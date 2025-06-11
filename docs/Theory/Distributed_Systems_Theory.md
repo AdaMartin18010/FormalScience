@@ -1,295 +1,425 @@
 # 分布式系统理论 (Distributed Systems Theory)
 
-## 概述
-
-分布式系统理论是计算机科学的重要分支，研究由多个独立计算节点组成的系统的设计、分析和验证。本文档系统性地梳理了分布式系统理论的主要分支，包括分布式算法、一致性理论、容错理论等。
-
-## 1. 分布式系统基础 (Distributed Systems Fundamentals)
+## 1. 分布式系统基础
 
 ### 1.1 系统模型
 
-**定义 1.1.1** 分布式系统：分布式系统是一个三元组 DS = (N, C, M)，其中：
-- N = {n₁, n₂, ..., nₙ} 是节点集
-- C ⊆ N × N 是通信连接集
-- M 是消息传递机制
+**定义 1.1 (分布式系统)**
+分布式系统是一个三元组 $DS = (N, C, M)$，其中：
+- $N = \{p_1, p_2, \ldots, p_n\}$ 是节点集合
+- $C \subseteq N \times N$ 是通信关系
+- $M$ 是消息传递机制
 
-**定义 1.1.2** 同步系统：在同步系统中，所有节点共享全局时钟，消息传递有固定延迟。
+**定义 1.2 (异步系统)**
+异步分布式系统中：
+- 消息传递延迟无界但有限
+- 节点处理时间无界但有限
+- 不存在全局时钟
 
-**定义 1.1.3** 异步系统：在异步系统中，节点没有共享时钟，消息传递延迟无界。
+**定义 1.3 (同步系统)**
+同步分布式系统中：
+- 消息传递延迟有界
+- 节点处理时间有界
+- 存在全局时钟或同步轮次
 
-**定理 1.1.1** (同步与异步等价性) 在故障模型下，同步系统和异步系统的计算能力等价。
-
-**证明** 通过模拟：
-1. 异步系统可以模拟同步系统
-2. 同步系统可以模拟异步系统
-3. 模拟过程保持计算等价性
+**定义 1.4 (部分同步系统)**
+部分同步系统中：
+- 消息传递延迟有界但未知
+- 节点处理时间有界但未知
+- 时钟漂移有界
 
 ### 1.2 故障模型
 
-**定义 1.2.1** 故障类型：
-- 崩溃故障：节点停止工作
-- 拜占庭故障：节点任意行为
-- 遗漏故障：节点丢失消息
-
-**定义 1.2.2** 故障模型：故障模型是一个三元组 FM = (F, t, f)，其中：
-- F 是故障类型集
-- t 是故障节点数上界
-- f 是实际故障节点数
-
-**定理 1.2.1** (故障边界) 在 n 个节点的系统中，最多可以容忍 ⌊(n-1)/2⌋ 个拜占庭故障。
-
-**证明** 通过反证法：
-1. 假设可以容忍超过 ⌊(n-1)/2⌋ 个故障
-2. 故障节点可以形成多数派
-3. 故障节点可以控制系统行为
-4. 这与容错目标矛盾
-
-## 2. 分布式算法 (Distributed Algorithms)
-
-### 2.1 共识算法 (Consensus Algorithms)
-
-**定义 2.1.1** 共识问题：给定初始值集 V，所有正确节点必须就某个值 v ∈ V 达成一致。
-
-**定义 2.1.2** 共识性质：
-- 一致性：所有正确节点决定相同值
-- 有效性：决定的值必须是某个节点的初始值
-- 终止性：所有正确节点最终决定
-
-**定理 2.1.1** (FLP 不可能性) 在异步系统中，即使只有一个节点崩溃，也无法实现共识。
-
-**证明** 通过反证法：
-1. 假设存在异步共识算法
-2. 构造无限执行序列
-3. 证明算法无法终止
-4. 这与终止性矛盾
-
-**定理 2.1.2** (Paxos 正确性) Paxos 算法在同步系统中实现共识。
-
-**证明** 通过归纳法：
-1. 基础情况：第一阶段确保唯一提议
-2. 归纳步骤：第二阶段确保一致性
-3. 算法满足所有共识性质
-
-### 2.2 领导者选举 (Leader Election)
-
-**定义 2.2.1** 领导者选举问题：在分布式系统中选择一个唯一的领导者。
-
-**定义 2.2.2** 领导者选举性质：
-- 唯一性：最多一个领导者
-- 安全性：领导者不会改变除非故障
-- 活性：最终会选出领导者
-
-**定理 2.2.1** (环算法正确性) 环算法在同步环网络中实现领导者选举。
-
-**证明** 通过算法分析：
-1. 每个节点发送自己的 ID
-2. 只有最大 ID 的节点成为领导者
-3. 算法满足所有性质
-
-### 2.3 互斥算法 (Mutual Exclusion)
-
-**定义 2.3.1** 互斥问题：确保在任意时刻最多一个节点在临界区。
-
-**定义 2.3.2** 互斥性质：
-- 安全性：最多一个节点在临界区
-- 活性：请求进入临界区的节点最终会进入
-
-**定理 2.3.1** (Lamport 算法正确性) Lamport 算法实现分布式互斥。
-
-**证明** 通过时间戳排序：
-1. 每个请求都有唯一时间戳
-2. 时间戳最小的请求优先进入
-3. 算法满足互斥性质
-
-## 3. 一致性理论 (Consistency Theory)
-
-### 3.1 强一致性 (Strong Consistency)
-
-**定义 3.1.1** 线性一致性：所有操作看起来都是原子的，按照某个全局顺序执行。
-
-**定义 3.1.2** 顺序一致性：所有节点看到相同的操作顺序。
-
-**定理 3.1.1** (线性一致性代价) 线性一致性在异步网络中需要至少两轮通信。
-
-**证明** 通过下界分析：
-1. 第一轮用于提议操作
-2. 第二轮用于确认操作
-3. 少于两轮无法保证一致性
-
-### 3.2 最终一致性 (Eventual Consistency)
-
-**定义 3.2.1** 最终一致性：如果没有新更新，所有副本最终会收敛到相同状态。
-
-**定义 3.2.2** 因果一致性：因果相关的操作在所有节点上按相同顺序执行。
-
-**定理 3.2.1** (最终一致性收敛) 在无故障网络中，最终一致性保证收敛。
-
-**证明** 通过传播机制：
-1. 更新通过消息传播
-2. 传播图是连通的
-3. 所有节点最终收到所有更新
-
-### 3.3 CAP 定理
-
-**定理 3.3.1** (CAP 定理) 在异步网络中，无法同时满足一致性、可用性和分区容错性。
-
-**证明** 通过反证法：
-1. 假设同时满足三个性质
-2. 网络分区时无法保证一致性
-3. 保证一致性会牺牲可用性
-4. 这与假设矛盾
-
-## 4. 容错理论 (Fault Tolerance Theory)
-
-### 4.1 复制 (Replication)
-
-**定义 4.1.1** 复制策略：
-- 主从复制：一个主节点，多个从节点
-- 多主复制：多个主节点
-- 无主复制：所有节点平等
-
-**定理 4.1.1** (复制一致性) 主从复制在同步网络中保证强一致性。
-
-**证明** 通过主节点协调：
-1. 所有写操作通过主节点
-2. 主节点序列化所有操作
-3. 从节点按序应用操作
-
-### 4.2 状态机复制 (State Machine Replication)
-
-**定义 4.2.1** 状态机复制：将确定性状态机复制到多个节点。
-
-**定义 4.2.2** 复制性质：
-- 安全性：所有正确节点执行相同操作序列
-- 活性：客户端请求最终被处理
-
-**定理 4.2.1** (状态机复制正确性) 状态机复制在同步网络中实现容错。
-
-**证明** 通过共识算法：
-1. 使用共识算法确定操作顺序
-2. 所有节点按相同顺序执行
-3. 故障节点不影响正确节点
-
-### 4.3 拜占庭容错 (Byzantine Fault Tolerance)
-
-**定义 4.3.1** 拜占庭容错：系统在存在拜占庭故障时仍能正确工作。
-
-**定理 4.3.1** (拜占庭容错下界) 拜占庭容错需要至少 3f+1 个节点容忍 f 个故障。
-
-**证明** 通过反证法：
-1. 假设 3f 个节点可以容忍 f 个故障
-2. 故障节点可以形成多数派
-3. 故障节点可以控制系统
-4. 这与容错目标矛盾
-
-## 5. 分布式事务 (Distributed Transactions)
-
-### 5.1 两阶段提交 (Two-Phase Commit)
-
-**定义 5.1.1** 两阶段提交：协调者协调多个参与者的事务提交。
-
-**定义 5.1.2** 两阶段：
-- 准备阶段：协调者询问参与者是否准备提交
-- 提交阶段：协调者通知参与者提交或中止
-
-**定理 5.1.1** (2PC 阻塞性) 两阶段提交在协调者故障时会阻塞。
-
-**证明** 通过故障分析：
-1. 参与者无法确定事务状态
-2. 参与者必须等待协调者恢复
-3. 系统无法处理新事务
-
-### 5.2 三阶段提交 (Three-Phase Commit)
-
-**定义 5.2.1** 三阶段提交：在 2PC 基础上增加预提交阶段。
-
-**定理 5.2.1** (3PC 非阻塞性) 三阶段提交在协调者故障时不会阻塞。
-
-**证明** 通过状态分析：
-1. 预提交阶段确保所有参与者准备提交
-2. 参与者可以独立决定提交
-3. 系统可以继续处理新事务
-
-## 6. 分布式存储 (Distributed Storage)
-
-### 6.1 一致性哈希 (Consistent Hashing)
-
-**定义 6.1.1** 一致性哈希：将数据映射到节点环上，支持动态节点变化。
-
-**定理 6.1.1** (一致性哈希平衡性) 一致性哈希在节点变化时最小化数据迁移。
-
-**证明** 通过哈希性质：
-1. 哈希函数将数据均匀分布
-2. 节点变化只影响相邻数据
-3. 迁移量正比于变化节点数
-
-### 6.2 分布式哈希表 (DHT)
-
-**定义 6.2.1** 分布式哈希表：在分布式网络中实现哈希表功能。
-
-**定理 6.2.1** (DHT 路由效率) DHT 可以在 O(log n) 跳内路由到目标节点。
-
-**证明** 通过路由算法：
-1. 每个节点维护部分路由表
-2. 路由表大小为 O(log n)
-3. 每跳减少一半距离
-
-## 7. 分布式计算模型 (Distributed Computation Models)
-
-### 7.1 消息传递模型
-
-**定义 7.1.1** 消息传递模型：节点通过消息通信，没有共享内存。
-
-**定理 7.1.1** (消息传递表达能力) 消息传递模型等价于共享内存模型。
-
-**证明** 通过模拟：
-1. 共享内存可以用消息传递模拟
-2. 消息传递可以用共享内存模拟
-3. 模拟过程保持计算等价性
-
-### 7.2 共享内存模型
-
-**定义 7.2.1** 共享内存模型：节点通过共享内存通信。
-
-**定理 7.2.1** (共享内存一致性) 共享内存需要一致性协议保证正确性。
-
-**证明** 通过缓存一致性：
-1. 每个节点有本地缓存
-2. 缓存需要与主内存一致
-3. 一致性协议协调缓存更新
-
-## 8. 分布式系统验证 (Distributed System Verification)
-
-### 8.1 模型检查
-
-**定义 8.1.1** 分布式系统模型检查：验证分布式系统是否满足时态性质。
-
-**定理 8.1.1** (状态爆炸) 分布式系统模型检查面临状态爆炸问题。
-
-**证明** 通过状态空间分析：
-1. n 个节点的状态空间为 O(2^n)
-2. 状态空间随节点数指数增长
-3. 模型检查算法复杂度爆炸
-
-### 8.2 形式化验证
-
-**定义 8.2.1** 形式化验证：使用数学方法证明系统正确性。
-
-**定理 8.2.1** (验证完备性) 形式化验证可以证明系统满足所有性质。
-
-**证明** 通过数学归纳：
-1. 基础情况：初始状态满足性质
-2. 归纳步骤：每个操作保持性质
-3. 所有可达状态都满足性质
-
-## 9. 结论
-
-分布式系统理论为构建可靠、高效的分布式系统提供了理论基础。从基本的系统模型到复杂的容错算法，从一致性理论到分布式事务，分布式系统理论形成了完整的理论体系，广泛应用于云计算、大数据、区块链等领域。
-
-## 参考文献
-
-1. Lamport, L. (1978). Time, clocks, and the ordering of events in a distributed system. Communications of the ACM, 21(7), 558-565.
-2. Fischer, M. J., Lynch, N. A., & Paterson, M. S. (1985). Impossibility of distributed consensus with one faulty process. Journal of the ACM, 32(2), 374-382.
-3. Lamport, L. (1998). The part-time parliament. ACM Transactions on Computer Systems, 16(2), 133-169.
-4. Brewer, E. A. (2012). CAP twelve years later: How the" rules" have changed. Computer, 45(2), 23-29.
-5. Schneider, F. B. (1990). Implementing fault-tolerant services using the state machine approach: A tutorial. ACM Computing Surveys, 22(4), 299-319. 
+**定义 1.5 (故障类型)**
+节点故障类型：
+- **崩溃故障**：节点停止工作
+- **拜占庭故障**：节点任意行为
+- **遗漏故障**：节点遗漏某些操作
+- **时序故障**：节点违反时序约束
+
+**定义 1.6 (故障假设)**
+故障假设 $F$ 指定：
+- 故障类型
+- 最大故障节点数 $f$
+- 故障模式（静态/动态）
+
+**定理 1.1 (故障边界)**
+在 $n$ 个节点的系统中，最多可以容忍 $f$ 个故障节点，其中：
+- 崩溃故障：$f < n$
+- 拜占庭故障：$f < n/3$
+- 遗漏故障：$f < n/2$
+
+**证明：** 通过反证法：
+1. 假设可以容忍更多故障节点
+2. 构造故障场景导致协议失败
+3. 得出矛盾，证明边界正确
+
+## 2. 一致性协议
+
+### 2.1 共识问题
+
+**定义 2.1 (共识问题)**
+共识问题要求所有正确节点就某个值达成一致，满足：
+- **一致性**：所有正确节点决定相同值
+- **有效性**：如果所有正确节点提议相同值，则决定该值
+- **终止性**：所有正确节点最终做出决定
+
+**定义 2.2 (共识复杂度)**
+共识问题的复杂度度量：
+- **消息复杂度**：总消息数量
+- **时间复杂度**：决定轮次数量
+- **空间复杂度**：每个节点存储空间
+
+**定理 2.1 (FLP不可能性)**
+在异步系统中，即使只有一个节点崩溃，也无法实现确定性共识。
+
+**证明：** 通过构造性证明：
+1. 假设存在确定性共识算法
+2. 构造执行序列导致无限延迟
+3. 违反终止性，得出矛盾
+
+### 2.2 Paxos算法
+
+**定义 2.3 (Paxos角色)**
+Paxos算法中的角色：
+- **提议者**：发起提议
+- **接受者**：接受提议
+- **学习者**：学习最终决定
+
+**算法 2.1 (Paxos算法)**
+```haskell
+data PaxosState = PaxosState
+  { proposalNumber :: Int
+  , acceptedValue :: Maybe Value
+  , acceptedNumber :: Int
+  }
+
+paxosPhase1a :: Proposer -> Int -> [Message]
+paxosPhase1a proposer n = 
+  [Prepare n | acceptor <- acceptors]
+
+paxosPhase1b :: Acceptor -> Int -> Maybe (Int, Value) -> Message
+paxosPhase1b acceptor n (promisedNum, acceptedVal) = 
+  if n > promisedNum 
+  then Promise n (acceptedNum, acceptedValue)
+  else Nack
+
+paxosPhase2a :: Proposer -> Int -> Value -> [Message]
+paxosPhase2a proposer n v = 
+  [Accept n v | acceptor <- acceptors]
+
+paxosPhase2b :: Acceptor -> Int -> Value -> Message
+paxosPhase2b acceptor n v = 
+  if n >= promisedNumber 
+  then Accepted n v
+  else Nack
+```
+
+**定理 2.2 (Paxos正确性)**
+Paxos算法满足共识的所有性质。
+
+**证明：** 通过归纳法：
+1. 一致性：通过提议编号保证
+2. 有效性：通过提议值选择保证
+3. 终止性：通过活锁避免机制保证
+
+### 2.3 Raft算法
+
+**定义 2.4 (Raft状态)**
+Raft节点状态：
+- **领导者**：处理所有客户端请求
+- **跟随者**：响应领导者请求
+- **候选人**：参与领导者选举
+
+**算法 2.2 (Raft领导者选举)**
+```haskell
+raftElection :: Node -> IO ()
+raftElection node = do
+  currentTerm <- getCurrentTerm node
+  votedFor <- getVotedFor node
+  
+  -- 转换为候选人
+  setState node Candidate
+  incrementTerm node
+  setVotedFor node (Just (nodeId node))
+  
+  -- 发送投票请求
+  votes <- sendRequestVote node currentTerm + 1
+  
+  if length votes > majority
+    then becomeLeader node
+    else becomeFollower node
+```
+
+**定理 2.3 (Raft安全性)**
+Raft算法保证在任何时刻最多只有一个领导者。
+
+**证明：** 通过投票机制：
+1. 每个任期最多一票
+2. 需要多数票成为领导者
+3. 任期编号单调递增
+
+## 3. 分布式存储
+
+### 3.1 复制状态机
+
+**定义 3.1 (复制状态机)**
+复制状态机是三元组 $RSM = (S, \delta, \Sigma)$，其中：
+- $S$ 是状态集合
+- $\delta : S \times \Sigma \rightarrow S$ 是状态转移函数
+- $\Sigma$ 是输入字母表
+
+**定义 3.2 (日志复制)**
+日志复制确保所有节点执行相同操作序列：
+$$\text{Log}_i = [\text{entry}_1, \text{entry}_2, \ldots, \text{entry}_n]$$
+
+**定理 3.1 (日志一致性)**
+如果两个节点的日志在相同索引处有相同任期，则包含相同命令。
+
+**证明：** 通过领导者唯一性：
+1. 每个任期最多一个领导者
+2. 领导者创建日志条目
+3. 日志条目不会改变
+
+### 3.2 一致性哈希
+
+**定义 3.3 (一致性哈希)**
+一致性哈希函数 $h : \text{Key} \rightarrow [0, 2^m)$ 满足：
+- **平衡性**：节点负载均衡
+- **单调性**：节点增减影响最小
+- **分散性**：相同键映射到不同节点概率低
+
+**算法 3.1 (一致性哈希)**
+```haskell
+data ConsistentHash = ConsistentHash
+  { ring :: [Node]
+  , hashFunction :: Key -> Int
+  }
+
+lookup :: ConsistentHash -> Key -> Node
+lookup ch key = 
+  let hash = hashFunction ch key
+      ring = ring ch
+      index = findClosest ring hash
+  in ring !! index
+
+addNode :: ConsistentHash -> Node -> ConsistentHash
+addNode ch node = 
+  let newRing = insertSorted (ring ch) node
+  in ch { ring = newRing }
+```
+
+## 4. 容错机制
+
+### 4.1 故障检测
+
+**定义 4.1 (故障检测器)**
+故障检测器是函数 $FD : N \rightarrow 2^N$，满足：
+- **完整性**：崩溃节点最终被所有正确节点怀疑
+- **准确性**：正确节点最终不被怀疑
+
+**定义 4.2 (心跳机制)**
+心跳机制通过定期消息检测故障：
+$$\text{Heartbeat}_i(t) = \begin{cases}
+1 & \text{if } p_i \text{ sends heartbeat at } t \\
+0 & \text{otherwise}
+\end{cases}$$
+
+**算法 4.1 (故障检测)**
+```haskell
+failureDetector :: Node -> IO ()
+failureDetector node = do
+  -- 发送心跳
+  broadcast Heartbeat (nodeId node)
+  
+  -- 检查超时
+  timeouts <- checkTimeouts node
+  forM_ timeouts $ \suspect -> 
+    suspectNode node suspect
+```
+
+### 4.2 故障恢复
+
+**定义 4.3 (故障恢复)**
+故障恢复机制确保系统在节点故障后继续运行：
+- **状态恢复**：从其他节点恢复状态
+- **日志重放**：重放未提交的操作
+- **成员变更**：更新系统成员
+
+**定理 4.1 (故障恢复正确性)**
+如果故障恢复机制正确实现，则系统在故障后保持一致性。
+
+**证明：** 通过状态同步：
+1. 恢复节点从其他节点获取状态
+2. 重放缺失的日志条目
+3. 加入系统并参与共识
+
+## 5. 分布式事务
+
+### 5.1 两阶段提交
+
+**定义 5.1 (两阶段提交)**
+两阶段提交协议：
+1. **准备阶段**：协调者询问参与者是否可以提交
+2. **提交阶段**：协调者通知参与者提交或中止
+
+**算法 5.1 (两阶段提交)**
+```haskell
+twoPhaseCommit :: Coordinator -> [Participant] -> Transaction -> IO Bool
+twoPhaseCommit coordinator participants transaction = do
+  -- 准备阶段
+  responses <- forM participants $ \participant -> 
+    sendPrepare participant transaction
+  
+  if all isPrepared responses
+    then do
+      -- 提交阶段
+      forM_ participants $ \participant -> 
+        sendCommit participant transaction
+      return True
+    else do
+      -- 中止阶段
+      forM_ participants $ \participant -> 
+        sendAbort participant transaction
+      return False
+```
+
+**定理 5.1 (2PC阻塞性)**
+两阶段提交在协调者故障时可能阻塞。
+
+**证明：** 通过构造故障场景：
+1. 协调者在准备阶段后故障
+2. 参与者无法确定最终决定
+3. 系统阻塞直到协调者恢复
+
+### 5.2 三阶段提交
+
+**定义 5.2 (三阶段提交)**
+三阶段提交协议：
+1. **准备阶段**：协调者询问参与者是否可以提交
+2. **预提交阶段**：协调者通知参与者准备提交
+3. **提交阶段**：协调者通知参与者提交
+
+**定理 5.2 (3PC非阻塞性)**
+三阶段提交在协调者故障时不会阻塞。
+
+**证明：** 通过超时机制：
+1. 参与者可以超时检测故障
+2. 预提交阶段提供足够信息
+3. 参与者可以独立决定
+
+## 6. 分布式时钟
+
+### 6.1 逻辑时钟
+
+**定义 6.1 (Lamport时钟)**
+Lamport时钟函数 $L : E \rightarrow \mathbb{N}$ 满足：
+- 如果 $e_1 \rightarrow e_2$，则 $L(e_1) < L(e_2)$
+- 如果 $e_1 \parallel e_2$，则 $L(e_1) \neq L(e_2)$
+
+**算法 6.1 (Lamport时钟)**
+```haskell
+lamportClock :: Process -> Event -> IO Int
+lamportClock process event = do
+  currentTime <- getLocalTime process
+  
+  case event of
+    LocalEvent -> do
+      incrementTime process
+      return (currentTime + 1)
+    
+    SendEvent message -> do
+      incrementTime process
+      send message (currentTime + 1)
+      return (currentTime + 1)
+    
+    ReceiveEvent message receivedTime -> do
+      newTime <- max currentTime receivedTime + 1
+      setLocalTime process newTime
+      return newTime
+```
+
+### 6.2 向量时钟
+
+**定义 6.2 (向量时钟)**
+向量时钟 $V : E \rightarrow \mathbb{N}^n$ 满足：
+- 如果 $e_1 \rightarrow e_2$，则 $V(e_1) < V(e_2)$
+- 如果 $e_1 \parallel e_2$，则 $V(e_1) \not< V(e_2)$ 且 $V(e_2) \not< V(e_1)$
+
+**定理 6.1 (向量时钟正确性)**
+向量时钟可以检测所有因果关系。
+
+**证明：** 通过分量比较：
+1. 每个分量记录对应进程的事件数
+2. 因果关系通过分量比较确定
+3. 并发关系通过不可比较确定
+
+## 7. 分布式算法
+
+### 7.1 分布式快照
+
+**定义 7.1 (Chandy-Lamport快照)**
+分布式快照算法记录系统全局状态：
+- **发起**：任意进程发起快照
+- **传播**：快照消息沿通道传播
+- **记录**：每个进程记录本地状态
+
+**算法 7.1 (分布式快照)**
+```haskell
+distributedSnapshot :: Process -> IO Snapshot
+distributedSnapshot initiator = do
+  -- 记录本地状态
+  localState <- getLocalState initiator
+  
+  -- 发送快照消息
+  forM_ (outgoingChannels initiator) $ \channel -> 
+    sendSnapshotMessage channel
+  
+  -- 等待所有快照消息
+  channelStates <- collectChannelStates initiator
+  
+  return Snapshot { localState = localState
+                  , channelStates = channelStates }
+```
+
+### 7.2 分布式死锁检测
+
+**定义 7.2 (资源分配图)**
+资源分配图 $G = (V, E)$，其中：
+- $V = P \cup R$ 是进程和资源节点
+- $E$ 是请求和分配边
+
+**算法 7.2 (死锁检测)**
+```haskell
+deadlockDetection :: System -> IO [Process]
+deadlockDetection system = do
+  -- 构建资源分配图
+  graph <- buildResourceGraph system
+  
+  -- 检测环
+  cycles <- findCycles graph
+  
+  -- 返回死锁进程
+  return (processesInCycles cycles)
+```
+
+## 8. 结论
+
+分布式系统理论为构建可靠、可扩展的系统提供了完整的理论框架：
+
+1. **系统建模**：精确描述分布式系统行为
+2. **一致性保证**：通过共识协议确保数据一致性
+3. **容错机制**：通过故障检测和恢复提高可靠性
+4. **性能优化**：通过分布式算法提高系统性能
+
+分布式系统理论在现代计算中发挥着关键作用，支撑着：
+- 大规模分布式存储系统
+- 高可用性服务架构
+- 区块链和加密货币
+- 云计算和边缘计算
+
+通过形式化的分布式系统理论，我们可以：
+- 设计可靠的分布式算法
+- 验证系统正确性和一致性
+- 分析系统性能和可扩展性
+- 处理各种故障和异常情况 
