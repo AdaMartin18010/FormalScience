@@ -12,6 +12,7 @@
 $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 
 **定义 1.3 (字符串操作)**
+
 - **连接**：$w_1 \cdot w_2 = w_1 w_2$
 - **幂运算**：$w^0 = \epsilon$, $w^{n+1} = w \cdot w^n$
 - **长度**：$|w| = n$ 对于 $w = a_1 a_2 \cdots a_n$
@@ -20,6 +21,7 @@ $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 语言 $L$ 是字符串集合：$L \subseteq \Sigma^*$
 
 **定义 1.5 (语言操作)**
+
 - **并集**：$L_1 \cup L_2 = \{w \mid w \in L_1 \text{ or } w \in L_2\}$
 - **连接**：$L_1 \cdot L_2 = \{w_1 w_2 \mid w_1 \in L_1, w_2 \in L_2\}$
 - **克林闭包**：$L^* = \bigcup_{n=0}^{\infty} L^n$
@@ -28,6 +30,7 @@ $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 
 **定义 1.6 (乔姆斯基层次)**
 语言类别的层次结构：
+
 1. **正则语言**：有限状态自动机识别
 2. **上下文无关语言**：下推自动机识别
 3. **上下文有关语言**：线性有界自动机识别
@@ -37,6 +40,7 @@ $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 
 **证明：** 通过构造性证明：
+
 1. 每个层次包含前一个层次
 2. 存在语言属于更高层次但不属于较低层次
 3. 通过泵引理证明严格包含
@@ -47,6 +51,7 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 
 **定义 2.1 (DFA)**
 确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 - $Q$ 是有限状态集合
 - $\Sigma$ 是输入字母表
 - $\delta : Q \times \Sigma \rightarrow Q$ 是转移函数
@@ -63,6 +68,7 @@ $$q_0 \xrightarrow{a_1} q_1 \xrightarrow{a_2} q_2 \cdots \xrightarrow{a_n} q_n$$
 DFA接受字符串 $w$，如果计算结束于接受状态：$q_n \in F$。
 
 **算法 2.1 (DFA模拟)**
+
 ```haskell
 simulateDFA :: DFA -> String -> Bool
 simulateDFA dfa input = 
@@ -78,6 +84,7 @@ transition dfa currentState symbol =
 
 **定义 2.4 (NFA)**
 非确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 - $\delta : Q \times \Sigma \rightarrow 2^Q$ 是转移函数
 
 **定义 2.5 (NFA计算)**
@@ -87,11 +94,13 @@ NFA在输入 $w$ 上的计算是一棵树，每个节点表示可能的状态。
 对于每个NFA，存在等价的DFA。
 
 **证明：** 通过子集构造：
+
 1. DFA状态是NFA状态集合
 2. DFA转移函数通过子集计算
 3. 接受状态包含NFA接受状态
 
 **算法 2.2 (子集构造)**
+
 ```haskell
 subsetConstruction :: NFA -> DFA
 subsetConstruction nfa = 
@@ -113,6 +122,7 @@ subsetConstruction nfa =
 $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^*$$
 
 **定义 2.7 (正则表达式语义)**
+
 - $L(\emptyset) = \emptyset$
 - $L(\epsilon) = \{\epsilon\}$
 - $L(a) = \{a\}$
@@ -124,6 +134,7 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 正则表达式和DFA识别相同的语言类。
 
 **证明：** 双向构造：
+
 1. 正则表达式到NFA：通过递归构造
 2. NFA到DFA：通过子集构造
 3. DFA到正则表达式：通过状态消除
@@ -134,6 +145,7 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 
 **定义 3.1 (CFG)**
 上下文无关文法是四元组 $G = (V, T, P, S)$，其中：
+
 - $V$ 是非终结符集合
 - $T$ 是终结符集合
 - $P$ 是产生式集合
@@ -141,6 +153,7 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 
 **定义 3.2 (推导)**
 推导关系 $\Rightarrow$ 定义：
+
 - 如果 $A \rightarrow \alpha \in P$，则 $\beta A \gamma \Rightarrow \beta \alpha \gamma$
 - 如果 $\alpha \Rightarrow \beta$ 且 $\beta \Rightarrow \gamma$，则 $\alpha \Rightarrow \gamma$
 
@@ -149,6 +162,7 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 $$L(G) = \{w \in T^* \mid S \Rightarrow^* w\}$$
 
 **算法 3.1 (CFG解析)**
+
 ```haskell
 parseCFG :: CFG -> String -> Bool
 parseCFG cfg input = 
@@ -162,6 +176,7 @@ parseCFG cfg input =
 
 **定义 3.4 (CNF)**
 乔姆斯基范式文法满足：
+
 - 所有产生式形如 $A \rightarrow BC$ 或 $A \rightarrow a$
 - 其中 $A, B, C \in V$ 且 $a \in T$
 
@@ -169,11 +184,13 @@ parseCFG cfg input =
 每个CFG都可以转换为等价的CNF。
 
 **证明：** 通过构造性转换：
+
 1. 消除 $\epsilon$ 产生式
 2. 消除单位产生式
 3. 转换为CNF形式
 
 **算法 3.2 (CNF转换)**
+
 ```haskell
 convertToCNF :: CFG -> CFG
 convertToCNF cfg = 
@@ -186,6 +203,7 @@ convertToCNF cfg =
 ### 3.3 CYK算法
 
 **算法 3.3 (CYK算法)**
+
 ```haskell
 cykParse :: CFG -> String -> Bool
 cykParse cfg input = 
@@ -221,6 +239,7 @@ fillTable cfg table n =
 
 **定义 4.1 (PDA)**
 下推自动机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
+
 - $Q$ 是有限状态集合
 - $\Sigma$ 是输入字母表
 - $\Gamma$ 是栈字母表
@@ -231,6 +250,7 @@ fillTable cfg table n =
 
 **定义 4.2 (PDA配置)**
 PDA配置是三元组 $(q, w, \gamma)$，其中：
+
 - $q$ 是当前状态
 - $w$ 是剩余输入
 - $\gamma$ 是栈内容
@@ -242,6 +262,7 @@ $$(q, aw, A\gamma) \vdash (p, w, \beta\gamma)$$
 如果 $(p, \beta) \in \delta(q, a, A)$。
 
 **算法 4.1 (PDA模拟)**
+
 ```haskell
 simulatePDA :: PDA -> String -> Bool
 simulatePDA pda input = 
@@ -257,6 +278,7 @@ simulatePDA pda input =
 下推自动机和上下文无关文法识别相同的语言类。
 
 **证明：** 双向构造：
+
 1. CFG到PDA：通过自顶向下或自底向上构造
 2. PDA到CFG：通过配置转换构造
 
@@ -266,6 +288,7 @@ simulatePDA pda input =
 
 **定义 5.1 (图灵机)**
 图灵机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
+
 - $Q$ 是有限状态集合
 - $\Sigma$ 是输入字母表
 - $\Gamma$ 是带字母表
@@ -276,6 +299,7 @@ simulatePDA pda input =
 
 **定义 5.2 (图灵机配置)**
 图灵机配置是三元组 $(q, \alpha, i)$，其中：
+
 - $q$ 是当前状态
 - $\alpha$ 是带内容
 - $i$ 是读写头位置
@@ -285,11 +309,13 @@ simulatePDA pda input =
 $$(q, \alpha, i) \vdash (p, \alpha', j)$$
 
 如果 $\delta(q, \alpha_i) = (p, b, D)$ 且：
+
 - $\alpha'_i = b$
 - $j = i + 1$ 如果 $D = R$
 - $j = i - 1$ 如果 $D = L$
 
 **算法 5.1 (图灵机模拟)**
+
 ```haskell
 simulateTuringMachine :: TuringMachine -> String -> Bool
 simulateTuringMachine tm input = 
@@ -317,6 +343,7 @@ $$\delta : Q \times \Gamma \rightarrow 2^{Q \times \Gamma \times \{L, R\}}$$
 确定性图灵机、非确定性图灵机和多带图灵机具有相同的计算能力。
 
 **证明：** 通过模拟：
+
 1. 非确定性图灵机可以模拟确定性图灵机
 2. 确定性图灵机可以模拟非确定性图灵机
 3. 多带图灵机可以相互模拟
@@ -330,6 +357,7 @@ $$\delta : Q \times \Gamma \rightarrow 2^{Q \times \Gamma \times \{L, R\}}$$
 $$T_M(n) = \max\{t \mid M \text{ 在长度为 } n \text{ 的输入上运行 } t \text{ 步}\}$$
 
 **定义 6.2 (复杂性类)**
+
 - **P**：多项式时间可解的问题
 - **NP**：非确定性多项式时间可解的问题
 - **PSPACE**：多项式空间可解的问题
@@ -352,6 +380,7 @@ $$S_M(n) = \max\{s \mid M \text{ 在长度为 } n \text{ 的输入上使用 } s 
 
 **定义 7.1 (词法分析)**
 词法分析器将输入字符串转换为词法单元序列：
+
 ```haskell
 lexicalAnalysis :: String -> [Token]
 lexicalAnalysis input = 
@@ -362,6 +391,7 @@ lexicalAnalysis input =
 
 **定义 7.2 (语法分析)**
 语法分析器构建抽象语法树：
+
 ```haskell
 syntaxAnalysis :: [Token] -> AST
 syntaxAnalysis tokens = 
@@ -374,6 +404,7 @@ syntaxAnalysis tokens =
 
 **定义 7.3 (句法分析)**
 句法分析识别句子结构：
+
 ```haskell
 syntacticAnalysis :: String -> ParseTree
 syntacticAnalysis sentence = 
@@ -392,13 +423,15 @@ syntacticAnalysis sentence =
 4. **计算复杂性**：分析算法的效率和可解性
 
 形式语言理论在以下领域发挥着关键作用：
+
 - 编译器设计和实现
 - 自然语言处理
 - 软件工程和程序验证
 - 人工智能和机器学习
 
 通过形式化的语言理论，我们可以：
+
 - 设计高效的解析算法
 - 验证程序的语法正确性
 - 分析计算问题的复杂性
-- 构建智能的语言处理系统 
+- 构建智能的语言处理系统

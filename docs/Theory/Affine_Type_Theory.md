@@ -13,6 +13,7 @@ $$\Gamma : \text{Var} \rightarrow \text{Type}$$
 $$\tau ::= \text{Base} \mid \tau_1 \rightarrow \tau_2 \mid \tau_1 \& \tau_2 \mid \tau_1 \oplus \tau_2$$
 
 其中：
+
 - $\rightarrow$ 表示仿射函数类型
 - $\&$ 表示加法积类型（with）
 - $\oplus$ 表示加法类型（plus）
@@ -35,6 +36,7 @@ $$\frac{\Gamma \vdash e : \tau}{\Gamma, x : \tau' \vdash e : \tau}$$
 在仿射类型系统中，如果 $\Gamma \vdash e : \tau$，则 $\Gamma$ 中的每个变量在 $e$ 中最多出现一次。
 
 **证明：** 通过结构归纳法证明。对于每个语法构造：
+
 1. 变量：直接满足仿射性
 2. 抽象：通过归纳假设，变量在体中最多出现一次
 3. 应用：通过上下文分离，确保变量不重复使用
@@ -49,6 +51,7 @@ $$\frac{\Gamma \vdash e : \tau}{\Gamma, x : \tau' \vdash e : \tau}$$
 
 **定义 2.1 (所有权类型)**
 所有权类型表示对资源的独占控制：
+
 ```haskell
 data Ownership a where
   Owned :: a -> Ownership a
@@ -58,6 +61,7 @@ data Ownership a where
 
 **定义 2.2 (所有权转移)**
 所有权转移操作：
+
 ```haskell
 transfer :: Ownership a -> (a -> b) -> Ownership b
 move :: Ownership a -> a
@@ -68,6 +72,7 @@ borrow :: Ownership a -> Borrowed a
 在仿射类型系统中，每个资源最多有一个所有者。
 
 **证明：** 通过仿射性约束：
+
 1. 每个所有权变量最多使用一次
 2. 转移操作消耗原所有权
 3. 无法同时拥有多个所有权
@@ -76,6 +81,7 @@ borrow :: Ownership a -> Borrowed a
 
 **定义 2.3 (生命周期)**
 生命周期表示变量的有效作用域：
+
 ```haskell
 data Lifetime where
   Static :: Lifetime
@@ -85,6 +91,7 @@ data Lifetime where
 
 **定义 2.4 (生命周期约束)**
 生命周期约束确保引用不会超过被引用对象的生命周期：
+
 ```haskell
 data LifetimeConstraint where
   Outlives :: Lifetime -> Lifetime -> LifetimeConstraint
@@ -95,6 +102,7 @@ data LifetimeConstraint where
 在仿射类型系统中，不会出现悬空引用。
 
 **证明：** 通过生命周期约束：
+
 1. 每个引用都有明确的生命周期
 2. 生命周期约束确保引用有效性
 3. 编译器检查生命周期一致性
@@ -105,6 +113,7 @@ data LifetimeConstraint where
 
 **定义 3.1 (仿射引用)**
 仿射引用确保内存安全：
+
 ```haskell
 data AffineRef a where
   NewRef :: a -> AffineRef a
@@ -115,11 +124,13 @@ data AffineRef a where
 
 **定理 3.1 (内存安全)**
 仿射引用系统保证：
+
 1. 不会出现悬空指针
 2. 不会重复释放内存
 3. 不会出现数据竞争
 
 **证明：** 通过仿射类型系统的性质：
+
 1. 每个引用最多使用一次
 2. 读取操作返回新的引用
 3. 释放操作消耗引用
@@ -128,6 +139,7 @@ data AffineRef a where
 
 **定义 3.2 (借用规则)**
 借用检查规则：
+
 ```haskell
 data Borrow where
   ImmutableBorrow :: AffineRef a -> Borrow a
@@ -137,6 +149,7 @@ data Borrow where
 
 **定理 3.2 (借用安全)**
 借用系统保证：
+
 1. 同时只能有一个可变借用或多个不可变借用
 2. 借用不能超过被借用对象的生命周期
 3. 借用释放后可以重新借用
@@ -179,6 +192,7 @@ $$(\lambda x.e) v \rightarrow e[v/x]$$
 仿射类型系统比线性类型系统更灵活，但表达能力相当。
 
 **证明：** 通过类型系统嵌入：
+
 1. 线性类型可以嵌入仿射类型
 2. 仿射类型通过弱化规则提供更多灵活性
 3. 两者都能保证内存安全
@@ -208,13 +222,15 @@ fn main() {
 Rust 的所有权系统保证内存安全。
 
 **证明：** 通过仿射类型系统的性质：
+
 1. 每个值最多有一个所有者
 2. 移动操作转移所有权
 3. 借用检查防止数据竞争
 
 ### 6.2 函数式编程中的仿射类型
 
-**定义 6.1 (仿射函数)**
+-**定义 6.1 (仿射函数)**
+
 ```haskell
 class Affine a where
   consume :: a -> ()
@@ -223,6 +239,7 @@ class Affine a where
 
 **定理 6.2 (仿射函数性质)**
 仿射函数满足：
+
 1. 参数最多使用一次
 2. 支持资源管理
 3. 保证内存安全
@@ -233,6 +250,7 @@ class Affine a where
 
 **定义 7.1 (区域类型)**
 区域类型用于管理内存区域：
+
 ```haskell
 data Region where
   Global :: Region
@@ -242,6 +260,7 @@ data Region where
 
 **定义 7.2 (区域约束)**
 区域约束确保内存安全：
+
 ```haskell
 data RegionConstraint where
   InRegion :: a -> Region -> RegionConstraint
@@ -252,6 +271,7 @@ data RegionConstraint where
 
 **定义 7.3 (能力类型)**
 能力类型表示程序的能力：
+
 ```haskell
 data Capability where
   Read :: Capability
@@ -274,7 +294,8 @@ data Capability where
 
 ### 8.2 类型推断
 
-**算法 8.1 (仿射类型推断)**
+-**算法 8.1 (仿射类型推断)**
+
 ```haskell
 inferAffine :: Context -> Expr -> Either TypeError (Type, Context)
 inferAffine ctx (Var x) = case lookup x ctx of
@@ -297,4 +318,4 @@ inferAffine ctx (App e1 e2) = do
 3. **并发安全**：通过借用检查防止数据竞争
 4. **类型安全**：在编译时捕获内存管理错误
 
-仿射类型理论在现代系统编程语言中发挥着关键作用，特别是在需要高性能和内存安全的场景中。通过形式化的类型系统，我们可以在编译时保证程序的内存安全性和并发安全性。 
+仿射类型理论在现代系统编程语言中发挥着关键作用，特别是在需要高性能和内存安全的场景中。通过形式化的类型系统，我们可以在编译时保证程序的内存安全性和并发安全性。

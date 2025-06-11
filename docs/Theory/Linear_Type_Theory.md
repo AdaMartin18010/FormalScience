@@ -13,6 +13,7 @@ $$\Gamma : \text{Var} \rightarrow \text{Type}$$
 $$\tau ::= \text{Base} \mid \tau_1 \multimap \tau_2 \mid \tau_1 \otimes \tau_2 \mid !\tau$$
 
 其中：
+
 - $\multimap$ 表示线性函数类型
 - $\otimes$ 表示张量积类型
 - $!$ 表示指数类型（可重复使用）
@@ -32,6 +33,7 @@ $$\frac{\Gamma_1 \vdash e_1 : \tau_1 \multimap \tau_2 \quad \Gamma_2 \vdash e_2 
 在线性类型系统中，如果 $\Gamma \vdash e : \tau$，则 $\Gamma$ 中的每个变量在 $e$ 中恰好出现一次。
 
 **证明：** 通过结构归纳法证明。对于每个语法构造：
+
 1. 变量：直接满足线性性
 2. 抽象：通过归纳假设，变量在体中恰好出现一次
 3. 应用：通过上下文分离，确保变量不重复使用
@@ -49,6 +51,7 @@ $$\text{Resource} ::= \text{FileHandle} \mid \text{MemoryRef} \mid \text{Network
 
 **定义 2.2 (资源操作)**
 资源操作包括创建、使用和销毁：
+
 ```haskell
 data ResourceOp a where
   Create :: ResourceType -> ResourceOp Resource
@@ -60,6 +63,7 @@ data ResourceOp a where
 在线性类型系统中，资源不会被重复释放或遗忘。
 
 **证明：** 通过线性性约束：
+
 1. 每个资源变量必须恰好使用一次
 2. 资源销毁操作消耗资源变量
 3. 无法重复访问已销毁的资源
@@ -68,6 +72,7 @@ data ResourceOp a where
 
 **定义 2.3 (线性引用)**
 线性引用确保内存安全：
+
 ```haskell
 data LinearRef a where
   NewRef :: a -> LinearRef a
@@ -78,11 +83,13 @@ data LinearRef a where
 
 **定理 2.2 (内存安全)**
 线性引用系统保证：
+
 1. 不会出现悬空指针
 2. 不会重复释放内存
 3. 不会出现数据竞争
 
 **证明：** 通过线性类型系统的性质：
+
 1. 每个引用最多使用一次
 2. 读取操作返回新的引用
 3. 释放操作消耗引用
@@ -129,6 +136,7 @@ $$\llbracket !A \rrbracket = \text{Comonad}(\llbracket A \rrbracket)$$
 
 **定理 4.1 (指数类型性质)**
 指数类型满足：
+
 1. 可重复使用
 2. 支持弱化和收缩
 3. 形成余单子结构
@@ -172,13 +180,15 @@ fn main() {
 Rust 的所有权系统保证内存安全。
 
 **证明：** 通过线性类型系统的性质：
+
 1. 每个值最多有一个所有者
 2. 移动操作转移所有权
 3. 借用检查防止数据竞争
 
 ### 6.2 函数式编程中的线性类型
 
-**定义 6.1 (线性函数)**
+-**定义 6.1 (线性函数)**
+
 ```haskell
 class Linear a where
   consume :: a -> ()
@@ -187,6 +197,7 @@ class Linear a where
 
 **定理 6.2 (线性函数性质)**
 线性函数满足：
+
 1. 参数恰好使用一次
 2. 支持资源管理
 3. 保证内存安全
@@ -202,7 +213,8 @@ class Linear a where
 
 ### 7.2 类型推断
 
-**算法 7.1 (线性类型推断)**
+-**算法 7.1 (线性类型推断)**
+
 ```haskell
 inferLinear :: Context -> Expr -> Either TypeError (Type, Context)
 inferLinear ctx (Var x) = case lookup x ctx of
@@ -225,4 +237,4 @@ inferLinear ctx (App e1 e2) = do
 3. **并发安全**：通过线性性防止数据竞争
 4. **类型安全**：在编译时捕获资源管理错误
 
-线性类型理论在现代编程语言设计中发挥着关键作用，特别是在系统编程和并发编程领域。通过形式化的类型系统，我们可以在编译时保证程序的资源安全性和内存安全性。 
+线性类型理论在现代编程语言设计中发挥着关键作用，特别是在系统编程和并发编程领域。通过形式化的类型系统，我们可以在编译时保证程序的资源安全性和内存安全性。
