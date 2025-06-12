@@ -15,6 +15,7 @@
 
 **定义 1.1.1 (基本Petri网)**
 基本Petri网是一个四元组 $N = (P, T, F, M_0)$，其中：
+
 - $P$ 是库所(places)的有限集合
 - $T$ 是变迁(transitions)的有限集合
 - $F \subseteq (P \times T) \cup (T \times P)$ 是流关系(flow relation)
@@ -22,11 +23,13 @@
 
 **定义 1.1.2 (前集和后集)**
 对于 $x \in P \cup T$：
+
 - **前集**：$^\bullet x = \{y \mid (y, x) \in F\}$
 - **后集**：$x^\bullet = \{y \mid (x, y) \in F\}$
 
 **定理 1.1.1 (Petri网结构)**
 Petri网满足：
+
 1. $P \cap T = \emptyset$
 2. $P \cup T \neq \emptyset$
 3. $F \subseteq (P \times T) \cup (T \times P)$
@@ -190,6 +193,7 @@ $$N_T = (P, T, F, M_0, I)$$
 
 **定义 2.1.2 (时间变迁)**
 时间变迁 $t$ 的时间约束为 $I(t) = [\alpha(t), \beta(t)]$，表示：
+
 - $\alpha(t)$ 是最小延迟时间
 - $\beta(t)$ 是最大延迟时间
 
@@ -282,6 +286,7 @@ computeTimedReachableStates timedNet initialMarking initialTime =
 $$N_C = (P, T, F, M_0, C, G, E)$$
 
 其中：
+
 - $C$ 是颜色集函数
 - $G$ 是守卫函数
 - $E$ 是弧表达式函数
@@ -387,6 +392,7 @@ $$\text{Step} = 2^T$$
 
 **定义 3.1.2 (步使能)**
 步 $S \subseteq T$ 在标识 $M$ 下使能，当且仅当：
+
 1. $\forall t \in S: t$ 在 $M$ 下使能
 2. $\forall t_1, t_2 \in S: t_1 \neq t_2 \rightarrow ^\bullet t_1 \cap ^\bullet t_2 = \emptyset$
 
@@ -576,6 +582,7 @@ checkIrreflexivity dependencies =
 $$RG(N) = (R(N), E)$$
 
 其中：
+
 - $R(N)$ 是可达标识集
 - $E = \{(M, t, M') \mid M[t\rangle M'\}$
 
@@ -660,6 +667,7 @@ canEventuallyFire net marking transition =
 $$\text{Invariant}: \sum_{p \in P} w(p) \cdot M(p) = \text{constant}$$
 
 **定义 4.2.2 (陷阱和虹吸)**
+
 - **陷阱**：$S \subseteq P$ 满足 $S^\bullet \subseteq ^\bullet S$
 - **虹吸**：$S \subseteq P$ 满足 $^\bullet S \subseteq S^\bullet$
 
@@ -811,6 +819,7 @@ $$\text{Workflow} = \{\text{Task}_1, \text{Task}_2, \ldots, \text{Task}_n\}$$
 
 **定义 5.2.2 (工作流模式)**
 工作流模式包括：
+
 1. **顺序模式**：任务顺序执行
 2. **并行模式**：任务并行执行
 3. **选择模式**：条件分支执行
