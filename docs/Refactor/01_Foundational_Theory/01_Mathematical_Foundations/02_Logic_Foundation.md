@@ -17,11 +17,13 @@
 **定义 1.1.1** (命题变量) 命题变量是基本命题符号，通常用 $p, q, r, \ldots$ 表示。
 
 **定义 1.1.2** (命题公式) 命题公式按以下规则递归定义：
+
 1. 每个命题变量是命题公式
 2. 如果 $\phi$ 是命题公式，则 $\neg \phi$ 是命题公式
 3. 如果 $\phi$ 和 $\psi$ 是命题公式，则 $(\phi \land \psi)$、$(\phi \lor \psi)$、$(\phi \rightarrow \psi)$、$(\phi \leftrightarrow \psi)$ 是命题公式
 
 **定义 1.1.3** (逻辑连接词) 逻辑连接词包括：
+
 - $\neg$ (否定)
 - $\land$ (合取)
 - $\lor$ (析取)
@@ -33,6 +35,7 @@
 **定义 1.2.1** (真值赋值) 真值赋值是从命题变量到 $\{0, 1\}$ 的函数 $v$，其中 $0$ 表示假，$1$ 表示真。
 
 **定义 1.2.2** (真值函数) 真值函数 $V_v$ 按以下规则递归定义：
+
 1. $V_v(p) = v(p)$ 对于命题变量 $p$
 2. $V_v(\neg \phi) = 1 - V_v(\phi)$
 3. $V_v(\phi \land \psi) = \min(V_v(\phi), V_v(\psi))$
@@ -102,6 +105,7 @@ $$\frac{\Gamma \vdash \phi \rightarrow \psi \quad \Gamma \vdash \phi}{\Gamma \vd
 **定义 2.1.3** (函数符号) 函数符号是表示函数的符号，通常用 $f, g, h, \ldots$ 表示。
 
 **定义 2.1.4** (项) 项按以下规则递归定义：
+
 1. 每个个体变量是项
 2. 每个个体常项是项
 3. 如果 $f$ 是 $n$ 元函数符号，$t_1, \ldots, t_n$ 是项，则 $f(t_1, \ldots, t_n)$ 是项
@@ -109,6 +113,7 @@ $$\frac{\Gamma \vdash \phi \rightarrow \psi \quad \Gamma \vdash \phi}{\Gamma \vd
 **定义 2.1.5** (原子公式) 原子公式是形如 $P(t_1, \ldots, t_n)$ 的公式，其中 $P$ 是 $n$ 元谓词符号，$t_1, \ldots, t_n$ 是项。
 
 **定义 2.1.6** (谓词公式) 谓词公式按以下规则递归定义：
+
 1. 每个原子公式是谓词公式
 2. 如果 $\phi$ 是谓词公式，则 $\neg \phi$ 是谓词公式
 3. 如果 $\phi$ 和 $\psi$ 是谓词公式，则 $(\phi \land \psi)$、$(\phi \lor \psi)$、$(\phi \rightarrow \psi)$、$(\phi \leftrightarrow \psi)$ 是谓词公式
@@ -121,11 +126,13 @@ $$\frac{\Gamma \vdash \phi \rightarrow \psi \quad \Gamma \vdash \phi}{\Gamma \vd
 **定义 2.2.2** (赋值) 赋值是从个体变量到域 $A$ 的函数 $s$。
 
 **定义 2.2.3** (项解释) 项 $t$ 在结构 $\mathcal{A}$ 和赋值 $s$ 下的解释 $t^{\mathcal{A}, s}$ 按以下规则递归定义：
+
 1. 如果 $t$ 是个体变量 $x$，则 $t^{\mathcal{A}, s} = s(x)$
 2. 如果 $t$ 是个体常项 $c$，则 $t^{\mathcal{A}, s} = I(c)$
 3. 如果 $t = f(t_1, \ldots, t_n)$，则 $t^{\mathcal{A}, s} = I(f)(t_1^{\mathcal{A}, s}, \ldots, t_n^{\mathcal{A}, s})$
 
 **定义 2.2.4** (满足关系) 满足关系 $\models$ 按以下规则递归定义：
+
 1. $\mathcal{A}, s \models P(t_1, \ldots, t_n)$ 当且仅当 $(t_1^{\mathcal{A}, s}, \ldots, t_n^{\mathcal{A}, s}) \in I(P)$
 2. $\mathcal{A}, s \models \neg \phi$ 当且仅当 $\mathcal{A}, s \not\models \phi$
 3. $\mathcal{A}, s \models \phi \land \psi$ 当且仅当 $\mathcal{A}, s \models \phi$ 且 $\mathcal{A}, s \models \psi$
@@ -161,14 +168,17 @@ $$\frac{\Gamma \vdash \exists x \phi \quad \Gamma, \phi \vdash \psi}{\Gamma \vda
 ### 3.1 基本模态逻辑
 
 **定义 3.1.1** (模态公式) 在命题逻辑基础上，增加模态算子 $\Box$ (必然) 和 $\Diamond$ (可能)：
+
 - 如果 $\phi$ 是模态公式，则 $\Box \phi$ 和 $\Diamond \phi$ 是模态公式
 
 **定义 3.1.2** (克里普克模型) 克里普克模型是三元组 $\mathcal{M} = (W, R, V)$，其中：
+
 - $W$ 是可能世界集
 - $R \subseteq W \times W$ 是可达关系
 - $V: W \times \text{Prop} \rightarrow \{0, 1\}$ 是赋值函数
 
 **定义 3.1.3** (模态语义) 满足关系按以下规则递归定义：
+
 1. $\mathcal{M}, w \models p$ 当且仅当 $V(w, p) = 1$
 2. $\mathcal{M}, w \models \Box \phi$ 当且仅当对于所有 $v$ 使得 $wRv$，$\mathcal{M}, v \models \phi$
 3. $\mathcal{M}, w \models \Diamond \phi$ 当且仅当存在 $v$ 使得 $wRv$ 且 $\mathcal{M}, v \models \phi$
@@ -176,20 +186,25 @@ $$\frac{\Gamma \vdash \exists x \phi \quad \Gamma, \phi \vdash \psi}{\Gamma \vda
 ### 3.2 模态系统
 
 **定义 3.2.1** (K系统) K系统包含以下公理和规则：
+
 - 所有命题逻辑重言式
 - K公理：$\Box(\phi \rightarrow \psi) \rightarrow (\Box \phi \rightarrow \Box \psi)$
 - 必然化规则：如果 $\vdash \phi$，则 $\vdash \Box \phi$
 
 **定义 3.2.2** (T系统) T系统在K系统基础上增加：
+
 - T公理：$\Box \phi \rightarrow \phi$
 
 **定义 3.2.3** (S4系统) S4系统在T系统基础上增加：
+
 - 4公理：$\Box \phi \rightarrow \Box \Box \phi$
 
 **定义 3.2.4** (S5系统) S5系统在T系统基础上增加：
+
 - 5公理：$\Diamond \phi \rightarrow \Box \Diamond \phi$
 
 **定理 3.2.1** (对应定理) 模态公式与框架性质之间存在对应关系：
+
 - T公理对应自反性
 - 4公理对应传递性
 - 5公理对应欧几里得性
@@ -280,9 +295,9 @@ $$\frac{\Gamma \Rightarrow \phi, \Delta \quad \Gamma \Rightarrow \psi, \Delta}{\
 
 ---
 
-**参考文献**
+-**参考文献**
 
 1. Enderton, H. B. (2001). *A Mathematical Introduction to Logic*. Academic Press.
 2. van Dalen, D. (2013). *Logic and Structure*. Springer-Verlag.
 3. Blackburn, P., de Rijke, M., & Venema, Y. (2001). *Modal Logic*. Cambridge University Press.
-4. Priest, G. (2008). *An Introduction to Non-Classical Logic*. Cambridge University Press. 
+4. Priest, G. (2008). *An Introduction to Non-Classical Logic*. Cambridge University Press.

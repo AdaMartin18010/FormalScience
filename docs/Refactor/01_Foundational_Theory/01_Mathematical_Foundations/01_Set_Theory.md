@@ -35,11 +35,13 @@ $$A \subseteq B \leftrightarrow \forall x(x \in A \rightarrow x \in B)$$
 $$A \subset B \leftrightarrow A \subseteq B \land A \neq B$$
 
 **定理 1.2.1** (子集性质)
+
 1. 对于任意集合 $A$，$\emptyset \subseteq A$
 2. 对于任意集合 $A$，$A \subseteq A$
 3. 如果 $A \subseteq B$ 且 $B \subseteq C$，则 $A \subseteq C$
 
 **证明**
+
 1. 对于任意 $x$，如果 $x \in \emptyset$，则 $x \in A$（因为 $x \in \emptyset$ 为假，所以整个蕴含为真）
 2. 对于任意 $x$，如果 $x \in A$，则 $x \in A$（显然成立）
 3. 对于任意 $x$，如果 $x \in A$，则 $x \in B$（因为 $A \subseteq B$），如果 $x \in B$，则 $x \in C$（因为 $B \subseteq C$），因此如果 $x \in A$，则 $x \in C$
@@ -52,6 +54,7 @@ $$\mathcal{P}(A) = \{B : B \subseteq A\}$$
 **定理 1.3.1** (幂集基数) 如果 $|A| = n$，则 $|\mathcal{P}(A)| = 2^n$。
 
 **证明** 使用数学归纳法：
+
 - 基础情况：$n = 0$，$A = \emptyset$，$\mathcal{P}(\emptyset) = \{\emptyset\}$，$|\mathcal{P}(\emptyset)| = 1 = 2^0$
 - 归纳假设：假设对于 $|A| = k$，$|\mathcal{P}(A)| = 2^k$
 - 归纳步骤：设 $|A| = k + 1$，取 $a \in A$，则 $\mathcal{P}(A) = \mathcal{P}(A \setminus \{a\}) \cup \{B \cup \{a\} : B \in \mathcal{P}(A \setminus \{a\})\}$，因此 $|\mathcal{P}(A)| = 2^k + 2^k = 2^{k+1}$
@@ -75,22 +78,26 @@ $$A \triangle B = (A \setminus B) \cup (B \setminus A)$$
 ### 2.2 运算性质
 
 **定理 2.2.1** (并集性质)
+
 1. 交换律：$A \cup B = B \cup A$
 2. 结合律：$(A \cup B) \cup C = A \cup (B \cup C)$
 3. 幂等律：$A \cup A = A$
 4. 单位元：$A \cup \emptyset = A$
 
 **证明**
+
 1. 交换律：$\forall x(x \in A \cup B \leftrightarrow x \in A \lor x \in B \leftrightarrow x \in B \lor x \in A \leftrightarrow x \in B \cup A)$
 2. 结合律：$\forall x(x \in (A \cup B) \cup C \leftrightarrow (x \in A \lor x \in B) \lor x \in C \leftrightarrow x \in A \lor (x \in B \lor x \in C) \leftrightarrow x \in A \cup (B \cup C))$
 3. 幂等律：$\forall x(x \in A \cup A \leftrightarrow x \in A \lor x \in A \leftrightarrow x \in A)$
 4. 单位元：$\forall x(x \in A \cup \emptyset \leftrightarrow x \in A \lor x \in \emptyset \leftrightarrow x \in A)$
 
 **定理 2.2.2** (德摩根律) 对于任意集合 $A$、$B$ 和全集 $U$：
+
 1. $(A \cup B)^c = A^c \cap B^c$
 2. $(A \cap B)^c = A^c \cup B^c$
 
 **证明**
+
 1. $\forall x(x \in (A \cup B)^c \leftrightarrow x \notin A \cup B \leftrightarrow \neg(x \in A \lor x \in B) \leftrightarrow x \notin A \land x \notin B \leftrightarrow x \in A^c \land x \in B^c \leftrightarrow x \in A^c \cap B^c)$
 2. $\forall x(x \in (A \cap B)^c \leftrightarrow x \notin A \cap B \leftrightarrow \neg(x \in A \land x \in B) \leftrightarrow x \notin A \lor x \notin B \leftrightarrow x \in A^c \lor x \in B^c \leftrightarrow x \in A^c \cup B^c)$
 
@@ -112,6 +119,7 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 **定义 3.1.1** (二元关系) 集合 $A$ 和 $B$ 之间的二元关系是 $A \times B$ 的子集。
 
 **定义 3.1.2** (关系性质) 设 $R$ 是集合 $A$ 上的关系：
+
 1. 自反性：$\forall x \in A(xRx)$
 2. 对称性：$\forall x, y \in A(xRy \rightarrow yRx)$
 3. 传递性：$\forall x, y, z \in A(xRy \land yRz \rightarrow xRz)$
@@ -124,10 +132,12 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 ### 3.2 函数
 
 **定义 3.2.1** (函数) 函数 $f: A \rightarrow B$ 是满足以下条件的二元关系：
+
 1. $\forall x \in A \exists y \in B((x, y) \in f)$（定义域覆盖）
 2. $\forall x \in A \forall y_1, y_2 \in B((x, y_1) \in f \land (x, y_2) \in f \rightarrow y_1 = y_2)$（单值性）
 
 **定义 3.2.2** (函数性质) 设 $f: A \rightarrow B$：
+
 1. 单射：$\forall x_1, x_2 \in A(f(x_1) = f(x_2) \rightarrow x_1 = x_2)$
 2. 满射：$\forall y \in B \exists x \in A(f(x) = y)$
 3. 双射：既是单射又是满射
@@ -151,11 +161,13 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 **定义 4.2.1** (可数集) 与自然数集 $\mathbb{N}$ 等势的集合称为可数集。
 
 **定理 4.2.1** (可数集性质)
+
 1. 可数集的子集是可数的或有限的
 2. 可数集的并集是可数的
 3. 可数集的笛卡尔积是可数的
 
 **证明**
+
 1. 设 $A$ 是可数集，$B \subseteq A$。如果 $B$ 是有限的，则结论成立。如果 $B$ 是无限的，则可以通过删除 $A$ 中不属于 $B$ 的元素得到 $B$ 与 $\mathbb{N}$ 的双射。
 2. 设 $A_1, A_2, \ldots$ 是可数集。可以构造一个双射 $f: \mathbb{N} \rightarrow \bigcup_{i=1}^{\infty} A_i$。
 3. 设 $A$ 和 $B$ 是可数集。可以构造一个双射 $f: \mathbb{N} \times \mathbb{N} \rightarrow A \times B$。
@@ -183,6 +195,7 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 ### 5.2 超限归纳
 
 **定理 5.2.1** (超限归纳原理) 设 $P$ 是序数的性质，如果：
+
 1. $P(0)$ 成立
 2. 对于任意序数 $\alpha$，如果对于所有 $\beta < \alpha$ 都有 $P(\beta)$，则 $P(\alpha)$ 成立
 
@@ -219,6 +232,7 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 ### 7.1 在数学中的应用
 
 集合论为现代数学提供了基础：
+
 - 实分析中的测度论
 - 拓扑学中的开集概念
 - 代数学中的群、环、域
@@ -227,6 +241,7 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 ### 7.2 在计算机科学中的应用
 
 集合论在计算机科学中有广泛应用：
+
 - 数据库理论中的关系模型
 - 形式语言理论中的语言定义
 - 算法分析中的复杂度理论
@@ -235,6 +250,7 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 ### 7.3 在逻辑学中的应用
 
 集合论为逻辑学提供了语义基础：
+
 - 模型论中的解释域
 - 证明论中的构造
 - 递归论中的可计算性
@@ -247,4 +263,4 @@ $$A \times B = \{(a, b) : a \in A \land b \in B\}$$
 1. Halmos, P. R. (1974). *Naive Set Theory*. Springer-Verlag.
 2. Jech, T. (2003). *Set Theory*. Springer-Verlag.
 3. Kunen, K. (1980). *Set Theory: An Introduction to Independence Proofs*. North-Holland.
-4. Enderton, H. B. (1977). *Elements of Set Theory*. Academic Press. 
+4. Enderton, H. B. (1977). *Elements of Set Theory*. Academic Press.
