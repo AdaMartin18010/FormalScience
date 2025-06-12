@@ -257,7 +257,8 @@ Petri网的展开是一个过程，其中：
 2. **边对应**：每个变迁发生都是状态图的边
 3. **行为完整**：状态图包含所有执行路径
 
-**算法 4.1 (状态空间构造)**
+-**算法 4.1 (状态空间构造)**
+
 ```haskell
 constructStateSpace :: PetriNet -> Marking -> StateGraph
 constructStateSpace net initialMarking = 
@@ -295,7 +296,8 @@ Petri网结构有界当且仅当存在正不变性。
 3. **解对应**：线性约束系统的解对应不变性
 4. **正不变性**：正不变性保证有界性
 
-**算法 4.2 (结构有界性检查)**
+-**算法 4.2 (结构有界性检查)**
+
 ```haskell
 checkStructuralBoundedness :: PetriNet -> Bool
 checkStructuralBoundedness net = 
@@ -426,4 +428,4 @@ Petri网满足公平性，如果对于任意无限执行序列，每个变迁都
 **文档版本**: 1.0  
 **最后更新**: 2024-12-19  
 **作者**: 形式科学理论体系重构项目  
-**许可证**: 学术开放许可 
+**许可证**: 学术开放许可
