@@ -84,6 +84,7 @@ $$(A \cap B)^c = A^c \cup B^c$$
 - $^{-1}: G \rightarrow G$ 是逆元函数
 
 满足以下公理：
+
 1. 结合律：$(a \cdot b) \cdot c = a \cdot (b \cdot c)$
 2. 单位元：$e \cdot a = a \cdot e = a$
 3. 逆元：$a \cdot a^{-1} = a^{-1} \cdot a = e$
@@ -364,4 +365,4 @@ $$\int_{\partial M} \omega = \int_M d\omega$$
 
 **最后更新**：2024-12-19  
 **版本**：1.0  
-**状态**：已完成数学理论重构 
+**状态**：已完成数学理论重构
