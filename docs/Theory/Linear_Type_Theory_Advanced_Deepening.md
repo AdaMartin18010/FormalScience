@@ -2,19 +2,19 @@
 
 ## 🎯 **概述**
 
-本文档构建了一个全面的线性类型理论深化体系，从基础的线性逻辑到高级的线性类型系统、资源管理和并发控制，为现代编程语言和形式化方法提供强大的理论基础。
+本文档构建了一个高级的线性类型理论基础体系，从基础的线性逻辑到高级的线性类型系统、资源管理和并发控制，为现代编程语言和系统设计提供强大的理论工具。
 
 ## 1. 线性逻辑基础深化
 
-### 1.1 线性逻辑完整系统
+### 1.1 线性逻辑系统
 
 **定义 1.1 (线性逻辑连接词)**
-线性逻辑的完整连接词系统：
+线性逻辑的连接词系统：
 
-- **乘法连接词**：$\otimes$ (张量积), $\&$ (与), $!$ (指数)
-- **加法连接词**：$\oplus$ (加), $\oplus$ (或), $?$ (弱指数)
-- **线性蕴含**：$\multimap$ (线性蕴含)
-- **线性否定**：$A^\bot$ (线性否定)
+- **乘法连接词**：$\otimes$ (张量积), $\&$ (与)
+- **加法连接词**：$\oplus$ (或), $\multimap$ (线性蕴含)
+- **指数连接词**：$!$ (必然), $?$ (可能)
+- **单位元**：$1$ (单位), $\top$ (顶), $0$ (零), $\bot$ (底)
 
 **定义 1.2 (线性逻辑规则)**
 线性逻辑的推理规则：
@@ -31,186 +31,173 @@ $$\frac{\Gamma \vdash A \quad \Delta, B \vdash C}{\Gamma, \Delta, A \multimap B 
 $$\frac{!\Gamma \vdash A}{!\Gamma \vdash !A} \text{ (!R)}$$
 $$\frac{\Gamma, A \vdash B}{\Gamma, !A \vdash B} \text{ (!L)}$$
 
-**定理 1.1 (线性逻辑一致性)**
-线性逻辑系统是一致的，即不能同时证明 $A$ 和 $A^\bot$。
-
-**证明：** 通过切割消除：
-1. 证明所有切割都可以消除
-2. 在无切割证明中，不可能同时证明 $A$ 和 $A^\bot$
-3. 因此系统是一致的
-
 **算法 1.1 (线性逻辑证明搜索)**
+
 ```haskell
 data LinearLogic = LinearLogic {
   connectives :: Set Connective,
-  rules :: [InferenceRule],
+  rules :: Map RuleName Rule,
   sequents :: [Sequent]
 }
 
 data Sequent = Sequent {
-  leftContext :: [Formula],
-  rightFormula :: Formula
+  antecedent :: [Formula],
+  consequent :: Formula
 }
 
-searchLinearProof :: Sequent -> Maybe Proof
-searchLinearProof sequent = 
-  let -- 反向搜索证明
-      possibleRules = findApplicableRules sequent
-      proofs = concatMap (\rule -> 
-        let subGoals = applyRule rule sequent
-            subProofs = map searchLinearProof subGoals
-        in if all isJust subProofs
-           then [Proof rule (map fromJust subProofs)]
-           else []) possibleRules
-  in if null proofs
-     then Nothing
-     else Just (head proofs)
+data Formula = 
+  Atom String
+  | Tensor Formula Formula
+  | Par Formula Formula
+  | With Formula Formula
+  | Plus Formula Formula
+  | Implies Formula Formula
+  | Bang Formula
+  | Question Formula
+  | One
+  | Top
+  | Zero
+  | Bottom
 
-findApplicableRules :: Sequent -> [InferenceRule]
-findApplicableRules sequent = 
-  let rightFormula = rightFormula sequent
-      leftFormulas = leftContext sequent
-  in case rightFormula of
-       Tensor a b -> [tensorRight]
-       LinearImplies a b -> [impliesRight]
-       Bang a -> [bangRight]
-       _ -> []
+proveLinearLogic :: Sequent -> Maybe Proof
+proveLinearLogic sequent = 
+  let -- 线性逻辑证明搜索
+      initialProof = Proof [] sequent
+      finalProof = searchProof initialProof
+  in if isValidProof finalProof
+     then Just finalProof
+     else Nothing
 
-applyRule :: InferenceRule -> Sequent -> [Sequent]
-applyRule rule sequent = 
-  case rule of
-    TensorRight -> 
-      let (a, b) = splitContext (leftContext sequent)
-      in [Sequent a (fst (decomposeTensor (rightFormula sequent))),
-          Sequent b (snd (decomposeTensor (rightFormula sequent)))]
-    ImpliesRight ->
-      let newContext = leftContext sequent ++ [fst (decomposeImplies (rightFormula sequent))]
-      in [Sequent newContext (snd (decomposeImplies (rightFormula sequent)))]
-    BangRight ->
-      let bangContext = map Bang (leftContext sequent)
-      in [Sequent bangContext (decomposeBang (rightFormula sequent))]
+searchProof :: Proof -> Proof
+searchProof proof = 
+  let currentSequent = currentSequent proof
+      applicableRules = findApplicableRules currentSequent
+  in case applicableRules of
+       [] -> proof  -- 无法继续
+       (rule:rules) -> 
+         let newProofs = applyRule rule proof
+             validProofs = filter isValidProof newProofs
+         in if null validProofs
+            then searchProof (Proof (steps proof) currentSequent)
+            else head validProofs
 ```
 
-### 1.2 线性类型系统
+### 1.2 资源管理理论
 
-**定义 1.3 (线性类型系统)**
-线性类型系统是类型系统，其中每个变量必须恰好使用一次。
+**定义 1.3 (资源类型)**
+资源类型 $R$ 表示可以被消耗或产生的资源：
 
-**定义 1.4 (线性类型语法)**
-线性类型的语法：
-$$\tau ::= \text{Unit} \mid \tau_1 \otimes \tau_2 \mid \tau_1 \multimap \tau_2 \mid !\tau$$
+- **消耗性资源**：使用后必须被销毁
+- **可重用资源**：可以多次使用
+- **共享资源**：可以被多个上下文共享
 
-**定义 1.5 (线性类型规则)**
-线性类型检查规则：
+**定义 1.4 (资源约束)**
+资源约束 $\Phi$ 定义资源的可用性和使用规则：
 
-**变量规则：**
-$$\frac{x : \tau \in \Gamma}{\Gamma \vdash x : \tau}$$
+$$\Phi ::= \emptyset \mid R \mid \Phi_1 \otimes \Phi_2 \mid \Phi_1 \& \Phi_2 \mid !\Phi$$
 
-**抽象规则：**
-$$\frac{\Gamma, x : \tau_1 \vdash e : \tau_2}{\Gamma \vdash \lambda x.e : \tau_1 \multimap \tau_2}$$
+**算法 1.2 (资源管理算法)**
 
-**应用规则：**
-$$\frac{\Gamma \vdash e_1 : \tau_1 \multimap \tau_2 \quad \Delta \vdash e_2 : \tau_1}{\Gamma, \Delta \vdash e_1 e_2 : \tau_2}$$
-
-**算法 1.2 (线性类型检查)**
-```haskell
-data LinearTypeChecker = LinearTypeChecker {
-  context :: Map Variable LinearType,
-  usageCount :: Map Variable Int
-}
-
-checkLinearType :: LinearTypeChecker -> Expr -> LinearType -> Bool
-checkLinearType checker expr expectedType = 
-  case expr of
-    Var x -> 
-      let varType = context checker Map.! x
-          usage = usageCount checker Map.! x
-      in varType == expectedType && usage == 1
-    
-    Lambda x body ->
-      case expectedType of
-        LinearImplies argType resultType ->
-          let newContext = Map.insert x argType (context checker)
-              newUsage = Map.insert x 0 (usageCount checker)
-              newChecker = LinearTypeChecker newContext newUsage
-          in checkLinearType newChecker body resultType
-        _ -> False
-    
-    App fun arg ->
-      let funType = inferLinearType checker fun
-          argType = inferLinearType checker arg
-      in case funType of
-           LinearImplies inputType outputType ->
-             inputType == argType && outputType == expectedType
-           _ -> False
-
-inferLinearType :: LinearTypeChecker -> Expr -> LinearType
-inferLinearType checker expr = 
-  case expr of
-    Var x -> context checker Map.! x
-    Lambda x body -> 
-      let argType = freshTypeVar
-          newContext = Map.insert x argType (context checker)
-          newChecker = LinearTypeChecker newContext (usageCount checker)
-          resultType = inferLinearType newChecker body
-      in LinearImplies argType resultType
-    App fun arg ->
-      let funType = inferLinearType checker fun
-          argType = inferLinearType checker arg
-      in case funType of
-           LinearImplies inputType outputType ->
-             if inputType == argType
-             then outputType
-             else error "Type mismatch"
-           _ -> error "Expected function type"
-```
-
-### 1.3 资源管理
-
-**定义 1.6 (资源类型)**
-资源类型表示可以消耗或产生的资源。
-
-**定义 1.7 (资源代数)**
-资源代数 $(R, \otimes, 1, \multimap)$ 满足：
-- $(R, \otimes, 1)$ 是幺半群
-- $\multimap$ 是右伴随：$A \otimes B \multimap C \cong A \multimap (B \multimap C)$
-
-**算法 1.3 (资源管理)**
 ```haskell
 data Resource = Resource {
   name :: String,
-  quantity :: Int,
-  type :: ResourceType
+  type :: ResourceType,
+  availability :: Int,
+  constraints :: [Constraint]
 }
+
+data ResourceType = Consumable | Reusable | Shared
 
 data ResourceManager = ResourceManager {
-  availableResources :: Map String Resource,
-  allocatedResources :: Map String Resource
+  resources :: Map String Resource,
+  allocations :: Map String [Allocation],
+  policies :: [ResourcePolicy]
 }
 
-allocateResource :: ResourceManager -> String -> Int -> Either String ResourceManager
+allocateResource :: ResourceManager -> String -> Int -> Either Error Allocation
 allocateResource manager resourceName amount = 
-  let available = availableResources manager Map.! resourceName
-  in if quantity available >= amount
-     then let newAvailable = available { quantity = quantity available - amount }
-              newAllocated = Map.insert resourceName 
-                           (Resource resourceName amount (type available))
-                           (allocatedResources manager)
-          in Right manager { 
-               availableResources = Map.insert resourceName newAvailable (availableResources manager),
-               allocatedResources = newAllocated
-             }
-     else Left "Insufficient resources"
+  let resource = resources manager Map.! resourceName
+      available = availability resource
+      currentAllocations = allocations manager Map.! resourceName
+  in if amount <= available && checkConstraints resource amount currentAllocations
+     then let newAllocation = Allocation resourceName amount (currentTime manager)
+              updatedManager = updateAllocations manager resourceName newAllocation
+          in Right newAllocation
+     else Left (InsufficientResource resourceName)
 
-deallocateResource :: ResourceManager -> String -> Int -> ResourceManager
-deallocateResource manager resourceName amount = 
-  let available = availableResources manager Map.! resourceName
-      newAvailable = available { quantity = quantity available + amount }
-      newAllocated = Map.delete resourceName (allocatedResources manager)
-  in manager {
-       availableResources = Map.insert resourceName newAvailable (availableResources manager),
-       allocatedResources = newAllocated
-     }
+checkConstraints :: Resource -> Int -> [Allocation] -> Bool
+checkConstraints resource amount allocations = 
+  let totalAllocated = sum (map allocationAmount allocations)
+      maxCapacity = getMaxCapacity resource
+      policy = getResourcePolicy resource
+  in case policy of
+       ConsumablePolicy -> amount <= (maxCapacity - totalAllocated)
+       ReusablePolicy -> amount <= maxCapacity
+       SharedPolicy -> amount <= maxCapacity
+
+deallocateResource :: ResourceManager -> Allocation -> ResourceManager
+deallocateResource manager allocation = 
+  let resourceName = allocationResource allocation
+      currentAllocations = allocations manager Map.! resourceName
+      updatedAllocations = filter (/= allocation) currentAllocations
+  in manager { allocations = Map.insert resourceName updatedAllocations (allocations manager) }
+```
+
+### 1.3 线性类型系统
+
+**定义 1.5 (线性类型)**
+线性类型 $\tau$ 的语法：
+
+$$\tau ::= \alpha \mid \tau_1 \otimes \tau_2 \mid \tau_1 \multimap \tau_2 \mid !\tau \mid 1$$
+
+**定义 1.6 (线性类型判断)**
+线性类型判断 $\Gamma \vdash_L e : \tau$ 表示在线性上下文 $\Gamma$ 中，表达式 $e$ 具有线性类型 $\tau$。
+
+**算法 1.3 (线性类型检查)**
+
+```haskell
+data LinearType = 
+  LinearVar String
+  | LinearTensor LinearType LinearType
+  | LinearArrow LinearType LinearType
+  | LinearBang LinearType
+  | LinearOne
+
+data LinearContext = LinearContext {
+  variables :: Map String LinearType,
+  usage :: Map String Int
+}
+
+checkLinearType :: LinearContext -> Expr -> LinearType -> Bool
+checkLinearType ctx (Var x) tau = 
+  case Map.lookup x (variables ctx) of
+    Just varType -> varType == tau && usageCount x ctx == 1
+    Nothing -> False
+
+checkLinearType ctx (Tensor e1 e2) (LinearTensor tau1 tau2) = 
+  let ctx1 = splitContext ctx
+      ctx2 = remainingContext ctx ctx1
+  in checkLinearType ctx1 e1 tau1 && checkLinearType ctx2 e2 tau2
+
+checkLinearType ctx (Lambda x body) (LinearArrow tau1 tau2) = 
+  let ctx' = extendContext ctx x tau1
+  in checkLinearType ctx' body tau2
+
+checkLinearType ctx (Bang e) (LinearBang tau) = 
+  let ctx' = weakenContext ctx
+  in checkLinearType ctx' e tau
+
+splitContext :: LinearContext -> LinearContext
+splitContext ctx = 
+  let -- 将上下文分割为两个部分
+      allVars = Map.keys (variables ctx)
+      halfSize = length allVars `div` 2
+      (vars1, vars2) = splitAt halfSize allVars
+      ctx1 = LinearContext {
+        variables = Map.fromList [(v, variables ctx Map.! v) | v <- vars1],
+        usage = Map.fromList [(v, usage ctx Map.! v) | v <- vars1]
+      }
+  in ctx1
 ```
 
 ## 2. 高级线性类型构造
@@ -218,365 +205,437 @@ deallocateResource manager resourceName amount =
 ### 2.1 线性函子
 
 **定义 2.1 (线性函子)**
-线性函子 $F$ 是保持线性结构的函子：
-$$F(A \otimes B) \cong F(A) \otimes F(B)$$
-$$F(1) \cong 1$$
+线性函子 $F$ 是保持线性结构的类型构造子：
 
-**定义 2.2 (线性单子)**
-线性单子是线性函子上的单子结构。
+$$F : \text{LinType} \rightarrow \text{LinType}$$
+
+满足线性函子定律：
+
+- $F(\tau_1 \otimes \tau_2) \cong F\tau_1 \otimes F\tau_2$
+- $F(1) \cong 1$
 
 **算法 2.1 (线性函子实现)**
+
 ```haskell
 class LinearFunctor f where
-  lfmap :: (a ⊸ b) -> f a ⊸ f b
+  linearFmap :: (a ->. b) -> f a ->. f b
   
   -- 线性函子定律
-  lfmap id = id
-  lfmap (g . h) = lfmap g . lfmap h
+  linearFmap id = id
+  linearFmap (g . h) = linearFmap g . linearFmap h
 
-instance LinearFunctor LinearList where
-  lfmap f Nil = Nil
-  lfmap f (Cons x xs) = Cons (f x) (lfmap f xs)
-
-data LinearList a = Nil | Cons a (LinearList a)
-
--- 线性单子
-class LinearFunctor m => LinearMonad m where
-  lreturn :: a ⊸ m a
-  lbind :: m a ⊸ (a ⊸ m b) ⊸ m b
-  
-  -- 线性单子定律
-  lbind (lreturn x) f = f x
-  lbind m lreturn = m
-  lbind (lbind m f) g = lbind m (\x -> lbind (f x) g)
-```
-
-### 2.2 线性效应系统
-
-**定义 2.3 (线性效应)**
-线性效应是只能发生一次的效应。
-
-**定义 2.4 (效应类型)**
-效应类型 $\text{Eff}[\tau]$ 表示产生类型 $\tau$ 的效应。
-
-**算法 2.2 (线性效应处理)**
-```haskell
-data LinearEffect a = LinearEffect {
-  effect :: Effect,
-  value :: a,
-  consumed :: Bool
+data LinearArrow a b = LinearArrow {
+  apply :: a ->. b
 }
 
-data Effect = Read | Write | Allocate | Deallocate
-
-handleLinearEffect :: LinearEffect a -> (a -> b) -> Either String b
-handleLinearEffect (LinearEffect effect value consumed) handler = 
-  if consumed
-  then Left "Effect already consumed"
-  else Right (handler value)
-
-consumeEffect :: LinearEffect a -> LinearEffect a
-consumeEffect effect = effect { consumed = True }
-
--- 线性效应组合
-combineEffects :: LinearEffect a -> LinearEffect b -> LinearEffect (a, b)
-combineEffects eff1 eff2 = 
-  if consumed eff1 || consumed eff2
-  then error "Cannot combine consumed effects"
-  else LinearEffect {
-         effect = combineEffectTypes (effect eff1) (effect eff2),
-         value = (value eff1, value eff2),
-         consumed = False
-       }
-```
-
-### 2.3 线性并发控制
-
-**定义 2.5 (线性通道)**
-线性通道是只能使用一次的通信通道。
-
-**定义 2.6 (线性进程)**
-线性进程是使用线性资源的并发进程。
-
-**算法 2.3 (线性并发系统)**
-```haskell
-data LinearChannel a = LinearChannel {
-  channelId :: ChannelId,
-  messageType :: Type a,
-  used :: Bool
-}
-
-data LinearProcess = LinearProcess {
-  processId :: ProcessId,
-  resources :: Map String Resource,
-  channels :: [LinearChannel a]
-}
-
-sendLinear :: LinearChannel a -> a -> LinearProcess -> Either String LinearProcess
-sendLinear channel message process = 
-  if used channel
-  then Left "Channel already used"
-  else let newChannels = map (\c -> if c == channel then c { used = True } else c) 
-                             (channels process)
-       in Right process { channels = newChannels }
-
-receiveLinear :: LinearChannel a -> LinearProcess -> Either String (a, LinearProcess)
-receiveLinear channel process = 
-  if used channel
-  then Left "Channel already used"
-  else let newChannels = map (\c -> if c == channel then c { used = True } else c) 
-                             (channels process)
-           message = generateMessage channel
-       in Right (message, process { channels = newChannels })
-
--- 线性进程组合
-spawnLinear :: LinearProcess -> LinearProcess -> Either String [LinearProcess]
-spawnLinear parent child = 
-  let sharedResources = findSharedResources parent child
-  in if canShareResources sharedResources
-     then Right [parent, child]
-     else Left "Cannot share linear resources"
-```
-
-## 3. 线性类型系统语义
-
-### 3.1 指称语义
-
-**定义 3.1 (线性类型语义)**
-线性类型的指称语义：
-
-- $\llbracket \text{Unit} \rrbracket = 1$
-- $\llbracket \tau_1 \otimes \tau_2 \rrbracket = \llbracket \tau_1 \rrbracket \otimes \llbracket \tau_2 \rrbracket$
-- $\llbracket \tau_1 \multimap \tau_2 \rrbracket = \llbracket \tau_1 \rrbracket \multimap \llbracket \tau_2 \rrbracket$
-- $\llbracket !\tau \rrbracket = !\llbracket \tau \rrbracket$
-
-**定理 3.1 (线性类型保持性)**
-如果 $\Gamma \vdash e : \tau$，则 $\llbracket e \rrbracket \in \llbracket \tau \rrbracket$。
-
-**证明：** 通过结构归纳：
-1. 变量：直接由环境给出
-2. 抽象：线性函数构造保持类型
-3. 应用：线性函数应用保持类型
-
-**算法 3.1 (语义解释)**
-```haskell
-interpretLinearType :: LinearType -> SemanticDomain
-interpretLinearType Unit = UnitDomain
-interpretLinearType (Tensor t1 t2) = 
-  TensorDomain (interpretLinearType t1) (interpretLinearType t2)
-interpretLinearType (LinearImplies t1 t2) = 
-  LinearFunctionDomain (interpretLinearType t1) (interpretLinearType t2)
-interpretLinearType (Bang t) = 
-  BangDomain (interpretLinearType t)
-
-interpretLinearExpr :: LinearExpr -> SemanticValue
-interpretLinearExpr (Var x) = lookupVariable x
-interpretLinearExpr (Lambda x body) = 
-  LinearFunction (\v -> interpretLinearExpr body (extendEnvironment x v))
-interpretLinearExpr (App fun arg) = 
-  let funValue = interpretLinearExpr fun
-      argValue = interpretLinearExpr arg
-  in applyLinearFunction funValue argValue
-```
-
-### 3.2 操作语义
-
-**定义 3.2 (线性归约)**
-线性归约关系 $\rightarrow_L$ 定义：
-
-- **线性β归约**：$(\lambda x.e_1) e_2 \rightarrow_L e_1[x \mapsto e_2]$
-- **线性η归约**：$\lambda x.(e x) \rightarrow_L e$ (如果 $x$ 线性使用)
-- **张量归约**：$\text{let } x \otimes y = e_1 \otimes e_2 \text{ in } e_3 \rightarrow_L e_3[x \mapsto e_1, y \mapsto e_2]$
-
-**算法 3.2 (线性归约)**
-```haskell
-data LinearReduction = LinearReduction {
-  redex :: LinearExpr,
-  contractum :: LinearExpr,
-  context :: EvaluationContext
-}
-
-linearReduce :: LinearExpr -> Maybe LinearReduction
-linearReduce expr = 
-  case expr of
-    App (Lambda x body) arg -> 
-      Just LinearReduction {
-        redex = expr,
-        contractum = substituteLinear x arg body,
-        context = TopContext
-      }
-    LetTensor (Tensor e1 e2) x y body ->
-      Just LinearReduction {
-        redex = expr,
-        contractum = substituteLinear x e1 (substituteLinear y e2 body),
-        context = TopContext
-      }
-    _ -> Nothing
-
-substituteLinear :: Variable -> LinearExpr -> LinearExpr -> LinearExpr
-substituteLinear x replacement expr = 
-  case expr of
-    Var y -> if x == y then replacement else expr
-    Lambda y body -> 
-      if x == y 
-      then expr
-      else Lambda y (substituteLinear x replacement body)
-    App fun arg -> 
-      App (substituteLinear x replacement fun) 
-          (substituteLinear x replacement arg)
-```
-
-## 4. 高级线性类型特性
-
-### 4.1 线性依赖类型
-
-**定义 4.1 (线性Π类型)**
-线性Π类型 $\Pi x : A.B(x)$ 表示线性依赖函数类型。
-
-**定义 4.2 (线性Σ类型)**
-线性Σ类型 $\Sigma x : A.B(x)$ 表示线性依赖对类型。
-
-**算法 4.1 (线性依赖类型检查)**
-```haskell
-checkLinearDependentType :: Context -> LinearExpr -> LinearType -> Bool
-checkLinearDependentType ctx (LinearPi x a b) LinearType = 
-  let newContext = extendContext ctx x a
-  in checkLinearDependentType newContext b LinearType
-
-checkLinearDependentType ctx (LinearApp f a) expectedType = 
-  case inferLinearType ctx f of
-    LinearPi x domainType codomainType -> 
-      let actualType = substituteLinearType codomainType x a
-      in checkLinearType ctx a domainType && 
-         checkLinearType ctx (LinearApp f a) actualType
-    _ -> False
-
-substituteLinearType :: LinearType -> Variable -> LinearExpr -> LinearType
-substituteLinearType (LinearPi x a b) y replacement = 
-  if x == y
-  then LinearPi x a b
-  else LinearPi x (substituteLinearType a y replacement) 
-                 (substituteLinearType b y replacement)
-substituteLinearType (Tensor t1 t2) x replacement = 
-  Tensor (substituteLinearType t1 x replacement) 
-         (substituteLinearType t2 x replacement)
-substituteLinearType t _ _ = t
-```
-
-### 4.2 线性高阶类型
-
-**定义 4.3 (线性类型构造子)**
-线性类型构造子 $F : \text{Type} \rightarrow \text{Type}$ 满足线性性。
-
-**算法 4.2 (线性高阶类型)**
-```haskell
-class LinearTypeConstructor (f :: Type -> Type) where
-  lmap :: (a ⊸ b) -> f a ⊸ f b
-  
-  -- 线性函子定律
-  lmap id = id
-  lmap (g . h) = lmap g . lmap h
-
--- 线性列表类型构造子
-instance LinearTypeConstructor LinearList where
-  lmap f Nil = Nil
-  lmap f (Cons x xs) = Cons (f x) (lmap f xs)
-
--- 线性状态单子
-newtype LinearState s a = LinearState { 
-  runLinearState :: s ⊸ (a, s) 
-}
-
-instance LinearTypeConstructor (LinearState s) where
-  lmap f (LinearState g) = LinearState (\s -> 
+instance LinearFunctor (LinearState s) where
+  linearFmap f (LinearState g) = LinearState (\s -> 
     let (a, s') = g s
     in (f a, s'))
+
+data LinearState s a = LinearState {
+  runState :: s ->. (a, s)
+}
+
+-- 线性状态单子
+instance LinearMonad (LinearState s) where
+  return a = LinearState (\s -> (a, s))
+  (LinearState g) >>= f = LinearState (\s -> 
+    let (a, s') = g s
+        LinearState h = f a
+    in h s')
+```
+
+### 2.2 线性单子
+
+**定义 2.2 (线性单子)**
+线性单子 $M$ 是线性类型系统上的单子结构：
+
+$$M : \text{LinType} \rightarrow \text{LinType}$$
+
+满足线性单子定律：
+
+- $\text{return} : \tau \rightarrow M\tau$
+- $\text{bind} : M\tau_1 \rightarrow (\tau_1 \rightarrow M\tau_2) \rightarrow M\tau_2$
+
+**算法 2.2 (线性单子实现)**
+
+```haskell
+class LinearMonad m where
+  return :: a ->. m a
+  (>>=) :: m a ->. (a ->. m b) ->. m b
+  
+  -- 线性单子定律
+  return a >>= f = f a
+  m >>= return = m
+  (m >>= f) >>= g = m >>= (\x -> f x >>= g)
+
+-- 线性IO单子
+data LinearIO a = LinearIO {
+  runIO :: World ->. (a, World)
+}
+
+instance LinearMonad LinearIO where
+  return a = LinearIO (\w -> (a, w))
+  (LinearIO g) >>= f = LinearIO (\w -> 
+    let (a, w') = g w
+        LinearIO h = f a
+    in h w')
+
+-- 线性资源单子
+data LinearResource a = LinearResource {
+  runResource :: ResourceState ->. (a, ResourceState)
+}
+
+instance LinearMonad LinearResource where
+  return a = LinearResource (\rs -> (a, rs))
+  (LinearResource g) >>= f = LinearResource (\rs -> 
+    let (a, rs') = g rs
+        LinearResource h = f a
+    in h rs')
+```
+
+### 2.3 线性效应系统
+
+**定义 2.3 (线性效应)**
+线性效应 $E$ 表示可以被精确控制的副作用：
+
+$$E ::= \emptyset \mid \text{Read} \mid \text{Write} \mid \text{Alloc} \mid \text{Free} \mid E_1 \cup E_2$$
+
+**定义 2.4 (效应类型)**
+效应类型 $\tau^E$ 表示具有效应 $E$ 的类型 $\tau$。
+
+**算法 2.3 (效应推断)**
+
+```haskell
+data Effect = 
+  NoEffect
+  | Read
+  | Write
+  | Alloc
+  | Free
+  | Union Effect Effect
+
+data EffectType a = EffectType {
+  type :: a,
+  effect :: Effect
+}
+
+inferEffects :: Expr -> EffectType Type
+inferEffects (Var x) = EffectType (typeOf x) NoEffect
+inferEffects (Read ref) = EffectType (typeOf ref) Read
+inferEffects (Write ref val) = EffectType Unit (Union Read Write)
+inferEffects (Alloc size) = EffectType (Array size) Alloc
+inferEffects (Free ptr) = EffectType Unit Free
+inferEffects (Seq e1 e2) = 
+  let EffectType t1 e1 = inferEffects e1
+      EffectType t2 e2 = inferEffects e2
+  in EffectType t2 (Union e1 e2)
+
+-- 效应子类型
+isSubEffect :: Effect -> Effect -> Bool
+isSubEffect NoEffect _ = True
+isSubEffect Read Read = True
+isSubEffect Write Write = True
+isSubEffect Alloc Alloc = True
+isSubEffect Free Free = True
+isSubEffect (Union e1 e2) e3 = 
+  isSubEffect e1 e3 && isSubEffect e2 e3
+isSubEffect _ _ = False
+```
+
+## 3. 并发线性类型系统
+
+### 3.1 会话类型
+
+**定义 3.1 (会话类型)**
+会话类型 $S$ 表示通信协议：
+
+$$S ::= \text{end} \mid ?\tau.S \mid !\tau.S \mid S_1 \oplus S_2 \mid S_1 \& S_2 \mid \mu \alpha.S$$
+
+**定义 3.2 (会话类型对偶性)**
+会话类型 $S$ 的对偶 $\overline{S}$ 定义：
+
+- $\overline{\text{end}} = \text{end}$
+- $\overline{?\tau.S} = !\tau.\overline{S}$
+- $\overline{!\tau.S} = ?\tau.\overline{S}$
+- $\overline{S_1 \oplus S_2} = \overline{S_1} \& \overline{S_2}$
+- $\overline{S_1 \& S_2} = \overline{S_1} \oplus \overline{S_2}$
+
+**算法 3.1 (会话类型检查)**
+
+```haskell
+data SessionType = 
+  End
+  | Receive Type SessionType
+  | Send Type SessionType
+  | Choice [SessionType]
+  | Branch [SessionType]
+  | Recursive String SessionType
+  | Variable String
+
+dual :: SessionType -> SessionType
+dual End = End
+dual (Receive t s) = Send t (dual s)
+dual (Send t s) = Receive t (dual s)
+dual (Choice ss) = Branch (map dual ss)
+dual (Branch ss) = Choice (map dual ss)
+dual (Recursive x s) = Recursive x (dual s)
+dual (Variable x) = Variable x
+
+checkSessionType :: SessionType -> SessionType -> Bool
+checkSessionType s1 s2 = 
+  let s1Dual = dual s1
+  in sessionSubtype s1Dual s2
+
+sessionSubtype :: SessionType -> SessionType -> Bool
+sessionSubtype End End = True
+sessionSubtype (Receive t1 s1) (Receive t2 s2) = 
+  typeSubtype t1 t2 && sessionSubtype s1 s2
+sessionSubtype (Send t1 s1) (Send t2 s2) = 
+  typeSubtype t2 t1 && sessionSubtype s1 s2
+sessionSubtype (Choice ss1) (Choice ss2) = 
+  length ss1 == length ss2 && 
+  all (\(s1, s2) -> sessionSubtype s1 s2) (zip ss1 ss2)
+sessionSubtype _ _ = False
+```
+
+### 3.2 并发线性类型
+
+**定义 3.3 (并发线性类型)**
+并发线性类型 $\tau \parallel \tau'$ 表示可以并发执行的类型。
+
+**定义 3.4 (并发类型规则)**
+并发类型的推理规则：
+
+$$\frac{\Gamma \vdash_L e_1 : \tau_1 \quad \Gamma \vdash_L e_2 : \tau_2}{\Gamma \vdash_L e_1 \parallel e_2 : \tau_1 \parallel \tau_2}$$
+
+**算法 3.2 (并发类型检查)**
+
+```haskell
+data ConcurrentType = 
+  Concurrent LinearType LinearType
+  | Sequential LinearType LinearType
+  | Parallel [LinearType]
+
+checkConcurrentType :: LinearContext -> Expr -> ConcurrentType -> Bool
+checkConcurrentType ctx (Parallel es) (Parallel ts) = 
+  length es == length ts && 
+  all (\(e, t) -> checkLinearType ctx e t) (zip es ts)
+
+checkConcurrentType ctx (Sequential e1 e2) (Sequential t1 t2) = 
+  let ctx1 = splitContext ctx
+      ctx2 = remainingContext ctx ctx1
+  in checkLinearType ctx1 e1 t1 && checkLinearType ctx2 e2 t2
+
+-- 并发资源管理
+data ConcurrentResource = ConcurrentResource {
+  resource :: Resource,
+  locks :: [Lock],
+  waitQueue :: [Thread]
+}
+
+acquireLock :: ConcurrentResource -> Thread -> Either Error Lock
+acquireLock cr thread = 
+  let availableLocks = filter isAvailable (locks cr)
+  in if null availableLocks
+     then Left (NoAvailableLocks (resource cr))
+     else let lock = head availableLocks
+              updatedCR = updateLock cr lock thread
+          in Right lock
+
+releaseLock :: ConcurrentResource -> Lock -> ConcurrentResource
+releaseLock cr lock = 
+  let updatedLocks = map (\l -> if l == lock then freeLock l else l) (locks cr)
+      nextThread = head (waitQueue cr)
+      updatedCR = cr { locks = updatedLocks }
+  in if null (waitQueue cr)
+     then updatedCR
+     else assignLock updatedCR lock nextThread
+```
+
+## 4. 高级线性类型算法
+
+### 4.1 线性类型推断
+
+**算法 4.1 (线性类型推断)**
+
+```haskell
+data LinearTypeInference = LinearTypeInference {
+  constraints :: [LinearConstraint],
+  substitutions :: Map String LinearType
+}
+
+inferLinearType :: Expr -> Either Error LinearType
+inferLinearType expr = 
+  let initialInference = LinearTypeInference [] Map.empty
+      (finalInference, inferredType) = inferExpr expr initialInference
+      solution = solveLinearConstraints (constraints finalInference)
+  in case solution of
+       Just subst -> Right (applySubstitution subst inferredType)
+       Nothing -> Left (UnsolvableConstraints (constraints finalInference))
+
+inferExpr :: Expr -> LinearTypeInference -> (LinearTypeInference, LinearType)
+inferExpr (Var x) inference = 
+  let freshType = freshLinearTypeVar inference
+      newConstraint = LinearConstraint (LinearVar x) freshType
+      updatedInference = addConstraint inference newConstraint
+  in (updatedInference, freshType)
+
+inferExpr (Lambda x body) inference = 
+  let paramType = freshLinearTypeVar inference
+      bodyInference = extendContext inference x paramType
+      (finalInference, bodyType) = inferExpr body bodyInference
+      arrowType = LinearArrow paramType bodyType
+  in (finalInference, arrowType)
+
+solveLinearConstraints :: [LinearConstraint] -> Maybe (Map String LinearType)
+solveLinearConstraints constraints = 
+  let initialSubst = Map.empty
+      finalSubst = solveConstraints constraints initialSubst
+  in if isConsistent finalSubst
+     then Just finalSubst
+     else Nothing
+
+solveConstraints :: [LinearConstraint] -> Map String LinearType -> Map String LinearType
+solveConstraints [] subst = subst
+solveConstraints (c:cs) subst = 
+  let newSubst = solveConstraint c subst
+      updatedConstraints = applySubstitutionToConstraints newSubst cs
+  in solveConstraints updatedConstraints newSubst
+```
+
+### 4.2 线性类型优化
+
+**算法 4.2 (线性类型优化)**
+
+```haskell
+data LinearTypeOptimization = LinearTypeOptimization {
+  originalType :: LinearType,
+  optimizedType :: LinearType,
+  optimizations :: [Optimization]
+}
+
+optimizeLinearType :: LinearType -> LinearTypeOptimization
+optimizeLinearType originalType = 
+  let -- 应用各种优化
+      type1 = eliminateUnusedVariables originalType
+      type2 = mergeLinearArrows type1
+      type3 = optimizeTensorStructure type2
+      type4 = minimizeBangUsage type3
+      
+      optimizations = collectOptimizations originalType type4
+  in LinearTypeOptimization {
+    originalType = originalType,
+    optimizedType = type4,
+    optimizations = optimizations
+  }
+
+eliminateUnusedVariables :: LinearType -> LinearType
+eliminateUnusedVariables (LinearArrow t1 t2) = 
+  let usedVars1 = freeVariables t2
+      usedVars2 = freeVariables t1
+      allUsedVars = Set.union usedVars1 usedVars2
+      cleanedT1 = removeUnusedVariables t1 allUsedVars
+  in LinearArrow cleanedT1 t2
+
+mergeLinearArrows :: LinearType -> LinearType
+mergeLinearArrows (LinearArrow t1 (LinearArrow t2 t3)) = 
+  LinearArrow (LinearTensor t1 t2) t3
+mergeLinearArrows t = t
+
+optimizeTensorStructure :: LinearType -> LinearType
+optimizeTensorStructure (LinearTensor (LinearTensor t1 t2) t3) = 
+  LinearTensor t1 (LinearTensor t2 t3)
+optimizeTensorStructure t = t
 ```
 
 ## 5. 线性类型系统应用
 
-### 5.1 内存管理
+### 5.1 内存安全
 
-**定义 5.1 (线性内存)**
-线性内存是只能使用一次的内存区域。
+**算法 5.1 (内存安全检查)**
 
-**算法 5.1 (线性内存管理)**
 ```haskell
-data LinearMemory = LinearMemory {
-  address :: Address,
-  size :: Size,
-  content :: ByteString,
-  allocated :: Bool
+data MemorySafety = MemorySafety {
+  allocations :: Map Address Allocation,
+  deallocations :: Set Address,
+  danglingPointers :: Set Address
 }
 
-data LinearMemoryManager = LinearMemoryManager {
-  freeMemory :: [LinearMemory],
-  allocatedMemory :: Map Address LinearMemory
-}
-
-allocateLinearMemory :: LinearMemoryManager -> Size -> Either String (Address, LinearMemoryManager)
-allocateLinearMemory manager size = 
-  let suitableMemory = findSuitableMemory (freeMemory manager) size
-  in case suitableMemory of
-       Just memory -> 
-         let newAllocated = Map.insert (address memory) memory (allocatedMemory manager)
-             newFree = removeFromList memory (freeMemory manager)
-         in Right (address memory, manager { 
-              allocatedMemory = newAllocated,
-              freeMemory = newFree
-            })
-       Nothing -> Left "No suitable memory available"
-
-deallocateLinearMemory :: LinearMemoryManager -> Address -> LinearMemoryManager
-deallocateLinearMemory manager addr = 
-  let memory = allocatedMemory manager Map.! addr
-      newAllocated = Map.delete addr (allocatedMemory manager)
-      newFree = memory { allocated = False } : freeMemory manager
-  in manager {
-       allocatedMemory = newAllocated,
-       freeMemory = newFree
-     }
-```
-
-### 5.2 并发编程
-
-**定义 5.2 (线性并发)**
-线性并发是使用线性资源的并发编程模型。
-
-**算法 5.2 (线性并发系统)**
-```haskell
-data LinearThread = LinearThread {
-  threadId :: ThreadId,
-  resources :: [LinearResource],
-  computation :: LinearComputation
-}
-
-data LinearComputation = LinearComputation {
-  code :: LinearCode,
-  environment :: LinearEnvironment
-}
-
-spawnLinearThread :: LinearComputation -> [LinearResource] -> LinearThread
-spawnLinearThread comp resources = 
-  LinearThread {
-    threadId = generateThreadId,
-    resources = resources,
-    computation = comp
+checkMemorySafety :: Program -> MemorySafety
+checkMemorySafety program = 
+  let -- 跟踪内存分配和释放
+      memoryTrace = traceMemoryOperations program
+      allocations = collectAllocations memoryTrace
+      deallocations = collectDeallocations memoryTrace
+      danglingPointers = findDanglingPointers allocations deallocations
+  in MemorySafety {
+    allocations = allocations,
+    deallocations = deallocations,
+    danglingPointers = danglingPointers
   }
 
-executeLinearThread :: LinearThread -> Either String LinearResult
-executeLinearThread thread = 
-  let comp = computation thread
-      env = environment comp
-      code = code comp
-  in if validateLinearResources (resources thread)
-     then executeLinearCode code env
-     else Left "Invalid linear resources"
+traceMemoryOperations :: Program -> [MemoryOperation]
+traceMemoryOperations program = 
+  let operations = extractMemoryOperations program
+      tracedOperations = map traceOperation operations
+  in concat tracedOperations
 
-validateLinearResources :: [LinearResource] -> Bool
-validateLinearResources resources = 
-  let resourceCounts = countResources resources
-  in all (\count -> count == 1) resourceCounts
+findDanglingPointers :: Map Address Allocation -> Set Address -> Set Address
+findDanglingPointers allocations deallocations = 
+  let allocatedAddresses = Map.keysSet allocations
+      deallocatedAddresses = deallocations
+      danglingAddresses = Set.intersection allocatedAddresses deallocatedAddresses
+  in danglingAddresses
+```
+
+### 5.2 资源管理
+
+**算法 5.2 (资源管理验证)**
+
+```haskell
+data ResourceVerification = ResourceVerification {
+  resourceUsage :: Map Resource [Usage],
+  violations :: [Violation],
+  recommendations :: [Recommendation]
+}
+
+verifyResourceManagement :: Program -> ResourceVerification
+verifyResourceManagement program = 
+  let -- 分析资源使用模式
+      resourceUsage = analyzeResourceUsage program
+      violations = findResourceViolations resourceUsage
+      recommendations = generateRecommendations violations
+  in ResourceVerification {
+    resourceUsage = resourceUsage,
+    violations = violations,
+    recommendations = recommendations
+  }
+
+analyzeResourceUsage :: Program -> Map Resource [Usage]
+analyzeResourceUsage program = 
+  let -- 静态分析资源使用
+      resourceOperations = extractResourceOperations program
+      usagePatterns = groupByResource resourceOperations
+      usageAnalysis = analyzeUsagePatterns usagePatterns
+  in usageAnalysis
+
+findResourceViolations :: Map Resource [Usage] -> [Violation]
+findResourceViolations resourceUsage = 
+  let violations = []
+      allViolations = foldl (\acc (resource, usages) -> 
+        let resourceViolations = checkResourceViolations resource usages
+        in acc ++ resourceViolations) violations (Map.toList resourceUsage)
+  in allViolations
+
+checkResourceViolations :: Resource -> [Usage] -> [Violation]
+checkResourceViolations resource usages = 
+  let -- 检查各种资源违规
+      leakViolations = checkResourceLeaks resource usages
+      doubleFreeViolations = checkDoubleFrees resource usages
+      useAfterFreeViolations = checkUseAfterFrees resource usages
+  in leakViolations ++ doubleFreeViolations ++ useAfterFreeViolations
 ```
 
 ## 6. 前沿研究方向
@@ -584,80 +643,71 @@ validateLinearResources resources =
 ### 6.1 量子线性类型
 
 **定义 6.1 (量子线性类型)**
-量子线性类型扩展了经典线性类型以支持量子计算。
+量子线性类型 $\tau_Q$ 扩展线性类型以支持量子计算：
 
-**算法 6.1 (量子线性类型系统)**
+$$\tau_Q ::= \text{Qubit} \mid \text{Qubit}^n \mid \tau_Q \otimes \tau_Q \mid \tau_Q \multimap \tau_Q$$
+
+**算法 6.1 (量子线性类型检查)**
+
 ```haskell
 data QuantumLinearType = 
-  QubitType |
-  QuantumGateType QuantumLinearType QuantumLinearType |
-  QuantumMeasurementType QuantumLinearType ClassicalType
+  Qubit
+  | QubitArray Int
+  | QuantumTensor QuantumLinearType QuantumLinearType
+  | QuantumArrow QuantumLinearType QuantumLinearType
 
-checkQuantumLinearType :: QuantumLinearType -> Bool
-checkQuantumLinearType QubitType = True
-checkQuantumLinearType (QuantumGateType input output) = 
-  checkQuantumLinearType input && checkQuantumLinearType output
-checkQuantumLinearType (QuantumMeasurementType quantum classical) = 
-  checkQuantumLinearType quantum && checkClassicalType classical
-
--- 量子线性函数
-data QuantumLinearFunction = QuantumLinearFunction {
-  inputType :: QuantumLinearType,
-  outputType :: QuantumLinearType,
-  quantumCircuit :: QuantumCircuit
-}
-
-applyQuantumLinearFunction :: QuantumLinearFunction -> QuantumState -> QuantumState
-applyQuantumLinearFunction func inputState = 
-  let circuit = quantumCircuit func
-  in executeQuantumCircuit circuit inputState
+checkQuantumLinearType :: QuantumContext -> QuantumExpr -> QuantumLinearType -> Bool
+checkQuantumLinearType ctx (QubitAlloc) Qubit = True
+checkQuantumLinearType ctx (QubitMeasure q) (QuantumArrow Qubit (ClassicalType Bool)) = 
+  checkQuantumLinearType ctx q Qubit
+checkQuantumLinearType ctx (QuantumGate gate q) (QuantumArrow Qubit Qubit) = 
+  checkQuantumLinearType ctx q Qubit
+checkQuantumLinearType _ _ _ = False
 ```
 
-### 6.2 概率线性类型
+### 6.2 高阶线性类型
 
-**定义 6.2 (概率线性类型)**
-概率线性类型支持概率计算和不确定性。
+**定义 6.2 (高阶线性类型)**
+高阶线性类型支持类型级别的线性计算：
 
-**算法 6.2 (概率线性类型系统)**
+$$\tau_H ::= \alpha \mid \tau_H \rightarrow \tau_H \mid \forall \alpha.\tau_H \mid \Lambda \alpha.\tau_H$$
+
+**算法 6.2 (高阶线性类型推断)**
+
 ```haskell
-data ProbabilisticLinearType = 
-  ProbabilisticType LinearType Double |
-  DistributionType LinearType |
-  ProbabilisticFunctionType ProbabilisticLinearType ProbabilisticLinearType
+data HigherOrderLinearType = 
+  HigherOrderVar String
+  | HigherOrderArrow HigherOrderLinearType HigherOrderLinearType
+  | HigherOrderForall String HigherOrderLinearType
+  | HigherOrderLambda String HigherOrderLinearType
 
-checkProbabilisticLinearType :: ProbabilisticLinearType -> Bool
-checkProbabilisticLinearType (ProbabilisticType t p) = 
-  checkLinearType t && p >= 0 && p <= 1
-checkProbabilisticLinearType (DistributionType t) = 
-  checkLinearType t
-checkProbabilisticLinearType (ProbabilisticFunctionType input output) = 
-  checkProbabilisticLinearType input && checkProbabilisticLinearType output
+inferHigherOrderLinearType :: HigherOrderExpr -> HigherOrderLinearType
+inferHigherOrderLinearType expr = 
+  let initialContext = emptyHigherOrderContext
+      (finalContext, inferredType) = inferHigherOrderExpr expr initialContext
+  in inferredType
 
--- 概率线性计算
-data ProbabilisticLinearComputation = ProbabilisticLinearComputation {
-  computation :: LinearComputation,
-  probability :: Double
-}
-
-executeProbabilisticLinear :: ProbabilisticLinearComputation -> IO LinearResult
-executeProbabilisticLinear comp = 
-  let randomValue = randomIO :: IO Double
-  in do
-    r <- randomValue
-    if r <= probability comp
-    then return (executeLinearComputation (computation comp))
-    else return (Left "Computation not executed")
+inferHigherOrderExpr :: HigherOrderExpr -> HigherOrderContext -> (HigherOrderContext, HigherOrderLinearType)
+inferHigherOrderExpr (HigherOrderLambda alpha body) ctx = 
+  let bodyContext = extendHigherOrderContext ctx alpha
+      (finalContext, bodyType) = inferHigherOrderExpr body bodyContext
+      lambdaType = HigherOrderLambda alpha bodyType
+  in (finalContext, lambdaType)
 ```
 
 ## 7. 结论
 
-线性类型理论高级深化为现代编程语言和形式化方法提供了强大的理论基础。从基础的线性逻辑到高级的线性类型系统、资源管理和并发控制，这些理论和方法在内存安全、并发编程、量子计算等领域发挥着重要作用。随着量子计算和概率计算的发展，线性类型理论也在不断扩展和深化。
+线性类型理论高级深化为现代编程语言和系统设计提供了强大的理论工具。从基础的线性逻辑到高级的并发线性类型系统，这些概念和方法在内存安全、资源管理和并发控制等领域发挥着重要作用。随着量子计算和高阶类型系统的发展，线性类型理论也在不断扩展和深化。
 
 ## 参考文献
 
 1. Girard, J. Y. (1987). Linear logic. Theoretical computer science, 50(1), 1-101.
 2. Wadler, P. (1990). Linear types can change the world! In Programming concepts and methods (pp. 347-359).
-3. Abramsky, S. (1993). Computational interpretations of linear logic. Theoretical Computer Science, 111(1-2), 3-57.
-4. Melliès, P. A. (2009). Categorical semantics of linear logic. Panoramas et synthèses, 27, 15-215.
-5. Selinger, P. (2004). Towards a quantum programming language. Mathematical Structures in Computer Science, 14(4), 527-586.
-6. Vákár, M., Kammar, O., & Plotkin, G. D. (2019). A domain theory for statistical probabilistic programming. Proceedings of the ACM on Programming Languages, 3(POPL), 1-29. 
+3. Walker, D. (2005). Substructural type systems. Advanced topics in types and programming languages, 3-43.
+4. Kobayashi, N. (2006). Type systems for concurrent programs. In Formal Methods for Components and Objects (pp. 439-464).
+5. Gay, S. J., & Vasconcelos, V. T. (2010). Linear type theory for asynchronous session types. Journal of Functional Programming, 20(1), 19-50.
+6. Tov, J. A., & Pucella, R. (2011). Practical affine types. In ACM SIGPLAN Notices (Vol. 46, No. 1, pp. 87-102).
+7. Mazurak, K., Zhao, J., & Zdancewic, S. (2010). Lightweight linear types in system F°. In TLDI (pp. 77-88).
+8. Pfenning, F., & Griffith, D. (2015). Polarized substructural session types. In International Conference on Foundations of Software Science and Computation Structures (pp. 3-22).
+9. Selinger, P. (2004). Towards a quantum programming language. Mathematical Structures in Computer Science, 14(4), 527-586.
+10. Vizzotto, J. K., Altenkirch, T., & Sabry, A. (2006). Structuring quantum effects: superoperators as arrows. Mathematical Structures in Computer Science, 16(3), 453-468.
