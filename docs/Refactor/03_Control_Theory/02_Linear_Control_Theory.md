@@ -604,7 +604,7 @@ dynamicOutputFeedback system desiredPoles =
 
 ---
 
-**参考文献**
+-**参考文献**
 
 1. Ogata, K. (2010). Modern Control Engineering. Prentice Hall.
 2. Franklin, G. F., Powell, J. D., & Emami-Naeini, A. (2015). Feedback Control of Dynamic Systems. Pearson.
