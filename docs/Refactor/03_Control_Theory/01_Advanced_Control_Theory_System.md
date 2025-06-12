@@ -44,6 +44,7 @@
 $$\mathcal{C} = (X, U, Y, \mathcal{F}, \mathcal{G}, \mathcal{H}, \mathcal{P})$$
 
 其中：
+
 - $X$ 是状态空间
 - $U$ 是控制输入空间
 - $Y$ 是输出空间
@@ -74,6 +75,7 @@ $$\mathcal{C} = (X, U, Y, \mathcal{F}, \mathcal{G}, \mathcal{H}, \mathcal{P})$$
 $$\mathcal{S} = (X, U, Y, f, h, g)$$
 
 其中：
+
 - $X$ 是状态空间
 - $U$ 是控制输入空间
 - $Y$ 是输出空间
@@ -296,6 +298,7 @@ $$\|x(0) - x_e\| < \delta \Rightarrow \|x(t) - x_e\| < \epsilon, \forall t \geq 
 
 **定义 4.1.3 (渐近稳定性)**
 系统在平衡点 $x_e$ 处渐近稳定，如果：
+
 1. 系统在 $x_e$ 处稳定
 2. $\lim_{t \rightarrow \infty} x(t) = x_e$
 
@@ -547,4 +550,4 @@ $$y(k) = H(x(k))$$
 
 **最后更新**：2024年12月
 **版本**：v1.0
-**状态**：已完成基础框架构建 
+**状态**：已完成基础框架构建

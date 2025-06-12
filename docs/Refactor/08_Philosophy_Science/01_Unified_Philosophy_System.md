@@ -44,6 +44,7 @@
 $$\mathcal{P} = (\mathcal{O}, \mathcal{E}, \mathcal{M}, \mathcal{L}, \mathcal{S}, \mathcal{T}, \mathcal{C}, \mathcal{R})$$
 
 其中：
+
 - $\mathcal{O}$ 是本体论空间
 - $\mathcal{E}$ 是认识论空间
 - $\mathcal{M}$ 是形而上学空间
@@ -58,6 +59,7 @@ $$\mathcal{P} = (\mathcal{O}, \mathcal{E}, \mathcal{M}, \mathcal{L}, \mathcal{S}
 $$\mathcal{X} = (C, \Phi, \Psi, \vdash, \models, \mathcal{I})$$
 
 其中：
+
 - $C$ 是概念集合
 - $\Phi$ 是命题集合
 - $\Psi$ 是论证集合
@@ -968,4 +970,4 @@ integrateMethods method =
 
 **最后更新**：2024年12月
 **版本**：v1.0
-**状态**：已完成基础框架构建 
+**状态**：已完成基础框架构建
