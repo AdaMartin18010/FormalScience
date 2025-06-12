@@ -135,39 +135,39 @@ data Transition = Transition {
 }
 
 isEnabled :: Transition -> Marking -> Bool
-isEnabled transition marking = 
-  all (\place -> 
-    Map.findWithDefault 0 place marking.tokens >= 1) 
+isEnabled transition marking =
+  all (\place ->
+    Map.findWithDefault 0 place marking.tokens >= 1)
     transition.prePlaces
 
 fireTransition :: Transition -> Marking -> Marking
-fireTransition transition marking = 
+fireTransition transition marking =
   let -- 从前集库所移除托肯
-      afterPre = foldl (\m place -> 
-        Map.insert place (m Map.! place - 1) m) 
+      afterPre = foldl (\m place ->
+        Map.insert place (m Map.! place - 1) m)
         marking.tokens transition.prePlaces
       -- 向后集库所添加托肯
-      afterPost = foldl (\m place -> 
-        Map.insert place (m Map.! place + 1) m) 
+      afterPost = foldl (\m place ->
+        Map.insert place (m Map.! place + 1) m)
         afterPre transition.postPlaces
   in Marking { tokens = afterPost }
 
 computeReachableSet :: PetriNet -> Set Marking
-computeReachableSet net = 
+computeReachableSet net =
   let initialMarking = Marking { tokens = net.initialMarking }
       -- 广度优先搜索可达标识
       search :: Set Marking -> Set Marking -> Set Marking
-      search visited frontier = 
+      search visited frontier =
         if Set.null frontier
         then visited
-        else 
+        else
           let current = Set.findMin frontier
               newVisited = Set.insert current visited
               -- 计算所有可能的后续标识
-              successors = Set.fromList [fireTransition t current | 
-                t <- Set.toList net.transitions, 
+              successors = Set.fromList [fireTransition t current |
+                t <- Set.toList net.transitions,
                 isEnabled t current]
-              newFrontier = Set.union (Set.deleteMin frontier) 
+              newFrontier = Set.union (Set.deleteMin frontier)
                            (Set.difference successors newVisited)
           in search newVisited newFrontier
   in search Set.empty (Set.singleton initialMarking)
@@ -207,22 +207,22 @@ data Invariant = Invariant {
 }
 
 computeInvariants :: PetriNet -> [Invariant]
-computeInvariants net = 
+computeInvariants net =
   let -- 构造关联矩阵
       incidenceMatrix = constructIncidenceMatrix net
       -- 求解齐次线性方程组
       solutions = solveHomogeneousSystem incidenceMatrix
       -- 转换为不变性形式
-      invariants = map (\solution -> 
+      invariants = map (\solution ->
         Invariant { coefficients = solution }) solutions
   in invariants
 
 constructIncidenceMatrix :: PetriNet -> Matrix Int
-constructIncidenceMatrix net = 
+constructIncidenceMatrix net =
   let places = Set.toList net.places
       transitions = Set.toList net.transitions
       -- 构造矩阵
-      matrix = matrix (length places) (length transitions) (\(i, j) -> 
+      matrix = matrix (length places) (length transitions) (\(i, j) ->
         let place = places !! i
             transition = transitions !! j
             preWeight = getFlowWeight net place transition
@@ -231,7 +231,7 @@ constructIncidenceMatrix net =
   in matrix
 
 solveHomogeneousSystem :: Matrix Int -> [Map Place Int]
-solveHomogeneousSystem matrix = 
+solveHomogeneousSystem matrix =
   let -- 使用高斯消元法求解
       reduced = gaussianElimination matrix
       -- 提取基础解系
@@ -241,17 +241,17 @@ solveHomogeneousSystem matrix =
   in invariants
 
 gaussianElimination :: Matrix Int -> Matrix Int
-gaussianElimination matrix = 
+gaussianElimination matrix =
   let (rows, cols) = matrixSize matrix
       -- 高斯消元过程
-      eliminate row col matrix = 
+      eliminate row col matrix =
         if row >= rows || col >= cols
         then matrix
-        else 
+        else
           let pivot = matrix ! (row, col)
           in if pivot == 0
              then eliminate row (col + 1) matrix
-             else 
+             else
                let -- 消元
                    newMatrix = eliminateColumn row col matrix
                in eliminate (row + 1) (col + 1) newMatrix
@@ -310,17 +310,17 @@ data TimeInterval = TimeInterval {
 }
 
 isTimedEnabled :: Transition -> TimedState -> Bool
-isTimedEnabled transition state = 
+isTimedEnabled transition state =
   let basicEnabled = isEnabled transition state.marking
       timeEnabled = case Map.lookup transition.id state.clocks of
-        Just clock -> 
+        Just clock ->
           let interval = state.timeIntervals Map.! transition.id
           in clock >= interval.lower && clock <= interval.upper
         Nothing -> False
   in basicEnabled && timeEnabled
 
 fireTimedTransition :: Transition -> TimedState -> TimedState
-fireTimedTransition transition state = 
+fireTimedTransition transition state =
   let -- 基本变迁发生
       newMarking = fireTransition transition state.marking
       -- 重置时钟
@@ -331,7 +331,7 @@ fireTimedTransition transition state =
   }
 
 advanceTime :: Double -> TimedState -> TimedState
-advanceTime delta state = 
+advanceTime delta state =
   let -- 所有时钟增加时间
       newClocks = Map.map (\clock -> clock + delta) state.clocks
   in TimedState {
@@ -340,7 +340,7 @@ advanceTime delta state =
   }
 
 computeTimedReachableSet :: TimedPetriNet -> Set TimedState
-computeTimedReachableSet net = 
+computeTimedReachableSet net =
   let initialState = TimedState {
     marking = Marking { tokens = net.basicNet.initialMarking },
     clocks = Map.fromList [(t.id, 0.0) | t <- Set.toList net.basicNet.transitions]
@@ -350,7 +350,7 @@ computeTimedReachableSet net =
   in abstractStates
 
 computeTimeAbstractStates :: TimedPetriNet -> TimedState -> Set TimedState
-computeTimeAbstractStates net initialState = 
+computeTimeAbstractStates net initialState =
   let -- 计算时间区域
       regions = computeTimeRegions net
       -- 构造区域图
@@ -413,7 +413,7 @@ data Color = Color {
 data ColorType = IntType | StringType | ProductType [ColorType]
 
 unfoldColoredNet :: ColoredPetriNet -> PetriNet
-unfoldColoredNet coloredNet = 
+unfoldColoredNet coloredNet =
   let -- 展开库所
       unfoldedPlaces = unfoldPlaces coloredNet
       -- 展开变迁
@@ -430,20 +430,20 @@ unfoldColoredNet coloredNet =
   }
 
 unfoldPlaces :: ColoredPetriNet -> Set Place
-unfoldPlaces coloredNet = 
+unfoldPlaces coloredNet =
   let -- 为每个库所和颜色组合创建新库所
-      unfolded = concatMap (\place -> 
+      unfolded = concatMap (\place ->
         let colors = getPlaceColors coloredNet place
-        in [Place { id = place.id ++ "_" ++ show color, 
+        in [Place { id = place.id ++ "_" ++ show color,
                    originalPlace = place.id,
-                   color = color } | color <- colors]) 
+                   color = color } | color <- colors])
         (Set.toList coloredNet.basicNet.places)
   in Set.fromList unfolded
 
 unfoldTransitions :: ColoredPetriNet -> Set Transition
-unfoldTransitions coloredNet = 
+unfoldTransitions coloredNet =
   let -- 为每个变迁和绑定组合创建新变迁
-      unfolded = concatMap (\transition -> 
+      unfolded = concatMap (\transition ->
         let bindings = getValidBindings coloredNet transition
         in [Transition { id = transition.id ++ "_" ++ show binding,
                         originalTransition = transition.id,
@@ -452,16 +452,16 @@ unfoldTransitions coloredNet =
   in Set.fromList unfolded
 
 getValidBindings :: ColoredPetriNet -> Transition -> [Binding]
-getValidBindings net transition = 
+getValidBindings net transition =
   let -- 获取所有可能的颜色绑定
       allBindings = generateAllBindings net transition
       -- 过滤满足守卫条件的绑定
-      validBindings = filter (\binding -> 
+      validBindings = filter (\binding ->
         evaluateGuard net transition binding) allBindings
   in validBindings
 
 evaluateGuard :: ColoredPetriNet -> Transition -> Binding -> Bool
-evaluateGuard net transition binding = 
+evaluateGuard net transition binding =
   let guardFunction = net.guardFunctions Map.! transition.id
   in guardFunction.condition binding
 ```
@@ -500,42 +500,42 @@ data Step = Step {
 }
 
 isStepEnabled :: Step -> Marking -> Bool
-isStepEnabled step marking = 
+isStepEnabled step marking =
   let -- 检查每个库所的托肯是否足够
-      sufficientTokens = all (\place -> 
-        let required = sum [step.transitions Map.! t * getFlowWeight place t | 
+      sufficientTokens = all (\place ->
+        let required = sum [step.transitions Map.! t * getFlowWeight place t |
                            t <- Map.keys step.transitions]
             available = marking.tokens Map.! place
-        in available >= required) 
+        in available >= required)
         (Set.toList marking.tokens)
   in sufficientTokens
 
 fireStep :: Step -> Marking -> Marking
-fireStep step marking = 
+fireStep step marking =
   let -- 计算每个库所的托肯变化
-      newTokens = Map.mapWithKey (\place currentTokens -> 
-        let inputTokens = sum [step.transitions Map.! t * getFlowWeight place t | 
+      newTokens = Map.mapWithKey (\place currentTokens ->
+        let inputTokens = sum [step.transitions Map.! t * getFlowWeight place t |
                               t <- Map.keys step.transitions]
-            outputTokens = sum [step.transitions Map.! t * getFlowWeight t place | 
+            outputTokens = sum [step.transitions Map.! t * getFlowWeight t place |
                                t <- Map.keys step.transitions]
-        in currentTokens - inputTokens + outputTokens) 
+        in currentTokens - inputTokens + outputTokens)
         marking.tokens
   in Marking { tokens = newTokens }
 
 computeMaximalSteps :: PetriNet -> Marking -> [Step]
-computeMaximalSteps net marking = 
+computeMaximalSteps net marking =
   let -- 计算所有可能的步
       allSteps = generateAllSteps net marking
       -- 过滤最大步
-      maximalSteps = filter (\step -> 
-        not (any (\largerStep -> 
-          isSubstep step largerStep && step /= largerStep) allSteps)) 
+      maximalSteps = filter (\step ->
+        not (any (\largerStep ->
+          isSubstep step largerStep && step /= largerStep) allSteps))
         allSteps
   in maximalSteps
 
 generateAllSteps :: PetriNet -> Marking -> [Step]
-generateAllSteps net marking = 
-  let enabledTransitions = filter (\t -> isEnabled t marking) 
+generateAllSteps net marking =
+  let enabledTransitions = filter (\t -> isEnabled t marking)
                                  (Set.toList net.transitions)
       -- 生成所有可能的步组合
       stepCombinations = generateStepCombinations enabledTransitions
@@ -585,7 +585,7 @@ data Process = Process {
 }
 
 computeUnfolding :: PetriNet -> Process
-computeUnfolding net = 
+computeUnfolding net =
   let -- 初始化展开
       initialProcess = initializeProcess net
       -- 逐步展开
@@ -593,33 +593,33 @@ computeUnfolding net =
   in unfoldedProcess
 
 unfoldProcess :: PetriNet -> Process -> Process
-unfoldProcess net process = 
+unfoldProcess net process =
   let -- 找到可扩展的事件
       extensibleEvents = findExtensibleEvents net process
       -- 扩展每个可扩展事件
-      newProcess = foldl (\p event -> 
+      newProcess = foldl (\p event ->
         extendProcess net p event) process extensibleEvents
   in if extensibleEvents == []
      then process
      else unfoldProcess net newProcess
 
 findExtensibleEvents :: PetriNet -> Process -> [Event]
-findExtensibleEvents net process = 
+findExtensibleEvents net process =
   let -- 找到所有可能的扩展点
       cut = computeCut process
       -- 检查哪些变迁可以在当前切面上发生
-      enabledTransitions = filter (\t -> 
+      enabledTransitions = filter (\t ->
         canOccurAtCut t cut) (Set.toList net.transitions)
       -- 创建新事件
-      newEvents = map (\t -> 
+      newEvents = map (\t ->
         Event { id = generateEventId t,
                 transition = t,
-                occurrence = getNextOccurrence t }) 
+                occurrence = getNextOccurrence t })
         enabledTransitions
   in newEvents
 
 extendProcess :: PetriNet -> Process -> Event -> Process
-extendProcess net process event = 
+extendProcess net process event =
   let -- 添加新事件
       newEvents = Set.insert event process.partialOrder.events
       -- 更新因果关系
@@ -675,7 +675,7 @@ data StructuralAnalysis = StructuralAnalysis {
 }
 
 analyzeStructure :: PetriNet -> StructuralAnalysis
-analyzeStructure net = 
+analyzeStructure net =
   let -- 分析有界性
       bounded = checkBoundedness net
       -- 分析活性
@@ -692,32 +692,32 @@ analyzeStructure net =
   }
 
 checkBoundedness :: PetriNet -> Bool
-checkBoundedness net = 
+checkBoundedness net =
   let -- 计算不变性
       invariants = computeInvariants net
       -- 检查是否存在正不变性
-      positiveInvariant = any (\inv -> 
+      positiveInvariant = any (\inv ->
         all (\coeff -> coeff > 0) (Map.elems inv.coefficients)) invariants
   in positiveInvariant
 
 checkLiveness :: PetriNet -> Bool
-checkLiveness net = 
+checkLiveness net =
   let -- 计算可达集
       reachableSet = computeReachableSet net
       -- 检查每个变迁在每个可达标识下是否最终可发生
-      allLive = all (\transition -> 
-        all (\marking -> 
-          canEventuallyFire transition marking reachableSet) 
-        reachableSet) 
+      allLive = all (\transition ->
+        all (\marking ->
+          canEventuallyFire transition marking reachableSet)
+        reachableSet)
         (Set.toList net.transitions)
   in allLive
 
 canEventuallyFire :: Transition -> Marking -> Set Marking -> Bool
-canEventuallyFire transition marking reachableSet = 
+canEventuallyFire transition marking reachableSet =
   let -- 检查是否存在从当前标识到使能该变迁标识的路径
-      canReachEnabled = any (\targetMarking -> 
-        isEnabled transition targetMarking && 
-        isReachable marking targetMarking reachableSet) 
+      canReachEnabled = any (\targetMarking ->
+        isEnabled transition targetMarking &&
+        isReachable marking targetMarking reachableSet)
         reachableSet
   in canReachEnabled
 ```
@@ -751,7 +751,7 @@ data PerformanceMetrics = PerformanceMetrics {
 }
 
 analyzePerformance :: StochasticPetriNet -> PerformanceMetrics
-analyzePerformance spn = 
+analyzePerformance spn =
   let -- 计算稳态概率
       steadyState = computeSteadyState spn
       -- 计算吞吐量
@@ -770,7 +770,7 @@ analyzePerformance spn =
   }
 
 computeSteadyState :: StochasticPetriNet -> Map Marking Double
-computeSteadyState spn = 
+computeSteadyState spn =
   let -- 构造马尔可夫链
       markovChain = constructMarkovChain spn
       -- 求解稳态方程
@@ -778,19 +778,19 @@ computeSteadyState spn =
   in steadyState
 
 constructMarkovChain :: StochasticPetriNet -> Matrix Double
-constructMarkovChain spn = 
+constructMarkovChain spn =
   let -- 获取所有可达标识
       reachableMarkings = computeReachableSet spn.basicNet
       -- 构造转移率矩阵
-      transitionMatrix = matrix (length reachableMarkings) 
-                               (length reachableMarkings) (\(i, j) -> 
+      transitionMatrix = matrix (length reachableMarkings)
+                               (length reachableMarkings) (\(i, j) ->
         let markingI = Set.elemAt i reachableMarkings
             markingJ = Set.elemAt j reachableMarkings
         in computeTransitionRate spn markingI markingJ)
   in transitionMatrix
 
 solveSteadyStateEquations :: Matrix Double -> Map Marking Double
-solveSteadyStateEquations matrix = 
+solveSteadyStateEquations matrix =
   let -- 添加概率和为1的约束
       augmentedMatrix = addProbabilityConstraint matrix
       -- 求解线性方程组
@@ -828,13 +828,13 @@ data TimedAnalysis = TimedAnalysis {
 }
 
 analyzeTiming :: TimedPetriNet -> TimedAnalysis
-analyzeTiming net = 
+analyzeTiming net =
   let -- 计算最早发生时间
       earliest = computeEarliestTimes net
       -- 计算最晚发生时间
       latest = computeLatestTimes net
       -- 计算时间间隔
-      intervals = Map.mapWithKey (\t (e, l) -> (e, l)) 
+      intervals = Map.mapWithKey (\t (e, l) -> (e, l))
                  (Map.intersectionWith (,) earliest latest)
   in TimedAnalysis {
     earliestTimes = earliest,
@@ -843,9 +843,9 @@ analyzeTiming net =
   }
 
 computeEarliestTimes :: TimedPetriNet -> Map Transition Double
-computeEarliestTimes net = 
+computeEarliestTimes net =
   let -- 使用动态规划计算最早时间
-      earliestTimes = foldl (\times transition -> 
+      earliestTimes = foldl (\times transition ->
         let predecessors = getPredecessors net transition
             maxPredecessorTime = maximum [times Map.! t | t <- predecessors]
             delay = net.delays Map.! transition.id
@@ -854,9 +854,9 @@ computeEarliestTimes net =
   in earliestTimes
 
 computeLatestTimes :: TimedPetriNet -> Map Transition Double
-computeLatestTimes net = 
+computeLatestTimes net =
   let -- 使用反向动态规划计算最晚时间
-      latestTimes = foldl (\times transition -> 
+      latestTimes = foldl (\times transition ->
         let successors = getSuccessors net transition
             minSuccessorTime = minimum [times Map.! t | t <- successors]
             delay = net.delays Map.! transition.id
@@ -889,7 +889,7 @@ data ColorAnalysis = ColorAnalysis {
 }
 
 analyzeColors :: ColoredPetriNet -> ColorAnalysis
-analyzeColors net = 
+analyzeColors net =
   let -- 分析颜色类型
       types = analyzeColorTypes net
       -- 分析颜色函数
@@ -903,41 +903,41 @@ analyzeColors net =
   }
 
 analyzeColorTypes :: ColoredPetriNet -> Map Place ColorType
-analyzeColorTypes net = 
+analyzeColorTypes net =
   let -- 推断每个库所的颜色类型
-      types = Map.mapWithKey (\place _ -> 
+      types = Map.mapWithKey (\place _ ->
         inferColorType net place) net.basicNet.places
   in types
 
 inferColorType :: ColoredPetriNet -> Place -> ColorType
-inferColorType net place = 
+inferColorType net place =
   let -- 分析输入变迁的颜色函数
       inputTransitions = getInputTransitions net place
-      inputTypes = map (\t -> 
+      inputTypes = map (\t ->
         getOutputColorType net t place) inputTransitions
       -- 分析输出变迁的颜色函数
       outputTransitions = getOutputTransitions net place
-      outputTypes = map (\t -> 
+      outputTypes = map (\t ->
         getInputColorType net t place) outputTransitions
       -- 统一颜色类型
       unifiedType = unifyColorTypes (inputTypes ++ outputTypes)
   in unifiedType
 
 unifyColorTypes :: [ColorType] -> ColorType
-unifyColorTypes types = 
+unifyColorTypes types =
   case types of
     [] -> IntType  -- 默认类型
     [t] -> t
-    (t1:t2:rest) -> 
+    (t1:t2:rest) ->
       let unified = unifyTwoTypes t1 t2
       in unifyColorTypes (unified:rest)
 
 unifyTwoTypes :: ColorType -> ColorType -> ColorType
-unifyTwoTypes t1 t2 = 
+unifyTwoTypes t1 t2 =
   case (t1, t2) of
     (IntType, IntType) -> IntType
     (StringType, StringType) -> StringType
-    (ProductType ts1, ProductType ts2) -> 
+    (ProductType ts1, ProductType ts2) ->
       if length ts1 == length ts2
       then ProductType (zipWith unifyTwoTypes ts1 ts2)
       else error "Incompatible product types"
