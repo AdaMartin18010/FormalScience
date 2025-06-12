@@ -107,19 +107,6 @@ checkConsistency theory =
       relationConsistent = checkRelationConsistency (relations theory)
   in typeConsistent && systemConsistent && languageConsistent && 
      controlConsistent && relationConsistent
-
--- 模型构造
-constructModel :: UnifiedTheory -> Model
-constructModel theory = 
-  let typeModel = constructTypeModel (typeTheory theory)
-      systemModel = constructSystemModel (systemTheory theory)
-      languageModel = constructLanguageModel (languageTheory theory)
-      controlModel = constructControlModel (controlTheory theory)
-  in UnifiedModel { typeModel = typeModel
-                  , systemModel = systemModel
-                  , languageModel = languageModel
-                  , controlModel = controlModel
-                  , relationMappings = mapRelations (relations theory) }
 ```
 
 ## 3. 统一理论空间构造
@@ -157,49 +144,6 @@ constructModel theory =
 3. **同构验证**：验证 $f \circ g = \text{id}$ 和 $g \circ f = \text{id}$
 4. **结构保持**：验证映射保持所有结构性质
 
-**证明细节：**
-
-```haskell
--- 类型-系统同构映射
-typeSystemIsomorphism :: TypeTheory -> SystemTheory
-typeSystemIsomorphism typeTheory = 
-  let -- 类型空间映射到状态空间
-      stateSpace = typeSpace typeTheory
-      
-      -- 类型转换映射到状态转移
-      transitions = map typeToTransition (typeTransitions typeTheory)
-      
-      -- 类型安全映射到系统不变性
-      invariants = map typeSafetyToInvariant (typeSafety typeTheory)
-      
-      -- 类型检查映射到系统验证
-      verification = typeCheckingToVerification (typeChecking typeTheory)
-      
-      -- 类型推导映射到系统演化
-      evolution = typeDerivationToEvolution (typeDerivation typeTheory)
-  in SystemTheory { stateSpace = stateSpace
-                  , transitionFunction = transitions
-                  , systemInvariants = invariants
-                  , verificationMethod = verification
-                  , systemEvolution = evolution }
-
--- 同构验证
-verifyIsomorphism :: TypeTheory -> SystemTheory -> Bool
-verifyIsomorphism typeTheory systemTheory = 
-  let forward = typeSystemIsomorphism typeTheory
-      backward = systemTypeIsomorphism systemTheory
-      
-      -- 验证正向映射
-      forwardCorrect = forward == systemTheory
-      
-      -- 验证逆向映射
-      backwardCorrect = backward == typeTheory
-      
-      -- 验证结构保持
-      structurePreserved = checkStructurePreservation forward backward
-  in forwardCorrect && backwardCorrect && structurePreserved
-```
-
 ## 4. 跨理论映射与同构
 
 ### 4.1 理论映射函数
@@ -221,13 +165,6 @@ $$\forall x \in \mathcal{X}. P(x) \Rightarrow P(f(x))$$
 
 **定理 4.2.1 (理论关系连通性)**
 理论关系图 $G$ 是强连通的。
-
-**证明：** 通过构造所有理论间的映射关系：
-
-1. **类型-系统映射**：$f_{TS} : \mathcal{T} \rightarrow \mathcal{S}$
-2. **系统-语言映射**：$f_{SL} : \mathcal{S} \rightarrow \mathcal{L}$
-3. **语言-控制映射**：$f_{LC} : \mathcal{L} \rightarrow \mathcal{C}$
-4. **控制-类型映射**：$f_{CT} : \mathcal{C} \rightarrow \mathcal{T}$
 
 ## 5. 高级类型系统统一
 
