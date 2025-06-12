@@ -25,6 +25,7 @@
 ### 1.2 类型理论的重要性
 
 类型理论为：
+
 - 程序语言设计提供理论基础
 - 程序验证提供形式化方法
 - 数学基础提供构造性框架
@@ -78,6 +79,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 如果 $\Gamma \vdash M: A$ 且 $M \rightarrow_\beta N$，则 $\Gamma \vdash N: A$。
 
 **证明**：
+
 1. 基础情况：直接应用
 2. 归纳步骤：通过结构归纳证明
 
@@ -96,6 +98,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 如果项 $M$ 有类型，则存在最一般类型 $\sigma$，使得 $\vdash M: \sigma$。
 
 **证明**：
+
 1. 证明约束系统的一致性
 2. 证明最一般解的存在性
 3. 通过统一算法构造解
@@ -106,6 +109,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 简单类型λ演算的类型推导问题是多项式时间可解的。
 
 **证明**：
+
 1. 约束生成是线性的
 2. 约束求解是多项式的
 3. 因此整个算法是多项式的
@@ -116,11 +120,13 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 
 **定义 4.1.1** (类型安全性)
 类型系统是类型安全的，当且仅当：
+
 1. 类型保持性：归约保持类型
 2. 进展性：良类型项要么是值，要么可以归约
 
 **定义 4.1.2** (值)
 值集合 $\mathcal{V}$ 定义为：
+
 - 变量是值
 - 抽象是值
 
@@ -128,6 +134,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 简单类型λ演算是类型安全的。
 
 **证明**：
+
 1. 类型保持性：通过结构归纳
 2. 进展性：通过结构归纳
 
@@ -137,6 +144,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 如果 $\Gamma \vdash M: A$，则 $M$ 不会产生类型错误。
 
 **证明**：
+
 1. 定义类型错误的概念
 2. 证明类型推导规则避免类型错误
 3. 通过结构归纳完成证明
@@ -164,6 +172,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 线性类型系统保证资源使用的一次性。
 
 **证明**：
+
 1. 每个变量在推导中恰好出现一次
 2. 应用规则要求变量集不相交
 3. 因此资源不会被重复使用
@@ -172,6 +181,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 
 **定义 5.2.1** (线性逻辑连接词)
 线性逻辑包含以下连接词：
+
 - $\multimap$：线性蕴含
 - $\otimes$：张量积
 - $\&$：加法积
@@ -181,6 +191,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 线性逻辑相对于线性类型系统是完备的。
 
 **证明**：
+
 1. 建立类型与逻辑公式的对应
 2. 证明类型推导与逻辑推导的对应
 3. 应用线性逻辑的完备性定理
@@ -208,6 +219,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 仿射类型系统保证资源使用的安全性。
 
 **证明**：
+
 1. 每个变量在推导中最多出现一次
 2. 应用规则允许变量集重叠
 3. 因此资源使用是安全的
@@ -221,6 +233,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 所有权系统防止数据竞争和内存泄漏。
 
 **证明**：
+
 1. 所有权转移保证唯一性
 2. 生命周期管理防止泄漏
 3. 通过类型检查保证安全性
@@ -234,6 +247,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 
 **定义 7.1.2** (时态类型构造子)
 时态类型包含以下构造子：
+
 - $\Box A$：总是 $A$
 - $\Diamond A$：有时 $A$
 - $\bigcirc A$：下一个 $A$
@@ -243,6 +257,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 时态类型系统保证时间相关的类型安全。
 
 **证明**：
+
 1. 每个时态类型对应时间序列上的类型
 2. 类型检查确保时间一致性
 3. 运行时检查确保时间约束满足
@@ -256,6 +271,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 时态类型系统可以验证实时系统的正确性。
 
 **证明**：
+
 1. 将实时约束编码为时态类型
 2. 类型检查验证约束满足
 3. 通过模型检查完成验证
@@ -277,6 +293,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 依赖类型系统保证程序正确性。
 
 **证明**：
+
 1. 依赖类型编码程序规约
 2. 类型检查验证规约满足
 3. 通过构造性证明保证正确性
@@ -290,6 +307,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 霍尔逻辑可以嵌入到依赖类型系统中。
 
 **证明**：
+
 1. 前置条件编码为依赖类型
 2. 后置条件编码为返回类型
 3. 程序正确性通过类型检查验证
@@ -311,6 +329,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 相等性类型具有群结构。
 
 **证明**：
+
 1. 自反性：$refl_a: a =_A a$
 2. 对称性：$p^{-1}: b =_A a$
 3. 传递性：$p \cdot q: a =_A c$
@@ -321,6 +340,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 同伦类型理论可以作为数学的基础。
 
 **证明**：
+
 1. 集合论可以嵌入到同伦类型理论中
 2. 范畴论可以嵌入到同伦类型理论中
 3. 通过构造性方法避免选择公理
@@ -342,6 +362,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 量子类型系统保证量子计算的安全性。
 
 **证明**：
+
 1. 量子态不可克隆性通过类型系统保证
 2. 量子纠缠通过类型系统管理
 3. 量子测量通过类型系统控制
@@ -355,6 +376,7 @@ $$\lambda x: A.Mx \rightarrow_\eta M \quad \text{如果} \quad x \notin FV(M)$$
 量子类型系统可以验证量子程序的正确性。
 
 **证明**：
+
 1. 量子规约编码为量子类型
 2. 量子类型检查验证规约满足
 3. 通过量子模型检查完成验证
