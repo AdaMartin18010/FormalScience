@@ -53,7 +53,7 @@ $$\delta y(t) = C \delta x(t) + D \delta u(t)$$
 $$A = \frac{\partial f}{\partial x}\bigg|_{(x_e, u_e)}, \quad B = \frac{\partial f}{\partial u}\bigg|_{(x_e, u_e)}$$
 $$C = \frac{\partial h}{\partial x}\bigg|_{(x_e, u_e)}, \quad D = \frac{\partial h}{\partial u}\bigg|_{(x_e, u_e)}$$
 
--**算法 1.1 (系统线性化)**
+--**算法 1.1 (系统线性化)**
 
 ```haskell
 data NonlinearSystem = NonlinearSystem {
@@ -117,7 +117,7 @@ computeJacobian f x u t =
 2. $\dot{V}(x) < 0$ 确保 $V(x)$ 严格递减
 3. 结合李雅普诺夫稳定性得到全局渐近稳定性
 
--**算法 2.1 (李雅普诺夫函数构造)**
+--**算法 2.1 (李雅普诺夫函数构造)**
 
 ```haskell
 data LyapunovFunction = LyapunovFunction {
@@ -171,7 +171,7 @@ $$\|y\|_\infty \leq \gamma \|u\|_\infty$$
 2. 利用三角不等式
 3. 应用小增益条件
 
--**算法 2.2 (L2增益计算)**
+--**算法 2.2 (L2增益计算)**
 
 ```haskell
 computeL2Gain :: LinearSystem -> Double
@@ -210,7 +210,7 @@ solveHInfinityRiccati sys gamma =
 **定义 2.6 (分岔)**
 分岔是系统定性行为发生突然变化的现象。
 
--**算法 2.3 (分岔分析)**
+--**算法 2.3 (分岔分析)**
 
 ```haskell
 data BifurcationAnalysis = BifurcationAnalysis {
@@ -247,7 +247,7 @@ findEquilibriumPoints systemFunc parameter =
 **定义 3.2 (相对度)**
 系统的相对度是输出需要微分多少次才能显式出现输入。
 
--**算法 3.1 (反馈线性化设计)**
+--**算法 3.1 (反馈线性化设计)**
 
 ```haskell
 data FeedbackLinearization = FeedbackLinearization {
@@ -302,7 +302,7 @@ $$u(t) = u_{eq}(t) + u_{sw}(t)$$
 
 其中 $u_{eq}$ 是等效控制，$u_{sw}$ 是切换控制。
 
-**算法 3.2 (滑模控制器设计)**
+-**算法 3.2 (滑模控制器设计)**
 
 ```haskell
 data SlidingModeController = SlidingModeController {
@@ -352,7 +352,7 @@ computeEquivalentControl sys surface =
 **定义 3.6 (参数估计)**
 参数估计是通过系统输入输出数据估计未知参数的过程。
 
-**算法 3.3 (自适应控制器设计)**
+-**算法 3.3 (自适应控制器设计)**
 
 ```haskell
 data AdaptiveController = AdaptiveController {
@@ -403,7 +403,7 @@ $$\|T_{zw}\|_\infty < \gamma$$
 
 其中 $T_{zw}$ 是从干扰 $w$ 到性能输出 $z$ 的传递函数。
 
-**算法 4.1 (H∞控制器设计)**
+-**算法 4.1 (H∞控制器设计)**
 
 ```haskell
 data HInfinityController = HInfinityController {
@@ -457,7 +457,7 @@ hInfinityRiccatiX plant gamma =
 **定义 4.4 (结构奇异值)**
 结构奇异值 $\mu$ 是衡量系统鲁棒性的指标。
 
-**算法 4.2 (μ综合设计)**
+-**算法 4.2 (μ综合设计)**
 
 ```haskell
 data MuSynthesisController = MuSynthesisController {
@@ -498,7 +498,7 @@ $$F_0 + \sum_{i=1}^m x_i F_i > 0$$
 
 其中 $F_i$ 是对称矩阵，$x_i$ 是变量。
 
-**算法 4.3 (LMI求解)**
+-**算法 4.3 (LMI求解)**
 
 ```haskell
 data LMISolver = LMISolver {
@@ -543,7 +543,7 @@ interiorPointMethod constraints objective initialPoint =
 **定义 5.2 (值函数)**
 值函数 $V(x)$ 是从状态 $x$ 开始的最优成本。
 
-**算法 5.1 (动态规划求解)**
+-**算法 5.1 (动态规划求解)**
 
 ```haskell
 data DynamicProgramming = DynamicProgramming {
@@ -591,7 +591,7 @@ bellmanUpdate mdp state values =
 欧拉-拉格朗日方程：
 $$\frac{d}{dt} \frac{\partial L}{\partial \dot{x}} - \frac{\partial L}{\partial x} = 0$$
 
-**算法 5.2 (变分法求解)**
+-**算法 5.2 (变分法求解)**
 
 ```haskell
 data VariationalProblem = VariationalProblem {
@@ -631,7 +631,7 @@ discretizeVariational problem =
 **定义 6.2 (一致性)**
 一致性是智能体状态趋于相同值的现象。
 
-**算法 6.1 (一致性控制)**
+-**算法 6.1 (一致性控制)**
 
 ```haskell
 data MultiAgentSystem = MultiAgentSystem {
@@ -673,7 +673,7 @@ simulateConsensus mas initialStates =
 **定义 6.4 (网络诱导延迟)**
 网络诱导延迟是数据在网络中传输产生的延迟。
 
-**算法 6.2 (网络化控制器设计)**
+-**算法 6.2 (网络化控制器设计)**
 
 ```haskell
 data NetworkedControlSystem = NetworkedControlSystem {
@@ -718,7 +718,7 @@ augmentPlantWithDelay plant network =
 **定义 7.2 (模糊推理)**
 模糊推理是基于模糊规则进行推理的过程。
 
-**算法 7.1 (模糊控制器设计)**
+-**算法 7.1 (模糊控制器设计)**
 
 ```haskell
 data FuzzyController = FuzzyController {
@@ -771,7 +771,7 @@ fuzzify controller input =
 **定义 7.4 (神经网络控制器)**
 神经网络控制器使用神经网络实现控制律。
 
-**算法 7.2 (神经网络控制器设计)**
+-**算法 7.2 (神经网络控制器设计)**
 
 ```haskell
 data NeuralNetworkController = NeuralNetworkController {
@@ -829,7 +829,7 @@ trainNetwork network trainingData =
 **定义 8.2 (量子控制)**
 量子控制是控制量子系统状态的过程。
 
-**算法 8.1 (量子控制器设计)**
+-**算法 8.1 (量子控制器设计)**
 
 ```haskell
 data QuantumSystem = QuantumSystem {
@@ -881,7 +881,7 @@ grapeAlgorithm qsys target controls =
 **定义 8.4 (触发条件)**
 触发条件是决定何时更新控制信号的条件。
 
-**算法 8.2 (事件触发控制器设计)**
+-**算法 8.2 (事件触发控制器设计)**
 
 ```haskell
 data EventTriggeredController = EventTriggeredController {

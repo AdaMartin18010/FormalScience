@@ -1,14 +1,36 @@
-# 控制理论基础 (Control Theory Foundation)
+# 控制理论基础
+
+(Control Theory Foundation)
 
 ## 目录
 
-1. [系统基础定义](#1-系统基础定义)
-2. [线性系统理论](#2-线性系统理论)
-3. [稳定性理论](#3-稳定性理论)
-4. [可控性与可观性](#4-可控性与可观性)
-5. [基本控制方法](#5-基本控制方法)
-6. [系统分析与设计](#6-系统分析与设计)
-7. [参考文献](#7-参考文献)
+- [控制理论基础](#控制理论基础)
+  - [目录](#目录)
+  - [1. 系统基础定义](#1-系统基础定义)
+    - [1.1 动态系统](#11-动态系统)
+    - [1.2 系统分类](#12-系统分类)
+    - [1.3 系统解](#13-系统解)
+  - [2. 线性系统理论](#2-线性系统理论)
+    - [2.1 传递函数](#21-传递函数)
+    - [2.2 系统响应](#22-系统响应)
+    - [2.3 系统连接](#23-系统连接)
+  - [3. 稳定性理论](#3-稳定性理论)
+    - [3.1 李雅普诺夫稳定性](#31-李雅普诺夫稳定性)
+    - [3.2 线性系统稳定性](#32-线性系统稳定性)
+  - [4. 可控性与可观性](#4-可控性与可观性)
+    - [4.1 可控性](#41-可控性)
+    - [4.2 可观性](#42-可观性)
+    - [4.3 卡尔曼分解](#43-卡尔曼分解)
+  - [5. 基本控制方法](#5-基本控制方法)
+    - [5.1 状态反馈](#51-状态反馈)
+    - [5.2 输出反馈](#52-输出反馈)
+    - [5.3 观测器设计](#53-观测器设计)
+    - [5.4 分离原理](#54-分离原理)
+  - [6. 系统分析与设计](#6-系统分析与设计)
+    - [6.1 性能指标](#61-性能指标)
+    - [6.2 根轨迹法](#62-根轨迹法)
+    - [6.3 频域分析](#63-频域分析)
+  - [7. 参考文献](#7-参考文献)
 
 ## 1. 系统基础定义
 
@@ -92,6 +114,7 @@ $$G(s) = C(sI - A)^{-1}B + D$$
 
 **定义 2.2 (极点与零点)**
 传递函数 $G(s) = \frac{N(s)}{D(s)}$ 的：
+
 - 极点是 $D(s) = 0$ 的根
 - 零点是 $N(s) = 0$ 的根
 
@@ -180,7 +203,7 @@ $$\|x(t) - x_e\| \leq M\|x(0) - x_e\|e^{-\alpha t}$$
 **定义 3.5 (赫尔维茨判据)**
 多项式 $p(s) = a_n s^n + a_{n-1} s^{n-1} + \cdots + a_0$ 是赫尔维茨的，如果所有根都有负实部。
 
-**算法 3.1 (赫尔维茨判据)**
+-**算法 3.1 (赫尔维茨判据)**
 
 ```haskell
 hurwitzCriterion :: [Double] -> Bool
@@ -225,7 +248,7 @@ $$\mathcal{C} = [B \quad AB \quad A^2B \quad \cdots \quad A^{n-1}B]$$
 
 **定义 4.3 (可控性标准形)**
 可控系统可以变换为标准形：
-$$\dot{z} = \begin{bmatrix} 
+$$\dot{z} = \begin{bmatrix}
 0 & 1 & 0 & \cdots & 0 \\
 0 & 0 & 1 & \cdots & 0 \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
@@ -253,7 +276,7 @@ $$\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatr
 
 **定义 4.6 (可观性标准形)**
 可观系统可以变换为标准形：
-$$\dot{z} = \begin{bmatrix} 
+$$\dot{z} = \begin{bmatrix}
 0 & 0 & \cdots & 0 & -a_0 \\
 1 & 0 & \cdots & 0 & -a_1 \\
 0 & 1 & \cdots & 0 & -a_2 \\
@@ -301,14 +324,14 @@ $$u(t) = -Kx(t) + r(t)$$
 
 ```haskell
 polePlacement :: Matrix Double -> Matrix Double -> [Complex Double] -> Matrix Double
-polePlacement a b desiredPoles = 
+polePlacement a b desiredPoles =
   let controllableForm = toControllableForm a b
       kStandard = placePoles controllableForm desiredPoles
       transformation = getTransformation a b
   in kStandard * transformation
 
 toControllableForm :: Matrix Double -> Matrix Double -> (Matrix Double, Matrix Double, Matrix Double)
-toControllableForm a b = 
+toControllableForm a b =
   let controllabilityMatrix = buildControllabilityMatrix a b
       transformation = controllabilityMatrix
       aNew = inverse transformation `multiply` a `multiply` transformation
@@ -401,7 +424,7 @@ $$M_p = \frac{y_{max} - y_{ss}}{y_{ss}} \times 100\%$$
 
 ```haskell
 rootLocus :: TransferFunction -> [Double] -> [(Complex Double, Double)]
-rootLocus tf gains = 
+rootLocus tf gains =
   let openLoopPoles = poles tf
       openLoopZeros = zeros tf
       rootLocusPoints = [findClosedLoopPoles tf k | k <- gains]
