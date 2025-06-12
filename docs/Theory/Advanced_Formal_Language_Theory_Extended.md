@@ -537,7 +537,7 @@ scanNextToken input =
 **定义 7.2 (语法分析器)**
 语法分析器将词法单元序列转换为抽象语法树。
 
-**算法 7.2 (递归下降分析)**
+-**算法 7.2 (递归下降分析)**
 
 ```haskell
 recursiveDescent :: CFG -> [Token] -> ParseTree
