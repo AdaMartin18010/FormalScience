@@ -468,4 +468,4 @@ $$\text{简单类型} \subsetneq \text{多态类型} \subsetneq \text{依赖类�
 
 8. Univalent Foundations Program. (2013). *Homotopy Type Theory: Univalent Foundations of Mathematics*. Institute for Advanced Study.
 
-9. Selinger, P. (2004). Towards a quantum programming language. *Mathematical Structures in Computer Science*, 14(4), 527-586. 
+9. Selinger, P. (2004). Towards a quantum programming language. *Mathematical Structures in Computer Science*, 14(4), 527-586.
