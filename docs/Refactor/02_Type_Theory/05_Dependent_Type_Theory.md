@@ -1,798 +1,500 @@
-# 依赖类型理论
-
-(Dependent Type Theory)
+# 依赖类型理论 (Dependent Type Theory)
 
 ## 目录
 
-- [依赖类型理论](#依赖类型理论)
-  - [目录](#目录)
-  - [1. 引言与动机](#1-引言与动机)
-    - [1.1 依赖类型理论的动机](#11-依赖类型理论的动机)
-    - [1.2 应用场景](#12-应用场景)
-  - [2. 依赖类型基础](#2-依赖类型基础)
-    - [2.1 依赖类型语法](#21-依赖类型语法)
-    - [2.2 依赖类型项](#22-依赖类型项)
-    - [2.3 依赖类型上下文](#23-依赖类型上下文)
-  - [3. 构造演算](#3-构造演算)
-    - [3.1 构造演算规则](#31-构造演算规则)
-    - [3.2 构造演算语义](#32-构造演算语义)
-    - [3.3 构造演算算法](#33-构造演算算法)
-  - [4. 依赖类型系统](#4-依赖类型系统)
-    - [4.1 依赖类型系统定义](#41-依赖类型系统定义)
-    - [4.2 依赖类型系统性质](#42-依赖类型系统性质)
-    - [4.3 依赖类型推导算法](#43-依赖类型推导算法)
-  - [5. 程序验证语义](#5-程序验证语义)
-    - [5.1 程序验证模型](#51-程序验证模型)
-    - [5.2 霍尔逻辑](#52-霍尔逻辑)
-    - [5.3 程序验证算法](#53-程序验证算法)
-  - [6. 形式化证明](#6-形式化证明)
-    - [6.1 证明系统](#61-证明系统)
-    - [6.2 证明构造](#62-证明构造)
-    - [6.3 证明验证](#63-证明验证)
-  - [7. 编程语言应用](#7-编程语言应用)
-    - [7.1 依赖类型编程语言](#71-依赖类型编程语言)
-    - [7.2 程序验证示例](#72-程序验证示例)
-    - [7.3 定理证明示例](#73-定理证明示例)
-  - [8. 主题间关联性与哲学批判](#8-主题间关联性与哲学批判)
-    - [8.1 主题关联性Mermaid图](#81-主题关联性mermaid图)
-    - [8.2 主题间表格对比](#82-主题间表格对比)
-    - [8.3 主题间批判性分析](#83-主题间批判性分析)
-  - [9. 总结与展望](#9-总结与展望)
-    - [9.1 理论总结](#91-理论总结)
-    - [9.2 应用价值](#92-应用价值)
-    - [9.3 发展方向](#93-发展方向)
-    - [9.4 挑战与机遇](#94-挑战与机遇)
-  - [10. 参考文献与索引](#10-参考文献与索引)
-    - [10.1 参考文献](#101-参考文献)
-    - [10.2 符号索引](#102-符号索引)
-    - [10.3 定理索引](#103-定理索引)
+1. [概述](#1-概述)
+2. [理论基础](#2-理论基础)
+3. [核心概念](#3-核心概念)
+4. [重要定理](#4-重要定理)
+5. [语义理论](#5-语义理论)
+6. [程序验证](#6-程序验证)
+7. [应用领域](#7-应用领域)
+8. [批判分析](#8-批判分析)
+9. [参考文献](#9-参考文献)
 
-## 1. 引言与动机
+## 1. 概述
 
-### 1.1 依赖类型理论的动机
+依赖类型理论是形式科学理论体系的核心组成部分，通过允许类型依赖于值，为程序验证和数学形式化提供强大的理论基础。本部分涵盖Π类型、Σ类型、依赖类型推导以及程序验证的形式化理论。
 
-依赖类型理论允许类型依赖于值，这为程序验证和形式化证明提供了强大的基础。传统类型系统中，类型和值是分离的，而依赖类型系统将它们统一起来，使得类型可以表达更丰富的程序性质。
+### 1.1 理论基础地位
 
-**核心思想**：
+依赖类型理论在形式科学理论体系中的核心地位：
 
-- **类型依赖值**：类型可以包含值表达式
-- **程序即证明**：程序可以作为数学证明
-- **形式化验证**：编译时验证程序正确性
-- **数学形式化**：将数学概念形式化为类型
+- **程序验证**: 提供程序正确性的形式化保证
+- **数学形式化**: 为数学定理的形式化证明提供基础
+- **类型安全**: 提供比传统类型系统更强的安全保障
+- **逻辑表达**: 统一类型理论和逻辑理论
 
-### 1.2 应用场景
+### 1.2 理论体系结构
 
-**程序验证**：
+```
+依赖类型理论
+├── Π类型理论 (Pi Type Theory)
+├── Σ类型理论 (Sigma Type Theory)
+├── 依赖类型推导 (Dependent Type Inference)
+├── 程序验证理论 (Program Verification Theory)
+└── 数学形式化 (Mathematical Formalization)
+```
 
-- 程序正确性证明
-- 安全性质验证
-- 性能保证验证
-- 并发安全验证
+## 2. 理论基础
 
-**数学形式化**：
+### 2.1 依赖类型基础
 
-- 数学定理证明
-- 算法正确性证明
-- 协议安全性证明
-- 系统规范验证
+**定义 2.1.1** (依赖类型) 依赖类型是类型依赖于值的类型系统，其中类型可以包含值表达式。
 
-## 2. 依赖类型基础
+**定义 2.1.2** (类型族) 类型族是从值到类型的函数：
+```
+A : U → Type
+```
 
-### 2.1 依赖类型语法
+**定义 2.1.3** (依赖类型上下文) 依赖类型上下文包含类型和值的绑定：
+```
+Γ ::= ∅ | Γ, x : A | Γ, x : A = t
+```
 
-**定义 2.1.1** (依赖类型)
-依赖类型的语法：
-$$A, B ::= \alpha \mid A \rightarrow B \mid \Pi x : A.B \mid \Sigma x : A.B \mid \text{Id}_A(M, N) \mid \text{Type}$$
+### 2.2 构造演算
 
-**定义 2.1.2** (依赖函数类型)
-依赖函数类型 $\Pi x : A.B$ 表示对于所有 $x : A$，类型为 $B$ 的函数。
+**定义 2.2.1** (构造演算) 构造演算是依赖类型理论的基础，包含：
+- 类型构造子
+- 项构造子
+- 类型推导规则
+- 计算规则
 
-**定义 2.1.3** (依赖积类型)
-依赖积类型 $\Sigma x : A.B$ 表示存在 $x : A$，类型为 $B$ 的对。
+**公理 2.2.1** (类型形成) 类型形成规则：
+```
+Γ ⊢ A : Type    Γ, x : A ⊢ B : Type
+─────────────────────────────────────
+Γ ⊢ Π(x:A).B : Type
+```
 
-**定义 2.1.4** (相等类型)
-相等类型 $\text{Id}_A(M, N)$ 表示 $M$ 和 $N$ 在类型 $A$ 中相等。
+## 3. 核心概念
 
-### 2.2 依赖类型项
+### 3.1 Π类型 (依赖函数类型)
 
-**定义 2.2.1** (依赖类型项)
-依赖类型项的语法：
-$$M, N ::= x \mid \lambda x : A.M \mid M N \mid (M, N) \mid \pi_1(M) \mid \pi_2(M) \mid \text{refl}_A(M) \mid \text{J}(M, N)$$
+#### 3.1.1 语法定义
 
-**定义 2.2.2** (依赖λ抽象)
-依赖λ抽象 $\lambda x : A.M$ 表示依赖函数。
+**定义 3.1.1** (Π类型) Π类型表示依赖函数类型：
+```
+Π(x:A).B
+```
 
-**定义 2.2.3** (依赖应用)
-依赖应用 $M N$ 表示将依赖函数 $M$ 应用于 $N$。
+其中：
+- A 是参数类型
+- B 是结果类型族，依赖于参数 x
 
-**定义 2.2.4** (依赖对)
-依赖对 $(M, N)$ 表示依赖积的元素。
+**定义 3.1.2** (Π类型项) Π类型的项包括：
+```
+t ::= λx.t | t₁ t₂ | x
+```
 
-### 2.3 依赖类型上下文
+其中：
+- λx.t 是依赖抽象
+- t₁ t₂ 是依赖应用
+- x 是变量
 
-**定义 2.3.1** (依赖类型上下文)
-依赖类型上下文是一个序列：
-$$\Gamma = x_1 : A_1, x_2 : A_2, \ldots, x_n : A_n$$
-其中每个 $A_i$ 可能依赖于前面的变量。
+#### 3.1.2 类型推导规则
 
-**定义 2.3.2** (上下文有效性)
-上下文 $\Gamma$ 是有效的，如果：
+**规则 3.1.1** (Π类型形成)
+```
+Γ ⊢ A : Type    Γ, x : A ⊢ B : Type
+─────────────────────────────────────
+Γ ⊢ Π(x:A).B : Type
+```
 
-1. 空上下文是有效的
-2. 如果 $\Gamma$ 有效且 $\Gamma \vdash A : \text{Type}$，则 $\Gamma, x : A$ 有效
+**规则 3.1.2** (依赖抽象)
+```
+Γ, x : A ⊢ t : B
+─────────────────
+Γ ⊢ λx.t : Π(x:A).B
+```
 
-## 3. 构造演算
+**规则 3.1.3** (依赖应用)
+```
+Γ ⊢ t₁ : Π(x:A).B    Γ ⊢ t₂ : A
+─────────────────────────────────
+Γ ⊢ t₁ t₂ : B[x ↦ t₂]
+```
 
-### 3.1 构造演算规则
+**定理 3.1.1** (Π类型性质) Π类型具有以下性质：
+1. 类型安全：类型推导保持类型安全
+2. 强正规化：所有良类型项都是强正规化的
+3. 一致性：类型系统是一致的
 
-**定义 3.1.1** (构造演算类型规则)
-**类型形成规则：**
-$$\frac{}{\Gamma \vdash \text{Type} : \text{Type}} \text{ (Type)}$$
+### 3.2 Σ类型 (依赖积类型)
 
-**依赖函数类型形成：**
-$$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma, x : A \vdash B : \text{Type}}{\Gamma \vdash \Pi x : A.B : \text{Type}} \text{ (Π)}$$
+#### 3.2.1 语法定义
 
-**依赖积类型形成：**
-$$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma, x : A \vdash B : \text{Type}}{\Gamma \vdash \Sigma x : A.B : \text{Type}} \text{ (Σ)}$$
+**定义 3.2.1** (Σ类型) Σ类型表示依赖积类型：
+```
+Σ(x:A).B
+```
 
-**相等类型形成：**
-$$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma \vdash M : A \quad \Gamma \vdash N : A}{\Gamma \vdash \text{Id}_A(M, N) : \text{Type}} \text{ (Id)}$$
+其中：
+- A 是第一个分量的类型
+- B 是第二个分量的类型族，依赖于第一个分量
 
-**定义 3.1.2** (构造演算项规则)
-**变量规则：**
-$$\frac{x : A \in \Gamma}{\Gamma \vdash x : A} \text{ (Var)}$$
+**定义 3.2.2** (Σ类型项) Σ类型的项包括：
+```
+t ::= (t₁, t₂) | π₁(t) | π₂(t)
+```
 
-**依赖λ抽象：**
-$$\frac{\Gamma, x : A \vdash M : B}{\Gamma \vdash \lambda x : A.M : \Pi x : A.B} \text{ (λ)}$$
+其中：
+- (t₁, t₂) 是依赖对构造
+- π₁(t) 是第一投影
+- π₂(t) 是第二投影
 
-**依赖应用：**
-$$\frac{\Gamma \vdash M : \Pi x : A.B \quad \Gamma \vdash N : A}{\Gamma \vdash M N : B[N/x]} \text{ (App)}$$
+#### 3.2.2 类型推导规则
 
-**依赖对形成：**
-$$\frac{\Gamma \vdash M : A \quad \Gamma \vdash N : B[M/x]}{\Gamma \vdash (M, N) : \Sigma x : A.B} \text{ (Pair)}$$
+**规则 3.2.1** (Σ类型形成)
+```
+Γ ⊢ A : Type    Γ, x : A ⊢ B : Type
+─────────────────────────────────────
+Γ ⊢ Σ(x:A).B : Type
+```
 
-**依赖对投影：**
-$$\frac{\Gamma \vdash M : \Sigma x : A.B}{\Gamma \vdash \pi_1(M) : A} \text{ (π₁)}$$
-$$\frac{\Gamma \vdash M : \Sigma x : A.B}{\Gamma \vdash \pi_2(M) : B[\pi_1(M)/x]} \text{ (π₂)}$$
+**规则 3.2.2** (依赖对构造)
+```
+Γ ⊢ t₁ : A    Γ ⊢ t₂ : B[x ↦ t₁]
+─────────────────────────────────
+Γ ⊢ (t₁, t₂) : Σ(x:A).B
+```
 
-**相等自反性：**
-$$\frac{\Gamma \vdash M : A}{\Gamma \vdash \text{refl}_A(M) : \text{Id}_A(M, M)} \text{ (Refl)}$$
+**规则 3.2.3** (第一投影)
+```
+Γ ⊢ t : Σ(x:A).B
+─────────────────
+Γ ⊢ π₁(t) : A
+```
 
-**相等消除：**
-$$\frac{\Gamma \vdash M : \text{Id}_A(N_1, N_2) \quad \Gamma, x : A, p : \text{Id}_A(x, N_1) \vdash P : \text{Type} \quad \Gamma \vdash Q : P[N_1/x, \text{refl}_A(N_1)/p]}{\Gamma \vdash \text{J}(M, Q) : P[N_2/x, M/p]} \text{ (J)}$$
+**规则 3.2.4** (第二投影)
+```
+Γ ⊢ t : Σ(x:A).B
+─────────────────
+Γ ⊢ π₂(t) : B[x ↦ π₁(t)]
+```
 
-### 3.2 构造演算语义
+**定理 3.2.1** (Σ类型性质) Σ类型具有以下性质：
+1. 类型安全：投影操作保持类型安全
+2. 计算规则：投影满足β归约规则
+3. 唯一性：依赖对具有唯一性
 
-**定义 3.2.1** (构造演算语义)
-构造演算的指称语义：
+### 3.3 依赖类型推导
 
-- $\llbracket \text{Type} \rrbracket$ 是所有集合的集合
-- $\llbracket \Pi x : A.B \rrbracket = \prod_{a \in \llbracket A \rrbracket} \llbracket B \rrbracket_{[x \mapsto a]}$
-- $\llbracket \Sigma x : A.B \rrbracket = \sum_{a \in \llbracket A \rrbracket} \llbracket B \rrbracket_{[x \mapsto a]}$
-- $\llbracket \text{Id}_A(M, N) \rrbracket = \{* \mid \llbracket M \rrbracket = \llbracket N \rrbracket\}$
+#### 3.3.1 类型推导算法
 
-**定理 3.2.1** (构造演算一致性)
-构造演算是一致的，即不能证明 $\text{Id}_A(M, N)$ 当 $M \neq N$。
-
-**证明：** 通过语义解释：
-
-1. 如果 $\vdash \text{Id}_A(M, N)$，则 $\llbracket M \rrbracket = \llbracket N \rrbracket$
-2. 语义解释保持一致性
-3. 因此构造演算一致
-
-### 3.3 构造演算算法
-
-**算法 3.3.1** (构造演算类型检查)
+**算法 3.3.1** (依赖类型推导) 依赖类型推导算法：
 
 ```haskell
-data DependentType = BaseType String | Pi String DependentType DependentType | Sigma String DependentType DependentType | Id DependentType DependentTerm DependentTerm | Type
-data DependentTerm = DependentVar String | DependentLambda String DependentType DependentTerm | DependentApp DependentTerm DependentTerm | DependentPair DependentTerm DependentTerm | DependentProj1 DependentTerm | DependentProj2 DependentTerm | DependentRefl DependentTerm | DependentJ DependentTerm DependentTerm
-
-type DependentContext = [(String, DependentType)]
-
-checkDependentType :: DependentContext -> DependentTerm -> DependentType -> Bool
-checkDependentType ctx term expectedType = case term of
-  DependentVar x -> 
-    case lookup x ctx of
-      Just t -> t == expectedType
-      Nothing -> False
-  
-  DependentLambda x t body -> 
-    case expectedType of
-      Pi paramType resultType | paramType == t -> 
-        let newCtx = (x, t) : ctx
-        in checkDependentType newCtx body resultType
-      _ -> False
-  
-  DependentApp fun arg -> 
-    let funType = inferDependentType ctx fun
-        argType = inferDependentType ctx arg
-    in case funType of
-         Pi domain codomain | domain == argType -> 
-           substitute codomain arg == expectedType
-         _ -> False
-  
-  DependentPair first second -> 
-    case expectedType of
-      Sigma firstType secondType -> 
-        checkDependentType ctx first firstType &&
-        checkDependentType ctx second (substitute secondType first)
-      _ -> False
-  
-  DependentProj1 pair -> 
-    let pairType = inferDependentType ctx pair
-    in case pairType of
-         Sigma firstType _ -> firstType == expectedType
-         _ -> False
-  
-  DependentProj2 pair -> 
-    let pairType = inferDependentType ctx pair
-    in case pairType of
-         Sigma firstType secondType -> 
-           let firstValue = inferDependentTerm ctx (DependentProj1 pair)
-           in substitute secondType firstValue == expectedType
-         _ -> False
-  
-  DependentRefl value -> 
-    case expectedType of
-      Id type' left right -> 
-        let valueType = inferDependentType ctx value
-        in type' == valueType && left == right && left == value
-      _ -> False
-
-substitute :: DependentType -> DependentTerm -> DependentType
-substitute (BaseType s) _ = BaseType s
-substitute (Pi x t1 t2) value = Pi x t1 (substitute t2 value)
-substitute (Sigma x t1 t2) value = Sigma x t1 (substitute t2 value)
-substitute (Id t m n) value = Id t (substituteTerm m value) (substituteTerm n value)
-substitute Type _ = Type
+inferType :: Context -> Term -> Maybe Type
+inferType ctx (Var x) = lookup x ctx
+inferType ctx (Lam x t) = do
+  a <- inferType ctx t
+  return (Pi x a)
+inferType ctx (App t1 t2) = do
+  piType <- inferType ctx t1
+  case piType of
+    Pi x a b -> do
+      checkType ctx t2 a
+      return (subst x t2 b)
+    _ -> Nothing
+inferType ctx (Pair t1 t2) = do
+  a <- inferType ctx t1
+  b <- inferType ctx t2
+  return (Sigma x a b)
 ```
 
-## 4. 依赖类型系统
+**定理 3.3.1** (类型推导正确性) 如果类型推导成功，则返回的类型是正确的。
 
-### 4.1 依赖类型系统定义
+#### 3.3.2 类型检查
 
-**定义 4.1.1** (依赖类型系统)
-依赖类型系统是一个五元组 $\mathcal{D} = (\mathcal{T}, \mathcal{E}, \vdash, \llbracket \cdot \rrbracket, \mathcal{R})$，其中：
+**定义 3.3.1** (类型检查) 类型检查是验证项是否具有给定类型的过程。
 
-- $\mathcal{T}$ 是依赖类型集合
-- $\mathcal{E}$ 是依赖表达式集合
-- $\vdash$ 是依赖类型推导关系
-- $\llbracket \cdot \rrbracket$ 是依赖语义解释函数
-- $\mathcal{R}$ 是依赖推理规则
-
-**定义 4.1.2** (依赖类型)
-依赖类型的完整语法：
-$$A, B ::= \alpha \mid A \rightarrow B \mid \Pi x : A.B \mid \Sigma x : A.B \mid \text{Id}_A(M, N) \mid \text{Type} \mid \text{Prop}$$
-
-### 4.2 依赖类型系统性质
-
-**定理 4.2.1** (依赖类型安全性)
-依赖类型系统是类型安全的，即如果 $\Gamma \vdash M : A$，则 $M$ 不会产生运行时错误。
-
-**证明：** 通过结构归纳：
-
-1. **基础情况**：
-   - 变量：$\Gamma \vdash x : A$，$x$ 在 $\Gamma$ 中定义
-   - 常量：常量项类型安全
-
-2. **归纳情况**：
-   - 依赖λ抽象：$\lambda x : A.M$ 构造依赖函数
-   - 依赖应用：$M N$ 要求类型匹配
-   - 依赖对：$(M, N)$ 要求类型兼容
-
-**定理 4.2.2** (依赖类型保持性)
-依赖类型系统满足类型保持性。
-
-**证明：** 通过归约规则分析：
-
-1. **β归约**：$(\lambda x : A.M) N \rightarrow M[N/x]$
-   - 依赖约束确保替换后类型正确
-
-2. **π归约**：$\pi_1((M, N)) \rightarrow M$
-   - 依赖约束确保投影类型正确
-
-### 4.3 依赖类型推导算法
-
-**算法 4.3.1** (依赖类型推导)
+**算法 3.3.2** (类型检查算法)：
 
 ```haskell
-inferDependentType :: DependentContext -> DependentTerm -> Maybe DependentType
-inferDependentType ctx term = case term of
-  DependentVar x -> lookup x ctx
-  
-  DependentLambda x t body -> do
-    let newCtx = (x, t) : ctx
-    resultType <- inferDependentType newCtx body
-    return $ Pi t resultType
-  
-  DependentApp fun arg -> do
-    funType <- inferDependentType ctx fun
-    argType <- inferDependentType ctx arg
-    case funType of
-      Pi domain codomain | domain == argType -> 
-        Just $ substitute codomain arg
-      _ -> Nothing
-  
-  DependentPair first second -> do
-    firstType <- inferDependentType ctx first
-    secondType <- inferDependentType ctx second
-    return $ Sigma "x" firstType secondType
-  
-  DependentProj1 pair -> do
-    pairType <- inferDependentType ctx pair
-    case pairType of
-      Sigma firstType _ -> Just firstType
-      _ -> Nothing
-  
-  DependentProj2 pair -> do
-    pairType <- inferDependentType ctx pair
-    case pairType of
-      Sigma firstType secondType -> 
-        let firstValue = inferDependentTerm ctx (DependentProj1 pair)
-        in Just $ substitute secondType firstValue
-      _ -> Nothing
-  
-  DependentRefl value -> do
-    valueType <- inferDependentType ctx value
-    return $ Id valueType value value
+checkType :: Context -> Term -> Type -> Bool
+checkType ctx (Lam x t) (Pi x a b) = 
+  checkType (extend ctx x a) t b
+checkType ctx (Pair t1 t2) (Sigma x a b) = 
+  checkType ctx t1 a && checkType ctx t2 (subst x t1 b)
+checkType ctx t a = 
+  case inferType ctx t of
+    Just a' -> a == a'
+    Nothing -> False
 ```
 
-## 5. 程序验证语义
+### 3.4 相等性理论
 
-### 5.1 程序验证模型
+#### 3.4.1 定义相等性
 
-**定义 5.1.1** (程序验证语义)
-程序验证语义是一个四元组 $\mathcal{V} = (P, S, \models, \vdash)$，其中：
+**定义 3.4.1** (定义相等性) 定义相等性是项之间的等价关系，满足：
+1. 自反性：t ≡ t
+2. 对称性：t₁ ≡ t₂ ⇒ t₂ ≡ t₁
+3. 传递性：t₁ ≡ t₂ ∧ t₂ ≡ t₃ ⇒ t₁ ≡ t₃
 
-- $P$ 是程序集合
-- $S$ 是规范集合
-- $\models$ 是满足关系
-- $\vdash$ 是推导关系
-
-**定义 5.1.2** (程序规范)
-程序规范是一个三元组 $\phi = (pre, post, inv)$，其中：
-
-- $pre$ 是前置条件
-- $post$ 是后置条件
-- $inv$ 是不变式
-
-**定义 5.1.3** (程序正确性)
-程序 $p$ 满足规范 $\phi$，记作 $p \models \phi$，如果：
-
-1. 当 $pre$ 成立时，$p$ 终止
-2. 当 $p$ 终止时，$post$ 成立
-3. 在 $p$ 执行过程中，$inv$ 始终成立
-
-### 5.2 霍尔逻辑
-
-**定义 5.2.1** (霍尔三元组)
-霍尔三元组 $\{P\} C \{Q\}$ 表示：
-
-- 如果程序 $C$ 在满足前置条件 $P$ 的状态下开始执行
-- 且 $C$ 终止
-- 则终止时满足后置条件 $Q$
-
-**定义 5.2.2** (霍尔逻辑规则)
-**赋值规则：**
-$$\frac{}{\{P[E/x]\} x := E \{P\}} \text{ (Assign)}$$
-
-**序列规则：**
-$$\frac{\{P\} C_1 \{R\} \quad \{R\} C_2 \{Q\}}{\{P\} C_1; C_2 \{Q\}} \text{ (Seq)}$$
-
-**条件规则：**
-$$\frac{\{P \land B\} C_1 \{Q\} \quad \{P \land \neg B\} C_2 \{Q\}}{\{P\} \text{if } B \text{ then } C_1 \text{ else } C_2 \{Q\}} \text{ (If)}$$
-
-**循环规则：**
-$$\frac{\{P \land B\} C \{P\}}{\{P\} \text{while } B \text{ do } C \{P \land \neg B\}} \text{ (While)}$$
-
-### 5.3 程序验证算法
-
-**算法 5.3.1** (程序验证)
-
-```haskell
-data Program = Assign String Expression | Seq Program Program | If Expression Program Program | While Expression Program
-data Specification = Specification {
-  precondition :: Predicate,
-  postcondition :: Predicate,
-  invariant :: Predicate
-}
-
-verifyProgram :: Program -> Specification -> Bool
-verifyProgram program spec = case program of
-  Assign var expr -> 
-    let newPre = substitute (precondition spec) var expr
-    in newPre `implies` (postcondition spec)
-  
-  Seq prog1 prog2 -> 
-    let intermediateSpec = Specification {
-          precondition = precondition spec,
-          postcondition = generateIntermediatePredicate prog1 prog2,
-          invariant = invariant spec
-        }
-        finalSpec = Specification {
-          precondition = generateIntermediatePredicate prog1 prog2,
-          postcondition = postcondition spec,
-          invariant = invariant spec
-        }
-    in verifyProgram prog1 intermediateSpec && 
-       verifyProgram prog2 finalSpec
-  
-  If condition thenProg elseProg -> 
-    let thenSpec = Specification {
-          precondition = precondition spec `and` condition,
-          postcondition = postcondition spec,
-          invariant = invariant spec
-        }
-        elseSpec = Specification {
-          precondition = precondition spec `and` (not condition),
-          postcondition = postcondition spec,
-          invariant = invariant spec
-        }
-    in verifyProgram thenProg thenSpec && 
-       verifyProgram elseProg elseSpec
-  
-  While condition body -> 
-    let loopSpec = Specification {
-          precondition = invariant spec `and` condition,
-          postcondition = invariant spec,
-          invariant = invariant spec
-        }
-        exitCondition = invariant spec `and` (not condition)
-    in verifyProgram body loopSpec && 
-       (invariant spec `implies` exitCondition)
-
-implies :: Predicate -> Predicate -> Bool
-implies p q = 
-  -- 使用SMT求解器检查蕴含关系
-  checkImplication p q
+**规则 3.4.1** (β归约)
+```
+(λx.t₁) t₂ ≡ t₁[x ↦ t₂]
 ```
 
-## 6. 形式化证明
-
-### 6.1 证明系统
-
-**定义 6.1.1** (证明系统)
-证明系统是一个四元组 $\mathcal{P} = (\Gamma, \vdash, \pi, \mathcal{R})$，其中：
-
-- $\Gamma$ 是假设集合
-- $\vdash$ 是推导关系
-- $\pi$ 是证明结构
-- $\mathcal{R}$ 是推理规则
-
-**定义 6.1.2** (证明规则)
-**假设规则：**
-$$\frac{A \in \Gamma}{\Gamma \vdash A} \text{ (Hyp)}$$
-
-**引入规则：**
-$$\frac{\Gamma, A \vdash B}{\Gamma \vdash A \rightarrow B} \text{ (→I)}$$
-
-**消除规则：**
-$$\frac{\Gamma \vdash A \rightarrow B \quad \Gamma \vdash A}{\Gamma \vdash B} \text{ (→E)}$$
-
-### 6.2 证明构造
-
-**算法 6.2.1** (证明构造)
-
-```haskell
-data Proof = Hypothesis String | ImplicationIntro String Proof | ImplicationElim Proof Proof | ForallIntro String Proof | ForallElim Proof Expression | ExistsIntro Expression Proof | ExistsElim Proof String Proof
-
-constructProof :: [String] -> String -> Maybe Proof
-constructProof assumptions goal = 
-  let -- 尝试直接假设
-      directProof = tryDirectProof assumptions goal
-  in case directProof of
-       Just proof -> Just proof
-       Nothing -> 
-         -- 尝试引入规则
-         tryIntroductionRules assumptions goal
-
-tryDirectProof :: [String] -> String -> Maybe Proof
-tryDirectProof assumptions goal = 
-  if goal `elem` assumptions
-    then Just $ Hypothesis goal
-    else Nothing
-
-tryIntroductionRules :: [String] -> String -> Maybe Proof
-tryIntroductionRules assumptions goal = 
-  case parseImplication goal of
-    Just (antecedent, consequent) -> 
-      let newAssumptions = antecedent : assumptions
-          subProof = constructProof newAssumptions consequent
-      in case subProof of
-           Just proof -> Just $ ImplicationIntro antecedent proof
-           Nothing -> Nothing
-    Nothing -> Nothing
-
-parseImplication :: String -> Maybe (String, String)
-parseImplication goal = 
-  -- 解析蕴含式 A -> B
-  if "->" `isInfixOf` goal
-    then let parts = splitOn "->" goal
-         in if length parts == 2
-            then Just (trim (parts !! 0), trim (parts !! 1))
-            else Nothing
-    else Nothing
+**规则 3.4.2** (η展开)
+```
+t ≡ λx.(t x)  (如果 t : Π(x:A).B)
 ```
 
-### 6.3 证明验证
+#### 3.4.2 类型相等性
 
-**算法 6.3.1** (证明验证)
+**定义 3.4.2** (类型相等性) 类型相等性是类型之间的等价关系。
 
-```haskell
-verifyProof :: Proof -> Bool
-verifyProof proof = case proof of
-  Hypothesis _ -> True
-  
-  ImplicationIntro antecedent subProof -> 
-    verifyProof subProof
-  
-  ImplicationElim major minor -> 
-    verifyProof major && verifyProof minor &&
-    checkImplicationElim major minor
-  
-  ForallIntro variable subProof -> 
-    verifyProof subProof
-  
-  ForallElim major term -> 
-    verifyProof major &&
-    checkForallElim major term
-  
-  ExistsIntro term subProof -> 
-    verifyProof subProof &&
-    checkExistsIntro term subProof
-  
-  ExistsElim major variable subProof -> 
-    verifyProof major && verifyProof subProof &&
-    checkExistsElim major variable subProof
-
-checkImplicationElim :: Proof -> Proof -> Bool
-checkImplicationElim major minor = 
-  let majorConclusion = getConclusion major
-      minorConclusion = getConclusion minor
-  in case parseImplication majorConclusion of
-       Just (antecedent, consequent) -> 
-         antecedent == minorConclusion
-       Nothing -> False
+**规则 3.4.3** (Π类型相等性)
+```
+A₁ ≡ A₂    B₁ ≡ B₂
+─────────────────────
+Π(x:A₁).B₁ ≡ Π(x:A₂).B₂
 ```
 
-## 7. 编程语言应用
-
-### 7.1 依赖类型编程语言
-
-**定义 7.1.1** (依赖类型编程语言)
-依赖类型编程语言的核心特性：
-
-```agda
--- 自然数定义
-data ℕ : Set where
-  zero : ℕ
-  suc  : ℕ → ℕ
-
--- 向量定义
-data Vec (A : Set) : ℕ → Set where
-  []  : Vec A zero
-  _∷_ : {n : ℕ} → A → Vec A n → Vec A (suc n)
-
--- 安全索引函数
-_!!_ : {A : Set} {n : ℕ} → Vec A n → (i : Fin n) → A
-(x ∷ xs) !! zero    = x
-(x ∷ xs) !! (suc i) = xs !! i
-
--- 长度函数
-length : {A : Set} {n : ℕ} → Vec A n → ℕ
-length {n = n} _ = n
-
--- 连接函数
-_++_ : {A : Set} {m n : ℕ} → Vec A m → Vec A n → Vec A (m + n)
-[]       ++ ys = ys
-(x ∷ xs) ++ ys = x ∷ (xs ++ ys)
+**规则 3.4.4** (Σ类型相等性)
+```
+A₁ ≡ A₂    B₁ ≡ B₂
+─────────────────────
+Σ(x:A₁).B₁ ≡ Σ(x:A₂).B₂
 ```
 
-### 7.2 程序验证示例
+## 4. 重要定理
 
-**示例 7.2.1** (排序算法验证)
+### 4.1 类型安全性
 
-```agda
--- 排序规范
-data Sorted {A : Set} (_≤_ : A → A → Set) : List A → Set where
-  nil  : Sorted _≤_ []
-  cons : {x : A} {xs : List A} → All (_≤_ x) xs → Sorted _≤_ xs → Sorted _≤_ (x ∷ xs)
+**定理 4.1.1** (类型保持性) 如果 Γ ⊢ t : A 且 t → t'，则 Γ ⊢ t' : A。
 
--- 排列关系
-data Permutation {A : Set} : List A → List A → Set where
-  nil  : Permutation [] []
-  cons : {x : A} {xs ys : List A} → Permutation xs ys → Permutation (x ∷ xs) (x ∷ ys)
-  swap : {x y : A} {xs : List A} → Permutation (x ∷ y ∷ xs) (y ∷ x ∷ xs)
-  trans : {xs ys zs : List A} → Permutation xs ys → Permutation ys zs → Permutation xs zs
+**证明** 通过结构归纳法：
 
--- 插入排序
-insert : {A : Set} (_≤_ : A → A → Set) → A → List A → List A
-insert _≤_ x [] = x ∷ []
-insert _≤_ x (y ∷ ys) with x ≤? y
-... | yes _ = x ∷ y ∷ ys
-... | no  _ = y ∷ insert _≤_ x ys
+1. **β归约**: (λx.t₁) t₂ → t₁[x ↦ t₂]
+   - 由依赖应用规则，Γ ⊢ (λx.t₁) t₂ : B[x ↦ t₂]
+   - 由替换引理，Γ ⊢ t₁[x ↦ t₂] : B[x ↦ t₂]
 
-insertion-sort : {A : Set} (_≤_ : A → A → Set) → List A → List A
-insertion-sort _≤_ [] = []
-insertion-sort _≤_ (x ∷ xs) = insert _≤_ x (insertion-sort _≤_ xs)
+2. **投影归约**: π₁((t₁, t₂)) → t₁
+   - 由第一投影规则，Γ ⊢ π₁((t₁, t₂)) : A
+   - 由归约规则，Γ ⊢ t₁ : A
 
--- 插入排序正确性证明
-insertion-sort-correct : {A : Set} (_≤_ : A → A → Set) (xs : List A) →
-  Sorted _≤_ (insertion-sort _≤_ xs) × Permutation xs (insertion-sort _≤_ xs)
-insertion-sort-correct _≤_ [] = nil , nil
-insertion-sort-correct _≤_ (x ∷ xs) with insertion-sort-correct _≤_ xs
-... | sorted-xs , perm-xs = 
-  let sorted-insert = insert-preserves-sorted _≤_ x (insertion-sort _≤_ xs) sorted-xs
-      perm-insert = insert-preserves-permutation _≤_ x (insertion-sort _≤_ xs) xs perm-xs
-  in sorted-insert , cons perm-insert
+**定理 4.1.2** (进展性) 如果 ∅ ⊢ t : A，则要么 t 是值，要么存在 t' 使得 t → t'。
+
+**证明** 通过结构归纳法：
+
+1. **变量**: 如果 ∅ ⊢ x : A，则 x ∈ ∅，矛盾
+2. **抽象**: λx.t 总是值
+3. **应用**: 如果 ∅ ⊢ t₁ t₂ : B[x ↦ t₂]，则：
+   - ∅ ⊢ t₁ : Π(x:A).B
+   - ∅ ⊢ t₂ : A
+   - 由归纳假设，t₁ 要么是值，要么可以归约
+   - 如果 t₁ 是值，则 t₁ = λx.t₁'
+   - 如果 t₂ 是值，则可以进行 β归约
+
+### 4.2 强正规化
+
+**定理 4.2.1** (强正规化) 在依赖类型理论中，所有良类型的项都是强正规化的。
+
+**证明** 通过可归约性方法：
+
+1. 定义依赖可归约性谓词 DRed_τ(t)
+2. 证明每个良类型项都是依赖可归约的
+3. 证明依赖可归约项是强正规化的
+
+### 4.3 一致性
+
+**定理 4.3.1** (一致性) 依赖类型理论是一致的，即不能同时证明 A 和 ¬A。
+
+**证明** 通过模型构造：
+
+1. 构造集合论模型
+2. 证明所有公理在模型中成立
+3. 证明推理规则保持真值
+4. 因此系统是一致的
+
+## 5. 语义理论
+
+### 5.1 集合论语义
+
+**定义 5.1.1** (集合论语义) 集合论语义将类型解释为集合。
+
+**定义 5.1.2** (Π类型语义) Π类型的语义：
+```
+⟦Π(x:A).B⟧_ρ = {f | ∀a ∈ ⟦A⟧_ρ, f(a) ∈ ⟦B⟧_{ρ[x↦a]}}
 ```
 
-### 7.3 定理证明示例
-
-**示例 7.3.1** (数学定理证明)
-
-```agda
--- 加法结合律
-+-assoc : (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
-+-assoc zero    n p = refl
-+-assoc (suc m) n p = cong suc (+-assoc m n p)
-
--- 加法交换律
-+-comm : (m n : ℕ) → m + n ≡ n + m
-+-comm zero    n = +-identityʳ n
-+-comm (suc m) n = cong suc (+-comm m n) ∙ +-suc n m
-
--- 乘法分配律
-*-distrib-+ : (m n p : ℕ) → m * (n + p) ≡ m * n + m * p
-*-distrib-+ zero    n p = refl
-*-distrib-+ (suc m) n p = 
-  begin
-    (suc m) * (n + p)
-  ≡⟨⟩
-    (n + p) + m * (n + p)
-  ≡⟨ cong ((n + p) +_) (*-distrib-+ m n p) ⟩
-    (n + p) + (m * n + m * p)
-  ≡⟨ +-assoc n p (m * n + m * p) ⟩
-    n + (p + (m * n + m * p))
-  ≡⟨ cong (n +_) (sym (+-assoc p (m * n) (m * p))) ⟩
-    n + ((p + m * n) + m * p)
-  ≡⟨ cong (n +_) (cong (_+ m * p) (+-comm p (m * n))) ⟩
-    n + ((m * n + p) + m * p)
-  ≡⟨ cong (n +_) (+-assoc (m * n) p (m * p)) ⟩
-    n + (m * n + (p + m * p))
-  ≡⟨ sym (+-assoc n (m * n) (p + m * p)) ⟩
-    (n + m * n) + (p + m * p)
-  ≡⟨⟩
-    (suc m) * n + (suc m) * p
-  ∎
+**定义 5.1.3** (Σ类型语义) Σ类型的语义：
+```
+⟦Σ(x:A).B⟧_ρ = {(a, b) | a ∈ ⟦A⟧_ρ ∧ b ∈ ⟦B⟧_{ρ[x↦a]}}
 ```
 
-## 8. 主题间关联性与哲学批判
+**定理 5.1.1** (语义正确性) 如果 Γ ⊢ t : A 且 ρ ⊨ Γ，则 ⟦t⟧_ρ ∈ ⟦A⟧_ρ。
 
-### 8.1 主题关联性Mermaid图
+### 5.2 范畴论语义
 
-```mermaid
-graph TD;
-  A["依赖类型理论"] --> B["构造演算"]
-  A --> C["程序验证"]
-  A --> D["数学形式化"]
-  A --> E["类型理论基础"]
-  B --> F["证明助理"]
-  C --> G["安全性"]
-  D --> H["同伦类型理论"]
+**定义 5.2.1** (范畴论语义) 范畴论语义将类型解释为范畴中的对象。
+
+**定义 5.2.2** (Π类型范畴语义) Π类型在局部笛卡尔闭范畴中的解释：
+```
+⟦Π(x:A).B⟧ = Π_⟦A⟧(⟦B⟧)
 ```
 
-### 8.2 主题间表格对比
+**定义 5.2.3** (Σ类型范畴语义) Σ类型在局部笛卡尔闭范畴中的解释：
+```
+⟦Σ(x:A).B⟧ = Σ_⟦A⟧(⟦B⟧)
+```
 
-| 主题         | 主要内容           | 关联领域         |
-|--------------|--------------------|------------------|
-| 依赖类型理论 | 类型依赖值、程序即证明 | 程序验证、数学形式化 |
-| 构造演算     | 依赖类型、证明项   | 证明助理         |
-| 程序验证     | 正确性、安全性     | 依赖类型、形式化 |
-| 数学形式化   | 定理证明、系统规范 | 同伦类型理论     |
+## 6. 程序验证
 
-### 8.3 主题间批判性分析
+### 6.1 规范语言
 
-- 依赖类型理论通过"类型依赖值"原则，实现了程序与证明的统一，极大提升了形式化验证的能力。
-- 构造演算为依赖类型理论提供了严格的语法和语义基础，推动了证明助理和自动化证明的发展。
-- 依赖类型理论与同伦类型理论在"类型的高阶结构化"上形成理论联动，为数学形式化和高阶证明提供了统一平台。
-- 程序验证的形式化为安全关键系统、协议、算法等领域的可靠性提供了坚实保障。
+**定义 6.1.1** (规范) 规范是程序行为的描述，用类型表示。
 
-## 9. 总结与展望
+**定义 6.1.2** (前置条件) 前置条件用依赖类型表示：
+```
+Π(x:Input).Pre(x) → Type
+```
 
-### 9.1 理论总结
+**定义 6.1.3** (后置条件) 后置条件用依赖类型表示：
+```
+Π(x:Input).Π(y:Output).Pre(x) → Post(x, y) → Type
+```
 
-依赖类型理论提供了：
+**定理 6.1.1** (规范正确性) 如果程序满足规范，则程序是正确的。
 
-1. **类型依赖值**：类型可以包含值表达式
-2. **程序即证明**：程序可以作为数学证明
-3. **形式化验证**：编译时验证程序正确性
-4. **数学形式化**：将数学概念形式化为类型
+### 6.2 程序证明
 
-### 9.2 应用价值
+**定义 6.2.1** (程序证明) 程序证明是证明程序满足规范的过程。
 
-**程序验证**：
+**方法 6.2.1** (构造性证明) 构造性证明方法：
+1. 构造满足规范的程序
+2. 证明程序类型推导成功
+3. 证明程序满足计算规则
 
-- 程序正确性证明
-- 安全性质验证
-- 性能保证验证
-- 并发安全验证
+**方法 6.2.2** (验证性证明) 验证性证明方法：
+1. 给定程序和规范
+2. 构造证明项
+3. 验证证明项的类型
 
-**数学形式化**：
+### 6.3 定理证明
 
-- 数学定理证明
-- 算法正确性证明
-- 协议安全性证明
-- 系统规范验证
+**定义 6.3.1** (定理) 定理是数学命题，用类型表示。
 
-**软件开发**：
+**定义 6.3.2** (证明) 证明是定理类型的项。
 
-- 高可靠性软件
-- 安全关键系统
-- 形式化方法
-- 程序合成
+**定理 6.3.1** (Curry-Howard对应) 类型和命题之间存在对应关系：
+- 类型 ↔ 命题
+- 项 ↔ 证明
+- 类型推导 ↔ 逻辑推理
 
-### 9.3 发展方向
+**证明** 通过构造对应关系：
 
-**理论方向**：
+1. **Π类型 ↔ 蕴含**: Π(x:A).B ↔ A → B
+2. **Σ类型 ↔ 合取**: Σ(x:A).B ↔ A ∧ B
+3. **依赖类型 ↔ 全称量词**: Π(x:A).B ↔ ∀x:A.B
 
-1. **高阶依赖类型**：高阶依赖类型系统
-2. **同伦依赖类型**：同伦依赖类型理论
-3. **概率依赖类型**：概率依赖类型系统
+## 7. 应用领域
 
-**应用方向**：
+### 7.1 程序验证
 
-1. **人工智能**：AI系统的形式化验证
-2. **区块链**：智能合约的形式化验证
-3. **量子计算**：量子算法的形式化验证
+- **函数式编程**: 高阶函数、纯函数验证
+- **系统编程**: 内存安全、并发安全验证
+- **嵌入式系统**: 实时性、可靠性验证
+- **安全关键系统**: 安全性、正确性验证
 
-### 9.4 挑战与机遇
+### 7.2 数学形式化
 
-**技术挑战**：
+- **定理证明**: 数学定理的形式化证明
+- **代数系统**: 群论、环论的形式化
+- **分析学**: 微积分、实分析的形式化
+- **几何学**: 欧几里得几何、拓扑学的形式化
 
-1. **类型推导复杂性**：复杂依赖约束的类型推导
-2. **性能优化**：依赖类型检查的性能优化
-3. **用户体验**：依赖类型的用户友好界面
+### 7.3 编译器技术
 
-**研究机遇**：
+- **类型检查**: 依赖类型检查算法
+- **代码生成**: 类型指导的代码生成
+- **优化**: 类型指导的优化
+- **错误诊断**: 精确的类型错误诊断
 
-1. **AI辅助**：AI辅助的依赖类型推导
-2. **自动化证明**：依赖类型系统性质的自动化证明
-3. **跨语言**：跨编程语言的依赖类型系统
+### 7.4 人工智能
 
-## 10. 参考文献与索引
+- **知识表示**: 形式化知识表示
+- **推理系统**: 自动定理证明
+- **机器学习**: 类型安全的机器学习
+- **自然语言处理**: 形式化语义分析
 
-### 10.1 参考文献
+## 8. 批判分析
 
-1. Martin-Löf, P. (1984). *Intuitionistic Type Theory*. Bibliopolis.
-2. Coquand, T., & Huet, G. (1988). The calculus of constructions. *Information and Computation*, 76(2-3), 95-120.
-3. Barendregt, H. P. (1992). *Lambda Calculi with Types*. Handbook of Logic in Computer Science, 2, 117-309.
-4. Nordström, B., Petersson, K., & Smith, J. M. (1990). *Programming in Martin-Löf's Type Theory*. Oxford University Press.
-5. The Univalent Foundations Program. (2013). *Homotopy Type Theory: Univalent Foundations of Mathematics*. Institute for Advanced Study.
+### 8.1 理论局限性
 
-### 10.2 符号索引
+#### 8.1.1 复杂性
 
-| 符号 | 含义 | 定义位置 |
-|------|------|----------|
-| $\Pi$ | 依赖函数类型 | 定义 2.1.2 |
-| $\Sigma$ | 依赖积类型 | 定义 2.1.3 |
-| $\text{Id}$ | 相等类型 | 定义 2.1.4 |
-| $\lambda$ | 依赖λ抽象 | 定义 2.2.2 |
-| $\pi_1, \pi_2$ | 投影函数 | 定义 3.1.2 |
-| $\text{refl}$ | 自反性 | 定义 3.1.2 |
-| $\text{J}$ | 相等消除 | 定义 3.1.2 |
+**批判 8.1.1** (复杂性) 依赖类型系统比传统类型系统更复杂。
 
-### 10.3 定理索引
+**分析** 复杂性的来源：
+- 类型推导算法复杂度高
+- 类型检查需要更多计算
+- 错误诊断更困难
+- 学习曲线陡峭
 
-| 定理 | 内容 | 位置 |
-|------|------|------|
-| 定理 3.2.1 | 构造演算一致性 | 第3.2节 |
-| 定理 4.2.1 | 依赖类型安全性 | 第4.2节 |
-| 定理 4.2.2 | 依赖类型保持性 | 第4.2节 |
+#### 8.1.2 表达能力
+
+**批判 8.1.2** (表达能力) 某些编程模式难以用依赖类型表达。
+
+**分析** 表达能力的限制：
+- 高阶函数类型复杂
+- 递归类型需要特殊处理
+- 某些算法模式难以表达
+- 性能优化困难
+
+### 8.2 实现挑战
+
+#### 8.2.1 类型推导
+
+**批判 8.2.1** (类型推导) 依赖类型推导比传统类型推导更困难。
+
+**分析** 类型推导的挑战：
+- 统一算法复杂度高
+- 约束求解困难
+- 类型变量管理复杂
+- 性能开销大
+
+#### 8.2.2 错误诊断
+
+**批判 8.2.2** (错误诊断) 依赖类型错误的诊断更困难。
+
+**分析** 错误诊断的挑战：
+- 错误信息复杂
+- 错误定位困难
+- 修复建议不准确
+- 用户理解困难
+
+### 8.3 哲学问题
+
+#### 8.3.1 类型实在性
+
+**问题 8.3.1** (类型实在性) 依赖类型是否反映客观实在？
+
+**分析** 类型实在性的哲学问题：
+- **柏拉图主义**: 依赖类型客观存在
+- **构造主义**: 依赖类型是构造的
+- **工具主义**: 依赖类型是有用的工具
+
+#### 8.3.2 证明与计算
+
+**问题 8.3.2** (证明与计算) 证明和计算的关系是什么？
+
+**分析** 证明与计算的关系：
+- **Curry-Howard对应**: 证明即计算
+- **构造性数学**: 证明必须构造
+- **经典数学**: 证明可以非构造
+
+## 9. 参考文献
+
+1. **基础理论**: Martin-Löf, P. (1984). Intuitionistic Type Theory
+2. **构造演算**: Coquand, T. & Huet, G. (1988). The Calculus of Constructions
+3. **程序验证**: Pierce, B.C. (2009). Proofs and Types
+4. **数学形式化**: The Univalent Foundations Program (2013). Homotopy Type Theory
+5. **实现技术**: Norell, U. (2007). Towards a Practical Programming Language Based on Dependent Type Theory
 
 ---
 
-**最后更新时间**：2024-12-19  
-**版本**：1.0  
-**状态**：已完成依赖类型理论部分
+*本文档将持续更新和完善*
