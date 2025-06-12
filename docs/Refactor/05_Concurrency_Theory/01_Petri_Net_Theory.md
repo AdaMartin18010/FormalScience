@@ -1,1074 +1,364 @@
-# Petri网理论 (Petri Net Theory)
+# Petri网理论与并发控制
 
 ## 目录
 
-1. [基本Petri网](#1-基本petri网)
-2. [高级Petri网](#2-高级petri网)
-3. [并发语义](#3-并发语义)
-4. [分析技术](#4-分析技术)
-5. [应用领域](#5-应用领域)
-6. [形式化验证](#6-形式化验证)
+1. [引言：并发理论的基础](#1-引言并发理论的基础)
+2. [Petri网基础](#2-petri网基础)
+3. [高级Petri网](#3-高级petri网)
+4. [进程代数](#4-进程代数)
+5. [并发控制](#5-并发控制)
+6. [死锁避免](#6-死锁避免)
+7. [并发验证](#7-并发验证)
+8. [并发系统应用](#8-并发系统应用)
+9. [结论与展望](#9-结论与展望)
 
-## 1. 基本Petri网 (Basic Petri Nets)
+## 1. 引言：并发理论的基础
 
-### 1.1 Petri网定义
+### 1.1 并发系统的定义
 
-**定义 1.1.1 (基本Petri网)**
-基本Petri网是一个四元组 $N = (P, T, F, M_0)$，其中：
+**定义 1.1.1** (并发系统) 并发系统是由多个同时执行的进程组成的系统，这些进程可能相互交互和竞争资源。
 
-- $P$ 是库所(places)的有限集合
-- $T$ 是变迁(transitions)的有限集合
-- $F \subseteq (P \times T) \cup (T \times P)$ 是流关系(flow relation)
-- $M_0: P \rightarrow \mathbb{N}$ 是初始标识(initial marking)
+**定义 1.1.2** (并发系统的特征) 并发系统具有以下特征：
 
-**定义 1.1.2 (前集和后集)**
-对于 $x \in P \cup T$：
+1. **并行性**：多个进程同时执行
+2. **交互性**：进程间可能相互通信
+3. **不确定性**：执行顺序可能不确定
+4. **资源竞争**：进程可能竞争有限资源
+5. **同步需求**：需要协调进程执行
 
-- **前集**：$^\bullet x = \{y \mid (y, x) \in F\}$
-- **后集**：$x^\bullet = \{y \mid (x, y) \in F\}$
+### 1.2 并发理论的挑战
 
-**定理 1.1.1 (Petri网结构)**
-Petri网满足：
+**挑战 1.2.1** (状态爆炸) 并发系统的状态空间随进程数量指数增长。
 
-1. $P \cap T = \emptyset$
-2. $P \cup T \neq \emptyset$
-3. $F \subseteq (P \times T) \cup (T \times P)$
+**挑战 1.2.2** (死锁问题) 并发系统可能出现死锁，导致系统无法继续执行。
 
-**证明：** 通过Petri网定义：
+**挑战 1.2.3** (活锁问题) 并发系统可能出现活锁，进程不断执行但无法取得进展。
 
-```haskell
--- 基本Petri网
-data PetriNet = PetriNet
-  { places :: Set Place
-  , transitions :: Set Transition
-  , flowRelation :: Set (Either (Place, Transition) (Transition, Place))
-  , initialMarking :: Map Place Int
-  }
+## 2. Petri网基础
 
--- 前集和后集
-data PrePostSets = PrePostSets
-  { preset :: Set (Either Place Transition)
-  , postset :: Set (Either Place Transition)
-  }
+### 2.1 基本Petri网
 
--- 前集计算
-preset :: PetriNet -> Either Place Transition -> Set (Either Place Transition)
-preset net x = 
-  let flow = flowRelation net
-      preset = filter (\arc -> case arc of
-        Left (p, t) -> Right t == x
-        Right (t, p) -> Left p == x) flow
-  in setFromList preset
+**定义 2.1.1** (Petri网) Petri网是一个四元组 $N = (P, T, F, M_0)$，其中：
 
--- 后集计算
-postset :: PetriNet -> Either Place Transition -> Set (Either Place Transition)
-postset net x = 
-  let flow = flowRelation net
-      postset = filter (\arc -> case arc of
-        Left (p, t) -> Left p == x
-        Right (t, p) -> Right t == x) flow
-  in setFromList postset
+- $P$ 是库所(place)的有限集
+- $T$ 是变迁(transition)的有限集
+- $F \subseteq (P \times T) \cup (T \times P)$ 是流关系
+- $M_0: P \rightarrow \mathbb{N}$ 是初始标识
 
--- Petri网验证
-validatePetriNet :: PetriNet -> Bool
-validatePetriNet net = 
-  let places = places net
-      transitions = transitions net
-      flow = flowRelation net
-      
-      -- 检查结构条件
-      disjointSets = isEmpty (intersection places transitions)
-      nonEmpty = not (isEmpty places) || not (isEmpty transitions)
-      validFlow = all isValidFlowArc flow
-  in disjointSets && nonEmpty && validFlow
+**定义 2.1.2** (标识) 标识 $M: P \rightarrow \mathbb{N}$ 为每个库所分配令牌数量。
 
--- 流弧验证
-isValidFlowArc :: Either (Place, Transition) (Transition, Place) -> Bool
-isValidFlowArc arc = 
-  case arc of
-    Left (p, t) -> True
-    Right (t, p) -> True
-```
+**定义 2.1.3** (变迁使能) 变迁 $t$ 在标识 $M$ 下使能，如果：
 
-### 1.2 标识和变迁规则
+$$\forall p \in \bullet t: M(p) \geq F(p,t)$$
 
-**定义 1.2.1 (标识)**
-标识是库所到非负整数的映射：
-$$M: P \rightarrow \mathbb{N}$$
+其中 $\bullet t = \{p \in P: (p,t) \in F\}$ 是 $t$ 的输入库所集。
 
-**定义 1.2.2 (变迁使能)**
-变迁 $t \in T$ 在标识 $M$ 下使能，当且仅当：
-$$\forall p \in ^\bullet t: M(p) \geq F(p, t)$$
+**定义 2.1.4** (变迁发生) 如果变迁 $t$ 在标识 $M$ 下使能，则 $t$ 可以发生，产生新标识 $M'$：
 
-**定义 1.2.3 (变迁发生)**
-变迁 $t$ 的发生产生新标识 $M'$：
-$$M'(p) = M(p) - F(p, t) + F(t, p)$$
+$$M'(p) = M(p) - F(p,t) + F(t,p)$$
 
-**定理 1.2.1 (变迁发生保持)**
-变迁发生保持标识的有效性。
+**定理 2.1.1** (Petri网可达性) Petri网的可达性问题在一般情况下是不可判定的。
 
-**证明：** 通过标识更新规则：
+**证明** 通过将停机问题归约到Petri网可达性问题。
 
-```haskell
--- 标识
-type Marking = Map Place Int
+### 2.2 Petri网的性质
 
--- 变迁使能检查
-isEnabled :: PetriNet -> Marking -> Transition -> Bool
-isEnabled net marking transition = 
-  let preset = preset net (Right transition)
-      requiredTokens = sum [getTokenCount marking place | Left place <- toList preset]
-      availableTokens = sum [marking ! place | Left place <- toList preset]
-  in availableTokens >= requiredTokens
+**定义 2.2.1** (有界性) Petri网是有界的，如果存在 $k \in \mathbb{N}$ 使得所有可达标识 $M$ 满足 $M(p) \leq k$ 对所有 $p \in P$。
 
--- 变迁发生
-fireTransition :: PetriNet -> Marking -> Transition -> Maybe Marking
-fireTransition net marking transition = 
-  if isEnabled net marking transition
-  then do
-    let newMarking = updateMarking net marking transition
-    return newMarking
-  else
-    Nothing
+**定义 2.2.2** (安全性) Petri网是安全的，如果它是1-有界的。
 
--- 标识更新
-updateMarking :: PetriNet -> Marking -> Transition -> Marking
-updateMarking net marking transition = 
-  let preset = preset net (Right transition)
-      postset = postset net (Right transition)
-      
-      -- 移除输入令牌
-      marking1 = foldl (\m place -> case place of
-        Left p -> adjust (\tokens -> tokens - 1) p m
-        Right _ -> m) marking preset
-      
-      -- 添加输出令牌
-      marking2 = foldl (\m place -> case place of
-        Left p -> adjust (\tokens -> tokens + 1) p m
-        Right _ -> m) marking1 postset
-  in marking2
+**定义 2.2.3** (活性) Petri网是活的，如果从任意可达标识出发，任意变迁最终都可以发生。
 
--- 可达性检查
-isReachable :: PetriNet -> Marking -> Marking -> Bool
-isReachable net initialMarking targetMarking = 
-  let reachableMarkings = computeReachableMarkings net initialMarking
-  in targetMarking `member` reachableMarkings
+**定义 2.2.4** (可逆性) Petri网是可逆的，如果从任意可达标识都可以回到初始标识。
 
--- 可达标识计算
-computeReachableMarkings :: PetriNet -> Marking -> Set Marking
-computeReachableMarkings net initialMarking = 
-  let transitions = transitions net
-      
-      -- 广度优先搜索
-      bfs :: Set Marking -> Set Marking -> Set Marking
-      bfs visited frontier = 
-        if isEmpty frontier
-        then visited
-        else let
-          currentMarking = choose frontier
-          newFrontier = delete currentMarking frontier
-          
-          -- 尝试所有可能的变迁
-          nextMarkings = [marking | 
-            transition <- toList transitions,
-            Just marking <- [fireTransition net currentMarking transition],
-            marking `notMember` visited]
-          
-          newVisited = insert currentMarking visited
-          newFrontier' = union newFrontier (setFromList nextMarkings)
-        in bfs newVisited newFrontier'
-      
-  in bfs empty (singleton initialMarking)
-```
+**定理 2.2.1** (有界性判定) Petri网的有界性是可判定的。
 
-## 2. 高级Petri网 (Advanced Petri Nets)
+**证明** 通过构造覆盖树。
 
-### 2.1 时间Petri网
+**定理 2.2.2** (活性判定) Petri网的活性是不可判定的。
 
-**定义 2.1.1 (时间Petri网)**
-时间Petri网是基本Petri网的扩展，包含时间约束：
-$$N_T = (P, T, F, M_0, I)$$
+**证明** 通过将可达性问题归约到活性问题。
 
-其中 $I: T \rightarrow \mathbb{R}^+ \times \mathbb{R}^+$ 是时间间隔函数。
+### 2.3 不变式
 
-**定义 2.1.2 (时间变迁)**
-时间变迁 $t$ 的时间约束为 $I(t) = [\alpha(t), \beta(t)]$，表示：
+**定义 2.3.1** (S-不变式) S-不变式是向量 $I: P \rightarrow \mathbb{Z}$ 使得：
 
-- $\alpha(t)$ 是最小延迟时间
-- $\beta(t)$ 是最大延迟时间
+$$\sum_{p \in P} I(p) \cdot M(p) = \sum_{p \in P} I(p) \cdot M_0(p)$$
 
-**定理 2.1.1 (时间一致性)**
-时间Petri网的时间约束必须满足：
-$$\forall t \in T: 0 \leq \alpha(t) \leq \beta(t)$$
+对所有可达标识 $M$ 成立。
 
-**证明：** 通过时间约束定义：
+**定义 2.3.2** (T-不变式) T-不变式是向量 $J: T \rightarrow \mathbb{Z}$ 使得：
 
-```haskell
--- 时间Petri网
-data TimedPetriNet = TimedPetriNet
-  { basicNet :: PetriNet
-  , timeIntervals :: Map Transition (Double, Double)
-  }
+$$\sum_{t \in T} J(t) \cdot [F(t,p) - F(p,t)] = 0$$
 
--- 时间间隔
-data TimeInterval = TimeInterval
-  { minDelay :: Double
-  , maxDelay :: Double
-  }
+对所有 $p \in P$ 成立。
 
--- 时间变迁状态
-data TimedTransitionState = TimedTransitionState
-  { transition :: Transition
-  , enabledTime :: Double
-  , deadline :: Double
-  }
+**定理 2.3.1** (不变式性质) S-不变式保持标识的线性组合不变，T-不变式表示可重复的变迁序列。
 
--- 时间使能检查
-isTimeEnabled :: TimedPetriNet -> Marking -> Double -> Transition -> Bool
-isTimeEnabled timedNet marking currentTime transition = 
-  let basicEnabled = isEnabled (basicNet timedNet) marking transition
-      timeInterval = timeIntervals timedNet ! transition
-      (minDelay, maxDelay) = timeInterval
-      enabledTime = currentTime
-      deadline = enabledTime + maxDelay
-  in basicEnabled && currentTime >= enabledTime && currentTime <= deadline
+## 3. 高级Petri网
 
--- 时间变迁发生
-fireTimedTransition :: TimedPetriNet -> Marking -> Double -> Transition -> Maybe (Marking, Double)
-fireTimedTransition timedNet marking currentTime transition = 
-  if isTimeEnabled timedNet marking currentTime transition
-  then do
-    let newMarking = fireTransition (basicNet timedNet) marking transition
-        timeInterval = timeIntervals timedNet ! transition
-        (minDelay, maxDelay) = timeInterval
-        fireTime = currentTime + minDelay
-    return (newMarking, fireTime)
-  else
-    Nothing
+### 3.1 着色Petri网
 
--- 时间可达性
-isTimeReachable :: TimedPetriNet -> Marking -> Double -> Marking -> Double -> Bool
-isTimeReachable timedNet initialMarking initialTime targetMarking targetTime = 
-  let reachableStates = computeTimedReachableStates timedNet initialMarking initialTime
-  in (targetMarking, targetTime) `member` reachableStates
+**定义 3.1.1** (着色Petri网) 着色Petri网是一个六元组 $CPN = (P, T, A, N, C, G)$，其中：
 
--- 时间可达状态计算
-computeTimedReachableStates :: TimedPetriNet -> Marking -> Double -> Set (Marking, Double)
-computeTimedReachableStates timedNet initialMarking initialTime = 
-  let transitions = transitions (basicNet timedNet)
-      
-      -- 时间状态搜索
-      search :: Set (Marking, Double) -> Set (Marking, Double) -> Set (Marking, Double)
-      search visited frontier = 
-        if isEmpty frontier
-        then visited
-        else let
-          (currentMarking, currentTime) = choose frontier
-          newFrontier = delete (currentMarking, currentTime) frontier
-          
-          -- 尝试所有可能的时间变迁
-          nextStates = [(marking, time) | 
-            transition <- toList transitions,
-            Just (marking, time) <- [fireTimedTransition timedNet currentMarking currentTime transition],
-            (marking, time) `notMember` visited]
-          
-          newVisited = insert (currentMarking, currentTime) visited
-          newFrontier' = union newFrontier (setFromList nextStates)
-        in search newVisited newFrontier'
-      
-  in search empty (singleton (initialMarking, initialTime))
-```
-
-### 2.2 着色Petri网
-
-**定义 2.2.1 (着色Petri网)**
-着色Petri网是基本Petri网的扩展，支持带颜色的令牌：
-$$N_C = (P, T, F, M_0, C, G, E)$$
-
-其中：
-
-- $C$ 是颜色集函数
+- $P$ 是库所集
+- $T$ 是变迁集
+- $A$ 是弧集
+- $N$ 是节点函数
+- $C$ 是颜色函数
 - $G$ 是守卫函数
-- $E$ 是弧表达式函数
 
-**定义 2.2.2 (颜色集)**
-颜色集定义令牌的类型：
-$$C: P \cup T \rightarrow \text{ColorSet}$$
+**定义 3.1.2** (颜色集) 颜色集为每个库所和变迁定义数据类型。
 
-**定理 2.2.1 (颜色一致性)**
-着色Petri网的颜色约束必须满足：
-$$\forall (p, t) \in F: C(p) \supseteq E(p, t)(C(t))$$
+**定义 3.1.3** (守卫函数) 守卫函数为变迁定义发生条件。
 
-**证明：** 通过颜色约束定义：
+**定理 3.1.1** (着色Petri网表达能力) 着色Petri网比基本Petri网具有更强的表达能力。
 
-```haskell
--- 着色Petri网
-data ColoredPetriNet = ColoredPetriNet
-  { basicNet :: PetriNet
-  , colorSets :: Map (Either Place Transition) ColorSet
-  , guards :: Map Transition Guard
-  , arcExpressions :: Map (Either (Place, Transition) (Transition, Place)) ArcExpression
-  }
+### 3.2 时间Petri网
 
--- 颜色集
-data ColorSet = ColorSet
-  { colors :: Set Color
-  , operations :: Map String (Color -> Color -> Color)
-  }
+**定义 3.2.1** (时间Petri网) 时间Petri网为每个变迁关联时间间隔。
 
--- 守卫函数
-data Guard = Guard
-  { condition :: Color -> Bool
-  , variables :: Set String
-  }
+**定义 3.2.2** (时间间隔) 时间间隔 $[a,b]$ 表示变迁必须在 $a$ 到 $b$ 时间单位内发生。
 
--- 弧表达式
-data ArcExpression = ArcExpression
-  { expression :: Color -> Multiset Color
-  , variables :: Set String
-  }
+**定义 3.2.3** (时间状态) 时间状态包含标识和时钟赋值。
 
--- 着色标识
-type ColoredMarking = Map Place (Multiset Color)
+**定理 3.2.1** (时间可达性) 时间Petri网的可达性问题比基本Petri网更复杂。
 
--- 着色变迁使能
-isColoredEnabled :: ColoredPetriNet -> ColoredMarking -> Transition -> Bool
-isColoredEnabled coloredNet marking transition = 
-  let preset = preset (basicNet coloredNet) (Right transition)
-      guard = guards coloredNet ! transition
-      
-      -- 检查输入弧
-      inputSatisfied = all (\arc -> case arc of
-        Left place -> checkInputArc coloredNet marking place transition
-        Right _ -> True) preset
-      
-      -- 检查守卫
-      guardSatisfied = checkGuard guard
-  in inputSatisfied && guardSatisfied
+### 3.3 随机Petri网
 
--- 输入弧检查
-checkInputArc :: ColoredPetriNet -> ColoredMarking -> Place -> Transition -> Bool
-checkInputArc coloredNet marking place transition = 
-  let requiredTokens = arcExpressions coloredNet ! Left (place, transition)
-      availableTokens = marking ! place
-      colorSet = colorSets coloredNet ! Left place
-  in hasEnoughTokens availableTokens requiredTokens colorSet
+**定义 3.3.1** (随机Petri网) 随机Petri网为每个变迁关联指数分布的延迟。
 
--- 着色变迁发生
-fireColoredTransition :: ColoredPetriNet -> ColoredMarking -> Transition -> Maybe ColoredMarking
-fireColoredTransition coloredNet marking transition = 
-  if isColoredEnabled coloredNet marking transition
-  then do
-    let newMarking = updateColoredMarking coloredNet marking transition
-    return newMarking
-  else
-    Nothing
+**定义 3.3.2** (随机变迁) 随机变迁的延迟服从指数分布。
 
--- 着色标识更新
-updateColoredMarking :: ColoredPetriNet -> ColoredMarking -> Transition -> ColoredMarking
-updateColoredMarking coloredNet marking transition = 
-  let preset = preset (basicNet coloredNet) (Right transition)
-      postset = postset (basicNet coloredNet) (Right transition)
-      
-      -- 移除输入令牌
-      marking1 = foldl (\m arc -> case arc of
-        Left place -> removeTokens m place transition
-        Right _ -> m) marking preset
-      
-      -- 添加输出令牌
-      marking2 = foldl (\m arc -> case arc of
-        Left place -> addTokens m place transition
-        Right _ -> m) marking1 postset
-  in marking2
-```
+**定理 3.3.1** (随机Petri网等价性) 随机Petri网等价于连续时间马尔可夫链。
 
-## 3. 并发语义 (Concurrency Semantics)
+## 4. 进程代数
 
-### 3.1 步语义
+### 4.1 CCS (Calculus of Communicating Systems)
 
-**定义 3.1.1 (步)**
-步是同时发生的变迁集合：
-$$\text{Step} = 2^T$$
+**定义 4.1.1** (CCS语法) CCS进程的语法：
 
-**定义 3.1.2 (步使能)**
-步 $S \subseteq T$ 在标识 $M$ 下使能，当且仅当：
-
-1. $\forall t \in S: t$ 在 $M$ 下使能
-2. $\forall t_1, t_2 \in S: t_1 \neq t_2 \rightarrow ^\bullet t_1 \cap ^\bullet t_2 = \emptyset$
-
-**定理 3.1.1 (步发生)**
-步 $S$ 的发生产生新标识 $M'$：
-$$M'(p) = M(p) - \sum_{t \in S} F(p, t) + \sum_{t \in S} F(t, p)$$
-
-**证明：** 通过步语义定义：
-
-```haskell
--- 步
-type Step = Set Transition
-
--- 步使能检查
-isStepEnabled :: PetriNet -> Marking -> Step -> Bool
-isStepEnabled net marking step = 
-  let -- 检查每个变迁使能
-      allEnabled = all (\t -> isEnabled net marking t) step
-      
-      -- 检查冲突自由
-      conflictFree = isConflictFree net step
-  in allEnabled && conflictFree
-
--- 冲突自由检查
-isConflictFree :: PetriNet -> Step -> Bool
-isConflictFree net step = 
-  let transitions = toList step
-      presets = map (\t -> preset net (Right t)) transitions
-      
-      -- 检查前集交集
-      hasConflict = any (\pair -> 
-        let (preset1, preset2) = pair
-            intersection = intersect preset1 preset2
-        in not (isEmpty intersection)) (pairs transitions)
-  in not hasConflict
-
--- 步发生
-fireStep :: PetriNet -> Marking -> Step -> Maybe Marking
-fireStep net marking step = 
-  if isStepEnabled net marking step
-  then do
-    let newMarking = updateMarkingForStep net marking step
-    return newMarking
-  else
-    Nothing
-
--- 步标识更新
-updateMarkingForStep :: PetriNet -> Marking -> Step -> Marking
-updateMarkingForStep net marking step = 
-  let transitions = toList step
-      
-      -- 移除所有输入令牌
-      marking1 = foldl (\m t -> 
-        let preset = preset net (Right t)
-        in foldl (\m' arc -> case arc of
-          Left place -> adjust (\tokens -> tokens - 1) place m'
-          Right _ -> m') m preset) marking transitions
-      
-      -- 添加所有输出令牌
-      marking2 = foldl (\m t -> 
-        let postset = postset net (Right t)
-        in foldl (\m' arc -> case arc of
-          Left place -> adjust (\tokens -> tokens + 1) place m'
-          Right _ -> m') m postset) marking1 transitions
-  in marking2
-
--- 步可达性
-isStepReachable :: PetriNet -> Marking -> Marking -> Bool
-isStepReachable net initialMarking targetMarking = 
-  let reachableMarkings = computeStepReachableMarkings net initialMarking
-  in targetMarking `member` reachableMarkings
-
--- 步可达标识计算
-computeStepReachableMarkings :: PetriNet -> Marking -> Set Marking
-computeStepReachableMarkings net initialMarking = 
-  let transitions = transitions net
-      allSteps = powerSet transitions
-      
-      -- 步搜索
-      search :: Set Marking -> Set Marking -> Set Marking
-      search visited frontier = 
-        if isEmpty frontier
-        then visited
-        else let
-          currentMarking = choose frontier
-          newFrontier = delete currentMarking frontier
-          
-          -- 尝试所有可能的步
-          nextMarkings = [marking | 
-            step <- toList allSteps,
-            Just marking <- [fireStep net currentMarking step],
-            marking `notMember` visited]
-          
-          newVisited = insert currentMarking visited
-          newFrontier' = union newFrontier (setFromList nextMarkings)
-        in search newVisited newFrontier'
-      
-  in search empty (singleton initialMarking)
-```
-
-### 3.2 部分序语义
-
-**定义 3.2.1 (部分序)**
-部分序是变迁发生的时间偏序关系：
-$$\text{PartialOrder} = (T, \prec)$$
-
-其中 $\prec$ 是严格偏序关系。
-
-**定义 3.2.2 (因果依赖)**
-变迁 $t_1$ 因果依赖于 $t_2$，记作 $t_1 \prec t_2$，当且仅当：
-$$\exists p \in P: p \in t_2^\bullet \cap ^\bullet t_1$$
-
-**定理 3.2.1 (部分序保持)**
-部分序语义保持因果依赖关系。
-
-**证明：** 通过因果依赖定义：
-
-```haskell
--- 部分序
-data PartialOrder = PartialOrder
-  { transitions :: Set Transition
-  , causalDependency :: Set (Transition, Transition)
-  }
-
--- 因果依赖检查
-isCausallyDependent :: PetriNet -> Transition -> Transition -> Bool
-isCausallyDependent net t1 t2 = 
-  let postsetT2 = postset net (Right t2)
-      presetT1 = preset net (Right t1)
-      intersection = intersect postsetT2 presetT1
-  in not (isEmpty intersection)
-
--- 部分序构造
-constructPartialOrder :: PetriNet -> [Transition] -> PartialOrder
-constructPartialOrder net transitionSequence = 
-  let transitions = setFromList transitionSequence
-      
-      -- 计算因果依赖
-      dependencies = [(t1, t2) | 
-        t1 <- transitionSequence,
-        t2 <- transitionSequence,
-        t1 /= t2,
-        isCausallyDependent net t1 t2]
-      
-      causalDependency = setFromList dependencies
-  in PartialOrder transitions causalDependency
-
--- 部分序验证
-validatePartialOrder :: PetriNet -> PartialOrder -> Bool
-validatePartialOrder net partialOrder = 
-  let dependencies = causalDependency partialOrder
-      
-      -- 检查传递性
-      isTransitive = checkTransitivity dependencies
-      
-      -- 检查反自反性
-      isIrreflexive = checkIrreflexivity dependencies
-  in isTransitive && isIrreflexive
-
--- 传递性检查
-checkTransitivity :: Set (Transition, Transition) -> Bool
-checkTransitivity dependencies = 
-  let allPairs = toList dependencies
-      
-      -- 检查所有三元组
-      isTransitive = all (\(t1, t2) -> 
-        all (\(t2', t3) -> 
-          if t2 == t2'
-          then (t1, t3) `member` dependencies
-          else True) allPairs) allPairs
-  in isTransitive
-
--- 反自反性检查
-checkIrreflexivity :: Set (Transition, Transition) -> Bool
-checkIrreflexivity dependencies = 
-  let allPairs = toList dependencies
-      hasSelfLoop = any (\(t1, t2) -> t1 == t2) allPairs
-  in not hasSelfLoop
-```
-
-## 4. 分析技术 (Analysis Techniques)
-
-### 4.1 状态空间分析
-
-**定义 4.1.1 (可达图)**
-可达图是Petri网的状态转换图：
-$$RG(N) = (R(N), E)$$
+$$P ::= 0 \mid \alpha.P \mid P + Q \mid P \mid Q \mid P \backslash L \mid P[f] \mid A$$
 
 其中：
 
-- $R(N)$ 是可达标识集
-- $E = \{(M, t, M') \mid M[t\rangle M'\}$
+- $0$ 是空进程
+- $\alpha.P$ 是前缀进程
+- $P + Q$ 是选择进程
+- $P \mid Q$ 是并行进程
+- $P \backslash L$ 是限制进程
+- $P[f]$ 是重命名进程
+- $A$ 是进程标识符
 
-**定义 4.1.2 (状态空间)**
-状态空间是可达图的所有节点：
-$$\text{StateSpace}(N) = R(N)$$
+**定义 4.1.2** (CCS语义) CCS的转移关系：
 
-**定理 4.1.1 (状态空间有限性)**
-有界Petri网的状态空间是有限的。
+- $\alpha.P \xrightarrow{\alpha} P$
+- $\frac{P \xrightarrow{\alpha} P'}{P + Q \xrightarrow{\alpha} P'}$
+- $\frac{P \xrightarrow{\alpha} P'}{P \mid Q \xrightarrow{\alpha} P' \mid Q}$
+- $\frac{P \xrightarrow{\tau} P'}{P \backslash L \xrightarrow{\tau} P' \backslash L}$
 
-**证明：** 通过有界性定义：
+**定理 4.1.1** (CCS表达能力) CCS可以表达有限状态并发系统。
 
-```haskell
--- 可达图
-data ReachabilityGraph = ReachabilityGraph
-  { nodes :: Set Marking
-  , edges :: Set (Marking, Transition, Marking)
-  }
+### 4.2 π演算
 
--- 可达图构造
-constructReachabilityGraph :: PetriNet -> ReachabilityGraph
-constructReachabilityGraph net = 
-  let initialMarking = initialMarking net
-      reachableMarkings = computeReachableMarkings net initialMarking
-      
-      -- 构造边
-      edges = [(marking1, transition, marking2) |
-        marking1 <- toList reachableMarkings,
-        transition <- toList (transitions net),
-        Just marking2 <- [fireTransition net marking1 transition]]
-      
-      edgeSet = setFromList edges
-  in ReachabilityGraph reachableMarkings edgeSet
+**定义 4.2.1** (π演算语法) π演算进程的语法：
 
--- 有界性检查
-isBounded :: PetriNet -> Bool
-isBounded net = 
-  let reachableMarkings = computeReachableMarkings net (initialMarking net)
-      allMarkings = toList reachableMarkings
-      
-      -- 检查每个库所是否有界
-      isBounded = all (\place -> 
-        let maxTokens = maximum [marking ! place | marking <- allMarkings]
-        in maxTokens < infinity) (toList (places net))
-  in isBounded
+$$P ::= 0 \mid \bar{x}y.P \mid x(y).P \mid P + Q \mid P \mid Q \mid (\nu x)P \mid !P$$
 
--- 安全性检查
-isSafe :: PetriNet -> Bool
-isSafe net = 
-  let reachableMarkings = computeReachableMarkings net (initialMarking net)
-      allMarkings = toList reachableMarkings
-      
-      -- 检查每个库所最多一个令牌
-      isSafe = all (\place -> 
-        all (\marking -> marking ! place <= 1) allMarkings) (toList (places net))
-  in isSafe
+其中：
 
--- 活性检查
-isLive :: PetriNet -> Bool
-isLive net = 
-  let reachableMarkings = computeReachableMarkings net (initialMarking net)
-      transitions = transitions net
-      
-      -- 检查每个变迁在每个可达标识下最终可发生
-      isLive = all (\transition -> 
-        all (\marking -> 
-          canEventuallyFire net marking transition) (toList reachableMarkings)) (toList transitions)
-  in isLive
+- $\bar{x}y.P$ 是输出进程
+- $x(y).P$ 是输入进程
+- $(\nu x)P$ 是限制进程
+- $!P$ 是复制进程
 
--- 最终可发生检查
-canEventuallyFire :: PetriNet -> Marking -> Transition -> Bool
-canEventuallyFire net marking transition = 
-  let reachableFromMarking = computeReachableMarkings net marking
-      canFire = any (\m -> isEnabled net m transition) (toList reachableFromMarking)
-  in canFire
-```
+**定义 4.2.2** (π演算语义) π演算的转移关系：
 
-### 4.2 结构分析
+- $\bar{x}y.P \xrightarrow{\bar{x}y} P$
+- $x(y).P \xrightarrow{xz} P\{z/y\}$
+- $\frac{P \xrightarrow{\alpha} P'}{P \mid Q \xrightarrow{\alpha} P' \mid Q}$
+- $\frac{P \xrightarrow{\bar{x}y} P'}{(\nu x)P \xrightarrow{\tau} (\nu x)P'}$
 
-**定义 4.2.1 (不变性)**
-不变性是Petri网的结构性质：
-$$\text{Invariant}: \sum_{p \in P} w(p) \cdot M(p) = \text{constant}$$
+**定理 4.2.1** (π演算表达能力) π演算可以表达动态并发系统。
 
-**定义 4.2.2 (陷阱和虹吸)**
+### 4.3 CSP (Communicating Sequential Processes)
 
-- **陷阱**：$S \subseteq P$ 满足 $S^\bullet \subseteq ^\bullet S$
-- **虹吸**：$S \subseteq P$ 满足 $^\bullet S \subseteq S^\bullet$
+**定义 4.3.1** (CSP语法) CSP进程的语法：
 
-**定理 4.2.1 (不变性构造)**
-每个不变性对应一个P-不变量。
+$$P ::= STOP \mid SKIP \mid a \rightarrow P \mid P \sqcap Q \mid P \sqcup Q \mid P \parallel Q$$
 
-**证明：** 通过线性代数：
+其中：
 
-```haskell
--- 不变性
-data Invariant = Invariant
-  { weights :: Map Place Double
-  , constant :: Double
-  }
+- $STOP$ 是停止进程
+- $SKIP$ 是成功终止
+- $a \rightarrow P$ 是前缀进程
+- $P \sqcap Q$ 是内部选择
+- $P \sqcup Q$ 是外部选择
+- $P \parallel Q$ 是并行组合
 
--- 不变性检查
-checkInvariant :: PetriNet -> Invariant -> Bool
-checkInvariant net invariant = 
-  let initialMarking = initialMarking net
-      reachableMarkings = computeReachableMarkings net initialMarking
-      weights = weights invariant
-      constant = constant invariant
-      
-      -- 检查所有可达标识
-      invariantHolds = all (\marking -> 
-        let weightedSum = sum [weights ! place * fromIntegral (marking ! place) | 
-          place <- toList (places net)]
-        in abs (weightedSum - constant) < epsilon) (toList reachableMarkings)
-  in invariantHolds
+**定理 4.3.1** (CSP表达能力) CSP可以表达确定性并发系统。
 
--- P-不变量计算
-computePInvariants :: PetriNet -> [Invariant]
-computePInvariants net = 
-  let places = toList (places net)
-      transitions = toList (transitions net)
-      
-      -- 构造关联矩阵
-      incidenceMatrix = constructIncidenceMatrix net
-      
-      -- 计算零空间
-      nullSpace = computeNullSpace incidenceMatrix
-      
-      -- 转换为不变量
-      invariants = map vectorToInvariant nullSpace
-  in invariants
+## 5. 并发控制
 
--- 关联矩阵构造
-constructIncidenceMatrix :: PetriNet -> Matrix Double
-constructIncidenceMatrix net = 
-  let places = toList (places net)
-      transitions = toList (transitions net)
-      
-      -- 构造矩阵
-      matrix = matrix (length places) (length transitions) (\(i, j) -> 
-        let place = places !! i
-            transition = transitions !! j
-            inputWeight = getArcWeight net place transition
-            outputWeight = getArcWeight net transition place
-        in outputWeight - inputWeight)
-  in matrix
+### 5.1 互斥控制
 
--- 陷阱检查
-isTrap :: PetriNet -> Set Place -> Bool
-isTrap net placeSet = 
-  let postset = union [postset net (Left place) | place <- toList placeSet]
-      preset = union [preset net (Left place) | place <- toList placeSet]
-      isTrap = isSubsetOf postset preset
-  in isTrap
+**定义 5.1.1** (互斥问题) 互斥问题要求确保同一时刻只有一个进程访问临界区。
 
--- 虹吸检查
-isSiphon :: PetriNet -> Set Place -> Bool
-isSiphon net placeSet = 
-  let postset = union [postset net (Left place) | place <- toList placeSet]
-      preset = union [preset net (Left place) | place <- toList placeSet]
-      isSiphon = isSubsetOf preset postset
-  in isSiphon
-```
+**定义 5.1.2** (Petri网互斥) 使用Petri网建模互斥：
 
-## 5. 应用领域 (Application Domains)
+- 库所：$p_1, p_2$ (进程状态), $p_3$ (临界区)
+- 变迁：$t_1, t_2$ (进入临界区), $t_3, t_4$ (离开临界区)
 
-### 5.1 并发系统建模
+**定理 5.1.1** (互斥安全性) 如果 $M(p_3) \leq 1$ 对所有可达标识成立，则满足互斥。
 
-**定义 5.1.1 (并发系统)**
-并发系统是多个进程同时执行的系统：
-$$\text{ConcurrentSystem} = \{P_1, P_2, \ldots, P_n\}$$
+### 5.2 同步控制
 
-**定义 5.1.2 (进程同步)**
-进程同步通过共享资源实现：
-$$\text{Synchronization} = \text{SharedResource} \times \text{Process}$$
+**定义 5.2.1** (同步问题) 同步问题要求协调多个进程的执行顺序。
 
-**定理 5.1.1 (并发建模)**
-Petri网能够准确建模并发系统的行为。
+**定义 5.2.2** (生产者-消费者) 生产者-消费者问题的Petri网模型：
 
-**证明：** 通过并发语义：
+- 生产者：$p_1 \xrightarrow{t_1} p_2 \xrightarrow{t_2} p_1$
+- 缓冲区：$p_3$ (容量为 $n$)
+- 消费者：$p_4 \xrightarrow{t_3} p_5 \xrightarrow{t_4} p_4$
 
-```haskell
--- 并发系统
-data ConcurrentSystem = ConcurrentSystem
-  { processes :: Set Process
-  , sharedResources :: Set Resource
-  , synchronization :: Set (Process, Resource)
-  }
+**定理 5.2.1** (同步正确性) 如果缓冲区有界且无死锁，则同步正确。
 
--- 并发系统到Petri网映射
-mapToPetriNet :: ConcurrentSystem -> PetriNet
-mapToPetriNet system = 
-  let processes = processes system
-      resources = sharedResources system
-      sync = synchronization system
-      
-      -- 构造库所
-      processPlaces = [ProcessPlace p | p <- toList processes]
-      resourcePlaces = [ResourcePlace r | r <- toList resources]
-      places = setFromList (processPlaces ++ resourcePlaces)
-      
-      -- 构造变迁
-      transitions = setFromList [SyncTransition p r | (p, r) <- toList sync]
-      
-      -- 构造流关系
-      flowRelations = concat [
-        [Left (ProcessPlace p, SyncTransition p r), Right (SyncTransition p r, ResourcePlace r)] |
-        (p, r) <- toList sync]
-      flow = setFromList flowRelations
-      
-      -- 初始标识
-      initialMarking = fromList [(ProcessPlace p, 1) | p <- toList processes] ++
-                      [(ResourcePlace r, 1) | r <- toList resources]
-  in PetriNet places transitions flow initialMarking
+### 5.3 资源分配
 
--- 死锁检测
-detectDeadlock :: ConcurrentSystem -> Bool
-detectDeadlock system = 
-  let petriNet = mapToPetriNet system
-      reachableMarkings = computeReachableMarkings petriNet (initialMarking petriNet)
-      
-      -- 检查是否存在死锁状态
-      hasDeadlock = any (\marking -> 
-        let enabledTransitions = [t | t <- toList (transitions petriNet), 
-          isEnabled petriNet marking t]
-        in null enabledTransitions) (toList reachableMarkings)
-  in hasDeadlock
-```
+**定义 5.3.1** (资源分配问题) 资源分配问题要求安全地分配有限资源。
 
-### 5.2 工作流建模
+**定义 5.3.2** (银行家算法) 银行家算法的Petri网模型：
 
-**定义 5.2.1 (工作流)**
-工作流是业务流程的自动化：
-$$\text{Workflow} = \{\text{Task}_1, \text{Task}_2, \ldots, \text{Task}_n\}$$
+- 进程库所：$p_i$ (进程 $i$ 的状态)
+- 资源库所：$r_j$ (资源 $j$ 的数量)
+- 分配变迁：分配和释放资源
 
-**定义 5.2.2 (工作流模式)**
-工作流模式包括：
+**定理 5.3.1** (银行家算法安全性) 银行家算法可以避免死锁。
 
-1. **顺序模式**：任务顺序执行
-2. **并行模式**：任务并行执行
-3. **选择模式**：条件分支执行
+## 6. 死锁避免
 
-**定理 5.2.1 (工作流正确性)**
-工作流的正确性可以通过Petri网验证。
+### 6.1 死锁检测
 
-**证明：** 通过工作流分析：
+**定义 6.1.1** (死锁) 死锁是进程集合，其中每个进程都在等待集合中其他进程持有的资源。
 
-```haskell
--- 工作流
-data Workflow = Workflow
-  { tasks :: Set Task
-  , controlFlow :: Set (Task, Task)
-  , dataFlow :: Set (Task, Data)
-  }
+**定义 6.1.2** (死锁检测算法) 死锁检测算法：
 
--- 工作流模式
-data WorkflowPattern = 
-  Sequential Task Task
-  | Parallel Task Task
-  | Choice Task Task Condition
+1. 构造资源分配图
+2. 寻找环路
+3. 如果存在环路，则存在死锁
 
--- 工作流到Petri网映射
-mapWorkflowToPetriNet :: Workflow -> PetriNet
-mapWorkflowToPetriNet workflow = 
-  let tasks = tasks workflow
-      controlFlow = controlFlow workflow
-      
-      -- 构造库所
-      taskPlaces = [TaskPlace t | t <- toList tasks]
-      controlPlaces = [ControlPlace t1 t2 | (t1, t2) <- toList controlFlow]
-      places = setFromList (taskPlaces ++ controlPlaces)
-      
-      -- 构造变迁
-      taskTransitions = [TaskTransition t | t <- toList tasks]
-      flowTransitions = [FlowTransition t1 t2 | (t1, t2) <- toList controlFlow]
-      transitions = setFromList (taskTransitions ++ flowTransitions)
-      
-      -- 构造流关系
-      flowRelations = concat [
-        [Left (TaskPlace t, TaskTransition t), Right (TaskTransition t, TaskPlace t)] |
-        t <- toList tasks] ++
-        [Left (ControlPlace t1 t2, FlowTransition t1 t2), Right (FlowTransition t1 t2, ControlPlace t1 t2)] |
-        (t1, t2) <- toList controlFlow]
-      flow = setFromList flowRelations
-      
-      -- 初始标识
-      initialMarking = fromList [(TaskPlace t, 0) | t <- toList tasks] ++
-                      [(ControlPlace t1 t2, 1) | (t1, t2) <- toList controlFlow]
-  in PetriNet places transitions flow initialMarking
+**定理 6.1.1** (死锁检测正确性) 资源分配图中存在环路当且仅当存在死锁。
 
--- 工作流正确性验证
-validateWorkflow :: Workflow -> Bool
-validateWorkflow workflow = 
-  let petriNet = mapWorkflowToPetriNet workflow
-      
-      -- 检查安全性
-      isSafe = isSafe petriNet
-      
-      -- 检查活性
-      isLive = isLive petriNet
-      
-      -- 检查有界性
-      isBounded = isBounded petriNet
-  in isSafe && isLive && isBounded
-```
+**证明** 通过环路与死锁的一一对应关系。
 
-## 6. 形式化验证 (Formal Verification)
+### 6.2 死锁预防
 
-### 6.1 模型检查
+**定义 6.2.1** (死锁预防) 死锁预防通过破坏死锁的四个必要条件来避免死锁。
 
-**定义 6.1.1 (模型检查)**
-模型检查是自动验证系统性质的方法：
-$$\text{ModelChecking}(M, \phi) \equiv M \models \phi$$
+**定义 6.2.2** (资源有序分配) 资源有序分配要求进程按固定顺序申请资源。
 
-**定义 6.1.2 (时态逻辑)**
-时态逻辑用于描述系统性质：
-$$\phi ::= p \mid \neg \phi \mid \phi_1 \wedge \phi_2 \mid \mathbf{G} \phi \mid \mathbf{F} \phi \mid \mathbf{X} \phi$$
+**定理 6.2.1** (资源有序分配) 资源有序分配可以预防死锁。
 
-**定理 6.1.1 (模型检查完备性)**
-模型检查能够验证所有可表达的性质。
+**证明** 通过反证法，假设存在死锁，则存在环路，与有序分配矛盾。
 
-**证明：** 通过时态逻辑完备性：
+### 6.3 死锁避免
 
-```haskell
--- 模型检查
-data ModelChecker = ModelChecker
-  { model :: PetriNet
-  , properties :: [TemporalFormula]
-  }
+**定义 6.3.1** (死锁避免) 死锁避免通过动态检查来避免不安全状态。
 
--- 时态公式
-data TemporalFormula = 
-  Atomic String
-  | Not TemporalFormula
-  | And TemporalFormula TemporalFormula
-  | Or TemporalFormula TemporalFormula
-  | Always TemporalFormula
-  | Eventually TemporalFormula
-  | Next TemporalFormula
-  | Until TemporalFormula TemporalFormula
+**定义 6.3.2** (安全状态) 安全状态是存在安全序列的状态。
 
--- 模型检查执行
-executeModelChecking :: ModelChecker -> [Bool]
-executeModelChecking checker = 
-  let model = model checker
-      properties = properties checker
-      
-      -- 构造状态空间
-      reachabilityGraph = constructReachabilityGraph model
-      
-      -- 验证每个性质
-      results = map (\property -> 
-        checkProperty reachabilityGraph property) properties
-  in results
+**定理 6.3.1** (银行家算法) 银行家算法可以避免死锁。
 
--- 性质检查
-checkProperty :: ReachabilityGraph -> TemporalFormula -> Bool
-checkProperty graph property = 
-  case property of
-    Atomic p -> checkAtomicProperty graph p
-    Not phi -> not (checkProperty graph phi)
-    And phi1 phi2 -> checkProperty graph phi1 && checkProperty graph phi2
-    Or phi1 phi2 -> checkProperty graph phi1 || checkProperty graph phi2
-    Always phi -> checkAlwaysProperty graph phi
-    Eventually phi -> checkEventuallyProperty graph phi
-    Next phi -> checkNextProperty graph phi
-    Until phi1 phi2 -> checkUntilProperty graph phi1 phi2
+**证明** 通过安全状态的定义和算法正确性。
 
--- 始终性质检查
-checkAlwaysProperty :: ReachabilityGraph -> TemporalFormula -> Bool
-checkAlwaysProperty graph property = 
-  let nodes = nodes graph
-      allSatisfy = all (\marking -> 
-        checkPropertyAtState graph marking property) (toList nodes)
-  in allSatisfy
+## 7. 并发验证
 
--- 最终性质检查
-checkEventuallyProperty :: ReachabilityGraph -> TemporalFormula -> Bool
-checkEventuallyProperty graph property = 
-  let nodes = nodes graph
-      someSatisfy = any (\marking -> 
-        checkPropertyAtState graph marking property) (toList nodes)
-  in someSatisfy
-```
+### 7.1 模型检查
 
-### 6.2 等价性检查
+**定义 7.1.1** (模型检查) 模型检查是自动验证系统是否满足规范的技术。
 
-**定义 6.2.1 (双模拟)**
-双模拟是Petri网等价性关系：
-$$M_1 \sim M_2 \equiv \forall a \in \Sigma: M_1 \xrightarrow{a} M_1' \Rightarrow \exists M_2': M_2 \xrightarrow{a} M_2' \wedge M_1' \sim M_2'$$
+**定义 7.1.2** (CTL公式) 计算树逻辑(CTL)公式：
 
-**定义 6.2.2 (迹等价)**
-迹等价是行为等价性：
-$$\text{TraceEquivalence}(N_1, N_2) \equiv \text{Traces}(N_1) = \text{Traces}(N_2)$$
+$$\phi ::= p \mid \neg \phi \mid \phi \land \psi \mid \phi \lor \psi \mid \phi \rightarrow \psi \mid EX \phi \mid AX \phi \mid EF \phi \mid AF \phi \mid EG \phi \mid AG \phi \mid E[\phi U \psi] \mid A[\phi U \psi]$$
 
-**定理 6.2.1 (等价性保持)**
-双模拟保持所有时态性质。
+**定理 7.1.1** (CTL模型检查) CTL模型检查的时间复杂度是 $O(|S| \times |\phi|)$。
 
-**证明：** 通过双模拟定义：
+### 7.2 可达性分析
 
-```haskell
--- 等价性检查
-data EquivalenceChecker = EquivalenceChecker
-  { net1 :: PetriNet
-  , net2 :: PetriNet
-  , equivalenceType :: EquivalenceType
-  }
+**定义 7.2.1** (可达性分析) 可达性分析检查系统是否可能到达某个状态。
 
--- 等价性类型
-data EquivalenceType = 
-  Bisimulation
-  | TraceEquivalence
-  | LanguageEquivalence
+**定义 7.2.2** (状态空间探索) 状态空间探索算法：
 
--- 双模拟检查
-checkBisimulation :: PetriNet -> PetriNet -> Bool
-checkBisimulation net1 net2 = 
-  let -- 构造乘积自动机
-      productAutomaton = constructProductAutomaton net1 net2
-      
-      -- 计算最大双模拟
-      bisimulation = computeMaximalBisimulation productAutomaton
-      
-      -- 检查初始状态等价
-      initialStates1 = initialMarking net1
-      initialStates2 = initialMarking net2
-      areEquivalent = (initialStates1, initialStates2) `member` bisimulation
-  in areEquivalent
+1. 从初始状态开始
+2. 广度优先或深度优先搜索
+3. 检查目标状态
 
--- 乘积自动机构造
-constructProductAutomaton :: PetriNet -> PetriNet -> ProductAutomaton
-constructProductAutomaton net1 net2 = 
-  let states1 = computeReachableMarkings net1 (initialMarking net1)
-      states2 = computeReachableMarkings net2 (initialMarking net2)
-      
-      -- 构造乘积状态
-      productStates = [(s1, s2) | s1 <- toList states1, s2 <- toList states2]
-      
-      -- 构造乘积转移
-      productTransitions = [(s1, s2, a, s1', s2') |
-        (s1, s2) <- productStates,
-        a <- toList (transitions net1),
-        Just s1' <- [fireTransition net1 s1 a],
-        Just s2' <- [fireTransition net2 s2 a]]
-      
-      transitions = setFromList productTransitions
-  in ProductAutomaton (setFromList productStates) transitions
+**定理 7.2.1** (可达性判定) Petri网的可达性在一般情况下是不可判定的。
 
--- 最大双模拟计算
-computeMaximalBisimulation :: ProductAutomaton -> Set (Marking, Marking)
-computeMaximalBisimulation automaton = 
-  let states = states automaton
-      transitions = transitions automaton
-      
-      -- 初始等价关系
-      initialEquivalence = setFromList [(s1, s2) | (s1, s2) <- toList states]
-      
-      -- 迭代细化
-      maximalBisimulation = iterateRefinement initialEquivalence transitions
-  in maximalBisimulation
+### 7.3 不变式验证
 
--- 迭代细化
-iterateRefinement :: Set (Marking, Marking) -> Set (Marking, Marking, String, Marking, Marking) -> Set (Marking, Marking)
-iterateRefinement equivalence transitions = 
-  let -- 检查等价性保持
-      preserved = all (\(s1, s2, a, s1', s2') -> 
-        (s1, s2) `member` equivalence && (s1', s2') `member` equivalence) (toList transitions)
-      
-      if preserved
-      then equivalence
-      else
-        -- 细化等价关系
-        let refined = refineEquivalence equivalence transitions
-        in iterateRefinement refined transitions
-```
+**定义 7.3.1** (不变式验证) 不变式验证检查系统是否始终保持某个性质。
+
+**定义 7.3.2** (线性不变式) 线性不变式是形如 $\sum_{i=1}^n a_i \cdot M(p_i) = k$ 的约束。
+
+**定理 7.3.1** (不变式保持) 如果 $I$ 是S-不变式，则 $\sum_{p \in P} I(p) \cdot M(p)$ 在所有可达标识中保持不变。
+
+## 8. 并发系统应用
+
+### 8.1 操作系统
+
+**应用 8.1.1** (进程调度) 使用Petri网建模进程调度算法。
+
+**应用 8.1.2** (内存管理) 使用Petri网建模内存分配和回收。
+
+### 8.2 数据库系统
+
+**应用 8.2.1** (事务管理) 使用Petri网建模事务的并发执行。
+
+**应用 8.2.2** (锁管理) 使用Petri网建模数据库锁机制。
+
+### 8.3 网络协议
+
+**应用 8.3.1** (通信协议) 使用Petri网建模网络通信协议。
+
+**应用 8.3.2** (路由算法) 使用Petri网建模网络路由算法。
+
+## 9. 结论与展望
+
+### 9.1 并发理论的重要性
+
+并发理论为理解和设计并发系统提供了理论基础，是现代计算机科学不可或缺的核心理论。
+
+### 9.2 未来发展方向
+
+1. **量子并发**：量子计算中的并发控制
+2. **分布式并发**：大规模分布式系统的并发管理
+3. **实时并发**：实时系统的并发控制
+4. **自适应并发**：自适应并发控制算法
+
+### 9.3 挑战与机遇
+
+- **状态爆炸**：大规模并发系统的状态空间管理
+- **复杂性**：复杂并发系统的建模和分析
+- **性能**：并发控制算法的性能优化
+- **正确性**：并发系统的正确性保证
 
 ---
 
-## 总结
+**参考文献**：
 
-本文档建立了完整的Petri网理论体系，包括：
+1. Petri, C. A. (1962). Kommunikation mit Automaten. *Schriften des Instituts für Instrumentelle Mathematik*, 1.
 
-1. **基本Petri网**：基本定义、标识、变迁规则
-2. **高级Petri网**：时间Petri网、着色Petri网
-3. **并发语义**：步语义、部分序语义
-4. **分析技术**：状态空间分析、结构分析
-5. **应用领域**：并发系统建模、工作流建模
-6. **形式化验证**：模型检查、等价性检查
+2. Milner, R. (1980). *A Calculus of Communicating Systems*. Springer-Verlag.
 
-所有理论都提供了严格的形式化定义、完整的定理证明和可验证的算法实现，为并发系统建模和分析提供了坚实的理论基础。
+3. Hoare, C. A. R. (1985). *Communicating Sequential Processes*. Prentice Hall.
+
+4. Milner, R. (1999). *Communicating and Mobile Systems: the π-Calculus*. Cambridge University Press.
+
+5. Jensen, K., & Kristensen, L. M. (2009). *Coloured Petri Nets: Modelling and Validation of Concurrent Systems*. Springer.
+
+---
+
+**最后更新**：2024-12-19  
+**版本**：1.0  
+**状态**：已完成Petri网理论重构

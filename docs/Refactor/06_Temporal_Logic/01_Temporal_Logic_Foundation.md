@@ -21,6 +21,7 @@
 $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \rangle$$
 
 其中：
+
 - $\mathcal{T}$ 是时间结构
 - $\mathcal{M}$ 是模型
 - $\mathcal{L}$ 是语言
@@ -29,6 +30,7 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 **定理 1.1.1** (时态逻辑的普遍性) 任何涉及时间的推理都可以用时态逻辑建模。
 
 **证明** 通过时间建模：
+
 1. 时间结构可以表示各种时间模型
 2. 时态算子可以表达时间关系
 3. 语义解释可以处理时间推理
@@ -39,6 +41,7 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 **问题 1.2.1** (时间的本质) 时间是客观存在还是主观构造？
 
 **分析**：
+
 - **客观时间**：时间独立于观察者存在
 - **主观时间**：时间是意识的构造
 - **关系时间**：时间是事件间的关系
@@ -46,6 +49,7 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 **问题 1.2.2** (时间的方向性) 时间是否具有方向性？
 
 **分析**：
+
 - **线性时间**：时间有明确的方向
 - **分支时间**：时间有多个可能方向
 - **循环时间**：时间是循环的
@@ -58,6 +62,7 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee \varphi \mid \varphi \rightarrow \varphi \mid \varphi \leftrightarrow \varphi \mid \Box \varphi \mid \Diamond \varphi \mid \bigcirc \varphi \mid \varphi \mathcal{U} \varphi \mid \varphi \mathcal{R} \varphi$$
 
 其中：
+
 - $p$ 是原子命题
 - $\Box \varphi$ 表示"总是 $\varphi$"
 - $\Diamond \varphi$ 表示"有时 $\varphi$"
@@ -66,6 +71,7 @@ $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee 
 - $\varphi \mathcal{R} \psi$ 表示"$\varphi$ 释放 $\psi$"
 
 **定义 2.1.2** (LTL缩写) 常用缩写：
+
 - $\Diamond \varphi \equiv \top \mathcal{U} \varphi$
 - $\Box \varphi \equiv \neg \Diamond \neg \varphi$
 - $\varphi \mathcal{W} \psi \equiv \varphi \mathcal{U} \psi \vee \Box \varphi$ (弱直到)
@@ -94,6 +100,7 @@ $$\pi = s_0, s_1, s_2, \ldots$$
 **定理 2.2.1** (LTL表达能力) LTL可以表达所有正则性质。
 
 **证明** 通过等价性：
+
 1. LTL公式对应ω正则语言
 2. ω正则语言对应正则性质
 3. 因此LTL表达正则性质
@@ -103,6 +110,7 @@ $$\pi = s_0, s_1, s_2, \ldots$$
 **定义 2.3.1** (模型检查问题) 模型检查问题是判断 $M \models \varphi$ 是否成立。
 
 **定义 2.3.2** (自动机方法) 自动机方法：
+
 1. 构造 $\neg \varphi$ 的Büchi自动机
 2. 构造系统 $M$ 的Büchi自动机
 3. 检查交集是否为空
@@ -110,6 +118,7 @@ $$\pi = s_0, s_1, s_2, \ldots$$
 **定理 2.3.1** (LTL模型检查复杂度) LTL模型检查是PSPACE完全的。
 
 **证明** 通过归约：
+
 1. 将PSPACE问题归约为LTL模型检查
 2. LTL模型检查在PSPACE中
 3. 因此复杂度是PSPACE完全
@@ -122,6 +131,7 @@ $$\pi = s_0, s_1, s_2, \ldots$$
 $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee \varphi \mid \varphi \rightarrow \varphi \mid \varphi \leftrightarrow \varphi \mid \text{A} \varphi \mid \text{E} \varphi \mid \text{AX} \varphi \mid \text{EX} \varphi \mid \text{AG} \varphi \mid \text{EG} \varphi \mid \text{AF} \varphi \mid \text{EF} \varphi \mid \text{A}[\varphi \mathcal{U} \psi] \mid \text{E}[\varphi \mathcal{U} \psi]$$
 
 其中：
+
 - $\text{A} \varphi$ 表示"所有路径上 $\varphi$"
 - $\text{E} \varphi$ 表示"存在路径上 $\varphi$"
 - $\text{AX} \varphi$ 表示"所有下一个状态 $\varphi$"
@@ -134,6 +144,7 @@ $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee 
 ### 3.2 CTL语义
 
 **定义 3.2.1** (Kripke结构) Kripke结构是三元组 $M = (S, R, L)$：
+
 - $S$ 是状态集
 - $R \subseteq S \times S$ 是转移关系
 - $L: S \rightarrow 2^P$ 是标记函数
@@ -151,6 +162,7 @@ $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee 
 **定理 3.2.1** (CTL表达能力) CTL可以表达所有树正则性质。
 
 **证明** 通过等价性：
+
 1. CTL公式对应树自动机
 2. 树自动机对应树正则性质
 3. 因此CTL表达树正则性质
@@ -166,6 +178,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 **定理 3.3.1** (CTL*表达能力) CTL*严格强于CTL和LTL。
 
 **证明** 通过表达能力比较：
+
 1. CTL*包含CTL和LTL
 2. CTL*可以表达CTL和LTL无法表达的性质
 3. 因此CTL*更强
@@ -178,6 +191,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 $$\varphi_{spec} = \varphi_{safety} \wedge \varphi_{liveness}$$
 
 其中：
+
 - $\varphi_{safety}$ 是安全性规范
 - $\varphi_{liveness}$ 是活性规范
 
@@ -190,6 +204,7 @@ $$\varphi_{liveness} = \Diamond good$$
 **定理 4.1.1** (规范分类) 任何时态规范都可以分解为安全性和活性部分。
 
 **证明** 通过规范分解：
+
 1. 使用安全性和活性的定义
 2. 构造分解算法
 3. 证明分解正确性
@@ -201,6 +216,7 @@ $$\varphi_{liveness} = \Diamond good$$
 $$M \parallel C \models \varphi_{spec}$$
 
 **定义 4.2.2** (游戏理论方法) 游戏理论方法：
+
 1. 将合成问题建模为双人游戏
 2. 玩家1控制环境
 3. 玩家2控制系统
@@ -209,6 +225,7 @@ $$M \parallel C \models \varphi_{spec}$$
 **定理 4.2.1** (合成存在性) 如果存在控制器，则存在有限状态控制器。
 
 **证明** 通过策略提取：
+
 1. 从获胜策略提取控制器
 2. 策略是有限状态的
 3. 因此控制器有限状态
@@ -227,6 +244,7 @@ $$\varphi_{goal} = \text{系统达到目标状态}$$
 **定理 4.3.1** (控制正确性) 时态逻辑控制保证系统满足规范。
 
 **证明** 通过控制验证：
+
 1. 控制器满足时态规范
 2. 系统在控制器下运行
 3. 因此系统满足规范
@@ -241,6 +259,7 @@ $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee 
 其中 $\varphi \mathcal{U}_{[a,b]} \psi$ 表示"$\varphi$ 在时间区间 $[a,b]$ 内直到 $\psi$"。
 
 **定义 5.1.2** (时间约束) 时间约束：
+
 - $\varphi \mathcal{U}_{[a,b]} \psi$：$\psi$ 在 $[a,b]$ 时间内发生
 - $\Box_{[a,b]} \varphi$：在 $[a,b]$ 时间内总是 $\varphi$
 - $\Diamond_{[a,b]} \varphi$：在 $[a,b]$ 时间内有时 $\varphi$
@@ -248,6 +267,7 @@ $$\varphi ::= p \mid \neg \varphi \mid \varphi \wedge \varphi \mid \varphi \vee 
 **定理 5.1.1** (实时表达能力) 实时时态逻辑可以表达时间约束性质。
 
 **证明** 通过时间建模：
+
 1. 时间约束可以精确表达
 2. 时间区间可以任意指定
 3. 因此表达时间约束
@@ -268,6 +288,7 @@ $$x := 0$$
 **定理 5.2.1** (时钟表达能力) 时钟变量可以表达复杂时间约束。
 
 **证明** 通过时钟组合：
+
 1. 单个时钟表达简单约束
 2. 多个时钟组合表达复杂约束
 3. 因此表达能力强
@@ -275,6 +296,7 @@ $$x := 0$$
 ### 5.3 时间自动机
 
 **定义 5.3.1** (时间自动机) 时间自动机是六元组 $A = (L, L_0, X, \Sigma, E, I)$：
+
 - $L$ 是位置集
 - $L_0 \subseteq L$ 是初始位置集
 - $X$ 是时钟集
@@ -287,6 +309,7 @@ $$x := 0$$
 **定理 5.3.1** (时间自动机表达能力) 时间自动机可以表达实时系统。
 
 **证明** 通过系统建模：
+
 1. 位置表示系统状态
 2. 时钟表示时间约束
 3. 边表示状态转移
@@ -307,6 +330,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 **定理 6.1.1** (概率表达能力) 概率时态逻辑可以表达概率性质。
 
 **证明** 通过概率建模：
+
 1. 概率算子表达概率约束
 2. 路径公式表达行为性质
 3. 因此表达概率性质
@@ -314,6 +338,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 ### 6.2 马尔可夫链
 
 **定义 6.2.1** (马尔可夫链) 马尔可夫链是三元组 $M = (S, P, L)$：
+
 - $S$ 是状态集
 - $P: S \times S \rightarrow [0,1]$ 是转移概率
 - $L: S \rightarrow 2^P$ 是标记函数
@@ -323,6 +348,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 **定理 6.2.1** (马尔可夫性质) 马尔可夫链满足无记忆性质。
 
 **证明** 通过概率定义：
+
 1. 转移概率只依赖当前状态
 2. 不依赖历史状态
 3. 因此无记忆
@@ -333,6 +359,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 $$\text{Pr}_M^s(\psi)$$
 
 **定义 6.3.2** (概率模型检查算法) 概率模型检查算法：
+
 1. 构造概率自动机
 2. 计算路径概率
 3. 验证概率约束
@@ -340,6 +367,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 6.3.1** (概率模型检查复杂度) 概率模型检查是多项式时间的。
 
 **证明** 通过动态规划：
+
 1. 使用动态规划计算概率
 2. 状态空间多项式大小
 3. 因此多项式时间
@@ -349,11 +377,13 @@ $$\text{Pr}_M^s(\psi)$$
 ### 7.1 克里普克语义
 
 **定义 7.1.1** (克里普克语义) 克里普克语义使用可能世界：
+
 - 世界表示状态
 - 可达关系表示转移
 - 解释函数表示真值
 
 **定义 7.1.2** (克里普克模型) 克里普克模型是三元组 $M = (W, R, V)$：
+
 - $W$ 是世界集
 - $R \subseteq W \times W$ 是可达关系
 - $V: W \times P \rightarrow \{0,1\}$ 是解释函数
@@ -361,6 +391,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 7.1.1** (克里普克语义正确性) 克里普克语义正确解释时态逻辑。
 
 **证明** 通过语义对应：
+
 1. 世界对应状态
 2. 可达关系对应转移
 3. 解释函数对应真值
@@ -369,6 +400,7 @@ $$\text{Pr}_M^s(\psi)$$
 ### 7.2 代数语义
 
 **定义 7.2.1** (代数语义) 代数语义使用代数结构：
+
 - 布尔代数表示真值
 - 模态算子表示时态操作
 - 代数运算表示逻辑运算
@@ -378,6 +410,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 7.2.1** (代数语义完备性) 代数语义是完备的。
 
 **证明** 通过代数构造：
+
 1. 构造自由时态代数
 2. 证明代数同构
 3. 因此语义完备
@@ -385,11 +418,13 @@ $$\text{Pr}_M^s(\psi)$$
 ### 7.3 博弈语义
 
 **定义 7.3.1** (博弈语义) 博弈语义使用双人游戏：
+
 - 玩家1选择路径
 - 玩家2选择位置
 - 胜负决定真值
 
 **定义 7.3.2** (时态博弈) 时态博弈的规则：
+
 1. 从初始状态开始
 2. 玩家轮流选择
 3. 根据公式决定胜负
@@ -397,6 +432,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 7.3.1** (博弈语义正确性) 博弈语义正确解释时态逻辑。
 
 **证明** 通过博弈对应：
+
 1. 博弈规则对应语义规则
 2. 胜负条件对应真值条件
 3. 因此语义正确
@@ -406,18 +442,21 @@ $$\text{Pr}_M^s(\psi)$$
 ### 8.1 公理化系统
 
 **定义 8.1.1** (时态逻辑公理) 时态逻辑的公理：
+
 1. **K公理**：$\Box(\varphi \rightarrow \psi) \rightarrow (\Box \varphi \rightarrow \Box \psi)$
 2. **T公理**：$\Box \varphi \rightarrow \varphi$
 3. **4公理**：$\Box \varphi \rightarrow \Box \Box \varphi$
 4. **5公理**：$\Diamond \varphi \rightarrow \Box \Diamond \varphi$
 
 **定义 8.1.2** (推理规则) 推理规则：
+
 1. **必然化**：如果 $\vdash \varphi$，则 $\vdash \Box \varphi$
 2. **分离**：如果 $\vdash \varphi \rightarrow \psi$ 且 $\vdash \varphi$，则 $\vdash \psi$
 
 **定理 8.1.1** (公理系统可靠性) 公理系统是可靠的。
 
 **证明** 通过语义验证：
+
 1. 每个公理在语义下成立
 2. 推理规则保持有效性
 3. 因此系统可靠
@@ -425,11 +464,13 @@ $$\text{Pr}_M^s(\psi)$$
 ### 8.2 表列系统
 
 **定义 8.2.1** (表列系统) 表列系统使用树结构：
+
 - 节点是公式集
 - 分支是选择
 - 闭合是矛盾
 
 **定义 8.2.2** (表列规则) 表列规则：
+
 1. **合取规则**：$\Gamma, \varphi \wedge \psi \Rightarrow \Gamma, \varphi, \psi$
 2. **析取规则**：$\Gamma, \varphi \vee \psi \Rightarrow \Gamma, \varphi \mid \Gamma, \psi$
 3. **必然规则**：$\Gamma, \Box \varphi \Rightarrow \Gamma', \varphi$
@@ -437,6 +478,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 8.2.1** (表列系统完备性) 表列系统是完备的。
 
 **证明** 通过模型构造：
+
 1. 从开放分支构造模型
 2. 模型满足所有公式
 3. 因此系统完备
@@ -444,11 +486,13 @@ $$\text{Pr}_M^s(\psi)$$
 ### 8.3 自然演绎
 
 **定义 8.3.1** (自然演绎) 自然演绎使用推理规则：
+
 - 引入规则
 - 消除规则
 - 假设规则
 
 **定义 8.3.2** (时态自然演绎) 时态自然演绎规则：
+
 1. **$\Box$引入**：$\frac{\Gamma \vdash \varphi}{\Gamma \vdash \Box \varphi}$
 2. **$\Box$消除**：$\frac{\Gamma \vdash \Box \varphi}{\Gamma \vdash \varphi}$
 3. **$\Diamond$引入**：$\frac{\Gamma \vdash \varphi}{\Gamma \vdash \Diamond \varphi}$
@@ -456,6 +500,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 8.3.1** (自然演绎正确性) 自然演绎是正确的。
 
 **证明** 通过规则验证：
+
 1. 每个规则保持有效性
 2. 推理过程正确
 3. 因此演绎正确
@@ -467,6 +512,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 9.1.1** (程序验证) 时态逻辑用于程序验证。
 
 **应用**：
+
 1. **模型检查**：自动验证程序性质
 2. **程序合成**：从规范合成程序
 3. **程序分析**：分析程序行为
@@ -476,6 +522,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 9.2.1** (硬件验证) 时态逻辑用于硬件验证。
 
 **应用**：
+
 1. **电路验证**：验证电路正确性
 2. **协议验证**：验证通信协议
 3. **系统验证**：验证系统性质
@@ -485,6 +532,7 @@ $$\text{Pr}_M^s(\psi)$$
 **定理 9.3.1** (人工智能) 时态逻辑用于人工智能。
 
 **应用**：
+
 1. **知识表示**：表示时态知识
 2. **推理系统**：时态推理
 3. **规划系统**：时态规划
@@ -506,16 +554,19 @@ $$\text{Pr}_M^s(\psi)$$
 ### 10.2 理论特点
 
 **形式化程度**：
+
 - 所有概念都有严格的数学定义
 - 所有定理都有完整的证明
 - 避免使用直觉性描述
 
 **系统性**：
+
 - 从基础到高级的完整体系
 - 理论间的相互联系
 - 统一的形式化语言
 
 **批判性**：
+
 - 对时态逻辑本质的哲学反思
 - 对不同方法的批判分析
 - 对理论局限性的认识
@@ -523,16 +574,19 @@ $$\text{Pr}_M^s(\psi)$$
 ### 10.3 未来发展方向
 
 **理论发展**：
+
 1. **量子时态逻辑**：量子计算中的时态逻辑
 2. **模糊时态逻辑**：模糊时间约束
 3. **动态时态逻辑**：动态变化的时态逻辑
 
 **应用扩展**：
+
 1. **物联网**：物联网中的时态验证
 2. **区块链**：区块链中的时态性质
 3. **自动驾驶**：自动驾驶中的时态控制
 
 **哲学深化**：
+
 1. **时间与空间**：时态逻辑的空间扩展
 2. **时间与因果**：时态逻辑的因果解释
 3. **时间与意识**：时态逻辑的认知基础
