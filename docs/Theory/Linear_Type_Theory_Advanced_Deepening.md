@@ -36,11 +36,13 @@ $$\frac{\Gamma, A \vdash B}{\Gamma, !A \vdash B} \text{ (!L)}$$
 线性逻辑是一致的，即不能同时证明 $A$ 和 $A^\bot$。
 
 **证明：** 通过切割消除：
+
 1. 线性逻辑满足切割消除
 2. 切割消除确保一致性
 3. 通过结构归纳证明
 
 **算法 1.1 (线性逻辑证明搜索)**
+
 ```haskell
 data LinearLogic = LinearLogic {
   connectives :: Set Connective,
@@ -104,6 +106,7 @@ applyRuleBackward rule conclusion =
 3. **指数结构**：存在共幺子 $\delta : A \rightarrow !A$ 和 $\varepsilon : !A \rightarrow A$
 
 **算法 1.2 (线性逻辑模型构造)**
+
 ```haskell
 data LinearModel = LinearModel {
   monoid :: Monoid,
@@ -163,6 +166,7 @@ $$\frac{\Gamma \vdash M : A \multimap B \quad \Delta \vdash N : A}{\Gamma, \Delt
 $$\frac{\Gamma \vdash M : A \quad \Delta \vdash N : B}{\Gamma, \Delta \vdash M \otimes N : A \otimes B} \text{ (张量积)}$$
 
 **算法 2.1 (线性类型检查)**
+
 ```haskell
 data LinearLambda = LinearLambda {
   variables :: Map Variable Type,
@@ -234,6 +238,7 @@ inferType lambda term =
 相关类型系统要求变量必须使用至少一次。
 
 **算法 2.2 (多态线性类型系统)**
+
 ```haskell
 data PolymorphicLinear = PolymorphicLinear {
   typeVariables :: Set TypeVar,
@@ -286,6 +291,7 @@ inferPolymorphicType poly term =
 资源安全确保资源不会泄漏或重复释放。
 
 **算法 3.1 (资源管理器)**
+
 ```haskell
 data ResourceManager = ResourceManager {
   resources :: Map ResourceId Resource,
@@ -349,6 +355,7 @@ releaseResource manager resourceId =
 线性互斥锁确保锁的正确使用。
 
 **算法 3.2 (线性并发原语)**
+
 ```haskell
 data LinearChannel = LinearChannel {
   id :: ChannelId,
@@ -444,6 +451,7 @@ releaseMutex mutex =
 - **量子叠加**：$\oplus_q$ (量子叠加)
 
 **算法 4.1 (量子线性类型检查)**
+
 ```haskell
 data QuantumLinearLogic = QuantumLinearLogic {
   quantumConnectives :: Set QuantumConnective,
@@ -501,6 +509,7 @@ inferQuantumType qll term =
 量子资源安全确保量子资源不会泄漏或重复使用。
 
 **算法 4.2 (量子资源管理器)**
+
 ```haskell
 data QuantumResourceManager = QuantumResourceManager {
   qubits :: Map QubitId Qubit,
@@ -574,6 +583,7 @@ measureQubit manager qubitId =
 线性性约束描述变量的使用模式。
 
 **算法 5.1 (线性性推断算法)**
+
 ```haskell
 data LinearityInference = LinearityInference {
   constraints :: [LinearityConstraint],
@@ -668,6 +678,7 @@ applyConstraint solution constraint =
 资源跟踪在运行时确保线性性。
 
 **算法 5.2 (线性类型编译器)**
+
 ```haskell
 data LinearCompiler = LinearCompiler {
   typeChecker :: TypeChecker,
@@ -768,6 +779,7 @@ generateChecks usageMap =
 线性类型族定义类型级别的线性性关系。
 
 **算法 6.1 (高阶线性类型检查)**
+
 ```haskell
 data HigherOrderLinear = HigherOrderLinear {
   typeFamilies :: Map TypeFamily TypeDefinition,
@@ -817,6 +829,7 @@ inferKind hol type' =
 线性性证明确保程序的线性性性质。
 
 **算法 6.2 (线性性证明生成)**
+
 ```haskell
 data LinearityProof = LinearityProof {
   assumptions :: [Assumption],

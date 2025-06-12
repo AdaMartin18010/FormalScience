@@ -53,7 +53,7 @@ $$\delta y(t) = C \delta x(t) + D \delta u(t)$$
 $$A = \frac{\partial f}{\partial x}\bigg|_{(x_e, u_e)}, \quad B = \frac{\partial f}{\partial u}\bigg|_{(x_e, u_e)}$$
 $$C = \frac{\partial h}{\partial x}\bigg|_{(x_e, u_e)}, \quad D = \frac{\partial h}{\partial u}\bigg|_{(x_e, u_e)}$$
 
-**算法 1.1 (系统线性化)**
+-**算法 1.1 (系统线性化)**
 
 ```haskell
 data NonlinearSystem = NonlinearSystem {
@@ -117,7 +117,7 @@ computeJacobian f x u t =
 2. $\dot{V}(x) < 0$ 确保 $V(x)$ 严格递减
 3. 结合李雅普诺夫稳定性得到全局渐近稳定性
 
-**算法 2.1 (李雅普诺夫函数构造)**
+-**算法 2.1 (李雅普诺夫函数构造)**
 
 ```haskell
 data LyapunovFunction = LyapunovFunction {
@@ -171,7 +171,7 @@ $$\|y\|_\infty \leq \gamma \|u\|_\infty$$
 2. 利用三角不等式
 3. 应用小增益条件
 
-**算法 2.2 (L2增益计算)**
+-**算法 2.2 (L2增益计算)**
 
 ```haskell
 computeL2Gain :: LinearSystem -> Double
@@ -210,7 +210,7 @@ solveHInfinityRiccati sys gamma =
 **定义 2.6 (分岔)**
 分岔是系统定性行为发生突然变化的现象。
 
-**算法 2.3 (分岔分析)**
+-**算法 2.3 (分岔分析)**
 
 ```haskell
 data BifurcationAnalysis = BifurcationAnalysis {
@@ -247,7 +247,7 @@ findEquilibriumPoints systemFunc parameter =
 **定义 3.2 (相对度)**
 系统的相对度是输出需要微分多少次才能显式出现输入。
 
-**算法 3.1 (反馈线性化设计)**
+-**算法 3.1 (反馈线性化设计)**
 
 ```haskell
 data FeedbackLinearization = FeedbackLinearization {
