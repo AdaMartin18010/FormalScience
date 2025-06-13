@@ -21,6 +21,7 @@
 $$\mathcal{L}_Q = \langle \Sigma, \mathcal{T}, \mathcal{F}, \mathcal{A}, \mathcal{R} \rangle$$
 
 其中：
+
 - $\Sigma$ 是符号集
 - $\mathcal{T}$ 是项集
 - $\mathcal{F}$ 是公式集
@@ -36,6 +37,7 @@ $$\mathcal{L}_Q = \langle \Sigma, \mathcal{T}, \mathcal{F}, \mathcal{A}, \mathca
 3. **表达能力**：谓词逻辑可以表达命题逻辑无法表达的概念
 
 **示例 1.1.1** (表达力对比)：
+
 - 命题逻辑：$p \rightarrow q$（如果下雨，则地面湿）
 - 谓词逻辑：$\forall x (Rain(x) \rightarrow Wet(Ground))$（对所有时刻x，如果x时刻下雨，则地面湿）
 
@@ -64,6 +66,7 @@ $$\mathcal{L}_Q = \langle \Sigma, \mathcal{T}, \mathcal{F}, \mathcal{A}, \mathca
 **定义 2.1.1** (谓词逻辑符号集) 谓词逻辑语言 $\mathcal{L}_Q$ 的符号集包含：
 
 **逻辑符号**：
+
 - 逻辑连接词：$\neg, \wedge, \vee, \rightarrow, \leftrightarrow$
 - 量词：$\forall, \exists$
 - 等号：$=$
@@ -71,12 +74,14 @@ $$\mathcal{L}_Q = \langle \Sigma, \mathcal{T}, \mathcal{F}, \mathcal{A}, \mathca
 - 逗号：$,$
 
 **非逻辑符号**：
+
 - 个体变量：$x, y, z, x_1, x_2, \ldots \in \mathcal{V}$
 - 个体常量：$a, b, c, a_1, a_2, \ldots \in \mathcal{C}$
 - 谓词符号：$P, Q, R, P_1, P_2, \ldots \in \mathcal{P}$
 - 函数符号：$f, g, h, f_1, f_2, \ldots \in \mathcal{F}$
 
 **定义 2.1.2** (符号的元数) 每个谓词符号和函数符号都有固定的元数：
+
 - $P^n$ 表示 $n$ 元谓词符号
 - $f^n$ 表示 $n$ 元函数符号
 
@@ -636,4 +641,4 @@ $$\mathcal{A} \models_{s[x/t^{\mathcal{A},s}]} \varphi \text{ 当且仅当 } \ma
 
 ---
 
-**重构宣言**：<(￣︶￣)↗[GO!] 谓词逻辑理论重构完成，为形式科学体系奠定坚实基础！ 
+**重构宣言**：<(￣︶￣)↗[GO!] 谓词逻辑理论重构完成，为形式科学体系奠定坚实基础！

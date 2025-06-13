@@ -21,6 +21,7 @@
 $$\mathcal{R} = \langle \text{Premises}, \text{Conclusion}, \text{Conditions} \rangle$$
 
 其中：
+
 - $\text{Premises}$ 是前提集
 - $\text{Conclusion}$ 是结论
 - $\text{Conditions}$ 是应用条件
@@ -184,6 +185,7 @@ $$\frac{\varphi \quad \varphi \rightarrow \psi}{\psi} \text{ (分离规则)}$$
 **存在概括**：$\varphi[t/x] \rightarrow \exists x \varphi$
 
 **等词公理**：
+
 - $x = x$ (自反性)
 - $x = y \rightarrow (\varphi[x/z] \rightarrow \varphi[y/z])$ (莱布尼茨律)
 
@@ -415,26 +417,31 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma', \varphi \vdash \Delta'}{\Ga
 ### 8.2 应用场景分析
 
 **自然演绎系统**：
+
 - **适用场景**：教学、直觉理解
 - **优势**：直观、易理解
 - **劣势**：自动化困难
 
 **公理化系统**：
+
 - **适用场景**：理论研究、元理论分析
 - **优势**：形式化程度高
 - **劣势**：证明冗长
 
 **表列系统**：
+
 - **适用场景**：语义分析、模型构造
 - **优势**：语义清晰、自动化程度高
 - **劣势**：证明树可能很大
 
 **归结系统**：
+
 - **适用场景**：自动推理、定理证明
 - **优势**：高度自动化
 - **劣势**：可读性差
 
 **序列演算**：
+
 - **适用场景**：结构分析、证明论研究
 - **优势**：结构清晰、子公式性质
 - **劣势**：证明可能复杂
@@ -595,4 +602,4 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma', \varphi \vdash \Delta'}{\Ga
 
 ---
 
-**重构宣言**：<(￣︶￣)↗[GO!] 推理规则理论重构完成，为形式科学体系提供坚实的推理基础！ 
+**重构宣言**：<(￣︶￣)↗[GO!] 推理规则理论重构完成，为形式科学体系提供坚实的推理基础！
