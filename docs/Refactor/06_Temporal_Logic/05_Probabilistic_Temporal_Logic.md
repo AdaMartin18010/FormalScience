@@ -154,7 +154,7 @@ $$M \models \varphi \text{ 当且仅当 } \forall s \in S_0 : M, s \models \varp
 
 **算法 4.2.1** (PCTL模型检查算法)
 
-```
+```text
 输入：概率系统 M，PCTL公式 φ
 输出：满足 φ 的状态集
 
@@ -170,7 +170,7 @@ $$M \models \varphi \text{ 当且仅当 } \forall s \in S_0 : M, s \models \varp
 
 **算法 4.2.2** (路径概率计算算法)
 
-```
+```text
 输入：概率系统 M，状态 s，路径公式 ψ
 输出：Prob_M(s, ψ)
 
@@ -198,7 +198,7 @@ $$\text{Prob}_M(s, \Diamond \varphi) = \sum_{s' \in S} \delta(s)(s') \cdot \text
 
 **算法 4.3.1** (线性方程组求解算法)
 
-```
+```text
 输入：线性方程组 Ax = b
 输出：解向量 x
 
@@ -224,7 +224,7 @@ $$\text{Prob}_M(s, \Diamond \varphi) = \sum_{s' \in S} \delta(s)(s') \cdot \text
 
 **算法 5.2.1** (概率控制器合成算法)
 
-```
+```text
 输入：概率系统 M，PCTL规范 φ
 输出：概率控制器 C 或"不可实现"
 
@@ -260,7 +260,7 @@ $$cost(C) = \sum_{s \in S_C} \sum_{a \in \mathcal{A}} P_C(s, a) \cdot w(a)$$
 
 **算法 5.3.1** (最优概率控制器合成算法)
 
-```
+```text
 输入：概率系统 M，PCTL规范 φ，代价函数 w
 输出：最优概率控制器 C
 
@@ -414,4 +414,4 @@ $$M, s \models \mathbb{P}_{\sim x}[\psi] \text{ 当且仅当 } \text{Prob}_M(s, 
 - **定义 5.3.1**：最优概率控制器
 - **定义 5.3.2**：概率控制代价
 - **定义 7.2.1**：实时概率语义
-- **定义 7.3.1**：参数化概率语义 
+- **定义 7.3.1**：参数化概率语义

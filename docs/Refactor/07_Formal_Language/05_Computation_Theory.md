@@ -18,6 +18,7 @@
 
 **定义 1.1.1** (计算模型)
 计算模型是描述计算过程的抽象机器，包括：
+
 - 图灵机
 - 有限自动机
 - λ演算
@@ -57,6 +58,7 @@ $$S(n) = \text{max}\{\text{space}(M, x) \mid |x| = n\}$$
 
 **定义 2.1.1** (图灵机)
 图灵机是一个七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
+
 - $Q$ 是状态集合
 - $\Sigma$ 是输入字母表
 - $\Gamma$ 是带字母表
@@ -67,6 +69,7 @@ $$S(n) = \text{max}\{\text{space}(M, x) \mid |x| = n\}$$
 
 **定义 2.1.2** (图灵机配置)
 图灵机配置是一个三元组 $(q, \alpha, i)$，其中：
+
 - $q$ 是当前状态
 - $\alpha$ 是带内容
 - $i$ 是读写头位置
@@ -85,12 +88,14 @@ $$(q_0, w, 0) \vdash_M (q_1, \alpha_1, i_1) \vdash_M \cdots \vdash_M (q_f, \alph
 
 **定义 2.2.1** (基本递归函数)
 基本递归函数包括：
+
 1. **零函数**：$Z(x) = 0$
 2. **后继函数**：$S(x) = x + 1$
 3. **投影函数**：$P_i^n(x_1, \ldots, x_n) = x_i$
 
 **定义 2.2.2** (递归函数构造)
 递归函数通过以下方式构造：
+
 1. **复合**：$h(x) = f(g_1(x), \ldots, g_m(x))$
 2. **原始递归**：$h(x, 0) = f(x), h(x, y+1) = g(x, y, h(x, y))$
 3. **μ递归**：$h(x) = \mu y[f(x, y) = 0]$
@@ -112,6 +117,7 @@ $$\text{HALT} = \{\langle M, w \rangle \mid M \text{ 在输入 } w \text{ 上停
 
 **证明**：
 假设停机问题是可判定的，构造矛盾：
+
 1. 假设存在图灵机 $H$ 判定停机问题
 2. 构造图灵机 $D$：$D(M) = \begin{cases}
    \text{停机} & \text{if } H(M, M) = \text{拒绝} \\
@@ -137,6 +143,7 @@ $$L = L(M) = \{w \mid M \text{ 接受 } w\}$$
 
 **定义 2.4.2** (递归语言)
 语言 $L$ 是递归的，当且仅当存在图灵机 $M$ 使得：
+
 - 对于所有 $w \in L$，$M$ 在 $w$ 上停机并接受
 - 对于所有 $w \notin L$，$M$ 在 $w$ 上停机并拒绝
 
@@ -144,6 +151,7 @@ $$L = L(M) = \{w \mid M \text{ 接受 } w\}$$
 递归语言类是递归可枚举语言类的真子集。
 
 **证明**：
+
 1. 每个递归语言都是递归可枚举的
 2. 存在递归可枚举语言不是递归的（如停机问题的语言）
 
@@ -157,6 +165,7 @@ $$T(n) = O(f(n)) \Leftrightarrow \exists c, n_0. \forall n \geq n_0. T(n) \leq c
 
 **定义 3.1.2** (复杂度类)
 主要复杂度类包括：
+
 - **P**：多项式时间可判定问题
 - **NP**：非确定性多项式时间可判定问题
 - **EXP**：指数时间可判定问题
@@ -175,6 +184,7 @@ $$x \in A \Leftrightarrow f(x) \in B$$
 
 **定义 3.2.2** (NP完全问题)
 问题 $L$ 是NP完全的，当且仅当：
+
 1. $L \in NP$
 2. 对于所有 $A \in NP$，$A \leq_p L$
 
@@ -201,6 +211,7 @@ $$S(n) = O(f(n)) \Leftrightarrow \exists c, n_0. \forall n \geq n_0. S(n) \leq c
 
 **定义 3.3.2** (空间复杂度类)
 主要空间复杂度类包括：
+
 - **L**：对数空间可判定问题
 - **NL**：非确定性对数空间可判定问题
 - **PSPACE**：多项式空间可判定问题
@@ -220,6 +231,7 @@ $$\delta: Q \times \Gamma \to 2^{Q \times \Gamma \times \{L, R\}}$$
 
 **定义 3.4.2** (概率复杂度类)
 主要概率复杂度类包括：
+
 - **RP**：随机多项式时间（单侧错误）
 - **BPP**：有界错误概率多项式时间
 - **PP**：无界错误概率多项式时间
@@ -260,6 +272,7 @@ $$T(n) = aT(n/b) + f(n)$$
 
 **定理 4.2.1** (主定理)
 对于递归关系 $T(n) = aT(n/b) + f(n)$，其中 $a \geq 1, b > 1$：
+
 1. 如果 $f(n) = O(n^{\log_b a - \varepsilon})$，则 $T(n) = \Theta(n^{\log_b a})$
 2. 如果 $f(n) = \Theta(n^{\log_b a})$，则 $T(n) = \Theta(n^{\log_b a} \log n)$
 3. 如果 $f(n) = \Omega(n^{\log_b a + \varepsilon})$，则 $T(n) = \Theta(f(n))$
@@ -271,6 +284,7 @@ $$T(n) = aT(n/b) + f(n)$$
 
 **定义 4.3.1** (分治算法)
 分治算法将问题分解为子问题：
+
 ```python
 def divide_and_conquer(problem):
     if base_case(problem):
@@ -282,6 +296,7 @@ def divide_and_conquer(problem):
 
 **定义 4.3.2** (动态规划)
 动态规划通过存储子问题解避免重复计算：
+
 ```python
 def dynamic_programming(problem):
     memo = {}
@@ -299,6 +314,7 @@ def dynamic_programming(problem):
 
 **定义 4.3.3** (贪心算法)
 贪心算法在每一步选择局部最优解：
+
 ```python
 def greedy_algorithm(problem):
     solution = []
@@ -315,12 +331,14 @@ def greedy_algorithm(problem):
 
 **定义 5.1.1** (PRAM模型)
 PRAM（并行随机访问机器）模型：
+
 - 多个处理器共享内存
 - 每个处理器有自己的局部内存
 - 处理器可以并行执行指令
 
 **定义 5.1.2** (并行复杂度)
 并行复杂度包括：
+
 - **时间**：并行执行时间
 - **工作**：总计算量
 - **空间**：总存储空间
@@ -333,6 +351,7 @@ $$\text{Speedup} = \frac{T_1}{T_p}$$
 
 **定义 5.2.1** (并行排序)
 并行归并排序算法：
+
 ```python
 def parallel_merge_sort(array, p):
     if p == 1:
@@ -347,6 +366,7 @@ def parallel_merge_sort(array, p):
 
 **定义 5.2.2** (并行搜索)
 并行二分搜索算法：
+
 ```python
 def parallel_binary_search(array, target, p):
     def search_range(start, end, processors):
@@ -372,18 +392,21 @@ $$\text{Efficiency} = \frac{\text{Speedup}}{p} = \frac{T_1}{p \cdot T_p}$$
 
 **定义 5.3.1** (分布式系统)
 分布式系统是由多个独立节点组成的系统：
+
 - 节点间通过消息传递通信
 - 每个节点有自己的局部状态
 - 系统具有容错能力
 
 **定义 5.3.2** (一致性协议)
 一致性协议确保分布式系统中的数据一致性：
+
 - **强一致性**：所有节点看到相同的数据
 - **最终一致性**：最终所有节点看到相同的数据
 - **因果一致性**：保持因果关系的顺序
 
 **定理 5.3.1** (CAP定理)
 分布式系统最多只能同时满足以下三个性质中的两个：
+
 - **一致性**（Consistency）
 - **可用性**（Availability）
 - **分区容错性**（Partition tolerance）
@@ -402,6 +425,7 @@ $$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$$
 
 **定义 6.1.2** (量子门)
 量子门是量子比特上的操作：
+
 - **Hadamard门**：$H = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
 - **CNOT门**：$\text{CNOT} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}$
 
@@ -419,6 +443,7 @@ $$|\psi\rangle = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} e^{2\pi i xy/N}|x\rangle$$
 
 **定义 6.2.2** (Shor算法)
 Shor算法用于整数分解：
+
 ```python
 def shor_algorithm(N):
     # 选择随机数a
@@ -448,6 +473,7 @@ Shor算法的时间复杂度是 $O((\log N)^3)$。
 
 **定义 6.3.1** (量子复杂度类)
 主要量子复杂度类包括：
+
 - **BQP**：有界错误量子多项式时间
 - **QMA**：量子Merlin-Arthur
 - **QCMA**：经典Merlin-量子Arthur
@@ -465,6 +491,7 @@ $$P \subseteq BPP \subseteq BQP \subseteq PSPACE$$
 
 **应用 7.1.1** (公钥密码学)
 RSA算法的安全性基于大整数分解的困难性：
+
 ```python
 def rsa_encrypt(message, public_key):
     n, e = public_key
@@ -477,6 +504,7 @@ def rsa_decrypt(ciphertext, private_key):
 
 **应用 7.1.2** (量子密码学)
 BB84量子密钥分发协议：
+
 ```python
 def bb84_protocol():
     # Alice随机选择比特和基底
@@ -498,6 +526,7 @@ def bb84_protocol():
 
 **应用 7.2.1** (机器学习)
 机器学习算法的复杂度分析：
+
 ```python
 def machine_learning_complexity(algorithm, data_size):
     if algorithm == "linear_regression":
@@ -510,6 +539,7 @@ def machine_learning_complexity(algorithm, data_size):
 
 **应用 7.2.2** (深度学习)
 深度学习模型的训练复杂度：
+
 ```python
 def deep_learning_complexity(model, batch_size, epochs):
     # 前向传播：O(batch_size * layers * neurons)
@@ -522,6 +552,7 @@ def deep_learning_complexity(model, batch_size, epochs):
 
 **应用 7.3.1** (序列比对)
 序列比对算法的复杂度：
+
 ```python
 def sequence_alignment_complexity(seq1, seq2):
     # 动态规划算法：O(mn)
@@ -531,6 +562,7 @@ def sequence_alignment_complexity(seq1, seq2):
 
 **应用 7.3.2** (基因预测)
 基因预测算法的复杂度：
+
 ```python
 def gene_prediction_complexity(genome_length):
     # 隐马尔可夫模型：O(genome_length * states)
@@ -542,6 +574,7 @@ def gene_prediction_complexity(genome_length):
 
 **扩展 7.4.1** (近似算法)
 近似算法理论：
+
 ```python
 def approximation_algorithm(problem, epsilon):
     # 构造近似解
@@ -559,6 +592,7 @@ def approximation_algorithm(problem, epsilon):
 
 **扩展 7.4.2** (在线算法)
 在线算法理论：
+
 ```python
 def online_algorithm(requests):
     solution = []
@@ -574,11 +608,13 @@ def online_algorithm(requests):
 ### 8.1 计算哲学视角
 
 **批判 8.1.1** (丘奇-图灵论题)
+
 - 丘奇-图灵论题声称所有可计算函数都是图灵可计算的
 - 但该论题无法被严格证明
 - 需要结合物理和认知科学的研究成果
 
 **批判 8.1.2** (计算本质)
+
 - 计算理论主要关注形式化计算模型
 - 但计算的本质可能超越形式化描述
 - 需要结合哲学和认知科学的研究
@@ -586,11 +622,13 @@ def online_algorithm(requests):
 ### 8.2 认知科学视角
 
 **批判 8.2.1** (人类计算)
+
 - 计算理论主要关注机器计算
 - 但人类计算可能具有不同的特性
 - 需要结合认知科学的研究成果
 
 **批判 8.2.2** (学习机制)
+
 - 计算理论假设算法是预先定义的
 - 但学习算法可能通过经验获得
 - 需要结合机器学习理论
@@ -598,11 +636,13 @@ def online_algorithm(requests):
 ### 8.3 物理视角
 
 **批判 8.3.1** (物理限制)
+
 - 计算理论主要关注抽象计算模型
 - 但实际计算受到物理定律限制
 - 需要结合物理学的研究成果
 
 **批判 8.3.2** (量子计算)
+
 - 经典计算理论可能无法完全描述量子计算
 - 需要发展新的量子计算理论
 - 需要结合量子力学的研究
@@ -612,16 +652,19 @@ def online_algorithm(requests):
 ### 9.1 理论贡献
 
 **贡献 9.1.1** (形式化基础)
+
 - 为计算提供了严格的形式化基础
 - 建立了计算复杂度的理论框架
 - 推动了计算机科学的发展
 
 **贡献 9.1.2** (算法设计)
+
 - 提供了多种算法设计技术
 - 为问题求解提供了实用工具
 - 推动了算法研究的发展
 
 **贡献 9.1.3** (应用基础)
+
 - 为密码学提供了理论基础
 - 为人工智能提供了数学工具
 - 为生物信息学提供了分析方法
@@ -629,16 +672,19 @@ def online_algorithm(requests):
 ### 9.2 理论局限
 
 **局限 9.2.1** (表达能力)
+
 - 计算理论可能无法完全描述复杂计算
 - 需要扩展理论以处理新的计算模型
 - 需要结合其他学科的研究成果
 
 **局限 9.2.2** (实际应用)
+
 - 某些理论结果可能难以实际应用
 - 需要开发实用的算法和工具
 - 需要与实际应用相结合
 
 **局限 9.2.3** (物理限制)
+
 - 计算理论主要关注抽象模型
 - 但实际计算受到物理定律限制
 - 需要结合物理学的研究
@@ -646,16 +692,19 @@ def online_algorithm(requests):
 ### 9.3 未来发展方向
 
 **方向 9.3.1** (理论扩展)
+
 - 发展更强大的计算理论
 - 研究新的计算模型
 - 探索计算与其他学科的关系
 
 **方向 9.3.2** (算法优化)
+
 - 开发更高效的算法
 - 研究并行和分布式算法
 - 探索量子算法
 
 **方向 9.3.3** (应用拓展)
+
 - 扩展到更多应用领域
 - 结合人工智能技术
 - 探索跨学科研究
@@ -663,16 +712,19 @@ def online_algorithm(requests):
 ### 9.4 哲学意义
 
 **意义 9.4.1** (认知理解)
+
 - 计算理论为理解智能提供了数学工具
 - 推动了认知科学的发展
 - 为人工智能研究提供了理论基础
 
 **意义 9.4.2** (科学方法)
+
 - 计算理论体现了形式化方法的重要性
 - 为科学研究提供了方法论指导
 - 推动了科学哲学的发展
 
 **意义 9.4.3** (技术发展)
+
 - 计算理论推动了计算机科学的发展
 - 为信息技术提供了理论基础
 - 促进了社会技术进步
@@ -680,19 +732,22 @@ def online_algorithm(requests):
 ---
 
 **定理总结**：
+
 - 可计算性理论建立了计算的基本界限
 - 计算复杂度理论为算法分析提供了框架
 - 算法分析为算法设计提供了指导
 - 计算理论为多个应用领域提供了理论基础
 
 **应用价值**：
+
 - 为密码学提供理论基础
 - 为人工智能提供数学工具
 - 为生物信息学提供分析方法
 - 为算法设计提供方法论指导
 
 **哲学意义**：
+
 - 体现了形式化方法的重要性
 - 推动了认知科学的发展
 - 为人工智能研究提供理论基础
-- 促进了跨学科研究的发展 
+- 促进了跨学科研究的发展

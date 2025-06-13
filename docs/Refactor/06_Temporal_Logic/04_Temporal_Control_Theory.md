@@ -121,7 +121,7 @@ $$\varphi_{composite} = \varphi_{safety} \wedge \varphi_{liveness} \wedge \varph
 
 **算法 3.2.1** (时态控制器合成算法)
 
-```
+```text
 输入：系统模型 M，时态规范 φ
 输出：控制器 C 或"不可实现"
 
@@ -155,7 +155,7 @@ $$cost(C) = \sum_{s \in S_C} \sum_{a \in L_C(s)} w(a)$$
 
 **算法 3.3.1** (最优控制器合成算法)
 
-```
+```text
 输入：系统模型 M，时态规范 φ，代价函数 w
 输出：最优控制器 C
 
@@ -197,7 +197,7 @@ $$M \parallel C_{rt} \models \varphi_{rt}$$
 
 **算法 4.2.1** (实时控制器合成算法)
 
-```
+```text
 输入：实时系统模型 M，实时时态规范 φ_rt
 输出：实时控制器 C_rt
 
@@ -263,7 +263,7 @@ $$M \parallel C_p \models \varphi_p$$
 
 **算法 5.2.1** (概率控制器合成算法)
 
-```
+```text
 输入：概率系统模型 M，概率时态规范 φ_p
 输出：概率控制器 C_p
 
@@ -308,7 +308,7 @@ $$\forall \delta \in \Delta : M(\delta) \parallel C_{robust} \models \varphi$$
 
 **算法 6.2.1** (鲁棒控制器合成算法)
 
-```
+```text
 输入：不确定性系统模型 M(δ)，时态规范 φ
 输出：鲁棒控制器 C_robust
 
@@ -442,4 +442,4 @@ $$\forall \delta \in \Delta : M(\delta) \parallel C \models \varphi$$
 - **定义 6.1.1**：鲁棒时态规范
 - **定义 6.1.2**：不确定性模型
 - **定义 6.2.1**：鲁棒控制器
-- **定义 6.3.1**：鲁棒性 
+- **定义 6.3.1**：鲁棒性

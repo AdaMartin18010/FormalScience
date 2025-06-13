@@ -228,7 +228,7 @@ $$L(\mathcal{A}_\varphi) = \{\pi \mid \pi \models \varphi\}$$
 
 **算法 5.2.1** (LTL到Büchi转换算法)
 
-```
+```text
 输入：LTL公式 φ
 输出：Büchi自动机 A_φ
 

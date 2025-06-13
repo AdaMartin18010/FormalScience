@@ -18,6 +18,7 @@
 
 **定义 1.1.1** (语法学)
 语法学是研究语言结构规律的学科，包括：
+
 - 词法结构
 - 句法结构
 - 语法规则
@@ -105,6 +106,7 @@ $$\delta(I, X) = \text{closure}(\{A \to \alpha X \cdot \beta \mid A \to \alpha \
 
 **定义 2.3.3** (LR(0)分析表)
 LR(0)分析表包含：
+
 - ACTION表：决定移进或归约
 - GOTO表：决定状态转移
 
@@ -140,6 +142,7 @@ $$\text{AST} = \text{Node}(\text{type}, \text{children}, \text{attributes})$$
 
 **定义 3.1.2** (AST节点类型)
 AST节点类型包括：
+
 - 表达式节点
 - 语句节点
 - 声明节点
@@ -171,6 +174,7 @@ CST到AST的转换保持语义等价。
 
 **定义 3.3.1** (深度优先遍历)
 深度优先遍历(DFS)算法：
+
 ```python
 def dfs(node):
     visit(node)
@@ -180,6 +184,7 @@ def dfs(node):
 
 **定义 3.3.2** (广度优先遍历)
 广度优先遍历(BFS)算法：
+
 ```python
 def bfs(root):
     queue = [root]
@@ -217,12 +222,14 @@ $$\text{error\_position}(w) = \min\{i \mid w[1..i] \text{ 不是任何句子的�
 
 **定义 4.2.1** (错误恢复策略)
 错误恢复策略包括：
+
 1. **紧急模式恢复**：跳过输入直到找到同步符号
 2. **短语级恢复**：替换错误短语
 3. **全局纠正**：全局最小修改
 
 **定义 4.2.2** (紧急模式恢复)
 紧急模式恢复算法：
+
 ```python
 def panic_mode_recovery():
     while not is_sync_symbol(lookahead):
@@ -240,6 +247,7 @@ def panic_mode_recovery():
 
 **定义 4.3.1** (错误消息)
 错误消息包含：
+
 - 错误位置
 - 错误类型
 - 期望的符号
@@ -261,6 +269,7 @@ $$\text{generate\_error\_message}: \text{Error} \to \text{String}$$
 
 **定义 5.1.1** (消除左递归)
 消除左递归的算法：
+
 ```python
 def eliminate_left_recursion(grammar):
     for A in nonterminals:
@@ -270,6 +279,7 @@ def eliminate_left_recursion(grammar):
 
 **定义 5.1.2** (提取左公因子)
 提取左公因子的算法：
+
 ```python
 def extract_left_factors(grammar):
     for A in nonterminals:
@@ -287,6 +297,7 @@ def extract_left_factors(grammar):
 
 **定义 5.2.1** (表压缩)
 LR分析表压缩算法：
+
 ```python
 def compress_table(table):
     # 合并相似行和列
@@ -295,6 +306,7 @@ def compress_table(table):
 
 **定义 5.2.2** (缓存优化)
 分析器缓存优化：
+
 ```python
 def cached_parse(input):
     if input in cache:
@@ -314,6 +326,7 @@ def cached_parse(input):
 
 **定义 5.3.1** (语法树压缩)
 语法树压缩算法：
+
 ```python
 def compress_ast(ast):
     # 共享相同子树
@@ -322,6 +335,7 @@ def compress_ast(ast):
 
 **定义 5.3.2** (垃圾回收)
 语法树垃圾回收：
+
 ```python
 def gc_ast(ast):
     # 标记可达节点
@@ -364,6 +378,7 @@ $$G = (V, \Sigma, I, A, S)$$
 
 **定义 6.2.2** (树邻接操作)
 树邻接操作包括：
+
 - 替换操作
 - 邻接操作
 
@@ -396,6 +411,7 @@ MCFG形成严格的层次结构。
 
 **应用 7.1.1** (词法分析器)
 词法分析器生成器(如Lex)：
+
 ```python
 def generate_lexer(specification):
     # 生成有限自动机
@@ -406,6 +422,7 @@ def generate_lexer(specification):
 
 **应用 7.1.2** (语法分析器)
 语法分析器生成器(如Yacc)：
+
 ```python
 def generate_parser(grammar):
     # 构建LR分析表
@@ -418,6 +435,7 @@ def generate_parser(grammar):
 
 **应用 7.2.1** (句法分析)
 自然语言句法分析：
+
 ```python
 def parse_natural_language(sentence):
     # 词性标注
@@ -429,6 +447,7 @@ def parse_natural_language(sentence):
 
 **应用 7.2.2** (依存分析)
 依存语法分析：
+
 ```python
 def dependency_parsing(sentence):
     # 构建依存图
@@ -441,6 +460,7 @@ def dependency_parsing(sentence):
 
 **应用 7.3.1** (序列分析)
 生物序列语法分析：
+
 ```python
 def parse_biological_sequence(sequence):
     # 识别序列模式
@@ -451,6 +471,7 @@ def parse_biological_sequence(sequence):
 
 **应用 7.3.2** (结构预测)
 RNA二级结构预测：
+
 ```python
 def predict_rna_structure(sequence):
     # 构建RNA语法
@@ -463,6 +484,7 @@ def predict_rna_structure(sequence):
 
 **技术 7.4.1** (递归下降实现)
 递归下降分析器实现：
+
 ```python
 class RecursiveDescentParser:
     def __init__(self, grammar):
@@ -482,6 +504,7 @@ class RecursiveDescentParser:
 
 **技术 7.4.2** (LR分析实现)
 LR分析器实现：
+
 ```python
 class LRParser:
     def __init__(self, action_table, goto_table):
@@ -508,11 +531,13 @@ class LRParser:
 ### 8.1 语言学视角
 
 **批判 8.1.1** (形式化限制)
+
 - 形式语法可能无法完全描述自然语言的复杂性
 - 需要结合语用学和语义学考虑
 - 形式化方法可能过于简化
 
 **批判 8.1.2** (歧义处理)
+
 - 自然语言中存在大量歧义
 - 形式语法难以处理所有歧义情况
 - 需要结合上下文和语义信息
@@ -520,11 +545,13 @@ class LRParser:
 ### 8.2 认知科学视角
 
 **批判 8.2.1** (认知过程)
+
 - 语法分析主要关注静态结构
 - 但语言理解是动态认知过程
 - 需要结合认知科学的研究成果
 
 **批判 8.2.2** (学习机制)
+
 - 语法理论假设语法规则是预先定义的
 - 但语法可能通过学习获得
 - 需要结合机器学习理论
@@ -532,11 +559,13 @@ class LRParser:
 ### 8.3 计算复杂性视角
 
 **批判 8.3.1** (计算效率)
+
 - 某些语法分析算法复杂度较高
 - 在实际应用中需要考虑计算效率
 - 需要在表达能力和效率之间找到平衡
 
 **批判 8.3.2** (可扩展性)
+
 - 语法理论主要处理简单的语言构造
 - 但实际语言可能非常复杂
 - 需要扩展理论以处理复杂语言
@@ -546,16 +575,19 @@ class LRParser:
 ### 9.1 理论贡献
 
 **贡献 9.1.1** (形式化基础)
+
 - 为语言分析提供了严格的形式化基础
 - 建立了语法分析的理论框架
 - 推动了编译器技术的发展
 
 **贡献 9.1.2** (算法设计)
+
 - 提供了多种语法分析算法
 - 为语言处理提供了实用工具
 - 推动了自然语言处理的发展
 
 **贡献 9.1.3** (应用基础)
+
 - 为编译器构造提供了理论基础
 - 为自然语言处理提供了数学工具
 - 为生物信息学提供了分析方法
@@ -563,16 +595,19 @@ class LRParser:
 ### 9.2 理论局限
 
 **局限 9.2.1** (表达能力)
+
 - 形式语法可能无法完全描述复杂语言
 - 需要扩展理论以处理新的语言特性
 - 需要结合其他学科的研究成果
 
 **局限 9.2.2** (计算效率)
+
 - 某些语法分析算法复杂度较高
 - 在实际应用中需要考虑计算效率
 - 需要开发更高效的算法
 
 **局限 9.2.3** (实用性)
+
 - 语法理论可能过于抽象
 - 需要与实际应用相结合
 - 需要开发实用的工具和方法
@@ -580,16 +615,19 @@ class LRParser:
 ### 9.3 未来发展方向
 
 **方向 9.3.1** (理论扩展)
+
 - 发展更强大的语法理论
 - 研究新的语法分析方法
 - 探索语法与其他学科的关系
 
 **方向 9.3.2** (算法优化)
+
 - 开发更高效的语法分析算法
 - 研究并行计算方法
 - 探索量子计算方法
 
 **方向 9.3.3** (应用拓展)
+
 - 扩展到更多应用领域
 - 结合人工智能技术
 - 探索跨学科研究
@@ -597,16 +635,19 @@ class LRParser:
 ### 9.4 哲学意义
 
 **意义 9.4.1** (认知理解)
+
 - 语法理论为理解语言结构提供了数学工具
 - 推动了认知科学的发展
 - 为人工智能研究提供了理论基础
 
 **意义 9.4.2** (科学方法)
+
 - 语法理论体现了形式化方法的重要性
 - 为科学研究提供了方法论指导
 - 推动了科学哲学的发展
 
 **意义 9.4.3** (技术发展)
+
 - 语法理论推动了计算机科学的发展
 - 为信息技术提供了理论基础
 - 促进了社会技术进步
@@ -614,19 +655,22 @@ class LRParser:
 ---
 
 **定理总结**：
+
 - 语法分析提供了多种分析策略和算法
 - 语法树为程序表示提供了重要数据结构
 - 语法错误处理为语言处理提供了实用工具
 - 语法理论为多个应用领域提供了理论基础
 
 **应用价值**：
+
 - 为编译器构造提供理论基础
 - 为自然语言处理提供数学工具
 - 为生物信息学提供分析方法
 - 为语言设计提供方法论指导
 
 **哲学意义**：
+
 - 体现了形式化方法的重要性
 - 推动了认知科学的发展
 - 为人工智能研究提供理论基础
-- 促进了跨学科研究的发展 
+- 促进了跨学科研究的发展
