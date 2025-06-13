@@ -209,6 +209,7 @@ $$\Box(start \rightarrow \Box \Diamond continue)$$
 - $F \subseteq Q$ 是接受状态集
 
 **定义 5.1.2** (Büchi接受) 无限字 $w = a_0 a_1 a_2 \ldots$ 被 $\mathcal{A}$ 接受当且仅当存在运行 $\rho = q_0 q_1 q_2 \ldots$ 使得：
+
 1. $q_{i+1} \in \delta(q_i, a_i)$ 对所有 $i \geq 0$
 2. $\text{Inf}(\rho) \cap F \neq \emptyset$
 
@@ -384,4 +385,4 @@ $$M, s \models \mathbb{P}_{\sim p}[\psi] \text{ 当且仅当 } \text{Prob}_M(s, 
 - **定义 5.1.1**：Büchi自动机
 - **定义 5.1.2**：Büchi接受
 - **定义 7.2.1**：实时语义
-- **定义 7.3.1**：概率语义 
+- **定义 7.3.1**：概率语义
