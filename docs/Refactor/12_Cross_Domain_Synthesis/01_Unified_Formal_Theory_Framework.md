@@ -53,18 +53,21 @@
 
 **公理 2.1.1 (集合论基础)**
 框架基于ZFC集合论公理系统，包括：
+
 - 外延公理、空集公理、配对公理
 - 并集公理、幂集公理、无穷公理
 - 替换公理、正则公理、选择公理
 
 **公理 2.1.2 (逻辑基础)**
 框架基于经典一阶逻辑，包括：
+
 - 命题逻辑：重言式、推理规则
 - 谓词逻辑：量词、变量、函数
 - 证明理论：自然演绎、序列演算
 
 **公理 2.1.3 (代数基础)**
 框架包含基本代数结构：
+
 - 群论：群、子群、群同态
 - 环论：环、理想、商环
 - 域论：域、子域、域扩张
@@ -106,6 +109,7 @@
 
 **定理 3.1.1 (类型安全性)**
 统一类型理论保证类型安全：
+
 1. 类型保持性：归约保持类型
 2. 进展性：良类型项可以归约
 3. 强正规化：所有归约序列终止
@@ -247,6 +251,7 @@ $$\vdash_X \phi \Rightarrow \vdash_Y f(\phi)$$
 $$\mathcal{U} = \mathcal{T} \cup \mathcal{L} \cup \mathcal{C} \cup \mathcal{D} \cup \mathcal{Q} \cup \mathcal{P} \cup \mathcal{R}$$
 
 其中：
+
 - $\mathcal{T}$ 是类型域
 - $\mathcal{L}$ 是逻辑域
 - $\mathcal{C}$ 是控制域
@@ -268,6 +273,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 统一语义框架保证所有理论的语义一致性。
 
 **证明：** 通过语义对应：
+
 1. 类型对应：类型系统语义与逻辑语义一致
 2. 逻辑对应：逻辑语义与控制语义一致
 3. 控制对应：控制系统语义与分布式语义一致
@@ -286,6 +292,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 ### 6.1 系统设计
 
 **框架 6.1.1 (系统设计流程)**
+
 1. **需求分析**：使用时态逻辑表达需求
 2. **系统建模**：使用Petri网或自动机建模
 3. **类型设计**：使用类型系统设计接口
@@ -295,6 +302,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 
 **示例 6.1.1 (实时系统设计)**
 设计一个实时控制系统：
+
 1. 使用LTL表达实时约束
 2. 使用时间Petri网建模系统
 3. 使用时态类型系统设计接口
@@ -304,6 +312,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 ### 6.2 编程语言设计
 
 **框架 6.2.1 (语言设计流程)**
+
 1. **语法设计**：使用形式语言理论
 2. **类型设计**：使用类型理论
 3. **语义设计**：使用操作语义和指称语义
@@ -312,6 +321,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 
 **示例 6.2.1 (安全语言设计)**
 设计一个内存安全语言：
+
 1. 使用线性类型系统防止内存泄漏
 2. 使用仿射类型系统管理所有权
 3. 使用时态类型系统处理时间约束
@@ -320,6 +330,7 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 ### 6.3 人工智能系统
 
 **框架 6.3.1 (AI系统设计)**
+
 1. **知识表示**：使用逻辑和类型理论
 2. **推理机制**：使用证明理论和模型论
 3. **学习算法**：使用统计学习理论
@@ -392,4 +403,4 @@ $$\llbracket N \rrbracket = \llbracket \text{Distributed}(N) \rrbracket$$
 7. Clarke, E. M., Emerson, E. A., & Sistla, A. P. (1986). Automatic verification of finite-state concurrent systems using temporal logic specifications. ACM Transactions on Programming Languages and Systems, 8(2), 244-263.
 8. Vardi, M. Y., & Wolper, P. (1986). An automata-theoretic approach to automatic program verification. In Proceedings of the First Annual Symposium on Logic in Computer Science (pp. 332-344).
 9. Brewer, E. A. (2012). CAP twelve years later: How the "rules" have changed. Computer, 45(2), 23-29.
-10. Ogata, K. (2010). Modern Control Engineering. Prentice Hall. 
+10. Ogata, K. (2010). Modern Control Engineering. Prentice Hall.
