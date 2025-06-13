@@ -95,7 +95,7 @@ $$\text{GettierCase}(S, p) \Leftrightarrow \text{JTB}(S, p) \land \neg\text{Know
 **证明**：
 通过构造葛梯尔反例：
 
-**案例1：工作面试**
+-**案例1：工作面试**
 
 1. 史密斯相信琼斯会得到工作
 2. 史密斯相信琼斯口袋里有10个硬币
@@ -103,7 +103,7 @@ $$\text{GettierCase}(S, p) \Leftrightarrow \text{JTB}(S, p) \land \neg\text{Know
 4. 实际上史密斯得到了工作，口袋里恰好有10个硬币
 5. 史密斯的信念被证成且为真，但不是知识
 
-**案例2：谷仓外观**
+-**案例2：谷仓外观**
 
 1. 亨利开车经过谷仓外观
 2. 亨利相信他看到的是谷仓

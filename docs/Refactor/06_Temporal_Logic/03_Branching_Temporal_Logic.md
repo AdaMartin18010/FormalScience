@@ -197,7 +197,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 
 **算法 4.1.1** (CTL模型检查算法)
 
-```
+```text
 输入：Kripke结构 M，CTL公式 φ
 输出：满足 φ 的状态集
 
@@ -226,7 +226,7 @@ $$\psi ::= \varphi \mid \neg \psi \mid \psi \wedge \psi \mid \psi \vee \psi \mid
 
 **算法 4.2.1** (CTL*模型检查算法)
 
-```
+```text
 输入：Kripke结构 M，CTL*公式 φ
 输出：满足 φ 的状态集
 
@@ -424,4 +424,4 @@ $$M, s \models \mathbb{P}_{\sim p}[\psi] \text{ 当且仅当 } \text{Prob}_M(s, 
 - **定义 4.1.1**：CTL模型检查问题
 - **定义 4.2.1**：CTL*模型检查问题
 - **定义 7.2.1**：实时CTL语义
-- **定义 7.3.1**：概率CTL语义 
+- **定义 7.3.1**：概率CTL语义
