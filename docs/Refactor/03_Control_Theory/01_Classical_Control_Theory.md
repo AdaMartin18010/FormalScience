@@ -362,6 +362,7 @@ calculateStabilityMargin eigenvalues =
 
 对于多项式 $P(s) = a_n s^n + a_{n-1} s^{n-1} + \cdots + a_0$，劳斯表为：
 
+```text
 $$\begin{array}{c|cccc}
 s^n & a_n & a_{n-2} & a_{n-4} & \cdots \\
 s^{n-1} & a_{n-1} & a_{n-3} & a_{n-5} & \cdots \\
@@ -369,6 +370,7 @@ s^{n-2} & b_1 & b_2 & b_3 & \cdots \\
 s^{n-3} & c_1 & c_2 & c_3 & \cdots \\
 \vdots & \vdots & \vdots & \vdots & \ddots
 \end{array}$$
+```
 
 其中：
 $$b_1 = \frac{a_{n-1}a_{n-2} - a_n a_{n-3}}{a_{n-1}}$$
