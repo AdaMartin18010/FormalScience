@@ -385,4 +385,4 @@ manufacturingNet = PetriNet
 
 **最后更新**: 2024-12-19  
 **版本**: v1.0  
-**状态**: 完成Petri网理论基础重构 
+**状态**: 完成Petri网理论基础重构
