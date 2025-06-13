@@ -37,6 +37,7 @@
 $$\tau ::= \alpha \mid \tau_1 \rightarrow \tau_2 \mid \forall \alpha.\tau$$
 
 其中：
+
 - $\alpha$ 表示类型变量
 - $\tau_1 \rightarrow \tau_2$ 表示函数类型
 - $\forall \alpha.\tau$ 表示全称类型
@@ -46,6 +47,7 @@ $$\tau ::= \alpha \mid \tau_1 \rightarrow \tau_2 \mid \forall \alpha.\tau$$
 $$e ::= x \mid \lambda x.e \mid e_1 e_2 \mid \Lambda \alpha.e \mid e[\tau]$$
 
 其中：
+
 - $x$ 表示变量
 - $\lambda x.e$ 表示λ抽象
 - $e_1 e_2$ 表示函数应用
@@ -60,12 +62,14 @@ $$\Gamma : \text{Var} \rightarrow \text{Type}$$
 
 **定义 2.4 (类型自由变量)**
 类型 $\tau$ 的自由变量集合 $FV(\tau)$ 定义如下：
+
 - $FV(\alpha) = \{\alpha\}$
 - $FV(\tau_1 \rightarrow \tau_2) = FV(\tau_1) \cup FV(\tau_2)$
 - $FV(\forall \alpha.\tau) = FV(\tau) \setminus \{\alpha\}$
 
 **定义 2.5 (表达式自由变量)**
 表达式 $e$ 的自由变量集合 $FV(e)$ 定义如下：
+
 - $FV(x) = \{x\}$
 - $FV(\lambda x.e) = FV(e) \setminus \{x\}$
 - $FV(e_1 e_2) = FV(e_1) \cup FV(e_2)$
@@ -113,14 +117,16 @@ $$\frac{\Gamma \vdash e : \tau_1 \quad \tau_1 \equiv \tau_2}{\Gamma \vdash e : \
 
 **情况1：β归约**
 假设 $(\lambda x.e_1) e_2 \rightarrow e_1[x \mapsto e_2]$
+
 - 已知：$\Gamma \vdash (\lambda x.e_1) e_2 : \tau$
 - 根据应用规则：$\Gamma \vdash \lambda x.e_1 : \tau_1 \rightarrow \tau$ 且 $\Gamma \vdash e_2 : \tau_1$
 - 根据抽象规则：$\Gamma, x : \tau_1 \vdash e_1 : \tau$
 - 根据替换引理：$\Gamma \vdash e_1[x \mapsto e_2] : \tau$
 
 **情况2：类型应用归约**
-假设 $(\Lambda \alpha.e)[\tau] \rightarrow e[\alpha \mapsto \tau]$
-- 已知：$\Gamma \vdash (\Lambda \alpha.e)[\tau] : \tau'$
+假设 $[\Lambda \alpha.e](\tau) \rightarrow e[\alpha \mapsto \tau]$
+
+- 已知：$\Gamma \vdash [\Lambda \alpha.e](\tau) : \tau'$
 - 根据类型应用规则：$\Gamma \vdash \Lambda \alpha.e : \forall \alpha.\tau'$
 - 根据类型抽象规则：$\Gamma, \alpha \vdash e : \tau'$
 - 根据类型替换引理：$\Gamma \vdash e[\alpha \mapsto \tau] : \tau'$
@@ -141,6 +147,7 @@ $$\frac{\Gamma \vdash e : \tau_1 \quad \tau_1 \equiv \tau_2}{\Gamma \vdash e : \
 
 **情况3：函数应用**
 如果 $e = e_1 e_2$，则：
+
 - $\emptyset \vdash e_1 : \tau_1 \rightarrow \tau$
 - $\emptyset \vdash e_2 : \tau_1$
 - 根据归纳假设，$e_1$ 要么是值，要么可以归约
@@ -160,6 +167,7 @@ $$\frac{\Gamma \vdash e : \tau_1 \quad \tau_1 \equiv \tau_2}{\Gamma \vdash e : \
 ### 5.1 类型推断算法
 
 **算法 5.1 (Hindley-Milner类型推断)**
+
 ```haskell
 type Infer = Either TypeError (Type, Substitution)
 
@@ -184,6 +192,7 @@ infer ctx (Abs x e) = do
 ### 5.2 统一算法
 
 **算法 5.2 (Robinson统一算法)**
+
 ```haskell
 unify :: Type -> Type -> Either TypeError Substitution
 unify (TVar a) t = 
@@ -213,12 +222,14 @@ unify (TCon a) (TCon b) =
 
 **定义 6.1 (类型解释)**
 类型 $\tau$ 在环境 $\rho$ 中的解释 $\llbracket \tau \rrbracket_\rho$ 定义如下：
+
 - $\llbracket \alpha \rrbracket_\rho = \rho(\alpha)$
 - $\llbracket \tau_1 \rightarrow \tau_2 \rrbracket_\rho = \llbracket \tau_1 \rrbracket_\rho \rightarrow \llbracket \tau_2 \rrbracket_\rho$
 - $\llbracket \forall \alpha.\tau \rrbracket_\rho = \prod_{A \in \text{Set}} \llbracket \tau \rrbracket_{\rho[\alpha \mapsto A]}$
 
 **定义 6.2 (表达式解释)**
 表达式 $e$ 在环境 $\rho$ 和赋值 $\sigma$ 中的解释 $\llbracket e \rrbracket_{\rho,\sigma}$ 定义如下：
+
 - $\llbracket x \rrbracket_{\rho,\sigma} = \sigma(x)$
 - $\llbracket \lambda x.e \rrbracket_{\rho,\sigma} = \lambda v.\llbracket e \rrbracket_{\rho,\sigma[x \mapsto v]}$
 - $\llbracket e_1 e_2 \rrbracket_{\rho,\sigma} = \llbracket e_1 \rrbracket_{\rho,\sigma} (\llbracket e_2 \rrbracket_{\rho,\sigma})$
@@ -227,13 +238,15 @@ unify (TCon a) (TCon b) =
 
 **定义 6.3 (小步语义)**
 小步归约关系 $\rightarrow$ 定义如下：
+
 - $(\lambda x.e_1) e_2 \rightarrow e_1[x \mapsto e_2]$ (β归约)
-- $(\Lambda \alpha.e)[\tau] \rightarrow e[\alpha \mapsto \tau]$ (类型β归约)
+- $[\Lambda \alpha.e](\tau) \rightarrow e[\alpha \mapsto \tau]$ (类型β归约)
 - $\frac{e_1 \rightarrow e_1'}{e_1 e_2 \rightarrow e_1' e_2}$ (应用左归约)
 - $\frac{e_2 \rightarrow e_2'}{v_1 e_2 \rightarrow v_1 e_2'}$ (应用右归约)
 
 **定义 6.4 (大步语义)**
 大步求值关系 $\Downarrow$ 定义如下：
+
 - $v \Downarrow v$ (值求值)
 - $\frac{e_1 \Downarrow \lambda x.e_1' \quad e_2 \Downarrow v_2 \quad e_1'[x \mapsto v_2] \Downarrow v}{e_1 e_2 \Downarrow v}$ (函数应用)
 
@@ -246,6 +259,7 @@ unify (TCon a) (TCon b) =
 
 **证明：**
 通过逻辑关系方法证明。定义类型 $\tau$ 的逻辑关系 $R_\tau$：
+
 - $R_\alpha = \{(e, v) \mid e \text{ 强正规化}\}$
 - $R_{\tau_1 \rightarrow \tau_2} = \{(e, v) \mid \forall (e', v') \in R_{\tau_1}, (e e', v v') \in R_{\tau_2}\}$
 - $R_{\forall \alpha.\tau} = \{(e, v) \mid \forall \tau', (e[\tau'], v[\tau']) \in R_\tau\}$
