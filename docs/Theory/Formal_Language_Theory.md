@@ -4,23 +4,23 @@
 
 ### 1.1 字母表和语言
 
-**定义 1.1 (字母表)**
+-**定义 1.1 (字母表)**
 字母表 $\Sigma$ 是有限符号集合。
 
-**定义 1.2 (字符串)**
+-**定义 1.2 (字符串)**
 字符串是字母表中符号的有限序列：
 $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 
-**定义 1.3 (字符串操作)**
+-**定义 1.3 (字符串操作)**
 
 - **连接**：$w_1 \cdot w_2 = w_1 w_2$
 - **幂运算**：$w^0 = \epsilon$, $w^{n+1} = w \cdot w^n$
 - **长度**：$|w| = n$ 对于 $w = a_1 a_2 \cdots a_n$
 
-**定义 1.4 (语言)**
+-**定义 1.4 (语言)**
 语言 $L$ 是字符串集合：$L \subseteq \Sigma^*$
 
-**定义 1.5 (语言操作)**
+-**定义 1.5 (语言操作)**
 
 - **并集**：$L_1 \cup L_2 = \{w \mid w \in L_1 \text{ or } w \in L_2\}$
 - **连接**：$L_1 \cdot L_2 = \{w_1 w_2 \mid w_1 \in L_1, w_2 \in L_2\}$
@@ -28,7 +28,7 @@ $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 
 ### 1.2 乔姆斯基层次结构
 
-**定义 1.6 (乔姆斯基层次)**
+-**定义 1.6 (乔姆斯基层次)**
 语言类别的层次结构：
 
 1. **正则语言**：有限状态自动机识别
@@ -49,7 +49,7 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 
 ### 2.1 确定性有限自动机
 
-**定义 2.1 (DFA)**
+-**定义 2.1 (DFA)**
 确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
 
 - $Q$ 是有限状态集合
@@ -58,16 +58,16 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 - $q_0 \in Q$ 是初始状态
 - $F \subseteq Q$ 是接受状态集合
 
-**定义 2.2 (DFA计算)**
+-**定义 2.2 (DFA计算)**
 DFA在输入 $w = a_1 a_2 \cdots a_n$ 上的计算：
 $$q_0 \xrightarrow{a_1} q_1 \xrightarrow{a_2} q_2 \cdots \xrightarrow{a_n} q_n$$
 
 其中 $q_{i+1} = \delta(q_i, a_{i+1})$。
 
-**定义 2.3 (DFA接受)**
+-**定义 2.3 (DFA接受)**
 DFA接受字符串 $w$，如果计算结束于接受状态：$q_n \in F$。
 
-**算法 2.1 (DFA模拟)**
+-**算法 2.1 (DFA模拟)**
 
 ```haskell
 simulateDFA :: DFA -> String -> Bool
@@ -82,12 +82,12 @@ transition dfa currentState symbol =
 
 ### 2.2 非确定性有限自动机
 
-**定义 2.4 (NFA)**
+-**定义 2.4 (NFA)**
 非确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
 
 - $\delta : Q \times \Sigma \rightarrow 2^Q$ 是转移函数
 
-**定义 2.5 (NFA计算)**
+-**定义 2.5 (NFA计算)**
 NFA在输入 $w$ 上的计算是一棵树，每个节点表示可能的状态。
 
 **定理 2.1 (DFA与NFA等价性)**
@@ -99,7 +99,7 @@ NFA在输入 $w$ 上的计算是一棵树，每个节点表示可能的状态。
 2. DFA转移函数通过子集计算
 3. 接受状态包含NFA接受状态
 
-**算法 2.2 (子集构造)**
+-**算法 2.2 (子集构造)**
 
 ```haskell
 subsetConstruction :: NFA -> DFA
@@ -117,11 +117,11 @@ subsetConstruction nfa =
 
 ### 2.3 正则表达式
 
-**定义 2.6 (正则表达式)**
+-**定义 2.6 (正则表达式)**
 正则表达式的语法：
 $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^*$$
 
-**定义 2.7 (正则表达式语义)**
+-**定义 2.7 (正则表达式语义)**
 
 - $L(\emptyset) = \emptyset$
 - $L(\epsilon) = \{\epsilon\}$
@@ -143,7 +143,7 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 
 ### 3.1 文法定义
 
-**定义 3.1 (CFG)**
+-**定义 3.1 (CFG)**
 上下文无关文法是四元组 $G = (V, T, P, S)$，其中：
 
 - $V$ 是非终结符集合
@@ -151,17 +151,17 @@ $$R ::= \emptyset \mid \epsilon \mid a \mid R_1 + R_2 \mid R_1 \cdot R_2 \mid R^
 - $P$ 是产生式集合
 - $S \in V$ 是开始符号
 
-**定义 3.2 (推导)**
+-**定义 3.2 (推导)**
 推导关系 $\Rightarrow$ 定义：
 
 - 如果 $A \rightarrow \alpha \in P$，则 $\beta A \gamma \Rightarrow \beta \alpha \gamma$
 - 如果 $\alpha \Rightarrow \beta$ 且 $\beta \Rightarrow \gamma$，则 $\alpha \Rightarrow \gamma$
 
-**定义 3.3 (语言生成)**
+-**定义 3.3 (语言生成)**
 文法 $G$ 生成的语言：
 $$L(G) = \{w \in T^* \mid S \Rightarrow^* w\}$$
 
-**算法 3.1 (CFG解析)**
+-**算法 3.1 (CFG解析)**
 
 ```haskell
 parseCFG :: CFG -> String -> Bool
@@ -174,7 +174,7 @@ parseCFG cfg input =
 
 ### 3.2 乔姆斯基范式
 
-**定义 3.4 (CNF)**
+-**定义 3.4 (CNF)**
 乔姆斯基范式文法满足：
 
 - 所有产生式形如 $A \rightarrow BC$ 或 $A \rightarrow a$
@@ -189,7 +189,7 @@ parseCFG cfg input =
 2. 消除单位产生式
 3. 转换为CNF形式
 
-**算法 3.2 (CNF转换)**
+-**算法 3.2 (CNF转换)**
 
 ```haskell
 convertToCNF :: CFG -> CFG
@@ -202,7 +202,7 @@ convertToCNF cfg =
 
 ### 3.3 CYK算法
 
-**算法 3.3 (CYK算法)**
+-**算法 3.3 (CYK算法)**
 
 ```haskell
 cykParse :: CFG -> String -> Bool
@@ -237,7 +237,7 @@ fillTable cfg table n =
 
 ### 4.1 PDA定义
 
-**定义 4.1 (PDA)**
+-**定义 4.1 (PDA)**
 下推自动机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
 
 - $Q$ 是有限状态集合
@@ -248,20 +248,20 @@ fillTable cfg table n =
 - $Z_0 \in \Gamma$ 是初始栈符号
 - $F \subseteq Q$ 是接受状态集合
 
-**定义 4.2 (PDA配置)**
+-**定义 4.2 (PDA配置)**
 PDA配置是三元组 $(q, w, \gamma)$，其中：
 
 - $q$ 是当前状态
 - $w$ 是剩余输入
 - $\gamma$ 是栈内容
 
-**定义 4.3 (PDA计算)**
+-**定义 4.3 (PDA计算)**
 PDA计算步骤：
 $$(q, aw, A\gamma) \vdash (p, w, \beta\gamma)$$
 
 如果 $(p, \beta) \in \delta(q, a, A)$。
 
-**算法 4.1 (PDA模拟)**
+-**算法 4.1 (PDA模拟)**
 
 ```haskell
 simulatePDA :: PDA -> String -> Bool
@@ -286,7 +286,7 @@ simulatePDA pda input =
 
 ### 5.1 图灵机定义
 
-**定义 5.1 (图灵机)**
+-**定义 5.1 (图灵机)**
 图灵机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
 
 - $Q$ 是有限状态集合
@@ -297,14 +297,14 @@ simulatePDA pda input =
 - $B \in \Gamma$ 是空白符号
 - $F \subseteq Q$ 是接受状态集合
 
-**定义 5.2 (图灵机配置)**
+-**定义 5.2 (图灵机配置)**
 图灵机配置是三元组 $(q, \alpha, i)$，其中：
 
 - $q$ 是当前状态
 - $\alpha$ 是带内容
 - $i$ 是读写头位置
 
-**定义 5.3 (图灵机计算)**
+-**定义 5.3 (图灵机计算)**
 图灵机计算步骤：
 $$(q, \alpha, i) \vdash (p, \alpha', j)$$
 
@@ -314,7 +314,7 @@ $$(q, \alpha, i) \vdash (p, \alpha', j)$$
 - $j = i + 1$ 如果 $D = R$
 - $j = i - 1$ 如果 $D = L$
 
-**算法 5.1 (图灵机模拟)**
+-**算法 5.1 (图灵机模拟)**
 
 ```haskell
 simulateTuringMachine :: TuringMachine -> String -> Bool
@@ -332,11 +332,11 @@ runComputation tm config =
 
 ### 5.2 图灵机变种
 
-**定义 5.4 (非确定性图灵机)**
+-**定义 5.4 (非确定性图灵机)**
 非确定性图灵机的转移函数：
 $$\delta : Q \times \Gamma \rightarrow 2^{Q \times \Gamma \times \{L, R\}}$$
 
-**定义 5.5 (多带图灵机)**
+-**定义 5.5 (多带图灵机)**
 多带图灵机有多个读写头，可以同时操作多个带。
 
 **定理 5.1 (图灵机等价性)**
@@ -352,11 +352,11 @@ $$\delta : Q \times \Gamma \rightarrow 2^{Q \times \Gamma \times \{L, R\}}$$
 
 ### 6.1 时间复杂性
 
-**定义 6.1 (时间复杂性)**
+-**定义 6.1 (时间复杂性)**
 图灵机 $M$ 的时间复杂性：
 $$T_M(n) = \max\{t \mid M \text{ 在长度为 } n \text{ 的输入上运行 } t \text{ 步}\}$$
 
-**定义 6.2 (复杂性类)**
+-**定义 6.2 (复杂性类)**
 
 - **P**：多项式时间可解的问题
 - **NP**：非确定性多项式时间可解的问题
@@ -367,7 +367,7 @@ $P \subseteq NP$，但 $P = NP$ 是否成立是未解决的问题。
 
 ### 6.2 空间复杂性
 
-**定义 6.3 (空间复杂性)**
+-**定义 6.3 (空间复杂性)**
 图灵机 $M$ 的空间复杂性：
 $$S_M(n) = \max\{s \mid M \text{ 在长度为 } n \text{ 的输入上使用 } s \text{ 个带单元}\}$$
 
@@ -378,7 +378,7 @@ $$S_M(n) = \max\{s \mid M \text{ 在长度为 } n \text{ 的输入上使用 } s 
 
 ### 7.1 编译器设计
 
-**定义 7.1 (词法分析)**
+-**定义 7.1 (词法分析)**
 词法分析器将输入字符串转换为词法单元序列：
 
 ```haskell
@@ -389,7 +389,7 @@ lexicalAnalysis input =
   in tokens
 ```
 
-**定义 7.2 (语法分析)**
+-**定义 7.2 (语法分析)**
 语法分析器构建抽象语法树：
 
 ```haskell
@@ -402,7 +402,7 @@ syntaxAnalysis tokens =
 
 ### 7.2 自然语言处理
 
-**定义 7.3 (句法分析)**
+-**定义 7.3 (句法分析)**
 句法分析识别句子结构：
 
 ```haskell
