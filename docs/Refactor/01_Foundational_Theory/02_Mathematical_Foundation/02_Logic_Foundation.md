@@ -78,7 +78,7 @@ $$v: P \rightarrow \{true, false\}$$
 
 #### 2.3 命题逻辑推理规则
 
-**公理 2.3.1 (命题逻辑公理)**
+-**公理 2.3.1 (命题逻辑公理)**
 
 1. **同一律**: $\phi \rightarrow \phi$
 2. **排中律**: $\phi \lor \neg \phi$
@@ -170,7 +170,7 @@ $$s: Var \rightarrow D$$
 
 #### 3.3 谓词逻辑推理规则
 
-**公理 3.3.1 (谓词逻辑公理)**
+-**公理 3.3.1 (谓词逻辑公理)**
 
 1. **全称实例化**: $\forall x \phi \rightarrow \phi[t/x]$
 2. **存在概括**: $\phi[t/x] \rightarrow \exists x \phi$
@@ -239,7 +239,7 @@ $$\Diamond \phi \rightarrow \Box \Diamond \phi$$
 **推理规则 4.3.1 (必然化规则)**
 $$\frac{\phi}{\Box \phi}$$
 
-**定理 4.3.1 (模态逻辑对应定理)**
+-**定理 4.3.1 (模态逻辑对应定理)**
 
 - T公理对应自反性：$\forall w: (w, w) \in R$
 - 4公理对应传递性：$\forall w, v, u: (w, v) \in R \land (v, u) \in R \rightarrow (w, u) \in R$
@@ -252,7 +252,7 @@ $$\frac{\phi}{\Box \phi}$$
 **定义 5.1.1 (直觉主义否定)**
 直觉主义否定 $\neg \phi$ 定义为 $\phi \rightarrow \bot$，其中 $\bot$ 是矛盾。
 
-**公理 5.1.1 (直觉主义公理)**
+-**公理 5.1.1 (直觉主义公理)**
 
 1. **双重否定消除**: $\neg \neg \phi \rightarrow \phi$（不成立）
 2. **排中律**: $\phi \lor \neg \phi$（不成立）

@@ -55,7 +55,7 @@ $$\Sigma^+ = \Sigma^* \setminus \{\varepsilon\}$$
 2. $\Sigma \subseteq \Sigma^*$
 3. 如果 $w_1, w_2 \in \Sigma^*$，则 $w_1 \cdot w_2 \in \Sigma^*$
 
-**证明**
+-**证明**
 
 1. 根据定义，$\varepsilon \in \Sigma^0 \subseteq \Sigma^*$
 2. 对于任何 $a \in \Sigma$，$a \in \Sigma^1 \subseteq \Sigma^*$

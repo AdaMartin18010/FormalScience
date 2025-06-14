@@ -345,7 +345,7 @@ $$K_i \phi \equiv \text{Agent } i \text{ knows } \phi$$
 信念模态算子 $B_i$ 表示主体 $i$ 相信：
 $$B_i \phi \equiv \text{Agent } i \text{ believes } \phi$$
 
-**公理 7.1.1 (知识公理)**
+-**公理 7.1.1 (知识公理)**
 
 1. **K公理**: $K_i(\phi \rightarrow \psi) \rightarrow (K_i \phi \rightarrow K_i \psi)$
 2. **T公理**: $K_i \phi \rightarrow \phi$

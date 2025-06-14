@@ -11,6 +11,7 @@
 $$\mathcal{C} = (Ob(\mathcal{C}), Hom(\mathcal{C}), \circ, id)$$
 
 其中：
+
 - $Ob(\mathcal{C})$ 是对象集合
 - $Hom(\mathcal{C})$ 是态射集合
 - $\circ$ 是态射复合运算
@@ -18,6 +19,7 @@ $$\mathcal{C} = (Ob(\mathcal{C}), Hom(\mathcal{C}), \circ, id)$$
 
 **定义 1.1.2 (态射)**
 态射 $f: A \rightarrow B$ 是从对象 $A$ 到对象 $B$ 的箭头，其中：
+
 - $A$ 是态射的域 (domain)
 - $B$ 是态射的陪域 (codomain)
 
@@ -132,10 +134,12 @@ $$\pi_1 \circ g = \pi_1', \pi_2 \circ g = \pi_2'$$
 
 **定义 3.1.1 (函子)**
 从范畴 $\mathcal{C}$ 到范畴 $\mathcal{D}$ 的函子 $F$ 包含：
+
 1. 对象映射：$F: Ob(\mathcal{C}) \rightarrow Ob(\mathcal{D})$
 2. 态射映射：$F: Hom(\mathcal{C}) \rightarrow Hom(\mathcal{D})$
 
 满足：
+
 1. $F(f: A \rightarrow B) = F(f): F(A) \rightarrow F(B)$
 2. $F(g \circ f) = F(g) \circ F(f)$
 3. $F(id_A) = id_{F(A)}$
@@ -669,6 +673,7 @@ example = do
 #### 8.1 数学基础
 
 范畴论在数学基础中的应用：
+
 - 代数几何
 - 同调代数
 - 拓扑学
@@ -677,6 +682,7 @@ example = do
 #### 8.2 计算机科学
 
 范畴论在计算机科学中的应用：
+
 - 函数式编程
 - 类型理论
 - 并发理论
@@ -685,6 +691,7 @@ example = do
 #### 8.3 物理学
 
 范畴论在物理学中的应用：
+
 - 量子场论
 - 弦理论
 - 拓扑量子场论
@@ -697,7 +704,8 @@ example = do
 ---
 
 **参考文献**:
+
 1. Mac Lane, S. (2013). Categories for the working mathematician. Springer Science & Business Media.
 2. Awodey, S. (2010). Category theory. Oxford University Press.
 3. Barr, M., & Wells, C. (2005). Toposes, triples and theories. Reprints in Theory and Applications of Categories, 12, 1-287.
-4. Riehl, E. (2017). Category theory in context. Courier Dover Publications. 
+4. Riehl, E. (2017). Category theory in context. Courier Dover Publications.
