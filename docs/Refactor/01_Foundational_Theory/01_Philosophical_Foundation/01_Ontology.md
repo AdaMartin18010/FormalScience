@@ -1,4 +1,5 @@
 # 01. 本体论 (Ontology)
+
 ## 形式科学体系的哲学基础
 
 ### 1. 本体论基础框架
@@ -11,6 +12,7 @@
 $$\text{Ontology} = \langle \mathcal{E}, \mathcal{R}, \mathcal{A} \rangle$$
 
 其中：
+
 - $\mathcal{E}$ 是实体集合 (Entities)
 - $\mathcal{R}$ 是关系集合 (Relations)
 - $\mathcal{A}$ 是公理集合 (Axioms)
@@ -36,6 +38,7 @@ $$\text{MathematicalObject}(x) \iff \exists \mathcal{A}_x : \mathcal{A}_x \vdash
 如果公理系统 $\mathcal{A}$ 一致，则其描述的数学对象在形式意义上存在。
 
 **证明：**
+
 1. 假设 $\mathcal{A}$ 一致
 2. 根据哥德尔完备性定理，$\mathcal{A}$ 有模型
 3. 模型中的元素对应数学对象
@@ -73,6 +76,7 @@ $$I(x) = -\log_2 P(x)$$
 $$\frac{dI_{total}}{dt} = 0$$
 
 **证明：**
+
 1. 根据热力学第二定律，熵不减少
 2. 信息是负熵
 3. 因此信息不增加
@@ -113,6 +117,7 @@ $$\text{MultipleRealization} \iff \forall \text{IntelligentEntity}(x) \exists y[
 $$\text{Physical} \subset \text{Information} \subset \text{Computational} \subset \text{Abstract}$$
 
 **证明：**
+
 1. 物理实体可以编码为信息
 2. 信息可以表示为计算过程
 3. 计算过程是抽象概念
@@ -178,6 +183,7 @@ $$\Box_P \phi \iff \forall w[\text{PhysicallyPossible}(w) \rightarrow \phi(w)]$$
 $$\Box_L \phi \rightarrow \Box_P \phi \rightarrow \phi$$
 
 **证明：**
+
 1. 逻辑可能世界包含物理可能世界
 2. 物理可能世界包含现实世界
 3. 因此必然性递减
@@ -219,6 +225,7 @@ $$\text{FreeWill}(x) \iff \exists a[\text{Action}(a) \land \text{Agent}(x) \land
 $$\text{Determinism} \land \text{FreeWill}(x) \rightarrow \bot$$
 
 **证明：**
+
 1. 决定论要求所有行动都被决定
 2. 自由意志要求存在未决定的行动
 3. 因此两者矛盾
@@ -343,13 +350,15 @@ necessityTransitivity (Necessarily (Implies phi psi)) (Necessarily phi) =
 ---
 
 **参考文献**
+
 1. Quine, W.V.O. (1948). "On What There Is". Review of Metaphysics.
 2. Kripke, S. (1980). Naming and Necessity. Harvard University Press.
 3. Lewis, D. (1986). On the Plurality of Worlds. Blackwell.
 4. Chalmers, D. (1996). The Conscious Mind. Oxford University Press.
 
 **相关链接**
+
 - [02. 认识论](02_Epistemology.md)
 - [03. 逻辑学](03_Logic.md)
 - [04. 伦理学](04_Ethics.md)
-- [05. 形而上学](05_Metaphysics.md) 
+- [05. 形而上学](05_Metaphysics.md)

@@ -1,4 +1,5 @@
 # 01. 有限状态自动机 (Finite State Automata)
+
 ## 形式语言理论的基础
 
 ### 1. 基础定义
@@ -36,6 +37,7 @@ $$w_1 \cdot w_2 = a_1 \cdots a_m b_1 \cdots b_n$$
 $$(w_1 \cdot w_2) \cdot w_3 = w_1 \cdot (w_2 \cdot w_3)$$
 
 **证明：**
+
 1. 设 $w_1 = a_1 \cdots a_m$, $w_2 = b_1 \cdots b_n$, $w_3 = c_1 \cdots c_p$
 2. $(w_1 \cdot w_2) \cdot w_3 = (a_1 \cdots a_m b_1 \cdots b_n) \cdot (c_1 \cdots c_p) = a_1 \cdots a_m b_1 \cdots b_n c_1 \cdots c_p$
 3. $w_1 \cdot (w_2 \cdot w_3) = (a_1 \cdots a_m) \cdot (b_1 \cdots b_n c_1 \cdots c_p) = a_1 \cdots a_m b_1 \cdots b_n c_1 \cdots c_p$
@@ -144,6 +146,7 @@ DFA模拟算法正确计算扩展转移函数：
 $$\text{simulateDFA}(M, w) = \text{true} \iff \hat{\delta}(q_0, w) \in F$$
 
 **证明：**
+
 1. 基础情况：$w = \epsilon$
    - $\text{simulateDFA}(M, \epsilon) = \text{true} \iff q_0 \in F$
    - $\hat{\delta}(q_0, \epsilon) = q_0 \in F$
@@ -193,6 +196,7 @@ testEvenOnes =
 上述DFA正确识别包含偶数个1的字符串。
 
 **证明：**
+
 1. 状态 $Even$ 表示已读入偶数个1
 2. 状态 $Odd$ 表示已读入奇数个1
 3. 初始状态为 $Even$（0个1是偶数）
@@ -295,6 +299,7 @@ findAcceptingStates nfa allStates =
 子集构造算法生成的DFA与原NFA等价。
 
 **证明：**
+
 1. 状态对应：DFA状态对应NFA状态集合
 2. 转移对应：DFA转移对应NFA状态集合的转移
 3. 接受对应：DFA接受当且仅当NFA状态集合包含接受状态
@@ -422,6 +427,7 @@ regexToNFA (Star r) =
 正则表达式和NFA识别相同的语言类。
 
 **证明：**
+
 1. 正则表达式到NFA：通过递归构造（已给出算法）
 2. NFA到DFA：通过子集构造
 3. DFA到正则表达式：通过状态消除
@@ -438,6 +444,7 @@ regexToNFA (Star r) =
 3. 对于所有 $i \geq 0$，$xy^i z \in L$
 
 **证明：**
+
 1. 设 $M$ 是识别 $L$ 的DFA，有 $p$ 个状态
 2. 对于 $w \in L$ 且 $|w| \geq p$，DFA计算路径包含重复状态
 3. 设 $q_i = q_j$ 是重复状态，$i < j \leq p$
@@ -450,6 +457,7 @@ regexToNFA (Star r) =
 证明 $L = \{a^n b^n \mid n \geq 0\}$ 不是正则语言。
 
 **证明：**
+
 1. 假设 $L$ 是正则语言
 2. 设泵引理常数为 $p$
 3. 考虑字符串 $w = a^p b^p \in L$
@@ -525,6 +533,7 @@ splitClass dfa partition classStates =
 最小化DFA在同构意义下唯一。
 
 **证明：**
+
 1. 等价关系是最大的等价关系
 2. 最小化DFA的状态对应等价类
 3. 转移函数由等价关系唯一确定
@@ -546,12 +555,14 @@ splitClass dfa partition classStates =
 ---
 
 **参考文献**
+
 1. Hopcroft, J.E., Motwani, R., & Ullman, J.D. (2006). Introduction to Automata Theory, Languages, and Computation.
 2. Sipser, M. (2012). Introduction to the Theory of Computation.
 3. Kozen, D.C. (2006). Automata and Computability.
 
 **相关链接**
+
 - [02. 上下文无关文法](02_Context_Free_Grammars.md)
 - [03. 下推自动机](03_Pushdown_Automata.md)
 - [04. 图灵机](04_Turing_Machines.md)
-- [05. 可计算性理论](05_Computability_Theory.md) 
+- [05. 可计算性理论](05_Computability_Theory.md)

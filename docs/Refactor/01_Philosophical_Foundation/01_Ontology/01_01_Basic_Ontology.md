@@ -24,6 +24,7 @@
 $$\text{Ontology} = \langle \mathcal{E}, \mathcal{P}, \mathcal{R}, \mathcal{C} \rangle$$
 
 其中：
+
 - $\mathcal{E}$ 是实体集合 (Entities)
 - $\mathcal{P}$ 是属性集合 (Properties)
 - $\mathcal{R}$ 是关系集合 (Relations)
@@ -51,11 +52,13 @@ $$\text{Exists}(x) \equiv \exists y (y = x \land \text{Real}(y))$$
 
 **定理 2.1 (存在的基本性质)**
 对于任意实体 $x$，如果 $x$ 存在，则：
+
 1. $x$ 具有同一性
 2. $x$ 具有持续性
 3. $x$ 具有可识别性
 
 **证明**：
+
 1. 同一性：如果 $x$ 存在，则 $x = x$（同一律）
 2. 持续性：存在意味着在时间中的持续
 3. 可识别性：存在意味着可以被识别和指称
@@ -108,6 +111,7 @@ $$\text{Realism} \equiv \forall x (\text{Exists}(x) \rightarrow \text{Independen
 
 **定理 3.1 (实在论的基本主张)**
 如果实在论成立，则：
+
 1. 存在独立于认知
 2. 真理是符合论
 3. 知识是发现而非创造
@@ -468,6 +472,7 @@ instance OntologicalReasoning Ontology where
 如果本体论 $\mathcal{O}$ 满足所有公理，则 $\mathcal{O}$ 是一致的。
 
 **证明**：
+
 1. 假设 $\mathcal{O}$ 不一致
 2. 则存在 $\phi$ 使得 $\mathcal{O} \vdash \phi$ 且 $\mathcal{O} \vdash \neg \phi$
 3. 这与公理 8.3 矛盾
@@ -499,8 +504,9 @@ instance OntologicalReasoning Ontology where
 **维护者**: 哲学基础重构团队
 
 **相关链接**：
+
 - [数学本体论](01_02_Mathematical_Ontology.md)
 - [信息本体论](01_03_Information_Ontology.md)
 - [AI本体论](01_04_AI_Ontology.md)
 - [知识理论](../02_Epistemology/02_01_Knowledge_Theory.md)
-- [形式逻辑](../03_Logic/03_01_Formal_Logic.md) 
+- [形式逻辑](../03_Logic/03_01_Formal_Logic.md)
