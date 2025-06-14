@@ -475,6 +475,7 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma \vdash \Delta, \psi}{\Gamma \
 **实例 9.1.1** (霍尔逻辑程序验证)
 
 考虑以下程序片段：
+
 ```python
 # 前置条件：x > 0
 if x % 2 == 0:
@@ -485,6 +486,7 @@ else:
 ```
 
 霍尔逻辑证明：
+
 1. **前置条件**：$x > 0$
 2. **分支1**：$x \equiv 0 \pmod{2} \rightarrow y = x/2 = \lceil x/2 \rceil$
 3. **分支2**：$x \equiv 1 \pmod{2} \rightarrow y = (x+1)/2 = \lceil x/2 \rceil$
@@ -493,6 +495,7 @@ else:
 **实例 9.1.2** (类型系统应用)
 
 在Haskell中的类型系统：
+
 ```haskell
 -- 函数类型签名
 map :: (a -> b) -> [a] -> [b]
@@ -513,6 +516,7 @@ map (+1) "abc"    -- 类型错误：String不是[Int]
 **实例 9.1.3** (专家系统规则)
 
 医疗诊断专家系统：
+
 ```prolog
 % 知识库
 symptom(fever, flu).
@@ -547,6 +551,7 @@ diagnose(Patient, Disease) :-
 **实例 9.2.1** (存在性问题的形式化)
 
 本体论承诺的形式化：
+
 ```latex
 % 存在性量化
 \exists x P(x) \text{ 表示存在具有性质 } P \text{ 的对象}
@@ -561,6 +566,7 @@ diagnose(Patient, Disease) :-
 **实例 9.2.2** (时间逻辑应用)
 
 时间形而上学的形式化：
+
 ```latex
 % 过去时态
 P \varphi \text{ 表示 } \varphi \text{ 在过去为真}
@@ -583,6 +589,7 @@ G \varphi \text{ 表示 } \varphi \text{ 在所有将来时刻为真}
 **实例 9.2.3** (知识逻辑)
 
 知识的形式化表示：
+
 ```latex
 % 知识算子
 K_i \varphi \text{ 表示主体 } i \text{ 知道 } \varphi
@@ -598,6 +605,7 @@ K_i \varphi \rightarrow K_i K_i \varphi \text{ (正内省)}
 **实例 9.3.1** (数字电路设计)
 
 组合逻辑电路设计：
+
 ```verilog
 module half_adder(
     input a, b,
@@ -612,6 +620,7 @@ endmodule
 **实例 9.3.2** (数据库查询优化)
 
 SQL查询的逻辑优化：
+
 ```sql
 -- 原始查询
 SELECT * FROM users u, orders o 
@@ -626,6 +635,7 @@ WHERE u.age > 18 AND o.amount > 100;
 **实例 9.3.3** (网络安全协议验证)
 
 协议安全性的逻辑验证：
+
 ```latex
 % 协议目标
 \text{目标：} \forall m \forall A \forall B [\text{Send}(A, B, m) \rightarrow \text{Receive}(B, A, m)]
@@ -640,6 +650,7 @@ WHERE u.age > 18 AND o.amount > 100;
 **实例 9.4.1** (集合论的形式化)
 
 集合论公理的形式化：
+
 ```latex
 % 外延公理
 \forall x \forall y [\forall z(z \in x \leftrightarrow z \in y) \rightarrow x = y]
@@ -654,6 +665,7 @@ WHERE u.age > 18 AND o.amount > 100;
 **实例 9.4.2** (数论证明)
 
 数学归纳法的逻辑形式：
+
 ```latex
 % 归纳原理
 [P(0) \wedge \forall n(P(n) \rightarrow P(n+1))] \rightarrow \forall n P(n)
