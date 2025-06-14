@@ -137,7 +137,7 @@ $$x(t) = e^{At}x(0) + \int_0^t e^{A(t-\tau)}Bu(\tau)d\tau$$
 状态转移矩阵定义为：
 $$\Phi(t) = e^{At}$$
 
-**性质 3.1 (状态转移矩阵性质)**
+-**性质 3.1 (状态转移矩阵性质)**
 
 1. $\Phi(0) = I$
 2. $\Phi(t_1 + t_2) = \Phi(t_1)\Phi(t_2)$
@@ -510,6 +510,8 @@ findRoots poly =
 
 **系统建模：**
 倒立摆系统的线性化模型：
+
+```latex
 $$\begin{bmatrix} \dot{x} \\ \dot{\theta} \\ \ddot{x} \\ \ddot{\theta} \end{bmatrix} =
 \begin{bmatrix}
 0 & 0 & 1 & 0 \\
@@ -519,8 +521,10 @@ $$\begin{bmatrix} \dot{x} \\ \dot{\theta} \\ \ddot{x} \\ \ddot{\theta} \end{bmat
 \end{bmatrix}
 \begin{bmatrix} x \\ \theta \\ \dot{x} \\ \dot{\theta} \end{bmatrix} +
 \begin{bmatrix} 0 \\ 0 \\ \frac{1}{M} \\ -\frac{1}{Ml} \end{bmatrix} u$$
+```
 
 **控制器设计：**
+
 ```haskell
 invertedPendulumControl :: IO ()
 invertedPendulumControl = do
@@ -558,17 +562,22 @@ invertedPendulumControl = do
 ### 9.2 直流电机控制
 
 **系统建模：**
+
+```latex
 直流电机的传递函数：
 $$G(s) = \frac{K_m}{s(Js + b)(Ls + R)}$$
 
 其中：
+
 - $K_m$ 是电机常数
 - $J$ 是转动惯量
 - $b$ 是阻尼系数
 - $L$ 是电感
 - $R$ 是电阻
+```
 
 **PID控制器设计：**
+
 ```haskell
 dcMotorControl :: IO ()
 dcMotorControl = do
@@ -601,14 +610,19 @@ dcMotorControl = do
 
 **系统建模：**
 温度控制系统的传递函数：
+
+```latex
 $$G(s) = \frac{K}{Ts + 1} e^{-\tau s}$$
 
 其中：
+
 - $K$ 是系统增益
 - $T$ 是时间常数
 - $\tau$ 是时间延迟
+```
 
 **Smith预测器设计：**
+
 ```haskell
 temperatureControl :: IO ()
 temperatureControl = do
@@ -637,6 +651,8 @@ temperatureControl = do
 ### 9.4 飞行器姿态控制
 
 **系统建模：**
+
+```latex
 飞行器姿态控制系统的状态空间模型：
 $$\begin{bmatrix} \dot{\phi} \\ \dot{\theta} \\ \dot{\psi} \\ \dot{p} \\ \dot{q} \\ \dot{r} \end{bmatrix} =
 \begin{bmatrix}
@@ -657,8 +673,10 @@ L_{\delta_a} & 0 & 0 \\
 0 & 0 & N_{\delta_r}
 \end{bmatrix}
 \begin{bmatrix} \delta_a \\ \delta_e \\ \delta_r \end{bmatrix}$$
+```
 
 **LQR控制器设计：**
+
 ```haskell
 aircraftControl :: IO ()
 aircraftControl = do
@@ -702,6 +720,8 @@ aircraftControl = do
 ### 9.5 机器人路径跟踪控制
 
 **系统建模：**
+
+```latex
 移动机器人的运动学模型：
 $$\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} =
 \begin{bmatrix}
@@ -710,6 +730,7 @@ $$\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} =
 0 & 1
 \end{bmatrix}
 \begin{bmatrix} v \\ \omega \end{bmatrix}$$
+```
 
 **非线性控制器设计：**
 ```haskell
@@ -720,31 +741,31 @@ robotPathTracking = do
 
       -- 路径跟踪控制器
       pathTrackingController :: (Double, Double, Double) -> (Double, Double) -> (Double, Double)
-      pathTrackingController (x, y, theta) (xd, yd) = 
+      pathTrackingController (x, y, theta) (xd, yd) =
         let -- 位置误差
             ex = xd - x
             ey = yd - y
-            
+
             -- 期望角度
             theta_d = atan2 (yd - y) (xd - x)
-            
+
             -- 角度误差
             e_theta = theta_d - theta
-            
+
             -- 控制律
             k1 = 2.0  -- 位置增益
             k2 = 3.0  -- 角度增益
-            
+
             v = k1 * sqrt (ex^2 + ey^2)  -- 线速度
             omega = k2 * e_theta         -- 角速度
         in (v, omega)
 
       -- 仿真
       simulateRobot :: Double -> (Double, Double, Double) -> [(Double, Double, Double)]
-      simulateRobot dt (x0, y0, theta0) = 
+      simulateRobot dt (x0, y0, theta0) =
         let timeSteps = [0, dt..10]  -- 10秒仿真
             initialState = (x0, y0, theta0)
-        in scanl (\state t -> 
+        in scanl (\state t ->
                let (x, y, theta) = state
                    (xd, yd) = desiredPath t
                    (v, omega) = pathTrackingController state (xd, yd)
@@ -782,30 +803,30 @@ powerSystemControl = do
 
       -- 自适应PID控制器
       adaptivePID :: Double -> Double -> Double -> Double -> Double -> Double
-      adaptivePID error integral derivative kp ki kd = 
+      adaptivePID error integral derivative kp ki kd =
         let -- 自适应增益调整
             kp' = kp * (1 + 0.1 * abs error)
             ki' = ki * (1 + 0.05 * abs integral)
             kd' = kd * (1 + 0.02 * abs derivative)
-            
+
             -- PID控制律
             control = kp' * error + ki' * integral + kd' * derivative
         in control
 
       -- 频率控制仿真
       frequencyControl :: Double -> [Double]
-      frequencyControl dt = 
+      frequencyControl dt =
         let timeSteps = [0, dt..20]  -- 20秒仿真
             initialFrequency = 50.0  -- 初始频率50Hz
             desiredFrequency = 50.0  -- 期望频率50Hz
-            
+
             -- 仿真循环
             simulate :: Double -> Double -> Double -> [Double]
-            simulate t freq integral = 
+            simulate t freq integral =
               let error = desiredFrequency - freq
                   derivative = 0  -- 简化处理
                   control = adaptivePID error integral derivative 1.0 0.5 0.1
-                  
+
                   -- 系统响应
                   freq' = freq + (control - d * freq) / m * dt
                   integral' = integral + error * dt
