@@ -50,11 +50,13 @@ $$\Sigma^+ = \Sigma^* \setminus \{\varepsilon\}$$
 
 **定理 1.2.1 (克莱尼星号性质)**
 对于任何字母表 $\Sigma$：
+
 1. $\varepsilon \in \Sigma^*$
 2. $\Sigma \subseteq \Sigma^*$
 3. 如果 $w_1, w_2 \in \Sigma^*$，则 $w_1 \cdot w_2 \in \Sigma^*$
 
 **证明**
+
 1. 根据定义，$\varepsilon \in \Sigma^0 \subseteq \Sigma^*$
 2. 对于任何 $a \in \Sigma$，$a \in \Sigma^1 \subseteq \Sigma^*$
 3. 如果 $w_1 \in \Sigma^m$，$w_2 \in \Sigma^n$，则 $w_1 \cdot w_2 \in \Sigma^{m+n} \subseteq \Sigma^*$
@@ -116,6 +118,7 @@ $$(L^*)^* = L^*$$
 
 **定义 3.1.1 (正则表达式)**
 字母表 $\Sigma$ 上的正则表达式递归定义如下：
+
 1. $\emptyset$ 是正则表达式
 2. $\varepsilon$ 是正则表达式
 3. 对于任何 $a \in \Sigma$，$a$ 是正则表达式
@@ -125,6 +128,7 @@ $$(L^*)^* = L^*$$
 
 **定义 3.1.2 (正则表达式语义)**
 正则表达式 $r$ 表示的语言 $L(r)$ 递归定义如下：
+
 1. $L(\emptyset) = \emptyset$
 2. $L(\varepsilon) = \{\varepsilon\}$
 3. $L(a) = \{a\}$，其中 $a \in \Sigma$
@@ -139,6 +143,7 @@ $$(L^*)^* = L^*$$
 
 **定理 3.2.2 (正则表达式代数律)**
 正则表达式满足以下代数律：
+
 1. **交换律**: $r_1 + r_2 = r_2 + r_1$
 2. **结合律**: $(r_1 + r_2) + r_3 = r_1 + (r_2 + r_3)$
 3. **分配律**: $r_1 \cdot (r_2 + r_3) = r_1 \cdot r_2 + r_1 \cdot r_3$
@@ -155,6 +160,7 @@ $$(L^*)^* = L^*$$
 $$M = (Q, \Sigma, \delta, q_0, F)$$
 
 其中：
+
 - $Q$ 是有限状态集合
 - $\Sigma$ 是输入字母表
 - $\delta: Q \times \Sigma \rightarrow Q$ 是转移函数
@@ -163,6 +169,7 @@ $$M = (Q, \Sigma, \delta, q_0, F)$$
 
 **定义 4.1.2 (DFA扩展转移函数)**
 DFA的扩展转移函数 $\hat{\delta}: Q \times \Sigma^* \rightarrow Q$ 递归定义如下：
+
 1. $\hat{\delta}(q, \varepsilon) = q$
 2. $\hat{\delta}(q, wa) = \delta(\hat{\delta}(q, w), a)$
 
@@ -179,6 +186,7 @@ $$L(M) = \{w \in \Sigma^*: \hat{\delta}(q_0, w) \in F\}$$
 $$M = (Q, \Sigma, \delta, q_0, F)$$
 
 其中：
+
 - $Q$ 是有限状态集合
 - $\Sigma$ 是输入字母表
 - $\delta: Q \times \Sigma \rightarrow \mathcal{P}(Q)$ 是转移函数
@@ -187,6 +195,7 @@ $$M = (Q, \Sigma, \delta, q_0, F)$$
 
 **定义 4.2.2 (NFA扩展转移函数)**
 NFA的扩展转移函数 $\hat{\delta}: Q \times \Sigma^* \rightarrow \mathcal{P}(Q)$ 递归定义如下：
+
 1. $\hat{\delta}(q, \varepsilon) = \{q\}$
 2. $\hat{\delta}(q, wa) = \bigcup_{p \in \hat{\delta}(q, w)} \delta(p, a)$
 
@@ -203,6 +212,7 @@ $$L(M) = \{w \in \Sigma^*: \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 构造性证明：使用子集构造法。
 设 $M = (Q, \Sigma, \delta, q_0, F)$ 是NFA。
 构造DFA $M' = (Q', \Sigma, \delta', q_0', F')$ 如下：
+
 - $Q' = \mathcal{P}(Q)$
 - $q_0' = \{q_0\}$
 - $F' = \{S \subseteq Q: S \cap F \neq \emptyset\}$
@@ -220,6 +230,7 @@ $$L(M) = \{w \in \Sigma^*: \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 $$G = (V, \Sigma, P, S)$$
 
 其中：
+
 - $V$ 是非终结符集合
 - $\Sigma$ 是终结符集合
 - $P$ 是产生式集合
@@ -240,6 +251,7 @@ $$L(G) = \{w \in \Sigma^*: S \Rightarrow^* w\}$$
 
 **定义 5.2.1 (乔姆斯基层次)**
 乔姆斯基层次定义了语言的四个层次：
+
 1. **类型0**: 无限制文法（图灵机）
 2. **类型1**: 上下文相关文法（线性有界自动机）
 3. **类型2**: 上下文无关文法（下推自动机）
@@ -609,6 +621,7 @@ example = do
 #### 7.1 编译器设计
 
 形式语言理论在编译器设计中有重要应用：
+
 - 词法分析器（正则表达式）
 - 语法分析器（上下文无关文法）
 - 语义分析
@@ -616,6 +629,7 @@ example = do
 #### 7.2 自然语言处理
 
 形式语言理论为自然语言处理提供基础：
+
 - 句法分析
 - 语义表示
 - 机器翻译
@@ -623,6 +637,7 @@ example = do
 #### 7.3 生物信息学
 
 形式语言理论在生物信息学中的应用：
+
 - DNA序列分析
 - 蛋白质结构预测
 - 基因表达分析
@@ -634,7 +649,8 @@ example = do
 ---
 
 **参考文献**:
+
 1. Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). Introduction to automata theory, languages, and computation. Pearson Education.
 2. Sipser, M. (2012). Introduction to the theory of computation. Cengage Learning.
 3. Chomsky, N. (1956). Three models for the description of language. IRE Transactions on information theory, 2(3), 113-124.
-4. Kleene, S. C. (1956). Representation of events in nerve nets and finite automata. Automata studies, 34, 3-41. 
+4. Kleene, S. C. (1956). Representation of events in nerve nets and finite automata. Automata studies, 34, 3-41.
