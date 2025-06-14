@@ -13,7 +13,7 @@
 
 ### 1.2 知识体系结构
 
-```
+```text
 形式科学体系
 ├── 01 基础理论 (Foundational Theory)
 ├── 02 数学基础 (Mathematical Foundation)

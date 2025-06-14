@@ -5,11 +5,13 @@
 类型理论是计算机科学和数学的基础理论，研究类型系统的数学性质、类型安全和类型推断算法。它为编程语言、程序验证、定理证明等领域提供理论基础。
 
 ### 1.1 理论基础
+
 - **数学基础**：集合论、范畴论、逻辑学
 - **计算基础**：λ演算、递归函数、计算模型
 - **逻辑基础**：直觉逻辑、构造性数学、证明论
 
 ### 1.2 核心问题
+
 - **类型安全**：确保程序不会产生类型错误
 - **类型推断**：自动推导表达式的类型
 - **类型等价**：判断两个类型是否等价
@@ -29,6 +31,7 @@
 类型规则是推导类型判断的形式规则。
 
 **形式化定义**：
+
 ```haskell
 -- 类型上下文定义
 type Context = Map Variable Type
@@ -52,6 +55,7 @@ data TypeRule = TypeRule {
 ### 2.2 基本类型构造
 
 **定义 2.4 (基本类型)**
+
 - **单位类型**：$\text{Unit}$ 或 $()$，只有一个值
 - **布尔类型**：$\text{Bool}$，有两个值 $\text{true}$ 和 $\text{false}$
 - **整数类型**：$\text{Int}$，整数集合
@@ -67,6 +71,7 @@ data TypeRule = TypeRule {
 和类型 $\tau_1 + \tau_2$ 表示类型 $\tau_1$ 和 $\tau_2$ 的不相交并集。
 
 **形式化定义**：
+
 ```haskell
 -- 类型定义
 data Type = 
@@ -116,6 +121,7 @@ $$\frac{}{\Gamma \vdash \text{true} : \text{Bool}} \quad \frac{}{\Gamma \vdash \
 $$\frac{n \in \mathbb{Z}}{\Gamma \vdash n : \text{Int}}$$
 
 **形式化定义**：
+
 ```haskell
 -- 基本类型规则
 varRule :: Context -> Variable -> Type -> TypeJudgment
@@ -140,6 +146,7 @@ $$\frac{\Gamma, x : \tau_1 \vdash e : \tau_2}{\Gamma \vdash \lambda x : \tau_1.e
 $$\frac{\Gamma \vdash e_1 : \tau_1 \rightarrow \tau_2 \quad \Gamma \vdash e_2 : \tau_1}{\Gamma \vdash e_1 e_2 : \tau_2}$$
 
 **形式化定义**：
+
 ```haskell
 -- 函数抽象规则
 lambdaRule :: Context -> Variable -> Type -> Expression -> TypeJudgment
@@ -167,6 +174,7 @@ $$\frac{\Gamma \vdash e_1 : \tau_1 \quad \Gamma \vdash e_2 : \tau_2}{\Gamma \vda
 $$\frac{\Gamma \vdash e : \tau_1 \times \tau_2}{\Gamma \vdash \text{fst } e : \tau_1} \quad \frac{\Gamma \vdash e : \tau_1 \times \tau_2}{\Gamma \vdash \text{snd } e : \tau_2}$$
 
 **形式化定义**：
+
 ```haskell
 -- 积类型构造规则
 pairRule :: Context -> Expression -> Expression -> TypeJudgment
@@ -196,6 +204,7 @@ $$\frac{\Gamma \vdash e : \tau_1}{\Gamma \vdash \text{inl } e : \tau_1 + \tau_2}
 $$\frac{\Gamma \vdash e : \tau_1 + \tau_2 \quad \Gamma, x : \tau_1 \vdash e_1 : \tau \quad \Gamma, y : \tau_2 \vdash e_2 : \tau}{\Gamma \vdash \text{case } e \text{ of inl } x \Rightarrow e_1 \text{ | inr } y \Rightarrow e_2 : \tau}$$
 
 **形式化定义**：
+
 ```haskell
 -- 和类型注入规则
 inlRule :: Context -> Expression -> Type -> TypeJudgment
@@ -232,6 +241,7 @@ caseRule ctx e x e1 y e2 =
 通过结构归纳法证明。对于每个归约规则，需要证明类型在归约后保持不变。
 
 **形式化证明**：
+
 ```haskell
 -- 类型保持性证明
 typePreservation :: Context -> Expression -> Expression -> Type -> Bool
@@ -263,6 +273,7 @@ checkTypePreservation ctx (Reduction e e' _) =
 通过结构归纳法证明。对于每个语法构造，证明要么是值，要么可以继续归约。
 
 **形式化证明**：
+
 ```haskell
 -- 值定义
 isValue :: Expression -> Bool
@@ -319,6 +330,7 @@ canReduce _ = Nothing
 表达式 $e$ 的最一般类型是使得 $\emptyset \vdash e : \tau$ 成立的类型 $\tau$。
 
 **形式化定义**：
+
 ```haskell
 -- 类型替换
 type Substitution = Map String Type
@@ -339,6 +351,7 @@ composeSubstitution sigma1 sigma2 = Map.union (Map.map (applySubstitution sigma1
 ### 5.2 算法 W (Robinson's Unification)
 
 **算法 W**：
+
 ```haskell
 -- 算法 W
 algorithmW :: Context -> Expression -> Either String (Substitution, Type)
@@ -420,6 +433,7 @@ $$\frac{\Gamma, \alpha \vdash e : \tau}{\Gamma \vdash \Lambda \alpha.e : \forall
 $$\frac{\Gamma \vdash e : \forall \alpha.\tau}{\Gamma \vdash e[\tau'] : \tau[\alpha \mapsto \tau']}$$
 
 **形式化定义**：
+
 ```haskell
 -- 全称类型
 data Type = 
@@ -449,6 +463,7 @@ $$\frac{\Gamma \vdash e : \tau[\alpha \mapsto \tau']}{\Gamma \vdash \text{pack }
 $$\frac{\Gamma \vdash e_1 : \exists \alpha.\tau \quad \Gamma, \alpha, x : \tau \vdash e_2 : \tau'}{\Gamma \vdash \text{unpack } \alpha, x = e_1 \text{ in } e_2 : \tau'}$$
 
 **形式化定义**：
+
 ```haskell
 -- 存在类型
 data Type = 
@@ -483,6 +498,7 @@ $$\llbracket \tau \rrbracket_\rho = \text{语义域}$$
 $$\llbracket e \rrbracket_{\rho,\sigma} : \llbracket \tau \rrbracket_\rho$$
 
 **形式化定义**：
+
 ```haskell
 -- 语义域
 data SemanticDomain = 
@@ -521,6 +537,7 @@ $$e \rightarrow e'$$
 $$e \Downarrow v$$
 
 **形式化定义**：
+
 ```haskell
 -- 小步语义
 smallStep :: Expression -> Maybe Expression
@@ -745,4 +762,4 @@ example = do
 **版本**：v7.0  
 **更新时间**：2024-12-19  
 **维护者**：类型理论研究团队  
-**状态**：持续更新中 
+**状态**：持续更新中
