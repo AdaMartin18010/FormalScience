@@ -18,12 +18,14 @@
 
 **定义 1.1** (分布式存储系统)
 分布式存储系统是一个三元组 $S = (N, D, R)$，其中：
+
 - $N$ 是节点集合
 - $D$ 是数据集合
 - $R$ 是复制关系集合
 
 **定义 1.2** (数据项)
 数据项是一个四元组 $d = (key, value, timestamp, version)$，其中：
+
 - $key$ 是唯一标识符
 - $value$ 是数据值
 - $timestamp$ 是时间戳
@@ -33,6 +35,7 @@
 
 **定义 1.3** (存储操作)
 存储操作包括：
+
 - $read(key)$：读取数据
 - $write(key, value)$：写入数据
 - $delete(key)$：删除数据
@@ -72,7 +75,8 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 ### 3.1 主从复制
 
 **算法 3.1** (主从复制)
-```
+
+```text
 1. 选择一个主节点
 2. 所有写操作发送到主节点
 3. 主节点将写操作复制到从节点
@@ -80,11 +84,13 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 ```
 
 **优点**：
+
 - 简单易实现
 - 强一致性
 - 写操作有序
 
 **缺点**：
+
 - 主节点单点故障
 - 写性能瓶颈
 - 网络分区时不可用
@@ -92,7 +98,8 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 ### 3.2 多主复制
 
 **算法 3.2** (多主复制)
-```
+
+```text
 1. 多个节点都可以接受写操作
 2. 写操作在本地执行
 3. 异步复制到其他节点
@@ -100,6 +107,7 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 ```
 
 **冲突解决策略**：
+
 - **最后写入胜利**：使用时间戳
 - **向量时钟**：检测因果关系
 - **应用层解决**：自定义冲突解决逻辑
@@ -107,7 +115,8 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 ### 3.3 无主复制
 
 **算法 3.3** (Dynamo风格复制)
-```
+
+```text
 1. 使用一致性哈希分区
 2. 每个数据项复制到多个节点
 3. 读写需要多数节点确认
@@ -127,11 +136,13 @@ $$\text{CausalConsistency} \equiv \forall op_1, op_2: \text{Causal}(op_1, op_2) 
 $$\text{RangePartition}(key) = \lfloor \frac{key}{range\_size} \rfloor$$
 
 **优点**：
+
 - 支持范围查询
 - 数据局部性好
 - 易于实现
 
 **缺点**：
+
 - 可能产生热点
 - 分区大小不均匀
 
@@ -143,18 +154,21 @@ $$\text{RangePartition}(key) = \lfloor \frac{key}{range\_size} \rfloor$$
 $$\text{HashPartition}(key) = hash(key) \bmod num\_partitions$$
 
 **优点**：
+
 - 负载均衡
 - 热点分布均匀
 - 实现简单
 
 **缺点**：
+
 - 不支持范围查询
 - 重新分区开销大
 
 ### 4.3 一致性哈希
 
 **算法 4.1** (一致性哈希)
-```
+
+```text
 1. 将哈希环分成固定数量的槽位
 2. 每个节点映射到环上的多个位置
 3. 数据项映射到环上最近的下一个节点
@@ -170,12 +184,14 @@ $$\text{HashPartition}(key) = hash(key) \bmod num\_partitions$$
 
 **定理 5.1** (CAP定理)
 在分布式系统中，最多只能同时满足以下三个性质中的两个：
+
 - **一致性 (Consistency)**：所有节点看到相同的数据
 - **可用性 (Availability)**：每个请求都能得到响应
 - **分区容错性 (Partition tolerance)**：网络分区时系统仍能工作
 
 **证明**：
 假设系统满足一致性和可用性，当网络分区发生时：
+
 1. 分区内的节点无法与分区外的节点通信
 2. 为了保持一致性，必须等待分区恢复
 3. 这违反了可用性要求
@@ -183,16 +199,19 @@ $$\text{HashPartition}(key) = hash(key) \bmod num\_partitions$$
 ### 5.2 CAP权衡
 
 **CP系统**：
+
 - 优先保证一致性和分区容错性
 - 在网络分区时拒绝服务
 - 例如：传统关系数据库
 
 **AP系统**：
+
 - 优先保证可用性和分区容错性
 - 允许暂时的不一致
 - 例如：NoSQL数据库
 
 **CA系统**：
+
 - 优先保证一致性和可用性
 - 不支持网络分区
 - 例如：单机数据库
@@ -203,11 +222,13 @@ $$\text{HashPartition}(key) = hash(key) \bmod num\_partitions$$
 
 **定义 6.1** (GFS组件)
 GFS包含以下组件：
+
 - **Master**：元数据管理
 - **ChunkServer**：数据存储
 - **Client**：文件访问
 
 **GFS特点**：
+
 - 大文件优化
 - 追加写入
 - 容错设计
@@ -217,11 +238,13 @@ GFS包含以下组件：
 
 **定义 6.2** (HDFS组件)
 HDFS包含以下组件：
+
 - **NameNode**：元数据管理
 - **DataNode**：数据存储
 - **Client**：文件访问
 
 **HDFS特点**：
+
 - 流式数据访问
 - 大数据集
 - 简单一致性模型
@@ -232,6 +255,7 @@ HDFS包含以下组件：
 ### 7.1 分布式数据库
 
 **应用实例 7.1** (Cassandra集群)
+
 ```python
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
@@ -326,6 +350,7 @@ cluster.close()
 ```
 
 **Cassandra特性**：
+
 - 最终一致性
 - 高可用性
 - 线性扩展
@@ -334,6 +359,7 @@ cluster.close()
 ### 7.2 分布式缓存
 
 **应用实例 7.2** (Redis集群)
+
 ```python
 import redis
 from redis.cluster import RedisCluster
@@ -418,6 +444,7 @@ cluster_info = cluster_manager.get_cluster_info()
 ```
 
 **Redis集群特性**：
+
 - 自动分片
 - 主从复制
 - 故障转移
@@ -426,6 +453,7 @@ cluster_info = cluster_manager.get_cluster_info()
 ### 7.3 分布式对象存储
 
 **应用实例 7.3** (MinIO对象存储)
+
 ```python
 from minio import Minio
 from minio.error import S3Error
@@ -536,6 +564,7 @@ storage.delete_object("my-bucket", "hello.txt")
 ```
 
 **MinIO特性**：
+
 - S3兼容API
 - 分布式存储
 - 数据加密
@@ -549,6 +578,7 @@ storage.delete_object("my-bucket", "hello.txt")
 强一致性系统保证所有读操作返回最新写入的值。
 
 **证明**：
+
 1. **安全性**：通过同步复制保证所有节点数据一致
 2. **活性**：写操作最终在所有节点生效
 3. **线性化**：所有操作都有全局顺序
@@ -560,6 +590,7 @@ storage.delete_object("my-bucket", "hello.txt")
 
 **证明**：
 构造反例：
+
 1. 假设系统满足CA
 2. 当网络分区发生时，分区内的节点无法与分区外通信
 3. 为了保持一致性，必须等待分区恢复
@@ -594,10 +625,11 @@ storage.delete_object("my-bucket", "hello.txt")
 ---
 
 **相关文档**：
+
 - [共识理论](01_Consensus_Theory.md)
 - [容错理论](02_Fault_Tolerance_Theory.md)
 - [分布式算法](03_Distributed_Algorithms.md)
 - [网络协议](04_Network_Protocols.md)
 - [分布式计算](06_Distributed_Computing.md)
 
-**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md) 
+**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md)

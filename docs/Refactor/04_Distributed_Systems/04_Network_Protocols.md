@@ -18,11 +18,13 @@
 
 **定义 1.1** (网络图)
 网络可以表示为一个有向图 $G = (V, E)$，其中：
+
 - $V$ 是节点集合（路由器、主机等）
 - $E$ 是边集合（通信链路）
 
 **定义 1.2** (网络状态)
 网络状态是一个函数 $\sigma: V \times T \rightarrow S$，其中：
+
 - $T$ 是时间域
 - $S$ 是状态空间
 
@@ -30,6 +32,7 @@
 
 **定义 1.3** (协议)
 协议是一个五元组 $P = (M, S, \delta, s_0, F)$，其中：
+
 - $M$ 是消息集合
 - $S$ 是状态集合
 - $\delta: S \times M \rightarrow S$ 是状态转移函数
@@ -69,7 +72,8 @@ TCP/IP模型包含四个层次：
 ### 3.1 距离向量路由
 
 **算法 3.1** (距离向量算法)
-```
+
+```text
 初始化: 每个节点知道到邻居的距离
 重复:
   1. 节点向邻居发送自己的距离向量
@@ -82,6 +86,7 @@ TCP/IP模型包含四个层次：
 $$D(i,j) = \min_{k \in N(i)} \{c(i,k) + D(k,j)\}$$
 
 其中：
+
 - $D(i,j)$ 是从节点 $i$ 到节点 $j$ 的最短距离
 - $c(i,k)$ 是从节点 $i$ 到邻居 $k$ 的链路成本
 - $N(i)$ 是节点 $i$ 的邻居集合
@@ -92,7 +97,8 @@ $$D(i,j) = \min_{k \in N(i)} \{c(i,k) + D(k,j)\}$$
 ### 3.2 链路状态路由
 
 **算法 3.2** (链路状态算法)
-```
+
+```text
 1. 发现邻居节点
 2. 测量到邻居的链路成本
 3. 构造链路状态包(LSP)
@@ -102,7 +108,8 @@ $$D(i,j) = \min_{k \in N(i)} \{c(i,k) + D(k,j)\}$$
 ```
 
 **Dijkstra算法**：
-```
+
+```text
 初始化: S = {源节点}, D[源节点] = 0, D[其他节点] = ∞
 重复:
   1. 选择不在S中且D值最小的节点u
@@ -122,7 +129,8 @@ Dijkstra算法计算出的路径是最短路径。
 TCP连接是一个四元组 $(src\_ip, src\_port, dst\_ip, dst\_port)$。
 
 **TCP状态机**：
-```
+
+```text
 CLOSED → LISTEN (被动打开)
 CLOSED → SYN_SENT (主动打开)
 LISTEN → SYN_RCVD (收到SYN)
@@ -139,7 +147,8 @@ TIME_WAIT → CLOSED (超时)
 ```
 
 **拥塞控制算法**：
-```
+
+```text
 慢启动:
   cwnd = 1
   每收到一个ACK: cwnd += 1
@@ -160,7 +169,8 @@ TIME_WAIT → CLOSED (超时)
 UDP是无连接的传输协议，提供尽力而为的服务。
 
 **UDP头部格式**：
-```
+
+```text
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -177,7 +187,7 @@ UDP是无连接的传输协议，提供尽力而为的服务。
 **定义 5.1** (HTTP请求)
 HTTP请求包含请求行、头部和主体：
 
-```
+```text
 GET /index.html HTTP/1.1
 Host: www.example.com
 User-Agent: Mozilla/5.0
@@ -189,7 +199,7 @@ Connection: keep-alive
 **定义 5.2** (HTTP响应)
 HTTP响应包含状态行、头部和主体：
 
-```
+```text
 HTTP/1.1 200 OK
 Content-Type: text/html
 Content-Length: 1234
@@ -199,6 +209,7 @@ Connection: keep-alive
 ```
 
 **HTTP方法**：
+
 - GET：获取资源
 - POST：提交数据
 - PUT：更新资源
@@ -211,6 +222,7 @@ Connection: keep-alive
 DNS查询用于将域名解析为IP地址。
 
 **DNS记录类型**：
+
 - A：IPv4地址
 - AAAA：IPv6地址
 - CNAME：规范名称
@@ -219,7 +231,8 @@ DNS查询用于将域名解析为IP地址。
 - PTR：指针记录
 
 **DNS解析过程**：
-```
+
+```text
 1. 查询本地缓存
 2. 查询本地DNS服务器
 3. 查询根DNS服务器
@@ -235,7 +248,7 @@ DNS查询用于将域名解析为IP地址。
 **定义 6.1** (SSL/TLS握手)
 SSL/TLS握手建立安全连接：
 
-```
+```text
 客户端 → 服务器: ClientHello
 服务器 → 客户端: ServerHello, Certificate, ServerKeyExchange
 客户端 → 服务器: ClientKeyExchange, ChangeCipherSpec, Finished
@@ -254,6 +267,7 @@ IPSec有两种工作模式：
 2. **隧道模式**：保护整个IP包
 
 **IPSec协议**：
+
 - AH (Authentication Header)：提供认证
 - ESP (Encapsulating Security Payload)：提供加密和认证
 
@@ -262,6 +276,7 @@ IPSec有两种工作模式：
 ### 7.1 网络编程
 
 **应用实例 7.1** (TCP服务器)
+
 ```python
 import socket
 import threading
@@ -321,6 +336,7 @@ if __name__ == "__main__":
 ```
 
 **应用实例 7.2** (HTTP客户端)
+
 ```python
 import requests
 import json
@@ -382,6 +398,7 @@ print(f"新仓库: {new_repo}")
 ### 7.3 网络监控
 
 **应用实例 7.3** (网络流量监控)
+
 ```python
 import pyshark
 import time
@@ -477,6 +494,7 @@ monitor.start_capture(duration=30)
 3. **公平性**：$\forall i,j: \text{Fair}(P, i, j)$
 
 **证明框架**：
+
 1. **状态机模型**：将协议建模为状态机
 2. **不变式**：证明协议执行过程中保持的性质
 3. **终止性**：证明协议最终会终止
@@ -495,6 +513,7 @@ Dijkstra算法计算出的路径是最短路径。
 **归纳步骤**：假设在第k次迭代后，S中的节点都有正确的最短距离。
 
 在第k+1次迭代中：
+
 1. 选择不在S中且距离最小的节点u
 2. 假设u的距离不正确，存在更短的路径
 3. 该路径必须经过S外的节点，但S外节点的距离都大于u的距离
@@ -529,10 +548,11 @@ Dijkstra算法计算出的路径是最短路径。
 ---
 
 **相关文档**：
+
 - [共识理论](01_Consensus_Theory.md)
 - [容错理论](02_Fault_Tolerance_Theory.md)
 - [分布式算法](03_Distributed_Algorithms.md)
 - [分布式存储](05_Distributed_Storage.md)
 - [分布式计算](06_Distributed_Computing.md)
 
-**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md) 
+**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md)

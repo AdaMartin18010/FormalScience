@@ -733,6 +733,7 @@ $$\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} =
 ```
 
 **非线性控制器设计：**
+
 ```haskell
 robotPathTracking :: IO ()
 robotPathTracking = do
@@ -787,10 +788,12 @@ robotPathTracking = do
 $$G(s) = \frac{1}{Ms + D}$$
 
 其中：
+
 - $M$ 是系统惯性常数
 - $D$ 是阻尼系数
 
 **自适应控制器设计：**
+
 ```haskell
 powerSystemControl :: IO ()
 powerSystemControl = do

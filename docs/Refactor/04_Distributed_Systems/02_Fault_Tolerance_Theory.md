@@ -22,6 +22,7 @@
 $$\text{FaultTolerant}(S) \equiv \forall f \in \mathcal{F}, \forall t \in \mathbb{T}: \text{Correct}(S, t)$$
 
 其中：
+
 - $\mathcal{F}$ 是故障集合
 - $\mathbb{T}$ 是时间域
 - $\text{Correct}(S, t)$ 表示系统 $S$ 在时间 $t$ 提供正确服务
@@ -60,6 +61,7 @@ $$\text{SyncFaultModel} \equiv \exists \Delta: \forall m \in \mathcal{M}: \text{
 
 **证明**：
 假设存在 $f+1$ 个拜占庭节点，则：
+
 - 正确节点数量：$n - (f+1) = n - \lfloor \frac{n-1}{2} \rfloor - 1$
 - 当 $n$ 为奇数时：$n - \frac{n-1}{2} - 1 = \frac{n-1}{2}$
 - 当 $n$ 为偶数时：$n - \frac{n-2}{2} - 1 = \frac{n}{2}$
@@ -86,6 +88,7 @@ $$\text{AsyncFaultModel} \equiv \forall \Delta: \exists m \in \mathcal{M}: \text
 $$R = \frac{N_{total}}{N_{min}}$$
 
 其中：
+
 - $N_{total}$ 是总节点数
 - $N_{min}$ 是最小所需节点数
 
@@ -106,7 +109,8 @@ $$\text{Replication}(S) \equiv \forall i,j \in \text{Replicas}: \text{State}_i =
 ### 4.1 心跳机制
 
 **算法 4.1** (心跳检测)
-```
+
+```text
 1. 每个节点定期发送心跳消息
 2. 设置超时时间 T
 3. 如果在 T 时间内未收到心跳，标记为故障
@@ -128,6 +132,7 @@ $$P_{detection} = 1 - (1-p_{heartbeat})^{n-1}$$
 $$\text{FD}: \mathcal{N} \times \mathbb{T} \rightarrow \{\text{trusted}, \text{suspected}\}$$
 
 **性质**：
+
 - **完整性**：故障节点最终被所有正确节点怀疑
 - **准确性**：正确节点最终不被任何正确节点怀疑
 
@@ -136,7 +141,8 @@ $$\text{FD}: \mathcal{N} \times \mathbb{T} \rightarrow \{\text{trusted}, \text{s
 ### 5.1 状态恢复
 
 **算法 5.1** (状态恢复)
-```
+
+```text
 1. 检测到故障节点
 2. 从其他副本获取最新状态
 3. 重新初始化故障节点
@@ -166,13 +172,15 @@ $n$ 个将军中，$m$ 个是叛徒，需要达成一致的进攻或撤退决定
 $$n \geq 3f + 1$$
 
 **证明**：
+
 1. **必要性**：如果 $n \leq 3f$，则正确节点数量 $\leq 2f$，无法区分 $f$ 个正确节点和 $f$ 个拜占庭节点
 2. **充分性**：通过PBFT等算法可以实现
 
 ### 6.2 PBFT算法
 
 **算法 6.1** (PBFT - Practical Byzantine Fault Tolerance)
-```
+
+```text
 阶段1: 预准备 (Pre-prepare)
 - 主节点分配序列号
 - 广播预准备消息
@@ -187,6 +195,7 @@ $$n \geq 3f + 1$$
 ```
 
 **复杂度分析**：
+
 - 消息复杂度：$O(n^2)$
 - 延迟：3轮消息传递
 - 吞吐量：$O(n)$
@@ -196,6 +205,7 @@ $$n \geq 3f + 1$$
 ### 7.1 区块链系统
 
 **应用实例 7.1** (比特币网络)
+
 ```python
 class BitcoinNode:
     def __init__(self, node_id):
@@ -225,6 +235,7 @@ class BitcoinNode:
 ```
 
 **容错特性**：
+
 - 容忍最多1/3的拜占庭节点
 - 使用工作量证明机制
 - 通过最长链规则解决分叉
@@ -232,6 +243,7 @@ class BitcoinNode:
 ### 7.2 分布式数据库
 
 **应用实例 7.2** (Raft共识算法)
+
 ```python
 class RaftNode:
     def __init__(self, node_id):
@@ -268,6 +280,7 @@ class RaftNode:
 ```
 
 **容错特性**：
+
 - 容忍最多1/2的崩溃故障
 - 保证强一致性
 - 自动故障转移
@@ -275,6 +288,7 @@ class RaftNode:
 ### 7.3 微服务架构
 
 **应用实例 7.3** (服务网格容错)
+
 ```yaml
 # Istio 容错配置
 apiVersion: networking.istio.io/v1alpha3
@@ -303,6 +317,7 @@ spec:
 ```
 
 **容错机制**：
+
 - 连接池管理
 - 熔断器模式
 - 重试机制
@@ -348,6 +363,7 @@ PBFT算法满足以下性质：
 4. 交集节点必须同时准备两个不同的值，矛盾
 
 **活性证明**：
+
 1. 主节点正确时，预准备阶段成功
 2. 正确节点数量 $n-f \geq 2f+1$，准备阶段成功
 3. 提交阶段同样成功
@@ -382,10 +398,11 @@ PBFT算法满足以下性质：
 ---
 
 **相关文档**：
+
 - [共识理论](01_Consensus_Theory.md)
 - [分布式算法](03_Distributed_Algorithms.md)
 - [网络协议](04_Network_Protocols.md)
 - [分布式存储](05_Distributed_Storage.md)
 - [分布式计算](06_Distributed_Computing.md)
 
-**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md) 
+**返回**：[分布式系统理论体系](../README.md) | [主索引](../../00_Master_Index/README.md)

@@ -192,7 +192,7 @@ $$\frac{\Gamma \vdash e : \tau_1 \quad \tau_1 \equiv \tau_2}{\Gamma \vdash e : \
 
 ### 5.1 类型推断算法
 
-**算法 5.1 (Hindley-Milner类型推断)**
+-**算法 5.1 (Hindley-Milner类型推断)**
 
 ```haskell
 type Infer = Either TypeError (Type, Substitution)
@@ -217,7 +217,7 @@ infer ctx (Abs x e) = do
 
 ### 5.2 统一算法
 
-**算法 5.2 (Robinson统一算法)**
+-**算法 5.2 (Robinson统一算法)**
 
 ```haskell
 unify :: Type -> Type -> Either TypeError Substitution

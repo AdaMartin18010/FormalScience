@@ -20,7 +20,7 @@
 
 ## 目录结构
 
-```
+```text
 docs/Refactor/
 ├── 00_Master_Index/                    # 主索引 (当前目录)
 ├── 01_Foundational_Theory/             # 基础理论
@@ -41,6 +41,7 @@ docs/Refactor/
 ## 主题分类
 
 ### 1. 基础理论 (01_Foundational_Theory/)
+
 - 集合论基础
 - 逻辑学基础
 - 数系理论
@@ -49,6 +50,7 @@ docs/Refactor/
 - 范畴论
 
 ### 2. 类型理论 (02_Type_Theory/)
+
 - 基础类型理论
 - 线性类型理论
 - 仿射类型理论
@@ -58,6 +60,7 @@ docs/Refactor/
 - 量子类型理论
 
 ### 3. 控制理论 (03_Control_Theory/)
+
 - 经典控制理论
 - 现代控制理论
 - 自适应控制
@@ -66,6 +69,7 @@ docs/Refactor/
 - 智能控制
 
 ### 4. 分布式系统 (04_Distributed_Systems/)
+
 - 共识理论
 - 容错理论
 - 分布式算法
@@ -74,6 +78,7 @@ docs/Refactor/
 - 分布式计算
 
 ### 5. 并发理论 (05_Concurrency_Theory/)
+
 - 进程代数
 - Petri网理论
 - 并发控制
@@ -82,6 +87,7 @@ docs/Refactor/
 - 并发验证
 
 ### 6. 时态逻辑 (06_Temporal_Logic/)
+
 - 线性时态逻辑 (LTL)
 - 分支时态逻辑 (CTL)
 - 时态控制理论
@@ -90,6 +96,7 @@ docs/Refactor/
 - 时态验证
 
 ### 7. 形式语言 (07_Formal_Language/)
+
 - 自动机理论
 - 语言层次结构
 - 语义理论
@@ -98,6 +105,7 @@ docs/Refactor/
 - 编译理论
 
 ### 8. 哲学科学 (08_Philosophy_Science/)
+
 - 本体论
 - 认识论
 - 方法论
@@ -106,6 +114,7 @@ docs/Refactor/
 - 数学哲学
 
 ### 9. 数学基础 (09_Mathematics/)
+
 - 基础数学
 - 高级数学
 - 应用数学
@@ -114,6 +123,7 @@ docs/Refactor/
 - 连续数学
 
 ### 10. 软件工程 (10_Software_Engineering/)
+
 - 软件设计
 - 软件验证
 - 软件测试
@@ -122,6 +132,7 @@ docs/Refactor/
 - 软件质量
 
 ### 11. AI计算 (11_AI_Computing/)
+
 - 机器学习
 - 深度学习
 - 知识表示
@@ -130,6 +141,7 @@ docs/Refactor/
 - 计算机视觉
 
 ### 12. 跨域综合 (12_Cross_Domain_Synthesis/)
+
 - 数学哲学
 - 认知科学
 - 信息论
@@ -150,6 +162,7 @@ docs/Refactor/
 ### 交叉引用
 
 每个主题目录都包含：
+
 - 与其他主题的关联分析
 - 交叉引用的详细说明
 - 统一的理论框架
@@ -228,4 +241,4 @@ docs/Refactor/
 
 **最后更新**：2024年12月19日  
 **版本**：v1.0  
-**维护者**：形式科学理论体系重构团队 
+**维护者**：形式科学理论体系重构团队
