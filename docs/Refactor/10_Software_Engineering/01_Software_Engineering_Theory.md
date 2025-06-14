@@ -14,6 +14,28 @@
 8. [批判分析](#8-批判分析)
 9. [参考文献](#9-参考文献)
 
+## 交叉引用与关联
+
+### 相关理论领域
+
+- **[系统设计理论](03_System_Design_Theory.md)**：软件系统架构设计
+- **[验证理论](04_Verification_Theory.md)**：软件形式化验证
+- **[人工智能理论](../11_AI_Computing/01_Artificial_Intelligence_Theory.md)**：AI驱动的软件开发
+- **[类型理论](../02_Type_Theory/01_Basic_Type_Theory.md)**：类型安全的软件开发
+- **[逻辑基础理论](../01_Foundational_Theory/01_Logic_Foundation.md)**：程序逻辑验证
+
+### 基础依赖关系
+
+- **[形式语言](../07_Formal_Language/01_Automata_Theory.md)**：程序语言的形式化
+- **[时态逻辑](../06_Temporal_Logic/01_Temporal_Logic_Foundation.md)**：程序时间性质验证
+- **[控制理论](../03_Control_Theory/01_Classical_Control_Theory.md)**：软件控制系统设计
+
+### 应用领域
+
+- **[分布式系统](../04_Distributed_Systems/01_Consensus_Theory.md)**：分布式软件系统
+- **[哲学科学](../08_Philosophy_Science/01_Ontology_Theory.md)**：软件系统的本体论分析
+- **[数学基础](../01_Foundational_Theory/05_Number_System_Theory.md)**：软件算法的数学基础
+
 ## 1. 概述
 
 软件工程理论是形式科学理论体系的核心组成部分，研究软件系统的设计、开发、验证和维护的理论基础。本部分涵盖软件生命周期、软件架构、软件验证、软件测试以及软件质量保证的理论体系。
@@ -27,9 +49,11 @@
 - **质量保证**: 确保软件质量
 - **验证理论**: 提供软件验证方法
 
+**关联**：软件工程理论与[验证理论](04_Verification_Theory.md)密切相关，为软件的正确性提供形式化保证。
+
 ### 1.2 理论体系结构
 
-```
+```text
 软件工程理论
 ├── 软件生命周期理论 (Software Lifecycle Theory)
 ├── 软件架构理论 (Software Architecture Theory)
@@ -556,4 +580,4 @@ analyzeHardwareConstraints reqs =
 
 **最后更新**：2024年12月19日  
 **版本**：v1.0  
-**维护者**：形式科学理论体系重构团队 
+**维护者**：形式科学理论体系重构团队

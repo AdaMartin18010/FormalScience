@@ -13,6 +13,32 @@
 9. [应用与扩展](#9-应用与扩展)
 10. [总结与展望](#10-总结与展望)
 
+## 交叉引用与关联
+
+### 相关理论领域
+
+- **[线性时态逻辑理论](02_Linear_Temporal_Logic_Theory.md)**：线性时间结构的详细理论
+- **[分支时态逻辑理论](03_Branching_Temporal_Logic_Theory.md)**：分支时间结构的详细理论
+- **[时态控制理论](04_Temporal_Control_Theory.md)**：时态逻辑在控制系统中的应用
+- **[概率时态逻辑](05_Probabilistic_Temporal_Logic.md)**：不确定性时态推理
+- **[模糊时态逻辑](06_Fuzzy_Temporal_Logic.md)**：模糊时间推理
+- **[逻辑基础理论](../01_Foundational_Theory/01_Logic_Foundation.md)**：时态逻辑的模态逻辑基础
+- **[形式语言](../07_Formal_Language/01_Automata_Theory.md)**：时态逻辑的自动机表示
+
+### 基础依赖关系
+
+- **[模态逻辑](../01_Foundational_Theory/01_Logic_Foundation.md)**：时态逻辑的模态基础
+- **[集合论](../01_Foundational_Theory/02_Set_Theory_Foundation.md)**：时间结构的形式化
+- **[关系理论](../01_Foundational_Theory/06_Relation_Theory.md)**：时间关系的数学表示
+
+### 应用领域
+
+- **[控制理论](../03_Control_Theory/01_Classical_Control_Theory.md)**：实时控制系统验证
+- **[分布式系统](../04_Distributed_Systems/01_Consensus_Theory.md)**：分布式系统时间性质
+- **[软件工程](../10_Software_Engineering/01_Software_Engineering_Theory.md)**：程序时间性质验证
+- **[人工智能](../11_AI_Computing/01_Artificial_Intelligence_Theory.md)**：智能系统时间推理
+- **[验证理论](../10_Software_Engineering/04_Verification_Theory.md)**：形式化验证方法
+
 ## 1. 引言：时态逻辑的哲学基础
 
 ### 1.1 时态逻辑的本质
@@ -36,6 +62,8 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 3. 语义解释可以处理时间推理
 4. 因此时态逻辑具有普遍性
 
+**关联**：时态逻辑是[模态逻辑](../01_Foundational_Theory/01_Logic_Foundation.md)在时间域上的扩展，将模态算子解释为时间算子。
+
 ### 1.2 时态逻辑的哲学问题
 
 **问题 1.2.1** (时间的本质) 时间是客观存在还是主观构造？
@@ -46,6 +74,8 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 - **主观时间**：时间是意识的构造
 - **关系时间**：时间是事件间的关系
 
+**关联**：此问题与[哲学科学](../08_Philosophy_Science/01_Ontology_Theory.md)中的本体论问题直接相关。
+
 **问题 1.2.2** (时间的方向性) 时间是否具有方向性？
 
 **分析**：
@@ -53,6 +83,8 @@ $$\mathcal{TL} = \langle \mathcal{T}, \mathcal{M}, \mathcal{L}, \mathcal{I} \ran
 - **线性时间**：时间有明确的方向
 - **分支时间**：时间有多个可能方向
 - **循环时间**：时间是循环的
+
+**关联**：此问题与[认识论理论](../08_Philosophy_Science/02_Epistemology_Theory.md)中的时间认知问题相关。
 
 ## 2. 线性时态逻辑：时间序列
 

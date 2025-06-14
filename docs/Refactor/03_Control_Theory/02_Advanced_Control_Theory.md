@@ -79,7 +79,7 @@ $$X > 0, Y > 0, \rho(XY) < \gamma^2$$
 2. 利用有界实引理
 3. 通过线性矩阵不等式求解
 
-**算法 1.1 (H∞控制器设计)**
+-**算法 1.1 (H∞控制器设计)**
 
 ```haskell
 hInfinityController :: LinearSystem -> Double -> Controller
@@ -161,7 +161,7 @@ $$\dot{\theta}_r(t) = -\Gamma r(t)e^T(t)PB$$
 2. 计算导数 $\dot{V} = -e^TQe \leq 0$
 3. 应用李雅普诺夫稳定性理论
 
-**算法 2.1 (模型参考自适应控制)**
+-**算法 2.1 (模型参考自适应控制)**
 
 ```haskell
 modelReferenceAdaptiveControl :: LinearSystem -> ReferenceModel -> Controller
@@ -188,21 +188,24 @@ modelReferenceAdaptiveControl sys refModel =
 
 ### 2.2 自校正控制
 
-**定义 2.3 (参数估计)**
+-**定义 2.3 (参数估计)**
 参数估计模型：
 $$y(k) = \phi^T(k-1)\theta + e(k)$$
 
 其中 $\phi(k-1)$ 是回归向量，$\theta$ 是参数向量，$e(k)$ 是噪声。
 
-**定义 2.4 (递归最小二乘)**
+-**定义 2.4 (递归最小二乘)**
+
+```latex
 递归最小二乘估计：
 $$\hat{\theta}(k) = \hat{\theta}(k-1) + P(k)\phi(k-1)[y(k) - \phi^T(k-1)\hat{\theta}(k-1)]$$
 $$P(k) = P(k-1) - \frac{P(k-1)\phi(k-1)\phi^T(k-1)P(k-1)}{1 + \phi^T(k-1)P(k-1)\phi(k-1)}$$
+```
 
 **定理 2.2 (自校正控制收敛性)**
 如果系统满足持续激励条件，则参数估计收敛到真值。
 
-**算法 2.2 (自校正控制)**
+--**算法 2.2 (自校正控制)**
 
 ```haskell
 selfTuningControl :: SystemModel -> Controller
@@ -250,7 +253,7 @@ $$u = \frac{1}{L_gL_f^{r-1}h(x)}[-L_f^rh(x) + v]$$
 2. 验证相对度条件
 3. 应用反馈线性化控制律
 
-**算法 3.1 (反馈线性化)**
+-**算法 3.1 (反馈线性化)**
 
 ```haskell
 feedbackLinearization :: NonlinearSystem -> Controller
@@ -298,7 +301,7 @@ $$s\dot{s} < 0$$
 2. 计算 $\dot{V} = s\dot{s}$
 3. 设计控制律使得 $\dot{V} < 0$
 
-**算法 3.2 (滑模控制)**
+-**算法 3.2 (滑模控制)**
 
 ```haskell
 slidingModeControl :: NonlinearSystem -> Vector Double -> Controller
@@ -347,7 +350,7 @@ $$u = \frac{1}{g_2(x_1, x_2)}[-f_2(x_1, x_2) - \frac{\partial V_1}{\partial x_1}
 
 其中 $z_2 = x_2 - \alpha_1(x_1)$，$\alpha_1(x_1)$ 是虚拟控制律。
 
-**算法 3.3 (反步法控制)**
+-**算法 3.3 (反步法控制)**
 
 ```haskell
 backsteppingControl :: NonlinearSystem -> Controller
@@ -410,7 +413,7 @@ $$-\frac{\partial V}{\partial t} = \min_u \{L(x, u, t) + \frac{\partial V}{\part
 2. 利用时间可加性
 3. 取极限得到偏微分方程
 
-**算法 4.1 (动态规划)**
+-**算法 4.1 (动态规划)**
 
 ```haskell
 dynamicProgramming :: CostFunction -> SystemDynamics -> ValueFunction
@@ -455,7 +458,7 @@ $$A^TP + PA - PBR^{-1}B^TP + Q = 0$$
 2. 代入贝尔曼方程
 3. 求解代数Riccati方程
 
-**算法 4.2 (LQR设计)**
+-**算法 4.2 (LQR设计)**
 
 ```haskell
 lqrDesign :: Matrix Double -> Matrix Double -> Matrix Double -> Matrix Double -> Matrix Double
@@ -503,7 +506,7 @@ $$A^TPA - P + Q - A^TPB(R + B^TPB)^{-1}B^TPA \leq 0$$
 
 则MPC闭环系统稳定。
 
-**算法 5.1 (MPC控制器)**
+-**算法 5.1 (MPC控制器)**
 
 ```haskell
 modelPredictiveControl :: LinearSystem -> Int -> Matrix Double -> Matrix Double -> Matrix Double -> Controller

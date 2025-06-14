@@ -29,7 +29,7 @@
 
 ### 1.2 理论体系结构
 
-```
+```text
 科学哲学理论
 ├── 科学方法论 (Scientific Methodology)
 ├── 科学解释理论 (Scientific Explanation Theory)
@@ -173,6 +173,7 @@ $$\text{Best explanation of } E \text{ is } H$$
 $$\mathcal{T} = \langle L, A, R, I \rangle$$
 
 其中：
+
 - $L$ 是语言
 - $A$ 是公理
 - $R$ 是推理规则
@@ -484,4 +485,4 @@ teachScientificMethod student method = case method of
 
 **最后更新**：2024年12月19日  
 **版本**：v1.0  
-**维护者**：形式科学理论体系重构团队 
+**维护者**：形式科学理论体系重构团队

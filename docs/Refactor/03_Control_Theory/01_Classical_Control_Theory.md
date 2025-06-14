@@ -14,6 +14,30 @@
 10. [总结](#总结)
 11. [参考文献](#参考文献)
 
+## 交叉引用与关联
+
+### 相关理论领域
+
+- **[现代控制理论](02_Modern_Control_Theory.md)**：状态空间方法的扩展
+- **[自适应控制理论](03_Adaptive_Control_Theory.md)**：参数自适应控制
+- **[鲁棒控制理论](04_Robust_Control_Theory.md)**：不确定性处理
+- **[最优控制理论](05_Optimal_Control_Theory.md)**：性能优化控制
+- **[智能控制理论](06_Intelligent_Control_Theory.md)**：智能算法控制
+- **[时态逻辑](../06_Temporal_Logic/01_Temporal_Logic_Foundation.md)**：控制系统的时间性质验证
+- **[分布式系统](../04_Distributed_Systems/01_Consensus_Theory.md)**：分布式控制系统
+
+### 基础依赖关系
+
+- **[数学基础](../01_Foundational_Theory/05_Number_System_Theory.md)**：线性代数和微分方程
+- **[逻辑基础](../01_Foundational_Theory/01_Logic_Foundation.md)**：系统性质的逻辑验证
+- **[形式语言](../07_Formal_Language/01_Automata_Theory.md)**：控制系统的形式化建模
+
+### 应用领域
+
+- **[软件工程](../10_Software_Engineering/01_Software_Engineering_Theory.md)**：软件控制系统设计
+- **[人工智能](../11_AI_Computing/01_Artificial_Intelligence_Theory.md)**：智能控制系统
+- **[系统设计](../10_Software_Engineering/03_System_Design_Theory.md)**：系统架构设计
+
 ## 引言
 
 经典控制理论是控制工程的基础，主要研究线性时不变系统的分析和设计方法。本章节建立经典控制理论的完整框架，包括系统建模、稳定性分析、控制器设计等核心内容。
@@ -21,6 +45,8 @@
 ### 1.1 研究背景
 
 经典控制理论起源于20世纪初的工程应用需求，经过Nyquist、Bode、Evans等人的发展，形成了完整的理论体系。经典控制理论主要处理单输入单输出(SISO)系统，为现代控制理论奠定了基础。
+
+**关联**：经典控制理论与[现代控制理论](02_Modern_Control_Theory.md)形成互补，前者关注频率域方法，后者关注状态空间方法。
 
 ### 1.2 本章目标
 
@@ -70,6 +96,7 @@ $$\dot{x}(t) = Ax(t) + Bu(t)$$
 $$y(t) = Cx(t) + Du(t)$$
 
 其中：
+
 - $A \in \mathbb{R}^{n \times n}$ 是系统矩阵
 - $B \in \mathbb{R}^{n \times m}$ 是输入矩阵
 - $C \in \mathbb{R}^{p \times n}$ 是输出矩阵
@@ -86,6 +113,7 @@ $$G(s) = C(sI - A)^{-1}B + D$$
 $$\deg(\text{num}) \leq \deg(\text{den})$$
 
 **证明：**
+
 1. $(sI - A)^{-1}$ 的每个元素都是有理函数
 2. 矩阵乘法和加法保持有理性
 3. 传递函数是有理函数的线性组合
@@ -110,6 +138,7 @@ $$x(t) = e^{At}x(0) + \int_0^t e^{A(t-\tau)}Bu(\tau)d\tau$$
 $$\Phi(t) = e^{At}$$
 
 **性质 3.1 (状态转移矩阵性质)**
+
 1. $\Phi(0) = I$
 2. $\Phi(t_1 + t_2) = \Phi(t_1)\Phi(t_2)$
 3. $\Phi^{-1}(t) = \Phi(-t)$
@@ -175,7 +204,8 @@ $$\lim_{t \rightarrow \infty} x(t) = x_e$$
 **定义 4.4 (赫尔维茨判据)**
 多项式 $p(s) = a_n s^n + a_{n-1} s^{n-1} + \cdots + a_0$ 是赫尔维茨的，如果所有根都有负实部。
 
-**算法 4.1 (赫尔维茨判据)**
+-**算法 4.1 (赫尔维茨判据)**
+
 ```haskell
 hurwitzCriterion :: [Double] -> Bool
 hurwitzCriterion coeffs = 
@@ -194,7 +224,8 @@ buildHurwitzMatrix coeffs =
 
 ### 4.3 Routh-Hurwitz判据
 
-**算法 4.2 (Routh表)**
+-**算法 4.2 (Routh表)**
+
 ```haskell
 routhTable :: [Double] -> [[Double]]
 routhTable coeffs = 
@@ -229,7 +260,8 @@ $$\mathcal{C} = [B \quad AB \quad A^2B \quad \cdots \quad A^{n-1}B]$$
 2. 满秩确保可达整个状态空间
 3. 凯莱-哈密顿定理限制矩阵幂的线性相关性
 
-**算法 5.1 (可控性检查)**
+-**算法 5.1 (可控性检查)**
+
 ```haskell
 controllability :: Matrix -> Matrix -> Bool
 controllability a b = 
@@ -262,7 +294,8 @@ $$\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatr
 2. 满秩确保状态唯一确定
 3. 输出序列包含足够信息重构状态
 
-**算法 5.2 (可观性检查)**
+-**算法 5.2 (可观性检查)**
+
 ```haskell
 observability :: Matrix -> Matrix -> Bool
 observability a c = 
@@ -296,7 +329,8 @@ $$u(t) = -Kx(t) + r(t)$$
 2. 标准形下极点配置直接可得
 3. 变换回原坐标系得到反馈增益
 
-**算法 6.1 (极点配置)**
+-**算法 6.1 (极点配置)**
+
 ```haskell
 polePlacement :: Matrix -> Matrix -> [Complex Double] -> Matrix
 polePlacement a b desiredPoles = 
@@ -356,7 +390,8 @@ $$\dot{\hat{x}}(t) = A\hat{x}(t) + Bu(t) + L(y(t) - C\hat{x}(t))$$
 2. 观测器极点配置等价于状态反馈极点配置
 3. 对偶系统使用相同的极点配置算法
 
-**算法 6.2 (观测器设计)**
+-**算法 6.2 (观测器设计)**
+
 ```haskell
 observerDesign :: Matrix -> Matrix -> [Complex Double] -> Matrix
 observerDesign a c desiredPoles = 
@@ -388,7 +423,8 @@ $$\angle G(j\omega) = \tan^{-1}\left(\frac{\text{Im}\{G(j\omega)\}}{\text{Re}\{G
 
 ### 7.2 Bode图
 
-**算法 7.1 (Bode图绘制)**
+-**算法 7.1 (Bode图绘制)**
+
 ```haskell
 bodePlot :: TransferFunction -> [Double] -> (Plot, Plot)
 bodePlot g frequencies = 
@@ -410,11 +446,13 @@ phase z = atan2 (imagPart z) (realPart z)
 $$N = P - Z$$
 
 其中：
+
 - $N$ 是 $G(s)H(s)$ 的 Nyquist 图绕 $(-1, 0)$ 点的圈数
 - $P$ 是开环系统在右半平面的极点数
 - $Z$ 是闭环系统在右半平面的极点数
 
-**算法 7.2 (Nyquist图)**
+-**算法 7.2 (Nyquist图)**
+
 ```haskell
 nyquistPlot :: TransferFunction -> [Double] -> Plot
 nyquistPlot g frequencies = 
@@ -436,17 +474,19 @@ $$1 + KG(s)H(s) = 0$$
 
 ### 8.2 根轨迹规则
 
-**规则 8.1 (根轨迹起点和终点)**
+-**规则 8.1 (根轨迹起点和终点)**
+
 - 起点：$K = 0$ 时，根轨迹从开环极点开始
 - 终点：$K = \infty$ 时，根轨迹趋向开环零点或无穷远
 
-**规则 8.2 (根轨迹分支数)**
+-**规则 8.2 (根轨迹分支数)**
 根轨迹的分支数等于开环极点数。
 
-**规则 8.3 (实轴上的根轨迹)**
+-**规则 8.3 (实轴上的根轨迹)**
 实轴上的根轨迹段满足：其右侧的开环极点和零点个数之和为奇数。
 
-**算法 8.1 (根轨迹绘制)**
+-**算法 8.1 (根轨迹绘制)**
+
 ```haskell
 rootLocus :: TransferFunction -> [Double] -> Plot
 rootLocus g gains = 
@@ -470,14 +510,14 @@ findRoots poly =
 
 **系统建模：**
 倒立摆系统的线性化模型：
-$$\begin{bmatrix} \dot{x} \\ \dot{\theta} \\ \ddot{x} \\ \ddot{\theta} \end{bmatrix} = 
-\begin{bmatrix} 
+$$\begin{bmatrix} \dot{x} \\ \dot{\theta} \\ \ddot{x} \\ \ddot{\theta} \end{bmatrix} =
+\begin{bmatrix}
 0 & 0 & 1 & 0 \\
 0 & 0 & 0 & 1 \\
 0 & -\frac{mg}{M} & 0 & 0 \\
 0 & \frac{(M+m)g}{Ml} & 0 & 0
 \end{bmatrix}
-\begin{bmatrix} x \\ \theta \\ \dot{x} \\ \dot{\theta} \end{bmatrix} + 
+\begin{bmatrix} x \\ \theta \\ \dot{x} \\ \dot{\theta} \end{bmatrix} +
 \begin{bmatrix} 0 \\ 0 \\ \frac{1}{M} \\ -\frac{1}{Ml} \end{bmatrix} u$$
 
 **控制器设计：**
@@ -489,7 +529,7 @@ invertedPendulumControl = do
       M = 1.0  -- 小车质量
       l = 0.5  -- 摆长
       g = 9.81 -- 重力加速度
-      
+
       -- 系统矩阵
       a = matrixFromList [
         [0, 0, 1, 0],
@@ -499,17 +539,17 @@ invertedPendulumControl = do
       ]
       b = matrixFromList [[0], [0], [1/M], [-1/(M*l)]]
       c = matrixFromList [[1, 0, 0, 0], [0, 1, 0, 0]]
-      
+
       -- 期望极点
       desiredPoles = [-2, -3, -4, -5]
-      
+
       -- 状态反馈设计
       k = polePlacement a b desiredPoles
-      
+
       -- 观测器设计
       observerPoles = [-6, -7, -8, -9]
       l = observerDesign a c observerPoles
-      
+
   putStrLn "倒立摆控制系统设计完成"
   putStrLn $ "状态反馈增益: " ++ show k
   putStrLn $ "观测器增益: " ++ show l
@@ -538,23 +578,243 @@ dcMotorControl = do
       b = 0.1   -- 阻尼系数
       l = 0.001 -- 电感
       r = 1.0   -- 电阻
-      
+
       -- 传递函数
       g s = km / (s * (j*s + b) * (l*s + r))
-      
+
       -- PID控制器
       kp = 100.0  -- 比例增益
       ki = 50.0   -- 积分增益
       kd = 10.0   -- 微分增益
-      
+
       -- PID传递函数
       pid s = kp + ki/s + kd*s
-      
+
       -- 闭环传递函数
       closedLoop s = (pid s * g s) / (1 + pid s * g s)
-      
+
   putStrLn "直流电机PID控制系统设计完成"
   putStrLn $ "闭环传递函数: " ++ show (closedLoop (0 :+ 1))
+```
+
+### 9.3 温度控制系统
+
+**系统建模：**
+温度控制系统的传递函数：
+$$G(s) = \frac{K}{Ts + 1} e^{-\tau s}$$
+
+其中：
+- $K$ 是系统增益
+- $T$ 是时间常数
+- $\tau$ 是时间延迟
+
+**Smith预测器设计：**
+```haskell
+temperatureControl :: IO ()
+temperatureControl = do
+  let -- 系统参数
+      k = 2.0   -- 系统增益
+      t = 10.0  -- 时间常数
+      tau = 2.0 -- 时间延迟
+
+      -- 系统传递函数
+      g s = k / (t*s + 1) * exp (-tau*s)
+
+      -- Smith预测器
+      g0 s = k / (t*s + 1)  -- 无延迟部分
+      delay s = exp (-tau*s) -- 延迟部分
+
+      -- 预测器控制器
+      c s = 1.0 / g0 s  -- 理想控制器
+
+      -- 闭环传递函数
+      closedLoop s = (c s * g s) / (1 + c s * g s)
+
+  putStrLn "温度控制系统Smith预测器设计完成"
+  putStrLn $ "闭环传递函数: " ++ show (closedLoop (0 :+ 0.1))
+```
+
+### 9.4 飞行器姿态控制
+
+**系统建模：**
+飞行器姿态控制系统的状态空间模型：
+$$\begin{bmatrix} \dot{\phi} \\ \dot{\theta} \\ \dot{\psi} \\ \dot{p} \\ \dot{q} \\ \dot{r} \end{bmatrix} =
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & L_p & 0 & 0 \\
+0 & 0 & 0 & 0 & M_q & 0 \\
+0 & 0 & 0 & 0 & 0 & N_r
+\end{bmatrix}
+\begin{bmatrix} \phi \\ \theta \\ \psi \\ p \\ q \\ r \end{bmatrix} +
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+L_{\delta_a} & 0 & 0 \\
+0 & M_{\delta_e} & 0 \\
+0 & 0 & N_{\delta_r}
+\end{bmatrix}
+\begin{bmatrix} \delta_a \\ \delta_e \\ \delta_r \end{bmatrix}$$
+
+**LQR控制器设计：**
+```haskell
+aircraftControl :: IO ()
+aircraftControl = do
+  let -- 系统参数
+      lp = -0.5   -- 滚转阻尼
+      mq = -0.8   -- 俯仰阻尼
+      nr = -0.3   -- 偏航阻尼
+      lda = 0.1   -- 副翼效率
+      mde = -0.2  -- 升降舵效率
+      ndr = 0.05  -- 方向舵效率
+
+      -- 系统矩阵
+      a = matrixFromList [
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, lp, 0, 0],
+        [0, 0, 0, 0, mq, 0],
+        [0, 0, 0, 0, 0, nr]
+      ]
+      b = matrixFromList [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [lda, 0, 0],
+        [0, mde, 0],
+        [0, 0, ndr]
+      ]
+
+      -- 权重矩阵
+      q = diagonal [1.0, 1.0, 1.0, 0.1, 0.1, 0.1]  -- 状态权重
+      r = diagonal [0.1, 0.1, 0.1]                  -- 控制权重
+
+      -- LQR控制器设计
+      k = lqr a b q r
+
+  putStrLn "飞行器姿态控制系统LQR设计完成"
+  putStrLn $ "LQR增益矩阵: " ++ show k
+```
+
+### 9.5 机器人路径跟踪控制
+
+**系统建模：**
+移动机器人的运动学模型：
+$$\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} =
+\begin{bmatrix}
+\cos \theta & 0 \\
+\sin \theta & 0 \\
+0 & 1
+\end{bmatrix}
+\begin{bmatrix} v \\ \omega \end{bmatrix}$$
+
+**非线性控制器设计：**
+```haskell
+robotPathTracking :: IO ()
+robotPathTracking = do
+  let -- 期望路径
+      desiredPath t = (t, sin t)  -- 正弦路径
+
+      -- 路径跟踪控制器
+      pathTrackingController :: (Double, Double, Double) -> (Double, Double) -> (Double, Double)
+      pathTrackingController (x, y, theta) (xd, yd) = 
+        let -- 位置误差
+            ex = xd - x
+            ey = yd - y
+            
+            -- 期望角度
+            theta_d = atan2 (yd - y) (xd - x)
+            
+            -- 角度误差
+            e_theta = theta_d - theta
+            
+            -- 控制律
+            k1 = 2.0  -- 位置增益
+            k2 = 3.0  -- 角度增益
+            
+            v = k1 * sqrt (ex^2 + ey^2)  -- 线速度
+            omega = k2 * e_theta         -- 角速度
+        in (v, omega)
+
+      -- 仿真
+      simulateRobot :: Double -> (Double, Double, Double) -> [(Double, Double, Double)]
+      simulateRobot dt (x0, y0, theta0) = 
+        let timeSteps = [0, dt..10]  -- 10秒仿真
+            initialState = (x0, y0, theta0)
+        in scanl (\state t -> 
+               let (x, y, theta) = state
+                   (xd, yd) = desiredPath t
+                   (v, omega) = pathTrackingController state (xd, yd)
+                   -- 欧拉积分
+                   x' = x + v * cos theta * dt
+                   y' = y + v * sin theta * dt
+                   theta' = theta + omega * dt
+               in (x', y', theta')) initialState timeSteps
+
+  putStrLn "机器人路径跟踪控制系统设计完成"
+  let trajectory = simulateRobot 0.01 (0, 0, 0)
+  putStrLn $ "轨迹点数: " ++ show (length trajectory)
+```
+
+### 9.6 电力系统频率控制
+
+**系统建模：**
+电力系统的频率控制模型：
+$$G(s) = \frac{1}{Ms + D}$$
+
+其中：
+- $M$ 是系统惯性常数
+- $D$ 是阻尼系数
+
+**自适应控制器设计：**
+```haskell
+powerSystemControl :: IO ()
+powerSystemControl = do
+  let -- 系统参数
+      m = 10.0  -- 惯性常数
+      d = 1.0   -- 阻尼系数
+
+      -- 系统传递函数
+      g s = 1 / (m*s + d)
+
+      -- 自适应PID控制器
+      adaptivePID :: Double -> Double -> Double -> Double -> Double -> Double
+      adaptivePID error integral derivative kp ki kd = 
+        let -- 自适应增益调整
+            kp' = kp * (1 + 0.1 * abs error)
+            ki' = ki * (1 + 0.05 * abs integral)
+            kd' = kd * (1 + 0.02 * abs derivative)
+            
+            -- PID控制律
+            control = kp' * error + ki' * integral + kd' * derivative
+        in control
+
+      -- 频率控制仿真
+      frequencyControl :: Double -> [Double]
+      frequencyControl dt = 
+        let timeSteps = [0, dt..20]  -- 20秒仿真
+            initialFrequency = 50.0  -- 初始频率50Hz
+            desiredFrequency = 50.0  -- 期望频率50Hz
+            
+            -- 仿真循环
+            simulate :: Double -> Double -> Double -> [Double]
+            simulate t freq integral = 
+              let error = desiredFrequency - freq
+                  derivative = 0  -- 简化处理
+                  control = adaptivePID error integral derivative 1.0 0.5 0.1
+                  
+                  -- 系统响应
+                  freq' = freq + (control - d * freq) / m * dt
+                  integral' = integral + error * dt
+              in freq : simulate (t + dt) freq' integral'
+        in simulate 0 initialFrequency 0
+
+  putStrLn "电力系统频率控制系统设计完成"
+  let frequencies = frequencyControl 0.01
+  putStrLn $ "频率响应点数: " ++ show (length frequencies)
 ```
 
 ## 总结

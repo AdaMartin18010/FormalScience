@@ -4,6 +4,7 @@
 
 - [自动机理论（Automata Theory）](#自动机理论automata-theory)
   - [目录](#目录)
+  - [交叉引用与关联](#交叉引用与关联)
   - [1. 概述](#1-概述)
   - [2. 有限自动机（Finite Automata）](#2-有限自动机finite-automata)
     - [2.1 DFA 与 NFA 定义与等价性](#21-dfa-与-nfa-定义与等价性)
@@ -30,9 +31,35 @@
   - [9. 结论](#9-结论)
   - [10. 参考文献](#10-参考文献)
 
+## 交叉引用与关联
+
+### 相关理论领域
+
+- **[语言层次结构理论](02_Language_Hierarchy_Theory.md)**：乔姆斯基语言层次结构
+- **[语义理论](03_Semantics_Theory.md)**：形式语义学基础
+- **[语法理论](04_Syntax_Theory.md)**：形式语法学
+- **[计算理论](05_Computation_Theory.md)**：可计算性理论
+- **[逻辑基础理论](../01_Foundational_Theory/01_Logic_Foundation.md)**：自动机的逻辑基础
+- **[时态逻辑](../06_Temporal_Logic/01_Temporal_Logic_Foundation.md)**：时态自动机
+
+### 基础依赖关系
+
+- **[集合论](../01_Foundational_Theory/02_Set_Theory_Foundation.md)**：自动机的集合论基础
+- **[关系理论](../01_Foundational_Theory/06_Relation_Theory.md)**：状态转移关系的形式化
+- **[形式系统](../01_Foundational_Theory/07_Formal_System.md)**：形式化系统理论
+
+### 应用领域
+
+- **[软件工程](../10_Software_Engineering/01_Software_Engineering_Theory.md)**：程序语言处理
+- **[人工智能](../11_AI_Computing/01_Artificial_Intelligence_Theory.md)**：模式识别和自然语言处理
+- **[验证理论](../10_Software_Engineering/04_Verification_Theory.md)**：形式化验证方法
+- **[分布式系统](../04_Distributed_Systems/01_Consensus_Theory.md)**：分布式协议验证
+
 ## 1. 概述
 
 自动机理论研究抽象计算模型与语言识别能力，是形式语言理论的基础。其核心问题包括不同自动机模型的定义、能力、相互关系及其在计算机科学中的应用。
+
+**关联**：自动机理论与[计算理论](05_Computation_Theory.md)密切相关，为可计算性理论提供了形式化基础。
 
 ## 2. 有限自动机（Finite Automata）
 

@@ -29,7 +29,7 @@
 
 ### 1.2 理论体系结构
 
-```
+```text
 逻辑哲学理论
 ├── 逻辑基础哲学 (Logic Foundation Philosophy)
 ├── 逻辑语义哲学 (Logic Semantics Philosophy)
@@ -434,4 +434,4 @@ logicalEntailment premise conclusion =
 
 **最后更新**：2024年12月19日  
 **版本**：v1.0  
-**维护者**：形式科学理论体系重构团队 
+**维护者**：形式科学理论体系重构团队

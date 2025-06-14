@@ -13,6 +13,29 @@
 9. [应用与扩展](#9-应用与扩展)
 10. [总结与展望](#10-总结与展望)
 
+## 交叉引用与关联
+
+### 相关理论领域
+
+- **[类型理论](../02_Type_Theory/01_Basic_Type_Theory.md)**：逻辑与类型系统的对应关系
+- **[时态逻辑](../06_Temporal_Logic/01_Temporal_Logic_Foundation.md)**：模态逻辑的时态扩展
+- **[形式语言](../07_Formal_Language/01_Automata_Theory.md)**：逻辑语言的形式化表示
+- **[哲学科学](../08_Philosophy_Science/01_Ontology_Theory.md)**：逻辑的哲学基础
+- **[控制理论](../03_Control_Theory/01_Classical_Control_Theory.md)**：逻辑在控制系统中的应用
+- **[分布式系统](../04_Distributed_Systems/01_Consensus_Theory.md)**：逻辑在分布式算法中的应用
+
+### 基础依赖关系
+
+- **[集合论基础](02_Set_Theory_Foundation.md)**：逻辑的集合论基础
+- **[数系理论](05_Number_System_Theory.md)**：逻辑在数学基础中的应用
+- **[关系理论](06_Relation_Theory.md)**：逻辑关系的形式化
+
+### 应用领域
+
+- **[软件工程](../10_Software_Engineering/01_Software_Engineering_Theory.md)**：程序逻辑验证
+- **[人工智能](../11_AI_Computing/01_Artificial_Intelligence_Theory.md)**：知识表示与推理
+- **[验证理论](../10_Software_Engineering/04_Verification_Theory.md)**：形式化验证方法
+
 ## 1. 引言：逻辑学的哲学基础
 
 ### 1.1 逻辑学的本质
@@ -37,6 +60,8 @@ $$\mathcal{L} = \langle \Sigma, \mathcal{F}, \mathcal{A}, \mathcal{R} \rangle$$
 4. 如果 $G$ 不可证明，则 $G$ 为真，但不可证明
 5. 因此 $\mathcal{L}$ 不完备
 
+**关联**：此定理与[类型理论](../02_Type_Theory/01_Basic_Type_Theory.md)中的类型系统完备性问题密切相关。
+
 ### 1.2 逻辑学的哲学问题
 
 **问题 1.2.1** (逻辑的本质) 逻辑是发现的还是发明的？
@@ -47,6 +72,8 @@ $$\mathcal{L} = \langle \Sigma, \mathcal{F}, \mathcal{A}, \mathcal{R} \rangle$$
 - **发明论**：逻辑是人类思维的构造物
 - **调和论**：逻辑既有客观基础，也有人为构造
 
+**关联**：此问题与[哲学科学](../08_Philosophy_Science/01_Ontology_Theory.md)中的本体论问题直接相关。
+
 **问题 1.2.2** (逻辑的普遍性) 逻辑是否具有跨文化的普遍性？
 
 **分析**：
@@ -54,6 +81,8 @@ $$\mathcal{L} = \langle \Sigma, \mathcal{F}, \mathcal{A}, \mathcal{R} \rangle$$
 - **普遍主义**：逻辑规律对所有理性思维都适用
 - **相对主义**：不同文化可能有不同的逻辑系统
 - **多元主义**：存在多种有效的逻辑系统
+
+**关联**：此问题与[认识论理论](../08_Philosophy_Science/02_Epistemology_Theory.md)中的知识普遍性问题相关。
 
 ## 2. 命题逻辑：基础推理系统
 
@@ -443,6 +472,36 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma \vdash \Delta, \psi}{\Gamma \
 2. **模型检查**：自动验证系统性质
 3. **类型系统**：程序类型安全保证
 
+**实例 9.1.1** (霍尔逻辑程序验证)
+
+考虑以下程序片段：
+```python
+# 前置条件：x > 0
+if x % 2 == 0:
+    y = x // 2
+else:
+    y = (x + 1) // 2
+# 后置条件：y = ⌈x/2⌉
+```
+
+霍尔逻辑证明：
+1. **前置条件**：$x > 0$
+2. **分支1**：$x \equiv 0 \pmod{2} \rightarrow y = x/2 = \lceil x/2 \rceil$
+3. **分支2**：$x \equiv 1 \pmod{2} \rightarrow y = (x+1)/2 = \lceil x/2 \rceil$
+4. **后置条件**：$y = \lceil x/2 \rceil$
+
+**实例 9.1.2** (类型系统应用)
+
+在Haskell中的类型系统：
+```haskell
+-- 函数类型签名
+map :: (a -> b) -> [a] -> [b]
+
+-- 类型推导
+map (+1) [1,2,3] :: [Int]  -- 类型检查通过
+map (+1) "abc"    -- 类型错误：String不是[Int]
+```
+
 **定理 9.1.2** (人工智能) 逻辑是人工智能推理的基础。
 
 **应用**：
@@ -450,6 +509,30 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma \vdash \Delta, \psi}{\Gamma \
 1. **知识表示**：逻辑知识库
 2. **自动推理**：定理证明系统
 3. **专家系统**：基于规则的推理
+
+**实例 9.1.3** (专家系统规则)
+
+医疗诊断专家系统：
+```prolog
+% 知识库
+symptom(fever, flu).
+symptom(cough, flu).
+symptom(headache, flu).
+symptom(fever, covid).
+symptom(cough, covid).
+symptom(loss_of_taste, covid).
+
+% 推理规则
+diagnose(Patient, Disease) :-
+    has_symptom(Patient, S1),
+    has_symptom(Patient, S2),
+    symptom(S1, Disease),
+    symptom(S2, Disease),
+    S1 \= S2.
+
+% 查询
+?- diagnose(john, flu).
+```
 
 ### 9.2 哲学中的应用
 
@@ -461,6 +544,34 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma \vdash \Delta, \psi}{\Gamma \
 2. **模态形而上学**：必然性和可能性
 3. **时间逻辑**：时间形而上学
 
+**实例 9.2.1** (存在性问题的形式化)
+
+本体论承诺的形式化：
+```latex
+% 存在性量化
+\exists x P(x) \text{ 表示存在具有性质 } P \text{ 的对象}
+
+% 全称量化
+\forall x P(x) \text{ 表示所有对象都具有性质 } P
+
+% 模态存在
+\Diamond \exists x P(x) \text{ 表示可能存在具有性质 } P \text{ 的对象}
+```
+
+**实例 9.2.2** (时间逻辑应用)
+
+时间形而上学的形式化：
+```latex
+% 过去时态
+P \varphi \text{ 表示 } \varphi \text{ 在过去为真}
+
+% 将来时态
+F \varphi \text{ 表示 } \varphi \text{ 在将来为真}
+
+% 时间模态
+G \varphi \text{ 表示 } \varphi \text{ 在所有将来时刻为真}
+```
+
 **定理 9.2.2** (认识论) 逻辑为知识论提供分析工具。
 
 **应用**：
@@ -468,6 +579,89 @@ $$\frac{\Gamma \vdash \Delta, \varphi \quad \Gamma \vdash \Delta, \psi}{\Gamma \
 1. **信念逻辑**：信念修正理论
 2. **知识逻辑**：知识的形式化
 3. **确证逻辑**：确证的形式化
+
+**实例 9.2.3** (知识逻辑)
+
+知识的形式化表示：
+```latex
+% 知识算子
+K_i \varphi \text{ 表示主体 } i \text{ 知道 } \varphi
+
+% 知识公理
+K_i \varphi \rightarrow \varphi \text{ (知识为真)}
+K_i \varphi \rightarrow K_i K_i \varphi \text{ (正内省)}
+\neg K_i \varphi \rightarrow K_i \neg K_i \varphi \text{ (负内省)}
+```
+
+### 9.3 工程应用实例
+
+**实例 9.3.1** (数字电路设计)
+
+组合逻辑电路设计：
+```verilog
+module half_adder(
+    input a, b,
+    output sum, carry
+);
+    // 逻辑表达式
+    assign sum = a ^ b;      // 异或：sum = a ⊕ b
+    assign carry = a & b;    // 与：carry = a ∧ b
+endmodule
+```
+
+**实例 9.3.2** (数据库查询优化)
+
+SQL查询的逻辑优化：
+```sql
+-- 原始查询
+SELECT * FROM users u, orders o 
+WHERE u.id = o.user_id AND u.age > 18 AND o.amount > 100;
+
+-- 逻辑等价的重写
+SELECT * FROM users u 
+JOIN orders o ON u.id = o.user_id 
+WHERE u.age > 18 AND o.amount > 100;
+```
+
+**实例 9.3.3** (网络安全协议验证)
+
+协议安全性的逻辑验证：
+```latex
+% 协议目标
+\text{目标：} \forall m \forall A \forall B [\text{Send}(A, B, m) \rightarrow \text{Receive}(B, A, m)]
+
+% 安全性质
+\text{机密性：} \forall m [\text{Secret}(m) \rightarrow \neg \text{Know}(\text{Attacker}, m)]
+\text{完整性：} \forall m [\text{Send}(A, B, m) \rightarrow \text{Receive}(B, A, m) \text{ 或 } \text{Detect}(B)]
+```
+
+### 9.4 数学应用实例
+
+**实例 9.4.1** (集合论的形式化)
+
+集合论公理的形式化：
+```latex
+% 外延公理
+\forall x \forall y [\forall z(z \in x \leftrightarrow z \in y) \rightarrow x = y]
+
+% 空集公理
+\exists x \forall y(y \notin x)
+
+% 配对公理
+\forall x \forall y \exists z \forall w(w \in z \leftrightarrow w = x \vee w = y)
+```
+
+**实例 9.4.2** (数论证明)
+
+数学归纳法的逻辑形式：
+```latex
+% 归纳原理
+[P(0) \wedge \forall n(P(n) \rightarrow P(n+1))] \rightarrow \forall n P(n)
+
+% 应用实例：证明 1+2+...+n = n(n+1)/2
+\text{基础情况：} P(0): 0 = 0(0+1)/2 \text{ 为真}
+\text{归纳步骤：} P(n) \rightarrow P(n+1) \text{ 的证明}
+```
 
 ## 10. 总结与展望
 
