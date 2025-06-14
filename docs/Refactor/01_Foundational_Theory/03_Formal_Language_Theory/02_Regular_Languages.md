@@ -21,6 +21,7 @@
 
 **定理 1.1.1 (正则语言等价性)**
 语言 $L$ 是正则语言，当且仅当存在：
+
 1. 确定性有限自动机 $M$ 使得 $L = L(M)$
 2. 非确定性有限自动机 $M$ 使得 $L = L(M)$
 3. 正则表达式 $r$ 使得 $L = L(r)$
@@ -41,6 +42,7 @@
 设 $L_1 = L(M_1)$，$L_2 = L(M_2)$，其中 $M_1 = (Q_1, \Sigma, \delta_1, q_{01}, F_1)$，$M_2 = (Q_2, \Sigma, \delta_2, q_{02}, F_2)$。
 
 构造新的DFA $M = (Q, \Sigma, \delta, q_0, F)$：
+
 - $Q = Q_1 \times Q_2$
 - $q_0 = (q_{01}, q_{02})$
 - $F = (F_1 \times Q_2) \cup (Q_1 \times F_2)$
@@ -70,6 +72,7 @@ $$q_0 \xrightarrow{w_1} q_1 \xrightarrow{w_2} q_2 \cdots \xrightarrow{w_n} q_n$$
 由于 $|w| \geq p = |Q|$，根据鸽巢原理，存在 $i < j$ 使得 $q_i = q_j$。
 
 设 $w = xyz$，其中：
+
 - $x$ 是从 $q_0$ 到 $q_i$ 的输入
 - $y$ 是从 $q_i$ 到 $q_j$ 的输入
 - $z$ 是从 $q_j$ 到 $q_n$ 的输入
@@ -286,6 +289,7 @@ minimize dfa =
 #### 6.1 编译器设计
 
 正则语言在编译器设计中用于：
+
 - 词法分析器（Lexer）设计
 - 模式匹配算法
 - 字符串处理
@@ -358,4 +362,4 @@ $$M = (Q, \Sigma, \delta, q_0, F)$$
 - [上下文无关语言](03_Context_Free_Languages.md)
 - [自动机理论](06_Automata_Theory.md)
 - [可计算性理论](07_Computability_Theory.md)
-- [复杂性理论](08_Complexity_Theory.md) 
+- [复杂性理论](08_Complexity_Theory.md)
