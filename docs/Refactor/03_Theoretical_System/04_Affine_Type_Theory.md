@@ -24,6 +24,7 @@ $$\Gamma : \text{Var} \rightarrow \text{Type}$$
 $$\tau ::= \text{Base} \mid \tau_1 \rightarrow \tau_2 \mid \tau_1 \& \tau_2$$
 
 其中：
+
 - $\rightarrow$ 表示仿射函数类型
 - $\&$ 表示合取类型
 
@@ -249,4 +250,4 @@ impl AffineTypeChecker {
 
 - [02. 类型理论基础](../02_Type_Theory_Foundation.md)
 - [03. 线性类型理论](../03_Linear_Type_Theory.md)
-- [05. 依赖类型理论](../05_Dependent_Type_Theory.md) 
+- [05. 依赖类型理论](../05_Dependent_Type_Theory.md)

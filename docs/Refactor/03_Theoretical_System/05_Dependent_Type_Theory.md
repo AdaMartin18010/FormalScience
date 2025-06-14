@@ -85,7 +85,8 @@ $$\frac{\Gamma \vdash p : \Sigma x : A.B \quad \Gamma, x : A, y : B \vdash c : C
 类型族是从类型到类型的函数：
 $$F : A \rightarrow \text{Type}$$
 
-**示例 3.1 (向量类型族)**
+**示例 3.1 (向量类型族)**:
+
 ```haskell
 -- 向量类型族：Vec A n 表示长度为 n 的 A 类型向量
 data Vec :: Type -> Nat -> Type where
@@ -116,7 +117,8 @@ tail (Cons x xs) = xs
 
 ### 3.3 依赖类型推断
 
-**算法 3.1 (依赖类型推断)**
+**算法 3.1 (依赖类型推断)**:
+
 ```haskell
 -- 依赖类型推断算法
 infer :: Context -> Expr -> Either TypeError (Type, Substitution)
@@ -173,7 +175,8 @@ $$f \circ g \sim \text{id}_B \quad \text{and} \quad g \circ f \sim \text{id}_A$$
 
 ### 5.1 证明助手
 
-**示例 5.1 (Coq 证明)**
+**示例 5.1 (Coq 证明)**:
+
 ```coq
 (* 自然数定义 *)
 Inductive nat : Type :=
@@ -199,7 +202,8 @@ Qed.
 
 ### 5.2 类型安全编程
 
-**示例 5.2 (Agda 实现)**
+**示例 5.2 (Agda 实现)**:
+
 ```agda
 -- 向量类型定义
 data Vec (A : Set) : Nat -> Set where
@@ -219,7 +223,8 @@ reverse (x :: xs) = reverse xs ++ (x :: [])
 
 ### 5.3 形式化验证
 
-**示例 5.3 (Idris 实现)**
+**示例 5.3 (Idris 实现)**:
+
 ```idris
 -- 排序函数类型
 sort : (xs : List a) -> List a
@@ -466,4 +471,4 @@ impl DepTypeChecker {
 - [07. 量子类型理论](../07_Quantum_Type_Theory.md)
 - [08. 时态类型理论](../08_Temporal_Type_Theory.md)
 - [09. 分布式类型理论](../09_Distributed_Type_Theory.md)
-- [10. 控制论类型理论](../10_Control_Theory_Type_Theory.md) 
+- [10. 控制论类型理论](../10_Control_Theory_Type_Theory.md)

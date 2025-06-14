@@ -26,6 +26,7 @@ $$\Gamma : \text{Var} \rightarrow \text{Type}$$
 $$\tau ::= \text{Base} \mid \tau_1 \multimap \tau_2 \mid \tau_1 \otimes \tau_2 \mid !\tau$$
 
 其中：
+
 - $\multimap$ 表示线性函数类型
 - $\otimes$ 表示张量积类型
 - $!$ 表示指数类型（可重复使用）
@@ -126,7 +127,8 @@ data LinearRef a where
 
 ### 2.3 文件系统安全
 
-**定义 2.4 (线性文件句柄)**
+**定义 2.4 (线性文件句柄)**:
+
 ```haskell
 data LinearFileHandle where
   OpenFile :: FilePath -> Mode -> LinearFileHandle
@@ -768,4 +770,4 @@ fn main() {
 - [07. 量子类型理论](../07_Quantum_Type_Theory.md)
 - [08. 时态类型理论](../08_Temporal_Type_Theory.md)
 - [09. 分布式类型理论](../09_Distributed_Type_Theory.md)
-- [10. 控制论类型理论](../10_Control_Theory_Type_Theory.md) 
+- [10. 控制论类型理论](../10_Control_Theory_Type_Theory.md)

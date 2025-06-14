@@ -99,7 +99,7 @@ $$\frac{e_1 \Downarrow \lambda x.e \quad e_2 \Downarrow v \quad e[v/x] \Downarro
 
 ### 3.1 Hindley-Milner 类型系统
 
-**算法 W (Robinson's Unification)**
+**算法 W (Robinson's Unification)**:
 
 ```haskell
 -- 类型定义
@@ -169,7 +169,7 @@ $$\frac{\Gamma, \alpha \vdash e : \tau}{\Gamma \vdash \Lambda \alpha.e : \forall
 **定义 4.2 (类型实例化)**
 $$\frac{\Gamma \vdash e : \forall \alpha.\tau}{\Gamma \vdash e[\tau'] : \tau[\alpha \mapsto \tau']} \quad \text{(Inst)}$$
 
-**示例 4.1 (多态恒等函数)**
+**示例 4.1 (多态恒等函数)**:
 
 ```haskell
 -- 类型：∀α.α → α
@@ -192,7 +192,7 @@ $$\frac{\Gamma \vdash e : \tau[\alpha \mapsto \tau']}{\Gamma \vdash \text{pack }
 **定义 4.4 (存在类型消除)**
 $$\frac{\Gamma \vdash e_1 : \exists \alpha.\tau \quad \Gamma, \alpha, x : \tau \vdash e_2 : \tau'}{\Gamma \vdash \text{unpack } \alpha, x = e_1 \text{ in } e_2 : \tau'} \quad \text{(Unpack)}$$
 
-**示例 4.2 (抽象数据类型)**
+**示例 4.2 (抽象数据类型)**:
 
 ```haskell
 -- 队列的抽象表示
@@ -236,7 +236,7 @@ emptyQueue = pack ([], \s a -> a:s, \s -> (head s, tail s)) as Queue a
 
 ### 6.1 编译器中的类型检查
 
-**类型检查器实现**
+**类型检查器实现**:
 
 ```haskell
 -- 表达式类型
@@ -275,7 +275,7 @@ typeCheck ctx (Bool _) = Right TBool
 
 ### 6.2 类型安全的编程实践
 
-**示例 6.1 (类型安全的API设计)**
+**示例 6.1 (类型安全的API设计)**:
 
 ```rust
 // Rust 实现
