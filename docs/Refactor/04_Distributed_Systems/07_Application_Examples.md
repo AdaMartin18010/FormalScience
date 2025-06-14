@@ -48,7 +48,8 @@ $$PoW(data, nonce) = H(data || nonce)$$
 
 其中 $H$ 是SHA-256哈希函数，要求结果的前 $d$ 位为0。
 
-**算法 2.1.1 (比特币挖矿算法)**
+-**算法 2.1.1 (比特币挖矿算法)**
+
 ```python
 def bitcoin_mining(block_data, target_difficulty):
     nonce = 0
@@ -65,11 +66,13 @@ def bitcoin_mining(block_data, target_difficulty):
 对于难度 $d$，期望尝试次数为 $2^d$。
 
 **证明**：
+
 - 哈希函数输出是均匀分布的
 - 概率 $P(H(x) \text{ 前 } d \text{ 位为 } 0) = 2^{-d}$
 - 期望尝试次数 $E[X] = 2^d$
 
 **实际应用**：
+
 - 比特币网络：约10分钟出块时间
 - 以太坊：约15秒出块时间
 - 能源消耗：全球比特币挖矿年耗电量约130TWh
@@ -84,6 +87,7 @@ def bitcoin_mining(block_data, target_difficulty):
 $$\delta: State \times Transaction \rightarrow State \times Result$$
 
 **示例合约**：
+
 ```solidity
 contract SimpleToken {
     mapping(address => uint256) public balanceOf;
@@ -109,11 +113,13 @@ Cassandra使用一致性哈希进行数据分片，支持最终一致性。
 $$h(key) = \text{SHA-1}(key) \bmod 2^{64}$$
 
 **复制策略**：
+
 - 每个数据项复制到 $R$ 个节点
 - 使用Gossip协议进行节点发现
 - 支持可调一致性级别
 
-**算法 3.1.1 (Cassandra写入算法)**
+-**算法 3.1.1 (Cassandra写入算法)**
+
 ```python
 def cassandra_write(key, value, consistency_level):
     # 计算分区键
@@ -145,6 +151,7 @@ Spanner是全球分布式数据库，使用TrueTime API实现外部一致性。
 $$commit(T_1) < start(T_2) \Rightarrow T_1 \prec T_2$$
 
 **TrueTime API**：
+
 ```cpp
 struct TimeInterval {
     Timestamp earliest;
@@ -157,6 +164,7 @@ void TT.before(Timestamp t);
 ```
 
 **两阶段提交优化**：
+
 - 使用Paxos进行协调
 - 支持并行提交
 - 减少网络往返次数
@@ -169,6 +177,7 @@ void TT.before(Timestamp t);
 Netflix使用微服务架构处理每秒数百万请求。
 
 **服务发现**：
+
 ```java
 @Service
 public class ServiceDiscovery {
@@ -182,6 +191,7 @@ public class ServiceDiscovery {
 ```
 
 **负载均衡**：
+
 ```java
 @Component
 public class RibbonLoadBalancer {
@@ -196,6 +206,7 @@ public class RibbonLoadBalancer {
 ```
 
 **熔断器模式**：
+
 ```java
 @HystrixCommand(fallbackMethod = "fallback")
 public String callService() {
@@ -212,7 +223,8 @@ public String fallback() {
 **Pod调度算法**：
 Kubernetes使用多阶段调度器分配Pod到节点。
 
-**算法 4.2.1 (Kubernetes调度算法)**
+-**算法 4.2.1 (Kubernetes调度算法)**
+
 ```python
 def schedule_pod(pod, nodes):
     # 阶段1：过滤不满足要求的节点
@@ -230,6 +242,7 @@ def schedule_pod(pod, nodes):
 ```
 
 **资源管理**：
+
 - CPU和内存限制
 - 服务质量(QoS)分类
 - 资源配额管理
@@ -242,6 +255,7 @@ def schedule_pod(pod, nodes):
 Lambda函数响应事件自动执行，按实际使用量计费。
 
 **函数定义**：
+
 ```python
 import json
 
@@ -264,6 +278,7 @@ def lambda_handler(event, context):
 ```
 
 **性能优化**：
+
 - 冷启动优化
 - 内存配置调优
 - 并发执行控制
@@ -274,6 +289,7 @@ def lambda_handler(event, context):
 Spanner支持跨地域的强一致性事务。
 
 **事务示例**：
+
 ```sql
 BEGIN TRANSACTION;
   UPDATE accounts SET balance = balance - 100 
@@ -288,6 +304,7 @@ COMMIT;
 ```
 
 **性能指标**：
+
 - 99.999%可用性
 - 毫秒级延迟
 - 无限扩展性
@@ -300,6 +317,7 @@ COMMIT;
 智能家居系统包含传感器、执行器和中央控制器。
 
 **设备通信协议**：
+
 ```python
 class ZigbeeProtocol:
     def __init__(self):
@@ -322,6 +340,7 @@ class ZigbeeProtocol:
 ```
 
 **边缘计算**：
+
 - 本地数据处理
 - 减少网络延迟
 - 保护隐私数据
@@ -331,7 +350,8 @@ class ZigbeeProtocol:
 **预测性维护**：
 使用机器学习预测设备故障。
 
-**算法 6.2.1 (故障预测算法)**
+-**算法 6.2.1 (故障预测算法)**
+
 ```python
 def predict_failure(sensor_data, model):
     # 特征提取
@@ -362,6 +382,7 @@ def predict_failure(sensor_data, model):
 $$T_{total} = T_{processing} + T_{network} + T_{queuing}$$
 
 **资源分配算法**：
+
 ```python
 def edge_resource_allocation(tasks, edge_nodes):
     # 任务优先级排序
@@ -391,6 +412,7 @@ def edge_resource_allocation(tasks, edge_nodes):
 自动驾驶汽车需要在边缘进行实时决策。
 
 **感知算法**：
+
 ```python
 def perception_pipeline(sensor_data):
     # 传感器融合
@@ -413,6 +435,7 @@ def perception_pipeline(sensor_data):
 ```
 
 **决策算法**：
+
 ```python
 def autonomous_decision(perception_result, map_data):
     # 路径规划
@@ -448,9 +471,10 @@ def autonomous_decision(perception_result, map_data):
 ---
 
 **相关文档**：
+
 - [共识理论](01_Consensus_Theory.md)
 - [容错理论](02_Fault_Tolerance_Theory.md)
 - [分布式算法](03_Distributed_Algorithms.md)
 - [网络协议](04_Network_Protocols.md)
 - [分布式存储](05_Distributed_Storage.md)
-- [分布式计算](06_Distributed_Computing.md) 
+- [分布式计算](06_Distributed_Computing.md)

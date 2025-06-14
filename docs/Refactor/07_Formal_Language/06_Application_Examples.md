@@ -47,7 +47,7 @@
 - $q_0 \in Q$ 是初始状态
 - $F \subseteq Q$ 是接受状态集合
 
-**算法 2.1.1 (词法分析算法)**
+-**算法 2.1.1 (词法分析算法)**
 
 ```python
 class LexicalAnalyzer:
@@ -151,7 +151,7 @@ def subset_construction(nfa):
 文法 $G$ 是LL(1)的，如果对于每个产生式 $A \rightarrow \alpha \mid \beta$，有：
 $$FIRST(\alpha) \cap FIRST(\beta) = \emptyset$$
 
-**算法 2.2.1 (递归下降解析器)**
+-**算法 2.2.1 (递归下降解析器)**
 
 ```python
 class RecursiveDescentParser:
@@ -219,7 +219,7 @@ class RecursiveDescentParser:
 **LR(1)解析器**：
 实现自底向上的语法分析。
 
-**算法 2.2.2 (LR(1)解析器)**
+-**算法 2.2.2 (LR(1)解析器)**
 
 ```python
 class LR1Parser:
@@ -284,7 +284,7 @@ class LR1Parser:
 **Thompson构造法**：
 将正则表达式转换为NFA。
 
-**算法 3.1.1 (Thompson构造法)**
+-**算法 3.1.1 (Thompson构造法)**
 
 ```python
 def thompson_construction(regex):
@@ -376,7 +376,7 @@ def concatenate_nfa(nfa1, nfa2):
 **DFA最小化**：
 使用Hopcroft算法最小化DFA。
 
-**算法 3.2.1 (Hopcroft算法)**
+-**算法 3.2.1 (Hopcroft算法)**
 
 ```python
 def hopcroft_minimization(dfa):
@@ -1040,7 +1040,7 @@ class SemanticRoleLabeler:
 ### 关键要点
 
 1. **理论指导实践**：自动机理论、语法理论等为工具开发提供理论基础
-2. **算法实现**：将形式化算法转化为实际可执行的代码
+2. -**算法实现**：将形式化算法转化为实际可执行的代码
 3. **性能优化**：通过算法优化提高工具性能
 4. **正确性保证**：通过形式化方法保证工具的正确性
 

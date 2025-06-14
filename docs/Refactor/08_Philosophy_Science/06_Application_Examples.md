@@ -36,6 +36,7 @@
 ### 2.1 假设检验方法论
 
 **波普尔证伪主义应用**：
+
 ```python
 class PopperianMethodology:
     def __init__(self):
@@ -140,6 +141,7 @@ if methodology.propose_theory(newton_gravity):
 ### 2.2 库恩范式理论应用
 
 **科学革命结构分析**：
+
 ```python
 class KuhnParadigmAnalysis:
     def __init__(self):
@@ -266,6 +268,7 @@ kuhn_analysis.record_revolution(
 ### 3.1 认知架构分析
 
 **认知科学中的哲学问题**：
+
 ```python
 class CognitiveArchitecture:
     def __init__(self, architecture_type):
@@ -377,6 +380,7 @@ print(f"ACT-R解释力评估: {evaluation}")
 ### 3.2 意识哲学分析
 
 **意识问题分析**：
+
 ```python
 class ConsciousnessAnalysis:
     def __init__(self):
@@ -534,6 +538,7 @@ for result in comparison:
 ### 4.1 强AI与弱AI争论
 
 **人工智能哲学分析**：
+
 ```python
 class AIPhilosophyAnalysis:
     def __init__(self):
@@ -704,6 +709,7 @@ print(f"中文房间测试结果: {test_result['conclusion']}")
 ### 4.2 机器伦理分析
 
 **人工智能伦理问题**：
+
 ```python
 class MachineEthics:
     def __init__(self):
@@ -879,6 +885,7 @@ for framework, decision in trolley_dilemma['analysis'].items():
 ### 5.1 数学实在论分析
 
 **数学对象存在性分析**：
+
 ```python
 class MathematicalRealism:
     def __init__(self):
@@ -1058,6 +1065,7 @@ for obj_name, obj in math_realism.mathematical_objects.items():
 ### 6.1 科学革命分析
 
 **科学史哲学分析**：
+
 ```python
 class ScientificHistoryAnalysis:
     def __init__(self):
@@ -1188,6 +1196,7 @@ print(f"理性评估: {shift_analysis['rationality']}")
 ### 7.1 认知科学与哲学
 
 **跨学科方法论**：
+
 ```python
 class InterdisciplinaryResearch:
     def __init__(self):
@@ -1359,8 +1368,9 @@ print(f"局限: {evaluation['limitations']}")
 ---
 
 **相关文档**：
+
 - [本体论理论](01_Ontology_Theory.md)
 - [认识论理论](02_Epistemology_Theory.md)
 - [方法论理论](03_Methodology_Theory.md)
 - [逻辑哲学理论](04_Logic_Philosophy_Theory.md)
-- [科学哲学理论](05_Science_Philosophy_Theory.md) 
+- [科学哲学理论](05_Science_Philosophy_Theory.md)

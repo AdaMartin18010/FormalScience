@@ -40,6 +40,7 @@
 SPIN是一个用于并发系统验证的模型检查器，使用Promela语言描述系统，LTL公式描述性质。
 
 **Promela语言示例**：
+
 ```promela
 /* 互斥锁协议 */
 mtype = {idle, trying, critical};
@@ -79,6 +80,7 @@ init {
 ```
 
 **LTL性质验证**：
+
 ```promela
 /* 互斥性质：两个进程不能同时进入临界区 */
 ltl mutex { !<>(process[1]@critical && process[2]@critical) }
@@ -95,7 +97,8 @@ ltl fairness {
 }
 ```
 
-**算法 2.1.1 (SPIN模型检查算法)**
+-**算法 2.1.1 (SPIN模型检查算法)**
+
 ```python
 class SPINModelChecker:
     def __init__(self, promela_code, ltl_formula):
@@ -178,6 +181,7 @@ class SPINModelChecker:
 ### 2.2 NuSMV模型检查器
 
 **系统描述语言**：
+
 ```smv
 MODULE main
 VAR
@@ -209,6 +213,7 @@ LTLSPEC G F (process1.state = critical)  -- 活性
 ```
 
 **CTL性质验证**：
+
 ```smv
 -- CTL性质
 SPEC AG !(process1.state = critical & process2.state = critical)  -- 互斥
@@ -222,6 +227,7 @@ SPEC AG AF (process1.state = critical)  -- 活性
 ### 3.1 程序不变式验证
 
 **Hoare逻辑与时态逻辑结合**：
+
 ```python
 class ProgramVerifier:
     def __init__(self):
@@ -284,6 +290,7 @@ class ProgramVerifier:
 ```
 
 **示例：数组边界检查**：
+
 ```python
 def array_bounds_check(array, index):
     """验证数组访问的安全性"""
@@ -310,6 +317,7 @@ print(f"Array access is safe: {is_safe}")
 ### 3.2 并发程序验证
 
 **Peterson互斥算法验证**：
+
 ```python
 class PetersonMutex:
     def __init__(self):
@@ -360,6 +368,7 @@ def verify_peterson_algorithm():
 ### 4.1 数字电路验证
 
 **有限状态机验证**：
+
 ```python
 class DigitalCircuitVerifier:
     def __init__(self):
@@ -422,6 +431,7 @@ class DigitalCircuitVerifier:
 ```
 
 **示例：计数器验证**：
+
 ```python
 class Counter:
     def __init__(self, width):
@@ -462,6 +472,7 @@ for property_name, result in results.items():
 ### 4.2 缓存一致性协议验证
 
 **MESI协议验证**：
+
 ```python
 class MESICache:
     def __init__(self, cache_id):
@@ -511,6 +522,7 @@ mesi_spec = {
 ### 5.1 网络协议验证
 
 **TCP三次握手验证**：
+
 ```python
 class TCPHandshake:
     def __init__(self):
@@ -555,6 +567,7 @@ tcp_spec = {
 ### 5.2 分布式共识协议验证
 
 **Paxos协议验证**：
+
 ```python
 class PaxosNode:
     def __init__(self, node_id):
@@ -603,6 +616,7 @@ paxos_spec = {
 ### 6.1 实时调度验证
 
 **EDF调度算法验证**：
+
 ```python
 class EDFScheduler:
     def __init__(self):
@@ -662,6 +676,7 @@ rt_spec = {
 ### 6.2 时间自动机验证
 
 **UPPAAL时间自动机**：
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.docs.uu.se/docs/rtmv/uppaal/xml/flat-1_1.dtd'>
@@ -737,6 +752,7 @@ A[] not (Task1.deadline_miss or Task2.deadline_miss)  // 是否从不错过截�
 ### 7.1 智能体行为验证
 
 **多智能体系统验证**：
+
 ```python
 class MultiAgentSystem:
     def __init__(self, num_agents):
@@ -822,6 +838,7 @@ mas_spec = {
 ### 7.2 强化学习策略验证
 
 **Q-learning策略验证**：
+
 ```python
 class QLearningAgent:
     def __init__(self, state_space, action_space):
@@ -924,9 +941,10 @@ rl_spec = {
 ---
 
 **相关文档**：
+
 - [时态逻辑理论基础](01_Temporal_Logic_Foundation.md)
 - [线性时态逻辑理论](02_Linear_Temporal_Logic.md)
 - [分支时态逻辑理论](03_Branching_Temporal_Logic.md)
 - [时态控制理论](04_Temporal_Control_Theory.md)
 - [概率时态逻辑理论](05_Probabilistic_Temporal_Logic.md)
-- [模糊时态逻辑理论](06_Fuzzy_Temporal_Logic.md) 
+- [模糊时态逻辑理论](06_Fuzzy_Temporal_Logic.md)
