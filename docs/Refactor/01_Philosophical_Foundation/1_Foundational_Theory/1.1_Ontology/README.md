@@ -126,24 +126,24 @@ graph TD
 
 #### 古代本体论
 
-**巴门尼德的存在论**
+**巴门尼德的存在论**:
 
 - 核心命题：存在存在，不存在不存在
 - 形式化表示：$\exists x(x = x) \land \neg\exists x(x \neq x)$
 
-**柏拉图的理念论**
+**柏拉图的理念论**:
 
 - 理念世界与现象世界的二分
 - 形式化表示：$\mathcal{I} \neq \mathcal{P}$，其中 $\mathcal{I}$ 是理念世界，$\mathcal{P}$ 是现象世界
 
 #### 现代本体论
 
-**笛卡尔的二元论**
+**笛卡尔的二元论**:
 
 - 心灵与物质的分离
 - 形式化表示：$\mathcal{M} \cap \mathcal{S} = \emptyset$，其中 $\mathcal{M}$ 是物质，$\mathcal{S}$ 是心灵
 
-**康德的先验唯心论**
+**康德的先验唯心论**:
 
 - 物自体与现象的区分
 - 形式化表示：$\mathcal{N} \rightarrow \mathcal{P}$，其中 $\mathcal{N}$ 是物自体，$\mathcal{P}$ 是现象
