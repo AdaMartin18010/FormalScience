@@ -2,165 +2,114 @@
 
 ## 🎯 **概述**
 
-类型理论是现代计算机科学和数学的基础理论，研究类型系统、类型检查和类型推导，为编程语言、形式化验证和数学基础提供理论支撑。
+类型理论是形式科学体系的核心理论，通过严格的类型系统和类型检查机制，为编程语言、逻辑系统和数学基础提供统一的理论框架。本目录包含简单类型理论、依赖类型理论、线性类型理论等核心分支。
 
-## 📋 **目录结构**
+## 📚 **目录结构**
 
 ### 1. 简单类型理论 (Simple Type Theory)
-
-- **4.1_Simple_Type_Theory/**
-  - 4.1.1 基本概念
-  - 4.1.2 简单类型λ演算
-  - 4.1.3 类型检查算法
-  - 4.1.4 类型推导算法
-  - 4.1.5 类型等价性
+- [1.1_Simply_Typed_Lambda_Calculus](./1.1_Simply_Typed_Lambda_Calculus/) - 简单类型λ演算
+- [1.2_Type_Systems](./1.2_Type_Systems/) - 类型系统
+- [1.3_Type_Inference](./1.3_Type_Inference/) - 类型推断
+- [1.4_Type_Checking](./1.4_Type_Checking/) - 类型检查
 
 ### 2. 依赖类型理论 (Dependent Type Theory)
-
-- **4.2_Dependent_Type_Theory/**
-  - 4.2.1 依赖类型基础
-  - 4.2.2 构造演算
-  - 4.2.3 同伦类型论
-  - 4.2.4 类型族
-  - 4.2.5 归纳类型
+- [2.1_Dependent_Types](./2.1_Dependent_Types/) - 依赖类型
+- [2.2_Type_Families](./2.2_Type_Families/) - 类型族
+- [2.3_Inductive_Types](./2.3_Inductive_Types/) - 归纳类型
+- [2.4_Coinductive_Types](./2.4_Coinductive_Types/) - 余归纳类型
 
 ### 3. 线性类型理论 (Linear Type Theory)
+- [3.1_Linear_Logic](./3.1_Linear_Logic/) - 线性逻辑
+- [3.2_Linear_Lambda_Calculus](./3.2_Linear_Lambda_Calculus/) - 线性λ演算
+- [3.3_Affine_Types](./3.3_Affine_Types/) - 仿射类型
+- [3.4_Relevant_Types](./3.4_Relevant_Types/) - 相关类型
 
-- **4.3_Linear_Type_Theory/**
-  - 4.3.1 线性逻辑基础
-  - 4.3.2 线性λ演算
-  - 4.3.3 资源管理
-  - 4.3.4 并发控制
-  - 4.3.5 量子类型系统
+### 4. 高阶类型理论 (Higher-Order Type Theory)
+- [4.1_System_F](./4.1_System_F/) - System F
+- [4.2_System_F_Omega](./4.2_System_F_Omega/) - System Fω
+- [4.3_Calculus_of_Constructions](./4.3_Calculus_of_Constructions/) - 构造演算
+- [4.4_Homotopy_Type_Theory](./4.4_Homotopy_Type_Theory/) - 同伦类型论
 
-### 4. 仿射类型理论 (Affine Type Theory)
+### 5. 子类型理论 (Subtyping Theory)
+- [5.1_Subtyping_Relations](./5.1_Subtyping_Relations/) - 子类型关系
+- [5.2_Bounded_Quantification](./5.2_Bounded_Quantification/) - 有界量化
+- [5.3_Variance](./5.3_Variance/) - 变型
+- [5.4_Coercion](./5.4_Coercion/) - 强制转换
 
-- **4.4_Affine_Type_Theory/**
-  - 4.4.1 仿射逻辑
-  - 4.4.2 仿射λ演算
-  - 4.4.3 所有权系统
-  - 4.4.4 内存安全
-  - 4.4.5 Rust类型系统
+### 6. 效果类型理论 (Effect Type Theory)
+- [6.1_Monadic_Types](./6.1_Monadic_Types/) - 单子类型
+- [6.2_Effect_Systems](./6.2_Effect_Systems/) - 效果系统
+- [6.3_Algebraic_Effects](./6.3_Algebraic_Effects/) - 代数效果
+- [6.4_Effect_Inference](./6.4_Effect_Inference/) - 效果推断
 
-### 5. 量子类型理论 (Quantum Type Theory)
+### 7. 量子类型理论 (Quantum Type Theory)
+- [7.1_Quantum_Types](./7.1_Quantum_Types/) - 量子类型
+- [7.2_Quantum_Effects](./7.2_Quantum_Effects/) - 量子效果
+- [7.3_Quantum_Linear_Types](./7.3_Quantum_Linear_Types/) - 量子线性类型
+- [7.4_Quantum_Measurement](./7.4_Quantum_Measurement/) - 量子测量
 
-- **4.5_Quantum_Type_Theory/**
-  - 4.5.1 量子线性逻辑
-  - 4.5.2 量子λ演算
-  - 4.5.3 量子资源管理
-  - 4.5.4 量子测量
-  - 4.5.5 量子编程语言
+### 8. 并发类型理论 (Concurrent Type Theory)
+- [8.1_Session_Types](./8.1_Session_Types/) - 会话类型
+- [8.2_Process_Types](./8.2_Process_Types/) - 进程类型
+- [8.3_Channel_Types](./8.3_Channel_Types/) - 通道类型
+- [8.4_Concurrent_Effects](./8.4_Concurrent_Effects/) - 并发效果
 
 ## 🔗 **快速导航**
 
-### 按主题分类
+### 基础理论
+- [简单类型λ演算](./1.1_Simply_Typed_Lambda_Calculus/README.md)
+- [类型系统](./1.2_Type_Systems/README.md)
+- [类型推断](./1.3_Type_Inference/README.md)
+- [类型检查](./1.4_Type_Checking/README.md)
 
-- [简单类型理论](4.1_Simple_Type_Theory/README.md)
-- [依赖类型理论](4.2_Dependent_Type_Theory/README.md)
-- [线性类型理论](4.3_Linear_Type_Theory/README.md)
-- [仿射类型理论](4.4_Affine_Type_Theory/README.md)
-- [量子类型理论](4.5_Quantum_Type_Theory/README.md)
+### 高级理论
+- [依赖类型](./2.1_Dependent_Types/README.md)
+- [线性类型](./3.1_Linear_Logic/README.md)
+- [高阶类型](./4.1_System_F/README.md)
+- [子类型](./5.1_Subtyping_Relations/README.md)
 
-### 按层次分类
+### 应用理论
+- [效果类型](./6.1_Monadic_Types/README.md)
+- [量子类型](./7.1_Quantum_Types/README.md)
+- [并发类型](./8.1_Session_Types/README.md)
 
-- **基础层**: 简单类型理论
-- **高级层**: 依赖类型理论
-- **资源层**: 线性类型理论、仿射类型理论
-- **前沿层**: 量子类型理论
+## 📋 **理论体系**
 
-## 📊 **类型理论图谱**
+### 1. 形式化特征
+- **类型系统**：严格的类型定义和规则
+- **类型检查**：静态类型检查机制
+- **类型推断**：自动类型推断算法
+- **类型安全**：类型安全保障机制
 
-```mermaid
-graph TB
-    A[类型理论] --> B[简单类型理论]
-    A --> C[依赖类型理论]
-    A --> D[线性类型理论]
-    A --> E[仿射类型理论]
-    A --> F[量子类型理论]
-    
-    B --> B1[基本概念]
-    B --> B2[简单类型λ演算]
-    B --> B3[类型检查算法]
-    B --> B4[类型推导算法]
-    B --> B5[类型等价性]
-    
-    C --> C1[依赖类型基础]
-    C --> C2[构造演算]
-    C --> C3[同伦类型论]
-    C --> C4[类型族]
-    C --> C5[归纳类型]
-    
-    D --> D1[线性逻辑基础]
-    D --> D2[线性λ演算]
-    D --> D3[资源管理]
-    D --> D4[并发控制]
-    D --> D5[量子类型系统]
-    
-    E --> E1[仿射逻辑]
-    E --> E2[仿射λ演算]
-    E --> E3[所有权系统]
-    E --> E4[内存安全]
-    E --> E5[Rust类型系统]
-    
-    F --> F1[量子线性逻辑]
-    F --> F2[量子λ演算]
-    F --> F3[量子资源管理]
-    F --> F4[量子测量]
-    F --> F5[量子编程语言]
-```
+### 2. 逻辑特征
+- **Curry-Howard对应**：类型与命题的对应关系
+- **证明系统**：类型作为证明的表示
+- **构造性逻辑**：构造性证明方法
+- **直觉主义逻辑**：直觉主义逻辑基础
 
-## 🎯 **重构原则**
-
-### 1. 形式化规范
-
-- 严格的数学符号和公式
-- 完整的证明过程
-- 规范的定理定义
-
-### 2. 多表征方式
-
-- 文字描述
-- 数学公式
-- 图表说明
-- 代码示例
-
-### 3. 一致性保证
-
-- 术语一致性
-- 符号一致性
-- 逻辑一致性
-- 引用一致性
-
-### 4. 系统性组织
-
-- 层次化结构
-- 模块化设计
-- 交叉引用
-- 索引导航
-
-## 📈 **进度跟踪**
-
-### 已完成模块
-
-- [x] 目录结构设计
-- [x] 导航系统构建
-- [x] 理论框架建立
-
-### 进行中模块
-
-- [ ] 简单类型理论重构
-- [ ] 依赖类型理论重构
-- [ ] 线性类型理论重构
-
-### 待完成模块
-
-- [ ] 仿射类型理论重构
-- [ ] 量子类型理论重构
+### 3. 计算特征
+- **λ演算**：函数式编程基础
+- **归约系统**：计算归约规则
+- **求值策略**：不同的求值策略
+- **并发计算**：并发类型系统
 
 ## 🔄 **持续更新**
 
-本文档将持续更新，反映类型理论重构的进度和发展。
+本类型理论体系将持续更新，确保：
+- 理论的一致性和完整性
+- 形式化的严格性和规范性
+- 应用的实用性和有效性
+- 跨学科的相关性和整合性
 
-**最后更新时间**: 2024-12-20
-**版本**: v1.0.0
-**状态**: 进行中
+## 📖 **使用指南**
+
+1. **按分支学习**：根据类型理论分支选择相应目录
+2. **按层次深入**：从基础理论到高级理论逐步深入
+3. **交叉参考**：利用本地链接进行跨领域学习
+4. **实践应用**：结合代码示例进行实际验证
+
+---
+
+**最后更新**：2024-12-20  
+**版本**：v1.0.0  
+**维护者**：类型理论重构团队

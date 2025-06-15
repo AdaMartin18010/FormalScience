@@ -2,164 +2,98 @@
 
 ## 🎯 **概述**
 
-哲学基础理论是形式科学体系的理论根基，为整个知识体系提供认识论、本体论、方法论和价值论的基础支撑。
+哲学基础理论是形式科学体系的理论根基，通过哲学科学批判分析，建立了严格的形式化哲学体系。本目录包含本体论、认识论、伦理学、逻辑学和形而上学等核心哲学分支的形式化理论。
 
-## 📋 **目录结构**
+## 📚 **目录结构**
 
-### 1. 认识论基础 (Epistemological Foundation)
+### 1. 本体论 (Ontology)
+- [1.1_Mathematical_Ontology](./1.1_Mathematical_Ontology/) - 数学本体论
+- [1.2_Reality_Ontology](./1.2_Reality_Ontology/) - 现实本体论
+- [1.3_Information_Ontology](./1.3_Information_Ontology/) - 信息本体论
+- [1.4_AI_Ontology](./1.4_AI_Ontology/) - AI本体论
 
-- **1.1_Knowledge_Theory/**
-  - 1.1.1 知识本质论
-  - 1.1.2 知识来源论
-  - 1.1.3 知识确证论
-  - 1.1.4 知识结构论
-  - 1.1.5 知识界限论
+### 2. 认识论 (Epistemology)
+- [2.1_Theory_of_Knowledge](./2.1_Theory_of_Knowledge/) - 知识论
+- [2.2_Theory_of_Truth](./2.2_Theory_of_Truth/) - 真理理论
+- [2.3_Sources_of_Knowledge](./2.3_Sources_of_Knowledge/) - 知识来源
+- [2.4_Structure_of_Knowledge](./2.4_Structure_of_Knowledge/) - 知识结构
 
-### 2. 本体论基础 (Ontological Foundation)
+### 3. 伦理学 (Ethics)
+- [3.1_Normative_Ethics](./3.1_Normative_Ethics/) - 规范伦理学
+- [3.2_Meta_Ethics](./3.2_Meta_Ethics/) - 元伦理学
+- [3.3_Applied_Ethics](./3.3_Applied_Ethics/) - 应用伦理学
+- [3.4_Formal_Ethics](./3.4_Formal_Ethics/) - 形式化伦理学
 
-- **1.2_Ontological_Foundation/**
-  - 1.2.1 存在本质论
-  - 1.2.2 实体属性论
-  - 1.2.3 关系结构论
-  - 1.2.4 模态存在论
-  - 1.2.5 信息本体论
+### 4. 逻辑学 (Logic)
+- [4.1_Formal_Logic](./4.1_Formal_Logic/) - 形式逻辑
+- [4.2_Philosophical_Logic](./4.2_Philosophical_Logic/) - 哲学逻辑
+- [4.3_Non_Classical_Logic](./4.3_Non_Classical_Logic/) - 非经典逻辑
+- [4.4_Logic_Philosophy](./4.4_Logic_Philosophy/) - 逻辑哲学
 
-### 3. 方法论基础 (Methodological Foundation)
+### 5. 形而上学 (Metaphysics)
+- [5.1_Ontology](./5.1_Ontology/) - 存在论
+- [5.2_Modal_Metaphysics](./5.2_Modal_Metaphysics/) - 模态形而上学
+- [5.3_Time_Space](./5.3_Time_Space/) - 时间与空间
+- [5.4_Causality](./5.4_Causality/) - 因果性
 
-- **1.3_Methodological_Foundation/**
-  - 1.3.1 理性方法论
-  - 1.3.2 经验方法论
-  - 1.3.3 形式化方法
-  - 1.3.4 系统方法论
-  - 1.3.5 批判方法论
-
-### 4. 价值论基础 (Axiological Foundation)
-
-- **1.4_Axiological_Foundation/**
-  - 1.4.1 价值本质论
-  - 1.4.2 价值类型论
-  - 1.4.3 价值判断论
-  - 1.4.4 价值冲突论
-  - 1.4.5 价值实现论
-
-### 5. 科学哲学基础 (Philosophy of Science Foundation)
-
-- **1.5_Philosophy_of_Science/**
-  - 1.5.1 科学本质论
-  - 1.5.2 科学方法论
-  - 1.5.3 科学实在论
-  - 1.5.4 科学解释论
-  - 1.5.5 科学进步论
+### 6. 交叉领域哲学
+- [6.1_Philosophy_of_Mathematics](./6.1_Philosophy_of_Mathematics/) - 数学哲学
+- [6.2_Philosophy_of_Science](./6.2_Philosophy_of_Science/) - 科学哲学
+- [6.3_Philosophy_of_Mind](./6.3_Philosophy_of_Mind/) - 心智哲学
+- [6.4_Philosophy_of_Technology](./6.4_Philosophy_of_Technology/) - 技术哲学
 
 ## 🔗 **快速导航**
 
-### 按主题分类
+### 核心分支
+- [本体论理论](./1.1_Mathematical_Ontology/README.md)
+- [认识论理论](./2.1_Theory_of_Knowledge/README.md)
+- [伦理学理论](./3.1_Normative_Ethics/README.md)
+- [逻辑学理论](./4.1_Formal_Logic/README.md)
+- [形而上学理论](./5.1_Ontology/README.md)
 
-- [认识论基础](1.1_Knowledge_Theory/README.md)
-- [本体论基础](1.2_Ontological_Foundation/README.md)
-- [方法论基础](1.3_Methodological_Foundation/README.md)
-- [价值论基础](1.4_Axiological_Foundation/README.md)
-- [科学哲学基础](1.5_Philosophy_of_Science/README.md)
+### 交叉领域
+- [数学哲学](./6.1_Philosophy_of_Mathematics/README.md)
+- [科学哲学](./6.2_Philosophy_of_Science/README.md)
+- [心智哲学](./6.3_Philosophy_of_Mind/README.md)
+- [技术哲学](./6.4_Philosophy_of_Technology/README.md)
 
-### 按层次分类
+## 📋 **理论体系**
 
-- **基础层**: 认识论、本体论
-- **方法层**: 方法论、科学哲学
-- **价值层**: 价值论、伦理基础
+### 1. 形式化特征
+- **公理化体系**：严格的公理和推理规则
+- **符号化表达**：数学符号和逻辑公式
+- **证明体系**：完整的证明过程和验证
+- **模型理论**：语义解释和真值定义
 
-## 📊 **哲学基础理论图谱**
+### 2. 跨学科整合
+- **数学整合**：与数学理论的深度融合
+- **科学整合**：与科学方法的有机结合
+- **技术整合**：与现代技术的应用结合
+- **认知整合**：与认知科学的交叉研究
 
-```mermaid
-graph TB
-    A[哲学基础理论] --> B[认识论基础]
-    A --> C[本体论基础]
-    A --> D[方法论基础]
-    A --> E[价值论基础]
-    A --> F[科学哲学基础]
-    
-    B --> B1[知识本质论]
-    B --> B2[知识来源论]
-    B --> B3[知识确证论]
-    B --> B4[知识结构论]
-    B --> B5[知识界限论]
-    
-    C --> C1[存在本质论]
-    C --> C2[实体属性论]
-    C --> C3[关系结构论]
-    C --> C4[模态存在论]
-    C --> C5[信息本体论]
-    
-    D --> D1[理性方法论]
-    D --> D2[经验方法论]
-    D --> D3[形式化方法]
-    D --> D4[系统方法论]
-    D --> D5[批判方法论]
-    
-    E --> E1[价值本质论]
-    E --> E2[价值类型论]
-    E --> E3[价值判断论]
-    E --> E4[价值冲突论]
-    E --> E5[价值实现论]
-    
-    F --> F1[科学本质论]
-    F --> F2[科学方法论]
-    F --> F3[科学实在论]
-    F --> F4[科学解释论]
-    F --> F5[科学进步论]
-```
-
-## 🎯 **重构原则**
-
-### 1. 形式化规范
-
-- 严格的逻辑符号和公式
-- 完整的论证过程
-- 规范的定理定义
-
-### 2. 多表征方式
-
-- 文字描述
-- 逻辑公式
-- 图表说明
-- 代码示例
-
-### 3. 一致性保证
-
-- 术语一致性
-- 符号一致性
-- 逻辑一致性
-- 引用一致性
-
-### 4. 系统性组织
-
-- 层次化结构
-- 模块化设计
-- 交叉引用
-- 索引导航
-
-## 📈 **进度跟踪**
-
-### 已完成模块
-
-- [x] 目录结构设计
-- [x] 导航系统构建
-- [x] 理论框架建立
-
-### 进行中模块
-
-- [ ] 认识论基础重构
-- [ ] 本体论基础重构
-- [ ] 方法论基础重构
-
-### 待完成模块
-
-- [ ] 价值论基础重构
-- [ ] 科学哲学基础重构
+### 3. 应用导向
+- **AI应用**：人工智能的哲学基础
+- **计算应用**：计算思维的哲学分析
+- **系统应用**：系统理论的哲学支撑
+- **教育应用**：哲学教育的现代方法
 
 ## 🔄 **持续更新**
 
-本文档将持续更新，反映哲学基础理论重构的进度和发展。
+本哲学基础理论体系将持续更新，确保：
+- 理论的一致性和完整性
+- 形式化的严格性和规范性
+- 应用的实用性和有效性
+- 跨学科的相关性和整合性
 
-**最后更新时间**: 2024-12-20
-**版本**: v1.0.0
-**状态**: 进行中
+## 📖 **使用指南**
+
+1. **按分支学习**：根据哲学分支选择相应目录
+2. **按主题深入**：从基础概念到高级理论逐步深入
+3. **交叉参考**：利用本地链接进行跨领域学习
+4. **实践应用**：结合具体应用进行理论验证
+
+---
+
+**最后更新**：2024-12-20  
+**版本**：v1.0.0  
+**维护者**：哲学基础理论重构团队
