@@ -19,6 +19,7 @@
 
 **定义 1.1.2 (上下文表示)**
 上下文表示是上下文的形式化描述，包含：
+
 - 实体集合 E
 - 关系集合 R
 - 约束集合 C
@@ -26,6 +27,7 @@
 
 **定义 1.1.3 (上下文模型)**
 上下文模型是一个四元组 M = (E, R, C, I)，其中：
+
 - E 是实体集合
 - R ⊆ E × E × P 是关系集合，P 是关系类型集合
 - C 是约束集合
@@ -50,23 +52,27 @@
 实体是上下文中的基本对象，具有属性和标识。
 
 **实体类型：**
+
 ```
 Entity ::= Object | Concept | Event | Agent | Location | Time
 ```
 
 **定义 2.1.2 (实体属性)**
 实体属性是描述实体特征的键值对：
+
 ```
 Attribute ::= (key : String, value : Value)
 Value ::= String | Number | Boolean | Entity | List<Value>
 ```
 
 **定理 2.1.1 (实体唯一性)**
+
 ```
 ∀e₁, e₂ ∈ E (e₁.id = e₂.id → e₁ = e₂)
 ```
 
 **证明：**
+
 1. 根据实体定义，每个实体都有唯一标识符
 2. 如果两个实体的标识符相同，则它们是同一实体
 3. 因此 e₁ = e₂
@@ -77,6 +83,7 @@ Value ::= String | Number | Boolean | Entity | List<Value>
 关系是实体之间的连接，具有类型和属性。
 
 **关系类型：**
+
 ```
 Relation ::= (source : Entity, target : Entity, type : RelationType, properties : Map<String, Value>)
 RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | SimilarTo
@@ -84,11 +91,13 @@ RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | Sim
 
 **定理 2.1.2 (关系传递性)**
 对于某些关系类型，具有传递性：
+
 ```
 ∀r₁, r₂ ∈ R (r₁.type = r₂.type ∧ r₁.target = r₂.source → ∃r₃ ∈ R (r₃.source = r₁.source ∧ r₃.target = r₂.target ∧ r₃.type = r₁.type))
 ```
 
 **证明：**
+
 1. 对于传递关系类型（如 IsA, PartOf）
 2. 如果 A 与 B 有关系，B 与 C 有关系
 3. 则 A 与 C 也有相同类型的关系
@@ -100,12 +109,14 @@ RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | Sim
 约束是上下文中的限制条件，用于确保一致性。
 
 **约束类型：**
+
 ```
 Constraint ::= UniquenessConstraint | CardinalityConstraint | TemporalConstraint | SpatialConstraint | LogicalConstraint
 ```
 
 **定义 2.1.5 (约束满足)**
 上下文满足约束，如果所有约束条件都成立：
+
 ```
 Satisfies(C, M) ↔ ∀c ∈ C (c.condition(M) = true)
 ```
@@ -118,17 +129,20 @@ Satisfies(C, M) ↔ ∀c ∈ C (c.condition(M) = true)
 层次关系表示实体之间的包含和继承关系。
 
 **层次关系类型：**
+
 ```
 HierarchicalRelation ::= IsA | PartOf | Contains | InheritsFrom
 ```
 
 **定理 3.1.1 (层次传递性)**
 层次关系具有传递性：
+
 ```
 ∀h₁, h₂ ∈ H (h₁.type ∈ {IsA, PartOf} ∧ h₁.target = h₂.source → ∃h₃ ∈ H (h₃.source = h₁.source ∧ h₃.target = h₂.target ∧ h₃.type = h₁.type))
 ```
 
 **证明：**
+
 1. 对于 IsA 关系：如果 A 是 B 的类型，B 是 C 的类型，则 A 是 C 的类型
 2. 对于 PartOf 关系：如果 A 是 B 的部分，B 是 C 的部分，则 A 是 C 的部分
 3. 因此层次关系具有传递性
@@ -139,17 +153,20 @@ HierarchicalRelation ::= IsA | PartOf | Contains | InheritsFrom
 空间关系表示实体之间的空间位置关系。
 
 **空间关系类型：**
+
 ```
 SpatialRelation ::= LocatedAt | Near | Far | Above | Below | Inside | Outside
 ```
 
 **定理 3.1.2 (空间关系对称性)**
 某些空间关系具有对称性：
+
 ```
 ∀s ∈ S (s.type ∈ {Near, Far} → ∃s' ∈ S (s'.source = s.target ∧ s'.target = s.source ∧ s'.type = s.type))
 ```
 
 **证明：**
+
 1. 如果 A 靠近 B，则 B 也靠近 A
 2. 如果 A 远离 B，则 B 也远离 A
 3. 因此这些关系具有对称性
@@ -160,17 +177,20 @@ SpatialRelation ::= LocatedAt | Near | Far | Above | Below | Inside | Outside
 时间关系表示实体之间的时间顺序关系。
 
 **时间关系类型：**
+
 ```
 TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finishes
 ```
 
 **定理 3.1.3 (时间关系传递性)**
 时间关系具有传递性：
+
 ```
 ∀t₁, t₂ ∈ T (t₁.type ∈ {Before, After} ∧ t₁.target = t₂.source → ∃t₃ ∈ T (t₃.source = t₁.source ∧ t₃.target = t₂.target ∧ t₃.type = t₁.type))
 ```
 
 **证明：**
+
 1. 如果事件 A 在事件 B 之前，事件 B 在事件 C 之前
 2. 则事件 A 在事件 C 之前
 3. 因此时间关系具有传递性
@@ -183,6 +203,7 @@ TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finis
 推理规则是从已知信息推导新信息的规则。
 
 **基本推理规则：**
+
 ```
 1. 传递性规则：A → B, B → C ⊢ A → C
 2. 对称性规则：A ↔ B ⊢ B ↔ A
@@ -192,11 +213,13 @@ TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finis
 
 **定理 4.1.1 (推理一致性)**
 如果上下文模型满足所有约束，则推理结果也满足约束：
+
 ```
 Satisfies(C, M) ∧ M ⊢ M' → Satisfies(C, M'))
 ```
 
 **证明：**
+
 1. 假设 M 满足所有约束
 2. 推理规则保持约束不变
 3. 因此 M' 也满足所有约束
@@ -207,17 +230,20 @@ Satisfies(C, M) ∧ M ⊢ M' → Satisfies(C, M'))
 上下文扩展是向现有上下文添加新信息的过程。
 
 **扩展操作：**
+
 ```
 Extend(M, E', R', C', I') = (E ∪ E', R ∪ R', C ∪ C', I ∪ I')
 ```
 
 **定理 4.1.2 (扩展一致性)**
 如果扩展后的上下文满足约束，则扩展是有效的：
+
 ```
 Satisfies(C ∪ C', Extend(M, E', R', C', I')) → ValidExtension(M, E', R', C', I')
 ```
 
 **证明：**
+
 1. 如果扩展后的上下文满足所有约束
 2. 则新添加的实体、关系和约束与现有上下文一致
 3. 因此扩展是有效的
@@ -228,17 +254,20 @@ Satisfies(C ∪ C', Extend(M, E', R', C', I')) → ValidExtension(M, E', R', C',
 上下文合并是将多个上下文组合成一个统一上下文的过程。
 
 **合并操作：**
+
 ```
 Merge(M₁, M₂) = (E₁ ∪ E₂, R₁ ∪ R₂, C₁ ∪ C₂, I₁ ∪ I₂)
 ```
 
 **定理 4.1.3 (合并一致性)**
 如果两个上下文都满足约束，且合并后也满足约束，则合并是有效的：
+
 ```
 Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies(C₁ ∪ C₂, Merge(M₁, M₂)) → ValidMerge(M₁, M₂)
 ```
 
 **证明：**
+
 1. 如果两个上下文都满足各自的约束
 2. 且合并后的上下文满足所有约束
 3. 则合并操作保持了一致性
@@ -248,6 +277,7 @@ Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies(C₁ ∪ C₂, Mer
 ### 5.1 一阶逻辑表示
 
 **语言 L：**
+
 - 个体变元：e, e₁, e₂, ..., r, r₁, r₂, ..., c, c₁, c₂, ...
 - 谓词符号：∈ (属于), = (等于), → (关系), ⊢ (推理), ⊨ (满足)
 - 函数符号：id (标识), type (类型), source (源), target (目标)
@@ -255,6 +285,7 @@ Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies(C₁ ∪ C₂, Mer
 - 量词：∀, ∃
 
 **公理系统：**
+
 ```
 A1: ∀e₁∀e₂(id(e₁) = id(e₂) → e₁ = e₂)  // 实体唯一性
 A2: ∀r(type(r) ∈ {IsA, PartOf} ∧ target(r₁) = source(r₂) → ∃r₃(source(r₃) = source(r₁) ∧ target(r₃) = target(r₂) ∧ type(r₃) = type(r₁)))  // 传递性
@@ -266,6 +297,7 @@ A5: ∀M₁∀M₂(Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies
 ### 5.2 类型论表示
 
 **类型定义：**
+
 ```rust
 // 实体类型
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -568,6 +600,7 @@ enum ValidationError {
 ### 6.1 推理规则
 
 **传递性规则：**
+
 ```
 A → B, B → C
 -------------
@@ -575,6 +608,7 @@ A → C
 ```
 
 **对称性规则：**
+
 ```
 A ↔ B
 -----
@@ -582,12 +616,14 @@ B ↔ A
 ```
 
 **反身性规则：**
+
 ```
 -----
 A → A
 ```
 
 **组合规则：**
+
 ```
 A → B, C → D
 -------------
@@ -597,6 +633,7 @@ A → B, C → D
 ### 6.2 证明示例
 
 **证明：上下文推理的一致性**
+
 ```
 目标：如果上下文模型满足所有约束，则推理结果也满足约束
 
@@ -613,11 +650,13 @@ A → B, C → D
 ### 7.1 与哲学的关联
 
 **认识论：**
+
 - 上下文与知识表示
 - 推理与真理
 - 约束与确定性
 
 **本体论：**
+
 - 实体与存在
 - 关系与结构
 - 约束与本质
@@ -625,11 +664,13 @@ A → B, C → D
 ### 7.2 与数学的关联
 
 **集合论：**
+
 - 实体集合
 - 关系集合
 - 约束集合
 
 **图论：**
+
 - 实体作为节点
 - 关系作为边
 - 约束作为属性
@@ -637,11 +678,13 @@ A → B, C → D
 ### 7.3 与计算机科学的关联
 
 **知识表示：**
+
 - 实体关系模型
 - 语义网络
 - 本体论
 
 **人工智能：**
+
 - 推理引擎
 - 知识图谱
 - 语义理解
@@ -829,4 +872,4 @@ impl LanguageModel {
 3. 实现上下文推理和扩展
 4. 应用到知识图谱和语义理解中
 
-这些理论为后续的自然语言处理、知识表示、智能系统等提供了重要的理论基础。 
+这些理论为后续的自然语言处理、知识表示、智能系统等提供了重要的理论基础。

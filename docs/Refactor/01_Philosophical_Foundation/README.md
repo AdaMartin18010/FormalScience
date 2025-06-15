@@ -1,180 +1,199 @@
-# 01. 哲学基础理论
+# 哲学基础理论
 
-## 🎯 **概述**
+## 目录结构
 
-哲学基础理论是形式科学体系的理论根基，通过严格的哲学分析为数学、逻辑、认知科学等领域提供基础支撑。本目录包含完整的哲学理论体系，从本体论到认识论，从逻辑学到伦理学，构建了形式科学的哲学基础。
+```
+01_Philosophical_Foundation/
+├── README.md                    # 主目录文件
+├── 01_Foundational_Concepts/    # 基础概念
+├── 02_Epistemology/            # 认识论
+├── 03_Ontology/                # 本体论
+├── 04_Logic_Philosophy/        # 逻辑哲学
+├── 05_Language_Philosophy/     # 语言哲学
+├── 06_Mind_Philosophy/         # 心灵哲学
+├── 07_Science_Philosophy/      # 科学哲学
+├── 08_Mathematics_Philosophy/  # 数学哲学
+├── 09_Computer_Philosophy/     # 计算机哲学
+├── 10_Formal_Philosophy/       # 形式哲学
+└── 11_Synthesis/               # 综合理论
+```
 
-## 📚 **目录结构**
+## 1. 基础概念 (01_Foundational_Concepts)
 
-### 01. 形而上学 (Metaphysics)
+### 1.1 哲学基本问题
+- [1.1.1 存在与本质](./01_Foundational_Concepts/01_Existence_and_Essence.md)
+- [1.1.2 知识与真理](./01_Foundational_Concepts/02_Knowledge_and_Truth.md)
+- [1.1.3 语言与意义](./01_Foundational_Concepts/03_Language_and_Meaning.md)
+- [1.1.4 逻辑与推理](./01_Foundational_Concepts/04_Logic_and_Reasoning.md)
 
-- [01_Metaphysics/README.md](01_Metaphysics/README.md) - 形而上学概述
-- [01_Metaphysics/01_Being_and_Existence.md](01_Metaphysics/01_Being_and_Existence.md) - 存在与实在
-- [01_Metaphysics/02_Reality_and_Appearance.md](01_Metaphysics/02_Reality_and_Appearance.md) - 实在与现象
-- [01_Metaphysics/03_Substance_and_Attributes.md](01_Metaphysics/03_Substance_and_Attributes.md) - 实体与属性
-- [01_Metaphysics/04_Causality_and_Determinism.md](01_Metaphysics/04_Causality_and_Determinism.md) - 因果性与决定论
+### 1.2 形式科学哲学基础
+- [1.2.1 形式化方法](./01_Foundational_Concepts/05_Formalization_Methods.md)
+- [1.2.2 抽象与具体](./01_Foundational_Concepts/06_Abstract_and_Concrete.md)
+- [1.2.3 结构与系统](./01_Foundational_Concepts/07_Structure_and_System.md)
+- [1.2.4 模型与理论](./01_Foundational_Concepts/08_Model_and_Theory.md)
 
-### 02. 认识论 (Epistemology)
+## 2. 认识论 (02_Epistemology)
 
-- [02_Epistemology/README.md](02_Epistemology/README.md) - 认识论概述
-- [02_Epistemology/01_Knowledge_Theory.md](02_Epistemology/01_Knowledge_Theory.md) - 知识理论
-- [02_Epistemology/02_Truth_Theory.md](02_Epistemology/02_Truth_Theory.md) - 真理理论
-- [02_Epistemology/03_Justification_Theory.md](02_Epistemology/03_Justification_Theory.md) - 辩护理论
-- [02_Epistemology/04_Skepticism_and_Certainty.md](02_Epistemology/04_Skepticism_and_Certainty.md) - 怀疑论与确定性
+### 2.1 知识理论
+- [2.1.1 知识的定义与分类](./02_Epistemology/01_Knowledge_Definition_Classification.md)
+- [2.1.2 知识的来源](./02_Epistemology/02_Sources_of_Knowledge.md)
+- [2.1.3 知识的验证](./02_Epistemology/03_Knowledge_Verification.md)
+- [2.1.4 知识的限度](./02_Epistemology/04_Limits_of_Knowledge.md)
 
-### 03. 逻辑学 (Logic)
+### 2.2 形式化认识论
+- [2.2.1 形式化知识](./02_Epistemology/05_Formal_Knowledge.md)
+- [2.2.2 算法知识](./02_Epistemology/06_Algorithmic_Knowledge.md)
+- [2.2.3 计算知识](./02_Epistemology/07_Computational_Knowledge.md)
+- [2.2.4 证明与验证](./02_Epistemology/08_Proof_and_Verification.md)
 
-- [03_Logic/README.md](03_Logic/README.md) - 逻辑学概述
-- [03_Logic/01_Classical_Logic.md](03_Logic/01_Classical_Logic.md) - 经典逻辑
-- [03_Logic/02_Modal_Logic.md](03_Logic/02_Modal_Logic.md) - 模态逻辑
-- [03_Logic/03_Intuitionistic_Logic.md](03_Logic/03_Intuitionistic_Logic.md) - 直觉主义逻辑
-- [03_Logic/04_Formal_Logic_Systems.md](03_Logic/04_Formal_Logic_Systems.md) - 形式逻辑系统
+## 3. 本体论 (03_Ontology)
 
-### 04. 本体论 (Ontology)
+### 3.1 存在理论
+- [3.1.1 存在的基本问题](./03_Ontology/01_Basic_Questions_of_Existence.md)
+- [3.1.2 实体与属性](./03_Ontology/02_Substance_and_Attributes.md)
+- [3.1.3 关系与结构](./03_Ontology/03_Relations_and_Structures.md)
+- [3.1.4 时间与空间](./03_Ontology/04_Time_and_Space.md)
 
-- [04_Ontology/README.md](04_Ontology/README.md) - 本体论概述
-- [04_Ontology/01_Categories_and_Types.md](04_Ontology/01_Categories_and_Types.md) - 范畴与类型
-- [04_Ontology/02_Identity_and_Individuation.md](04_Ontology/02_Identity_and_Individuation.md) - 同一性与个体化
-- [04_Ontology/03_Relations_and_Structures.md](04_Ontology/03_Relations_and_Structures.md) - 关系与结构
-- [04_Ontology/04_Formal_Ontology.md](04_Ontology/04_Formal_Ontology.md) - 形式本体论
+### 3.2 形式化本体论
+- [3.2.1 形式对象](./03_Ontology/05_Formal_Objects.md)
+- [3.2.2 抽象实体](./03_Ontology/06_Abstract_Entities.md)
+- [3.2.3 信息本体论](./03_Ontology/07_Information_Ontology.md)
+- [3.2.4 计算本体论](./03_Ontology/08_Computational_Ontology.md)
 
-## 🔗 **快速导航**
+## 4. 逻辑哲学 (04_Logic_Philosophy)
 
-### 核心理论
+### 4.1 逻辑基础
+- [4.1.1 逻辑的本质](./04_Logic_Philosophy/01_Nature_of_Logic.md)
+- [4.1.2 逻辑与思维](./04_Logic_Philosophy/02_Logic_and_Thinking.md)
+- [4.1.3 逻辑与语言](./04_Logic_Philosophy/03_Logic_and_Language.md)
+- [4.1.4 逻辑与数学](./04_Logic_Philosophy/04_Logic_and_Mathematics.md)
 
-- [本体论基础](./01_Core_Concepts/01_Ontology/01_Fundamental_Ontology.md)
-- [认识论基础](./01_Core_Concepts/02_Epistemology/01_Fundamental_Epistemology.md)
-- [逻辑学基础](./01_Core_Concepts/03_Logic/01_Fundamental_Logic.md)
-- [伦理学基础](./01_Core_Concepts/04_Ethics/01_Fundamental_Ethics.md)
-- [形而上学基础](./01_Core_Concepts/05_Metaphysics/01_Fundamental_Metaphysics.md)
+### 4.2 形式逻辑哲学
+- [4.2.1 形式系统](./04_Logic_Philosophy/05_Formal_Systems.md)
+- [4.2.2 公理化方法](./04_Logic_Philosophy/06_Axiomatic_Methods.md)
+- [4.2.3 证明理论](./04_Logic_Philosophy/07_Proof_Theory.md)
+- [4.2.4 模型理论](./04_Logic_Philosophy/08_Model_Theory.md)
 
-### 数学哲学
+## 5. 语言哲学 (05_Language_Philosophy)
 
-- [数学本体论](./02_Mathematical_Philosophy/01_Mathematical_Ontology/01_Mathematical_Objects.md)
-- [数学认识论](./02_Mathematical_Philosophy/02_Mathematical_Epistemology/01_Mathematical_Knowledge.md)
-- [数学逻辑](./02_Mathematical_Philosophy/03_Mathematical_Logic/01_Mathematical_Reasoning.md)
-- [数学方法论](./02_Mathematical_Philosophy/04_Mathematical_Methodology/01_Mathematical_Methods.md)
+### 5.1 语言基础
+- [5.1.1 语言的本质](./05_Language_Philosophy/01_Nature_of_Language.md)
+- [5.1.2 意义理论](./05_Language_Philosophy/02_Theory_of_Meaning.md)
+- [5.1.3 指称理论](./05_Language_Philosophy/03_Theory_of_Reference.md)
+- [5.1.4 语言与思维](./05_Language_Philosophy/04_Language_and_Thought.md)
 
-### 科学哲学
+### 5.2 形式语言哲学
+- [5.2.1 形式语言](./05_Language_Philosophy/05_Formal_Languages.md)
+- [5.2.2 语法与语义](./05_Language_Philosophy/06_Syntax_and_Semantics.md)
+- [5.2.3 语言计算](./05_Language_Philosophy/07_Language_Computation.md)
+- [5.2.4 编程语言哲学](./05_Language_Philosophy/08_Programming_Language_Philosophy.md)
 
-- [科学方法论](./03_Science_Philosophy/01_Scientific_Methodology/01_Scientific_Methods.md)
-- [科学实在论](./03_Science_Philosophy/02_Scientific_Realism/01_Scientific_Reality.md)
-- [科学解释](./03_Science_Philosophy/03_Scientific_Explanation/01_Scientific_Explanation.md)
-- [科学革命](./03_Science_Philosophy/04_Scientific_Revolution/01_Scientific_Revolutions.md)
+## 6. 心灵哲学 (06_Mind_Philosophy)
 
-### 认知哲学
+### 6.1 心灵基础
+- [6.1.1 心灵的本质](./06_Mind_Philosophy/01_Nature_of_Mind.md)
+- [6.1.2 意识理论](./06_Mind_Philosophy/02_Theory_of_Consciousness.md)
+- [6.1.3 思维与认知](./06_Mind_Philosophy/03_Thinking_and_Cognition.md)
+- [6.1.4 心灵与身体](./06_Mind_Philosophy/04_Mind_and_Body.md)
 
-- [心智哲学](./04_Cognitive_Philosophy/01_Mind_Philosophy/01_Mind_Body_Problem.md)
-- [意识哲学](./04_Cognitive_Philosophy/02_Consciousness/01_Consciousness_Theory.md)
-- [认知科学哲学](./04_Cognitive_Philosophy/03_Cognitive_Science/01_Cognitive_Architecture.md)
-- [人工智能哲学](./04_Cognitive_Philosophy/04_Artificial_Intelligence/01_AI_Philosophy.md)
+### 6.2 计算心灵哲学
+- [6.2.1 计算主义](./06_Mind_Philosophy/05_Computationalism.md)
+- [6.2.2 人工智能哲学](./06_Mind_Philosophy/06_AI_Philosophy.md)
+- [6.2.3 认知计算](./06_Mind_Philosophy/07_Cognitive_Computation.md)
+- [6.2.4 信息处理](./06_Mind_Philosophy/08_Information_Processing.md)
 
-### 技术哲学
+## 7. 科学哲学 (07_Science_Philosophy)
 
-- [计算哲学](./05_Technology_Philosophy/01_Computational_Philosophy/01_Computation_Theory.md)
-- [信息哲学](./05_Technology_Philosophy/02_Information_Philosophy/01_Information_Theory.md)
-- [AI哲学](./05_Technology_Philosophy/03_AI_Philosophy/01_AI_Philosophy.md)
-- [量子哲学](./05_Technology_Philosophy/04_Quantum_Philosophy/01_Quantum_Philosophy.md)
+### 7.1 科学基础
+- [7.1.1 科学的本质](./07_Science_Philosophy/01_Nature_of_Science.md)
+- [7.1.2 科学方法](./07_Science_Philosophy/02_Scientific_Methods.md)
+- [7.1.3 科学理论](./07_Science_Philosophy/03_Scientific_Theories.md)
+- [7.1.4 科学进步](./07_Science_Philosophy/04_Scientific_Progress.md)
 
-### 形式化哲学
+### 7.2 形式科学哲学
+- [7.2.1 形式科学](./07_Science_Philosophy/05_Formal_Sciences.md)
+- [7.2.2 计算机科学哲学](./07_Science_Philosophy/06_Computer_Science_Philosophy.md)
+- [7.2.3 信息科学哲学](./07_Science_Philosophy/07_Information_Science_Philosophy.md)
+- [7.2.4 系统科学哲学](./07_Science_Philosophy/08_Systems_Science_Philosophy.md)
 
-- [形式本体论](./06_Formal_Philosophy/01_Formal_Ontology/01_Formal_Ontology.md)
-- [形式认识论](./06_Formal_Philosophy/02_Formal_Epistemology/01_Formal_Epistemology.md)
-- [形式伦理学](./06_Formal_Philosophy/03_Formal_Ethics/01_Formal_Ethics.md)
-- [形式形而上学](./06_Formal_Philosophy/04_Formal_Metaphysics/01_Formal_Metaphysics.md)
+## 8. 数学哲学 (08_Mathematics_Philosophy)
 
-## 📖 **学习路径**
+### 8.1 数学基础
+- [8.1.1 数学的本质](./08_Mathematics_Philosophy/01_Nature_of_Mathematics.md)
+- [8.1.2 数学对象](./08_Mathematics_Philosophy/02_Mathematical_Objects.md)
+- [8.1.3 数学真理](./08_Mathematics_Philosophy/03_Mathematical_Truth.md)
+- [8.1.4 数学证明](./08_Mathematics_Philosophy/04_Mathematical_Proof.md)
 
-### 1. 基础路径
+### 8.2 形式化数学哲学
+- [8.2.1 形式化数学](./08_Mathematics_Philosophy/05_Formal_Mathematics.md)
+- [8.2.2 构造主义](./08_Mathematics_Philosophy/06_Constructivism.md)
+- [8.2.3 直觉主义](./08_Mathematics_Philosophy/07_Intuitionism.md)
+- [8.2.4 形式主义](./08_Mathematics_Philosophy/08_Formalism.md)
 
-1. [本体论基础](./01_Core_Concepts/01_Ontology/00_Introduction.md)
-2. [认识论基础](./01_Core_Concepts/02_Epistemology/00_Introduction.md)
-3. [逻辑学基础](./01_Core_Concepts/03_Logic/00_Introduction.md)
-4. [伦理学基础](./01_Core_Concepts/04_Ethics/00_Introduction.md)
-5. [形而上学基础](./01_Core_Concepts/05_Metaphysics/00_Introduction.md)
+## 9. 计算机哲学 (09_Computer_Philosophy)
 
-### 2. 数学哲学路径
+### 9.1 计算基础
+- [9.1.1 计算的本质](./09_Computer_Philosophy/01_Nature_of_Computation.md)
+- [9.1.2 算法哲学](./09_Computer_Philosophy/02_Algorithm_Philosophy.md)
+- [9.1.3 信息哲学](./09_Computer_Philosophy/03_Information_Philosophy.md)
+- [9.1.4 复杂性哲学](./09_Computer_Philosophy/04_Complexity_Philosophy.md)
 
-1. [数学本体论](./02_Mathematical_Philosophy/01_Mathematical_Ontology/00_Introduction.md)
-2. [数学认识论](./02_Mathematical_Philosophy/02_Mathematical_Epistemology/00_Introduction.md)
-3. [数学逻辑](./02_Mathematical_Philosophy/03_Mathematical_Logic/00_Introduction.md)
-4. [数学方法论](./02_Mathematical_Philosophy/04_Mathematical_Methodology/00_Introduction.md)
+### 9.2 形式化计算哲学
+- [9.2.1 形式化计算](./09_Computer_Philosophy/05_Formal_Computation.md)
+- [9.2.2 可计算性理论](./09_Computer_Philosophy/06_Computability_Theory.md)
+- [9.2.3 计算复杂性](./09_Computer_Philosophy/07_Computational_Complexity.md)
+- [9.2.4 量子计算哲学](./09_Computer_Philosophy/08_Quantum_Computation_Philosophy.md)
 
-### 3. 科学哲学路径
+## 10. 形式哲学 (10_Formal_Philosophy)
 
-1. [科学方法论](./03_Science_Philosophy/01_Scientific_Methodology/00_Introduction.md)
-2. [科学实在论](./03_Science_Philosophy/02_Scientific_Realism/00_Introduction.md)
-3. [科学解释](./03_Science_Philosophy/03_Scientific_Explanation/00_Introduction.md)
-4. [科学革命](./03_Science_Philosophy/04_Scientific_Revolution/00_Introduction.md)
+### 10.1 形式化基础
+- [10.1.1 形式化的本质](./10_Formal_Philosophy/01_Nature_of_Formalization.md)
+- [10.1.2 形式系统](./10_Formal_Philosophy/02_Formal_Systems.md)
+- [10.1.3 形式语言](./10_Formal_Philosophy/03_Formal_Languages.md)
+- [10.1.4 形式逻辑](./10_Formal_Philosophy/04_Formal_Logic.md)
 
-### 4. 认知哲学路径
+### 10.2 形式化应用
+- [10.2.1 哲学形式化](./10_Formal_Philosophy/05_Philosophy_Formalization.md)
+- [10.2.2 科学形式化](./10_Formal_Philosophy/06_Science_Formalization.md)
+- [10.2.3 语言形式化](./10_Formal_Philosophy/07_Language_Formalization.md)
+- [10.2.4 思维形式化](./10_Formal_Philosophy/08_Thinking_Formalization.md)
 
-1. [心智哲学](./04_Cognitive_Philosophy/01_Mind_Philosophy/00_Introduction.md)
-2. [意识哲学](./04_Cognitive_Philosophy/02_Consciousness/00_Introduction.md)
-3. [认知科学哲学](./04_Cognitive_Philosophy/03_Cognitive_Science/00_Introduction.md)
-4. [人工智能哲学](./04_Cognitive_Philosophy/04_Artificial_Intelligence/00_Introduction.md)
+## 11. 综合理论 (11_Synthesis)
 
-### 5. 技术哲学路径
+### 11.1 理论综合
+- [11.1.1 哲学理论统一](./11_Synthesis/01_Philosophical_Theory_Unification.md)
+- [11.1.2 跨域整合](./11_Synthesis/02_Cross_Domain_Integration.md)
+- [11.1.3 形式化综合](./11_Synthesis/03_Formalization_Synthesis.md)
+- [11.1.4 系统哲学](./11_Synthesis/04_Systems_Philosophy.md)
 
-1. [计算哲学](./05_Technology_Philosophy/01_Computational_Philosophy/00_Introduction.md)
-2. [信息哲学](./05_Technology_Philosophy/02_Information_Philosophy/00_Introduction.md)
-3. [AI哲学](./05_Technology_Philosophy/03_AI_Philosophy/00_Introduction.md)
-4. [量子哲学](./05_Technology_Philosophy/04_Quantum_Philosophy/00_Introduction.md)
+### 11.2 应用综合
+- [11.2.1 哲学应用](./11_Synthesis/05_Philosophical_Applications.md)
+- [11.2.2 实践指导](./11_Synthesis/06_Practical_Guidance.md)
+- [11.2.3 未来发展](./11_Synthesis/07_Future_Development.md)
+- [11.2.4 总结展望](./11_Synthesis/08_Summary_and_Prospects.md)
 
-### 6. 形式化哲学路径
+## 导航链接
 
-1. [形式本体论](./06_Formal_Philosophy/01_Formal_Ontology/00_Introduction.md)
-2. [形式认识论](./06_Formal_Philosophy/02_Formal_Epistemology/00_Introduction.md)
-3. [形式伦理学](./06_Formal_Philosophy/03_Formal_Ethics/00_Introduction.md)
-4. [形式形而上学](./06_Formal_Philosophy/04_Formal_Metaphysics/00_Introduction.md)
+- [返回主索引](../00_Master_Index/README.md)
+- [数学基础理论](../02_Mathematical_Foundation/README.md)
+- [形式语言理论](../03_Formal_Language_Theory/README.md)
 
-## 🔄 **更新状态**
-
-### 已完成
+## 构建状态
 
 - [x] 目录结构建立
-- [x] 导航体系构建
-- [x] 学习路径设计
+- [ ] 基础概念内容
+- [ ] 认识论内容
+- [ ] 本体论内容
+- [ ] 逻辑哲学内容
+- [ ] 语言哲学内容
+- [ ] 心灵哲学内容
+- [ ] 科学哲学内容
+- [ ] 数学哲学内容
+- [ ] 计算机哲学内容
+- [ ] 形式哲学内容
+- [ ] 综合理论内容
 
-### 进行中
+## 更新日志
 
-- [ ] 本体论基础内容重构
-- [ ] 认识论基础内容重构
-- [ ] 逻辑学基础内容重构
-- [ ] 伦理学基础内容重构
-- [ ] 形而上学基础内容重构
-
-### 待完成
-
-- [ ] 数学哲学内容重构
-- [ ] 科学哲学内容重构
-- [ ] 认知哲学内容重构
-- [ ] 技术哲学内容重构
-- [ ] 形式化哲学内容重构
-
-## 📝 **内容规范**
-
-### 1. 形式化要求
-
-- 严格的哲学论证
-- 完整的逻辑推理
-- 详细的证明过程
-- 多种表征方式
-
-### 2. 结构要求
-
-- 树形序号目录
-- 本地跳转链接
-- 交叉引用体系
-- 主题相关性组织
-
-### 3. 质量标准
-
-- 学术规范
-- 逻辑一致
-- 内容完整
-- 形式统一
-
----
-
-**注意**：本目录正在持续构建中，请关注更新。
+- 2024-12-20: 创建哲学基础理论目录结构
+- 2024-12-20: 建立完整的树形导航体系
