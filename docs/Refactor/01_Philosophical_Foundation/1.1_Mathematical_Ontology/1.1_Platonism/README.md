@@ -7,24 +7,28 @@
 ## 📚 **目录结构**
 
 ### 1. 理论基础
+
 - [1.1_Mathematical_Objects](./1.1_Mathematical_Objects/) - 数学对象理论
 - [1.2_Platonic_Realm](./1.2_Platonic_Realm/) - 理念世界理论
 - [1.3_Mathematical_Knowledge](./1.3_Mathematical_Knowledge/) - 数学知识理论
 - [1.4_Mathematical_Truth](./1.4_Mathematical_Truth/) - 数学真理理论
 
 ### 2. 形式化体系
+
 - [2.1_Axiomatic_System](./2.1_Axiomatic_System/) - 公理化体系
 - [2.2_Logical_Framework](./2.2_Logical_Framework/) - 逻辑框架
 - [2.3_Proof_Theory](./2.3_Proof_Theory/) - 证明理论
 - [2.4_Model_Theory](./2.4_Model_Theory/) - 模型理论
 
 ### 3. 哲学论证
+
 - [3.1_Ontological_Arguments](./3.1_Ontological_Arguments/) - 本体论论证
 - [3.2_Epistemological_Arguments](./3.2_Epistemological_Arguments/) - 认识论论证
 - [3.3_Metaphysical_Arguments](./3.3_Metaphysical_Arguments/) - 形而上学论证
 - [3.4_Semantic_Arguments](./3.4_Semantic_Arguments/) - 语义论证
 
 ### 4. 应用与扩展
+
 - [4.1_Set_Theory_Application](./4.1_Set_Theory_Application/) - 集合论应用
 - [4.2_Category_Theory_Application](./4.2_Category_Theory_Application/) - 范畴论应用
 - [4.3_Type_Theory_Application](./4.3_Type_Theory_Application/) - 类型论应用
@@ -33,12 +37,14 @@
 ## 🔗 **快速导航**
 
 ### 理论基础
+
 - [数学对象理论](./1.1_Mathematical_Objects/README.md)
 - [理念世界理论](./1.2_Platonic_Realm/README.md)
 - [数学知识理论](./1.3_Mathematical_Knowledge/README.md)
 - [数学真理理论](./1.4_Mathematical_Truth/README.md)
 
 ### 形式化体系
+
 - [公理化体系](./2.1_Axiomatic_System/README.md)
 - [逻辑框架](./2.2_Logical_Framework/README.md)
 - [证明理论](./2.3_Proof_Theory/README.md)
@@ -73,6 +79,7 @@ $$\text{Intuition}(x, M) \leftrightarrow \text{DirectGrasp}(x, M) \land \text{Im
 $$\forall K \in \mathcal{K}_{\text{math}}: \exists I \in \mathcal{I}: \text{Source}(K, I)$$
 
 **证明：**
+
 1. 假设存在数学知识 $K$ 不通过直觉获得
 2. 根据柏拉图主义，数学对象在理念世界
 3. 只有通过直觉才能直接把握理念世界
@@ -219,6 +226,7 @@ verifyMathematicalTruth intuition proposition realm =
 ## 🔄 **持续更新**
 
 本柏拉图主义数学本体论体系将持续更新，确保：
+
 - 理论的一致性和完整性
 - 形式化的严格性和规范性
 - 哲学论证的深度和广度
@@ -235,4 +243,4 @@ verifyMathematicalTruth intuition proposition realm =
 
 **最后更新**：2024-12-20  
 **版本**：v1.0.0  
-**维护者**：柏拉图主义数学本体论重构团队 
+**维护者**：柏拉图主义数学本体论重构团队

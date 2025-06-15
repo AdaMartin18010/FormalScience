@@ -1,116 +1,222 @@
-# 数学基础理论 (Mathematical Foundation)
+# 数学基础理论重构
 
 ## 🎯 **概述**
 
-数学基础理论是形式科学体系的核心支柱，通过严格的公理化方法和形式化技术，建立了完整的数学理论体系。本目录包含集合论、逻辑学、代数、几何、分析等核心数学分支的基础理论。
+数学基础理论是形式科学体系的核心支柱，通过严格的公理化方法和形式化证明，构建了完整的数学理论体系。本目录包含从基础数学到高级数学的完整理论体系，为形式科学提供坚实的数学基础。
 
 ## 📚 **目录结构**
 
-### 1. 集合论基础 (Set Theory Foundation)
-- [1.1_Naive_Set_Theory](./1.1_Naive_Set_Theory/) - 朴素集合论
-- [1.2_Axiomatic_Set_Theory](./1.2_Axiomatic_Set_Theory/) - 公理集合论
-- [1.3_Constructive_Set_Theory](./1.3_Constructive_Set_Theory/) - 构造性集合论
-- [1.4_Category_Set_Theory](./1.4_Category_Set_Theory/) - 范畴集合论
+### 1. 基础概念 (01_Fundamental_Concepts)
+- [01_Set_Theory](./01_Fundamental_Concepts/01_Set_Theory/) - 集合论基础
+- [02_Logic](./01_Fundamental_Concepts/02_Logic/) - 逻辑基础
+- [03_Number_Systems](./01_Fundamental_Concepts/03_Number_Systems/) - 数系基础
+- [04_Functions](./01_Fundamental_Concepts/04_Functions/) - 函数基础
+- [05_Relations](./01_Fundamental_Concepts/05_Relations/) - 关系基础
 
-### 2. 逻辑学基础 (Logic Foundation)
-- [2.1_Propositional_Logic](./2.1_Propositional_Logic/) - 命题逻辑
-- [2.2_Predicate_Logic](./2.2_Predicate_Logic/) - 谓词逻辑
-- [2.3_Modal_Logic](./2.3_Modal_Logic/) - 模态逻辑
-- [2.4_Intuitionistic_Logic](./2.4_Intuitionistic_Logic/) - 直觉主义逻辑
+### 2. 代数理论 (02_Algebra_Theory)
+- [01_Abstract_Algebra](./02_Algebra_Theory/01_Abstract_Algebra/) - 抽象代数
+- [02_Linear_Algebra](./02_Algebra_Theory/02_Linear_Algebra/) - 线性代数
+- [03_Group_Theory](./02_Algebra_Theory/03_Group_Theory/) - 群论
+- [04_Ring_Theory](./02_Algebra_Theory/04_Ring_Theory/) - 环论
+- [05_Field_Theory](./02_Algebra_Theory/05_Field_Theory/) - 域论
 
-### 3. 代数基础 (Algebra Foundation)
-- [3.1_Abstract_Algebra](./3.1_Abstract_Algebra/) - 抽象代数
-- [3.2_Linear_Algebra](./3.2_Linear_Algebra/) - 线性代数
-- [3.3_Group_Theory](./3.3_Group_Theory/) - 群论
-- [3.4_Ring_Theory](./3.4_Ring_Theory/) - 环论
+### 3. 几何理论 (03_Geometry_Theory)
+- [01_Euclidean_Geometry](./03_Geometry_Theory/01_Euclidean_Geometry/) - 欧氏几何
+- [02_Non_Euclidean_Geometry](./03_Geometry_Theory/02_Non_Euclidean_Geometry/) - 非欧几何
+- [03_Topology](./03_Geometry_Theory/03_Topology/) - 拓扑学
+- [04_Differential_Geometry](./03_Geometry_Theory/04_Differential_Geometry/) - 微分几何
+- [05_Algebraic_Geometry](./03_Geometry_Theory/05_Algebraic_Geometry/) - 代数几何
 
-### 4. 几何基础 (Geometry Foundation)
-- [4.1_Euclidean_Geometry](./4.1_Euclidean_Geometry/) - 欧几里得几何
-- [4.2_Topology](./4.2_Topology/) - 拓扑学
-- [4.3_Differential_Geometry](./4.3_Differential_Geometry/) - 微分几何
-- [4.4_Algebraic_Geometry](./4.4_Algebraic_Geometry/) - 代数几何
+### 4. 分析理论 (04_Analysis_Theory)
+- [01_Calculus](./04_Analysis_Theory/01_Calculus/) - 微积分
+- [02_Real_Analysis](./04_Analysis_Theory/02_Real_Analysis/) - 实分析
+- [03_Complex_Analysis](./04_Analysis_Theory/03_Complex_Analysis/) - 复分析
+- [04_Functional_Analysis](./04_Analysis_Theory/04_Functional_Analysis/) - 泛函分析
+- [05_Harmonic_Analysis](./04_Analysis_Theory/05_Harmonic_Analysis/) - 调和分析
 
-### 5. 分析基础 (Analysis Foundation)
-- [5.1_Real_Analysis](./5.1_Real_Analysis/) - 实分析
-- [5.2_Complex_Analysis](./5.2_Complex_Analysis/) - 复分析
-- [5.3_Functional_Analysis](./5.3_Functional_Analysis/) - 泛函分析
-- [5.4_Measure_Theory](./5.4_Measure_Theory/) - 测度论
+### 5. 数论理论 (05_Number_Theory)
+- [01_Elementary_Number_Theory](./05_Number_Theory/01_Elementary_Number_Theory/) - 初等数论
+- [02_Algebraic_Number_Theory](./05_Number_Theory/02_Algebraic_Number_Theory/) - 代数数论
+- [03_Analytic_Number_Theory](./05_Number_Theory/03_Analytic_Number_Theory/) - 解析数论
+- [04_Combinatorial_Number_Theory](./05_Number_Theory/04_Combinatorial_Number_Theory/) - 组合数论
+- [05_Computational_Number_Theory](./05_Number_Theory/05_Computational_Number_Theory/) - 计算数论
 
-### 6. 数论基础 (Number Theory Foundation)
-- [6.1_Elementary_Number_Theory](./6.1_Elementary_Number_Theory/) - 初等数论
-- [6.2_Algebraic_Number_Theory](./6.2_Algebraic_Number_Theory/) - 代数数论
-- [6.3_Analytic_Number_Theory](./6.3_Analytic_Number_Theory/) - 解析数论
-- [6.4_Computational_Number_Theory](./6.4_Computational_Number_Theory/) - 计算数论
+### 6. 概率统计理论 (06_Probability_Statistics_Theory)
+- [01_Probability_Theory](./06_Probability_Statistics_Theory/01_Probability_Theory/) - 概率论
+- [02_Statistics](./06_Probability_Statistics_Theory/02_Statistics/) - 统计学
+- [03_Stochastic_Processes](./06_Probability_Statistics_Theory/03_Stochastic_Processes/) - 随机过程
+- [04_Information_Theory](./06_Probability_Statistics_Theory/04_Information_Theory/) - 信息论
+- [05_Game_Theory](./06_Probability_Statistics_Theory/05_Game_Theory/) - 博弈论
 
-### 7. 概率统计基础 (Probability Statistics Foundation)
-- [7.1_Probability_Theory](./7.1_Probability_Theory/) - 概率论
-- [7.2_Statistics_Theory](./7.2_Statistics_Theory/) - 统计学
-- [7.3_Stochastic_Processes](./7.3_Stochastic_Processes/) - 随机过程
-- [7.4_Information_Theory](./7.4_Information_Theory/) - 信息论
+### 7. 范畴论 (07_Category_Theory)
+- [01_Basic_Category_Theory](./07_Category_Theory/01_Basic_Category_Theory/) - 基础范畴论
+- [02_Functor_Theory](./07_Category_Theory/02_Functor_Theory/) - 函子理论
+- [03_Natural_Transformations](./07_Category_Theory/03_Natural_Transformations/) - 自然变换
+- [04_Limits_and_Colimits](./07_Category_Theory/04_Limits_and_Colimits/) - 极限与余极限
+- [05_Adjunctions](./07_Category_Theory/05_Adjunctions/) - 伴随
 
-### 8. 范畴论基础 (Category Theory Foundation)
-- [8.1_Basic_Category_Theory](./8.1_Basic_Category_Theory/) - 基础范畴论
-- [8.2_Advanced_Category_Theory](./8.2_Advanced_Category_Theory/) - 高级范畴论
-- [8.3_Topos_Theory](./8.3_Topos_Theory/) - Topos理论
-- [8.4_Higher_Category_Theory](./8.4_Higher_Category_Theory/) - 高阶范畴论
+### 8. 元数学理论 (08_Metamathematics_Theory)
+- [01_Proof_Theory](./08_Metamathematics_Theory/01_Proof_Theory/) - 证明论
+- [02_Model_Theory](./08_Metamathematics_Theory/02_Model_Theory/) - 模型论
+- [03_Recursion_Theory](./08_Metamathematics_Theory/03_Recursion_Theory/) - 递归论
+- [04_Set_Theory_Foundations](./08_Metamathematics_Theory/04_Set_Theory_Foundations/) - 集合论基础
+- [05_Computability_Theory](./08_Metamathematics_Theory/05_Computability_Theory/) - 可计算性理论
 
 ## 🔗 **快速导航**
 
-### 基础理论
-- [集合论基础](./1.1_Naive_Set_Theory/README.md)
-- [逻辑学基础](./2.1_Propositional_Logic/README.md)
-- [代数基础](./3.1_Abstract_Algebra/README.md)
-- [几何基础](./4.1_Euclidean_Geometry/README.md)
+### 基础概念
+- [集合论基础](./01_Fundamental_Concepts/01_Set_Theory/01_Set_Theory_Foundation.md)
+- [逻辑基础](./01_Fundamental_Concepts/02_Logic/01_Logic_Foundation.md)
+- [数系基础](./01_Fundamental_Concepts/03_Number_Systems/01_Number_Systems_Foundation.md)
+- [函数基础](./01_Fundamental_Concepts/04_Functions/01_Functions_Foundation.md)
+- [关系基础](./01_Fundamental_Concepts/05_Relations/01_Relations_Foundation.md)
+
+### 代数理论
+- [抽象代数](./02_Algebra_Theory/01_Abstract_Algebra/01_Abstract_Algebra_Theory.md)
+- [线性代数](./02_Algebra_Theory/02_Linear_Algebra/01_Linear_Algebra_Theory.md)
+- [群论](./02_Algebra_Theory/03_Group_Theory/01_Group_Theory.md)
+- [环论](./02_Algebra_Theory/04_Ring_Theory/01_Ring_Theory.md)
+- [域论](./02_Algebra_Theory/05_Field_Theory/01_Field_Theory.md)
+
+### 几何理论
+- [欧氏几何](./03_Geometry_Theory/01_Euclidean_Geometry/01_Euclidean_Geometry_Theory.md)
+- [非欧几何](./03_Geometry_Theory/02_Non_Euclidean_Geometry/01_Non_Euclidean_Geometry_Theory.md)
+- [拓扑学](./03_Geometry_Theory/03_Topology/01_Topology_Theory.md)
+- [微分几何](./03_Geometry_Theory/04_Differential_Geometry/01_Differential_Geometry_Theory.md)
+- [代数几何](./03_Geometry_Theory/05_Algebraic_Geometry/01_Algebraic_Geometry_Theory.md)
 
 ### 分析理论
-- [实分析](./5.1_Real_Analysis/README.md)
-- [复分析](./5.2_Complex_Analysis/README.md)
-- [泛函分析](./5.3_Functional_Analysis/README.md)
-- [测度论](./5.4_Measure_Theory/README.md)
+- [微积分](./04_Analysis_Theory/01_Calculus/01_Calculus_Theory.md)
+- [实分析](./04_Analysis_Theory/02_Real_Analysis/01_Real_Analysis_Theory.md)
+- [复分析](./04_Analysis_Theory/03_Complex_Analysis/01_Complex_Analysis_Theory.md)
+- [泛函分析](./04_Analysis_Theory/04_Functional_Analysis/01_Functional_Analysis_Theory.md)
+- [调和分析](./04_Analysis_Theory/05_Harmonic_Analysis/01_Harmonic_Analysis_Theory.md)
 
-### 高级理论
-- [数论基础](./6.1_Elementary_Number_Theory/README.md)
-- [概率统计](./7.1_Probability_Theory/README.md)
-- [范畴论基础](./8.1_Basic_Category_Theory/README.md)
-- [高级范畴论](./8.2_Advanced_Category_Theory/README.md)
+### 数论理论
+- [初等数论](./05_Number_Theory/01_Elementary_Number_Theory/01_Elementary_Number_Theory.md)
+- [代数数论](./05_Number_Theory/02_Algebraic_Number_Theory/01_Algebraic_Number_Theory.md)
+- [解析数论](./05_Number_Theory/03_Analytic_Number_Theory/01_Analytic_Number_Theory.md)
+- [组合数论](./05_Number_Theory/04_Combinatorial_Number_Theory/01_Combinatorial_Number_Theory.md)
+- [计算数论](./05_Number_Theory/05_Computational_Number_Theory/01_Computational_Number_Theory.md)
 
-## 📋 **理论体系**
+### 概率统计理论
+- [概率论](./06_Probability_Statistics_Theory/01_Probability_Theory/01_Probability_Theory.md)
+- [统计学](./06_Probability_Statistics_Theory/02_Statistics/01_Statistics_Theory.md)
+- [随机过程](./06_Probability_Statistics_Theory/03_Stochastic_Processes/01_Stochastic_Processes_Theory.md)
+- [信息论](./06_Probability_Statistics_Theory/04_Information_Theory/01_Information_Theory.md)
+- [博弈论](./06_Probability_Statistics_Theory/05_Game_Theory/01_Game_Theory.md)
 
-### 1. 公理化特征
-- **严格公理**：完整的公理体系和推理规则
-- **形式化表达**：数学符号和逻辑公式
-- **证明体系**：完整的证明过程和验证
-- **模型理论**：语义解释和真值定义
+### 范畴论
+- [基础范畴论](./07_Category_Theory/01_Basic_Category_Theory/01_Basic_Category_Theory.md)
+- [函子理论](./07_Category_Theory/02_Functor_Theory/01_Functor_Theory.md)
+- [自然变换](./07_Category_Theory/03_Natural_Transformations/01_Natural_Transformations_Theory.md)
+- [极限与余极限](./07_Category_Theory/04_Limits_and_Colimits/01_Limits_and_Colimits_Theory.md)
+- [伴随](./07_Category_Theory/05_Adjunctions/01_Adjunctions_Theory.md)
 
-### 2. 结构特征
-- **层次化结构**：从基础到高级的层次体系
-- **模块化设计**：独立而相互关联的模块
-- **交叉引用**：理论间的相互支撑和引用
-- **统一框架**：范畴论作为统一的理论框架
+### 元数学理论
+- [证明论](./08_Metamathematics_Theory/01_Proof_Theory/01_Proof_Theory.md)
+- [模型论](./08_Metamathematics_Theory/02_Model_Theory/01_Model_Theory.md)
+- [递归论](./08_Metamathematics_Theory/03_Recursion_Theory/01_Recursion_Theory.md)
+- [集合论基础](./08_Metamathematics_Theory/04_Set_Theory_Foundations/01_Set_Theory_Foundations.md)
+- [可计算性理论](./08_Metamathematics_Theory/05_Computability_Theory/01_Computability_Theory.md)
 
-### 3. 应用特征
-- **计算应用**：与计算机科学的深度融合
-- **物理应用**：与物理学的有机结合
-- **工程应用**：与工程技术的实际应用
-- **认知应用**：与认知科学的交叉研究
+## 📖 **学习路径**
 
-## 🔄 **持续更新**
+### 1. 基础路径
+1. [集合论基础](./01_Fundamental_Concepts/01_Set_Theory/00_Introduction.md)
+2. [逻辑基础](./01_Fundamental_Concepts/02_Logic/00_Introduction.md)
+3. [数系基础](./01_Fundamental_Concepts/03_Number_Systems/00_Introduction.md)
+4. [函数基础](./01_Fundamental_Concepts/04_Functions/00_Introduction.md)
+5. [关系基础](./01_Fundamental_Concepts/05_Relations/00_Introduction.md)
 
-本数学基础理论体系将持续更新，确保：
-- 理论的一致性和完整性
-- 公理化的严格性和规范性
-- 应用的实用性和有效性
-- 跨学科的相关性和整合性
+### 2. 代数路径
+1. [抽象代数](./02_Algebra_Theory/01_Abstract_Algebra/00_Introduction.md)
+2. [线性代数](./02_Algebra_Theory/02_Linear_Algebra/00_Introduction.md)
+3. [群论](./02_Algebra_Theory/03_Group_Theory/00_Introduction.md)
+4. [环论](./02_Algebra_Theory/04_Ring_Theory/00_Introduction.md)
+5. [域论](./02_Algebra_Theory/05_Field_Theory/00_Introduction.md)
 
-## 📖 **使用指南**
+### 3. 几何路径
+1. [欧氏几何](./03_Geometry_Theory/01_Euclidean_Geometry/00_Introduction.md)
+2. [非欧几何](./03_Geometry_Theory/02_Non_Euclidean_Geometry/00_Introduction.md)
+3. [拓扑学](./03_Geometry_Theory/03_Topology/00_Introduction.md)
+4. [微分几何](./03_Geometry_Theory/04_Differential_Geometry/00_Introduction.md)
+5. [代数几何](./03_Geometry_Theory/05_Algebraic_Geometry/00_Introduction.md)
 
-1. **按分支学习**：根据数学分支选择相应目录
-2. **按层次深入**：从基础理论到高级理论逐步深入
-3. **交叉参考**：利用本地链接进行跨领域学习
-4. **实践应用**：结合代码示例进行实际验证
+### 4. 分析路径
+1. [微积分](./04_Analysis_Theory/01_Calculus/00_Introduction.md)
+2. [实分析](./04_Analysis_Theory/02_Real_Analysis/00_Introduction.md)
+3. [复分析](./04_Analysis_Theory/03_Complex_Analysis/00_Introduction.md)
+4. [泛函分析](./04_Analysis_Theory/04_Functional_Analysis/00_Introduction.md)
+5. [调和分析](./04_Analysis_Theory/05_Harmonic_Analysis/00_Introduction.md)
+
+### 5. 数论路径
+1. [初等数论](./05_Number_Theory/01_Elementary_Number_Theory/00_Introduction.md)
+2. [代数数论](./05_Number_Theory/02_Algebraic_Number_Theory/00_Introduction.md)
+3. [解析数论](./05_Number_Theory/03_Analytic_Number_Theory/00_Introduction.md)
+4. [组合数论](./05_Number_Theory/04_Combinatorial_Number_Theory/00_Introduction.md)
+5. [计算数论](./05_Number_Theory/05_Computational_Number_Theory/00_Introduction.md)
+
+### 6. 概率统计路径
+1. [概率论](./06_Probability_Statistics_Theory/01_Probability_Theory/00_Introduction.md)
+2. [统计学](./06_Probability_Statistics_Theory/02_Statistics/00_Introduction.md)
+3. [随机过程](./06_Probability_Statistics_Theory/03_Stochastic_Processes/00_Introduction.md)
+4. [信息论](./06_Probability_Statistics_Theory/04_Information_Theory/00_Introduction.md)
+5. [博弈论](./06_Probability_Statistics_Theory/05_Game_Theory/00_Introduction.md)
+
+### 7. 范畴论路径
+1. [基础范畴论](./07_Category_Theory/01_Basic_Category_Theory/00_Introduction.md)
+2. [函子理论](./07_Category_Theory/02_Functor_Theory/00_Introduction.md)
+3. [自然变换](./07_Category_Theory/03_Natural_Transformations/00_Introduction.md)
+4. [极限与余极限](./07_Category_Theory/04_Limits_and_Colimits/00_Introduction.md)
+5. [伴随](./07_Category_Theory/05_Adjunctions/00_Introduction.md)
+
+### 8. 元数学路径
+1. [证明论](./08_Metamathematics_Theory/01_Proof_Theory/00_Introduction.md)
+2. [模型论](./08_Metamathematics_Theory/02_Model_Theory/00_Introduction.md)
+3. [递归论](./08_Metamathematics_Theory/03_Recursion_Theory/00_Introduction.md)
+4. [集合论基础](./08_Metamathematics_Theory/04_Set_Theory_Foundations/00_Introduction.md)
+5. [可计算性理论](./08_Metamathematics_Theory/05_Computability_Theory/00_Introduction.md)
+
+## 🔄 **更新状态**
+
+### 已完成
+- [x] 目录结构建立
+- [x] 导航体系构建
+- [x] 学习路径设计
+
+### 进行中
+- [ ] 基础概念内容重构
+- [ ] 代数理论内容重构
+- [ ] 几何理论内容重构
+
+### 待完成
+- [ ] 分析理论内容重构
+- [ ] 数论理论内容重构
+- [ ] 概率统计理论内容重构
+- [ ] 范畴论内容重构
+- [ ] 元数学理论内容重构
+
+## 📝 **内容规范**
+
+### 1. 形式化要求
+- 严格的数学定义
+- 完整的公理系统
+- 详细的证明过程
+- 多种表征方式
+
+### 2. 结构要求
+- 树形序号目录
+- 本地跳转链接
+- 交叉引用体系
+- 主题相关性组织
+
+### 3. 质量标准
+- 学术规范
+- 逻辑一致
+- 内容完整
+- 形式统一
 
 ---
 
-**最后更新**：2024-12-20  
-**版本**：v1.0.0  
-**维护者**：数学基础理论重构团队
+**注意**：本目录正在持续构建中，请关注更新。

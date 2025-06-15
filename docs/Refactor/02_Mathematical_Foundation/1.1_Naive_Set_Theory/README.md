@@ -7,24 +7,28 @@
 ## 📚 **目录结构**
 
 ### 1. 基础概念
+
 - [1.1_Set_Concepts](./1.1_Set_Concepts/) - 集合概念
 - [1.2_Set_Operations](./1.2_Set_Operations/) - 集合运算
 - [1.3_Set_Relations](./1.3_Set_Relations/) - 集合关系
 - [1.4_Set_Functions](./1.4_Set_Functions/) - 集合函数
 
 ### 2. 集合构造
+
 - [2.1_Set_Builder_Notation](./2.1_Set_Builder_Notation/) - 集合构造记号
 - [2.2_Set_Comprehension](./2.2_Set_Comprehension/) - 集合概括
 - [2.3_Set_Construction_Methods](./2.3_Set_Construction_Methods/) - 集合构造方法
 - [2.4_Set_Examples](./2.4_Set_Examples/) - 集合示例
 
 ### 3. 集合性质
+
 - [3.1_Set_Properties](./3.1_Set_Properties/) - 集合性质
 - [3.2_Set_Identities](./3.2_Set_Identities/) - 集合恒等式
 - [3.3_Set_Theorems](./3.3_Set_Theorems/) - 集合定理
 - [3.4_Set_Proofs](./3.4_Set_Proofs/) - 集合证明
 
 ### 4. 特殊集合
+
 - [4.1_Empty_Set](./4.1_Empty_Set/) - 空集
 - [4.2_Universal_Set](./4.2_Universal_Set/) - 全集
 - [4.3_Finite_Sets](./4.3_Finite_Sets/) - 有限集
@@ -33,12 +37,14 @@
 ## 🔗 **快速导航**
 
 ### 基础概念
+
 - [集合概念](./1.1_Set_Concepts/README.md)
 - [集合运算](./1.2_Set_Operations/README.md)
 - [集合关系](./1.3_Set_Relations/README.md)
 - [集合函数](./1.4_Set_Functions/README.md)
 
 ### 集合构造
+
 - [集合构造记号](./2.1_Set_Builder_Notation/README.md)
 - [集合概括](./2.2_Set_Comprehension/README.md)
 - [集合构造方法](./2.3_Set_Construction_Methods/README.md)
@@ -89,6 +95,7 @@ $$A \cup A = A$$
 $$A \cap A = A$$
 
 **证明：**
+
 1. 对于任意 $x \in A \cup A$，有 $x \in A \lor x \in A$
 2. 根据逻辑幂等律，$x \in A \lor x \in A \leftrightarrow x \in A$
 3. 因此 $A \cup A = A$
@@ -98,6 +105,7 @@ $$A \cup B = B \cup A$$
 $$A \cap B = B \cap A$$
 
 **证明：**
+
 1. 对于任意 $x \in A \cup B$，有 $x \in A \lor x \in B$
 2. 根据逻辑交换律，$x \in A \lor x \in B \leftrightarrow x \in B \lor x \in A$
 3. 因此 $x \in B \cup A$
@@ -120,6 +128,7 @@ $$(A \cup B)^c = A^c \cap B^c$$
 $$(A \cap B)^c = A^c \cup B^c$$
 
 **证明：**
+
 1. 对于任意 $x \in (A \cup B)^c$，有 $x \notin A \cup B$
 2. 根据并集定义，$x \notin A \land x \notin B$
 3. 因此 $x \in A^c \land x \in B^c$
@@ -379,6 +388,7 @@ verifyDistributive s1 s2 s3 =
 ## 🔄 **持续更新**
 
 本朴素集合论体系将持续更新，确保：
+
 - 理论的一致性和完整性
 - 形式化的严格性和规范性
 - 实现的正确性和效率
@@ -395,4 +405,4 @@ verifyDistributive s1 s2 s3 =
 
 **最后更新**：2024-12-20  
 **版本**：v1.0.0  
-**维护者**：朴素集合论重构团队 
+**维护者**：朴素集合论重构团队

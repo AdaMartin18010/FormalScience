@@ -7,24 +7,28 @@
 ## 📚 **目录结构**
 
 ### 1. 基础概念
+
 - [1.1_Syntax](./1.1_Syntax/) - 语法定义
 - [1.2_Types](./1.2_Types/) - 类型系统
 - [1.3_Terms](./1.3_Terms/) - 项的定义
 - [1.4_Contexts](./1.4_Contexts/) - 上下文
 
 ### 2. 类型规则
+
 - [2.1_Type_Rules](./2.1_Type_Rules/) - 类型规则
 - [2.2_Type_Checking](./2.2_Type_Checking/) - 类型检查
 - [2.3_Type_Inference](./2.3_Type_Inference/) - 类型推断
 - [2.4_Type_Safety](./2.4_Type_Safety/) - 类型安全
 
 ### 3. 归约系统
+
 - [3.1_Beta_Reduction](./3.1_Beta_Reduction/) - β归约
 - [3.2_Eta_Reduction](./3.2_Eta_Reduction/) - η归约
 - [3.3_Reduction_Strategies](./3.3_Reduction_Strategies/) - 归约策略
 - [3.4_Normal_Forms](./3.4_Normal_Forms/) - 范式
 
 ### 4. 语义理论
+
 - [4.1_Operational_Semantics](./4.1_Operational_Semantics/) - 操作语义
 - [4.2_Denotational_Semantics](./4.2_Denotational_Semantics/) - 指称语义
 - [4.3_Equational_Theory](./4.3_Equational_Theory/) - 等式理论
@@ -33,12 +37,14 @@
 ## 🔗 **快速导航**
 
 ### 基础概念
+
 - [语法定义](./1.1_Syntax/README.md)
 - [类型系统](./1.2_Types/README.md)
 - [项的定义](./1.3_Terms/README.md)
 - [上下文](./1.4_Contexts/README.md)
 
 ### 类型规则
+
 - [类型规则](./2.1_Type_Rules/README.md)
 - [类型检查](./2.2_Type_Checking/README.md)
 - [类型推断](./2.3_Type_Inference/README.md)
@@ -99,6 +105,7 @@ $$\lambda x:\tau.(M x) \rightarrow_\eta M \quad \text{if } x \notin \text{FV}(M)
 
 **证明：**
 通过结构归纳证明：
+
 1. **变量**：变量不能归约
 2. **抽象**：如果 $M = \lambda x:\tau_1.N$ 且 $M \rightarrow M'$，则 $M' = \lambda x:\tau_1.N'$ 且 $N \rightarrow N'$
 3. **应用**：如果 $M = M_1 M_2$ 且 $M \rightarrow M'$，则有两种情况：
@@ -110,6 +117,7 @@ $$\lambda x:\tau.(M x) \rightarrow_\eta M \quad \text{if } x \notin \text{FV}(M)
 
 **证明：**
 通过结构归纳证明：
+
 1. **变量**：在空上下文中，变量没有类型
 2. **抽象**：抽象是值
 3. **应用**：如果 $M = M_1 M_2$，则：
@@ -432,6 +440,7 @@ testTypeInference = do
 ## 🔄 **持续更新**
 
 本简单类型λ演算体系将持续更新，确保：
+
 - 理论的一致性和完整性
 - 形式化的严格性和规范性
 - 实现的正确性和效率
@@ -448,4 +457,4 @@ testTypeInference = do
 
 **最后更新**：2024-12-20  
 **版本**：v1.0.0  
-**维护者**：简单类型λ演算重构团队 
+**维护者**：简单类型λ演算重构团队
