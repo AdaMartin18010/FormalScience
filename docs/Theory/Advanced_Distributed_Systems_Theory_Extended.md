@@ -148,7 +148,7 @@ Paxos状态包含：
 - **已接受值**：$v \in V$
 - **已接受编号**：$n_a \in \mathbb{N}$
 
-**算法 2.1 (Paxos算法)**
+**算法 2.1 (Paxos算法)**:
 
 ```haskell
 data PaxosState = PaxosState
@@ -208,7 +208,7 @@ Raft节点状态：
 **定义 2.7 (Raft任期)**
 Raft任期是单调递增的整数，每个任期最多一个领导者。
 
-**算法 2.2 (Raft领导者选举)**
+**算法 2.2 (Raft领导者选举)**:
 
 ```haskell
 raftElection :: Node -> IO ()
@@ -280,7 +280,7 @@ $$\text{Log}_i = [\text{entry}_1, \text{entry}_2, \ldots, \text{entry}_n]$$
 2. 领导者创建日志条目
 3. 日志条目不会改变
 
-**算法 3.1 (日志复制)**
+**算法 3.1 (日志复制)**:
 
 ```haskell
 logReplication :: Leader -> Command -> IO ()
@@ -313,7 +313,7 @@ replicateToFollowers leader entry =
 **定义 3.5 (虚拟节点)**
 虚拟节点技术通过为每个物理节点创建多个虚拟节点提高负载均衡。
 
-**算法 3.2 (一致性哈希)**
+**算法 3.2 (一致性哈希)**:
 
 ```haskell
 data ConsistentHash = ConsistentHash
