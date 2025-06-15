@@ -22,6 +22,7 @@
 
 **定义 1.1 (认识论)**
 认识论是研究知识的本质、来源、范围和确证的哲学理论，包括：
+
 - **知识**：确证的真信念
 - **真理**：命题与事实的符合
 - **确证**：信念的合理性基础
@@ -72,6 +73,7 @@ data Justification = Justification {
 $$K_a(p) \equiv B_a(p) \land J_a(p) \land p$$
 
 其中：
+
 - $K_a(p)$ 表示主体 $a$ 知道命题 $p$
 - $B_a(p)$ 表示主体 $a$ 相信命题 $p$
 - $J_a(p)$ 表示主体 $a$ 对命题 $p$ 有确证
@@ -121,6 +123,7 @@ $$K_a(p) \land K_a(p \rightarrow q) \rightarrow K_a(q)$$
 $$T(p) \equiv \exists f (F(f) \land C(p, f))$$
 
 其中：
+
 - $T(p)$ 表示命题 $p$ 为真
 - $F(f)$ 表示 $f$ 是一个事实
 - $C(p, f)$ 表示命题 $p$ 与事实 $f$ 符合
@@ -165,6 +168,7 @@ $$(p \rightarrow q) \land T(p) \rightarrow T(q)$$
 $$J_a(p) \equiv \exists e (E(e) \land S_a(e) \land R(e, p))$$
 
 其中：
+
 - $J_a(p)$ 表示主体 $a$ 对命题 $p$ 有确证
 - $E(e)$ 表示 $e$ 是证据
 - $S_a(e)$ 表示主体 $a$ 拥有证据 $e$
@@ -211,6 +215,7 @@ $$J_a(p) \rightarrow \text{Reliable}(\text{Source}(J_a(p)))$$
 $$P_1, P_2, \ldots, P_n \vdash C$$
 
 其中：
+
 - $P_1, P_2, \ldots, P_n$ 是前提
 - $C$ 是结论
 - $\vdash$ 表示推理关系
@@ -256,6 +261,7 @@ $$\frac{p \lor q \quad p \vdash r \quad q \vdash r}{r}$$
 $$B_a(p) \equiv \text{Attitude}_a(p, \text{Belief})$$
 
 其中：
+
 - $B_a(p)$ 表示主体 $a$ 相信命题 $p$
 - $\text{Attitude}_a(p, \text{Belief})$ 表示主体 $a$ 对命题 $p$ 持信念态度
 
@@ -298,6 +304,7 @@ $$B_a(p, d_1) \land E(e) \land R(e, p) \rightarrow B_a(p, d_2)$$
 3. **赋值函数**：$V: \text{Prop} \rightarrow \mathcal{P}(W)$
 
 **定义 7.3 (模态算子语义)**
+
 - $\mathcal{M}, w \models K_a \phi$ 当且仅当对所有 $v$ 使得 $w R_a v$，$\mathcal{M}, v \models \phi$
 - $\mathcal{M}, w \models B_a \phi$ 当且仅当对所有 $v$ 使得 $w R_a v$，$\mathcal{M}, v \models \phi$
 - $\mathcal{M}, w \models J_a \phi$ 当且仅当存在证据 $e$ 使得 $e$ 支持 $\phi$
@@ -308,12 +315,14 @@ $$B_a(p, d_1) \land E(e) \land R(e, p) \rightarrow B_a(p, d_2)$$
 认识论证明系统包含以下公理和规则：
 
 **公理**：
+
 1. $K_a \phi \rightarrow \phi$ (知识事实性)
 2. $K_a \phi \rightarrow K_a K_a \phi$ (知识正内省)
 3. $\neg K_a \phi \rightarrow K_a \neg K_a \phi$ (知识负内省)
 4. $K_a(\phi \rightarrow \psi) \rightarrow (K_a \phi \rightarrow K_a \psi)$ (知识分布)
 
 **规则**：
+
 1. $\frac{\phi}{K_a \phi}$ (知识概括)
 2. $\frac{\phi \rightarrow \psi \quad \phi}{\psi}$ (假言推理)
 
@@ -492,4 +501,4 @@ class EpistemicML:
 **版本**：v1.0  
 **更新时间**：2024-12-20  
 **维护者**：形式科学基础理论研究团队  
-**状态**：持续更新中 
+**状态**：持续更新中
