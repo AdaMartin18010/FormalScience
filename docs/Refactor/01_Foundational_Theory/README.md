@@ -1,298 +1,104 @@
-# 基础理论 (Foundational Theory) v7.0
-
-## 1. 概述
-
-基础理论是形式科学体系的核心支柱，为整个知识体系提供理论基础和方法论支撑。本目录包含形式语言理论、类型理论、控制论基础等核心理论，建立了严格的形式化框架。
-
-### 1.1 理论基础
-
-- **数学基础**：基于集合论、逻辑学、范畴论
-- **哲学基础**：基于认识论、本体论、方法论
-- **系统基础**：基于系统论、信息论、控制论
-
-### 1.2 核心特征
-
-- **形式化严格**：使用严格的数学符号和证明
-- **逻辑一致**：理论内部和理论间保持逻辑一致
-- **应用导向**：理论直接服务于实际应用
-- **可扩展性**：支持理论的扩展和发展
-
-## 2. 目录结构
-
-```
-01_Foundational_Theory/
-├── README.md                    # 本文件
-├── 01_Theory/                   # 理论基础
-│   ├── 01_Formal_Language_Theory.md
-│   ├── 02_Type_Theory.md
-│   ├── 03_Control_Theory.md
-│   └── 04_System_Theory.md
-├── 02_Formalization/            # 形式化定义
-│   ├── 01_Formal_Definitions.md
-│   ├── 02_Axiomatic_Systems.md
-│   ├── 03_Proof_Systems.md
-│   └── 04_Semantic_Frameworks.md
-├── 03_Proofs/                   # 证明过程
-│   ├── 01_Type_Safety_Proofs.md
-│   ├── 02_System_Properties.md
-│   ├── 03_Algorithm_Correctness.md
-│   └── 04_Formal_Verification.md
-├── 04_Applications/             # 应用实例
-│   ├── 01_Programming_Languages.md
-│   ├── 02_System_Design.md
-│   ├── 03_Software_Verification.md
-│   └── 04_AI_Systems.md
-├── 05_Code_Examples/            # 代码示例
-│   ├── 01_Rust_Examples/
-│   ├── 02_Haskell_Examples/
-│   └── 03_Formal_Proofs/
-└── 06_References/               # 参考文献
-    ├── 01_Classical_Papers.md
-    ├── 02_Modern_Developments.md
-    └── 03_Textbooks.md
-```
-
-## 3. 核心理论
-
-### 3.1 形式语言理论 (Formal Language Theory)
-
-**定义**：研究形式语言的数学理论，包括语法、语义、计算模型等。
-
-**核心概念**：
-
-- **自动机理论**：有限状态机、下推自动机、图灵机
-- **语法理论**：上下文无关文法、正则文法、无限制文法
-- **语义理论**：指称语义、操作语义、公理语义
-
-**形式化定义**：
-
-```haskell
--- 形式语言定义
-data Language = Language {
-    alphabet :: Set Symbol,
-    grammar :: Grammar,
-    semantics :: SemanticFunction
-}
-
--- 自动机定义
-data Automaton = Automaton {
-    states :: Set State,
-    alphabet :: Set Symbol,
-    transitions :: Set Transition,
-    startState :: State,
-    acceptStates :: Set State
-}
-```
-
-**快速链接**：
-
-- [理论基础](../01_Theory/01_Formal_Language_Theory.md)
-- [形式化定义](../02_Formalization/01_Formal_Definitions.md)
-- [应用实例](../04_Applications/01_Programming_Languages.md)
-
-### 3.2 类型理论 (Type Theory)
-
-**定义**：研究类型系统的数学理论，为编程语言提供类型安全保证。
-
-**核心概念**：
-
-- **类型系统**：类型检查、类型推断、类型安全
-- **类型构造**：函数类型、积类型、和类型、递归类型
-- **类型语义**：类型解释、类型等价、类型子类型
+# 01. 形式科学基础理论
 
-**形式化定义**：
+## 🎯 **概述**
 
-```haskell
--- 类型系统定义
-data Type = 
-    TUnit
-  | TBool
-  | TInt
-  | TFloat
-  | TArrow Type Type
-  | TProduct Type Type
-  | TSum Type Type
-  | TRec String Type
-
--- 类型判断
-type TypeJudgment = (Context, Expression, Type)
-type Context = Map Variable Type
-```
-
-**快速链接**：
-
-- [理论基础](../01_Theory/02_Type_Theory.md)
-- [类型安全证明](../03_Proofs/01_Type_Safety_Proofs.md)
-- [代码示例](../05_Code_Examples/02_Haskell_Examples/)
-
-### 3.3 控制论基础 (Control Theory)
+形式科学基础理论是形式科学体系的理论根基，涵盖哲学基础、形式化方法、逻辑基础等核心内容。本目录建立了形式科学的理论基础体系，为后续的理论发展提供坚实的哲学和方法论支撑。
 
-**定义**：研究动态系统控制和调节的数学理论。
-
-**核心概念**：
+## 📋 **目录结构**
 
-- **动态系统**：状态空间、输入输出、系统响应
-- **稳定性**：李雅普诺夫稳定性、渐近稳定性
-- **控制设计**：反馈控制、最优控制、鲁棒控制
+### 1. 哲学基础 (01_Philosophical_Foundation)
 
-**形式化定义**：
+- **1.1 本体论基础** - 存在、实体、属性、关系的哲学分析
+- **1.2 认识论基础** - 知识、真理、确证、推理的认识论分析
+- **1.3 逻辑学基础** - 形式逻辑、哲学逻辑、非经典逻辑
+- **1.4 方法论基础** - 科学方法、形式化方法、系统方法
 
-```haskell
--- 动态系统定义
-data DynamicSystem = DynamicSystem {
-    stateSpace :: VectorSpace,
-    inputSpace :: VectorSpace,
-    outputSpace :: VectorSpace,
-    stateEquation :: StateEquation,
-    outputEquation :: OutputEquation
-}
+### 2. 形式化方法 (02_Formalization_Methods)
 
--- 状态方程
-type StateEquation = State -> Input -> Time -> State
-type OutputEquation = State -> Output
-```
+- **2.1 公理化方法** - 公理系统、形式化语言、证明理论
+- **2.2 模型论方法** - 语义模型、解释理论、模型构造
+- **2.3 证明论方法** - 证明系统、证明搜索、证明验证
+- **2.4 计算论方法** - 算法理论、计算复杂性、可计算性
 
-**快速链接**：
+### 3. 逻辑基础 (03_Logical_Foundation)
 
-- [理论基础](../01_Theory/03_Control_Theory.md)
-- [系统性质证明](../03_Proofs/02_System_Properties.md)
-- [应用实例](../04_Applications/02_System_Design.md)
+- **3.1 经典逻辑** - 命题逻辑、谓词逻辑、高阶逻辑
+- **3.2 非经典逻辑** - 直觉逻辑、模态逻辑、多值逻辑
+- **3.3 线性逻辑** - 线性逻辑、资源逻辑、并发逻辑
+- **3.4 量子逻辑** - 量子逻辑、量子推理、量子测量
 
-### 3.4 系统理论 (System Theory)
+### 4. 系统论基础 (04_Systems_Theory)
 
-**定义**：研究复杂系统结构和行为的统一理论。
+- **4.1 一般系统论** - 系统概念、系统结构、系统行为
+- **4.2 控制论基础** - 反馈原理、信息论、控制理论
+- **4.3 信息论基础** - 信息概念、熵理论、编码理论
+- **4.4 复杂性理论** - 复杂系统、涌现性、自组织
 
-**核心概念**：
+## 🔗 **导航链接**
 
-- **系统结构**：组件、连接、层次、组织
-- **系统行为**：动态、稳态、响应、稳定性
-- **系统控制**：反馈、调节、优化、适应
+### 哲学基础
 
-**形式化定义**：
+- [1.1 本体论基础](./01_Philosophical_Foundation/01_Ontology_Foundation.md)
+- [1.2 认识论基础](./01_Philosophical_Foundation/02_Epistemology_Foundation.md)
+- [1.3 逻辑学基础](./01_Philosophical_Foundation/03_Logic_Foundation.md)
+- [1.4 方法论基础](./01_Philosophical_Foundation/04_Methodology_Foundation.md)
 
-```haskell
--- 系统定义
-data System = System {
-    components :: Set Component,
-    connections :: Set Connection,
-    behavior :: BehaviorFunction,
-    constraints :: Set Constraint
-}
+### 形式化方法
 
--- 系统行为
-type BehaviorFunction = State -> Input -> Time -> State
-```
+- [2.1 公理化方法](./02_Formalization_Methods/01_Axiomatic_Methods.md)
+- [2.2 模型论方法](./02_Formalization_Methods/02_Model_Theoretic_Methods.md)
+- [2.3 证明论方法](./02_Formalization_Methods/03_Proof_Theoretic_Methods.md)
+- [2.4 计算论方法](./02_Formalization_Methods/04_Computational_Methods.md)
 
-**快速链接**：
+### 逻辑基础
 
-- [理论基础](../01_Theory/04_System_Theory.md)
-- [算法正确性证明](../03_Proofs/03_Algorithm_Correctness.md)
-- [应用实例](../04_Applications/03_Software_Verification.md)
+- [3.1 经典逻辑](./03_Logical_Foundation/01_Classical_Logic.md)
+- [3.2 非经典逻辑](./03_Logical_Foundation/02_Non_Classical_Logic.md)
+- [3.3 线性逻辑](./03_Logical_Foundation/03_Linear_Logic.md)
+- [3.4 量子逻辑](./03_Logical_Foundation/04_Quantum_Logic.md)
 
-## 4. 理论关联
+### 系统论基础
 
-### 4.1 理论层次结构
+- [4.1 一般系统论](./04_Systems_Theory/01_General_Systems_Theory.md)
+- [4.2 控制论基础](./04_Systems_Theory/02_Cybernetics_Foundation.md)
+- [4.3 信息论基础](./04_Systems_Theory/03_Information_Theory_Foundation.md)
+- [4.4 复杂性理论](./04_Systems_Theory/04_Complexity_Theory.md)
 
-```mermaid
-graph TD
-    A[数学基础] --> B[形式语言理论]
-    A --> C[类型理论]
-    A --> D[控制论基础]
-    A --> E[系统理论]
-    
-    B --> F[编程语言]
-    C --> F
-    D --> G[控制系统]
-    E --> G
-    
-    F --> H[软件工程]
-    G --> H
-```
+## 📊 **内容统计**
 
-### 4.2 概念关联表
+| 子目录 | 文件数量 | 主要主题 | 状态 |
+|--------|----------|----------|------|
+| 01_Philosophical_Foundation | 4 | 哲学基础理论 | 待构建 |
+| 02_Formalization_Methods | 4 | 形式化方法 | 待构建 |
+| 03_Logical_Foundation | 4 | 逻辑基础 | 待构建 |
+| 04_Systems_Theory | 4 | 系统论基础 | 待构建 |
 
-| 核心概念 | 形式语言理论 | 类型理论 | 控制论基础 | 系统理论 |
-|----------|--------------|----------|------------|----------|
-| 状态 | 自动机状态 | 类型状态 | 系统状态 | 系统状态 |
-| 转换 | 状态转换 | 类型转换 | 状态转移 | 系统演化 |
-| 约束 | 语法约束 | 类型约束 | 控制约束 | 系统约束 |
-| 验证 | 语言验证 | 类型检查 | 稳定性验证 | 系统验证 |
+## 🔄 **更新日志**
 
-## 5. 学习路径
+- **2024-12-20**: 创建基础理论目录结构
+- **2024-12-20**: 建立导航体系
+- **2024-12-20**: 开始内容构建
 
-### 5.1 基础路径
+## 📝 **理论框架**
 
-**目标**：理解核心概念和基本理论
-**学习顺序**：
+### 核心概念
 
-1. [形式语言理论基础](../01_Theory/01_Formal_Language_Theory.md)
-2. [类型理论基础](../01_Theory/02_Type_Theory.md)
-3. [控制论基础](../01_Theory/03_Control_Theory.md)
-4. [系统理论基础](../01_Theory/04_System_Theory.md)
+- **形式化**：将非形式概念转换为精确的数学表示
+- **公理化**：建立基于公理的推理体系
+- **模型化**：构造语义解释和验证模型
+- **系统化**：建立统一的认知框架
 
-### 5.2 深入路径
+### 方法论原则
 
-**目标**：掌握形式化方法和证明技术
-**学习顺序**：
+1. **严格性**：使用精确的数学语言
+2. **系统性**：建立完整的理论体系
+3. **一致性**：确保概念间的逻辑一致性
+4. **可验证性**：提供形式化验证方法
 
-1. [形式化定义](../02_Formalization/01_Formal_Definitions.md)
-2. [公理系统](../02_Formalization/02_Axiomatic_Systems.md)
-3. [证明系统](../02_Formalization/03_Proof_Systems.md)
-4. [语义框架](../02_Formalization/04_Semantic_Frameworks.md)
+## 🎯 **下一步计划**
 
-### 5.3 应用路径
-
-**目标**：掌握实际应用和实现技术
-**学习顺序**：
-
-1. [编程语言应用](../04_Applications/01_Programming_Languages.md)
-2. [系统设计应用](../04_Applications/02_System_Design.md)
-3. [软件验证应用](../04_Applications/03_Software_Verification.md)
-4. [AI系统应用](../04_Applications/04_AI_Systems.md)
-
-## 6. 质量保证
-
-### 6.1 理论一致性
-
-- **内部一致性**：每个理论内部逻辑一致
-- **外部一致性**：不同理论间概念一致
-- **层次一致性**：理论层次结构合理
-
-### 6.2 形式化标准
-
-- **符号规范**：使用标准数学符号
-- **证明完整**：所有定理有完整证明
-- **定义精确**：所有概念有精确定义
-
-### 6.3 应用验证
-
-- **实例丰富**：提供充分的应用实例
-- **代码正确**：所有代码示例正确可运行
-- **效果验证**：理论应用效果可验证
-
-## 7. 发展前景
-
-### 7.1 理论发展
-
-- **新理论**：发展新的基础理论
-- **理论整合**：整合不同理论
-- **理论扩展**：扩展现有理论
-
-### 7.2 应用扩展
-
-- **新应用**：发现新的应用领域
-- **应用优化**：优化现有应用
-- **应用创新**：创新应用方法
-
-### 7.3 教育发展
-
-- **教材建设**：建设高质量教材
-- **课程开发**：开发相关课程
-- **人才培养**：培养理论人才
-
----
-
-**版本**：v7.0  
-**更新时间**：2024-12-19  
-**维护者**：基础理论研究团队  
-**状态**：持续更新中
+1. 构建哲学基础理论
+2. 建立形式化方法体系
+3. 完善逻辑基础理论
+4. 发展系统论基础
+5. 建立交叉引用体系
