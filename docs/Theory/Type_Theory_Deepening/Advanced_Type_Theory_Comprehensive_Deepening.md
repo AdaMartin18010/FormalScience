@@ -16,7 +16,7 @@
 - $\vdash$ 是类型判定关系
 - $\mathcal{R}$ 是归约关系
 
-**公理 1.1.1 (类型系统公理)**
+**公理 1.1.1 (类型系统公理)**:
 
 1. **变量规则**：$\frac{x : \tau \in \Gamma}{\Gamma \vdash x : \tau}$
 2. **抽象规则**：$\frac{\Gamma, x : \tau_1 \vdash e : \tau_2}{\Gamma \vdash \lambda x.e : \tau_1 \rightarrow \tau_2}$
@@ -71,7 +71,7 @@ progress e tau =
 **定义 1.2.1 (全称类型)**
 全称类型 $\forall \alpha.\tau$ 表示对于所有类型 $\alpha$，表达式具有类型 $\tau[\alpha]$。
 
-**公理 1.2.1 (全称类型规则)**
+**公理 1.2.1 (全称类型规则)**:
 
 1. **引入规则**：$\frac{\Gamma, \alpha \vdash e : \tau}{\Gamma \vdash \Lambda \alpha.e : \forall \alpha.\tau}$
 2. **消除规则**：$\frac{\Gamma \vdash e : \forall \alpha.\tau}{\Gamma \vdash e[\tau'] : \tau[\alpha \mapsto \tau']}$
@@ -86,7 +86,7 @@ progress e tau =
 **定义 1.3.1 (存在类型)**
 存在类型 $\exists \alpha.\tau$ 表示存在某个类型 $\alpha$，使得表达式具有类型 $\tau$。
 
-**公理 1.3.1 (存在类型规则)**
+**公理 1.3.1 (存在类型规则)**:
 
 1. **引入规则**：$\frac{\Gamma \vdash e : \tau[\alpha \mapsto \tau']}{\Gamma \vdash \text{pack } \tau', e \text{ as } \exists \alpha.\tau : \exists \alpha.\tau}$
 2. **消除规则**：$\frac{\Gamma \vdash e_1 : \exists \alpha.\tau \quad \Gamma, \alpha, x : \tau \vdash e_2 : \tau'}{\Gamma \vdash \text{unpack } \alpha, x = e_1 \text{ in } e_2 : \tau'}$
@@ -110,7 +110,7 @@ progress e tau =
 **定义 2.1.2 (依赖积类型)**
 依赖积类型 $\Sigma x : A.B(x)$ 表示存在 $A$ 中的值 $x$ 和类型 $B(x)$ 中的值。
 
-**公理 2.1.1 (依赖类型规则)**
+**公理 2.1.1 (依赖类型规则)**:
 
 1. **Π引入**：$\frac{\Gamma, x : A \vdash e : B(x)}{\Gamma \vdash \lambda x.e : \Pi x : A.B(x)}$
 2. **Π消除**：$\frac{\Gamma \vdash e_1 : \Pi x : A.B(x) \quad \Gamma \vdash e_2 : A}{\Gamma \vdash e_1 e_2 : B(e_2)}$
@@ -142,7 +142,7 @@ tail (Cons _ xs) = xs
 **定义 2.2.1 (恒等类型)**
 恒等类型 $a =_A b$ 表示在类型 $A$ 中 $a$ 和 $b$ 相等。
 
-**公理 2.2.1 (恒等类型规则)**
+**公理 2.2.1 (恒等类型规则)**:
 
 1. **自反性**：$\frac{\Gamma \vdash a : A}{\Gamma \vdash \text{refl}_a : a =_A a}$
 2. **替换**：$\frac{\Gamma \vdash p : a =_A b \quad \Gamma \vdash e : P(a)}{\Gamma \vdash \text{subst } p \text{ in } e : P(b)}$
@@ -440,7 +440,7 @@ data TemporalTerm where
   PastIntro :: TemporalTerm -> Time -> TemporalTerm
 ```
 
-**公理 6.1.1 (时态类型规则)**
+**公理 6.1.1 (时态类型规则)**:
 
 1. **未来引入**：$\frac{\Gamma \vdash e : \tau}{\Gamma \vdash \text{future } e : \text{Future}[\tau]}$
 2. **未来消除**：$\frac{\Gamma \vdash e : \text{Future}[\tau]}{\Gamma \vdash \text{await } e : \tau}$
@@ -508,7 +508,7 @@ data QuantumTerm where
   Measure :: QuantumTerm -> QuantumTerm
 ```
 
-**公理 7.1.1 (量子类型规则)**
+**公理 7.1.1 (量子类型规则)**:
 
 1. **量子比特**：$\frac{}{\Gamma \vdash \text{qubit} : \text{Qubit}}$
 2. **量子门**：$\frac{\Gamma \vdash e : \text{Qubit}}{\Gamma \vdash H(e) : \text{Qubit}}$

@@ -26,6 +26,7 @@
 $$\text{Exists}(x) \equiv \exists y (y = x)$$
 
 其中：
+
 - $x$ 是任意对象
 - $\text{Exists}(x)$ 表示"x存在"
 - $\exists y (y = x)$ 表示"存在y使得y等于x"
@@ -37,6 +38,7 @@ $$\text{Exists}(x) \equiv \exists y (y = x)$$
 $$\text{ActuallyExists}(x) \equiv \text{Exists}(x) \land \text{Actual}(x)$$
 
 其中：
+
 - $\text{ActuallyExists}(x)$ 表示"x实存"
 - $\text{Actual}(x)$ 表示"x是实际的"
 
@@ -57,6 +59,7 @@ $$\text{ActuallyExists}(x) \equiv \text{Exists}(x) \land \text{Actual}(x)$$
 3. **对称性**：$\forall x \forall y (x = y \rightarrow y = x)$
 
 **证明：**
+
 1. **自反性证明**：
    - 假设 $\text{Exists}(x)$
    - 根据定义，$\exists y (y = x)$
@@ -91,6 +94,7 @@ $$\forall x (\text{Thinkable}(x) \rightarrow \text{Exists}(x))$$
 $$\forall x (\text{Exists}(x) \rightarrow \Box \text{Exists}(x))$$
 
 **证明：**
+
 - 假设 $\text{Exists}(x)$
 - 根据存在的定义，$\exists y (y = x)$
 - 如果 $y = x$，那么在任意可能世界中都有 $y = x$
@@ -184,11 +188,13 @@ $$\forall x (\text{PhysicalExists}(x) \rightarrow \neg \text{MentalExists}(x) \l
 存在语义为存在逻辑提供解释：
 
 **模型结构：**
+
 - **论域**：$D$ (所有可能对象的集合)
 - **存在谓词**：$E \subseteq D$ (实际存在的对象集合)
 - **解释函数**：$I$ (将符号映射到论域)
 
 **真值条件：**
+
 1. $\models \text{Exists}(a)$ 当且仅当 $I(a) \in E$
 2. $\models \exists x \phi(x)$ 当且仅当存在 $d \in D$ 使得 $\models \phi(d)$
 3. $\models \forall x \phi(x)$ 当且仅当对所有 $d \in D$ 都有 $\models \phi(d)$
@@ -205,6 +211,7 @@ $$\forall x (\text{PhysicalExists}(x) \rightarrow \neg \text{MentalExists}(x) \l
 3. **实存是存在的子集**：$\text{ActuallyExists} \subseteq \text{Exists}$
 
 **证明：**
+
 1. **实存蕴含存在**：
    - 根据定义，$\text{ActuallyExists}(x) \equiv \text{Exists}(x) \land \text{Actual}(x)$
    - 因此 $\text{ActuallyExists}(x) \rightarrow \text{Exists}(x)$
@@ -291,7 +298,7 @@ $$\forall x (\text{Mathematical}(x) \land \text{Exists}(x) \rightarrow \Box \tex
 
 ## 📚 **参考文献**
 
-1. Aristotle. (350 BCE). *Metaphysics*. 
+1. Aristotle. (350 BCE). *Metaphysics*.
 2. Heidegger, M. (1927). *Being and Time*.
 3. Quine, W. V. O. (1948). "On What There Is". *Review of Metaphysics*.
 4. Meinong, A. (1904). *On Assumptions*.
@@ -299,4 +306,4 @@ $$\forall x (\text{Mathematical}(x) \land \text{Exists}(x) \rightarrow \Box \tex
 
 ---
 
-**注意**：本文档正在持续完善中，请关注更新。 
+**注意**：本文档正在持续完善中，请关注更新。

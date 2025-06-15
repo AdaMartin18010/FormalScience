@@ -202,7 +202,7 @@ $$\llbracket \tau_1^t \rightarrow \tau_2^{t+1} \rrbracket = \llbracket \tau_1 \r
 线性逻辑公式由以下语法定义：
 $$\phi ::= p \mid \neg \phi \mid \phi_1 \otimes \phi_2 \mid \phi_1 \multimap \phi_2 \mid \phi_1 \& \phi_2 \mid \phi_1 \oplus \phi_2 \mid !\phi$$
 
-**定义 5.1.2 (线性逻辑规则)**
+**定义 5.1.2 (线性逻辑规则)**:
 
 - 张量积规则：$\frac{\Gamma_1 \vdash \phi_1 \quad \Gamma_2 \vdash \phi_2}{\Gamma_1, \Gamma_2 \vdash \phi_1 \otimes \phi_2}$
 - 线性蕴含规则：$\frac{\Gamma, \phi_1 \vdash \phi_2}{\Gamma \vdash \phi_1 \multimap \phi_2}$
