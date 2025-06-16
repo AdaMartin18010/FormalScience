@@ -28,6 +28,7 @@ $$E(x) \iff x \in U \land x \neq \emptyset$$
 本质是事物内在的、决定其身份和特征的根本属性集合。
 
 **形式化定义**：
+
 设 $P(x)$ 为 $x$ 的所有属性集合，$E(x)$ 为 $x$ 的本质属性集合，则：
 $$E(x) = \{p \in P(x) : \forall y (y \neq x \implies p \notin P(y)) \lor \text{essential}(p)\}$$
 
@@ -38,11 +39,13 @@ $$E(x) = \{p \in P(x) : \forall y (y \neq x \implies p \notin P(y)) \lor \text{e
 ### 2.1 存在的基本性质
 
 **公理 2.1.1** (存在公理)
+
 1. 存在是自明的
 2. 存在是普遍的
 3. 存在是基础的
 
 **形式化表达**：
+
 $$\begin{align}
 &\text{Axiom 1: } \exists x E(x) \\
 &\text{Axiom 2: } \forall x (E(x) \implies \text{universal}(x)) \\
@@ -101,6 +104,7 @@ $$p \in E(x) \iff \forall y (y \neq x \implies p \notin P(y)) \lor \text{essenti
 每个对象都有唯一的本质集合。
 
 **证明**：
+
 假设对象 $x$ 有两个不同的本质集合 $E_1(x)$ 和 $E_2(x)$。
 根据本质的定义，$E_1(x) \subseteq E_2(x)$ 且 $E_2(x) \subseteq E_1(x)$。
 因此 $E_1(x) = E_2(x)$，矛盾。
@@ -260,4 +264,4 @@ $$E(\text{justice}) = \{\text{fairness}, \text{morality}, \text{equality}\}$$
 **相关链接**：
 - [1.1.2 知识与真理](./02_Knowledge_and_Truth.md)
 - [1.1.3 语言与意义](./03_Language_and_Meaning.md)
-- [3.1.1 存在的基本问题](../03_Ontology/01_Basic_Questions_of_Existence.md) 
+- [3.1.1 存在的基本问题](../03_Ontology/01_Basic_Questions_of_Existence.md)
