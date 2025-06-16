@@ -27,12 +27,14 @@
 
 **定义 1.3 (存在谓词)**
 存在谓词 $E$ 是一个一元谓词，满足：
+
 - $E(x)$ 当且仅当 $x$ 存在
 - $\forall x(E(x) \rightarrow x \in \mathcal{D})$
 
 ### 1.2 存在的基本性质
 
 **公理 1.1 (存在的基本性质)**
+
 1. **存在性**：$\exists x E(x)$
 2. **非空性**：$\mathcal{D} \neq \emptyset$
 3. **一致性**：$\neg \exists x(E(x) \land \neg E(x))$
@@ -56,11 +58,13 @@ $x$ 概念存在，记作 $E_c(x)$，当且仅当 $x$ 作为概念存在。
 ### 2.2 存在性的形式化公理
 
 **公理 2.1 (存在性公理)**
+
 1. **实际存在蕴含存在**：$\forall x(E_a(x) \rightarrow E(x))$
 2. **可能存在蕴含概念存在**：$\forall x(E_p(x) \rightarrow E_c(x))$
 3. **必然存在蕴含实际存在**：$\forall x(E_n(x) \rightarrow E_a(x))$
 
 **公理 2.2 (存在性关系)**
+
 1. **传递性**：$(E_n(x) \land E_a(x)) \rightarrow E_c(x)$
 2. **反身性**：$E(x) \rightarrow E(x)$
 3. **非对称性**：$(E_a(x) \land E_c(x)) \not\rightarrow E_n(x)$
@@ -82,6 +86,7 @@ $x$ 是现象，记作 $P(x)$，当且仅当 $x$ 依赖于认知主体而存在�
 $$\forall x(R(x) \rightarrow E(x))$$
 
 **证明**：
+
 1. 假设 $R(x)$ 成立
 2. 根据实在的定义，$x$ 独立于认知主体而存在
 3. 因此 $x$ 在某种意义上存在
@@ -93,6 +98,7 @@ $$\forall x(R(x) \rightarrow E(x))$$
 $$\forall x(P(x) \rightarrow E_c(x))$$
 
 **证明**：
+
 1. 假设 $P(x)$ 成立
 2. 根据现象的定义，$x$ 依赖于认知主体而存在
 3. 因此 $x$ 作为概念存在
@@ -115,11 +121,13 @@ $x$ 可能存在，记作 $\Diamond E(x)$，当且仅当 $x$ 在某个可能世�
 ### 4.2 模态存在性公理
 
 **公理 4.1 (模态存在性公理)**
+
 1. **必然存在蕴含存在**：$\Box E(x) \rightarrow E(x)$
 2. **存在蕴含可能存在**：$E(x) \rightarrow \Diamond E(x)$
 3. **必然存在蕴含可能存在**：$\Box E(x) \rightarrow \Diamond E(x)$
 
 **公理 4.2 (模态逻辑公理)**
+
 1. **K公理**：$\Box(E(x) \rightarrow E(y)) \rightarrow (\Box E(x) \rightarrow \Box E(y))$
 2. **T公理**：$\Box E(x) \rightarrow E(x)$
 3. **4公理**：$\Box E(x) \rightarrow \Box \Box E(x)$
@@ -134,6 +142,7 @@ $x$ 可能存在，记作 $\Diamond E(x)$，当且仅当 $x$ 在某个可能世�
 $$\frac{d}{dt}\int_{\mathcal{D}} E(x) dx = 0$$
 
 **证明**：
+
 1. 假设系统是封闭的，没有外部输入输出
 2. 根据存在性公理，存在性不能凭空产生或消失
 3. 因此存在性总量必须守恒
@@ -146,6 +155,7 @@ $$\frac{d}{dt}\int_{\mathcal{D}} E(x) dx = 0$$
 $$\forall x(E(x) \rightarrow \exists! y(y = x \land E(y)))$$
 
 **证明**：
+
 1. 假设 $E(x)$ 成立
 2. 根据同一性公理，$x = x$
 3. 根据存在性公理，$E(x)$ 成立
@@ -160,6 +170,7 @@ $$\forall x(E(x) \rightarrow \exists! y(y = x \land E(y)))$$
 $$\forall x \forall y((E(x) \land x = y) \rightarrow E(y))$$
 
 **证明**：
+
 1. 假设 $E(x) \land x = y$ 成立
 2. 根据同一性公理，$x = y$ 意味着 $x$ 和 $y$ 是同一个对象
 3. 因此 $E(x)$ 等价于 $E(y)$
@@ -293,12 +304,14 @@ impl ExistenceReasoner for ExistenceReasonerImpl {
 
 **实例 7.1 (自然数的存在性)**
 自然数作为概念存在：
+
 - $E_c(\mathbb{N})$ - 自然数概念存在
 - $\forall n \in \mathbb{N}(E_c(n))$ - 每个自然数概念存在
 - $\neg E_a(\mathbb{N})$ - 自然数不实际存在
 
 **实例 7.2 (集合的存在性)**
 空集必然存在：
+
 - $\Box E(\emptyset)$ - 空集必然存在
 - $\forall x(x \notin \emptyset)$ - 空集不包含任何元素
 - $E_c(\emptyset) \land E_a(\emptyset)$ - 空集概念存在且实际存在
@@ -307,12 +320,14 @@ impl ExistenceReasoner for ExistenceReasonerImpl {
 
 **实例 7.3 (原子的存在性)**
 原子实际存在：
+
 - $E_a(\text{atom})$ - 原子实际存在
 - $\forall a \in \text{atoms}(E_a(a))$ - 每个原子实际存在
 - $R(\text{atom})$ - 原子是实在的
 
 **实例 7.4 (光子的存在性)**
 光子可能存在：
+
 - $\Diamond E(\text{photon})$ - 光子可能存在
 - $E_c(\text{photon})$ - 光子概念存在
 - $\neg E_a(\text{photon})$ - 光子不实际存在
@@ -321,12 +336,14 @@ impl ExistenceReasoner for ExistenceReasonerImpl {
 
 **实例 7.5 (概念的存在性)**
 概念概念存在：
+
 - $E_c(\text{concept})$ - 概念概念存在
 - $\forall c \in \text{concepts}(E_c(c))$ - 每个概念概念存在
 - $\neg E_a(\text{concept})$ - 概念不实际存在
 
 **实例 7.6 (关系的存在性)**
 关系概念存在：
+
 - $E_c(\text{relation})$ - 关系概念存在
 - $\forall r \in \text{relations}(E_c(r))$ - 每个关系概念存在
 - $P(\text{relation})$ - 关系是现象
@@ -346,4 +363,4 @@ impl ExistenceReasoner for ExistenceReasonerImpl {
 
 **最后更新时间**: 2024年12月20日  
 **版本**: v1.0  
-**维护者**: 形而上学理论团队 
+**维护者**: 形而上学理论团队
