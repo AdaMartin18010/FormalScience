@@ -841,26 +841,32 @@ impl SocialEpistemology {
 ## 交叉引用
 
 ### 与真理理论的关联
+
 - [真理理论](./02_Truth_Theory.md#1-2-2) - 知识与真理的关系
 - [符合论](./02_Truth_Theory.md#1-2-2-1) - 真理符合论与知识
 
 ### 与知识来源的关联
+
 - [知识来源](./03_Knowledge_Sources.md#1-2-3) - 知识的来源问题
 - [理性主义](./03_Knowledge_Sources.md#1-2-3-1) - 理性知识论
 
 ### 与知识结构的关联
+
 - [知识结构](./04_Knowledge_Structure.md#1-2-4) - 知识的结构问题
 - [基础主义](./04_Knowledge_Structure.md#1-2-4-1) - 基础主义知识论
 
 ### 与认知科学的关联
+
 - [认知科学视角](./05_Cognitive_Science.md#1-2-5) - 认知科学与知识论
 - [认知架构](./05_Cognitive_Science.md#1-2-5-1) - 认知架构与知识
 
 ### 与形而上学的关联
+
 - [形而上学基础](../01_Metaphysics/README.md) - 知识对象的形而上学
 - [存在论基础](../01_Metaphysics/01_Existence_Theory.md#1-1-1) - 存在与知识
 
 ### 与逻辑哲学的关联
+
 - [逻辑哲学基础](../04_Logic_Philosophy/README.md) - 逻辑与知识
 - [形式逻辑基础](../04_Logic_Philosophy/01_Formal_Logic.md#1-4-1) - 逻辑推理与知识
 
@@ -877,4 +883,4 @@ impl SocialEpistemology {
 
 - [认识论基础](./README.md)
 - [哲学基础](../README.md)
-- [重构主索引](../../00_Master_Index/01_重构主索引_v9.0.md) 
+- [重构主索引](../../00_Master_Index/01_重构主索引_v9.0.md)

@@ -590,22 +590,27 @@ data Entanglement = Entanglement {
 ## 交叉引用
 
 ### 与认识论的关联
+
 - [认识论基础](../02_Epistemology/README.md) - 存在与知识的关系
 - [知识论基础](../02_Epistemology/01_Knowledge_Theory.md#1-2-1) - 如何认识存在
 
 ### 与本体论的关联
+
 - [本体论基础](../03_Ontology/README.md) - 存在的分类和结构
 - [数学本体论](../03_Ontology/01_Mathematical_Ontology.md#1-3-1) - 数学对象的存在
 
 ### 与逻辑哲学的关联
+
 - [逻辑哲学基础](../04_Logic_Philosophy/README.md) - 存在论的形式化
 - [形式逻辑基础](../04_Logic_Philosophy/01_Formal_Logic.md#1-4-1) - 存在量词和全称量词
 
 ### 与数学基础的关联
+
 - [数学基础](../../02_Mathematical_Foundation/README.md) - 数学对象的存在
 - [集合论](../../02_Mathematical_Foundation/01_Set_Theory/README.md) - 集合的存在
 
 ### 与类型理论的关联
+
 - [类型理论](../../04_Type_Theory/README.md) - 类型与存在
 - [线性类型理论](../../04_Type_Theory/02_Linear_Type_Theory/README.md) - 线性逻辑与存在
 
@@ -622,4 +627,4 @@ data Entanglement = Entanglement {
 
 - [形而上学基础](./README.md)
 - [哲学基础](../README.md)
-- [重构主索引](../../00_Master_Index/01_重构主索引_v9.0.md) 
+- [重构主索引](../../00_Master_Index/01_重构主索引_v9.0.md)
