@@ -1,91 +1,307 @@
 # 集合基础 (Set Basics)
 
-## 📚 **目录**
+## 📋 概述
 
-1. [概述](#概述)
-2. [基本概念](#基本概念)
-3. [形式化定义](#形式化定义)
-4. [公理系统](#公理系统)
-5. [核心定理](#核心定理)
-6. [证明系统](#证明系统)
-7. [应用示例](#应用示例)
-8. [与其他理论的关联](#与其他理论的关联)
+集合基础是数学理论体系的根基，为所有后续的数学理论提供基本的概念和工具。本文档建立了严格的集合论形式化体系，包括集合的基本概念、运算、关系和性质。
 
-## 🎯 **概述**
+## 📚 目录
 
-集合基础是集合论的起点，定义了集合的基本概念、性质和公理。集合是现代数学的基础语言，几乎所有数学对象都可以用集合来表示。
+1. [基本概念](#1-基本概念)
+2. [集合运算](#2-集合运算)
+3. [集合关系](#3-集合关系)
+4. [集合构造](#4-集合构造)
+5. [集合性质](#5-集合性质)
+6. [集合定理](#6-集合定理)
+7. [集合算法](#7-集合算法)
+8. [应用实例](#8-应用实例)
+9. [参考文献](#9-参考文献)
 
-### 理论目标
+## 1. 基本概念
 
-1. **定义集合概念**：为"集合"提供严格的形式化定义
-2. **建立集合公理**：构建集合的基本公理系统
-3. **证明集合定理**：推导集合的核心定理
-4. **应用集合理论**：将集合理论应用于其他领域
+### 1.1 集合的定义
 
-## 🔍 **基本概念**
+**定义 1.1 (集合)**
+集合是一些对象的无序聚集，这些对象称为集合的元素。我们用 $a \in A$ 表示 $a$ 是集合 $A$ 的元素，用 $a \notin A$ 表示 $a$ 不是集合 $A$ 的元素。
 
-### 1. 集合 (Set)
+**定义 1.2 (集合相等)**
+两个集合 $A$ 和 $B$ 相等，记作 $A = B$，当且仅当它们包含相同的元素：
+$$A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)$$
 
-集合是一些对象的汇集，这些对象称为集合的元素。
+**定义 1.3 (空集)**
+空集是不包含任何元素的集合，记作 $\emptyset$：
+$$\emptyset = \{x \mid x \neq x\}$$
 
-**直观理解**：
-- 集合是元素的容器
-- 集合中的元素是无序的
-- 集合中的元素是互不相同的
-- 集合由其元素唯一确定
+**定义 1.4 (单元素集)**
+单元素集是只包含一个元素的集合：
+$$\{a\} = \{x \mid x = a\}$$
 
-**符号表示**：
-- $A = \{a, b, c\}$：集合 $A$ 包含元素 $a, b, c$
-- $x \in A$：元素 $x$ 属于集合 $A$
-- $x \notin A$：元素 $x$ 不属于集合 $A$
+### 1.2 集合的基本性质
 
-### 2. 元素 (Element)
+**公理 1.1 (外延公理)**
+两个集合相等当且仅当它们包含相同的元素：
+$$\forall A \forall B(A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B))$$
 
-元素是集合的组成部分，可以是任何对象。
+**公理 1.2 (空集公理)**
+空集存在且唯一：
+$$\exists A \forall x(x \notin A)$$
 
-**元素的性质**：
-- 元素可以是任何对象（包括其他集合）
-- 元素在集合中是无序的
-- 元素在集合中是唯一的
-- 元素可以是集合本身
+**公理 1.3 (配对公理)**
+对于任意两个对象 $a$ 和 $b$，存在包含它们的集合：
+$$\forall a \forall b \exists A \forall x(x \in A \leftrightarrow x = a \lor x = b)$$
 
-### 3. 空集 (Empty Set)
+## 2. 集合运算
 
-空集是不包含任何元素的集合。
+### 2.1 基本运算
 
-**符号表示**：
-- $\emptyset$ 或 $\{\}$：空集
-- $\forall x(x \notin \emptyset)$：任何元素都不属于空集
+**定义 2.1 (并集)**
+集合 $A$ 和 $B$ 的并集，记作 $A \cup B$，是包含 $A$ 和 $B$ 中所有元素的集合：
+$$A \cup B = \{x \mid x \in A \lor x \in B\}$$
 
-## 🔗 **形式化定义**
+**定义 2.2 (交集)**
+集合 $A$ 和 $B$ 的交集，记作 $A \cap B$，是同时属于 $A$ 和 $B$ 的元素的集合：
+$$A \cap B = \{x \mid x \in A \land x \in B\}$$
 
-### 集合谓词
+**定义 2.3 (差集)**
+集合 $A$ 和 $B$ 的差集，记作 $A \setminus B$，是属于 $A$ 但不属于 $B$ 的元素的集合：
+$$A \setminus B = \{x \mid x \in A \land x \notin B\}$$
+
+**定义 2.4 (对称差集)**
+集合 $A$ 和 $B$ 的对称差集，记作 $A \triangle B$，是只属于其中一个集合的元素的集合：
+$$A \triangle B = (A \setminus B) \cup (B \setminus A)$$
+
+### 2.2 高级运算
+
+**定义 2.5 (幂集)**
+集合 $A$ 的幂集，记作 $\mathcal{P}(A)$，是 $A$ 的所有子集的集合：
+$$\mathcal{P}(A) = \{B \mid B \subseteq A\}$$
+
+**定义 2.6 (笛卡尔积)**
+集合 $A$ 和 $B$ 的笛卡尔积，记作 $A \times B$，是所有有序对 $(a,b)$ 的集合：
+$$A \times B = \{(a,b) \mid a \in A \land b \in B\}$$
+
+**定义 2.7 (广义并集)**
+集合族 $\mathcal{F}$ 的广义并集，记作 $\bigcup \mathcal{F}$，是所有属于 $\mathcal{F}$ 中某个集合的元素的集合：
+$$\bigcup \mathcal{F} = \{x \mid \exists A \in \mathcal{F}(x \in A)\}$$
+
+**定义 2.8 (广义交集)**
+集合族 $\mathcal{F}$ 的广义交集，记作 $\bigcap \mathcal{F}$，是所有属于 $\mathcal{F}$ 中每个集合的元素的集合：
+$$\bigcap \mathcal{F} = \{x \mid \forall A \in \mathcal{F}(x \in A)\}$$
+
+## 3. 集合关系
+
+### 3.1 包含关系
+
+**定义 3.1 (子集)**
+集合 $A$ 是集合 $B$ 的子集，记作 $A \subseteq B$，当且仅当 $A$ 的每个元素都属于 $B$：
+$$A \subseteq B \leftrightarrow \forall x(x \in A \rightarrow x \in B)$$
+
+**定义 3.2 (真子集)**
+集合 $A$ 是集合 $B$ 的真子集，记作 $A \subset B$，当且仅当 $A \subseteq B$ 且 $A \neq B$：
+$$A \subset B \leftrightarrow A \subseteq B \land A \neq B$$
+
+**定义 3.3 (超集)**
+集合 $A$ 是集合 $B$ 的超集，记作 $A \supseteq B$，当且仅当 $B \subseteq A$：
+$$A \supseteq B \leftrightarrow B \subseteq A$$
+
+### 3.2 集合关系定理
+
+**定理 3.1 (子集传递性)**
+如果 $A \subseteq B$ 且 $B \subseteq C$，那么 $A \subseteq C$：
+$$(A \subseteq B \land B \subseteq C) \rightarrow A \subseteq C$$
+
+**证明**：
+1. 假设 $A \subseteq B$ 且 $B \subseteq C$
+2. 根据子集定义，$\forall x(x \in A \rightarrow x \in B)$
+3. 根据子集定义，$\forall x(x \in B \rightarrow x \in C)$
+4. 根据逻辑传递性，$\forall x(x \in A \rightarrow x \in C)$
+5. 根据子集定义，$A \subseteq C$
+
+**定理 3.2 (子集反身性)**
+任何集合都是自己的子集：
+$$\forall A(A \subseteq A)$$
+
+**证明**：
+1. 对于任意集合 $A$
+2. 根据逻辑反身性，$\forall x(x \in A \rightarrow x \in A)$
+3. 根据子集定义，$A \subseteq A$
+
+## 4. 集合构造
+
+### 4.1 集合构造方法
+
+**定义 4.1 (列举法)**
+通过列举元素来定义集合：
+$$A = \{a_1, a_2, \ldots, a_n\}$$
+
+**定义 4.2 (描述法)**
+通过描述性质来定义集合：
+$$A = \{x \mid P(x)\}$$
+其中 $P(x)$ 是关于 $x$ 的谓词。
+
+**定义 4.3 (递归构造)**
+通过递归定义来构造集合：
+$$A_0 = \emptyset$$
+$$A_{n+1} = A_n \cup \{A_n\}$$
+
+### 4.2 特殊集合
+
+**定义 4.4 (自然数集合)**
+自然数集合 $\mathbb{N}$ 是包含所有自然数的集合：
+$$\mathbb{N} = \{0, 1, 2, 3, \ldots\}$$
+
+**定义 4.5 (整数集合)**
+整数集合 $\mathbb{Z}$ 是包含所有整数的集合：
+$$\mathbb{Z} = \{\ldots, -2, -1, 0, 1, 2, \ldots\}$$
+
+**定义 4.6 (有理数集合)**
+有理数集合 $\mathbb{Q}$ 是包含所有有理数的集合：
+$$\mathbb{Q} = \left\{\frac{p}{q} \mid p, q \in \mathbb{Z}, q \neq 0\right\}$$
+
+**定义 4.7 (实数集合)**
+实数集合 $\mathbb{R}$ 是包含所有实数的集合。
+
+## 5. 集合性质
+
+### 5.1 基数性质
+
+**定义 5.1 (有限集)**
+集合 $A$ 是有限的，当且仅当存在自然数 $n$ 使得 $A$ 与 $\{1, 2, \ldots, n\}$ 等势。
+
+**定义 5.2 (无限集)**
+集合 $A$ 是无限的，当且仅当 $A$ 不是有限的。
+
+**定义 5.3 (可数集)**
+集合 $A$ 是可数的，当且仅当 $A$ 与 $\mathbb{N}$ 等势或 $A$ 是有限的。
+
+**定义 5.4 (不可数集)**
+集合 $A$ 是不可数的，当且仅当 $A$ 不是可数的。
+
+### 5.2 序性质
+
+**定义 5.5 (全序集)**
+集合 $A$ 上的关系 $\leq$ 是全序，当且仅当：
+1. 自反性：$\forall x \in A(x \leq x)$
+2. 反对称性：$\forall x, y \in A(x \leq y \land y \leq x \rightarrow x = y)$
+3. 传递性：$\forall x, y, z \in A(x \leq y \land y \leq z \rightarrow x \leq z)$
+4. 完全性：$\forall x, y \in A(x \leq y \lor y \leq x)$
+
+**定义 5.6 (良序集)**
+集合 $A$ 上的关系 $\leq$ 是良序，当且仅当 $\leq$ 是全序且 $A$ 的每个非空子集都有最小元素。
+
+## 6. 集合定理
+
+### 6.1 基本定理
+
+**定理 6.1 (德摩根律)**
+对于任意集合 $A$、$B$ 和全集 $U$：
+1. $(A \cup B)^c = A^c \cap B^c$
+2. $(A \cap B)^c = A^c \cup B^c$
+
+**证明**：
+1. 对于第一个等式：
+   - 设 $x \in (A \cup B)^c$
+   - 则 $x \notin A \cup B$
+   - 即 $x \notin A$ 且 $x \notin B$
+   - 即 $x \in A^c$ 且 $x \in B^c$
+   - 即 $x \in A^c \cap B^c$
+   - 因此 $(A \cup B)^c \subseteq A^c \cap B^c$
+   - 类似可证 $A^c \cap B^c \subseteq (A \cup B)^c$
+   - 因此 $(A \cup B)^c = A^c \cap B^c$
+
+**定理 6.2 (分配律)**
+对于任意集合 $A$、$B$ 和 $C$：
+1. $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+2. $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+
+**定理 6.3 (幂集基数定理)**
+对于有限集 $A$，如果 $|A| = n$，那么 $|\mathcal{P}(A)| = 2^n$。
+
+**证明**：
+1. 对于每个元素 $a \in A$，有两种选择：包含或不包含在子集中
+2. 因此总共有 $2^n$ 个不同的子集
+3. 因此 $|\mathcal{P}(A)| = 2^n$
+
+### 6.2 高级定理
+
+**定理 6.4 (康托尔定理)**
+对于任意集合 $A$，$|A| < |\mathcal{P}(A)|$。
+
+**证明**：
+1. 首先证明 $|A| \leq |\mathcal{P}(A)|$：
+   - 定义函数 $f: A \rightarrow \mathcal{P}(A)$ 为 $f(a) = \{a\}$
+   - 这个函数是单射的，因此 $|A| \leq |\mathcal{P}(A)|$
+
+2. 然后证明 $|A| \neq |\mathcal{P}(A)|$：
+   - 假设存在双射 $g: A \rightarrow \mathcal{P}(A)$
+   - 定义集合 $B = \{a \in A \mid a \notin g(a)\}$
+   - 由于 $g$ 是满射，存在 $b \in A$ 使得 $g(b) = B$
+   - 如果 $b \in B$，则 $b \notin g(b) = B$，矛盾
+   - 如果 $b \notin B$，则 $b \in g(b) = B$，矛盾
+   - 因此不存在这样的双射
+   - 因此 $|A| < |\mathcal{P}(A)|$
+
+## 7. 集合算法
+
+### 7.1 基本集合操作
 
 ```rust
-// 集合的基本定义
-trait Set<T> {
-    /// 判断元素是否属于集合
+/// 集合基本操作
+pub trait Set<T> {
+    /// 检查元素是否属于集合
     fn contains(&self, element: &T) -> bool;
     
-    /// 判断集合是否为空
+    /// 检查集合是否为空
     fn is_empty(&self) -> bool;
     
     /// 获取集合的大小
     fn size(&self) -> usize;
     
-    /// 判断是否为有限集
+    /// 检查集合是否为有限集
     fn is_finite(&self) -> bool;
     
-    /// 获取所有元素
+    /// 获取集合的所有元素
     fn elements(&self) -> Vec<T>;
 }
 
-// 集合的基本实现
-struct FiniteSet<T> {
-    elements: Vec<T>,
+/// 集合运算操作
+pub trait SetOperations<T> {
+    /// 并集
+    fn union(&self, other: &dyn Set<T>) -> Box<dyn Set<T>>;
+    
+    /// 交集
+    fn intersection(&self, other: &dyn Set<T>) -> Box<dyn Set<T>>;
+    
+    /// 差集
+    fn difference(&self, other: &dyn Set<T>) -> Box<dyn Set<T>>;
+    
+    /// 对称差集
+    fn symmetric_difference(&self, other: &dyn Set<T>) -> Box<dyn Set<T>>;
+    
+    /// 幂集
+    fn power_set(&self) -> Box<dyn Set<Box<dyn Set<T>>>>;
 }
 
-impl<T: Eq + Clone> Set<T> for FiniteSet<T> {
+/// 集合关系操作
+pub trait SetRelations<T> {
+    /// 检查是否为子集
+    fn is_subset(&self, other: &dyn Set<T>) -> bool;
+    
+    /// 检查是否为真子集
+    fn is_proper_subset(&self, other: &dyn Set<T>) -> bool;
+    
+    /// 检查是否相等
+    fn is_equal(&self, other: &dyn Set<T>) -> bool;
+    
+    /// 检查是否不相交
+    fn is_disjoint(&self, other: &dyn Set<T>) -> bool;
+}
+
+/// 集合实现
+pub struct FiniteSet<T> {
+    elements: std::collections::HashSet<T>,
+}
+
+impl<T: Eq + std::hash::Hash + Clone> Set<T> for FiniteSet<T> {
     fn contains(&self, element: &T) -> bool {
         self.elements.contains(element)
     }
@@ -103,384 +319,252 @@ impl<T: Eq + Clone> Set<T> for FiniteSet<T> {
     }
     
     fn elements(&self) -> Vec<T> {
-        self.elements.clone()
+        self.elements.iter().cloned().collect()
     }
 }
 
-// 空集实现
-struct EmptySet<T> {
-    _phantom: std::marker::PhantomData<T>,
+impl<T: Eq + std::hash::Hash + Clone> SetOperations<T> for FiniteSet<T> {
+    fn union(&self, other: &dyn Set<T>) -> Box<dyn Set<T>> {
+        let mut result = self.elements.clone();
+        for element in other.elements() {
+            result.insert(element);
+        }
+        Box::new(FiniteSet { elements: result })
+    }
+    
+    fn intersection(&self, other: &dyn Set<T>) -> Box<dyn Set<T>> {
+        let mut result = std::collections::HashSet::new();
+        for element in &self.elements {
+            if other.contains(element) {
+                result.insert(element.clone());
+            }
+        }
+        Box::new(FiniteSet { elements: result })
+    }
+    
+    fn difference(&self, other: &dyn Set<T>) -> Box<dyn Set<T>> {
+        let mut result = std::collections::HashSet::new();
+        for element in &self.elements {
+            if !other.contains(element) {
+                result.insert(element.clone());
+            }
+        }
+        Box::new(FiniteSet { elements: result })
+    }
+    
+    fn symmetric_difference(&self, other: &dyn Set<T>) -> Box<dyn Set<T>> {
+        let union = self.union(other);
+        let intersection = self.intersection(other);
+        union.difference(&**intersection)
+    }
+    
+    fn power_set(&self) -> Box<dyn Set<Box<dyn Set<T>>>> {
+        let elements = self.elements();
+        let mut power_set = std::collections::HashSet::new();
+        
+        // 生成所有可能的子集
+        for i in 0..(1 << elements.len()) {
+            let mut subset = std::collections::HashSet::new();
+            for j in 0..elements.len() {
+                if (i & (1 << j)) != 0 {
+                    subset.insert(elements[j].clone());
+                }
+            }
+            power_set.insert(Box::new(FiniteSet { elements: subset }) as Box<dyn Set<T>>);
+        }
+        
+        Box::new(PowerSet { elements: power_set })
+    }
 }
 
-impl<T> Set<T> for EmptySet<T> {
-    fn contains(&self, _element: &T) -> bool {
-        false
+impl<T: Eq + std::hash::Hash + Clone> SetRelations<T> for FiniteSet<T> {
+    fn is_subset(&self, other: &dyn Set<T>) -> bool {
+        self.elements.iter().all(|element| other.contains(element))
     }
     
-    fn is_empty(&self) -> bool {
-        true
+    fn is_proper_subset(&self, other: &dyn Set<T>) -> bool {
+        self.is_subset(other) && !other.is_subset(self)
     }
     
-    fn size(&self) -> usize {
-        0
+    fn is_equal(&self, other: &dyn Set<T>) -> bool {
+        self.is_subset(other) && other.is_subset(self)
     }
     
-    fn is_finite(&self) -> bool {
-        true
-    }
-    
-    fn elements(&self) -> Vec<T> {
-        Vec::new()
+    fn is_disjoint(&self, other: &dyn Set<T>) -> bool {
+        self.elements.iter().all(|element| !other.contains(element))
     }
 }
 ```
 
-### 集合类型系统
-
-```haskell
--- 集合类型类
-class Set a where
-    contains :: a -> Element -> Bool
-    isEmpty :: a -> Bool
-    size :: a -> Int
-    isFinite :: a -> Bool
-    elements :: a -> [Element]
-
--- 有限集类型
-data FiniteSet a = FiniteSet [a]
-
--- 空集类型
-data EmptySet a = EmptySet
-
--- 集合实例
-instance Set (FiniteSet a) where
-    contains (FiniteSet xs) x = x `elem` xs
-    isEmpty (FiniteSet xs) = null xs
-    size (FiniteSet xs) = length xs
-    isFinite _ = True
-    elements (FiniteSet xs) = xs
-
-instance Set (EmptySet a) where
-    contains _ _ = False
-    isEmpty _ = True
-    size _ = 0
-    isFinite _ = True
-    elements _ = []
-```
-
-## 📝 **公理系统**
-
-### 集合论公理
-
-**公理 1.1** (外延性公理)
-两个集合相等当且仅当它们包含相同的元素。
-
-$$\forall A \forall B(A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B))$$
-
-**公理 1.2** (空集公理)
-存在一个不包含任何元素的集合。
-
-$$\exists A \forall x(x \notin A)$$
-
-**公理 1.3** (配对公理)
-对于任意两个集合，存在一个集合包含它们作为元素。
-
-$$\forall A \forall B \exists C \forall x(x \in C \leftrightarrow x = A \lor x = B)$$
-
-**公理 1.4** (并集公理)
-对于任意集合族，存在一个集合包含所有成员集合的元素。
-
-$$\forall F \exists A \forall x(x \in A \leftrightarrow \exists B(B \in F \land x \in B))$$
-
-**公理 1.5** (幂集公理)
-对于任意集合，存在一个集合包含其所有子集。
-
-$$\forall A \exists P \forall x(x \in P \leftrightarrow x \subseteq A)$$
-
-### 集合构造公理
-
-**公理 1.6** (分离公理)
-对于任意集合和性质，存在一个集合包含满足该性质的所有元素。
-
-$$\forall A \forall P \exists B \forall x(x \in B \leftrightarrow x \in A \land P(x))$$
-
-**公理 1.7** (替换公理)
-如果函数 $F$ 定义在集合 $A$ 上，则存在集合包含 $F$ 的值域。
-
-$$\forall A \forall F(\text{Function}(F) \rightarrow \exists B \forall y(y \in B \leftrightarrow \exists x(x \in A \land F(x) = y)))$$
-
-## 📊 **核心定理**
-
-### 集合相等性定理
-
-**定理 1.1** (外延性定理)
-两个集合相等当且仅当它们包含相同的元素。
-
-**形式化表述**：
-$$\forall A \forall B(A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B))$$
-
-**证明**：
-
-1. **假设**：设 $A$ 和 $B$ 是任意集合
-2. **目标**：证明 $A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)$
-3. **证明步骤**：
-   
-   a) **必要性**：如果 $A = B$，则根据同一性，$A$ 和 $B$ 的所有属性相同
-   
-   b) 包含关系是集合的属性，因此 $\forall x(x \in A \leftrightarrow x \in B)$
-   
-   c) **充分性**：如果 $\forall x(x \in A \leftrightarrow x \in B)$，则 $A$ 和 $B$ 包含相同元素
-   
-   d) 根据外延性公理，$A = B$
-
-4. **结论**：$A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)$
-
-### 空集唯一性定理
-
-**定理 1.2** (空集唯一性)
-空集是唯一的。
-
-**形式化表述**：
-$$\forall A \forall B((\forall x(x \notin A)) \land (\forall x(x \notin B)) \rightarrow A = B)$$
-
-**证明**：
-
-1. **假设**：设 $A$ 和 $B$ 都是空集
-2. **目标**：证明 $A = B$
-3. **证明步骤**：
-   
-   a) 根据假设，$\forall x(x \notin A)$
-   
-   b) 根据假设，$\forall x(x \notin B)$
-   
-   c) 因此，$\forall x(x \in A \leftrightarrow x \in B)$
-   
-   d) 根据外延性公理，$A = B$
-
-4. **结论**：$\forall A \forall B((\forall x(x \notin A)) \land (\forall x(x \notin B)) \rightarrow A = B)$
-
-### 子集传递性定理
-
-**定理 1.3** (子集传递性)
-如果 $A \subseteq B$ 且 $B \subseteq C$，则 $A \subseteq C$。
-
-**形式化表述**：
-$$\forall A \forall B \forall C((A \subseteq B \land B \subseteq C) \rightarrow A \subseteq C)$$
-
-**证明**：
-
-1. **假设**：设 $A \subseteq B$ 且 $B \subseteq C$
-2. **目标**：证明 $A \subseteq C$
-3. **证明步骤**：
-   
-   a) 根据假设，$\forall x(x \in A \rightarrow x \in B)$
-   
-   b) 根据假设，$\forall x(x \in B \rightarrow x \in C)$
-   
-   c) 因此，$\forall x(x \in A \rightarrow x \in C)$
-   
-   d) 根据子集定义，$A \subseteq C$
-
-4. **结论**：$\forall A \forall B \forall C((A \subseteq B \land B \subseteq C) \rightarrow A \subseteq C)$
-
-## 🔧 **证明系统**
-
-### 集合论证明规则
-
-**规则 1.1** (外延性规则)
-如果两个集合包含相同元素，则它们相等。
-
-$$\frac{\forall x(x \in A \leftrightarrow x \in B)}{A = B} \quad \text{(外延性)}$$
-
-**规则 1.2** (子集规则)
-如果 $A$ 的每个元素都属于 $B$，则 $A \subseteq B$。
-
-$$\frac{\forall x(x \in A \rightarrow x \in B)}{A \subseteq B} \quad \text{(子集)}$$
-
-**规则 1.3** (空集规则)
-空集是任何集合的子集。
-
-$$\frac{}{A \subseteq \emptyset} \quad \text{(空集)}$$
-
-### 证明示例
-
-**示例 1.1**：证明 $\emptyset \subseteq A$ 对任意集合 $A$ 成立。
-
-**证明**：
-
-1. **目标**：证明 $\emptyset \subseteq A$
-2. **证明步骤**：
-   
-   a) 根据子集定义，需要证明 $\forall x(x \in \emptyset \rightarrow x \in A)$
-   
-   b) 设 $x$ 是任意元素
-   
-   c) 如果 $x \in \emptyset$，则根据空集定义，这是不可能的
-   
-   d) 因此，$x \in \emptyset \rightarrow x \in A$ 为真（前件为假）
-   
-   e) 由于 $x$ 是任意的，$\forall x(x \in \emptyset \rightarrow x \in A)$
-
-3. **结论**：$\emptyset \subseteq A$
-
-## 💻 **应用示例**
-
-### 数学中的应用
+### 7.2 集合算法实现
 
 ```rust
-// 自然数集合
-struct NaturalNumbers {
-    max: usize,
-}
+/// 集合算法
+pub struct SetAlgorithms;
 
-impl Set<usize> for NaturalNumbers {
-    fn contains(&self, element: &usize) -> bool {
-        *element <= self.max
+impl SetAlgorithms {
+    /// 生成笛卡尔积
+    pub fn cartesian_product<T: Clone, U: Clone>(
+        set_a: &dyn Set<T>,
+        set_b: &dyn Set<U>
+    ) -> Box<dyn Set<(T, U)>> {
+        let mut result = std::collections::HashSet::new();
+        for a in set_a.elements() {
+            for b in set_b.elements() {
+                result.insert((a.clone(), b.clone()));
+            }
+        }
+        Box::new(FiniteSet { elements: result })
     }
     
-    fn is_empty(&self) -> bool {
-        self.max == 0
+    /// 生成广义并集
+    pub fn generalized_union<T: Clone>(
+        sets: &[Box<dyn Set<T>>]
+    ) -> Box<dyn Set<T>> {
+        let mut result = std::collections::HashSet::new();
+        for set in sets {
+            for element in set.elements() {
+                result.insert(element);
+            }
+        }
+        Box::new(FiniteSet { elements: result })
     }
     
-    fn size(&self) -> usize {
-        self.max + 1
+    /// 生成广义交集
+    pub fn generalized_intersection<T: Clone>(
+        sets: &[Box<dyn Set<T>>]
+    ) -> Box<dyn Set<T>> {
+        if sets.is_empty() {
+            return Box::new(FiniteSet { elements: std::collections::HashSet::new() });
+        }
+        
+        let mut result = sets[0].elements().into_iter().collect::<std::collections::HashSet<_>>();
+        for set in &sets[1..] {
+            result = result.intersection(&set.elements().into_iter().collect())
+                .cloned()
+                .collect();
+        }
+        Box::new(FiniteSet { elements: result })
     }
     
-    fn is_finite(&self) -> bool {
-        true
+    /// 检查集合是否可数
+    pub fn is_countable<T>(set: &dyn Set<T>) -> bool {
+        set.is_finite() || set.size() == std::usize::MAX // 简化处理
     }
     
-    fn elements(&self) -> Vec<usize> {
-        (0..=self.max).collect()
-    }
-}
-
-// 整数集合
-struct IntegerSet {
-    min: i32,
-    max: i32,
-}
-
-impl Set<i32> for IntegerSet {
-    fn contains(&self, element: &i32) -> bool {
-        self.min <= *element && *element <= self.max
-    }
-    
-    fn is_empty(&self) -> bool {
-        self.min > self.max
-    }
-    
-    fn size(&self) -> usize {
-        if self.min > self.max {
-            0
+    /// 生成集合的基数
+    pub fn cardinality<T>(set: &dyn Set<T>) -> Cardinality {
+        if set.is_finite() {
+            Cardinality::Finite(set.size())
         } else {
-            (self.max - self.min + 1) as usize
+            Cardinality::Infinite
         }
     }
+}
+
+/// 基数类型
+#[derive(Debug, Clone, PartialEq)]
+pub enum Cardinality {
+    Finite(usize),
+    Infinite,
+}
+
+/// 幂集实现
+pub struct PowerSet<T> {
+    elements: std::collections::HashSet<Box<dyn Set<T>>>,
+}
+
+impl<T: Eq + std::hash::Hash + Clone> Set<Box<dyn Set<T>>> for PowerSet<T> {
+    fn contains(&self, element: &Box<dyn Set<T>>) -> bool {
+        self.elements.contains(element)
+    }
+    
+    fn is_empty(&self) -> bool {
+        self.elements.is_empty()
+    }
+    
+    fn size(&self) -> usize {
+        self.elements.len()
+    }
     
     fn is_finite(&self) -> bool {
         true
     }
     
-    fn elements(&self) -> Vec<i32> {
-        (self.min..=self.max).collect()
+    fn elements(&self) -> Vec<Box<dyn Set<T>>> {
+        self.elements.iter().cloned().collect()
     }
 }
 ```
 
-### 计算机科学中的应用
+## 8. 应用实例
 
-```rust
-// 字符集合
-struct CharacterSet {
-    chars: std::collections::HashSet<char>,
-}
+### 8.1 数学应用
 
-impl Set<char> for CharacterSet {
-    fn contains(&self, element: &char) -> bool {
-        self.chars.contains(element)
-    }
-    
-    fn is_empty(&self) -> bool {
-        self.chars.is_empty()
-    }
-    
-    fn size(&self) -> usize {
-        self.chars.len()
-    }
-    
-    fn is_finite(&self) -> bool {
-        true
-    }
-    
-    fn elements(&self) -> Vec<char> {
-        self.chars.iter().cloned().collect()
-    }
-}
+**实例 8.1 (自然数集合)**
+自然数集合的构造：
+- $\mathbb{N} = \{0, 1, 2, 3, \ldots\}$
+- $|\mathbb{N}| = \aleph_0$ (可数无限)
+- $\mathcal{P}(\mathbb{N})$ 是不可数的
 
-// 字符串集合
-struct StringSet {
-    strings: std::collections::HashSet<String>,
-}
+**实例 8.2 (实数集合)**
+实数集合的性质：
+- $\mathbb{R}$ 是不可数的
+- $|\mathbb{R}| = 2^{\aleph_0}$
+- $\mathbb{Q} \subset \mathbb{R}$
 
-impl Set<String> for StringSet {
-    fn contains(&self, element: &String) -> bool {
-        self.strings.contains(element)
-    }
-    
-    fn is_empty(&self) -> bool {
-        self.strings.is_empty()
-    }
-    
-    fn size(&self) -> usize {
-        self.strings.len()
-    }
-    
-    fn is_finite(&self) -> bool {
-        true
-    }
-    
-    fn elements(&self) -> Vec<String> {
-        self.strings.iter().cloned().collect()
-    }
-}
-```
+**实例 8.3 (函数集合)**
+从集合 $A$ 到集合 $B$ 的函数集合：
+- $B^A = \{f \mid f: A \rightarrow B\}$
+- $|B^A| = |B|^{|A|}$
 
-## 🔄 **与其他理论的关联**
+### 8.2 计算机科学应用
 
-### 与逻辑学的关联
+**实例 8.4 (数据结构)**
+集合在数据结构中的应用：
+- 哈希表：基于集合的快速查找
+- 并查集：集合的合并和查找
+- 图论：顶点集和边集
 
-- **集合与谓词**：集合可以表示为谓词的扩展
-- **集合与量词**：存在量词和全称量词与集合运算对应
-- **集合与推理**：集合论为逻辑推理提供语义基础
+**实例 8.5 (算法设计)**
+集合在算法中的应用：
+- 集合覆盖问题
+- 集合划分问题
+- 集合匹配问题
 
-### 与数学的关联
+**实例 8.6 (数据库理论)**
+集合在数据库中的应用：
+- 关系代数
+- 集合运算
+- 查询优化
 
-- **集合与函数**：函数是特殊的二元关系
-- **集合与关系**：关系是集合的笛卡尔积的子集
-- **集合与代数**：代数结构基于集合定义
+### 8.3 逻辑应用
 
-### 与形式科学的关联
+**实例 8.7 (逻辑语义)**
+集合在逻辑语义中的应用：
+- 模型论：结构作为集合
+- 语义解释：谓词作为集合
+- 真值集合：$\{true, false\}$
 
-- **集合与类型**：类型可以视为集合
-- **集合与语言**：形式语言的字母表是集合
-- **集合与系统**：系统状态空间是集合
+**实例 8.8 (类型论)**
+集合在类型论中的应用：
+- 类型作为集合
+- 函数类型：$A \rightarrow B$
+- 积类型：$A \times B$
 
-## 📅 **更新日志**
+## 9. 参考文献
 
-### 2024-12-20
-- 创建集合基础理论框架
-- 建立形式化定义系统
-- 构建公理和定理体系
-- 提供证明系统
-
-### 2024-12-21 (计划)
-- 完善集合运算理论
-- 建立与逻辑学的关联
-- 扩展应用示例
+1. Cantor, G. *Contributions to the Founding of the Theory of Transfinite Numbers*. Dover, 1955.
+2. Halmos, P.R. *Naive Set Theory*. Springer, 1974.
+3. Jech, T. *Set Theory*. Springer, 2003.
+4. Kunen, K. *Set Theory: An Introduction to Independence Proofs*. North-Holland, 1980.
+5. Enderton, H.B. *Elements of Set Theory*. Academic Press, 1977.
+6. Suppes, P. *Axiomatic Set Theory*. Dover, 1972.
+7. Fraenkel, A.A., Bar-Hillel, Y., & Levy, A. *Foundations of Set Theory*. North-Holland, 1973.
+8. Cohen, P.J. *Set Theory and the Continuum Hypothesis*. Benjamin, 1966.
 
 ---
 
-**最后更新**: 2024-12-20  
-**版本**: v1.0.0  
-**维护者**: 集合论理论团队 
+**最后更新时间**: 2024年12月20日  
+**版本**: v1.0  
+**维护者**: 数学基础理论团队 

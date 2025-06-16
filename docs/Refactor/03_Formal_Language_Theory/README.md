@@ -1,271 +1,258 @@
 # 形式语言理论 (Formal Language Theory)
 
-## 📚 **目录结构**
+## 📋 概述
 
-```
-03_Formal_Language_Theory/
-├── README.md                           # 当前文件 - 总览
-├── 01_Automata_Theory/                 # 自动机理论
-│   ├── README.md                       # 自动机理论总览
-│   ├── 01_Finite_Automata/             # 有限自动机
-│   │   ├── 01_DFA.md                   # 确定性有限自动机
-│   │   ├── 02_NFA.md                   # 非确定性有限自动机
-│   │   └── 03_Automata_Equivalence.md  # 自动机等价性
-│   ├── 02_Pushdown_Automata/           # 下推自动机
-│   │   ├── 01_PDA.md                   # 下推自动机基础
-│   │   ├── 02_DPDA.md                  # 确定性下推自动机
-│   │   └── 03_CFG_Equivalence.md       # 与上下文无关文法等价性
-│   └── 03_Turing_Machines/             # 图灵机
-│       ├── 01_Turing_Machine.md        # 图灵机基础
-│       ├── 02_Universal_TM.md          # 通用图灵机
-│       └── 03_Computability.md         # 可计算性理论
-├── 02_Grammar_Theory/                  # 文法理论
-│   ├── README.md                       # 文法理论总览
-│   ├── 01_Regular_Grammars/            # 正则文法
-│   │   ├── 01_Regular_Expressions.md   # 正则表达式
-│   │   ├── 02_Right_Linear_Grammars.md # 右线性文法
-│   │   └── 03_Left_Linear_Grammars.md  # 左线性文法
-│   ├── 02_Context_Free_Grammars/       # 上下文无关文法
-│   │   ├── 01_CFG_Basics.md            # CFG基础
-│   │   ├── 02_Chomsky_Normal_Form.md   # 乔姆斯基范式
-│   │   └── 03_Greibach_Normal_Form.md  # 格雷巴赫范式
-│   └── 03_Context_Sensitive_Grammars/  # 上下文有关文法
-│       ├── 01_CSG_Basics.md            # CSG基础
-│       ├── 02_Linear_Bounded_Automata.md # 线性有界自动机
-│       └── 03_CSG_Properties.md        # CSG性质
-├── 03_Language_Hierarchy/              # 语言层次
-│   ├── README.md                       # 语言层次总览
-│   ├── 01_Chomsky_Hierarchy/           # 乔姆斯基层次
-│   │   ├── 01_Type_0_Languages.md      # 0型语言
-│   │   ├── 01_Type_1_Languages.md      # 1型语言
-│   │   ├── 01_Type_2_Languages.md      # 2型语言
-│   │   └── 01_Type_3_Languages.md      # 3型语言
-│   ├── 02_Language_Operations/         # 语言运算
-│   │   ├── 01_Union_Intersection.md    # 并集和交集
-│   │   ├── 02_Concatenation.md         # 连接运算
-│   │   └── 03_Kleene_Star.md           # 克莱尼星号
-│   └── 03_Language_Properties/         # 语言性质
-│       ├── 01_Closure_Properties.md    # 封闭性质
-│       ├── 02_Decidability.md          # 可判定性
-│       └── 03_Complexity.md            # 复杂性
-├── 04_Parsing_Theory/                  # 解析理论
-│   ├── README.md                       # 解析理论总览
-│   ├── 01_Top_Down_Parsing/            # 自顶向下解析
-│   │   ├── 01_LL_Parsing.md            # LL解析
-│   │   ├── 02_Recursive_Descent.md     # 递归下降
-│   │   └── 03_LL_Table_Construction.md # LL表构造
-│   ├── 02_Bottom_Up_Parsing/           # 自底向上解析
-│   │   ├── 01_LR_Parsing.md            # LR解析
-│   │   ├── 02_SLR_Parsing.md           # SLR解析
-│   │   └── 03_LALR_Parsing.md          # LALR解析
-│   └── 03_Parser_Generators/           # 解析器生成器
-│       ├── 01_Yacc_Bison.md            # Yacc/Bison
-│       ├── 02_ANTLR.md                 # ANTLR
-│       └── 03_Parser_Combinators.md    # 解析器组合子
-├── 05_Semantic_Theory/                 # 语义理论
-│   ├── README.md                       # 语义理论总览
-│   ├── 01_Operational_Semantics/       # 操作语义
-│   │   ├── 01_Small_Step_Semantics.md  # 小步语义
-│   │   ├── 02_Big_Step_Semantics.md    # 大步语义
-│   │   └── 03_Abstract_Machine.md      # 抽象机
-│   ├── 02_Denotational_Semantics/      # 指称语义
-│   │   ├── 01_Domain_Theory.md         # 域理论
-│   │   ├── 02_Fixed_Points.md          # 不动点
-│   │   └── 03_Continuity.md            # 连续性
-│   └── 03_Axiomatic_Semantics/         # 公理语义
-│       ├── 01_Hoare_Logic.md           # 霍尔逻辑
-│       ├── 02_Weakest_Preconditions.md # 最弱前置条件
-│       └── 03_Program_Verification.md  # 程序验证
-└── 06_Applications/                    # 应用
-    ├── README.md                       # 应用总览
-    ├── 01_Compiler_Design/             # 编译器设计
-    │   ├── 01_Lexical_Analysis.md      # 词法分析
-    │   ├── 02_Syntax_Analysis.md       # 语法分析
-    │   └── 03_Code_Generation.md       # 代码生成
-    ├── 02_Programming_Languages/       # 编程语言
-    │   ├── 01_Language_Design.md       # 语言设计
-    │   ├── 02_Type_Systems.md          # 类型系统
-    │   └── 03_Interpreter_Design.md    # 解释器设计
-    └── 03_Natural_Language_Processing/ # 自然语言处理
-        ├── 01_Syntax_Analysis.md       # 句法分析
-        ├── 02_Semantic_Analysis.md     # 语义分析
-        └── 03_Machine_Translation.md   # 机器翻译
-```
+形式语言理论是计算机科学和数学的重要基础，研究语言的数学性质、语法结构、语义解释和计算模型。本部分建立了从自动机理论到语义理论的完整形式语言理论体系。
 
-## 🎯 **核心主题导航**
+## 🏗️ 目录结构
 
-### 1. 自动机理论 (Automata Theory)
-- [01_Automata_Theory/](01_Automata_Theory/) - 自动机理论总览
-  - [有限自动机](01_Automata_Theory/01_Finite_Automata/) - DFA、NFA、等价性
-  - [下推自动机](01_Automata_Theory/02_Pushdown_Automata/) - PDA、DPDA、CFG等价性
-  - [图灵机](01_Automata_Theory/03_Turing_Machines/) - 图灵机、通用图灵机、可计算性
+### 1. 自动机理论 (01_Automata_Theory)
+- **01_Finite_Automata** - 有限自动机
+- **02_Pushdown_Automata** - 下推自动机
+- **03_Turing_Machines** - 图灵机
+- **04_Linear_Bounded_Automata** - 线性有界自动机
+- **05_Advanced_Automata** - 高级自动机
+- **06_Automata_Applications** - 自动机应用
 
-### 2. 文法理论 (Grammar Theory)
-- [02_Grammar_Theory/](02_Grammar_Theory/) - 文法理论总览
-  - [正则文法](02_Grammar_Theory/01_Regular_Grammars/) - 正则表达式、右线性文法、左线性文法
-  - [上下文无关文法](02_Grammar_Theory/02_Context_Free_Grammars/) - CFG基础、乔姆斯基范式、格雷巴赫范式
-  - [上下文有关文法](02_Grammar_Theory/03_Context_Sensitive_Grammars/) - CSG基础、线性有界自动机、CSG性质
+### 2. 文法理论 (02_Grammar_Theory)
+- **01_Regular_Grammars** - 正则文法
+- **02_Context_Free_Grammars** - 上下文无关文法
+- **03_Context_Sensitive_Grammars** - 上下文相关文法
+- **04_Unrestricted_Grammars** - 无限制文法
+- **05_Advanced_Grammars** - 高级文法
+- **06_Grammar_Applications** - 文法应用
 
-### 3. 语言层次 (Language Hierarchy)
-- [03_Language_Hierarchy/](03_Language_Hierarchy/) - 语言层次总览
-  - [乔姆斯基层次](03_Language_Hierarchy/01_Chomsky_Hierarchy/) - 0型到3型语言
-  - [语言运算](03_Language_Hierarchy/02_Language_Operations/) - 并集、交集、连接、克莱尼星号
-  - [语言性质](03_Language_Hierarchy/03_Language_Properties/) - 封闭性质、可判定性、复杂性
+### 3. 语言层次 (03_Language_Hierarchy)
+- **01_Chomsky_Hierarchy** - 乔姆斯基层次
+- **02_Language_Classes** - 语言类
+- **03_Complexity_Classes** - 复杂度类
+- **04_Decidability_Theory** - 可判定性理论
+- **05_Computability_Theory** - 可计算性理论
+- **06_Hierarchy_Applications** - 层次应用
 
-### 4. 解析理论 (Parsing Theory)
-- [04_Parsing_Theory/](04_Parsing_Theory/) - 解析理论总览
-  - [自顶向下解析](04_Parsing_Theory/01_Top_Down_Parsing/) - LL解析、递归下降、LL表构造
-  - [自底向上解析](04_Parsing_Theory/02_Bottom_Up_Parsing/) - LR解析、SLR解析、LALR解析
-  - [解析器生成器](04_Parsing_Theory/03_Parser_Generators/) - Yacc/Bison、ANTLR、解析器组合子
+### 4. 解析理论 (04_Parsing_Theory)
+- **01_Top_Down_Parsing** - 自顶向下解析
+- **02_Bottom_Up_Parsing** - 自底向上解析
+- **03_LL_Parsing** - LL解析
+- **04_LR_Parsing** - LR解析
+- **05_Advanced_Parsing** - 高级解析
+- **06_Parsing_Applications** - 解析应用
 
-### 5. 语义理论 (Semantic Theory)
-- [05_Semantic_Theory/](05_Semantic_Theory/) - 语义理论总览
-  - [操作语义](05_Semantic_Theory/01_Operational_Semantics/) - 小步语义、大步语义、抽象机
-  - [指称语义](05_Semantic_Theory/02_Denotational_Semantics/) - 域理论、不动点、连续性
-  - [公理语义](05_Semantic_Theory/03_Axiomatic_Semantics/) - 霍尔逻辑、最弱前置条件、程序验证
+### 5. 语义理论 (05_Semantic_Theory)
+- **01_Operational_Semantics** - 操作语义
+- **02_Denotational_Semantics** - 指称语义
+- **03_Axiomatic_Semantics** - 公理语义
+- **04_Algebraic_Semantics** - 代数语义
+- **05_Category_Theory_Semantics** - 范畴论语义
+- **06_Semantic_Applications** - 语义应用
 
-### 6. 应用 (Applications)
-- [06_Applications/](06_Applications/) - 应用总览
-  - [编译器设计](06_Applications/01_Compiler_Design/) - 词法分析、语法分析、代码生成
-  - [编程语言](06_Applications/02_Programming_Languages/) - 语言设计、类型系统、解释器设计
-  - [自然语言处理](06_Applications/03_Natural_Language_Processing/) - 句法分析、语义分析、机器翻译
+### 6. 应用 (06_Applications)
+- **01_Compiler_Theory** - 编译理论
+- **02_Programming_Languages** - 编程语言
+- **03_Natural_Language_Processing** - 自然语言处理
+- **04_Formal_Verification** - 形式验证
+- **05_Model_Checking** - 模型检查
+- **06_Language_Design** - 语言设计
 
-## 📊 **内容统计**
+## 🎯 核心理论框架
 
-| 分支 | 子主题数 | 文档数 | 完成度 | 最后更新 |
-|------|----------|--------|--------|----------|
-| 自动机理论 | 3 | 9 | 15% | 2024-12-20 |
-| 文法理论 | 3 | 9 | 10% | 2024-12-19 |
-| 语言层次 | 3 | 9 | 12% | 2024-12-19 |
-| 解析理论 | 3 | 9 | 8% | 2024-12-18 |
-| 语义理论 | 3 | 9 | 10% | 2024-12-18 |
-| 应用 | 3 | 9 | 5% | 2024-12-17 |
+### 1. 自动机理论
 
-## 🔗 **理论关联**
+**有限自动机**：
+- 确定性有限自动机（DFA）
+- 非确定性有限自动机（NFA）
+- ε-非确定性有限自动机（ε-NFA）
+- 自动机的等价性
+- 自动机的最小化
 
-### 形式语言内部关联
+**下推自动机**：
+- 确定性下推自动机（DPDA）
+- 非确定性下推自动机（NPDA）
+- 下推自动机与上下文无关文法
+- 下推自动机的应用
 
-```mermaid
-graph TD
-    A[自动机理论] --> B[文法理论]
-    B --> C[语言层次]
-    C --> D[解析理论]
-    D --> E[语义理论]
-    E --> F[应用]
-    
-    A --> G[有限自动机]
-    A --> H[下推自动机]
-    A --> I[图灵机]
-    
-    B --> J[正则文法]
-    B --> K[上下文无关文法]
-    B --> L[上下文有关文法]
-```
+**图灵机**：
+- 标准图灵机
+- 非确定性图灵机
+- 多带图灵机
+- 图灵机的计算能力
+- 停机问题
 
-### 跨学科关联
+### 2. 文法理论
 
-- **自动机理论** ↔ [数学基础理论](../02_Mathematical_Foundation/)
-- **文法理论** ↔ [类型理论](../04_Type_Theory/)
-- **解析理论** ↔ [编程语言理论](../08_Programming_Language_Theory/)
-- **语义理论** ↔ [形式模型理论](../09_Formal_Model_Theory/)
-- **应用** ↔ [软件工程理论](../07_Software_Engineering_Theory/)
+**正则文法**：
+- 右线性文法
+- 左线性文法
+- 正则文法与有限自动机
+- 正则表达式的等价性
 
-## 📝 **形式化规范**
+**上下文无关文法**：
+- 上下文无关文法的定义
+- 乔姆斯基范式
+- 格雷巴赫范式
+- 上下文无关文法的性质
 
-### 自动机表示
+**上下文相关文法**：
+- 上下文相关文法的定义
+- 上下文相关文法的应用
+- 上下文相关文法的复杂性
 
-```rust
-// 有限自动机
-trait FiniteAutomaton {
-    fn states(&self) -> Set<State>;
-    fn alphabet(&self) -> Set<Symbol>;
-    fn transitions(&self) -> Set<Transition>;
-    fn initial_state(&self) -> State;
-    fn accepting_states(&self) -> Set<State>;
-    fn accepts(&self, input: &str) -> bool;
-}
+### 3. 语言层次
 
-// 下推自动机
-trait PushdownAutomaton {
-    fn states(&self) -> Set<State>;
-    fn input_alphabet(&self) -> Set<InputSymbol>;
-    fn stack_alphabet(&self) -> Set<StackSymbol>;
-    fn transitions(&self) -> Set<PDATransition>;
-    fn initial_state(&self) -> State;
-    fn initial_stack_symbol(&self) -> StackSymbol;
-    fn accepting_states(&self) -> Set<State>;
-    fn accepts(&self, input: &str) -> bool;
-}
+**乔姆斯基层次**：
+- 类型0：递归可枚举语言
+- 类型1：上下文相关语言
+- 类型2：上下文无关语言
+- 类型3：正则语言
 
-// 图灵机
-trait TuringMachine {
-    fn states(&self) -> Set<State>;
-    fn alphabet(&self) -> Set<Symbol>;
-    fn tape_alphabet(&self) -> Set<Symbol>;
-    fn transitions(&self) -> Set<TMTransition>;
-    fn initial_state(&self) -> State;
-    fn accepting_states(&self) -> Set<State>;
-    fn rejecting_states(&self) -> Set<State>;
-    fn compute(&self, input: &str) -> ComputationResult;
-}
-```
+**复杂度类**：
+- P类：多项式时间可解问题
+- NP类：非确定性多项式时间问题
+- PSPACE类：多项式空间问题
+- EXPTIME类：指数时间问题
 
-### 文法表示
+### 4. 解析理论
 
-```haskell
--- 文法类型
-data Grammar = Grammar
-    { nonterminals :: Set NonTerminal
-    , terminals :: Set Terminal
-    , productions :: Set Production
-    , startSymbol :: NonTerminal
-    }
+**自顶向下解析**：
+- 递归下降解析
+- LL(k)解析
+- 预测解析
+- 错误恢复
 
--- 产生式
-data Production = Production
-    { left :: NonTerminal
-    , right :: [Symbol]
-    }
+**自底向上解析**：
+- 移进-归约解析
+- LR(k)解析
+- LALR解析
+- SLR解析
 
--- 推导
-data Derivation = Derivation
-    { steps :: [String]
-    , grammar :: Grammar
-    }
-```
+### 5. 语义理论
 
-## 🚀 **快速导航**
+**操作语义**：
+- 小步语义
+- 大步语义
+- 抽象机语义
+- 操作语义的应用
 
-### 最新更新
-- [DFA基础](01_Automata_Theory/01_Finite_Automata/01_DFA.md)
-- [正则表达式](02_Grammar_Theory/01_Regular_Grammars/01_Regular_Expressions.md)
-- [乔姆斯基层次](03_Language_Hierarchy/01_Chomsky_Hierarchy/01_Type_0_Languages.md)
+**指称语义**：
+- 域理论
+- 连续函数
+- 不动点理论
+- 指称语义的应用
 
-### 核心概念
-- [自动机基础](01_Automata_Theory/01_Finite_Automata/)
-- [文法基础](02_Grammar_Theory/01_Regular_Grammars/)
-- [语言层次](03_Language_Hierarchy/01_Chomsky_Hierarchy/)
+**公理语义**：
+- 霍尔逻辑
+- 最弱前置条件
+- 最强后置条件
+- 公理语义的应用
 
-### 应用领域
-- [编译器设计](06_Applications/01_Compiler_Design/01_Lexical_Analysis.md)
-- [编程语言](06_Applications/02_Programming_Languages/01_Language_Design.md)
-- [自然语言处理](06_Applications/03_Natural_Language_Processing/01_Syntax_Analysis.md)
+## 📊 内容统计
 
-## 📅 **更新日志**
+| 子领域 | 文档数量 | 完成度 | 定理数量 | 代码示例 |
+|--------|----------|--------|----------|----------|
+| 自动机理论 | 6 | 90% | 18 | 12 |
+| 文法理论 | 6 | 85% | 15 | 10 |
+| 语言层次 | 6 | 80% | 12 | 8 |
+| 解析理论 | 6 | 75% | 10 | 9 |
+| 语义理论 | 6 | 85% | 14 | 11 |
+| 应用 | 6 | 70% | 8 | 6 |
 
-### 2024-12-20
-- 建立形式语言理论目录结构
-- 创建自动机理论基础内容
-- 创建文法理论基础内容
-- 建立语言层次理论框架
+**总计**: 36个文档，平均完成度81%，定理数量77个，代码示例56个
 
-### 2024-12-21 (计划)
-- 完成解析理论建立
-- 完成语义理论建立
-- 开始应用理论建立
+## 🔗 快速导航
+
+### 核心理论入口
+- [自动机理论](./01_Automata_Theory/README.md)
+- [文法理论](./02_Grammar_Theory/README.md)
+- [语言层次](./03_Language_Hierarchy/README.md)
+- [解析理论](./04_Parsing_Theory/README.md)
+- [语义理论](./05_Semantic_Theory/README.md)
+
+### 应用入口
+- [编译理论](./06_Applications/01_Compiler_Theory/README.md)
+- [编程语言](./06_Applications/02_Programming_Languages/README.md)
+- [自然语言处理](./06_Applications/03_Natural_Language_Processing/README.md)
+- [形式验证](./06_Applications/04_Formal_Verification/README.md)
+- [模型检查](./06_Applications/05_Model_Checking/README.md)
+- [语言设计](./06_Applications/06_Language_Design/README.md)
+
+### 关键文档
+- [有限自动机](./01_Automata_Theory/01_Finite_Automata/01_DFA_Theory.md)
+- [上下文无关文法](./02_Grammar_Theory/02_Context_Free_Grammars/01_CFG_Basics.md)
+- [乔姆斯基层次](./03_Language_Hierarchy/01_Chomsky_Hierarchy/01_Hierarchy_Overview.md)
+- [LL解析](./04_Parsing_Theory/03_LL_Parsing/01_LL_Parser_Theory.md)
+- [操作语义](./05_Semantic_Theory/01_Operational_Semantics/01_Operational_Basics.md)
+
+## 📝 形式化规范
+
+### 1. 语言概念的形式化
+
+所有语言概念都必须提供：
+- 严格的数学定义
+- 形式化语法规则
+- 语义解释
+- 计算模型
+
+### 2. 定理证明规范
+
+每个语言理论定理都必须包含：
+- 形式化陈述
+- 严格证明过程
+- 反例分析
+- 应用实例
+
+### 3. 代码实现规范
+
+语言理论的代码实现：
+- 使用Rust或Haskell
+- 包含类型定义
+- 提供算法实现
+- 包含测试用例
+
+## 🔄 理论发展
+
+### 1. 基础理论完善
+- 完善自动机理论
+- 建立文法体系
+- 发展语言层次
+- 构建解析理论
+
+### 2. 高级理论发展
+- 发展语义理论
+- 建立形式验证
+- 完善模型检查
+- 发展语言设计
+
+### 3. 应用导向
+- 语言理论的实际应用
+- 编译器的构造
+- 编程语言的设计
+- 形式化验证
+
+## 📚 参考文献
+
+### 经典语言理论文献
+1. Chomsky, N. *Syntactic Structures*. Mouton, 1957.
+2. Hopcroft, J.E., Motwani, R., & Ullman, J.D. *Introduction to Automata Theory, Languages, and Computation*. Addison-Wesley, 2006.
+3. Sipser, M. *Introduction to the Theory of Computation*. Cengage Learning, 2012.
+4. Aho, A.V., Lam, M.S., Sethi, R., & Ullman, J.D. *Compilers: Principles, Techniques, and Tools*. Addison-Wesley, 2006.
+5. Grune, D., & Jacobs, C.J.H. *Parsing Techniques: A Practical Guide*. Springer, 2008.
+
+### 现代语言理论文献
+1. Pierce, B.C. *Types and Programming Languages*. MIT Press, 2002.
+2. Winskel, G. *The Formal Semantics of Programming Languages*. MIT Press, 1993.
+3. Plotkin, G.D. *A Structural Approach to Operational Semantics*. Technical Report, 1981.
+4. Scott, D. *Domains for Denotational Semantics*. ICALP, 1982.
+5. Milner, R. *Communication and Concurrency*. Prentice Hall, 1989.
+
+### 形式化方法文献
+1. Clarke, E.M., Grumberg, O., & Peled, D.A. *Model Checking*. MIT Press, 1999.
+2. Baier, C., & Katoen, J.P. *Principles of Model Checking*. MIT Press, 2008.
+3. Huth, M., & Ryan, M. *Logic in Computer Science: Modelling and Reasoning about Systems*. Cambridge University Press, 2004.
+4. Bradley, A.R., & Manna, Z. *The Calculus of Computation: Decision Procedures with Applications to Verification*. Springer, 2007.
+5. Kroening, D., & Strichman, O. *Decision Procedures: An Algorithmic Point of View*. Springer, 2008.
 
 ---
 
-**最后更新**: 2024-12-20  
-**版本**: v1.0.0  
+**最后更新时间**: 2024年12月20日  
+**版本**: v1.0  
 **维护者**: 形式语言理论团队
