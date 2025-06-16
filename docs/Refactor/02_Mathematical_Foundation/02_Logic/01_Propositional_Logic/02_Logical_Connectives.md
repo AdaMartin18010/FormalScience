@@ -146,6 +146,7 @@ $$\phi \leftrightarrow \psi \leftrightarrow \psi \leftrightarrow \phi$$
 $$\neg \neg \phi \leftrightarrow \phi$$
 
 **证明：**
+
 1. 如果 $v(\phi) = \text{true}$，则 $v(\neg\phi) = \text{false}$，$v(\neg\neg\phi) = \text{true}$
 2. 如果 $v(\phi) = \text{false}$，则 $v(\neg\phi) = \text{true}$，$v(\neg\neg\phi) = \text{false}$
 3. 因此 $v(\neg\neg\phi) = v(\phi)$ 对所有真值函数成立
@@ -154,6 +155,7 @@ $$\neg \neg \phi \leftrightarrow \phi$$
 $$\phi \land \psi \leftrightarrow \psi \land \phi$$
 
 **证明：**
+
 1. $v(\phi \land \psi) = \text{true}$ 当且仅当 $v(\phi) = \text{true}$ 且 $v(\psi) = \text{true}$
 2. $v(\psi \land \phi) = \text{true}$ 当且仅当 $v(\psi) = \text{true}$ 且 $v(\phi) = \text{true}$
 3. 由于逻辑与的交换性，两者等价
@@ -162,6 +164,7 @@ $$\phi \land \psi \leftrightarrow \psi \land \phi$$
 $$\neg(\phi \land \psi) \leftrightarrow \neg\phi \lor \neg\psi$$
 
 **证明：**
+
 1. $v(\neg(\phi \land \psi)) = \text{true}$ 当且仅当 $v(\phi \land \psi) = \text{false}$
 2. $v(\phi \land \psi) = \text{false}$ 当且仅当 $v(\phi) = \text{false}$ 或 $v(\psi) = \text{false}$
 3. $v(\neg\phi \lor \neg\psi) = \text{true}$ 当且仅当 $v(\neg\phi) = \text{true}$ 或 $v(\neg\psi) = \text{true}$
@@ -174,6 +177,7 @@ $$\neg(\phi \land \psi) \leftrightarrow \neg\phi \lor \neg\psi$$
 $$(\phi \rightarrow \psi) \land (\psi \rightarrow \chi) \rightarrow (\phi \rightarrow \chi)$$
 
 **证明：**
+
 1. 假设 $v(\phi \rightarrow \psi) = \text{true}$ 且 $v(\psi \rightarrow \chi) = \text{true}$
 2. 如果 $v(\phi) = \text{false}$，则 $v(\phi \rightarrow \chi) = \text{true}$
 3. 如果 $v(\phi) = \text{true}$，则 $v(\psi) = \text{true}$（由第一个蕴含）
@@ -184,6 +188,7 @@ $$(\phi \rightarrow \psi) \land (\psi \rightarrow \chi) \rightarrow (\phi \right
 $$\phi \rightarrow \psi \leftrightarrow \neg\psi \rightarrow \neg\phi$$
 
 **证明：**
+
 1. $v(\phi \rightarrow \psi) = \text{true}$ 当且仅当 $v(\phi) = \text{false}$ 或 $v(\psi) = \text{true}$
 2. $v(\neg\psi \rightarrow \neg\phi) = \text{true}$ 当且仅当 $v(\neg\psi) = \text{false}$ 或 $v(\neg\phi) = \text{true}$
 3. $v(\neg\psi) = \text{false}$ 当且仅当 $v(\psi) = \text{true}$
@@ -196,6 +201,7 @@ $$\phi \rightarrow \psi \leftrightarrow \neg\psi \rightarrow \neg\phi$$
 $$\phi \land (\psi \lor \chi) \leftrightarrow (\phi \land \psi) \lor (\phi \land \chi)$$
 
 **证明：**
+
 1. $v(\phi \land (\psi \lor \chi)) = \text{true}$ 当且仅当 $v(\phi) = \text{true}$ 且 $(v(\psi) = \text{true}$ 或 $v(\chi) = \text{true})$
 2. $v((\phi \land \psi) \lor (\phi \land \chi)) = \text{true}$ 当且仅当 $(v(\phi) = \text{true}$ 且 $v(\psi) = \text{true})$ 或 $(v(\phi) = \text{true}$ 且 $v(\chi) = \text{true})$
 3. 通过逻辑分配律，两者等价
@@ -681,4 +687,4 @@ impl BooleanAlgebra {
 1. Enderton, H. B. (2001). A Mathematical Introduction to Logic
 2. Mendelson, E. (2015). Introduction to Mathematical Logic
 3. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). Computability and Logic
-4. Huth, M., & Ryan, M. (2004). Logic in Computer Science: Modelling and Reasoning about Systems 
+4. Huth, M., & Ryan, M. (2004). Logic in Computer Science: Modelling and Reasoning about Systems
