@@ -1,1139 +1,1080 @@
-# 有限自动机基础理论
+# 03.01.01 有限自动机基础理论 (Finite Automata Basics)
 
 ## 📋 概述
 
-本文档建立了有限自动机的基础理论体系，包括确定性有限自动机(DFA)、非确定性有限自动机(NFA)、ε-NFA等核心内容。通过严格的形式化定义和证明，为整个形式语言理论体系提供自动机基础。
+有限自动机是形式语言理论的基础，研究有限状态机器的计算能力和语言识别。本文档建立了严格的形式化有限自动机理论，为所有形式语言理论提供基础。
+
+**构建时间**: 2024年12月21日  
+**版本**: v1.0  
+**状态**: 已完成
 
 ## 📚 目录
 
 1. [基本概念](#1-基本概念)
-2. [确定性有限自动机](#2-确定性有限自动机)
-3. [非确定性有限自动机](#3-非确定性有限自动机)
-4. [ε-非确定性有限自动机](#4-ε-非确定性有限自动机)
-5. [自动机等价性](#5-自动机等价性)
-6. [自动机最小化](#6-自动机最小化)
-7. [定理证明](#7-定理证明)
+2. [形式化定义](#2-形式化定义)
+3. [自动机公理](#3-自动机公理)
+4. [核心定理](#4-核心定理)
+5. [自动机类型](#5-自动机类型)
+6. [状态转换](#6-状态转换)
+7. [语言识别](#7-语言识别)
 8. [应用实例](#8-应用实例)
-9. [参考文献](#9-参考文献)
+9. [代码实现](#9-代码实现)
+10. [参考文献](#10-参考文献)
 
 ## 1. 基本概念
 
-### 1.1 自动机定义
-
-**定义 1.1.1 (有限自动机)**
-有限自动机是一个五元组(Q, Σ, δ, q₀, F)，其中：
-- Q是有限状态集
-- Σ是有限输入字母表
-- δ是转移函数
-- q₀是初始状态
-- F是接受状态集
-
-```rust
-/// 有限自动机的基本概念
-pub trait FiniteAutomaton {
-    /// 状态集
-    fn states(&self) -> &Vec<State>;
-    
-    /// 字母表
-    fn alphabet(&self) -> &Vec<Symbol>;
-    
-    /// 转移函数
-    fn transition_function(&self) -> &TransitionFunction;
-    
-    /// 初始状态
-    fn initial_state(&self) -> &State;
-    
-    /// 接受状态集
-    fn accepting_states(&self) -> &Vec<State>;
-    
-    /// 接受语言
-    fn accept(&self, input: &str) -> bool;
-}
-
-/// 状态
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct State {
-    /// 状态标识符
-    pub id: String,
-    /// 状态类型
-    pub state_type: StateType,
-}
-
-/// 状态类型
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum StateType {
-    /// 初始状态
-    Initial,
-    /// 接受状态
-    Accepting,
-    /// 普通状态
-    Normal,
-    /// 陷阱状态
-    Trap,
-}
-
-/// 符号
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Symbol {
-    /// 符号值
-    pub value: char,
-    /// 符号类型
-    pub symbol_type: SymbolType,
-}
-
-/// 符号类型
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum SymbolType {
-    /// 输入符号
-    Input,
-    /// ε符号
-    Epsilon,
-    /// 特殊符号
-    Special,
-}
-
-/// 转移函数
-#[derive(Debug, Clone)]
-pub struct TransitionFunction {
-    /// 转移规则
-    pub transitions: Vec<Transition>,
-    /// 转移类型
-    pub transition_type: TransitionType,
-}
-
-/// 转移
-#[derive(Debug, Clone)]
-pub struct Transition {
-    /// 当前状态
-    pub current_state: State,
-    /// 输入符号
-    pub input_symbol: Symbol,
-    /// 下一状态
-    pub next_state: State,
-}
-
-/// 转移类型
-#[derive(Debug, Clone)]
-pub enum TransitionType {
-    /// 确定性转移
-    Deterministic,
-    /// 非确定性转移
-    Nondeterministic,
-    /// ε转移
-    Epsilon,
-}
-```
-
-### 1.2 语言定义
-
-**定义 1.2.1 (语言)**
-语言是字母表上字符串的集合。
-
-```rust
-/// 语言
-pub trait Language {
-    /// 字母表
-    fn alphabet(&self) -> &Vec<Symbol>;
-    
-    /// 字符串集合
-    fn strings(&self) -> &Vec<String>;
-    
-    /// 包含检查
-    fn contains(&self, string: &str) -> bool;
-    
-    /// 语言类型
-    fn language_type(&self) -> LanguageType;
-}
-
-/// 语言类型
-#[derive(Debug, Clone)]
-pub enum LanguageType {
-    /// 正则语言
-    Regular,
-    /// 上下文无关语言
-    ContextFree,
-    /// 上下文有关语言
-    ContextSensitive,
-    /// 递归可枚举语言
-    RecursivelyEnumerable,
-}
-
-/// 语言实现
-pub struct LanguageImpl {
-    pub alphabet: Vec<Symbol>,
-    pub strings: Vec<String>,
-    pub language_type: LanguageType,
-}
-
-impl Language for LanguageImpl {
-    fn alphabet(&self) -> &Vec<Symbol> {
-        &self.alphabet
-    }
-    
-    fn strings(&self) -> &Vec<String> {
-        &self.strings
-    }
-    
-    fn contains(&self, string: &str) -> bool {
-        self.strings.contains(&string.to_string())
-    }
-    
-    fn language_type(&self) -> LanguageType {
-        self.language_type.clone()
-    }
-}
-```
-
-## 2. 确定性有限自动机
-
-### 2.1 DFA定义
-
-**定义 2.1.1 (DFA)**
-确定性有限自动机是转移函数δ: Q × Σ → Q的有限自动机。
-
-```rust
-/// 确定性有限自动机
-pub struct DeterministicFiniteAutomaton {
-    /// 状态集
-    pub states: Vec<State>,
-    /// 字母表
-    pub alphabet: Vec<Symbol>,
-    /// 转移函数
-    pub transition_function: TransitionFunction,
-    /// 初始状态
-    pub initial_state: State,
-    /// 接受状态集
-    pub accepting_states: Vec<State>,
-}
-
-impl FiniteAutomaton for DeterministicFiniteAutomaton {
-    fn states(&self) -> &Vec<State> {
-        &self.states
-    }
-    
-    fn alphabet(&self) -> &Vec<Symbol> {
-        &self.alphabet
-    }
-    
-    fn transition_function(&self) -> &TransitionFunction {
-        &self.transition_function
-    }
-    
-    fn initial_state(&self) -> &State {
-        &self.initial_state
-    }
-    
-    fn accepting_states(&self) -> &Vec<State> {
-        &self.accepting_states
-    }
-    
-    fn accept(&self, input: &str) -> bool {
-        let mut current_state = self.initial_state.clone();
-        
-        for c in input.chars() {
-            let symbol = Symbol {
-                value: c,
-                symbol_type: SymbolType::Input,
-            };
-            
-            if let Some(next_state) = self.get_next_state(&current_state, &symbol) {
-                current_state = next_state;
-            } else {
-                return false; // 无转移
-            }
-        }
-        
-        self.accepting_states.contains(&current_state)
-    }
-}
-
-impl DeterministicFiniteAutomaton {
-    /// 获取下一状态
-    pub fn get_next_state(&self, current_state: &State, symbol: &Symbol) -> Option<State> {
-        self.transition_function.transitions.iter()
-            .find(|t| t.current_state == *current_state && t.input_symbol == *symbol)
-            .map(|t| t.next_state.clone())
-    }
-    
-    /// 创建DFA
-    pub fn new(
-        states: Vec<State>,
-        alphabet: Vec<Symbol>,
-        transitions: Vec<Transition>,
-        initial_state: State,
-        accepting_states: Vec<State>,
-    ) -> Self {
-        DeterministicFiniteAutomaton {
-            states,
-            alphabet,
-            transition_function: TransitionFunction {
-                transitions,
-                transition_type: TransitionType::Deterministic,
-            },
-            initial_state,
-            accepting_states,
-        }
-    }
-}
-```
-
-### 2.2 DFA构造
-
-**定义 2.2.1 (DFA构造)**
-DFA可以通过多种方式构造，包括直接构造和从正则表达式构造。
-
-```rust
-/// DFA构造
-pub trait DFAConstruction {
-    /// 直接构造
-    fn direct_construction(&self, specification: &str) -> DeterministicFiniteAutomaton;
-    
-    /// 从正则表达式构造
-    fn from_regex(&self, regex: &str) -> DeterministicFiniteAutomaton;
-    
-    /// 从NFA构造
-    fn from_nfa(&self, nfa: &NondeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-}
-
-/// DFA构造实现
-pub struct DFAConstructionImpl;
-
-impl DFAConstruction for DFAConstructionImpl {
-    fn direct_construction(&self, specification: &str) -> DeterministicFiniteAutomaton {
-        // 根据规范直接构造DFA
-        let states = vec![
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            State { id: "q1".to_string(), state_type: StateType::Normal },
-            State { id: "q2".to_string(), state_type: StateType::Accepting },
-        ];
-        
-        let alphabet = vec![
-            Symbol { value: '0', symbol_type: SymbolType::Input },
-            Symbol { value: '1', symbol_type: SymbolType::Input },
-        ];
-        
-        let transitions = vec![
-            Transition {
-                current_state: State { id: "q0".to_string(), state_type: StateType::Initial },
-                input_symbol: Symbol { value: '0', symbol_type: SymbolType::Input },
-                next_state: State { id: "q1".to_string(), state_type: StateType::Normal },
-            },
-            Transition {
-                current_state: State { id: "q0".to_string(), state_type: StateType::Initial },
-                input_symbol: Symbol { value: '1', symbol_type: SymbolType::Input },
-                next_state: State { id: "q2".to_string(), state_type: StateType::Accepting },
-            },
-        ];
-        
-        DeterministicFiniteAutomaton::new(
-            states,
-            alphabet,
-            transitions,
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            vec![State { id: "q2".to_string(), state_type: StateType::Accepting }],
-        )
-    }
-    
-    fn from_regex(&self, regex: &str) -> DeterministicFiniteAutomaton {
-        // 从正则表达式构造DFA
-        // 简化实现
-        self.direct_construction(regex)
-    }
-    
-    fn from_nfa(&self, nfa: &NondeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // 从NFA构造DFA（子集构造法）
-        // 简化实现
-        self.direct_construction("nfa_to_dfa")
-    }
-}
-```
-
-## 3. 非确定性有限自动机
-
-### 3.1 NFA定义
-
-**定义 3.1.1 (NFA)**
-非确定性有限自动机是转移函数δ: Q × Σ → P(Q)的有限自动机。
-
-```rust
-/// 非确定性有限自动机
-pub struct NondeterministicFiniteAutomaton {
-    /// 状态集
-    pub states: Vec<State>,
-    /// 字母表
-    pub alphabet: Vec<Symbol>,
-    /// 转移函数
-    pub transition_function: TransitionFunction,
-    /// 初始状态
-    pub initial_state: State,
-    /// 接受状态集
-    pub accepting_states: Vec<State>,
-}
-
-impl FiniteAutomaton for NondeterministicFiniteAutomaton {
-    fn states(&self) -> &Vec<State> {
-        &self.states
-    }
-    
-    fn alphabet(&self) -> &Vec<Symbol> {
-        &self.alphabet
-    }
-    
-    fn transition_function(&self) -> &TransitionFunction {
-        &self.transition_function
-    }
-    
-    fn initial_state(&self) -> &State {
-        &self.initial_state
-    }
-    
-    fn accepting_states(&self) -> &Vec<State> {
-        &self.accepting_states
-    }
-    
-    fn accept(&self, input: &str) -> bool {
-        let mut current_states = vec![self.initial_state.clone()];
-        
-        for c in input.chars() {
-            let symbol = Symbol {
-                value: c,
-                symbol_type: SymbolType::Input,
-            };
-            
-            let mut next_states = Vec::new();
-            for state in &current_states {
-                let states = self.get_next_states(state, &symbol);
-                next_states.extend(states);
-            }
-            current_states = next_states;
-        }
-        
-        current_states.iter().any(|s| self.accepting_states.contains(s))
-    }
-}
-
-impl NondeterministicFiniteAutomaton {
-    /// 获取下一状态集
-    pub fn get_next_states(&self, current_state: &State, symbol: &Symbol) -> Vec<State> {
-        self.transition_function.transitions.iter()
-            .filter(|t| t.current_state == *current_state && t.input_symbol == *symbol)
-            .map(|t| t.next_state.clone())
-            .collect()
-    }
-    
-    /// 创建NFA
-    pub fn new(
-        states: Vec<State>,
-        alphabet: Vec<Symbol>,
-        transitions: Vec<Transition>,
-        initial_state: State,
-        accepting_states: Vec<State>,
-    ) -> Self {
-        NondeterministicFiniteAutomaton {
-            states,
-            alphabet,
-            transition_function: TransitionFunction {
-                transitions,
-                transition_type: TransitionType::Nondeterministic,
-            },
-            initial_state,
-            accepting_states,
-        }
-    }
-}
-```
-
-### 3.2 NFA构造
-
-**定义 3.2.1 (NFA构造)**
-NFA可以通过多种方式构造，包括直接构造和从正则表达式构造。
-
-```rust
-/// NFA构造
-pub trait NFAConstruction {
-    /// 直接构造
-    fn direct_construction(&self, specification: &str) -> NondeterministicFiniteAutomaton;
-    
-    /// 从正则表达式构造
-    fn from_regex(&self, regex: &str) -> NondeterministicFiniteAutomaton;
-    
-    /// 从ε-NFA构造
-    fn from_epsilon_nfa(&self, epsilon_nfa: &EpsilonNondeterministicFiniteAutomaton) -> NondeterministicFiniteAutomaton;
-}
-
-/// NFA构造实现
-pub struct NFAConstructionImpl;
-
-impl NFAConstruction for NFAConstructionImpl {
-    fn direct_construction(&self, specification: &str) -> NondeterministicFiniteAutomaton {
-        // 根据规范直接构造NFA
-        let states = vec![
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            State { id: "q1".to_string(), state_type: StateType::Normal },
-            State { id: "q2".to_string(), state_type: StateType::Accepting },
-        ];
-        
-        let alphabet = vec![
-            Symbol { value: '0', symbol_type: SymbolType::Input },
-            Symbol { value: '1', symbol_type: SymbolType::Input },
-        ];
-        
-        let transitions = vec![
-            Transition {
-                current_state: State { id: "q0".to_string(), state_type: StateType::Initial },
-                input_symbol: Symbol { value: '0', symbol_type: SymbolType::Input },
-                next_state: State { id: "q1".to_string(), state_type: StateType::Normal },
-            },
-            Transition {
-                current_state: State { id: "q0".to_string(), state_type: StateType::Initial },
-                input_symbol: Symbol { value: '1', symbol_type: SymbolType::Input },
-                next_state: State { id: "q2".to_string(), state_type: StateType::Accepting },
-            },
-        ];
-        
-        NondeterministicFiniteAutomaton::new(
-            states,
-            alphabet,
-            transitions,
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            vec![State { id: "q2".to_string(), state_type: StateType::Accepting }],
-        )
-    }
-    
-    fn from_regex(&self, regex: &str) -> NondeterministicFiniteAutomaton {
-        // 从正则表达式构造NFA
-        // 简化实现
-        self.direct_construction(regex)
-    }
-    
-    fn from_epsilon_nfa(&self, epsilon_nfa: &EpsilonNondeterministicFiniteAutomaton) -> NondeterministicFiniteAutomaton {
-        // 从ε-NFA构造NFA（ε闭包消除）
-        // 简化实现
-        self.direct_construction("epsilon_nfa_to_nfa")
-    }
-}
-```
-
-## 4. ε-非确定性有限自动机
-
-### 4.1 ε-NFA定义
-
-**定义 4.1.1 (ε-NFA)**
-ε-非确定性有限自动机是允许ε转移的非确定性有限自动机。
-
-```rust
-/// ε-非确定性有限自动机
-pub struct EpsilonNondeterministicFiniteAutomaton {
-    /// 状态集
-    pub states: Vec<State>,
-    /// 字母表
-    pub alphabet: Vec<Symbol>,
-    /// 转移函数
-    pub transition_function: TransitionFunction,
-    /// 初始状态
-    pub initial_state: State,
-    /// 接受状态集
-    pub accepting_states: Vec<State>,
-}
-
-impl FiniteAutomaton for EpsilonNondeterministicFiniteAutomaton {
-    fn states(&self) -> &Vec<State> {
-        &self.states
-    }
-    
-    fn alphabet(&self) -> &Vec<Symbol> {
-        &self.alphabet
-    }
-    
-    fn transition_function(&self) -> &TransitionFunction {
-        &self.transition_function
-    }
-    
-    fn initial_state(&self) -> &State {
-        &self.initial_state
-    }
-    
-    fn accepting_states(&self) -> &Vec<State> {
-        &self.accepting_states
-    }
-    
-    fn accept(&self, input: &str) -> bool {
-        let mut current_states = self.epsilon_closure(&vec![self.initial_state.clone()]);
-        
-        for c in input.chars() {
-            let symbol = Symbol {
-                value: c,
-                symbol_type: SymbolType::Input,
-            };
-            
-            let mut next_states = Vec::new();
-            for state in &current_states {
-                let states = self.get_next_states(state, &symbol);
-                next_states.extend(states);
-            }
-            current_states = self.epsilon_closure(&next_states);
-        }
-        
-        current_states.iter().any(|s| self.accepting_states.contains(s))
-    }
-}
-
-impl EpsilonNondeterministicFiniteAutomaton {
-    /// 获取下一状态集
-    pub fn get_next_states(&self, current_state: &State, symbol: &Symbol) -> Vec<State> {
-        self.transition_function.transitions.iter()
-            .filter(|t| t.current_state == *current_state && t.input_symbol == *symbol)
-            .map(|t| t.next_state.clone())
-            .collect()
-    }
-    
-    /// ε闭包
-    pub fn epsilon_closure(&self, states: &Vec<State>) -> Vec<State> {
-        let mut closure = states.clone();
-        let mut changed = true;
-        
-        while changed {
-            changed = false;
-            let mut new_states = Vec::new();
-            
-            for state in &closure {
-                let epsilon_transitions = self.transition_function.transitions.iter()
-                    .filter(|t| t.current_state == *state && t.input_symbol.value == 'ε')
-                    .map(|t| t.next_state.clone())
-                    .collect::<Vec<_>>();
-                
-                for next_state in epsilon_transitions {
-                    if !closure.contains(&next_state) {
-                        new_states.push(next_state);
-                        changed = true;
-                    }
-                }
-            }
-            
-            closure.extend(new_states);
-        }
-        
-        closure
-    }
-    
-    /// 创建ε-NFA
-    pub fn new(
-        states: Vec<State>,
-        alphabet: Vec<Symbol>,
-        transitions: Vec<Transition>,
-        initial_state: State,
-        accepting_states: Vec<State>,
-    ) -> Self {
-        EpsilonNondeterministicFiniteAutomaton {
-            states,
-            alphabet,
-            transition_function: TransitionFunction {
-                transitions,
-                transition_type: TransitionType::Epsilon,
-            },
-            initial_state,
-            accepting_states,
-        }
-    }
-}
-```
-
-## 5. 自动机等价性
-
-### 5.1 等价性定义
-
-**定义 5.1.1 (自动机等价性)**
-两个自动机等价，当且仅当它们接受相同的语言。
-
-```rust
-/// 自动机等价性
-pub trait AutomatonEquivalence {
-    /// 等价性检查
-    fn is_equivalent(&self, other: &dyn FiniteAutomaton) -> bool;
-    
-    /// 语言等价性
-    fn language_equivalence(&self, other: &dyn FiniteAutomaton) -> bool;
-    
-    /// 状态等价性
-    fn state_equivalence(&self, other: &dyn FiniteAutomaton) -> bool;
-}
-
-impl AutomatonEquivalence for DeterministicFiniteAutomaton {
-    fn is_equivalent(&self, other: &dyn FiniteAutomaton) -> bool {
-        // 检查两个自动机是否等价
-        self.language_equivalence(other)
-    }
-    
-    fn language_equivalence(&self, other: &dyn FiniteAutomaton) -> bool {
-        // 检查语言等价性
-        // 简化实现，实际需要更复杂的算法
-        true
-    }
-    
-    fn state_equivalence(&self, other: &dyn FiniteAutomaton) -> bool {
-        // 检查状态等价性
-        // 简化实现
-        true
-    }
-}
-```
-
-### 5.2 等价性算法
-
-**定义 5.2.1 (等价性算法)**
-自动机等价性可以通过多种算法检查。
-
-```rust
-/// 等价性算法
-pub trait EquivalenceAlgorithm {
-    /// 表填充算法
-    fn table_filling_algorithm(&self, dfa1: &DeterministicFiniteAutomaton, dfa2: &DeterministicFiniteAutomaton) -> bool;
-    
-    /// 最小化算法
-    fn minimization_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-    
-    /// 同构检查
-    fn isomorphism_check(&self, dfa1: &DeterministicFiniteAutomaton, dfa2: &DeterministicFiniteAutomaton) -> bool;
-}
-
-/// 等价性算法实现
-pub struct EquivalenceAlgorithmImpl;
-
-impl EquivalenceAlgorithm for EquivalenceAlgorithmImpl {
-    fn table_filling_algorithm(&self, dfa1: &DeterministicFiniteAutomaton, dfa2: &DeterministicFiniteAutomaton) -> bool {
-        // 表填充算法检查DFA等价性
-        // 简化实现
-        true
-    }
-    
-    fn minimization_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // DFA最小化算法
-        // 简化实现
-        dfa.clone()
-    }
-    
-    fn isomorphism_check(&self, dfa1: &DeterministicFiniteAutomaton, dfa2: &DeterministicFiniteAutomaton) -> bool {
-        // 检查两个DFA是否同构
-        // 简化实现
-        true
-    }
-}
-```
-
-## 6. 自动机最小化
-
-### 6.1 最小化定义
-
-**定义 6.1.1 (最小化)**
-DFA最小化是构造等价的最小状态DFA的过程。
-
-```rust
-/// 自动机最小化
-pub trait AutomatonMinimization {
-    /// 状态最小化
-    fn minimize_states(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-    
-    /// 转移最小化
-    fn minimize_transitions(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-    
-    /// 完全最小化
-    fn complete_minimization(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-}
-
-impl AutomatonMinimization for DeterministicFiniteAutomaton {
-    fn minimize_states(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // 状态最小化
-        // 简化实现
-        dfa.clone()
-    }
-    
-    fn minimize_transitions(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // 转移最小化
-        // 简化实现
-        dfa.clone()
-    }
-    
-    fn complete_minimization(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // 完全最小化
-        self.minimize_states(dfa)
-    }
-}
-```
-
-### 6.2 最小化算法
-
-**定义 6.2.1 (最小化算法)**
-最小化算法包括Hopcroft算法和Moore算法。
-
-```rust
-/// 最小化算法
-pub trait MinimizationAlgorithm {
-    /// Hopcroft算法
-    fn hopcroft_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-    
-    /// Moore算法
-    fn moore_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-    
-    /// 分区细化算法
-    fn partition_refinement(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton;
-}
-
-/// 最小化算法实现
-pub struct MinimizationAlgorithmImpl;
-
-impl MinimizationAlgorithm for MinimizationAlgorithmImpl {
-    fn hopcroft_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // Hopcroft最小化算法
-        // 简化实现
-        dfa.clone()
-    }
-    
-    fn moore_algorithm(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // Moore最小化算法
-        // 简化实现
-        dfa.clone()
-    }
-    
-    fn partition_refinement(&self, dfa: &DeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-        // 分区细化算法
-        // 简化实现
-        dfa.clone()
-    }
-}
-```
-
-## 7. 定理证明
-
-### 7.1 子集构造定理
-
-**定理 7.1.1 (子集构造定理)**
-对于任何NFA，存在等价的DFA。
-
-**证明**：
-1. 设N = (Q, Σ, δ, q₀, F)是一个NFA
-2. 构造DFA D = (P(Q), Σ, δ', {q₀}, F')
-3. 其中δ'(S, a) = ∪_{q∈S} δ(q, a)，F' = {S | S ∩ F ≠ ∅}
-4. 可以证明L(D) = L(N)
-5. 证毕
-
-```rust
-/// 子集构造定理的证明
-pub fn subset_construction_theorem(nfa: &NondeterministicFiniteAutomaton) -> DeterministicFiniteAutomaton {
-    // 子集构造法
-    let power_set = generate_power_set(&nfa.states);
-    
-    let mut dfa_transitions = Vec::new();
-    for subset in &power_set {
-        for symbol in &nfa.alphabet {
-            let next_subset = compute_next_subset(nfa, subset, symbol);
-            dfa_transitions.push(Transition {
-                current_state: State {
-                    id: format!("{:?}", subset),
-                    state_type: StateType::Normal,
-                },
-                input_symbol: symbol.clone(),
-                next_state: State {
-                    id: format!("{:?}", next_subset),
-                    state_type: StateType::Normal,
-                },
-            });
-        }
-    }
-    
-    DeterministicFiniteAutomaton::new(
-        power_set.iter().map(|s| State {
-            id: format!("{:?}", s),
-            state_type: StateType::Normal,
-        }).collect(),
-        nfa.alphabet.clone(),
-        dfa_transitions,
-        State {
-            id: format!("{:?}", vec![nfa.initial_state.clone()]),
-            state_type: StateType::Initial,
-        },
-        power_set.iter().filter(|s| {
-            s.iter().any(|state| nfa.accepting_states.contains(state))
-        }).map(|s| State {
-            id: format!("{:?}", s),
-            state_type: StateType::Accepting,
-        }).collect(),
-    )
-}
-
-fn generate_power_set(states: &Vec<State>) -> Vec<Vec<State>> {
-    // 生成幂集
-    let mut power_set = vec![vec![]];
-    for state in states {
-        let mut new_subsets = Vec::new();
-        for subset in &power_set {
-            let mut new_subset = subset.clone();
-            new_subset.push(state.clone());
-            new_subsets.push(new_subset);
-        }
-        power_set.extend(new_subsets);
-    }
-    power_set
-}
-
-fn compute_next_subset(nfa: &NondeterministicFiniteAutomaton, subset: &Vec<State>, symbol: &Symbol) -> Vec<State> {
-    let mut next_subset = Vec::new();
-    for state in subset {
-        let next_states = nfa.get_next_states(state, symbol);
-        next_subset.extend(next_states);
-    }
-    next_subset
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    
-    #[test]
-    fn test_subset_construction() {
-        let nfa = NFAConstructionImpl.direct_construction("test");
-        let dfa = subset_construction_theorem(&nfa);
-        
-        // 测试等价性
-        assert!(dfa.accept("01") == nfa.accept("01"));
-    }
-}
-```
-
-### 7.2 最小化唯一性定理
-
-**定理 7.2.1 (最小化唯一性定理)**
-对于任何DFA，存在唯一的最小等价DFA（在同构意义下）。
-
-**证明**：
-1. 设D是一个DFA
-2. 通过最小化算法可以得到最小DFA M
-3. 假设存在另一个最小DFA M'
-4. 由于M和M'都等价于D，它们彼此等价
-5. 由于都是最小的，它们必须同构
-6. 证毕
-
-```rust
-/// 最小化唯一性定理的证明
-pub fn minimization_uniqueness_theorem(dfa: &DeterministicFiniteAutomaton) -> bool {
-    let minimized1 = MinimizationAlgorithmImpl.hopcroft_algorithm(dfa);
-    let minimized2 = MinimizationAlgorithmImpl.moore_algorithm(dfa);
-    
-    // 检查两个最小化结果是否同构
-    EquivalenceAlgorithmImpl.isomorphism_check(&minimized1, &minimized2)
-}
-```
-
-### 7.3 泵引理
-
-**定理 7.3.1 (泵引理)**
-如果L是正则语言，则存在正整数n，使得对于任何字符串w ∈ L且|w| ≥ n，w可以分解为w = xyz，满足：
-1. |xy| ≤ n
-2. |y| > 0
-3. 对于所有k ≥ 0，xy^k z ∈ L
-
-**证明**：
-1. 设L是正则语言，存在DFA D接受L
-2. 设n是D的状态数
-3. 对于|w| ≥ n的字符串w，D在读取w时至少访问某个状态两次
-4. 设第一次访问该状态时读入x，第二次访问时读入y
-5. 则w = xyz，其中z是剩余部分
-6. 可以证明xy^k z ∈ L对所有k ≥ 0成立
-7. 证毕
-
-```rust
-/// 泵引理的证明
-pub fn pumping_lemma_proof(language: &LanguageImpl, n: usize) -> bool {
-    // 检查泵引理条件
-    for string in &language.strings {
-        if string.len() >= n {
-            // 寻找分解x, y, z
-            for i in 1..=n {
-                for j in 1..=string.len() - i {
-                    let x = &string[..i];
-                    let y = &string[i..i+j];
-                    let z = &string[i+j..];
-                    
-                    // 检查条件
-                    if x.len() + y.len() <= n && y.len() > 0 {
-                        // 检查xy^k z是否在语言中
-                        let mut valid = true;
-                        for k in 0..=2 {
-                            let pumped_string = format!("{}{}{}", x, y.repeat(k), z);
-                            if !language.contains(&pumped_string) {
-                                valid = false;
-                                break;
-                            }
-                        }
-                        if valid {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    false
-}
-```
+### 1.1 有限自动机的定义
+
+**定义 1.1.1** (有限自动机)
+有限自动机是一个五元组 $(Q, \Sigma, \delta, q_0, F)$，其中：
+- $Q$ 是有限状态集合
+- $\Sigma$ 是有限输入字母表
+- $\delta$ 是状态转换函数
+- $q_0$ 是初始状态
+- $F$ 是接受状态集合
+
+**形式化表示**:
+$$\text{FiniteAutomaton}(M) \equiv \text{Quintuple}(Q, \Sigma, \delta, q_0, F)$$
+
+### 1.2 状态转换
+
+**定义 1.2.1** (状态转换)
+状态转换是自动机从一个状态到另一个状态的转移。
+
+**形式化表示**:
+$$\delta: Q \times \Sigma \rightarrow Q$$
+
+### 1.3 语言识别
+
+**定义 1.3.1** (语言识别)
+自动机识别一个字符串，当且仅当从初始状态开始，经过一系列转换后到达接受状态。
+
+**形式化表示**:
+$$L(M) = \{w \in \Sigma^* \mid \delta^*(q_0, w) \in F\}$$
+
+## 2. 形式化定义
+
+### 2.1 确定性有限自动机
+
+**定义 2.1.1** (确定性有限自动机)
+确定性有限自动机(DFA)是状态转换函数为确定性的有限自动机。
+
+**形式化定义**:
+$$\text{DFA}(M) \equiv \text{FiniteAutomaton}(M) \land \text{Deterministic}(\delta)$$
+
+### 2.2 非确定性有限自动机
+
+**定义 2.2.1** (非确定性有限自动机)
+非确定性有限自动机(NFA)是状态转换函数可以为非确定性的有限自动机。
+
+**形式化定义**:
+$$\text{NFA}(M) \equiv \text{FiniteAutomaton}(M) \land \text{Nondeterministic}(\delta)$$
+
+### 2.3 扩展转换函数
+
+**定义 2.3.1** (扩展转换函数)
+扩展转换函数 $\delta^*$ 是处理字符串的状态转换函数。
+
+**形式化定义**:
+$$\delta^*: Q \times \Sigma^* \rightarrow Q$$
+
+对于DFA：
+$$\delta^*(q, \varepsilon) = q$$
+$$\delta^*(q, wa) = \delta(\delta^*(q, w), a)$$
+
+对于NFA：
+$$\delta^*: Q \times \Sigma^* \rightarrow 2^Q$$
+
+## 3. 自动机公理
+
+### 3.1 基本公理
+
+**公理 3.1.1** (状态集合非空性)
+状态集合非空。
+
+**形式化表示**:
+$$Q \neq \emptyset$$
+
+**公理 3.1.2** (字母表非空性)
+输入字母表非空。
+
+**形式化表示**:
+$$\Sigma \neq \emptyset$$
+
+**公理 3.1.3** (初始状态存在性)
+初始状态在状态集合中。
+
+**形式化表示**:
+$$q_0 \in Q$$
+
+**公理 3.1.4** (接受状态子集性)
+接受状态集合是状态集合的子集。
+
+**形式化表示**:
+$$F \subseteq Q$$
+
+### 3.2 转换函数公理
+
+**公理 3.2.1** (转换函数定义域)
+转换函数在定义域上完全定义。
+
+**形式化表示**:
+$$\forall q \in Q, \forall a \in \Sigma, \delta(q, a) \text{ is defined}$$
+
+**公理 3.2.2** (转换函数值域)
+转换函数的值在状态集合中。
+
+**形式化表示**:
+$$\forall q \in Q, \forall a \in \Sigma, \delta(q, a) \in Q$$
+
+## 4. 核心定理
+
+### 4.1 DFA与NFA等价性
+
+**定理 4.1.1** (DFA与NFA等价性)
+对于每个NFA，存在等价的DFA。
+
+**形式化表示**:
+$$\forall M_{NFA}, \exists M_{DFA}: L(M_{NFA}) = L(M_{DFA})$$
+
+**证明**:
+
+1. **构造方法**: 子集构造法
+   - 设NFA $M = (Q, \Sigma, \delta, q_0, F)$
+   - 构造DFA $M' = (2^Q, \Sigma, \delta', \{q_0\}, F')$
+   - 其中 $\delta'(S, a) = \bigcup_{q \in S} \delta(q, a)$
+   - $F' = \{S \subseteq Q \mid S \cap F \neq \emptyset\}$
+
+2. **等价性证明**:
+   - 对于任意字符串 $w$，$w \in L(M)$ 当且仅当 $w \in L(M')$
+   - 使用数学归纳法证明 $\delta'^*(\{q_0\}, w) = \delta^*(q_0, w)$
+
+### 4.2 泵引理
+
+**定理 4.2.1** (泵引理)
+如果 $L$ 是正则语言，则存在泵长度 $p$，使得对于所有长度至少为 $p$ 的字符串 $s \in L$，存在分解 $s = xyz$ 满足：
+1. $|xy| \leq p$
+2. $|y| > 0$
+3. 对于所有 $i \geq 0$，$xy^iz \in L$
+
+**形式化表示**:
+$$L \text{ is regular} \rightarrow \exists p \forall s (|s| \geq p \land s \in L \rightarrow \exists x,y,z (s = xyz \land |xy| \leq p \land |y| > 0 \land \forall i \geq 0, xy^iz \in L))$$
+
+**证明**:
+
+1. 设 $M$ 是识别 $L$ 的DFA，状态数为 $n$
+2. 取泵长度 $p = n$
+3. 对于长度至少为 $p$ 的字符串 $s$，在 $M$ 上运行时必然重复某个状态
+4. 设重复的状态为 $q$，对应的子串为 $y$
+5. 可以泵入任意数量的 $y$，得到 $xy^iz \in L$
+
+### 4.3 最小化定理
+
+**定理 4.3.1** (DFA最小化)
+对于每个DFA，存在唯一的最小等价DFA。
+
+**形式化表示**:
+$$\forall M_{DFA}, \exists! M_{min}: L(M_{DFA}) = L(M_{min}) \land \text{Minimal}(M_{min})$$
+
+**证明**:
+
+1. **构造方法**: 等价类构造
+   - 定义状态等价关系：$q \sim r$ 当且仅当 $\forall w, \delta^*(q, w) \in F \leftrightarrow \delta^*(r, w) \in F$
+   - 构造等价类 $[q] = \{r \mid q \sim r\}$
+   - 最小化DFA的状态为等价类集合
+
+2. **唯一性证明**:
+   - 假设存在两个不同的最小DFA
+   - 构造它们的乘积自动机
+   - 通过等价性证明它们必须相同
+
+## 5. 自动机类型
+
+### 5.1 确定性有限自动机
+
+**定义 5.1.1** (DFA)
+确定性有限自动机是状态转换完全确定的自动机。
+
+**特征**:
+- 每个状态对每个输入符号有唯一的后继状态
+- 转换函数是单值函数
+- 计算过程是确定性的
+
+### 5.2 非确定性有限自动机
+
+**定义 5.2.1** (NFA)
+非确定性有限自动机是状态转换可以为非确定性的自动机。
+
+**特征**:
+- 每个状态对每个输入符号可以有多个后继状态
+- 转换函数是多值函数
+- 计算过程是非确定性的
+
+### 5.3 ε-非确定性有限自动机
+
+**定义 5.3.1** (ε-NFA)
+ε-非确定性有限自动机是允许ε转换的非确定性有限自动机。
+
+**特征**:
+- 允许不消耗输入符号的状态转换
+- 转换函数为 $\delta: Q \times (\Sigma \cup \{\varepsilon\}) \rightarrow 2^Q$
+- 可以处理空字符串转换
+
+## 6. 状态转换
+
+### 6.1 转换函数定义
+
+**定义 6.1.1** (DFA转换函数)
+DFA的转换函数是确定性的：
+
+$$\delta: Q \times \Sigma \rightarrow Q$$
+
+**定义 6.1.2** (NFA转换函数)
+NFA的转换函数是非确定性的：
+
+$$\delta: Q \times \Sigma \rightarrow 2^Q$$
+
+**定义 6.1.3** (ε-NFA转换函数)
+ε-NFA的转换函数包含ε转换：
+
+$$\delta: Q \times (\Sigma \cup \{\varepsilon\}) \rightarrow 2^Q$$
+
+### 6.2 扩展转换函数
+
+**定义 6.2.1** (DFA扩展转换函数)
+对于DFA，扩展转换函数递归定义为：
+
+$$\delta^*(q, \varepsilon) = q$$
+$$\delta^*(q, wa) = \delta(\delta^*(q, w), a)$$
+
+**定义 6.2.2** (NFA扩展转换函数)
+对于NFA，扩展转换函数递归定义为：
+
+$$\delta^*(q, \varepsilon) = \{q\}$$
+$$\delta^*(q, wa) = \bigcup_{r \in \delta^*(q, w)} \delta(r, a)$$
+
+### 6.3 ε闭包
+
+**定义 6.3.1** (ε闭包)
+ε闭包是从给定状态通过ε转换可达的所有状态集合。
+
+**形式化定义**:
+$$\varepsilon\text{-closure}(q) = \{p \mid q \stackrel{\varepsilon^*}{\rightarrow} p\}$$
+
+## 7. 语言识别
+
+### 7.1 语言定义
+
+**定义 7.1.1** (DFA语言)
+DFA $M$ 识别的语言为：
+
+$$L(M) = \{w \in \Sigma^* \mid \delta^*(q_0, w) \in F\}$$
+
+**定义 7.1.2** (NFA语言)
+NFA $M$ 识别的语言为：
+
+$$L(M) = \{w \in \Sigma^* \mid \delta^*(q_0, w) \cap F \neq \emptyset\}$$
+
+### 7.2 语言性质
+
+**性质 7.2.1** (正则语言封闭性)
+正则语言在以下运算下封闭：
+1. 并集
+2. 交集
+3. 补集
+4. 连接
+5. 星闭包
+
+**证明**:
+通过构造相应的有限自动机证明每种运算的封闭性。
+
+### 7.3 语言等价性
+
+**定义 7.3.1** (自动机等价性)
+两个自动机等价，当且仅当它们识别相同的语言。
+
+**形式化表示**:
+$$M_1 \equiv M_2 \leftrightarrow L(M_1) = L(M_2)$$
 
 ## 8. 应用实例
 
 ### 8.1 词法分析器
 
+**实例 8.1.1** (标识符识别)
+识别编程语言中的标识符：
+
 ```rust
-/// 词法分析器
-pub struct LexicalAnalyzer {
-    pub dfa: DeterministicFiniteAutomaton,
-    pub token_types: Vec<TokenType>,
-}
+// 标识符DFA
+let identifier_dfa = DFA::new(
+    vec!["start", "letter", "letter_digit"],
+    vec!['a'..='z', 'A'..='Z', '0'..='9', '_'],
+    // 转换函数定义
+    "start",
+    vec!["letter", "letter_digit"]
+);
+```
 
-/// 词法单元类型
+### 8.2 数字识别
+
+**实例 8.1.2** (整数识别)
+识别整数常量：
+
+```rust
+// 整数DFA
+let integer_dfa = DFA::new(
+    vec!["start", "digit"],
+    vec!['0'..='9', '+', '-'],
+    // 转换函数定义
+    "start",
+    vec!["digit"]
+);
+```
+
+### 8.3 模式匹配
+
+**实例 8.1.3** (字符串匹配)
+使用自动机进行字符串匹配：
+
+```rust
+// 模式匹配自动机
+let pattern = "abab";
+let pattern_dfa = build_pattern_dfa(pattern);
+```
+
+## 9. 代码实现
+
+### 9.1 Rust实现
+
+```rust
+// 有限自动机基础理论 - Rust实现
+// 文件名: finite_automata_basics.rs
+
+use std::collections::{HashMap, HashSet};
+use std::fmt;
+
+/// 状态类型
+pub type State = String;
+
+/// 符号类型
+pub type Symbol = char;
+
+/// 转换函数类型
+pub type TransitionFunction = HashMap<(State, Symbol), State>;
+
+/// 非确定性转换函数类型
+pub type NFATransitionFunction = HashMap<(State, Symbol), HashSet<State>>;
+
+/// 确定性有限自动机
 #[derive(Debug, Clone)]
-pub enum TokenType {
-    Identifier,
-    Number,
-    Operator,
-    Keyword,
-    Delimiter,
+pub struct DFA {
+    states: HashSet<State>,
+    alphabet: HashSet<Symbol>,
+    transition: TransitionFunction,
+    initial_state: State,
+    accepting_states: HashSet<State>,
 }
 
-impl LexicalAnalyzer {
-    /// 词法分析
-    pub fn analyze(&self, input: &str) -> Vec<Token> {
-        let mut tokens = Vec::new();
-        let mut current_pos = 0;
+impl DFA {
+    /// 创建新的DFA
+    pub fn new(
+        states: Vec<State>,
+        alphabet: Vec<Symbol>,
+        transition: TransitionFunction,
+        initial_state: State,
+        accepting_states: Vec<State>,
+    ) -> Self {
+        let states_set: HashSet<State> = states.into_iter().collect();
+        let alphabet_set: HashSet<Symbol> = alphabet.into_iter().collect();
+        let accepting_set: HashSet<State> = accepting_states.into_iter().collect();
         
-        while current_pos < input.len() {
-            if let Some((token, length)) = self.scan_token(&input[current_pos..]) {
-                tokens.push(token);
-                current_pos += length;
+        DFA {
+            states: states_set,
+            alphabet: alphabet_set,
+            transition,
+            initial_state,
+            accepting_states: accepting_set,
+        }
+    }
+    
+    /// 执行单步转换
+    pub fn step(&self, current_state: &State, symbol: Symbol) -> Option<State> {
+        self.transition.get(&(current_state.clone(), symbol)).cloned()
+    }
+    
+    /// 执行扩展转换
+    pub fn step_extended(&self, current_state: &State, input: &str) -> Option<State> {
+        let mut current = current_state.clone();
+        
+        for symbol in input.chars() {
+            if let Some(next_state) = self.step(&current, symbol) {
+                current = next_state;
             } else {
-                current_pos += 1; // 跳过无效字符
+                return None;
             }
         }
         
-        tokens
+        Some(current)
     }
     
-    /// 扫描词法单元
-    fn scan_token(&self, input: &str) -> Option<(Token, usize)> {
-        // 使用DFA扫描词法单元
-        for i in 1..=input.len() {
-            let substring = &input[..i];
-            if self.dfa.accept(substring) {
-                return Some((Token {
-                    token_type: self.determine_token_type(substring),
-                    value: substring.to_string(),
-                }, i));
-            }
-        }
-        None
-    }
-    
-    /// 确定词法单元类型
-    fn determine_token_type(&self, value: &str) -> TokenType {
-        // 根据值确定类型
-        if value.chars().all(|c| c.is_alphabetic()) {
-            TokenType::Identifier
-        } else if value.chars().all(|c| c.is_numeric()) {
-            TokenType::Number
+    /// 检查字符串是否被接受
+    pub fn accepts(&self, input: &str) -> bool {
+        if let Some(final_state) = self.step_extended(&self.initial_state, input) {
+            self.accepting_states.contains(&final_state)
         } else {
-            TokenType::Operator
+            false
         }
     }
-}
-
-/// 词法单元
-#[derive(Debug, Clone)]
-pub struct Token {
-    pub token_type: TokenType,
-    pub value: String,
-}
-```
-
-### 8.2 模式匹配
-
-```rust
-/// 模式匹配器
-pub struct PatternMatcher {
-    pub dfa: DeterministicFiniteAutomaton,
-}
-
-impl PatternMatcher {
-    /// 模式匹配
-    pub fn match_pattern(&self, text: &str, pattern: &str) -> Vec<usize> {
-        let mut matches = Vec::new();
+    
+    /// 获取DFA识别的语言
+    pub fn language(&self) -> Vec<String> {
+        // 简化实现：返回所有长度不超过3的字符串
+        let mut language = Vec::new();
+        let max_length = 3;
         
-        for i in 0..text.len() {
-            if self.matches_at(text, pattern, i) {
-                matches.push(i);
+        for length in 0..=max_length {
+            self.generate_strings(&self.initial_state, "", length, &mut language);
+        }
+        
+        language
+    }
+    
+    /// 生成字符串
+    fn generate_strings(&self, current_state: &State, current_string: &str, remaining_length: usize, language: &mut Vec<String>) {
+        if remaining_length == 0 {
+            if self.accepting_states.contains(current_state) {
+                language.push(current_string.to_string());
+            }
+            return;
+        }
+        
+        for &symbol in &self.alphabet {
+            if let Some(next_state) = self.step(current_state, symbol) {
+                let new_string = format!("{}{}", current_string, symbol);
+                self.generate_strings(&next_state, &new_string, remaining_length - 1, language);
+            }
+        }
+    }
+    
+    /// 最小化DFA
+    pub fn minimize(&self) -> DFA {
+        // 实现Hopcroft算法进行DFA最小化
+        let equivalence_classes = self.compute_equivalence_classes();
+        self.build_minimal_dfa(&equivalence_classes)
+    }
+    
+    /// 计算等价类
+    fn compute_equivalence_classes(&self) -> HashMap<State, usize> {
+        let mut classes = HashMap::new();
+        let mut class_id = 0;
+        
+        // 初始分类：接受状态和非接受状态
+        for state in &self.states {
+            let class = if self.accepting_states.contains(state) { 0 } else { 1 };
+            classes.insert(state.clone(), class);
+        }
+        
+        // 迭代细化等价类
+        let mut changed = true;
+        while changed {
+            changed = false;
+            let mut new_classes = HashMap::new();
+            let mut new_class_id = 0;
+            
+            for state in &self.states {
+                let mut signature = Vec::new();
+                signature.push(classes[state]);
+                
+                for &symbol in &self.alphabet {
+                    if let Some(next_state) = self.step(state, symbol) {
+                        signature.push(classes[&next_state]);
+                    } else {
+                        signature.push(usize::MAX);
+                    }
+                }
+                
+                let new_class = if let Some(&existing_class) = new_classes.get(&signature) {
+                    existing_class
+                } else {
+                    new_classes.insert(signature, new_class_id);
+                    new_class_id += 1;
+                    new_class_id - 1
+                };
+                
+                if classes[state] != new_class {
+                    changed = true;
+                }
+                classes.insert(state.clone(), new_class);
             }
         }
         
-        matches
+        classes
     }
     
-    /// 在指定位置匹配
-    fn matches_at(&self, text: &str, pattern: &str, start: usize) -> bool {
-        if start + pattern.len() > text.len() {
-            return false;
+    /// 构建最小化DFA
+    fn build_minimal_dfa(&self, equivalence_classes: &HashMap<State, usize>) -> DFA {
+        let mut new_states = HashSet::new();
+        let mut new_transition = HashMap::new();
+        let mut new_accepting_states = HashSet::new();
+        
+        // 构建新状态
+        for class_id in equivalence_classes.values() {
+            new_states.insert(format!("q{}", class_id));
         }
         
-        let substring = &text[start..start + pattern.len()];
-        self.dfa.accept(substring)
+        // 构建新转换函数
+        for state in &self.states {
+            let class_id = equivalence_classes[state];
+            let new_state = format!("q{}", class_id);
+            
+            for &symbol in &self.alphabet {
+                if let Some(next_state) = self.step(state, symbol) {
+                    let next_class_id = equivalence_classes[&next_state];
+                    let new_next_state = format!("q{}", next_class_id);
+                    new_transition.insert((new_state.clone(), symbol), new_next_state);
+                }
+            }
+        }
+        
+        // 构建新接受状态
+        for state in &self.accepting_states {
+            let class_id = equivalence_classes[state];
+            new_accepting_states.insert(format!("q{}", class_id));
+        }
+        
+        DFA {
+            states: new_states,
+            alphabet: self.alphabet.clone(),
+            transition: new_transition,
+            initial_state: format!("q{}", equivalence_classes[&self.initial_state]),
+            accepting_states: new_accepting_states,
+        }
+    }
+}
+
+/// 非确定性有限自动机
+#[derive(Debug, Clone)]
+pub struct NFA {
+    states: HashSet<State>,
+    alphabet: HashSet<Symbol>,
+    transition: NFATransitionFunction,
+    initial_state: State,
+    accepting_states: HashSet<State>,
+}
+
+impl NFA {
+    /// 创建新的NFA
+    pub fn new(
+        states: Vec<State>,
+        alphabet: Vec<Symbol>,
+        transition: NFATransitionFunction,
+        initial_state: State,
+        accepting_states: Vec<State>,
+    ) -> Self {
+        let states_set: HashSet<State> = states.into_iter().collect();
+        let alphabet_set: HashSet<Symbol> = alphabet.into_iter().collect();
+        let accepting_set: HashSet<State> = accepting_states.into_iter().collect();
+        
+        NFA {
+            states: states_set,
+            alphabet: alphabet_set,
+            transition,
+            initial_state,
+            accepting_states: accepting_set,
+        }
     }
     
-    /// 构造模式DFA
-    pub fn build_pattern_dfa(&self, pattern: &str) -> DeterministicFiniteAutomaton {
-        // 构造接受指定模式的DFA
-        let states = vec![
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            State { id: "q1".to_string(), state_type: StateType::Normal },
-        ];
+    /// 执行单步转换
+    pub fn step(&self, current_states: &HashSet<State>, symbol: Symbol) -> HashSet<State> {
+        let mut next_states = HashSet::new();
         
-        let alphabet = pattern.chars().map(|c| Symbol {
-            value: c,
-            symbol_type: SymbolType::Input,
-        }).collect();
+        for state in current_states {
+            if let Some(target_states) = self.transition.get(&(state.clone(), symbol)) {
+                next_states.extend(target_states.clone());
+            }
+        }
         
-        let transitions = vec![
-            Transition {
-                current_state: State { id: "q0".to_string(), state_type: StateType::Initial },
-                input_symbol: Symbol { value: pattern.chars().next().unwrap(), symbol_type: SymbolType::Input },
-                next_state: State { id: "q1".to_string(), state_type: StateType::Normal },
-            },
-        ];
+        next_states
+    }
+    
+    /// 执行扩展转换
+    pub fn step_extended(&self, current_states: &HashSet<State>, input: &str) -> HashSet<State> {
+        let mut current = current_states.clone();
         
-        DeterministicFiniteAutomaton::new(
-            states,
-            alphabet,
-            transitions,
-            State { id: "q0".to_string(), state_type: StateType::Initial },
-            vec![State { id: "q1".to_string(), state_type: StateType::Accepting }],
-        )
+        for symbol in input.chars() {
+            current = self.step(&current, symbol);
+        }
+        
+        current
+    }
+    
+    /// 检查字符串是否被接受
+    pub fn accepts(&self, input: &str) -> bool {
+        let initial_states = vec![self.initial_state.clone()].into_iter().collect();
+        let final_states = self.step_extended(&initial_states, input);
+        
+        !final_states.is_disjoint(&self.accepting_states)
+    }
+    
+    /// 转换为DFA
+    pub fn to_dfa(&self) -> DFA {
+        let mut dfa_states = HashSet::new();
+        let mut dfa_transition = HashMap::new();
+        let mut dfa_accepting_states = HashSet::new();
+        
+        // 初始状态
+        let initial_dfa_state = vec![self.initial_state.clone()].into_iter().collect();
+        dfa_states.insert(self.state_set_to_string(&initial_dfa_state));
+        
+        // 使用队列进行广度优先搜索
+        let mut queue = vec![initial_dfa_state];
+        let mut processed = HashSet::new();
+        
+        while let Some(current_states) = queue.pop() {
+            let current_state_str = self.state_set_to_string(&current_states);
+            
+            if processed.contains(&current_state_str) {
+                continue;
+            }
+            processed.insert(current_state_str.clone());
+            
+            // 检查是否为接受状态
+            if !current_states.is_disjoint(&self.accepting_states) {
+                dfa_accepting_states.insert(current_state_str.clone());
+            }
+            
+            // 为每个输入符号计算转换
+            for &symbol in &self.alphabet {
+                let next_states = self.step(&current_states, symbol);
+                let next_state_str = self.state_set_to_string(&next_states);
+                
+                if !next_states.is_empty() {
+                    dfa_states.insert(next_state_str.clone());
+                    dfa_transition.insert((current_state_str.clone(), symbol), next_state_str.clone());
+                    
+                    if !processed.contains(&next_state_str) {
+                        queue.push(next_states);
+                    }
+                }
+            }
+        }
+        
+        DFA {
+            states: dfa_states,
+            alphabet: self.alphabet.clone(),
+            transition: dfa_transition,
+            initial_state: self.state_set_to_string(&initial_dfa_state),
+            accepting_states: dfa_accepting_states,
+        }
+    }
+    
+    /// 将状态集合转换为字符串表示
+    fn state_set_to_string(&self, states: &HashSet<State>) -> String {
+        let mut sorted_states: Vec<_> = states.iter().collect();
+        sorted_states.sort();
+        format!("{{{}}}", sorted_states.join(","))
+    }
+}
+
+/// 自动机构造器
+pub struct AutomataBuilder;
+
+impl AutomataBuilder {
+    /// 构造识别特定字符串的DFA
+    pub fn build_string_dfa(pattern: &str) -> DFA {
+        let mut states = Vec::new();
+        let mut transition = HashMap::new();
+        let mut accepting_states = Vec::new();
+        
+        // 创建状态
+        for i in 0..=pattern.len() {
+            states.push(format!("q{}", i));
+        }
+        
+        // 创建转换
+        for (i, &symbol) in pattern.as_bytes().iter().enumerate() {
+            let current_state = format!("q{}", i);
+            let next_state = format!("q{}", i + 1);
+            transition.insert((current_state, symbol as char), next_state);
+        }
+        
+        // 添加失败转换
+        for i in 0..pattern.len() {
+            let current_state = format!("q{}", i);
+            for c in b'a'..=b'z' {
+                let symbol = c as char;
+                if symbol != pattern.chars().nth(i).unwrap() {
+                    // 计算失败状态
+                    let mut failure_state = 0;
+                    for j in 0..i {
+                        if pattern[..j+1] == pattern[i-j..i+1] {
+                            failure_state = j + 1;
+                        }
+                    }
+                    transition.insert((current_state.clone(), symbol), format!("q{}", failure_state));
+                }
+            }
+        }
+        
+        accepting_states.push(format!("q{}", pattern.len()));
+        
+        DFA::new(states, vec!['a', 'b', 'c'], transition, "q0".to_string(), accepting_states)
+    }
+    
+    /// 构造识别正则表达式的NFA
+    pub fn build_regex_nfa(regex: &str) -> NFA {
+        // 简化实现：只处理基本的正则表达式
+        let mut states = Vec::new();
+        let mut transition = HashMap::new();
+        let mut accepting_states = Vec::new();
+        
+        // 创建状态
+        states.push("q0".to_string());
+        states.push("q1".to_string());
+        
+        // 创建转换
+        for c in regex.chars() {
+            if c.is_alphanumeric() {
+                let mut target_states = HashSet::new();
+                target_states.insert("q1".to_string());
+                transition.insert(("q0".to_string(), c), target_states);
+            }
+        }
+        
+        accepting_states.push("q1".to_string());
+        
+        NFA::new(states, vec!['a', 'b', 'c'], transition, "q0".to_string(), accepting_states)
+    }
+}
+
+/// 测试模块
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_dfa_construction() {
+        let mut transition = HashMap::new();
+        transition.insert(("q0".to_string(), 'a'), "q1".to_string());
+        transition.insert(("q1".to_string(), 'b'), "q2".to_string());
+        transition.insert(("q2".to_string(), 'a'), "q1".to_string());
+        
+        let dfa = DFA::new(
+            vec!["q0".to_string(), "q1".to_string(), "q2".to_string()],
+            vec!['a', 'b'],
+            transition,
+            "q0".to_string(),
+            vec!["q2".to_string()],
+        );
+        
+        assert!(dfa.accepts("aba"));
+        assert!(!dfa.accepts("ab"));
+    }
+
+    #[test]
+    fn test_nfa_construction() {
+        let mut transition = HashMap::new();
+        let mut target_states = HashSet::new();
+        target_states.insert("q1".to_string());
+        target_states.insert("q2".to_string());
+        transition.insert(("q0".to_string(), 'a'), target_states);
+        
+        let nfa = NFA::new(
+            vec!["q0".to_string(), "q1".to_string(), "q2".to_string()],
+            vec!['a', 'b'],
+            transition,
+            "q0".to_string(),
+            vec!["q1".to_string(), "q2".to_string()],
+        );
+        
+        assert!(nfa.accepts("a"));
+    }
+
+    #[test]
+    fn test_nfa_to_dfa_conversion() {
+        let mut transition = HashMap::new();
+        let mut target_states = HashSet::new();
+        target_states.insert("q1".to_string());
+        transition.insert(("q0".to_string(), 'a'), target_states);
+        
+        let nfa = NFA::new(
+            vec!["q0".to_string(), "q1".to_string()],
+            vec!['a'],
+            transition,
+            "q0".to_string(),
+            vec!["q1".to_string()],
+        );
+        
+        let dfa = nfa.to_dfa();
+        assert!(dfa.accepts("a"));
+    }
+
+    #[test]
+    fn test_string_pattern_dfa() {
+        let dfa = AutomataBuilder::build_string_dfa("aba");
+        assert!(dfa.accepts("aba"));
+        assert!(!dfa.accepts("abb"));
     }
 }
 ```
 
-## 9. 参考文献
+### 9.2 Haskell实现
 
-1. Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). *Introduction to Automata Theory, Languages, and Computation*. Pearson.
-2. Sipser, M. (2012). *Introduction to the Theory of Computation*. Cengage Learning.
-3. Kozen, D. C. (1997). *Automata and Computability*. Springer.
-4. Lewis, H. R., & Papadimitriou, C. H. (1998). *Elements of the Theory of Computation*. Prentice Hall.
-5. Hopcroft, J. E. (1971). "An n log n algorithm for minimizing states in a finite automaton". *Theory of Machines and Computations*.
-6. Moore, E. F. (1956). "Gedanken-experiments on sequential machines". *Automata Studies*.
-7. Myhill, J. (1957). "Finite automata and the representation of events". *WADD TR-57-624*.
-8. Nerode, A. (1958). "Linear automaton transformations". *Proceedings of the American Mathematical Society*.
+```haskell
+-- 有限自动机基础理论 - Haskell实现
+-- 文件名: FiniteAutomataBasics.hs
+
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
+module FiniteAutomataBasics where
+
+import Data.Set (Set)
+import qualified Data.Set as Set
+import Data.Map (Map)
+import qualified Data.Map as Map
+import Data.List (find, nub)
+
+-- 状态类型
+type State = String
+
+-- 符号类型
+type Symbol = Char
+
+-- 确定性有限自动机
+data DFA = DFA
+  { states :: Set State
+  , alphabet :: Set Symbol
+  , transition :: Map (State, Symbol) State
+  , initialState :: State
+  , acceptingStates :: Set State
+  }
+  deriving (Show, Eq)
+
+-- 非确定性有限自动机
+data NFA = NFA
+  { nfaStates :: Set State
+  , nfaAlphabet :: Set Symbol
+  , nfaTransition :: Map (State, Symbol) (Set State)
+  , nfaInitialState :: State
+  , nfaAcceptingStates :: Set State
+  }
+  deriving (Show, Eq)
+
+-- 创建DFA
+makeDFA :: [State] -> [Symbol] -> [(State, Symbol, State)] -> State -> [State] -> DFA
+makeDFA statesList alphabetList transitions initial accepting = DFA
+  { states = Set.fromList statesList
+  , alphabet = Set.fromList alphabetList
+  , transition = Map.fromList [(s, a, t) | (s, a, t) <- transitions]
+  , initialState = initial
+  , acceptingStates = Set.fromList accepting
+  }
+
+-- 创建NFA
+makeNFA :: [State] -> [Symbol] -> [(State, Symbol, [State])] -> State -> [State] -> NFA
+makeNFA statesList alphabetList transitions initial accepting = NFA
+  { nfaStates = Set.fromList statesList
+  , nfaAlphabet = Set.fromList alphabetList
+  , nfaTransition = Map.fromList [(s, a, Set.fromList ts) | (s, a, ts) <- transitions]
+  , nfaInitialState = initial
+  , nfaAcceptingStates = Set.fromList accepting
+  }
+
+-- DFA单步转换
+dfaStep :: DFA -> State -> Symbol -> Maybe State
+dfaStep dfa state symbol = Map.lookup (state, symbol) (transition dfa)
+
+-- DFA扩展转换
+dfaStepExtended :: DFA -> State -> String -> Maybe State
+dfaStepExtended dfa state [] = Just state
+dfaStepExtended dfa state (c:cs) = do
+  nextState <- dfaStep dfa state c
+  dfaStepExtended dfa nextState cs
+
+-- DFA接受检查
+dfaAccepts :: DFA -> String -> Bool
+dfaAccepts dfa input = case dfaStepExtended dfa (initialState dfa) input of
+  Just finalState -> Set.member finalState (acceptingStates dfa)
+  Nothing -> False
+
+-- NFA单步转换
+nfaStep :: NFA -> Set State -> Symbol -> Set State
+nfaStep nfa currentStates symbol = Set.unions [targetStates | state <- Set.toList currentStates, targetStates <- maybe [] (:[]) (Map.lookup (state, symbol) (nfaTransition nfa))]
+
+-- NFA扩展转换
+nfaStepExtended :: NFA -> Set State -> String -> Set State
+nfaStepExtended nfa currentStates [] = currentStates
+nfaStepExtended nfa currentStates (c:cs) = nfaStepExtended nfa (nfaStep nfa currentStates c) cs
+
+-- NFA接受检查
+nfaAccepts :: NFA -> String -> Bool
+nfaAccepts nfa input = not $ Set.null $ Set.intersection finalStates (nfaAcceptingStates nfa)
+  where
+    initialStates = Set.singleton (nfaInitialState nfa)
+    finalStates = nfaStepExtended nfa initialStates input
+
+-- NFA转DFA
+nfaToDFA :: NFA -> DFA
+nfaToDFA nfa = DFA
+  { states = dfaStates
+  , alphabet = nfaAlphabet nfa
+  , transition = dfaTransition
+  , initialState = stateSetToString initialDFAState
+  , acceptingStates = dfaAcceptingStates
+  }
+  where
+    initialDFAState = Set.singleton (nfaInitialState nfa)
+    (dfaStates, dfaTransition, dfaAcceptingStates) = buildDFA nfa initialDFAState Set.empty Map.empty Set.empty
+
+-- 构建DFA
+buildDFA :: NFA -> Set State -> Set (Set State) -> Map (String, Symbol) State -> Set String -> (Set String, Map (String, Symbol) State, Set String)
+buildDFA nfa currentStates processedStates transitions acceptingStates
+  | Set.member currentStates processedStates = (Set.singleton (stateSetToString currentStates), transitions, acceptingStates)
+  | otherwise = (newStates, newTransitions, newAcceptingStates)
+  where
+    currentStateStr = stateSetToString currentStates
+    newProcessedStates = Set.insert currentStates processedStates
+    newAcceptingStates = if not (Set.null (Set.intersection currentStates (nfaAcceptingStates nfa)))
+      then Set.insert currentStateStr acceptingStates
+      else acceptingStates
+    
+    (newStates, newTransitions) = foldl addTransitions (Set.singleton currentStateStr, transitions) (Set.toList (nfaAlphabet nfa))
+    
+    addTransitions (states, trans) symbol = (states, Map.insert (currentStateStr, symbol) nextStateStr trans)
+      where
+        nextStates = nfaStep nfa currentStates symbol
+        nextStateStr = stateSetToString nextStates
+        newStates = Set.insert nextStateStr states
+
+-- 状态集合转字符串
+stateSetToString :: Set State -> String
+stateSetToString states = "{" ++ intercalate "," (Set.toList states) ++ "}"
+
+-- 字符串分割
+intercalate :: String -> [String] -> String
+intercalate _ [] = ""
+intercalate _ [x] = x
+intercalate sep (x:xs) = x ++ sep ++ intercalate sep xs
+
+-- DFA最小化
+minimizeDFA :: DFA -> DFA
+minimizeDFA dfa = buildMinimalDFA dfa (computeEquivalenceClasses dfa)
+
+-- 计算等价类
+computeEquivalenceClasses :: DFA -> Map State Int
+computeEquivalenceClasses dfa = iterateRefinement initialClasses
+  where
+    initialClasses = Map.fromList [(state, if Set.member state (acceptingStates dfa) then 0 else 1) | state <- Set.toList (states dfa)]
+    
+    iterateRefinement classes = if changed then iterateRefinement newClasses else classes
+      where
+        (changed, newClasses) = refineClasses dfa classes
+
+-- 细化等价类
+refineClasses :: DFA -> Map State Int -> (Bool, Map State Int)
+refineClasses dfa classes = (changed, newClasses)
+  where
+    signatures = Map.fromList [(state, computeSignature dfa classes state) | state <- Set.toList (states dfa)]
+    newClasses = assignNewClasses signatures
+    changed = any (\state -> Map.findWithDefault 0 state classes /= Map.findWithDefault 0 state newClasses) (Set.toList (states dfa))
+
+-- 计算状态签名
+computeSignature :: DFA -> Map State Int -> State -> [Int]
+computeSignature dfa classes state = currentClass : [Map.findWithDefault (-1) (state, symbol) (transition dfa) | symbol <- Set.toList (alphabet dfa)]
+  where
+    currentClass = Map.findWithDefault 0 state classes
+
+-- 分配新类
+assignNewClasses :: Map State [Int] -> Map State Int
+assignNewClasses signatures = Map.fromList [(state, classId) | (state, classId) <- zip (Map.keys signatures) [0..]]
+  where
+    uniqueSignatures = nub (Map.elems signatures)
+    classId = Map.fromList (zip uniqueSignatures [0..])
+
+-- 构建最小化DFA
+buildMinimalDFA :: DFA -> Map State Int -> DFA
+buildMinimalDFA dfa classes = DFA
+  { states = newStates
+  , alphabet = alphabet dfa
+  , transition = newTransition
+  , initialState = newInitialState
+  , acceptingStates = newAcceptingStates
+  }
+  where
+    newStates = Set.fromList [show classId | classId <- nub (Map.elems classes)]
+    newInitialState = show (Map.findWithDefault 0 (initialState dfa) classes)
+    newAcceptingStates = Set.fromList [show classId | (state, classId) <- Map.toList classes, Set.member state (acceptingStates dfa)]
+    newTransition = Map.fromList [((show classId, symbol), show targetClassId) | (state, classId) <- Map.toList classes, symbol <- Set.toList (alphabet dfa), Just targetState <- [Map.lookup (state, symbol) (transition dfa)], let targetClassId = Map.findWithDefault 0 targetState classes]
+
+-- 自动机构造器
+class AutomataBuilder where
+  buildStringDFA :: String -> DFA
+  buildRegexNFA :: String -> NFA
+
+-- 实例化自动机构造器
+instance AutomataBuilder where
+  buildStringDFA pattern = makeDFA states alphabet transitions "q0" [last states]
+    where
+      states = ["q" ++ show i | i <- [0..length pattern]]
+      alphabet = nub pattern
+      transitions = [(states !! i, pattern !! i, states !! (i + 1)) | i <- [0..length pattern - 1]]
+  
+  buildRegexNFA regex = makeNFA ["q0", "q1"] alphabet transitions "q0" ["q1"]
+    where
+      alphabet = nub regex
+      transitions = [("q0", c, ["q1"]) | c <- regex, c `elem` ['a'..'z']]
+
+-- 测试函数
+testDFAConstruction :: Bool
+testDFAConstruction =
+  let dfa = makeDFA ["q0", "q1", "q2"] ['a', 'b'] [("q0", 'a', "q1"), ("q1", 'b', "q2")] "q0" ["q2"]
+  in dfaAccepts dfa "ab" && not (dfaAccepts dfa "a")
+
+testNFAConstruction :: Bool
+testNFAConstruction =
+  let nfa = makeNFA ["q0", "q1"] ['a'] [("q0", 'a', ["q1"])] "q0" ["q1"]
+  in nfaAccepts nfa "a"
+
+testNFAtoDFAConversion :: Bool
+testNFAtoDFAConversion =
+  let nfa = makeNFA ["q0", "q1"] ['a'] [("q0", 'a', ["q1"])] "q0" ["q1"]
+      dfa = nfaToDFA nfa
+  in dfaAccepts dfa "a"
+
+testStringPatternDFA :: Bool
+testStringPatternDFA =
+  let dfa = buildStringDFA "aba"
+  in dfaAccepts dfa "aba" && not (dfaAccepts dfa "abb")
+
+-- 运行所有测试
+runAllTests :: IO ()
+runAllTests = do
+  putStrLn "Running finite automata tests..."
+  putStrLn $ "DFA construction test: " ++ show testDFAConstruction
+  putStrLn $ "NFA construction test: " ++ show testNFAConstruction
+  putStrLn $ "NFA to DFA conversion test: " ++ show testNFAtoDFAConversion
+  putStrLn $ "String pattern DFA test: " ++ show testStringPatternDFA
+  putStrLn "All tests completed!"
+```
+
+## 10. 参考文献
+
+1. Hopcroft, John E. and Ullman, Jeffrey D. *Introduction to Automata Theory, Languages, and Computation*. Addison-Wesley, 1979.
+2. Sipser, Michael. *Introduction to the Theory of Computation*. Cengage Learning, 2012.
+3. Kozen, Dexter C. *Automata and Computability*. Springer, 1997.
+4. Lewis, Harry R. and Papadimitriou, Christos H. *Elements of the Theory of Computation*. Prentice Hall, 1998.
+5. Martin, John C. *Introduction to Languages and the Theory of Computation*. McGraw-Hill, 2010.
+6. Linz, Peter. *An Introduction to Formal Languages and Automata*. Jones & Bartlett Learning, 2011.
+7. Sudkamp, Thomas A. *Languages and Machines: An Introduction to the Theory of Computer Science*. Addison-Wesley, 2006.
+8. Davis, Martin D., Sigal, Ron, and Weyuker, Elaine J. *Computability, Complexity, and Languages: Fundamentals of Theoretical Computer Science*. Academic Press, 1994.
+9. Hopcroft, John E., Motwani, Rajeev, and Ullman, Jeffrey D. *Introduction to Automata Theory, Languages, and Computation*. Pearson, 2006.
+10. Arora, Sanjeev and Barak, Boaz. *Computational Complexity: A Modern Approach*. Cambridge University Press, 2009.
 
 ---
 
-**文档信息**:
-- **创建时间**: 2024年12月21日
-- **版本**: v1.0
-- **作者**: 形式科学理论体系重构团队
-- **状态**: ✅ 已完成
-- **相关文档**: 
-  - [形式语言理论](../README.md)
-  - [文法理论](../02_Grammar_Theory/01_Grammar_Basics/01_Grammar_Basics.md)
-  - [语言层次理论](../03_Language_Hierarchy/01_Chomsky_Hierarchy/01_Chomsky_Hierarchy.md) 
+**最后更新时间**: 2024年12月21日  
+**版本**: v1.0  
+**维护者**: 形式科学理论体系重构团队  
+**状态**: ✅ 已完成 
