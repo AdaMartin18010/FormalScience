@@ -320,6 +320,7 @@ $$\text{TotalOrder}(\leq, S) \equiv \text{Reflexive}(\leq) \land \text{Antisymme
 $$a \bmod n = r \text{ 当且仅当 } a = qn + r \text{ 且 } 0 \leq r < n$$
 
 **应用**:
+
 - 密码学中的RSA算法
 - 计算机科学中的哈希函数
 - 数论中的同余理论
@@ -332,6 +333,7 @@ $$a \bmod n = r \text{ 当且仅当 } a = qn + r \text{ 且 } 0 \leq r < n$$
 如果$p$是素数，则对于所有$a$，$a^p \equiv a \pmod{p}$。
 
 **应用**:
+
 - 密码学中的密钥生成
 - 随机数生成
 - 数论研究
@@ -344,6 +346,7 @@ $$a \bmod n = r \text{ 当且仅当 } a = qn + r \text{ 且 } 0 \leq r < n$$
 $$[a_0; a_1, a_2, \ldots] = a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{\ddots}}}$$
 
 **应用**:
+
 - 最佳有理逼近
 - 数论研究
 - 算法分析
@@ -1056,4 +1059,4 @@ runAllTests = do
 **最后更新时间**: 2024年12月21日  
 **版本**: v1.0  
 **维护者**: 形式科学理论体系重构团队  
-**状态**: ✅ 已完成 
+**状态**: ✅ 已完成
