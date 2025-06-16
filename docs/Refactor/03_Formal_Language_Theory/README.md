@@ -1,258 +1,400 @@
-# 形式语言理论 (Formal Language Theory)
+# 03. 形式语言理论 (Formal Language Theory)
 
 ## 📋 概述
 
-形式语言理论是计算机科学和数学的重要基础，研究语言的数学性质、语法结构、语义解释和计算模型。本部分建立了从自动机理论到语义理论的完整形式语言理论体系。
+形式语言理论是计算机科学和语言学的基础理论，研究语言的数学结构和计算性质。本模块建立了完整的形式语言理论框架，包括自动机理论、文法理论、语言层次等核心领域。
 
-## 🏗️ 目录结构
+**构建时间**: 2024年12月20日  
+**版本**: v2.0  
+**状态**: 持续构建中
 
-### 1. 自动机理论 (01_Automata_Theory)
-- **01_Finite_Automata** - 有限自动机
-- **02_Pushdown_Automata** - 下推自动机
-- **03_Turing_Machines** - 图灵机
-- **04_Linear_Bounded_Automata** - 线性有界自动机
-- **05_Advanced_Automata** - 高级自动机
-- **06_Automata_Applications** - 自动机应用
+## 🏗️ 理论结构
 
-### 2. 文法理论 (02_Grammar_Theory)
-- **01_Regular_Grammars** - 正则文法
-- **02_Context_Free_Grammars** - 上下文无关文法
-- **03_Context_Sensitive_Grammars** - 上下文相关文法
-- **04_Unrestricted_Grammars** - 无限制文法
-- **05_Advanced_Grammars** - 高级文法
-- **06_Grammar_Applications** - 文法应用
+### 03.01 自动机理论 (Automata Theory)
+- **03.01.01** 有限自动机基础 (Finite Automata Basics)
+- **03.01.02** 确定性有限自动机 (Deterministic Finite Automata)
+- **03.01.03** 非确定性有限自动机 (Nondeterministic Finite Automata)
+- **03.01.04** ε-非确定性有限自动机 (ε-Nondeterministic Finite Automata)
+- **03.01.05** 下推自动机 (Pushdown Automata)
+- **03.01.06** 图灵机 (Turing Machines)
+- **03.01.07** 线性有界自动机 (Linear Bounded Automata)
+- **03.01.08** 自动机等价性 (Automata Equivalence)
 
-### 3. 语言层次 (03_Language_Hierarchy)
-- **01_Chomsky_Hierarchy** - 乔姆斯基层次
-- **02_Language_Classes** - 语言类
-- **03_Complexity_Classes** - 复杂度类
-- **04_Decidability_Theory** - 可判定性理论
-- **05_Computability_Theory** - 可计算性理论
-- **06_Hierarchy_Applications** - 层次应用
+### 03.02 文法理论 (Grammar Theory)
+- **03.02.01** 文法基础 (Grammar Basics)
+- **03.02.02** 正则文法 (Regular Grammars)
+- **03.02.03** 上下文无关文法 (Context-Free Grammars)
+- **03.02.04** 上下文有关文法 (Context-Sensitive Grammars)
+- **03.02.05** 无限制文法 (Unrestricted Grammars)
+- **03.02.06** 文法范式 (Grammar Normal Forms)
+- **03.02.07** 文法等价性 (Grammar Equivalence)
 
-### 4. 解析理论 (04_Parsing_Theory)
-- **01_Top_Down_Parsing** - 自顶向下解析
-- **02_Bottom_Up_Parsing** - 自底向上解析
-- **03_LL_Parsing** - LL解析
-- **04_LR_Parsing** - LR解析
-- **05_Advanced_Parsing** - 高级解析
-- **06_Parsing_Applications** - 解析应用
+### 03.03 语言层次理论 (Language Hierarchy)
+- **03.03.01** 乔姆斯基层次 (Chomsky Hierarchy)
+- **03.03.02** 正则语言 (Regular Languages)
+- **03.03.03** 上下文无关语言 (Context-Free Languages)
+- **03.03.04** 上下文有关语言 (Context-Sensitive Languages)
+- **03.03.05** 递归可枚举语言 (Recursively Enumerable Languages)
+- **03.03.06** 语言包含关系 (Language Inclusion)
+- **03.03.07** 语言运算 (Language Operations)
 
-### 5. 语义理论 (05_Semantic_Theory)
-- **01_Operational_Semantics** - 操作语义
-- **02_Denotational_Semantics** - 指称语义
-- **03_Axiomatic_Semantics** - 公理语义
-- **04_Algebraic_Semantics** - 代数语义
-- **05_Category_Theory_Semantics** - 范畴论语义
-- **06_Semantic_Applications** - 语义应用
+### 03.04 解析理论 (Parsing Theory)
+- **03.04.01** 解析基础 (Parsing Basics)
+- **03.04.02** LL解析 (LL Parsing)
+- **03.04.03** LR解析 (LR Parsing)
+- **03.04.04** 递归下降解析 (Recursive Descent Parsing)
+- **03.04.05** 预测解析 (Predictive Parsing)
+- **03.04.06** 自底向上解析 (Bottom-Up Parsing)
+- **03.04.07** 解析表构造 (Parse Table Construction)
 
-### 6. 应用 (06_Applications)
-- **01_Compiler_Theory** - 编译理论
-- **02_Programming_Languages** - 编程语言
-- **03_Natural_Language_Processing** - 自然语言处理
-- **04_Formal_Verification** - 形式验证
-- **05_Model_Checking** - 模型检查
-- **06_Language_Design** - 语言设计
+### 03.05 语义理论 (Semantics Theory)
+- **03.05.01** 语义基础 (Semantics Basics)
+- **03.05.02** 操作语义 (Operational Semantics)
+- **03.05.03** 指称语义 (Denotational Semantics)
+- **03.05.04** 公理语义 (Axiomatic Semantics)
+- **03.05.05** 自然语义 (Natural Semantics)
+- **03.05.06** 语义等价性 (Semantic Equivalence)
+- **03.05.07** 语义验证 (Semantic Verification)
 
-## 🎯 核心理论框架
+## 📊 构建进度
 
-### 1. 自动机理论
+### 总体进度
+- **计划文档数**: 20个
+- **已完成文档数**: 0个
+- **完成度**: 0%
+- **当前状态**: 开始构建
 
-**有限自动机**：
-- 确定性有限自动机（DFA）
-- 非确定性有限自动机（NFA）
-- ε-非确定性有限自动机（ε-NFA）
-- 自动机的等价性
-- 自动机的最小化
+### 各子领域进度
+| 子领域 | 计划文档数 | 已完成 | 完成度 | 状态 |
+|--------|------------|--------|--------|------|
+| 03.01 自动机理论 | 8 | 0 | 0% | 🔴 未开始 |
+| 03.02 文法理论 | 7 | 0 | 0% | 🔴 未开始 |
+| 03.03 语言层次理论 | 7 | 0 | 0% | 🔴 未开始 |
+| 03.04 解析理论 | 7 | 0 | 0% | 🔴 未开始 |
+| 03.05 语义理论 | 7 | 0 | 0% | 🔴 未开始 |
 
-**下推自动机**：
-- 确定性下推自动机（DPDA）
-- 非确定性下推自动机（NPDA）
-- 下推自动机与上下文无关文法
-- 下推自动机的应用
+## 🔗 理论关联
 
-**图灵机**：
-- 标准图灵机
-- 非确定性图灵机
-- 多带图灵机
-- 图灵机的计算能力
-- 停机问题
+### 内部关联
+```
+自动机理论
+    ↓
+文法理论 ← 语言层次理论
+    ↓
+解析理论 ← 语义理论
+```
 
-### 2. 文法理论
+### 外部关联
+```
+哲学基础理论
+    ↓
+数学基础理论
+    ↓
+形式语言理论
+    ↓
+类型理论
+```
 
-**正则文法**：
-- 右线性文法
-- 左线性文法
-- 正则文法与有限自动机
-- 正则表达式的等价性
+## 📝 核心概念
 
-**上下文无关文法**：
-- 上下文无关文法的定义
-- 乔姆斯基范式
-- 格雷巴赫范式
-- 上下文无关文法的性质
+### 1. 语言 (Language)
+- **定义**: 语言是字符串的集合
+- **形式化**: $L \subseteq \Sigma^*$ 其中Σ是字母表
+- **应用**: 在编程语言中用于定义语法
 
-**上下文相关文法**：
-- 上下文相关文法的定义
-- 上下文相关文法的应用
-- 上下文相关文法的复杂性
+### 2. 自动机 (Automaton)
+- **定义**: 自动机是处理字符串的抽象机器
+- **形式化**: $M = (Q, \Sigma, \delta, q_0, F)$
+- **应用**: 在编译器中用于词法分析
 
-### 3. 语言层次
+### 3. 文法 (Grammar)
+- **定义**: 文法是生成语言的规则系统
+- **形式化**: $G = (V, T, P, S)$
+- **应用**: 在编程语言中用于定义语法规则
 
-**乔姆斯基层次**：
-- 类型0：递归可枚举语言
-- 类型1：上下文相关语言
-- 类型2：上下文无关语言
-- 类型3：正则语言
+### 4. 解析 (Parsing)
+- **定义**: 解析是将字符串转换为语法树的过程
+- **形式化**: $\text{Parse}: \Sigma^* \rightarrow \text{ParseTree}$
+- **应用**: 在编译器中用于语法分析
 
-**复杂度类**：
-- P类：多项式时间可解问题
-- NP类：非确定性多项式时间问题
-- PSPACE类：多项式空间问题
-- EXPTIME类：指数时间问题
+### 5. 语义 (Semantics)
+- **定义**: 语义是语言表达式的含义
+- **形式化**: $\llbracket \cdot \rrbracket: \text{Expression} \rightarrow \text{Meaning}$
+- **应用**: 在编程语言中用于定义程序含义
 
-### 4. 解析理论
+## 🛠️ 形式化方法
 
-**自顶向下解析**：
-- 递归下降解析
-- LL(k)解析
-- 预测解析
-- 错误恢复
+### 1. 自动机方法
+- 使用状态转换图表示计算过程
+- 通过转移函数定义行为
+- 建立语言识别机制
 
-**自底向上解析**：
-- 移进-归约解析
-- LR(k)解析
-- LALR解析
-- SLR解析
+### 2. 文法方法
+- 使用产生式规则定义语言结构
+- 通过推导过程生成字符串
+- 建立语言生成机制
 
-### 5. 语义理论
+### 3. 代数方法
+- 使用代数结构表示语言性质
+- 通过运算定义语言操作
+- 建立语言代数理论
 
-**操作语义**：
-- 小步语义
-- 大步语义
-- 抽象机语义
-- 操作语义的应用
+## 📚 核心定理
 
-**指称语义**：
-- 域理论
-- 连续函数
-- 不动点理论
-- 指称语义的应用
+### 定理 03.01.01 (DFA与NFA等价性)
+**陈述**: 对于任意非确定性有限自动机，存在等价的确定性有限自动机。
 
-**公理语义**：
-- 霍尔逻辑
-- 最弱前置条件
-- 最强后置条件
-- 公理语义的应用
+**形式化**: 
+$$\forall \text{NFA} N \exists \text{DFA} D (L(N) = L(D))$$
 
-## 📊 内容统计
+**证明**: 略
 
-| 子领域 | 文档数量 | 完成度 | 定理数量 | 代码示例 |
-|--------|----------|--------|----------|----------|
-| 自动机理论 | 6 | 90% | 18 | 12 |
-| 文法理论 | 6 | 85% | 15 | 10 |
-| 语言层次 | 6 | 80% | 12 | 8 |
-| 解析理论 | 6 | 75% | 10 | 9 |
-| 语义理论 | 6 | 85% | 14 | 11 |
-| 应用 | 6 | 70% | 8 | 6 |
+### 定理 03.02.01 (泵引理)
+**陈述**: 如果L是正则语言，则存在泵长度p，使得对于任意长度至少为p的字符串w∈L，可以分解为w=xyz，满足泵引理条件。
 
-**总计**: 36个文档，平均完成度81%，定理数量77个，代码示例56个
+**形式化**: 
+$$L \in \text{REG} \rightarrow \exists p \forall w \in L (|w| \geq p \rightarrow \exists x,y,z (w=xyz \land \text{PumpConditions}(x,y,z)))$$
 
-## 🔗 快速导航
+**证明**: 略
 
-### 核心理论入口
-- [自动机理论](./01_Automata_Theory/README.md)
-- [文法理论](./02_Grammar_Theory/README.md)
-- [语言层次](./03_Language_Hierarchy/README.md)
-- [解析理论](./04_Parsing_Theory/README.md)
-- [语义理论](./05_Semantic_Theory/README.md)
+### 定理 03.03.01 (乔姆斯基层次)
+**陈述**: 语言类形成严格的层次结构：REG ⊂ CFL ⊂ CSL ⊂ REL。
 
-### 应用入口
-- [编译理论](./06_Applications/01_Compiler_Theory/README.md)
-- [编程语言](./06_Applications/02_Programming_Languages/README.md)
-- [自然语言处理](./06_Applications/03_Natural_Language_Processing/README.md)
-- [形式验证](./06_Applications/04_Formal_Verification/README.md)
-- [模型检查](./06_Applications/05_Model_Checking/README.md)
-- [语言设计](./06_Applications/06_Language_Design/README.md)
+**形式化**: 
+$$\text{REG} \subsetneq \text{CFL} \subsetneq \text{CSL} \subsetneq \text{REL}$$
 
-### 关键文档
-- [有限自动机](./01_Automata_Theory/01_Finite_Automata/01_DFA_Theory.md)
-- [上下文无关文法](./02_Grammar_Theory/02_Context_Free_Grammars/01_CFG_Basics.md)
-- [乔姆斯基层次](./03_Language_Hierarchy/01_Chomsky_Hierarchy/01_Hierarchy_Overview.md)
-- [LL解析](./04_Parsing_Theory/03_LL_Parsing/01_LL_Parser_Theory.md)
-- [操作语义](./05_Semantic_Theory/01_Operational_Semantics/01_Operational_Basics.md)
+**证明**: 略
 
-## 📝 形式化规范
+## 💻 代码实现
 
-### 1. 语言概念的形式化
+### Rust实现示例
 
-所有语言概念都必须提供：
-- 严格的数学定义
-- 形式化语法规则
-- 语义解释
-- 计算模型
+```rust
+use std::collections::{HashMap, HashSet};
+use std::fmt;
 
-### 2. 定理证明规范
+// 自动机状态类型
+type State = String;
 
-每个语言理论定理都必须包含：
-- 形式化陈述
-- 严格证明过程
-- 反例分析
-- 应用实例
+// 转移函数类型
+type TransitionFunction = HashMap<(State, char), State>;
 
-### 3. 代码实现规范
+// 有限自动机
+#[derive(Debug, Clone)]
+pub struct FiniteAutomaton {
+    states: HashSet<State>,
+    alphabet: HashSet<char>,
+    transitions: TransitionFunction,
+    initial_state: State,
+    final_states: HashSet<State>,
+}
 
-语言理论的代码实现：
-- 使用Rust或Haskell
-- 包含类型定义
-- 提供算法实现
-- 包含测试用例
+impl FiniteAutomaton {
+    pub fn new(
+        states: HashSet<State>,
+        alphabet: HashSet<char>,
+        transitions: TransitionFunction,
+        initial_state: State,
+        final_states: HashSet<State>,
+    ) -> Self {
+        Self {
+            states,
+            alphabet,
+            transitions,
+            initial_state,
+            final_states,
+        }
+    }
+    
+    pub fn accepts(&self, input: &str) -> bool {
+        let mut current_state = self.initial_state.clone();
+        
+        for c in input.chars() {
+            if let Some(next_state) = self.transitions.get(&(current_state.clone(), c)) {
+                current_state = next_state.clone();
+            } else {
+                return false;
+            }
+        }
+        
+        self.final_states.contains(&current_state)
+    }
+}
 
-## 🔄 理论发展
+// 文法类型
+#[derive(Debug, Clone)]
+pub struct Grammar {
+    variables: HashSet<String>,
+    terminals: HashSet<String>,
+    productions: Vec<Production>,
+    start_symbol: String,
+}
 
-### 1. 基础理论完善
-- 完善自动机理论
-- 建立文法体系
-- 发展语言层次
-- 构建解析理论
+#[derive(Debug, Clone)]
+pub struct Production {
+    left: String,
+    right: Vec<String>,
+}
 
-### 2. 高级理论发展
-- 发展语义理论
-- 建立形式验证
-- 完善模型检查
-- 发展语言设计
+impl Grammar {
+    pub fn new(
+        variables: HashSet<String>,
+        terminals: HashSet<String>,
+        productions: Vec<Production>,
+        start_symbol: String,
+    ) -> Self {
+        Self {
+            variables,
+            terminals,
+            productions,
+            start_symbol,
+        }
+    }
+    
+    pub fn derive(&self, steps: usize) -> Vec<String> {
+        let mut current = vec![self.start_symbol.clone()];
+        let mut result = vec![current.join("")];
+        
+        for _ in 0..steps {
+            let mut next = Vec::new();
+            for sentential_form in &current {
+                for production in &self.productions {
+                    if sentential_form.contains(&production.left) {
+                        let new_form = sentential_form.replace(&production.left, &production.right.join(""));
+                        next.push(new_form);
+                    }
+                }
+            }
+            current = next;
+            if !current.is_empty() {
+                result.push(current[0].clone());
+            }
+        }
+        
+        result
+    }
+}
+```
 
-### 3. 应用导向
-- 语言理论的实际应用
-- 编译器的构造
-- 编程语言的设计
-- 形式化验证
+### Haskell实现示例
+
+```haskell
+-- 自动机状态类型
+type State = String
+
+-- 转移函数类型
+type TransitionFunction = [(State, Char, State)]
+
+-- 有限自动机
+data FiniteAutomaton = FiniteAutomaton
+    { states :: [State]
+    , alphabet :: [Char]
+    , transitions :: TransitionFunction
+    , initialState :: State
+    , finalStates :: [State]
+    }
+
+-- 检查自动机是否接受输入
+accepts :: FiniteAutomaton -> String -> Bool
+accepts automaton input = 
+    let finalState = foldl (step automaton) (initialState automaton) input
+    in finalState `elem` finalStates automaton
+
+-- 单步转移
+step :: FiniteAutomaton -> State -> Char -> State
+step automaton currentState symbol = 
+    case lookup (currentState, symbol) (transitions automaton) of
+        Just nextState -> nextState
+        Nothing -> currentState
+
+-- 文法类型
+data Grammar = Grammar
+    { variables :: [String]
+    , terminals :: [String]
+    , productions :: [Production]
+    , startSymbol :: String
+    }
+
+data Production = Production
+    { left :: String
+    , right :: [String]
+    }
+
+-- 推导
+derive :: Grammar -> Int -> [String]
+derive grammar steps = 
+    let initial = [startSymbol grammar]
+        result = iterate (applyProductions grammar) initial
+    in take (steps + 1) $ map concat result
+
+-- 应用产生式
+applyProductions :: Grammar -> [String] -> [String]
+applyProductions grammar sententialForms = 
+    concatMap (applyAllProductions grammar) sententialForms
+
+applyAllProductions :: Grammar -> String -> [String]
+applyAllProductions grammar sententialForm = 
+    concatMap (applyProduction sententialForm) (productions grammar)
+
+applyProduction :: String -> Production -> [String]
+applyProduction sententialForm production = 
+    let parts = splitOn (left production) sententialForm
+    in if length parts > 1 
+       then [concat $ zipWith (++) parts (replicate (length parts - 1) (concat $ right production) ++ [""])]
+       else []
+```
+
+## 🎯 应用领域
+
+### 1. 编译器设计
+- 词法分析器使用有限自动机
+- 语法分析器使用上下文无关文法
+- 语义分析器使用语义理论
+
+### 2. 自然语言处理
+- 句法分析使用文法理论
+- 语义理解使用语义理论
+- 语言生成使用自动机理论
+
+### 3. 软件工程
+- 形式化规范使用语言理论
+- 程序验证使用语义理论
+- 代码生成使用文法理论
+
+### 4. 人工智能
+- 知识表示使用语言理论
+- 推理系统使用语义理论
+- 学习算法使用自动机理论
 
 ## 📚 参考文献
 
-### 经典语言理论文献
-1. Chomsky, N. *Syntactic Structures*. Mouton, 1957.
-2. Hopcroft, J.E., Motwani, R., & Ullman, J.D. *Introduction to Automata Theory, Languages, and Computation*. Addison-Wesley, 2006.
-3. Sipser, M. *Introduction to the Theory of Computation*. Cengage Learning, 2012.
-4. Aho, A.V., Lam, M.S., Sethi, R., & Ullman, J.D. *Compilers: Principles, Techniques, and Tools*. Addison-Wesley, 2006.
-5. Grune, D., & Jacobs, C.J.H. *Parsing Techniques: A Practical Guide*. Springer, 2008.
+1. **Chomsky, N.** (1956). "Three Models for the Description of Language". *IRE Transactions on Information Theory*.
+2. **Hopcroft, J.E.** (1979). *Introduction to Automata Theory, Languages, and Computation*. Addison-Wesley.
+3. **Sipser, M.** (2012). *Introduction to the Theory of Computation*. Cengage Learning.
+4. **Aho, A.V.** (2006). *Compilers: Principles, Techniques, and Tools*. Pearson.
+5. **Winskel, G.** (1993). *The Formal Semantics of Programming Languages*. MIT Press.
+6. **Plotkin, G.D.** (1981). *A Structural Approach to Operational Semantics*. Aarhus University.
+7. **Scott, D.** (1970). "Outline of a Mathematical Theory of Computation". *Oxford University Computing Laboratory*.
 
-### 现代语言理论文献
-1. Pierce, B.C. *Types and Programming Languages*. MIT Press, 2002.
-2. Winskel, G. *The Formal Semantics of Programming Languages*. MIT Press, 1993.
-3. Plotkin, G.D. *A Structural Approach to Operational Semantics*. Technical Report, 1981.
-4. Scott, D. *Domains for Denotational Semantics*. ICALP, 1982.
-5. Milner, R. *Communication and Concurrency*. Prentice Hall, 1989.
+## 🚀 下一步计划
 
-### 形式化方法文献
-1. Clarke, E.M., Grumberg, O., & Peled, D.A. *Model Checking*. MIT Press, 1999.
-2. Baier, C., & Katoen, J.P. *Principles of Model Checking*. MIT Press, 2008.
-3. Huth, M., & Ryan, M. *Logic in Computer Science: Modelling and Reasoning about Systems*. Cambridge University Press, 2004.
-4. Bradley, A.R., & Manna, Z. *The Calculus of Computation: Decision Procedures with Applications to Verification*. Springer, 2007.
-5. Kroening, D., & Strichman, O. *Decision Procedures: An Algorithmic Point of View*. Springer, 2008.
+### 立即开始 (今天)
+1. 创建有限自动机基础文档
+2. 创建文法基础文档
+3. 建立语言理论关联系统
+
+### 短期目标 (本周内)
+1. 完成自动机理论子领域
+2. 完成文法理论子领域
+3. 开始语言层次理论子领域
+
+### 中期目标 (本月内)
+1. 完成基础语言理论
+2. 开始高级语言理论
+3. 完善语言理论关联
 
 ---
 
-**最后更新时间**: 2024年12月20日  
-**版本**: v1.0  
-**维护者**: 形式语言理论团队
+**构建者**: AI Assistant  
+**最后更新**: 2024年12月20日  
+**版本**: v2.0

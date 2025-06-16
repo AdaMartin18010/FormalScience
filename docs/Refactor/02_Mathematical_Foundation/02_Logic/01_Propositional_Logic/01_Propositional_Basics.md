@@ -1,577 +1,982 @@
-# 命题逻辑基础 (Propositional Logic Basics)
+# 02.02.01 命题逻辑基础 (Propositional Logic Basics)
 
 ## 📋 概述
 
-命题逻辑是逻辑学的基础，研究命题之间的逻辑关系。本文档建立了严格的命题逻辑形式化体系，包括命题的基本概念、逻辑连接词、推理规则和语义解释。
+命题逻辑基础是逻辑学的核心，研究命题的基本结构、逻辑连接词和推理规则。本文档建立了严格的命题逻辑基础理论，为所有其他逻辑理论提供基础。
+
+**构建时间**: 2024年12月20日  
+**版本**: v2.0  
+**状态**: 已完成
 
 ## 📚 目录
 
 1. [基本概念](#1-基本概念)
-2. [逻辑连接词](#2-逻辑连接词)
-3. [命题公式](#3-命题公式)
-4. [推理规则](#4-推理规则)
-5. [语义解释](#5-语义解释)
-6. [命题逻辑定理](#6-命题逻辑定理)
-7. [命题逻辑算法](#7-命题逻辑算法)
+2. [命题语法](#2-命题语法)
+3. [逻辑连接词](#3-逻辑连接词)
+4. [语义解释](#4-语义解释)
+5. [推理规则](#5-推理规则)
+6. [逻辑等价](#6-逻辑等价)
+7. [范式理论](#7-范式理论)
 8. [应用实例](#8-应用实例)
-9. [参考文献](#9-参考文献)
+9. [代码实现](#9-代码实现)
+10. [参考文献](#10-参考文献)
 
 ## 1. 基本概念
 
 ### 1.1 命题的定义
 
-**定义 1.1 (命题)**
-命题是一个有真假值的陈述句。我们用 $p, q, r, \ldots$ 表示命题变元，用 $T$ 表示真，用 $F$ 表示假。
+**定义 1.1.1** (命题)
+命题是具有真假值的陈述句。
 
-**定义 1.2 (原子命题)**
-原子命题是不可再分解的基本命题，也称为命题变元。
+**形式化表示**:
+$$P \in \text{Prop}$$
 
-**定义 1.3 (复合命题)**
+其中Prop是命题集合。
+
+### 1.2 原子命题
+
+**定义 1.2.1** (原子命题)
+原子命题是不可再分解的基本命题。
+
+**形式化表示**:
+$$p, q, r \in \text{Atom}$$
+
+其中Atom是原子命题集合。
+
+### 1.3 复合命题
+
+**定义 1.3.1** (复合命题)
 复合命题是由原子命题通过逻辑连接词构成的命题。
 
-**定义 1.4 (真值)**
-真值是命题的真假性，用 $v(p)$ 表示命题 $p$ 的真值：
-$$v(p) \in \{T, F\}$$
+**形式化表示**:
+$$\phi, \psi, \chi \in \text{Form}$$
 
-### 1.2 命题的基本性质
+其中Form是公式集合。
 
-**公理 1.1 (排中律)**
-对于任意命题 $p$，$p$ 为真或 $p$ 为假：
-$$\forall p(v(p) = T \lor v(p) = F)$$
+## 2. 命题语法
 
-**公理 1.2 (矛盾律)**
-对于任意命题 $p$，$p$ 不能同时为真和为假：
-$$\forall p(\neg(v(p) = T \land v(p) = F))$$
+### 2.1 语法规则
 
-**公理 1.3 (同一律)**
-对于任意命题 $p$，$p$ 等价于 $p$：
-$$\forall p(p \leftrightarrow p)$$
+**规则 2.1.1** (原子命题)
+原子命题是公式。
 
-## 2. 逻辑连接词
+**形式化表示**:
+$$\frac{p \in \text{Atom}}{p \in \text{Form}}$$
 
-### 2.1 基本连接词
+**规则 2.1.2** (否定)
+如果φ是公式，则¬φ是公式。
 
-**定义 2.1 (否定)**
-否定连接词 $\neg$ 表示"非"，满足：
-- $v(\neg p) = T$ 当且仅当 $v(p) = F$
-- $v(\neg p) = F$ 当且仅当 $v(p) = T$
+**形式化表示**:
+$$\frac{\phi \in \text{Form}}{\neg \phi \in \text{Form}}$$
 
-**定义 2.2 (合取)**
-合取连接词 $\land$ 表示"且"，满足：
-- $v(p \land q) = T$ 当且仅当 $v(p) = T$ 且 $v(q) = T$
-- $v(p \land q) = F$ 当且仅当 $v(p) = F$ 或 $v(q) = F$
+**规则 2.1.3** (合取)
+如果φ和ψ是公式，则φ∧ψ是公式。
 
-**定义 2.3 (析取)**
-析取连接词 $\lor$ 表示"或"，满足：
-- $v(p \lor q) = T$ 当且仅当 $v(p) = T$ 或 $v(q) = T$
-- $v(p \lor q) = F$ 当且仅当 $v(p) = F$ 且 $v(q) = F$
+**形式化表示**:
+$$\frac{\phi \in \text{Form} \quad \psi \in \text{Form}}{\phi \land \psi \in \text{Form}}$$
 
-**定义 2.4 (蕴含)**
-蕴含连接词 $\rightarrow$ 表示"如果...那么"，满足：
-- $v(p \rightarrow q) = T$ 当且仅当 $v(p) = F$ 或 $v(q) = T$
-- $v(p \rightarrow q) = F$ 当且仅当 $v(p) = T$ 且 $v(q) = F$
+**规则 2.1.4** (析取)
+如果φ和ψ是公式，则φ∨ψ是公式。
 
-**定义 2.5 (等价)**
-等价连接词 $\leftrightarrow$ 表示"当且仅当"，满足：
-- $v(p \leftrightarrow q) = T$ 当且仅当 $v(p) = v(q)$
-- $v(p \leftrightarrow q) = F$ 当且仅当 $v(p) \neq v(q)$
+**形式化表示**:
+$$\frac{\phi \in \text{Form} \quad \psi \in \text{Form}}{\phi \lor \psi \in \text{Form}}$$
 
-### 2.2 真值表
+**规则 2.1.5** (蕴含)
+如果φ和ψ是公式，则φ→ψ是公式。
 
-**表 2.1 (基本连接词真值表)**
+**形式化表示**:
+$$\frac{\phi \in \text{Form} \quad \psi \in \text{Form}}{\phi \rightarrow \psi \in \text{Form}}$$
 
-| $p$ | $q$ | $\neg p$ | $p \land q$ | $p \lor q$ | $p \rightarrow q$ | $p \leftrightarrow q$ |
-|-----|-----|----------|-------------|------------|-------------------|----------------------|
-| T   | T   | F        | T           | T          | T                 | T                    |
-| T   | F   | F        | F           | T          | F                 | F                    |
-| F   | T   | T        | F           | T          | T                 | F                    |
-| F   | F   | T        | F           | F          | T                 | T                    |
+**规则 2.1.6** (等价)
+如果φ和ψ是公式，则φ↔ψ是公式。
 
-### 2.3 连接词的性质
+**形式化表示**:
+$$\frac{\phi \in \text{Form} \quad \psi \in \text{Form}}{\phi \leftrightarrow \psi \in \text{Form}}$$
 
-**定理 2.1 (德摩根律)**
-1. $\neg(p \land q) \leftrightarrow \neg p \lor \neg q$
-2. $\neg(p \lor q) \leftrightarrow \neg p \land \neg q$
+### 2.2 语法树
 
-**定理 2.2 (分配律)**
-1. $p \land (q \lor r) \leftrightarrow (p \land q) \lor (p \land r)$
-2. $p \lor (q \land r) \leftrightarrow (p \lor q) \land (p \lor r)$
+**定义 2.2.1** (语法树)
+公式的语法树是表示公式结构的树形图。
 
-**定理 2.3 (双重否定律)**
-$\neg \neg p \leftrightarrow p$
+**示例**:
 
-## 3. 命题公式
+- 公式φ∧(ψ∨χ)的语法树：
 
-### 3.1 公式的定义
-
-**定义 3.1 (命题公式)**
-命题公式的递归定义：
-1. 原子命题是公式
-2. 如果 $\phi$ 是公式，那么 $\neg \phi$ 是公式
-3. 如果 $\phi$ 和 $\psi$ 是公式，那么 $(\phi \land \psi)$、$(\phi \lor \psi)$、$(\phi \rightarrow \psi)$、$(\phi \leftrightarrow \psi)$ 是公式
-4. 只有通过以上规则构造的才是公式
-
-**定义 3.2 (子公式)**
-子公式是公式的组成部分，递归定义：
-1. 公式 $\phi$ 是 $\phi$ 的子公式
-2. 如果 $\neg \psi$ 是 $\phi$ 的子公式，那么 $\psi$ 是 $\phi$ 的子公式
-3. 如果 $(\psi_1 \circ \psi_2)$ 是 $\phi$ 的子公式，那么 $\psi_1$ 和 $\psi_2$ 是 $\phi$ 的子公式
-
-### 3.2 公式的分类
-
-**定义 3.3 (重言式)**
-重言式是在所有真值赋值下都为真的公式：
-$$\forall v(v(\phi) = T)$$
-
-**定义 3.4 (矛盾式)**
-矛盾式是在所有真值赋值下都为假的公式：
-$$\forall v(v(\phi) = F)$$
-
-**定义 3.5 (可满足式)**
-可满足式是至少在一个真值赋值下为真的公式：
-$$\exists v(v(\phi) = T)$$
-
-**定义 3.6 (偶然式)**
-偶然式既不是重言式也不是矛盾式的公式。
-
-### 3.3 公式的等价
-
-**定义 3.7 (逻辑等价)**
-两个公式 $\phi$ 和 $\psi$ 逻辑等价，记作 $\phi \equiv \psi$，当且仅当在所有真值赋值下它们具有相同的真值：
-$$\phi \equiv \psi \leftrightarrow \forall v(v(\phi) = v(\psi))$$
-
-**定理 3.1 (等价关系)**
-逻辑等价是等价关系：
-1. 自反性：$\phi \equiv \phi$
-2. 对称性：$\phi \equiv \psi \rightarrow \psi \equiv \phi$
-3. 传递性：$(\phi \equiv \psi \land \psi \equiv \chi) \rightarrow \phi \equiv \chi$
-
-## 4. 推理规则
-
-### 4.1 基本推理规则
-
-**规则 4.1 (肯定前件)**
-$$\frac{p \rightarrow q \quad p}{q} \quad \text{(MP)}$$
-
-**规则 4.2 (否定后件)**
-$$\frac{p \rightarrow q \quad \neg q}{\neg p} \quad \text{(MT)}$$
-
-**规则 4.3 (假言三段论)**
-$$\frac{p \rightarrow q \quad q \rightarrow r}{p \rightarrow r} \quad \text{(HS)}$$
-
-**规则 4.4 (构造性二难)**
-$$\frac{p \rightarrow q \quad r \rightarrow s \quad p \lor r}{q \lor s} \quad \text{(CD)}$$
-
-**规则 4.5 (析取三段论)**
-$$\frac{p \lor q \quad \neg p}{q} \quad \text{(DS)}$$
-
-### 4.2 导出规则
-
-**规则 4.6 (合取引入)**
-$$\frac{p \quad q}{p \land q} \quad \text{(Conj)}$$
-
-**规则 4.7 (合取消除)**
-$$\frac{p \land q}{p} \quad \text{(Simp)}$$
-
-**规则 4.8 (析取引入)**
-$$\frac{p}{p \lor q} \quad \text{(Add)}$$
-
-**规则 4.9 (等价替换)**
-$$\frac{p \leftrightarrow q \quad \phi(p)}{\phi(q)} \quad \text{(Equiv)}$$
-
-### 4.3 证明系统
-
-**定义 4.1 (证明)**
-证明是从前提推出结论的有限序列，每一步都应用了推理规则。
-
-**定义 4.2 (有效性)**
-推理是有效的，当且仅当前提为真时结论必为真。
-
-**定义 4.3 (完备性)**
-证明系统是完备的，当且仅当所有有效的推理都能在系统中得到证明。
-
-## 5. 语义解释
-
-### 5.1 真值赋值
-
-**定义 5.1 (真值赋值)**
-真值赋值是从命题变元到真值的函数：
-$$v: \mathcal{P} \rightarrow \{T, F\}$$
-其中 $\mathcal{P}$ 是命题变元的集合。
-
-**定义 5.2 (真值赋值扩展)**
-真值赋值可以扩展到所有公式：
-1. $v(\neg \phi) = T$ 当且仅当 $v(\phi) = F$
-2. $v(\phi \land \psi) = T$ 当且仅当 $v(\phi) = T$ 且 $v(\psi) = T$
-3. $v(\phi \lor \psi) = T$ 当且仅当 $v(\phi) = T$ 或 $v(\psi) = T$
-4. $v(\phi \rightarrow \psi) = T$ 当且仅当 $v(\phi) = F$ 或 $v(\psi) = T$
-5. $v(\phi \leftrightarrow \psi) = T$ 当且仅当 $v(\phi) = v(\psi)$
-
-### 5.2 语义概念
-
-**定义 5.3 (满足)**
-真值赋值 $v$ 满足公式 $\phi$，记作 $v \models \phi$，当且仅当 $v(\phi) = T$。
-
-**定义 5.4 (逻辑蕴含)**
-公式集 $\Gamma$ 逻辑蕴含公式 $\phi$，记作 $\Gamma \models \phi$，当且仅当所有满足 $\Gamma$ 的真值赋值都满足 $\phi$。
-
-**定义 5.5 (逻辑等价)**
-公式 $\phi$ 和 $\psi$ 逻辑等价，记作 $\phi \models \psi$，当且仅当 $\phi \models \psi$ 且 $\psi \models \phi$。
-
-### 5.3 语义定理
-
-**定理 5.1 (可靠性定理)**
-如果 $\Gamma \vdash \phi$，那么 $\Gamma \models \phi$。
-
-**定理 5.2 (完备性定理)**
-如果 $\Gamma \models \phi$，那么 $\Gamma \vdash \phi$。
-
-**定理 5.3 (紧致性定理)**
-如果 $\Gamma \models \phi$，那么存在 $\Gamma$ 的有限子集 $\Delta$ 使得 $\Delta \models \phi$。
-
-## 6. 命题逻辑定理
-
-### 6.1 基本定理
-
-**定理 6.1 (重言式定理)**
-如果 $\phi$ 是重言式，那么 $\vdash \phi$。
-
-**定理 6.2 (矛盾式定理)**
-如果 $\phi$ 是矛盾式，那么 $\phi \vdash \psi$ 对于任意公式 $\psi$。
-
-**定理 6.3 (可满足性定理)**
-公式 $\phi$ 是可满足的，当且仅当 $\neg \phi$ 不是重言式。
-
-### 6.2 高级定理
-
-**定理 6.4 (析取范式定理)**
-每个命题公式都等价于一个析取范式。
-
-**定理 6.5 (合取范式定理)**
-每个命题公式都等价于一个合取范式。
-
-**定理 6.6 (主析取范式定理)**
-每个命题公式都等价于唯一的主析取范式。
-
-**定理 6.7 (主合取范式定理)**
-每个命题公式都等价于唯一的主合取范式。
-
-### 6.3 复杂性定理
-
-**定理 6.8 (可满足性问题)**
-命题逻辑的可满足性问题是NP完全问题。
-
-**定理 6.9 (重言式问题)**
-命题逻辑的重言式问题是co-NP完全问题。
-
-**定理 6.10 (等价性问题)**
-命题逻辑的等价性问题是co-NP完全问题。
-
-## 7. 命题逻辑算法
-
-### 7.1 真值表算法
-
-```rust
-/// 真值表算法
-pub trait TruthTable {
-    /// 计算公式的真值表
-    fn truth_table(&self, formula: &Formula) -> Vec<TruthAssignment>;
-    
-    /// 检查公式是否为重言式
-    fn is_tautology(&self, formula: &Formula) -> bool;
-    
-    /// 检查公式是否为矛盾式
-    fn is_contradiction(&self, formula: &Formula) -> bool;
-    
-    /// 检查公式是否为可满足式
-    fn is_satisfiable(&self, formula: &Formula) -> bool;
-    
-    /// 检查两个公式是否等价
-    fn are_equivalent(&self, formula1: &Formula, formula2: &Formula) -> bool;
-}
-
-/// 真值表实现
-pub struct TruthTableImpl {
-    variables: Vec<Variable>,
-}
-
-impl TruthTable for TruthTableImpl {
-    fn truth_table(&self, formula: &Formula) -> Vec<TruthAssignment> {
-        let mut assignments = Vec::new();
-        let num_vars = self.variables.len();
-        
-        // 生成所有可能的真值赋值
-        for i in 0..(1 << num_vars) {
-            let mut assignment = TruthAssignment::new();
-            
-            for (j, var) in self.variables.iter().enumerate() {
-                let value = (i & (1 << j)) != 0;
-                assignment.set(var.clone(), value);
-            }
-            
-            let result = self.evaluate(formula, &assignment);
-            assignment.set_result(result);
-            assignments.push(assignment);
-        }
-        
-        assignments
-    }
-    
-    fn is_tautology(&self, formula: &Formula) -> bool {
-        self.truth_table(formula).iter().all(|a| a.result())
-    }
-    
-    fn is_contradiction(&self, formula: &Formula) -> bool {
-        self.truth_table(formula).iter().all(|a| !a.result())
-    }
-    
-    fn is_satisfiable(&self, formula: &Formula) -> bool {
-        self.truth_table(formula).iter().any(|a| a.result())
-    }
-    
-    fn are_equivalent(&self, formula1: &Formula, formula2: &Formula) -> bool {
-        let table1 = self.truth_table(formula1);
-        let table2 = self.truth_table(formula2);
-        
-        table1.iter().zip(table2.iter()).all(|(a1, a2)| a1.result() == a2.result())
-    }
-    
-    fn evaluate(&self, formula: &Formula, assignment: &TruthAssignment) -> bool {
-        match formula {
-            Formula::Variable(var) => assignment.get(var),
-            Formula::Negation(inner) => !self.evaluate(inner, assignment),
-            Formula::Conjunction(left, right) => {
-                self.evaluate(left, assignment) && self.evaluate(right, assignment)
-            }
-            Formula::Disjunction(left, right) => {
-                self.evaluate(left, assignment) || self.evaluate(right, assignment)
-            }
-            Formula::Implication(left, right) => {
-                !self.evaluate(left, assignment) || self.evaluate(right, assignment)
-            }
-            Formula::Equivalence(left, right) => {
-                self.evaluate(left, assignment) == self.evaluate(right, assignment)
-            }
-        }
-    }
-}
+```text
+    ∧
+   / \
+  φ   ∨
+     / \
+    ψ   χ
 ```
 
-### 7.2 证明搜索算法
+## 3. 逻辑连接词
 
-```rust
-/// 证明搜索算法
-pub trait ProofSearch {
-    /// 搜索证明
-    fn search_proof(&self, premises: &[Formula], conclusion: &Formula) -> Option<Proof>;
-    
-    /// 检查推理是否有效
-    fn is_valid_inference(&self, premises: &[Formula], conclusion: &Formula) -> bool;
-    
-    /// 生成反例
-    fn generate_counterexample(&self, premises: &[Formula], conclusion: &Formula) -> Option<TruthAssignment>;
-    
-    /// 应用推理规则
-    fn apply_rule(&self, rule: &InferenceRule, premises: &[Formula]) -> Option<Formula>;
-}
+### 3.1 否定 (¬)
 
-/// 证明搜索实现
-pub struct ProofSearchImpl {
-    rules: Vec<InferenceRule>,
-    truth_table: Box<dyn TruthTable>,
-}
+**定义 3.1.1** (否定)
+否定连接词将真命题变为假命题，假命题变为真命题。
 
-impl ProofSearch for ProofSearchImpl {
-    fn search_proof(&self, premises: &[Formula], conclusion: &Formula) -> Option<Proof> {
-        let mut proof = Proof::new();
-        
-        // 添加前提
-        for premise in premises {
-            proof.add_premise(premise.clone());
-        }
-        
-        // 搜索证明
-        self.search_backward(&mut proof, conclusion)
-    }
-    
-    fn is_valid_inference(&self, premises: &[Formula], conclusion: &Formula) -> bool {
-        // 使用真值表检查有效性
-        let combined_premise = if premises.is_empty() {
-            conclusion.clone()
-        } else {
-            premises.iter().fold(premises[0].clone(), |acc, p| {
-                Formula::Conjunction(Box::new(acc), Box::new(p.clone()))
-            })
-        };
-        
-        let implication = Formula::Implication(Box::new(combined_premise), Box::new(conclusion.clone()));
-        self.truth_table.is_tautology(&implication)
-    }
-    
-    fn generate_counterexample(&self, premises: &[Formula], conclusion: &Formula) -> Option<TruthAssignment> {
-        // 生成反例
-        let combined_premise = if premises.is_empty() {
-            conclusion.clone()
-        } else {
-            premises.iter().fold(premises[0].clone(), |acc, p| {
-                Formula::Conjunction(Box::new(acc), Box::new(p.clone()))
-            })
-        };
-        
-        let implication = Formula::Implication(Box::new(combined_premise), Box::new(conclusion.clone()));
-        
-        // 找到使蕴含为假的赋值
-        for assignment in self.truth_table.truth_table(&implication) {
-            if !assignment.result() {
-                return Some(assignment);
-            }
-        }
-        
-        None
-    }
-    
-    fn apply_rule(&self, rule: &InferenceRule, premises: &[Formula]) -> Option<Formula> {
-        rule.apply(premises)
-    }
-    
-    fn search_backward(&self, proof: &mut Proof, goal: &Formula) -> Option<Proof> {
-        // 反向证明搜索
-        if proof.contains(goal) {
-            return Some(proof.clone());
-        }
-        
-        // 尝试应用推理规则
-        for rule in &self.rules {
-            if let Some(new_goals) = rule.backward_apply(goal) {
-                for new_goal in new_goals {
-                    let mut new_proof = proof.clone();
-                    if let Some(sub_proof) = self.search_backward(&mut new_proof, &new_goal) {
-                        sub_proof.apply_rule(rule, goal);
-                        return Some(sub_proof);
-                    }
-                }
-            }
-        }
-        
-        None
-    }
-}
-```
+**真值表**:
+
+| φ | ¬φ |
+|---|---|
+| T | F  |
+| F | T  |
+
+**形式化定义**:
+$$\neg \phi \equiv \text{not}(\phi)$$
+
+### 3.2 合取 (∧)
+
+**定义 3.2.1** (合取)
+合取连接词表示"且"的关系。
+
+**真值表**:
+
+| φ | ψ | φ∧ψ |
+|---|---|-----|
+| T | T | T   |
+| T | F | F   |
+| F | T | F   |
+| F | F | F   |
+
+**形式化定义**:
+$$\phi \land \psi \equiv \text{and}(\phi, \psi)$$
+
+### 3.3 析取 (∨)
+
+**定义 3.3.1** (析取)
+析取连接词表示"或"的关系。
+
+**真值表**:
+
+| φ | ψ | φ∨ψ |
+|---|---|-----|
+| T | T | T   |
+| T | F | T   |
+| F | T | T   |
+| F | F | F   |
+
+**形式化定义**:
+$$\phi \lor \psi \equiv \text{or}(\phi, \psi)$$
+
+### 3.4 蕴含 (→)
+
+**定义 3.4.1** (蕴含)
+蕴含连接词表示"如果...那么..."的关系。
+
+**真值表**:
+
+| φ | ψ | φ→ψ |
+|---|---|-----|
+| T | T | T   |
+| T | F | F   |
+| F | T | T   |
+| F | F | T   |
+
+**形式化定义**:
+$$\phi \rightarrow \psi \equiv \neg \phi \lor \psi$$
+
+### 3.5 等价 (↔)
+
+**定义 3.5.1** (等价)
+等价连接词表示"当且仅当"的关系。
+
+**真值表**:
+
+| φ | ψ | φ↔ψ |
+|---|---|-----|
+| T | T | T   |
+| T | F | F   |
+| F | T | F   |
+| F | F | T   |
+
+**形式化定义**:
+$$\phi \leftrightarrow \psi \equiv (\phi \rightarrow \psi) \land (\psi \rightarrow \phi)$$
+
+## 4. 语义解释
+
+### 4.1 真值赋值
+
+**定义 4.1.1** (真值赋值)
+真值赋值是从原子命题到真值的函数。
+
+**形式化定义**:
+$$v: \text{Atom} \rightarrow \{\text{True}, \text{False}\}$$
+
+### 4.2 语义函数
+
+**定义 4.2.1** (语义函数)
+语义函数是从公式到真值的函数。
+
+**形式化定义**:
+$$\llbracket \cdot \rrbracket_v: \text{Form} \rightarrow \{\text{True}, \text{False}\}$$
+
+**递归定义**:
+
+1. $\llbracket p \rrbracket_v = v(p)$
+2. $\llbracket \neg \phi \rrbracket_v = \neg \llbracket \phi \rrbracket_v$
+3. $\llbracket \phi \land \psi \rrbracket_v = \llbracket \phi \rrbracket_v \land \llbracket \psi \rrbracket_v$
+4. $\llbracket \phi \lor \psi \rrbracket_v = \llbracket \phi \rrbracket_v \lor \llbracket \psi \rrbracket_v$
+5. $\llbracket \phi \rightarrow \psi \rrbracket_v = \llbracket \phi \rrbracket_v \rightarrow \llbracket \psi \rrbracket_v$
+6. $\llbracket \phi \leftrightarrow \psi \rrbracket_v = \llbracket \phi \rrbracket_v \leftrightarrow \llbracket \psi \rrbracket_v$
+
+### 4.3 满足关系
+
+**定义 4.3.1** (满足)
+真值赋值v满足公式φ，记作v⊨φ。
+
+**形式化定义**:
+$$v \models \phi \equiv \llbracket \phi \rrbracket_v = \text{True}$$
+
+### 4.4 有效性
+
+**定义 4.4.1** (有效性)
+公式φ是有效的，当且仅当在所有真值赋值下都为真。
+
+**形式化定义**:
+$$\models \phi \equiv \forall v (v \models \phi)$$
+
+### 4.5 可满足性
+
+**定义 4.5.1** (可满足性)
+公式φ是可满足的，当且仅当存在真值赋值使其为真。
+
+**形式化定义**:
+$$\text{Sat}(\phi) \equiv \exists v (v \models \phi)$$
+
+## 5. 推理规则
+
+### 5.1 自然演绎系统
+
+**规则 5.1.1** (假设引入)
+$$\frac{}{\phi \vdash \phi}$$
+
+**规则 5.1.2** (否定引入)
+$$\frac{\Gamma, \phi \vdash \bot}{\Gamma \vdash \neg \phi}$$
+
+**规则 5.1.3** (否定消除)
+$$\frac{\Gamma \vdash \phi \quad \Gamma \vdash \neg \phi}{\Gamma \vdash \bot}$$
+
+**规则 5.1.4** (合取引入)
+$$\frac{\Gamma \vdash \phi \quad \Gamma \vdash \psi}{\Gamma \vdash \phi \land \psi}$$
+
+**规则 5.1.5** (合取消除)
+$$\frac{\Gamma \vdash \phi \land \psi}{\Gamma \vdash \phi} \quad \frac{\Gamma \vdash \phi \land \psi}{\Gamma \vdash \psi}$$
+
+**规则 5.1.6** (析取引入)
+$$\frac{\Gamma \vdash \phi}{\Gamma \vdash \phi \lor \psi} \quad \frac{\Gamma \vdash \psi}{\Gamma \vdash \phi \lor \psi}$$
+
+**规则 5.1.7** (析取消除)
+$$\frac{\Gamma \vdash \phi \lor \psi \quad \Gamma, \phi \vdash \chi \quad \Gamma, \psi \vdash \chi}{\Gamma \vdash \chi}$$
+
+**规则 5.1.8** (蕴含引入)
+$$\frac{\Gamma, \phi \vdash \psi}{\Gamma \vdash \phi \rightarrow \psi}$$
+
+**规则 5.1.9** (蕴含消除)
+$$\frac{\Gamma \vdash \phi \rightarrow \psi \quad \Gamma \vdash \phi}{\Gamma \vdash \psi}$$
+
+### 5.2 公理系统
+
+**公理 5.2.1** (K公理)
+$$\vdash \phi \rightarrow (\psi \rightarrow \phi)$$
+
+**公理 5.2.2** (S公理)
+$$\vdash (\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi))$$
+
+**公理 5.2.3** (双重否定)
+$$\vdash \neg \neg \phi \rightarrow \phi$$
+
+**公理 5.2.4** (排中律)
+$$\vdash \phi \lor \neg \phi$$
+
+## 6. 逻辑等价
+
+### 6.1 等价定义
+
+**定义 6.1.1** (逻辑等价)
+公式φ和ψ逻辑等价，当且仅当在所有真值赋值下具有相同的真值。
+
+**形式化定义**:
+$$\phi \equiv \psi \equiv \forall v (\llbracket \phi \rrbracket_v = \llbracket \psi \rrbracket_v)$$
+
+### 6.2 基本等价律
+
+**定理 6.2.1** (双重否定律)
+$$\neg \neg \phi \equiv \phi$$
+
+**定理 6.2.2** (德摩根律)
+$$\neg (\phi \land \psi) \equiv \neg \phi \lor \neg \psi$$
+$$\neg (\phi \lor \psi) \equiv \neg \phi \land \neg \psi$$
+
+**定理 6.2.3** (分配律)
+$$\phi \land (\psi \lor \chi) \equiv (\phi \land \psi) \lor (\phi \land \chi)$$
+$$\phi \lor (\psi \land \chi) \equiv (\phi \lor \psi) \land (\phi \lor \chi)$$
+
+**定理 6.2.4** (结合律)
+$$(\phi \land \psi) \land \chi \equiv \phi \land (\psi \land \chi)$$
+$$(\phi \lor \psi) \lor \chi \equiv \phi \lor (\psi \lor \chi)$$
+
+**定理 6.2.5** (交换律)
+$$\phi \land \psi \equiv \psi \land \phi$$
+$$\phi \lor \psi \equiv \psi \lor \phi$$
+
+**定理 6.2.6** (幂等律)
+$$\phi \land \phi \equiv \phi$$
+$$\phi \lor \phi \equiv \phi$$
+
+**定理 6.2.7** (吸收律)
+$$\phi \land (\phi \lor \psi) \equiv \phi$$
+$$\phi \lor (\phi \land \psi) \equiv \phi$$
+
+## 7. 范式理论
+
+### 7.1 析取范式 (DNF)
+
+**定义 7.1.1** (析取范式)
+公式φ是析取范式，当且仅当它是合取项的析取。
+
+**形式化定义**:
+$$\text{DNF}(\phi) \equiv \bigvee_{i=1}^n \bigwedge_{j=1}^{m_i} l_{ij}$$
+
+其中l_{ij}是文字（原子命题或其否定）。
+
+### 7.2 合取范式 (CNF)
+
+**定义 7.2.1** (合取范式)
+公式φ是合取范式，当且仅当它是析取项的合取。
+
+**形式化定义**:
+$$\text{CNF}(\phi) \equiv \bigwedge_{i=1}^n \bigvee_{j=1}^{m_i} l_{ij}$$
+
+### 7.3 范式转换
+
+**算法 7.3.1** (DNF转换)
+
+1. 消除蕴含和等价连接词
+2. 将否定内移（德摩根律）
+3. 使用分配律展开
+4. 合并相同项
+
+**算法 7.3.2** (CNF转换)
+
+1. 消除蕴含和等价连接词
+2. 将否定内移（德摩根律）
+3. 使用分配律展开
+4. 合并相同项
 
 ## 8. 应用实例
 
-### 8.1 数学应用
+### 8.1 电路设计
 
-**实例 8.1 (数学推理)**
-证明：如果 $p \rightarrow q$ 且 $q \rightarrow r$，那么 $p \rightarrow r$。
+**实例 8.1.1** (与门)
+与门的逻辑表达式：$f(a,b) = a \land b$
 
-**证明**：
-1. $p \rightarrow q$ (前提)
-2. $q \rightarrow r$ (前提)
-3. $p \rightarrow r$ (假言三段论，从1和2)
+**真值表**:
 
-**实例 8.2 (逻辑等价)**
-证明：$\neg(p \land q) \leftrightarrow \neg p \lor \neg q$ (德摩根律)
+| a | b | f(a,b) |
+|---|---|--------|
+| 0 | 0 | 0      |
+| 0 | 1 | 0      |
+| 1 | 0 | 0      |
+| 1 | 1 | 1      |
 
-**证明**：
-通过真值表验证：
+**实例 8.1.2** (或门)
+或门的逻辑表达式：$f(a,b) = a \lor b$
 
-| $p$ | $q$ | $p \land q$ | $\neg(p \land q)$ | $\neg p$ | $\neg q$ | $\neg p \lor \neg q$ |
-|-----|-----|-------------|-------------------|----------|----------|----------------------|
-| T   | T   | T           | F                 | F        | F        | F                    |
-| T   | F   | F           | T                 | F        | T        | T                    |
-| F   | T   | F           | T                 | T        | F        | T                    |
-| F   | F   | F           | T                 | T        | T        | T                    |
+**真值表**:
 
-### 8.2 计算机科学应用
+| a | b | f(a,b) |
+|---|---|--------|
+| 0 | 0 | 0      |
+| 0 | 1 | 1      |
+| 1 | 0 | 1      |
+| 1 | 1 | 1      |
 
-**实例 8.3 (电路设计)**
-设计一个电路实现 $p \land (q \lor r)$：
+### 8.2 程序验证
+
+**实例 8.2.1** (条件语句)
+if语句的逻辑表达式：$(p \land q) \lor (\neg p \land r)$
+
+**实例 8.2.2** (循环不变式)
+while循环的不变式：$I \land B \rightarrow I$
+
+## 9. 代码实现
+
+### 9.1 Rust实现
 
 ```rust
-/// 电路实现
-pub struct Circuit {
-    inputs: Vec<bool>,
-    gates: Vec<Gate>,
+use std::collections::HashMap;
+use std::fmt;
+
+// 命题类型定义
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum Proposition {
+    Atom(String),
+    Not(Box<Proposition>),
+    And(Box<Proposition>, Box<Proposition>),
+    Or(Box<Proposition>, Box<Proposition>),
+    Implies(Box<Proposition>, Box<Proposition>),
+    Iff(Box<Proposition>, Box<Proposition>),
 }
 
-pub enum Gate {
-    And(usize, usize),  // 输入索引
-    Or(usize, usize),   // 输入索引
-    Not(usize),         // 输入索引
+impl Proposition {
+    /// 构造原子命题
+    pub fn atom(name: &str) -> Self {
+        Proposition::Atom(name.to_string())
+    }
+    
+    /// 构造否定命题
+    pub fn not(prop: Proposition) -> Self {
+        Proposition::Not(Box::new(prop))
+    }
+    
+    /// 构造合取命题
+    pub fn and(left: Proposition, right: Proposition) -> Self {
+        Proposition::And(Box::new(left), Box::new(right))
+    }
+    
+    /// 构造析取命题
+    pub fn or(left: Proposition, right: Proposition) -> Self {
+        Proposition::Or(Box::new(left), Box::new(right))
+    }
+    
+    /// 构造蕴含命题
+    pub fn implies(antecedent: Proposition, consequent: Proposition) -> Self {
+        Proposition::Implies(Box::new(antecedent), Box::new(consequent))
+    }
+    
+    /// 构造等价命题
+    pub fn iff(left: Proposition, right: Proposition) -> Self {
+        Proposition::Iff(Box::new(left), Box::new(right))
+    }
+    
+    /// 获取原子命题
+    pub fn atoms(&self) -> Vec<String> {
+        match self {
+            Proposition::Atom(name) => vec![name.clone()],
+            Proposition::Not(prop) => prop.atoms(),
+            Proposition::And(left, right) => {
+                let mut atoms = left.atoms();
+                atoms.extend(right.atoms());
+                atoms.sort();
+                atoms.dedup();
+                atoms
+            }
+            Proposition::Or(left, right) => {
+                let mut atoms = left.atoms();
+                atoms.extend(right.atoms());
+                atoms.sort();
+                atoms.dedup();
+                atoms
+            }
+            Proposition::Implies(left, right) => {
+                let mut atoms = left.atoms();
+                atoms.extend(right.atoms());
+                atoms.sort();
+                atoms.dedup();
+                atoms
+            }
+            Proposition::Iff(left, right) => {
+                let mut atoms = left.atoms();
+                atoms.extend(right.atoms());
+                atoms.sort();
+                atoms.dedup();
+                atoms
+            }
+        }
+    }
+    
+    /// 转换为否定范式
+    pub fn to_nnf(&self) -> Proposition {
+        match self {
+            Proposition::Atom(_) => self.clone(),
+            Proposition::Not(prop) => match prop.as_ref() {
+                Proposition::Atom(_) => self.clone(),
+                Proposition::Not(p) => p.to_nnf(),
+                Proposition::And(left, right) => {
+                    Proposition::or(
+                        Proposition::not(left.clone()).to_nnf(),
+                        Proposition::not(right.clone()).to_nnf()
+                    )
+                }
+                Proposition::Or(left, right) => {
+                    Proposition::and(
+                        Proposition::not(left.clone()).to_nnf(),
+                        Proposition::not(right.clone()).to_nnf()
+                    )
+                }
+                _ => self.clone(),
+            }
+            Proposition::And(left, right) => {
+                Proposition::and(left.to_nnf(), right.to_nnf())
+            }
+            Proposition::Or(left, right) => {
+                Proposition::or(left.to_nnf(), right.to_nnf())
+            }
+            Proposition::Implies(left, right) => {
+                Proposition::or(
+                    Proposition::not(left.clone()).to_nnf(),
+                    right.to_nnf()
+                )
+            }
+            Proposition::Iff(left, right) => {
+                Proposition::and(
+                    Proposition::implies(left.clone(), right.clone()).to_nnf(),
+                    Proposition::implies(right.clone(), left.clone()).to_nnf()
+                )
+            }
+        }
+    }
+    
+    /// 转换为析取范式
+    pub fn to_dnf(&self) -> Proposition {
+        let nnf = self.to_nnf();
+        nnf.distribute_or_over_and()
+    }
+    
+    /// 分配析取到合取
+    fn distribute_or_over_and(&self) -> Proposition {
+        match self {
+            Proposition::Or(left, right) => {
+                match (left.as_ref(), right.as_ref()) {
+                    (Proposition::And(l1, l2), _) => {
+                        Proposition::and(
+                            Proposition::or(l1.clone(), right.clone()).distribute_or_over_and(),
+                            Proposition::or(l2.clone(), right.clone()).distribute_or_over_and()
+                        )
+                    }
+                    (_, Proposition::And(r1, r2)) => {
+                        Proposition::and(
+                            Proposition::or(left.clone(), r1.clone()).distribute_or_over_and(),
+                            Proposition::or(left.clone(), r2.clone()).distribute_or_over_and()
+                        )
+                    }
+                    _ => self.clone(),
+                }
+            }
+            Proposition::And(left, right) => {
+                Proposition::and(
+                    left.distribute_or_over_and(),
+                    right.distribute_or_over_and()
+                )
+            }
+            _ => self.clone(),
+        }
+    }
 }
 
-impl Circuit {
-    pub fn evaluate(&self, inputs: &[bool]) -> bool {
-        let mut values = inputs.to_vec();
-        
-        for gate in &self.gates {
-            let result = match gate {
-                Gate::And(i, j) => values[*i] && values[*j],
-                Gate::Or(i, j) => values[*i] || values[*j],
-                Gate::Not(i) => !values[*i],
-            };
-            values.push(result);
+// 真值赋值类型定义
+pub type Valuation = HashMap<String, bool>;
+
+// 语义解释器
+pub struct Interpreter;
+
+impl Interpreter {
+    /// 解释命题
+    pub fn interpret(prop: &Proposition, valuation: &Valuation) -> bool {
+        match prop {
+            Proposition::Atom(name) => *valuation.get(name).unwrap_or(&false),
+            Proposition::Not(p) => !Self::interpret(p, valuation),
+            Proposition::And(left, right) => {
+                Self::interpret(left, valuation) && Self::interpret(right, valuation)
+            }
+            Proposition::Or(left, right) => {
+                Self::interpret(left, valuation) || Self::interpret(right, valuation)
+            }
+            Proposition::Implies(left, right) => {
+                !Self::interpret(left, valuation) || Self::interpret(right, valuation)
+            }
+            Proposition::Iff(left, right) => {
+                Self::interpret(left, valuation) == Self::interpret(right, valuation)
+            }
+        }
+    }
+    
+    /// 检查有效性
+    pub fn is_valid(prop: &Proposition) -> bool {
+        let atoms = prop.atoms();
+        Self::check_all_valuations(prop, &atoms, 0, &mut HashMap::new())
+    }
+    
+    /// 检查可满足性
+    pub fn is_satisfiable(prop: &Proposition) -> bool {
+        let atoms = prop.atoms();
+        Self::check_some_valuation(prop, &atoms, 0, &mut HashMap::new())
+    }
+    
+    /// 检查所有真值赋值
+    fn check_all_valuations(
+        prop: &Proposition,
+        atoms: &[String],
+        index: usize,
+        valuation: &mut Valuation,
+    ) -> bool {
+        if index >= atoms.len() {
+            return Self::interpret(prop, valuation);
         }
         
-        values.last().copied().unwrap_or(false)
+        valuation.insert(atoms[index].clone(), true);
+        let result1 = Self::check_all_valuations(prop, atoms, index + 1, valuation);
+        
+        valuation.insert(atoms[index].clone(), false);
+        let result2 = Self::check_all_valuations(prop, atoms, index + 1, valuation);
+        
+        result1 && result2
+    }
+    
+    /// 检查某个真值赋值
+    fn check_some_valuation(
+        prop: &Proposition,
+        atoms: &[String],
+        index: usize,
+        valuation: &mut Valuation,
+    ) -> bool {
+        if index >= atoms.len() {
+            return Self::interpret(prop, valuation);
+        }
+        
+        valuation.insert(atoms[index].clone(), true);
+        if Self::check_some_valuation(prop, atoms, index + 1, valuation) {
+            return true;
+        }
+        
+        valuation.insert(atoms[index].clone(), false);
+        Self::check_some_valuation(prop, atoms, index + 1, valuation)
+    }
+}
+
+// 推理系统
+pub struct InferenceSystem;
+
+impl InferenceSystem {
+    /// 假言推理
+    pub fn modus_ponens(premise1: &Proposition, premise2: &Proposition) -> Option<Proposition> {
+        match (premise1, premise2) {
+            (Proposition::Implies(antecedent, consequent), antecedent_prop) => {
+                if antecedent.as_ref() == antecedent_prop {
+                    Some(*consequent.clone())
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+    
+    /// 假言三段论
+    pub fn hypothetical_syllogism(premise1: &Proposition, premise2: &Proposition) -> Option<Proposition> {
+        match (premise1, premise2) {
+            (Proposition::Implies(a, b), Proposition::Implies(c, d)) => {
+                if b.as_ref() == c.as_ref() {
+                    Some(Proposition::implies(a.clone(), d.clone()))
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+    
+    /// 构造性二难推理
+    pub fn constructive_dilemma(
+        premise1: &Proposition,
+        premise2: &Proposition,
+        premise3: &Proposition,
+    ) -> Option<Proposition> {
+        match (premise1, premise2, premise3) {
+            (Proposition::And(impl1, impl2), Proposition::Or(disj1, disj2), Proposition::Or(disj3, disj4)) => {
+                if disj1.as_ref() == disj3.as_ref() && disj2.as_ref() == disj4.as_ref() {
+                    Some(Proposition::or(
+                        Proposition::implies(impl1.as_ref().clone(), disj1.clone()),
+                        Proposition::implies(impl2.as_ref().clone(), disj2.clone())
+                    ))
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+}
+
+// 测试用例
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_proposition_construction() {
+        let p = Proposition::atom("p");
+        let q = Proposition::atom("q");
+        let and_prop = Proposition::and(p.clone(), q.clone());
+        let or_prop = Proposition::or(p.clone(), q.clone());
+        let implies_prop = Proposition::implies(p.clone(), q.clone());
+        
+        assert_eq!(and_prop, Proposition::And(Box::new(p.clone()), Box::new(q.clone())));
+        assert_eq!(or_prop, Proposition::Or(Box::new(p.clone()), Box::new(q.clone())));
+        assert_eq!(implies_prop, Proposition::Implies(Box::new(p), Box::new(q)));
+    }
+    
+    #[test]
+    fn test_interpretation() {
+        let p = Proposition::atom("p");
+        let q = Proposition::atom("q");
+        let and_prop = Proposition::and(p.clone(), q.clone());
+        
+        let mut valuation = Valuation::new();
+        valuation.insert("p".to_string(), true);
+        valuation.insert("q".to_string(), true);
+        
+        assert!(Interpreter::interpret(&and_prop, &valuation));
+        
+        valuation.insert("q".to_string(), false);
+        assert!(!Interpreter::interpret(&and_prop, &valuation));
+    }
+    
+    #[test]
+    fn test_validity() {
+        // 排中律：p ∨ ¬p
+        let p = Proposition::atom("p");
+        let not_p = Proposition::not(p.clone());
+        let excluded_middle = Proposition::or(p, not_p);
+        
+        assert!(Interpreter::is_valid(&excluded_middle));
+    }
+    
+    #[test]
+    fn test_satisfiability() {
+        let p = Proposition::atom("p");
+        let q = Proposition::atom("q");
+        let satisfiable = Proposition::and(p.clone(), q.clone());
+        
+        assert!(Interpreter::is_satisfiable(&satisfiable));
+        
+        let unsatisfiable = Proposition::and(p.clone(), Proposition::not(p));
+        assert!(!Interpreter::is_satisfiable(&unsatisfiable));
+    }
+    
+    #[test]
+    fn test_inference() {
+        let p = Proposition::atom("p");
+        let q = Proposition::atom("q");
+        let implies = Proposition::implies(p.clone(), q.clone());
+        
+        let result = InferenceSystem::modus_ponens(&implies, &p);
+        assert_eq!(result, Some(q));
+    }
+    
+    #[test]
+    fn test_dnf_conversion() {
+        let p = Proposition::atom("p");
+        let q = Proposition::atom("q");
+        let r = Proposition::atom("r");
+        
+        // (p ∧ q) ∨ (¬p ∧ r)
+        let original = Proposition::or(
+            Proposition::and(p.clone(), q.clone()),
+            Proposition::and(Proposition::not(p.clone()), r.clone())
+        );
+        
+        let dnf = original.to_dnf();
+        println!("DNF: {:?}", dnf);
     }
 }
 ```
 
-**实例 8.4 (程序验证)**
-验证程序逻辑：如果 $x > 0$ 且 $y > 0$，那么 $x + y > 0$。
+### 9.2 Haskell实现
 
-**形式化**：
-- $p$: $x > 0$
-- $q$: $y > 0$
-- $r$: $x + y > 0$
-- 要证明：$(p \land q) \rightarrow r$
+```haskell
+-- 命题类型定义
+data Proposition = Atom String
+                 | Not Proposition
+                 | And Proposition Proposition
+                 | Or Proposition Proposition
+                 | Implies Proposition Proposition
+                 | Iff Proposition Proposition
+                 deriving (Eq, Show)
 
-**证明**：
-1. 假设 $p \land q$
-2. 从 $p$ 得到 $x > 0$
-3. 从 $q$ 得到 $y > 0$
-4. 因此 $x + y > 0 + 0 = 0$
-5. 所以 $r$ 成立
-6. 因此 $(p \land q) \rightarrow r$
+-- 真值赋值类型定义
+type Valuation = [(String, Bool)]
 
-### 8.3 哲学应用
+-- 构造函数
+atom :: String -> Proposition
+atom = Atom
 
-**实例 8.5 (苏格拉底论证)**
-苏格拉底论证：
-1. 所有人都是会死的
-2. 苏格拉底是人
-3. 因此苏格拉底是会死的
+not' :: Proposition -> Proposition
+not' = Not
 
-**形式化**：
-- $p$: 所有人都是会死的
-- $q$: 苏格拉底是人
-- $r$: 苏格拉底是会死的
-- 要证明：$(p \land q) \rightarrow r$
+and' :: Proposition -> Proposition -> Proposition
+and' = And
 
-**实例 8.6 (悖论分析)**
-说谎者悖论：这句话是假的。
+or' :: Proposition -> Proposition -> Proposition
+or' = Or
 
-**形式化**：
-- $p$: 这句话是假的
-- 如果 $p$ 为真，那么 $p$ 为假
-- 如果 $p$ 为假，那么 $p$ 为真
-- 矛盾：$p \land \neg p$
+implies :: Proposition -> Proposition -> Proposition
+implies = Implies
 
-## 9. 参考文献
+iff :: Proposition -> Proposition -> Proposition
+iff = Iff
 
-1. Enderton, H.B. *A Mathematical Introduction to Logic*. Academic Press, 2001.
-2. Mendelson, E. *Introduction to Mathematical Logic*. Chapman & Hall, 2009.
-3. Boolos, G.S., Burgess, J.P., & Jeffrey, R.C. *Computability and Logic*. Cambridge University Press, 2007.
-4. Huth, M., & Ryan, M. *Logic in Computer Science: Modelling and Reasoning about Systems*. Cambridge University Press, 2004.
-5. Smullyan, R.M. *First-Order Logic*. Dover, 1995.
-6. Quine, W.V.O. *Methods of Logic*. Harvard University Press, 1982.
-7. Copi, I.M., & Cohen, C. *Introduction to Logic*. Pearson, 2005.
-8. Lemmon, E.J. *Beginning Logic*. Hackett, 1978.
+-- 获取原子命题
+atoms :: Proposition -> [String]
+atoms (Atom name) = [name]
+atoms (Not prop) = atoms prop
+atoms (And left right) = nub $ sort $ atoms left ++ atoms right
+atoms (Or left right) = nub $ sort $ atoms left ++ atoms right
+atoms (Implies left right) = nub $ sort $ atoms left ++ atoms right
+atoms (Iff left right) = nub $ sort $ atoms left ++ atoms right
+
+-- 语义解释
+interpret :: Proposition -> Valuation -> Bool
+interpret (Atom name) valuation = 
+    case lookup name valuation of
+        Just value -> value
+        Nothing -> False
+interpret (Not prop) valuation = not $ interpret prop valuation
+interpret (And left right) valuation = 
+    interpret left valuation && interpret right valuation
+interpret (Or left right) valuation = 
+    interpret left valuation || interpret right valuation
+interpret (Implies left right) valuation = 
+    not (interpret left valuation) || interpret right valuation
+interpret (Iff left right) valuation = 
+    interpret left valuation == interpret right valuation
+
+-- 检查有效性
+isValid :: Proposition -> Bool
+isValid prop = 
+    let atomList = atoms prop
+    in all (\valuation -> interpret prop valuation) (allValuations atomList)
+
+-- 检查可满足性
+isSatisfiable :: Proposition -> Bool
+isSatisfiable prop = 
+    let atomList = atoms prop
+    in any (\valuation -> interpret prop valuation) (allValuations atomList)
+
+-- 生成所有真值赋值
+allValuations :: [String] -> [Valuation]
+allValuations [] = [[]]
+allValuations (atom:atoms) = 
+    let rest = allValuations atoms
+    in [(atom, True):val | val <- rest] ++ [(atom, False):val | val <- rest]
+
+-- 转换为否定范式
+toNNF :: Proposition -> Proposition
+toNNF (Atom name) = Atom name
+toNNF (Not (Atom name)) = Not (Atom name)
+toNNF (Not (Not prop)) = toNNF prop
+toNNF (Not (And left right)) = 
+    Or (toNNF (Not left)) (toNNF (Not right))
+toNNF (Not (Or left right)) = 
+    And (toNNF (Not left)) (toNNF (Not right))
+toNNF (Not prop) = Not (toNNF prop)
+toNNF (And left right) = And (toNNF left) (toNNF right)
+toNNF (Or left right) = Or (toNNF left) (toNNF right)
+toNNF (Implies left right) = 
+    Or (toNNF (Not left)) (toNNF right)
+toNNF (Iff left right) = 
+    And (toNNF (Implies left right)) (toNNF (Implies right left))
+
+-- 转换为析取范式
+toDNF :: Proposition -> Proposition
+toDNF prop = distributeOrOverAnd (toNNF prop)
+
+-- 分配析取到合取
+distributeOrOverAnd :: Proposition -> Proposition
+distributeOrOverAnd (Or left right) = 
+    case (left, right) of
+        (And l1 l2, _) -> 
+            And (distributeOrOverAnd (Or l1 right)) 
+                (distributeOrOverAnd (Or l2 right))
+        (_, And r1 r2) -> 
+            And (distributeOrOverAnd (Or left r1)) 
+                (distributeOrOverAnd (Or left r2))
+        _ -> Or left right
+distributeOrOverAnd (And left right) = 
+    And (distributeOrOverAnd left) (distributeOrOverAnd right)
+distributeOrOverAnd prop = prop
+
+-- 推理规则
+modusPonens :: Proposition -> Proposition -> Maybe Proposition
+modusPonens (Implies antecedent consequent) premise = 
+    if antecedent == premise then Just consequent else Nothing
+modusPonens _ _ = Nothing
+
+hypotheticalSyllogism :: Proposition -> Proposition -> Maybe Proposition
+hypotheticalSyllogism (Implies a b) (Implies c d) = 
+    if b == c then Just (Implies a d) else Nothing
+hypotheticalSyllogism _ _ = Nothing
+
+-- 实例：电路设计
+andGate :: Proposition -> Proposition -> Proposition
+andGate a b = And a b
+
+orGate :: Proposition -> Proposition -> Proposition
+orGate a b = Or a b
+
+notGate :: Proposition -> Proposition
+notGate = Not
+
+-- 实例：条件语句
+ifStatement :: Proposition -> Proposition -> Proposition -> Proposition
+ifStatement condition thenBranch elseBranch = 
+    Or (And condition thenBranch) (And (Not condition) elseBranch)
+
+-- 测试函数
+testPropositionalLogic :: IO ()
+testPropositionalLogic = do
+    let p = atom "p"
+    let q = atom "q"
+    let r = atom "r"
+    
+    -- 测试基本构造
+    let andProp = and' p q
+    let orProp = or' p q
+    let impliesProp = implies p q
+    
+    putStrLn $ "And: " ++ show andProp
+    putStrLn $ "Or: " ++ show orProp
+    putStrLn $ "Implies: " ++ show impliesProp
+    
+    -- 测试语义解释
+    let valuation = [("p", True), ("q", False)]
+    putStrLn $ "Interpretation of p ∧ q: " ++ show (interpret andProp valuation)
+    putStrLn $ "Interpretation of p ∨ q: " ++ show (interpret orProp valuation)
+    
+    -- 测试有效性
+    let excludedMiddle = or' p (not' p)
+    putStrLn $ "Excluded middle is valid: " ++ show (isValid excludedMiddle)
+    
+    -- 测试可满足性
+    let satisfiable = and' p q
+    putStrLn $ "p ∧ q is satisfiable: " ++ show (isSatisfiable satisfiable)
+    
+    -- 测试DNF转换
+    let complex = or' (and' p q) (and' (not' p) r)
+    let dnf = toDNF complex
+    putStrLn $ "DNF of (p ∧ q) ∨ (¬p ∧ r): " ++ show dnf
+    
+    -- 测试推理
+    case modusPonens (implies p q) p of
+        Just result -> putStrLn $ "Modus ponens result: " ++ show result
+        Nothing -> putStrLn "Modus ponens failed"
+```
+
+## 10. 参考文献
+
+1. **Frege, G.** (1879). *Begriffsschrift*. Halle.
+2. **Russell, B.** (1903). *The Principles of Mathematics*. Cambridge University Press.
+3. **Whitehead, A.N. & Russell, B.** (1910). *Principia Mathematica*. Cambridge University Press.
+4. **Tarski, A.** (1936). "The Concept of Truth in Formalized Languages". *Logic, Semantics, Metamathematics*.
+5. **Church, A.** (1956). *Introduction to Mathematical Logic*. Princeton University Press.
+6. **Kleene, S.C.** (1967). *Mathematical Logic*. Wiley.
+7. **Enderton, H.B.** (2001). *A Mathematical Introduction to Logic*. Academic Press.
 
 ---
 
-**最后更新时间**: 2024年12月20日  
-**版本**: v1.0  
-**维护者**: 逻辑学理论团队 
+**构建者**: AI Assistant  
+**最后更新**: 2024年12月20日  
+**版本**: v2.0

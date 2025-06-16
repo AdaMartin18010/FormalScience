@@ -23,6 +23,7 @@
 
 **定义 1.1 (确定性有限自动机)**
 确定性有限自动机（DFA）是一个五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 - $Q$ 是有限状态集
 - $\Sigma$ 是有限输入字母表
 - $\delta: Q \times \Sigma \rightarrow Q$ 是转移函数
@@ -31,6 +32,7 @@
 
 **定义 1.2 (配置)**
 DFA的配置是一个二元组 $(q, w)$，其中：
+
 - $q \in Q$ 是当前状态
 - $w \in \Sigma^*$ 是剩余输入串
 
@@ -75,6 +77,7 @@ $$(p, w) \vdash_M^* (q, \varepsilon)$$
 
 **定义 2.4 (扩展转移函数)**
 扩展转移函数 $\delta^*: Q \times \Sigma^* \rightarrow Q$ 递归定义为：
+
 1. $\delta^*(q, \varepsilon) = q$
 2. $\delta^*(q, wa) = \delta(\delta^*(q, w), a)$
 
@@ -83,6 +86,7 @@ $$(p, w) \vdash_M^* (q, \varepsilon)$$
 $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 
 **证明**：
+
 1. 基础情况：$w = \varepsilon$
    - $\delta^*(q, \varepsilon) = q$
    - $(q, \varepsilon) \vdash_M^* (q, \varepsilon)$
@@ -104,6 +108,7 @@ $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 如果 $L = L(M)$ 对于某个DFA $M$，那么 $L$ 是正则的。
 
 **证明**：
+
 1. 根据定义，$L(M)$ 是DFA接受的语言
 2. 根据正则语言的定义，$L(M)$ 是正则的
 3. 因此 $L$ 是正则的
@@ -112,6 +117,7 @@ $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 
 **定理 3.2 (正则语言的封闭性)**
 正则语言在以下运算下是封闭的：
+
 1. 并集
 2. 交集
 3. 补集
@@ -119,6 +125,7 @@ $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 5. 克林星号
 
 **证明**：
+
 1. **并集封闭性**：
    - 设 $L_1 = L(M_1)$，$L_2 = L(M_2)$
    - 构造DFA $M$ 接受 $L_1 \cup L_2$
@@ -138,12 +145,14 @@ $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 
 **定理 3.3 (DFA问题的可判定性)**
 以下问题对于DFA是可判定的：
+
 1. 成员问题：给定DFA $M$ 和字符串 $w$，判断 $w \in L(M)$
 2. 空性问题：给定DFA $M$，判断 $L(M) = \emptyset$
 3. 有限性问题：给定DFA $M$，判断 $L(M)$ 是否有限
 4. 等价性问题：给定两个DFA $M_1$ 和 $M_2$，判断 $L(M_1) = L(M_2)$
 
 **证明**：
+
 1. **成员问题**：
    - 模拟DFA在输入 $w$ 上的运行
    - 时间复杂度：$O(|w|)$
@@ -168,10 +177,12 @@ $$(q, w) \vdash_M^* (\delta^*(q, w), \varepsilon)$$
 给定两个DFA $M_1 = (Q_1, \Sigma, \delta_1, q_{01}, F_1)$ 和 $M_2 = (Q_2, \Sigma, \delta_2, q_{02}, F_2)$，它们的乘积DFA定义为：
 $$M_1 \times M_2 = (Q_1 \times Q_2, \Sigma, \delta, (q_{01}, q_{02}), F)$$
 其中：
+
 - $\delta((q_1, q_2), a) = (\delta_1(q_1, a), \delta_2(q_2, a))$
 - $F$ 根据运算类型确定
 
 **定理 4.1 (乘积构造的正确性)**
+
 1. 对于并集：$F = (F_1 \times Q_2) \cup (Q_1 \times F_2)$
 2. 对于交集：$F = F_1 \times F_2$
 3. 对于差集：$F = F_1 \times (Q_2 \setminus F_2)$
@@ -186,6 +197,7 @@ $$M^c = (Q, \Sigma, \delta, q_0, Q \setminus F)$$
 $$L(M^c) = \Sigma^* \setminus L(M)$$
 
 **证明**：
+
 1. 对于任意字符串 $w$：
    - $w \in L(M^c)$ 当且仅当 $\delta^*(q_0, w) \in Q \setminus F$
    - $w \in L(M^c)$ 当且仅当 $\delta^*(q_0, w) \notin F$
@@ -206,6 +218,7 @@ $$\delta^*(q_1, w) \in F \leftrightarrow \delta^*(q_2, w) \in F$$
 ### 5.2 等价性判定
 
 **算法 5.1 (等价性判定算法)**
+
 ```rust
 /// 等价性判定算法
 pub fn are_equivalent(dfa1: &DFA, dfa2: &DFA) -> bool {
@@ -221,6 +234,7 @@ pub fn are_equivalent(dfa1: &DFA, dfa2: &DFA) -> bool {
 两个DFA等价当且仅当它们的对称差集为空。
 
 **证明**：
+
 1. 如果 $L(M_1) = L(M_2)$，那么 $L(M_1) \triangle L(M_2) = \emptyset$
 2. 如果 $L(M_1) \triangle L(M_2) = \emptyset$，那么 $L(M_1) = L(M_2)$
 3. 因此等价性判定算法是正确的
@@ -238,6 +252,7 @@ DFA $M$ 是最小的，当且仅当不存在等价的状态数更少的DFA。
 ### 6.2 最小化算法
 
 **算法 6.1 (Hopcroft最小化算法)**
+
 ```rust
 /// Hopcroft最小化算法
 pub fn minimize_dfa(dfa: &DFA) -> DFA {
@@ -276,6 +291,7 @@ pub fn minimize_dfa(dfa: &DFA) -> DFA {
 Hopcroft算法产生等价的最小DFA。
 
 **证明**：
+
 1. 算法保持语言等价性
 2. 算法产生不可分割的分区
 3. 最小DFA的状态数等于等价类的数量
@@ -289,6 +305,7 @@ Hopcroft算法产生等价的最小DFA。
 如果DFA $M$ 接受语言 $L$，那么 $M$ 的状态数至少为 $L$ 的Myhill-Nerode等价类的数量。
 
 **证明**：
+
 1. 设 $L$ 的Myhill-Nerode等价类为 $[w_1], [w_2], \ldots, [w_n]$
 2. 对于每个等价类 $[w_i]$，存在状态 $q_i$ 使得 $\delta^*(q_0, w_i) = q_i$
 3. 如果 $[w_i] \neq [w_j]$，那么 $q_i \neq q_j$
@@ -298,6 +315,7 @@ Hopcroft算法产生等价的最小DFA。
 对于每个正则语言 $L$，存在唯一的最小DFA（在同构意义下）。
 
 **证明**：
+
 1. 最小DFA的状态对应于Myhill-Nerode等价类
 2. Myhill-Nerode等价类是唯一的
 3. 因此最小DFA在同构意义下是唯一的
@@ -306,11 +324,13 @@ Hopcroft算法产生等价的最小DFA。
 
 **定理 7.3 (泵引理)**
 对于正则语言 $L$，存在常数 $n$ 使得对于任意字符串 $w \in L$ 且 $|w| \geq n$，存在分解 $w = xyz$ 满足：
+
 1. $|xy| \leq n$
 2. $|y| > 0$
 3. 对于任意 $i \geq 0$，$xy^i z \in L$
 
 **证明**：
+
 1. 设DFA $M$ 接受 $L$，状态数为 $n$
 2. 对于字符串 $w$ 且 $|w| \geq n$，在运行过程中至少有一个状态被访问两次
 3. 设 $q$ 是第一个重复访问的状态
@@ -751,6 +771,7 @@ assert!(!dfa.accepts("01"));
 ### 9.2 语言运算
 
 **实例 9.3 (语言运算)**
+
 ```rust
 // 构造两个DFA
 let dfa1 = construct_dfa_for_pattern("ab");
@@ -774,6 +795,7 @@ assert!(complement.accepts("ac"));
 ### 9.3 编译器应用
 
 **实例 9.4 (词法分析器)**
+
 ```rust
 // 构造标识符DFA
 let identifier_dfa = DFA::new(
@@ -828,4 +850,4 @@ fn tokenize(input: &str) -> Vec<Token> {
 
 **最后更新时间**: 2024年12月20日  
 **版本**: v1.0  
-**维护者**: 形式语言理论团队 
+**维护者**: 形式语言理论团队
