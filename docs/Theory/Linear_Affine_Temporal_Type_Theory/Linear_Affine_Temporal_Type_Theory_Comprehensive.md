@@ -16,7 +16,7 @@
 - $A$ 是公理集合
 - $\vdash$ 是推导关系
 
-**公理 1.1.1 (线性逻辑公理)**
+**公理 1.1.1 (线性逻辑公理)**:
 
 1. **线性性**：每个假设恰好使用一次
 2. **交换性**：假设顺序无关紧要
@@ -276,7 +276,7 @@ data TemporalTerm where
   EventuallyIntro :: TemporalTerm -> TemporalTerm
 ```
 
-**公理 3.1.1 (时态类型规则)**
+**公理 3.1.1 (时态类型规则)**:
 
 1. **未来引入**：$\frac{\Gamma \vdash e : \tau}{\Gamma \vdash \text{future } e : \text{Future}[\tau]}$
 2. **未来消除**：$\frac{\Gamma \vdash e : \text{Future}[\tau]}{\Gamma \vdash \text{await } e : \tau}$
@@ -392,7 +392,7 @@ schedulability scheduler =
 - $A$ 是类型公理集合
 - $\vdash$ 是类型判定关系
 
-**公理 4.1.1 (统一类型公理)**
+**公理 4.1.1 (统一类型公理)**:
 
 1. **线性性**：线性类型变量恰好使用一次
 2. **仿射性**：仿射类型变量最多使用一次
@@ -424,7 +424,7 @@ interpretUnifiedType model type_ =
 **定义 4.2.1 (类型转换)**
 类型转换关系 $\tau_1 \rightarrow \tau_2$ 表示类型 $\tau_1$ 可以转换为类型 $\tau_2$。
 
-**公理 4.2.1 (类型转换公理)**
+**公理 4.2.1 (类型转换公理)**:
 
 1. **线性到仿射**：$\tau_1 \multimap \tau_2 \rightarrow \tau_1 \rightarrowtail \tau_2$
 2. **仿射到普通**：$\tau_1 \rightarrowtail \tau_2 \rightarrow \tau_1 \rightarrow \tau_2$
