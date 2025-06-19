@@ -133,6 +133,7 @@ C = (S₁, S₂, P, M)
 如果微服务 $S_1$ 和 $S_2$ 是独立的，则 $S_1$ 的故障不会影响 $S_2$ 的正常运行。
 
 **证明**:
+
 ```latex
 1. 服务独立性定义: Independent(S₁, S₂) ⟺ ¬Depend(S₁, S₂)
 2. 故障隔离: Fault(S₁) ⟹ ¬Fault(S₂)
@@ -145,6 +146,7 @@ C = (S₁, S₂, P, M)
 如果微服务 $S$ 是无状态的，则 $S$ 可以水平扩展。
 
 **证明**:
+
 ```latex
 1. 无状态定义: Stateless(S) ⟺ ∀σ₁, σ₂: State(S, σ₁) = State(S, σ₂)
 2. 水平扩展: Scalable(S) ⟺ ∀n: ∃S₁, ..., Sₙ: S = S₁ ∪ ... ∪ Sₙ
@@ -157,6 +159,7 @@ C = (S₁, S₂, P, M)
 在微服务架构中，强一致性需要分布式事务，而最终一致性可以通过事件驱动实现。
 
 **证明**:
+
 ```latex
 1. 强一致性: StrongConsistency ⟺ ∀t: State(t) = State(t-1)
 2. 最终一致性: EventualConsistency ⟺ ∃t: State(t) = State(t-1)
@@ -1323,7 +1326,8 @@ impl NotificationService {
 ---
 
 **相关文档**:
+
 - [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md)
 - [架构模式理论](../02_Software_Architecture/02_Architecture_Pattern_Theory.md)
 - [事件驱动架构](../02_Software_Architecture/04_Event_Driven_Architecture.md)
-- [分布式系统理论](../06_Distributed_Systems_Theory/01_Distributed_Systems_Foundation.md) 
+- [分布式系统理论](../06_Distributed_Systems_Theory/01_Distributed_Systems_Foundation.md)

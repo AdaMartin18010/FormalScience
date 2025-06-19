@@ -140,6 +140,7 @@ P₁ ⊕ P₂ = (C₁ ∪ C₂, R₁ ∪ R₂ ∪ R₁₂, I₁ ∪ I₂, S₁ �
 如果架构模式 $P$ 是正确的，则其实例化 $I(P)$ 满足设计目标。
 
 **证明**:
+
 ```latex
 1. 模式正确性: ∀P: Correct(P) ⟺ ∀I: I(P) ⊨ Goals(P)
 2. 实例化保持语义: I(P) ≡ P
@@ -153,6 +154,7 @@ P₁ ⊕ P₂ = (C₁ ∪ C₂, R₁ ∪ R₂ ∪ R₁₂, I₁ ∪ I₂, S₁ �
 如果模式 $P_1$ 和 $P_2$ 兼容，则组合模式 $P_1 \oplus P_2$ 保持各自性质。
 
 **证明**:
+
 ```latex
 1. 模式兼容性: Compatible(P₁, P₂) ⟺ ¬Conflict(P₁, P₂)
 2. 组合保持性质: Properties(P₁ ⊕ P₂) = Properties(P₁) ∩ Properties(P₂)
@@ -165,6 +167,7 @@ P₁ ⊕ P₂ = (C₁ ∪ C₂, R₁ ∪ R₂ ∪ R₁₂, I₁ ∪ I₂, S₁ �
 如果模式 $P_1$ 演化到 $P_2$，则 $P_2$ 保持 $P_1$ 的核心性质。
 
 **证明**:
+
 ```latex
 1. 演化关系: Evolve(P₁, P₂) ⟺ Core(P₁) ⊆ Core(P₂)
 2. 核心性质保持: Core(P₁) = Core(P₂)
@@ -924,7 +927,8 @@ impl ServiceInstance {
 ---
 
 **相关文档**:
+
 - [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md)
 - [微服务架构](../02_Software_Architecture/03_Microservice_Architecture.md)
 - [事件驱动架构](../02_Software_Architecture/04_Event_Driven_Architecture.md)
-- [形式化规格说明](../01_Formal_Methods/01_Formal_Specification.md) 
+- [形式化规格说明](../01_Formal_Methods/01_Formal_Specification.md)

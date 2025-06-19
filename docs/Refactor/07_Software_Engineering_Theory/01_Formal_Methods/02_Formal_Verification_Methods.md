@@ -124,6 +124,7 @@ M ⊨ φ ⟺ ∀s ∈ S₀: M, s ⊨ φ
 如果模型检查算法返回 $M \models \phi$，则 $M$ 确实满足 $\phi$。
 
 **证明**:
+
 ```latex
 1. 模型检查算法是完备的
 2. 对于有限状态系统，算法总是终止
@@ -137,6 +138,7 @@ M ⊨ φ ⟺ ∀s ∈ S₀: M, s ⊨ φ
 如果抽象解释返回安全结果，则具体程序也安全。
 
 **证明**:
+
 ```latex
 1. 抽象解释是过度近似
 2. 对于任何性质 P: γ(α(P)) ⊇ P
@@ -150,6 +152,7 @@ M ⊨ φ ⟺ ∀s ∈ S₀: M, s ⊨ φ
 如果程序通过类型检查，则程序不会出现类型错误。
 
 **证明**:
+
 ```latex
 1. 类型系统是语法导向的
 2. 类型推导规则保持类型安全
@@ -585,7 +588,8 @@ fn verify_type_safety() {
 ---
 
 **相关文档**:
+
 - [形式化规格说明](../01_Formal_Methods/01_Formal_Specification.md)
 - [模型驱动开发](../01_Formal_Methods/03_Model_Driven_Development.md)
 - [契约式编程](../01_Formal_Methods/04_Contract_Programming.md)
-- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md) 
+- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md)

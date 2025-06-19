@@ -129,6 +129,7 @@ C₁ ∘ C₂ = (P₁ ∧ wp(S₁, P₂), Q₁ ∧ wp(S₁, Q₂), I₁ ∧ I₂
 如果程序 $S$ 满足契约 $C = (P, Q, I)$，则对于任何满足前置条件的状态，程序执行后满足后置条件和不变式。
 
 **证明**:
+
 ```latex
 1. 契约满足定义: ∀σ: P(σ) ∧ I(σ) ⟹ wp(S, Q ∧ I)
 2. 最弱前置条件性质: wp(S, Q ∧ I)(σ) ⟺ ∀σ': σ' = S(σ) ⟹ Q(σ') ∧ I(σ')
@@ -142,6 +143,7 @@ C₁ ∘ C₂ = (P₁ ∧ wp(S₁, P₂), Q₁ ∧ wp(S₁, Q₂), I₁ ∧ I₂
 如果程序 $S_1$ 满足契约 $C_1$，程序 $S_2$ 满足契约 $C_2$，则 $S_1; S_2$ 满足契约 $C_1 \circ C_2$。
 
 **证明**:
+
 ```latex
 1. S₁ 满足 C₁: ∀σ: P₁(σ) ∧ I₁(σ) ⟹ wp(S₁, Q₁ ∧ I₁)
 2. S₂ 满足 C₂: ∀σ: P₂(σ) ∧ I₂(σ) ⟹ wp(S₂, Q₂ ∧ I₂)
@@ -155,6 +157,7 @@ C₁ ∘ C₂ = (P₁ ∧ wp(S₁, P₂), Q₁ ∧ wp(S₁, Q₂), I₁ ∧ I₂
 如果子类契约 $C_s = (P_s, Q_s, I_s)$ 强于父类契约 $C_p = (P_p, Q_p, I_p)$，则子类可以替换父类。
 
 **证明**:
+
 ```latex
 1. 契约强化: P_s ⟹ P_p, Q_p ⟹ Q_s, I_s ⟹ I_p
 2. 里氏替换原则: 子类可以替换父类
@@ -1263,7 +1266,8 @@ mod queue_tests {
 ---
 
 **相关文档**:
+
 - [形式化规格说明](../01_Formal_Methods/01_Formal_Specification.md)
 - [形式化验证方法](../01_Formal_Methods/02_Formal_Verification_Methods.md)
 - [模型驱动开发](../01_Formal_Methods/03_Model_Driven_Development.md)
-- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md) 
+- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md)

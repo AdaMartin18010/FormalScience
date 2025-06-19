@@ -133,6 +133,7 @@ G: M → C
 如果模型转换 $T$ 是正确的，则对于任何源模型 $M_1$，目标模型 $T(M_1)$ 与 $M_1$ 语义等价。
 
 **证明**:
+
 ```latex
 1. 定义语义等价关系 ≡
 2. 对于任何模型 M₁, M₂: M₁ ≡ M₂ ⟺ I₁(M₁) = I₂(M₂)
@@ -146,6 +147,7 @@ G: M → C
 如果代码生成器 $G$ 是完备的，则对于任何模型 $M$，生成的代码 $G(M)$ 完全实现 $M$ 的语义。
 
 **证明**:
+
 ```latex
 1. 定义实现关系 ⊨
 2. 对于任何模型 M 和代码 C: C ⊨ M ⟺ C 实现 M 的语义
@@ -159,6 +161,7 @@ G: M → C
 如果模型 $M_1$ 和 $M_2$ 通过转换 $T$ 关联，则它们保持一致性。
 
 **证明**:
+
 ```latex
 1. 定义一致性关系 ≈
 2. 对于转换 T: M₁ ≈ T(M₁)
@@ -889,7 +892,8 @@ impl EmbeddedGenerator {
 ---
 
 **相关文档**:
+
 - [形式化规格说明](../01_Formal_Methods/01_Formal_Specification.md)
 - [形式化验证方法](../01_Formal_Methods/02_Formal_Verification_Methods.md)
 - [契约式编程](../01_Formal_Methods/04_Contract_Programming.md)
-- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md) 
+- [软件架构设计原则](../02_Software_Architecture/01_Architecture_Design_Principles.md)
