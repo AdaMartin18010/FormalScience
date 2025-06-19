@@ -49,6 +49,7 @@
 
 **定义 2.1** (软件系统)
 软件系统 $S$ 是一个三元组 $(S, I, O)$，其中：
+
 - $S$ 是状态集合
 - $I$ 是输入集合
 - $O$ 是输出集合
@@ -102,6 +103,7 @@ $Verify(system, spec) = \forall i \in I, o \in O: Spec(system, i, o)$
 如果验证过程是完备的，则验证通过意味着系统满足规格说明。
 
 **证明**：
+
 1. 设验证函数为 $Verify: S \times Spec \rightarrow \text{Bool}$
 2. 完备性意味着 $Verify(system, spec) = true \implies \forall i, o: Spec(system, i, o)$
 3. 因此验证通过确保系统满足规格说明。□
@@ -112,6 +114,7 @@ $Verify(system, spec) = \forall i \in I, o \in O: Spec(system, i, o)$
 对于有限状态系统，验证问题是可判定的。
 
 **证明**：
+
 1. 设系统状态数为 $n$
 2. 状态空间是有限的
 3. 可以在有限时间内检查所有状态
@@ -1006,16 +1009,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../04_Testing_Theory/01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [单元测试理论](../04_Testing_Theory/02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [集成测试理论](../04_Testing_Theory/03_Integration_Testing/01_Integration_Testing_Theory.md)
 - [系统测试理论](../04_Testing_Theory/04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1032,4 +1038,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

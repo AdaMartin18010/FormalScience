@@ -49,6 +49,7 @@
 
 **定义 2.1** (编程语言)
 编程语言 $L$ 是一个四元组 $(Σ, G, S, I)$，其中：
+
 - $Σ$ 是字母表
 - $G$ 是语法规则
 - $S$ 是语义函数
@@ -58,6 +59,7 @@
 
 **定义 2.2** (语法)
 语法 $G$ 是一个上下文无关文法 $(N, T, P, S)$，其中：
+
 - $N$ 是非终结符集合
 - $T$ 是终结符集合
 - $P$ 是产生式规则
@@ -67,6 +69,7 @@
 
 **定义 2.3** (语义)
 语义 $S$ 是一个函数 $S: AST \times Env \rightarrow Value$，其中：
+
 - $AST$ 是抽象语法树
 - $Env$ 是环境
 - $Value$ 是值域
@@ -108,6 +111,7 @@
 如果编程语言能够模拟图灵机，则该语言是图灵完备的。
 
 **证明**：
+
 1. 设语言 $L$ 包含基本操作：赋值、条件、循环
 2. 这些操作足以模拟图灵机的状态转换
 3. 因此 $L$ 是图灵完备的。□
@@ -118,6 +122,7 @@
 如果类型系统正确，则类型正确的程序不会产生运行时类型错误。
 
 **证明**：
+
 1. 设程序 $P$ 通过类型检查
 2. 类型检查确保操作数类型匹配
 3. 因此运行时不会出现类型错误。□
@@ -1207,16 +1212,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 编程语言理论
+
 - [语言语义理论](../02_Language_Semantics/01_Language_Semantics_Theory.md)
 - [类型系统理论](../03_Type_Systems/01_Type_Systems_Theory.md)
 - [编译原理理论](../04_Compilation_Theory/01_Compilation_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1233,4 +1241,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

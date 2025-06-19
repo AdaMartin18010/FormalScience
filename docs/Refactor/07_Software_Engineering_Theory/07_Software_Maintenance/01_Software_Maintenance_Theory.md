@@ -49,6 +49,7 @@
 
 **定义 2.1** (软件系统)
 软件系统 $S$ 是一个四元组 $(C, I, O, V)$，其中：
+
 - $C$ 是组件集合
 - $I$ 是输入接口
 - $O$ 是输出接口
@@ -58,6 +59,7 @@
 
 **定义 2.2** (维护操作)
 维护操作 $M$ 是一个函数 $M: S \times R \rightarrow S'$，其中：
+
 - $S$ 是原系统
 - $R$ 是维护需求
 - $S'$ 是维护后的系统
@@ -104,6 +106,7 @@
 软件维护成本随系统复杂度的增加而指数增长。
 
 **证明**：
+
 1. 设系统复杂度为 $C$，维护成本为 $M$
 2. 复杂度增加导致理解困难
 3. 理解困难导致维护时间增加
@@ -115,6 +118,7 @@
 预防性维护的效果优于反应式维护。
 
 **证明**：
+
 1. 设预防性维护成本为 $C_p$，效果为 $E_p$
 2. 设反应式维护成本为 $C_r$，效果为 $E_r$
 3. 预防性维护避免问题发生
@@ -1107,16 +1111,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../04_Testing_Theory/01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [单元测试理论](../04_Testing_Theory/02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [集成测试理论](../04_Testing_Theory/03_Integration_Testing/01_Integration_Testing_Theory.md)
 - [系统测试理论](../04_Testing_Theory/04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1133,4 +1140,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

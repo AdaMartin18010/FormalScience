@@ -31,6 +31,7 @@
 
 **定义 1.2** (测试用例)
 测试用例是一个四元组 $(I, O, P, E)$，其中：
+
 - $I$ 是输入集合
 - $O$ 是预期输出集合
 - $P$ 是前置条件
@@ -53,6 +54,7 @@
 
 **定义 2.1** (程序)
 程序 $P$ 是一个函数 $P: D \rightarrow R$，其中：
+
 - $D$ 是输入域
 - $R$ 是输出域
 
@@ -60,6 +62,7 @@
 
 **定义 2.2** (语句覆盖)
 语句覆盖是一个函数 $C_s: P \times T \rightarrow [0,1]$，其中：
+
 - $P$ 是程序集合
 - $T$ 是测试用例集合
 - $C_s(p,t)$ 表示程序 $p$ 在测试用例 $t$ 下的语句覆盖率
@@ -71,6 +74,7 @@
 
 **定义 2.4** (测试充分性)
 测试充分性是一个谓词 $Adequate(P, T, C) \iff C(P, T) \geq \theta$，其中：
+
 - $\theta$ 是充分性阈值
 - $C$ 是覆盖率函数
 
@@ -111,6 +115,7 @@
 如果测试用例集合 $T$ 满足充分性条件 $Adequate(P, T, C)$，则 $T$ 能够发现程序 $P$ 中的大部分缺陷。
 
 **证明**：
+
 1. 设缺陷集合为 $D = \{d_1, d_2, ..., d_n\}$
 2. 每个缺陷 $d_i$ 对应一个执行路径 $p_i$
 3. 充分性条件确保覆盖率 $C(P, T) \geq \theta$
@@ -123,6 +128,7 @@
 不存在有限的测试用例集合能够发现程序中的所有缺陷。
 
 **证明**：
+
 1. 假设存在有限测试用例集合 $T$ 能发现所有缺陷
 2. 程序 $P$ 的输入域 $D$ 是无限的
 3. 有限集合 $T$ 只能覆盖 $D$ 的有限子集
@@ -986,16 +992,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [单元测试理论](../02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [集成测试理论](../03_Integration_Testing/01_Integration_Testing_Theory.md)
 - [系统测试理论](../04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1012,4 +1021,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

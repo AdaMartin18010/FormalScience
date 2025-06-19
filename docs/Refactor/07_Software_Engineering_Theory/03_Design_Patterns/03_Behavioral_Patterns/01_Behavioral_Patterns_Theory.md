@@ -28,6 +28,7 @@
 
 **定义 1.1** (行为型模式)
 行为型模式是一类用于处理对象间通信和交互的软件设计模式，其核心目标是：
+
 - 定义对象间的交互方式
 - 分配对象间的责任
 - 确保交互的一致性和可维护性
@@ -55,6 +56,7 @@ $$R \subseteq O \times B \times O$$
 
 **定义 2.2** (观察者模式)
 观察者模式是一个四元组 $(S, O, \text{notify}, \text{update})$，其中：
+
 - $S$ 是主题集合
 - $O$ 是观察者集合
 - $\text{notify}: S \rightarrow O^*$ 是通知函数
@@ -64,6 +66,7 @@ $$R \subseteq O \times B \times O$$
 
 **定义 2.3** (策略模式)
 策略模式是一个三元组 $(C, S, \text{execute})$，其中：
+
 - $C$ 是上下文类
 - $S$ 是策略集合
 - $\text{execute}: C \times S \rightarrow \text{Result}$ 是执行函数
@@ -123,6 +126,7 @@ graph TD
 观察者模式确保所有观察者都能接收到主题的状态变化通知。
 
 **证明**：
+
 1. 设主题 $s \in S$，观察者集合 $O_s \subseteq O$
 2. 当 $s$ 状态变化时，调用 $\text{notify}(s)$
 3. $\text{notify}(s)$ 返回所有观察者 $O_s$
@@ -135,6 +139,7 @@ graph TD
 策略模式支持在不修改上下文的情况下添加新的策略。
 
 **证明**：
+
 1. 设现有策略集合为 $S$
 2. 新增策略 $s'$，扩展为 $S \cup \{s'\}$
 3. 上下文 $C$ 的 $\text{execute}$ 函数接受 $S \cup \{s'\}$ 中的任意策略
@@ -848,16 +853,19 @@ impl Order {
 ## 7. 相关理论
 
 ### 7.1 设计模式理论
+
 - [创建型模式理论](../01_Creational_Patterns/01_Creational_Patterns_Theory.md)
 - [结构型模式理论](../02_Structural_Patterns/01_Structural_Patterns_Theory.md)
 - [架构模式理论](../04_Architectural_Patterns/01_Architectural_Patterns_Theory.md)
 
 ### 7.2 软件设计理论
+
 - [设计原则理论](../01_Design_Principles/01_Design_Principles_Theory.md)
 - [架构设计理论](../02_Architecture_Design/01_Architecture_Design_Theory.md)
 - [代码重构理论](../05_Code_Refactoring/01_Code_Refactoring_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型驱动开发](../03_Model_Driven_Development/01_Model_Driven_Development_Theory.md)
@@ -874,4 +882,4 @@ impl Order {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

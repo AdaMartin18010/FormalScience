@@ -28,6 +28,7 @@
 
 **定义 1.1** (结构型模式)
 结构型模式是一类用于处理类和对象组合的软件设计模式，其核心目标是：
+
 - 简化类和对象之间的关系
 - 提供灵活的结构组合机制
 - 确保结构的一致性和可维护性
@@ -55,6 +56,7 @@ $$R \subseteq C \times C \cup O \times O$$
 
 **定义 2.2** (适配器模式)
 适配器模式是一个五元组 $(T, A, C, f, g)$，其中：
+
 - $T$ 是目标接口
 - $A$ 是适配器类
 - $C$ 是被适配类
@@ -65,6 +67,7 @@ $$R \subseteq C \times C \cup O \times O$$
 
 **定义 2.3** (装饰器模式)
 装饰器模式是一个四元组 $(C, D, \text{decorate}, \text{operation})$，其中：
+
 - $C$ 是组件接口
 - $D$ 是装饰器类
 - $\text{decorate}: C \rightarrow D$ 是装饰函数
@@ -121,6 +124,7 @@ graph TD
 适配器模式能够正确地将不兼容的接口转换为兼容的接口。
 
 **证明**：
+
 1. 设原始接口为 $I_1$，目标接口为 $I_2$
 2. 适配器 $A$ 实现 $I_2$ 并包含 $I_1$ 的实例
 3. 对于 $I_2$ 的每个方法 $m$，$A$ 提供对应的实现
@@ -132,6 +136,7 @@ graph TD
 装饰器模式支持任意组合多个装饰器。
 
 **证明**：
+
 1. 设装饰器 $D_1, D_2, ..., D_n$ 都实现组件接口 $C$
 2. 每个装饰器都包含一个组件实例
 3. 可以形成链式组合：$D_n(D_{n-1}(...D_1(C)...))$
@@ -830,16 +835,19 @@ impl FileComponent for EncryptionDecorator {
 ## 7. 相关理论
 
 ### 7.1 设计模式理论
+
 - [创建型模式理论](../01_Creational_Patterns/01_Creational_Patterns_Theory.md)
 - [行为型模式理论](../03_Behavioral_Patterns/01_Behavioral_Patterns_Theory.md)
 - [架构模式理论](../04_Architectural_Patterns/01_Architectural_Patterns_Theory.md)
 
 ### 7.2 软件设计理论
+
 - [设计原则理论](../01_Design_Principles/01_Design_Principles_Theory.md)
 - [架构设计理论](../02_Architecture_Design/01_Architecture_Design_Theory.md)
 - [代码重构理论](../05_Code_Refactoring/01_Code_Refactoring_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型驱动开发](../03_Model_Driven_Development/01_Model_Driven_Development_Theory.md)
@@ -856,4 +864,4 @@ impl FileComponent for EncryptionDecorator {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

@@ -49,6 +49,7 @@
 
 **定义 2.1** (软件质量)
 软件质量 $Q$ 是一个函数 $Q: S \times R \rightarrow [0,1]$，其中：
+
 - $S$ 是软件系统集合
 - $R$ 是需求集合
 - $Q(s, r)$ 表示系统 $s$ 满足需求 $r$ 的程度
@@ -57,6 +58,7 @@
 
 **定义 2.2** (质量属性)
 质量属性 $A$ 是一个函数 $A: S \rightarrow V$，其中：
+
 - $S$ 是软件系统集合
 - $V$ 是属性值域
 
@@ -64,6 +66,7 @@
 
 **定义 2.3** (质量评估)
 质量评估是一个函数 $E: S \times A_1 \times A_2 \times ... \times A_n \rightarrow Q$，其中：
+
 - $A_i$ 是质量属性
 - $Q$ 是综合质量分数
 
@@ -106,6 +109,7 @@
 内部质量影响外部质量，过程质量影响内部质量。
 
 **证明**：
+
 1. 设内部质量为 $Q_i$，外部质量为 $Q_e$，过程质量为 $Q_p$
 2. 内部质量直接影响代码结构和实现
 3. 代码结构影响外部可见的功能和性能
@@ -117,6 +121,7 @@
 不同质量属性之间存在权衡关系，无法同时优化所有属性。
 
 **证明**：
+
 1. 设质量属性集合为 $A = \{a_1, a_2, ..., a_n\}$
 2. 优化属性 $a_i$ 可能影响属性 $a_j$
 3. 例如：优化性能可能降低可维护性
@@ -1063,16 +1068,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../04_Testing_Theory/01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [单元测试理论](../04_Testing_Theory/02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [集成测试理论](../04_Testing_Theory/03_Integration_Testing/01_Integration_Testing_Theory.md)
 - [系统测试理论](../04_Testing_Theory/04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1089,4 +1097,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

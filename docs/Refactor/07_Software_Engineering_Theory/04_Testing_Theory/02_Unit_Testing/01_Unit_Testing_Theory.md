@@ -49,6 +49,7 @@
 
 **定义 2.1** (单元)
 单元 $U$ 是一个函数 $U: D \rightarrow R$，其中：
+
 - $D$ 是输入域
 - $R$ 是输出域
 
@@ -56,6 +57,7 @@
 
 **定义 2.2** (单元测试)
 单元测试是一个三元组 $(U, T, V)$，其中：
+
 - $U$ 是被测试单元
 - $T$ 是测试用例集合
 - $V$ 是验证函数 $V: R \times R \rightarrow \text{Bool}$
@@ -64,6 +66,7 @@
 
 **定义 2.3** (语句覆盖)
 语句覆盖 $C_s(U, T) = \frac{|S_{executed}|}{|S_{total}|}$，其中：
+
 - $S_{executed}$ 是执行的语句集合
 - $S_{total}$ 是总语句集合
 
@@ -103,6 +106,7 @@
 如果单元测试的语句覆盖率达到100%，则能够发现单元中的大部分逻辑错误。
 
 **证明**：
+
 1. 设错误集合为 $E = \{e_1, e_2, ..., e_n\}$
 2. 每个错误 $e_i$ 对应一个语句 $s_i$
 3. 100%语句覆盖确保所有语句都被执行
@@ -114,6 +118,7 @@
 独立的单元测试能够并行执行，提高测试效率。
 
 **证明**：
+
 1. 设测试集合 $T = \{t_1, t_2, ..., t_n\}$
 2. 每个测试 $t_i$ 只依赖单元 $U_i$
 3. 不同单元间无依赖关系
@@ -1106,16 +1111,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [集成测试理论](../03_Integration_Testing/01_Integration_Testing_Theory.md)
 - [系统测试理论](../04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1132,4 +1140,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

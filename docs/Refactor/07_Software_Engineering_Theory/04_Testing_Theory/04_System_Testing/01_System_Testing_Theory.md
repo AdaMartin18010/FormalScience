@@ -49,6 +49,7 @@
 
 **定义 2.1** (系统)
 系统 $S$ 是一个五元组 $(C, I, O, E, F)$，其中：
+
 - $C$ 是组件集合
 - $I$ 是系统输入接口
 - $O$ 是系统输出接口
@@ -59,6 +60,7 @@
 
 **定义 2.2** (系统测试)
 系统测试是一个四元组 $(S, T, E, V)$，其中：
+
 - $S$ 是被测试系统
 - $T$ 是测试用例集合
 - $E$ 是测试环境
@@ -68,6 +70,7 @@
 
 **定义 2.3** (需求覆盖)
 需求覆盖 $C_r(S, T) = \frac{|R_{covered}|}{|R_{total}|}$，其中：
+
 - $R_{covered}$ 是被覆盖的需求集合
 - $R_{total}$ 是总需求集合
 
@@ -109,6 +112,7 @@
 如果系统测试的需求覆盖率达到100%，则能够验证系统满足所有需求。
 
 **证明**：
+
 1. 设需求集合为 $R = \{r_1, r_2, ..., r_n\}$
 2. 每个需求 $r_i$ 对应一个测试用例 $t_i$
 3. 100%需求覆盖确保所有需求都被测试
@@ -120,6 +124,7 @@
 测试环境越接近真实环境，测试结果越可靠。
 
 **证明**：
+
 1. 设真实环境为 $E_{real}$，测试环境为 $E_{test}$
 2. 环境差异 $D = |E_{real} - E_{test}|$
 3. 差异越小，测试结果越准确
@@ -872,16 +877,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [单元测试理论](../02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [集成测试理论](../03_Integration_Testing/01_Integration_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -898,4 +906,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

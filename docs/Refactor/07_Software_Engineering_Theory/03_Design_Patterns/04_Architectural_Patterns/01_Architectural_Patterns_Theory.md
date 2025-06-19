@@ -28,6 +28,7 @@
 
 **定义 1.1** (架构模式)
 架构模式是一类用于定义软件系统整体结构的模式，其核心目标是：
+
 - 定义系统的基本组织结构
 - 建立组件间的交互关系
 - 确保系统的可扩展性和可维护性
@@ -55,6 +56,7 @@ $$R \subseteq C \times I \times C$$
 
 **定义 2.2** (分层架构)
 分层架构是一个四元组 $(L, \prec, I, \text{invoke})$，其中：
+
 - $L$ 是层集合
 - $\prec$ 是层的依赖关系
 - $I$ 是接口集合
@@ -64,6 +66,7 @@ $$R \subseteq C \times I \times C$$
 
 **定义 2.3** (MVC架构)
 MVC架构是一个五元组 $(M, V, C, \text{update}, \text{notify})$，其中：
+
 - $M$ 是模型集合
 - $V$ 是视图集合
 - $C$ 是控制器集合
@@ -123,6 +126,7 @@ graph TD
 在分层架构中，上层只能依赖下层，不能依赖上层。
 
 **证明**：
+
 1. 设层 $L_1 \prec L_2$ 表示 $L_1$ 依赖 $L_2$
 2. 假设存在 $L_2 \prec L_1$，形成循环依赖
 3. 这与分层架构的定义矛盾
@@ -134,6 +138,7 @@ graph TD
 MVC架构确保模型、视图、控制器之间的完全分离。
 
 **证明**：
+
 1. 模型 $M$ 只包含数据和业务逻辑
 2. 视图 $V$ 只负责显示
 3. 控制器 $C$ 只处理用户输入
@@ -1101,16 +1106,19 @@ impl ChatSystem {
 ## 7. 相关理论
 
 ### 7.1 设计模式理论
+
 - [创建型模式理论](../01_Creational_Patterns/01_Creational_Patterns_Theory.md)
 - [结构型模式理论](../02_Structural_Patterns/01_Structural_Patterns_Theory.md)
 - [行为型模式理论](../03_Behavioral_Patterns/01_Behavioral_Patterns_Theory.md)
 
 ### 7.2 软件设计理论
+
 - [设计原则理论](../01_Design_Principles/01_Design_Principles_Theory.md)
 - [架构设计理论](../02_Architecture_Design/01_Architecture_Design_Theory.md)
 - [代码重构理论](../05_Code_Refactoring/01_Code_Refactoring_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型驱动开发](../03_Model_Driven_Development/01_Model_Driven_Development_Theory.md)
@@ -1127,4 +1135,4 @@ impl ChatSystem {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0

@@ -49,6 +49,7 @@
 
 **定义 2.1** (组件)
 组件 $C$ 是一个四元组 $(I, O, S, F)$，其中：
+
 - $I$ 是输入接口集合
 - $O$ 是输出接口集合
 - $S$ 是内部状态集合
@@ -58,6 +59,7 @@
 
 **定义 2.2** (集成)
 集成是一个函数 $\text{Integrate}: C_1 \times C_2 \times ... \times C_n \rightarrow S$，其中：
+
 - $C_i$ 是组件
 - $S$ 是集成后的系统
 
@@ -105,6 +107,7 @@ $\text{Compatible}(C_1, C_2) \iff O_1 \cap I_2 \neq \emptyset$
 如果所有组件都正确实现，且接口兼容，则集成后的系统功能正确。
 
 **证明**：
+
 1. 设组件集合为 $C = \{C_1, C_2, ..., C_n\}$
 2. 每个组件 $C_i$ 都正确实现功能 $F_i$
 3. 接口兼容性确保数据正确传递
@@ -116,6 +119,7 @@ $\text{Compatible}(C_1, C_2) \iff O_1 \cap I_2 \neq \emptyset$
 不同的集成顺序可能产生不同的测试效果，但最终结果应一致。
 
 **证明**：
+
 1. 设集成顺序为 $\sigma_1$ 和 $\sigma_2$
 2. 如果组件间无依赖关系，则顺序无关
 3. 如果有依赖关系，则顺序影响测试效果
@@ -1320,16 +1324,19 @@ mod tests {
 ## 7. 相关理论
 
 ### 7.1 测试理论
+
 - [测试理论基础](../01_Testing_Foundations/01_Testing_Foundations_Theory.md)
 - [单元测试理论](../02_Unit_Testing/01_Unit_Testing_Theory.md)
 - [系统测试理论](../04_System_Testing/01_System_Testing_Theory.md)
 
 ### 7.2 软件工程理论
+
 - [软件质量理论](../05_Software_Quality/01_Software_Quality_Theory.md)
 - [软件验证理论](../06_Software_Verification/01_Software_Verification_Theory.md)
 - [软件维护理论](../07_Software_Maintenance/01_Software_Maintenance_Theory.md)
 
 ### 7.3 形式化方法
+
 - [形式化规格说明](../01_Formal_Specification/01_Formal_Specification_Theory.md)
 - [形式化验证方法](../02_Formal_Verification/01_Formal_Verification_Theory.md)
 - [模型检测理论](../03_Model_Checking/01_Model_Checking_Theory.md)
@@ -1346,4 +1353,4 @@ mod tests {
 
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
-**版本**: v1.0 
+**版本**: v1.0
