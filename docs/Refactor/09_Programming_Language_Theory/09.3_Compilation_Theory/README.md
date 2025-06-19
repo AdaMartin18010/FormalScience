@@ -9,6 +9,7 @@
 ### 形式化定义
 
 **定义 9.3.1 (编译器)** 编译器是一个函数 $C: \Sigma^* \rightarrow \Omega^*$，其中：
+
 - $\Sigma$ 是源语言的字母表
 - $\Omega$ 是目标语言的字母表
 - $C$ 保持语义等价性：$\forall s \in \Sigma^*, \llbracket s \rrbracket_S = \llbracket C(s) \rrbracket_T$
@@ -21,6 +22,7 @@ $$\vdash P \Rightarrow \vdash C(P)$$
 ### 1. 词法分析 (Lexical Analysis)
 
 **定义 9.3.2 (词法分析器)** 词法分析器是一个有限状态自动机 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 - $Q$ 是状态集合
 - $\Sigma$ 是输入字母表
 - $\delta: Q \times \Sigma \rightarrow Q$ 是转移函数
@@ -227,6 +229,7 @@ impl Lexer {
 ### 2. 语法分析 (Syntax Analysis)
 
 **定义 9.3.3 (上下文无关文法)** 上下文无关文法是一个四元组 $G = (N, T, P, S)$，其中：
+
 - $N$ 是非终结符集合
 - $T$ 是终结符集合
 - $P$ 是产生式集合
@@ -706,6 +709,7 @@ impl TypeChecker {
 ### 4. 代码生成 (Code Generation)
 
 **定义 9.3.6 (中间表示)** 中间表示是一个三元组 $IR = (V, E, \phi)$，其中：
+
 - $V$ 是基本块集合
 - $E$ 是控制流边集合
 - $\phi$ 是变量定义映射
@@ -909,6 +913,7 @@ $$\forall e_1, e_2 \in Const: C(e_1 \oplus e_2) = eval(e_1 \oplus e_2)$$
 ### 3. 寄存器分配
 
 **定义 9.3.9 (图着色)** 寄存器分配等价于图着色问题，其中：
+
 - 节点是活跃变量
 - 边表示变量同时活跃
 - 颜色是寄存器
@@ -994,6 +999,7 @@ fn main() {
 $$e \rightarrow^* v \Rightarrow \llbracket e \rrbracket = v$$
 
 **证明** 通过结构归纳法证明：
+
 1. 基础情况：字面量直接求值为自身
 2. 归纳步骤：二元运算、函数调用等保持语义
 
@@ -1016,4 +1022,4 @@ $$\llbracket P \rrbracket = \llbracket C(P) \rrbracket$$
 
 - [语言设计理论](../09.1_Language_Design_Theory/README.md)
 - [类型系统理论](../09.2_Type_System_Theory/README.md)
-- [形式语言理论](../03_Formal_Language_Theory/README.md) 
+- [形式语言理论](../03_Formal_Language_Theory/README.md)

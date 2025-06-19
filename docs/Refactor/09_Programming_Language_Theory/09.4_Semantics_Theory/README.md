@@ -9,6 +9,7 @@
 ### 形式化定义
 
 **定义 9.4.1 (语义函数)** 语义函数是一个映射 $\llbracket \cdot \rrbracket: Prog \rightarrow D$，其中：
+
 - $Prog$ 是程序集合
 - $D$ 是语义域
 - $\llbracket P \rrbracket$ 表示程序 $P$ 的语义
@@ -21,6 +22,7 @@ $$\llbracket P_1 \rrbracket = \llbracket P_2 \rrbracket$$
 ### 小步语义 (Small-Step Semantics)
 
 **定义 9.4.3 (小步语义)** 小步语义是一个关系 $\rightarrow \subseteq Conf \times Conf$，其中：
+
 - $Conf$ 是配置集合
 - 配置是程序状态和环境的对偶
 
@@ -413,6 +415,7 @@ impl BigStepSemantics {
 ### 语义域理论
 
 **定义 9.4.5 (语义域)** 语义域是一个完全偏序集 $(D, \sqsubseteq)$，其中：
+
 - $\sqsubseteq$ 是偏序关系
 - 每个有向集都有最小上界
 
@@ -565,6 +568,7 @@ impl DenotationalSemantics {
 ### Hoare逻辑
 
 **定义 9.4.7 (Hoare三元组)** Hoare三元组 $\{P\} C \{Q\}$ 表示：
+
 - 如果前置条件 $P$ 在程序 $C$ 执行前成立
 - 且 $C$ 终止
 - 则后置条件 $Q$ 在 $C$ 执行后成立
@@ -813,4 +817,4 @@ $$\llbracket e_1 \rrbracket = \llbracket e_2 \rrbracket$$
 
 - [语言设计理论](../09.1_Language_Design_Theory/README.md)
 - [类型系统理论](../09.2_Type_System_Theory/README.md)
-- [编译理论](../09.3_Compilation_Theory/README.md) 
+- [编译理论](../09.3_Compilation_Theory/README.md)
