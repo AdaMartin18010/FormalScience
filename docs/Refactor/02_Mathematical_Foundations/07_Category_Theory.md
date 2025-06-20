@@ -18,16 +18,19 @@
 
 **定义 1.1.1** (范畴)
 范畴 $\mathcal{C}$ 包含：
+
 1. 对象类 $\text{Ob}(\mathcal{C})$
 2. 态射集 $\text{Hom}(A, B)$ 对任意对象 $A, B$
 3. 复合运算 $\circ: \text{Hom}(B, C) \times \text{Hom}(A, B) \to \text{Hom}(A, C)$
 4. 单位态射 $1_A \in \text{Hom}(A, A)$
 
 满足：
+
 - 结合律：$(f \circ g) \circ h = f \circ (g \circ h)$
 - 单位律：$f \circ 1_A = f = 1_B \circ f$
 
 **定义 1.1.2** (小范畴与大范畴)
+
 - 小范畴：对象和态射都是集合
 - 大范畴：对象或态射可能是真类
 
@@ -59,10 +62,12 @@ $\text{Top}$：对象是拓扑空间，态射是连续映射。
 
 **定义 2.1.1** (协变函子)
 协变函子 $F: \mathcal{C} \to \mathcal{D}$ 包含：
+
 1. 对象映射 $F: \text{Ob}(\mathcal{C}) \to \text{Ob}(\mathcal{D})$
 2. 态射映射 $F: \text{Hom}(A, B) \to \text{Hom}(F(A), F(B))$
 
 满足：
+
 - $F(1_A) = 1_{F(A)}$
 - $F(f \circ g) = F(f) \circ F(g)$
 
@@ -199,6 +204,7 @@ $F \dashv G$ 当且仅当存在单位 $\eta: 1_{\mathcal{C}} \to G \circ F$ 和�
 ### 9.1 函数式编程
 
 **例子 9.1.1** (Haskell中的范畴)
+
 ```haskell
 -- Functor类型类
 class Functor f where
@@ -234,4 +240,4 @@ class Monad m where
 - [02_Mathematical_Foundations/01_Set_Theory.md](01_Set_Theory.md) - 集合论基础
 - [02_Mathematical_Foundations/03_Algebra.md](03_Algebra.md) - 代数基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础 
+- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础

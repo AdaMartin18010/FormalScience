@@ -154,17 +154,21 @@ $\frac{d}{dt} \frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q
 ```
 
 ### 8.2 计算机辅助证明
+
 - Coq/Lean/Isabelle 等证明助手
 
 ## 9. 应用与算法
 
 ### 9.1 信号处理
+
 - 傅里叶分析、小波分析
 
 ### 9.2 最优化
+
 - 梯度下降、变分法
 
 ### 9.3 机器学习
+
 - 损失函数、泛函最优化
 
 ## 参考文献
@@ -181,4 +185,4 @@ $\frac{d}{dt} \frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q
 - [02_Mathematical_Foundations/01_Set_Theory.md](01_Set_Theory.md) - 集合论基础
 - [02_Mathematical_Foundations/03_Algebra.md](03_Algebra.md) - 代数基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础 
+- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础

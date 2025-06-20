@@ -20,6 +20,7 @@
 欧氏空间 $\mathbb{E}^n$ 是带有距离函数的 $n$ 维实向量空间。
 
 **欧几里得公理体系**（Hilbert 版）：
+
 1. 点、直线、平面公理
 2. 顺序公理
 3. 合同公理
@@ -125,17 +126,21 @@ $(x - a)^2 + (y - b)^2 = r^2$
 ```
 
 ### 8.2 计算机辅助证明
+
 - Coq/Lean/Isabelle 等证明助手
 
 ## 9. 应用与算法
 
 ### 9.1 计算机图形学
+
 - 几何变换、投影、建模
 
 ### 9.2 机器人运动学
+
 - 路径规划、空间变换
 
 ### 9.3 机器视觉
+
 - 特征提取、几何校正
 
 ## 参考文献
@@ -152,4 +157,4 @@ $(x - a)^2 + (y - b)^2 = r^2$
 - [02_Mathematical_Foundations/01_Set_Theory.md](01_Set_Theory.md) - 集合论基础
 - [02_Mathematical_Foundations/03_Algebra.md](03_Algebra.md) - 代数基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础 
+- [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础

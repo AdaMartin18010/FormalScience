@@ -19,6 +19,7 @@
 
 **定义 1.1.1** (自然数集)
 自然数集 $\mathbb{N}$ 是满足以下公理的集合：
+
 - $0 \in \mathbb{N}$
 - 如果 $n \in \mathbb{N}$，则 $n + 1 \in \mathbb{N}$
 - 数学归纳原理
@@ -33,6 +34,7 @@ $$\mathbb{Z} = \{..., -2, -1, 0, 1, 2, ...\}$$
 对于整数 $a, b$，如果存在整数 $k$ 使得 $a = kb$，则称 $b$ 整除 $a$，记作 $b \mid a$。
 
 **性质 1.2.1** (整除的基本性质)
+
 1. 如果 $a \mid b$ 且 $b \mid c$，则 $a \mid c$
 2. 如果 $a \mid b$ 且 $a \mid c$，则 $a \mid (bx + cy)$ 对所有整数 $x, y$
 3. 如果 $a \mid b$ 且 $b \mid a$，则 $a = \pm b$
@@ -41,6 +43,7 @@ $$\mathbb{Z} = \{..., -2, -1, 0, 1, 2, ...\}$$
 
 **定义 1.3.1** (最大公约数)
 整数 $a, b$ 的最大公约数 $\gcd(a, b)$ 是满足以下条件的最大正整数 $d$：
+
 - $d \mid a$ 且 $d \mid b$
 - 如果 $c \mid a$ 且 $c \mid b$，则 $c \mid d$
 
@@ -78,12 +81,14 @@ end
 $$a = bq + r, \quad 0 \leq r < b$$
 
 **证明**：
+
 1. **存在性**：构造性证明
 2. **唯一性**：反证法
 
 ### 2.2 欧几里得算法
 
 **算法 2.2.1** (欧几里得算法)
+
 ```rust
 // Rust 实现
 pub fn gcd(mut a: i64, mut b: i64) -> i64 {
@@ -110,6 +115,7 @@ pub fn extended_gcd(a: i64, b: i64) -> (i64, i64, i64) {
 
 **定义 2.3.1** (最小公倍数)
 整数 $a, b$ 的最小公倍数 $\text{lcm}(a, b)$ 是满足以下条件的最小正整数 $m$：
+
 - $a \mid m$ 且 $b \mid m$
 - 如果 $a \mid c$ 且 $b \mid c$，则 $m \mid c$
 
@@ -136,6 +142,7 @@ $$\gcd(a, b) \cdot \text{lcm}(a, b) = |ab|$$
 $$n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$$
 
 **证明**：
+
 1. **存在性**：数学归纳法
 2. **唯一性**：使用素数性质
 
@@ -178,6 +185,7 @@ $$a \equiv b \pmod{m}$$
 ### 4.2 同余性质
 
 **性质 4.2.1** (同余的基本性质)
+
 1. 自反性：$a \equiv a \pmod{m}$
 2. 对称性：如果 $a \equiv b \pmod{m}$，则 $b \equiv a \pmod{m}$
 3. 传递性：如果 $a \equiv b \pmod{m}$ 且 $b \equiv c \pmod{m}$，则 $a \equiv c \pmod{m}$
@@ -237,21 +245,21 @@ pub fn chinese_remainder_theorem(
     if remainders.len() != moduli.len() {
         return None;
     }
-    
+
     let mut result = 0;
     let mut product = 1;
-    
+
     // 计算所有模数的乘积
     for &m in moduli {
         product *= m;
     }
-    
+
     for i in 0..remainders.len() {
         let pi = product / moduli[i];
         let (_, inv, _) = extended_gcd(pi, moduli[i]);
         result = (result + remainders[i] * pi * inv) % product;
     }
-    
+
     Some((result + product) % product)
 }
 ```
@@ -312,18 +320,18 @@ $$\left(\frac{p}{q}\right) \left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2} \cdot 
 pub fn continued_fraction_expansion(x: f64, max_terms: usize) -> Vec<i64> {
     let mut result = Vec::new();
     let mut current = x;
-    
+
     for _ in 0..max_terms {
         let integer_part = current.floor() as i64;
         result.push(integer_part);
-        
+
         let fractional_part = current - integer_part as f64;
         if fractional_part.abs() < 1e-10 {
             break;
         }
         current = 1.0 / fractional_part;
     }
-    
+
     result
 }
 ```
@@ -372,17 +380,17 @@ pub fn generate_rsa_keys(bit_length: usize) -> RSAKey {
     // 生成大素数
     let p = generate_large_prime(bit_length / 2);
     let q = generate_large_prime(bit_length / 2);
-    
+
     let n = p * q;
     let phi = (p - 1) * (q - 1);
-    
+
     // 选择公钥指数
     let e = 65537; // 常用选择
-    
+
     // 计算私钥
     let (_, d, _) = extended_gcd(e, phi);
     let d = (d % phi + phi) % phi;
-    
+
     RSAKey { n, e, d }
 }
 ```
@@ -406,7 +414,7 @@ pub fn miller_rabin(n: u64, k: u32) -> bool {
     if n <= 3 {
         return true;
     }
-    
+
     // 将 n-1 写成 d * 2^r 的形式
     let mut d = n - 1;
     let mut r = 0;
@@ -414,16 +422,16 @@ pub fn miller_rabin(n: u64, k: u32) -> bool {
         d /= 2;
         r += 1;
     }
-    
+
     // 进行 k 次测试
     for _ in 0..k {
         let a = 2 + (rand::random::<u64>() % (n - 4));
         let mut x = mod_pow(a, d, n);
-        
+
         if x == 1 || x == n - 1 {
             continue;
         }
-        
+
         for _ in 1..r {
             x = (x * x) % n;
             if x == n - 1 {
@@ -433,12 +441,12 @@ pub fn miller_rabin(n: u64, k: u32) -> bool {
                 return false;
             }
         }
-        
+
         if x != n - 1 {
             return false;
         }
     }
-    
+
     true
 }
 ```
@@ -464,7 +472,7 @@ $\phi(n)$ 表示不超过 $n$ 且与 $n$ 互素的正整数个数。
 pub fn euler_totient(n: u64) -> u64 {
     let mut result = n;
     let mut n_mut = n;
-    
+
     for i in 2..=((n as f64).sqrt() as u64) {
         if n_mut % i == 0 {
             while n_mut % i == 0 {
@@ -473,11 +481,11 @@ pub fn euler_totient(n: u64) -> u64 {
             result = result / i * (i - 1);
         }
     }
-    
+
     if n_mut > 1 {
         result = result / n_mut * (n_mut - 1);
     }
-    
+
     result
 }
 ```
@@ -504,4 +512,4 @@ $$\mu(n) = \begin{cases}
 - [02_Mathematical_Foundations/01_Set_Theory.md](01_Set_Theory.md) - 集合论基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
 - [04_Formal_Language_Theory/01_Formal_Grammars.md](../04_Formal_Language_Theory/01_Formal_Grammars.md) - 形式语言理论
-- [15_Information_Theory/01_Information_Theory_Foundations.md](../15_Information_Theory/01_Information_Theory_Foundations.md) - 信息论基础 
+- [15_Information_Theory/01_Information_Theory_Foundations.md](../15_Information_Theory/01_Information_Theory_Foundations.md) - 信息论基础

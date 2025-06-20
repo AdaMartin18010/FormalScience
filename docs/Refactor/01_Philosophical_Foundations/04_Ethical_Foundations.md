@@ -29,6 +29,7 @@ $$\text{Utility}(A) = \sum_{i} \text{Happiness}_i(A) - \sum_{i} \text{Suffering}
 $$\text{Correct}(A) \iff \forall B : \text{Utility}(A) \geq \text{Utility}(B)$$
 
 **批判分析 1.1.1** (功利主义的挑战)
+
 - **分配正义**：功利主义是否忽视公平分配？
 - **权利问题**：是否可以为多数人利益牺牲少数人权利？
 - **测量问题**：如何客观测量和比较不同人的幸福？
@@ -48,6 +49,7 @@ $$\text{CategoricalImperative}(M) \iff \text{Universalizable}(M) \land \text{Res
 $$\text{Duty}(D) \implies \forall x : \text{Rational}(x) \implies \text{Applies}(D, x)$$
 
 **批判分析 1.2.1** (义务论的挑战)
+
 - **冲突处理**：当义务冲突时如何选择？
 - **结果忽视**：是否应该完全忽视行为后果？
 - **动机问题**：如何确保行为动机的纯粹性？
@@ -59,6 +61,7 @@ $$\text{Duty}(D) \implies \forall x : \text{Rational}(x) \implies \text{Applies}
 $$\text{Right}(R) \iff \text{MoralConstraint}(R) \land \text{Protection}(R)$$
 
 **定义 1.3.2** (权利类型)
+
 1. **消极权利**：$\text{NegativeRight}(R) \iff \text{NonInterference}(R)$
 2. **积极权利**：$\text{PositiveRight}(R) \iff \text{Provision}(R)$
 3. **人权**：$\text{HumanRight}(R) \iff \text{Universal}(R) \land \text{Inalienable}(R)$
@@ -80,6 +83,7 @@ $$\text{MoralRealism} \iff \exists \phi : \text{MoralFact}(\phi) \land \text{Obj
 $$\text{MoralFact}(\phi) \iff \text{True}(\phi) \land \text{Moral}(\phi)$$
 
 **批判分析 2.1.1** (道德实在论的挑战)
+
 - **认识论问题**：如何认识客观的道德事实？
 - **形而上学问题**：道德事实如何与自然事实关联？
 - **动机问题**：客观道德事实如何产生动机？
@@ -117,11 +121,13 @@ $$\text{MoralNonCognitivism} \iff \forall \phi : \text{Moral}(\phi) \implies \ne
 $$\text{Bioethics}(B) \iff \text{Ethics}(B) \land \text{LifeRelated}(B)$$
 
 **问题 3.1.1** (生命伦理问题)
+
 1. **堕胎**：$\text{Abortion}(A) \iff \text{TerminatePregnancy}(A)$
 2. **安乐死**：$\text{Euthanasia}(E) \iff \text{AssistedDeath}(E)$
 3. **基因编辑**：$\text{GeneEditing}(G) \iff \text{ModifyGenome}(G)$
 
 **原则 3.1.1** (生命伦理原则)
+
 1. **自主性**：$\text{Autonomy}(P) \iff \text{SelfDetermination}(P)$
 2. **不伤害**：$\text{NonMaleficence}(A) \iff \neg \text{Harm}(A)$
 3. **有利**：$\text{Beneficence}(A) \iff \text{Benefit}(A)$
@@ -138,6 +144,7 @@ $$\text{EnvironmentalEthics}(E) \iff \text{Ethics}(E) \land \text{EnvironmentRel
 $$\text{IntrinsicValue}(E) \iff \text{Value}(E) \land \neg \text{Instrumental}(E)$$
 
 **原则 3.2.1** (环境伦理原则)
+
 1. **可持续性**：$\text{Sustainability}(A) \iff \text{Maintain}(A, \text{Environment})$
 2. **生物多样性**：$\text{Biodiversity}(A) \iff \text{Preserve}(A, \text{Species})$
 3. **代际正义**：$\text{IntergenerationalJustice}(A) \iff \text{Fair}(A, \text{Future})$
@@ -149,6 +156,7 @@ $$\text{IntrinsicValue}(E) \iff \text{Value}(E) \land \neg \text{Instrumental}(E
 $$\text{TechnologyEthics}(T) \iff \text{Ethics}(T) \land \text{TechnologyRelated}(T)$$
 
 **问题 3.3.1** (技术伦理问题)
+
 1. **人工智能**：$\text{AI}(A) \iff \text{ArtificialIntelligence}(A)$
 2. **隐私**：$\text{Privacy}(P) \iff \text{PersonalInformation}(P)$
 3. **自动化**：$\text{Automation}(A) \iff \text{JobDisplacement}(A)$
@@ -166,6 +174,7 @@ $$\text{AlgorithmEthics}(A) \iff \text{Ethics}(A) \land \text{AlgorithmRelated}(
 $$\text{AlgorithmBias}(A) \iff \text{Unfair}(A) \land \text{Discriminatory}(A)$$
 
 **原则 4.1.1** (算法伦理原则)
+
 1. **公平性**：$\text{Fairness}(A) \iff \text{EqualTreatment}(A)$
 2. **透明性**：$\text{Transparency}(A) \iff \text{Explainable}(A)$
 3. **问责性**：$\text{Accountability}(A) \iff \text{Responsible}(A)$
@@ -178,11 +187,13 @@ $$\text{AlgorithmBias}(A) \iff \text{Unfair}(A) \land \text{Discriminatory}(A)$$
 $$\text{AIEthics}(A) \iff \text{Ethics}(A) \land \text{ArtificialIntelligence}(A)$
 
 **问题 4.2.1** (AI伦理问题)
+
 1. **自主性**：$\text{AIAutonomy}(A) \iff \text{IndependentDecision}(A)$
 2. **责任归属**：$\text{Responsibility}(A) \iff \text{Blame}(A)$
 3. **价值对齐**：$\text{ValueAlignment}(A) \iff \text{HumanValues}(A)$
 
 **原则 4.2.1** (AI伦理原则)
+
 1. **人类控制**：$\text{HumanControl}(A) \iff \text{Supervision}(A)$
 2. **安全**：$\text{Safety}(A) \iff \text{Secure}(A)$
 3. **透明**：$\text{Transparency}(A) \iff \text{Explainable}(A)$
@@ -194,6 +205,7 @@ $$\text{AIEthics}(A) \iff \text{Ethics}(A) \land \text{ArtificialIntelligence}(A
 $$\text{DataEthics}(D) \iff \text{Ethics}(D) \land \text{DataRelated}(D)$
 
 **原则 4.3.1** (数据伦理原则)
+
 1. **同意**：$\text{Consent}(D) \iff \text{InformedPermission}(D)$
 2. **最小化**：$\text{Minimization}(D) \iff \text{LeastNecessary}(D)$
 3. **目的限制**：$\text{PurposeLimitation}(D) \iff \text{SpecificUse}(D)$
@@ -208,11 +220,13 @@ $$\text{MoralLogic}(L) = \langle \Sigma, R, A, O \rangle$$
 其中 $\Sigma$ 是符号集，$R$ 是推理规则，$A$ 是公理集，$O$ 是义务算子。
 
 **定义 5.1.2** (义务算子)
+
 - **义务**：$O\phi$ 表示"应该做 $\phi$"
 - **允许**：$P\phi$ 表示"可以做 $\phi$"
 - **禁止**：$F\phi$ 表示"不应该做 $\phi$"
 
 **公理 5.1.1** (义务逻辑公理)
+
 1. **一致性**：$\neg(O\phi \land O\neg\phi)$
 2. **分配性**：$O(\phi \land \psi) \leftrightarrow (O\phi \land O\psi)$
 3. **必然化**：如果 $\vdash \phi$，则 $\vdash O\phi$
@@ -251,6 +265,7 @@ $$\text{CooperativeSolution}(G) \iff \text{Optimal}(G) \land \text{Fair}(G)$$
 $$\text{Virtue}(V) \iff \text{CharacterTrait}(V) \land \text{Flourishing}(V)$$
 
 **定义 6.1.2** (美德类型)
+
 1. **智慧**：$\text{Wisdom}(W) \iff \text{PracticalReason}(W)$
 2. **勇气**：$\text{Courage}(C) \iff \text{FaceFear}(C)$
 3. **节制**：$\text{Temperance}(T) \iff \text{Moderation}(T)$
@@ -271,6 +286,7 @@ $$\text{Character}(C) = \{V_1, V_2, \ldots, V_n\} \land \text{Stable}(C)$$
 $$\text{CharacterDevelopment}(D) \iff \text{Practice}(D) \land \text{Habituation}(D)$$
 
 **原则 6.2.1** (品格培养原则)
+
 1. **实践**：$\text{Practice}(V) \iff \text{RepeatedAction}(V)$
 2. **指导**：$\text{Guidance}(V) \iff \text{Mentor}(V)$
 3. **反思**：$\text{Reflection}(V) \iff \text{SelfExamination}(V)$
@@ -294,6 +310,7 @@ $$\text{VirtuousAction}(A) \implies \text{Correct}(A)$$
 $$\text{SocialContract}(C) \iff \text{RationalAgreement}(C) \land \text{MoralObligation}(C)$$
 
 **定义 7.1.2** (契约条件)
+
 1. **自愿性**：$\text{Voluntary}(C) \iff \text{FreeChoice}(C)$
 2. **互惠性**：$\text{Reciprocal}(C) \iff \text{MutualBenefit}(C)$
 3. **公平性**：$\text{Fair}(C) \iff \text{EqualBargaining}(C)$
@@ -367,6 +384,7 @@ $$\text{UtilitarianPrinciple}(A) \iff \text{MaximizeHappiness}(A)$$
 $$\text{MoralReasoning}(R) \iff \text{MoralPremises}(R) \land \text{MoralConclusion}(R)$$
 
 **规则 8.3.1** (道德推理规则)
+
 1. **一致性**：$\text{Consistency}(R)$
 2. **完整性**：$\text{Completeness}(R)$
 3. **有效性**：$\text{Validity}(R)$
@@ -401,11 +419,13 @@ def moral_judgment (action : MoralAction) (principle : MoralPrinciple) : Prop :=
 ### 9.2 哲学批判
 
 **批判 9.2.1** (伦理学的局限性)
+
 - 是否存在客观的道德真理？
 - 道德判断是否具有普遍性？
 - 伦理学是否能够解决所有道德问题？
 
 **批判 9.2.2** (文化相对主义)
+
 - 不同文化是否有不同的道德标准？
 - 道德是否具有文化相对性？
 - 是否存在跨文化的道德共识？
@@ -413,16 +433,19 @@ def moral_judgment (action : MoralAction) (principle : MoralPrinciple) : Prop :=
 ### 9.3 跨学科应用
 
 **应用 9.3.1** (人工智能)
+
 - 道德算法设计
 - 价值对齐
 - 伦理决策系统
 
 **应用 9.3.2** (政策制定)
+
 - 公共政策伦理
 - 分配正义
 - 环境政策
 
 **应用 9.3.3** (商业伦理)
+
 - 企业社会责任
 - 商业决策伦理
 - 利益相关者理论
@@ -445,4 +468,4 @@ def moral_judgment (action : MoralAction) (principle : MoralPrinciple) : Prop :=
 - [03_Methodological_Foundations.md](03_Methodological_Foundations.md) - 方法论基础
 - [02_Mathematical_Foundations/01_Set_Theory.md](../02_Mathematical_Foundations/01_Set_Theory.md) - 集合论基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [04_Formal_Language_Theory/01_Formal_Language_Foundations.md](../04_Formal_Language_Theory/01_Formal_Language_Foundations.md) - 形式语言基础 
+- [04_Formal_Language_Theory/01_Formal_Language_Foundations.md](../04_Formal_Language_Theory/01_Formal_Language_Foundations.md) - 形式语言基础

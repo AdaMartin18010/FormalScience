@@ -21,6 +21,7 @@
 $$\text{ScientificMethod}(M) \iff \text{Systematic}(M) \land \text{Repeatable}(M) \land \text{Empirical}(M)$$
 
 **定义 1.1.2** (科学方法步骤)
+
 1. **观察**：$\text{Observe}(P)$
 2. **假设**：$\text{Hypothesize}(H)$
 3. **预测**：$\text{Predict}(C)$
@@ -28,6 +29,7 @@ $$\text{ScientificMethod}(M) \iff \text{Systematic}(M) \land \text{Repeatable}(M
 5. **验证**：$\text{Verify}(V)$
 
 **批判分析 1.1.1** (科学方法的局限性)
+
 - **观察负载理论**：观察是否独立于理论？
 - **归纳问题**：如何从有限观察推出普遍规律？
 - **证伪主义**：科学理论是否只能被证伪而不能被证实？
@@ -69,6 +71,7 @@ $$E \text{ disconfirms } P \implies E \text{ refutes } H$$
 $$\text{LogicalInference}(P_1, \ldots, P_n, C) \iff \text{Valid}(P_1, \ldots, P_n \vdash C)$$
 
 **定义 2.1.2** (推理类型)
+
 1. **演绎推理**：$\text{Deductive}(R)$
 2. **归纳推理**：$\text{Inductive}(R)$
 3. **溯因推理**：$\text{Abductive}(R)$
@@ -99,6 +102,7 @@ $$\text{ModalLogic}(M) = \langle \Sigma, R, A, \Box, \Diamond \rangle$$
 $$\text{IntuitionisticLogic}(I) \iff \neg \forall \phi : \phi \lor \neg \phi$$
 
 **批判分析 2.3.1** (逻辑多元主义)
+
 - 是否存在唯一正确的逻辑？
 - 不同逻辑系统如何选择？
 - 逻辑是否具有文化相对性？
@@ -112,6 +116,7 @@ $$\text{IntuitionisticLogic}(I) \iff \neg \forall \phi : \phi \lor \neg \phi$$
 $$\text{MathematicalProof}(P, T) \iff \text{FromAxioms}(P) \land \text{ToTheorem}(T)$$
 
 **定义 3.1.2** (证明方法)
+
 1. **直接证明**：$\text{DirectProof}(P)$
 2. **反证法**：$\text{ProofByContradiction}(P)$
 3. **归纳证明**：$\text{InductiveProof}(P)$
@@ -128,6 +133,7 @@ $$\text{ValidProof}(P) \land \text{TrueAxioms}(A) \implies \text{TrueConclusion}
 $$\text{MathematicalModeling}(M, P) \iff \text{Model}(M) \land \text{Problem}(P) \land \text{Represents}(M, P)$$
 
 **定义 3.2.2** (建模步骤)
+
 1. **问题识别**：$\text{Identify}(P)$
 2. **变量选择**：$\text{SelectVariables}(V)$
 3. **关系建立**：$\text{EstablishRelations}(R)$
@@ -158,6 +164,7 @@ $$\text{Consistent}(A) \iff \neg \exists \phi : A \vdash \phi \land A \vdash \ne
 $$\text{Algorithm}(A) \iff \text{Finite}(A) \land \text{Deterministic}(A) \land \text{Effective}(A)$$
 
 **定义 4.1.2** (算法性质)
+
 1. **正确性**：$\text{Correct}(A) \iff \text{Output}(A) = \text{Expected}(A)$
 2. **效率**：$\text{Efficient}(A) \iff \text{Complexity}(A) \leq \text{Polynomial}(n)$
 3. **终止性**：$\text{Terminating}(A) \iff \text{AlwaysHalt}(A)$
@@ -186,6 +193,7 @@ $$\text{Complexity}(A) = \langle \text{Time}(A), \text{Space}(A) \rangle$$
 $$\text{Heuristic}(H) \iff \text{ExperienceBased}(H) \land \text{ProblemSolving}(H)$$
 
 **定义 4.3.2** (启发式类型)
+
 1. **贪心算法**：$\text{Greedy}(H)$
 2. **模拟退火**：$\text{SimulatedAnnealing}(H)$
 3. **遗传算法**：$\text{GeneticAlgorithm}(H)$
@@ -201,6 +209,7 @@ $$\text{System}(S) = \langle E, R, F \rangle$$
 其中 $E$ 是元素集，$R$ 是关系集，$F$ 是功能集。
 
 **定义 5.1.2** (系统性质)
+
 1. **整体性**：$\text{Wholeness}(S)$
 2. **层次性**：$\text{Hierarchy}(S)$
 3. **涌现性**：$\text{Emergence}(S)$
@@ -213,6 +222,7 @@ $$\text{System}(S) = \langle E, R, F \rangle$$
 $$\text{SystemAnalysis}(A, S) \iff \text{Analyze}(A, S) \land \text{Systematic}(A)$$
 
 **方法 5.2.1** (系统分析方法)
+
 1. **结构分析**：$\text{StructuralAnalysis}(S)$
 2. **功能分析**：$\text{FunctionalAnalysis}(S)$
 3. **行为分析**：$\text{BehavioralAnalysis}(S)$
@@ -237,6 +247,7 @@ $$\text{SystemPerformance}(S) \neq \sum_{i} \text{ComponentPerformance}(C_i)$$
 $$\text{CriticalThinking}(C) \iff \text{Systematic}(C) \land \text{Evaluative}(C) \land \text{Reflective}(C)$$
 
 **定义 6.1.2** (批判标准)
+
 1. **清晰性**：$\text{Clarity}(A)$
 2. **准确性**：$\text{Accuracy}(A)$
 3. **相关性**：$\text{Relevance}(A)$
@@ -251,6 +262,7 @@ $$\text{Argument}(A) = \langle P, C, R \rangle$$
 其中 $P$ 是前提集，$C$ 是结论，$R$ 是推理关系。
 
 **定义 6.2.2** (论证评估)
+
 1. **有效性**：$\text{Validity}(A)$
 2. **可靠性**：$\text{Reliability}(A)$
 3. **相关性**：$\text{Relevance}(A)$
@@ -263,6 +275,7 @@ $$\text{Argument}(A) = \langle P, C, R \rangle$$
 $$\text{LogicalFallacy}(F) \iff \text{Invalid}(F) \land \text{Deceptive}(F)$$
 
 **分类 6.3.1** (谬误类型)
+
 1. **形式谬误**：$\text{FormalFallacy}(F)$
 2. **非形式谬误**：$\text{InformalFallacy}(F)$
 3. **认知偏差**：$\text{CognitiveBias}(B)$
@@ -276,6 +289,7 @@ $$\text{LogicalFallacy}(F) \iff \text{Invalid}(F) \land \text{Deceptive}(F)$$
 $$\text{Formalization}(F, C) \iff \text{FromConcept}(C) \to \text{ToFormal}(F)$$
 
 **定义 7.1.2** (形式化步骤)
+
 1. **概念分析**：$\text{ConceptualAnalysis}(C)$
 2. **符号化**：$\text{Symbolization}(S)$
 3. **公理化**：$\text{Axiomatization}(A)$
@@ -288,6 +302,7 @@ $$\text{Formalization}(F, C) \iff \text{FromConcept}(C) \to \text{ToFormal}(F)$$
 $$\text{FormalVerification}(V, S) \iff \text{Mathematical}(V) \land \text{Verify}(V, S)$$
 
 **方法 7.2.1** (验证方法)
+
 1. **模型检验**：$\text{ModelChecking}(M)$
 2. **定理证明**：$\text{TheoremProving}(T)$
 3. **抽象解释**：$\text{AbstractInterpretation}(A)$
@@ -299,6 +314,7 @@ $$\text{FormalVerification}(V, S) \iff \text{Mathematical}(V) \land \text{Verify
 $$\text{FormalSemantics}(S, L) \iff \text{Formal}(S) \land \text{Semantics}(S, L)$$
 
 **定义 7.3.2** (语义类型)
+
 1. **指称语义**：$\text{DenotationalSemantics}(S)$
 2. **操作语义**：$\text{OperationalSemantics}(S)$
 3. **公理语义**：$\text{AxiomaticSemantics}(S)$
@@ -340,6 +356,7 @@ $$\text{Falsifiability}(T) \iff \text{Theory}(T) \implies \text{Falsifiable}(T)$
 $$\text{MethodologyEvaluation}(E, M) \iff \text{Evaluate}(E, M) \land \text{Systematic}(E)$$
 
 **标准 8.3.1** (评估标准)
+
 1. **有效性**：$\text{Effectiveness}(M)$
 2. **效率**：$\text{Efficiency}(M)$
 3. **可靠性**：$\text{Reliability}(M)$
@@ -375,11 +392,13 @@ def ockham_razor (t1 t2 : Theory) : Prop :=
 ### 9.2 哲学批判
 
 **批判 9.2.1** (方法论的局限性)
+
 - 是否存在普适的方法论？
 - 方法论是否具有文化相对性？
 - 方法论是否能够完全自动化？
 
 **批判 9.2.2** (科学方法的挑战)
+
 - 观察负载理论问题
 - 归纳推理的合理性
 - 理论选择的标准
@@ -387,16 +406,19 @@ def ockham_razor (t1 t2 : Theory) : Prop :=
 ### 9.3 跨学科应用
 
 **应用 9.3.1** (科学研究)
+
 - 实验设计
 - 数据分析
 - 理论构建
 
 **应用 9.3.2** (工程实践)
+
 - 系统设计
 - 问题解决
 - 质量控制
 
 **应用 9.3.3** (决策制定)
+
 - 风险评估
 - 方案选择
 - 效果评估
@@ -418,4 +440,4 @@ def ockham_razor (t1 t2 : Theory) : Prop :=
 - [02_Ontological_Foundations.md](02_Ontological_Foundations.md) - 本体论基础
 - [02_Mathematical_Foundations/01_Set_Theory.md](../02_Mathematical_Foundations/01_Set_Theory.md) - 集合论基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [04_Formal_Language_Theory/01_Formal_Language_Foundations.md](../04_Formal_Language_Theory/01_Formal_Language_Foundations.md) - 形式语言基础 
+- [04_Formal_Language_Theory/01_Formal_Language_Foundations.md](../04_Formal_Language_Theory/01_Formal_Language_Foundations.md) - 形式语言基础

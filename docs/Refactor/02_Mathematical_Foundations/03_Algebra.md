@@ -19,6 +19,7 @@
 
 **定义 1.1.1** (群)
 群是一个集合 $G$ 连同二元运算 $\cdot: G \times G \to G$，满足以下公理：
+
 1. **结合律**：$(a \cdot b) \cdot c = a \cdot (b \cdot c)$ 对所有 $a, b, c \in G$
 2. **单位元**：存在 $e \in G$ 使得 $e \cdot a = a \cdot e = a$ 对所有 $a \in G$
 3. **逆元**：对每个 $a \in G$，存在 $a^{-1} \in G$ 使得 $a \cdot a^{-1} = a^{-1} \cdot a = e$
@@ -29,10 +30,12 @@
 ### 1.2 群的基本性质
 
 **定理 1.2.1** (群的唯一性)
+
 1. 群的单位元是唯一的
 2. 每个元素的逆元是唯一的
 
 **证明**：
+
 1. 假设 $e_1, e_2$ 都是单位元，则 $e_1 = e_1 \cdot e_2 = e_2$
 2. 假设 $a^{-1}, a'$ 都是 $a$ 的逆元，则 $a^{-1} = a^{-1} \cdot e = a^{-1} \cdot (a \cdot a') = (a^{-1} \cdot a) \cdot a' = e \cdot a' = a'$
 
@@ -43,6 +46,7 @@
 
 **定义 1.3.1** (子群)
 群 $G$ 的子集 $H$ 是子群，如果：
+
 1. $H$ 非空
 2. 如果 $a, b \in H$，则 $a \cdot b \in H$
 3. 如果 $a \in H$，则 $a^{-1} \in H$
@@ -65,6 +69,7 @@ $$Ha = \{h \cdot a \mid h \in H\}$$
 $$|H| \mid |G|$$
 
 **证明**：
+
 1. 所有左陪集的大小相等且等于 $|H|$
 2. 不同的左陪集不相交
 3. $G$ 是所有左陪集的并集
@@ -90,6 +95,7 @@ $$G/\ker(\phi) \cong \text{im}(\phi)$$
 群 $G$ 是循环群，如果存在 $g \in G$ 使得 $G = \langle g \rangle = \{g^n \mid n \in \mathbb{Z}\}$。
 
 **定理 1.6.1** (循环群的结构)
+
 1. 无限循环群同构于 $(\mathbb{Z}, +)$
 2. 有限循环群同构于 $(\mathbb{Z}_n, +)$
 
@@ -119,6 +125,7 @@ end
 
 **定义 2.1.1** (环)
 环是一个集合 $R$ 连同两个二元运算 $+$ 和 $\cdot$，满足：
+
 1. $(R, +)$ 是阿贝尔群
 2. $(R, \cdot)$ 是半群（满足结合律）
 3. 分配律：$a \cdot (b + c) = a \cdot b + a \cdot c$ 和 $(a + b) \cdot c = a \cdot c + b \cdot c$
@@ -133,6 +140,7 @@ end
 
 **定理 2.2.1** (环的基本性质)
 在环 $R$ 中：
+
 1. $0 \cdot a = a \cdot 0 = 0$ 对所有 $a \in R$
 2. $(-a) \cdot b = a \cdot (-b) = -(a \cdot b)$
 3. $(-a) \cdot (-b) = a \cdot b$
@@ -141,11 +149,13 @@ end
 
 **定义 2.3.1** (左理想)
 环 $R$ 的子集 $I$ 是左理想，如果：
+
 1. $(I, +)$ 是 $(R, +)$ 的子群
 2. 对任意 $r \in R$ 和 $a \in I$，有 $r \cdot a \in I$
 
 **定义 2.3.2** (右理想)
 环 $R$ 的子集 $I$ 是右理想，如果：
+
 1. $(I, +)$ 是 $(R, +)$ 的子群
 2. 对任意 $r \in R$ 和 $a \in I$，有 $a \cdot r \in I$
 
@@ -209,6 +219,7 @@ $$R/\ker(\phi) \cong \text{im}(\phi)$$
 
 **定义 4.1.1** (左模)
 环 $R$ 上的左模是一个阿贝尔群 $M$ 连同标量乘法 $R \times M \to M$，满足：
+
 1. $(r + s) \cdot m = r \cdot m + s \cdot m$
 2. $r \cdot (m + n) = r \cdot m + r \cdot n$
 3. $(rs) \cdot m = r \cdot (s \cdot m)$
@@ -288,4 +299,4 @@ end
 
 **更新时间**: 2024-12-21  
 **版本**: 1.0  
-**作者**: FormalScience Team 
+**作者**: FormalScience Team
