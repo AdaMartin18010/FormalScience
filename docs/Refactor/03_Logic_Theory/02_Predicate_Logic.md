@@ -22,6 +22,7 @@
 
 **定义 1.1.2** (语言)
 谓词逻辑的语言 $\mathcal{L}$ 包含：
+
 - 个体变量：$x, y, z, ...$
 - 个体常项：$a, b, c, ...$
 - 谓词符号：$P, Q, R, ...$
@@ -34,6 +35,7 @@
 
 **定义 1.2.1** (项)
 项递归定义如下：
+
 1. 个体变量和个体常项是项
 2. 如果 $f$ 是 $n$ 元函数符号，$t_1, ..., t_n$ 是项，则 $f(t_1, ..., t_n)$ 是项
 3. 只有通过上述规则构造的表达式才是项
@@ -43,6 +45,7 @@
 
 **定义 1.2.3** (公式)
 公式递归定义如下：
+
 1. 原子公式是公式
 2. 如果 $\phi$ 是公式，则 $\neg\phi$ 是公式
 3. 如果 $\phi$ 和 $\psi$ 是公式，则 $(\phi \land \psi)$、$(\phi \lor \psi)$、$(\phi \to \psi)$、$(\phi \leftrightarrow \psi)$ 是公式
@@ -55,6 +58,7 @@
 
 **定义 2.1.1** (自由变量)
 变量 $x$ 在公式 $\phi$ 中自由出现，递归定义如下：
+
 1. 在原子公式 $P(t_1, ..., t_n)$ 中，$x$ 自由出现当且仅当 $x$ 在某个 $t_i$ 中出现
 2. 在 $\neg\phi$ 中，$x$ 自由出现当且仅当 $x$ 在 $\phi$ 中自由出现
 3. 在 $\phi \circ \psi$ 中（$\circ$ 是二元连接词），$x$ 自由出现当且仅当 $x$ 在 $\phi$ 或 $\psi$ 中自由出现
@@ -70,11 +74,12 @@
 
 **定义 2.2.1** (替换)
 用项 $t$ 替换公式 $\phi$ 中变量 $x$ 的所有自由出现，记作 $\phi[t/x]$，递归定义如下：
+
 1. 如果 $\phi$ 是原子公式 $P(t_1, ..., t_n)$，则 $\phi[t/x] = P(t_1[t/x], ..., t_n[t/x])$
-2. $(\neg\phi)[t/x] = \neg(\phi[t/x])$
-3. $(\phi \circ \psi)[t/x] = \phi[t/x] \circ \psi[t/x]$
-4. $(\forall y \phi)[t/x] = \forall y (\phi[t/x])$（如果 $y \neq x$）
-5. $(\exists y \phi)[t/x] = \exists y (\phi[t/x])$（如果 $y \neq x$）
+2. $[\neg\phi](t/x) = \neg(\phi[t/x])$
+3. $[\phi \circ \psi](t/x) = \phi[t/x] \circ \psi[t/x]$
+4. $[\forall y \phi](t/x) = \forall y (\phi[t/x])$（如果 $y \neq x$）
+5. $[\exists y \phi](t/x) = \exists y (\phi[t/x])$（如果 $y \neq x$）
 
 **定义 2.2.2** (可替换性)
 项 $t$ 对变量 $x$ 在公式 $\phi$ 中可替换，如果 $t$ 中没有任何变量在 $\phi$ 中被 $x$ 约束。
@@ -85,6 +90,7 @@
 
 **定义 3.1.1** (结构)
 语言 $\mathcal{L}$ 的结构 $\mathcal{A}$ 包含：
+
 1. 非空集合 $A$（论域）
 2. 对每个 $n$ 元谓词符号 $P$，指派 $P^{\mathcal{A}} \subseteq A^n$
 3. 对每个 $n$ 元函数符号 $f$，指派 $f^{\mathcal{A}}: A^n \to A$
@@ -97,6 +103,7 @@
 
 **定义 3.2.2** (项的解释)
 项 $t$ 在结构 $\mathcal{A}$ 和赋值 $s$ 下的解释 $t^{\mathcal{A}}[s]$ 递归定义：
+
 1. $x^{\mathcal{A}}[s] = s(x)$
 2. $c^{\mathcal{A}}[s] = c^{\mathcal{A}}$
 3. $f(t_1, ..., t_n)^{\mathcal{A}}[s] = f^{\mathcal{A}}(t_1^{\mathcal{A}}[s], ..., t_n^{\mathcal{A}}[s])$
@@ -105,7 +112,8 @@
 
 **定义 3.3.1** (满足关系)
 结构 $\mathcal{A}$ 和赋值 $s$ 满足公式 $\phi$，记作 $\mathcal{A} \models \phi[s]$，递归定义：
-1. $\mathcal{A} \models P(t_1, ..., t_n)[s]$ 当且仅当 $(t_1^{\mathcal{A}}[s], ..., t_n^{\mathcal{A}}[s]) \in P^{\mathcal{A}}$
+
+1. $\mathcal{A} \models P[t_1, ..., t_n](s)$ 当且仅当 $(t_1^{\mathcal{A}}[s], ..., t_n^{\mathcal{A}}[s]) \in P^{\mathcal{A}}$
 2. $\mathcal{A} \models t_1 = t_2[s]$ 当且仅当 $t_1^{\mathcal{A}}[s] = t_2^{\mathcal{A}}[s]$
 3. $\mathcal{A} \models \neg\phi[s]$ 当且仅当 $\mathcal{A} \not\models \phi[s]$
 4. $\mathcal{A} \models \phi \land \psi[s]$ 当且仅当 $\mathcal{A} \models \phi[s]$ 且 $\mathcal{A} \models \psi[s]$
@@ -156,17 +164,20 @@ $$\frac{\exists x \phi \quad \phi[y/x] \vdash \psi}{\psi}$$
 谓词逻辑的希尔伯特系统包含以下公理：
 
 **命题逻辑公理**：
+
 1. $\phi \to (\psi \to \phi)$
 2. $(\phi \to (\psi \to \chi)) \to ((\phi \to \psi) \to (\phi \to \chi))$
 3. $(\neg\phi \to \neg\psi) \to (\psi \to \phi)$
 
 **量词公理**：
+
 1. $\forall x \phi \to \phi[t/x]$（$t$ 对 $x$ 在 $\phi$ 中可替换）
 2. $\phi[t/x] \to \exists x \phi$（$t$ 对 $x$ 在 $\phi$ 中可替换）
 3. $\forall x (\phi \to \psi) \to (\forall x \phi \to \forall x \psi)$
 4. $\forall x (\phi \to \psi) \to (\exists x \phi \to \exists x \psi)$
 
 **推理规则**：
+
 - 分离规则：从 $\phi$ 和 $\phi \to \psi$ 推出 $\psi$
 - 概括规则：从 $\phi$ 推出 $\forall x \phi$（$x$ 不在 $\phi$ 中自由出现）
 
@@ -176,6 +187,7 @@ $$\frac{\exists x \phi \quad \phi[y/x] \vdash \psi}{\psi}$$
 $\neg\forall x \phi \leftrightarrow \exists x \neg\phi$
 
 **证明**：
+
 ```lean
 -- Lean 4 证明示例
 theorem quantifier_duality (α : Type*) (P : α → Prop) :
@@ -210,6 +222,7 @@ $$Q_1 x_1 Q_2 x_2 \cdots Q_n x_n \psi$$
 
 **证明**：
 通过以下步骤将任意公式转换为前束范式：
+
 1. 消除 $\to$ 和 $\leftrightarrow$
 2. 将否定符号内移
 3. 重命名变量避免冲突
@@ -273,6 +286,7 @@ pub fn to_prenex_form(formula: &Formula) -> PrenexForm {
 
 **证明**：
 使用亨金构造法：
+
 1. 将 $\Gamma$ 扩展为极大一致集
 2. 构造典范模型
 3. 证明该模型满足 $\Gamma$ 但不满足 $\phi$（如果 $\Gamma \not\vdash \phi$）
@@ -336,6 +350,7 @@ $$\mathcal{A} \models \phi[a_1, ..., a_n] \text{ 当且仅当 } \mathcal{B} \mod
 二阶逻辑允许量化谓词和函数。
 
 **语法扩展**：
+
 - 谓词变量：$X, Y, Z, ...$
 - 函数变量：$F, G, H, ...$
 - 二阶量词：$\forall X, \exists X, \forall F, \exists F$
@@ -353,6 +368,7 @@ $$\mathcal{A} \models \phi[a_1, ..., a_n] \text{ 当且仅当 } \mathcal{B} \mod
 ### 10.1 自动定理证明
 
 #### 10.1.1 归结方法
+
 基于前束范式和斯科伦化的自动证明方法。
 
 ```rust
@@ -399,11 +415,13 @@ impl ResolutionProver {
 ```
 
 #### 10.1.2 表方法
+
 基于语义表的证明方法。
 
 ### 10.2 模型检查
 
 #### 10.2.1 有限模型检查
+
 检查公式在有限结构上的有效性。
 
 ```rust
@@ -447,6 +465,7 @@ impl FiniteModelChecker {
 ### 10.3 逻辑编程
 
 #### 10.3.1 Prolog 语言
+
 基于一阶逻辑的编程语言。
 
 ```prolog
@@ -466,11 +485,13 @@ ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
 ```
 
 #### 10.3.2 约束逻辑编程
+
 扩展逻辑编程以处理约束。
 
 ### 10.4 数据库理论
 
 #### 10.4.1 关系代数
+
 基于一阶逻辑的数据库查询语言。
 
 ```sql
@@ -484,6 +505,7 @@ WHERE age > 18 AND department = 'Computer Science';
 ```
 
 #### 10.4.2 数据库完整性约束
+
 使用一阶逻辑表达数据库约束。
 
 ## 参考文献
@@ -501,4 +523,4 @@ WHERE age > 18 AND department = 'Computer Science';
 - [03_Logic_Theory/01_Propositional_Logic.md](01_Propositional_Logic.md) - 命题逻辑基础
 - [04_Formal_Language_Theory/01_Formal_Grammars.md](../04_Formal_Language_Theory/01_Formal_Grammars.md) - 形式语言理论
 - [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础
-- [12_Database_Theory/01_Relational_Database_Theory.md](../12_Database_Theory/01_Relational_Database_Theory.md) - 关系数据库理论 
+- [12_Database_Theory/01_Relational_Database_Theory.md](../12_Database_Theory/01_Relational_Database_Theory.md) - 关系数据库理论

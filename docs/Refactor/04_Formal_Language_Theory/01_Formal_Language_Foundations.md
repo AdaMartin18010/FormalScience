@@ -58,6 +58,7 @@ $$\Sigma^+ = \{w | w \text{ 是 } \Sigma \text{ 上的非空字符串}\}$$
 **定义 2.2.1** (形式语言) 给定字母表 $\Sigma$，$\Sigma$ 上的形式语言 $L$ 是 $\Sigma^*$ 的子集，即 $L \subseteq \Sigma^*$。
 
 **示例 2.2.1** 以下都是形式语言的例子：
+
 - $L_1 = \{a, ab, abc\}$ 是字母表 $\Sigma = \{a, b, c\}$ 上的有限语言
 - $L_2 = \{a^n b^n | n \geq 1\}$ 是字母表 $\Sigma = \{a, b\}$ 上的无限语言
 - $L_3 = \emptyset$ 是空语言
@@ -207,6 +208,7 @@ $$L(G) = \{w \in \Sigma^* | S \Rightarrow^* w\}$$
 4. **类型系统**：基于形式规则定义类型检查和推导
 
 **示例 7.1.1** 简单表达式语言的上下文无关文法：
+
 ```
 E → E + T | E - T | T
 T → T * F | T / F | F
@@ -222,6 +224,7 @@ F → (E) | id
 3. **形式语义**：利用形式语言构建语义表示和推理系统
 
 **示例 7.2.1** 自然语言的简化上下文无关文法：
+
 ```
 S → NP VP
 NP → Det N | N
@@ -270,4 +273,4 @@ V → sees | chases
 2. Sipser, M. (2012). Introduction to the Theory of Computation (3rd ed.). Cengage Learning.
 3. Chomsky, N. (1956). Three models for the description of language. IRE Transactions on Information Theory, 2(3), 113-124.
 4. Kozen, D. C. (1997). Automata and Computability. Springer.
-5. Linz, P. (2011). An Introduction to Formal Languages and Automata (5th ed.). Jones & Bartlett Learning. 
+5. Linz, P. (2011). An Introduction to Formal Languages and Automata (5th ed.). Jones & Bartlett Learning.

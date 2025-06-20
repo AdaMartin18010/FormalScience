@@ -10,6 +10,7 @@
 
 **定义 2.1** (确定性有限自动机)
 确定性有限自动机是一个五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 1. $Q$ 是有限状态集
 2. $\Sigma$ 是有限输入字母表
 3. $\delta: Q \times \Sigma \to Q$ 是转移函数
@@ -18,6 +19,7 @@
 
 **定义 2.2** (DFA的扩展转移函数)
 扩展转移函数 $\hat{\delta}: Q \times \Sigma^* \to Q$ 定义为：
+
 1. $\hat{\delta}(q, \varepsilon) = q$
 2. $\hat{\delta}(q, wa) = \delta(\hat{\delta}(q, w), a)$
 
@@ -29,6 +31,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \in F\}$$
 
 **定义 2.4** (非确定性有限自动机)
 非确定性有限自动机是一个五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
+
 1. $Q$ 是有限状态集
 2. $\Sigma$ 是有限输入字母表
 3. $\delta: Q \times \Sigma \to 2^Q$ 是转移函数
@@ -37,6 +40,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \in F\}$$
 
 **定义 2.5** (NFA的扩展转移函数)
 扩展转移函数 $\hat{\delta}: Q \times \Sigma^* \to 2^Q$ 定义为：
+
 1. $\hat{\delta}(q, \varepsilon) = \{q\}$
 2. $\hat{\delta}(q, wa) = \bigcup_{p \in \hat{\delta}(q, w)} \delta(p, a)$
 
@@ -51,6 +55,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 
 **证明**:
 构造DFA $M' = (Q', \Sigma, \delta', q_0', F')$，其中：
+
 - $Q' = 2^Q$
 - $q_0' = \{q_0\}$
 - $F' = \{S \subseteq Q \mid S \cap F \neq \emptyset\}$
@@ -60,6 +65,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 
 **定理 2.2** (有限自动机的封闭性)
 正则语言在以下运算下封闭：
+
 1. 并集
 2. 交集
 3. 补集
@@ -72,6 +78,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 
 **定义 2.7** (确定性下推自动机)
 确定性下推自动机是一个七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
+
 1. $Q$ 是有限状态集
 2. $\Sigma$ 是输入字母表
 3. $\Gamma$ 是栈字母表
@@ -84,6 +91,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 
 **定义 2.8** (非确定性下推自动机)
 非确定性下推自动机是一个七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
+
 1. $Q$ 是有限状态集
 2. $\Sigma$ 是输入字母表
 3. $\Gamma$ 是栈字母表
@@ -96,6 +104,7 @@ $$L(M) = \{w \in \Sigma^* \mid \hat{\delta}(q_0, w) \cap F \neq \emptyset\}$$
 
 **定义 2.9** (配置)
 下推自动机的配置是一个三元组 $(q, w, \gamma)$，其中：
+
 - $q \in Q$ 是当前状态
 - $w \in \Sigma^*$ 是剩余输入串
 - $\gamma \in \Gamma^*$ 是栈内容
@@ -120,6 +129,7 @@ $$N(M) = \{w \in \Sigma^* \mid (q_0, w, Z_0) \vdash^* (q, \varepsilon, \varepsil
 
 **定义 2.13** (图灵机)
 图灵机是一个七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
+
 1. $Q$ 是有限状态集
 2. $\Sigma$ 是输入字母表
 3. $\Gamma$ 是带字母表，$\Sigma \subseteq \Gamma$
@@ -132,6 +142,7 @@ $$N(M) = \{w \in \Sigma^* \mid (q_0, w, Z_0) \vdash^* (q, \varepsilon, \varepsil
 
 **定义 2.14** (图灵机配置)
 图灵机的配置是一个三元组 $(q, \alpha, i)$，其中：
+
 - $q \in Q$ 是当前状态
 - $\alpha \in \Gamma^*$ 是带内容
 - $i \in \mathbb{N}$ 是读写头位置
@@ -139,6 +150,7 @@ $$N(M) = \{w \in \Sigma^* \mid (q_0, w, Z_0) \vdash^* (q, \varepsilon, \varepsil
 **定义 2.15** (图灵机转移)
 配置转移关系 $\vdash$ 定义为：
 $(q, \alpha, i) \vdash (p, \beta, j)$ 当且仅当：
+
 - $\delta(q, \alpha_i) = (p, b, D)$
 - $\beta = \alpha[0:i] b \alpha[i+1:]$
 - $j = i + 1$ (如果 $D = R$) 或 $j = i - 1$ (如果 $D = L$)
@@ -577,4 +589,4 @@ end
 
 **更新时间**: 2024-12-21  
 **版本**: 1.0  
-**作者**: FormalScience Team 
+**作者**: FormalScience Team

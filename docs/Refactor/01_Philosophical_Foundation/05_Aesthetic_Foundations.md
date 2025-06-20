@@ -437,6 +437,7 @@ $$C_{aesthetic}(s) = f(Attention, Memory, Emotion, Context)$$
 美学作为哲学和形式科学的交叉领域，具有丰富的理论内涵和广泛的应用前景。通过形式化表示和计算模型，我们可以更深入地理解和应用美学原理，将美学思考融入科学研究、技术开发和日常生活。
 
 未来美学研究的发展方向包括：
+
 1. 加强美学的形式化和计算化研究
 2. 深化神经美学的理论和实验探索
 3. 拓展美学在人工智能和虚拟现实中的应用
@@ -455,4 +456,4 @@ $$C_{aesthetic}(s) = f(Attention, Memory, Emotion, Context)$$
 7. Hardy, G. H. (1940). A Mathematician's Apology.
 8. Leder, H., et al. (2004). A Model of Aesthetic Appreciation and Aesthetic Judgments. British Journal of Psychology, 95(4), 489-508.
 9. Norman, D. A. (2004). Emotional Design: Why We Love (or Hate) Everyday Things.
-10. Tractinsky, N., et al. (2000). What is Beautiful is Usable. Interacting with Computers, 13(2), 127-145. 
+10. Tractinsky, N., et al. (2000). What is Beautiful is Usable. Interacting with Computers, 13(2), 127-145.
