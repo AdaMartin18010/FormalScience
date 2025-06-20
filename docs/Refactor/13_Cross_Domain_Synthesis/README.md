@@ -2,7 +2,7 @@
 
 ## 目录结构
 
-```
+```text
 13_Cross_Domain_Synthesis/
 ├── README.md                    # 主目录文件
 ├── 01_Unified_Theory/          # 统一理论
