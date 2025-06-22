@@ -191,6 +191,40 @@
    - 将这些内容整合到标准目录的 README.md 文件中
    - 更新了文档版本号和修改日期
 
+### 4. 形式文法重构进展
+
+已完成以下重构工作：
+
+1. **创建标准化英文文件**
+   - 创建了四个主要文法类型的英文命名文件：
+     - 03.2.1_Regular_Grammar.md
+     - 03.2.2_Context_Free_Grammar.md
+     - 03.2.3_Context_Sensitive_Grammar.md
+     - 03.2.4_Unrestricted_Grammar.md
+   - 每个文件包含完整的理论内容、形式定义、性质和应用示例
+
+2. **更新目录结构**
+   - 更新了 03.2_Formal_Grammars/README.md 以反映新的文件结构
+   - 更新了主文件 03.2_Formal_Grammars.md 的引用
+   - 简化了目录结构，移除了不必要的子目录
+
+### 5. 语言层次重构进展
+
+已完成以下重构工作：
+
+1. **创建标准化英文文件**
+   - 创建了四个主要语言层次理论文件：
+     - 03.3.1_Chomsky_Hierarchy.md
+     - 03.3.2_Language_Classification.md
+     - 03.3.3_Language_Properties.md
+     - 03.3.4_Language_Relations.md
+   - 每个文件包含完整的理论内容、定义、性质和应用示例
+
+2. **更新目录结构**
+   - 更新了 03.3_Language_Hierarchy/README.md 以反映新的文件结构
+   - 更新了主文件 03.3_Language_Hierarchy.md 的引用
+   - 简化了目录结构，移除了不必要的子目录和中文文件
+
 ## 待完成工作
 
 ### 1. 最终审核
