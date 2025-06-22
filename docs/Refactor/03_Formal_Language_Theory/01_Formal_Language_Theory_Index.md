@@ -4,6 +4,11 @@
 
 ### 1. [自动机理论](03.1_Automata_Theory.md)
 
+- [1.1 有限自动机](03.1_Automata_Theory/03.1.1_Finite_Automata.md)
+- [1.2 下推自动机](03.1_Automata_Theory/03.1.2_Pushdown_Automata.md)
+- [1.3 线性有界自动机](03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata.md)
+- [1.4 图灵机](03.1_Automata_Theory/03.1.4_Turing_Machine.md)
+
 ### 2. [形式文法](03.2_Formal_Grammars.md)
 
 ### 3. [语言层次](03.3_Language_Hierarchy.md)
@@ -14,17 +19,17 @@
 
 ### 6. [计算理论](03.6_Computation_Theory.md)
 
-- [6.1 可计算性理论](03.6.1_Computability_Theory.md)
-- [6.2 复杂性理论](03.6.2_Complexity_Theory.md)
-- [6.3 算法分析](03.6.3_算法分析.md)
-- [6.4 计算模型](03.6.4_计算模型.md)
+- [6.1 可计算性理论](03.6_Computation_Theory/03.6.1_Computability_Theory.md)
+- [6.2 复杂性理论](03.6_Computation_Theory/03.6.2_Complexity_Theory.md)
+- [6.3 算法分析](03.6_Computation_Theory/03.6.3_算法分析.md)
+- [6.4 计算模型](03.6_Computation_Theory/03.6.4_计算模型.md)
 
 ### 7. [形式语言应用](03.7_Language_Applications.md)
 
-- [7.1 编译器设计](03.7.1_Compiler_Design.md)
-- [7.2 自然语言处理](03.7.2_Natural_Language_Processing.md)
-- [7.3 协议设计](03.7.3_Protocol_Design.md)
-- [7.4 形式验证](03.7.4_Formal_Verification.md)
+- [7.1 编译器设计](03.7_Language_Applications/03.7.1_Compiler_Design.md)
+- [7.2 自然语言处理](03.7_Language_Applications/03.7.2_Natural_Language_Processing.md)
+- [7.3 协议设计](03.7_Language_Applications/03.7.3_Protocol_Design.md)
+- [7.4 形式验证](03.7_Language_Applications/03.7.4_Formal_Verification.md)
 
 ### 8. [形式语言前沿](03.8_Language_Frontiers.md)
 
@@ -80,10 +85,10 @@ graph TD
 
 ### 3.1 自动机理论
 
-- **3.1.1** [有限自动机](03.1_Automata_Theory.md#0312-有限自动机-finite-automata)
-- **3.1.2** [下推自动机](03.1_Automata_Theory.md#0313-下推自动机-pushdown-automata)
-- **3.1.3** [线性有界自动机](03.1_Automata_Theory.md#0315-线性有界自动机-linear-bounded-automata)
-- **3.1.4** [图灵机](03.1_Automata_Theory.md#0314-图灵机-turing-machine)
+- **3.1.1** [有限自动机](03.1_Automata_Theory/03.1.1_Finite_Automata.md)
+- **3.1.2** [下推自动机](03.1_Automata_Theory/03.1.2_Pushdown_Automata.md)
+- **3.1.3** [线性有界自动机](03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata.md)
+- **3.1.4** [图灵机](03.1_Automata_Theory/03.1.4_Turing_Machine.md)
 
 ### 3.2 形式文法
 
@@ -115,17 +120,17 @@ graph TD
 
 ### 3.6 计算理论
 
-- **3.6.1** [可计算性理论](03.6.1_Computability_Theory.md)
-- **3.6.2** [复杂性理论](03.6.2_Complexity_Theory.md)
-- **3.6.3** [算法分析](03.6.3_算法分析.md)
-- **3.6.4** [计算模型](03.6.4_计算模型.md)
+- **3.6.1** [可计算性理论](03.6_Computation_Theory/03.6.1_Computability_Theory.md)
+- **3.6.2** [复杂性理论](03.6_Computation_Theory/03.6.2_Complexity_Theory.md)
+- **3.6.3** [算法分析](03.6_Computation_Theory/03.6.3_算法分析.md)
+- **3.6.4** [计算模型](03.6_Computation_Theory/03.6.4_计算模型.md)
 
 ### 3.7 形式语言应用
 
-- **3.7.1** [编译器设计](03.7.1_Compiler_Design.md)
-- **3.7.2** [自然语言处理](03.7.2_Natural_Language_Processing.md)
-- **3.7.3** [协议设计](03.7.3_Protocol_Design.md)
-- **3.7.4** [形式验证](03.7.4_Formal_Verification.md)
+- **3.7.1** [编译器设计](03.7_Language_Applications/03.7.1_Compiler_Design.md)
+- **3.7.2** [自然语言处理](03.7_Language_Applications/03.7.2_Natural_Language_Processing.md)
+- **3.7.3** [协议设计](03.7_Language_Applications/03.7.3_Protocol_Design.md)
+- **3.7.4** [形式验证](03.7_Language_Applications/03.7.4_Formal_Verification.md)
 - **3.7.5** [应用集成](03.7_Language_Applications.md#0375-应用集成)
 - **3.7.6** [跨域应用](03.7_Language_Applications.md#0376-跨域应用)
 
@@ -174,22 +179,22 @@ graph TD
 
 | 概念 | 定义位置 | 相关理论 |
 |------|----------|----------|
-| 有限自动机 | [3.1.1](03.1_Automata_Theory.md#0312-有限自动机-finite-automata) | 自动机理论 |
+| 有限自动机 | [3.1.1](03.1_Automata_Theory/03.1.1_Finite_Automata.md) | 自动机理论 |
 | 形式文法 | [3.2](03.2_Formal_Grammars.md) | 形式文法 |
 | 乔姆斯基谱系 | [3.3.1](03.3_Language_Hierarchy.md#0331-乔姆斯基谱系) | 语言层次 |
 | LL解析 | [3.4.1](03.4_Parsing_Theory.md#0341-ll解析) | 解析理论 |
 | 操作语义 | [3.5.1](03.5_Semantics_Theory.md#0351-操作语义) | 语义理论 |
-| 可计算性 | [3.6.1](03.6.1_Computability_Theory.md) | 计算理论 |
-| 复杂性 | [3.6.2](03.6.2_Complexity_Theory.md) | 计算理论 |
-| 编译器设计 | [3.7.1](03.7.1_Compiler_Design.md) | 形式语言应用 |
+| 可计算性 | [3.6.1](03.6_Computation_Theory/03.6.1_Computability_Theory.md) | 计算理论 |
+| 复杂性 | [3.6.2](03.6_Computation_Theory/03.6.2_Complexity_Theory.md) | 计算理论 |
+| 编译器设计 | [3.7.1](03.7_Language_Applications/03.7.1_Compiler_Design.md) | 形式语言应用 |
 | 量子语言 | [3.8.1](03.8_Language_Frontiers/03.8.1_Quantum_Languages.md) | 形式语言前沿 |
 
 ---
 
 ## 🔄 **持续更新**
 
-**最后更新时间**：2024-12-21  
-**版本**：v2.0.0  
+**最后更新时间**：2024-12-25  
+**版本**：v2.1.0  
 **维护者**：形式语言理论重构团队  
 
 ---
