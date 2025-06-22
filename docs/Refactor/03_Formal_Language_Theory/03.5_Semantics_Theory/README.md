@@ -10,36 +10,28 @@
 
 ### 主要内容
 
-- [03.5.1_操作语义](./03.5.1_操作语义/03.5.1_操作语义.md) - 研究基于抽象机器的语义模型
-- [03.5.2_指称语义](./03.5.2_指称语义/03.5.2_指称语义.md) - 研究基于数学函数的语义模型
-- [03.5.3_公理语义](./03.5.3_公理语义/03.5.3_公理语义.md) - 研究基于逻辑断言的语义模型
-- [03.5.4_代数语义](./03.5.4_代数语义/03.5.4_代数语义.md) - 研究基于代数结构的语义模型
+- [03.5.1_Operational_Semantics](./03.5.1_Operational_Semantics/README.md) - 研究基于抽象机器的语义模型
+- [03.5.2_Denotational_Semantics](./03.5.2_Denotational_Semantics/README.md) - 研究基于数学函数的语义模型
+- [03.5.3_Axiomatic_Semantics](./03.5.3_Axiomatic_Semantics/README.md) - 研究基于逻辑断言的语义模型
+- [03.5.4_Algebraic_Semantics](./03.5.4_Algebraic_Semantics/README.md) - 研究基于代数结构的语义模型
 
-### 扩展内容
+### 详细文档
 
-- [03.5.1_操作语义](./03.5.1_操作语义/) - 操作语义的深入探讨
-  - 小步操作语义（结构化操作语义）
-  - 大步操作语义（自然语义）
-  - 上下文语义
-  - 抽象机器
+- [03.5.1_Operational_Semantics](./03.5.1_Operational_Semantics/) - 操作语义的深入探讨
+  - [03.5.1_Operational_Semantics.md](./03.5.1_Operational_Semantics/03.5.1_Operational_Semantics.md) - 英文版
+  - [03.5.1_操作语义.md](./03.5.1_Operational_Semantics/03.5.1_操作语义.md) - 中文版
   
-- [03.5.2_指称语义](./03.5.2_指称语义/) - 指称语义的深入探讨
-  - 域理论基础
-  - 函数空间与连续性
-  - 不动点语义
-  - 组合性原则
+- [03.5.2_Denotational_Semantics](./03.5.2_Denotational_Semantics/) - 指称语义的深入探讨
+  - [03.5.2_Denotational_Semantics.md](./03.5.2_Denotational_Semantics/03.5.2_Denotational_Semantics.md) - 英文版
+  - [03.5.2_指称语义.md](./03.5.2_Denotational_Semantics/03.5.2_指称语义.md) - 中文版
   
-- [03.5.3_公理语义](./03.5.3_公理语义/) - 公理语义的深入探讨
-  - 霍尔逻辑
-  - 谓词变换器
-  - 不变量与终止性
-  - 程序验证技术
+- [03.5.3_Axiomatic_Semantics](./03.5.3_Axiomatic_Semantics/) - 公理语义的深入探讨
+  - [03.5.3_Axiomatic_Semantics.md](./03.5.3_Axiomatic_Semantics/03.5.3_Axiomatic_Semantics.md) - 英文版
+  - [03.5.3_公理语义.md](./03.5.3_Axiomatic_Semantics/03.5.3_公理语义.md) - 中文版
   
-- [03.5.4_代数语义](./03.5.4_代数语义/) - 代数语义的深入探讨
-  - 初始代数语义
-  - 终端代数语义
-  - 代数规范
-  - 进程代数
+- [03.5.4_Algebraic_Semantics](./03.5.4_Algebraic_Semantics/) - 代数语义的深入探讨
+  - [03.5.4_Algebraic_Semantics.md](./03.5.4_Algebraic_Semantics/03.5.4_Algebraic_Semantics.md) - 英文版
+  - [03.5.4_代数语义.md](./03.5.4_Algebraic_Semantics/03.5.4_代数语义.md) - 中文版
 
 ## 🔗 交叉引用
 
@@ -57,10 +49,10 @@
 
 ## 📝 重构说明
 
-本目录遵循形式科学理论体系重构主索引v9.0的结构，将语义理论的内容组织为四个主要部分，按照语义描述方法的不同类型排列，形成了系统的学习路径。
+本目录遵循形式科学理论体系重构主索引v9.0的结构，将语义理论的内容组织为四个主要部分，按照语义描述方法的不同类型排列，形成了系统的学习路径。所有文件采用标准化的命名约定，同时提供中英文版本，方便不同语言背景的读者学习。
 
 ---
 
-**更新时间**: 2024-12-22  
-**版本**: 2.0  
+**更新时间**: 2024-12-28  
+**版本**: 3.0  
 **状态**: 已完成
