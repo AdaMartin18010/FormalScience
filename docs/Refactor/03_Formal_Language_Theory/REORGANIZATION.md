@@ -208,16 +208,16 @@
 
 | Current Directory | Target Directory | Status |
 |------------------|-----------------|--------|
-| 03.1_Automata_Theory/03.1.1_有限自动机/ | 03.1_Automata_Theory/03.1.1_Finite_Automata_Legacy/ | Pending |
-| 03.1_Automata_Theory/03.1.2_下推自动机/ | 03.1_Automata_Theory/03.1.2_Pushdown_Automata_Legacy/ | Pending |
-| 03.1_Automata_Theory/03.1.3_线性有界自动机/ | 03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata_Legacy/ | Pending |
-| 03.1_Automata_Theory/03.1.4_图灵机/ | 03.1_Automata_Theory/03.1.4_Turing_Machine_Legacy/ | Pending |
-| 03.1_Automata_Theory/01_有限自动机/ | 03.1_Automata_Theory/01_Finite_Automata_Legacy/ | Pending |
-| 03.1_Automata_Theory/02_下推自动机/ | 03.1_Automata_Theory/02_Pushdown_Automata_Legacy/ | Pending |
-| 03.4_Parsing_Theory/03.4.1_LL解析/ | 03.4_Parsing_Theory/03.4.1_LL_Parsing_Legacy/ | Pending |
-| 03.4_Parsing_Theory/03.4.2_LR解析/ | 03.4_Parsing_Theory/03.4.2_LR_Parsing_Legacy/ | Pending |
-| 03.4_Parsing_Theory/03.4.3_递归下降解析/ | 03.4_Parsing_Theory/03.4.3_Recursive_Descent_Parsing_Legacy/ | Pending |
-| 03.4_Parsing_Theory/03.4.4_自底向上解析/ | 03.4_Parsing_Theory/03.4.4_Bottom_Up_Parsing_Legacy/ | Pending |
+| 03.1_Automata_Theory/03.1.1_有限自动机/ | 03.1_Automata_Theory/03.1.1_Finite_Automata_Legacy/ | ✅ Completed |
+| 03.1_Automata_Theory/03.1.2_下推自动机/ | 03.1_Automata_Theory/03.1.2_Pushdown_Automata_Legacy/ | ✅ Completed |
+| 03.1_Automata_Theory/03.1.3_线性有界自动机/ | 03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata_Legacy/ | ✅ Completed |
+| 03.1_Automata_Theory/03.1.4_图灵机/ | 03.1_Automata_Theory/03.1.4_Turing_Machine_Legacy/ | ✅ Completed |
+| 03.1_Automata_Theory/01_有限自动机/ | 03.1_Automata_Theory/01_Finite_Automata_Legacy/ | ✅ Completed |
+| 03.1_Automata_Theory/02_下推自动机/ | 03.1_Automata_Theory/02_Pushdown_Automata_Legacy/ | ✅ Completed |
+| 03.4_Parsing_Theory/03.4.1_LL解析/ | 03.4_Parsing_Theory/03.4.1_LL_Parsing_Legacy/ | ✅ Completed |
+| 03.4_Parsing_Theory/03.4.2_LR解析/ | 03.4_Parsing_Theory/03.4.2_LR_Parsing_Legacy/ | ✅ Completed |
+| 03.4_Parsing_Theory/03.4.3_递归下降解析/ | 03.4_Parsing_Theory/03.4.3_Recursive_Descent_Parsing_Legacy/ | ✅ Completed |
+| 03.4_Parsing_Theory/03.4.4_自底向上解析/ | 03.4_Parsing_Theory/03.4.4_Bottom_Up_Parsing_Legacy/ | ✅ Completed |
 | 03.5_Semantics_Theory/03.5.1_操作语义/ | 03.5_Semantics_Theory/03.5.1_Operational_Semantics_Legacy/ | Pending |
 | 03.5_Semantics_Theory/03.5.2_指称语义/ | 03.5_Semantics_Theory/03.5.2_Denotational_Semantics_Legacy/ | Pending |
 | 03.5_Semantics_Theory/03.5.3_公理语义/ | 03.5_Semantics_Theory/03.5.3_Axiomatic_Semantics_Legacy/ | Pending |
