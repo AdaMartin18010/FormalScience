@@ -189,7 +189,7 @@
 **版本**: 1.4  
 **状态**: 进行中
 
-# FormalScience Restructuring Plan
+## FormalScience Restructuring Plan
 
 **Date**: 2024-12-28
 **Status**: In Progress
@@ -229,20 +229,20 @@ These files already have English equivalents and should be deleted after verifyi
 
 | Files to Remove | Status |
 |----------------|--------|
-| 03.4.1_LL解析.md | Pending |
-| 03.4.2_LR解析.md | Pending |
-| 03.4.3_递归下降解析.md | Pending |
-| 03.4.4_自底向上解析.md | Pending |
-| 03.5.1_操作语义.md | Pending |
-| 03.5.2_指称语义.md | Pending |
-| 03.5.3_公理语义.md | Pending |
-| 03.5.4_代数语义.md | Pending |
-| 03.7.1_编译器设计.md | Pending |
-| 03.7.2_自然语言处理.md | Pending |
-| 03.7.3_协议设计.md | Pending |
-| 03.7.4_形式验证.md | Pending |
-| 03.8.1_量子语言.md | Pending |
-| 03.8.2_生物语言.md | Pending |
+| 03.4.1_LL解析.md | ✅ Completed |
+| 03.4.2_LR解析.md | ✅ Completed |
+| 03.4.3_递归下降解析.md | ✅ Completed |
+| 03.4.4_自底向上解析.md | ✅ Completed |
+| 03.5.1_操作语义.md | ✅ Completed |
+| 03.5.2_指称语义.md | ✅ Completed |
+| 03.5.3_公理语义.md | ✅ Completed |
+| 03.5.4_代数语义.md | ✅ Completed |
+| 03.7.1_编译器设计.md | ✅ Completed |
+| 03.7.2_自然语言处理.md | ✅ Completed |
+| 03.7.3_协议设计.md | ✅ Completed |
+| 03.7.4_形式验证.md | ✅ Completed |
+| 03.8.1_量子语言.md | ✅ Completed |
+| 03.8.2_生物语言.md | ✅ Completed |
 
 ## 2. Directory Structure Consolidation
 
@@ -265,6 +265,19 @@ These files already have English equivalents and should be deleted after verifyi
 | docs/Refactor/03_Formal_Language_Theory/3.1_Formal_Grammar | docs/Refactor/03_Formal_Language_Theory/03.2_Formal_Grammars | Merge unique content | Pending |
 | docs/Refactor/03_Formal_Language_Theory/01_Chomsky_Hierarchy | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy | Merge unique content | Pending |
 
+### 2.3 File Content Merging
+
+| Source File | Target File | Content to Merge | Status |
+|------------|------------|-----------------|--------|
+| docs/Refactor/02_Formal_Language_Theory/02.7_Computability_Theory.md | docs/Refactor/03_Formal_Language_Theory/03.6_Computation_Theory/03.6.1_Computability_Theory.md | Unique sections on computability | In Progress |
+| docs/Refactor/02_Formal_Language_Theory/02.8_Complexity_Theory.md | docs/Refactor/03_Formal_Language_Theory/03.6_Computation_Theory/03.6.2_Complexity_Theory.md | Unique sections on complexity | In Progress |
+| docs/Refactor/02_Formal_Language_Theory/02.1_Formal_Language_Foundation.md | docs/Refactor/03_Formal_Language_Theory/01_Formal_Language_Theory_Index.md | Core foundation concepts | Pending |
+| docs/Refactor/04_Formal_Language_Theory/01_Formal_Language_Foundations.md | docs/Refactor/03_Formal_Language_Theory/01_Formal_Language_Theory_Index.md | Unique foundation concepts | Pending |
+| docs/Refactor/02_Formal_Language_Theory/02.2_Regular_Languages.md | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md | Regular language content | Pending |
+| docs/Refactor/02_Formal_Language_Theory/02.3_Context_Free_Languages.md | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md | Context-free language content | Pending |
+| docs/Refactor/02_Formal_Language_Theory/04_Context_Sensitive_Languages.md | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md | Context-sensitive language content | Pending |
+| docs/Refactor/02_Formal_Language_Theory/05_Recursively_Enumerable_Languages.md | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md | Recursively enumerable language content | Pending |
+
 ## 3. Implementation Strategy
 
 ### 3.1 Order of Operations
@@ -282,6 +295,7 @@ For each completed step, update this document with the completion status.
 ### 3.3 Quality Checks
 
 After each major step:
+
 1. Verify no content has been lost
 2. Check that all links still work or have been updated
 3. Ensure README files are updated to reflect the new structure
