@@ -80,7 +80,7 @@ $$\alpha A \beta \rightarrow \alpha \gamma \beta$$
 
 **乔姆斯基层次结构**：
 
-```
+```text
 递归可枚举语言 (Type 0)
     ↑
 上下文相关语言 (Type 1)
@@ -151,7 +151,7 @@ $$\text{REG} \subsetneq \text{CFL} \subsetneq \text{CSL} \subsetneq \text{REL}$$
 **示例 2.1** (上下文相关文法)
 考虑文法 $G = (\{S, A, B\}, \{a, b, c\}, P, S)$，其中：
 
-```
+```text
 S → aSBC | aBC
 CB → BC
 aB → ab

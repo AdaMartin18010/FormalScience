@@ -55,7 +55,7 @@
   - `02.7_Computability_Theory.md` → `03.6.1_Computability_Theory.md`
   - `02.8_Complexity_Theory.md` → `03.6.2_Complexity_Theory.md`
 - Pending: Merge language hierarchy content:
-  - `02.2_Regular_Languages.md` → `03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md` 
+  - `02.2_Regular_Languages.md` → `03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md`
   - `02.3_Context_Free_Languages.md` → `03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md`
   - `04_Context_Sensitive_Languages.md` → `03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md`
   - `05_Recursively_Enumerable_Languages.md` → `03.3_Language_Hierarchy/03.3.1_Chomsky_Hierarchy.md`
