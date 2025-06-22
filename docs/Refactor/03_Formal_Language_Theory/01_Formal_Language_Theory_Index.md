@@ -21,17 +21,17 @@
 
 ### 7. [形式语言应用](03.7_Language_Applications.md)
 
-- [7.1 编译器设计](03.7.1_编译器设计.md)
-- [7.2 自然语言处理](03.7.2_自然语言处理.md)
-- [7.3 协议设计](03.7.3_协议设计.md)
-- [7.4 形式验证](03.7.4_形式验证.md)
+- [7.1 编译器设计](03.7.1_Compiler_Design.md)
+- [7.2 自然语言处理](03.7.2_Natural_Language_Processing.md)
+- [7.3 协议设计](03.7.3_Protocol_Design.md)
+- [7.4 形式验证](03.7.4_Formal_Verification.md)
 
 ### 8. [形式语言前沿](03.8_Language_Frontiers.md)
 
-- [8.1 量子语言](03.8.1_量子语言.md)
-- [8.2 生物语言](03.8.2_生物语言.md)
-- [8.3 神经语言](03.8.3_神经语言.md)
-- [8.4 认知语言](03.8.4_认知语言.md)
+- [8.1 量子语言](03.8_Language_Frontiers/03.8.1_Quantum_Languages.md)
+- [8.2 生物语言](03.8_Language_Frontiers/03.8.2_Bio_Languages.md)
+- [8.3 神经语言](03.8_Language_Frontiers/03.8.3_Neural_Languages.md)
+- [8.4 认知语言](03.8_Language_Frontiers/03.8.4_Cognitive_Languages.md)
 
 ---
 
@@ -122,19 +122,19 @@ graph TD
 
 ### 3.7 形式语言应用
 
-- **3.7.1** [编译器设计](03.7.1_编译器设计.md)
-- **3.7.2** [自然语言处理](03.7.2_自然语言处理.md)
-- **3.7.3** [协议设计](03.7.3_协议设计.md)
-- **3.7.4** [形式验证](03.7.4_形式验证.md)
+- **3.7.1** [编译器设计](03.7.1_Compiler_Design.md)
+- **3.7.2** [自然语言处理](03.7.2_Natural_Language_Processing.md)
+- **3.7.3** [协议设计](03.7.3_Protocol_Design.md)
+- **3.7.4** [形式验证](03.7.4_Formal_Verification.md)
 - **3.7.5** [应用集成](03.7_Language_Applications.md#0375-应用集成)
 - **3.7.6** [跨域应用](03.7_Language_Applications.md#0376-跨域应用)
 
 ### 3.8 形式语言前沿
 
-- **3.8.1** [量子语言](03.8.1_量子语言.md)
-- **3.8.2** [生物语言](03.8.2_生物语言.md)
-- **3.8.3** [神经语言](03.8.3_神经语言.md)
-- **3.8.4** [认知语言](03.8.4_认知语言.md)
+- **3.8.1** [量子语言](03.8_Language_Frontiers/03.8.1_Quantum_Languages.md)
+- **3.8.2** [生物语言](03.8_Language_Frontiers/03.8.2_Bio_Languages.md)
+- **3.8.3** [神经语言](03.8_Language_Frontiers/03.8.3_Neural_Languages.md)
+- **3.8.4** [认知语言](03.8_Language_Frontiers/03.8.4_Cognitive_Languages.md)
 - **3.8.5** [前沿交叉研究](03.8_Language_Frontiers.md#0385-前沿交叉研究)
 - **3.8.6** [未来发展方向](03.8_Language_Frontiers.md#0386-未来发展方向)
 
@@ -181,8 +181,8 @@ graph TD
 | 操作语义 | [3.5.1](03.5_Semantics_Theory.md#0351-操作语义) | 语义理论 |
 | 可计算性 | [3.6.1](03.6.1_Computability_Theory.md) | 计算理论 |
 | 复杂性 | [3.6.2](03.6.2_Complexity_Theory.md) | 计算理论 |
-| 编译器设计 | [3.7.1](03.7.1_编译器设计.md) | 形式语言应用 |
-| 量子语言 | [3.8.1](03.8.1_量子语言.md) | 形式语言前沿 |
+| 编译器设计 | [3.7.1](03.7.1_Compiler_Design.md) | 形式语言应用 |
+| 量子语言 | [3.8.1](03.8_Language_Frontiers/03.8.1_Quantum_Languages.md) | 形式语言前沿 |
 
 ---
 
