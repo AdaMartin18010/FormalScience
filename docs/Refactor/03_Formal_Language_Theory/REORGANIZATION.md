@@ -188,3 +188,104 @@
 **更新时间**: 2024-12-27  
 **版本**: 1.4  
 **状态**: 进行中
+
+# FormalScience Restructuring Plan
+
+**Date**: 2024-12-28
+**Status**: In Progress
+**Priority**: High
+
+## 1. File Renaming Tasks
+
+### 1.1 Computation Theory Files to Rename
+
+| Current Filename | Target Filename | Status |
+|-----------------|----------------|--------|
+| 03.6.3_算法分析.md | 03.6.3_Algorithm_Analysis.md | ✅ Completed |
+| 03.6.4_计算模型.md | 03.6.4_Computational_Models.md | ✅ Completed |
+
+### 1.2 Directory Renaming Tasks
+
+| Current Directory | Target Directory | Status |
+|------------------|-----------------|--------|
+| 03.1_Automata_Theory/03.1.1_有限自动机/ | 03.1_Automata_Theory/03.1.1_Finite_Automata_Legacy/ | Pending |
+| 03.1_Automata_Theory/03.1.2_下推自动机/ | 03.1_Automata_Theory/03.1.2_Pushdown_Automata_Legacy/ | Pending |
+| 03.1_Automata_Theory/03.1.3_线性有界自动机/ | 03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata_Legacy/ | Pending |
+| 03.1_Automata_Theory/03.1.4_图灵机/ | 03.1_Automata_Theory/03.1.4_Turing_Machine_Legacy/ | Pending |
+| 03.1_Automata_Theory/01_有限自动机/ | 03.1_Automata_Theory/01_Finite_Automata_Legacy/ | Pending |
+| 03.1_Automata_Theory/02_下推自动机/ | 03.1_Automata_Theory/02_Pushdown_Automata_Legacy/ | Pending |
+| 03.4_Parsing_Theory/03.4.1_LL解析/ | 03.4_Parsing_Theory/03.4.1_LL_Parsing_Legacy/ | Pending |
+| 03.4_Parsing_Theory/03.4.2_LR解析/ | 03.4_Parsing_Theory/03.4.2_LR_Parsing_Legacy/ | Pending |
+| 03.4_Parsing_Theory/03.4.3_递归下降解析/ | 03.4_Parsing_Theory/03.4.3_Recursive_Descent_Parsing_Legacy/ | Pending |
+| 03.4_Parsing_Theory/03.4.4_自底向上解析/ | 03.4_Parsing_Theory/03.4.4_Bottom_Up_Parsing_Legacy/ | Pending |
+| 03.5_Semantics_Theory/03.5.1_操作语义/ | 03.5_Semantics_Theory/03.5.1_Operational_Semantics_Legacy/ | Pending |
+| 03.5_Semantics_Theory/03.5.2_指称语义/ | 03.5_Semantics_Theory/03.5.2_Denotational_Semantics_Legacy/ | Pending |
+| 03.5_Semantics_Theory/03.5.3_公理语义/ | 03.5_Semantics_Theory/03.5.3_Axiomatic_Semantics_Legacy/ | Pending |
+| 03.5_Semantics_Theory/03.5.4_代数语义/ | 03.5_Semantics_Theory/03.5.4_Algebraic_Semantics_Legacy/ | Pending |
+
+### 1.3 Root Level File Removal Tasks
+
+These files already have English equivalents and should be deleted after verifying content integration:
+
+| Files to Remove | Status |
+|----------------|--------|
+| 03.4.1_LL解析.md | Pending |
+| 03.4.2_LR解析.md | Pending |
+| 03.4.3_递归下降解析.md | Pending |
+| 03.4.4_自底向上解析.md | Pending |
+| 03.5.1_操作语义.md | Pending |
+| 03.5.2_指称语义.md | Pending |
+| 03.5.3_公理语义.md | Pending |
+| 03.5.4_代数语义.md | Pending |
+| 03.7.1_编译器设计.md | Pending |
+| 03.7.2_自然语言处理.md | Pending |
+| 03.7.3_协议设计.md | Pending |
+| 03.7.4_形式验证.md | Pending |
+| 03.8.1_量子语言.md | Pending |
+| 03.8.2_生物语言.md | Pending |
+
+## 2. Directory Structure Consolidation
+
+### 2.1 Directory Merging Tasks
+
+| Source Directory | Target Directory | Action | Status |
+|-----------------|-----------------|--------|--------|
+| docs/Refactor/02_Formal_Language_Theory | docs/Refactor/03_Formal_Language_Theory | Merge unique content | Pending |
+| docs/Refactor/04_Formal_Language_Theory | docs/Refactor/03_Formal_Language_Theory | Merge unique content | Pending |
+| docs/Refactor/01_Philosophical_Foundation | docs/Refactor/01_Philosophical_Foundations | Merge unique content | Pending |
+| docs/Refactor/02_Mathematical_Foundation | docs/Refactor/02_Mathematical_Foundations | Merge unique content | Pending |
+| docs/Refactor/05_Type_Theory | docs/Refactor/04_Type_Theory | Merge unique content | Pending |
+| docs/Refactor/06_Control_Theory | docs/Refactor/05_Control_Theory | Merge unique content | Pending |
+
+### 2.2 Subdirectory Consolidation
+
+| Source Subdirectory | Target Subdirectory | Action | Status |
+|---------------------|---------------------|--------|--------|
+| docs/Refactor/03_Formal_Language_Theory/01_Automata_Theory | docs/Refactor/03_Formal_Language_Theory/03.1_Automata_Theory | Merge unique content | Pending |
+| docs/Refactor/03_Formal_Language_Theory/3.1_Formal_Grammar | docs/Refactor/03_Formal_Language_Theory/03.2_Formal_Grammars | Merge unique content | Pending |
+| docs/Refactor/03_Formal_Language_Theory/01_Chomsky_Hierarchy | docs/Refactor/03_Formal_Language_Theory/03.3_Language_Hierarchy | Merge unique content | Pending |
+
+## 3. Implementation Strategy
+
+### 3.1 Order of Operations
+
+1. First rename files in the 03.6_Computation_Theory directory
+2. Rename directories with Chinese names to add "_Legacy" suffix
+3. Remove duplicate root-level Chinese files after verifying content
+4. Merge directories starting with Formal Language Theory
+5. Proceed to merge other theory domains
+
+### 3.2 Progress Tracking
+
+For each completed step, update this document with the completion status.
+
+### 3.3 Quality Checks
+
+After each major step:
+1. Verify no content has been lost
+2. Check that all links still work or have been updated
+3. Ensure README files are updated to reflect the new structure
+
+## 4. Reporting
+
+Create brief progress reports after completing each major section.
