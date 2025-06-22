@@ -37,4 +37,4 @@
 
 - Plotkin, G. D. (1981). A Structural Approach to Operational Semantics.
 - Kahn, G. (1987). Natural Semantics.
-- Winskel, G. (1993). The Formal Semantics of Programming Languages: An Introduction. 
+- Winskel, G. (1993). The Formal Semantics of Programming Languages: An Introduction.
