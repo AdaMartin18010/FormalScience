@@ -21,7 +21,7 @@
     - `01_Formal_Language_Foundations.md`
     - `01_Formal_Grammars.md`
     - `02_Automata_Theory.md`
-    
+
 - ✅ 创建合并计划文档 `MERGE_PLAN.md`，详细描述:
   - 文件映射表：源文件 → 目标文件
   - 合并策略
@@ -86,4 +86,4 @@
 
 ---
 
-**负责人**: FormalScience团队 
+**负责人**: FormalScience团队
