@@ -2,7 +2,7 @@
 
 ## 📚 **目录结构**
 
-```
+```text
 01_Automata_Theory/
 ├── README.md                           # 当前文件 - 自动机理论总览
 ├── 01_Finite_Automata/                 # 有限自动机
@@ -22,18 +22,21 @@
 ## 🎯 **核心主题**
 
 ### 1. 有限自动机 (Finite Automata)
+
 - [01_Finite_Automata/](01_Finite_Automata/) - 有限自动机总览
   - [确定性有限自动机](01_Finite_Automata/01_DFA.md) - DFA的定义、性质和构造
   - [非确定性有限自动机](01_Finite_Automata/02_NFA.md) - NFA的定义、性质和构造
   - [自动机等价性](01_Finite_Automata/03_Automata_Equivalence.md) - DFA与NFA的等价性证明
 
 ### 2. 下推自动机 (Pushdown Automata)
+
 - [02_Pushdown_Automata/](02_Pushdown_Automata/) - 下推自动机总览
   - [下推自动机基础](02_Pushdown_Automata/01_PDA.md) - PDA的定义、性质和构造
   - [确定性下推自动机](02_Pushdown_Automata/02_DPDA.md) - DPDA的定义、性质和限制
   - [与上下文无关文法等价性](02_Pushdown_Automata/03_CFG_Equivalence.md) - PDA与CFG的等价性
 
 ### 3. 图灵机 (Turing Machines)
+
 - [03_Turing_Machines/](03_Turing_Machines/) - 图灵机总览
   - [图灵机基础](03_Turing_Machines/01_Turing_Machine.md) - 图灵机的定义、性质和构造
   - [通用图灵机](03_Turing_Machines/02_Universal_TM.md) - 通用图灵机的构造和意义
@@ -255,15 +258,15 @@ $$\forall N \in \text{NFA} \exists D \in \text{DFA}(L(N) = L(D))$$
 
 1. **构造方法**：子集构造法
 2. **证明步骤**：
-   
+
    a) 设 $N = (Q_N, \Sigma, \delta_N, q_0, F_N)$ 是NFA
-   
+
    b) 构造DFA $D = (Q_D, \Sigma, \delta_D, q_0', F_D)$ 其中：
       - $Q_D = 2^{Q_N}$ (幂集)
       - $q_0' = \{q_0\}$
       - $F_D = \{S \subseteq Q_N : S \cap F_N \neq \emptyset\}$
       - $\delta_D(S, a) = \bigcup_{q \in S} \delta_N(q, a)$
-   
+
    c) 证明 $L(N) = L(D)$：
       - 对于任意输入 $w$，$D$ 的状态对应 $N$ 在 $w$ 上可能到达的状态集合
       - $D$ 接受 $w$ 当且仅当 $N$ 接受 $w$
@@ -282,13 +285,13 @@ $$\forall D \in \text{DFA} \exists M \in \text{DFA}(L(D) = L(M) \land |M| \text{
 
 1. **构造方法**：等价类划分
 2. **证明步骤**：
-   
+
    a) 定义状态等价关系：$p \equiv q$ 当且仅当 $\forall w \in \Sigma^*(\delta^*(p, w) \in F \leftrightarrow \delta^*(q, w) \in F)$
-   
+
    b) 构造等价类：$[q] = \{p : p \equiv q\}$
-   
+
    c) 构造最小DFA：状态为等价类，转移为 $\delta([q], a) = [\delta(q, a)]$
-   
+
    d) 证明最小性：任何更小的DFA都无法识别相同语言
 
 3. **结论**：最小DFA存在且唯一
@@ -297,6 +300,7 @@ $$\forall D \in \text{DFA} \exists M \in \text{DFA}(L(D) = L(M) \land |M| \text{
 
 **定理 1.3** (正则语言泵引理)
 如果 $L$ 是正则语言，则存在常数 $p$ 使得对于任意 $w \in L$ 且 $|w| \geq p$，存在分解 $w = xyz$ 满足：
+
 1. $|xy| \leq p$
 2. $|y| > 0$
 3. $\forall i \geq 0(xy^i z \in L)$
@@ -305,13 +309,13 @@ $$\forall D \in \text{DFA} \exists M \in \text{DFA}(L(D) = L(M) \land |M| \text{
 
 1. **构造**：设 $D$ 是识别 $L$ 的DFA，$p = |Q|$
 2. **证明步骤**：
-   
+
    a) 对于 $w \in L$ 且 $|w| \geq p$，考虑 $D$ 在 $w$ 上的计算路径
-   
+
    b) 根据鸽巢原理，路径中必有重复状态
-   
+
    c) 设重复状态为 $q$，对应子串 $y$
-   
+
    d) 则 $xy^i z$ 对应绕过 $y$ 的路径，仍在 $L$ 中
 
 3. **应用**：用于证明语言非正则性
@@ -467,11 +471,13 @@ impl ProtocolStateMachine {
 ## 🚀 **快速导航**
 
 ### 核心概念
+
 - [DFA基础](01_Finite_Automata/01_DFA.md)
 - [NFA基础](01_Finite_Automata/02_NFA.md)
 - [图灵机基础](03_Turing_Machines/01_Turing_Machine.md)
 
 ### 应用领域
+
 - [编译器设计](../06_Applications/01_Compiler_Design/)
 - [编程语言](../06_Applications/02_Programming_Languages/)
 - [自然语言处理](../06_Applications/03_Natural_Language_Processing/)
