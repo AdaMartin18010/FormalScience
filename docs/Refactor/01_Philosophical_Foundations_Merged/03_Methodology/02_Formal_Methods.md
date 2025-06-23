@@ -495,7 +495,7 @@ impl ProofAssistant {
 
 ### 5.1 Safety-Critical Systems
 
-**Example: Verification of Aerospace Software**
+**Example: Verification of Aerospace Software**:
 
 1. **System Description**: Flight control software for an aircraft
 2. **Safety Properties**:
@@ -517,7 +517,7 @@ impl ProofAssistant {
 
 ### 5.2 Security Protocols
 
-**Example: Verification of Authentication Protocol**
+**Example: Verification of Authentication Protocol**:
 
 1. **Protocol Description**: Two-factor authentication system
 2. **Security Properties**:
@@ -538,7 +538,7 @@ impl ProofAssistant {
 
 ### 5.3 Hardware Verification
 
-**Example: Verification of CPU Cache Coherence Protocol**
+**Example: Verification of CPU Cache Coherence Protocol**:
 
 1. **System Description**: Multicore processor cache coherence mechanism
 2. **Correctness Properties**:
