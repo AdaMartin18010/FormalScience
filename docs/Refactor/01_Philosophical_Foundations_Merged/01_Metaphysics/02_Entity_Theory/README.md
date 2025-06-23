@@ -20,31 +20,34 @@
 5. **事件与过程**：分析事件和过程作为实体的特性和结构
 6. **部分与整体**：研究实体的部分-整体关系和形式化表示
 
+## 已完成文件
+
+1. [实体分类理论](01_Entity_Classification.md) - 实体分类的形式化理论与应用
+2. [本体论关系理论](02_Ontological_Relations.md) - 研究实体间的各种关系类型和性质
+3. [实体模态理论](03_Entity_Modality.md) - 研究实体存在的不同方式和可能性
+4. [本体论框架](04_Ontological_Framework.md) - 研究存在的基本结构和组织方式
+
 ## 子目录结构
 
 ```text
 02_Entity_Theory/
-├── 01_Entity_Classification/
-│   ├── 01_Entity_Types.md
-│   ├── 02_Concrete_Abstract_Distinction.md
-│   └── 03_Taxonomy_Systems.md
-├── 02_Object_Theory/
+├── 01_Entity_Classification.md (已完成)
+├── 02_Ontological_Relations.md (已完成)
+├── 03_Entity_Modality.md (已完成)
+├── 04_Ontological_Framework.md (已完成)
+├── 05_Object_Theory/ (计划中)
 │   ├── 01_Object_Identity.md
 │   ├── 02_Object_Persistence.md
 │   └── 03_Bundle_Theories.md
-├── 03_Property_Theory/
+├── 06_Property_Theory/ (计划中)
 │   ├── 01_Property_Types.md
 │   ├── 02_Universals_Particulars.md
 │   └── 03_Property_Instantiation.md
-├── 04_Relation_Theory/
-│   ├── 01_Relation_Types.md
-│   ├── 02_Formal_Relations.md
-│   └── 03_Internal_External_Relations.md
-├── 05_Events_Processes/
+├── 07_Events_Processes/ (计划中)
 │   ├── 01_Event_Ontology.md
 │   ├── 02_Process_Philosophy.md
 │   └── 03_Causal_Relations.md
-└── 06_Mereology/
+└── 08_Mereology/ (计划中)
     ├── 01_Part_Whole_Relations.md
     ├── 02_Formal_Mereology.md
     └── 03_Composition_Problems.md
@@ -54,13 +57,16 @@
 
 | 概念 | 描述 | 相关文件 |
 |------|------|---------|
-| **实体** | 任何可被认为存在的事物 | `01_Entity_Types.md` |
-| **对象** | 具有同一性和持存性的实体 | `02_Object_Theory/01_Object_Identity.md` |
-| **属性** | 实体所具有的特征或性质 | `03_Property_Theory/01_Property_Types.md` |
-| **关系** | 实体之间的联系或连接 | `04_Relation_Theory/01_Relation_Types.md` |
-| **事件** | 在时空中发生的变化或状态转换 | `05_Events_Processes/01_Event_Ontology.md` |
-| **过程** | 随时间展开的一系列变化 | `05_Events_Processes/02_Process_Philosophy.md` |
-| **部分-整体** | 实体之间的组成关系 | `06_Mereology/01_Part_Whole_Relations.md` |
+| **实体** | 任何可被认为存在的事物 | `01_Entity_Classification.md` |
+| **分类系统** | 对实体进行分类的形式化框架 | `01_Entity_Classification.md` |
+| **关系** | 实体之间的联系或连接 | `02_Ontological_Relations.md` |
+| **存在模态** | 实体存在的不同方式和可能性 | `03_Entity_Modality.md` |
+| **本体论框架** | 存在的基本结构和组织方式 | `04_Ontological_Framework.md` |
+| **对象** | 具有同一性和持存性的实体 | `计划中: 05_Object_Theory/01_Object_Identity.md` |
+| **属性** | 实体所具有的特征或性质 | `计划中: 06_Property_Theory/01_Property_Types.md` |
+| **事件** | 在时空中发生的变化或状态转换 | `计划中: 07_Events_Processes/01_Event_Ontology.md` |
+| **过程** | 随时间展开的一系列变化 | `计划中: 07_Events_Processes/02_Process_Philosophy.md` |
+| **部分-整体** | 实体之间的组成关系 | `计划中: 08_Mereology/01_Part_Whole_Relations.md` |
 
 ## 理论框架
 
@@ -138,4 +144,5 @@ struct Mereology {
 ---
 
 **负责人**: FormalScience团队  
-**创建日期**: 2025-01-02 
+**创建日期**: 2025-01-02  
+**最后更新**: 2025-01-02
