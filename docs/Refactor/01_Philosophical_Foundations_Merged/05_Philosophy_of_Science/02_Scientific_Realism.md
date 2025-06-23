@@ -23,6 +23,7 @@ We can formalize scientific realism through a model-theoretic approach:
 Let $T$ be a scientific theory with language $L_T$, and let $M$ be a class of models for $L_T$.
 
 **Definition 1** (Scientific Realism): Scientific realism holds that:
+
 1. There exists a unique intended model $M_w$ representing the actual world.
 2. A theory $T$ is true if and only if $M_w \models T$ (the actual world model satisfies the theory).
 3. The success of a theory is explained by its truth or approximate truth.
@@ -237,4 +238,4 @@ The integration of scientific realism with formal methods allows for a more rigo
 3. Laudan, L. (1981). "A Confutation of Convergent Realism." *Philosophy of Science*, 48, 19-49.
 4. Psillos, S. (1999). *Scientific Realism: How Science Tracks Truth*. Routledge.
 5. van Fraassen, B. C. (1980). *The Scientific Image*. Oxford University Press.
-6. Worrall, J. (1989). "Structural Realism: The Best of Both Worlds?" *Dialectica*, 43(1-2), 99-124. 
+6. Worrall, J. (1989). "Structural Realism: The Best of Both Worlds?" *Dialectica*, 43(1-2), 99-124.

@@ -136,4 +136,4 @@ impl ScientificTheory {
 
 - [Methodology](../03_Methodology/README.md) - For detailed treatment of scientific method
 - [Epistemology](../02_Epistemology/README.md) - For theories of scientific knowledge
-- [Metaphysics](../01_Metaphysics/README.md) - For ontological implications of science 
+- [Metaphysics](../01_Metaphysics/README.md) - For ontological implications of science
