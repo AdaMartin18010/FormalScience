@@ -1138,3 +1138,217 @@ Millikan, R. G. (1984). Language, Thought, and Other Biological Categories. MIT 
 Searle, J. R. (1983). Intentionality: An Essay in the Philosophy of Mind. Cambridge University Press.
 
 Varela, F. J., Thompson, E., & Rosch, E. (1991). The Embodied Mind: Cognitive Science and Human Experience. MIT Press.
+
+Zhang, J., & Norman, D. A. (1994). Representations in Distributed Cognitive Tasks. Cognitive Science, 18(1), 87–122.
+
+## 7. 补充：表征的形式化与认知增强
+
+### 7.1 形式化表征的应用扩展
+
+#### 7.1.1 认知增强技术
+
+**形式化表征在认知增强中的角色**：
+
+- 表征格式优化：改进信息编码效率
+- 表征转换工具：跨模态信息转换
+- 增强式交互界面：基于表征理论的人机交互设计
+
+**技术实现路径**：
+
+- 外部表征工具：数字笔记系统、视觉化工具
+- 认知辅助设备：记忆辅助、注意力引导系统
+- 认知训练平台：基于表征理论的能力提升方案
+
+#### 7.1.2 形式表征系统的评估框架
+
+**评估维度**：
+
+- 表征精确度：与目标内容的匹配程度
+- 表征效率：信息压缩与处理速度
+- 表征适应性：在不同问题域的适用性
+- 表征可学习性：获取和掌握的难易程度
+
+**量化指标**：
+
+- 表征空间维度分析
+- 信息保留率测量
+- 认知负荷评估
+- 迁移学习成功率
+
+### 7.2 表征理论的学科整合
+
+#### 7.2.1 教育学应用
+
+**基于表征理论的教学设计**：
+
+- 多重表征教学：利用多种表征形式促进理解
+- 表征转换训练：提升概念流通性
+- 元表征能力培养：发展对表征本身的认识
+
+**学习障碍干预**：
+
+- 表征缺陷的识别与评估
+- 针对性表征技能训练
+- 替代性表征策略开发
+
+#### 7.2.2 组织知识管理
+
+**集体表征系统**：
+
+- 共享心理模型：团队协作中的表征协调
+- 知识表征标准化：促进组织内信息流动
+- 专业领域表征：专业知识的形式化与传递
+
+**决策支持应用**：
+
+- 表征多样性与决策质量的关系
+- 表征偏差的识别与纠正
+- 基于多层次表征的决策模型
+
+## 8. 意向性与表征在当代人工智能中的应用
+
+### 8.1 大型语言模型中的表征问题
+
+#### 8.1.1 分布式语义表征
+
+**向量空间语义**：
+
+- 词嵌入技术：从word2vec到BERT的表征进化
+- 上下文敏感表征：动态语义捕捉
+- 语义空间几何：相似性、类比和关系的表征
+
+**表征评估方法**：
+
+- 语义相似性任务
+- 类比推理测试
+- 概念关系保留度量
+
+#### 8.1.2 涌现意向性问题
+
+**系统意向性的涌现**：
+
+- 预训练-微调范式下的意向性获取
+- 规模效应与意向能力的关系
+- 意向性的层级结构：从词汇到话语层面
+
+**意向性归属争议**：
+
+- 表面意向性与真实理解的区分
+- 系统意向性与设计者意向性的关系
+- 西尔的"中文房间"论证在LLM背景下的重新审视
+
+### 8.2 多模态系统的表征整合
+
+#### 8.2.1 跨模态表征对齐
+
+**模态桥接技术**：
+
+- 共享表征空间构建
+- 跨模态注意力机制
+- 表征转换与翻译方法
+
+**整合挑战**：
+
+- 模态特异性信息保留
+- 表征粒度不匹配问题
+- 模态缺失下的表征鲁棒性
+
+#### 8.2.2 多模态意向性
+
+**多模态理解的意向特性**：
+
+- 视觉-语言意向性的协同作用
+- 多模态内容确定的复杂性
+- 跨模态指称与认同问题
+
+**实现策略**：
+
+- 基础模型的多模态预训练
+- 对齐学习与表征融合
+- 多模态推理机制
+
+### 8.3 人工意向系统的哲学与伦理问题
+
+#### 8.3.1 人工系统的意向地位
+
+**意向系统分类学**：
+
+- 派生意向性与原初意向性的光谱
+- 功能性意向与现象性意向的区分
+- 意向能力的评估框架
+
+**哲学立场**：
+
+- 功能主义视角：意向性作为功能角色
+- 生物主义视角：意向性需要生物基质
+- 混合视角：意向性的多层次实现
+
+#### 8.3.2 伦理与社会影响
+
+**意向归属的伦理维度**：
+
+- 拟人化风险与适当归因
+- 道德责任与意向系统
+- 意向能力与道德地位的关系
+
+**社会-技术考量**：
+
+- 人工意向系统的透明度要求
+- 表征可解释性与社会信任
+- 人类-AI协作中的意向协调
+
+### 8.4 未来方向：整合生物与人工意向性
+
+**研究前沿**：
+
+- 神经符号系统与混合表征
+- 意向性的发展模型与学习理论
+- 情境化表征与动态意向性
+
+**整合愿景**：
+
+- 生物启发的人工意向系统
+- 增强人类意向能力的技术方案
+- 意向性理论的统一框架
+
+## 补充参考文献
+
+Bermúdez, J. L. (2003). Thinking Without Words. Oxford University Press.
+
+Clark, A., & Chalmers, D. (1998). The Extended Mind. Analysis, 58(1), 7–19.
+
+Kirsh, D., & Maglio, P. (1994). On Distinguishing Epistemic from Pragmatic Action. Cognitive Science, 18(4), 513–549.
+
+Kosslyn, S. M. (1994). Image and Brain: The Resolution of the Imagery Debate. MIT Press.
+
+O'Regan, J. K., & Noë, A. (2001). A Sensorimotor Account of Vision and Visual Consciousness. Behavioral and Brain Sciences, 24(5), 939–973.
+
+Rescorla, M. (2017). Maps in the Head? In K. Andrews & J. Beck (Eds.), The Routledge Handbook of Philosophy of Animal Minds (pp. 34–45). Routledge.
+
+Shea, N. (2018). Representation in Cognitive Science. Oxford University Press.
+
+Sterelny, K. (2003). Thought in a Hostile World: The Evolution of Human Cognition. Blackwell.
+
+Tversky, B. (2011). Visualizing Thought. Topics in Cognitive Science, 3(3), 499–535.
+
+Zhang, J., & Norman, D. A. (1994). Representations in Distributed Cognitive Tasks. Cognitive Science, 18(1), 87–122.
+
+Bender, E. M., & Koller, A. (2020). Climbing towards NLU: On Meaning, Form, and Understanding in the Age of Data. Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics, 5185–5198.
+
+Chalmers, D. J. (2023). Could a Large Language Model Be Conscious? Journal of Consciousness Studies, 30(3-4), 31–51.
+
+Gärdenfors, P. (2014). The Geometry of Meaning: Semantics Based on Conceptual Spaces. MIT Press.
+
+Lake, B. M., Ullman, T. D., Tenenbaum, J. B., & Gershman, S. J. (2017). Building Machines That Learn and Think Like People. Behavioral and Brain Sciences, 40, e253.
+
+LeCun, Y., Bengio, Y., & Hinton, G. (2015). Deep Learning. Nature, 521(7553), 436–444.
+
+Mitchell, M. (2021). Why AI Is Harder Than We Think. Proceedings of the 2021 AAAI Conference on Artificial Intelligence, 35(17), 15033-15037.
+
+Piantadosi, S. T., & Hill, F. (2022). Meaning Without Reference in Large Language Models. ArXiv:2208.02957.
+
+Searle, J. R. (2022). The Turing Test: A Philosophical Appraisal. Cambridge University Press.
+
+Tegmark, M. (2017). Life 3.0: Being Human in the Age of Artificial Intelligence. Knopf.
+
+Zhu, J., Xia, Y., Wu, L., Deng, J., Zhou, W., Qin, T., & Li, H. (2022). Unified Vision-Language Pre-Training for Image Captioning and VQA. Proceedings of the AAAI Conference on Artificial Intelligence, 36(3), 3377-3384.
