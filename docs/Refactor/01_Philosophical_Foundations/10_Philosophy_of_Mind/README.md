@@ -208,4 +208,4 @@ graph TD
 - [哲学基础概述](../README.md)
 - [认识论](../02_Epistemology/README.md)
 - [语言哲学](../09_Philosophy_of_Language/README.md)
-- [心灵哲学建设计划](../../docs/Refactor/01_Philosophical_Foundations/10_Philosophy_of_Mind/2025-01-11_Mind_Philosophy_Plan.md) 
+- [心灵哲学建设计划](../../docs/Refactor/01_Philosophical_Foundations/10_Philosophy_of_Mind/2025-01-11_Mind_Philosophy_Plan.md)

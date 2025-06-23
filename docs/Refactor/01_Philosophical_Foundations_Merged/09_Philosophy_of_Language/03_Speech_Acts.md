@@ -27,6 +27,7 @@
 ```
 
 其中：
+
 - L 是言内行为（说出某些话）
 - I 是言外行为（通过说话执行特定意图）
 - P 是言后行为（话语对听者产生的效果）
@@ -131,6 +132,7 @@
 ```
 
 其中：
+
 - F1 是直接执行的言语行为类型
 - p 是直接言语行为的命题内容
 - F2 是间接执行的言语行为类型
@@ -418,6 +420,7 @@ impl IndirectSpeechActRecognizer {
 ### 7.1 人机对话系统
 
 语言行为理论为人机对话系统提供基础，特别是在：
+
 - 意图识别
 - 对话管理
 - 语境追踪
@@ -426,6 +429,7 @@ impl IndirectSpeechActRecognizer {
 ### 7.2 法律语言分析
 
 在法律语境中，语言行为理论用于分析：
+
 - 合同和承诺的约束力
 - 法律宣告的效力
 - 证词的断言性质
@@ -434,6 +438,7 @@ impl IndirectSpeechActRecognizer {
 ### 7.3 社交人工智能
 
 对于社交AI系统，语言行为理论提供：
+
 - 适当言语行为选择机制
 - 社交义务追踪
 - 礼貌策略
@@ -444,6 +449,7 @@ impl IndirectSpeechActRecognizer {
 ### 8.1 与语用学的联系
 
 语言行为理论与语用学密切相关：
+
 - 会话含义与间接言语行为
 - 语境敏感性
 - 合作原则的共享
@@ -452,6 +458,7 @@ impl IndirectSpeechActRecognizer {
 ### 8.2 与社会语言学的联系
 
 语言行为理论为社会语言学提供：
+
 - 文化特定言语行为分析
 - 权力关系对言语行为的影响
 - 礼貌理论基础
@@ -462,4 +469,4 @@ impl IndirectSpeechActRecognizer {
 - [语言哲学总览](./README.md)
 - [语用学理论](./02_Pragmatics.md)
 - [形式语用学](./04_Formal_Pragmatics.md)
-- [伦理学中的规范性语言](../08_Ethics/01_Normative_Ethics.md) 
+- [伦理学中的规范性语言](../08_Ethics/01_Normative_Ethics.md)
