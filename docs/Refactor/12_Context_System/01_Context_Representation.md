@@ -53,21 +53,21 @@
 
 **实体类型：**
 
-```
+```text
 Entity ::= Object | Concept | Event | Agent | Location | Time
 ```
 
 **定义 2.1.2 (实体属性)**
 实体属性是描述实体特征的键值对：
 
-```
+```text
 Attribute ::= (key : String, value : Value)
 Value ::= String | Number | Boolean | Entity | List<Value>
 ```
 
-**定理 2.1.1 (实体唯一性)**
+**定理 2.1.1 (实体唯一性)**:
 
-```
+```text
 ∀e₁, e₂ ∈ E (e₁.id = e₂.id → e₁ = e₂)
 ```
 
@@ -84,7 +84,7 @@ Value ::= String | Number | Boolean | Entity | List<Value>
 
 **关系类型：**
 
-```
+```text
 Relation ::= (source : Entity, target : Entity, type : RelationType, properties : Map<String, Value>)
 RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | SimilarTo
 ```
@@ -92,7 +92,7 @@ RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | Sim
 **定理 2.1.2 (关系传递性)**
 对于某些关系类型，具有传递性：
 
-```
+```text
 ∀r₁, r₂ ∈ R (r₁.type = r₂.type ∧ r₁.target = r₂.source → ∃r₃ ∈ R (r₃.source = r₁.source ∧ r₃.target = r₂.target ∧ r₃.type = r₁.type))
 ```
 
@@ -110,14 +110,14 @@ RelationType ::= IsA | PartOf | LocatedAt | OccursAt | Causes | Influences | Sim
 
 **约束类型：**
 
-```
+```text
 Constraint ::= UniquenessConstraint | CardinalityConstraint | TemporalConstraint | SpatialConstraint | LogicalConstraint
 ```
 
 **定义 2.1.5 (约束满足)**
 上下文满足约束，如果所有约束条件都成立：
 
-```
+```text
 Satisfies(C, M) ↔ ∀c ∈ C (c.condition(M) = true)
 ```
 
@@ -130,14 +130,14 @@ Satisfies(C, M) ↔ ∀c ∈ C (c.condition(M) = true)
 
 **层次关系类型：**
 
-```
+```text
 HierarchicalRelation ::= IsA | PartOf | Contains | InheritsFrom
 ```
 
 **定理 3.1.1 (层次传递性)**
 层次关系具有传递性：
 
-```
+```text
 ∀h₁, h₂ ∈ H (h₁.type ∈ {IsA, PartOf} ∧ h₁.target = h₂.source → ∃h₃ ∈ H (h₃.source = h₁.source ∧ h₃.target = h₂.target ∧ h₃.type = h₁.type))
 ```
 
@@ -154,14 +154,14 @@ HierarchicalRelation ::= IsA | PartOf | Contains | InheritsFrom
 
 **空间关系类型：**
 
-```
+```text
 SpatialRelation ::= LocatedAt | Near | Far | Above | Below | Inside | Outside
 ```
 
 **定理 3.1.2 (空间关系对称性)**
 某些空间关系具有对称性：
 
-```
+```text
 ∀s ∈ S (s.type ∈ {Near, Far} → ∃s' ∈ S (s'.source = s.target ∧ s'.target = s.source ∧ s'.type = s.type))
 ```
 
@@ -178,14 +178,14 @@ SpatialRelation ::= LocatedAt | Near | Far | Above | Below | Inside | Outside
 
 **时间关系类型：**
 
-```
+```text
 TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finishes
 ```
 
 **定理 3.1.3 (时间关系传递性)**
 时间关系具有传递性：
 
-```
+```text
 ∀t₁, t₂ ∈ T (t₁.type ∈ {Before, After} ∧ t₁.target = t₂.source → ∃t₃ ∈ T (t₃.source = t₁.source ∧ t₃.target = t₂.target ∧ t₃.type = t₁.type))
 ```
 
@@ -204,7 +204,7 @@ TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finis
 
 **基本推理规则：**
 
-```
+```text
 1. 传递性规则：A → B, B → C ⊢ A → C
 2. 对称性规则：A ↔ B ⊢ B ↔ A
 3. 反身性规则：⊢ A → A
@@ -214,7 +214,7 @@ TemporalRelation ::= Before | After | During | Overlaps | Meets | Starts | Finis
 **定理 4.1.1 (推理一致性)**
 如果上下文模型满足所有约束，则推理结果也满足约束：
 
-```
+```text
 Satisfies(C, M) ∧ M ⊢ M' → Satisfies(C, M'))
 ```
 
@@ -231,14 +231,14 @@ Satisfies(C, M) ∧ M ⊢ M' → Satisfies(C, M'))
 
 **扩展操作：**
 
-```
+```text
 Extend(M, E', R', C', I') = (E ∪ E', R ∪ R', C ∪ C', I ∪ I')
 ```
 
 **定理 4.1.2 (扩展一致性)**
 如果扩展后的上下文满足约束，则扩展是有效的：
 
-```
+```text
 Satisfies(C ∪ C', Extend(M, E', R', C', I')) → ValidExtension(M, E', R', C', I')
 ```
 
@@ -255,14 +255,14 @@ Satisfies(C ∪ C', Extend(M, E', R', C', I')) → ValidExtension(M, E', R', C',
 
 **合并操作：**
 
-```
+```text
 Merge(M₁, M₂) = (E₁ ∪ E₂, R₁ ∪ R₂, C₁ ∪ C₂, I₁ ∪ I₂)
 ```
 
 **定理 4.1.3 (合并一致性)**
 如果两个上下文都满足约束，且合并后也满足约束，则合并是有效的：
 
-```
+```text
 Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies(C₁ ∪ C₂, Merge(M₁, M₂)) → ValidMerge(M₁, M₂)
 ```
 
@@ -286,7 +286,7 @@ Satisfies(C₁, M₁) ∧ Satisfies(C₂, M₂) ∧ Satisfies(C₁ ∪ C₂, Mer
 
 **公理系统：**
 
-```
+```text
 A1: ∀e₁∀e₂(id(e₁) = id(e₂) → e₁ = e₂)  // 实体唯一性
 A2: ∀r(type(r) ∈ {IsA, PartOf} ∧ target(r₁) = source(r₂) → ∃r₃(source(r₃) = source(r₁) ∧ target(r₃) = target(r₂) ∧ type(r₃) = type(r₁)))  // 传递性
 A3: ∀r(type(r) ∈ {Near, Far} → ∃r'(source(r') = target(r) ∧ target(r') = source(r) ∧ type(r') = type(r)))  // 对称性
@@ -601,7 +601,7 @@ enum ValidationError {
 
 **传递性规则：**
 
-```
+```text
 A → B, B → C
 -------------
 A → C
@@ -609,7 +609,7 @@ A → C
 
 **对称性规则：**
 
-```
+```text
 A ↔ B
 -----
 B ↔ A
@@ -617,14 +617,14 @@ B ↔ A
 
 **反身性规则：**
 
-```
+```text
 -----
 A → A
 ```
 
 **组合规则：**
 
-```
+```text
 A → B, C → D
 -------------
 (A ∧ C) → (B ∧ D)
@@ -632,9 +632,9 @@ A → B, C → D
 
 ### 6.2 证明示例
 
-**证明：上下文推理的一致性**
+**证明：上下文推理的一致性**:
 
-```
+```text
 目标：如果上下文模型满足所有约束，则推理结果也满足约束
 
 证明：

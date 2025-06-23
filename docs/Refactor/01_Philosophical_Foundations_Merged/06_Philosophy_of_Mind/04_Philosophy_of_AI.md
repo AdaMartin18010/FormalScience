@@ -9,6 +9,7 @@
 ### 1.2 目标
 
 本文旨在：
+
 - 探讨人工智能的哲学基础和核心问题
 - 分析人工智能与人类智能的关系和区别
 - 考察人工智能的认知和意识可能性
@@ -188,6 +189,7 @@ AI风险与治理框架：
 **定理1**：如果智能是计算的，则存在图灵机可以模拟人类级智能。
 
 证明：
+
 1. 假设智能是计算过程
 2. 根据丘奇-图灵论题，任何可计算函数都可以被图灵机计算
 3. 人类智能可以表示为函数$f_H: I \rightarrow O$，其中$I$是输入空间，$O$是输出空间
@@ -197,6 +199,7 @@ AI风险与治理框架：
 **定理2**：在功能主义框架下，如果系统$A$实现了与人类意识相同的功能角色，则$A$具有意识。
 
 证明：
+
 1. 根据功能主义，心理状态由其功能角色定义
 2. 设$F_C$为意识的功能角色集合
 3. 人类$H$具有意识，当且仅当$H$实现了$F_C$
@@ -627,4 +630,4 @@ end
 - Dreyfus, H. L. (1992). *What Computers Still Can't Do: A Critique of Artificial Reason*. MIT Press.
 - Russell, S. (2019). *Human Compatible: Artificial Intelligence and the Problem of Control*. Viking.
 - Searle, J. R. (1980). "Minds, Brains, and Programs." *Behavioral and Brain Sciences*, 3(3), 417-424.
-- Tegmark, M. (2017). *Life 3.0: Being Human in the Age of Artificial Intelligence*. Knopf. 
+- Tegmark, M. (2017). *Life 3.0: Being Human in the Age of Artificial Intelligence*. Knopf.

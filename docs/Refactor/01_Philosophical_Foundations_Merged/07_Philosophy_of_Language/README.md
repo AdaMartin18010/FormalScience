@@ -90,4 +90,4 @@
 - [认识论](../02_Epistemology/README.md)
 - [逻辑理论](../../03_Logic_Theory/README.md)
 - [形式语言理论](../../04_Formal_Language_Theory/README.md)
-- [认知科学](../../14_Cognitive_Science/README.md) 
+- [认知科学](../../14_Cognitive_Science/README.md)

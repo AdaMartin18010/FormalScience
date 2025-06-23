@@ -80,4 +80,4 @@
 - [形而上学](../03_Metaphysics/README.md)
 - [语言哲学](../07_Philosophy_of_Language/README.md)
 - [伦理学](../08_Ethics/README.md)
-- [科学哲学](../09_Philosophy_of_Science/README.md) 
+- [科学哲学](../09_Philosophy_of_Science/README.md)
