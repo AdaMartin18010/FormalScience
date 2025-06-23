@@ -125,7 +125,7 @@ enum MappingType {
 
 知识流动可以形式化表示为：
 
-```
+```text
 Flow(K, S, T, C, M)
 ```
 
@@ -139,7 +139,7 @@ Flow(K, S, T, C, M)
 
 示例:
 
-```
+```text
 Flow(
   Truth_Concept,
   Epistemology,
@@ -183,7 +183,7 @@ Flow(
 
 1. **"类型"术语冲突**:
 
-   ```
+   ```text
    Conflict("Type", Type_Theory, Programming_Language_Theory, 
      "类型在类型理论中是逻辑对象，在程序语言中是数据分类")
    
@@ -193,7 +193,7 @@ Flow(
 
 2. **"模型"定义冲突**:
 
-   ```
+   ```text
    Conflict("Model", Logic_Theory, Computation_Theory,
      "模型在逻辑理论中是满足公式的结构，在计算理论中是计算过程的抽象")
    
@@ -203,7 +203,7 @@ Flow(
 
 3. **"证明"方法冲突**:
 
-   ```
+   ```text
    Conflict("Proof_Method", Logic_Theory, Type_Theory,
      "证明方法在逻辑理论中基于公理和推理规则，在类型理论中基于类型检查")
    

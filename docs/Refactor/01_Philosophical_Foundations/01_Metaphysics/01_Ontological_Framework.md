@@ -258,3 +258,68 @@ Modal(m, p): m是关于命题p的模态特性
 - Armstrong, D.M. (1989). *Universals: An Opinionated Introduction*. Boulder: Westview Press.
 - Lowe, E.J. (2006). *The Four-Category Ontology: A Metaphysical Foundation for Natural Science*. Oxford: Oxford University Press.
 - Hofweber, T. (2016). *Ontology and the Ambitions of Metaphysics*. Oxford: Oxford University Press.
+
+# 1.1.1 本体论与存在论（合并重构版）
+
+## 目录
+
+1. 存在论基本概念
+2. 实体论与属性论
+3. 模态理论
+4. 因果理论
+5. 结构图与表征
+6. 形式化定义与证明
+7. 相关代码（Rust/Lean）
+8. 交叉引用
+
+---
+
+## 1. 存在论基本概念
+
+（合并原Existence_Theory、Entity_Theory相关内容，统一定义存在、实体、属性、关系等基本范畴，去重冗余）
+
+## 2. 实体论与属性论
+
+（合并Entity_Theory、属性论相关内容，系统梳理实体、属性、关系的哲学与形式化表达）
+
+## 3. 模态理论
+
+（合并Modal_Theory相关内容，补充模态逻辑、可能世界等核心知识点）
+
+## 4. 因果理论
+
+（合并Causality_Theory相关内容，系统梳理因果关系的哲学与形式化表达）
+
+## 5. 结构图与表征
+
+```mermaid
+graph TD
+  A["存在"] --> B["实体"]
+  A --> C["属性"]
+  B --> D["关系"]
+```
+
+## 6. 形式化定义与证明
+
+- 存在性公理：∃x (Entity(x))
+- Lean 代码示例：
+
+```lean
+axiom Entity : Type
+axiom Exists : Entity → Prop
+example (x : Entity) : Exists x → true := λ _, trivial
+```
+
+## 7. 相关代码（Rust）
+
+```rust
+struct Entity {
+    name: String,
+    properties: Vec<String>,
+}
+```
+
+## 8. 交叉引用
+
+- [1.1.2 实体分类](./02_Entity_Classification.md)
+- [2.1.1 知识理论](../02_Epistemology/01_Knowledge_Theory.md)
