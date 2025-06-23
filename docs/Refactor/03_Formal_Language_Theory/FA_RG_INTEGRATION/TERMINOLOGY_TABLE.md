@@ -67,8 +67,8 @@
 
 | 示例 | 正则文法表示 | 有限自动机表示 |
 |-----|------------|---------------|
-| $(a\|b)^*abb$ | $S \to aS \| bS \| aA$\$A \to bB$\$B \to b$ | 五状态DFA，识别以abb结尾的字符串 |
-| $a^*b^*$ | $S \to aS \| T$\$T \to bT \| \varepsilon$ | 三状态DFA，先接受任意个a，然后接受任意个b |
+| $(a\|b)^*abb$ | $S \to aS \| bS \| aA$\>$A \to bB$\>$B \to b$ | 五状态DFA，识别以abb结尾的字符串 |
+| $a^*b^*$ | $S \to aS \| T$\>$T \to bT \| \varepsilon$ | 三状态DFA，先接受任意个a，然后接受任意个b |
 
 ## 8. 代码实现统一
 

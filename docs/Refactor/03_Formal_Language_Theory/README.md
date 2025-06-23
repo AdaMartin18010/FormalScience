@@ -8,6 +8,8 @@
 > 03.4 解析理论相关子文件已全部迁移至 `03.4_Parsing_Theory/` 子目录下，所有引用请使用新路径。
 >
 > 03.6 计算理论相关子文件已全部迁移至 `03.6_Computation_Theory/` 子目录下，所有引用请使用新路径。
+>
+> 形式文法与自动机理论的整合文档已添加至 `FA_RG_INTEGRATION/` 子目录下，提供了两者之间的转换算法和实现。
 
 ## 📚 概述
 
@@ -44,8 +46,8 @@
 
 - [03.6.1 可计算性理论](./03.6_Computation_Theory/03.6.1_Computability_Theory.md) - 研究什么是可计算的
 - [03.6.2 复杂性理论](./03.6_Computation_Theory/03.6.2_Complexity_Theory.md) - 研究计算问题的资源需求
-- [03.6.3 算法分析](./03.6_Computation_Theory/03.6.3_算法分析.md) - 研究算法的效率和性能
-- [03.6.4 计算模型](./03.6_Computation_Theory/03.6.4_计算模型.md) - 研究不同的计算模型及其等价性
+- [03.6.3 算法分析](./03.6_Computation_Theory/03.6.3_Algorithm_Analysis.md) - 研究算法的效率和性能
+- [03.6.4 计算模型](./03.6_Computation_Theory/03.6.4_Computational_Models.md) - 研究不同的计算模型及其等价性
 
 ### 应用与前沿
 
@@ -60,15 +62,23 @@
   - [03.8.3 神经语言](./03.8_Language_Frontiers/03.8.3_Neural_Languages.md) - 神经计算中的形式语言
   - [03.8.4 认知语言](./03.8_Language_Frontiers/03.8.4_Cognitive_Languages.md) - 认知计算中的形式语言
 
+### 理论整合文档
+
+- [形式文法与自动机理论整合计划](./FORMAL_GRAMMAR_AUTOMATA_INTEGRATION_PLAN.md) - 形式文法与自动机理论整合的总体规划
+- [FA_RG_INTEGRATION](./FA_RG_INTEGRATION/) - 正则文法与有限自动机整合文档
+  - [统一术语表](./FA_RG_INTEGRATION/TERMINOLOGY_TABLE.md) - 正则文法与有限自动机的统一术语定义
+  - [转换算法](./FA_RG_INTEGRATION/CONVERSION_ALGORITHMS.md) - 正则文法与有限自动机的转换算法
+  - [转换代码实现](./FA_RG_INTEGRATION/CONVERSION_CODE.md) - 转换算法的Rust语言实现
+
 ### 扩展材料目录
 
 每个主要章节都有对应的扩展材料目录，包含更详细的内容和深入探讨：
 
 - [03.1 自动机理论](./03.1_Automata_Theory/) - 自动机理论的扩展材料
-  - [03.1.1_有限自动机](./03.1_Automata_Theory/03.1.1_有限自动机/) - 有限自动机的深入探讨
-  - [03.1.2_下推自动机](./03.1_Automata_Theory/03.1.2_下推自动机/) - 下推自动机的深入探讨
-  - [03.1.3_线性有界自动机](./03.1_Automata_Theory/03.1.3_线性有界自动机/) - 线性有界自动机的深入探讨
-  - [03.1.4_图灵机](./03.1_Automata_Theory/03.1.4_图灵机/) - 图灵机的深入探讨
+  - [03.1.1_Finite_Automata_Legacy](./03.1_Automata_Theory/03.1.1_Finite_Automata_Legacy/) - 有限自动机的深入探讨
+  - [03.1.2_Pushdown_Automata_Legacy](./03.1_Automata_Theory/03.1.2_Pushdown_Automata_Legacy/) - 下推自动机的深入探讨
+  - [03.1.3_Linear_Bounded_Automata_Legacy](./03.1_Automata_Theory/03.1.3_Linear_Bounded_Automata_Legacy/) - 线性有界自动机的深入探讨
+  - [03.1.4_Turing_Machine_Legacy](./03.1_Automata_Theory/03.1.4_Turing_Machine_Legacy/) - 图灵机的深入探讨
 - [03.2 形式文法](./03.2_Formal_Grammars/) - 形式文法的扩展材料
   - [01_正则文法](./03.2_Formal_Grammars/01_正则文法/) - 正则文法的深入探讨
   - [02_上下文无关文法](./03.2_Formal_Grammars/02_上下文无关文法/) - 上下文无关文法的深入探讨
@@ -85,8 +95,9 @@
 1. **主要文件**：采用 `03.X_主题名.md` 的命名格式，如 `03.1_Automata_Theory.md`
 2. **子主题文件**：采用 `03.X.Y_子主题名.md` 的命名格式，如 `03.6.1_Computability_Theory.md`
 3. **扩展材料目录**：每个主题都有一个同名目录，包含更详细的内容
-   - 扩展目录中的子目录采用 `03.X.Y_主题名` 的命名格式，如 `03.1.1_有限自动机`
+   - 扩展目录中的子目录采用 `03.X.Y_主题名` 的命名格式，如 `03.1.1_Finite_Automata_Legacy`
    - 每个子目录都有一个README.md文件，提供该主题的概述和导航
+4. **整合文档**：采用全大写的命名格式，如 `FORMAL_GRAMMAR_AUTOMATA_INTEGRATION_PLAN.md`
 
 这种结构确保了内容的层次清晰、导航便捷，同时保持了中英文命名的一致性。
 
@@ -145,7 +156,7 @@ graph TD
     B4 -.-> C4
 ```
 
-## �� 主要概念
+## 📚 主要概念
 
 1. **自动机** - 从有限自动机到图灵机的计算模型谱系
    - 有限自动机 (FA) - 识别正则语言
@@ -199,11 +210,14 @@ graph TD
   - [x] 03.6.4 计算模型 - 已完成
 - [x] 03.7 语言应用 - 已完成
 - [x] 03.8 语言前沿 - 已完成
+- [x] 形式文法与自动机理论整合 - 进行中
 
-**整体完成度**: 100%
+## 📝 重构进度
+
+请参阅 [PROGRESS_UPDATE_20241231.md](./PROGRESS_UPDATE_20241231.md) 了解最新的重构进度和计划。
 
 ---
 
-**更新时间**: 2024-12-27  
-**版本**: 2.2  
-**状态**: 已完成
+**更新时间**: 2024-12-31  
+**版本**: 2.0  
+**状态**: 重构进行中

@@ -6,7 +6,7 @@
 
 首先，我们定义基本的数据结构：
 
-```rust
+``` rust
 use std::collections::{HashMap, HashSet};
 use std::fmt;
 
@@ -255,7 +255,7 @@ impl FiniteAutomaton {
 
 ## 2. 右线性文法到NFA的转换
 
-```rust
+``` rust
 /// 将右线性文法转换为NFA
 fn right_linear_grammar_to_nfa(grammar: &RegularGrammar) -> Result<FiniteAutomaton, String> {
     // 验证是否为右线性文法
@@ -298,7 +298,7 @@ fn right_linear_grammar_to_nfa(grammar: &RegularGrammar) -> Result<FiniteAutomat
 
 ## 3. NFA到右线性文法的转换
 
-```rust
+``` rust
 /// 将NFA转换为右线性文法
 fn nfa_to_right_linear_grammar(nfa: &FiniteAutomaton) -> RegularGrammar {
     let mut grammar = RegularGrammar::new(GrammarType::RightLinear);
@@ -327,7 +327,7 @@ fn nfa_to_right_linear_grammar(nfa: &FiniteAutomaton) -> RegularGrammar {
 
 ## 4. DFA最小化
 
-```rust
+``` rust
 /// 计算状态的ε-闭包
 fn epsilon_closure(nfa: &FiniteAutomaton, state: &str) -> HashSet<String> {
     let mut closure = HashSet::new();
@@ -525,7 +525,7 @@ fn remove_unreachable_states(dfa: &FiniteAutomaton, reachable: &HashSet<String>)
 
 以下是使用上述实现的示例代码：
 
-```rust
+``` rust
 fn main() -> Result<(), String> {
     // 创建一个右线性文法
     let mut grammar = RegularGrammar::new(GrammarType::RightLinear);
@@ -607,7 +607,7 @@ qf -> ε
 
 ## 7. 单元测试
 
-```rust
+``` rust
 #[cfg(test)]
 mod tests {
     use super::*;

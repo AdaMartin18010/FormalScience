@@ -18,7 +18,7 @@
 
 ### 1.3 伪代码
 
-```text
+``` text
 function RightLinearGrammarToNFA(G: RegularGrammar) -> FiniteAutomaton:
     // 1. 创建状态集
     Q = G.non_terminals ∪ {q_f}  // q_f 为新的接受状态
@@ -67,7 +67,7 @@ function RightLinearGrammarToNFA(G: RegularGrammar) -> FiniteAutomaton:
 
 ### 2.3 伪代码
 
-```text
+``` text
 function NFAToRightLinearGrammar(M: FiniteAutomaton) -> RegularGrammar:
     // 1. 创建非终结符集和终结符集
     G = new RegularGrammar()
@@ -107,7 +107,7 @@ function NFAToRightLinearGrammar(M: FiniteAutomaton) -> RegularGrammar:
 
 ### 3.3 伪代码
 
-```text
+``` text
 function RightToLeftLinearGrammar(G_R: RegularGrammar) -> RegularGrammar:
     // 1. 转换为NFA
     M = RightLinearGrammarToNFA(G_R)
@@ -166,7 +166,7 @@ function RightToLeftLinearGrammar(G_R: RegularGrammar) -> RegularGrammar:
 
 ### 4.3 伪代码
 
-```text
+``` text
 function MinimizeDFA(M: FiniteAutomaton) -> FiniteAutomaton:
     // 1. 移除不可达状态
     reachable_states = 找出从初始状态可达的所有状态
@@ -197,145 +197,49 @@ function MinimizeDFA(M: FiniteAutomaton) -> FiniteAutomaton:
                             add (Y ∩ X) to work_list
                         else:
                             add (Y - X) to work_list
-    
+```
+
+### 4.4 构建最小DFA
+
+``` text
     // 4. 构建最小DFA
     M' = new FiniteAutomaton()
-    M'.alphabet = M.alphabet
     
     // 每个等价类成为一个新状态
-    for each 类 C in partition:
-        创建代表此类的新状态S
-        if C contains M.initial_state:
-            M'.initial_state = S
+    for each 等价类 C in partition:
+        创建新状态 q_C
         if C ∩ M.accepting_states != ∅:
-            将S添加到M'.accepting_states
+            M'.accepting_states.add(q_C)
+        if M.initial_state ∈ C:
+            M'.initial_state = q_C
     
     // 定义新的转移函数
-    for each 新状态 S representing 类 C in partition:
-        q = 选择C中的任意一个状态
+    for each 等价类 C in partition:
+        q_C = 对应C的新状态
+        // 选择C中的任意一个状态作为代表
+        q = 从C中选择一个状态
         for each 符号 a in M.alphabet:
-            p = δ(q, a)  // p是q通过a转移到的状态
-            S' = 找出包含p的等价类对应的新状态
-            M'.transitions[S, a] = S'
+            p = δ(q, a)  // 原始转移目标
+            // 找到p所在的等价类
+            D = 包含p的等价类
+            q_D = 对应D的新状态
+            M'.transitions[q_C, a] = {q_D}
     
     return M'
 ```
 
-## 5. 优化与实际实现
+## 5. 时间复杂度分析
 
-### 5.1 正则文法到NFA的优化
+| 算法 | 最坏情况时间复杂度 | 空间复杂度 |
+|------|-----------------|----------|
+| 右线性文法→NFA | $O(\|P\|)$ | $O(\|V\|)$ |
+| NFA→右线性文法 | $O(\|Q\|\|\Sigma\|)$ | $O(\|Q\|\|\Sigma\|)$ |
+| 右线性文法→左线性文法 | $O(\|P\| + \|V\|\|\Sigma\|)$ | $O(\|V\| + \|P\|)$ |
+| DFA最小化 (Hopcroft) | $O(\|Q\|\|\Sigma\|\log\|Q\|)$ | $O(\|Q\|\|\Sigma\|)$ |
 
-在实际实现中，我们可以通过以下方式优化转换过程：
+其中，$P$ 是产生式集合，$V$ 是非终结符集合，$Q$ 是状态集合，$\Sigma$ 是字母表。
 
-1. **直接构建**:
-   - 对于产生式 $A \to aB$，直接添加状态和转移，无需额外的接受状态
-   - 对于产生式 $A \to a$，可以将 $A$ 设为接受状态，并添加 $a$ 的转移到一个"死状态"
-
-2. **处理特殊情况**:
-   - 对于空产生式 $A \to \varepsilon$，可以使用ε-转移或直接将 $A$ 设为接受状态
-
-### 5.2 NFA到正则文法的优化
-
-在从NFA构建正则文法时，以下优化可以减少产生的规则数量：
-
-1. **消除多余规则**:
-   - 如果存在多个产生式 $A \to aB$ 和 $A \to aC$，可以引入新的非终结符 $X_a$ 和产生式 $A \to aX_a$, $X_a \to B | C$
-
-2. **处理空串**:
-   - 仅为真正需要接受空串的状态添加 $\varepsilon$-产生式
-
-### 5.3 代码实现考虑
-
-在实际的代码实现中，应注意以下几点：
-
-1. **数据结构选择**:
-   - 使用邻接表表示转移函数，提高查找效率
-   - 使用集合操作处理状态集合，简化算法
-
-2. **错误处理**:
-   - 检查输入的合法性，确保文法是正则的
-   - 处理特殊情况，如空语言
-
-3. **效率优化**:
-   - 使用懒惰计算和缓存中间结果
-   - 并行处理独立的计算步骤
-
-## 6. 示例
-
-### 6.1 右线性文法到NFA的转换示例
-
-**输入**: 右线性文法 $G$
-
-```text
-S → aA | bS
-A → aA | bB
-B → aS | ε
-```
-
-**转换过程**:
-
-1. 创建状态集: $Q = \{S, A, B, q_f\}$
-2. 设置初始状态: $q_0 = S$
-3. 设置接受状态: $F = \{q_f, B\}$ (B因为有 $\varepsilon$-产生式)
-4. 构建转移函数:
-   - $\delta(S, a) = \{A\}$
-   - $\delta(S, b) = \{S\}$
-   - $\delta(A, a) = \{A\}$
-   - $\delta(A, b) = \{B\}$
-   - $\delta(B, a) = \{S\}$
-
-**输出**: NFA $M$ 的转移表
-
-| 状态 | a | b |
-|------|---|---|
-| →S   | A | S |
-| A    | A | B |
-| *B   | S | - |
-| *q_f | - | - |
-
-### 6.2 NFA到右线性文法的转换示例
-
-**输入**: NFA $M$ 如上表
-
-**转换过程**:
-
-1. 创建非终结符集: $V = \{S, A, B, q_f\}$
-2. 设置起始符号: $S$
-3. 构建产生式:
-   - $S \to aA | bS$
-   - $A \to aA | bB$
-   - $B \to aS | \varepsilon$
-   - $q_f \to \varepsilon$
-
-**输出**: 右线性文法 $G$
-
-```text
-S → aA | bS
-A → aA | bB
-B → aS | ε
-q_f → ε
-```
-
-## 7. 复杂度分析
-
-### 7.1 空间复杂度
-
-| 算法 | 空间复杂度 | 说明 |
-|------|----------|------|
-| 右线性文法→NFA | O(\|V\| + \|P\|) | 需要存储所有非终结符和产生式 |
-| NFA→右线性文法 | O(\|Q\| + \|δ\|) | 需要存储所有状态和转移 |
-| DFA最小化 | O(\|Q\|²) | 需要存储状态对的等价关系 |
-
-### 7.2 时间复杂度
-
-| 算法 | 时间复杂度 | 说明 |
-|------|----------|------|
-| 右线性文法→NFA | O(\|P\|) | 每条产生式需要O(1)时间处理 |
-| NFA→右线性文法 | O(\|Q\|·\|Σ\|) | 需要检查每个状态对每个输入符号的转移 |
-| 右线性→左线性 | O(\|P\|) | 通过逆向自动机完成转换 |
-| DFA最小化 | O(\|Σ\|·\|Q\|·log\|Q\|) | Hopcroft算法的优化复杂度 |
-
-## 8. 参考文献
+## 6. 参考文献
 
 1. Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). Introduction to Automata Theory, Languages, and Computation. Pearson.
 2. Sipser, M. (2012). Introduction to the Theory of Computation. Cengage Learning.
