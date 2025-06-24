@@ -1,4 +1,4 @@
-# 03.4 解析理论 (Parsing Theory)
+# 03.4 语法分析理论（Parsing Theory）
 
 ## 📚 概述
 
@@ -10,10 +10,11 @@
 
 ### 主要内容
 
-- [03.4.1_LL_Parsing.md](./03.4.1_LL_Parsing.md) - 研究自顶向下的预测性解析方法
-- [03.4.2_LR_Parsing.md](./03.4.2_LR_Parsing.md) - 研究自底向上的移进-归约解析方法
-- [03.4.3_Recursive_Descent_Parsing.md](./03.4.3_Recursive_Descent_Parsing.md) - 研究一种直观的自顶向下解析方法
-- [03.4.4_Bottom_Up_Parsing.md](./03.4.4_Bottom_Up_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
+- [03.4.1_Top_Down_Parsing.md](./03.4.1_Top_Down_Parsing.md) - 研究自顶向下的预测性解析方法
+- [03.4.2_Bottom_Up_Parsing.md](./03.4.2_Bottom_Up_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
+- [03.4.3_LL_Parsing.md](./03.4.3_LL_Parsing.md) - 研究自顶向下的预测性解析方法
+- [03.4.4_LR_Parsing.md](./03.4.4_LR_Parsing.md) - 研究自底向上的移进-归约解析方法
+- [03.4.5_Generalized_Parsing.md](./03.4.5_Generalized_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
 
 ### 扩展内容
 
@@ -65,3 +66,37 @@
 **更新时间**: 2024-12-27  
 **版本**: 2.1  
 **状态**: 已完成
+
+## 目录
+
+1.  [自顶向下分析](./03.4.1_Top_Down_Parsing.md)
+2.  [自底向上分析](./03.4.2_Bottom_Up_Parsing.md)
+3.  [LL分析](./03.4.3_LL_Parsing.md)
+4.  [LR分析](./03.4.4_LR_Parsing.md)
+5.  [广义分析](./03.4.5_Generalized_Parsing.md)
+
+---
+
+## 主题分类与说明
+
+-   **自顶向下分析**: 从文法的开始符号出发，尝试推导出目标串。
+-   **自底向上分析**: 从目标串出发，尝试规约到文法的开始符号。
+-   **LL分析**: 一类自顶向下分析方法，适用于LL(k)文法。
+-   **LR分析**: 一类自底向上分析方法，适用于LR(k)文法，功能更强。
+-   **广义分析**: 如Earley、CYK算法，能处理任意CFG，但效率较低。
+
+---
+
+## 交叉引用
+
+-   [形式文法](../03.2_Formal_Grammars/README.md)
+-   [上下文无关文法](../03.2_Formal_Grammars/03.2.2_Context_Free_Grammars.md)
+-   [下推自动机](../01_Automata_Theory/03.1.2_Pushdown_Automata.md)
+
+---
+
+## 规范说明
+
+本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
+
+> 本文档为语法分析理论分支的总览与导航。
