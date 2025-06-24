@@ -2,10 +2,10 @@
 
 ## 目录
 
-1.  [敏捷与Scrum (Agile and Scrum)](./07.2.1_Agile_and_Scrum.md)
-2.  [瀑布与V模型 (Waterfall and V-Model)](./07.2.2_Waterfall_and_V-Model.md)
-3.  [DevOps](./07.2.3_DevOps.md)
-4.  [持续集成与持续部署 (CI/CD)](./07.2.4_CI_CD.md)
+1. [敏捷与Scrum (Agile and Scrum)](./07.2.1_Agile_and_Scrum.md)
+2. [瀑布与V模型 (Waterfall and V-Model)](./07.2.2_Waterfall_and_V-Model.md)
+3. [DevOps](./07.2.3_DevOps.md)
+4. [持续集成与持续部署 (CI/CD)](./07.2.4_CI_CD.md)
 
 ---
 
@@ -17,10 +17,10 @@
 
 ## 交叉引用
 
--   [软件工程总览](../README.md)
--   [软件质量与测试](../07.5_Software_Quality_and_Testing/README.md)
--   [项目管理理论](./TODO.md)
+- [软件工程总览](../README.md)
+- [软件质量与测试](../07.5_Software_Quality_and_Testing/README.md)
+- [项目管理理论](./TODO.md)
 
 ---
 
-> 本文档为软件开发方法论分支的导航。 
+> 本文档为软件开发方法论分支的导航。

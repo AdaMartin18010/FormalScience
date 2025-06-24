@@ -2,8 +2,8 @@
 
 ## 目录
 
-1.  [软件维护模型 (Maintenance Models)](./07.6.1_Maintenance_Models.md)
-2.  [重构 (Refactoring)](./07.6.2_Refactoring.md)
+1. [软件维护模型 (Maintenance Models)](./07.6.1_Maintenance_Models.md)
+2. [重构 (Refactoring)](./07.6.2_Refactoring.md)
 
 ---
 
@@ -15,10 +15,10 @@
 
 ## 交叉引用
 
--   [软件工程总览](../README.md)
--   [代码质量与度量](../07.5_Software_Quality_and_Testing/07.5.3_Code_Quality_and_Metrics.md)
--   [架构设计原则](../07.3_Software_Architecture_and_Design/07.3.1_Architectural_Principles.md)
+- [软件工程总览](../README.md)
+- [代码质量与度量](../07.5_Software_Quality_and_Testing/07.5.3_Code_Quality_and_Metrics.md)
+- [架构设计原则](../07.3_Software_Architecture_and_Design/07.3.1_Architectural_Principles.md)
 
 ---
 
-> 本文档为软件维护与演化分支的导航。 
+> 本文档为软件维护与演化分支的导航。

@@ -2,9 +2,9 @@
 
 ## 目录
 
-1.  [形式化方法导论](./07.1.1_Introduction_to_Formal_Methods.md)
-2.  [形式化规约 (Formal Specification)](./07.1.2_Formal_Specification.md)
-3.  [形式化验证 (Formal Verification)](./07.1.3_Formal_Verification.md)
+1. [形式化方法导论](./07.1.1_Introduction_to_Formal_Methods.md)
+2. [形式化规约 (Formal Specification)](./07.1.2_Formal_Specification.md)
+3. [形式化验证 (Formal Verification)](./07.1.3_Formal_Verification.md)
 
 ---
 
@@ -16,10 +16,10 @@
 
 ## 交叉引用
 
--   [软件工程总览](../README.md)
--   [逻辑理论](../../11_Logic_Theory/README.md)
--   [类型理论](../../04_Type_Theory/README.md)
+- [软件工程总览](../README.md)
+- [逻辑理论](../../11_Logic_Theory/README.md)
+- [类型理论](../../04_Type_Theory/README.md)
 
 ---
 
-> 本文档为形式化方法分支的导航。 
+> 本文档为形式化方法分支的导航。
