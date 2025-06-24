@@ -69,29 +69,29 @@
 
 ## 目录
 
-1.  [自顶向下分析](./03.4.1_Top_Down_Parsing.md)
-2.  [自底向上分析](./03.4.2_Bottom_Up_Parsing.md)
-3.  [LL分析](./03.4.3_LL_Parsing.md)
-4.  [LR分析](./03.4.4_LR_Parsing.md)
-5.  [广义分析](./03.4.5_Generalized_Parsing.md)
+1. [自顶向下分析](./03.4.1_Top_Down_Parsing.md)
+2. [自底向上分析](./03.4.2_Bottom_Up_Parsing.md)
+3. [LL分析](./03.4.3_LL_Parsing.md)
+4. [LR分析](./03.4.4_LR_Parsing.md)
+5. [广义分析](./03.4.5_Generalized_Parsing.md)
 
 ---
 
 ## 主题分类与说明
 
--   **自顶向下分析**: 从文法的开始符号出发，尝试推导出目标串。
--   **自底向上分析**: 从目标串出发，尝试规约到文法的开始符号。
--   **LL分析**: 一类自顶向下分析方法，适用于LL(k)文法。
--   **LR分析**: 一类自底向上分析方法，适用于LR(k)文法，功能更强。
--   **广义分析**: 如Earley、CYK算法，能处理任意CFG，但效率较低。
+- **自顶向下分析**: 从文法的开始符号出发，尝试推导出目标串。
+- **自底向上分析**: 从目标串出发，尝试规约到文法的开始符号。
+- **LL分析**: 一类自顶向下分析方法，适用于LL(k)文法。
+- **LR分析**: 一类自底向上分析方法，适用于LR(k)文法，功能更强。
+- **广义分析**: 如Earley、CYK算法，能处理任意CFG，但效率较低。
 
 ---
 
 ## 交叉引用
 
--   [形式文法](../03.2_Formal_Grammars/README.md)
--   [上下文无关文法](../03.2_Formal_Grammars/03.2.2_Context_Free_Grammars.md)
--   [下推自动机](../01_Automata_Theory/03.1.2_Pushdown_Automata.md)
+- [形式文法](../03.2_Formal_Grammars/README.md)
+- [上下文无关文法](../03.2_Formal_Grammars/03.2.2_Context_Free_Grammars.md)
+- [下推自动机](../01_Automata_Theory/03.1.2_Pushdown_Automata.md)
 
 ---
 

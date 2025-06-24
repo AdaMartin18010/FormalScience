@@ -66,29 +66,29 @@
 
 ## 目录
 
-1.  [操作语义](./03.5.1_Operational_Semantics.md)
-2.  [指称语义](./03.5.2_Denotational_Semantics.md)
-3.  [公理语义](./03.5.3_Axiomatic_Semantics.md)
-4.  [代数语义](./03.5.4_Algebraic_Semantics.md)
-5.  [类型理论语义](./03.5.5_Type_Theoretic_Semantics.md)
+1. [操作语义](./03.5.1_Operational_Semantics.md)
+2. [指称语义](./03.5.2_Denotational_Semantics.md)
+3. [公理语义](./03.5.3_Axiomatic_Semantics.md)
+4. [代数语义](./03.5.4_Algebraic_Semantics.md)
+5. [类型理论语义](./03.5.5_Type_Theoretic_Semantics.md)
 
 ---
 
 ## 主题分类与说明
 
--   **操作语义**: 通过程序在一台抽象机器上的执行步骤来定义其含义。
--   **指称语义**: 将程序映射到数学对象（指称物），如函数。
--   **公理语义**: 通过描述程序执行前后状态的逻辑断言来定义其含义。
--   **代数语义**: 将程序视为代数结构，用代数公理定义其行为。
--   **类型理论语义**: 使用类型论作为元语言来描述程序的语义。
+- **操作语义**: 通过程序在一台抽象机器上的执行步骤来定义其含义。
+- **指称语义**: 将程序映射到数学对象（指称物），如函数。
+- **公理语义**: 通过描述程序执行前后状态的逻辑断言来定义其含义。
+- **代数语义**: 将程序视为代数结构，用代数公理定义其行为。
+- **类型理论语义**: 使用类型论作为元语言来描述程序的语义。
 
 ---
 
 ## 交叉引用
 
--   [形式文法](../03.2_Formal_Grammars/README.md)
--   [类型理论](../../04_Type_Theory/README.md)
--   [程序语言理论](../../08_Programming_Language_Theory/README.md)
+- [形式文法](../03.2_Formal_Grammars/README.md)
+- [类型理论](../../04_Type_Theory/README.md)
+- [程序语言理论](../../08_Programming_Language_Theory/README.md)
 
 ---
 
