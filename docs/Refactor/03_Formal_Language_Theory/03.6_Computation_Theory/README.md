@@ -2,30 +2,30 @@
 
 ## 目录
 
-1.  [可计算性理论](./03.6.1_Computability_Theory.md)
-2.  [丘奇-图灵论题](./03.6.2_Church_Turing_Thesis.md)
-3.  [判定问题](./03.6.3_Decision_Problems.md)
-4.  [递归理论](./03.6.4_Recursion_Theory.md)
-5.  [λ演算](./03.6.5_Lambda_Calculus.md)
+1. [可计算性理论](./03.6.1_Computability_Theory.md)
+2. [丘奇-图灵论题](./03.6.2_Church_Turing_Thesis.md)
+3. [判定问题](./03.6.3_Decision_Problems.md)
+4. [递归理论](./03.6.4_Recursion_Theory.md)
+5. [λ演算](./03.6.5_Lambda_Calculus.md)
 
 ---
 
 ## 主题分类与说明
 
--   **可计算性理论**: 研究哪些问题可以用算法解决。
--   **丘奇-图灵论题**: 断言所有直觉上可计算的函数都可以由图灵机计算。
--   **判定问题**: 关注是否存在一个算法能对某个形式系统中的问题给出"是"或"否"的答案，如图灵机的停机问题。
--   **递归理论**: 可计算性理论的数学化分支，研究可计算函数和图灵度。
--   **λ演算**: 一种通用的计算模型，是函数式编程的基础。
+- **可计算性理论**: 研究哪些问题可以用算法解决。
+- **丘奇-图灵论题**: 断言所有直觉上可计算的函数都可以由图灵机计算。
+- **判定问题**: 关注是否存在一个算法能对某个形式系统中的问题给出"是"或"否"的答案，如图灵机的停机问题。
+- **递归理论**: 可计算性理论的数学化分支，研究可计算函数和图灵度。
+- **λ演算**: 一种通用的计算模型，是函数式编程的基础。
 
 ---
 
 ## 交叉引用
 
--   [自动机理论](../01_Automata_Theory/README.md)
--   [图灵机](../01_Automata_Theory/03.1.3_Turing_Machine.md)
--   [复杂性理论](../../16_Complexity_Theory/README.md)
--   [逻辑理论](../../11_Logic_Theory/README.md)
+- [自动机理论](../01_Automata_Theory/README.md)
+- [图灵机](../01_Automata_Theory/03.1.3_Turing_Machine.md)
+- [复杂性理论](../../16_Complexity_Theory/README.md)
+- [逻辑理论](../../11_Logic_Theory/README.md)
 
 ---
 
