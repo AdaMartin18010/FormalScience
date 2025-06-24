@@ -15,7 +15,21 @@
 7. [DFA定理](#7-dfa定理)
 8. [DFA算法](#8-dfa算法)
 9. [应用实例](#9-应用实例)
-10. [参考文献](#10-参考文献)
+10. [Mealy机](./02_Mealy_Machine.md)
+11. [Moore机](./03_Moore_Machine.md)
+12. [交叉引用](#交叉引用)
+13. [参考文献](#参考文献)
+
+## 交叉引用
+
+- [Mealy机](./02_Mealy_Machine.md)
+- [Moore机](./03_Moore_Machine.md)
+- [有限自动机基础](./01_Finite_Automata_Basics.md)
+- [自动机理论总览](../README.md)
+- [正则语言](../../02_Regular_Languages.md)
+- [形式文法](../../03.2_Formal_Grammars.md)
+- [计算理论](../../03.6_Computation_Theory/README.md)
+- [上下文系统](../../../12_Context_System/README.md)
 
 ## 1. 基本概念
 
