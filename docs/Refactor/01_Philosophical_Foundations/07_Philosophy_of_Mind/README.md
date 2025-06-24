@@ -17,16 +17,15 @@
 
 ## 3. 文件结构
 
-本模块包含以下核心文件：
+本模块包含以下核心子目录：
 
-```text
-10_Philosophy_of_Mind/
-├── README.md                # 本文件：心灵哲学概述
-├── 01_Mind_Body_Problem.md  # 心身问题
-├── 02_Consciousness.md      # 意识理论
-├── 03_Cognitive_Science.md  # 认知科学哲学
-└── 04_Philosophy_of_AI.md   # 人工智能哲学
-```
+- **[01_Mind_Body_Problem](./01_Mind_Body_Problem/)**: 心身问题，探讨心灵与物理世界的关系。
+- **[02_Consciousness](./02_Consciousness/)**: 意识理论，研究意识的本质和主观经验。
+- **[03_Cognitive_Science](./03_Cognitive_Science/)**: 认知科学哲学，研究认知过程的结构。
+- **[04_Intentionality](./04_Intentionality/)**: 意向性与表征理论。
+- **[05_Self_Theory](./05_Self_Theory/)**: 自我理论，探讨人格同一性等问题。
+- **[06_Philosophy_of_AI](./06_Philosophy_of_AI/)**: 人工智能哲学，研究机器心灵的可能性。
+- **[Context](./Context/)**: 包含本模块相关的规划与进度文档。
 
 ## 4. 理论框架
 
@@ -152,6 +151,6 @@ where
 ## 9. 参考文档
 
 - [认识论文档](../02_Epistemology/README.md)
-- [语言哲学文档](../09_Philosophy_of_Language/README.md)
+- [语言哲学文档](../06_Philosophy_of_Language/README.md)
 - [人工智能理论](../../13_Artificial_Intelligence_Theory/README.md)
-- [上下文管理系统](../../12_Context_System/Architecture.md)
+- [上下文管理系统](../../12_Context_System/README.md)

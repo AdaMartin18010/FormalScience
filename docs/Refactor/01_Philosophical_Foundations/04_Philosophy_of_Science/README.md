@@ -18,17 +18,17 @@ This directory contains the formal science approach to philosophy of science, es
 
 The philosophy of science section is organized into the following components:
 
-1. **Scientific Methodology**: Philosophical analysis of scientific methods
-   - [01_Scientific_Methodology.md](./01_Scientific_Methodology.md): Philosophical foundations of scientific method
+1. **[Scientific Methodology](./01_Scientific_Methodology/)**: Philosophical analysis of scientific methods.
+   - Contains documents on the philosophical foundations of scientific method.
 
-2. **Scientific Realism**: Debates over the ontological status of scientific theories
-   - [02_Scientific_Realism.md](./02_Scientific_Realism.md): Realism, anti-realism, and instrumentalism
+2. **[Scientific Realism](./02_Scientific_Realism/)**: Debates over the ontological status of scientific theories.
+   - Contains documents on realism, anti-realism, and instrumentalism.
 
-3. **Scientific Explanation**: Theories about what constitutes scientific explanation
-   - [03_Scientific_Explanation.md](./03_Scientific_Explanation.md): Models of scientific explanation
+3. **[Scientific Explanation](./03_Scientific_Explanation/)**: Theories about what constitutes scientific explanation.
+   - Contains documents on various models of scientific explanation.
 
-4. **Scientific Progress**: Analysis of how science advances over time
-   - [04_Scientific_Progress.md](./04_Scientific_Progress.md): Theories of scientific progress and revolution
+4. **[Scientific Progress](./04_Scientific_Progress/)**: Analysis of how science advances over time.
+   - Contains documents on theories of scientific progress and revolution.
 
 ## 🔄 Integration with Other Domains
 

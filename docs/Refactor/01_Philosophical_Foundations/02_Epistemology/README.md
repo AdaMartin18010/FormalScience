@@ -17,17 +17,21 @@ This directory contains the formal science approach to epistemology, establishin
 
 The epistemology section is organized into the following components:
 
-1. **Knowledge Theory**: Core concepts of knowledge, including definitions, types, and formal models
-   - [01_Knowledge_Theory.md](./01_Knowledge_Theory.md): Formal knowledge theory and epistemological foundations
+1. **[Knowledge Theory](./01_Knowledge/)**: Core concepts of knowledge, including definitions, types, and formal models.
+   - `01_Knowledge_Theory.md`: Formal knowledge theory and epistemological foundations.
+   - `01.2.1_知识理论.md`: Chinese version of knowledge theory.
 
-2. **Belief Theory**: Analysis of belief systems, including doxastic logic and belief dynamics
-   - [02_Belief_Theory.md](./02_Belief_Theory.md): Formal models of belief systems
+2. **[Belief Theory](./02_Belief/)**: Analysis of belief systems, including doxastic logic and belief dynamics.
+   - `02_Belief_Theory.md`: Formal models of belief systems.
+   - `01.2.2_信念理论.md`: Chinese version of belief theory.
 
-3. **Justification Theory**: Theories of epistemic justification and evidence
-   - [03_Justification_Theory.md](./03_Justification_Theory.md): Formal justification frameworks
+3. **[Justification Theory](./03_Justification/)**: Theories of epistemic justification and evidence.
+   - `03_Justification_Theory.md`: Formal justification frameworks.
+   - `01.2.3_确证理论.md`: Chinese version of justification theory.
 
-4. **Truth Theory**: Analysis of truth theories from correspondence to deflationary approaches
-   - [04_Truth_Theory.md](./04_Truth_Theory.md): Formal models of truth concepts
+4. **[Truth Theory](./04_Truth/)**: Analysis of truth theories from correspondence to deflationary approaches.
+   - `04_Truth_Theory.md`: Formal models of truth concepts.
+   - `01.2.4_真理理论.md`: Chinese version of truth theory.
 
 ## 🔄 Integration with Other Domains
 

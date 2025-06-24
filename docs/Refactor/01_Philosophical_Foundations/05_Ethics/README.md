@@ -18,17 +18,13 @@
 
 伦理学部分按照以下结构组织：
 
-1. **规范伦理学**：研究道德规范和原则的理论
-   - [01_Normative_Ethics.md](./01_Normative_Ethics.md)：功利主义、义务论和德性伦理学的形式化
+1. **[元伦理学 (Meta-Ethics)](./01_Meta_Ethics/)**: 研究伦理学的元理论问题，如道德实在论、认识论和语义学。
 
-2. **元伦理学**：研究伦理学的元理论问题
-   - [02_Meta_Ethics.md](./02_Meta_Ethics.md)：道德实在论、认识论和语义学
+2. **[规范伦理学 (Normative Ethics)](./02_Normative_Ethics/)**: 研究道德规范和原则的理论，如功利主义、义务论和德性伦理学的形式化。
 
-3. **应用伦理学**：特定领域的伦理问题分析
-   - [03_Applied_Ethics.md](./03_Applied_Ethics.md)：应用伦理学的系统化框架
+3. **[应用伦理学 (Applied Ethics)](./03_Applied_Ethics/)**: 分析特定领域的伦理问题。
 
-4. **AI伦理学**：人工智能和智能系统的伦理问题
-   - [04_AI_Ethics.md](./04_AI_Ethics.md)：机器伦理和AI伦理原则
+4. **[AI伦理学 (AI Ethics)](./04_AI_Ethics/)**: 探讨人工智能和智能系统的伦理问题，如机器伦理和AI伦理原则。
 
 ## 🔄 与其他领域的集成
 
@@ -149,4 +145,4 @@ impl EthicalTheory {
 
 - [认识论](../02_Epistemology/README.md) - 道德知识和道德认识论
 - [方法论](../03_Methodology/README.md) - 伦理研究方法
-- [科学哲学](../05_Philosophy_of_Science/README.md) - 科学研究的伦理维度
+- [科学哲学](../04_Philosophy_of_Science/README.md) - 科学研究的伦理维度

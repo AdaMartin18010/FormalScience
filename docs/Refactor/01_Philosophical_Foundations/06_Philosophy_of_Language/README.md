@@ -17,16 +17,12 @@
 
 ## 3. 文件结构
 
-本模块包含以下核心文件：
+本模块包含以下核心子目录：
 
-```text
-09_Philosophy_of_Language/
-├── README.md                # 本文件：语言哲学概述
-├── 01_Semantics.md          # 语义学理论
-├── 02_Pragmatics.md         # 语用学理论
-├── 03_Speech_Acts.md        # 语言行为理论
-└── 04_Formal_Pragmatics.md  # 形式语用学
-```
+- **[01_Semantics](./01_Semantics/)**: 语义学理论，研究意义和指称。
+- **[02_Pragmatics](./02_Pragmatics/)**: 语用学理论，研究语言在上下文中的使用。
+- **[03_Grammar_Theory](./03_Grammar_Theory/)**: 语法理论，研究语言的结构规则。
+- **[04_Speech_Acts](./04_Speech_Acts/)**: 语言行为理论，研究语言如何作为行动。
 
 ## 4. 理论框架
 
@@ -139,6 +135,6 @@ where
 ## 9. 参考文档
 
 - [认识论文档](../02_Epistemology/README.md)
-- [心灵哲学规划](../../重构计划_20250110_心灵哲学标准化.md)
-- [形式语言理论](../../03_Formal_Language_Theory/README.md)
-- [上下文管理系统](../../12_Context_System/Architecture.md)
+- [心灵哲学文档](../07_Philosophy_of_Mind/README.md)
+- [形式语言理论](../../04_Formal_Language_Theory/README.md)
+- [上下文管理系统](../../12_Context_System/README.md)

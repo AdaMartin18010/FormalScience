@@ -17,17 +17,17 @@ This directory contains the formal science approach to methodology, establishing
 
 The methodology section is organized into the following components:
 
-1. **Scientific Methodology**: Core principles and practices of scientific inquiry
-   - [01_Scientific_Methodology.md](./01_Scientific_Methodology.md): Scientific method theory and framework
+1. **[Scientific Methodology](./01_Scientific_Method/)**: Core principles and practices of scientific inquiry.
+   - Contains documents on the scientific method's theory and frameworks.
 
-2. **Formal Methods**: Rigorous mathematical approaches for specification and verification
-   - [02_Formal_Methods.md](./02_Formal_Methods.md): Formal method theory and applications
+2. **[Formal Methods](./02_Formal_Methods/)**: Rigorous mathematical approaches for specification and verification.
+   - Contains documents on formal method theory and applications.
 
-3. **Analytical-Synthetic Methods**: Complementary approaches for decomposition and construction
-   - [03_Analytical_Synthetic_Methods.md](./03_Analytical_Synthetic_Methods.md): Analysis and synthesis methodology
+3. **[Research Paradigms](./03_Research_Paradigms/)**: Fundamental frameworks guiding research approaches.
+   - Contains documents on major research paradigms and their characteristics.
 
-4. **Research Paradigms**: Fundamental frameworks guiding research approaches
-   - [04_Research_Paradigms.md](./04_Research_Paradigms.md): Major research paradigms and their characteristics
+4. **[Analytical-Synthetic Methods](./04_Analytical_Synthetic_Methods/)**: Complementary approaches for decomposition and construction.
+   - Contains documents on analysis and synthesis methodology.
 
 ## 🔄 Integration with Other Domains
 
