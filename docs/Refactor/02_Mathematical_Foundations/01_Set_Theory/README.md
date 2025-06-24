@@ -1,356 +1,408 @@
-# 集合论 (Set Theory)
+# 朴素集合论 (Naive Set Theory)
+
+## 🎯 **概述**
+
+朴素集合论是集合论的基础理论，通过直观的集合概念和基本运算，建立了集合论的核心框架。本文档通过严格的形式化方法，建立了朴素集合论的完整理论体系。
 
 ## 📚 **目录结构**
 
-```
-01_Set_Theory/
-├── README.md                           # 当前文件 - 集合论总览
-├── 01_Naive_Set_Theory/                # 朴素集合论
-│   ├── 01_Set_Basics.md                # 集合基础
-│   ├── 02_Set_Operations.md            # 集合运算
-│   └── 03_Set_Relations.md             # 集合关系
-├── 02_Axiomatic_Set_Theory/            # 公理化集合论
-│   ├── 01_ZFC_Axioms.md                # ZFC公理系统
-│   ├── 02_Ordinals.md                  # 序数理论
-│   └── 03_Cardinals.md                 # 基数理论
-└── 03_Set_Theory_Applications/         # 集合论应用
-    ├── 01_Relations.md                 # 关系理论
-    ├── 02_Functions.md                 # 函数理论
-    └── 03_Equivalence.md               # 等价关系
-```
+### 1. 基础概念
 
-## 🎯 **核心主题**
+- [1.1_Set_Concepts](./1.1_Set_Concepts/) - 集合概念
+- [1.2_Set_Operations](./1.2_Set_Operations/) - 集合运算
+- [1.3_Set_Relations](./1.3_Set_Relations/) - 集合关系
+- [1.4_Set_Functions](./1.4_Set_Functions/) - 集合函数
 
-### 1. 朴素集合论 (Naive Set Theory)
-- [01_Naive_Set_Theory/](01_Naive_Set_Theory/) - 朴素集合论总览
-  - [集合基础](01_Naive_Set_Theory/01_Set_Basics.md) - 集合的基本概念和性质
-  - [集合运算](01_Naive_Set_Theory/02_Set_Operations.md) - 并集、交集、差集等运算
-  - [集合关系](01_Naive_Set_Theory/03_Set_Relations.md) - 包含、相等、子集等关系
+### 2. 集合构造
 
-### 2. 公理化集合论 (Axiomatic Set Theory)
-- [02_Axiomatic_Set_Theory/](02_Axiomatic_Set_Theory/) - 公理化集合论总览
-  - [ZFC公理系统](02_Axiomatic_Set_Theory/01_ZFC_Axioms.md) - Zermelo-Fraenkel公理系统
-  - [序数理论](02_Axiomatic_Set_Theory/02_Ordinals.md) - 序数的定义和性质
-  - [基数理论](02_Axiomatic_Set_Theory/03_Cardinals.md) - 基数的定义和比较
+- [2.1_Set_Builder_Notation](./2.1_Set_Builder_Notation/) - 集合构造记号
+- [2.2_Set_Comprehension](./2.2_Set_Comprehension/) - 集合概括
+- [2.3_Set_Construction_Methods](./2.3_Set_Construction_Methods/) - 集合构造方法
+- [2.4_Set_Examples](./2.4_Set_Examples/) - 集合示例
 
-### 3. 集合论应用 (Set Theory Applications)
-- [03_Set_Theory_Applications/](03_Set_Theory_Applications/) - 集合论应用总览
-  - [关系理论](03_Set_Theory_Applications/01_Relations.md) - 基于集合的关系定义
-  - [函数理论](03_Set_Theory_Applications/02_Functions.md) - 基于集合的函数定义
-  - [等价关系](03_Set_Theory_Applications/03_Equivalence.md) - 等价关系和商集
+### 3. 集合性质
 
-## 📊 **理论框架**
+- [3.1_Set_Properties](./3.1_Set_Properties/) - 集合性质
+- [3.2_Set_Identities](./3.2_Set_Identities/) - 集合恒等式
+- [3.3_Set_Theorems](./3.3_Set_Theorems/) - 集合定理
+- [3.4_Set_Proofs](./3.4_Set_Proofs/) - 集合证明
 
-### 集合论的基本问题
+### 4. 特殊集合
 
-1. **集合的存在性**
-   - 什么是集合？
-   - 哪些对象构成集合？
-   - 集合的存在条件？
+- [4.1_Empty_Set](./4.1_Empty_Set/) - 空集
+- [4.2_Universal_Set](./4.2_Universal_Set/) - 全集
+- [4.3_Finite_Sets](./4.3_Finite_Sets/) - 有限集
+- [4.4_Infinite_Sets](./4.4_Infinite_Sets/) - 无限集
 
-2. **集合的构造**
-   - 如何构造新集合？
-   - 集合运算的合法性？
-   - 集合构造的限制？
+## 🔗 **快速导航**
 
-3. **集合的比较**
-   - 集合的大小如何比较？
-   - 无限集合的性质？
-   - 基数与序数的关系？
+### 基础概念
 
-## 🔗 **形式化表示**
+- [集合概念](./1.1_Set_Concepts/README.md)
+- [集合运算](./1.2_Set_Operations/README.md)
+- [集合关系](./1.3_Set_Relations/README.md)
+- [集合函数](./1.4_Set_Functions/README.md)
 
-### 集合类型系统
+### 集合构造
 
-```rust
-// 集合的基本类型
-trait Set<T> {
-    /// 判断元素是否属于集合
-    fn contains(&self, element: &T) -> bool;
-    
-    /// 判断是否为子集
-    fn is_subset(&self, other: &Set<T>) -> bool;
-    
-    /// 判断是否相等
-    fn is_equal(&self, other: &Set<T>) -> bool;
-    
-    /// 获取集合大小
-    fn cardinality(&self) -> Cardinality;
-}
+- [集合构造记号](./2.1_Set_Builder_Notation/README.md)
+- [集合概括](./2.2_Set_Comprehension/README.md)
+- [集合构造方法](./2.3_Set_Construction_Methods/README.md)
+- [集合示例](./2.4_Set_Examples/README.md)
 
-// 集合运算
-trait SetOperations<T> {
-    /// 并集
-    fn union(&self, other: &Set<T>) -> Set<T>;
-    
-    /// 交集
-    fn intersection(&self, other: &Set<T>) -> Set<T>;
-    
-    /// 差集
-    fn difference(&self, other: &Set<T>) -> Set<T>;
-    
-    /// 对称差集
-    fn symmetric_difference(&self, other: &Set<T>) -> Set<T>;
-    
-    /// 幂集
-    fn power_set(&self) -> Set<Set<T>>;
-}
+## 📋 **核心理论**
 
-// 基数类型
-enum Cardinality {
-    Finite(usize),
-    CountablyInfinite,
-    UncountablyInfinite,
-}
-```
+### 1. 集合基本概念
 
-### 集合论公理系统
+**定义 1.1 (集合)**
+集合是不同对象的无序聚集：
+$$A = \{a_1, a_2, \ldots, a_n\}$$
 
-```haskell
--- 集合类型类
-class Set a where
-    contains :: a -> Element -> Bool
-    isSubset :: a -> a -> Bool
-    isEqual :: a -> a -> Bool
-    cardinality :: a -> Cardinality
+**定义 1.2 (元素)**
+如果 $a$ 是集合 $A$ 的元素，记作：
+$$a \in A$$
 
--- 集合运算类型类
-class SetOperations a where
-    union :: a -> a -> a
-    intersection :: a -> a -> a
-    difference :: a -> a -> a
-    symmetricDifference :: a -> a -> a
-    powerSet :: a -> Set a
+**定义 1.3 (子集)**
+如果集合 $A$ 的每个元素都是集合 $B$ 的元素，则 $A$ 是 $B$ 的子集：
+$$A \subseteq B \leftrightarrow \forall x(x \in A \rightarrow x \in B)$$
 
--- 基数类型
-data Cardinality = Finite Int | CountablyInfinite | UncountablyInfinite
-```
+**定义 1.4 (真子集)**
+如果 $A \subseteq B$ 且 $A \neq B$，则 $A$ 是 $B$ 的真子集：
+$$A \subset B \leftrightarrow A \subseteq B \land A \neq B$$
 
-## 📝 **核心定理**
+### 2. 集合基本运算
 
-### 集合相等性定理
+**定义 2.1 (并集)**
+两个集合的并集是包含所有元素的集合：
+$$A \cup B = \{x \mid x \in A \lor x \in B\}$$
 
-**定理 1.1** (外延性公理)
-两个集合相等当且仅当它们包含相同的元素。
+**定义 2.2 (交集)**
+两个集合的交集是共同元素的集合：
+$$A \cap B = \{x \mid x \in A \land x \in B\}$$
 
-**形式化表述**：
-$$\forall A \forall B(A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B))$$
+**定义 2.3 (差集)**
+集合 $A$ 相对于集合 $B$ 的差集：
+$$A \setminus B = \{x \mid x \in A \land x \notin B\}$$
 
-**证明**：
-1. **假设**：设 $A$ 和 $B$ 是任意集合
-2. **目标**：证明 $A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)$
-3. **证明步骤**：
-   
-   a) **必要性**：如果 $A = B$，则根据同一性，$A$ 和 $B$ 的所有属性相同
-   
-   b) 包含关系是集合的属性，因此 $\forall x(x \in A \leftrightarrow x \in B)$
-   
-   c) **充分性**：如果 $\forall x(x \in A \leftrightarrow x \in B)$，则 $A$ 和 $B$ 包含相同元素
-   
-   d) 根据外延性公理，$A = B$
+**定义 2.4 (补集)**
+集合 $A$ 在全集 $U$ 中的补集：
+$$A^c = U \setminus A = \{x \mid x \in U \land x \notin A\}$$
 
-4. **结论**：$A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)$
+### 3. 集合基本性质
 
-### 幂集存在性定理
+**定理 3.1 (幂等律)**
+$$A \cup A = A$$
+$$A \cap A = A$$
 
-**定理 1.2** (幂集公理)
-对于任何集合 $A$，存在集合 $P(A)$ 包含 $A$ 的所有子集。
+**证明：**
 
-**形式化表述**：
-$$\forall A \exists P \forall x(x \in P \leftrightarrow x \subseteq A)$$
+1. 对于任意 $x \in A \cup A$，有 $x \in A \lor x \in A$
+2. 根据逻辑幂等律，$x \in A \lor x \in A \leftrightarrow x \in A$
+3. 因此 $A \cup A = A$
 
-**证明**：
-1. **假设**：设 $A$ 是任意集合
-2. **目标**：证明存在集合 $P$ 使得 $\forall x(x \in P \leftrightarrow x \subseteq A)$
-3. **证明步骤**：
-   
-   a) 根据幂集公理，对于任何集合 $A$，存在幂集 $P(A)$
-   
-   b) 幂集 $P(A)$ 的定义是：$P(A) = \{x : x \subseteq A\}$
-   
-   c) 因此，$\forall x(x \in P(A) \leftrightarrow x \subseteq A)$
+**定理 3.2 (交换律)**
+$$A \cup B = B \cup A$$
+$$A \cap B = B \cap A$$
 
-4. **结论**：$\forall A \exists P \forall x(x \in P \leftrightarrow x \subseteq A)$
+**证明：**
 
-### 选择公理等价形式
+1. 对于任意 $x \in A \cup B$，有 $x \in A \lor x \in B$
+2. 根据逻辑交换律，$x \in A \lor x \in B \leftrightarrow x \in B \lor x \in A$
+3. 因此 $x \in B \cup A$
+4. 所以 $A \cup B \subseteq B \cup A$
+5. 同理可证 $B \cup A \subseteq A \cup B$
+6. 因此 $A \cup B = B \cup A$
 
-**定理 1.3** (佐恩引理)
-每个偏序集都有极大链。
+**定理 3.3 (结合律)**
+$$(A \cup B) \cup C = A \cup (B \cup C)$$
+$$(A \cap B) \cap C = A \cap (B \cap C)$$
 
-**形式化表述**：
-$$\forall P(\text{PartiallyOrdered}(P) \rightarrow \exists C(\text{Chain}(C) \land \text{Maximal}(C)))$$
+**定理 3.4 (分配律)**
+$$A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$$
+$$A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$$
 
-**证明**：
-1. **假设**：设 $P$ 是偏序集
-2. **目标**：证明 $P$ 有极大链
-3. **证明步骤**：
-   
-   a) 根据选择公理，存在选择函数
-   
-   b) 使用超限归纳构造极大链
-   
-   c) 每个步骤都选择下一个元素
-   
-   d) 当无法继续时，得到极大链
+### 4. 德摩根律
 
-4. **结论**：$\forall P(\text{PartiallyOrdered}(P) \rightarrow \exists C(\text{Chain}(C) \land \text{Maximal}(C)))$
+**定理 4.1 (德摩根律)**
+$$(A \cup B)^c = A^c \cap B^c$$
+$$(A \cap B)^c = A^c \cup B^c$$
 
-## 🔧 **证明系统**
+**证明：**
 
-### 集合论证明规则
+1. 对于任意 $x \in (A \cup B)^c$，有 $x \notin A \cup B$
+2. 根据并集定义，$x \notin A \land x \notin B$
+3. 因此 $x \in A^c \land x \in B^c$
+4. 所以 $x \in A^c \cap B^c$
+5. 因此 $(A \cup B)^c \subseteq A^c \cap B^c$
+6. 同理可证 $A^c \cap B^c \subseteq (A \cup B)^c$
+7. 所以 $(A \cup B)^c = A^c \cap B^c$
 
-**规则 1.1** (外延性规则)
-如果两个集合包含相同元素，则它们相等。
+## 🔧 **形式化实现**
 
-$$\frac{\forall x(x \in A \leftrightarrow x \in B)}{A = B} \quad \text{(外延性)}$$
-
-**规则 1.2** (子集规则)
-如果 $A$ 的每个元素都属于 $B$，则 $A \subseteq B$。
-
-$$\frac{\forall x(x \in A \rightarrow x \in B)}{A \subseteq B} \quad \text{(子集)}$$
-
-**规则 1.3** (幂集规则)
-如果 $A \subseteq B$，则 $A \in P(B)$。
-
-$$\frac{A \subseteq B}{A \in P(B)} \quad \text{(幂集)}$$
-
-### 证明示例
-
-**示例 1.1**：证明 $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
-
-**证明**：
-
-1. **目标**：证明分配律
-2. **证明步骤**：
-   
-   a) 设 $x$ 是任意元素
-   
-   b) $x \in A \cap (B \cup C)$
-   
-   c) $\leftrightarrow x \in A \land x \in (B \cup C)$
-   
-   d) $\leftrightarrow x \in A \land (x \in B \lor x \in C)$
-   
-   e) $\leftrightarrow (x \in A \land x \in B) \lor (x \in A \land x \in C)$
-   
-   f) $\leftrightarrow x \in (A \cap B) \lor x \in (A \cap C)$
-   
-   g) $\leftrightarrow x \in (A \cap B) \cup (A \cap C)$
-
-3. **结论**：$A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
-
-## 💻 **应用示例**
-
-### 数学中的应用
+### 1. 朴素集合论类型系统
 
 ```rust
-// 自然数集合
-struct NaturalNumbers {
-    elements: Vec<usize>,
+// 集合类型
+#[derive(Debug, Clone, PartialEq)]
+struct Set<T: Clone + PartialEq> {
+    elements: Vec<T>,
 }
 
-impl Set<usize> for NaturalNumbers {
-    fn contains(&self, element: &usize) -> bool {
+impl<T: Clone + PartialEq> Set<T> {
+    // 创建空集
+    fn new() -> Self {
+        Set { elements: Vec::new() }
+    }
+    
+    // 创建单元素集
+    fn singleton(element: T) -> Self {
+        Set { elements: vec![element] }
+    }
+    
+    // 检查元素是否属于集合
+    fn contains(&self, element: &T) -> bool {
         self.elements.contains(element)
     }
     
-    fn is_subset(&self, other: &Set<usize>) -> bool {
+    // 添加元素
+    fn insert(&mut self, element: T) {
+        if !self.contains(&element) {
+            self.elements.push(element);
+        }
+    }
+    
+    // 移除元素
+    fn remove(&mut self, element: &T) {
+        self.elements.retain(|x| x != element);
+    }
+    
+    // 集合大小
+    fn size(&self) -> usize {
+        self.elements.len()
+    }
+    
+    // 检查是否为空集
+    fn is_empty(&self) -> bool {
+        self.elements.is_empty()
+    }
+    
+    // 并集
+    fn union(&self, other: &Set<T>) -> Set<T> {
+        let mut result = self.clone();
+        for element in &other.elements {
+            result.insert(element.clone());
+        }
+        result
+    }
+    
+    // 交集
+    fn intersection(&self, other: &Set<T>) -> Set<T> {
+        let mut result = Set::new();
+        for element in &self.elements {
+            if other.contains(element) {
+                result.insert(element.clone());
+            }
+        }
+        result
+    }
+    
+    // 差集
+    fn difference(&self, other: &Set<T>) -> Set<T> {
+        let mut result = Set::new();
+        for element in &self.elements {
+            if !other.contains(element) {
+                result.insert(element.clone());
+            }
+        }
+        result
+    }
+    
+    // 检查子集关系
+    fn is_subset(&self, other: &Set<T>) -> bool {
         self.elements.iter().all(|x| other.contains(x))
     }
     
-    fn cardinality(&self) -> Cardinality {
-        Cardinality::CountablyInfinite
+    // 检查真子集关系
+    fn is_proper_subset(&self, other: &Set<T>) -> bool {
+        self.is_subset(other) && self != other
     }
 }
 
-// 实数集合
-struct RealNumbers {
-    // 实数的表示
-}
-
-impl Set<f64> for RealNumbers {
-    fn contains(&self, element: &f64) -> bool {
-        // 实数包含所有有理数和无理数
-        true
+// 集合运算的扩展实现
+impl<T: Clone + PartialEq> Set<T> {
+    // 幂集
+    fn power_set(&self) -> Set<Set<T>> {
+        let mut result = Set::new();
+        let n = self.elements.len();
+        
+        // 使用位掩码生成所有子集
+        for i in 0..(1 << n) {
+            let mut subset = Set::new();
+            for j in 0..n {
+                if (i & (1 << j)) != 0 {
+                    subset.insert(self.elements[j].clone());
+                }
+            }
+            result.insert(subset);
+        }
+        result
     }
     
-    fn cardinality(&self) -> Cardinality {
-        Cardinality::UncountablyInfinite
+    // 笛卡尔积
+    fn cartesian_product<U: Clone + PartialEq>(&self, other: &Set<U>) -> Set<(T, U)> {
+        let mut result = Set::new();
+        for a in &self.elements {
+            for b in &other.elements {
+                result.insert((a.clone(), b.clone()));
+            }
+        }
+        result
     }
+}
+
+// 集合恒等式验证
+fn verify_set_identities() {
+    let mut a = Set::new();
+    a.insert(1);
+    a.insert(2);
+    a.insert(3);
+    
+    let mut b = Set::new();
+    b.insert(2);
+    b.insert(3);
+    b.insert(4);
+    
+    let mut c = Set::new();
+    c.insert(3);
+    c.insert(4);
+    c.insert(5);
+    
+    // 验证幂等律
+    assert_eq!(a.union(&a), a);
+    assert_eq!(a.intersection(&a), a);
+    
+    // 验证交换律
+    assert_eq!(a.union(&b), b.union(&a));
+    assert_eq!(a.intersection(&b), b.intersection(&a));
+    
+    // 验证结合律
+    assert_eq!((a.union(&b)).union(&c), a.union(&(b.union(&c))));
+    assert_eq!((a.intersection(&b)).intersection(&c), a.intersection(&(b.intersection(&c))));
+    
+    // 验证分配律
+    assert_eq!(a.union(&b.intersection(&c)), (a.union(&b)).intersection(&(a.union(&c))));
+    assert_eq!(a.intersection(&b.union(&c)), (a.intersection(&b)).union(&(a.intersection(&c))));
 }
 ```
 
-### 计算机科学中的应用
+### 2. 集合论公理化系统
 
-```rust
-// 集合数据结构
-struct HashSet<T: Hash + Eq> {
-    data: std::collections::HashSet<T>,
-}
+```haskell
+-- 集合类型
+data Set a = Set [a] deriving (Show, Eq)
 
-impl<T: Hash + Eq> Set<T> for HashSet<T> {
-    fn contains(&self, element: &T) -> bool {
-        self.data.contains(element)
-    }
-    
-    fn is_subset(&self, other: &Set<T>) -> bool {
-        self.data.iter().all(|x| other.contains(x))
-    }
-    
-    fn cardinality(&self) -> Cardinality {
-        Cardinality::Finite(self.data.len())
-    }
-}
+-- 基本操作
+emptySet :: Set a
+emptySet = Set []
 
-impl<T: Hash + Eq> SetOperations<T> for HashSet<T> {
-    fn union(&self, other: &Set<T>) -> Set<T> {
-        let mut result = self.data.clone();
-        // 实现并集运算
-        HashSet { data: result }
-    }
-    
-    fn intersection(&self, other: &Set<T>) -> Set<T> {
-        let result: std::collections::HashSet<_> = 
-            self.data.intersection(&other.data).cloned().collect();
-        HashSet { data: result }
-    }
-}
+singleton :: a -> Set a
+singleton x = Set [x]
+
+member :: Eq a => a -> Set a -> Bool
+member x (Set xs) = x `elem` xs
+
+insert :: Eq a => a -> Set a -> Set a
+insert x (Set xs) = if x `elem` xs then Set xs else Set (x:xs)
+
+remove :: Eq a => a -> Set a -> Set a
+remove x (Set xs) = Set (filter (/= x) xs)
+
+-- 集合运算
+union :: Eq a => Set a -> Set a -> Set a
+union (Set xs) (Set ys) = Set (nub (xs ++ ys))
+
+intersection :: Eq a => Set a -> Set a -> Set a
+intersection (Set xs) (Set ys) = Set (filter (`elem` ys) xs)
+
+difference :: Eq a => Set a -> Set a -> Set a
+difference (Set xs) (Set ys) = Set (filter (`notElem` ys) xs)
+
+-- 集合关系
+isSubset :: Eq a => Set a -> Set a -> Bool
+isSubset (Set xs) (Set ys) = all (`elem` ys) xs
+
+isProperSubset :: Eq a => Set a -> Set a -> Bool
+isProperSubset s1 s2 = isSubset s1 s2 && s1 /= s2
+
+-- 集合性质验证
+verifyIdempotent :: Eq a => Set a -> Bool
+verifyIdempotent s = union s s == s && intersection s s == s
+
+verifyCommutative :: Eq a => Set a -> Set a -> Bool
+verifyCommutative s1 s2 = 
+    union s1 s2 == union s2 s1 && 
+    intersection s1 s2 == intersection s2 s1
+
+verifyAssociative :: Eq a => Set a -> Set a -> Set a -> Bool
+verifyAssociative s1 s2 s3 = 
+    union (union s1 s2) s3 == union s1 (union s2 s3) &&
+    intersection (intersection s1 s2) s3 == intersection s1 (intersection s2 s3)
+
+verifyDistributive :: Eq a => Set a -> Set a -> Set a -> Bool
+verifyDistributive s1 s2 s3 = 
+    union s1 (intersection s2 s3) == intersection (union s1 s2) (union s1 s3) &&
+    intersection s1 (union s2 s3) == union (intersection s1 s2) (intersection s1 s3)
 ```
 
-## 🔄 **与其他理论的关联**
+## 📊 **理论分析**
 
-### 与逻辑学的关联
+### 1. 基本性质总结
 
-- **集合与谓词**：集合可以表示为谓词的扩展
-- **集合与量词**：存在量词和全称量词与集合运算对应
-- **集合与推理**：集合论为逻辑推理提供语义基础
+| 性质 | 描述 | 形式化表达 |
+|------|------|------------|
+| **幂等律** | $A \cup A = A$, $A \cap A = A$ | $\forall A: A \cup A = A$ |
+| **交换律** | $A \cup B = B \cup A$, $A \cap B = B \cap A$ | $\forall A,B: A \cup B = B \cup A$ |
+| **结合律** | $(A \cup B) \cup C = A \cup (B \cup C)$ | $\forall A,B,C: (A \cup B) \cup C = A \cup (B \cup C)$ |
+| **分配律** | $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | $\forall A,B,C: A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ |
+| **德摩根律** | $(A \cup B)^c = A^c \cap B^c$ | $\forall A,B: (A \cup B)^c = A^c \cap B^c$ |
 
-### 与数学的关联
+### 2. 集合运算复杂度
 
-- **集合与函数**：函数是特殊的二元关系
-- **集合与关系**：关系是集合的笛卡尔积的子集
-- **集合与代数**：代数结构基于集合定义
+| 运算 | 时间复杂度 | 空间复杂度 | 描述 |
+|------|------------|------------|------|
+| **成员检查** | $O(n)$ | $O(1)$ | 检查元素是否属于集合 |
+| **并集** | $O(n + m)$ | $O(n + m)$ | 两个集合的并集 |
+| **交集** | $O(n \cdot m)$ | $O(\min(n,m))$ | 两个集合的交集 |
+| **差集** | $O(n \cdot m)$ | $O(n)$ | 两个集合的差集 |
+| **子集检查** | $O(n \cdot m)$ | $O(1)$ | 检查子集关系 |
 
-### 与形式科学的关联
+### 3. 朴素集合论的局限性
 
-- **集合与类型**：类型可以视为集合
-- **集合与语言**：形式语言的字母表是集合
-- **集合与系统**：系统状态空间是集合
+| 局限性 | 描述 | 解决方案 |
+|--------|------|----------|
+| **罗素悖论** | 集合 $R = \{x \mid x \notin x\}$ 导致矛盾 | 公理集合论 |
+| **无限集问题** | 朴素集合论无法处理无限集 | 基数理论 |
+| **选择问题** | 无法证明选择公理 | 选择公理 |
+| **一致性** | 朴素集合论可能不一致 | 形式化公理系统 |
 
-## 🚀 **快速导航**
+## 🔄 **持续更新**
 
-### 核心概念
-- [集合基础](01_Naive_Set_Theory/01_Set_Basics.md)
-- [集合运算](01_Naive_Set_Theory/02_Set_Operations.md)
-- [ZFC公理](02_Axiomatic_Set_Theory/01_ZFC_Axioms.md)
+本朴素集合论体系将持续更新，确保：
 
-### 应用领域
-- [关系理论](03_Set_Theory_Applications/01_Relations.md)
-- [函数理论](03_Set_Theory_Applications/02_Functions.md)
-- [等价关系](03_Set_Theory_Applications/03_Equivalence.md)
+- 理论的一致性和完整性
+- 形式化的严格性和规范性
+- 实现的正确性和效率
+- 应用的实用性和有效性
+
+## 📖 **使用指南**
+
+1. **理论学习**：从基本概念开始，理解集合运算
+2. **形式化学习**：通过代码示例理解形式化实现
+3. **性质验证**：验证集合运算的基本性质
+4. **实践应用**：在实际问题中应用集合论
 
 ---
 
-**最后更新**: 2024-12-20  
-**版本**: v1.0.0  
-**维护者**: 集合论理论团队
+**最后更新**：2024-12-20  
+**版本**：v1.0.0  
+**维护者**：朴素集合论重构团队
