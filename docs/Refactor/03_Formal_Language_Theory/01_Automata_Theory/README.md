@@ -3,16 +3,20 @@
 ## 目录结构
 
 1. [有限自动机（Finite Automata）](./03.1.1_Finite_Automata.md)
+    1. [有限自动机基础](./01_Finite_Automata/01_Finite_Automata_Basics.md)
+    2. [DFA理论](./01_Finite_Automata/01_DFA_Theory.md)
+    3. [Mealy机](./01_Finite_Automata/02_Mealy_Machine.md)
+    4. [Moore机](./01_Finite_Automata/03_Moore_Machine.md)
 2. [下推自动机（Pushdown Automata）](./03.1.2_Pushdown_Automata.md)
-3. [线性有界自动机（Linear Bounded Automata）](./03.1.3_Linear_Bounded_Automata.md)
-4. [图灵机（Turing Machine）](./03.1.4_Turing_Machine.md)
+3. [线性有界自动机（Linear Bounded Automata）](./03.1.4_Linear_Bounded_Automaton.md)
+4. [图灵机（Turing Machine）](./03.1.3_Turing_Machine.md)
 5. [自动机与语言的关系](../03.3_Language_Hierarchy/README.md)
 
 ---
 
 ## 主题分类与说明
 
-- **有限自动机**：研究有限状态机的结构、性质、正则语言的识别与生成。
+- **有限自动机**：研究有限状态机的结构、性质、正则语言的识别与生成，包括DFA、NFA、Mealy机、Moore机等。
 - **下推自动机**：研究带有栈存储的自动机，主要用于上下文无关语言的识别。
 - **线性有界自动机**：研究受限空间的自动机模型，连接上下文相关语言。
 - **图灵机**：研究通用计算模型、可计算性、递归可枚举语言。
