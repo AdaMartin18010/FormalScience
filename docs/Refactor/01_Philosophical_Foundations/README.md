@@ -1,42 +1,252 @@
-# 01. 哲学基础（Philosophical Foundations）
+# 哲学基础 (Philosophical Foundations)
+
+**文档编号**: `PHIL-00-MAIN`  
+**创建时间**: 2025-01-02  
+**最后更新**: 2025-01-02  
+**版本**: 1.0  
 
 ## 目录
 
-1. [01_形而上学 Metaphysics](./01_Metaphysics/README.md)
-2. [02_认识论 Epistemology](./02_Epistemology/README.md)
-3. [03_方法论 Methodology](./03_Methodology/README.md)
-4. [04_逻辑哲学 Logic Philosophy](./04_Logic_Philosophy/README.md)
-5. [05_科学哲学 Philosophy of Science](./05_Philosophy_of_Science/README.md)
-6. [06_心灵哲学 Philosophy of Mind](./06_Philosophy_of_Mind/README.md)
-7. [07_语言哲学 Philosophy of Language](./07_Philosophy_of_Language/README.md)
-8. [08_伦理学 Ethics](./08_Ethics/README.md)
-9. [Context 上下文整合](./Context/README.md)
+### 1. [形而上学 (Metaphysics)](./01_Metaphysics/)
+
+- 1.1 [存在与本质](./01_Metaphysics/01_Being_and_Existence/)
+- 1.2 [实体理论](./01_Metaphysics/02_Entity_Theory/)
+- 1.3 [模态理论](./01_Metaphysics/03_Modal_Theory/)
+- 1.4 [因果理论](./01_Metaphysics/04_Causality_Theory/)
+
+### 2. [认识论 (Epistemology)](./02_Epistemology/)
+
+- 2.1 [知识理论](./02_Epistemology/01_Knowledge_Theory/)
+- 2.2 [信念理论](./02_Epistemology/02_Belief_Theory/)
+- 2.3 [确证理论](./02_Epistemology/03_Justification_Theory/)
+- 2.4 [真理理论](./02_Epistemology/04_Truth_Theory/)
+
+### 3. [逻辑哲学 (Philosophy of Logic)](./03_Philosophy_of_Logic/)
+
+- 3.1 [逻辑基础](./03_Philosophy_of_Logic/01_Logic_Foundations/)
+- 3.2 [推理理论](./03_Philosophy_of_Logic/02_Reasoning_Theory/)
+- 3.3 [证明理论](./03_Philosophy_of_Logic/03_Proof_Theory/)
+- 3.4 [逻辑哲学](./03_Philosophy_of_Logic/04_Philosophy_of_Logic/)
+
+### 4. [数学哲学 (Philosophy of Mathematics)](./04_Philosophy_of_Mathematics/)
+
+- 4.1 [数学本体论](./04_Philosophy_of_Mathematics/01_Mathematical_Ontology/)
+- 4.2 [数学认识论](./04_Philosophy_of_Mathematics/02_Mathematical_Epistemology/)
+- 4.3 [数学基础](./04_Philosophy_of_Mathematics/03_Foundations_of_Mathematics/)
+- 4.4 [数学实践](./04_Philosophy_of_Mathematics/04_Mathematical_Practice/)
+
+### 5. [科学哲学 (Philosophy of Science)](./05_Philosophy_of_Science/)
+
+- 5.1 [科学方法论](./05_Philosophy_of_Science/01_Scientific_Methodology/)
+- 5.2 [科学实在论](./05_Philosophy_of_Science/02_Scientific_Realism/)
+- 5.3 [科学解释](./05_Philosophy_of_Science/03_Scientific_Explanation/)
+- 5.4 [科学进步](./05_Philosophy_of_Science/04_Scientific_Progress/)
+
+### 6. [语言哲学 (Philosophy of Language)](./06_Philosophy_of_Language/)
+
+- 6.1 [意义理论](./06_Philosophy_of_Language/01_Theories_of_Meaning/)
+- 6.2 [指称理论](./06_Philosophy_of_Language/02_Reference_Theory/)
+- 6.3 [语言行为](./06_Philosophy_of_Language/03_Speech_Acts/)
+- 6.4 [形式语义学](./06_Philosophy_of_Language/04_Formal_Semantics/)
+
+### 7. [心灵哲学 (Philosophy of Mind)](./07_Philosophy_of_Mind/)
+
+- 7.1 [心身问题](./07_Philosophy_of_Mind/01_Mind_Body_Problem/)
+- 7.2 [意识理论](./07_Philosophy_of_Mind/02_Consciousness/)
+- 7.3 [认知科学哲学](./07_Philosophy_of_Mind/03_Philosophy_of_Cognitive_Science/)
+- 7.4 [人工智能哲学](./07_Philosophy_of_Mind/04_Philosophy_of_AI/)
+
+### 8. [伦理学 (Ethics)](./08_Ethics/)
+
+- 8.1 [规范伦理学](./08_Ethics/01_Normative_Ethics/)
+- 8.2 [元伦理学](./08_Ethics/02_Meta_Ethics/)
+- 8.3 [应用伦理学](./08_Ethics/03_Applied_Ethics/)
+- 8.4 [AI伦理学](./08_Ethics/04_AI_Ethics/)
+
+### 9. [美学 (Aesthetics)](./09_Aesthetics/)
+
+- 9.1 [美的理论](./09_Aesthetics/01_Theories_of_Beauty/)
+- 9.2 [艺术哲学](./09_Aesthetics/02_Philosophy_of_Art/)
+- 9.3 [审美经验](./09_Aesthetics/03_Aesthetic_Experience/)
+- 9.4 [计算美学](./09_Aesthetics/04_Computational_Aesthetics/)
+
+## 哲学体系总览
+
+```mermaid
+mindmap
+  root((哲学基础))
+    形而上学
+      存在与本质
+      实体理论
+      模态理论
+      因果理论
+    认识论
+      知识理论
+      信念理论
+      确证理论
+      真理理论
+    逻辑哲学
+      逻辑基础
+      推理理论
+      证明理论
+      逻辑哲学
+    数学哲学
+      数学本体论
+      数学认识论
+      数学基础
+      数学实践
+    科学哲学
+      科学方法论
+      科学实在论
+      科学解释
+      科学进步
+    语言哲学
+      意义理论
+      指称理论
+      语言行为
+      形式语义学
+    心灵哲学
+      心身问题
+      意识理论
+      认知科学哲学
+      人工智能哲学
+    伦理学
+      规范伦理学
+      元伦理学
+      应用伦理学
+      AI伦理学
+    美学
+      美的理论
+      艺术哲学
+      审美经验
+      计算美学
+```
+
+## 核心概念网络
+
+```mermaid
+graph TB
+    subgraph "哲学核心概念"
+        A[存在] --> B[实体]
+        A --> C[属性]
+        A --> D[关系]
+        
+        E[知识] --> F[信念]
+        E --> G[真理]
+        E --> H[确证]
+        
+        I[价值] --> J[善]
+        I --> K[美]
+        I --> L[真]
+        
+        M[推理] --> N[逻辑]
+        M --> O[论证]
+        M --> P[证明]
+        
+        Q[意识] --> R[心智]
+        Q --> S[认知]
+        Q --> T[智能]
+    end
+    
+    subgraph "现代扩展"
+        U[信息] --> V[数据]
+        U --> W[知识]
+        U --> X[智能]
+        
+        Y[技术] --> Z[AI]
+        Y --> AA[计算]
+        Y --> BB[网络]
+    end
+```
+
+## 哲学基础公理系统
+
+**公理 1** (存在性公理): $\exists x \text{ } \text{Being}(x)$
+
+**公理 2** (知识公理): $\forall x \text{ } \text{Being}(x) \rightarrow \text{Knowable}(x)$
+
+**公理 3** (逻辑公理): $\forall p \text{ } \text{Proposition}(p) \rightarrow (\text{True}(p) \lor \text{False}(p))$
+
+**公理 4** (伦理公理): $\forall a \text{ } \text{Action}(a) \rightarrow \text{Evaluable}(a)$
+
+**公理 5** (形而上学公理): $\forall x \text{ } \text{Being}(x) \rightarrow \text{Modal}(x)$
+
+## 哲学发展时间线
+
+```mermaid
+timeline
+    title 哲学发展历程
+    section 古代哲学
+        前6世纪 : 泰勒斯开创自然哲学
+        前5世纪 : 苏格拉底转向伦理学
+        前4世纪 : 柏拉图建立理念论
+        前3世纪 : 亚里士多德系统化哲学
+    section 中世纪哲学
+        5世纪 : 奥古斯丁基督教哲学
+        13世纪 : 托马斯·阿奎那综合亚里士多德
+        14世纪 : 奥卡姆剃刀原则
+    section 近代哲学
+        17世纪 : 笛卡尔理性主义
+        18世纪 : 康德批判哲学
+        19世纪 : 黑格尔辩证法
+    section 现代哲学
+        20世纪初 : 分析哲学兴起
+        20世纪中 : 现象学发展
+        20世纪末 : 后现代主义
+    section 当代哲学
+        21世纪初 : 认知科学哲学
+        现在 : AI哲学兴起
+        未来 : 技术哲学发展
+```
+
+## 交叉引用索引
+
+### 与数学基础的关联
+
+- [数学基础](../02_Mathematical_Foundations/README.md) - 数学哲学与数学基础的关系
+- [集合论](../02_Mathematical_Foundations/01_Set_Theory/README.md) - 本体论与集合论
+- [逻辑学](../02_Mathematical_Foundations/02_Logic/README.md) - 逻辑哲学与形式逻辑
+
+### 与形式语言理论的关联
+
+- [形式语言理论](../03_Formal_Language_Theory/README.md) - 语言哲学与形式语言
+- [自动机理论](../03_Formal_Language_Theory/01_Automata_Theory/README.md) - 认知哲学与自动机
+
+### 与类型理论的关联
+
+- [类型理论](../04_Type_Theory/README.md) - 本体论与类型理论
+- [线性类型理论](../04_Type_Theory/02_Linear_Type_Theory/README.md) - 模态形而上学与线性逻辑
+
+### 与控制理论的关联
+
+- [控制理论](../05_Control_Theory/README.md) - 因果性理论与控制论
+- [时态逻辑控制](../05_Control_Theory/01_Basic_Control_Theory/README.md) - 时间哲学与时态逻辑
+
+## 合并说明
+
+本目录是由原`01_Philosophical_Foundation`和`01_Philosophical_Foundations`合并而成，采用了统一的命名规范和结构组织。主要变更包括：
+
+1. 目录采用复数形式：`Philosophical_Foundations`
+2. 子目录采用"Philosophy_of_X"格式，如`Philosophy_of_Logic`
+3. 文件名采用下划线连接的Pascal命名法
+4. 保留的中文文件添加了`_Legacy`后缀
+5. 整合了两个目录中的独特内容
+
+## 持续构建状态
+
+- **完成度**: 60%
+- **最后更新**: 2025-01-02
+- **当前状态**: 目录合并进行中
+- **下一步**: 完善子目录内容和交叉引用
+
+## 相关文档
+
+- [重构主索引](../00_Master_Index/README.md)
+- [持续构建上下文](../12_Context_System/README.md)
+- [交叉领域综合](../13_Cross_Domain_Synthesis/README.md)
+- [哲学基础目录合并计划](../持续构建上下文系统/哲学基础目录合并计划.md)
 
 ---
 
-## 1. 引言
-
-哲学基础模块系统梳理了形而上学、认识论、方法论、伦理学、心灵哲学、语言哲学等分支，所有内容均已去重、合并，并严格按照树形序号目录组织。各分支内容均包含：
-
-- 定义与背景
-- 批判性分析
-- 形式化表达（数学/逻辑/代码/图表）
-- 交叉引用
-- 参考文献
-
-## 2. 交叉引用
-
-- [上下文系统集成](../../12_Context_System/README.md)
-- [重构进度与规范](../../07_重构进度与规范/README.md)
-- [主索引](../../00_Master_Index/README.md)
-
-## 3. 规范说明
-
-- 所有子目录与文件均带唯一编号，避免重名
-- 内容唯一且递进，所有引用本地化
-- 目录与内容严格一致，避免遗漏与重复
-- 多表征（文本、图、表、代码、证明等）
-
----
-
-> 本README为哲学基础模块的唯一入口，所有内容均已合并、去重、规范化。
+**负责人**: FormalScience团队  
+**创建日期**: 2025-01-02
