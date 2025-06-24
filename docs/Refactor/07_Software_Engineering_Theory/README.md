@@ -1,4 +1,4 @@
-# 07 软件工程理论
+# 07 软件工程理论 (Software Engineering Theory)
 
 ## 📋 概述
 
@@ -467,3 +467,40 @@
 
 - 2024-12-20: 创建软件工程理论目录结构
 - 2024-12-20: 建立完整的树形导航体系
+
+## 目录
+
+1.  [软件工程理论总览](./README.md)
+2.  [形式化方法 (Formal Methods)](./07.1_Formal_Methods/README.md)
+3.  [软件开发方法论 (Software Development Methodologies)](./07.2_Software_Development_Methodologies/README.md)
+4.  [软件架构与设计 (Software Architecture and Design)](./07.3_Software_Architecture_and_Design/README.md)
+5.  [设计模式 (Design Patterns)](./07.4_Design_Patterns/README.md)
+6.  [软件质量与测试 (Software Quality and Testing)](./07.5_Software_Quality_and_Testing/README.md)
+7.  [软件维护与演化 (Software Maintenance and Evolution)](./07.6_Software_Maintenance_and_Evolution/README.md)
+
+---
+
+## 主题分类与说明
+
+-   **形式化方法**: 使用基于数学的规范、设计和验证技术来确保软件的正确性。
+-   **软件开发方法论**: 指导软件开发过程的框架，如敏捷、瀑布、DevOps等。
+-   **软件架构与设计**: 定义系统的高级结构、组件及其相互关系。
+-   **设计模式**: 针对常见软件设计问题的可复用解决方案。
+-   **软件质量与测试**: 确保软件满足功能和非功能性需求的活动，包括各种测试层级和质量模型。
+-   **软件维护与演化**: 在软件发布后对其进行修改、修复和改进的过程。
+
+---
+
+## 交叉引用
+
+-   [分布式系统理论](../06_Distributed_Systems_Theory/README.md)
+-   [程序语言理论](../08_Programming_Language_Theory/README.md)
+-   [项目管理理论](./TODO.md)
+
+---
+
+## 规范说明
+
+本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
+
+> 本文档为软件工程理论分支的总览与导航。
