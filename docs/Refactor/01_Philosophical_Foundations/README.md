@@ -9,66 +9,66 @@
 
 ### 1. [形而上学 (Metaphysics)](./01_Metaphysics/)
 
-- 1.1 [存在与本质](./01_Metaphysics/01_Being_and_Existence/)
-- 1.2 [实体理论](./01_Metaphysics/02_Entity_Theory/)
-- 1.3 [模态理论](./01_Metaphysics/03_Modal_Theory/)
-- 1.4 [因果理论](./01_Metaphysics/04_Causality_Theory/)
+- 1.1 [存在与本质](./01_Metaphysics/Cross_Cutting_Concepts/01_Existence_Theory.md)
+- 1.2 [实体理论](./01_Metaphysics/Cross_Cutting_Concepts/01_02_实体论基础理论.md)
+- 1.3 [模态理论](./01_Metaphysics/02_Modality/03_Modal_Theory.md)
+- 1.4 [因果理论](./01_Metaphysics/03_Causality/04_Causality_Theory.md)
 
 ### 2. [认识论 (Epistemology)](./02_Epistemology/)
 
-- 2.1 [知识理论](./02_Epistemology/01_Knowledge_Theory/)
-- 2.2 [信念理论](./02_Epistemology/02_Belief_Theory/)
-- 2.3 [确证理论](./02_Epistemology/03_Justification_Theory/)
-- 2.4 [真理理论](./02_Epistemology/04_Truth_Theory/)
+- 2.1 [知识理论](./02_Epistemology/01_Knowledge_Theory.md)
+- 2.2 [信念理论](./02_Epistemology/01_02_信念理论.md)
+- 2.3 [确证理论](./02_Epistemology/01_03_确证理论.md)
+- 2.4 [真理理论](./02_Epistemology/01_04_真理理论.md)
 
-### 3. [逻辑哲学 (Philosophy of Logic)](./03_Philosophy_of_Logic/)
+### 3. [逻辑哲学 (Philosophy of Logic)](./04_Logic_Philosophy/)
 
-- 3.1 [逻辑基础](./03_Philosophy_of_Logic/01_Logic_Foundations/)
-- 3.2 [推理理论](./03_Philosophy_of_Logic/02_Reasoning_Theory/)
-- 3.3 [证明理论](./03_Philosophy_of_Logic/03_Proof_Theory/)
-- 3.4 [逻辑哲学](./03_Philosophy_of_Logic/04_Philosophy_of_Logic/)
+- 3.1 [逻辑基础](./04_Logic_Philosophy/01_Formal_Logic.md)
+- 3.2 [推理理论](./04_Logic_Philosophy/02_Reasoning_Theory.md)
+- 3.3 [证明理论](./04_Logic_Philosophy/03_Proof_Theory.md)
+- 3.4 [逻辑哲学](./04_Logic_Philosophy/04_Philosophy_of_Logic.md)
 
-### 4. [数学哲学 (Philosophy of Mathematics)](./04_Philosophy_of_Mathematics/)
+### 4. [数学哲学 (Philosophy of Mathematics)](./03_Methodology/)
 
-- 4.1 [数学本体论](./04_Philosophy_of_Mathematics/01_Mathematical_Ontology/)
-- 4.2 [数学认识论](./04_Philosophy_of_Mathematics/02_Mathematical_Epistemology/)
-- 4.3 [数学基础](./04_Philosophy_of_Mathematics/03_Foundations_of_Mathematics/)
-- 4.4 [数学实践](./04_Philosophy_of_Mathematics/04_Mathematical_Practice/)
+- 4.1 [数学本体论](./03_Methodology/01_Mathematical_Ontology.md)
+- 4.2 [数学认识论](./03_Methodology/02_Mathematical_Epistemology.md)
+- 4.3 [数学基础](./03_Methodology/03_Foundations_of_Mathematics.md)
+- 4.4 [数学实践](./03_Methodology/04_Mathematical_Practice.md)
 
-### 5. [科学哲学 (Philosophy of Science)](./05_Philosophy_of_Science/)
+### 5. [科学哲学 (Philosophy of Science)](./04_Philosophy_of_Science/)
 
-- 5.1 [科学方法论](./05_Philosophy_of_Science/01_Scientific_Methodology/)
-- 5.2 [科学实在论](./05_Philosophy_of_Science/02_Scientific_Realism/)
-- 5.3 [科学解释](./05_Philosophy_of_Science/03_Scientific_Explanation/)
-- 5.4 [科学进步](./05_Philosophy_of_Science/04_Scientific_Progress/)
+- 5.1 [科学方法论](./04_Philosophy_of_Science/01_Scientific_Methodology.md)
+- 5.2 [科学实在论](./04_Philosophy_of_Science/02_Scientific_Realism.md)
+- 5.3 [科学解释](./04_Philosophy_of_Science/03_Scientific_Explanation.md)
+- 5.4 [科学进步](./04_Philosophy_of_Science/04_Scientific_Progress.md)
 
 ### 6. [语言哲学 (Philosophy of Language)](./06_Philosophy_of_Language/)
 
-- 6.1 [意义理论](./06_Philosophy_of_Language/01_Theories_of_Meaning/)
-- 6.2 [指称理论](./06_Philosophy_of_Language/02_Reference_Theory/)
-- 6.3 [语言行为](./06_Philosophy_of_Language/03_Speech_Acts/)
-- 6.4 [形式语义学](./06_Philosophy_of_Language/04_Formal_Semantics/)
+- 6.1 [意义理论](./06_Philosophy_of_Language/01_Theories_of_Meaning.md)
+- 6.2 [指称理论](./06_Philosophy_of_Language/02_Reference_Theory.md)
+- 6.3 [语言行为](./06_Philosophy_of_Language/03_Speech_Acts.md)
+- 6.4 [形式语义学](./06_Philosophy_of_Language/04_Formal_Semantics.md)
 
 ### 7. [心灵哲学 (Philosophy of Mind)](./07_Philosophy_of_Mind/)
 
-- 7.1 [心身问题](./07_Philosophy_of_Mind/01_Mind_Body_Problem/)
-- 7.2 [意识理论](./07_Philosophy_of_Mind/02_Consciousness/)
-- 7.3 [认知科学哲学](./07_Philosophy_of_Mind/03_Philosophy_of_Cognitive_Science/)
-- 7.4 [人工智能哲学](./07_Philosophy_of_Mind/04_Philosophy_of_AI/)
+- 7.1 [心身问题](./07_Philosophy_of_Mind/01_Mind_Body_Problem.md)
+- 7.2 [意识理论](./07_Philosophy_of_Mind/02_Consciousness.md)
+- 7.3 [认知科学哲学](./07_Philosophy_of_Mind/03_Philosophy_of_Cognitive_Science.md)
+- 7.4 [人工智能哲学](./07_Philosophy_of_Mind/04_Philosophy_of_AI.md)
 
-### 8. [伦理学 (Ethics)](./08_Ethics/)
+### 8. [伦理学 (Ethics)](./05_Ethics/)
 
-- 8.1 [规范伦理学](./08_Ethics/01_Normative_Ethics/)
-- 8.2 [元伦理学](./08_Ethics/02_Meta_Ethics/)
-- 8.3 [应用伦理学](./08_Ethics/03_Applied_Ethics/)
-- 8.4 [AI伦理学](./08_Ethics/04_AI_Ethics/)
+- 8.1 [规范伦理学](./05_Ethics/01_Normative_Ethics.md)
+- 8.2 [元伦理学](./05_Ethics/02_Meta_Ethics.md)
+- 8.3 [应用伦理学](./05_Ethics/03_Applied_Ethics.md)
+- 8.4 [AI伦理学](./05_Ethics/04_AI_Ethics.md)
 
 ### 9. [美学 (Aesthetics)](./09_Aesthetics/)
 
-- 9.1 [美的理论](./09_Aesthetics/01_Theories_of_Beauty/)
-- 9.2 [艺术哲学](./09_Aesthetics/02_Philosophy_of_Art/)
-- 9.3 [审美经验](./09_Aesthetics/03_Aesthetic_Experience/)
-- 9.4 [计算美学](./09_Aesthetics/04_Computational_Aesthetics/)
+- 9.1 [美的理论](./09_Aesthetics/01_Theories_of_Beauty.md)
+- 9.2 [艺术哲学](./09_Aesthetics/02_Philosophy_of_Art.md)
+- 9.3 [审美经验](./09_Aesthetics/03_Aesthetic_Experience.md)
+- 9.4 [计算美学](./09_Aesthetics/04_Computational_Aesthetics.md)
 
 ## 哲学体系总览
 

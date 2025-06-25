@@ -863,9 +863,9 @@ theorem fault_recovery_availability :
 
 **相关理论**：
 
-- [关系数据库理论](02_Relational_Database_Theory.md)
-- [分布式数据库理论](03_Distributed_Database_Theory.md)
-- [NoSQL数据库理论](04_NoSQL_Database_Theory.md)
-- [数据库安全理论](05_Database_Security_Theory.md)
+- [数据模型理论](./01_Data_Models/README.md)
+- [数据库设计理论](./02_Database_Design/README.md)
+- [查询优化理论](./03_Query_Optimization/README.md)
+- [事务管理理论](./04_Transaction_Management/README.md)
 
-**返回**：[数据库理论目录](README.md)
+**返回**：[数据库理论目录](../README.md)

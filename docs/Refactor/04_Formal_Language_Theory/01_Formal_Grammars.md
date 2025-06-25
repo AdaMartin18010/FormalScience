@@ -22,6 +22,7 @@
 
 **定义 1.5** (字符串幂)
 字符串 $w$ 的 $n$ 次幂定义为：
+
 - $w^0 = \varepsilon$
 - $w^n = w \cdot w^{n-1}$ 对于 $n > 0$
 
@@ -49,6 +50,7 @@ $$L \subseteq \Sigma^*$$
 
 **定义 1.8** (形式语法)
 形式语法是一个四元组 $G = (V, \Sigma, P, S)$，其中：
+
 - $V$ 是非终结符的有限集合
 - $\Sigma$ 是终结符的有限集合，且 $V \cap \Sigma = \emptyset$
 - $P$ 是产生式规则的有限集合
@@ -56,6 +58,7 @@ $$L \subseteq \Sigma^*$$
 
 **定义 1.9** (产生式规则)
 产生式规则具有形式 $\alpha \rightarrow \beta$，其中：
+
 - $\alpha \in (V \cup \Sigma)^* V (V \cup \Sigma)^*$
 - $\beta \in (V \cup \Sigma)^*$
 
@@ -108,6 +111,7 @@ $$A \rightarrow \alpha$$
 由上下文无关语法生成的语言称为上下文无关语言。
 
 **定理 1.3** (上下文无关语法的性质)
+
 1. 上下文无关语言在并集、连接和克林闭包运算下封闭
 2. 上下文无关语言在交集和补集运算下不封闭
 
@@ -137,6 +141,7 @@ $$A \rightarrow Ba \quad \text{或} \quad A \rightarrow a$$
 
 **定义 1.20** (语法树)
 语法树是表示推导过程的树形结构，其中：
+
 - 根节点是开始符号
 - 内部节点是非终结符
 - 叶节点是终结符或空字符串
@@ -256,6 +261,7 @@ fn eliminate_unit_productions(grammar: &Grammar) -> Grammar {
 
 **定义 1.25** (乔姆斯基范式)
 上下文无关语法是乔姆斯基范式，如果所有产生式规则都具有形式：
+
 - $A \rightarrow BC$，其中 $A, B, C \in V$
 - $A \rightarrow a$，其中 $A \in V$，$a \in \Sigma$
 - $S \rightarrow \varepsilon$（仅当 $\varepsilon \in L(G)$）
@@ -582,4 +588,4 @@ end
 
 **更新时间**: 2024-12-21  
 **版本**: 1.0  
-**作者**: FormalScience Team 
+**作者**: FormalScience Team

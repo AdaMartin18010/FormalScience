@@ -212,10 +212,10 @@ graph TD
 
 ## 5. 交叉引用
 
-- [形而上学总览](./README.md)
-- [本体论](./01_Ontology.md)
-- [实体理论](./02_Entity_Theory.md)
-- [因果理论](./04_Causality_Theory.md)
+- [形而上学总览](../README.md)
+- [本体论](../Cross_Cutting_Concepts/README.md)
+- [实体理论](../Cross_Cutting_Concepts/01_02_实体论基础理论.md)
+- [因果理论](../03_Causality/04_Causality_Theory.md)
 - [认识论](../../02_Epistemology/README.md)
 - [上下文系统](../../../12_Context_System/README.md)
 

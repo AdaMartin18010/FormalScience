@@ -793,5 +793,5 @@ impl MathematicalProof {
 ## 相关链接
 
 - [形式化方法](../07_Software_Engineering_Theory/07.1_Formal_Methods/README.md)
-- [类型系统理论](../09_Programming_Language_Theory/09.2_Type_System_Theory/README.md)
-- [逻辑理论](../10_Logic_Theory/README.md)
+- [类型系统理论](../08_Programming_Language_Theory/08.2_Type_Systems/README.md)
+- [逻辑理论](../03_Logic_Theory/README.md)

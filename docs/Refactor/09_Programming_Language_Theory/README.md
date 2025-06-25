@@ -248,7 +248,7 @@ main = do
 3. 推导序列对应唯一的语法树
 4. 因此解析唯一性成立
 
-#### Rust实现
+#### Rust实现2
 
 ```rust
 // 语法树节点
@@ -353,7 +353,7 @@ impl RecursiveDescentParser {
 2. 对于任意状态 $s$，转换关系 $\rightarrow$ 是函数
 3. 因此最多有一个后继状态
 
-#### Rust实现
+#### Rust实现3
 
 ```rust
 // 状态类型
@@ -445,7 +445,7 @@ fn main() {
 }
 ```
 
-#### Haskell实现
+#### Haskell实现1
 
 ```haskell
 import Data.Map (Map)
@@ -535,7 +535,7 @@ main = do
 2. 类型判断 $\Gamma \vdash e : \tau$ 成立
 3. 根据类型安全定义，$e$ 不会产生类型错误
 
-#### Rust实现
+#### Rust实现4
 
 ```rust
 use std::collections::HashMap;
@@ -632,7 +632,7 @@ fn main() {
 }
 ```
 
-#### Haskell实现
+#### Haskell实现2
 
 ```haskell
 import Data.Map (Map)
@@ -717,7 +717,7 @@ main = do
 2. 对于程序 $P$，$C(P)$ 是 $P$ 的编译结果
 3. 根据正确性定义，$C(P)$ 与 $P$ 语义等价
 
-#### Rust实现
+#### Rust实现5
 
 ```rust
 // 编译器阶段
@@ -852,7 +852,7 @@ fn main() {
 
 ### 9.6 语言解释器
 
-#### Rust实现
+#### Rust实现6
 
 ```rust
 // 解释器
@@ -897,7 +897,7 @@ impl Interpreter {
 }
 ```
 
-#### Haskell实现
+#### Haskell实现3
 
 ```haskell
 -- 解释器
@@ -945,6 +945,6 @@ evaluate interpreter expr = case expr of
 
 **相关文档**:
 
-- [类型理论](../04_Type_Theory/README.md)
-- [形式语言理论](../03_Formal_Language_Theory/README.md)
-- [软件工程理论](../08_Software_Engineering_Theory/README.md)
+- [类型理论](../05_Type_Theory/README.md)
+- [形式语言理论](../04_Formal_Language_Theory/README.md)
+- [软件工程理论](../07_Software_Engineering_Theory/README.md)

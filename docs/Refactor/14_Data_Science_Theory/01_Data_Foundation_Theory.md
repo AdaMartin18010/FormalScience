@@ -886,9 +886,9 @@ impl Optimizer for SGD {
 
 **相关理论**：
 
-- [数据挖掘理论](02_Data_Mining_Theory.md)
-- [机器学习理论](03_Machine_Learning_Theory.md)
-- [统计学习理论](04_Statistical_Learning_Theory.md)
-- [大数据理论](05_Big_Data_Theory.md)
+- [统计分析理论](./01_Statistical_Analysis/README.md)
+- [数据挖掘理论](./02_Data_Mining/README.md)
+- [机器学习理论](../13_Artificial_Intelligence_Theory/01_Machine_Learning/README.md)
+- [大数据理论](./03_Big_Data/README.md)
 
-**返回**：[数据科学理论目录](README.md)
+**返回**：[数据科学理论目录](../README.md)

@@ -633,8 +633,8 @@ data Entanglement = Entanglement {
 
 ### 与本体论的关联
 
-- [本体论基础](../03_Ontology/README.md) - 存在的分类和结构
-- [数学本体论](../03_Ontology/01_Mathematical_Ontology.md#1-3-1) - 数学对象的存在
+- [本体论基础](./README.md) - 存在的分类和结构
+- [数学本体论](./01_Mathematical_Ontology.md#1-3-1) - 数学对象的存在
 
 ### 与逻辑哲学的关联
 
@@ -643,13 +643,13 @@ data Entanglement = Entanglement {
 
 ### 与数学基础的关联
 
-- [数学基础](../../02_Mathematical_Foundation/README.md) - 数学对象的存在
-- [集合论](../../02_Mathematical_Foundation/01_Set_Theory/README.md) - 集合的存在
+- [数学基础](../../02_Mathematical_Foundations/README.md) - 数学对象的存在
+- [集合论](../../02_Mathematical_Foundations/01_Set_Theory/README.md) - 集合的存在
 
 ### 与类型理论的关联
 
-- [类型理论](../../04_Type_Theory/README.md) - 类型与存在
-- [线性类型理论](../../04_Type_Theory/02_Linear_Type_Theory/README.md) - 线性逻辑与存在
+- [类型理论](../../05_Type_Theory/README.md) - 类型与存在
+- [线性类型理论](../../05_Type_Theory/02_Linear_Type_Theory/README.md) - 线性逻辑与存在
 
 ---
 
@@ -662,6 +662,6 @@ data Entanglement = Entanglement {
 
 ## 相关文档
 
-- [形而上学基础](./README.md)
-- [哲学基础](../README.md)
-- [重构主索引](../../00_Master_Index/01_重构主索引_v9.0.md)
+- [形而上学基础](../README.md)
+- [哲学基础](../../README.md)
+- [重构主索引](../../../00_Master_Index/00_重构主索引_v1.0.md)

@@ -11,30 +11,27 @@
 
 ## 目录内容
 
-### 1. [本体论 (Ontology)](../01_Ontology/)
+### 1. [本体论 (Ontology)](./Cross_Cutting_Concepts/)
 
-- 1.1 [存在理论](../01_Ontology/01_Existence_Theory.md)
-- 1.2 [实体与属性](../01_Ontology/01_02_实体论基础理论.md)
-- 1.3 [关系与结构](../01_Ontology/01_04_关系论基础理论.md)
-- 1.4 [现实、信息与AI本体论](../01_Ontology/02_Reality_Ontology.md)
+- 1.1 [存在理论](./Cross_Cutting_Concepts/01_Existence_Theory.md)
+- 1.2 [实体与属性](./Cross_Cutting_Concepts/01_02_实体论基础理论.md)
+- 1.3 [关系与结构](./Cross_Cutting_Concepts/01_04_关系论基础理论.md)
+- 1.4 [现实、信息与AI本体论](./Cross_Cutting_Concepts/02_Reality_Ontology.md)
 
+### 2. [模态理论 (Modal Theory)](./02_Modality/)
 
-### 2. [模态理论 (Modal Theory)](../02_Modality/)
+- 2.1 [可能性与必然性](./02_Modality/03_Modal_Theory.md)
+- 2.2 [可能世界](./02_Modality/01.1.3_模态理论.md)
 
-- 2.1 [可能性与必然性](../02_Modality/03_Modal_Theory.md)
-- 2.2 [可能世界](../02_Modality/01.1.3_模态理论.md)
+### 3. [因果理论 (Causality Theory)](./03_Causality/)
 
+- 3.1 [因果关系](./03_Causality/04_Causality_Theory.md)
+- 3.2 [决定论与自由意志](./03_Causality/01.1.4_因果理论.md)
 
-### 3. [因果理论 (Causality Theory)](../03_Causality/)
+### 4. [交叉核心概念 (Cross-Cutting Concepts)](./Cross_Cutting_Concepts/)
 
-- 3.1 [因果关系](../03_Causality/04_Causality_Theory.md)
-- 3.2 [决定论与自由意志](../03_Causality/01.1.4_因果理论.md)
-
-
-### 4. [交叉核心概念 (Cross-Cutting Concepts)](../Cross_Cutting_Concepts/)
-- 4.1 [逻辑哲学](./01.4.4_Logic_Philosophy.md)
-- 4.2 [推理与证明](./01.4.2_推理理论.md)
-
+- 4.1 [逻辑哲学](./Cross_Cutting_Concepts/01.4.4_Logic_Philosophy.md)
+- 4.2 [推理与证明](./Cross_Cutting_Concepts/01.4.2_推理理论.md)
 
 ## 形而上学核心概念图
 

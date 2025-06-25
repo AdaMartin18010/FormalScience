@@ -14,16 +14,27 @@
 ## 📚 目录结构
 
 ### [01. 集合论](./01_Set_Theory/)
+
 ### [02. 逻辑](./02_Logic/)
+
 ### [03. 数系](./03_Number_Systems/)
+
 ### [04. 函数论](./04_Function_Theory/)
+
 ### [05. 代数](./05_Algebra/)
+
 ### [06. 拓扑学](./06_Topology/)
+
 ### [07. 范畴论](./07_Category_Theory/)
+
 ### [08. 分析学](./08_Analysis/)
+
 ### [09. 几何](./09_Geometry/)
+
 ### [10. 数论](./10_Number_Theory/)
+
 ### [11. 组合数学](./11_Combinatorics/)
+
 ### [12. 测度论](./12_Measure_Theory/)
 
 ## 🔗 快速导航
@@ -45,9 +56,9 @@
 
 ### 交叉领域链接
 
-- [哲学基础理论](../01_Philosophical_Foundation/README.md)
-- [形式语言理论](../03_Formal_Language_Theory/README.md)
-- [类型理论](../04_Type_Theory/README.md)
+- [哲学基础理论](../01_Philosophical_Foundations/README.md)
+- [形式语言理论](../04_Formal_Language_Theory/README.md)
+- [类型理论](../05_Type_Theory/README.md)
 
 ## 📊 知识图谱
 

@@ -834,9 +834,9 @@ theorem access_control_integrity :
 
 **相关理论**：
 
-- [网络协议理论](02_Network_Protocol_Theory.md)
-- [网络路由理论](03_Network_Routing_Theory.md)
-- [网络安全理论](04_Network_Security_Theory.md)
-- [网络性能理论](05_Network_Performance_Theory.md)
+- [网络架构理论](./01_Network_Architecture/README.md)
+- [网络协议理论](./02_Network_Protocols/README.md)
+- [网络安全理论](./03_Network_Security/README.md)
+- [分布式系统理论](./04_Distributed_Systems/README.md)
 
-**返回**：[计算机网络理论目录](README.md)
+**返回**：[计算机网络理论目录](../README.md)

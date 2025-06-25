@@ -362,7 +362,7 @@ impl NaturalDeduction {
 
 ## 谓词逻辑 (Predicate Logic)
 
-### 语法
+### 语法1
 
 **定义 10.7 (一阶语言)** 一阶语言是一个四元组 $\mathcal{L} = (C, F, P, V)$，其中：
 
@@ -464,7 +464,7 @@ impl PredicateFormula {
 }
 ```
 
-### 语义
+### 语义1
 
 **定义 10.10 (结构)** 结构是一个对偶 $\mathcal{M} = (D, I)$，其中：
 
@@ -600,7 +600,7 @@ impl PredicateSemantics {
 
 ## 模态逻辑 (Modal Logic)
 
-### 语法
+### 语法2
 
 **定义 10.13 (模态公式)** 模态公式的BNF定义：
 $$\phi ::= p \mid \neg \phi \mid \phi \land \psi \mid \phi \lor \psi \mid \phi \rightarrow \psi \mid \Box \phi \mid \Diamond \phi$$
@@ -642,7 +642,7 @@ impl ModalFormula {
 }
 ```
 
-### 语义
+### 语义2
 
 **定义 10.14 (克里普克模型)** 克里普克模型是一个三元组 $\mathcal{M} = (W, R, V)$，其中：
 
@@ -768,7 +768,7 @@ impl LogicalEquivalence {
 }
 ```
 
-### 证明系统
+### 证明系统2
 
 **定理 10.3 (完备性)** 对于命题逻辑：
 $$\vdash \phi \Leftrightarrow \models \phi$$
@@ -790,6 +790,6 @@ $$\vdash \phi \Rightarrow \models \phi$$
 
 ## 相关链接
 
-- [集合论](../01_Set_Theory/README.md)
-- [范畴论](../02_Category_Theory/README.md)
-- [形式语言理论](../03_Formal_Language_Theory/README.md)
+- [集合论](../02_Mathematical_Foundations/01_Set_Theory/README.md)
+- [范畴论](../02_Mathematical_Foundations/07_Category_Theory/README.md)
+- [形式语言理论](../04_Formal_Language_Theory/README.md)

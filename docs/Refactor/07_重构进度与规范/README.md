@@ -22,9 +22,9 @@
 
 ## 2. 交叉引用
 
-- [上下文系统](../../12_Context_System/README.md)
-- [哲学基础](../../01_Philosophical_Foundations/README.md)
-- [主索引](../00_Master_Index/README.md)
+- [上下文系统](../12_Context_System/README.md)
+- [哲学基础](../01_Philosophical_Foundations/README.md)
+- [主索引](../00_Master_Index/00_重构主索引_v1.0.md)
 
 ## 3. 规范说明
 

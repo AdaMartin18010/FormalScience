@@ -980,9 +980,9 @@ impl std::ops::Mul<&Vector<f64>> for &Matrix<f64> {
 
 **相关理论**：
 
-- [机器学习理论](02_Machine_Learning_Theory.md)
-- [深度学习理论](03_Deep_Learning_Theory.md)
-- [自然语言处理理论](04_Natural_Language_Processing_Theory.md)
-- [计算机视觉理论](05_Computer_Vision_Theory.md)
+- [机器学习理论](./01_Machine_Learning/README.md)
+- [深度学习理论](./02_Deep_Learning/README.md)
+- [自然语言处理理论](./04_Natural_Language_Processing/README.md)
+- [计算机视觉理论](./05_Computer_Vision/README.md)
 
-**返回**：[人工智能理论目录](README.md)
+**返回**：[人工智能理论目录](../README.md)

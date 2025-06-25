@@ -1264,9 +1264,9 @@ theorem protection_effectiveness :
 
 **相关理论**：
 
-- [进程管理理论](02_Process_Management_Theory.md)
-- [内存管理理论](03_Memory_Management_Theory.md)
-- [文件系统理论](04_File_System_Theory.md)
-- [设备管理理论](05_Device_Management_Theory.md)
+- [进程管理理论](./01_Process_Management/README.md)
+- [内存管理理论](./02_Memory_Management/README.md)
+- [文件系统理论](./03_File_Systems/README.md)
+- [设备管理理论](./04_Device_Management/README.md)
 
-**返回**：[操作系统理论目录](README.md)
+**返回**：[操作系统理论目录](../README.md)

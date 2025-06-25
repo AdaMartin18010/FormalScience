@@ -273,13 +273,13 @@
 
 ## 导航链接
 
-- [返回主索引](../00_Master_Index/README.md)
-- [哲学基础理论](../01_Philosophical_Foundation/README.md)
-- [数学基础理论](../02_Mathematical_Foundation/README.md)
-- [形式语言理论](../03_Formal_Language_Theory/README.md)
-- [类型理论](../04_Type_Theory/README.md)
+- [返回主索引](../00_Master_Index/00_重构主索引_v1.0.md)
+- [哲学基础理论](../01_Philosophical_Foundations/README.md)
+- [数学基础理论](../02_Mathematical_Foundations/README.md)
+- [形式语言理论](../04_Formal_Language_Theory/README.md)
+- [类型理论](../05_Type_Theory/README.md)
 - [控制理论](../05_Control_Theory/README.md)
-- [分布式系统理论](../06_Distributed_Systems_Theory/README.md)
+- [分布式系统理论](../10_Distributed_Systems_Theory/README.md)
 - [软件工程理论](../07_Software_Engineering_Theory/README.md)
 - [编程语言理论](../08_Programming_Language_Theory/README.md)
 - [形式模型理论](../09_Formal_Model_Theory/README.md)
