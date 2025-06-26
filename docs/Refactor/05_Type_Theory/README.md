@@ -1,4 +1,50 @@
-# 类型理论 (Type Theory)
+# 05. 类型理论 (Type Theory)
+
+[返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 05-00-TYPE  
+**创建时间**: 2024-12-21  
+**最后更新**: 2025-01-02  
+**版本**: 1.2
+
+---
+
+## 05.0 主题树形编号目录
+
+- 05.01 [类型理论总览 (Type Theory Overview)](./README.md)
+- 05.02 [类型理论索引 (Type Theory Index)](./01_Type_Theory_Index.md)
+- 05.03 [高级类型理论集成 (Advanced Type Theory Integration)](./01_Advanced_Type_Theory_Integration.md)
+- 05.04 [基础类型理论 (Basic Type Theory)](./01_Basic_Type_Theory/)
+- 05.05 [简单类型理论 (Simple Type Theory)](./04.1_Simple_Type_Theory.md)
+- 05.06 [线性类型理论 (Linear Type Theory)](./04.2_Linear_Type_Theory.md)
+- 05.07 [仿射类型理论 (Affine Type Theory)](./04.3_Affine_Type_Theory.md)
+- 05.08 [依赖类型理论 (Dependent Type Theory)](./04.4_Dependent_Type_Theory.md)
+- 05.09 [同伦类型理论 (Homotopy Type Theory)](./04.3_Homotopy_Type_Theory.md)
+- 05.10 [Curry-Howard对应 (Curry-Howard Correspondence)](./04.5_Curry_Howard_Correspondence.md)
+
+---
+
+## 05.1 主题分层结构与导航
+
+- [返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：概述](#概述)
+- [跳转：目录结构](#目录结构)
+- [跳转：核心理论体系](#核心理论体系)
+- [跳转：理论层次结构](#理论层次结构)
+- [跳转：交叉引用](#交叉引用)
+- [跳转：质量指标](#质量指标)
+
+---
+
+## 05.2 交叉引用示例
+
+- [05.05.01 简单类型理论](./04.1_Simple_Type_Theory.md) ↔ [06.01.01 命题逻辑](../06_Logic_Theory/01_Propositional_Logic.md)
+- [05.06.01 线性类型理论](./04.2_Linear_Type_Theory.md) ↔ [07.01.01 形式文法](../07_Formal_Language/01_Formal_Grammars.md)
+- [05.10.01 Curry-Howard对应](./04.5_Curry_Howard_Correspondence.md) ↔ [09.07.01 范畴论基础](../09_Mathematics/07_Category_Theory/)
+
+---
+
+# 以下为原有内容（保留）
 
 ## 概述
 
@@ -187,11 +233,11 @@
 
 ### 相关理论模块
 
-- **逻辑理论**: [03_Logic_Theory](../03_Logic_Theory/README.md)
+- **逻辑理论**: [06_Logic_Theory](../06_Logic_Theory/README.md)
   - 命题逻辑、谓词逻辑、模态逻辑
-- **形式语言理论**: [04_Formal_Language_Theory](../04_Formal_Language_Theory/README.md)
+- **形式语言理论**: [07_Formal_Language](../07_Formal_Language/README.md)
   - 形式文法、自动机理论
-- **数学基础**: [02_Mathematical_Foundations](../02_Mathematical_Foundations/README.md)
+- **数学基础**: [09_Mathematics](../09_Mathematics/README.md)
   - 集合论、范畴论、代数
 
 ### 应用领域
@@ -224,6 +270,12 @@
 - 建立完整的目录结构
 - 整合所有子模块内容
 - 建立交叉引用体系
+
+### v1.2 (2025-01-02)
+
+- 补全严格编号目录和交叉引用
+- 优化主题树形结构
+- 增强导航链接
 
 ### 下一步计划
 

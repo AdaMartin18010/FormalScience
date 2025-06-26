@@ -1,9 +1,54 @@
-# 形而上学 (Metaphysics)
+# 08.01 形而上学 (Metaphysics)
 
-**文档编号**: `PHIL-01-META`  
+[返回哲学科学主目录](../README.md) | [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 08.01-00-META  
 **创建时间**: 2025-01-02  
 **最后更新**: 2025-01-02  
-**版本**: 1.0  
+**版本**: 1.1
+
+---
+
+## 08.01.0 主题树形编号目录
+
+- 08.01.01 [本体论 (Ontology)](./Cross_Cutting_Concepts/)
+  - 08.01.01.01 [存在理论](./Cross_Cutting_Concepts/01_Existence_Theory.md)
+  - 08.01.01.02 [实体与属性](./Cross_Cutting_Concepts/01_02_实体论基础理论.md)
+  - 08.01.01.03 [关系与结构](./Cross_Cutting_Concepts/01_04_关系论基础理论.md)
+  - 08.01.01.04 [现实、信息与AI本体论](./Cross_Cutting_Concepts/02_Reality_Ontology.md)
+- 08.01.02 [模态理论 (Modal Theory)](./02_Modality/)
+  - 08.01.02.01 [可能性与必然性](./02_Modality/03_Modal_Theory.md)
+  - 08.01.02.02 [可能世界](./02_Modality/01.1.3_模态理论.md)
+- 08.01.03 [因果理论 (Causality Theory)](./03_Causality/)
+  - 08.01.03.01 [因果关系](./03_Causality/04_Causality_Theory.md)
+  - 08.01.03.02 [决定论与自由意志](./03_Causality/01.1.4_因果理论.md)
+- 08.01.04 [交叉核心概念 (Cross-Cutting Concepts)](./Cross_Cutting_Concepts/)
+  - 08.01.04.01 [逻辑哲学](./Cross_Cutting_Concepts/01.4.4_Logic_Philosophy.md)
+  - 08.01.04.02 [推理与证明](./Cross_Cutting_Concepts/01.4.2_推理理论.md)
+
+---
+
+## 08.01.1 主题分层结构与导航
+
+- [返回哲学科学主目录](../README.md)
+- [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：形而上学核心概念图](#形而上学核心概念图)
+- [跳转：形式化表达](#形而上学的形式化表达)
+- [跳转：主要形而上学立场](#主要形而上学立场)
+- [跳转：分支关系](#与其他哲学分支的关系)
+- [跳转：研究方向](#当代形而上学研究方向)
+
+---
+
+## 08.01.2 交叉引用示例
+
+- [08.01.01.01 存在理论](./Cross_Cutting_Concepts/01_Existence_Theory.md) ↔ [09.01.01 集合论基础](../../09_Mathematics/01_Set_Theory/01_Set_Theory_Foundation.md)
+- [08.01.02.01 可能性与必然性](./02_Modality/03_Modal_Theory.md) ↔ [06.03.01 模态逻辑基础](../../06_Logic_Theory/03_Modal_Logic/01_Modal_Logic.md)
+- [08.01.03.01 因果关系](./03_Causality/04_Causality_Theory.md) ↔ [09.06.01 概率论基础](../../09_Mathematics/07_Category_Theory/01_Category_Theory.md)
+
+---
+
+# 以下为原有内容（保留）
 
 ## 概述
 

@@ -1,4 +1,45 @@
-# 伦理学 (Ethics)
+# 08.05 伦理学 (Ethics)
+
+[返回哲学科学主目录](../README.md) | [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 08.05-00-ETHICS  
+**创建时间**: 2025-01-02  
+**最后更新**: 2025-01-02  
+**版本**: 1.1
+
+---
+
+## 08.05.0 主题树形编号目录
+
+- 08.05.01 [元伦理学 (Meta-Ethics)](./01_Meta_Ethics)
+- 08.05.02 [规范伦理学 (Normative Ethics)](./02_Normative_Ethics)
+- 08.05.03 [应用伦理学 (Applied Ethics)](./03_Applied_Ethics)
+- 08.05.04 [AI伦理学 (AI Ethics)](./04_AI_Ethics)
+
+---
+
+## 08.05.1 主题分层结构与导航
+
+- [返回哲学科学主目录](../README.md)
+- [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：概述](#概述)
+- [跳转：核心目标](#核心目标)
+- [跳转：目录结构](#目录结构)
+- [跳转：领域集成](#与其他领域的集成)
+- [跳转：形式分析工具](#形式分析工具)
+- [跳转：计算实现](#计算实现)
+
+---
+
+## 08.05.2 交叉引用示例
+
+- [08.05.01 元伦理学](./01_Meta_Ethics) ↔ [08.02.01 认识论基础](../02_Epistemology/01_Epistemological_Foundations.md)
+- [08.05.02 规范伦理学](./02_Normative_Ethics) ↔ [08.01.01 本体论基础](../01_Metaphysics/01_Ontological_Foundations.md)
+- [08.05.04 AI伦理学](./04_AI_Ethics) ↔ [13.01.01 人工智能基础](../../13_Artificial_Intelligence_Theory/01_AI_Foundations.md)
+
+---
+
+# 以下为原有内容（保留）
 
 ## 📋 概述
 

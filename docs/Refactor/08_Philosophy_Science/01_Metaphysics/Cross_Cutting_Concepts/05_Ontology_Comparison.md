@@ -299,7 +299,7 @@ graph TD
 
 **数学层次结构**:
 
-```
+```text
 L1: 基础数学 (集合论、数论)
 L2: 核心数学 (代数、几何、分析)
 L3: 高级数学 (拓扑、范畴论)
@@ -312,7 +312,7 @@ L4: 应用数学 (概率统计、计算数学)
 
 **现实层次结构**:
 
-```
+```text
 L1: 物理实在 (基本粒子、场)
 L2: 意识实在 (感知、思维、自我)
 L3: 社会实在 (个体、群体、制度)
@@ -325,7 +325,7 @@ L4: 文明实在 (文化、技术、文明)
 
 **信息层次结构**:
 
-```
+```text
 L1: 句法信息 (符号、数值、逻辑)
 L2: 语义信息 (概念、事实、规则)
 L3: 语用信息 (指令、评价、情感)
@@ -338,7 +338,7 @@ L4: 社会信息 (文化、制度、知识)
 
 **AI层次结构**:
 
-```
+```text
 L1: 狭义AI (专家系统、机器学习)
 L2: 通用AI (认知架构、推理系统)
 L3: 超级AI (超智能、自主系统)
@@ -549,7 +549,7 @@ $R: \text{UnifiedObject} \times \text{UnifiedObject} \rightarrow \{\text{Foundat
 
 **统一证明系统**:
 
-```
+```text
 1. ∀x (Mathematical(x) → Formalizable(x))           [数学公理]
 2. ∀x (Information(x) → ∃y Mathematical(y) ∧ BasedOn(x, y))  [信息公理]
 3. ∀x (AI(x) → ∃y Information(y) ∧ Processes(x, y))  [AI公理]

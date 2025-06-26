@@ -5,7 +5,10 @@
 1. [定义与背景](#1-定义与背景)
 2. [批判性分析](#2-批判性分析)
 3. [形式化表达](#3-形式化表达)
+   - [3.1 因果关系的形式化定义（Lean）](#31-因果关系的形式化定义lean)
+   - [3.2 因果模型的Rust实现](#32-因果模型的rust实现)
 4. [多表征内容](#4-多表征内容)
+   - [4.1 因果关系类型图（Mermaid）](#41-因果关系类型图mermaid)
 5. [交叉引用](#5-交叉引用)
 6. [参考文献](#6-参考文献)
 
@@ -61,7 +64,9 @@
 
 ## 3. 形式化表达
 
-### 3.1 因果关系的形式化定义
+### 3.1 因果关系的形式化定义（Lean）
+
+> 用Lean语言形式化描述因果结构和推理规则。
 
 ```lean
 -- 因果关系的基本结构
@@ -90,17 +95,18 @@ axiom causality_asymmetry :
   ∀ (c : Causality), c.cause ≠ c.effect
 ```
 
-### 3.2 因果模型的形式化
+### 3.2 因果模型的Rust实现
+
+> 用Rust结构体描述因果模型的基本结构和因果路径查找方法。
 
 ```rust
-// 因果模型的Rust实现
 #[derive(Debug, Clone, PartialEq)]
 pub enum CausalityType {
-    Direct,
-    Indirect,
-    Contributory,
-    Necessary,
-    Sufficient,
+    Direct,         // 直接因果
+    Indirect,       // 间接因果
+    Contributory,   // 贡献因果
+    Necessary,      // 必要因果
+    Sufficient,     // 充分因果
 }
 
 #[derive(Debug, Clone)]
@@ -138,6 +144,7 @@ impl CausalModel {
         self.causal_relations.push(causality);
     }
     
+    /// 查找给定结果的所有原因
     pub fn find_causes(&self, effect: &str) -> Vec<&Causality> {
         self.causal_relations
             .iter()
@@ -145,6 +152,7 @@ impl CausalModel {
             .collect()
     }
     
+    /// 查找给定原因的所有结果
     pub fn find_effects(&self, cause: &str) -> Vec<&Causality> {
         self.causal_relations
             .iter()
@@ -152,8 +160,8 @@ impl CausalModel {
             .collect()
     }
     
+    /// 查找因果路径
     pub fn causal_path(&self, from: &str, to: &str) -> Vec<&Causality> {
-        // 实现因果路径查找算法
         let mut path = Vec::new();
         let mut visited = std::collections::HashSet::new();
         self.dfs_causal_path(from, to, &mut path, &mut visited);
@@ -164,9 +172,7 @@ impl CausalModel {
         if current == target {
             return true;
         }
-        
         visited.insert(current.to_string());
-        
         for causality in &self.causal_relations {
             if causality.cause == current && !visited.contains(&causality.effect) {
                 path.push(causality);
@@ -176,7 +182,6 @@ impl CausalModel {
                 path.pop();
             }
         }
-        
         false
     }
 }
@@ -186,7 +191,9 @@ impl CausalModel {
 
 ## 4. 多表征内容
 
-### 4.1 因果关系类型图
+### 4.1 因果关系类型图（Mermaid）
+
+> 用Mermaid图展示因果关系的类型和结构。
 
 ```mermaid
 graph TD
@@ -195,21 +202,8 @@ graph TD
     A --> D[贡献因果 Contributory]
     A --> E[必要因果 Necessary]
     A --> F[充分因果 Sufficient]
-    
     B --> B1[线性因果 Linear]
     B --> B2[非线性因果 Nonlinear]
-    
-    C --> C1[中介因果 Mediating]
-    C --> C2[调节因果 Moderating]
-    
-    D --> D1[促进因果 Facilitating]
-    D --> D2[抑制因果 Inhibiting]
-    
-    E --> E1[必要条件 Necessary Condition]
-    E --> E2[充分条件 Sufficient Condition]
-    
-    F --> F1[充分非必要 Sufficient Not Necessary]
-    F --> F2[必要且充分 Necessary and Sufficient]
 ```
 
 ### 4.2 因果推理方法对比表
@@ -235,12 +229,9 @@ graph TD
 
 ## 5. 交叉引用
 
-- [形而上学总览](../README.md)
-- [本体论](../Cross_Cutting_Concepts/README.md)
-- [实体理论](../Cross_Cutting_Concepts/01_02_实体论基础理论.md)
-- [模态理论](../02_Modality/03_Modal_Theory.md)
-- [认识论](../../02_Epistemology/README.md)
-- [上下文系统](../../../12_Context_System/README.md)
+- [存在论基础](../Cross_Cutting_Concepts/01_Existence_Theory.md#1113-存在的层次) ↔ [因果理论](./04_Causality_Theory.md)
+- [模态理论](../02_Modality/03_Modal_Theory.md) ↔ [因果理论](./04_Causality_Theory.md)
+- [概率论基础](../../../09_Mathematics/07_Category_Theory/01_Category_Theory.md) ↔ [因果理论](./04_Causality_Theory.md)
 
 ---
 

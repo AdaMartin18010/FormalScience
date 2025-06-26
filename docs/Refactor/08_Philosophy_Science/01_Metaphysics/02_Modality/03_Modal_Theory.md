@@ -5,7 +5,11 @@
 1. [定义与背景](#1-定义与背景)
 2. [批判性分析](#2-批判性分析)
 3. [形式化表达](#3-形式化表达)
+   - [3.1 模态概念的形式化定义（Lean）](#31-模态概念的形式化定义lean)
+   - [3.2 模态逻辑的Rust实现](#32-模态逻辑的rust实现)
 4. [多表征内容](#4-多表征内容)
+   - [4.1 模态概念关系图（Mermaid）](#41-模态概念关系图mermaid)
+   - [4.2 模态逻辑系统对比表](#42-模态逻辑系统对比表)
 5. [交叉引用](#5-交叉引用)
 6. [参考文献](#6-参考文献)
 
@@ -61,7 +65,9 @@
 
 ## 3. 形式化表达
 
-### 3.1 模态概念的形式化定义
+### 3.1 模态概念的形式化定义（Lean）
+
+> 用Lean语言形式化描述模态算子和可能世界结构。
 
 ```lean
 -- 模态算子定义
@@ -85,27 +91,28 @@ theorem modal_equivalence :
   ∀ (P : Prop), □P ↔ ¬◇¬P ∧ ◇P ↔ ¬□¬P
 ```
 
-### 3.2 模态逻辑的形式化
+### 3.2 模态逻辑的Rust实现
+
+> 用Rust结构体描述模态逻辑的基本结构和推理方法。
 
 ```rust
-// 模态逻辑的Rust实现
 #[derive(Debug, Clone, PartialEq)]
 pub enum ModalOperator {
-    Necessity,  // □
-    Possibility, // ◇
+    Necessity,  // □ 必然性
+    Possibility, // ◇ 可能性
     Contingency, // 偶然
 }
 
 #[derive(Debug, Clone)]
 pub struct ModalLogic {
-    worlds: Vec<PossibleWorld>,
-    accessibility: Vec<Vec<bool>>,
+    worlds: Vec<PossibleWorld>, // 可能世界集合
+    accessibility: Vec<Vec<bool>>, // 可达性关系矩阵
 }
 
 #[derive(Debug, Clone)]
 pub struct PossibleWorld {
     id: String,
-    propositions: HashMap<String, bool>,
+    propositions: HashMap<String, bool>, // 命题在该世界的真假
 }
 
 impl ModalLogic {
@@ -132,8 +139,8 @@ impl ModalLogic {
         }
     }
     
+    /// 检查在所有可达世界中命题是否为真（必然性）
     pub fn is_necessary(&self, world_id: usize, proposition: &str) -> bool {
-        // 检查在所有可达世界中命题是否为真
         for (i, accessible) in self.accessibility[world_id].iter().enumerate() {
             if *accessible {
                 if let Some(world) = self.worlds.get(i) {
@@ -146,8 +153,8 @@ impl ModalLogic {
         true
     }
     
+    /// 检查在至少一个可达世界中命题是否为真（可能性）
     pub fn is_possible(&self, world_id: usize, proposition: &str) -> bool {
-        // 检查在至少一个可达世界中命题是否为真
         for (i, accessible) in self.accessibility[world_id].iter().enumerate() {
             if *accessible {
                 if let Some(world) = self.worlds.get(i) {
@@ -166,7 +173,9 @@ impl ModalLogic {
 
 ## 4. 多表征内容
 
-### 4.1 模态概念关系图
+### 4.1 模态概念关系图（Mermaid）
+
+> 用Mermaid图展示模态概念之间的关系。
 
 ```mermaid
 graph TD
@@ -174,18 +183,14 @@ graph TD
     A --> C[可能性 Possibility]
     A --> D[偶然性 Contingency]
     A --> E[不可能性 Impossibility]
-    
     B --> B1[逻辑必然性 Logical]
     B --> B2[形而上学必然性 Metaphysical]
     B --> B3[物理必然性 Physical]
-    
     C --> C1[逻辑可能性 Logical]
     C --> C2[形而上学可能性 Metaphysical]
     C --> C3[物理可能性 Physical]
-    
     D --> D1[偶然为真 Contingently True]
     D --> D2[偶然为假 Contingently False]
-    
     E --> E1[逻辑不可能 Logical]
     E --> E2[形而上学不可能 Metaphysical]
     E --> E3[物理不可能 Physical]
@@ -198,26 +203,14 @@ graph TD
 | K系统 | K公理 | 基本模态逻辑 | 形式化推理 |
 | T系统 | K + T | 自反性 | 信念逻辑 |
 | S4系统 | K + T + 4 | 传递性 | 知识逻辑 |
-| S5系统 | K + T + 5 | 欧几里得性 | 可能世界语义 |
-
-### 4.3 模态概念真值表
-
-| 命题P | □P (必然) | ◇P (可能) | ¬□P (非必然) | ¬◇P (不可能) |
-|-------|-----------|-----------|-------------|-------------|
-| 真 | 真 | 真 | 假 | 假 |
-| 假 | 假 | 假 | 真 | 真 |
-| 偶然 | 假 | 真 | 真 | 假 |
 
 ---
 
 ## 5. 交叉引用
 
-- [形而上学总览](../README.md)
-- [本体论](../Cross_Cutting_Concepts/README.md)
-- [实体理论](../Cross_Cutting_Concepts/01_02_实体论基础理论.md)
-- [因果理论](../03_Causality/04_Causality_Theory.md)
-- [认识论](../../02_Epistemology/README.md)
-- [上下文系统](../../../12_Context_System/README.md)
+- [存在的模态](../Cross_Cutting_Concepts/01_Existence_Theory.md#1112-存在的模态) ↔ [模态理论](./03_Modal_Theory.md)
+- [模态逻辑基础](../../../06_Logic_Theory/03_Modal_Logic/01_Modal_Logic.md) ↔ [模态理论](./03_Modal_Theory.md)
+- [类型理论中的模态](../../../05_Type_Theory/01_Advanced_Type_Theory_Integration.md) ↔ [模态理论](./03_Modal_Theory.md)
 
 ---
 

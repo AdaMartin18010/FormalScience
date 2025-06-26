@@ -1,4 +1,53 @@
-# 并发理论
+# 11. 并发理论 (Concurrency Theory)
+
+[返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 11-00-CONC  
+**创建时间**: 2024-12-20  
+**最后更新**: 2025-01-02  
+**版本**: 1.2
+
+---
+
+## 11.0 主题树形编号目录
+
+- 11.01 [并发理论总览 (Concurrency Theory Overview)](./README.md)
+- 11.02 [进程理论 (Process Theory)](./11.1_进程理论.md)
+- 11.03 [同步理论 (Synchronization Theory)](./02_Synchronization_Theory.md)
+- 11.04 [死锁理论 (Deadlock Theory)](./03_Deadlock_Theory.md)
+- 11.05 [竞态条件理论 (Race Condition Theory)](./04_Race_Condition_Theory.md)
+- 11.06 [并发算法 (Concurrent Algorithms)](./05_Concurrent_Algorithms.md)
+- 11.07 [并发验证 (Concurrent Verification)](./06_Concurrent_Verification.md)
+
+---
+
+## 11.1 主题分层结构与导航
+
+- [返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：目录结构](#目录结构)
+- [跳转：基本概念](#1-基本概念-01_basic_concepts)
+- [跳转：进程演算](#2-进程演算-02_process_calculi)
+- [跳转：并发模型](#3-并发模型-03_concurrency_models)
+- [跳转：同步机制](#4-同步机制-04_synchronization)
+- [跳转：通信机制](#5-通信机制-05_communication)
+- [跳转：死锁理论](#6-死锁理论-06_deadlock_theory)
+- [跳转：竞态条件](#7-竞态条件-07_race_conditions)
+- [跳转：并发控制](#8-并发控制-08_concurrency_control)
+- [跳转：分布式并发](#9-分布式并发-09_distributed_concurrency)
+- [跳转：量子并发](#10-量子并发-10_quantum_concurrency)
+- [跳转：综合理论](#11-综合理论-11_synthesis)
+
+---
+
+## 11.2 交叉引用示例
+
+- [11.02.01 进程理论](./11.1_进程理论.md) ↔ [10.01.01 时态逻辑基础](../10_Temporal_Logic_Theory/01_Temporal_Logic_Foundations.md)
+- [11.03.01 同步理论](./02_Synchronization_Theory.md) ↔ [05.06.01 线性类型理论](../05_Type_Theory/04.2_Linear_Type_Theory.md)
+- [11.07.01 并发验证](./06_Concurrent_Verification.md) ↔ [07.01.01 形式语言基础](../07_Formal_Language/01_Formal_Language_Foundations.md)
+
+---
+
+# 以下为原有内容（保留）
 
 ## 目录结构
 
@@ -266,12 +315,12 @@
 
 ## 导航链接
 
-- [返回主索引](../00_Master_Index/00_重构主索引_v1.0.md)
-- [哲学基础理论](../01_Philosophical_Foundations/README.md)
-- [数学基础理论](../02_Mathematical_Foundations/README.md)
-- [形式语言理论](../04_Formal_Language_Theory/README.md)
+- [返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+- [哲学基础理论](../08_Philosophy_Science/README.md)
+- [数学基础理论](../09_Mathematics/README.md)
+- [形式语言理论](../07_Formal_Language/README.md)
 - [类型理论](../05_Type_Theory/README.md)
-- [控制理论](../05_Control_Theory/README.md)
+- [控制理论](../03_Control_Theory/README.md)
 - [分布式系统理论](../10_Distributed_Systems_Theory/README.md)
 - [软件工程理论](../07_Software_Engineering_Theory/README.md)
 - [编程语言理论](../08_Programming_Language_Theory/README.md)
@@ -294,6 +343,21 @@
 - [ ] 综合理论内容
 
 ## 更新日志
+
+### v1.0 (2025-01-16)
+
+- 完成并发理论模块重构
+- 建立完整的目录结构
+- 整合所有子模块内容
+- 建立交叉引用体系
+
+### v1.2 (2025-01-02)
+
+- 补全严格编号目录和交叉引用
+- 优化主题树形结构
+- 增强导航链接
+
+### 历史更新
 
 - 2024-12-20: 创建并发理论目录结构
 - 2024-12-20: 建立完整的树形导航体系

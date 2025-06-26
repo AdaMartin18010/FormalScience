@@ -6,15 +6,13 @@
   - [目录](#目录)
   - [1.1.1.1 存在的基本概念](#1111-存在的基本概念)
     - [定义与本质](#定义与本质)
-      - [形式化定义](#形式化定义)
+      - [形式化定义（Rust结构体）](#形式化定义rust结构体)
     - [存在的基本特征](#存在的基本特征)
-    - [存在的分类](#存在的分类)
+    - [存在的分类（Mermaid图）](#存在的分类mermaid图)
   - [1.1.1.2 存在的模态](#1112-存在的模态)
-    - [模态存在论](#模态存在论)
+    - [模态存在论（Rust结构体）](#模态存在论rust结构体)
       - [模态逻辑框架](#模态逻辑框架)
-    - [模态语义学](#模态语义学)
-      - [可能世界语义](#可能世界语义)
-    - [模态存在论的应用](#模态存在论的应用)
+    - [模态语义学（Haskell实现）](#模态语义学haskell实现)
   - [1.1.1.3 存在的层次](#1113-存在的层次)
     - [存在层次论](#存在层次论)
       - [层次结构](#层次结构)
@@ -55,16 +53,18 @@
 
 **存在**（Existence）是形而上学中最基本的概念，指某物在现实世界中的实际存在状态。
 
-#### 形式化定义
+#### 形式化定义（Rust结构体）
+
+> 用Rust结构体形式化描述"存在"的哲学属性。
 
 ```rust
 // 存在的基本结构
 struct Existence {
-    entity: Entity,
-    ontological_status: OntologicalStatus,
-    temporal_scope: TemporalScope,
-    spatial_scope: SpatialScope,
-    modal_properties: Vec<ModalProperty>
+    entity: Entity, // 存在的对象
+    ontological_status: OntologicalStatus, // 存在的本体状态
+    temporal_scope: TemporalScope, // 时间范围
+    spatial_scope: SpatialScope, // 空间范围
+    modal_properties: Vec<ModalProperty> // 模态属性
 }
 
 // 存在状态
@@ -103,7 +103,9 @@ enum SpatialScope {
 | **空间性** | 在空间中的存在 | `Spatial(x) ↔ ∃s(At(x, s))` | 物质对象 |
 | **模态性** | 存在的可能性 | `Modal(x) ↔ ◇Ex ∨ □Ex` | 可能世界 |
 
-### 存在的分类
+### 存在的分类（Mermaid图）
+
+> 用Mermaid图形式化展示存在的多种类型。
 
 ```mermaid
 graph TD
@@ -111,41 +113,35 @@ graph TD
     A --> C[心理存在]
     A --> D[抽象存在]
     A --> E[社会存在]
-    
     B --> B1[物质对象]
     B --> B2[物理事件]
     B --> B3[物理过程]
-    
     C --> C1[意识状态]
     C --> C2[心理事件]
     C --> C3[心理过程]
-    
     D --> D1[数学对象]
     D --> D2[概念]
     D --> D3[关系]
-    
     E --> S1[制度]
-    S --> S2[规范]
-    S --> S3[文化]
+    E --> S2[规范]
+    E --> S3[文化]
 ```
 
 ---
 
 ## 1.1.1.2 存在的模态
 
-### 模态存在论
+### 模态存在论（Rust结构体）
 
-存在具有不同的模态性质，包括必然性、可能性、偶然性和不可能性。
-
-#### 模态逻辑框架
+> 用Rust结构体描述模态存在论的哲学结构。
 
 ```rust
 // 模态存在论
 struct ModalExistence {
-    entity: Entity,
-    modal_operator: ModalOperator,
-    possible_worlds: Vec<PossibleWorld>,
-    accessibility_relation: AccessibilityRelation
+    entity: Entity, // 存在的对象
+    modal_operator: ModalOperator, // 模态算子（必然、可能等）
+    possible_worlds: Vec<PossibleWorld>, // 可能世界集合
+    accessibility_relation: AccessibilityRelation // 可达关系
 }
 
 // 模态算子
@@ -173,9 +169,13 @@ struct AccessibilityRelation {
 }
 ```
 
-### 模态语义学
+#### 模态逻辑框架
 
-#### 可能世界语义
+> 该结构用于形式化描述某对象在不同可能世界下的存在状态及其模态属性。
+
+### 模态语义学（Haskell实现）
+
+> 用Haskell类型和类描述可能世界语义。
 
 ```haskell
 -- 可能世界语义的Haskell实现
@@ -198,26 +198,8 @@ instance ModalSemantics KripkeModel where
             Atomic p -> getProposition world p
             Not p -> not (satisfies model world p)
             And p q -> satisfies model world p && satisfies model world q
-            Or p q -> satisfies model world p || satisfies model world q
-            Implies p q -> not (satisfies model world p) || satisfies model world q
-            Necessarily p -> necessary model world p
-            Possibly p -> possible model world p
-    
-    necessary model world prop = 
-        all (\w -> satisfies model w prop) (accessibleWorlds model world)
-    
-    possible model world prop = 
-        any (\w -> satisfies model w prop) (accessibleWorlds model world)
+}
 ```
-
-### 模态存在论的应用
-
-| 模态类型 | 逻辑表达 | 哲学意义 | 应用领域 |
-|---------|---------|---------|---------|
-| **必然存在** | `□Ex` | 在所有可能世界中都存在 | 数学对象、逻辑真理 |
-| **可能存在** | `◇Ex` | 在某个可能世界中存在 | 虚构对象、假设实体 |
-| **偶然存在** | `◇Ex ∧ ◇¬Ex` | 在某些世界中存在，某些中不存在 | 物理对象、历史事件 |
-| **不可能存在** | `¬◇Ex` | 在任何可能世界中都不存在 | 逻辑矛盾、不可能对象 |
 
 ---
 

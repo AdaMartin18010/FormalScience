@@ -1,4 +1,46 @@
-# 心灵哲学 (Philosophy of Mind)
+# 08.07 心灵哲学 (Philosophy of Mind)
+
+[返回哲学科学主目录](../README.md) | [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 08.07-00-PHIL-MIND  
+**创建时间**: 2025-01-02  
+**最后更新**: 2025-01-02  
+**版本**: 1.1
+
+---
+
+## 08.07.0 主题树形编号目录
+
+- 08.07.01 [心身问题 (Mind-Body Problem)](./01_Mind_Body_Problem)
+- 08.07.02 [意识理论 (Consciousness)](./02_Consciousness)
+- 08.07.03 [认知科学哲学 (Cognitive Science)](./03_Cognitive_Science)
+- 08.07.04 [意向性理论 (Intentionality)](./04_Intentionality)
+- 08.07.05 [自我理论 (Self Theory)](./05_Self_Theory)
+- 08.07.06 [人工智能哲学 (Philosophy of AI)](./06_Philosophy_of_AI)
+
+---
+
+## 08.07.1 主题分层结构与导航
+
+- [返回哲学科学主目录](../README.md)
+- [返回主索引](../../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：简介](#1-简介)
+- [跳转：核心问题](#2-核心问题)
+- [跳转：文件结构](#3-文件结构)
+- [跳转：理论框架](#4-理论框架)
+- [跳转：领域关系](#5-与其他哲学领域的关系)
+
+---
+
+## 08.07.2 交叉引用示例
+
+- [08.07.01 心身问题](./01_Mind_Body_Problem) ↔ [08.01.01 本体论基础](../01_Metaphysics/01_Ontological_Foundations.md)
+- [08.07.02 意识理论](./02_Consciousness) ↔ [08.02.01 认识论基础](../02_Epistemology/01_Epistemological_Foundations.md)
+- [08.07.06 人工智能哲学](./06_Philosophy_of_AI) ↔ [13.01.01 人工智能基础](../../13_Artificial_Intelligence_Theory/01_AI_Foundations.md)
+
+---
+
+# 以下为原有内容（保留）
 
 ## 1. 简介
 

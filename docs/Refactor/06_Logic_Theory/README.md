@@ -1,4 +1,57 @@
-# 逻辑理论 (Logic Theory)
+# 06. 逻辑理论 (Logic Theory)
+
+[返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+
+**文档编号**: 06-00-LOGIC  
+**创建时间**: 2024-12-21  
+**最后更新**: 2025-01-02  
+**版本**: 1.2
+
+---
+
+## 06.0 主题树形编号目录
+
+- 06.01 [命题逻辑 (Propositional Logic)](./01_Propositional_Logic.md)
+- 06.02 [谓词逻辑 (Predicate Logic)](./02_Predicate_Logic.md)
+- 06.03 [模态逻辑 (Modal Logic)](./03_Modal_Logic.md)
+- 06.04 [直觉主义逻辑 (Intuitionistic Logic)](./10.4_Intuitionistic_Logic/)
+- 06.05 [非经典逻辑 (Nonclassical Logic)](#非经典逻辑)
+- 06.06 [归纳逻辑 (Inductive Logic)](#归纳逻辑)
+- 06.07 [概率逻辑 (Probabilistic Logic)](#概率逻辑)
+- 06.08 [模糊逻辑 (Fuzzy Logic)](#模糊逻辑)
+- 06.09 [时序逻辑 (Temporal Logic)](#时序逻辑)
+- 06.10 [多值逻辑 (Many Valued Logic)](#多值逻辑)
+
+---
+
+## 06.1 主题分层结构与导航
+
+- [返回主索引](../00_Master_Index/00_主索引-形式科学体系.md)
+- [跳转：概述](#概述)
+- [跳转：理论基础](#理论基础)
+- [跳转：命题逻辑](#命题逻辑-propositional-logic)
+- [跳转：谓词逻辑](#谓词逻辑-predicate-logic)
+- [跳转：模态逻辑](#模态逻辑-modal-logic)
+- [跳转：形式化验证](#形式化验证)
+
+---
+
+## 06.2 交叉引用示例
+
+- [06.01.01 命题逻辑](./01_Propositional_Logic.md) ↔ [09.02.01 逻辑基础](../09_Mathematics/02_Logic/)
+- [06.02.01 谓词逻辑](./02_Predicate_Logic.md) ↔ [07.01.01 形式语言基础](../07_Formal_Language/01_Formal_Language_Foundations.md)
+- [06.03.01 模态逻辑](./03_Modal_Logic.md) ↔ [08.01.01 形而上学基础](../08_Philosophy_Science/01_Metaphysics/)
+
+---
+
+# 以下为原有内容（保留）
+
+**模块**: 06. 逻辑理论  
+**版本**: v1.1  
+**创建时间**: 2024-12-21  
+**维护状态**: 持续构建中  
+
+---
 
 ## 概述
 
@@ -793,3 +846,19 @@ $$\vdash \phi \Rightarrow \models \phi$$
 - [集合论](../02_Mathematical_Foundations/01_Set_Theory/README.md)
 - [范畴论](../02_Mathematical_Foundations/07_Category_Theory/README.md)
 - [形式语言理论](../04_Formal_Language_Theory/README.md)
+
+## 更新日志
+
+### v1.0 (2025-01-16)
+
+- 完成逻辑理论模块重构
+- 建立完整的目录结构
+- 整合所有子模块内容
+- 清理重复文件
+- 建立交叉引用体系
+
+### v1.2 (2025-01-02)
+
+- 补全严格编号目录和交叉引用
+- 优化主题树形结构
+- 增强导航链接
