@@ -1,11 +1,15 @@
-# 08.3 编程范式 (Programming Paradigms)
+[返回编程语言理论主题索引](../README.md)
+
+# 08.3 编程范式（Programming Paradigms）
+
+> 本分支系统梳理编程范式理论，包括命令式、函数式、面向对象、逻辑式、并发/并行范式等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [命令式与面向对象编程 (Imperative and Object-Oriented)](./08.3.1_Imperative_and_Object_Oriented.md)
-2. [函数式编程 (Functional Programming)](./08.3.2_Functional_Programming.md)
-3. [逻辑编程 (Logic Programming)](./08.3.3_Logic_Programming.md)
-4. [并发与并行编程 (Concurrent and Parallel)](./08.3.4_Concurrent_and_Parallel.md)
+- [08.3.1 命令式范式](./08.3.1_Imperative_Paradigm.md)
+- [08.3.2 函数式范式](./08.3.2_Functional_Paradigm.md)
+- [08.3.3 面向对象范式](./08.3.3_Object_Oriented_Paradigm.md)
+- [08.3.4 逻辑式范式](./08.3.4_Logic_Paradigm.md)
+- [08.3.5 并发与并行范式](./08.3.5_Concurrent_and_Parallel_Paradigms.md)
 
 ---
 

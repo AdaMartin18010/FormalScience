@@ -1,13 +1,13 @@
-# 08 程序语言理论 (Programming Language Theory, PLT)
+# 08 编程语言理论（Programming Language Theory）
+
+> 本索引系统梳理编程语言理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
 ## 目录
-
-1. [程序语言理论总览](./README.md)
-2. [语言设计与规约 (Language Design and Specification)](./08.1_Language_Design_and_Specification/README.md)
-3. [类型系统 (Type Systems)](./08.2_Type_Systems/README.md)
-4. [编程范式 (Programming Paradigms)](./08.3_Programming_Paradigms/README.md)
-5. [语言实现 (Language Implementation)](./08.4_Language_Implementation/README.md)
-6. [高级主题 (Advanced Topics)](./08.5_Advanced_Topics/README.md)
+- [08.1 语言设计与规范](./08.1_Language_Design_and_Specification/README.md)
+- [08.2 类型系统](./08.2_Type_Systems/README.md)
+- [08.3 编程范式](./08.3_Programming_Paradigms/README.md)
+- [08.4 语言实现](./08.4_Language_Implementation/README.md)
+- [08.5 高级主题](./08.5_Advanced_Topics/README.md)
 
 ---
 
@@ -37,3 +37,5 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为程序语言理论分支的总览与导航。
+
+> 各分支内容将分批迁移自 /docs/Matter/ProgrammingLanguage/、/docs/Refactor/08_Programming_Language_Theory/ 及相关文档，持续完善。

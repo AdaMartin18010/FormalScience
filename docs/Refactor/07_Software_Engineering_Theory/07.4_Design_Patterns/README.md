@@ -1,10 +1,13 @@
-# 07.4 设计模式 (Design Patterns)
+[返回软件工程理论主题索引](../README.md)
+
+# 07.4 设计模式（Design Patterns）
+
+> 本分支系统梳理软件设计模式，包括创建型、结构型、行为型等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [创建型模式 (Creational Patterns)](./07.4.1_Creational_Patterns.md)
-2. [结构型模式 (Structural Patterns)](./07.4.2_Structural_Patterns.md)
-3. [行为型模式 (Behavioral Patterns)](./07.4.3_Behavioral_Patterns.md)
+- [07.4.1 创建型模式](./07.4.1_Creational_Patterns.md)
+- [07.4.2 结构型模式](./07.4.2_Structural_Patterns.md)
+- [07.4.3 行为型模式](./07.4.3_Behavioral_Patterns.md)
 
 ---
 
@@ -29,3 +32,5 @@
 ---
 
 > 本文档为设计模式分支的导航。
+
+> 各子主题内容将分批迁移自相关文档，持续完善。

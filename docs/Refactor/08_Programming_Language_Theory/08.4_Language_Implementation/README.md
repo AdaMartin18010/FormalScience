@@ -1,11 +1,14 @@
-# 08.4 语言实现 (Language Implementation)
+[返回编程语言理论主题索引](../README.md)
+
+# 08.4 语言实现（Language Implementation）
+
+> 本分支系统梳理编程语言实现理论，包括词法分析、语法分析、解释与编译、虚拟机、运行时系统等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [编译理论 (Compilation Theory)](./08.4.1_Compilation_Theory.md)
-2. [解释 (Interpretation)](./08.4.2_Interpretation.md)
-3. [虚拟机与运行时 (Virtual Machines and Runtimes)](./08.4.3_Virtual_Machines_and_Runtimes.md)
-4. [内存管理 (Memory Management)](./08.4.4_Memory_Management.md)
+- [08.4.1 词法分析](./08.4.1_Lexical_Analysis.md)
+- [08.4.2 语法分析](./08.4.2_Syntax_Analysis.md)
+- [08.4.3 解释与编译](./08.4.3_Interpretation_and_Compilation.md)
+- [08.4.4 虚拟机与运行时](./08.4.4_VM_and_Runtime.md)
 
 ---
 

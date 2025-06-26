@@ -1,10 +1,14 @@
-# 08.1 语言设计与规约 (Language Design and Specification)
+[返回编程语言理论主题索引](../README.md)
+
+# 08.1 语言设计与规范（Language Design and Specification）
+
+> 本分支系统梳理编程语言设计与规范理论，包括语法、语义、抽象语法树、语言规范文档等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [语言设计原则 (Language Design Principles)](./08.1.1_Language_Design_Principles.md)
-2. [语法与文法 (Syntax and Grammars)](./08.1.2_Syntax_and_Grammars.md)
-3. [语义 (Semantics)](./08.1.3_Semantics.md)
+- [08.1.1 语法与语义](./08.1.1_Syntax_and_Semantics.md)
+- [08.1.2 抽象语法树](./08.1.2_Abstract_Syntax_Tree.md)
+- [08.1.3 语言规范文档](./08.1.3_Language_Specification.md)
+- [08.1.4 语言设计案例](./08.1.4_Language_Design_Cases.md)
 
 ---
 
@@ -21,4 +25,4 @@
 
 ---
 
-> 本文档为语言设计与规约分支的导航。
+> 本文档为语言设计与规范分支的导航。

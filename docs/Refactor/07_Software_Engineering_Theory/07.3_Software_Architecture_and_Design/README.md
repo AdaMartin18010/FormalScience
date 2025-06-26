@@ -1,9 +1,13 @@
-# 07.3 软件架构与设计 (Software Architecture and Design)
+[返回软件工程理论主题索引](../README.md)
+
+# 07.3 软件架构与设计（Software Architecture and Design）
+
+> 本分支系统梳理软件架构与设计理论，包括架构风格、设计原则、架构模式、案例等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [架构设计原则 (Architectural Principles)](./07.3.1_Architectural_Principles.md)
-2. [架构模式 (Architectural Patterns)](./07.3.2_Architectural_Patterns.md)
+- [07.3.1 架构风格](./07.3.1_Architecture_Styles.md)
+- [07.3.2 设计原则](./07.3.2_Design_Principles.md)
+- [07.3.3 架构模式](./07.3.3_Architecture_Patterns.md)
 
 ---
 

@@ -1,11 +1,14 @@
-# 07.2 软件开发方法论 (Software Development Methodologies)
+[返回软件工程理论主题索引](../README.md)
+
+# 07.2 软件开发方法论（Software Development Methodologies）
+
+> 本分支系统梳理软件开发方法论，包括瀑布模型、敏捷开发、极限编程、DevOps等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [敏捷与Scrum (Agile and Scrum)](./07.2.1_Agile_and_Scrum.md)
-2. [瀑布与V模型 (Waterfall and V-Model)](./07.2.2_Waterfall_and_V-Model.md)
-3. [DevOps](./07.2.3_DevOps.md)
-4. [持续集成与持续部署 (CI/CD)](./07.2.4_CI_CD.md)
+- [07.2.1 瀑布模型](./07.2.1_Waterfall_Model.md)
+- [07.2.2 敏捷开发](./07.2.2_Agile_Development.md)
+- [07.2.3 极限编程](./07.2.3_Extreme_Programming.md)
+- [07.2.4 DevOps](./07.2.4_DevOps.md)
 
 ---
 

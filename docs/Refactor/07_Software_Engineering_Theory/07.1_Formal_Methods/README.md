@@ -1,10 +1,14 @@
-# 07.1 形式化方法 (Formal Methods)
+[返回软件工程理论主题索引](../README.md)
+
+# 07.1 形式方法（Formal Methods）
+
+> 本分支系统梳理软件工程中的形式方法理论，包括规范化建模、验证、模型检测、形式化证明等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [形式化方法导论](./07.1.1_Introduction_to_Formal_Methods.md)
-2. [形式化规约 (Formal Specification)](./07.1.2_Formal_Specification.md)
-3. [形式化验证 (Formal Verification)](./07.1.3_Formal_Verification.md)
+- [07.1.1 规范化建模](./07.1.1_Formal_Modeling.md)
+- [07.1.2 形式化验证](./07.1.2_Formal_Verification.md)
+- [07.1.3 模型检测](./07.1.3_Model_Checking.md)
+- [07.1.4 形式化证明](./07.1.4_Formal_Proof.md)
 
 ---
 

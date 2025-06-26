@@ -1,12 +1,15 @@
-# 09 计算机架构理论 (Computer Architecture Theory)
+# 09 计算机体系结构理论（Computer Architecture Theory）
+
+> 本索引系统梳理计算机体系结构理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
 ## 目录
-
-1. [计算机架构理论总览](./README.md)
-2. [基础理论 (Fundamentals)](./09.1_Fundamentals/README.md)
-3. [处理器设计 (Processor Design)](./09.2_Processor_Design/README.md)
-4. [内存层次结构 (Memory Hierarchy)](./09.3_Memory_Hierarchy/README.md)
-5. [并行计算与数据级并行 (Parallelism and Data-Level Parallelism)](./09.4_Parallelism_and_Data-Level_Parallelism/README.md)
+- [09.1 处理器体系结构](./01_Processor_Architecture/README.md)
+- [09.2 存储系统](./02_Memory_Systems/README.md)
+- [09.3 并行计算](./03_Parallel_Computing/README.md)
+- [09.4 性能优化](./04_Performance_Optimization/README.md)
+- [09.5 体系结构基础理论](./09.1.01_计算机体系结构基础理论.md)
+- [09.6 指令集架构理论](./09.1.02_指令集架构理论.md)
+- [09.7 微架构设计理论](./09.1.03_微架构设计理论.md)
 
 ---
 
@@ -29,3 +32,5 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为计算机架构理论分支的总览与导航。
+
+> 各分支内容将分批迁移自 /docs/Matter/ComputerArchitecture/、/docs/Refactor/09_Computer_Architecture_Theory/ 及相关文档，持续完善。

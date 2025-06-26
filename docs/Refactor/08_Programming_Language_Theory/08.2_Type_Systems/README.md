@@ -1,9 +1,14 @@
-# 08.2 类型系统 (Type Systems)
+[返回编程语言理论主题索引](../README.md)
+
+# 08.2 类型系统（Type Systems）
+
+> 本分支系统梳理类型系统理论，包括类型推断、类型安全、子类型、多态等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
-
-1. [类型系统基础 (Type System Fundamentals)](./08.2.1_Type_System_Fundamentals.md)
-2. [高级类型系统 (Advanced Type Systems)](./08.2.2_Advanced_Type_Systems.md)
+- [08.2.1 类型推断](./08.2.1_Type_Inference.md)
+- [08.2.2 类型安全](./08.2.2_Type_Safety.md)
+- [08.2.3 子类型与多态](./08.2.3_Subtyping_and_Polymorphism.md)
+- [08.2.4 类型系统案例](./08.2.4_Type_System_Cases.md)
 
 ---
 
