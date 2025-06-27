@@ -34,7 +34,7 @@
 
 ---
 
-## 1. 智能理论基础
+## 1. 智能理论基础1
 
 ### 1.1 智能定义与分类
 
@@ -167,7 +167,7 @@ def construct_adequate_representation {α : Type} (K : Set α) : KnowledgeRepres
 
 ---
 
-## 2. 知识表示理论
+## 2. 知识表示理论1
 
 ### 2.1 逻辑表示
 

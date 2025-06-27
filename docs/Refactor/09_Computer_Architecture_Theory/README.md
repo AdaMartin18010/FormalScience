@@ -37,5 +37,4 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为计算机架构理论分支的总览与导航。
-
 > 各分支内容将分批迁移自 /docs/Matter/ComputerArchitecture/、/docs/Refactor/09_Computer_Architecture_Theory/ 及相关文档，持续完善。
