@@ -1,4 +1,54 @@
-# 06 分布式系统理论（Distributed Systems Theory）
+# 10 分布式系统理论 (Distributed Systems Theory)
+
+## 概述
+
+分布式系统理论研究由多个独立计算机组成的系统的设计、实现和分析。这些系统通过网络进行通信和协调，以实现共同的目标。
+
+## 子模块
+
+### [10.1 微服务架构理论](10.1_Microservice_Architecture.md)
+
+- 服务分解和组合
+- 服务间通信模式
+- 服务治理和监控
+
+### [10.2 容器技术理论](10.2_Container_Technology.md)
+
+- 容器隔离和虚拟化
+- 容器编排和管理
+- 云原生部署
+
+### [10.3 CI/CD 理论](10.3_CI_CD_Theory.md)
+
+- 持续集成流程
+- 持续部署策略
+- 自动化交付
+
+### [10.4 物联网系统理论](10.4_IoT_Systems_Theory.md)
+
+- OTA更新系统
+- 设备管理
+- 通信协议
+
+### [10.5 可观测性理论](10.5_Observability_Theory.md)
+
+- 分布式追踪
+- 指标和日志
+- 监控和分析
+
+## 理论基础
+
+- 分布式一致性
+- 容错和可靠性
+- 性能和可扩展性
+
+## 相关理论
+
+- [并发理论](11_Concurrency_Theory/README.md)
+- [网络理论](11_Computer_Network_Theory/README.md)
+- [软件工程理论](07_Software_Engineering_Theory/README.md)
+
+---
 
 ## 目录
 

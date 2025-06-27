@@ -5,6 +5,7 @@
 > 本分支系统梳理软件维护与演化理论，包括维护类型、演化模型、重构、逆向工程、维护管理等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
+
 - [07.6.1 维护类型与策略](./07.6.1_Maintenance_Types_and_Strategies.md)
 - [07.6.2 软件演化模型](./07.6.2_Evolution_Models.md)
 - [07.6.3 重构与逆向工程](./07.6.3_Refactoring_and_Reverse_Engineering.md)

@@ -5,6 +5,7 @@
 > 本分支系统梳理编程语言理论中的高级主题，包括类型理论前沿、宏系统、元编程、语言安全、形式化验证等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
+
 - [08.5.1 类型理论前沿](./08.5.1_Advanced_Type_Theory.md)
 - [08.5.2 宏系统与元编程](./08.5.2_Macro_and_Metaprogramming.md)
 - [08.5.3 语言安全与形式化验证](./08.5.3_Language_Safety_and_Formal_Verification.md)

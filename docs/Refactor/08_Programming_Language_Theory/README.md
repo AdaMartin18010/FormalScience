@@ -3,6 +3,7 @@
 > 本索引系统梳理编程语言理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
 ## 目录
+
 - [08.1 语言设计与规范](./08.1_Language_Design_and_Specification/README.md)
 - [08.2 类型系统](./08.2_Type_Systems/README.md)
 - [08.3 编程范式](./08.3_Programming_Paradigms/README.md)
