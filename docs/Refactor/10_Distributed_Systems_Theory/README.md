@@ -1,4 +1,8 @@
-# 10 分布式系统理论 (Distributed Systems Theory)
+# 10 分布式系统理论（Distributed Systems Theory）
+
+[返回Refactor主目录](../README.md)
+
+> 本索引系统梳理分布式系统理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
 ## 概述
 

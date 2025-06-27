@@ -1,4 +1,5 @@
 # 99 上下文与进度（Context and Progress）
+[返回Refactor主目录](../README.md)
 
 ## 99.1 迁移与规范化进度
 
@@ -9,10 +10,6 @@
 ## 99.2 断点续作与上下文说明
 
 - [99.2.1 断点续作说明](./99.2.1_Context_Resume.md)
-
----
-
-[返回Refactor主目录](../README.md)
 
 ---
 

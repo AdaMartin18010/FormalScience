@@ -1,22 +1,33 @@
-[返回软件工程理论主题索引](../README.md)
-
 # 07.4 设计模式 (Design Patterns)
+
+[返回软件工程理论主题索引](../README.md)
 
 ## 目录
 
-- [07.4 设计模式](#074-设计模式-design-patterns)
+- [07.4 设计模式 (Design Patterns)](#074-设计模式-design-patterns)
   - [目录](#目录)
   - [概述](#概述)
   - [分类体系](#分类体系)
+    - [按目的分类](#按目的分类)
+    - [按范围分类](#按范围分类)
   - [理论基础](#理论基础)
+    - [设计原则](#设计原则)
+    - [形式化基础](#形式化基础)
   - [模式详解](#模式详解)
-    - [07.4.1 创建型模式](07.4.1_Creational_Patterns.md)
-    - [07.4.2 结构型模式](07.4.2_Structural_Patterns.md)
-    - [07.4.3 行为型模式](07.4.3_Behavioral_Patterns.md)
-    - [07.4.4 并发模式](07.4.4_Concurrent_Patterns.md)
+    - [07.4.1 创建型模式](#0741-创建型模式)
+    - [07.4.2 结构型模式](#0742-结构型模式)
+    - [07.4.3 行为型模式](#0743-行为型模式)
+    - [07.4.4 并发模式](#0744-并发模式)
   - [应用场景](#应用场景)
+    - [软件架构中的应用](#软件架构中的应用)
+    - [特定领域应用](#特定领域应用)
   - [最佳实践](#最佳实践)
+    - [模式选择原则](#模式选择原则)
+    - [实现注意事项](#实现注意事项)
+    - [Rust 特定实践](#rust-特定实践)
   - [相关理论](#相关理论)
+    - [软件工程理论](#软件工程理论)
+    - [形式化理论](#形式化理论)
   - [参考文献](#参考文献)
 
 ---
@@ -97,6 +108,7 @@
 创建型模式关注对象的创建机制，通过将对象的创建与使用分离，提高系统的灵活性和可维护性。
 
 **核心模式**:
+
 - **单例模式**: 保证一个类仅有一个实例
 - **工厂方法模式**: 定义创建对象的接口，让子类决定实例化
 - **抽象工厂模式**: 创建一系列相关对象的接口
@@ -108,6 +120,7 @@
 结构型模式关注类和对象的组合，通过继承和组合机制来获得新的功能。
 
 **核心模式**:
+
 - **适配器模式**: 将不兼容的接口转换为可用的接口
 - **桥接模式**: 将抽象与实现分离
 - **组合模式**: 将对象组合成树形结构
@@ -121,6 +134,7 @@
 行为型模式关注对象之间的通信机制，描述对象之间如何相互协作以及如何分配职责。
 
 **核心模式**:
+
 - **责任链模式**: 为请求创建处理者链
 - **命令模式**: 将请求封装为对象
 - **解释器模式**: 定义语言的文法表示
@@ -138,6 +152,7 @@
 并发模式专注于处理并发和多线程环境下的问题，帮助设计安全、高效的并发程序。
 
 **核心模式**:
+
 - **线程池模式**: 预先创建线程组执行任务
 - **Future/Promise 模式**: 表示异步计算结果
 - **反应器模式**: 通过非阻塞 I/O 处理请求
@@ -228,11 +243,12 @@
 2. Freeman, E., Robson, E., Sierra, K., & Bates, B. (2004). *Head First Design Patterns*. O'Reilly Media.
 3. Schmidt, D., Stal, M., Rohnert, H., & Buschmann, F. (2000). *Pattern-Oriented Software Architecture, Volume 2: Patterns for Concurrent and Networked Objects*. Wiley.
 4. Martin, R. C. (2000). *Design Principles and Design Patterns*. Object Mentor.
-5. Rust Programming Language. (2021). *The Rust Programming Language*. https://doc.rust-lang.org/book/
+5. Rust Programming Language. (2021). *The Rust Programming Language*. <https://doc.rust-lang.org/book/>
 
 ---
 
 **相关链接**:
+
 - [返回软件工程理论总览](../README.md#07-软件工程理论)
 - [软件架构与设计](07.3_Software_Architecture_and_Design/README.md)
 - [软件质量与测试](07.5_Software_Quality_and_Testing/README.md)

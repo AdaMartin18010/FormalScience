@@ -7,16 +7,19 @@
 ## 子模块
 
 ### [07.7.1 Web 组件](07.7.1_Web_Components.md)
+
 - WebAssembly 高性能执行环境
 - HTTP 客户端和服务器组件
 - Web 技术栈集成
 
 ### [07.7.2 Web3 组件](07.7.2_Web3_Components.md)
+
 - P2P 网络通信
 - 区块链和智能合约
 - 去中心化应用组件
 
 ### [07.7.3 认证组件](07.7.3_Authentication_Components.md)
+
 - 加密和解密功能
 - 身份验证和授权
 - 安全协议实现
@@ -31,4 +34,4 @@
 
 - [软件架构与设计](07.3_Software_Architecture_and_Design/README.md)
 - [设计模式](07.4_Design_Patterns/README.md)
-- [分布式系统理论](10_Distributed_Systems_Theory/README.md) 
+- [分布式系统理论](10_Distributed_Systems_Theory/README.md)
