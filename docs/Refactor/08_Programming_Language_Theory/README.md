@@ -1,4 +1,5 @@
 # 08 编程语言理论（Programming Language Theory）
+
 [返回Refactor主目录](../README.md)
 
 > 本索引系统梳理编程语言理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
@@ -39,5 +40,4 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为程序语言理论分支的总览与导航。
-
 > 各分支内容将分批迁移自 /docs/Matter/ProgrammingLanguage/、/docs/Refactor/08_Programming_Language_Theory/ 及相关文档，持续完善。
