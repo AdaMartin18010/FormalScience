@@ -1,11 +1,12 @@
 # 07 软件工程理论（Software Engineering Theory）
+
 [返回Refactor主目录](../README.md)
 
 > 本索引系统梳理软件工程理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
 ## 目录
 
-- [07 软件工程理论 (Software Engineering Theory)](#07-软件工程理论-software-engineering-theory)
+- [07 软件工程理论（Software Engineering Theory）](#07-软件工程理论software-engineering-theory)
   - [目录](#目录)
   - [概述](#概述)
   - [理论体系](#理论体系)
