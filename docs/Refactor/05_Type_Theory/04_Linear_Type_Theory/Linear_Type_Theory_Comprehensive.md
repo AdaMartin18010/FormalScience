@@ -51,7 +51,7 @@ $$\frac{\Gamma, A \vdash B}{\Gamma, !A \vdash B} \text{ (!L)}$$
 2. 切割消除确保一致性
 3. 通过结构归纳证明
 
-**算法 1.1 (线性逻辑证明搜索)**
+**算法 1.1 (线性逻辑证明搜索)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -131,7 +131,7 @@ impl LinearLogic {
 2. **闭结构**：存在内部同态对象 $\multimap$
 3. **指数结构**：存在共幺子 $\delta : A \rightarrow !A$ 和 $\varepsilon : !A \rightarrow A$
 
-**算法 1.2 (线性逻辑模型构造)**
+**算法 1.2 (线性逻辑模型构造)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -192,7 +192,7 @@ $$\frac{\Gamma \vdash M : A \multimap B \quad \Delta \vdash N : A}{\Gamma, \Delt
 
 $$\frac{\Gamma \vdash M : A \quad \Delta \vdash N : B}{\Gamma, \Delta \vdash M \otimes N : A \otimes B} \text{ (张量积)}$$
 
-**算法 2.1 (线性类型检查)**
+**算法 2.1 (线性类型检查)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -290,7 +290,7 @@ impl LinearLambda {
 **定义 2.4 (相关类型系统)**
 相关类型系统要求变量必须使用至少一次。
 
-**算法 2.2 (多态线性类型系统)**
+**算法 2.2 (多态线性类型系统)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -357,7 +357,7 @@ impl PolymorphicLinear {
 **定义 3.2 (资源安全)**
 资源安全确保资源不会泄漏或重复释放。
 
-**算法 3.1 (资源管理器)**
+**算法 3.1 (资源管理器)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -416,7 +416,7 @@ impl ResourceManager {
 **定义 3.4 (线性互斥锁)**
 线性互斥锁确保锁的正确使用。
 
-**算法 3.2 (线性并发原语)**
+**算法 3.2 (线性并发原语)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -509,7 +509,7 @@ impl LinearMutex {
 - **量子测量**：$\text{measure}$ (量子测量)
 - **量子叠加**：$\oplus_q$ (量子叠加)
 
-**算法 4.1 (量子线性类型检查)**
+**算法 4.1 (量子线性类型检查)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -587,7 +587,7 @@ impl QuantumLinearLogic {
 **定义 4.4 (量子资源安全)**
 量子资源安全确保量子资源不会泄漏或重复使用。
 
-**算法 4.2 (量子资源管理器)**
+**算法 4.2 (量子资源管理器)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -659,7 +659,7 @@ impl QuantumResourceManager {
 **定义 5.2 (线性性约束)**
 线性性约束描述变量的使用模式。
 
-**算法 5.1 (线性性推断算法)**
+**算法 5.1 (线性性推断算法)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -796,7 +796,7 @@ impl LinearityInference {
 **定义 5.4 (资源跟踪)**
 资源跟踪在运行时确保线性性。
 
-**算法 5.2 (线性类型编译器)**
+**算法 5.2 (线性类型编译器)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -916,7 +916,7 @@ impl CodeGenerator {
 **定义 6.2 (线性类型族)**
 线性类型族定义类型级别的线性性关系。
 
-**算法 6.1 (高阶线性类型检查)**
+**算法 6.1 (高阶线性类型检查)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -974,7 +974,7 @@ impl HigherOrderLinear {
 **定义 6.4 (线性性证明)**
 线性性证明确保程序的线性性性质。
 
-**算法 6.2 (线性性证明生成)**
+**算法 6.2 (线性性证明生成)**:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -1084,4 +1084,4 @@ impl LinearityProof {
 
 **最后更新**: 2024-12-20  
 **版本**: v1.0.0  
-**维护者**: 形式科学体系重构团队 
+**维护者**: 形式科学体系重构团队

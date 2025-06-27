@@ -70,7 +70,7 @@ $$M ::= x \mid \lambda x:\tau.M \mid M_1 M_2$$
 类型上下文是变量到类型的映射：
 $$\Gamma ::= \emptyset \mid \Gamma, x:\tau$$
 
-### 2. 类型规则
+### 2. 类型规则1
 
 **定义 2.1 (类型判断)**
 类型判断的形式为 $\Gamma \vdash M : \tau$，表示在上下文 $\Gamma$ 下，项 $M$ 具有类型 $\tau$。
