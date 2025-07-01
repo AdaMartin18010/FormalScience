@@ -6,54 +6,36 @@
 
 ## 模块结构
 
-### 1. 科学哲学 (Philosophy of Science)
+### 1. 科学哲学 (Philosophy of Science) - (进行中)
 
 科学哲学研究科学知识的本质、方法和概念基础，探讨科学理论的结构、科学解释的性质、科学实在论与反实在论等问题。
 
-- [科学理论结构](04_Philosophy_of_Science/01_Scientific_Theory_Structure.md)
-- [科学解释模型](04_Philosophy_of_Science/02_Scientific_Explanation_Models.md)
-- [科学实在论](04_Philosophy_of_Science/03_Scientific_Realism.md)
-- [科学方法论](04_Philosophy_of_Science/04_Scientific_Methodology.md)
-- [科学进步理论](04_Philosophy_of_Science/05_Scientific_Progress_Theories.md)
+- [科学理论结构](./01.1_Philosophy_of_Science/01_Scientific_Theory_Structure.md)
+- [科学解释模型](./01.1_Philosophy_of_Science/02_Scientific_Explanation_Models.md)
+- [科学实在论](./01.1_Philosophy_of_Science/03_Scientific_Realism.md)
+- [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md)
+- [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md)
 
-### 2. 心灵哲学 (Philosophy of Mind)
+### 2. 心灵哲学 (Philosophy of Mind) - (已完成)
 
 心灵哲学探讨心灵的本质、意识的性质、心灵与身体的关系等问题，为认知科学和人工智能提供概念基础。
 
-- [心身问题](07_Philosophy_of_Mind/01_Mind_Body_Problem.md) - 探讨心灵与物理世界的关系
-- [意识理论](07_Philosophy_of_Mind/02_Consciousness_Theory.md) - 分析意识的本质与理论
-- [心理表征](07_Philosophy_of_Mind/03_Mental_Representation.md) - 研究心理表征的性质与机制
-- [认知科学](07_Philosophy_of_Mind/04_Cognitive_Science.md) - 探讨认知的计算与神经基础
-- [意向性理论](07_Philosophy_of_Mind/05_Intentionality.md) - 分析心理状态的"关于性"特征
-- [自我与主体性](07_Philosophy_of_Mind/06_Self_and_Subjectivity.md) - 研究自我意识与主体性体验
-- [意识的本体论与认识论](07_Philosophy_of_Mind/07_Consciousness_Ontology_Epistemology.md) - 探讨意识的存在性质与认识方法
+- [心理表征](./01.2_Philosophy_of_Mind/01_Mental_Representation.md) - 研究心理表征的性质与机制
+- [意向性理论](./01.2_Philosophy_of_Mind/02_Intentionality_Theory.md) - 分析心理状态的"关于性"特征
+- [自我与主体性](./01.2_Philosophy_of_Mind/03_Self_and_Subjectivity.md) - 研究自我意识与主体性体验
+- [意识的本体论与认识论](./01.2_Philosophy_of_Mind/04_Consciousness_Ontology_Epistemology.md) - 探讨意识的存在性质与认识方法
 
-### 3. 语言哲学 (Philosophy of Language)
+### 3. 语言哲学 (Philosophy of Language) - (待创建)
 
 语言哲学研究语言的本质、意义理论、指称理论等问题，为形式语言理论提供哲学基础。
 
-- [意义理论](03_Philosophy_of_Language/01_Theories_of_Meaning.md)
-- [指称理论](03_Philosophy_of_Language/02_Theories_of_Reference.md)
-- [语言行为理论](03_Philosophy_of_Language/03_Speech_Act_Theory.md)
-- [形式语用学](03_Philosophy_of_Language/04_Formal_Pragmatics.md)
-
-### 4. 逻辑哲学 (Philosophy of Logic)
+### 4. 逻辑哲学 (Philosophy of Logic) - (待创建)
 
 逻辑哲学探讨逻辑的本质、逻辑真理的地位、逻辑多元论等问题，为形式逻辑提供哲学基础。
 
-- [逻辑本质论](02_Philosophy_of_Logic/01_Nature_of_Logic.md)
-- [逻辑真理地位](02_Philosophy_of_Logic/02_Logical_Truth_Status.md)
-- [逻辑多元论](02_Philosophy_of_Logic/03_Logical_Pluralism.md)
-- [悖论研究](02_Philosophy_of_Logic/04_Paradoxes.md)
-
-### 5. 数学哲学 (Philosophy of Mathematics)
+### 5. 数学哲学 (Philosophy of Mathematics) - (待创建)
 
 数学哲学研究数学对象的本体论地位、数学知识的认识论基础、数学实践的方法论等问题。
-
-- [数学本体论](01_Philosophy_of_Mathematics/01_Mathematical_Ontology.md)
-- [数学认识论](01_Philosophy_of_Mathematics/02_Mathematical_Epistemology.md)
-- [数学实践哲学](01_Philosophy_of_Mathematics/03_Philosophy_of_Mathematical_Practice.md)
-- [数学解释理论](01_Philosophy_of_Mathematics/04_Theories_of_Mathematical_Explanation.md)
 
 ## 核心概念
 
@@ -91,15 +73,15 @@
 
 ### 内部引用
 
-- [数理基础](../02_Mathematical_Foundations) - 提供数学基础理论
-- [逻辑理论](../03_Logic_Theory) - 提供形式逻辑系统
-- [形式语言理论](../04_Formal_Language_Theory) - 提供语言形式化理论
+- [数理基础](../02_Mathematical_Foundations/README.md) - 提供数学基础理论
+- [逻辑理论](../03_Logic_Theory/README.md) - 提供形式逻辑系统
+- [形式语言理论](../04_Formal_Language_Theory/README.md) - 提供语言形式化理论
 
 ### 外部引用
 
-- [类型理论](../05_Type_Theory) - 与本体论和认识论相关
-- [控制理论](../03_Control_Theory) - 与科学方法论相关
-- [人工智能理论](../13_Artificial_Intelligence_Theory) - 与心灵哲学相关
+- [类型理论](../05_Type_Theory/README.md) - 与本体论和认识论相关
+- [控制理论](../03_Control_Theory/README.md) - 与科学方法论相关
+- [人工智能理论](../13_Artificial_Intelligence_Theory/README.md) - 与心灵哲学相关
 
 ## 研究方法
 
@@ -125,9 +107,9 @@
 
 ## 模块进度
 
-- **已完成**：心灵哲学子模块 (7/7) - 2025年1月17日完成
-- **进行中**：科学哲学子模块 (5/10)
-- **待开始**：语言哲学、逻辑哲学、数学哲学
+- **已完成**: 心灵哲学子模块 (4/4) - 2025年1月17日完成
+- **进行中**: 科学哲学子模块
+- **待开始**: 语言哲学、逻辑哲学、数学哲学
 
 ## 参考资料
 
@@ -140,14 +122,14 @@
 ## 更新历史
 
 - **2025-01-15**: 创建统一的哲学基础模块结构
-- **2025-01-17**: 完成心灵哲学子模块全部7个专题文档
-- **2025-01-17**: 计划开始目录编号规范化与数理基础模块准备
-- **2025-01-18**: 计划完成伦理学、语言哲学、社会政治哲学重构
+- **2025-01-17**: 完成心灵哲学子模块全部专题文档
+- **2025-01-17**: 完成目录编号规范化第一阶段
+- **2025-01-18**: 修正本模块README链接，规范化内部目录
 
 ## 返回
 
-[返回主索引](README.md)  
-[返回重构进度与规范](README.md)
+[返回主索引](../README.md)  
+[返回重构进度与规范](../07_重构进度与规范/README.md)
 
 ## 批判性分析
 

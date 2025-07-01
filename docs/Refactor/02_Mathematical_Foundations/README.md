@@ -1,5 +1,23 @@
 # 数学理论 (Mathematics Theory)
 
+## 模块索引
+
+- [**02.01 集合论 (Set Theory)**](./02.01_Set_Theory/README.md)
+- [**02.02 逻辑 (Logic)**](./02.02_Logic/README.md)
+- [**02.03 数系理论 (Number Systems)**](./02.03_Number_Systems/README.md)
+- [**02.04 函数论 (Function Theory)**](./02.04_Function_Theory/README.md)
+- [**02.05 代数 (Algebra)**](./02.05_Algebra/README.md)
+- [**02.06 拓扑学 (Topology)**](./02.06_Topology/README.md)
+- [**02.07 范畴论 (Category Theory)**](./02.07_Category_Theory/README.md)
+- [**02.08 分析 (Analysis)**](./02.08_Analysis/README.md)
+- [**02.09 几何 (Geometry)**](./02.09_Geometry/README.md)
+- [**02.10 数论 (Number Theory)**](./02.10_Number_Theory/README.md)
+- [**02.11 组合数学 (Combinatorics)**](./02.11_Combinatorics/README.md)
+- [**02.12 测度论 (Measure Theory)**](./02.12_Measure_Theory/README.md)
+- **遗留文件 (Legacy Files)**: [`_legacy_06/`](./_legacy_06/) (待审查)
+
+---
+
 ## 概述
 
 数学理论是研究数学结构、关系和模式的科学，为形式化科学提供基础工具和方法。本文档系统化组织数学理论的核心分支，包括集合论、代数、分析、几何等领域的理论基础和形式化实现。
@@ -21,7 +39,7 @@
 
 ## 核心分支
 
-### 1. 集合论 (Set Theory)
+### 1. [集合论 (Set Theory)](./02.01_Set_Theory/)
 
 集合论是数学的基础，研究集合的性质和关系。
 
@@ -41,7 +59,7 @@
 - 序数：良序集的序型
 - 超限归纳：在序数上的归纳原理
 
-### 2. 代数 (Algebra)
+### 2. [代数 (Algebra)](./02.05_Algebra/)
 
 代数研究代数结构和运算。
 
@@ -59,7 +77,7 @@
 - 同构：双射同态
 - 商结构：通过等价关系构造的结构
 
-### 3. 分析 (Analysis)
+### 3. [分析 (Analysis)](./02.08_Analysis/)
 
 分析研究连续性和极限。
 
@@ -78,7 +96,7 @@
 - 可微性：函数的可微性
 - 积分：函数的积分
 
-### 4. 几何 (Geometry)
+### 4. [几何 (Geometry)](./02.09_Geometry/)
 
 几何研究空间和形状。
 
@@ -799,3 +817,9 @@ impl MathematicalProof {
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。
+
+---
+
+## 返回
+
+[返回主索引](../README.md)
