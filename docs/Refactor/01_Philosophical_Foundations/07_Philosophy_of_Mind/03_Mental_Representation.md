@@ -521,6 +521,7 @@ impl ConceptVector {
   > 其中：B（身体状态）、S（感知状态）、E（环境状态）、I（交互函数）
 
 **Rust伪代码示例**：
+
 ```rust
 struct EmbodiedRepresentation {
     body_state: BodyState,
@@ -541,6 +542,7 @@ struct EmbodiedRepresentation {
   > **ActiveInference: argmin_a E[PredictionError(a)]**
 
 **Rust伪代码示例**：
+
 ```rust
 fn prediction_error(input: f64, prediction: f64) -> f64 {
     input - prediction
@@ -564,6 +566,7 @@ fn active_inference(model: &Model, context: &Context) -> Action {
   > 其中f_i为第i层变换，x为原始输入。
 
 **Rust伪代码示例**：
+
 ```rust
 struct DeepLayer {
     weights: Vec<f64>,
