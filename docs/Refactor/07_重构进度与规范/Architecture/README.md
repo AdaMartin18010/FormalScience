@@ -22,9 +22,9 @@
 
 ## 2. 交叉引用
 
-- [重构进度与规范总览](../README.md)
-- [上下文系统架构](../../12_Context_System/Integration/Context_System_Architecture.md)
-- [主索引](../../00_Master_Index/README.md)
+- [重构进度与规范总览](README.md)
+- [上下文系统架构](../../00_Primary_System/context_system_architecture.md)
+- [主索引](README.md)
 
 ## 3. 规范说明
 
@@ -36,3 +36,8 @@
 ---
 
 > 本README为架构设计唯一入口，所有内容均已合并、去重、规范化。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

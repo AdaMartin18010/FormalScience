@@ -863,9 +863,14 @@ theorem fault_recovery_availability :
 
 **相关理论**：
 
-- [数据模型理论](./01_Data_Models/README.md)
-- [数据库设计理论](./02_Database_Design/README.md)
-- [查询优化理论](./03_Query_Optimization/README.md)
-- [事务管理理论](./04_Transaction_Management/README.md)
+- [数据模型理论](README.md)
+- [数据库设计理论](README.md)
+- [查询优化理论](README.md)
+- [事务管理理论](README.md)
 
-**返回**：[数据库理论目录](../README.md)
+**返回**：[数据库理论目录](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

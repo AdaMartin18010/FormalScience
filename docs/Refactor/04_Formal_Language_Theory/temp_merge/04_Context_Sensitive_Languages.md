@@ -888,7 +888,7 @@ $$\text{DCSL} \subseteq \text{CSL} = \text{NSPACE}(n)$$
 - [02.2_Regular_Languages.md](02.2_Regular_Languages.md) - 正则语言理论
 - [02.3_Context_Free_Languages.md](02.3_Context_Free_Languages.md) - 上下文无关语言
 - [02.5_Recursively_Enumerable_Languages.md](02.5_Recursively_Enumerable_Languages.md) - 递归可枚举语言
-- [02.6_Automata_Theory.md](02.6_Automata_Theory.md) - 自动机理论
+- [02.6_Automata_Theory.md](../02.6_Automata_Theory.md) - 自动机理论
 - [02.7_Computability_Theory.md](02.7_Computability_Theory.md) - 可计算性理论
 - [02.8_Complexity_Theory.md](02.8_Complexity_Theory.md) - 复杂性理论
 
@@ -921,3 +921,8 @@ $$\text{DCSL} \subseteq \text{CSL} = \text{NSPACE}(n)$$
 - **创建日期**: 2024-12-20
 - **最后更新**: 2024-12-20
 - **作者**: FormalScience Team
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

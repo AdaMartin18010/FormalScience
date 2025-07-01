@@ -2,18 +2,18 @@
 
 ## 目录结构
 
-1. [自动机理论](./01_Automata_Theory/README.md)
-2. [乔姆斯基谱系](./01_Chomsky_Hierarchy/README.md)
+1. [自动机理论](README.md)
+2. [乔姆斯基谱系](README.md)
 3. [形式语言基础](./02_Formal_Language_Foundation.md)
 4. [正则语言](./02_Regular_Languages.md)
 5. [上下文无关语言](./03_Context_Free_Languages.md)
-6. [形式文法](./03.2_Formal_Grammars.md)
-7. [语言层级](./03.3_Language_Hierarchy/README.md)
-8. [语法分析理论](./03.4_Parsing_Theory/README.md)
-9. [语义理论](./03.5_Semantics_Theory/README.md)
-10. [计算理论](./03.6_Computation_Theory/README.md)
-11. [语言应用](./03.7_Language_Applications/README.md)
-12. [前沿与扩展](./03.8_Language_Frontiers/README.md)
+6. [形式文法](03.2_Formal_Grammars.md)
+7. [语言层级](README.md)
+8. [语法分析理论](README.md)
+9. [语义理论](README.md)
+10. [计算理论](README.md)
+11. [语言应用](README.md)
+12. [前沿与扩展](README.md)
 
 ---
 
@@ -32,11 +32,11 @@
 
 ## 交叉引用
 
-- [哲学基础](../01_Philosophical_Foundations/README.md)
-- [数学基础](../02_Mathematical_Foundation/README.md)
-- [逻辑理论](../03_Logic_Theory/README.md)
-- [类型理论](../04_Type_Theory/README.md)
-- [上下文系统](../12_Context_System/README.md)
+- [哲学基础](README.md)
+- [数学基础](README.md)
+- [逻辑理论](README.md)
+- [类型理论](README.md)
+- [上下文系统](README.md)
 
 ---
 
@@ -49,3 +49,8 @@
 ---
 
 > 本文档为形式语言理论分支的总览与导航，后续所有子主题均严格遵循本规范。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

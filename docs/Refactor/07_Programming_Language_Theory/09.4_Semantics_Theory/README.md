@@ -815,6 +815,11 @@ $$\llbracket e_1 \rrbracket = \llbracket e_2 \rrbracket$$
 
 ## 相关链接
 
-- [语言设计理论](../09.1_Language_Design_Theory/README.md)
-- [类型系统理论](../09.2_Type_System_Theory/README.md)
-- [编译理论](../09.3_Compilation_Theory/README.md)
+- [语言设计理论](README.md)
+- [类型系统理论](README.md)
+- [编译理论](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -1,574 +1,266 @@
-# 形式科学项目 - 上下文系统架构
-
-**创建时间**: 2025-01-15  
-**最后更新**: 2025-01-15  
-**文档状态**: 活跃  
+# 上下文系统架构 (Context System Architecture)
 
 ## 1. 架构概述
 
-### 1.1 系统目标
+上下文系统是形式科学重构项目的核心基础设施，它通过管理和维护项目的上下文信息，确保理论体系的一致性和完整性。本文档描述了上下文系统的整体架构、核心组件及其交互方式。
 
-上下文系统架构旨在提供一个统一的框架，用于：
+### 1.1 设计原则
 
-1. 组织和管理形式科学项目的知识体系
-2. 确保不同领域知识间的连贯性和一致性
-3. 支持知识的有效传递和演化
-4. 检测和解决知识间的潜在冲突
-5. 提供直观的知识导航和探索机制
+上下文系统的设计遵循以下核心原则：
 
-### 1.2 设计原则
+1. **模块化**: 系统由独立但相互关联的组件构成，便于维护和扩展
+2. **层次化**: 采用分层架构，从底层数据到高层应用
+3. **可追溯性**: 所有上下文信息都可追溯到其来源
+4. **一致性**: 确保不同模块间的概念和术语一致
+5. **适应性**: 能够适应项目的演化和扩展
 
-上下文系统架构遵循以下设计原则：
+### 1.2 架构层次
 
-1. **模块化**: 将系统分解为独立但相互关联的模块
-2. **层次化**: 采用多层次结构组织知识和功能
-3. **可扩展性**: 支持新领域和概念的无缝集成
-4. **一致性**: 确保系统各部分采用统一的表示和操作方式
-5. **可追溯性**: 支持知识的来源和演化追踪
+上下文系统采用四层架构：
 
-## 2. 系统组件
+1. **数据层**: 存储和管理原始上下文数据
+2. **模型层**: 定义上下文模型和关系
+3. **服务层**: 提供上下文管理和分析功能
+4. **应用层**: 支持具体的上下文应用场景
 
-### 2.1 核心组件
+## 2. 核心组件
 
-```mermaid
-graph TD
-    CM[上下文管理器] --> MM[模型管理器]
-    CM --> RM[关系管理器]
-    CM --> FM[流动管理器]
-    CM --> VM[可视化管理器]
-    
-    MM --> MD[模型定义]
-    MM --> MI[模型实例]
-    
-    RM --> RD[关系定义]
-    RM --> RI[关系实例]
-    
-    FM --> FD[流动定义]
-    FM --> FI[流动实例]
-    
-    VM --> VD[可视化定义]
-    VM --> VR[可视化渲染]
-    
-    classDef core fill:#f96,stroke:#333,stroke-width:2px
-    classDef manager fill:#bbf,stroke:#333,stroke-width:1.5px
-    classDef component fill:#bfb,stroke:#333,stroke-width:1px
-    
-    class CM core
-    class MM,RM,FM,VM manager
-    class MD,MI,RD,RI,FD,FI,VD,VR component
-```
+### 2.1 上下文数据存储
 
-#### 2.1.1 上下文管理器 (Context Manager)
+**功能**: 存储和管理所有上下文相关数据
 
-上下文管理器是系统的核心组件，负责协调其他组件的工作，并提供统一的接口。主要功能包括：
+**组件**:
 
-- 初始化和配置系统
-- 协调各管理器的工作
-- 处理上下文操作请求
-- 维护系统状态
-- 提供API接口
+- **文档存储**: 管理所有文档及其元数据
+- **关系数据库**: 存储实体间的关系信息
+- **版本控制**: 跟踪内容的变更历史
 
-#### 2.1.2 模型管理器 (Model Manager)
+**接口**:
 
-模型管理器负责管理上下文模型的定义和实例。主要功能包括：
+- `store(document, metadata)`: 存储文档及其元数据
+- `retrieve(documentId)`: 检索指定文档
+- `listVersions(documentId)`: 列出文档的所有版本
 
-- 创建和维护上下文模型定义
-- 实例化上下文模型
-- 验证模型的一致性
-- 提供模型查询接口
-- 支持模型的版本控制
+### 2.2 上下文模型管理器
 
-#### 2.1.3 关系管理器 (Relation Manager)
+**功能**: 定义和管理上下文模型
 
-关系管理器负责管理上下文间的关系。主要功能包括：
+**组件**:
 
-- 定义和维护关系类型
-- 创建和管理关系实例
-- 验证关系的有效性
-- 提供关系查询接口
-- 检测关系冲突
+- **概念模型**: 管理核心概念及其属性
+- **关系模型**: 管理概念间的关系
+- **上下文图**: 构建和维护上下文知识图谱
 
-#### 2.1.4 流动管理器 (Flow Manager)
+**接口**:
 
-流动管理器负责管理上下文间的知识流动。主要功能包括：
+- `defineConcept(name, attributes)`: 定义新概念
+- `defineRelation(source, target, type)`: 定义概念间关系
+- `queryContext(concept)`: 查询与概念相关的上下文
 
-- 定义和维护流动类型
-- 创建和管理流动实例
-- 验证流动的有效性
-- 提供流动查询接口
-- 监控流动状态
+### 2.3 上下文分析引擎
 
-#### 2.1.5 可视化管理器 (Visualization Manager)
+**功能**: 分析上下文数据，提取洞见
 
-可视化管理器负责生成上下文的可视化表示。主要功能包括：
+**组件**:
 
-- 定义和维护可视化模板
-- 根据上下文数据生成可视化
-- 提供可视化渲染接口
-- 支持交互式可视化
-- 导出可视化结果
+- **一致性检查器**: 检查概念和术语的一致性
+- **依赖分析器**: 分析模块间的依赖关系
+- **影响评估器**: 评估变更对系统的影响
 
-### 2.2 辅助组件
+**接口**:
 
-```mermaid
-graph TD
-    CM[上下文管理器] --> SM[存储管理器]
-    CM --> QM[查询管理器]
-    CM --> IM[集成管理器]
-    CM --> PM[进度管理器]
-    
-    SM --> FS[文件存储]
-    SM --> MS[内存缓存]
-    
-    QM --> QP[查询处理]
-    QM --> QO[查询优化]
-    
-    IM --> IP[集成插件]
-    IM --> IC[集成配置]
-    
-    PM --> PT[进度跟踪]
-    PM --> PR[进度报告]
-    
-    classDef core fill:#f96,stroke:#333,stroke-width:2px
-    classDef manager fill:#bbf,stroke:#333,stroke-width:1.5px
-    classDef component fill:#bfb,stroke:#333,stroke-width:1px
-    
-    class CM core
-    class SM,QM,IM,PM manager
-    class FS,MS,QP,QO,IP,IC,PT,PR component
-```
+- `checkConsistency(domain)`: 检查特定领域的一致性
+- `analyzeDependencies(module)`: 分析模块依赖
+- `assessImpact(change)`: 评估变更影响
 
-#### 2.2.1 存储管理器 (Storage Manager)
+### 2.4 上下文集成服务
 
-存储管理器负责上下文数据的持久化和检索。主要功能包括：
+**功能**: 将上下文信息集成到项目的各个方面
 
-- 文件系统存储管理
-- 内存缓存管理
-- 数据序列化和反序列化
-- 数据一致性维护
-- 备份和恢复
+**组件**:
 
-#### 2.2.2 查询管理器 (Query Manager)
+- **交叉引用生成器**: 生成和维护交叉引用
+- **导航系统**: 提供基于上下文的导航
+- **知识图谱**: 可视化知识结构和关系
 
-查询管理器负责处理对上下文系统的查询。主要功能包括：
+**接口**:
 
-- 解析查询请求
-- 优化查询执行
-- 执行查询操作
-- 返回查询结果
-- 缓存常用查询结果
+- `generateCrossReferences(document)`: 生成交叉引用
+- `buildNavigationPath(source, target)`: 构建导航路径
+- `visualizeKnowledgeGraph(domain)`: 可视化知识图谱
 
-#### 2.2.3 集成管理器 (Integration Manager)
+### 2.5 进度跟踪系统
 
-集成管理器负责与其他系统和工具的集成。主要功能包括：
+**功能**: 跟踪和管理项目进度
 
-- 管理集成插件
-- 配置集成接口
-- 处理数据转换
-- 同步外部系统状态
-- 提供扩展点
+**组件**:
 
-#### 2.2.4 进度管理器 (Progress Manager)
+- **任务管理器**: 管理任务及其状态
+- **进度报告生成器**: 生成进度报告
+- **里程碑跟踪器**: 跟踪项目里程碑
 
-进度管理器负责跟踪和报告系统的进度。主要功能包括：
+**接口**:
 
-- 跟踪任务进度
-- 生成进度报告
-- 维护历史记录
-- 提供进度统计
-- 支持进度可视化
+- `createTask(description, deadline)`: 创建新任务
+- `updateTaskStatus(taskId, status)`: 更新任务状态
+- `generateProgressReport(period)`: 生成进度报告
 
-## 3. 数据模型
+## 3. 组件交互
 
-### 3.1 核心数据模型
+### 3.1 数据流
 
-```mermaid
-classDiagram
-    ContextUnit <|-- KnowledgeUnit
-    ContextUnit <|-- RelationUnit
-    ContextUnit <|-- FlowUnit
-    
-    KnowledgeUnit "1" *-- "n" Attribute
-    KnowledgeUnit "1" *-- "n" FormalDefinition
-    
-    RelationUnit "1" *-- "2" KnowledgeUnit
-    RelationUnit "1" *-- "1" RelationType
-    
-    FlowUnit "1" *-- "n" RelationUnit
-    FlowUnit "1" *-- "1" FlowType
-    
-    class ContextUnit {
-        +String id
-        +String name
-        +DateTime createdAt
-        +DateTime updatedAt
-        +String version
-    }
-    
-    class KnowledgeUnit {
-        +String description
-        +ContextLevel level
-        +Domain domain
-        +List~String~ dependencies
-    }
-    
-    class RelationUnit {
-        +String sourceId
-        +String targetId
-        +String description
-        +float strength
-    }
-    
-    class FlowUnit {
-        +String sourceContextId
-        +String targetContextId
-        +String transformationRule
-    }
-    
-    class Attribute {
-        +String name
-        +String value
-        +AttributeType type
-    }
-    
-    class FormalDefinition {
-        +String notation
-        +String language
-        +int formalizationLevel
-    }
-    
-    class RelationType {
-        <<enumeration>>
-        Contains
-        DependsOn
-        Extends
-        Specializes
-        DualTo
-        TransformsTo
-    }
-    
-    class FlowType {
-        <<enumeration>>
-        Vertical
-        Horizontal
-        Diagonal
-    }
-```
+上下文系统中的数据流如下：
 
-### 3.2 辅助数据模型
+1. **文档创建/更新**:
+   - 文档通过上下文数据存储组件存储
+   - 上下文模型管理器提取概念和关系
+   - 上下文分析引擎检查一致性
+   - 上下文集成服务更新交叉引用
 
-```mermaid
-classDiagram
-    ProgressReport "1" *-- "n" TaskStatus
-    ProgressReport "1" *-- "n" MetricValue
-    
-    ConflictRecord "1" *-- "n" KnowledgeUnit
-    ConflictRecord "1" *-- "1" ConflictType
-    ConflictRecord "1" *-- "0..1" ResolutionStrategy
-    
-    VisualizationTemplate "1" *-- "n" VisualElement
-    VisualizationTemplate "1" *-- "1" VisualType
-    
-    class ProgressReport {
-        +String id
-        +DateTime reportDate
-        +String title
-        +String summary
-        +float overallProgress
-    }
-    
-    class TaskStatus {
-        +String taskId
-        +String taskName
-        +TaskState state
-        +float progress
-        +String notes
-    }
-    
-    class MetricValue {
-        +String metricName
-        +float value
-        +float previousValue
-        +float change
-    }
-    
-    class ConflictRecord {
-        +String conflictId
-        +String description
-        +ConflictSeverity severity
-        +boolean resolved
-        +String resolutionDescription
-    }
-    
-    class VisualizationTemplate {
-        +String templateId
-        +String name
-        +String description
-        +String renderOptions
-    }
-    
-    class VisualElement {
-        +String elementId
-        +String elementType
-        +Map~String,String~ properties
-        +String dataBinding
-    }
-    
-    class TaskState {
-        <<enumeration>>
-        NotStarted
-        InProgress
-        Completed
-        Blocked
-        Deferred
-    }
-    
-    class ConflictType {
-        <<enumeration>>
-        Terminology
-        Definition
-        Assumption
-        Methodology
-    }
-    
-    class ConflictSeverity {
-        <<enumeration>>
-        Critical
-        Significant
-        Minor
-    }
-    
-    class ResolutionStrategy {
-        <<enumeration>>
-        Qualification
-        Mapping
-        Bridging
-        Preference
-    }
-    
-    class VisualType {
-        <<enumeration>>
-        RelationGraph
-        HierarchyTree
-        FlowDiagram
-        HeatMap
-        Timeline
-    }
+2. **上下文查询**:
+   - 用户通过应用层发起查询
+   - 查询传递到上下文模型管理器
+   - 模型管理器从数据存储检索相关数据
+   - 结果返回给用户
+
+3. **进度跟踪**:
+   - 任务状态更新记录在进度跟踪系统
+   - 系统生成进度报告
+   - 报告存储在上下文数据存储中
+
+### 3.2 交互模式
+
+组件间的主要交互模式包括：
+
+1. **事件驱动**: 组件通过事件通知机制进行通信
+2. **查询响应**: 组件通过查询-响应模式交换信息
+3. **批处理**: 定期执行的批处理任务处理大量数据
+
+### 3.3 交互序列
+
+典型的交互序列如下：
+
+```text
+用户 -> 应用层 -> 服务层 -> 模型层 -> 数据层
+                           |
+                           v
+用户 <- 应用层 <- 服务层 <- 模型层
 ```
 
 ## 4. 工作流程
 
-### 4.1 上下文创建流程
+### 4.1 文档管理工作流
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant CM as 上下文管理器
-    participant MM as 模型管理器
-    participant RM as 关系管理器
-    participant SM as 存储管理器
-    
-    User->>CM: 请求创建上下文
-    CM->>MM: 验证上下文模型
-    MM-->>CM: 验证结果
-    
-    alt 验证通过
-        CM->>MM: 创建上下文实例
-        MM->>RM: 建立初始关系
-        RM-->>MM: 关系创建结果
-        MM->>SM: 存储上下文数据
-        SM-->>MM: 存储确认
-        MM-->>CM: 创建成功
-        CM-->>User: 返回创建结果
-    else 验证失败
-        CM-->>User: 返回验证错误
-    end
-```
+1. **文档创建**:
+   - 用户创建新文档
+   - 系统提取文档中的概念和关系
+   - 系统检查与现有上下文的一致性
+   - 系统生成交叉引用
+   - 文档存储并集成到知识体系
 
-### 4.2 上下文查询流程
+2. **文档更新**:
+   - 用户更新现有文档
+   - 系统识别变更内容
+   - 系统评估变更对上下文的影响
+   - 系统更新相关交叉引用
+   - 更新后的文档存储并集成
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant CM as 上下文管理器
-    participant QM as 查询管理器
-    participant MM as 模型管理器
-    participant RM as 关系管理器
-    
-    User->>CM: 提交查询请求
-    CM->>QM: 处理查询
-    
-    QM->>QM: 解析查询
-    QM->>QM: 优化查询
-    
-    alt 知识单元查询
-        QM->>MM: 查询知识单元
-        MM-->>QM: 返回知识单元
-    else 关系查询
-        QM->>RM: 查询关系
-        RM-->>QM: 返回关系
-    else 复合查询
-        QM->>MM: 查询知识单元
-        MM-->>QM: 返回知识单元
-        QM->>RM: 查询关系
-        RM-->>QM: 返回关系
-        QM->>QM: 组合结果
-    end
-    
-    QM-->>CM: 返回查询结果
-    CM-->>User: 返回查询结果
-```
+### 4.2 上下文分析工作流
 
-### 4.3 上下文可视化流程
+1. **一致性分析**:
+   - 系统定期检查概念和术语一致性
+   - 识别不一致之处
+   - 生成一致性报告
+   - 提出修正建议
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant CM as 上下文管理器
-    participant VM as 可视化管理器
-    participant QM as 查询管理器
-    
-    User->>CM: 请求可视化
-    CM->>VM: 处理可视化请求
-    
-    VM->>QM: 查询所需数据
-    QM-->>VM: 返回数据
-    
-    VM->>VM: 选择可视化模板
-    VM->>VM: 应用数据到模板
-    VM->>VM: 生成可视化
-    
-    VM-->>CM: 返回可视化结果
-    CM-->>User: 返回可视化结果
-```
+2. **依赖分析**:
+   - 系统分析模块间的依赖关系
+   - 构建依赖图
+   - 识别循环依赖
+   - 提出优化建议
 
-### 4.4 冲突检测与解决流程
+### 4.3 进度跟踪工作流
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant CM as 上下文管理器
-    participant RM as 关系管理器
-    participant MM as 模型管理器
-    
-    User->>CM: 请求冲突检测
-    CM->>RM: 检测关系冲突
-    
-    RM->>MM: 获取相关上下文
-    MM-->>RM: 返回上下文数据
-    
-    RM->>RM: 分析冲突
-    
-    alt 发现冲突
-        RM-->>CM: 返回冲突列表
-        CM-->>User: 显示冲突
-        User->>CM: 提交解决方案
-        CM->>RM: 应用解决方案
-        RM->>MM: 更新上下文
-        MM-->>RM: 更新确认
-        RM-->>CM: 解决结果
-        CM-->>User: 确认解决
-    else 无冲突
-        RM-->>CM: 返回无冲突
-        CM-->>User: 确认无冲突
-    end
-```
+1. **任务管理**:
+   - 创建和分配任务
+   - 更新任务状态
+   - 跟踪任务完成情况
 
-## 5. 部署架构
+2. **报告生成**:
+   - 收集任务状态数据
+   - 生成进度报告
+   - 分析项目趋势
+   - 预测完成时间
 
-### 5.1 文件系统部署
+## 5. 系统集成
 
-上下文系统采用基于文件系统的部署架构，组织如下：
+### 5.1 与其他系统的集成
 
-```text
-12_Context_System/
-├── README.md                                # 系统概述
-├── Architecture.md                          # 本文档
-├── Context_Management_Specification.md      # 上下文管理规范
-├── Models/                                  # 上下文模型
-│   ├── Context_Models.md                    # 上下文模型定义
-│   └── Context_Visualization.md             # 上下文可视化
-├── Integration/                             # 整合方案
-│   ├── Philosophical_Context_Integration.md # 哲学上下文整合
-│   └── Formal_Science_Context_Integration.md # 形式科学上下文整合
-└── Progress/                                # 进度记录
-    └── YYYY-MM-DD_Progress_Report.md        # 按日期命名的进度报告
-```
+上下文系统与以下系统集成：
 
-### 5.2 组件交互
+1. **版本控制系统**: 同步文档变更历史
+2. **知识管理系统**: 共享概念和术语定义
+3. **项目管理系统**: 同步任务和里程碑信息
 
-```mermaid
-graph TD
-    FS[文件系统存储] <--> CM[上下文管理器]
-    
-    CM <--> MM[模型管理器]
-    CM <--> RM[关系管理器]
-    CM <--> FM[流动管理器]
-    CM <--> VM[可视化管理器]
-    
-    MM <--> RM
-    RM <--> FM
-    FM <--> VM
-    
-    CM <--> UI[用户接口]
-    
-    classDef storage fill:#f96,stroke:#333,stroke-width:2px
-    classDef core fill:#bbf,stroke:#333,stroke-width:1.5px
-    classDef interface fill:#bfb,stroke:#333,stroke-width:1px
-    
-    class FS storage
-    class CM,MM,RM,FM,VM core
-    class UI interface
-```
+### 5.2 集成接口
 
-## 6. 扩展机制
+系统提供以下集成接口：
 
-### 6.1 插件系统
+1. **REST API**: 提供对上下文数据的编程访问
+2. **事件钩子**: 允许外部系统订阅上下文变更事件
+3. **数据导入/导出**: 支持与外部系统交换数据
 
-上下文系统支持通过插件扩展功能，包括：
+## 6. 部署架构
 
-1. **模型插件**: 扩展上下文模型定义
-2. **关系插件**: 添加新的关系类型和处理逻辑
-3. **可视化插件**: 提供新的可视化模板和渲染器
-4. **存储插件**: 支持不同的存储后端
-5. **集成插件**: 与外部系统集成
+上下文系统采用分布式架构部署：
 
-### 6.2 扩展点
+1. **前端组件**: 提供用户界面和交互
+2. **后端服务**: 提供核心功能和API
+3. **数据存储**: 存储上下文数据和关系
+4. **分析引擎**: 执行上下文分析任务
 
-系统提供以下扩展点：
+## 7. 安全与访问控制
 
-1. **模型扩展点**: 用于扩展上下文模型
-2. **关系扩展点**: 用于扩展关系类型和处理
-3. **可视化扩展点**: 用于扩展可视化功能
-4. **查询扩展点**: 用于扩展查询能力
-5. **存储扩展点**: 用于扩展存储机制
+### 7.1 安全机制
 
-## 7. 未来发展
+系统实现以下安全机制：
 
-### 7.1 近期计划
+1. **身份验证**: 确认用户身份
+2. **授权控制**: 控制对资源的访问
+3. **数据加密**: 保护敏感数据
+4. **审计日志**: 记录系统活动
 
-1. **完善基础架构**: 完成核心组件的实现和集成
-2. **增强可视化能力**: 开发更丰富的可视化模板和工具
-3. **提高形式化程度**: 增强形式化定义和验证机制
-4. **改进冲突检测**: 开发更智能的冲突检测和解决机制
+### 7.2 访问控制模型
 
-### 7.2 长期愿景
+系统采用基于角色的访问控制模型：
 
-1. **知识图谱构建**: 基于上下文系统构建完整的形式科学知识图谱
-2. **智能推理支持**: 添加基于上下文的推理能力
-3. **协作编辑功能**: 支持多用户协作编辑和管理上下文
-4. **学习路径生成**: 基于上下文关系自动生成学习路径
+1. **管理员**: 完全访问权限
+2. **编辑者**: 创建和修改内容的权限
+3. **查看者**: 只读权限
 
-## 8. 相关文档
+## 8. 扩展性与未来发展
 
-- [上下文管理规范](./Context_Management_Specification.md)
-- [上下文模型定义](./Models/Context_Models.md)
-- [上下文可视化](./Models/Context_Visualization.md)
-- [哲学上下文整合](./Integration/Philosophical_Context_Integration.md)
-- [形式科学上下文整合](./Integration/Formal_Science_Context_Integration.md)
+### 8.1 扩展机制
+
+系统支持以下扩展机制：
+
+1. **插件架构**: 允许添加新功能
+2. **自定义分析器**: 支持自定义上下文分析
+3. **API扩展**: 允许扩展API功能
+
+### 8.2 未来发展方向
+
+系统计划在以下方向发展：
+
+1. **智能上下文推荐**: 基于机器学习的上下文推荐
+2. **自动一致性维护**: 自动检测和修复一致性问题
+3. **跨领域知识集成**: 集成更多领域的知识
 
 ---
 
-**最后更新**: 2025-01-15  
-**文档版本**: 1.0  
-**审核状态**: 已审核
+**最后更新**: 2025-01-16
+**文档版本**: 1.0
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

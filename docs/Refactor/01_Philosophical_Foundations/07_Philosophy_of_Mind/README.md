@@ -194,22 +194,22 @@
 
 ### 内部引用
 
-- [心身问题](./01_Mind_Body_Problem.md)
-- [意识理论](./02_Consciousness_Theory.md)
-- [心理表征](./03_Mental_Representation.md)
-- [认知科学](./04_Cognitive_Science.md)
+- [心身问题](01_Mind_Body_Problem.md)
+- [意识理论](02_Consciousness_Theory.md)
+- [心理表征](03_Mental_Representation.md)
+- [认知科学](04_Cognitive_Science.md)
 
 ### 外部引用
 
-- [认识论](../02_Epistemology/README.md)
-- [科学哲学](../04_Philosophy_of_Science/README.md)
-- [人工智能理论](../../13_Artificial_Intelligence_Theory/README.md)
-- [信息理论](../../15_Information_Theory/README.md)
+- [认识论](README.md)
+- [科学哲学](README.md)
+- [人工智能理论](README.md)
+- [信息理论](README.md)
 
 ### 相关文档
 
 - [心灵哲学标准化计划](../../07_重构进度与规范/重构计划_20250110_心灵哲学标准化.md)
-- [跨域综合](../../16_Cross_Domain_Synthesis/README.md)
+- [跨域综合](README.md)
 
 ## 重构进度
 
@@ -222,5 +222,9 @@
 
 ## 返回
 
-[返回哲学基础模块](../README.md)  
-[返回主索引](../../README.md)
+[返回哲学基础模块](README.md)  
+[返回主索引](README.md)
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

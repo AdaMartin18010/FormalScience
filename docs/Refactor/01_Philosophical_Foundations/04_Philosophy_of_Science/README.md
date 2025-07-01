@@ -159,27 +159,31 @@
 
 ### 内部引用
 
-- [认识论](../02_Epistemology/README.md): 知识论基础
-- [形而上学](../01_Metaphysics/README.md): 本体论问题
-- [方法论](../03_Methodology/README.md): 科学方法
+- [认识论](README.md): 知识论基础
+- [形而上学](README.md): 本体论问题
+- [方法论](README.md): 科学方法
 
 ### 外部引用
 
-- [逻辑理论](../../03_Logic_Theory/README.md): 科学推理的逻辑基础
-- [数学基础](../../02_Mathematical_Foundations/README.md): 科学的数学化
-- [形式语言理论](../../04_Formal_Language_Theory/README.md): 科学语言的形式化
+- [逻辑理论](README.md): 科学推理的逻辑基础
+- [数学基础](README.md): 科学的数学化
+- [形式语言理论](README.md): 科学语言的形式化
 
 ### 应用领域
 
-- [软件工程理论](../../08_Software_Engineering_Theory/README.md): 计算科学哲学
-- [人工智能理论](../../13_Artificial_Intelligence_Theory/README.md): AI科学哲学
-- [跨域综合](../../16_Cross_Domain_Synthesis/README.md): 科学统一性问题
+- [软件工程理论](README.md): 计算科学哲学
+- [人工智能理论](README.md): AI科学哲学
+- [跨域综合](README.md): 科学统一性问题
 
 ## 返回
 
-[返回哲学基础模块](../README.md)  
-[返回主索引](../../README.md)
+[返回哲学基础模块](README.md)  
+[返回主索引](README.md)
 
 ---
 
 > 本索引严格树形编号，所有内容均有本地跳转锚点和交叉引用。内容持续规范化中。
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

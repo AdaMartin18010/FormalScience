@@ -980,9 +980,14 @@ impl std::ops::Mul<&Vector<f64>> for &Matrix<f64> {
 
 **相关理论**：
 
-- [机器学习理论](./01_Machine_Learning/README.md)
-- [深度学习理论](./02_Deep_Learning/README.md)
-- [自然语言处理理论](./04_Natural_Language_Processing/README.md)
-- [计算机视觉理论](./05_Computer_Vision/README.md)
+- [机器学习理论](README.md)
+- [深度学习理论](README.md)
+- [自然语言处理理论](README.md)
+- [计算机视觉理论](README.md)
 
-**返回**：[人工智能理论目录](../README.md)
+**返回**：[人工智能理论目录](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

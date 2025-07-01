@@ -8,10 +8,10 @@
 
 ### 主要内容
 
-- [03.1.1_Finite_Automata.md](./03.1.1_Finite_Automata.md) - 研究有限状态机及其变体
-- [03.1.2_Pushdown_Automata.md](./03.1.2_Pushdown_Automata.md) - 研究带有栈的自动机
-- [03.1.3_Linear_Bounded_Automata.md](./03.1.3_Linear_Bounded_Automata.md) - 研究带有有界磁带的自动机
-- [03.1.4_Turing_Machine.md](./03.1.4_Turing_Machine.md) - 研究通用计算模型
+- [03.1.1_Finite_Automata.md](03.1.1_Finite_Automata.md) - 研究有限状态机及其变体
+- [03.1.2_Pushdown_Automata.md](03.1.2_Pushdown_Automata.md) - 研究带有栈的自动机
+- [03.1.3_Linear_Bounded_Automata.md](03.1.3_Linear_Bounded_Automata.md) - 研究带有有界磁带的自动机
+- [03.1.4_Turing_Machine.md](03.1.4_Turing_Machine.md) - 研究通用计算模型
 
 ### 扩展内容
 
@@ -123,3 +123,8 @@ struct NFA {
 **更新时间**: 2024-12-26  
 **版本**: 2.2  
 **状态**: 已完成
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

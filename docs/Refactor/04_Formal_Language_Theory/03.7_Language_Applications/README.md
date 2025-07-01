@@ -2,11 +2,11 @@
 
 ## 目录
 
-1. [编译器设计](./03.7.1_Compiler_Design.md)
-2. [自然语言处理](./03.7.2_Natural_Language_Processing.md)
-3. [生物信息学](./03.7.3_Bioinformatics.md)
-4. [形式验证](./03.7.4_Formal_Verification.md)
-5. [数据库查询语言](./03.7.5_Database_Query_Languages.md)
+1. [编译器设计](03.7.1_Compiler_Design.md)
+2. [自然语言处理](03.7.2_Natural_Language_Processing.md)
+3. [生物信息学](03.7.3_Bioinformatics.md)
+4. [形式验证](03.7.4_Formal_Verification.md)
+5. [数据库查询语言](03.7.5_Database_Query_Languages.md)
 
 ---
 
@@ -23,9 +23,9 @@
 ## 交叉引用
 
 - [形式语言理论总览](../01_Formal_Language_Theory_Index.md)
-- [自动机理论](../01_Automata_Theory/README.md)
-- [语法分析理论](../03.4_Parsing_Theory/README.md)
-- [计算理论](../03.6_Computation_Theory/README.md)
+- [自动机理论](README.md)
+- [语法分析理论](README.md)
+- [计算理论](README.md)
 
 ---
 
@@ -34,3 +34,8 @@
 本分支所有文档均遵循项目规范，包含定义、分析、核心技术、交叉引用及参考文献。
 
 > 本文档为语言应用分支的总览与导航。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

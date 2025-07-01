@@ -32,6 +32,11 @@
 
 ## 相关理论
 
-- [软件架构与设计](07.3_Software_Architecture_and_Design/README.md)
-- [设计模式](07.4_Design_Patterns/README.md)
-- [分布式系统理论](10_Distributed_Systems_Theory/README.md)
+- [软件架构与设计](README.md)
+- [设计模式](README.md)
+- [分布式系统理论](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -244,3 +244,8 @@ function MinimizeDFA(M: FiniteAutomaton) -> FiniteAutomaton:
 1. Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). Introduction to Automata Theory, Languages, and Computation. Pearson.
 2. Sipser, M. (2012). Introduction to the Theory of Computation. Cengage Learning.
 3. Linz, P. (2011). An Introduction to Formal Languages and Automata. Jones & Bartlett Learning.
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

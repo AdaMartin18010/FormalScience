@@ -886,9 +886,14 @@ impl Optimizer for SGD {
 
 **相关理论**：
 
-- [统计分析理论](./01_Statistical_Analysis/README.md)
-- [数据挖掘理论](./02_Data_Mining/README.md)
-- [机器学习理论](../13_Artificial_Intelligence_Theory/01_Machine_Learning/README.md)
-- [大数据理论](./03_Big_Data/README.md)
+- [统计分析理论](../README.md)
+- [数据挖掘理论](../README.md)
+- [机器学习理论](../README.md)
+- [大数据理论](../README.md)
 
 **返回**：[数据科学理论目录](../README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

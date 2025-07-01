@@ -8,7 +8,7 @@
 
 本目录包含与操作语义相关的文档：
 
-- [03.5.1_Operational_Semantics.md](./03.5.1_Operational_Semantics.md) - 操作语义的英文详细介绍
+- [03.5.1_Operational_Semantics.md](03.5.1_Operational_Semantics.md) - 操作语义的英文详细介绍
 - [03.5.1_操作语义.md](./03.5.1_操作语义.md) - 操作语义的中文详细介绍
 
 ## 主要概念
@@ -29,12 +29,17 @@
 
 ## 相关主题
 
-- [指称语义](../03.5.2_Denotational_Semantics/README.md) - 另一种主要的语义模型
-- [公理语义](../03.5.3_Axiomatic_Semantics/README.md) - 基于逻辑的语义模型
-- [代数语义](../03.5.4_Algebraic_Semantics/README.md) - 基于代数结构的语义模型
+- [指称语义](README.md) - 另一种主要的语义模型
+- [公理语义](README.md) - 基于逻辑的语义模型
+- [代数语义](README.md) - 基于代数结构的语义模型
 
 ## 参考资源
 
 - Plotkin, G. D. (1981). A Structural Approach to Operational Semantics.
 - Kahn, G. (1987). Natural Semantics.
 - Winskel, G. (1993). The Formal Semantics of Programming Languages: An Introduction.
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -771,8 +771,8 @@ impl MultipleRegression {
 
 ## 5. 相关理论与交叉引用
 
-- [机器学习理论](../01_Machine_Learning/01_Machine_Learning_Theory.md)
-- [深度学习理论](../02_Deep_Learning/01_Deep_Learning_Theory.md)
+- [机器学习理论](../../13_Artificial_Intelligence_Theory/01_Machine_Learning/01_Machine_Learning_Theory.md)
+- [深度学习理论](../../13_Artificial_Intelligence_Theory/02_Deep_Learning/01_Deep_Learning_Theory.md)
 - [数据挖掘理论](../02_Data_Mining/01_Data_Mining_Theory.md)
 
 ## 6. 参考文献
@@ -786,3 +786,8 @@ impl MultipleRegression {
 **最后更新**: 2024年12月21日  
 **维护者**: AI助手  
 **版本**: v1.0
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

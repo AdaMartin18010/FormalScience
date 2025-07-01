@@ -2,10 +2,10 @@
 
 ## 目录
 
-1. [Progress_Reports 进度报告](./Progress_Reports/)
-2. [Standards 规范文档](./Standards/)
-3. [Action_Plans 行动方案](./Action_Plans/)
-4. [Architecture 架构设计](./Architecture/)
+1. [Progress_Reports 进度报告](Progress_Reports)
+2. [Standards 规范文档](Standards)
+3. [Action_Plans 行动方案](Action_Plans)
+4. [Architecture 架构设计](Architecture)
 
 ---
 
@@ -22,8 +22,8 @@
 
 ## 2. 交叉引用
 
-- [上下文系统](../12_Context_System/README.md)
-- [哲学基础](../01_Philosophical_Foundations/README.md)
+- [上下文系统](README.md)
+- [哲学基础](README.md)
 - [主索引](../00_Master_Index/00_重构主索引_v1.0.md)
 
 ## 3. 规范说明
@@ -36,3 +36,8 @@
 ---
 
 > 本README为重构进度与规范唯一入口，所有内容均已合并、去重、规范化。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

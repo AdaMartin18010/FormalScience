@@ -276,3 +276,8 @@ V → sees | chases
 3. Chomsky, N. (1956). Three models for the description of language. IRE Transactions on Information Theory, 2(3), 113-124.
 4. Kozen, D. C. (1997). Automata and Computability. Springer.
 5. Linz, P. (2011). An Introduction to Formal Languages and Automata (5th ed.). Jones & Bartlett Learning.
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

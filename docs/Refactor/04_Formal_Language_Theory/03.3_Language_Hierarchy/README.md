@@ -2,11 +2,11 @@
 
 ## 目录结构
 
-1. [正则语言与有限自动机](./03.3.1_Regular_Languages.md)
-2. [上下文无关语言与下推自动机](./03.3.2_Context_Free_Languages.md)
-3. [上下文有关语言与线性有界自动机](./03.3.3_Context_Sensitive_Languages.md)
-4. [递归可枚举语言与图灵机](./03.3.4_Recursively_Enumerable_Languages.md)
-5. [语言层级对比与应用](./03.3.5_Language_Hierarchy_Comparison.md)
+1. [正则语言与有限自动机](03.3.1_Regular_Languages.md)
+2. [上下文无关语言与下推自动机](03.3.2_Context_Free_Languages.md)
+3. [上下文有关语言与线性有界自动机](03.3.3_Context_Sensitive_Languages.md)
+4. [递归可枚举语言与图灵机](03.3.4_Recursively_Enumerable_Languages.md)
+5. [语言层级对比与应用](03.3.5_Language_Hierarchy_Comparison.md)
 
 ---
 
@@ -22,10 +22,10 @@
 
 ## 交叉引用
 
-- [自动机理论总览](../01_Automata_Theory/README.md)
+- [自动机理论总览](README.md)
 - [形式文法](../03.2_Formal_Grammars.md)
-- [计算理论](../03.6_Computation_Theory/README.md)
-- [上下文系统](../../12_Context_System/README.md)
+- [计算理论](README.md)
+- [上下文系统](README.md)
 
 ---
 
@@ -38,3 +38,8 @@
 ---
 
 > 本文档为语言层级与自动机关系分支的总览与导航，后续所有子主题均严格遵循本规范。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -835,18 +835,18 @@ impl ReasoningSystem {
 
 ### 内部引用
 
-- [心身问题](./01_Mind_Body_Problem.md)
-- [意识理论](./02_Consciousness_Theory.md)
-- [心理表征](./03_Mental_Representation.md)
+- [心身问题](01_Mind_Body_Problem.md)
+- [意识理论](02_Consciousness_Theory.md)
+- [心理表征](03_Mental_Representation.md)
 
 ### 外部引用
 
-- [计算理论](../../06_Computation_Theory/README.md)
-- [人工智能理论](../../13_Artificial_Intelligence_Theory/README.md)
-- [信息理论](../../15_Information_Theory/README.md)
-- [神经科学基础](../../14_Neuroscience_Theory/README.md)
+- [计算理论](README.md)
+- [人工智能理论](README.md)
+- [信息理论](README.md)
+- [神经科学基础](README.md)
 
 ## 返回
 
-[返回心灵哲学](./README.md)  
-[返回哲学基础模块](../README.md)
+[返回心灵哲学](README.md)  
+[返回哲学基础模块](README.md)

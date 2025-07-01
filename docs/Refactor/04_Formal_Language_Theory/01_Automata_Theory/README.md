@@ -2,15 +2,15 @@
 
 ## 目录结构
 
-1. [有限自动机（Finite Automata）](./03.1.1_Finite_Automata.md)
-    1. [有限自动机基础](./01_Finite_Automata/01_Finite_Automata_Basics.md)
-    2. [DFA理论](./01_Finite_Automata/01_DFA_Theory.md)
-    3. [Mealy机](./01_Finite_Automata/02_Mealy_Machine.md)
-    4. [Moore机](./01_Finite_Automata/03_Moore_Machine.md)
-2. [下推自动机（Pushdown Automata）](./03.1.2_Pushdown_Automata.md)
-3. [线性有界自动机（Linear Bounded Automata）](./03.1.4_Linear_Bounded_Automaton.md)
-4. [图灵机（Turing Machine）](./03.1.3_Turing_Machine.md)
-5. [自动机与语言的关系](../03.3_Language_Hierarchy/README.md)
+1. [有限自动机（Finite Automata）](03.1.1_Finite_Automata.md)
+    1. [有限自动机基础](01_Finite_Automata/01_Finite_Automata_Basics.md)
+    2. [DFA理论](01_Finite_Automata/01_DFA_Theory.md)
+    3. [Mealy机](01_Finite_Automata/02_Mealy_Machine.md)
+    4. [Moore机](01_Finite_Automata/03_Moore_Machine.md)
+2. [下推自动机（Pushdown Automata）](03.1.2_Pushdown_Automata.md)
+3. [线性有界自动机（Linear Bounded Automata）](03.1.4_Linear_Bounded_Automaton.md)
+4. [图灵机（Turing Machine）](03.1.3_Turing_Machine.md)
+5. [自动机与语言的关系](README.md)
 
 ---
 
@@ -28,9 +28,9 @@
 
 - [形式语言理论总览](../01_Formal_Language_Theory_Index.md)
 - [形式文法](../03.2_Formal_Grammars.md)
-- [语言层级](../03.3_Language_Hierarchy/README.md)
-- [计算理论](../03.6_Computation_Theory/README.md)
-- [上下文系统](../../12_Context_System/README.md)
+- [语言层级](README.md)
+- [计算理论](README.md)
+- [上下文系统](README.md)
 
 ---
 
@@ -43,3 +43,8 @@
 ---
 
 > 本文档为自动机理论分支的总览与导航，后续所有子主题均严格遵循本规范。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

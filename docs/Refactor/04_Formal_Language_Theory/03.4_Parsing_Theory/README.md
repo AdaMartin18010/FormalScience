@@ -10,11 +10,11 @@
 
 ### 主要内容
 
-- [03.4.1_Top_Down_Parsing.md](./03.4.1_Top_Down_Parsing.md) - 研究自顶向下的预测性解析方法
-- [03.4.2_Bottom_Up_Parsing.md](./03.4.2_Bottom_Up_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
-- [03.4.3_LL_Parsing.md](./03.4.3_LL_Parsing.md) - 研究自顶向下的预测性解析方法
-- [03.4.4_LR_Parsing.md](./03.4.4_LR_Parsing.md) - 研究自底向上的移进-归约解析方法
-- [03.4.5_Generalized_Parsing.md](./03.4.5_Generalized_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
+- [03.4.1_Top_Down_Parsing.md](03.4.1_Top_Down_Parsing.md) - 研究自顶向下的预测性解析方法
+- [03.4.2_Bottom_Up_Parsing.md](03.4.2_Bottom_Up_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
+- [03.4.3_LL_Parsing.md](03.4.3_LL_Parsing.md) - 研究自顶向下的预测性解析方法
+- [03.4.4_LR_Parsing.md](03.4.4_LR_Parsing.md) - 研究自底向上的移进-归约解析方法
+- [03.4.5_Generalized_Parsing.md](03.4.5_Generalized_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
 
 ### 扩展内容
 
@@ -44,10 +44,10 @@
 
 ## 🔗 交叉引用
 
-- [03.2 文法理论](../03.2_Formal_Grammars/README.md) - 解析理论的形式基础
-- [03.3 语言层次理论](../03.3_Language_Hierarchy/README.md) - 不同类型语言的解析复杂性
+- [03.2 文法理论](README.md) - 解析理论的形式基础
+- [03.3 语言层次理论](README.md) - 不同类型语言的解析复杂性
 - [03.7.1 编译器设计](../03.7_Language_Applications/03.7.1_编译器设计.md) - 解析理论的主要应用领域
-- [03.5 语义理论](../03.5_Semantics_Theory/README.md) - 解析后的语义分析阶段
+- [03.5 语义理论](README.md) - 解析后的语义分析阶段
 
 ## 📚 学习路径
 
@@ -69,11 +69,11 @@
 
 ## 目录
 
-1. [自顶向下分析](./03.4.1_Top_Down_Parsing.md)
-2. [自底向上分析](./03.4.2_Bottom_Up_Parsing.md)
-3. [LL分析](./03.4.3_LL_Parsing.md)
-4. [LR分析](./03.4.4_LR_Parsing.md)
-5. [广义分析](./03.4.5_Generalized_Parsing.md)
+1. [自顶向下分析](03.4.1_Top_Down_Parsing.md)
+2. [自底向上分析](03.4.2_Bottom_Up_Parsing.md)
+3. [LL分析](03.4.3_LL_Parsing.md)
+4. [LR分析](03.4.4_LR_Parsing.md)
+5. [广义分析](03.4.5_Generalized_Parsing.md)
 
 ---
 
@@ -89,7 +89,7 @@
 
 ## 交叉引用
 
-- [形式文法](../03.2_Formal_Grammars/README.md)
+- [形式文法](README.md)
 - [上下文无关文法](../03.2_Formal_Grammars/03.2.2_Context_Free_Grammars.md)
 - [下推自动机](../01_Automata_Theory/03.1.2_Pushdown_Automata.md)
 
@@ -100,3 +100,8 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为语法分析理论分支的总览与导航。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

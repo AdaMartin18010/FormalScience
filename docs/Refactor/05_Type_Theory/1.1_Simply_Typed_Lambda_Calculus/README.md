@@ -38,17 +38,17 @@
 
 ### 基础概念
 
-- [语法定义](./1.1_Syntax/README.md)
-- [类型系统](./1.2_Types/README.md)
-- [项的定义](./1.3_Terms/README.md)
-- [上下文](./1.4_Contexts/README.md)
+- [语法定义](README.md)
+- [类型系统](README.md)
+- [项的定义](README.md)
+- [上下文](README.md)
 
 ### 类型规则
 
-- [类型规则](./2.1_Type_Rules/README.md)
-- [类型检查](./2.2_Type_Checking/README.md)
-- [类型推断](./2.3_Type_Inference/README.md)
-- [类型安全](./2.4_Type_Safety/README.md)
+- [类型规则](README.md)
+- [类型检查](README.md)
+- [类型推断](README.md)
+- [类型安全](README.md)
 
 ## 📋 **核心理论**
 
@@ -458,3 +458,8 @@ testTypeInference = do
 **最后更新**：2024-12-20  
 **版本**：v1.0.0  
 **维护者**：简单类型λ演算重构团队
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

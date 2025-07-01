@@ -135,13 +135,13 @@ graph TD
 
 ## 5. 交叉引用
 
-- [有限自动机基础](./01_Finite_Automata_Basics.md)
-- [DFA理论](./01_DFA_Theory.md)
-- [Mealy机](./02_Mealy_Machine.md)
+- [有限自动机基础](01_Finite_Automata_Basics.md)
+- [DFA理论](01_DFA_Theory.md)
+- [Mealy机](02_Mealy_Machine.md)
 - [自动机理论总览](../README.md)
 - [形式文法](../../03.2_Formal_Grammars.md)
-- [计算理论](../../03.6_Computation_Theory/README.md)
-- [上下文系统](../../../12_Context_System/README.md)
+- [计算理论](../README.md)
+- [上下文系统](../README.md)
 
 ---
 
@@ -156,3 +156,8 @@ graph TD
 ---
 
 > 本文档为Moore机主题的完整阐述，包含形式化表达、多表征内容、批判性分析等，严格遵循学术规范。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

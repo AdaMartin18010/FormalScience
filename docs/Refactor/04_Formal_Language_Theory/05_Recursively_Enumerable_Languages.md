@@ -1105,9 +1105,9 @@ $$\text{REC} \subsetneq \text{REL}$$
 
 ### 8.3 高级主题
 
-- [01.1_Type_Theory_Foundation.md](../01_Foundational_Theory/01.1_Type_Theory_Foundation.md) - 类型理论基础
-- [01.2_Linear_Type_Theory.md](../01_Foundational_Theory/01.2_Linear_Type_Theory.md) - 线性类型理论
-- [01.3_Affine_Type_Theory.md](../01_Foundational_Theory/01.3_Affine_Type_Theory.md) - 仿射类型理论
+- [01.1_Type_Theory_Foundation.md](../../Matter/01_Foundational_Theory/01.1_Type_Theory_Foundation.md) - 类型理论基础
+- [01.2_Linear_Type_Theory.md](../../Matter/01_Foundational_Theory/01.2_Linear_Type_Theory.md) - 线性类型理论
+- [01.3_Affine_Type_Theory.md](../../Matter/01_Foundational_Theory/01.3_Affine_Type_Theory.md) - 仿射类型理论
 
 ---
 
@@ -1125,3 +1125,8 @@ $$\text{REC} \subsetneq \text{REL}$$
 - **创建日期**: 2024-12-20
 - **最后更新**: 2024-12-20
 - **作者**: FormalScience Team
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

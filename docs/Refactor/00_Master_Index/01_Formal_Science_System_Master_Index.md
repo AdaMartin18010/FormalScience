@@ -4,13 +4,13 @@
 
 ### 1. [哲学基础理论](../01_Foundational_Theory/01_Philosophical_Foundation_Index.md)
 
-### 2. [数学基础理论](../02_Mathematical_Foundation/01_Mathematical_Foundation_Index.md)
+### 2. [数学基础理论](../02_Mathematical_Foundations/01_Mathematical_Foundation_Index.md)
 
-### 3. [形式语言理论](../03_Formal_Language_Theory/01_Formal_Language_Theory_Index.md)
+### 3. [形式语言理论](../04_Formal_Language_Theory/01_Formal_Language_Theory_Index.md)
 
-### 4. [类型理论](../04_Type_Theory/01_Type_Theory_Index.md)
+### 4. [类型理论](../05_Type_Theory/01_Type_Theory_Index.md)
 
-### 5. [控制论理论](../05_Control_Theory/01_Control_Theory_Index.md)
+### 5. [控制论理论](../03_Control_Theory/01_Control_Theory_Index.md)
 
 ### 6. [分布式系统理论](../06_Distributed_Systems_Theory/01_Distributed_Systems_Theory_Index.md)
 
@@ -24,7 +24,7 @@
 
 ### 11. [并发理论](../11_Concurrency_Theory/01_Concurrency_Theory_Index.md)
 
-### 12. [上下文系统](../12_Context_System/01_Context_System_Index.md)
+### 12. [上下文系统](../13_Context_System/01_Context_System_Index.md)
 
 ### 13. [跨域综合理论](../13_Cross_Domain_Synthesis/01_Cross_Domain_Synthesis_Index.md)
 
@@ -105,13 +105,13 @@ graph TD
 
 - [3.1 形式语法理论](../03_Formal_Language_Theory/03.1_Formal_Grammar_Theory.md)
 - [3.2 自动机理论](../03_Formal_Language_Theory/03.2_Automata_Theory.md)
-- [3.3 语言层次结构](../03_Formal_Language_Theory/03.3_Language_Hierarchy.md)
+- [3.3 语言层次结构](../04_Formal_Language_Theory/03.3_Language_Hierarchy.md)
 
 ### 类型理论
 
-- [4.1 简单类型理论](../04_Type_Theory/04.1_Simple_Type_Theory.md)
-- [4.2 依赖类型理论](../04_Type_Theory/04.2_Dependent_Type_Theory.md)
-- [4.3 线性类型理论](../04_Type_Theory/04.3_Linear_Type_Theory.md)
+- [4.1 简单类型理论](../05_Type_Theory/04.1_Simple_Type_Theory.md)
+- [4.2 依赖类型理论](../05_Type_Theory/04.2_Dependent_Type_Theory.md)
+- [4.3 线性类型理论](../05_Type_Theory/04.3_Linear_Type_Theory.md)
 
 ---
 
@@ -140,3 +140,8 @@ graph TD
 - [ ] 建立理论间的交叉引用系统
 - [ ] 实现形式化证明的标准化
 - [ ] 构建持续更新的上下文系统
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

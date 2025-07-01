@@ -110,21 +110,21 @@
 
 ### 内部引用
 
-- [形而上学](./01_Metaphysics/README.md)
-- [认识论](./02_Epistemology/README.md)
-- [方法论](./03_Methodology/README.md)
-- [科学哲学](./04_Philosophy_of_Science/README.md)
-- [伦理学](./05_Ethics/README.md)
-- [语言哲学](./06_Philosophy_of_Language/README.md)
-- [心灵哲学](./07_Philosophy_of_Mind/README.md)
-- [社会政治哲学](./08_Social_Political_Philosophy/README.md)
+- [形而上学](README.md)
+- [认识论](README.md)
+- [方法论](README.md)
+- [科学哲学](README.md)
+- [伦理学](README.md)
+- [语言哲学](README.md)
+- [心灵哲学](README.md)
+- [社会政治哲学](README.md)
 
 ### 外部引用
 
-- [数学基础](../02_Mathematical_Foundations/README.md)
-- [逻辑理论](../03_Logic_Theory/README.md)
-- [上下文系统](../12_Context_System/README.md)
-- [跨域综合](../16_Cross_Domain_Synthesis/README.md)
+- [数学基础](README.md)
+- [逻辑理论](README.md)
+- [上下文系统](README.md)
+- [跨域综合](README.md)
 
 ### 相关文档
 
@@ -140,5 +140,9 @@
 
 ## 返回
 
-[返回主索引](../README.md)  
-[返回重构进度与规范](../07_重构进度与规范/README.md)
+[返回主索引](README.md)  
+[返回重构进度与规范](README.md)
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

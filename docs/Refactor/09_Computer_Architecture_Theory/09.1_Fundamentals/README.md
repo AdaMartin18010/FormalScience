@@ -2,7 +2,7 @@
 
 ## 目录
 
-1.  [计算机架构导论 (Introduction to Computer Architecture)](./09.1.1_Introduction_to_Computer_Architecture.md)
+1.  [计算机架构导论 (Introduction to Computer Architecture)](09.1.1_Introduction_to_Computer_Architecture.md)
 2.  [指令集架构 (Instruction Set Architecture, ISA)](./09.1.2_Instruction_Set_Architecture.md)
 3.  [性能度量与分析 (Performance Metrics and Analysis)](./09.1.3_Performance_Metrics_and_Analysis.md)
 
@@ -16,9 +16,13 @@
 
 ## 交叉引用
 
--   [计算机架构总览](../README.md)
--   [处理器设计](../09.2_Processor_Design/README.md)
+-   [计算机架构总览](README.md)
+-   [处理器设计](README.md)
 
 ---
 
 > 本文档为基础理论分支的导航。 
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

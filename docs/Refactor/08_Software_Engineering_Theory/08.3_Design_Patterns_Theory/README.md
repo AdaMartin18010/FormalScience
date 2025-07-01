@@ -1123,6 +1123,11 @@ checkMaintainability _ _ = []
 
 **相关文档**:
 
-- [软件架构理论](../08.2_Architecture_Theory/README.md)
-- [编程语言理论](../09_Programming_Language_Theory/README.md)
-- [形式化方法理论](../07_Formal_Methods_Theory/README.md)
+- [软件架构理论](README.md)
+- [编程语言理论](README.md)
+- [形式化方法理论](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

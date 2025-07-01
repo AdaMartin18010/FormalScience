@@ -2,11 +2,11 @@
 
 ## 目录
 
-1. [可计算性理论](./03.6.1_Computability_Theory.md)
-2. [丘奇-图灵论题](./03.6.2_Church_Turing_Thesis.md)
-3. [判定问题](./03.6.3_Decision_Problems.md)
-4. [递归理论](./03.6.4_Recursion_Theory.md)
-5. [λ演算](./03.6.5_Lambda_Calculus.md)
+1. [可计算性理论](03.6.1_Computability_Theory.md)
+2. [丘奇-图灵论题](03.6.2_Church_Turing_Thesis.md)
+3. [判定问题](03.6.3_Decision_Problems.md)
+4. [递归理论](03.6.4_Recursion_Theory.md)
+5. [λ演算](03.6.5_Lambda_Calculus.md)
 
 ---
 
@@ -22,10 +22,10 @@
 
 ## 交叉引用
 
-- [自动机理论](../01_Automata_Theory/README.md)
+- [自动机理论](README.md)
 - [图灵机](../01_Automata_Theory/03.1.3_Turing_Machine.md)
-- [复杂性理论](../../16_Complexity_Theory/README.md)
-- [逻辑理论](../../11_Logic_Theory/README.md)
+- [复杂性理论](README.md)
+- [逻辑理论](README.md)
 
 ---
 
@@ -34,3 +34,8 @@
 本分支所有文档均遵循项目规范，包含定义、分析、形式化表达、多表征内容、交叉引用及参考文献。
 
 > 本文档为计算理论分支的总览与导航。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

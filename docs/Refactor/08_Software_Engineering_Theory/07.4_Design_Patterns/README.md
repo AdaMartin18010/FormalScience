@@ -1,6 +1,6 @@
 # 07.4 设计模式 (Design Patterns)
 
-[返回软件工程理论主题索引](../README.md)
+[返回软件工程理论主题索引](README.md)
 
 ## 目录
 
@@ -227,15 +227,15 @@
 
 ### 软件工程理论
 
-- **[07.3.1 架构风格](07.3_Software_Architecture_and_Design/07.3.1_Architecture_Styles.md)**: 架构风格与设计模式的关系
-- **[07.3.2 设计原则](07.3_Software_Architecture_and_Design/07.3.2_Design_Principles.md)**: 设计原则指导模式应用
-- **[07.3.3 架构模式](07.3_Software_Architecture_and_Design/07.3.3_Architecture_Patterns.md)**: 架构模式与设计模式的区别
+- **[07.3.1 架构风格](../07.3_Software_Architecture_and_Design/07.3.1_Architecture_Styles.md)**: 架构风格与设计模式的关系
+- **[07.3.2 设计原则](../07.3_Software_Architecture_and_Design/07.3.2_Design_Principles.md)**: 设计原则指导模式应用
+- **[07.3.3 架构模式](../07.3_Software_Architecture_and_Design/07.3.3_Architecture_Patterns.md)**: 架构模式与设计模式的区别
 
 ### 形式化理论
 
-- **[01.1 类型理论基础](01_Type_Theory/01.1.1_Type_Theory_Foundation.md)**: 类型理论在设计模式中的应用
-- **[03.1 形式语言理论](03_Formal_Language/03.1.1_Automata_Theory.md)**: 形式语言与模式识别
-- **[04.1 Petri 网理论](04_Petri_Net_Theory/04.1.1_Petri_Net_Foundation.md)**: Petri 网与并发模式
+- **[01.1 类型理论基础](../../05_Type_Theory/01.1.1_Type_Theory_Foundation.md)**: 类型理论在设计模式中的应用
+- **[03.1 形式语言理论](../../04_Formal_Language_Theory/03.1.1_Automata_Theory.md)**: 形式语言与模式识别
+- **[04.1 Petri 网理论](../../06_Petri_Net_Theory/04.1.1_Petri_Net_Foundation.md)**: Petri 网与并发模式
 
 ## 参考文献
 
@@ -250,6 +250,11 @@
 **相关链接**:
 
 - [返回软件工程理论总览](../README.md#07-软件工程理论)
-- [软件架构与设计](07.3_Software_Architecture_and_Design/README.md)
-- [软件质量与测试](07.5_Software_Quality_and_Testing/README.md)
-- [软件维护与演化](07.6_Software_Maintenance_and_Evolution/README.md)
+- [软件架构与设计](README.md)
+- [软件质量与测试](README.md)
+- [软件维护与演化](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

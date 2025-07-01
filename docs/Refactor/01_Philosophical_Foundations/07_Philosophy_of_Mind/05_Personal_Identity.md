@@ -29,6 +29,7 @@
     - [内部引用](#内部引用)
     - [外部引用](#外部引用)
   - [返回](#返回)
+  - [批判性分析](#批判性分析)
 
 ## 引言
 
@@ -679,18 +680,22 @@ impl PracticalApplication {
 
 ### 内部引用
 
-- [心身问题](./01_Mind_Body_Problem.md)
-- [意识理论](./02_Consciousness_Theory.md)
-- [认知科学](./04_Cognitive_Science.md)
+- [心身问题](01_Mind_Body_Problem.md)
+- [意识理论](02_Consciousness_Theory.md)
+- [认知科学](04_Cognitive_Science.md)
 
 ### 外部引用
 
 - [时间哲学](../01_Metaphysics/03_Time_and_Space.md)
-- [伦理学基础](../05_Ethics/README.md)
-- [认识论](../02_Epistemology/README.md)
-- [逻辑理论](../../03_Logic_Theory/README.md)
+- [伦理学基础](README.md)
+- [认识论](README.md)
+- [逻辑理论](README.md)
 
 ## 返回
 
-[返回心灵哲学](./README.md)  
-[返回哲学基础模块](../README.md)
+[返回心灵哲学](README.md)  
+[返回哲学基础模块](README.md)
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

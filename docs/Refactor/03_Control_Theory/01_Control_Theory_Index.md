@@ -127,8 +127,8 @@ graph TD
 
 ### 向上关联
 
-- **类型理论**：[04_Type_Theory](../04_Type_Theory/01_Type_Theory_Index.md)
-- **数学基础理论**：[02_Mathematical_Foundation](../02_Mathematical_Foundation/01_Mathematical_Foundation_Index.md)
+- **类型理论**：[04_Type_Theory](../05_Type_Theory/01_Type_Theory_Index.md)
+- **数学基础理论**：[02_Mathematical_Foundation](../02_Mathematical_Foundations/01_Mathematical_Foundation_Index.md)
 
 ### 向下关联
 
@@ -182,3 +182,8 @@ graph TD
 - [ ] 建立控制概念间的交叉引用系统
 - [ ] 完善数学推导和算法
 - [ ] 构建控制理论与工程实践的桥梁
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

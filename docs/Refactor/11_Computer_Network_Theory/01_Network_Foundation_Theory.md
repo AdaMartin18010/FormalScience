@@ -834,9 +834,14 @@ theorem access_control_integrity :
 
 **相关理论**：
 
-- [网络架构理论](./01_Network_Architecture/README.md)
-- [网络协议理论](./02_Network_Protocols/README.md)
-- [网络安全理论](./03_Network_Security/README.md)
-- [分布式系统理论](./04_Distributed_Systems/README.md)
+- [网络架构理论](../README.md)
+- [网络协议理论](../README.md)
+- [网络安全理论](../README.md)
+- [分布式系统理论](../README.md)
 
 **返回**：[计算机网络理论目录](../README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

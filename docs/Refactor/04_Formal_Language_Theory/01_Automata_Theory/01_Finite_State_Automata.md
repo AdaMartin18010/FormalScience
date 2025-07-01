@@ -566,3 +566,8 @@ splitClass dfa partition classStates =
 - [03. 下推自动机](03_Pushdown_Automata.md)
 - [04. 图灵机](04_Turing_Machines.md)
 - [05. 可计算性理论](05_Computability_Theory.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

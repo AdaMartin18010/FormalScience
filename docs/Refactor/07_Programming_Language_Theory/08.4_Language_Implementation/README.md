@@ -1,6 +1,6 @@
 # 08.4 语言实现（Language Implementation）
 
-[返回编程语言理论主题索引](../README.md)
+[返回编程语言理论主题索引](README.md)
 
 > 本分支系统梳理编程语言实现理论，包括词法分析、语法分析、解释与编译、虚拟机、运行时系统等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
@@ -21,10 +21,15 @@
 
 ## 交叉引用
 
-- [程序语言理论总览](../README.md)
+- [程序语言理论总览](README.md)
 - [语法与文法](../08.1_Language_Design_and_Specification/08.1.2_Syntax_and_Grammars.md)
-- [计算机架构理论](../../09_Computer_Architecture_Theory/README.md)
+- [计算机架构理论](README.md)
 
 ---
 
 > 本文档为语言实现分支的导航。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -1264,9 +1264,14 @@ theorem protection_effectiveness :
 
 **相关理论**：
 
-- [进程管理理论](./01_Process_Management/README.md)
-- [内存管理理论](./02_Memory_Management/README.md)
-- [文件系统理论](./03_File_Systems/README.md)
-- [设备管理理论](./04_Device_Management/README.md)
+- [进程管理理论](README.md)
+- [内存管理理论](README.md)
+- [文件系统理论](README.md)
+- [设备管理理论](README.md)
 
-**返回**：[操作系统理论目录](../README.md)
+**返回**：[操作系统理论目录](README.md)
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

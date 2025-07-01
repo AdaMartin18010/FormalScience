@@ -62,7 +62,7 @@
 
 ### 2.1 集合论
 
-- [基本集合理论](02_Mathematical_Foundation/01_Set_Theory/01_Basic_Set_Theory.md)
+- [基本集合理论](../02_Mathematical_Foundations/01_Set_Theory/01_Basic_Set_Theory.md)
   - 集合运算和关系
   - ZFC公理系统
   - 基数理论和序数理论
@@ -218,7 +218,7 @@
 
 ### 3.1 乔姆斯基谱系
 
-- [正则语言](03_Formal_Language_Theory/01_Chomsky_Hierarchy/01_Regular_Languages.md)
+- [正则语言](../04_Formal_Language_Theory/01_Chomsky_Hierarchy/01_Regular_Languages.md)
   - 正则表达式
   - 有限自动机
   - 泵引理
@@ -238,13 +238,13 @@
 
 ### 3.2 自动机理论
 
-- [有限自动机](03_Formal_Language_Theory/02_Automata_Theory/01_Finite_Automata.md)
+- [有限自动机](../04_Formal_Language_Theory/01_Automata_Theory/01_Finite_Automata.md)
   - 确定性有限自动机
   - 非确定性有限自动机
   - 自动机最小化
   - 自动机应用
 
-- [下推自动机](03_Formal_Language_Theory/02_Automata_Theory/02_Pushdown_Automata.md)
+- [下推自动机](../04_Formal_Language_Theory/01_Automata_Theory/02_Pushdown_Automata.md)
   - 下推自动机定义
   - 下推自动机等价性
   - 下推自动机性质
@@ -316,7 +316,7 @@
 
 ### 4.1 基本类型理论
 
-- [简单类型理论](04_Type_Theory/01_Basic_Type_Theory/01_Simple_Type_Theory.md)
+- [简单类型理论](../05_Type_Theory/01_Basic_Type_Theory/01_Simple_Type_Theory.md)
   - 类型语法和语义
   - 类型推导
   - 类型安全
@@ -330,7 +330,7 @@
   - 子类型多态
   - 多态类型实现
 
-- [依赖类型理论](04_Type_Theory/02_Advanced_Type_Theory/02_Dependent_Type_Theory.md)
+- [依赖类型理论](../05_Type_Theory/01_Simple_Type_Theory/02_Dependent_Type_Theory.md)
   - 依赖类型定义
   - 依赖类型系统
   - 依赖类型推导
@@ -567,3 +567,8 @@
 13. **跨域综合**：理论综合、应用综合
 
 这个索引为形式科学的系统化研究提供了完整的框架结构。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

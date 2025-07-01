@@ -963,11 +963,16 @@ testTypeInference = do
 
 **相关理论链接**:
 
-- [形式语言理论](../03_Formal_Language_Theory/README.md)
-- [逻辑理论](../10_Logic_Theory/README.md)
-- [软件工程理论](../07_Software_Engineering_Theory/README.md)
-- [编程语言理论](../08_Programming_Language_Theory/README.md)
+- [形式语言理论](README.md)
+- [逻辑理论](README.md)
+- [软件工程理论](README.md)
+- [编程语言理论](README.md)
 
 **更新时间**: 2024年12月21日  
 **版本**: v1.0  
 **状态**: 完成
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

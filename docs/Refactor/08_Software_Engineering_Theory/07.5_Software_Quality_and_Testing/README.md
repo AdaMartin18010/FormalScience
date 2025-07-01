@@ -1,15 +1,15 @@
 # 07.5 软件质量与测试（Software Quality and Testing）
 
-[返回软件工程理论主题索引](../README.md)
+[返回软件工程理论主题索引](README.md)
 
 > 本分支系统梳理软件质量与测试理论，包括质量模型、测试方法、自动化测试、测试覆盖、缺陷管理等，采用严格树形编号、目录结构、本地跳转锚点与交叉引用。
 
 ## 目录
 
-- [07.5.1 质量模型](./07.5.1_Quality_Models.md)
-- [07.5.2 测试方法](./07.5.2_Testing_Methods.md)
-- [07.5.3 自动化测试](./07.5.3_Automated_Testing.md)
-- [07.5.4 测试覆盖与缺陷管理](./07.5.4_Coverage_and_Defect_Management.md)
+- [07.5.1 质量模型](07.5.1_Quality_Models.md)
+- [07.5.2 测试方法](07.5.2_Testing_Methods.md)
+- [07.5.3 自动化测试](07.5.3_Automated_Testing.md)
+- [07.5.4 测试覆盖与缺陷管理](07.5.4_Coverage_and_Defect_Management.md)
 
 ---
 
@@ -24,10 +24,15 @@
 
 ## 交叉引用
 
-- [软件工程总览](../README.md)
-- [软件开发方法论](../07.2_Software_Development_Methodologies/README.md)
-- [形式化方法](../07.1_Formal_Methods/README.md)
+- [软件工程总览](README.md)
+- [软件开发方法论](README.md)
+- [形式化方法](README.md)
 
 ---
 
 > 本文档为软件质量与测试分支的导航。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

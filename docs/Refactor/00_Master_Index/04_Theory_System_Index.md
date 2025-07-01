@@ -358,7 +358,7 @@ fn function_name(param1: Type1, param2: Type2) -> ReturnType {
 **主索引导航**：
 
 - [00. 重构主索引](../00_Master_Index/00_重构主索引_v1.0.md)
-- [01. 综合知识体系](../00_Master_Index/01_Comprehensive_Knowledge_System.md)
+- [01. 综合知识体系](01_Comprehensive_Knowledge_System.md)
 - [02. 主题分类体系](../00_Master_Index/02_主题分类体系.md)
 - [03. 交叉引用索引](../00_Master_Index/03_交叉引用索引.md)
 
@@ -387,3 +387,8 @@ fn function_name(param1: Type1, param2: Type2) -> ReturnType {
 - 交叉引用和导航
 
 该体系为形式科学提供了坚实的理论基础，支持从理论研究到实际应用的完整链路。
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

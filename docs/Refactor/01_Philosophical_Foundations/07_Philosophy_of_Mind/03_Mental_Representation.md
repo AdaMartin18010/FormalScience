@@ -241,12 +241,12 @@ impl SymbolicRepresentationSystem {
 
 ### 2. 联结主义表征理论 (Connectionist Representation Theory)
 
-#### 理论核心
+#### 理论核心1
 
 **主要代表**：David Rumelhart, James McClelland  
 **核心思想**：心理表征是分布式的激活模式，认知是网络中激活传播的结果。
 
-#### 关键概念
+#### 关键概念1
 
 1. **分布式表征** (Distributed Representation)
    - 概念由激活模式表征
@@ -258,7 +258,7 @@ impl SymbolicRepresentationSystem {
    - 统计学习机制
    - 权重调整与学习
 
-#### 形式化模型
+#### 形式化模型1
 
 **定义 3.3（联结网络）**：
 联结网络是一个四元组：
@@ -274,7 +274,7 @@ impl SymbolicRepresentationSystem {
 **激活传播方程**：
 > **aᵢ(t+1) = A(∑ⱼ wᵢⱼ · aⱼ(t) + bᵢ)**
 
-#### Rust实现示例
+#### Rust实现示例1
 
 ```rust
 use ndarray::{Array1, Array2};
@@ -488,15 +488,15 @@ impl ConceptVector {
 
 ### 内部引用
 
-- [心身问题](./01_Mind_Body_Problem.md) - 表征的本体论基础
-- [意识理论](./02_Consciousness_Theory.md) - 意识表征的特殊性质
-- [认知科学](./04_Cognitive_Science.md) - 表征的认知机制
+- [心身问题](01_Mind_Body_Problem.md) - 表征的本体论基础
+- [意识理论](02_Consciousness_Theory.md) - 意识表征的特殊性质
+- [认知科学](04_Cognitive_Science.md) - 表征的认知机制
 
 ### 外部引用
 
-- [计算理论](../../05_Type_Theory/) - 表征的计算实现
-- [逻辑理论](../../03_Logic_Theory/) - 表征的逻辑结构
-- [人工智能理论](../../13_Artificial_Intelligence_Theory/) - 机器表征学习
+- [计算理论](../../05_Type_Theory) - 表征的计算实现
+- [逻辑理论](../../03_Logic_Theory) - 表征的逻辑结构
+- [人工智能理论](../../13_Artificial_Intelligence_Theory) - 机器表征学习
 
 ## 小结
 
@@ -510,9 +510,95 @@ impl ConceptVector {
 
 当代发展趋势：
 
-- 具身认知对传统表征理论的挑战
-- 深度学习中的表征学习新发现
-- 预测编码框架的兴起
-- 多模态和时间动态表征的研究
+### 1. 具身认知理论（Embodied Cognition）
 
-心理表征理论不仅是理论问题，也具有重要的实践意义，为人工智能、认知科学、神经科学等领域提供了基础框架。
+**核心思想**：认知不仅依赖于大脑内部的表征，还深刻依赖于身体结构、感知运动系统与环境的动态交互。
+
+- **表征的具身性**：认知表征往往与感知运动经验紧密耦合，抽象思维也常借助身体隐喻。
+- **动态系统观点**：认知过程是大脑、身体与环境的协同动态系统。
+- **形式化表示**：
+  > **EmbodiedRepr = (B, S, E, I)**
+  > 其中：B（身体状态）、S（感知状态）、E（环境状态）、I（交互函数）
+
+**Rust伪代码示例**：
+```rust
+struct EmbodiedRepresentation {
+    body_state: BodyState,
+    sensory_state: SensoryState,
+    environment_state: EnvironmentState,
+    interaction: fn(&BodyState, &EnvironmentState) -> SensoryState,
+}
+```
+
+### 2. 预测编码与主动推断（Predictive Coding & Active Inference）
+
+**核心思想**：大脑是预测机器，通过不断生成对感知输入的预测并最小化预测误差来实现感知、学习与行动。
+
+- **表征的层级预测结构**：高层表征预测低层输入，误差信号驱动模型更新。
+- **主动推断**：不仅更新内部模型，还通过行动改变环境以减少预测误差。
+- **形式化表示**：
+  > **PredictionError = SensoryInput - Prediction(Model, Context)**
+  > **ActiveInference: argmin_a E[PredictionError(a)]**
+
+**Rust伪代码示例**：
+```rust
+fn prediction_error(input: f64, prediction: f64) -> f64 {
+    input - prediction
+}
+
+fn active_inference(model: &Model, context: &Context) -> Action {
+    // 选择最小化预测误差的动作
+    // ...
+}
+```
+
+### 3. 深度学习与多模态表征（Deep Learning & Multimodal Representation）
+
+**核心思想**：深度神经网络能够自动学习多层次、抽象和多模态的表征，广泛应用于视觉、语言、音频等领域。
+
+- **分布式与层级表征**：信息在多层网络中逐步抽象，形成高层语义表征。
+- **多模态融合**：不同感知通道的信息在统一表征空间中整合。
+- **表征学习**：通过无监督/自监督等方式自动发现有用特征。
+- **形式化表示**：
+  > **DeepRepr = f_L(...f_2(f_1(x)))**
+  > 其中f_i为第i层变换，x为原始输入。
+
+**Rust伪代码示例**：
+```rust
+struct DeepLayer {
+    weights: Vec<f64>,
+    bias: f64,
+    activation: fn(f64) -> f64,
+}
+
+fn forward(layers: &[DeepLayer], input: f64) -> f64 {
+    layers.iter().fold(input, |acc, layer| {
+        (layer.activation)((acc * layer.weights[0]) + layer.bias)
+    })
+}
+```
+
+---
+
+## 批判性分析
+
+心理表征理论的多元视角、局限性与争议：
+
+1. **理论多元性**：
+   - 符号主义强调结构与规则，适合解释逻辑推理与语言处理，但难以解释感知、运动等连续性认知现象。
+   - 联结主义强调分布式处理与优雅降级，适合模拟神经网络与学习，但符号操作与组合性解释有限。
+   - 具身认知挑战传统"头脑内表征"观，强调身体与环境的作用，但形式化与实验验证仍在发展。
+   - 预测编码与主动推断为统一感知、行动、学习提供新框架，但其神经实现和理论边界仍有争议。
+   - 深度学习表征强大但可解释性不足，难以直接映射到人类认知结构。
+
+2. **局限性与争议点**：
+   - 表征的"内容确定性"问题尚无公认解答。
+   - 不同理论间的整合与互补机制尚不清晰。
+   - AI中的表征学习与人类认知表征的异同仍需深入研究。
+
+3. **应用前景**：
+   - 跨学科融合（认知科学、神经科学、AI、哲学）推动表征理论发展。
+   - 新一代AI系统（如多模态大模型、具身智能体）对复杂表征理论提出更高要求。
+   - 表征理论对教育、脑机接口、智能医疗等领域具有重要启发。
+
+---

@@ -1,6 +1,6 @@
 # 14 复杂性理论（Complexity Theory）
 
-[返回Refactor主目录](../README.md)
+[返回Refactor主目录](README.md)
 
 > 本索引系统梳理复杂性理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
@@ -13,7 +13,7 @@
 
 ## 14.0 主题树形编号目录
 
-- 14.01 [复杂性理论总览 (Complexity Theory Overview)](./README.md)
+- 14.01 [复杂性理论总览 (Complexity Theory Overview)](README.md)
 - 14.02 [计算复杂性基础 (Computational Complexity Foundation)](./13.1.1_计算复杂性基础.md)
 - 14.03 [算法复杂性 (Algorithmic Complexity)](#算法复杂性)
 - 14.04 [系统复杂性 (System Complexity)](#系统复杂性)
@@ -35,9 +35,9 @@
 
 ## 14.2 交叉引用示例
 
-- [14.02.01 计算复杂性基础](./13.1.1_计算复杂性基础.md) ↔ [09.04.01 集合论基础](../09_Mathematics/01_Set_Theory/)
+- [14.02.01 计算复杂性基础](./13.1.1_计算复杂性基础.md) ↔ [09.04.01 集合论基础](../02_Mathematical_Foundations/01_Set_Theory)
 - [14.03.01 算法复杂性](#算法复杂性) ↔ [13.02.01 人工智能基础理论](../13_Artificial_Intelligence_Theory/01_AI_Foundation_Theory.md)
-- [14.06.01 网络复杂性](#网络复杂性) ↔ [10.02.01 时态逻辑基础](../10_Temporal_Logic_Theory/01_Temporal_Logic_Foundations.md)
+- [14.06.01 网络复杂性](#网络复杂性) ↔ [10.02.01 时态逻辑基础](../04_Temporal_Logic_Theory/01_Temporal_Logic_Foundations.md)
 
 ---
 
@@ -148,3 +148,8 @@
 
 - 2024-12-20: 创建复杂性理论目录结构
 - 2025-01-02: 补全严格编号目录和交叉引用
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -23,7 +23,7 @@
 - **Consensus Algorithms (共识算法)** - [04.1 共识算法](../04_Distributed_Systems/04.1_Consensus_Algorithms.md)
 - **Control Theory (控制理论)** - [03.1 线性控制](../03_Control_Theory/03.1_Linear_Control.md)
 - **Concurrency Theory (并发理论)** - [04.2 并发理论](../04_Distributed_Systems/04.2_Concurrency_Theory.md)
-- **Context Systems (上下文系统)** - [12.1 持续构建](../12_Context_System/12.1_Continuous_Construction.md)
+- **Context Systems (上下文系统)** - [12.1 持续构建](../13_Context_System/12.1_Continuous_Construction.md)
 
 ### D
 
@@ -165,8 +165,8 @@
 
 ### 3.12 上下文系统
 
-- **持续构建** - [12.1 持续构建](../12_Context_System/12.1_Continuous_Construction.md)
-- **进度跟踪** - [12.2 进度跟踪](../12_Context_System/12.2_Progress_Tracking.md)
+- **持续构建** - [12.1 持续构建](../13_Context_System/12.1_Continuous_Construction.md)
+- **进度跟踪** - [12.2 进度跟踪](../13_Context_System/12.2_Progress_Tracking.md)
 - **上下文管理** - [12.3 上下文管理](../12_Context_System/12.3_Context_Management.md)
 - **质量保证** - [12.4 质量保证](../12_Context_System/12.4_Quality_Assurance.md)
 
@@ -284,3 +284,8 @@ graph TD
 **版本**: v6.0
 **最后更新**: 2024-12-19
 **维护者**: AI Assistant
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

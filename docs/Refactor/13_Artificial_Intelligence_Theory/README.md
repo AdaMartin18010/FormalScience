@@ -11,13 +11,13 @@
 
 ## 13.0 主题树形编号目录
 
-- 13.01 [人工智能理论总览 (AI Theory Overview)](./README.md)
-- 13.02 [人工智能基础理论 (AI Foundation Theory)](./01_AI_Foundation_Theory.md)
-- 13.03 [机器学习 (Machine Learning)](./01_Machine_Learning/)
-- 13.04 [深度学习 (Deep Learning)](./02_Deep_Learning/)
-- 13.05 [强化学习 (Reinforcement Learning)](./03_Reinforcement_Learning/)
-- 13.06 [自然语言处理 (Natural Language Processing)](./04_Natural_Language_Processing/)
-- 13.07 [计算机视觉 (Computer Vision)](./05_Computer_Vision/)
+- 13.01 [人工智能理论总览 (AI Theory Overview)](README.md)
+- 13.02 [人工智能基础理论 (AI Foundation Theory)](01_AI_Foundation_Theory.md)
+- 13.03 [机器学习 (Machine Learning)](01_Machine_Learning)
+- 13.04 [深度学习 (Deep Learning)](02_Deep_Learning)
+- 13.05 [强化学习 (Reinforcement Learning)](03_Reinforcement_Learning)
+- 13.06 [自然语言处理 (Natural Language Processing)](04_Natural_Language_Processing)
+- 13.07 [计算机视觉 (Computer Vision)](05_Computer_Vision)
 
 ---
 
@@ -34,9 +34,9 @@
 
 ## 13.2 交叉引用示例
 
-- [13.02.01 人工智能基础理论](./01_AI_Foundation_Theory.md) ↔ [08.10.01 心灵哲学基础](../08_Philosophy_Science/07_Philosophy_of_Mind/01_Mind_Body_Problem.md)
-- [13.03.01 机器学习](./01_Machine_Learning/) ↔ [09.04.01 集合论基础](../09_Mathematics/01_Set_Theory/)
-- [13.06.01 自然语言处理](./04_Natural_Language_Processing/) ↔ [07.01.01 形式语言基础](../07_Formal_Language/01_Formal_Language_Foundations.md)
+- [13.02.01 人工智能基础理论](01_AI_Foundation_Theory.md) ↔ [08.10.01 心灵哲学基础](../01_Philosophical_Foundations/07_Philosophy_of_Mind/01_Mind_Body_Problem.md)
+- [13.03.01 机器学习](01_Machine_Learning) ↔ [09.04.01 集合论基础](../02_Mathematical_Foundations/01_Set_Theory)
+- [13.06.01 自然语言处理](04_Natural_Language_Processing) ↔ [07.01.01 形式语言基础](../04_Formal_Language_Theory/01_Formal_Language_Foundations.md)
 
 ---
 
@@ -162,3 +162,8 @@
 
 - 2024-12-20: 创建人工智能理论目录结构
 - 2025-01-02: 补全严格编号目录和交叉引用
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

@@ -11,7 +11,7 @@
 
 ## 15.0 主题树形编号目录
 
-- 15.01 [信息理论总览 (Information Theory Overview)](./README.md)
+- 15.01 [信息理论总览 (Information Theory Overview)](README.md)
 - 15.02 [信息论基础 (Information Theory Foundation)](./14.1.1_信息论基础.md)
 - 15.03 [熵理论 (Entropy Theory)](#熵理论)
 - 15.04 [编码理论 (Coding Theory)](#编码理论)
@@ -33,9 +33,9 @@
 
 ## 15.2 交叉引用示例
 
-- [15.02.01 信息论基础](./14.1.1_信息论基础.md) ↔ [09.04.01 集合论基础](../09_Mathematics/01_Set_Theory/)
+- [15.02.01 信息论基础](./14.1.1_信息论基础.md) ↔ [09.04.01 集合论基础](../02_Mathematical_Foundations/01_Set_Theory)
 - [15.03.01 熵理论](#熵理论) ↔ [14.02.01 计算复杂性基础](../14_Complexity_Theory/13.1.1_计算复杂性基础.md)
-- [15.06.01 量子信息论](#量子信息论) ↔ [10.02.01 时态逻辑基础](../10_Temporal_Logic_Theory/01_Temporal_Logic_Foundations.md)
+- [15.06.01 量子信息论](#量子信息论) ↔ [10.02.01 时态逻辑基础](../04_Temporal_Logic_Theory/01_Temporal_Logic_Foundations.md)
 
 ---
 
@@ -146,3 +146,8 @@
 
 - 2024-12-20: 创建信息理论目录结构
 - 2025-01-02: 补全严格编号目录和交叉引用
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

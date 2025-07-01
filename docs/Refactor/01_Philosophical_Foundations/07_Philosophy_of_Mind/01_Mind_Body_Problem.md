@@ -472,17 +472,17 @@ mod tests {
 
 ### 内部引用
 
-- [意识理论](./02_Consciousness_Theory.md)
-- [心理表征](./03_Mental_Representation.md)
-- [认知科学](./04_Cognitive_Science.md)
+- [意识理论](02_Consciousness_Theory.md)
+- [心理表征](03_Mental_Representation.md)
+- [认知科学](04_Cognitive_Science.md)
 
 ### 外部引用
 
-- [形而上学](../01_Metaphysics/README.md)
-- [认识论](../02_Epistemology/README.md)
-- [科学哲学](../04_Philosophy_of_Science/README.md)
-- [计算理论](../../06_Computation_Theory/README.md)
-- [人工智能理论](../../13_Artificial_Intelligence_Theory/README.md)
+- [形而上学](README.md)
+- [认识论](README.md)
+- [科学哲学](README.md)
+- [计算理论](README.md)
+- [人工智能理论](README.md)
 
 ## 参考文献
 
@@ -494,5 +494,9 @@ mod tests {
 
 ## 返回
 
-[返回心灵哲学](./README.md)  
-[返回哲学基础模块](../README.md)
+[返回心灵哲学](README.md)  
+[返回哲学基础模块](README.md)
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

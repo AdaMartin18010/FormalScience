@@ -19,21 +19,21 @@
 7. [语言识别](#7-语言识别)
 8. [应用实例](#8-应用实例)
 9. [代码实现](#9-代码实现)
-10. [Mealy机](./02_Mealy_Machine.md)
-11. [Moore机](./03_Moore_Machine.md)
+10. [Mealy机](02_Mealy_Machine.md)
+11. [Moore机](03_Moore_Machine.md)
 12. [交叉引用](#交叉引用)
 13. [参考文献](#参考文献)
 
 ## 交叉引用
 
-- [Mealy机](./02_Mealy_Machine.md)
-- [Moore机](./03_Moore_Machine.md)
-- [DFA理论](./01_DFA_Theory.md)
+- [Mealy机](02_Mealy_Machine.md)
+- [Moore机](03_Moore_Machine.md)
+- [DFA理论](01_DFA_Theory.md)
 - [自动机理论总览](../README.md)
 - [正则语言](../../02_Regular_Languages.md)
 - [形式文法](../../03.2_Formal_Grammars.md)
-- [计算理论](../../03.6_Computation_Theory/README.md)
-- [上下文系统](../../../12_Context_System/README.md)
+- [计算理论](../README.md)
+- [上下文系统](../README.md)
 
 ## 1. 基本概念
 
@@ -1098,3 +1098,8 @@ runAllTests = do
 **版本**: v1.0  
 **维护者**: 形式科学理论体系重构团队  
 **状态**: ✅ 已完成
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

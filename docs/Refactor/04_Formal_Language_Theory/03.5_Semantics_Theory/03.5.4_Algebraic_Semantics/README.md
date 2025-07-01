@@ -8,7 +8,7 @@
 
 本目录包含与代数语义相关的文档：
 
-- [03.5.4_Algebraic_Semantics.md](./03.5.4_Algebraic_Semantics.md) - 代数语义的英文详细介绍
+- [03.5.4_Algebraic_Semantics.md](../03.5.4_Algebraic_Semantics.md) - 代数语义的英文详细介绍
 - [03.5.4_代数语义.md](./03.5.4_代数语义.md) - 代数语义的中文详细介绍
 
 ## 主要概念
@@ -31,12 +31,17 @@
 
 ## 相关主题
 
-- [操作语义](../03.5.1_Operational_Semantics/README.md) - 基于状态转换的语义模型
-- [指称语义](../03.5.2_Denotational_Semantics/README.md) - 基于数学函数的语义模型
-- [公理语义](../03.5.3_Axiomatic_Semantics/README.md) - 基于逻辑的语义模型
+- [操作语义](README.md) - 基于状态转换的语义模型
+- [指称语义](README.md) - 基于数学函数的语义模型
+- [公理语义](README.md) - 基于逻辑的语义模型
 
 ## 参考资源
 
 - Goguen, J. A. & Thatcher, J. W. (1977). Initial Algebra Semantics and Continuous Algebras.
 - Meseguer, J. & Goguen, J. A. (1985). Initiality, Induction, and Computability.
 - Hennessy, M. (1990). The Semantics of Programming Languages: An Elementary Introduction Using Structural Operational Semantics.
+
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

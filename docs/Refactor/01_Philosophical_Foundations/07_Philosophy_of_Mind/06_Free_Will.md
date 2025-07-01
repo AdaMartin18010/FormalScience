@@ -32,6 +32,7 @@
     - [内部引用](#内部引用)
     - [外部引用](#外部引用)
   - [返回](#返回)
+  - [批判性分析](#批判性分析)
 
 ## 引言
 
@@ -639,18 +640,22 @@ impl FreeWillFramework {
 
 ### 内部引用
 
-- [心身问题](./01_Mind_Body_Problem.md)
-- [意识理论](./02_Consciousness_Theory.md)
-- [个人同一性](./05_Personal_Identity.md)
+- [心身问题](01_Mind_Body_Problem.md)
+- [意识理论](02_Consciousness_Theory.md)
+- [个人同一性](05_Personal_Identity.md)
 
 ### 外部引用
 
 - [因果性](../01_Metaphysics/04_Causation.md)
-- [伦理学基础](../05_Ethics/README.md)
-- [科学哲学](../04_Philosophy_of_Science/README.md)
+- [伦理学基础](README.md)
+- [科学哲学](README.md)
 - [时间哲学](../01_Metaphysics/03_Time_and_Space.md)
 
 ## 返回
 
-[返回心灵哲学](./README.md)  
-[返回哲学基础模块](../README.md)
+[返回心灵哲学](README.md)  
+[返回哲学基础模块](README.md)
+
+## 批判性分析
+
+- 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。
