@@ -44,11 +44,13 @@
 ## 交叉引用
 
 ### 内部学科链接
+
 - **[01 哲学基础](../01_Philosophical_Foundations/README.md)**: 为逻辑的本质、真理和悖论提供哲学背景。
 - **[02 数学基础](../02_Mathematical_Foundations/README.md)**: 逻辑是构建数学证明和公理系统的基础。
 - **[04 形式语言理论](../04_Formal_Language_Theory/README.md)**: 逻辑语言本身就是一种形式语言。
 
 ### 外部学科链接
+
 - **[05 类型理论](../05_Type_Theory/README.md)**: Curry-Howard同构揭示了逻辑与计算之间的深刻联系。
 - **[09 计算机体系结构](../09_Computer_Architecture_Theory/01_Digital_Logic_Design/README.md)**: 命题逻辑是数字电路设计的基础。
 - **[13 人工智能理论](../13_Artificial_Intelligence_Theory/README.md)**: 逻辑是知识表示和自动推理的核心工具。

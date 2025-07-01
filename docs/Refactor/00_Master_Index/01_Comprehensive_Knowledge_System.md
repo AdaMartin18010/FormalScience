@@ -415,7 +415,6 @@ applyRule rule premises = case rule of
 **更新人**：AI Assistant  
 **状态**：初始版本，持续完善中
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。
