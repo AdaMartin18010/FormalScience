@@ -2,83 +2,59 @@
 
 ## 模块概述
 
-形式语言理论是计算机科学和数学的重要分支，研究形式语言的性质、分类和应用。本模块涵盖自动机理论、形式文法、语言层次、语义理论、解析理论和应用领域，为程序语言理论、编译器设计、自然语言处理等提供理论基础。
-
-## 核心研究领域
-
-### 自动机理论
-
-- 有限自动机与正则语言
-- 下推自动机与上下文无关语言
-- 线性有界自动机与上下文相关语言
-- 图灵机与递归可枚举语言
-
-### 形式文法理论
-
-- 乔姆斯基文法层次
-- 产生式规则和文法变换
-- 文法的等价性和简化
-- 属性文法和语义规则
-
-### 语言语义学
-
-- 操作语义学
-- 指称语义学
-- 公理语义学
-- 代数语义学
-
-### 解析理论
-
-- 自顶向下解析方法
-- 自底向上解析方法
-- LR解析和LALR解析
-- 错误处理和恢复
+形式语言理论是计算机科学和数学的重要分支，研究形式语言的性质、分类和应用。本模块系统性地组织了从基础到前沿的核心理论，涵盖自动机理论、形式文法、语言层次结构、解析理论、语义学、计算理论，以及它们在编译器设计、自然语言处理等领域的应用。
 
 ## 模块结构
 
+本模块根据理论主题进行划分，确保了内容的逻辑性和一致性。
+
 ```text
 04_Formal_Language_Theory/
-├── README.md                                    # 本文件
-├── 01_Formal_Language_Foundations.md           # 形式语言基础
-├── 02_Automata_Theory/                         # 自动机理论
+├── README.md                                # 本文件，模块总览
+├── 04.1_Automata_Theory/                    # 自动机理论
 │   ├── README.md
-│   ├── 01_Finite_Automata.md                  # 有限自动机
-│   ├── 02_Regular_Languages.md                # 正则语言
-│   ├── 03_Context_Free_Grammars.md           # 上下文无关文法
-│   └── 04_Pushdown_Automata.md               # 下推自动机
-├── 03_Language_Hierarchy/                      # 语言层次
+│   ├── 04.1.1_Finite_Automata.md            # 有限自动机
+│   ├── 04.1.2_Pushdown_Automata.md          # 下推自动机
+│   ├── 04.1.3_Linear_Bouned_Automata.md     # 线性有界自动机
+│   └── 04.1.4_Turing_Machine.md             # 图灵机
+├── 04.2_Formal_Grammars/                    # 形式文法
 │   ├── README.md
-│   ├── 01_Chomsky_Hierarchy.md               # 乔姆斯基层次
-│   ├── 02_Regular_Languages.md               # 正则语言
-│   ├── 03_Context_Free_Languages.md          # 上下文无关语言
-│   ├── 04_Context_Sensitive_Languages.md     # 上下文相关语言
-│   └── 05_Recursively_Enumerable_Languages.md # 递归可枚举语言
-├── 04_Parsing_Theory/                          # 解析理论
+│   ├── 04.2.1_Chomsky_Hierarchy.md          # 乔姆斯基层次
+│   ├── 04.2.2_Grammar_Transformation.md     # 文法变换
+│   └── 04.2.3_Attribute_Grammar.md          # 属性文法
+├── 04.3_Language_Hierarchy/                 # 语言层次
 │   ├── README.md
-│   ├── 01_LL_Parsing.md                      # LL解析
-│   ├── 02_LR_Parsing.md                      # LR解析
-│   ├── 03_Recursive_Descent_Parsing.md       # 递归下降解析
-│   └── 04_Bottom_Up_Parsing.md               # 自底向上解析
-├── 05_Semantics_Theory/                        # 语义理论
+│   ├── 04.3.1_Regular_Languages.md          # 正则语言
+│   ├── 04.3.2_Context_Free_Languages.md     # 上下文无关语言
+│   ├── 04.3.3_Context_Sensitive_Languages.md # 上下文相关语言
+│   └── 04.3.4_Recursively_Enumerable_Languages.md # 递归可枚举语言
+├── 04.4_Parsing_Theory/                     # 解析理论
 │   ├── README.md
-│   ├── 01_Operational_Semantics.md           # 操作语义学
-│   ├── 02_Denotational_Semantics.md          # 指称语义学
-│   ├── 03_Axiomatic_Semantics.md             # 公理语义学
-│   └── 04_Algebraic_Semantics.md             # 代数语义学
-├── 06_Computation_Theory/                      # 计算理论
+│   ├── 04.4.1_LL_Parsing.md                 # LL解析
+│   ├── 04.4.2_LR_Parsing.md                 # LR解析
+│   ├── 04.4.3_Recursive_Descent_Parsing.md  # 递归下降解析
+│   └── 04.4.4_Bottom_Up_Parsing.md          # 自底向上解析
+├── 04.5_Semantics_Theory/                   # 语义理论
 │   ├── README.md
-│   ├── 01_Computability_Theory.md            # 可计算性理论
-│   └── 02_Complexity_Theory.md               # 复杂性理论
-├── 07_Language_Applications/                   # 语言应用
+│   ├── 04.5.1_Operational_Semantics.md      # 操作语义学
+│   ├── 04.5.2_Denotational_Semantics.md     # 指称语义学
+│   ├── 04.5.3_Axiomatic_Semantics.md        # 公理语义学
+│   └── 04.5.4_Algebraic_Semantics.md        # 代数语义学
+├── 04.6_Computation_Theory/                 # 计算理论
 │   ├── README.md
-│   ├── 01_Compiler_Design.md                 # 编译器设计
-│   ├── 02_Natural_Language_Processing.md     # 自然语言处理
-│   ├── 03_Protocol_Design.md                 # 协议设计
-│   └── 04_Formal_Verification.md             # 形式验证
-└── 08_Language_Frontiers/                     # 语言前沿
+│   ├── 04.6.1_Computability_Theory.md       # 可计算性理论
+│   ├── 04.6.2_Complexity_Theory.md          # 复杂性理论
+│   └── 04.6.3_Church_Turing_Thesis.md       # 丘奇-图灵论题
+├── 04.7_Language_Applications/              # 语言应用
+│   ├── README.md
+│   ├── 04.7.1_Compiler_Design.md            # 编译器设计
+│   ├── 04.7.2_Natural_Language_Processing.md # 自然语言处理
+│   ├── 04.7.3_Protocol_Design.md            # 协议设计
+│   └── 04.7.4_Formal_Verification.md        # 形式验证
+└── 04.8_Language_Frontiers/                 # 语言前沿
     ├── README.md
-    ├── 01_Quantum_Languages.md               # 量子语言
-    └── 02_Biological_Languages.md            # 生物语言
+    ├── 04.8.1_Quantum_Languages.md          # 量子语言
+    └── 04.8.2_Biological_Languages.md       # 生物语言
 ```
 
 ## 理论框架
@@ -249,24 +225,15 @@
 
 ### 形式语言工具
 
-- **ANTLR**: 语法分析器生成器
-- **Lex/Yacc**: 词法/语法分析器
-- **Bison**: GNU语法分析器生成器
-- **PEG**: 解析表达式文法
+- **JFLAP**: 自动机和形式语言教学工具
+- **ANTLR**: 功能强大的解析器生成器
+- **Lex & Yacc**: 经典的词法分析和语法分析工具
 
-### 验证工具
+### 形式验证工具
 
-- **TLA+**: 时序逻辑规约语言
-- **Spin**: 模型检查器
+- **Spin**: LTL模型检查器
 - **NuSMV**: 符号模型检查器
-- **UPPAAL**: 实时系统验证
-
-### 理论工具
-
-- **Mathematica**: 符号计算和形式推导
 - **Coq**: 交互式定理证明器
-- **Isabelle/HOL**: 高阶逻辑证明助手
-- **Agda**: 依赖类型编程语言
 
 ## 学习路径
 
