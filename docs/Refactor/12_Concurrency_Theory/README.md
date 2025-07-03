@@ -73,116 +73,116 @@
 
 ### 1.1 并发基础
 
-- [1.1.1 并发定义](./01_Basic_Concepts/01_Concurrency_Definition.md)
-- [1.1.2 并发与并行](./01_Basic_Concepts/02_Concurrency_vs_Parallelism.md)
-- [1.1.3 并发系统](./01_Basic_Concepts/03_Concurrent_Systems.md)
-- [1.1.4 并发性质](./01_Basic_Concepts/04_Concurrency_Properties.md)
+- [1.1.1 并发定义](./01_Basic_Concepts/01_Concurrency_Definition.md)（链接失效，待补充）
+- [1.1.2 并发与并行](./01_Basic_Concepts/02_Concurrency_vs_Parallelism.md)（链接失效，待补充）
+- [1.1.3 并发系统](./01_Basic_Concepts/03_Concurrent_Systems.md)（链接失效，待补充）
+- [1.1.4 并发性质](./01_Basic_Concepts/04_Concurrency_Properties.md)（链接失效，待补充）
 
 ### 1.2 并发计算模型
 
-- [1.2.1 并发计算模型基础](./01_Basic_Concepts/05_Concurrent_Computation_Model_Basics.md)
-- [1.2.2 共享内存模型](./01_Basic_Concepts/06_Shared_Memory_Model.md)
-- [1.2.3 消息传递模型](./01_Basic_Concepts/07_Message_Passing_Model.md)
-- [1.2.4 混合模型](./01_Basic_Concepts/08_Hybrid_Model.md)
+- [1.2.1 并发计算模型基础](./01_Basic_Concepts/05_Concurrent_Computation_Model_Basics.md)（链接失效，待补充）
+- [1.2.2 共享内存模型](./01_Basic_Concepts/06_Shared_Memory_Model.md)（链接失效，待补充）
+- [1.2.3 消息传递模型](./01_Basic_Concepts/07_Message_Passing_Model.md)（链接失效，待补充）
+- [1.2.4 混合模型](./01_Basic_Concepts/08_Hybrid_Model.md)（链接失效，待补充）
 
 ### 1.3 并发问题
 
-- [1.3.1 并发问题分类](./01_Basic_Concepts/09_Concurrency_Problem_Classification.md)
-- [1.3.2 互斥问题](./01_Basic_Concepts/10_Mutual_Exclusion_Problem.md)
-- [1.3.3 生产者消费者问题](./01_Basic_Concepts/11_Producer_Consumer_Problem.md)
-- [1.3.4 哲学家就餐问题](./01_Basic_Concepts/12_Dining_Philosophers_Problem.md)
+- [1.3.1 并发问题分类](./01_Basic_Concepts/09_Concurrency_Problem_Classification.md)（链接失效，待补充）
+- [1.3.2 互斥问题](./01_Basic_Concepts/10_Mutual_Exclusion_Problem.md)（链接失效，待补充）
+- [1.3.3 生产者消费者问题](./01_Basic_Concepts/11_Producer_Consumer_Problem.md)（链接失效，待补充）
+- [1.3.4 哲学家就餐问题](./01_Basic_Concepts/12_Dining_Philosophers_Problem.md)（链接失效，待补充）
 
 ## 2. 进程演算 (02_Process_Calculi)
 
 ### 2.1 CCS演算
 
-- [2.1.1 CCS基础](./02_Process_Calculi/01_CCS_Basics.md)
-- [2.1.2 CCS语法](./02_Process_Calculi/02_CCS_Syntax.md)
-- [2.1.3 CCS语义](./02_Process_Calculi/03_CCS_Semantics.md)
-- [2.1.4 CCS等价性](./02_Process_Calculi/04_CCS_Equivalence.md)
+- [2.1.1 CCS基础](./02_Process_Calculi/01_CCS_Basics.md)（链接失效，待补充）
+- [2.1.2 CCS语法](./02_Process_Calculi/02_CCS_Syntax.md)（链接失效，待补充）
+- [2.1.3 CCS语义](./02_Process_Calculi/03_CCS_Semantics.md)（链接失效，待补充）
+- [2.1.4 CCS等价性](./02_Process_Calculi/04_CCS_Equivalence.md)（链接失效，待补充）
 
 ### 2.2 π演算
 
-- [2.2.1 π演算基础](./02_Process_Calculi/05_Pi_Calculus_Basics.md)
-- [2.2.2 π演算语法](./02_Process_Calculi/06_Pi_Calculus_Syntax.md)
-- [2.2.3 π演算语义](./02_Process_Calculi/07_Pi_Calculus_Semantics.md)
-- [2.2.4 π演算应用](./02_Process_Calculi/08_Pi_Calculus_Applications.md)
+- [2.2.1 π演算基础](./02_Process_Calculi/05_Pi_Calculus_Basics.md)（链接失效，待补充）
+- [2.2.2 π演算语法](./02_Process_Calculi/06_Pi_Calculus_Syntax.md)（链接失效，待补充）
+- [2.2.3 π演算语义](./02_Process_Calculi/07_Pi_Calculus_Semantics.md)（链接失效，待补充）
+- [2.2.4 π演算应用](./02_Process_Calculi/08_Pi_Calculus_Applications.md)（链接失效，待补充）
 
 ### 2.3 CSP演算
 
-- [2.3.1 CSP基础](./02_Process_Calculi/09_CSP_Basics.md)
-- [2.3.2 CSP语法](./02_Process_Calculi/10_CSP_Syntax.md)
-- [2.3.3 CSP语义](./02_Process_Calculi/11_CSP_Semantics.md)
-- [2.3.4 CSP应用](./02_Process_Calculi/12_CSP_Applications.md)
+- [2.3.1 CSP基础](./02_Process_Calculi/09_CSP_Basics.md)（链接失效，待补充）
+- [2.3.2 CSP语法](./02_Process_Calculi/10_CSP_Syntax.md)（链接失效，待补充）
+- [2.3.3 CSP语义](./02_Process_Calculi/11_CSP_Semantics.md)（链接失效，待补充）
+- [2.3.4 CSP应用](./02_Process_Calculi/12_CSP_Applications.md)（链接失效，待补充）
 
 ## 3. 并发模型 (03_Concurrency_Models)
 
 ### 3.1 线程模型
 
-- [3.1.1 线程模型基础](./03_Concurrency_Models/01_Thread_Model_Basics.md)
-- [3.1.2 用户级线程](./03_Concurrency_Models/02_User_Level_Threads.md)
-- [3.1.3 内核级线程](./03_Concurrency_Models/03_Kernel_Level_Threads.md)
-- [3.1.4 混合线程](./03_Concurrency_Models/04_Hybrid_Threads.md)
+- [3.1.1 线程模型基础](./03_Concurrency_Models/01_Thread_Model_Basics.md)（链接失效，待补充）
+- [3.1.2 用户级线程](./03_Concurrency_Models/02_User_Level_Threads.md)（链接失效，待补充）
+- [3.1.3 内核级线程](./03_Concurrency_Models/03_Kernel_Level_Threads.md)（链接失效，待补充）
+- [3.1.4 混合线程](./03_Concurrency_Models/04_Hybrid_Threads.md)（链接失效，待补充）
 
 ### 3.2 进程模型
 
-- [3.2.1 进程模型基础](./03_Concurrency_Models/05_Process_Model_Basics.md)
-- [3.2.2 进程创建](./03_Concurrency_Models/06_Process_Creation.md)
-- [3.2.3 进程调度](./03_Concurrency_Models/07_Process_Scheduling.md)
-- [3.2.4 进程通信](./03_Concurrency_Models/08_Process_Communication.md)
+- [3.2.1 进程模型基础](./03_Concurrency_Models/05_Process_Model_Basics.md)（链接失效，待补充）
+- [3.2.2 进程创建](./03_Concurrency_Models/06_Process_Creation.md)（链接失效，待补充）
+- [3.2.3 进程调度](./03_Concurrency_Models/07_Process_Scheduling.md)（链接失效，待补充）
+- [3.2.4 进程通信](./03_Concurrency_Models/08_Process_Communication.md)（链接失效，待补充）
 
 ### 3.3 协程模型
 
-- [3.3.1 协程模型基础](./03_Concurrency_Models/09_Coroutine_Model_Basics.md)
-- [3.3.2 协程实现](./03_Concurrency_Models/10_Coroutine_Implementation.md)
-- [3.3.3 协程调度](./03_Concurrency_Models/11_Coroutine_Scheduling.md)
-- [3.3.4 协程应用](./03_Concurrency_Models/12_Coroutine_Applications.md)
+- [3.3.1 协程模型基础](./03_Concurrency_Models/09_Coroutine_Model_Basics.md)（链接失效，待补充）
+- [3.3.2 协程实现](./03_Concurrency_Models/10_Coroutine_Implementation.md)（链接失效，待补充）
+- [3.3.3 协程调度](./03_Concurrency_Models/11_Coroutine_Scheduling.md)（链接失效，待补充）
+- [3.3.4 协程应用](./03_Concurrency_Models/12_Coroutine_Applications.md)（链接失效，待补充）
 
 ## 4. 同步机制 (04_Synchronization)
 
 ### 4.1 基本同步原语
 
-- [4.1.1 同步原语基础](./04_Synchronization/01_Synchronization_Primitive_Basics.md)
-- [4.1.2 信号量](./04_Synchronization/02_Semaphores.md)
-- [4.1.3 互斥锁](./04_Synchronization/03_Mutexes.md)
-- [4.1.4 条件变量](./04_Synchronization/04_Condition_Variables.md)
+- [4.1.1 同步原语基础](./04_Synchronization/01_Synchronization_Primitive_Basics.md)（链接失效，待补充）
+- [4.1.2 信号量](./04_Synchronization/02_Semaphores.md)（链接失效，待补充）
+- [4.1.3 互斥锁](./04_Synchronization/03_Mutexes.md)（链接失效，待补充）
+- [4.1.4 条件变量](./04_Synchronization/04_Condition_Variables.md)（链接失效，待补充）
 
 ### 4.2 高级同步机制
 
-- [4.2.1 读写锁](./04_Synchronization/05_Read_Write_Locks.md)
-- [4.2.2 屏障](./04_Synchronization/06_Barriers.md)
-- [4.2.3 事件](./04_Synchronization/07_Events.md)
-- [4.2.4 原子操作](./04_Synchronization/08_Atomic_Operations.md)
+- [4.2.1 读写锁](./04_Synchronization/05_Read_Write_Locks.md)（链接失效，待补充）
+- [4.2.2 屏障](./04_Synchronization/06_Barriers.md)（链接失效，待补充）
+- [4.2.3 事件](./04_Synchronization/07_Events.md)（链接失效，待补充）
+- [4.2.4 原子操作](./04_Synchronization/08_Atomic_Operations.md)（链接失效，待补充）
 
 ### 4.3 无锁同步
 
-- [4.3.1 无锁同步基础](./04_Synchronization/09_Lock_Free_Synchronization_Basics.md)
-- [4.3.2 无锁数据结构](./04_Synchronization/10_Lock_Free_Data_Structures.md)
-- [4.3.3 无锁算法](./04_Synchronization/11_Lock_Free_Algorithms.md)
-- [4.3.4 无锁应用](./04_Synchronization/12_Lock_Free_Applications.md)
+- [4.3.1 无锁同步基础](./04_Synchronization/09_Lock_Free_Synchronization_Basics.md)（链接失效，待补充）
+- [4.3.2 无锁数据结构](./04_Synchronization/10_Lock_Free_Data_Structures.md)（链接失效，待补充）
+- [4.3.3 无锁算法](./04_Synchronization/11_Lock_Free_Algorithms.md)（链接失效，待补充）
+- [4.3.4 无锁应用](./04_Synchronization/12_Lock_Free_Applications.md)（链接失效，待补充）
 
 ## 5. 通信机制 (05_Communication)
 
 ### 5.1 共享内存通信
 
-- [5.1.1 共享内存基础](./05_Communication/01_Shared_Memory_Basics.md)
-- [5.1.2 内存模型](./05_Communication/02_Memory_Models.md)
-- [5.1.3 内存屏障](./05_Communication/03_Memory_Barriers.md)
-- [5.1.4 缓存一致性](./05_Communication/04_Cache_Coherence.md)
+- [5.1.1 共享内存基础](./05_Communication/01_Shared_Memory_Basics.md)（链接失效，待补充）
+- [5.1.2 内存模型](./05_Communication/02_Memory_Models.md)（链接失效，待补充）
+- [5.1.3 内存屏障](./05_Communication/03_Memory_Barriers.md)（链接失效，待补充）
+- [5.1.4 缓存一致性](./05_Communication/04_Cache_Coherence.md)（链接失效，待补充）
 
 ### 5.2 消息传递通信
 
-- [5.2.1 消息传递基础](./05_Communication/05_Message_Passing_Basics.md)
-- [5.2.2 同步消息传递](./05_Communication/06_Synchronous_Message_Passing.md)
-- [5.2.3 异步消息传递](./05_Communication/07_Asynchronous_Message_Passing.md)
-- [5.2.4 消息队列](./05_Communication/08_Message_Queues.md)
+- [5.2.1 消息传递基础](./05_Communication/05_Message_Passing_Basics.md)（链接失效，待补充）
+- [5.2.2 同步消息传递](./05_Communication/06_Synchronous_Message_Passing.md)（链接失效，待补充）
+- [5.2.3 异步消息传递](./05_Communication/07_Asynchronous_Message_Passing.md)（链接失效，待补充）
+- [5.2.4 消息队列](./05_Communication/08_Message_Queues.md)（链接失效，待补充）
 
 ### 5.3 远程过程调用
 
-- [5.3.1 RPC基础](./05_Communication/09_RPC_Basics.md)
-- [5.3.2 RPC实现](./05_Communication/10_RPC_Implementation.md)
-- [5.3.3 RPC协议](./05_Communication/11_RPC_Protocols.md)
-- [5.3.4 RPC应用](./05_Communication/12_RPC_Applications.md)
+- [5.3.1 RPC基础](./05_Communication/09_RPC_Basics.md)（链接失效，待补充）
+- [5.3.2 RPC实现](./05_Communication/10_RPC_Implementation.md)（链接失效，待补充）
+- [5.3.3 RPC协议](./05_Communication/11_RPC_Protocols.md)（链接失效，待补充）
+- [5.3.4 RPC应用](./05_Communication/12_RPC_Applications.md)（链接失效，待补充）
 
 ## 6. 死锁理论 (06_Deadlock_Theory)
 

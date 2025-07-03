@@ -10,11 +10,11 @@
 
 科学哲学研究科学知识的本质、方法和概念基础，探讨科学理论的结构、科学解释的性质、科学实在论与反实在论等问题。
 
-- [科学理论结构](./01.1_Philosophy_of_Science/01_Scientific_Theory_Structure.md)
-- [科学解释模型](./01.1_Philosophy_of_Science/02_Scientific_Explanation_Models.md)
-- [科学实在论](./01.1_Philosophy_of_Science/03_Scientific_Realism.md)
-- [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md)
-- [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md)
+- [科学理论结构](./01.1_Philosophy_of_Science/01_Scientific_Theory_Structure.md)（链接失效，待补充）
+- [科学解释模型](./01.1_Philosophy_of_Science/02_Scientific_Explanation_Models.md)（链接失效，待补充）
+- [科学实在论](./01.1_Philosophy_of_Science/03_Scientific_Realism.md)（链接失效，待补充）
+- [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md)（链接失效，待补充）
+- [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md)（链接失效，待补充）
 
 ### 2. 心灵哲学 (Philosophy of Mind) - (已完成)
 
