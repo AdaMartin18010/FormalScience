@@ -2,6 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
+脚本名称：link_fixer.py
+用途：批量修复知识库中的 Markdown 链接错误。
+用法：python link_fixer.py [参数]
+主要参数：
+    --dry-run      仅检查不修改
+    --fix          自动修复链接
+说明：请根据实际需求扩展功能，并配合 Meta/README.md 说明文档使用。
+
 链接修复工具 (Link Fixer)
 用于检测和修复Markdown文件中的断链问题
 

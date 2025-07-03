@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
+脚本名称：run_improvements.py
+用途：批量执行知识库改进、规范化、自动修复等操作。
+用法：python run_improvements.py [参数]
+主要参数：
+    --fix-links    批量修复链接
+    --normalize    目录编号规范化
+    --summary      输出改进摘要
+说明：请根据实际需求扩展功能，并配合 Meta/README.md 说明文档使用。
+
 形式科学项目改进执行脚本
 用于自动化执行所有改进工作
 
