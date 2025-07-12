@@ -1,5 +1,36 @@
 # Petri网理论 (Petri Net Theory)
 
+## 目录
+
+- [Petri网理论 (Petri Net Theory)](#petri网理论-petri-net-theory)
+  - [目录](#目录)
+  - [概述](#概述)
+  - [1. 基本Petri网 (Basic Petri Nets)](#1-基本petri网-basic-petri-nets)
+    - [1.1 基本定义](#11-基本定义)
+    - [1.2 可达性分析](#12-可达性分析)
+    - [1.3 不变性分析](#13-不变性分析)
+  - [2. 高级Petri网 (Advanced Petri Nets)](#2-高级petri网-advanced-petri-nets)
+    - [2.1 时间Petri网 (Timed Petri Nets)](#21-时间petri网-timed-petri-nets)
+    - [2.2 着色Petri网 (Colored Petri Nets)](#22-着色petri网-colored-petri-nets)
+    - [2.3 层次Petri网 (Hierarchical Petri Nets)](#23-层次petri网-hierarchical-petri-nets)
+  - [3. 并发语义 (Concurrency Semantics)](#3-并发语义-concurrency-semantics)
+    - [3.1 步语义 (Step Semantics)](#31-步语义-step-semantics)
+    - [3.2 部分序语义 (Partial Order Semantics)](#32-部分序语义-partial-order-semantics)
+  - [4. 分析技术 (Analysis Techniques)](#4-分析技术-analysis-techniques)
+    - [4.1 状态空间分析](#41-状态空间分析)
+    - [4.2 结构分析](#42-结构分析)
+    - [4.3 性能分析](#43-性能分析)
+  - [5. 应用领域 (Application Domains)](#5-应用领域-application-domains)
+    - [5.1 并发系统建模](#51-并发系统建模)
+    - [5.2 工作流建模](#52-工作流建模)
+    - [5.3 制造系统建模](#53-制造系统建模)
+  - [6. 扩展理论 (Extension Theories)](#6-扩展理论-extension-theories)
+    - [6.1 概率Petri网](#61-概率petri网)
+    - [6.2 模糊Petri网](#62-模糊petri网)
+    - [6.3 对象Petri网](#63-对象petri网)
+  - [7. 结论](#7-结论)
+  - [参考文献](#参考文献)
+
 ## 概述
 
 Petri网是并发系统建模和分析的重要形式化工具，由Carl Adam Petri在1962年提出。本文档系统性地梳理了Petri网理论的主要分支，从基本Petri网到高级变种，包括时间Petri网、着色Petri网等。
