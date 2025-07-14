@@ -28,6 +28,7 @@
 > **∀x (Consciousness(x) → ∃y (Physical(y) ∧ Identity(x, y)))**
 
 **主要变体**：
+
 - 同一论：意识状态与大脑状态同一
 - 功能主义：意识状态由其功能角色定义
 - 涌现物理主义：意识从物理基础涌现
@@ -40,6 +41,7 @@
 > **∃x (Consciousness(x) ∧ ¬Physical(x))**
 
 **主要变体**：
+
 - 实体二元论：意识是非物理实体
 - 属性二元论：意识是非物理属性
 - 交互二元论：意识与物理世界有因果交互
@@ -53,6 +55,7 @@
 > 其中d表示意识程度
 
 **主要变体**：
+
 - 构成泛心论：复杂意识由简单意识构成
 - 中性一元论：意识与物质源于共同基础
 - 泛经验主义：经验是实在的基本特性
@@ -65,6 +68,7 @@
 > **∀x (Physical(x) → ∃y (Mental(y) ∧ DependsOn(x, y)))**
 
 **主要变体**：
+
 - 主观唯心主义：世界依赖个体意识
 - 客观唯心主义：世界依赖超个体意识
 - 超验唯心主义：世界是意识的表象
@@ -206,6 +210,7 @@ impl ConsciousnessOntology {
 > **∀e (ConsciousExperience(e) → FirstPersonAccess(e))**
 
 **主要难点**：
+
 - 主观经验的私密性
 - 内省报告的可靠性
 - 第一人称数据与第三人称数据的整合
@@ -218,6 +223,7 @@ impl ConsciousnessOntology {
 > **ExplanatoryGap = {(p, c) | Physical(p) ∧ Consciousness(c) ∧ ¬ExplainedBy(c, p)}**
 
 **主要难点**：
+
 - 物理描述与现象描述的不对称
 - 结构功能解释的局限
 - 质性内容的还原问题
@@ -230,6 +236,7 @@ impl ConsciousnessOntology {
 > **OtherMinds = {(a, b) | HasConsciousness(a) ∧ KnowsIfHasConsciousness(a, b)}**
 
 **主要难点**：
+
 - 行为证据的间接性
 - 类比推理的局限
 - 意识归属的标准
@@ -353,6 +360,7 @@ impl ConsciousnessEpistemology {
 **核心思想**：通过系统化的第一人称反思来研究意识体验。
 
 **主要步骤**：
+
 - 现象学还原
 - 本质直观
 - 意向性分析
@@ -366,6 +374,7 @@ impl ConsciousnessEpistemology {
 **核心思想**：通过第三人称实验和观察来研究意识的神经和行为相关物。
 
 **主要技术**：
+
 - 功能性脑成像
 - 神经元记录
 - 心理物理学实验
@@ -379,6 +388,7 @@ impl ConsciousnessEpistemology {
 **核心思想**：通过分析意识概念的逻辑结构来澄清意识问题。
 
 **主要技术**：
+
 - 思想实验
 - 概念澄清
 - 逻辑分析
@@ -392,6 +402,7 @@ impl ConsciousnessEpistemology {
 **核心思想**：结合多种方法来全面研究意识。
 
 **主要策略**：
+
 - 神经现象学
 - 第一人称数据与第三人称数据的三角测量
 - 跨学科对话
@@ -541,7 +552,7 @@ impl ConsciousnessOntoEpistemology {
 **神秘主义**：意识有超越科学解释的成分。
 
 **形式化表示**：
-> **∃m (ScientificMethod(m) ∧ CanExplain(m, Consciousness)) ∨ 
+> **∃m (ScientificMethod(m) ∧ CanExplain(m, Consciousness)) ∨
 > ∀m (ScientificMethod(m) → ¬CanFullyExplain(m, Consciousness))**
 
 ### 3. 现象学与科学的关系
@@ -613,4 +624,4 @@ impl ConsciousnessOntoEpistemology {
    - 发展更精细的本体论分类
    - 改进第一人称数据收集方法
    - 构建更完善的整合方法论
-   - 推进本体认识论一致性研究 
+   - 推进本体认识论一致性研究

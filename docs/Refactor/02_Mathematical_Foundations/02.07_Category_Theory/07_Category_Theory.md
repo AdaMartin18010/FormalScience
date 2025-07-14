@@ -242,7 +242,6 @@ class Monad m where
 - [03_Logic_Theory/01_Propositional_Logic.md](../../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
 - [05_Type_Theory/01_Type_Theory_Foundations.md](../05_Type_Theory/01_Type_Theory_Foundations.md) - 类型理论基础
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

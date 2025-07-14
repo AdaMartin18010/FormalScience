@@ -689,7 +689,6 @@ impl BooleanAlgebra {
 3. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). Computability and Logic
 4. Huth, M., & Ryan, M. (2004). Logic in Computer Science: Modelling and Reasoning about Systems
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

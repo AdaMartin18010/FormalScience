@@ -1,5 +1,43 @@
 # 心理表征 (Mental Representation)
 
+## 目录
+
+- [心理表征 (Mental Representation)](#心理表征-mental-representation)
+  - [目录](#目录)
+  - [引言](#引言)
+  - [表征的基本概念](#表征的基本概念)
+    - [表征的定义](#表征的定义)
+    - [表征的基本性质](#表征的基本性质)
+      - [1. 意向性 (Intentionality)](#1-意向性-intentionality)
+      - [2. 语义内容 (Semantic Content)](#2-语义内容-semantic-content)
+      - [3. 系统性 (Systematicity)](#3-系统性-systematicity)
+  - [表征理论的主要框架](#表征理论的主要框架)
+    - [1. 符号表征理论 (Symbolic Representation Theory)](#1-符号表征理论-symbolic-representation-theory)
+      - [理论核心](#理论核心)
+      - [关键概念](#关键概念)
+      - [形式化模型](#形式化模型)
+      - [Rust实现示例](#rust实现示例)
+    - [2. 联结主义表征理论 (Connectionist Representation Theory)](#2-联结主义表征理论-connectionist-representation-theory)
+      - [理论核心1](#理论核心1)
+      - [关键概念1](#关键概念1)
+      - [形式化模型1](#形式化模型1)
+      - [Rust实现示例1](#rust实现示例1)
+  - [内容确定性问题 (The Problem of Content Determination)](#内容确定性问题-the-problem-of-content-determination)
+    - [问题陈述](#问题陈述)
+    - [主要理论](#主要理论)
+      - [1. 因果理论 (Causal Theory)](#1-因果理论-causal-theory)
+      - [2. 信息论语义学 (Informational Semantics)](#2-信息论语义学-informational-semantics)
+      - [3. 目的论语义学 (Teleological Semantics)](#3-目的论语义学-teleological-semantics)
+      - [4. 概念角色语义学 (Conceptual Role Semantics)](#4-概念角色语义学-conceptual-role-semantics)
+  - [交叉引用](#交叉引用)
+    - [内部引用](#内部引用)
+    - [外部引用](#外部引用)
+  - [小结](#小结)
+    - [1. 具身认知理论（Embodied Cognition）](#1-具身认知理论embodied-cognition)
+    - [2. 预测编码与主动推断（Predictive Coding \& Active Inference）](#2-预测编码与主动推断predictive-coding--active-inference)
+    - [3. 深度学习与多模态表征（Deep Learning \& Multimodal Representation）](#3-深度学习与多模态表征deep-learning--multimodal-representation)
+  - [批判性分析](#批判性分析)
+
 ## 引言
 
 心理表征理论研究心理状态如何表征世界、表征的性质是什么、以及表征内容如何确定等根本问题。作为心灵哲学和认知科学的核心概念，心理表征理论为理解思维、知觉、记忆等心理现象提供了基础框架。本文档系统分析心理表征的主要理论，并探讨其在计算认知科学中的应用。

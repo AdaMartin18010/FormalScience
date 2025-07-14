@@ -1426,7 +1426,6 @@ impl OptimizationApplication {
   - [集合基础理论](../../01_Set_Theory/01_Naive_Set_Theory/01_Set_Basics.md)
   - [关系论基础](../05_Relation_Theory/01_Relation_Basics/01_Relation_Basics.md)
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

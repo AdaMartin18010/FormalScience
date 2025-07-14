@@ -49,6 +49,7 @@
       - [10.3.2 莫比乌斯函数](#1032-莫比乌斯函数)
   - [参考文献](#参考文献)
   - [交叉引用](#交叉引用)
+  - [批判性分析](#批判性分析)
 
 ## 1. 基本概念
 
@@ -564,7 +565,6 @@ $$
 - [03_Logic_Theory/01_Propositional_Logic.md](../../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
 - [04_Formal_Language_Theory/01_Formal_Grammars.md](../../04_Formal_Language_Theory/01_Formal_Grammars.md) - 形式语言理论
 - [15_Information_Theory/01_Information_Theory_Foundations.md](../15_Information_Theory/01_Information_Theory_Foundations.md) - 信息论基础
-
 
 ## 批判性分析
 

@@ -830,7 +830,6 @@ impl AlgorithmAnalysis {
   - [命题逻辑基础](../../02_Logic/01_Propositional_Logic/01_Propositional_Basics.md)
   - [函数论基础](../../04_Function_Theory/01_Function_Basics/01_Function_Basics.md)
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。
