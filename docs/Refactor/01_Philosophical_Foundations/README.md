@@ -75,7 +75,7 @@
 
 - [数理基础](../02_Mathematical_Foundations/README.md) - 提供数学基础理论
 - [逻辑理论](../03_Logic_Theory/README.md) - 提供形式逻辑系统
-- [形式语言理论](../04_Formal_Language_Theory/README.md) - 提供语言形式化理论
+- [形式语言理论](../03_Formal_Language_Theory/README.md) - 提供语言形式化理论
 
 ### 外部引用
 

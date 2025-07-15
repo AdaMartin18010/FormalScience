@@ -563,7 +563,7 @@ $$
 - [01_Philosophical_Foundations/01_Epistemological_Foundations.md](../01_Philosophical_Foundations/01_Epistemological_Foundations.md) - 数学知识的认识论基础
 - [02_Mathematical_Foundations/01_Set_Theory.md](../01_Set_Theory/01_Set_Theory.md) - 集合论基础
 - [03_Logic_Theory/01_Propositional_Logic.md](../../03_Logic_Theory/01_Propositional_Logic.md) - 逻辑推理基础
-- [04_Formal_Language_Theory/01_Formal_Grammars.md](../../04_Formal_Language_Theory/01_Formal_Grammars.md) - 形式语言理论
+- [03_Formal_Language_Theory/03.2_Formal_Grammars.md](../../03_Formal_Language_Theory/03.2_Formal_Grammars.md) - 形式语言理论
 - [15_Information_Theory/01_Information_Theory_Foundations.md](../15_Information_Theory/01_Information_Theory_Foundations.md) - 信息论基础
 
 ## 批判性分析

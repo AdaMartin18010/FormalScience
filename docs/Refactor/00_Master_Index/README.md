@@ -39,7 +39,7 @@ docs/Refactor/
 ├── 01_Philosophical_Foundations/        # 哲学基础
 ├── 02_Mathematical_Foundations/         # 数学基础
 ├── 03_Logic_Theory/                    # 逻辑理论
-├── 04_Formal_Language_Theory/          # 形式语言理论
+├── 03_Formal_Language_Theory/          # 形式语言理论
 ├── 05_Type_Theory/                     # 类型理论
 ├── 06_Formal_Model_Theory/             # 形式模型理论
 ├── 07_Programming_Language_Theory/     # 程序语言理论
@@ -88,15 +88,15 @@ docs/Refactor/
 - [时态逻辑](../03_Logic_Theory/03.4_Temporal_Logic/README.md): 研究时间相关的逻辑系统
 - [直觉主义逻辑](../03_Logic_Theory/03.5_Intuitionistic_Logic/README.md): 研究基于构造主义的逻辑
 
-### 3.4 形式语言理论 (04_Formal_Language_Theory)
+### 3.4 形式语言理论 (03_Formal_Language_Theory)
 
 形式语言理论模块研究形式语言和自动机，包括：
 
-- [自动机理论](../04_Formal_Language_Theory/04.1_Automata_Theory/README.md): 研究有限自动机、下推自动机和图灵机
-- [形式文法](../04_Formal_Language_Theory/04.2_Formal_Grammars/README.md): 研究形式语言的语法规则
-- [语言层次](../04_Formal_Language_Theory/04.3_Language_Hierarchy/README.md): 研究形式语言的层次结构
-- [解析理论](../04_Formal_Language_Theory/04.4_Parsing_Theory/README.md): 研究形式语言的解析方法
-- [语义理论](../04_Formal_Language_Theory/04.5_Semantics_Theory/README.md): 研究形式语言的语义
+- [自动机理论](../03_Formal_Language_Theory/03.1_Automata_Theory/README.md): 研究有限自动机、下推自动机和图灵机
+- [形式文法](../03_Formal_Language_Theory/03.2_Formal_Grammars/README.md): 研究形式语言的语法规则
+- [语言层次](../03_Formal_Language_Theory/03.3_Language_Hierarchy/README.md): 研究形式语言的层次结构
+- [解析理论](../03_Formal_Language_Theory/03.4_Parsing_Theory/README.md): 研究形式语言的解析方法
+- [语义理论](../03_Formal_Language_Theory/03.5_Semantics_Theory/README.md): 研究形式语言的语义
 
 ### 3.5 类型理论 (05_Type_Theory)
 

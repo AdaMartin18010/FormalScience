@@ -467,7 +467,7 @@ impl SearleIntentionalitySystem {
 
 ### 外部引用
 
-- [语言哲学](../../04_Formal_Language_Theory) - 语言与意向性
+- [语言哲学](../../03_Formal_Language_Theory) - 语言与意向性
 - [逻辑理论](../../03_Logic_Theory) - 意向性的逻辑结构
 - [人工智能理论](../../13_Artificial_Intelligence_Theory) - 机器意向性
 

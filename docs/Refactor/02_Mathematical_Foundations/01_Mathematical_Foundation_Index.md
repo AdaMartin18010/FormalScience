@@ -150,7 +150,7 @@ graph TD
 
 ### 向下关联
 
-- **形式语言理论**：[03_Formal_Language_Theory](../04_Formal_Language_Theory/01_Formal_Language_Theory_Index.md)
+- **形式语言理论**：[03_Formal_Language_Theory](../03_Formal_Language_Theory/README.md)
 - **类型理论**：[04_Type_Theory](../05_Type_Theory/01_Type_Theory_Index.md)
 
 ---

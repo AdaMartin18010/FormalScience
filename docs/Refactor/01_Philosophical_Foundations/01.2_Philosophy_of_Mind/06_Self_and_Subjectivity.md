@@ -650,9 +650,9 @@ impl JamesianSelf {
 
 ### 外部引用
 
-- [认知科学](../../04_Formal_Language_Theory) - 自我认知机制
+- [认知科学](../../03_Formal_Language_Theory) - 自我认知机制
 - [神经科学](../../13_Artificial_Intelligence_Theory) - 自我神经基础
-- [心理学](../../04_Formal_Language_Theory) - 自我心理学研究
+- [心理学](../../03_Formal_Language_Theory) - 自我心理学研究
 
 ## 小结
 

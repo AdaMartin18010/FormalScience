@@ -124,13 +124,13 @@
 
 ### 5.1 乔姆斯基谱系
 
-- [正则语言](../04_Formal_Language_Theory/03.3_Language_Hierarchy/01_Regular_Languages.md)
-- [上下文无关语言](../04_Formal_Language_Theory/03.3_Language_Hierarchy/02_Context_Free_Languages.md)
+- [正则语言](../03_Formal_Language_Theory/03.3_Language_Hierarchy/01_Regular_Languages.md)
+- [上下文无关语言](../03_Formal_Language_Theory/03.3_Language_Hierarchy/02_Context_Free_Languages.md)
 
 ### 5.2 自动机理论
 
-- [有限自动机](../04_Formal_Language_Theory/03.1_Automata_Theory/01_Finite_Automata/README.md)
-- [下推自动机](../04_Formal_Language_Theory/03.1_Automata_Theory/02_Pushdown_Automata/README.md)
+- [有限自动机](../03_Formal_Language_Theory/03.1_Automata_Theory/01_Finite_Automata/README.md)
+- [下推自动机](../03_Formal_Language_Theory/03.1_Automata_Theory/02_Pushdown_Automata/README.md)
 
 ## 6. 类型理论
 

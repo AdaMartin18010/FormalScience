@@ -6,7 +6,7 @@
 
 ### 2. [数学基础理论](../02_Mathematical_Foundations/01_Mathematical_Foundation_Index.md)
 
-### 3. [形式语言理论](../04_Formal_Language_Theory/01_Formal_Language_Theory_Index.md)
+### 3. [形式语言理论](../03_Formal_Language_Theory/README.md)
 
 ### 4. [类型理论](../05_Type_Theory/01_Type_Theory_Index.md)
 
@@ -140,7 +140,6 @@ graph TD
 - [ ] 建立理论间的交叉引用系统
 - [ ] 实现形式化证明的标准化
 - [ ] 构建持续更新的上下文系统
-
 
 ## 批判性分析
 
