@@ -1,4 +1,4 @@
-# 05 类型理论 (Type Theory)
+# 04 类型理论 (Type Theory)
 
 ## 模块概述
 
@@ -9,40 +9,40 @@
 本模块根据理论的复杂性和依赖关系进行组织，结构如下：
 
 ```text
-05_Type_Theory/
+04_Type_Theory/
 ├── README.md                           # 本文件，模块总览
-├── 05.1_Simple_Type_Theory/            # 简单类型理论
-│   ├── 05.1_Simple_Type_Theory.md
-│   ├── 05.1.1_Simply_Typed_Lambda_Calculus.md
-│   ├── 05.1.2_Hindley_Milner.md
-│   └── 05.1.3_System_F.md
-├── 05.2_Dependent_Type_Theory/         # 依赖类型理论
-│   ├── 05.2_Dependent_Type_Theory.md
-│   ├── 05.2.1_Dependent_Types_Formalism.md
-│   ├── 05.2.2_Type_Families.md
-│   ├── 05.2.3_Program_Verification.md
-│   ├── 05.2.4_Specification_Languages.md
-│   └── 05.2.5_Dependent_Type_System.md
-├── 05.3_Linear_Type_Theory/            # 线性类型理论 (及其变体)
-│   ├── 05.3_Linear_Type_Theory.md
-│   ├── 05.3.1_Linear_Type_Theory_Intro.md
-│   ├── 05.3.2_Affine_Type_Theory.md
-│   ├── 05.3.3_Linear_Function_Types.md
-│   ├── 05.3.4_Linear_Data_Structures.md
-│   ├── 05.3.5_Linear_Type_System.md
-│   ├── 05.3.6_Affine_Type_Basics.md
-│   ├── 05.3.7_Ownership_System.md
-│   ├── 05.3.8_Memory_Management.md
-│   └── 05.3.9_Concurrent_Types.md
-├── 05.4_Homotopy_Type_Theory/          # 同伦类型理论
-│   ├── 05.4_Homotopy_Type_Theory.md
-│   ├── 05.4.1_Homotopy_Theory.md
-│   ├── 05.4.2_Identity_Types.md
-│   ├── 05.4.3_Homotopy_Equivalence.md
-│   ├── 05.4.4_Higher_Inductive_Types.md
-│   └── 05.4.5_Homotopy_Invariants.md
-├── 05.5_Curry_Howard_Correspondence/   # Curry-Howard同构
-│   └── 05.5_Curry_Howard_Correspondence.md
+├── 04.1_Simple_Type_Theory/            # 简单类型理论
+│   ├── 04.1_Simple_Type_Theory.md
+│   ├── 04.1.1_Simply_Typed_Lambda_Calculus.md
+│   ├── 04.1.2_Hindley_Milner.md
+│   └── 04.1.3_System_F.md
+├── 04.2_Dependent_Type_Theory/         # 依赖类型理论
+│   ├── 04.2_Dependent_Type_Theory.md
+│   ├── 04.2.1_Dependent_Types_Formalism.md
+│   ├── 04.2.2_Type_Families.md
+│   ├── 04.2.3_Program_Verification.md
+│   ├── 04.2.4_Specification_Languages.md
+│   └── 04.2.5_Dependent_Type_System.md
+├── 04.3_Linear_Type_Theory/            # 线性类型理论 (及其变体)
+│   ├── 04.3_Linear_Type_Theory.md
+│   ├── 04.3.1_Linear_Type_Theory_Intro.md
+│   ├── 04.3.2_Affine_Type_Theory.md
+│   ├── 04.3.3_Linear_Function_Types.md
+│   ├── 04.3.4_Linear_Data_Structures.md
+│   ├── 04.3.5_Linear_Type_System.md
+│   ├── 04.3.6_Affine_Type_Basics.md
+│   ├── 04.3.7_Ownership_System.md
+│   ├── 04.3.8_Memory_Management.md
+│   └── 04.3.9_Concurrent_Types.md
+├── 04.4_Homotopy_Type_Theory/          # 同伦类型理论
+│   ├── 04.4_Homotopy_Type_Theory.md
+│   ├── 04.4.1_Homotopy_Theory.md
+│   ├── 04.4.2_Identity_Types.md
+│   ├── 04.4.3_Homotopy_Equivalence.md
+│   ├── 04.4.4_Higher_Inductive_Types.md
+│   └── 04.4.5_Homotopy_Invariants.md
+├── 04.5_Curry_Howard_Correspondence/   # Curry-Howard同构
+│   └── 04.5_Curry_Howard_Correspondence.md
 └── _legacy/                            # 遗留文件，待整理
 ```
 

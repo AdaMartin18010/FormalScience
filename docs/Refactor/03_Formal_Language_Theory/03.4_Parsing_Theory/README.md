@@ -10,7 +10,7 @@
 
 ### 主要内容
 
-- [03.4.1_Top_Down_Parsing.md](03.4.1_Top_Down_Parsing.md) - 研究自顶向下的预测性解析方法
+- [03.4.1_LL_Parsing.md](03.4.1_LL_Parsing.md) - 研究LL解析方法
 - [03.4.2_Bottom_Up_Parsing.md](03.4.2_Bottom_Up_Parsing.md) - 研究包括简单优先级和算符优先级等解析技术
 - [03.4.3_LL_Parsing.md](03.4.3_LL_Parsing.md) - 研究自顶向下的预测性解析方法
 - [03.4.4_LR_Parsing.md](03.4.4_LR_Parsing.md) - 研究自底向上的移进-归约解析方法
@@ -69,7 +69,7 @@
 
 ## 目录
 
-1. [自顶向下分析](03.4.1_Top_Down_Parsing.md)
+1. [LL解析分析](03.4.1_LL_Parsing.md)
 2. [自底向上分析](03.4.2_Bottom_Up_Parsing.md)
 3. [LL分析](03.4.3_LL_Parsing.md)
 4. [LR分析](03.4.4_LR_Parsing.md)
