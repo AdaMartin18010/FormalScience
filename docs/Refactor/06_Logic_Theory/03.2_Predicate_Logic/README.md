@@ -1128,7 +1128,6 @@ $$\vdash \phi \Leftrightarrow \models \phi$$
 - [命题逻辑](README.md)
 - [模态逻辑](README.md)
 
-
 ## 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。
