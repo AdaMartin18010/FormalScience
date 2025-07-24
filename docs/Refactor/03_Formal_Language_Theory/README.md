@@ -1,10 +1,12 @@
 # 03 形式语言理论 (Formal Language Theory)
 
-## 模块概述
+## 模块概述 | Module Overview
 
 形式语言理论是计算机科学和数学的重要分支，研究形式语言的性质、分类和应用。本模块系统性地组织了从基础到前沿的核心理论，涵盖自动机理论、形式文法、语言层次结构、解析理论、语义学、计算理论，以及它们在编译器设计、自然语言处理等领域的应用。
 
-## 模块结构
+Formal Language Theory is a fundamental branch of computer science and mathematics, focusing on the properties, classification, and applications of formal languages. This module systematically organizes core theories from foundational to advanced topics, covering automata theory, formal grammars, language hierarchies, parsing theory, semantics, computation theory, and their applications in compiler design, natural language processing, and more.
+
+## 模块结构 | Module Structure
 
 本模块根据理论主题进行划分，确保了内容的逻辑性和一致性。
 
@@ -58,27 +60,47 @@
     └── 03.8.2_Biological_Languages.md       # 生物语言
 ```
 
-## 理论基础
+## 理论基础 | Theoretical Foundations
 
-**📖 推荐阅读**：[02.1_Formal_Language_Foundation.md](./02.1_Formal_Language_Foundation.md) - 形式语言基础理论（理论基础主文档）
+**📖 推荐阅读 | Recommended Reading**：[02.1_Formal_Language_Foundation.md](./02.1_Formal_Language_Foundation.md) - 形式语言基础理论（理论基础主文档）
 
 本模块的理论基础包括：
 
-### 核心概念
+The theoretical foundations of this module include:
 
-- **形式语言定义**：字母表、字符串、语言的基本概念
-- **语言操作**：并集、交集、连接、克林闭包等基本运算
-- **语言分类**：正则语言、上下文无关语言、上下文相关语言、递归可枚举语言
+### 核心概念 | Core Concepts
 
-### 理论框架
+- **形式语言定义 | Definition of Formal Language**：字母表、字符串、语言的基本概念
+  
+  A formal language is a set of strings constructed from a finite alphabet, governed by specific syntactic rules.
+- **语言操作 | Language Operations**：并集、交集、连接、克林闭包等基本运算
+  
+  Operations on languages include union, intersection, concatenation, and Kleene closure, which are fundamental to language manipulation.
+- **语言分类 | Language Classification**：正则语言、上下文无关语言、上下文相关语言、递归可枚举语言
+  
+  Languages are classified as regular, context-free, context-sensitive, and recursively enumerable, forming the Chomsky hierarchy.
 
-- **乔姆斯基层次**：形式语言的分类体系
-- **自动机等价性**：语言类与自动机的对应关系
-- **计算复杂性**：语言识别的时间、空间、描述复杂性
+### 理论框架 | Theoretical Framework
 
-详细的理论定义、定理证明、算法实现等内容请参考[理论基础主文档](./02.1_Formal_Language_Foundation.md)。
+- **乔姆斯基层次 | Chomsky Hierarchy**：形式语言的分类体系
+  
+  The Chomsky hierarchy provides a classification of languages based on generative power, from regular to recursively enumerable languages.
+- **自动机等价性 | Automata Equivalence**：语言类与自动机的对应关系
+  
+  Each class of language corresponds to a specific automaton model (e.g., regular languages to finite automata).
+- **计算复杂性 | Computational Complexity**：语言识别的时间、空间、描述复杂性
+  
+  The complexity of language recognition is measured in terms of time, space, and descriptive resources required by automata or algorithms.
 
-## 应用领域
+#### 批判性分析 | Critical Analysis
+
+- 形式语言理论强调形式化和可证明性，但在自然语言处理、语义理解等实际应用中存在局限。
+- 不同学派对“语言本质”的理解存在分歧，如生成语法与分布式语法的争论。
+- 复杂性理论与实际可计算性之间存在张力。
+
+Formal language theory emphasizes formalization and provability, but faces limitations in practical applications such as natural language processing and semantic understanding. There are debates among different schools regarding the essence of language (e.g., generative vs. distributional grammar). Tensions also exist between complexity theory and practical computability.
+
+## 应用领域 | Application Areas
 
 ### 编译器设计
 
@@ -108,7 +130,7 @@
 - **进化分析**：系统发生文法
 - **基因调控**：布尔网络和Petri网
 
-## 与其他模块的关系
+## 与其他模块的关系 | Relations to Other Modules
 
 ### 数学基础
 
@@ -138,7 +160,7 @@
 - **程序分析**：抽象解释和数据流分析
 - **程序变换**：程序等价性和优化
 
-## 研究前沿
+## 研究前沿 | Research Frontiers
 
 ### 扩展自动机模型
 
@@ -161,7 +183,7 @@
 - **信息理论**：语言的信息容量
 - **社会网络**：社交语言和网络语言
 
-## 工具和实现
+## 工具和实现 | Tools and Implementations
 
 ### 形式语言工具
 
@@ -175,7 +197,7 @@
 - **NuSMV**：符号模型检查器
 - **Coq**：交互式定理证明器
 
-## 学习路径
+## 学习路径 | Learning Pathways
 
 ### 基础路径
 
@@ -190,6 +212,30 @@
 2. **自然语言处理**：计算语言学和统计方法
 3. **形式验证**：模型检查和定理证明
 4. **生物信息学**：序列分析和结构预测
+
+---
+
+## 争议与批判 | Controversies & Critique
+
+**中文：**
+
+- 形式语言理论在自然语言处理中的适用性存在争议，部分学者认为其过于理想化，难以覆盖自然语言的模糊性与多义性。
+- 复杂性理论的实际指导意义有限，部分理论模型难以落地。
+- 形式系统的封闭性导致对开放性、演化性语言现象的解释能力不足。
+
+**English:**
+
+- The applicability of formal language theory to natural language processing is debated; some scholars argue it is too idealized to capture the ambiguity and polysemy of natural languages.
+- The practical significance of complexity theory is limited, as some theoretical models are difficult to implement.
+- The closed nature of formal systems limits their explanatory power for open, evolving language phenomena.
+
+## 参考文献 | References
+
+- Hopcroft, J.E., Motwani, R., Ullman, J.D. "Introduction to Automata Theory, Languages, and Computation"
+- Wikipedia: [Formal language](https://en.wikipedia.org/wiki/Formal_language)
+- Stanford Encyclopedia of Philosophy: [Formal Languages](https://plato.stanford.edu/entries/formal-languages/)
+- Chomsky, N. "Three Models for the Description of Language" (1956)
+- Gold, E.M. "Language Identification in the Limit" (1967)
 
 ---
 
