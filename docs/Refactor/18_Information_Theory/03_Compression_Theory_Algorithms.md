@@ -99,6 +99,221 @@ theorem entropy_coding_optimality :
 **定义 1.4** (字典压缩)
 字典压缩使用预定义或动态字典：
 
+$$C = \{(offset, length, next\_char)\}$$
+
+其中 $offset$ 是偏移量，$length$ 是匹配长度，$next\_char$ 是下一个字符。
+
+**定义 1.5** (LZ77算法)
+LZ77是一种滑动窗口字典压缩算法：
+
+1. **滑动窗口**: 包含已处理的文本
+2. **前瞻缓冲区**: 包含待处理的文本
+3. **匹配**: 在前瞻缓冲区中寻找滑动窗口中的最长匹配
+
+**算法 1.1** (LZ77编码算法)
+
+```text
+function LZ77Encode(text, window_size, look_ahead_size):
+    window = ""
+    look_ahead = text[:look_ahead_size]
+    encoded = []
+    
+    while look_ahead is not empty:
+        // 寻找最长匹配
+        (offset, length) = find_longest_match(window, look_ahead)
+        
+        if length > 0:
+            // 找到匹配
+            next_char = look_ahead[length]
+            encoded.append((offset, length, next_char))
+            
+            // 更新窗口
+            window += look_ahead[:length + 1]
+            if len(window) > window_size:
+                window = window[-window_size:]
+        else:
+            // 没有匹配
+            next_char = look_ahead[0]
+            encoded.append((0, 0, next_char))
+            window += next_char
+        
+        // 更新前瞻缓冲区
+        look_ahead = text[len(window):len(window) + look_ahead_size]
+    
+    return encoded
+```
+
+**定理 1.2** (LZ77压缩率)
+LZ77的压缩率取决于文本的重复性：
+
+$$CR = 1 - \frac{L_{compressed}}{L_{original}}$$
+
+其中 $L_{compressed}$ 是压缩后长度，$L_{original}$ 是原始长度。
+
+**Rust实现**:
+
+```rust
+use std::collections::HashMap;
+
+#[derive(Debug, Clone)]
+pub struct LZ77Token {
+    pub offset: usize,
+    pub length: usize,
+    pub next_char: char,
+}
+
+#[derive(Debug)]
+pub struct LZ77Compressor {
+    pub window_size: usize,
+    pub look_ahead_size: usize,
+}
+
+impl LZ77Compressor {
+    pub fn new(window_size: usize, look_ahead_size: usize) -> Self {
+        Self {
+            window_size,
+            look_ahead_size,
+        }
+    }
+    
+    pub fn compress(&self, text: &str) -> Vec<LZ77Token> {
+        let mut tokens = Vec::new();
+        let mut window = String::new();
+        let mut pos = 0;
+        
+        while pos < text.len() {
+            let look_ahead = &text[pos..std::cmp::min(pos + self.look_ahead_size, text.len())];
+            
+            if let Some((offset, length)) = self.find_longest_match(&window, look_ahead) {
+                let next_char_pos = pos + length;
+                let next_char = if next_char_pos < text.len() {
+                    text.chars().nth(next_char_pos).unwrap()
+                } else {
+                    '\0'
+                };
+                
+                tokens.push(LZ77Token {
+                    offset,
+                    length,
+                    next_char,
+                });
+                
+                // 更新窗口
+                let matched_text = &text[pos..pos + length + 1];
+                window.push_str(matched_text);
+                pos += length + 1;
+            } else {
+                let next_char = text.chars().nth(pos).unwrap();
+                tokens.push(LZ77Token {
+                    offset: 0,
+                    length: 0,
+                    next_char,
+                });
+                
+                window.push(next_char);
+                pos += 1;
+            }
+            
+            // 保持窗口大小
+            if window.len() > self.window_size {
+                window = window[window.len() - self.window_size..].to_string();
+            }
+        }
+        
+        tokens
+    }
+    
+    fn find_longest_match(&self, window: &str, look_ahead: &str) -> Option<(usize, usize)> {
+        let mut best_offset = 0;
+        let mut best_length = 0;
+        
+        for start in 0..window.len() {
+            for end in start + 1..=window.len() {
+                let pattern = &window[start..end];
+                
+                if look_ahead.starts_with(pattern) && pattern.len() > best_length {
+                    best_offset = window.len() - start;
+                    best_length = pattern.len();
+                }
+            }
+        }
+        
+        if best_length > 0 {
+            Some((best_offset, best_length))
+        } else {
+            None
+        }
+    }
+    
+    pub fn decompress(&self, tokens: &[LZ77Token]) -> String {
+        let mut result = String::new();
+        let mut window = String::new();
+        
+        for token in tokens {
+            if token.length > 0 {
+                // 从窗口复制匹配的文本
+                let start = window.len().saturating_sub(token.offset);
+                let end = start + token.length;
+                let matched_text = &window[start..end];
+                result.push_str(matched_text);
+                window.push_str(matched_text);
+            }
+            
+            if token.next_char != '\0' {
+                result.push(token.next_char);
+                window.push(token.next_char);
+            }
+            
+            // 保持窗口大小
+            if window.len() > self.window_size {
+                window = window[window.len() - self.window_size..].to_string();
+            }
+        }
+        
+        result
+    }
+    
+    pub fn compression_ratio(&self, original: &str) -> f64 {
+        let tokens = self.compress(original);
+        let compressed_size = tokens.len() * std::mem::size_of::<LZ77Token>();
+        let original_size = original.len();
+        
+        1.0 - (compressed_size as f64 / original_size as f64)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_lz77_compression() {
+        let compressor = LZ77Compressor::new(1024, 64);
+        let text = "hello world hello world";
+        
+        let tokens = compressor.compress(text);
+        let decompressed = compressor.decompress(&tokens);
+        
+        assert_eq!(decompressed, text);
+        
+        let ratio = compressor.compression_ratio(text);
+        assert!(ratio > 0.0); // 应该有压缩效果
+    }
+    
+    #[test]
+    fn test_lz77_repetitive_text() {
+        let compressor = LZ77Compressor::new(1024, 64);
+        let text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        
+        let tokens = compressor.compress(text);
+        let ratio = compressor.compression_ratio(text);
+        
+        // 重复文本应该有更好的压缩率
+        assert!(ratio > 0.5);
+    }
+}
+```
+
 $$D = \{w_1, w_2, ..., w_n\}$$
 
 **定义 1.5** (字典查找)

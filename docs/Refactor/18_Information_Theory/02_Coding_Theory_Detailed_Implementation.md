@@ -8,6 +8,7 @@
     - [1.1 前缀码定义](#11-前缀码定义)
     - [1.2 Kraft不等式](#12-kraft不等式)
     - [1.3 Huffman编码](#13-huffman编码)
+    - [1.3 Huffman编码](#13-huffman编码-1)
   - [2. 纠错码理论](#2-纠错码理论)
     - [2.1 线性码](#21-线性码)
     - [2.2 汉明码](#22-汉明码)
@@ -98,6 +99,244 @@ $$\sum_{i=1}^{n} 2^{-l_i} \leq 1$$
 
 **定义 1.5** (Kraft-McMillan不等式)
 对于任意唯一解码码，有：
+
+$$\sum_{i=1}^{n} 2^{-l_i} \leq 1$$
+
+**定理 1.2** (Kraft-McMillan定理)
+对于任意唯一解码码，Kraft-McMillan不等式成立。
+
+**证明**：
+使用归纳法证明，对于任意前缀码，Kraft不等式成立。□
+
+### 1.3 Huffman编码
+
+**定义 1.6** (Huffman编码)
+Huffman编码是一种最优前缀码，通过贪心算法构建。
+
+**算法 1.1** (Huffman编码算法)
+
+```text
+function HuffmanEncoding(frequencies):
+    // 创建叶子节点
+    nodes = []
+    for each symbol s with frequency f:
+        nodes.append(Node(s, f))
+    
+    // 构建Huffman树
+    while len(nodes) > 1:
+        // 找到两个最小频率的节点
+        min1, min2 = find_two_minimum(nodes)
+        
+        // 创建新节点
+        new_node = Node(
+            symbol = min1.symbol + min2.symbol,
+            frequency = min1.frequency + min2.frequency,
+            left = min1,
+            right = min2
+        )
+        
+        // 更新节点列表
+        nodes.remove(min1)
+        nodes.remove(min2)
+        nodes.append(new_node)
+    
+    return nodes[0]  // 返回根节点
+```
+
+**定理 1.3** (Huffman编码最优性)
+Huffman编码产生的码字长度满足Kraft不等式，且平均码长最小。
+
+**证明**：
+
+1. Huffman编码产生前缀码，满足Kraft不等式
+2. 通过归纳法证明平均码长最小
+3. 每次合并都选择最小频率的节点，保证最优性
+
+**Rust实现**:
+
+```rust
+use std::collections::BinaryHeap;
+use std::collections::HashMap;
+use std::cmp::Ordering;
+
+#[derive(Debug, Clone)]
+pub struct HuffmanNode {
+    pub symbol: Option<char>,
+    pub frequency: usize,
+    pub left: Option<Box<HuffmanNode>>,
+    pub right: Option<Box<HuffmanNode>>,
+}
+
+impl PartialEq for HuffmanNode {
+    fn eq(&self, other: &Self) -> bool {
+        self.frequency == other.frequency
+    }
+}
+
+impl Eq for HuffmanNode {}
+
+impl PartialOrd for HuffmanNode {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for HuffmanNode {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.frequency.cmp(&self.frequency) // 最小堆
+    }
+}
+
+#[derive(Debug)]
+pub struct HuffmanCode {
+    pub root: Option<HuffmanNode>,
+    pub codes: HashMap<char, String>,
+}
+
+impl HuffmanCode {
+    pub fn new() -> Self {
+        Self {
+            root: None,
+            codes: HashMap::new(),
+        }
+    }
+    
+    pub fn build(&mut self, text: &str) {
+        // 计算频率
+        let mut frequencies = HashMap::new();
+        for ch in text.chars() {
+            *frequencies.entry(ch).or_insert(0) += 1;
+        }
+        
+        // 创建叶子节点
+        let mut heap = BinaryHeap::new();
+        for (symbol, frequency) in frequencies {
+            heap.push(HuffmanNode {
+                symbol: Some(symbol),
+                frequency,
+                left: None,
+                right: None,
+            });
+        }
+        
+        // 构建Huffman树
+        while heap.len() > 1 {
+            let left = heap.pop().unwrap();
+            let right = heap.pop().unwrap();
+            
+            let parent = HuffmanNode {
+                symbol: None,
+                frequency: left.frequency + right.frequency,
+                left: Some(Box::new(left)),
+                right: Some(Box::new(right)),
+            };
+            
+            heap.push(parent);
+        }
+        
+        self.root = heap.pop();
+        self.generate_codes();
+    }
+    
+    fn generate_codes(&mut self) {
+        self.codes.clear();
+        if let Some(ref root) = self.root {
+            self.generate_codes_recursive(root, String::new());
+        }
+    }
+    
+    fn generate_codes_recursive(&mut self, node: &HuffmanNode, code: String) {
+        if let Some(symbol) = node.symbol {
+            self.codes.insert(symbol, code);
+        } else {
+            if let Some(ref left) = node.left {
+                self.generate_codes_recursive(left, code.clone() + "0");
+            }
+            if let Some(ref right) = node.right {
+                self.generate_codes_recursive(right, code + "1");
+            }
+        }
+    }
+    
+    pub fn encode(&self, text: &str) -> String {
+        let mut encoded = String::new();
+        for ch in text.chars() {
+            if let Some(code) = self.codes.get(&ch) {
+                encoded.push_str(code);
+            }
+        }
+        encoded
+    }
+    
+    pub fn decode(&self, encoded: &str) -> String {
+        let mut decoded = String::new();
+        let mut current = self.root.as_ref();
+        
+        for bit in encoded.chars() {
+            match current {
+                Some(node) => {
+                    match bit {
+                        '0' => current = node.left.as_ref(),
+                        '1' => current = node.right.as_ref(),
+                        _ => continue,
+                    }
+                    
+                    if let Some(symbol) = node.symbol {
+                        decoded.push(symbol);
+                        current = self.root.as_ref();
+                    }
+                }
+                None => break,
+            }
+        }
+        
+        decoded
+    }
+    
+    pub fn compression_ratio(&self, original: &str) -> f64 {
+        let encoded = self.encode(original);
+        let original_bits = original.len() * 8;
+        let encoded_bits = encoded.len();
+        
+        1.0 - (encoded_bits as f64 / original_bits as f64)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_huffman_encoding() {
+        let mut huffman = HuffmanCode::new();
+        let text = "hello world";
+        
+        huffman.build(text);
+        
+        let encoded = huffman.encode(text);
+        let decoded = huffman.decode(&encoded);
+        
+        assert_eq!(decoded, text);
+        
+        let ratio = huffman.compression_ratio(text);
+        assert!(ratio > 0.0); // 应该有压缩效果
+    }
+    
+    #[test]
+    fn test_huffman_frequency() {
+        let mut huffman = HuffmanCode::new();
+        let text = "aaaabbbcc";
+        
+        huffman.build(text);
+        
+        // 验证频率高的字符有更短的编码
+        let a_code = huffman.codes.get(&'a').unwrap();
+        let c_code = huffman.codes.get(&'c').unwrap();
+        
+        assert!(a_code.len() <= c_code.len()); // 'a'的频率更高，应该有更短的编码
+    }
+}
+```
 
 $$\sum_{i=1}^{n} 2^{-l_i} \leq 1$$
 

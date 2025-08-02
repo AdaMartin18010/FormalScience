@@ -101,13 +101,97 @@ pub struct LinearRegression {
     pub max_iterations: usize,
 }
 
-#[derive(Debug, Clone)]
+impl LinearRegression {
+    pub fn new(input_dim: usize, learning_rate: f64) -> Self {
+        Self {
+            weights: vec![0.0; input_dim],
+            bias: 0.0,
+            learning_rate,
+            max_iterations: 1000,
+        }
+    }
+    
+    pub fn fit(&mut self, X: &[Vec<f64>], y: &[f64]) {
+        let n_samples = X.len();
+        let n_features = X[0].len();
+        
+        for _ in 0..self.max_iterations {
+            let mut gradients_w = vec![0.0; n_features];
+            let mut gradient_b = 0.0;
+            
+            // 计算梯度
+            for i in 0..n_samples {
+                let prediction = self.predict(&X[i]);
+                let error = prediction - y[i];
+                
+                for j in 0..n_features {
+                    gradients_w[j] += error * X[i][j];
+                }
+                gradient_b += error;
+            }
+            
+            // 更新参数
+            for j in 0..n_features {
+                self.weights[j] -= self.learning_rate * gradients_w[j] / n_samples as f64;
+            }
+            self.bias -= self.learning_rate * gradient_b / n_samples as f64;
+        }
+    }
+    
+    pub fn predict(&self, x: &[f64]) -> f64 {
+        let mut result = self.bias;
+        for (i, &weight) in self.weights.iter().enumerate() {
+            result += weight * x[i];
+        }
+        result
+    }
+    
+    pub fn score(&self, X: &[Vec<f64>], y: &[f64]) -> f64 {
+        let mut total_error = 0.0;
+        for (i, x) in X.iter().enumerate() {
+            let prediction = self.predict(x);
+            total_error += (prediction - y[i]).powi(2);
+        }
+        1.0 - total_error / y.len() as f64
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_linear_regression() {
+        let mut model = LinearRegression::new(2, 0.01);
+        
+        // 简单的线性关系: y = 2*x1 + 3*x2 + 1
+        let X = vec![
+            vec![1.0, 2.0],
+            vec![2.0, 3.0],
+            vec![3.0, 4.0],
+            vec![4.0, 5.0],
+        ];
+        let y = vec![9.0, 13.0, 17.0, 21.0];
+        
+        model.fit(&X, &y);
+        
+        // 测试预测
+        let test_x = vec![5.0, 6.0];
+        let prediction = model.predict(&test_x);
+        let expected = 2.0 * 5.0 + 3.0 * 6.0 + 1.0;
+        
+        assert!((prediction - expected).abs() < 1.0);
+    }
+    pub max_iterations: usize,
+}
+
+# [derive(Debug, Clone)]
 pub struct Dataset {
     pub features: Vec<Vec<f64>>,
     pub targets: Vec<f64>,
 }
 
-#[derive(Debug, Clone)]
+# [derive(Debug, Clone)]
 pub struct TrainingResult {
     pub weights: Vec<f64>,
     pub bias: f64,
@@ -124,7 +208,7 @@ impl LinearRegression {
             max_iterations,
         }
     }
-    
+
     pub fn fit(&mut self, dataset: &Dataset) -> TrainingResult {
         let mut loss_history = Vec::new();
         
@@ -219,7 +303,7 @@ impl Dataset {
     pub fn new(features: Vec<Vec<f64>>, targets: Vec<f64>) -> Self {
         Dataset { features, targets }
     }
-    
+
     pub fn normalize(&self) -> (Dataset, Vec<f64>, Vec<f64>) {
         let feature_count = self.features[0].len();
         let mut means = vec![0.0; feature_count];
@@ -269,6 +353,7 @@ impl Dataset {
         (Dataset::new(train_features, train_targets), Dataset::new(test_features, test_targets))
     }
 }
+
 ```
 
 ### 4.2 决策树实现
@@ -370,6 +455,113 @@ impl DecisionTree {
                 
                 let left_entropy = self.calculate_entropy(&left_dataset.targets);
                 let right_entropy = self.calculate_entropy(&right_dataset.targets);
+                
+                let left_weight = left_dataset.features.len() as f64 / dataset.features.len() as f64;
+                let right_weight = right_dataset.features.len() as f64 / dataset.features.len() as f64;
+                
+                let information_gain = parent_entropy - (left_weight * left_entropy + right_weight * right_entropy);
+                
+                if information_gain > best_gain {
+                    best_gain = information_gain;
+                    best_feature = feature_index;
+                    best_threshold = threshold;
+                }
+            }
+        }
+        
+        if best_gain > 0.0 {
+            Some((best_feature, best_threshold, best_gain))
+        } else {
+            None
+        }
+    }
+    
+    fn calculate_entropy(&self, targets: &[f64]) -> f64 {
+        let n = targets.len() as f64;
+        let mean = targets.iter().sum::<f64>() / n;
+        let variance = targets.iter().map(|&t| (t - mean).powi(2)).sum::<f64>() / n;
+        
+        if variance == 0.0 {
+            0.0
+        } else {
+            0.5 * (1.0 + (2.0 * std::f64::consts::PI * variance).ln())
+        }
+    }
+    
+    fn split_dataset(&self, dataset: &Dataset, feature_index: usize, threshold: f64) -> (Dataset, Dataset) {
+        let mut left_features = Vec::new();
+        let mut left_targets = Vec::new();
+        let mut right_features = Vec::new();
+        let mut right_targets = Vec::new();
+        
+        for (i, features) in dataset.features.iter().enumerate() {
+            if features[feature_index] <= threshold {
+                left_features.push(features.clone());
+                left_targets.push(dataset.targets[i]);
+            } else {
+                right_features.push(features.clone());
+                right_targets.push(dataset.targets[i]);
+            }
+        }
+        
+        (Dataset { features: left_features, targets: left_targets },
+         Dataset { features: right_features, targets: right_targets })
+    }
+    
+    fn calculate_leaf_prediction(&self, dataset: &Dataset) -> f64 {
+        dataset.targets.iter().sum::<f64>() / dataset.targets.len() as f64
+    }
+    
+    pub fn predict(&self, features: &[f64]) -> f64 {
+        if let Some(ref root) = self.root {
+            self.predict_node(root, features)
+        } else {
+            0.0
+        }
+    }
+    
+    fn predict_node(&self, node: &TreeNode, features: &[f64]) -> f64 {
+        match node {
+            TreeNode::Leaf { prediction, .. } => *prediction,
+            TreeNode::Split { feature_index, threshold, left, right, .. } => {
+                if features[*feature_index] <= *threshold {
+                    self.predict_node(left, features)
+                } else {
+                    self.predict_node(right, features)
+                }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_decision_tree() {
+        let mut tree = DecisionTree::new(3, 2);
+        
+        // 简单的分类问题
+        let dataset = Dataset {
+            features: vec![
+                vec![1.0, 2.0],
+                vec![2.0, 3.0],
+                vec![3.0, 4.0],
+                vec![4.0, 5.0],
+            ],
+            targets: vec![0.0, 0.0, 1.0, 1.0],
+        };
+        
+        tree.fit(&dataset);
+        
+        // 测试预测
+        let test_features = vec![2.5, 3.5];
+        let prediction = tree.predict(&test_features);
+        
+        assert!(prediction >= 0.0 && prediction <= 1.0);
+    }
+}
                 
                 let left_weight = left_dataset.features.len() as f64 / dataset.features.len() as f64;
                 let right_weight = right_dataset.features.len() as f64 / dataset.features.len() as f64;

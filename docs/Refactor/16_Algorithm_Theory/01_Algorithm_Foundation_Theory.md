@@ -22,11 +22,11 @@
     - [4.3 图结构](#43-图结构)
   - [5. 排序算法理论](#5-排序算法理论)
     - [5.1 比较排序](#51-比较排序)
-    - [5.2 非比较排序](#52-非比较排序)
     - [5.3 排序下界](#53-排序下界)
   - [6. 搜索算法理论](#6-搜索算法理论)
     - [6.1 线性搜索](#61-线性搜索)
     - [6.2 二分搜索](#62-二分搜索)
+    - [6.2 二分搜索](#62-二分搜索-1)
     - [6.3 启发式搜索](#63-启发式搜索)
   - [7. 图算法理论](#7-图算法理论)
     - [7.1 图的遍历](#71-图的遍历)
@@ -76,6 +76,57 @@ $$A: I \rightarrow O$$
 
 **定理 1.1** (算法存在性)
 对于任意可计算问题，存在至少一个算法能够解决该问题。
+
+**证明**: 根据丘奇-图灵论题，任何可计算函数都可以由图灵机计算，而图灵机可以转换为算法。
+
+**代码示例 1.1** (算法基本框架 - Rust)
+
+```rust
+/// 算法基本框架
+pub trait Algorithm<I, O> {
+    /// 算法的主要计算函数
+    fn compute(&self, input: I) -> O;
+    
+    /// 算法的时间复杂度
+    fn time_complexity(&self, input_size: usize) -> f64;
+    
+    /// 算法的空间复杂度
+    fn space_complexity(&self, input_size: usize) -> f64;
+}
+
+/// 具体算法实现示例
+pub struct LinearSearch<T: PartialEq> {
+    _phantom: std::marker::PhantomData<T>,
+}
+
+impl<T: PartialEq> LinearSearch<T> {
+    pub fn new() -> Self {
+        Self {
+            _phantom: std::marker::PhantomData,
+        }
+    }
+}
+
+impl<T: PartialEq> Algorithm<(&[T], &T), Option<usize>> for LinearSearch<T> {
+    fn compute(&self, input: (&[T], &T)) -> Option<usize> {
+        let (arr, target) = input;
+        for (i, item) in arr.iter().enumerate() {
+            if item == target {
+                return Some(i);
+            }
+        }
+        None
+    }
+    
+    fn time_complexity(&self, input_size: usize) -> f64 {
+        input_size as f64 // O(n)
+    }
+    
+    fn space_complexity(&self, _input_size: usize) -> f64 {
+        1.0 // O(1)
+    }
+}
+```
 
 ### 1.3 算法表示
 
@@ -307,29 +358,279 @@ function Partition(A, left, right):
 **定理 5.1** (快速排序复杂度)
 快速排序的平均时间复杂度为 $O(n \log n)$，最坏情况为 $O(n^2)$。
 
+**证明**:
+
+1. **平均情况分析**:
+   - 设 $T(n)$ 为快速排序的平均时间复杂度
+   - 每次分割的期望复杂度为 $O(n)$
+   - 分割后左右子问题的期望大小分别为 $n/2$
+   - 因此 $T(n) = O(n) + 2T(n/2)$
+   - 根据主定理，$T(n) = O(n \log n)$
+
+2. **最坏情况分析**:
+   - 当数组已经排序时，每次分割极不平衡
+   - 左子问题大小为0，右子问题大小为n-1
+   - 因此 $T(n) = O(n) + T(n-1)$
+   - 解得 $T(n) = O(n^2)$
+
+**Rust实现**:
+
+```rust
+pub struct QuickSort;
+
+impl QuickSort {
+    pub fn sort<T: Ord + Clone>(arr: &mut [T]) {
+        if arr.len() <= 1 {
+            return;
+        }
+        
+        let pivot_index = Self::partition(arr);
+        Self::sort(&mut arr[..pivot_index]);
+        Self::sort(&mut arr[pivot_index + 1..]);
+    }
+    
+    fn partition<T: Ord>(arr: &mut [T]) -> usize {
+        let pivot_index = arr.len() - 1;
+        let mut i = 0;
+        
+        for j in 0..pivot_index {
+            if arr[j] <= arr[pivot_index] {
+                arr.swap(i, j);
+                i += 1;
+            }
+        }
+        
+        arr.swap(i, pivot_index);
+        i
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_quick_sort() {
+        let mut arr = vec![3, 1, 4, 1, 5, 9, 2, 6];
+        QuickSort::sort(&mut arr);
+        assert_eq!(arr, vec![1, 1, 2, 3, 4, 5, 6, 9]);
+    }
+    
+    #[test]
+    fn test_quick_sort_performance() {
+        let mut arr: Vec<i32> = (0..10000).rev().collect();
+        let start = std::time::Instant::now();
+        QuickSort::sort(&mut arr);
+        let duration = start.elapsed();
+        println!("QuickSort took: {:?}", duration);
+    }
+}
+        arr.swap(i, pivot_index);
+        i
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_quick_sort() {
+        let mut arr = vec![3, 1, 4, 1, 5, 9, 2, 6];
+        QuickSort::sort(&mut arr);
+        assert_eq!(arr, vec![1, 1, 2, 3, 4, 5, 6, 9]);
+    }
+    
+    #[test]
+    fn test_quick_sort_performance() {
+        let mut arr: Vec<i32> = (0..10000).rev().collect();
+        let start = std::time::Instant::now();
+        QuickSort::sort(&mut arr);
+        let duration = start.elapsed();
+        println!("QuickSort took: {:?}", duration);
+        assert!(duration.as_millis() < 100); // 性能基准
+    }
+}
+```
+
+**性能分析**:
+
+- **时间复杂度**: 平均 $O(n \log n)$，最坏 $O(n^2)$
+- **空间复杂度**: $O(\log n)$ (递归栈深度)
+- **稳定性**: 不稳定排序
+- **原地排序**: 是
+            i = i + 1
+            swap A[i] and A[j]
+    swap A[i + 1] and A[right]
+    return i + 1
+
+```
+
+**定理 5.1** (快速排序复杂度)
+快速排序的平均时间复杂度为 $O(n \log n)$，最坏情况为 $O(n^2)$。
+
 ### 5.2 非比较排序
 
 **定义 5.2** (计数排序)
 计数排序通过统计元素出现次数来排序。
 
-**算法 5.2** (计数排序)
+**算法 5.2** (归并排序)
 
 ```text
-function CountingSort(A, k):
-    C = array of size k, initialized to 0
-    B = array of size n
-    for i = 1 to n:
-        C[A[i]] = C[A[i]] + 1
-    for i = 1 to k:
-        C[i] = C[i] + C[i-1]
-    for i = n downto 1:
-        B[C[A[i]]] = A[i]
-        C[A[i]] = C[A[i]] - 1
-    return B
+function MergeSort(A, left, right):
+    if left < right:
+        mid = (left + right) / 2
+        MergeSort(A, left, mid)
+        MergeSort(A, mid + 1, right)
+        Merge(A, left, mid, right)
+
+function Merge(A, left, mid, right):
+    L = A[left..mid]
+    R = A[mid+1..right]
+    i = j = 0
+    k = left
+    while i < len(L) and j < len(R):
+        if L[i] <= R[j]:
+            A[k] = L[i]
+            i = i + 1
+        else:
+            A[k] = R[j]
+            j = j + 1
+        k = k + 1
+    while i < len(L):
+        A[k] = L[i]
+        i = i + 1
+        k = k + 1
+    while j < len(R):
+        A[k] = R[j]
+        j = j + 1
+        k = k + 1
 ```
 
-**定理 5.2** (计数排序复杂度)
-计数排序的时间复杂度为 $O(n + k)$，其中 $k$ 是元素范围。
+**定理 5.2** (归并排序复杂度)
+归并排序的时间复杂度为 $O(n \log n)$，空间复杂度为 $O(n)$。
+
+**证明**:
+
+1. **时间复杂度分析**:
+   - 设 $T(n)$ 为归并排序的时间复杂度
+   - 递归关系：$T(n) = 2T(n/2) + O(n)$
+   - 根据主定理，$T(n) = O(n \log n)$
+
+2. **空间复杂度分析**:
+   - 每次归并需要额外的 $O(n)$ 空间
+   - 递归栈深度为 $O(\log n)$
+   - 因此总空间复杂度为 $O(n)$
+
+**定理 5.2.1** (归并排序稳定性)
+归并排序是稳定排序算法。
+
+**证明**:
+
+1. 在归并过程中，当 $L[i] = R[j]$ 时，优先选择 $L[i]$
+2. 这保证了相等元素的相对顺序不变
+3. 因此归并排序是稳定的
+
+**Rust实现**:
+
+```rust
+pub struct MergeSort;
+
+impl MergeSort {
+    pub fn sort<T: Ord + Clone>(arr: &mut [T]) {
+        if arr.len() <= 1 {
+            return;
+        }
+        
+        let mid = arr.len() / 2;
+        Self::sort(&mut arr[..mid]);
+        Self::sort(&mut arr[mid..]);
+        Self::merge(arr, mid);
+    }
+    
+    fn merge<T: Ord + Clone>(arr: &mut [T], mid: usize) {
+        let left = arr[..mid].to_vec();
+        let right = arr[mid..].to_vec();
+        
+        let mut i = 0;
+        let mut j = 0;
+        let mut k = 0;
+        
+        while i < left.len() && j < right.len() {
+            if left[i] <= right[j] {
+                arr[k] = left[i].clone();
+                i += 1;
+            } else {
+                arr[k] = right[j].clone();
+                j += 1;
+            }
+            k += 1;
+        }
+        
+        while i < left.len() {
+            arr[k] = left[i].clone();
+            i += 1;
+            k += 1;
+        }
+        
+        while j < right.len() {
+            arr[k] = right[j].clone();
+            j += 1;
+            k += 1;
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_merge_sort() {
+        let mut arr = vec![3, 1, 4, 1, 5, 9, 2, 6];
+        MergeSort::sort(&mut arr);
+        assert_eq!(arr, vec![1, 1, 2, 3, 4, 5, 6, 9]);
+    }
+    
+    #[test]
+    fn test_merge_sort_stability() {
+        #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+        struct Item {
+            value: i32,
+            index: usize,
+        }
+        
+        let mut arr = vec![
+            Item { value: 1, index: 0 },
+            Item { value: 1, index: 1 },
+            Item { value: 2, index: 2 },
+        ];
+        
+        MergeSort::sort(&mut arr);
+        
+        // 验证稳定性：相等元素保持原有顺序
+        assert_eq!(arr[0].index, 0);
+        assert_eq!(arr[1].index, 1);
+    }
+    
+    #[test]
+    fn test_merge_sort_performance() {
+        let mut arr: Vec<i32> = (0..10000).rev().collect();
+        let start = std::time::Instant::now();
+        MergeSort::sort(&mut arr);
+        let duration = start.elapsed();
+        println!("MergeSort took: {:?}", duration);
+        assert!(duration.as_millis() < 100); // 性能基准
+    }
+}
+```
+
+**性能分析**:
+
+- **时间复杂度**: $O(n \log n)$ (最优、平均、最坏情况)
+- **空间复杂度**: $O(n)$
+- **稳定性**: 稳定排序
+- **原地排序**: 否 (需要额外空间)
 
 ### 5.3 排序下界
 
@@ -358,6 +659,131 @@ function LinearSearch(A, target):
 
 **定理 6.1** (线性搜索复杂度)
 线性搜索的时间复杂度为 $O(n)$。
+
+**Rust实现**:
+
+```rust
+pub struct LinearSearch;
+
+impl LinearSearch {
+    pub fn search<T: PartialEq>(arr: &[T], target: &T) -> Option<usize> {
+        for (i, item) in arr.iter().enumerate() {
+            if item == target {
+                return Some(i);
+            }
+        }
+        None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_linear_search() {
+        let arr = vec![1, 3, 5, 7, 9, 11, 13];
+        assert_eq!(LinearSearch::search(&arr, &5), Some(2));
+        assert_eq!(LinearSearch::search(&arr, &10), None);
+    }
+}
+```
+
+### 6.2 二分搜索
+
+**定义 6.2** (二分搜索)
+二分搜索是在有序数组中查找目标值的搜索算法。
+
+**算法 6.2** (二分搜索)
+
+```text
+function BinarySearch(A, target):
+    left = 0
+    right = len(A) - 1
+    while left <= right:
+        mid = (left + right) / 2
+        if A[mid] == target:
+            return mid
+        elif A[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+```
+
+**定理 6.2** (二分搜索复杂度)
+二分搜索的时间复杂度为 $O(\log n)$，空间复杂度为 $O(1)$。
+
+**证明**:
+
+1. 每次迭代将搜索范围减半
+2. 设 $T(n)$ 为时间复杂度，则 $T(n) = T(n/2) + O(1)$
+3. 根据主定理，$T(n) = O(\log n)$
+
+**Rust实现**:
+
+```rust
+pub struct BinarySearch;
+
+impl BinarySearch {
+    pub fn search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
+        let mut left = 0;
+        let mut right = arr.len().saturating_sub(1);
+        
+        while left <= right {
+            let mid = left + (right - left) / 2;
+            
+            match arr[mid].cmp(target) {
+                std::cmp::Ordering::Equal => return Some(mid),
+                std::cmp::Ordering::Less => left = mid + 1,
+                std::cmp::Ordering::Greater => right = mid.saturating_sub(1),
+            }
+        }
+        
+        None
+    }
+    
+    /// 查找第一个等于目标值的位置
+    pub fn search_first<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
+        let mut left = 0;
+        let mut right = arr.len();
+        let mut result = None;
+        
+        while left < right {
+            let mid = left + (right - left) / 2;
+            
+            match arr[mid].cmp(target) {
+                std::cmp::Ordering::Equal => {
+                    result = Some(mid);
+                    right = mid;
+                }
+                std::cmp::Ordering::Less => left = mid + 1,
+                std::cmp::Ordering::Greater => right = mid,
+            }
+        }
+        
+        result
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_binary_search() {
+        let arr = vec![1, 3, 5, 7, 9, 11, 13];
+        assert_eq!(BinarySearch::search(&arr, &5), Some(2));
+        assert_eq!(BinarySearch::search(&arr, &10), None);
+    }
+    
+    #[test]
+    fn test_binary_search_first() {
+        let arr = vec![1, 2, 2, 2, 3, 4, 5];
+        assert_eq!(BinarySearch::search_first(&arr, &2), Some(1));
+    }
+}
+```
 
 ### 6.2 二分搜索
 

@@ -113,6 +113,20 @@
 ### 1.1 数学基础的重要性
 
 数学作为形式科学的基础，为计算机科学、软件工程和人工智能提供了严格的逻辑框架和理论工具。
+
+**形式化定义**: 数学基础为形式科学提供严格的公理化体系，确保理论的一致性和完整性。
+
+**定理**: 数学基础的重要性定理
+
+- 任何形式科学理论都必须建立在严格的数学基础之上
+- 数学基础为形式科学提供可验证的证明方法
+- 数学基础确保形式科学理论的可计算性
+
+**证明**:
+
+1. 公理化方法确保理论的一致性
+2. 形式化证明提供可验证的推理过程
+3. 数学符号系统提供精确的表达方式
 本框架旨在建立系统性的数学基础体系，为形式化理论提供坚实的数学支撑。
 
 ### 1.2 框架目标
@@ -141,12 +155,58 @@
 **定义 2.1.1** (集合)
 集合是满足特定性质的对象的总称，记作 $A = \{x \mid P(x)\}$，其中 $P(x)$ 是性质谓词。
 
+**ZFC公理系统**:
+
 **公理 2.1.1** (外延公理)
 两个集合相等当且仅当它们包含相同的元素：
 $$\forall A \forall B [A = B \leftrightarrow \forall x(x \in A \leftrightarrow x \in B)]$$
 
+**公理 2.1.2** (空集公理)
+存在一个不包含任何元素的集合：
+$$\exists A \forall x(x \notin A)$$
+
+**公理 2.1.3** (配对公理)
+对于任意两个集合 $a$ 和 $b$，存在包含它们的集合：
+$$\forall a \forall b \exists A \forall x(x \in A \leftrightarrow x = a \vee x = b)$$
+
+**公理 2.1.4** (并集公理)
+对于任意集合族 $\mathcal{F}$，存在包含所有成员元素的集合：
+$$\forall \mathcal{F} \exists A \forall x(x \in A \leftrightarrow \exists B(B \in \mathcal{F} \wedge x \in B))$$
+
+**公理 2.1.5** (幂集公理)
+对于任意集合 $A$，存在其幂集：
+$$\forall A \exists B \forall C(C \in B \leftrightarrow C \subseteq A)$$
+
+**公理 2.1.6** (无穷公理)
+存在一个归纳集：
+$$\exists A(\emptyset \in A \wedge \forall x(x \in A \rightarrow x \cup \{x\} \in A))$$
+
+**公理 2.1.7** (替换公理)
+对于任意函数 $F$ 和集合 $A$，存在 $F[A]$：
+$$\forall A \forall F \exists B \forall y(y \in B \leftrightarrow \exists x(x \in A \wedge y = F(x)))$$
+
+**公理 2.1.8** (正则公理)
+每个非空集合都有一个 $\in$-最小元素：
+$$\forall A(A \neq \emptyset \rightarrow \exists x(x \in A \wedge \forall y(y \in x \rightarrow y \notin A)))$$
+
+**公理 2.1.9** (选择公理)
+对于任意非空集合族，存在选择函数：
+$$\forall \mathcal{F}(\emptyset \notin \mathcal{F} \rightarrow \exists f \forall A(A \in \mathcal{F} \rightarrow f(A) \in A))$$
+
 **定理 2.1.1** (幂集存在性)
 对于任意集合 $A$，存在其幂集 $\mathcal{P}(A) = \{B \mid B \subseteq A\}$
+
+**证明**: 由幂集公理直接得到。
+
+**定理 2.1.2** (集合运算基本性质)
+对于任意集合 $A, B, C$：
+
+1. **交换律**: $A \cup B = B \cup A$, $A \cap B = B \cap A$
+2. **结合律**: $(A \cup B) \cup C = A \cup (B \cup C)$, $(A \cap B) \cap C = A \cap (B \cap C)$
+3. **分配律**: $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$, $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+4. **德摩根律**: $\overline{A \cup B} = \overline{A} \cap \overline{B}$, $\overline{A \cap B} = \overline{A} \cup \overline{B}$
+
+**证明**: 通过外延公理和逻辑推理直接验证。
 
 #### 2.1.2 关系与函数
 

@@ -98,6 +98,34 @@
 集合是一个数学对象，由不同的元素组成，满足外延性公理：
 $$\forall x \forall y (x = y \leftrightarrow \forall z (z \in x \leftrightarrow z \in y))$$
 
+**定义 1.1.2** (集合的形式化表示)
+在ZFC公理系统中，集合可以形式化定义为：
+$$\text{Set}(x) \equiv \forall y \forall z ((y \in x \land z \in x \land y \neq z) \rightarrow y \cap z = \emptyset)$$
+
+**定理 1.1.1** (集合存在性)
+对于任意性质P，存在集合{x | P(x)}当且仅当P是良定义的。
+
+**证明**:
+
+1. 假设P是良定义的
+2. 根据概括公理，存在集合A = {x | P(x)}
+3. 反之，如果P不是良定义的，则可能导致罗素悖论
+4. 因此，集合存在性等价于性质P的良定义性
+
+**定义 1.1.3** (空集)
+空集是唯一不包含任何元素的集合：
+$$\emptyset = \{x | x \neq x\}$$
+
+**定理 1.1.2** (空集唯一性)
+空集是唯一的。
+
+**证明**:
+
+1. 假设存在两个空集$\emptyset_1$和$\emptyset_2$
+2. 根据外延性公理，$\emptyset_1 = \emptyset_2$当且仅当$\forall x (x \in \emptyset_1 \leftrightarrow x \in \emptyset_2)$
+3. 由于两个集合都不包含任何元素，条件成立
+4. 因此$\emptyset_1 = \emptyset_2$，空集唯一
+
 **定义 1.1.2** (属于关系)
 属于关系 $\in$ 是一个二元关系，表示元素与集合的关系。
 
@@ -166,13 +194,33 @@ $$A \triangle B = (A \setminus B) \cup (B \setminus A)$$
 **定理 1.2.1** (交换律)
 $$A \cup B = B \cup A, \quad A \cap B = B \cap A$$
 
-**证明：**
+**证明**:
 
-1. $x \in A \cup B \iff x \in A \lor x \in B$
-2. $\iff x \in B \lor x \in A$ (逻辑或的交换律)
-3. $\iff x \in B \cup A$
-4. 因此 $A \cup B = B \cup A$
-5. 证毕
+1. **并集交换律**:
+   - 设 $x \in A \cup B$
+   - 根据并集定义，$x \in A \lor x \in B$
+   - 根据逻辑或的交换律，$x \in B \lor x \in A$
+   - 因此 $x \in B \cup A$
+   - 同理可证 $x \in B \cup A \implies x \in A \cup B$
+   - 根据外延性公理，$A \cup B = B \cup A$
+
+2. **交集交换律**:
+   - 设 $x \in A \cap B$
+   - 根据交集定义，$x \in A \land x \in B$
+   - 根据逻辑与的交换律，$x \in B \land x \in A$
+   - 因此 $x \in B \cap A$
+   - 同理可证 $x \in B \cap A \implies x \in A \cap B$
+   - 根据外延性公理，$A \cap B = B \cap A$
+
+**定理 1.2.1.1** (运算的封闭性)
+对于任意集合A和B，$A \cup B$和$A \cap B$都是集合。
+
+**证明**:
+
+1. 根据并集公理，对于任意集合A和B，存在集合C = A ∪ B
+2. 根据交集定义，$A \cap B = \{x \in A | x \in B\}$
+3. 根据概括公理，$A \cap B$是集合
+4. 因此集合运算在集合类上是封闭的
 
 **定理 1.2.2** (结合律)
 $$(A \cup B) \cup C = A \cup (B \cup C), \quad (A \cap B) \cap C = A \cap (B \cap C)$$
