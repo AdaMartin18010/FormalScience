@@ -9,61 +9,64 @@
 ```text
 16_Algorithm_Theory/
 ├── README.md                           # 模块总览
-├── 12.1.1_.md                         # 算法基础
-├── 14.1_Fundamentals/                 # 基础理论
-│   ├── 14.1.1_Algorithm_Design.md     # 算法设计
-│   ├── 14.1.2_Complexity_Analysis.md  # 复杂度分析
-│   └── 14.1.3_Data_Structures.md     # 数据结构
-├── 14.2_Complexity_Theory/            # 复杂度理论
-│   ├── 14.2.1_Time_Complexity.md      # 时间复杂度
-│   ├── 14.2.2_Space_Complexity.md     # 空间复杂度
-│   └── 14.2.3_Asymptotic_Analysis.md  # 渐进分析
-└── 14.3_Optimization_Theory/          # 优化理论
-    ├── 14.3.1_Algorithm_Optimization.md # 算法优化
-    ├── 14.3.2_Parallel_Algorithms.md   # 并行算法
-    └── 14.3.3_Distributed_Algorithms.md # 分布式算法
+├── 01_Algorithm_Foundation_Theory.md   # 算法基础理论
+├── 16.1_Fundamentals/                  # 基础理论
+│   ├── 16.1.1_Algorithm_Design.md     # 算法设计
+│   ├── 16.1.2_Complexity_Analysis.md  # 复杂度分析
+│   └── 16.1.3_Data_Structures.md     # 数据结构
+├── 16.2_Complexity_Theory/             # 复杂度理论
+│   ├── 16.2.1_Time_Complexity.md      # 时间复杂度
+│   ├── 16.2.2_Space_Complexity.md     # 空间复杂度
+│   └── 16.2.3_Asymptotic_Analysis.md  # 渐进分析
+├── 16.3_Optimization_Theory/           # 优化理论
+│   ├── 16.3.1_Algorithm_Optimization.md # 算法优化
+│   ├── 16.3.2_Parallel_Algorithms.md   # 并行算法
+│   └── 16.3.3_Distributed_Algorithms.md # 分布式算法
+├── 16.4_Design_Patterns/               # 设计模式
+├── 16.5_Advanced_Algorithms/           # 高级算法
+└── 16.6_Algorithm_Analysis/            # 算法分析
 ```
 
 ## 🔬 核心理论
 
-### 1. 算法设计理论
+### 16.1 算法设计理论
 
-**定义 1.1** (算法)
+**定义 16.1.1** (算法)
 算法是解决特定问题的有限步骤序列，表示为 $A = (I, O, P)$，其中：
 
 - $I$ 是输入集合
 - $O$ 是输出集合  
 - $P$ 是处理步骤
 
-**定义 1.2** (算法正确性)
+**定义 16.1.2** (算法正确性)
 算法 $A$ 对于问题 $P$ 是正确的，当且仅当：
 $\forall x \in I, A(x) \in O \land P(x, A(x))$
 
-**定理 1.1** (算法终止性)
+**定理 16.1.1** (算法终止性)
 确定性算法在有限时间内终止。
 
-### 2. 复杂度理论
+### 16.2 复杂度理论
 
-**定义 2.1** (时间复杂度)
+**定义 16.2.1** (时间复杂度)
 算法 $A$ 的时间复杂度函数 $T_A: \mathbb{N} \rightarrow \mathbb{N}$ 定义为：
 $T_A(n) = \max\{t_A(x) \mid |x| = n\}$
 
-**定义 2.2** (空间复杂度)
+**定义 16.2.2** (空间复杂度)
 算法 $A$ 的空间复杂度函数 $S_A: \mathbb{N} \rightarrow \mathbb{N}$ 定义为：
 $S_A(n) = \max\{s_A(x) \mid |x| = n\}$
 
-**定理 2.1** (复杂度关系)
+**定理 16.2.1** (复杂度关系)
 对于任意算法 $A$，$T_A(n) \geq S_A(n)$
 
-### 3. 算法设计模式
+### 16.3 算法设计模式
 
-**定义 3.1** (分治法)
+**定义 16.3.1** (分治法)
 分治法将问题分解为子问题：$T(n) = aT(n/b) + f(n)$
 
-**定义 3.2** (动态规划)
+**定义 16.3.2** (动态规划)
 动态规划通过子问题重叠求解：$T(n) = \sum_{i=1}^k T(n_i) + O(1)$
 
-**定义 3.3** (贪心算法)
+**定义 16.3.3** (贪心算法)
 贪心算法在每一步选择局部最优解。
 
 ## 💻 Rust实现
