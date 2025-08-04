@@ -7,7 +7,7 @@
 
 ## 模块结构
 
-### 1. 科学哲学 (Philosophy of Science) - (进行中)
+### 01.1 科学哲学 (Philosophy of Science) - (进行中)
 
 科学哲学研究科学知识的本质、方法和概念基础，探讨科学理论的结构、科学解释的性质、科学实在论与反实在论等问题。
 
@@ -17,7 +17,7 @@
 - [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md)（链接失效，待补充）
 - [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md)（链接失效，待补充）
 
-### 2. 心灵哲学 (Philosophy of Mind) - (已完成)
+### 01.2 心灵哲学 (Philosophy of Mind) - (已完成)
 
 心灵哲学探讨心灵的本质、意识的性质、心灵与身体的关系等问题，为认知科学和人工智能提供概念基础。
 
@@ -26,15 +26,15 @@
 - [自我与主体性](./01.2_Philosophy_of_Mind/03_Self_and_Subjectivity.md) - 研究自我意识与主体性体验
 - [意识的本体论与认识论](./01.2_Philosophy_of_Mind/04_Consciousness_Ontology_Epistemology.md) - 探讨意识的存在性质与认识方法
 
-### 3. 语言哲学 (Philosophy of Language) - (待创建)
+### 01.3 语言哲学 (Philosophy of Language) - (待创建)
 
 语言哲学研究语言的本质、意义理论、指称理论等问题，为形式语言理论提供哲学基础。
 
-### 4. 逻辑哲学 (Philosophy of Logic) - (待创建)
+### 01.4 逻辑哲学 (Philosophy of Logic) - (待创建)
 
 逻辑哲学探讨逻辑的本质、逻辑真理的地位、逻辑多元论等问题，为形式逻辑提供哲学基础。
 
-### 5. 数学哲学 (Philosophy of Mathematics) - (待创建)
+### 01.5 数学哲学 (Philosophy of Mathematics) - (待创建)
 
 数学哲学研究数学对象的本体论地位、数学知识的认识论基础、数学实践的方法论等问题。
 

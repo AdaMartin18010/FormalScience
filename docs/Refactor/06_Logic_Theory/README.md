@@ -1,20 +1,20 @@
 ---
-**文档编号**: 03-00-LOGIC
+**文档编号**: 06-00-LOGIC
 **创建时间**: 2024-12-21
 **最后更新**: 2025-01-18
 **版本**: 2.0 (重构版)
 **状态**: 持续构建中
 ---
 
-# 03 逻辑理论 (Logic Theory)
+# 06 逻辑理论 (Logic Theory)
 
 ## 模块索引
 
-- **03.1 [命题逻辑 (Propositional Logic)](./03.1_Propositional_Logic/)**
-- **03.2 [谓词逻辑 (Predicate Logic)](./03.2_Predicate_Logic/)**
-- **03.3 [模态逻辑 (Modal Logic)](./03.3_Modal_Logic/)**
-- **03.4 [时态逻辑 (Temporal Logic)](./03.4_Temporal_Logic/)**
-- **03.5 [直觉主义逻辑 (Intuitionistic Logic)](./03.5_Intuitionistic_Logic/)**
+- **06.1 [命题逻辑 (Propositional Logic)](./03.1_Propositional_Logic/)**
+- **06.2 [谓词逻辑 (Predicate Logic)](./03.2_Predicate_Logic/)**
+- **06.3 [模态逻辑 (Modal Logic)](./03.3_Modal_Logic/)**
+- **06.4 [时态逻辑 (Temporal Logic)](./03.4_Temporal_Logic/)**
+- **06.5 [直觉主义逻辑 (Intuitionistic Logic)](./03.5_Intuitionistic_Logic/)**
 - 占位符: *非经典逻辑 (Non-classical Logic)*
 - 占位符: *高阶逻辑 (Higher-order Logic)*
 
@@ -28,7 +28,7 @@
 
 ### 形式化定义
 
-**定义 3.1 (逻辑系统)** 逻辑系统是一个三元组 $\mathcal{L} = (L, \vdash, \models)$，其中：
+**定义 6.1 (逻辑系统)** 逻辑系统是一个三元组 $\mathcal{L} = (L, \vdash, \models)$，其中：
 
 - $L$ 是由语法规则定义的良构公式集合。
 - $\vdash$ 是一个语法上的**推导关系** (Syntactic Entailment)，表示可以从一组前提出发，通过推理规则导出结论。
@@ -51,9 +51,9 @@
 
 ### 外部学科链接
 
-- **[05 类型理论](../05_Type_Theory/README.md)**: Curry-Howard同构揭示了逻辑与计算之间的深刻联系。
-- **[09 计算机体系结构](../09_Computer_Architecture_Theory/01_Digital_Logic_Design/README.md)**: 命题逻辑是数字电路设计的基础。
-- **[13 人工智能理论](../13_Artificial_Intelligence_Theory/README.md)**: 逻辑是知识表示和自动推理的核心工具。
+- **[04 类型理论](../04_Type_Theory/README.md)**: Curry-Howard同构揭示了逻辑与计算之间的深刻联系。
+- **[10 计算机体系结构](../10_Computer_Architecture_Theory/README.md)**: 命题逻辑是数字电路设计的基础。
+- **[19 人工智能理论](../19_Artificial_Intelligence_Theory/README.md)**: 逻辑是知识表示和自动推理的核心工具。
 
 ---
 

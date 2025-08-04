@@ -1,4 +1,4 @@
-# 06 形式模型理论 (Formal Model Theory)
+# 05 形式模型理论 (Formal Model Theory)
 
 ## 模块概述
 
@@ -8,27 +8,31 @@
 
 ## 核心主题
 
-### 06.1 转换系统理论 (Transition System Theory)
+### 05.1 转换系统理论 (Transition System Theory)
 
 - **内容**: 转换系统是形式模型理论的基石，提供了描述系统状态和行为演化的基本框架。本节将深入探讨转换系统的基本定义、属性以及相关的分析技术。
 
-### 06.2 进程演算理论 (Process Calculus Theory)
+### 05.2 进程演算理论 (Process Calculus Theory)
 
 - **内容**: 进程演算是用于描述和分析并发系统交互的代数方法。本节将介绍核心的进程演算（如CCS、CSP），并探讨它们在建模并发协议和通信模式中的应用。
 
-### 06.3 Petri网理论 (Petri Net Theory)
+### 05.3 Petri网理论 (Petri Net Theory)
 
 - **内容**: Petri网是一种用于建模分布式和并发系统的图形化数学工具。本节将涵盖从基本Petri网到高级变种（如着色Petri网和时间Petri网）的理论和应用。
 
-### 06.4 行为模型理论 (Behavior Model Theory)
+### 05.4 行为模型理论 (Behavior Model Theory)
 
 - **内容**: 行为模型关注系统外部可观察到的行为，而不是其内部结构。本节将探讨用于规约和验证系统行为等价性的理论，如轨迹等价性和互模拟。
 
-### 06.5 结构模型理论 (Structural Model Theory)
+### 05.5 结构模型理论 (Structural Model Theory)
 
 - **内容**: 与行为模型相对，结构模型关注系统的内部构成和组织。本节将介绍如何使用形式化方法来描述系统的体系结构、组件及其相互关系。
 
+### 05.6 语义模型理论 (Semantic Model Theory)
+
+- **内容**: 语义模型理论关注系统行为的语义解释和形式化表示。
+
 ## 学习路径与关联
 
-- **前置知识**: 学习本模块需要扎实的 [02 数学基础](../02_Mathematical_Foundations/README.md)（特别是集合论和图论）和 [03 逻辑理论](../03_Logic_Theory/README.md)。
-- **后续关联**: 本模块的知识是学习 [07 编程语言理论](../07_Programming_Language_Theory/README.md)、[10 分布式系统理论](../10_Distributed_Systems_Theory/README.md) 和 [12 并发理论](../12_Concurrency_Theory/README.md) 的重要基础。
+- **前置知识**: 学习本模块需要扎实的 [02 数学基础](../02_Mathematical_Foundations/README.md)（特别是集合论和图论）和 [06 逻辑理论](../06_Logic_Theory/README.md)。
+- **后续关联**: 本模块的知识是学习 [08 编程语言理论](../08_Programming_Language_Theory/README.md)、[11 分布式系统理论](../11_Distributed_Systems_Theory/README.md) 和 [13 并发理论](../13_Concurrency_Theory/README.md) 的重要基础。
