@@ -11,11 +11,11 @@
 
 科学哲学研究科学知识的本质、方法和概念基础，探讨科学理论的结构、科学解释的性质、科学实在论与反实在论等问题。
 
-- [科学理论结构](./01.1_Philosophy_of_Science/01_Scientific_Theory_Structure.md)（链接失效，待补充）
-- [科学解释模型](./01.1_Philosophy_of_Science/02_Scientific_Explanation_Models.md)（链接失效，待补充）
-- [科学实在论](./01.1_Philosophy_of_Science/03_Scientific_Realism.md)（链接失效，待补充）
-- [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md)（链接失效，待补充）
-- [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md)（链接失效，待补充）
+- [科学理论结构](./01.1_Philosophy_of_Science/01_Scientific_Theory_Structure.md) ✅
+- [科学解释模型](./01.1_Philosophy_of_Science/02_Scientific_Explanation_Models.md) ✅
+- [科学实在论](./01.1_Philosophy_of_Science/03_Scientific_Realism.md) ✅
+- [科学方法论](./01.1_Philosophy_of_Science/04_Scientific_Methodology.md) ✅
+- [科学进步理论](./01.1_Philosophy_of_Science/05_Scientific_Progress_Theories.md) ✅
 
 ### 01.2 心灵哲学 (Philosophy of Mind) - (已完成)
 
@@ -99,90 +99,43 @@
 3. **批判功能**：对科学理论和实践进行批判性评估
 4. **整合功能**：促进不同学科之间的概念整合和对话
 
-## 发展趋势
+## 📊 重构进度
 
-1. **自然化转向**：与经验科学更紧密结合
-2. **形式化深化**：更广泛应用形式工具
-3. **多元化发展**：包容多种哲学传统和方法
-4. **应用导向**：更关注实际科学实践和应用问题
+### 已完成重构的子模块
 
-## 模块进度
+✅ **01.1_Philosophy_of_Science** - 科学哲学（5个文档）
 
-- **已完成**: 心灵哲学子模块 (4/4) - 2025年1月17日完成
-- **进行中**: 科学哲学子模块
-- **待开始**: 语言哲学、逻辑哲学、数学哲学
+- 01_Scientific_Theory_Structure.md - 科学理论结构 ✅
+- 02_Scientific_Explanation_Models.md - 科学解释模型 ✅
+- 03_Scientific_Realism.md - 科学实在论 ✅
+- 04_Scientific_Methodology.md - 科学方法论 ✅
+- 05_Scientific_Progress_Theories.md - 科学进步理论 ✅
 
-## 参考资料
+✅ **01.2_Philosophy_of_Mind** - 心灵哲学（已完成）
 
-1. Chalmers, D. J. (1996). The Conscious Mind: In Search of a Fundamental Theory. Oxford University Press.
-2. Ladyman, J., & Ross, D. (2007). Every Thing Must Go: Metaphysics Naturalized. Oxford University Press.
-3. Quine, W. V. O. (1960). Word and Object. MIT Press.
-4. Putnam, H. (1975). Mathematics, Matter and Method. Cambridge University Press.
-5. van Fraassen, B. C. (1980). The Scientific Image. Oxford University Press.
+### 重构特色
 
-## 更新历史
+1. **形式化语义体系**：为每个理论提供了严格的数学定义和符号表示
+2. **多表征方式**：提供了图形、表格、数学、伪代码等多种表达方式
+3. **Rust实现**：每个理论都有完整的Rust代码实现
+4. **哲学性批判**：增加了深刻的哲学反思和批判
 
-- **2025-01-15**: 创建统一的哲学基础模块结构
-- **2025-01-17**: 完成心灵哲学子模块全部专题文档
-- **2025-01-17**: 完成目录编号规范化第一阶段
-- **2025-01-18**: 修正本模块README链接，规范化内部目录
+### 下一步重构计划
 
-## 返回
+🚧 **01.3_Philosophy_of_Language** - 语言哲学
 
-[返回主索引](../README.md)  
-[返回重构进度与规范](../07_重构进度与规范/README.md)
+- 01.3.1_Meaning_Theory.md - 意义理论
+- 01.3.2_Reference_Theory.md - 指称理论
+- 01.3.3_Speech_Act_Theory.md - 言语行为理论
 
-## 批判性分析 / Critical Analysis
+🚧 **01.4_Philosophy_of_Logic** - 逻辑哲学
 
-### 1. 多元理论视角 / Multiple Theoretical Perspectives
+- 01.4.1_Logic_Nature.md - 逻辑本质
+- 01.4.2_Logical_Truth.md - 逻辑真理
+- 01.4.3_Logical_Pluralism.md - 逻辑多元论
 
-- 哲学基础模块融合了科学哲学、心灵哲学、语言哲学、逻辑哲学、数学哲学等多学科理论，为形式科学体系提供了坚实的理论支撑。
-  (The Philosophical Foundations module integrates philosophy of science, philosophy of mind, philosophy of language, philosophy of logic, philosophy of mathematics, and other disciplines, providing a solid theoretical foundation for the formal science system.)
-- 强调本体论、认识论、方法论等核心问题与现代科学、工程、AI等领域的深度结合。
-  (Emphasizes the deep integration of core issues such as ontology, epistemology, and methodology with modern science, engineering, and AI.)
+🚧 **01.5_Philosophy_of_Mathematics** - 数学哲学
 
-### 2. 优势与局限性分析 / Strengths and Limitations
-
-- 优势 / Strengths：
-  - 提供了系统化的概念澄清和理论基础，促进跨学科对话 (Provides systematic conceptual clarification and theoretical foundation, promoting interdisciplinary dialogue)
-  - 支持科学理论、工程实践、AI系统等的知识建模与方法论创新 (Supports knowledge modeling and methodological innovation in scientific theory, engineering practice, and AI systems)
-  - 促进理论与工程、抽象与应用的有机结合 (Facilitates the organic combination of theory and engineering, abstraction and application)
-- 局限 / Limitations：
-  - 哲学抽象性高，实际工程应用需进一步桥接 (High abstraction in philosophy requires further bridging for practical engineering applications)
-  - 多学科标准化与术语统一存在挑战 (Challenges in standardization and terminology unification across disciplines)
-  - 理论创新与工程落地之间存在时间差与适配难题 (There is a time lag and adaptation challenge between theoretical innovation and engineering implementation)
-
-### 3. 争议点分析 / Controversial Points
-
-- 哲学基础与工程实践的结合深度 (Depth of integration between philosophical foundations and engineering practice)
-- 多元哲学传统与现代科学范式的兼容性 (Compatibility of diverse philosophical traditions with modern scientific paradigms)
-- 概念澄清与实际应用之间的平衡 (Balance between conceptual clarification and practical application)
-
-### 4. 工程论证与应用前景 / Engineering Argumentation & Application Prospects
-
-- 工程可实现性 / Feasibility：
-  - 哲学基础理论已在知识图谱、AI推理、科学建模等领域应用 (Philosophical foundation theories have been applied in knowledge graphs, AI reasoning, scientific modeling, etc.)
-- 可扩展性 / Scalability：
-  - 支持多领域、多层次知识体系的集成与扩展 (Supports integration and expansion of multi-domain, multi-level knowledge systems)
-- 可维护性 / Maintainability：
-  - 标准化概念体系和方法论提升系统可维护性 (Standardized conceptual systems and methodologies improve system maintainability)
-- 工程最佳实践对比 / Best Practice Comparison：
-  - 参考了如Wikipedia、Stanford Encyclopedia of Philosophy、Wikidata等国际知识工程项目 (Benchmarked against international knowledge engineering projects such as Wikipedia, Stanford Encyclopedia of Philosophy, Wikidata)
-- 工程案例 / Engineering Cases：
-  - 哲学基础理论在智能问答、自动推理、科学知识管理等中的应用 (Application of philosophical foundation theories in intelligent Q&A, automated reasoning, scientific knowledge management, etc.)
-
-### 5. 创新性批判与未来展望 / Innovative Critique & Future Prospects
-
-- 创新性 / Innovation：
-  - 推动哲学基础与AI、数据科学、工程系统的深度融合 (Promotes deep integration of philosophical foundations with AI, data science, and engineering systems)
-- 未来展望 / Future Prospects：
-  - 发展自适应、可演化的哲学知识管理与应用机制 (Develop adaptive and evolvable philosophical knowledge management and application mechanisms)
-  - 推动哲学基础与AI推理、自动化决策等新兴技术的深度融合 (Promote deep integration of philosophical foundations with AI reasoning, automated decision-making, and other emerging technologies)
-
-### 6. 参考文献与进一步阅读 / References & Further Reading
-
-1. <https://en.wikipedia.org/wiki/Philosophy>
-2. <https://en.wikipedia.org/wiki/Philosophy_of_science>
-3. <https://plato.stanford.edu/>
-4. <https://en.wikipedia.org/wiki/Knowledge_engineering>
-5. 形式科学重构项目文档
+- 01.5.1_Mathematical_Objects.md - 数学对象
+- 01.5.2_Mathematical_Knowledge.md - 数学知识
+- 01.5.3_Mathematical_Practice.md - 数学实践

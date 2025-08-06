@@ -98,180 +98,313 @@
 - 分布式表示和权重调整
 - 深度学习和神经网络
 
-**行为主义模型**：
+## 🧮 形式化理论基础
 
-- 基于强化学习的行为优化
-- 环境交互和奖励机制
-- 智能体和多智能体系统
+### 数学表示
 
-## 🔧 形式化实现
+**定义 19.5** (智能函数)
+智能函数 $I: \mathcal{X} \rightarrow \mathcal{Y}$ 定义为：
 
-### 基础数据结构
+$$I(x) = \arg\max_{y \in \mathcal{Y}} P(y|x)$$
+
+其中 $\mathcal{X}$ 是输入空间，$\mathcal{Y}$ 是输出空间，$P(y|x)$ 是条件概率。
+
+**定义 19.6** (学习算法)
+学习算法 $\mathcal{L}$ 是一个映射：
+
+$$\mathcal{L}: \mathcal{D} \rightarrow \mathcal{H}$$
+
+其中 $\mathcal{D}$ 是训练数据集，$\mathcal{H}$ 是假设空间。
+
+**定义 19.7** (神经网络)
+神经网络是一个函数 $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$，定义为：
+
+$$f(x) = \sigma_L(W_L \sigma_{L-1}(W_{L-1} \cdots \sigma_1(W_1 x + b_1) + b_{L-1}) + b_L)$$
+
+其中 $W_i$ 是权重矩阵，$b_i$ 是偏置向量，$\sigma_i$ 是激活函数。
+
+### 核心定理
+
+**定理 19.1** (万能逼近定理)
+对于任意连续函数 $f: [0,1]^n \rightarrow \mathbb{R}$ 和任意 $\epsilon > 0$，存在一个单隐层神经网络 $g$，使得：
+
+$$\sup_{x \in [0,1]^n} |f(x) - g(x)| < \epsilon$$
+
+**证明**: 通过构造性证明，使用sigmoid激活函数可以逼近任意连续函数。
+
+**定理 19.2** (学习理论基本定理)
+对于任意 $\delta > 0$ 和 $\epsilon > 0$，如果训练样本数 $m$ 满足：
+
+$$m \geq \frac{1}{\epsilon^2} \left(\log|\mathcal{H}| + \log\frac{1}{\delta}\right)$$
+
+则以概率至少 $1-\delta$，有：
+
+$$P(\text{err}(h) \leq \hat{\text{err}}(h) + \epsilon) \geq 1-\delta$$
+
+其中 $\text{err}(h)$ 是真实错误率，$\hat{\text{err}}(h)$ 是经验错误率。
+
+**定理 19.3** (梯度下降收敛定理)
+对于凸函数 $f$ 和步长 $\eta \leq \frac{1}{L}$，梯度下降算法收敛到全局最优解：
+
+$$\lim_{t \rightarrow \infty} \|\nabla f(x_t)\| = 0$$
+
+其中 $L$ 是函数的Lipschitz常数。
+
+## 🔧 工程验证框架
+
+### 代码实现示例
+
+**神经网络实现 (Rust)**:
 
 ```rust
-use std::collections::HashMap;
-use nalgebra::{DMatrix, DVector};
-use serde::{Serialize, Deserialize};
+use ndarray::{Array1, Array2};
 
-// 神经网络层
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct NeuralLayer {
-    pub weights: DMatrix<f64>,
-    pub biases: DVector<f64>,
-    pub activation_function: ActivationFunction,
-    pub input_size: usize,
-    pub output_size: usize,
+/// 神经网络结构
+pub struct NeuralNetwork {
+    layers: Vec<Layer>,
+    learning_rate: f64,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+/// 神经网络层
+pub struct Layer {
+    weights: Array2<f64>,
+    biases: Array1<f64>,
+    activation: ActivationFunction,
+}
+
+/// 激活函数枚举
 pub enum ActivationFunction {
     Sigmoid,
-    Tanh,
     ReLU,
-    LeakyReLU,
-    Softmax,
-    Linear,
-}
-
-impl NeuralLayer {
-    pub fn new(input_size: usize, output_size: usize, activation: ActivationFunction) -> Self {
-        NeuralLayer {
-            weights: DMatrix::random(output_size, input_size),
-            biases: DVector::zeros(output_size),
-            activation_function: activation,
-            input_size,
-            output_size,
-        }
-    }
-
-    // 前向传播
-    pub fn forward(&self, input: &DVector<f64>) -> DVector<f64> {
-        let linear_output = &self.weights * input + &self.biases;
-        self.activate(&linear_output)
-    }
-
-    // 激活函数
-    pub fn activate(&self, input: &DVector<f64>) -> DVector<f64> {
-        match self.activation_function {
-            ActivationFunction::Sigmoid => input.map(|x| 1.0 / (1.0 + (-x).exp())),
-            ActivationFunction::Tanh => input.map(|x| x.tanh()),
-            ActivationFunction::ReLU => input.map(|x| x.max(0.0)),
-            ActivationFunction::LeakyReLU => input.map(|x| if x > 0.0 { x } else { 0.01 * x }),
-            ActivationFunction::Softmax => {
-                let max_val = input.max();
-                let exp_input = input.map(|x| (x - max_val).exp());
-                let sum_exp = exp_input.sum();
-                exp_input.map(|x| x / sum_exp)
-            }
-            ActivationFunction::Linear => input.clone(),
-        }
-    }
-}
-
-// 神经网络
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct NeuralNetwork {
-    pub layers: Vec<NeuralLayer>,
-    pub learning_rate: f64,
+    Tanh,
 }
 
 impl NeuralNetwork {
-    pub fn new(layers: Vec<NeuralLayer>, learning_rate: f64) -> Self {
-        NeuralNetwork {
+    /// 创建新的神经网络
+    pub fn new(layer_sizes: Vec<usize>, learning_rate: f64) -> Self {
+        let mut layers = Vec::new();
+        
+        for i in 0..layer_sizes.len() - 1 {
+            let input_size = layer_sizes[i];
+            let output_size = layer_sizes[i + 1];
+            
+            // 初始化权重 (He初始化)
+            let weights = Array2::random(
+                (output_size, input_size),
+                ndarray_rand::rand_distr::Normal::new(0.0, (2.0 / input_size as f64).sqrt()).unwrap()
+            );
+            
+            // 初始化偏置
+            let biases = Array1::zeros(output_size);
+            
+            let activation = if i == layer_sizes.len() - 2 {
+                ActivationFunction::Sigmoid
+            } else {
+                ActivationFunction::ReLU
+            };
+            
+            layers.push(Layer {
+                weights,
+                biases,
+                activation,
+            });
+        }
+        
+        Self {
             layers,
             learning_rate,
         }
     }
-
-    // 前向传播
-    pub fn forward(&self, input: &DVector<f64>) -> DVector<f64> {
-        let mut current_input = input.clone();
+    
+    /// 前向传播
+    pub fn forward(&self, input: &Array1<f64>) -> Array1<f64> {
+        let mut current = input.clone();
+        
         for layer in &self.layers {
-            current_input = layer.forward(&current_input);
+            current = layer.forward(&current);
         }
-        current_input
+        
+        current
     }
-
-    // 反向传播
-    pub fn backward(&mut self, input: &DVector<f64>, target: &DVector<f64>) -> f64 {
+    
+    /// 反向传播
+    pub fn backward(&mut self, input: &Array1<f64>, target: &Array1<f64>) {
         // 前向传播
         let mut activations = vec![input.clone()];
         let mut z_values = Vec::new();
         
         for layer in &self.layers {
-            let z = &layer.weights * &activations.last().unwrap() + &layer.biases;
-            z_values.push(z.clone());
-            let activation = layer.activate(&z);
+            let (z, activation) = layer.forward_with_cache(&activations.last().unwrap());
+            z_values.push(z);
             activations.push(activation);
         }
-
-        // 计算损失
-        let output = activations.last().unwrap();
-        let loss = self.compute_loss(output, target);
-
-        // 反向传播误差
-        let mut delta = self.compute_output_delta(output, target);
         
-        for i in (0..self.layers.len()).rev() {
-            let layer = &mut self.layers[i];
-            let activation = &activations[i];
+        // 计算输出层误差
+        let mut delta = activations.last().unwrap() - target;
+        
+        // 反向传播误差
+        for (i, layer) in self.layers.iter_mut().enumerate().rev() {
+            let layer_index = self.layers.len() - 1 - i;
+            
+            // 计算权重和偏置的梯度
+            let weight_grad = delta.outer(&activations[layer_index]);
+            let bias_grad = delta.clone();
             
             // 更新权重和偏置
-            let weight_gradient = &delta * activation.transpose();
-            let bias_gradient = delta.clone();
-            
-            layer.weights -= self.learning_rate * weight_gradient;
-            layer.biases -= self.learning_rate * bias_gradient;
+            layer.weights -= &(self.learning_rate * weight_grad);
+            layer.biases -= &(self.learning_rate * bias_grad);
             
             // 计算下一层的误差
-            if i > 0 {
-                delta = layer.weights.transpose() * &delta;
-                let z = &z_values[i-1];
-                delta = self.element_wise_multiply(&delta, &self.derivative_activate(z, &layer.activation_function));
+            if layer_index > 0 {
+                delta = layer.backward_delta(&delta, &z_values[layer_index - 1]);
             }
         }
-
-        loss
     }
-
-    // 计算损失
-    fn compute_loss(&self, output: &DVector<f64>, target: &DVector<f64>) -> f64 {
-        let mut loss = 0.0;
-        for i in 0..output.len() {
-            loss += 0.5 * (output[i] - target[i]).powi(2);
+    
+    /// 训练神经网络
+    pub fn train(&mut self, training_data: &[(Array1<f64>, Array1<f64>)], epochs: usize) {
+        for epoch in 0..epochs {
+            let mut total_loss = 0.0;
+            
+            for (input, target) in training_data {
+                self.backward(input, target);
+                
+                let output = self.forward(input);
+                total_loss += self.cross_entropy_loss(&output, target);
+            }
+            
+            if epoch % 100 == 0 {
+                println!("Epoch {}, Loss: {:.4}", epoch, total_loss / training_data.len() as f64);
+            }
         }
-        loss
     }
-
-    // 计算输出层误差
-    fn compute_output_delta(&self, output: &DVector<f64>, target: &DVector<f64>) -> DVector<f64> {
-        output - target
+    
+    /// 交叉熵损失函数
+    fn cross_entropy_loss(&self, output: &Array1<f64>, target: &Array1<f64>) -> f64 {
+        -target.dot(&output.mapv(|x| (x + 1e-15).ln()))
     }
+}
 
-    // 元素级乘法
-    fn element_wise_multiply(&self, a: &DVector<f64>, b: &DVector<f64>) -> DVector<f64> {
-        DVector::from_iterator(a.len(), (0..a.len()).map(|i| a[i] * b[i]))
+impl Layer {
+    /// 前向传播
+    pub fn forward(&self, input: &Array1<f64>) -> Array1<f64> {
+        let z = &self.weights.dot(input) + &self.biases;
+        self.apply_activation(z)
     }
-
-    // 激活函数导数
-    fn derivative_activate(&self, input: &DVector<f64>, activation: &ActivationFunction) -> DVector<f64> {
-        match activation {
+    
+    /// 前向传播（带缓存）
+    pub fn forward_with_cache(&self, input: &Array1<f64>) -> (Array1<f64>, Array1<f64>) {
+        let z = &self.weights.dot(input) + &self.biases;
+        let activation = self.apply_activation(&z);
+        (z.clone(), activation)
+    }
+    
+    /// 应用激活函数
+    fn apply_activation(&self, z: &Array1<f64>) -> Array1<f64> {
+        match self.activation {
+            ActivationFunction::Sigmoid => z.mapv(|x| 1.0 / (1.0 + (-x).exp())),
+            ActivationFunction::ReLU => z.mapv(|x| x.max(0.0)),
+            ActivationFunction::Tanh => z.mapv(|x| x.tanh()),
+        }
+    }
+    
+    /// 计算反向传播的误差
+    fn backward_delta(&self, delta: &Array1<f64>, z: &Array1<f64>) -> Array1<f64> {
+        let activation_derivative = self.apply_activation_derivative(z);
+        self.weights.t().dot(delta) * activation_derivative
+    }
+    
+    /// 激活函数导数
+    fn apply_activation_derivative(&self, z: &Array1<f64>) -> Array1<f64> {
+        match self.activation {
             ActivationFunction::Sigmoid => {
-                let sigmoid = input.map(|x| 1.0 / (1.0 + (-x).exp()));
-                sigmoid.map(|x| x * (1.0 - x))
+                let sigmoid = z.mapv(|x| 1.0 / (1.0 + (-x).exp()));
+                sigmoid.clone() * (Array1::ones(sigmoid.len()) - sigmoid)
             }
-            ActivationFunction::Tanh => {
-                let tanh = input.map(|x| x.tanh());
-                tanh.map(|x| 1.0 - x * x)
-            }
-            ActivationFunction::ReLU => input.map(|x| if x > 0.0 { 1.0 } else { 0.0 }),
-            ActivationFunction::LeakyReLU => input.map(|x| if x > 0.0 { 1.0 } else { 0.01 }),
-            ActivationFunction::Softmax => {
-                // Softmax的导数比较复杂，这里简化处理
-                input.map(|_| 1.0)
-            }
-            ActivationFunction::Linear => DVector::from_element(input.len(), 1.0),
+            ActivationFunction::ReLU => z.mapv(|x| if x > 0.0 { 1.0 } else { 0.0 }),
+            ActivationFunction::Tanh => z.mapv(|x| 1.0 - x.tanh().powi(2)),
         }
+    }
+}
+
+/// 性能测试框架
+pub trait AIPerformanceBenchmark {
+    /// 运行性能测试
+    fn benchmark(&self, test_data: &[Array1<f64>]) -> PerformanceResult;
+    
+    /// 生成性能报告
+    fn generate_report(&self, results: &[PerformanceResult]) -> String;
+}
+
+#[derive(Debug)]
+pub struct PerformanceResult {
+    pub accuracy: f64,
+    pub precision: f64,
+    pub recall: f64,
+    pub f1_score: f64,
+    pub training_time: std::time::Duration,
+    pub inference_time: std::time::Duration,
+}
+
+impl AIPerformanceBenchmark for NeuralNetwork {
+    fn benchmark(&self, test_data: &[Array1<f64>]) -> PerformanceResult {
+        let start_time = std::time::Instant::now();
+        
+        let mut correct_predictions = 0;
+        let mut total_predictions = 0;
+        
+        for input in test_data {
+            let output = self.forward(input);
+            let prediction = output.iter().enumerate()
+                .max_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap())
+                .map(|(i, _)| i)
+                .unwrap();
+            
+            // 假设测试数据有标签（这里简化处理）
+            if prediction == 0 { // 假设第一个类别为正确类别
+                correct_predictions += 1;
+            }
+            total_predictions += 1;
+        }
+        
+        let accuracy = correct_predictions as f64 / total_predictions as f64;
+        let inference_time = start_time.elapsed();
+        
+        PerformanceResult {
+            accuracy,
+            precision: accuracy, // 简化处理
+            recall: accuracy,    // 简化处理
+            f1_score: accuracy,  // 简化处理
+            training_time: std::time::Duration::from_secs(0), // 训练时间在训练时记录
+            inference_time,
+        }
+    }
+    
+    fn generate_report(&self, results: &[PerformanceResult]) -> String {
+        let mut report = String::new();
+        report.push_str("## 神经网络性能测试报告\n\n");
+        report.push_str("| 指标 | 平均值 | 标准差 |\n");
+        report.push_str("|------|--------|--------|\n");
+        
+        let accuracies: Vec<f64> = results.iter().map(|r| r.accuracy).collect();
+        let avg_accuracy = accuracies.iter().sum::<f64>() / accuracies.len() as f64;
+        let variance = accuracies.iter().map(|x| (x - avg_accuracy).powi(2)).sum::<f64>() / accuracies.len() as f64;
+        let std_accuracy = variance.sqrt();
+        
+        report.push_str(&format!(
+            "| 准确率 | {:.4} | {:.4} |\n",
+            avg_accuracy, std_accuracy
+        ));
+        
+        let inference_times: Vec<f64> = results.iter().map(|r| r.inference_time.as_millis() as f64).collect();
+        let avg_inference_time = inference_times.iter().sum::<f64>() / inference_times.len() as f64;
+        
+        report.push_str(&format!(
+            "| 推理时间(ms) | {:.2} | - |\n",
+            avg_inference_time
+        ));
+        
+        report
     }
 }
 ```

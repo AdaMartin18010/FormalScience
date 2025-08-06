@@ -1,64 +1,62 @@
-# 03 形式语言理论 (Formal Language Theory)
+# 03 形式语言理论
 
-## 模块概述 | Module Overview
+## 模块概述
 
-形式语言理论是计算机科学和数学的重要分支，研究形式语言的性质、分类和应用。本模块系统性地组织了从基础到前沿的核心理论，涵盖自动机理论、形式文法、语言层次结构、解析理论、语义学、计算理论，以及它们在编译器设计、自然语言处理等领域的应用。
+形式语言理论是计算机科学和数学的重要分支，研究形式语言的性质、分类和应用。它为编译器设计、自然语言处理、协议设计等领域提供了重要的理论基础。
 
-Formal Language Theory is a fundamental branch of computer science and mathematics, focusing on the properties, classification, and applications of formal languages. This module systematically organizes core theories from foundational to advanced topics, covering automata theory, formal grammars, language hierarchies, parsing theory, semantics, computation theory, and their applications in compiler design, natural language processing, and more.
+## 理论体系结构
 
-## 模块结构 | Module Structure
+### 03.1 自动机理论
 
-本模块根据理论主题进行划分，确保了内容的逻辑性和一致性。
+- **有限自动机**：有限状态自动机的基本概念和性质
+- **下推自动机**：下推自动机的理论和应用
+- **线性有界自动机**：线性有界自动机的理论
+- **图灵机**：图灵机的理论和计算能力
 
-```text
-03_Formal_Language_Theory/
-├── README.md                                # 本文件，模块总览
-├── 02.1_Formal_Language_Foundation.md      # 形式语言基础理论（理论基础主文档）
-├── 03.1_Automata_Theory/                    # 自动机理论
-│   ├── README.md
-│   ├── 03.1.1_Finite_Automata.md            # 有限自动机
-│   ├── 03.1.2_Pushdown_Automata.md          # 下推自动机
-│   ├── 03.1.3_Linear_Bouned_Automata.md     # 线性有界自动机
-│   └── 03.1.4_Turing_Machine.md             # 图灵机
-├── 03.2_Formal_Grammars/                    # 形式文法
-│   ├── README.md
-│   ├── 03.2.1_Chomsky_Hierarchy.md          # 乔姆斯基层次
-│   ├── 03.2.2_Grammar_Transformation.md     # 文法变换
-│   └── 03.2.3_Attribute_Grammar.md          # 属性文法
-├── 03.3_Language_Hierarchy/                 # 语言层次
-│   ├── README.md
-│   ├── 03.3.1_Regular_Languages.md          # 正则语言
-│   ├── 03.3.2_Context_Free_Languages.md     # 上下文无关语言
-│   ├── 03.3.3_Context_Sensitive_Languages.md # 上下文相关语言
-│   └── 03.3.4_Recursively_Enumerable_Languages.md # 递归可枚举语言
-├── 03.4_Parsing_Theory/                     # 解析理论
-│   ├── README.md
-│   ├── 03.4.1_LL_Parsing.md                 # LL解析
-│   ├── 03.4.2_LR_Parsing.md                 # LR解析
-│   ├── 03.4.3_Recursive_Descent_Parsing.md  # 递归下降解析
-│   └── 03.4.4_Bottom_Up_Parsing.md          # 自底向上解析
-├── 03.5_Semantics_Theory/                   # 语义理论
-│   ├── README.md
-│   ├── 03.5.1_Operational_Semantics.md      # 操作语义学
-│   ├── 03.5.2_Denotational_Semantics.md     # 指称语义学
-│   ├── 03.5.3_Axiomatic_Semantics.md        # 公理语义学
-│   └── 03.5.4_Algebraic_Semantics.md        # 代数语义学
-├── 03.6_Computation_Theory/                 # 计算理论
-│   ├── README.md
-│   ├── 03.6.1_Computability_Theory.md       # 可计算性理论
-│   ├── 03.6.2_Complexity_Theory.md          # 复杂性理论
-│   └── 03.6.3_Church_Turing_Thesis.md       # 丘奇-图灵论题
-├── 03.7_Language_Applications/              # 语言应用
-│   ├── README.md
-│   ├── 03.7.1_Compiler_Design.md            # 编译器设计
-│   ├── 03.7.2_Natural_Language_Processing.md # 自然语言处理
-│   ├── 03.7.3_Protocol_Design.md            # 协议设计
-│   └── 03.7.4_Formal_Verification.md        # 形式验证
-└── 03.8_Language_Frontiers/                 # 语言前沿
-    ├── README.md
-    ├── 03.8.1_Quantum_Languages.md          # 量子语言
-    └── 03.8.2_Biological_Languages.md       # 生物语言
-```
+### 03.2 形式文法
+
+- **乔姆斯基层次**：形式文法的分类体系
+- **文法变换**：文法之间的变换关系
+- **属性文法**：属性文法的理论和应用
+
+### 03.3 语言层次
+
+- **正则语言**：正则语言的性质和识别
+- **上下文无关语言**：上下文无关语言的理论
+- **上下文相关语言**：上下文相关语言的理论
+- **递归可枚举语言**：递归可枚举语言的理论
+
+### 03.4 解析理论
+
+- **LL解析**：LL解析器的理论和实现
+- **LR解析**：LR解析器的理论和实现
+- **递归下降解析**：递归下降解析的方法
+- **自底向上解析**：自底向上解析的方法
+
+### 03.5 语义理论
+
+- **操作语义学**：操作语义的基本理论
+- **指称语义学**：指称语义的基本理论
+- **公理语义学**：公理语义的基本理论
+- **代数语义学**：代数语义的基本理论
+
+### 03.6 计算理论
+
+- **可计算性理论**：可计算性的基本概念
+- **复杂性理论**：计算复杂性的理论
+- **丘奇-图灵论题**：丘奇-图灵论题的理论
+
+### 03.7 语言应用
+
+- **编译器设计**：形式语言在编译器设计中的应用
+- **自然语言处理**：形式语言在自然语言处理中的应用
+- **协议设计**：形式语言在协议设计中的应用
+- **形式验证**：形式语言在形式验证中的应用
+
+### 03.8 语言前沿
+
+- **量子语言**：量子计算中的语言理论
+- **生物语言**：生物学中的语言理论
 
 ## 理论基础 | Theoretical Foundations
 

@@ -15,9 +15,9 @@
   - [📋 概述](#-概述)
   - [📚 目录](#-目录)
   - [1. 基本概念](#1-基本概念)
-    - [1.1 命题的定义](#11-命题的定义)
-    - [1.2 原子命题](#12-原子命题)
-    - [1.3 复合命题](#13-复合命题)
+    - [1.1 命题逻辑的形式化定义](#11-命题逻辑的形式化定义)
+    - [1.2 命题逻辑的语义理论](#12-命题逻辑的语义理论)
+    - [1.3 命题逻辑的证明理论](#13-命题逻辑的证明理论)
   - [2. 命题语法](#2-命题语法)
     - [2.1 语法规则](#21-语法规则)
     - [2.2 语法树](#22-语法树)
@@ -54,35 +54,85 @@
 
 ## 1. 基本概念
 
-### 1.1 命题的定义
+### 1.1 命题逻辑的形式化定义
 
-**定义 1.1.1** (命题)
-命题是具有真假值的陈述句。
+**定义 1.1.1** (命题逻辑语言)
+命题逻辑语言是一个三元组 $\mathcal{L} = (\text{Atom}, \text{Conn}, \text{Form})$，其中：
 
-**形式化表示**:
-$$P \in \text{Prop}$$
+- $\text{Atom}$ 是原子命题集合（可数无限集）
+- $\text{Conn} = \{\neg, \land, \lor, \rightarrow, \leftrightarrow\}$ 是逻辑连接词集合
+- $\text{Form}$ 是公式集合，递归定义如下：
 
-其中Prop是命题集合。
+**递归定义**:
 
-### 1.2 原子命题
+1. **原子公式**: 如果 $p \in \text{Atom}$，则 $p \in \text{Form}$
+2. **否定公式**: 如果 $\phi \in \text{Form}$，则 $\neg\phi \in \text{Form}$
+3. **二元连接词**: 如果 $\phi, \psi \in \text{Form}$，则：
+   - $(\phi \land \psi) \in \text{Form}$ (合取)
+   - $(\phi \lor \psi) \in \text{Form}$ (析取)
+   - $(\phi \rightarrow \psi) \in \text{Form}$ (蕴含)
+   - $(\phi \leftrightarrow \psi) \in \text{Form}$ (等价)
 
-**定义 1.2.1** (原子命题)
-原子命题是不可再分解的基本命题。
+**定义 1.1.2** (命题)
+命题是命题逻辑语言中的公式。
 
-**形式化表示**:
-$$p, q, r \in \text{Atom}$$
+**定义 1.1.3** (原子命题)
+原子命题是命题逻辑语言中的原子公式。
 
-其中Atom是原子命题集合。
+**定义 1.1.4** (复合命题)
+复合命题是通过逻辑连接词构成的非原子公式。
 
-### 1.3 复合命题
+### 1.2 命题逻辑的语义理论
 
-**定义 1.3.1** (复合命题)
-复合命题是由原子命题通过逻辑连接词构成的命题。
+**定义 1.2.1** (真值赋值)
+真值赋值是一个函数 $v: \text{Atom} \rightarrow \{T, F\}$，其中 $T$ 表示真，$F$ 表示假。
 
-**形式化表示**:
-$$\phi, \psi, \chi \in \text{Form}$$
+**定义 1.2.2** (语义函数)
+语义函数 $\llbracket \cdot \rrbracket_v: \text{Form} \rightarrow \{T, F\}$ 递归定义如下：
 
-其中Form是公式集合。
+1. **原子公式**: $\llbracket p \rrbracket_v = v(p)$
+2. **否定**: $\llbracket \neg\phi \rrbracket_v = T$ 当且仅当 $\llbracket \phi \rrbracket_v = F$
+3. **合取**: $\llbracket \phi \land \psi \rrbracket_v = T$ 当且仅当 $\llbracket \phi \rrbracket_v = T$ 且 $\llbracket \psi \rrbracket_v = T$
+4. **析取**: $\llbracket \phi \lor \psi \rrbracket_v = T$ 当且仅当 $\llbracket \phi \rrbracket_v = T$ 或 $\llbracket \psi \rrbracket_v = T$
+5. **蕴含**: $\llbracket \phi \rightarrow \psi \rrbracket_v = T$ 当且仅当 $\llbracket \phi \rrbracket_v = F$ 或 $\llbracket \psi \rrbracket_v = T$
+6. **等价**: $\llbracket \phi \leftrightarrow \psi \rrbracket_v = T$ 当且仅当 $\llbracket \phi \rrbracket_v = \llbracket \psi \rrbracket_v$
+
+### 1.3 命题逻辑的证明理论
+
+**定义 1.3.1** (自然演绎系统)
+自然演绎系统包含以下推理规则：
+
+**引入规则**:
+
+- $\land$-I: $\frac{\phi \quad \psi}{\phi \land \psi}$
+- $\lor$-I: $\frac{\phi}{\phi \lor \psi}$ 或 $\frac{\psi}{\phi \lor \psi}$
+- $\rightarrow$-I: $\frac{[\phi] \quad \psi}{\phi \rightarrow \psi}$
+- $\leftrightarrow$-I: $\frac{\phi \rightarrow \psi \quad \psi \rightarrow \phi}{\phi \leftrightarrow \psi}$
+
+**消除规则**:
+
+- $\land$-E: $\frac{\phi \land \psi}{\phi}$ 或 $\frac{\phi \land \psi}{\psi}$
+- $\lor$-E: $\frac{\phi \lor \psi \quad [\phi] \quad \chi \quad [\psi] \quad \chi}{\chi}$
+- $\rightarrow$-E: $\frac{\phi \rightarrow \psi \quad \phi}{\psi}$
+- $\leftrightarrow$-E: $\frac{\phi \leftrightarrow \psi \quad \phi}{\psi}$ 或 $\frac{\phi \leftrightarrow \psi \quad \psi}{\phi}$
+
+**否定规则**:
+
+- $\neg$-I: $\frac{[\phi] \quad \bot}{\neg\phi}$
+- $\neg$-E: $\frac{\phi \quad \neg\phi}{\bot}$
+- $\bot$-E: $\frac{\bot}{\phi}$ (爆炸原理)
+
+**定义 1.3.2** (证明)
+从假设集合 $\Gamma$ 到结论 $\phi$ 的证明是一个有限的公式序列，其中每个公式要么是假设，要么是通过推理规则从前面的公式得出的。
+
+**定义 1.3.3** (可证性)
+$\Gamma \vdash \phi$ 表示存在从 $\Gamma$ 到 $\phi$ 的证明。
+
+**定理 1.3.1** (可靠性定理)
+如果 $\Gamma \vdash \phi$，则 $\Gamma \models \phi$。
+
+**定理 1.3.2** (完备性定理)
+如果 $\Gamma \models \phi$，则 $\Gamma \vdash \phi$。
 
 ## 2. 命题语法
 
