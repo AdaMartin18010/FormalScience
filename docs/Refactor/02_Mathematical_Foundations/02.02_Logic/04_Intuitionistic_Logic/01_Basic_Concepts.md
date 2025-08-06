@@ -10,7 +10,7 @@
 
 ## 📚 目录
 
-- [02.02.4.1 直觉逻辑基础概念](#02024-1-直觉逻辑基础概念)
+- [02.02.4.1 直觉逻辑基础概念](#020241-直觉逻辑基础概念)
   - [📋 概述](#-概述)
   - [📚 目录](#-目录)
   - [1. 构造性推理](#1-构造性推理)
@@ -46,11 +46,13 @@
 构造性证明是提供具体对象或算法的证明方法，而不仅仅是证明存在性。
 
 **构造性证明原则**:
+
 - 证明存在性时，必须提供具体的构造方法
 - 证明蕴含时，必须提供从前提构造结论的方法
 - 证明析取时，必须确定哪个析取项为真
 
 **示例**:
+
 - 经典证明：证明存在无理数 $a, b$ 使得 $a^b$ 是有理数
   - 考虑 $\sqrt{2}^{\sqrt{2}}$，如果它是有理数，则 $a = b = \sqrt{2}$
   - 如果它是无理数，则 $a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}$
@@ -62,10 +64,12 @@
 直觉逻辑中的存在性证明必须提供具体的构造方法。
 
 **构造性存在性原则**:
+
 - 证明 $\exists x \phi(x)$ 时，必须提供具体的 $t$ 使得 $\phi(t)$ 成立
 - 不能仅通过否定全称来证明存在性
 
 **示例**:
+
 - 经典证明：证明存在无限多个素数
   - 假设只有有限个素数 $p_1, \ldots, p_n$
   - 考虑 $N = p_1 \cdots p_n + 1$，它不能被任何 $p_i$ 整除
@@ -78,6 +82,7 @@
 排中律是经典逻辑的公理：$\phi \lor \neg\phi$
 
 **直觉逻辑中的排中律**:
+
 - 直觉逻辑不承认排中律作为普遍有效的原则
 - 只有在特定情况下（如有限域上的命题）才承认排中律
 
@@ -85,6 +90,7 @@
 在直觉逻辑中，$\phi \lor \neg\phi$ 有效当且仅当 $\phi$ 是可判定的。
 
 **证明**:
+
 - 如果 $\phi$ 可判定，则我们可以构造性地确定 $\phi$ 或 $\neg\phi$ 为真
 - 如果 $\phi \lor \neg\phi$ 有效，则我们必须能够构造性地确定 $\phi$ 的真值
 
@@ -96,6 +102,7 @@
 直觉否定 $\neg\phi$ 定义为 $\phi \rightarrow \bot$，其中 $\bot$ 是矛盾。
 
 **语义解释**:
+
 - $\neg\phi$ 为真当且仅当从 $\phi$ 可以推出矛盾
 - 这比经典否定更强，因为它要求构造性的矛盾证明
 
@@ -111,6 +118,7 @@ $\top$ 是直觉逻辑中的真符号，定义为 $\neg\bot$。
 在直觉逻辑中，$\phi \rightarrow \neg\neg\phi$ 是有效的。
 
 **证明**:
+
 - 假设 $\phi$ 为真
 - 要证明 $\neg\neg\phi$，即 $\neg\phi \rightarrow \bot$
 - 假设 $\neg\phi$ 为真，即 $\phi \rightarrow \bot$
@@ -121,17 +129,20 @@ $\top$ 是直觉逻辑中的真符号，定义为 $\neg\bot$。
 在直觉逻辑中，$\neg\neg\phi \rightarrow \phi$ 不是普遍有效的。
 
 **反例**:
+
 - 考虑 $\phi = \neg\neg P \rightarrow P$，其中 $P$ 是不可判定的命题
 - 在直觉逻辑中，这通常不是有效的
 
 ### 2.3 否定与经典否定的区别
 
 **经典否定性质**:
+
 1. $\neg\neg\phi \equiv \phi$ (双重否定消除)
 2. $\phi \lor \neg\phi$ (排中律)
 3. $\neg(\phi \land \psi) \equiv \neg\phi \lor \neg\psi$ (德摩根律)
 
 **直觉否定性质**:
+
 1. $\phi \rightarrow \neg\neg\phi$ (双重否定引入)
 2. $\neg\neg\phi \rightarrow \phi$ 不普遍有效
 3. $\phi \lor \neg\phi$ 不普遍有效
@@ -145,6 +156,7 @@ $\top$ 是直觉逻辑中的真符号，定义为 $\neg\bot$。
 直觉逻辑语言与经典命题逻辑语言相同，但语义解释不同。
 
 **直觉语言符号**:
+
 - 命题变量：$p, q, r, \ldots$
 - 逻辑连接词：$\neg, \land, \lor, \rightarrow$
 - 特殊符号：$\bot, \top$
@@ -177,6 +189,7 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 4. **否定**: $\neg\phi$ 为真当且仅当从 $\phi$ 可以推出矛盾
 
 **构造性要求**:
+
 - 析取必须确定哪个析取项为真
 - 存在性必须提供具体的构造
 - 蕴含必须提供从前提构造结论的方法
@@ -201,9 +214,11 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 直觉逻辑的Kripke模型就是Kripke框架，其中赋值函数满足单调性。
 
 **单调性条件**:
+
 - 如果 $w \leq v$ 且 $\mathcal{M}, w \models \phi$，则 $\mathcal{M}, v \models \phi$
 
 **符号约定**:
+
 - $\mathcal{M}, w \models \phi$ 表示公式 $\phi$ 在模型 $\mathcal{M}$ 的世界 $w$ 中为真
 
 ### 4.3 强制关系
@@ -229,12 +244,14 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 直觉逻辑的自然演绎系统包含以下规则：
 
 **引入规则**:
+
 1. **合取引入**: 从 $\phi$ 和 $\psi$ 推出 $\phi \land \psi$
 2. **析取引入**: 从 $\phi$ 推出 $\phi \lor \psi$ 或 $\psi \lor \phi$
 3. **蕴含引入**: 从假设 $\phi$ 和结论 $\psi$ 推出 $\phi \rightarrow \psi$
 4. **否定引入**: 从假设 $\phi$ 和矛盾推出 $\neg\phi$
 
 **消除规则**:
+
 1. **合取消除**: 从 $\phi \land \psi$ 推出 $\phi$ 或 $\psi$
 2. **析取消除**: 从 $\phi \lor \psi$、$\phi \rightarrow \chi$ 和 $\psi \rightarrow \chi$ 推出 $\chi$
 3. **蕴含消除**: 从 $\phi \rightarrow \psi$ 和 $\phi$ 推出 $\psi$
@@ -246,6 +263,7 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 直觉逻辑的公理系统包含：
 
 **命题逻辑公理**:
+
 1. $\phi \rightarrow (\psi \rightarrow \phi)$
 2. $(\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi))$
 3. $\phi \land \psi \rightarrow \phi$
@@ -256,6 +274,7 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 8. $(\phi \rightarrow \chi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\phi \lor \psi \rightarrow \chi))$
 
 **直觉特殊公理**:
+
 - 没有排中律 $\phi \lor \neg\phi$
 - 没有双重否定消除 $\neg\neg\phi \rightarrow \phi$
 
@@ -269,6 +288,7 @@ $\phi \leftrightarrow \psi$ 定义为 $(\phi \rightarrow \psi) \land (\psi \righ
 3. **蕴含构造**: 证明 $\phi \rightarrow \psi$ 时必须提供从 $\phi$ 构造 $\psi$ 的方法
 
 **构造性证明示例**:
+
 - 证明 $\exists x (x^2 = 2)$ 在有理数域中不成立
 - 构造性证明：假设存在有理数 $p/q$ 使得 $(p/q)^2 = 2$
 - 则 $p^2 = 2q^2$，这与 $p$ 和 $q$ 互质矛盾
@@ -445,4 +465,4 @@ isValid model formula = all (\world -> satisfies model (worldId world) formula) 
 **模块状态**：✅ 已完成  
 **最后更新**：2025年1月17日  
 **理论深度**：⭐⭐⭐⭐⭐ 五星级  
-**创新程度**：⭐⭐⭐⭐⭐ 五星级 
+**创新程度**：⭐⭐⭐⭐⭐ 五星级

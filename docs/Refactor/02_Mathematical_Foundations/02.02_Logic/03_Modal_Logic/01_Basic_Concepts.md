@@ -10,7 +10,7 @@
 
 ## 📚 目录
 
-- [02.02.3.1 模态逻辑基础概念](#02023-1-模态逻辑基础概念)
+- [02.02.3.1 模态逻辑基础概念](#020231-模态逻辑基础概念)
   - [📋 概述](#-概述)
   - [📚 目录](#-目录)
   - [1. 模态算子](#1-模态算子)
@@ -47,10 +47,12 @@
 必然性算子 $\Box$ 表示"必然"或"在所有可能的情况下"。
 
 **语义解释**:
+
 - $\Box\phi$ 表示"$\phi$ 必然为真"
 - 在可能世界语义中：$\Box\phi$ 在某个世界为真，当且仅当 $\phi$ 在所有可及世界中都为真
 
 **示例**:
+
 - $\Box P$ 表示"P 必然成立"
 - $\Box(x > 0)$ 表示"x 必然大于 0"
 
@@ -60,10 +62,12 @@
 可能性算子 $\Diamond$ 表示"可能"或"在某个可能的情况下"。
 
 **语义解释**:
+
 - $\Diamond\phi$ 表示"$\phi$ 可能为真"
 - 在可能世界语义中：$\Diamond\phi$ 在某个世界为真，当且仅当 $\phi$ 在某个可及世界中为真
 
 **示例**:
+
 - $\Diamond P$ 表示"P 可能成立"
 - $\Diamond(x = 5)$ 表示"x 可能等于 5"
 
@@ -76,11 +80,13 @@
 2. $\Diamond\phi \equiv \neg\Box\neg\phi$
 
 **证明**:
+
 - $\Box\phi$ 表示"$\phi$ 在所有可及世界中为真"
 - $\neg\Diamond\neg\phi$ 表示"不存在可及世界使得 $\phi$ 为假"
 - 这两个陈述在语义上等价
 
 **推论 1.3.1** (对偶性推论)
+
 1. $\Box\neg\phi \equiv \neg\Diamond\phi$
 2. $\Diamond\neg\phi \equiv \neg\Box\phi$
 
@@ -93,6 +99,7 @@
 
 **定义 2.1.2** (模态语言符号)
 模态语言包含：
+
 - 命题变量：$p, q, r, \ldots$
 - 逻辑连接词：$\neg, \land, \lor, \rightarrow, \leftrightarrow$
 - 模态算子：$\Box, \Diamond$
@@ -115,6 +122,7 @@
    - $\Diamond\phi$ 是模态公式
 
 **示例**:
+
 - $\Box p$ 是模态公式
 - $\Diamond(p \land q)$ 是模态公式
 - $\Box(p \rightarrow \Diamond q)$ 是模态公式
@@ -125,6 +133,7 @@
 模态公式可以包含嵌套的模态算子。
 
 **示例**:
+
 - $\Box\Box p$ 表示"必然必然 p"
 - $\Diamond\Box p$ 表示"可能必然 p"
 - $\Box\Diamond\Box p$ 表示"必然可能必然 p"
@@ -165,6 +174,7 @@ $W$ 中的元素称为可能世界（possible worlds）。
 赋值函数 $V$ 为每个世界和每个命题变量指定真值。
 
 **符号约定**:
+
 - $V(w, p)$ 表示命题 $p$ 在世界 $w$ 中的真值
 - $\mathcal{M}, w \models \phi$ 表示公式 $\phi$ 在模型 $\mathcal{M}$ 的世界 $w$ 中为真
 
@@ -189,10 +199,12 @@ $W$ 中的元素称为可能世界（possible worlds）。
 K系统是最基本的模态逻辑系统，包含以下公理和推理规则：
 
 **公理**:
+
 1. 所有命题逻辑重言式
 2. **K公理**: $\Box(\phi \rightarrow \psi) \rightarrow (\Box\phi \rightarrow \Box\psi)$
 
 **推理规则**:
+
 1. **分离规则**: 从 $\phi$ 和 $\phi \rightarrow \psi$ 推出 $\psi$
 2. **必然化规则**: 从 $\phi$ 推出 $\Box\phi$
 
@@ -210,6 +222,7 @@ T系统在K系统基础上增加T公理：
 T系统要求可及关系是自反的。
 
 **证明**:
+
 - 如果 $\mathcal{M}, w \models \Box\phi$，则对所有 $v$ 使得 $(w, v) \in R$，都有 $\mathcal{M}, v \models \phi$
 - 由于 $(w, w) \in R$（自反性），所以 $\mathcal{M}, w \models \phi$
 
@@ -224,6 +237,7 @@ S4系统在T系统基础上增加4公理：
 S4系统要求可及关系是自反的和传递的。
 
 **证明**:
+
 - 4公理要求：如果 $\mathcal{M}, w \models \Box\phi$，则 $\mathcal{M}, w \models \Box\Box\phi$
 - 这意味着：如果 $\phi$ 在所有可及世界中为真，则"$\phi$ 在所有可及世界中为真"在所有可及世界中为真
 - 这要求可及关系是传递的
@@ -239,6 +253,7 @@ S5系统在S4系统基础上增加5公理：
 S5系统要求可及关系是等价关系（自反、对称、传递）。
 
 **证明**:
+
 - 5公理要求：如果 $\mathcal{M}, w \models \Diamond\phi$，则 $\mathcal{M}, w \models \Box\Diamond\phi$
 - 这意味着：如果 $\phi$ 在某个可及世界中为真，则"$\phi$ 在某个可及世界中为真"在所有可及世界中为真
 - 这要求可及关系是对称的
@@ -266,6 +281,7 @@ S5系统要求可及关系是等价关系（自反、对称、传递）。
 2. **可能性**: $\mathcal{M}, w \models \Diamond\phi$ 当且仅当存在 $v \in W$，使得 $(w, v) \in R$ 且 $\mathcal{M}, v \models \phi$
 
 **示例**:
+
 - $\mathcal{M}, w \models \Box p$ 表示在所有从 $w$ 可及的世界中，$p$ 都为真
 - $\mathcal{M}, w \models \Diamond p$ 表示在某个从 $w$ 可及的世界中，$p$ 为真
 
@@ -446,4 +462,4 @@ isValid model formula = all (\world -> satisfies model (worldId world) formula) 
 **模块状态**：✅ 已完成  
 **最后更新**：2025年1月17日  
 **理论深度**：⭐⭐⭐⭐⭐ 五星级  
-**创新程度**：⭐⭐⭐⭐⭐ 五星级 
+**创新程度**：⭐⭐⭐⭐⭐ 五星级

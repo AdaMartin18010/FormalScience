@@ -111,9 +111,28 @@
 ## 子模块结构
 
 - **02.04.1_Function_Concepts/**：函数概念
+  - `01_Basic_Definitions.md`：函数基本定义
 - **02.04.2_Function_Properties/**：函数性质
+  - `01_Basic_Properties.md`：函数基本性质
 - **02.04.3_Function_Operations/**：函数运算
 - **02.04.4_Function_Classification/**：函数分类
+
+## 重构进度
+
+### ✅ 已完成模块
+
+- **函数概念**：基本定义已完成
+- **函数性质**：基本性质已完成
+
+### 🚧 进行中模块
+
+- 函数运算理论
+- 函数分类理论
+
+### 📋 计划模块
+
+- 函数变换理论
+- 函数逼近理论
 
 ---
 
