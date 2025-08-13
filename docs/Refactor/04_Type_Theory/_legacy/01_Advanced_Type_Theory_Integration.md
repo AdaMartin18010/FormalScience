@@ -72,7 +72,7 @@ $$\text{Simple} \subset \text{Parametric} \subset \text{Higher-Order} \subset \t
 - 类型类约束：$\tau : \text{Class}$
 - 相等性假设：$\tau_1 \equiv \tau_2$
 
-**定义 2.2.2 (类型判断形式)**
+**定义 2.2.2 (类型判断形式)**:
 
 - 类型检查：$\Gamma \vdash e : \tau$
 - 类型推断：$\Gamma \vdash e \Rightarrow \tau$
@@ -115,7 +115,7 @@ theorem universal_type_preservation {α : Type} {τ : Type} {e : ∀ α, τ} {τ
 存在类型 $\exists \alpha.\tau$ 的语义：
 $$\llbracket \exists \alpha.\tau \rrbracket = \bigcup_{A \in \text{Type}} \llbracket \tau[\alpha \mapsto A] \rrbracket$$
 
-**算法 3.1.1 (存在类型消除)**
+**算法 3.1.1 (存在类型消除)**:
 
 ```haskell
 eliminateExistential :: Type -> Type -> Type -> Type
@@ -137,7 +137,7 @@ eliminateExistential (Exists alpha tau) bodyType context =
 - 类型保持性：如果 $\tau : \text{Type}$，则 $F \tau : \text{Type}$
 - 函数性：$F(\tau_1 \rightarrow \tau_2) = F\tau_1 \rightarrow F\tau_2$
 
-**定义 3.2.2 (函子类型类)**
+**定义 3.2.2 (函子类型类)**:
 
 ```haskell
 class Functor (f :: Type -> Type) where
@@ -217,7 +217,7 @@ $$\frac{\Gamma \vdash f : \Pi x : A.B(x) \quad \Gamma \vdash a : A}{\Gamma \vdas
 Σ类型 $\Sigma x : A.B(x)$ 表示依赖对类型：
 $$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma, x : A \vdash B(x) : \text{Type}}{\Gamma \vdash \Sigma x : A.B(x) : \text{Type}}$$
 
-**算法 3.3.1 (依赖类型检查)**
+**算法 3.3.1 (依赖类型检查)**:
 
 ```haskell
 checkDependentType :: Context -> Expr -> Type -> Bool
@@ -245,7 +245,7 @@ $$\sigma ::= \tau \mid \forall \alpha.\sigma$$
 **定义 4.1.2 (类型模式实例化)**
 $$\frac{\Gamma \vdash e : \forall \alpha.\sigma}{\Gamma \vdash e : \sigma[\alpha \mapsto \tau]}$$
 
-**算法 4.1.1 (改进的类型推断)**
+**算法 4.1.1 (改进的类型推断)**:
 
 ```haskell
 inferType :: Context -> Expr -> Either TypeError Type
@@ -279,7 +279,7 @@ inferType ctx (App fun arg) = do
 类型约束 $C$ 的语法：
 $$C ::= \tau_1 \equiv \tau_2 \mid C_1 \land C_2 \mid \exists \alpha.C$$
 
-**算法 4.2.1 (约束生成)**
+**算法 4.2.1 (约束生成)**:
 
 ```haskell
 generateConstraints :: Context -> Expr -> (Type, [Constraint])
@@ -296,7 +296,7 @@ generateConstraints ctx (App e1 e2) =
   in (freshType, c1 ++ c2 ++ [newConstraint])
 ```
 
-**算法 4.2.2 (约束求解)**
+**算法 4.2.2 (约束求解)**:
 
 ```haskell
 solveConstraints :: [Constraint] -> Either TypeError Substitution
@@ -374,7 +374,7 @@ class Eq a where
   x /= y = not (x == y)
 ```
 
-**定义 6.1.2 (类型类实例)**
+**定义 6.1.2 (类型类实例)**:
 
 ```haskell
 instance Eq Int where
@@ -386,7 +386,7 @@ instance Eq a => Eq [a] where
   _ == _ = False
 ```
 
-**算法 6.1.1 (类型类解析)**
+**算法 6.1.1 (类型类解析)**:
 
 ```haskell
 resolveTypeClass :: Context -> Type -> Class -> Either TypeError [Constraint]
@@ -405,7 +405,7 @@ resolveTypeClass ctx tau cls =
 高阶多态性允许类型变量本身具有类型：
 $$\frac{\Gamma, \alpha : \text{Type} \vdash e : \tau}{\Gamma \vdash \Lambda \alpha : \text{Type}.e : \Pi \alpha : \text{Type}.\tau}$$
 
-**定义 6.2.2 (类型级编程)**
+**定义 6.2.2 (类型级编程)**:
 
 ```haskell
 -- 类型级自然数
@@ -456,7 +456,7 @@ data Vec (n :: Nat) (a :: Type) where
 
 ### 8.1 类型检查器实现
 
-**算法 8.1.1 (完整类型检查器)**
+**算法 8.1.1 (完整类型检查器)**:
 
 ```haskell
 data TypeChecker = TypeChecker {
@@ -490,13 +490,13 @@ checkDeclaration checker (ValueDecl name expr) =
 
 ### 8.2 类型安全编程实践
 
-**原则 8.2.1 (类型安全设计)**
+**原则 8.2.1 (类型安全设计)**:
 
 1. **最小特权原则**：类型应该精确表达程序意图
 2. **抽象原则**：通过类型抽象隐藏实现细节
 3. **组合原则**：类型应该支持安全组合
 
-**示例 8.2.1 (类型安全API设计)**
+**示例 8.2.1 (类型安全API设计)**:
 
 ```haskell
 -- 类型安全的文件操作
@@ -971,7 +971,6 @@ testTypeInference = do
 **更新时间**: 2024年12月21日  
 **版本**: v1.0  
 **状态**: 完成
-
 
 ## 批判性分析
 
