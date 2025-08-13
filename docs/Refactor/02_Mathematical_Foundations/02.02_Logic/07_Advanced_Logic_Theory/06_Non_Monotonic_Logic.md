@@ -35,6 +35,7 @@
 $$\frac{\alpha : \beta_1, \ldots, \beta_n}{\gamma}$$
 
 其中：
+
 - $\alpha$ 是前提 (prerequisite)
 - $\beta_1, \ldots, \beta_n$ 是正当化条件 (justifications)
 - $\gamma$ 是结论 (conclusion)
@@ -43,6 +44,7 @@ $$\frac{\alpha : \beta_1, \ldots, \beta_n}{\gamma}$$
 
 **定义 6.4** (默认理论)
 默认理论是一个二元组 $\Delta = (D, W)$，其中：
+
 - $D$ 是默认规则集合
 - $W$ 是一阶逻辑公式集合
 
@@ -53,6 +55,7 @@ $$\frac{\alpha : \beta_1, \ldots, \beta_n}{\gamma}$$
 $$E = \bigcup_{i=0}^{\infty} E_i$$
 
 其中：
+
 - $E_0 = W$
 - $E_{i+1} = \text{Th}(E_i) \cup \{\gamma \mid \frac{\alpha : \beta_1, \ldots, \beta_n}{\gamma} \in D, \alpha \in E_i, \neg\beta_1, \ldots, \neg\beta_n \notin E\}$
 
@@ -105,6 +108,7 @@ $$E = \bigcup_{i=0}^{\infty} E_i$$
 自动认识逻辑通过模态算子 $L$ 表示"已知"：
 
 **公理**:
+
 - $L\phi \rightarrow \phi$ (真理性)
 - $L\phi \rightarrow LL\phi$ (正内省)
 - $\neg L\phi \rightarrow L\neg L\phi$ (负内省)
@@ -350,7 +354,7 @@ kb.update_knowledge("cannot_fly(tweety)")
 print(f"After update - Tweety can fly: {kb.query('can_fly(tweety)')}")
 ```
 
-### 异常处理
+### 异常处理1
 
 #### 异常继承系统
 
@@ -875,4 +879,4 @@ main = do
 
 非单调逻辑的语义理论基于扩展、异常处理和优先语义，提供了严格的数学基础。通过代码实现，我们可以实际应用非单调逻辑来解决各种常识推理和知识表示问题，特别是在人工智能、知识工程和常识推理等领域。
 
-非单调逻辑是经典逻辑的重要扩展，为人工智能和知识表示的发展提供了重要的理论基础，为智能系统的推理能力提供了强有力的支持。 
+非单调逻辑是经典逻辑的重要扩展，为人工智能和知识表示的发展提供了重要的理论基础，为智能系统的推理能力提供了强有力的支持。
