@@ -6,6 +6,8 @@
 
 ## 目录结构
 
+- 术语表：见 [TERMINOLOGY_TABLE.md](./TERMINOLOGY_TABLE.md)
+
 ```text
 04_Type_Theory/
 ├── README.md                           # 模块总览
