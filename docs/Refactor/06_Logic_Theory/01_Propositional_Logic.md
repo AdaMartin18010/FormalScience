@@ -19,6 +19,7 @@ $$\mathcal{P} = \{p_1, p_2, p_3, \ldots\}$$
 
 **定义 1.3** (逻辑连接词)
 命题逻辑包含以下逻辑连接词：
+
 1. **否定** ($\neg$): 非
 2. **合取** ($\land$): 且
 3. **析取** ($\lor$): 或
@@ -29,6 +30,7 @@ $$\mathcal{P} = \{p_1, p_2, p_3, \ldots\}$$
 
 **定义 1.4** (合式公式)
 合式公式按以下规则递归定义：
+
 1. **基础**: 每个命题变量 $p \in \mathcal{P}$ 是合式公式
 2. **否定**: 如果 $\phi$ 是合式公式，则 $\neg \phi$ 是合式公式
 3. **二元连接词**: 如果 $\phi$ 和 $\psi$ 是合式公式，则 $(\phi \land \psi)$、$(\phi \lor \psi)$、$(\phi \rightarrow \psi)$、$(\phi \leftrightarrow \psi)$ 是合式公式
@@ -46,6 +48,7 @@ $$v: \mathcal{P} \rightarrow \{T, F\}$$
 
 **定义 1.7** (真值函数)
 真值函数 $\overline{v}: \mathcal{L} \rightarrow \{T, F\}$ 递归定义如下：
+
 1. $\overline{v}(p) = v(p)$ 对于 $p \in \mathcal{P}$
 2. $\overline{v}(\neg \phi) = T$ 当且仅当 $\overline{v}(\phi) = F$
 3. $\overline{v}(\phi \land \psi) = T$ 当且仅当 $\overline{v}(\phi) = T$ 且 $\overline{v}(\psi) = T$
@@ -132,18 +135,21 @@ $$\models (\phi \rightarrow \psi) \land (\psi \rightarrow \chi) \rightarrow (\ph
 自然演绎系统包含以下推理规则：
 
 **引入规则**:
+
 - $\land$-I: $\frac{\phi \quad \psi}{\phi \land \psi}$
 - $\lor$-I: $\frac{\phi}{\phi \lor \psi}$ 或 $\frac{\psi}{\phi \lor \psi}$
 - $\rightarrow$-I: $\frac{[\phi] \quad \psi}{\phi \rightarrow \psi}$
 - $\leftrightarrow$-I: $\frac{\phi \rightarrow \psi \quad \psi \rightarrow \phi}{\phi \leftrightarrow \psi}$
 
 **消去规则**:
+
 - $\land$-E: $\frac{\phi \land \psi}{\phi}$ 或 $\frac{\phi \land \psi}{\psi}$
 - $\lor$-E: $\frac{\phi \lor \psi \quad [\phi] \quad \chi \quad [\psi] \quad \chi}{\chi}$
 - $\rightarrow$-E: $\frac{\phi \rightarrow \psi \quad \phi}{\psi}$
 - $\leftrightarrow$-E: $\frac{\phi \leftrightarrow \psi \quad \phi}{\psi}$ 或 $\frac{\phi \leftrightarrow \psi \quad \psi}{\phi}$
 
 **否定规则**:
+
 - $\neg$-I: $\frac{[\phi] \quad \bot}{\neg \phi}$
 - $\neg$-E: $\frac{\phi \quad \neg \phi}{\bot}$
 - $\bot$-E: $\frac{\bot}{\phi}$
@@ -179,6 +185,7 @@ $$\overline{v}(\phi) = T$$
 $$\Gamma \models \phi \text{ 当且仅当 } \Gamma \vdash \phi$$
 
 **证明**:
+
 1. **可靠性**: 如果 $\Gamma \vdash \phi$，则 $\Gamma \models \phi$
 2. **完备性**: 如果 $\Gamma \models \phi$，则 $\Gamma \vdash \phi$
 
@@ -412,7 +419,7 @@ end
 
 **更新时间**: 2024-12-21  
 **版本**: 1.0  
-**作者**: FormalScience Team 
+**作者**: FormalScience Team
 
 ## 批判性分析
 
