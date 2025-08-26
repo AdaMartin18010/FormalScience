@@ -27,16 +27,19 @@
 ├── 04.2_Linear_Type_Theory.md
 ├── 04.3_Affine_Type_Theory.md
 ├── 04.4_Dependent_Type_Theory.md
+│   ├── 04.4.1_Dependent_Function_and_Pair_Types.md
+│   └── 04.4.2_Identity_Type.md
 ├── 04.5_Homotopy_Type_Theory.md
-├── 04.6_Quantum_Type_Theory.md
-├── 04.7_Temporal_Type_Theory.md
+├── 04.5_Curry_Howard_Correspondence/05.5_Curry_Howard_Correspondence.md
 ├── 04.8_Type_Theory_Applications.md
 └── 04.9_Type_Theory_Frontiers.md
 ```
 
-- 简单类型链路：`λ演算 → STLC → HM → System F`
-- 资源敏感链路：`线性 → 仿射 → 所有权/借用 → 资源管控`
-- 证明—程序同构链路：`依赖类型 → 构造演算 → HoTT → 证明助手`
+- 快速链接：
+  - 依类型核心：`04.4_Dependent_Type_Theory.md`｜`04.4.1_Dependent_Function_and_Pair_Types.md`｜`04.4.2_Identity_Type.md`
+  - 线性/仿射：`04.2_Linear_Type_Theory.md`｜`04.3_Affine_Type_Theory.md`｜`04.2.1_Linear_Logic.md`
+  - HoTT/CH：`04.5_Homotopy_Type_Theory.md`｜`04.5_Curry_Howard_Correspondence/05.5_Curry_Howard_Correspondence.md`
+  - 应用：`04.8_Type_Theory_Applications.md`
 
 ## 📑 学习路径
 
