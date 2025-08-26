@@ -10,6 +10,7 @@
 
 **定义 3.1** (模态算子)
 模态逻辑在经典逻辑基础上增加两个模态算子：
+
 - $\Box$ (必然算子): "必然地"
 - $\Diamond$ (可能算子): "可能地"
 
@@ -21,6 +22,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 
 **定义 3.3** (模态逻辑语法)
 模态逻辑公式按以下规则递归定义：
+
 1. 命题变量 $p, q, r, \ldots$ 是公式
 2. 如果 $\phi$ 是公式，则 $\neg \phi$, $\Box \phi$, $\Diamond \phi$ 是公式
 3. 如果 $\phi, \psi$ 是公式，则 $(\phi \land \psi)$, $(\phi \lor \psi)$, $(\phi \rightarrow \psi)$, $(\phi \leftrightarrow \psi)$ 是公式
@@ -29,12 +31,14 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 
 **定义 3.4** (克里普克模型)
 克里普克模型 $\mathcal{M} = (W, R, V)$ 包含：
+
 1. **可能世界集** $W$ (非空集合)
 2. **可达关系** $R \subseteq W \times W$
 3. **赋值函数** $V: \text{Prop} \to 2^W$
 
 **定义 3.5** (真值定义)
 公式 $\phi$ 在模型 $\mathcal{M}$ 的世界 $w$ 中为真，记作 $\mathcal{M}, w \models \phi$，定义为：
+
 1. $\mathcal{M}, w \models p$ 当且仅当 $w \in V(p)$
 2. $\mathcal{M}, w \models \neg \phi$ 当且仅当 $\mathcal{M}, w \not\models \phi$
 3. $\mathcal{M}, w \models \phi \land \psi$ 当且仅当 $\mathcal{M}, w \models \phi$ 且 $\mathcal{M}, w \models \psi$
@@ -51,10 +55,12 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 系统 K 的公理和推理规则：
 
 **公理**:
+
 1. 所有命题逻辑重言式
 2. K公理: $\Box(\phi \rightarrow \psi) \rightarrow (\Box \phi \rightarrow \Box \psi)$
 
 **推理规则**:
+
 1. 分离规则 (MP): $\frac{\phi \quad \phi \rightarrow \psi}{\psi}$
 2. 必然化规则 (N): $\frac{\phi}{\Box \phi}$
 
@@ -75,6 +81,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 ### 3.3.3 对应理论
 
 **定理 3.1** (模态公理与可达关系性质对应)
+
 - T公理 $\Box \phi \rightarrow \phi$ 对应自反性: $\forall w \in W, wRw$
 - 4公理 $\Box \phi \rightarrow \Box \Box \phi$ 对应传递性: $\forall w, v, u \in W, (wRv \land vRu) \rightarrow wRu$
 - 5公理 $\Diamond \phi \rightarrow \Box \Diamond \phi$ 对应欧几里得性: $\forall w, v, u \in W, (wRv \land wRu) \rightarrow vRu$
@@ -86,11 +93,13 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 
 **定义 3.11** (多智能体模态逻辑)
 多智能体模态逻辑为每个智能体 $i$ 引入模态算子：
+
 - $\Box_i$: "智能体 $i$ 知道"
 - $\Diamond_i$: "智能体 $i$ 认为可能"
 
 **定义 3.12** (多智能体克里普克模型)
 多智能体克里普克模型 $\mathcal{M} = (W, \{R_i\}_{i \in \mathcal{A}}, V)$ 包含：
+
 1. 可能世界集 $W$
 2. 每个智能体 $i$ 的可达关系 $R_i \subseteq W \times W$
 3. 赋值函数 $V$
@@ -109,12 +118,14 @@ $$C_G \phi \equiv \bigwedge_{i \in G} \Box_i C_G \phi$$
 
 **定义 3.14** (LTL语法)
 LTL公式按以下规则定义：
+
 1. 命题变量是公式
 2. 如果 $\phi, \psi$ 是公式，则 $\neg \phi$, $\phi \land \psi$, $\phi \lor \psi$, $\phi \rightarrow \psi$ 是公式
 3. 如果 $\phi, \psi$ 是公式，则 $X \phi$ (下一个), $F \phi$ (将来), $G \phi$ (总是), $\phi U \psi$ (直到) 是公式
 
 **定义 3.15** (LTL语义)
 LTL公式在无限序列 $\sigma = s_0 s_1 s_2 \ldots$ 上的真值定义为：
+
 1. $\sigma \models p$ 当且仅当 $p \in s_0$
 2. $\sigma \models X \phi$ 当且仅当 $\sigma^1 \models \phi$
 3. $\sigma \models F \phi$ 当且仅当存在 $i \geq 0$，$\sigma^i \models \phi$
@@ -125,6 +136,7 @@ LTL公式在无限序列 $\sigma = s_0 s_1 s_2 \ldots$ 上的真值定义为：
 
 **定义 3.16** (CTL语法)
 CTL公式按以下规则定义：
+
 1. 命题变量是公式
 2. 如果 $\phi, \psi$ 是公式，则 $\neg \phi$, $\phi \land \psi$, $\phi \lor \psi$, $\phi \rightarrow \psi$ 是公式
 3. 如果 $\phi, \psi$ 是公式，则 $AX \phi$, $EX \phi$, $AF \phi$, $EF \phi$, $AG \phi$, $EG \phi$, $A[\phi U \psi]$, $E[\phi U \psi]$ 是公式
@@ -362,7 +374,7 @@ def common_knowledge {α agents : Type*} (M : multi_agent_modal_logic α agents)
 
 **更新时间**: 2024-12-21  
 **版本**: 1.0  
-**作者**: FormalScience Team 
+**作者**: FormalScience Team
 
 ## 批判性分析
 
