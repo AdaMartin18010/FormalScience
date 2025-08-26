@@ -15,8 +15,8 @@
 - **06.3 [模态逻辑 (Modal Logic)](./03.3_Modal_Logic/)**
 - **06.4 [时态逻辑 (Temporal Logic)](./03.4_Temporal_Logic/)**
 - **06.5 [直觉主义逻辑 (Intuitionistic Logic)](./03.5_Intuitionistic_Logic/)**
-- 占位符: *非经典逻辑 (Non-classical Logic)*
-- 占位符: *高阶逻辑 (Higher-order Logic)*
+- **06.6 [非经典逻辑 (Non-classical Logic)](./03.6_Non_classical_Logic/)**
+- **06.7 [高阶逻辑 (Higher-order Logic)](./03.7_Higher_order_Logic/)**
 
 ---
 

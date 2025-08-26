@@ -190,7 +190,7 @@ impl TransactionManager {
             timestamp: Instant::now(),
             transaction_id,
             operation: Operation {
-                operation_type: OperationType::Read, // 占位符
+                operation_type: OperationType::Begin,
                 resource: String::new(),
                 data: None,
                 timestamp: Instant::now(),
