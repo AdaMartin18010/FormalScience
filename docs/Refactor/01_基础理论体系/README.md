@@ -1,658 +1,1005 @@
-# 04 类型理论 (Type Theory)
+# 16. 算法理论 (Algorithm Theory)
 
-## 模块概述
+## 📋 模块概述
 
-类型理论是研究类型系统和类型安全的数学分支，为编程语言和形式化证明提供理论基础。本模块涵盖从简单类型理论到同伦类型论的完整理论体系，包括类型构造、类型检查、类型推导和类型安全等核心内容。
+算法理论是计算机科学的核心基础，研究算法的设计、分析、优化和复杂度。本模块涵盖算法设计方法、复杂度理论、数据结构、并行算法等核心概念，为高效计算和问题求解提供理论基础。
 
-## 目录结构
-
-- 术语表：见 [TERMINOLOGY_TABLE.md](./TERMINOLOGY_TABLE.md)
+## 🏗️ 目录结构
 
 ```text
-04_Type_Theory/
+16_Algorithm_Theory/
 ├── README.md                           # 模块总览
-├── 04.1_Simple_Type_Theory/            # 简单类型理论
-├── 04.2_Dependent_Type_Theory/         # 依赖类型理论
-├── 04.3_Linear_Type_Theory/            # 线性类型理论
-├── 04.4_Homotopy_Type_Theory/          # 同伦类型论
-├── 04.5_Curry_Howard_Correspondence/   # Curry-Howard对应
-├── 04.6_Type_Systems/                  # 类型系统
-├── 04.7_Type_Safety/                   # 类型安全
-└── Resources/                          # 资源目录
-    ├── Examples/                       # 示例代码
-    ├── Exercises/                      # 练习题
-    └── References/                     # 参考文献
+├── 01_Algorithm_Foundation_Theory.md   # 算法基础理论
+├── 16.1_Fundamentals/                  # 基础理论
+│   ├── 16.1.1_Algorithm_Design.md     # 算法设计
+│   ├── 16.1.2_Complexity_Analysis.md  # 复杂度分析
+│   └── 16.1.3_Data_Structures.md     # 数据结构
+├── 16.2_Complexity_Theory/             # 复杂度理论
+│   ├── 16.2.1_Time_Complexity.md      # 时间复杂度
+│   ├── 16.2.2_Space_Complexity.md     # 空间复杂度
+│   └── 16.2.3_Asymptotic_Analysis.md  # 渐进分析
+├── 16.3_Optimization_Theory/           # 优化理论
+│   ├── 16.3.1_Algorithm_Optimization.md # 算法优化
+│   ├── 16.3.2_Parallel_Algorithms.md   # 并行算法
+│   └── 16.3.3_Distributed_Algorithms.md # 分布式算法
+├── 16.4_Design_Patterns/               # 设计模式
+├── 16.5_Advanced_Algorithms/           # 高级算法
+└── 16.6_Algorithm_Analysis/            # 算法分析
 ```
 
-## 理论基础
+## 🔬 核心理论
 
-### 核心概念
+### 16.1 算法设计理论
 
-**定义 04.1 (类型)** 类型是值的集合，具有共同的性质和操作。
+**定义 16.1.1** (算法)
+算法是解决特定问题的有限步骤序列，表示为 $A = (I, O, P)$，其中：
 
-**定义 04.2 (类型环境)** 类型环境 $\Gamma$ 是一个从变量到类型的映射：
-$$\Gamma = \{x_1 : \tau_1, x_2 : \tau_2, \ldots, x_n : \tau_n\}$$
+- $I$ 是输入集合
+- $O$ 是输出集合  
+- $P$ 是处理步骤
 
-**定义 04.3 (类型判断)** 类型判断 $\Gamma \vdash e : \tau$ 表示在环境 $\Gamma$ 中，表达式 $e$ 具有类型 $\tau$。
+**定义 16.1.2** (算法正确性)
+算法 $A$ 对于问题 $P$ 是正确的，当且仅当：
+$\forall x \in I, A(x) \in O \land P(x, A(x))$
 
-### 基本类型构造
+**定理 16.1.1** (算法终止性)
+确定性算法在有限时间内终止。
 
-**函数类型**：
-$$\frac{\Gamma, x : \tau_1 \vdash e : \tau_2}{\Gamma \vdash \lambda x : \tau_1. e : \tau_1 \rightarrow \tau_2}$$
+### 16.2 复杂度理论
 
-**应用类型**：
-$$\frac{\Gamma \vdash e_1 : \tau_1 \rightarrow \tau_2 \quad \Gamma \vdash e_2 : \tau_1}{\Gamma \vdash e_1 e_2 : \tau_2}$$
+**定义 16.2.1** (时间复杂度)
+算法 $A$ 的时间复杂度函数 $T_A: \mathbb{N} \rightarrow \mathbb{N}$ 定义为：
+$T_A(n) = \max\{t_A(x) \mid |x| = n\}$
 
-**积类型**：
-$$\frac{\Gamma \vdash e_1 : \tau_1 \quad \Gamma \vdash e_2 : \tau_2}{\Gamma \vdash (e_1, e_2) : \tau_1 \times \tau_2}$$
+**定义 16.2.2** (空间复杂度)
+算法 $A$ 的空间复杂度函数 $S_A: \mathbb{N} \rightarrow \mathbb{N}$ 定义为：
+$S_A(n) = \max\{s_A(x) \mid |x| = n\}$
 
-**和类型**：
-$$\frac{\Gamma \vdash e : \tau_1}{\Gamma \vdash \text{inl}(e) : \tau_1 + \tau_2} \quad \frac{\Gamma \vdash e : \tau_2}{\Gamma \vdash \text{inr}(e) : \tau_1 + \tau_2}$$
+**定理 16.2.1** (复杂度关系)
+对于任意算法 $A$，$T_A(n) \geq S_A(n)$
 
-## 形式化实现
+### 16.3 算法设计模式
 
-### 基础数据结构
+**定义 16.3.1** (分治法)
+分治法将问题分解为子问题：$T(n) = aT(n/b) + f(n)$
+
+**定义 16.3.2** (动态规划)
+动态规划通过子问题重叠求解：$T(n) = \sum_{i=1}^k T(n_i) + O(1)$
+
+**定义 16.3.3** (贪心算法)
+贪心算法在每一步选择局部最优解。
+
+## 💻 Rust实现
+
+### 算法设计模式实现
 
 ```rust
-use std::collections::HashMap;
+use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::fmt;
 
-// 类型的基本表示
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Type {
-    // 基本类型
-    Bool,
-    Int,
-    Float,
-    String,
-    Unit,
-    // 类型变量
-    Var(String),
-    // 函数类型
-    Arrow(Box<Type>, Box<Type>),
-    // 积类型
-    Product(Box<Type>, Box<Type>),
-    // 和类型
-    Sum(Box<Type>, Box<Type>),
-    // 列表类型
-    List(Box<Type>),
-    // 可选类型
-    Option(Box<Type>),
-    // 依赖类型
-    Pi(String, Box<Type>, Box<Type>), // Π(x:A).B
-    Sigma(String, Box<Type>, Box<Type>), // Σ(x:A).B
-    // 线性类型
-    Linear(Box<Type>),
-    Affine(Box<Type>),
-    // 同伦类型
-    Path(Box<Type>, Box<Type>, Box<Type>), // Path A a b
-    Circle,
-    Sphere,
+/// 算法特征
+pub trait Algorithm<I, O> {
+    fn solve(&self, input: I) -> O;
+    fn time_complexity(&self, n: usize) -> f64;
+    fn space_complexity(&self, n: usize) -> f64;
 }
 
-impl Type {
-    // 创建基本类型
-    pub fn bool() -> Self { Type::Bool }
-    pub fn int() -> Self { Type::Int }
-    pub fn float() -> Self { Type::Float }
-    pub fn string() -> Self { Type::String }
-    pub fn unit() -> Self { Type::Unit }
+/// 分治法实现
+pub struct DivideAndConquer;
 
-    // 创建函数类型
-    pub fn arrow(domain: Type, codomain: Type) -> Self {
-        Type::Arrow(Box::new(domain), Box::new(codomain))
-    }
-
-    // 创建积类型
-    pub fn product(t1: Type, t2: Type) -> Self {
-        Type::Product(Box::new(t1), Box::new(t2))
-    }
-
-    // 创建和类型
-    pub fn sum(t1: Type, t2: Type) -> Self {
-        Type::Sum(Box::new(t1), Box::new(t2))
-    }
-
-    // 创建列表类型
-    pub fn list(element_type: Type) -> Self {
-        Type::List(Box::new(element_type))
-    }
-
-    // 创建可选类型
-    pub fn option(element_type: Type) -> Self {
-        Type::Option(Box::new(element_type))
-    }
-
-    // 创建依赖函数类型
-    pub fn pi(param: &str, domain: Type, codomain: Type) -> Self {
-        Type::Pi(param.to_string(), Box::new(domain), Box::new(codomain))
-    }
-
-    // 创建依赖积类型
-    pub fn sigma(param: &str, domain: Type, codomain: Type) -> Self {
-        Type::Sigma(param.to_string(), Box::new(domain), Box::new(codomain))
-    }
-
-    // 创建线性类型
-    pub fn linear(inner_type: Type) -> Self {
-        Type::Linear(Box::new(inner_type))
-    }
-
-    // 创建仿射类型
-    pub fn affine(inner_type: Type) -> Self {
-        Type::Affine(Box::new(inner_type))
-    }
-
-    // 创建路径类型
-    pub fn path(space: Type, start: Type, end: Type) -> Self {
-        Type::Path(Box::new(space), Box::new(start), Box::new(end))
-    }
-
-    // 获取自由类型变量
-    pub fn free_vars(&self) -> Vec<String> {
-        match self {
-            Type::Var(name) => vec![name.clone()],
-            Type::Arrow(t1, t2) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars
-            },
-            Type::Product(t1, t2) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars
-            },
-            Type::Sum(t1, t2) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars
-            },
-            Type::List(t) => t.free_vars(),
-            Type::Option(t) => t.free_vars(),
-            Type::Pi(_, t1, t2) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars
-            },
-            Type::Sigma(_, t1, t2) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars
-            },
-            Type::Linear(t) | Type::Affine(t) => t.free_vars(),
-            Type::Path(t1, t2, t3) => {
-                let mut vars = t1.free_vars();
-                vars.extend(t2.free_vars());
-                vars.extend(t3.free_vars());
-                vars
-            },
-            _ => vec![],
+impl DivideAndConquer {
+    /// 归并排序
+    pub fn merge_sort<T: Ord + Clone>(arr: &[T]) -> Vec<T> {
+        if arr.len() <= 1 {
+            return arr.to_vec();
         }
+        
+        let mid = arr.len() / 2;
+        let left = Self::merge_sort(&arr[..mid]);
+        let right = Self::merge_sort(&arr[mid..]);
+        
+        Self::merge(left, right)
     }
-
-    // 类型替换
-    pub fn substitute(&self, var: &str, replacement: &Type) -> Type {
-        match self {
-            Type::Var(name) => {
-                if name == var {
-                    replacement.clone()
-                } else {
-                    self.clone()
+    
+    fn merge<T: Ord + Clone>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
+        let mut result = Vec::new();
+        let mut left_iter = left.into_iter();
+        let mut right_iter = right.into_iter();
+        let mut left_peek = left_iter.next();
+        let mut right_peek = right_iter.next();
+        
+        while let (Some(l), Some(r)) = (&left_peek, &right_peek) {
+            match l.cmp(r) {
+                Ordering::Less | Ordering::Equal => {
+                    result.push(left_peek.take().unwrap());
+                    left_peek = left_iter.next();
                 }
-            },
-            Type::Arrow(t1, t2) => Type::arrow(
-                t1.substitute(var, replacement),
-                t2.substitute(var, replacement)
-            ),
-            Type::Product(t1, t2) => Type::product(
-                t1.substitute(var, replacement),
-                t2.substitute(var, replacement)
-            ),
-            Type::Sum(t1, t2) => Type::sum(
-                t1.substitute(var, replacement),
-                t2.substitute(var, replacement)
-            ),
-            Type::List(t) => Type::list(t.substitute(var, replacement)),
-            Type::Option(t) => Type::option(t.substitute(var, replacement)),
-            Type::Pi(param, t1, t2) => {
-                if param == var {
-                    self.clone()
-                } else {
-                    Type::pi(param, t1.substitute(var, replacement), t2.substitute(var, replacement))
+                Ordering::Greater => {
+                    result.push(right_peek.take().unwrap());
+                    right_peek = right_iter.next();
                 }
-            },
-            Type::Sigma(param, t1, t2) => {
-                if param == var {
-                    self.clone()
-                } else {
-                    Type::sigma(param, t1.substitute(var, replacement), t2.substitute(var, replacement))
-                }
-            },
-            Type::Linear(t) => Type::linear(t.substitute(var, replacement)),
-            Type::Affine(t) => Type::affine(t.substitute(var, replacement)),
-            Type::Path(t1, t2, t3) => Type::path(
-                t1.substitute(var, replacement),
-                t2.substitute(var, replacement),
-                t3.substitute(var, replacement)
-            ),
-            _ => self.clone(),
+            }
         }
+        
+        // 添加剩余元素
+        if let Some(l) = left_peek {
+            result.push(l);
+        }
+        if let Some(r) = right_peek {
+            result.push(r);
+        }
+        
+        result.extend(left_iter);
+        result.extend(right_iter);
+        result
+    }
+    
+    /// 快速排序
+    pub fn quick_sort<T: Ord + Clone>(arr: &[T]) -> Vec<T> {
+        if arr.len() <= 1 {
+            return arr.to_vec();
+        }
+        
+        let pivot = &arr[0];
+        let (less, equal, greater): (Vec<_>, Vec<_>, Vec<_>) = arr.iter()
+            .partition(|&x| x < pivot);
+        
+        let mut result = Self::quick_sort(&less);
+        result.extend(equal);
+        result.extend(Self::quick_sort(&greater));
+        result
     }
 }
 
-// 显示实现
-impl fmt::Display for Type {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Type::Bool => write!(f, "bool"),
-            Type::Int => write!(f, "int"),
-            Type::Float => write!(f, "float"),
-            Type::String => write!(f, "string"),
-            Type::Unit => write!(f, "unit"),
-            Type::Var(name) => write!(f, "{}", name),
-            Type::Arrow(t1, t2) => write!(f, "({} → {})", t1, t2),
-            Type::Product(t1, t2) => write!(f, "({} × {})", t1, t2),
-            Type::Sum(t1, t2) => write!(f, "({} + {})", t1, t2),
-            Type::List(t) => write!(f, "[{}]", t),
-            Type::Option(t) => write!(f, "Option<{}>", t),
-            Type::Pi(param, t1, t2) => write!(f, "Π({}: {}). {}", param, t1, t2),
-            Type::Sigma(param, t1, t2) => write!(f, "Σ({}: {}). {}", param, t1, t2),
-            Type::Linear(t) => write!(f, "!{}", t),
-            Type::Affine(t) => write!(f, "@{}", t),
-            Type::Path(space, start, end) => write!(f, "Path({}, {}, {})", space, start, end),
-            Type::Circle => write!(f, "S¹"),
-            Type::Sphere => write!(f, "S²"),
+/// 动态规划实现
+pub struct DynamicProgramming;
+
+impl DynamicProgramming {
+    /// 斐波那契数列
+    pub fn fibonacci(n: usize) -> u64 {
+        if n <= 1 {
+            return n as u64;
         }
+        
+        let mut dp = vec![0; n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        
+        for i in 2..=n {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        
+        dp[n]
+    }
+    
+    /// 最长公共子序列
+    pub fn longest_common_subsequence(s1: &str, s2: &str) -> String {
+        let chars1: Vec<char> = s1.chars().collect();
+        let chars2: Vec<char> = s2.chars().collect();
+        let m = chars1.len();
+        let n = chars2.len();
+        
+        let mut dp = vec![vec![0; n + 1]; m + 1];
+        
+        // 填充DP表
+        for i in 1..=m {
+            for j in 1..=n {
+                if chars1[i-1] == chars2[j-1] {
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                } else {
+                    dp[i][j] = dp[i-1][j].max(dp[i][j-1]);
+                }
+            }
+        }
+        
+        // 回溯构造结果
+        let mut result = String::new();
+        let mut i = m;
+        let mut j = n;
+        
+        while i > 0 && j > 0 {
+            if chars1[i-1] == chars2[j-1] {
+                result.insert(0, chars1[i-1]);
+                i -= 1;
+                j -= 1;
+            } else if dp[i-1][j] > dp[i][j-1] {
+                i -= 1;
+            } else {
+                j -= 1;
+            }
+        }
+        
+        result
+    }
+    
+    /// 0-1背包问题
+    pub fn knapsack_01(weights: &[usize], values: &[usize], capacity: usize) -> usize {
+        let n = weights.len();
+        let mut dp = vec![vec![0; capacity + 1]; n + 1];
+        
+        for i in 1..=n {
+            for w in 0..=capacity {
+                if weights[i-1] <= w {
+                    dp[i][w] = dp[i-1][w].max(dp[i-1][w - weights[i-1]] + values[i-1]);
+                } else {
+                    dp[i][w] = dp[i-1][w];
+                }
+            }
+        }
+        
+        dp[n][capacity]
+    }
+}
+
+/// 贪心算法实现
+pub struct GreedyAlgorithm;
+
+impl GreedyAlgorithm {
+    /// 活动选择问题
+    pub fn activity_selection(activities: &[(usize, usize)]) -> Vec<usize> {
+        let mut sorted_activities: Vec<(usize, usize, usize)> = activities
+            .iter()
+            .enumerate()
+            .map(|(i, &(start, end))| (start, end, i))
+            .collect();
+        
+        sorted_activities.sort_by_key(|&(_, end, _)| end);
+        
+        let mut selected = Vec::new();
+        let mut last_end = 0;
+        
+        for (start, end, index) in sorted_activities {
+            if start >= last_end {
+                selected.push(index);
+                last_end = end;
+            }
+        }
+        
+        selected
+    }
+    
+    /// 霍夫曼编码
+    pub fn huffman_encoding(frequencies: &[usize]) -> HashMap<char, String> {
+        #[derive(PartialEq, Eq)]
+        struct HuffmanNode {
+            frequency: usize,
+            character: Option<char>,
+            left: Option<Box<HuffmanNode>>,
+            right: Option<Box<HuffmanNode>>,
+        }
+        
+        impl PartialOrd for HuffmanNode {
+            fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+                Some(self.frequency.cmp(&other.frequency).reverse())
+            }
+        }
+        
+        impl Ord for HuffmanNode {
+            fn cmp(&self, other: &Self) -> Ordering {
+                self.frequency.cmp(&other.frequency).reverse()
+            }
+        }
+        
+        // 构建霍夫曼树
+        let mut heap = BinaryHeap::new();
+        for (i, &freq) in frequencies.iter().enumerate() {
+            if freq > 0 {
+                heap.push(HuffmanNode {
+                    frequency: freq,
+                    character: Some((b'a' + i as u8) as char),
+                    left: None,
+                    right: None,
+                });
+            }
+        }
+        
+        while heap.len() > 1 {
+            let left = heap.pop().unwrap();
+            let right = heap.pop().unwrap();
+            
+            heap.push(HuffmanNode {
+                frequency: left.frequency + right.frequency,
+                character: None,
+                left: Some(Box::new(left)),
+                right: Some(Box::new(right)),
+            });
+        }
+        
+        // 生成编码
+        let mut codes = HashMap::new();
+        fn generate_codes(node: &HuffmanNode, code: String, codes: &mut HashMap<char, String>) {
+            if let Some(ch) = node.character {
+                codes.insert(ch, code);
+            } else {
+                if let Some(ref left) = node.left {
+                    generate_codes(left, code.clone() + "0", codes);
+                }
+                if let Some(ref right) = node.right {
+                    generate_codes(right, code + "1", codes);
+                }
+            }
+        }
+        
+        if let Some(root) = heap.pop() {
+            generate_codes(&root, String::new(), &mut codes);
+        }
+        
+        codes
+    }
+}
+
+/// 回溯算法实现
+pub struct Backtracking;
+
+impl Backtracking {
+    /// N皇后问题
+    pub fn n_queens(n: usize) -> Vec<Vec<String>> {
+        let mut solutions = Vec::new();
+        let mut board = vec![vec![false; n]; n];
+        
+        fn is_safe(board: &[Vec<bool>], row: usize, col: usize) -> bool {
+            let n = board.len();
+            
+            // 检查行
+            for j in 0..n {
+                if board[row][j] {
+                    return false;
+                }
+            }
+            
+            // 检查列
+            for i in 0..n {
+                if board[i][col] {
+                    return false;
+                }
+            }
+            
+            // 检查对角线
+            for i in 0..n {
+                for j in 0..n {
+                    if board[i][j] && (i + j == row + col || i as i32 - j as i32 == row as i32 - col as i32) {
+                        return false;
+                    }
+                }
+            }
+            
+            true
+        }
+        
+        fn solve_n_queens(board: &mut Vec<Vec<bool>>, row: usize, solutions: &mut Vec<Vec<String>>) {
+            let n = board.len();
+            
+            if row >= n {
+                // 找到解
+                let mut solution = Vec::new();
+                for i in 0..n {
+                    let mut row_str = String::new();
+                    for j in 0..n {
+                        if board[i][j] {
+                            row_str.push('Q');
+                        } else {
+                            row_str.push('.');
+                        }
+                    }
+                    solution.push(row_str);
+                }
+                solutions.push(solution);
+                return;
+            }
+            
+            for col in 0..n {
+                if is_safe(board, row, col) {
+                    board[row][col] = true;
+                    solve_n_queens(board, row + 1, solutions);
+                    board[row][col] = false;
+                }
+            }
+        }
+        
+        solve_n_queens(&mut board, 0, &mut solutions);
+        solutions
+    }
+    
+    /// 子集和问题
+    pub fn subset_sum(nums: &[i32], target: i32) -> Vec<Vec<i32>> {
+        let mut solutions = Vec::new();
+        let mut current = Vec::new();
+        
+        fn backtrack(nums: &[i32], target: i32, start: usize, current: &mut Vec<i32>, solutions: &mut Vec<Vec<i32>>) {
+            let sum: i32 = current.iter().sum();
+            
+            if sum == target {
+                solutions.push(current.clone());
+                return;
+            }
+            
+            if sum > target {
+                return;
+            }
+            
+            for i in start..nums.len() {
+                current.push(nums[i]);
+                backtrack(nums, target, i + 1, current, solutions);
+                current.pop();
+            }
+        }
+        
+        backtrack(nums, target, 0, &mut current, &mut solutions);
+        solutions
     }
 }
 ```
 
-### 表达式和类型检查
+### 复杂度分析实现
 
 ```rust
-// 表达式
-#[derive(Debug, Clone)]
-pub enum Expression {
-    // 基本表达式
-    Bool(bool),
-    Int(i64),
-    Float(f64),
-    String(String),
-    Unit,
-    Variable(String),
-    
-    // 函数相关
-    Lambda(String, Box<Expression>),
-    Application(Box<Expression>, Box<Expression>),
-    
-    // 积类型相关
-    Pair(Box<Expression>, Box<Expression>),
-    First(Box<Expression>),
-    Second(Box<Expression>),
-    
-    // 和类型相关
-    InLeft(Box<Expression>),
-    InRight(Box<Expression>),
-    Case(Box<Expression>, String, Box<Expression>, String, Box<Expression>),
-    
-    // 列表相关
-    Nil,
-    Cons(Box<Expression>, Box<Expression>),
-    Head(Box<Expression>),
-    Tail(Box<Expression>),
-    
-    // 依赖类型相关
-    DependentLambda(String, Box<Expression>),
-    DependentApplication(Box<Expression>, Box<Expression>),
-    DependentPair(Box<Expression>, Box<Expression>),
-    DependentFirst(Box<Expression>),
-    DependentSecond(Box<Expression>),
-    
-    // 线性类型相关
-    LinearLet(String, Box<Expression>, Box<Expression>),
-    LinearUse(Box<Expression>),
+use std::time::{Duration, Instant};
+
+/// 复杂度分析器
+#[derive(Debug)]
+pub struct ComplexityAnalyzer {
+    pub measurements: Vec<(usize, Duration)>,
 }
 
-impl Expression {
-    // 创建基本表达式
-    pub fn bool(value: bool) -> Self { Expression::Bool(value) }
-    pub fn int(value: i64) -> Self { Expression::Int(value) }
-    pub fn float(value: f64) -> Self { Expression::Float(value) }
-    pub fn string(value: String) -> Self { Expression::String(value) }
-    pub fn unit() -> Self { Expression::Unit }
-    pub fn variable(name: String) -> Self { Expression::Variable(name) }
-
-    // 创建函数
-    pub fn lambda(param: &str, body: Expression) -> Self {
-        Expression::Lambda(param.to_string(), Box::new(body))
-    }
-
-    // 创建应用
-    pub fn application(func: Expression, arg: Expression) -> Self {
-        Expression::Application(Box::new(func), Box::new(arg))
-    }
-
-    // 创建积
-    pub fn pair(first: Expression, second: Expression) -> Self {
-        Expression::Pair(Box::new(first), Box::new(second))
-    }
-
-    // 创建和类型
-    pub fn in_left(expr: Expression) -> Self {
-        Expression::InLeft(Box::new(expr))
-    }
-
-    pub fn in_right(expr: Expression) -> Self {
-        Expression::InRight(Box::new(expr))
-    }
-
-    // 创建线性绑定
-    pub fn linear_let(var: &str, value: Expression, body: Expression) -> Self {
-        Expression::LinearLet(var.to_string(), Box::new(value), Box::new(body))
-    }
-}
-
-// 类型环境
-#[derive(Debug, Clone)]
-pub struct TypeEnvironment {
-    pub bindings: HashMap<String, Type>,
-    pub linear_bindings: HashMap<String, bool>, // 标记线性变量
-}
-
-impl TypeEnvironment {
+impl ComplexityAnalyzer {
     pub fn new() -> Self {
-        TypeEnvironment {
-            bindings: HashMap::new(),
-            linear_bindings: HashMap::new(),
+        ComplexityAnalyzer {
+            measurements: Vec::new(),
         }
     }
-
-    pub fn extend(&self, var: &str, ty: Type) -> Self {
-        let mut new_env = self.clone();
-        new_env.bindings.insert(var.to_string(), ty);
-        new_env
+    
+    /// 测量算法性能
+    pub fn measure<F, T>(&mut self, input_size: usize, algorithm: F) -> Duration 
+    where F: FnOnce() -> T {
+        let start = Instant::now();
+        algorithm();
+        let duration = start.elapsed();
+        
+        self.measurements.push((input_size, duration));
+        duration
     }
-
-    pub fn extend_linear(&self, var: &str, ty: Type) -> Self {
-        let mut new_env = self.extend(var, ty);
-        new_env.linear_bindings.insert(var.to_string(), true);
-        new_env
+    
+    /// 分析时间复杂度
+    pub fn analyze_time_complexity(&self) -> TimeComplexity {
+        if self.measurements.len() < 2 {
+            return TimeComplexity::Unknown;
+        }
+        
+        let mut ratios = Vec::new();
+        for i in 1..self.measurements.len() {
+            let (n1, t1) = self.measurements[i-1];
+            let (n2, t2) = self.measurements[i];
+            
+            let ratio = (t2.as_nanos() as f64) / (t1.as_nanos() as f64);
+            let size_ratio = (n2 as f64) / (n1 as f64);
+            let complexity_ratio = ratio / size_ratio;
+            
+            ratios.push(complexity_ratio);
+        }
+        
+        let avg_ratio = ratios.iter().sum::<f64>() / ratios.len() as f64;
+        
+        if avg_ratio < 1.5 {
+            TimeComplexity::O1
+        } else if avg_ratio < 2.5 {
+            TimeComplexity::OLogN
+        } else if avg_ratio < 4.0 {
+            TimeComplexity::ON
+        } else if avg_ratio < 8.0 {
+            TimeComplexity::ONLogN
+        } else if avg_ratio < 16.0 {
+            TimeComplexity::ON2
+        } else {
+            TimeComplexity::OExponential
+        }
     }
-
-    pub fn lookup(&self, var: &str) -> Option<&Type> {
-        self.bindings.get(var)
-    }
-
-    pub fn is_linear(&self, var: &str) -> bool {
-        self.linear_bindings.get(var).unwrap_or(&false)
+    
+    /// 估算大O复杂度
+    pub fn estimate_big_o(&self) -> String {
+        match self.analyze_time_complexity() {
+            TimeComplexity::O1 => "O(1)".to_string(),
+            TimeComplexity::OLogN => "O(log n)".to_string(),
+            TimeComplexity::ON => "O(n)".to_string(),
+            TimeComplexity::ONLogN => "O(n log n)".to_string(),
+            TimeComplexity::ON2 => "O(n²)".to_string(),
+            TimeComplexity::OExponential => "O(2ⁿ)".to_string(),
+            TimeComplexity::Unknown => "Unknown".to_string(),
+        }
     }
 }
 
-// 类型检查器
-pub struct TypeChecker;
+#[derive(Debug)]
+pub enum TimeComplexity {
+    O1,
+    OLogN,
+    ON,
+    ONLogN,
+    ON2,
+    OExponential,
+    Unknown,
+}
 
-impl TypeChecker {
-    // 类型检查主函数
-    pub fn type_check(env: &TypeEnvironment, expr: &Expression) -> Result<Type, String> {
-        match expr {
-            Expression::Bool(_) => Ok(Type::bool()),
-            Expression::Int(_) => Ok(Type::int()),
-            Expression::Float(_) => Ok(Type::float()),
-            Expression::String(_) => Ok(Type::string()),
-            Expression::Unit => Ok(Type::unit()),
+/// 算法基准测试
+#[derive(Debug)]
+pub struct AlgorithmBenchmark {
+    pub analyzer: ComplexityAnalyzer,
+}
+
+impl AlgorithmBenchmark {
+    pub fn new() -> Self {
+        AlgorithmBenchmark {
+            analyzer: ComplexityAnalyzer::new(),
+        }
+    }
+    
+    /// 基准测试排序算法
+    pub fn benchmark_sorting_algorithms(&mut self, max_size: usize) -> HashMap<String, String> {
+        let mut results = HashMap::new();
+        
+        // 测试不同大小的输入
+        for size in [100, 1000, 10000] {
+            if size > max_size {
+                break;
+            }
             
-            Expression::Variable(name) => {
-                env.lookup(name)
-                    .ok_or_else(|| format!("Undefined variable: {}", name))
-                    .cloned()
-            },
+            let mut data: Vec<i32> = (0..size).collect();
+            data.reverse(); // 最坏情况
             
-            Expression::Lambda(param, body) => {
-                // 对于简单类型，我们假设参数类型为通用类型
-                let param_type = Type::Var(format!("T_{}", param));
-                let new_env = env.extend(param, param_type.clone());
-                let body_type = Self::type_check(&new_env, body)?;
-                Ok(Type::arrow(param_type, body_type))
-            },
+            // 测试归并排序
+            self.analyzer.measure(size, || {
+                let _ = DivideAndConquer::merge_sort(&data);
+            });
+        }
+        results.insert("Merge Sort".to_string(), self.analyzer.estimate_big_o());
+        
+        // 重置分析器
+        self.analyzer = ComplexityAnalyzer::new();
+        
+        // 测试快速排序
+        for size in [100, 1000, 10000] {
+            if size > max_size {
+                break;
+            }
             
-            Expression::Application(func, arg) => {
-                let func_type = Self::type_check(env, func)?;
-                let arg_type = Self::type_check(env, arg)?;
-                
-                match func_type {
-                    Type::Arrow(domain, codomain) => {
-                        if *domain == arg_type {
-                            Ok(*codomain)
-                        } else {
-                            Err(format!("Type mismatch: expected {}, got {}", domain, arg_type))
+            let mut data: Vec<i32> = (0..size).collect();
+            data.reverse();
+            
+            self.analyzer.measure(size, || {
+                let _ = DivideAndConquer::quick_sort(&data);
+            });
+        }
+        results.insert("Quick Sort".to_string(), self.analyzer.estimate_big_o());
+        
+        results
+    }
+    
+    /// 基准测试搜索算法
+    pub fn benchmark_search_algorithms(&mut self, max_size: usize) -> HashMap<String, String> {
+        let mut results = HashMap::new();
+        
+        for size in [100, 1000, 10000] {
+            if size > max_size {
+                break;
+            }
+            
+            let data: Vec<i32> = (0..size).collect();
+            let target = size as i32 - 1; // 查找最后一个元素
+            
+            self.analyzer.measure(size, || {
+                let _ = data.binary_search(&target);
+            });
+        }
+        results.insert("Binary Search".to_string(), self.analyzer.estimate_big_o());
+        
+        results
+    }
+}
+```
+
+### 数据结构实现
+
+```rust
+use std::collections::{HashMap, HashSet};
+use std::fmt;
+
+/// 二叉树节点
+#[derive(Debug)]
+pub struct TreeNode<T> {
+    pub value: T,
+    pub left: Option<Box<TreeNode<T>>>,
+    pub right: Option<Box<TreeNode<T>>>,
+}
+
+impl<T> TreeNode<T> {
+    pub fn new(value: T) -> Self {
+        TreeNode {
+            value,
+            left: None,
+            right: None,
+        }
+    }
+}
+
+/// 二叉搜索树
+#[derive(Debug)]
+pub struct BinarySearchTree<T: Ord> {
+    pub root: Option<Box<TreeNode<T>>>,
+}
+
+impl<T: Ord> BinarySearchTree<T> {
+    pub fn new() -> Self {
+        BinarySearchTree { root: None }
+    }
+    
+    /// 插入节点
+    pub fn insert(&mut self, value: T) {
+        self.root = Some(self.insert_recursive(self.root.take(), value));
+    }
+    
+    fn insert_recursive(&self, node: Option<Box<TreeNode<T>>>, value: T) -> Box<TreeNode<T>> {
+        match node {
+            None => Box::new(TreeNode::new(value)),
+            Some(mut node) => {
+                if value < node.value {
+                    node.left = Some(self.insert_recursive(node.left.take(), value));
+                } else if value > node.value {
+                    node.right = Some(self.insert_recursive(node.right.take(), value));
+                }
+                node
+            }
+        }
+    }
+    
+    /// 查找节点
+    pub fn search(&self, value: &T) -> Option<&T> {
+        self.search_recursive(self.root.as_ref(), value)
+    }
+    
+    fn search_recursive<'a>(&'a self, node: Option<&'a Box<TreeNode<T>>>, value: &T) -> Option<&'a T> {
+        match node {
+            None => None,
+            Some(node) => {
+                if value < &node.value {
+                    self.search_recursive(node.left.as_ref(), value)
+                } else if value > &node.value {
+                    self.search_recursive(node.right.as_ref(), value)
+                } else {
+                    Some(&node.value)
+                }
+            }
+        }
+    }
+    
+    /// 中序遍历
+    pub fn inorder_traversal(&self) -> Vec<&T> {
+        let mut result = Vec::new();
+        self.inorder_recursive(self.root.as_ref(), &mut result);
+        result
+    }
+    
+    fn inorder_recursive<'a>(&'a self, node: Option<&'a Box<TreeNode<T>>>, result: &mut Vec<&'a T>) {
+        if let Some(node) = node {
+            self.inorder_recursive(node.left.as_ref(), result);
+            result.push(&node.value);
+            self.inorder_recursive(node.right.as_ref(), result);
+        }
+    }
+}
+
+/// 图数据结构
+#[derive(Debug)]
+pub struct Graph {
+    pub adjacency_list: HashMap<usize, Vec<usize>>,
+    pub directed: bool,
+}
+
+impl Graph {
+    pub fn new(directed: bool) -> Self {
+        Graph {
+            adjacency_list: HashMap::new(),
+            directed,
+        }
+    }
+    
+    /// 添加边
+    pub fn add_edge(&mut self, from: usize, to: usize) {
+        self.adjacency_list.entry(from).or_insert_with(Vec::new).push(to);
+        
+        if !self.directed {
+            self.adjacency_list.entry(to).or_insert_with(Vec::new).push(from);
+        }
+    }
+    
+    /// 深度优先搜索
+    pub fn dfs(&self, start: usize) -> Vec<usize> {
+        let mut visited = HashSet::new();
+        let mut result = Vec::new();
+        self.dfs_recursive(start, &mut visited, &mut result);
+        result
+    }
+    
+    fn dfs_recursive(&self, node: usize, visited: &mut HashSet<usize>, result: &mut Vec<usize>) {
+        if visited.contains(&node) {
+            return;
+        }
+        
+        visited.insert(node);
+        result.push(node);
+        
+        if let Some(neighbors) = self.adjacency_list.get(&node) {
+            for &neighbor in neighbors {
+                self.dfs_recursive(neighbor, visited, result);
+            }
+        }
+    }
+    
+    /// 广度优先搜索
+    pub fn bfs(&self, start: usize) -> Vec<usize> {
+        let mut visited = HashSet::new();
+        let mut result = Vec::new();
+        let mut queue = std::collections::VecDeque::new();
+        
+        queue.push_back(start);
+        visited.insert(start);
+        
+        while let Some(node) = queue.pop_front() {
+            result.push(node);
+            
+            if let Some(neighbors) = self.adjacency_list.get(&node) {
+                for &neighbor in neighbors {
+                    if !visited.contains(&neighbor) {
+                        visited.insert(neighbor);
+                        queue.push_back(neighbor);
+                    }
+                }
+            }
+        }
+        
+        result
+    }
+    
+    /// 拓扑排序
+    pub fn topological_sort(&self) -> Result<Vec<usize>, String> {
+        if !self.directed {
+            return Err("Topological sort requires directed graph".to_string());
+        }
+        
+        let mut in_degree = HashMap::new();
+        let mut result = Vec::new();
+        let mut queue = std::collections::VecDeque::new();
+        
+        // 计算入度
+        for (node, neighbors) in &self.adjacency_list {
+            in_degree.entry(*node).or_insert(0);
+            for &neighbor in neighbors {
+                *in_degree.entry(neighbor).or_insert(0) += 1;
+            }
+        }
+        
+        // 找到入度为0的节点
+        for (node, &degree) in &in_degree {
+            if degree == 0 {
+                queue.push_back(*node);
+            }
+        }
+        
+        // 拓扑排序
+        while let Some(node) = queue.pop_front() {
+            result.push(node);
+            
+            if let Some(neighbors) = self.adjacency_list.get(&node) {
+                for &neighbor in neighbors {
+                    if let Some(degree) = in_degree.get_mut(&neighbor) {
+                        *degree -= 1;
+                        if *degree == 0 {
+                            queue.push_back(neighbor);
                         }
-                    },
-                    _ => Err(format!("Expected function type, got {}", func_type)),
+                    }
                 }
-            },
-            
-            Expression::Pair(first, second) => {
-                let first_type = Self::type_check(env, first)?;
-                let second_type = Self::type_check(env, second)?;
-                Ok(Type::product(first_type, second_type))
-            },
-            
-            Expression::First(pair) => {
-                let pair_type = Self::type_check(env, pair)?;
-                match pair_type {
-                    Type::Product(first, _) => Ok(*first),
-                    _ => Err(format!("Expected product type, got {}", pair_type)),
-                }
-            },
-            
-            Expression::Second(pair) => {
-                let pair_type = Self::type_check(env, pair)?;
-                match pair_type {
-                    Type::Product(_, second) => Ok(*second),
-                    _ => Err(format!("Expected product type, got {}", pair_type)),
-                }
-            },
-            
-            Expression::InLeft(expr) => {
-                let expr_type = Self::type_check(env, expr)?;
-                // 假设右类型为通用类型
-                let right_type = Type::Var("T_right".to_string());
-                Ok(Type::sum(expr_type, right_type))
-            },
-            
-            Expression::InRight(expr) => {
-                let expr_type = Self::type_check(env, expr)?;
-                // 假设左类型为通用类型
-                let left_type = Type::Var("T_left".to_string());
-                Ok(Type::sum(left_type, expr_type))
-            },
-            
-            Expression::LinearLet(var, value, body) => {
-                let value_type = Self::type_check(env, value)?;
-                let new_env = env.extend_linear(var, value_type);
-                Self::type_check(&new_env, body)
-            },
-            
-            _ => Err("Unsupported expression type".to_string()),
+            }
         }
+        
+        if result.len() == in_degree.len() {
+            Ok(result)
+        } else {
+            Err("Graph contains cycle".to_string())
+        }
+    }
+}
+
+/// 并查集
+#[derive(Debug)]
+pub struct UnionFind {
+    pub parent: Vec<usize>,
+    pub rank: Vec<usize>,
+}
+
+impl UnionFind {
+    pub fn new(size: usize) -> Self {
+        UnionFind {
+            parent: (0..size).collect(),
+            rank: vec![0; size],
+        }
+    }
+    
+    /// 查找根节点
+    pub fn find(&mut self, x: usize) -> usize {
+        if self.parent[x] != x {
+            self.parent[x] = self.find(self.parent[x]);
+        }
+        self.parent[x]
+    }
+    
+    /// 合并两个集合
+    pub fn union(&mut self, x: usize, y: usize) {
+        let root_x = self.find(x);
+        let root_y = self.find(y);
+        
+        if root_x != root_y {
+            if self.rank[root_x] < self.rank[root_y] {
+                self.parent[root_x] = root_y;
+            } else if self.rank[root_x] > self.rank[root_y] {
+                self.parent[root_y] = root_x;
+            } else {
+                self.parent[root_y] = root_x;
+                self.rank[root_x] += 1;
+            }
+        }
+    }
+    
+    /// 检查两个元素是否在同一集合
+    pub fn connected(&mut self, x: usize, y: usize) -> bool {
+        self.find(x) == self.find(y)
     }
 }
 ```
 
-### 类型推导
+## 📊 应用示例
+
+### 示例1：排序算法比较
 
 ```rust
-// 类型推导器
-pub struct TypeInferrer;
-
-impl TypeInferrer {
-    // 生成新的类型变量
-    pub fn fresh_type_var() -> Type {
-        static mut COUNTER: u64 = 0;
-        unsafe {
-            COUNTER += 1;
-            Type::Var(format!("α{}", COUNTER))
-        }
-    }
-
-    // 类型推导主函数
-    pub fn infer_type(env: &TypeEnvironment, expr: &Expression) -> Result<Type, String> {
-        match expr {
-            Expression::Bool(_) => Ok(Type::bool()),
-            Expression::Int(_) => Ok(Type::int()),
-            Expression::Float(_) => Ok(Type::float()),
-            Expression::String(_) => Ok(Type::string()),
-            Expression::Unit => Ok(Type::unit()),
-            
-            Expression::Variable(name) => {
-                env.lookup(name)
-                    .ok_or_else(|| format!("Undefined variable: {}", name))
-                    .cloned()
-            },
-            
-            Expression::Lambda(param, body) => {
-                let param_type = Self::fresh_type_var();
-                let new_env = env.extend(param, param_type.clone());
-                let body_type = Self::infer_type(&new_env, body)?;
-                Ok(Type::arrow(param_type, body_type))
-            },
-            
-            Expression::Application(func, arg) => {
-                let func_type = Self::infer_type(env, func)?;
-                let arg_type = Self::infer_type(env, arg)?;
-                
-                match func_type {
-                    Type::Arrow(domain, codomain) => {
-                        // 这里应该进行类型统一
-                        if *domain == arg_type {
-                            Ok(*codomain)
-                        } else {
-                            Err(format!("Type mismatch: expected {}, got {}", domain, arg_type))
-                        }
-                    },
-                    _ => Err(format!("Expected function type, got {}", func_type)),
-                }
-            },
-            
-            _ => Err("Unsupported expression for type inference".to_string()),
-        }
+fn main() {
+    let mut benchmark = AlgorithmBenchmark::new();
+    
+    // 基准测试排序算法
+    let results = benchmark.benchmark_sorting_algorithms(10000);
+    
+    println!("Sorting Algorithm Complexity Analysis:");
+    for (algorithm, complexity) in results {
+        println!("{}: {}", algorithm, complexity);
     }
 }
 ```
 
-## 应用示例
-
-### 简单类型检查
+### 示例2：图算法应用
 
 ```rust
-fn simple_type_checking_example() {
-    let env = TypeEnvironment::new();
+fn main() {
+    // 创建有向图
+    let mut graph = Graph::new(true);
     
-    // 检查基本表达式
-    let expr = Expression::int(42);
-    match TypeChecker::type_check(&env, &expr) {
-        Ok(ty) => println!("42 has type: {}", ty),
-        Err(e) => println!("Error: {}", e),
-    }
+    // 添加边
+    graph.add_edge(0, 1);
+    graph.add_edge(0, 2);
+    graph.add_edge(1, 3);
+    graph.add_edge(2, 3);
+    graph.add_edge(3, 4);
     
-    // 检查函数应用
-    let func = Expression::lambda("x", Expression::variable("x".to_string()));
-    let arg = Expression::int(42);
-    let app = Expression::application(func, arg);
+    // 深度优先搜索
+    let dfs_result = graph.dfs(0);
+    println!("DFS traversal: {:?}", dfs_result);
     
-    match TypeChecker::type_check(&env, &app) {
-        Ok(ty) => println!("Function application has type: {}", ty),
+    // 广度优先搜索
+    let bfs_result = graph.bfs(0);
+    println!("BFS traversal: {:?}", bfs_result);
+    
+    // 拓扑排序
+    match graph.topological_sort() {
+        Ok(order) => println!("Topological order: {:?}", order),
         Err(e) => println!("Error: {}", e),
     }
 }
 ```
 
-### 线性类型示例
+### 示例3：动态规划应用
 
 ```rust
-fn linear_type_example() {
-    let env = TypeEnvironment::new();
+fn main() {
+    // 斐波那契数列
+    let n = 50;
+    let fib = DynamicProgramming::fibonacci(n);
+    println!("Fibonacci({}) = {}", n, fib);
     
-    // 线性绑定示例
-    let linear_expr = Expression::linear_let(
-        "x",
-        Expression::int(42),
-        Expression::variable("x".to_string())
-    );
+    // 最长公共子序列
+    let s1 = "ABCDGH";
+    let s2 = "AEDFHR";
+    let lcs = DynamicProgramming::longest_common_subsequence(s1, s2);
+    println!("LCS of '{}' and '{}': '{}'", s1, s2, lcs);
     
-    match TypeChecker::type_check(&env, &linear_expr) {
-        Ok(ty) => println!("Linear expression has type: {}", ty),
-        Err(e) => println!("Error: {}", e),
-    }
+    // 0-1背包问题
+    let weights = vec![2, 1, 3, 2];
+    let values = vec![12, 10, 20, 15];
+    let capacity = 5;
+    let max_value = DynamicProgramming::knapsack_01(&weights, &values, capacity);
+    println!("Maximum value for capacity {}: {}", capacity, max_value);
 }
 ```
 
-## 理论扩展
+## 🔬 理论扩展
 
-### Curry-Howard对应
+### 1. 并行算法理论
 
-**定理 04.1 (Curry-Howard对应)** 类型和证明之间存在一一对应关系：
+**定义 4.1** (并行算法)
+并行算法是同时在多个处理器上执行的算法。
 
-- 类型对应命题
-- 程序对应证明
-- 类型检查对应证明验证
+**定理 4.1** (Amdahl定律)
+并行化加速比：$S = \frac{1}{(1-p) + \frac{p}{n}}$，其中 $p$ 是可并行化部分，$n$ 是处理器数量。
 
-**示例**：
+### 2. 随机算法理论
 
-- $A \rightarrow B$ 对应蕴含命题
-- $A \times B$ 对应合取命题
-- $A + B$ 对应析取命题
+**定义 4.2** (随机算法)
+随机算法在计算过程中使用随机数。
 
-### 同伦类型论
+**定理 4.2** (随机算法期望复杂度)
+随机算法的期望时间复杂度：$E[T(n)] = \sum_{i} p_i \cdot T_i(n)$
 
-**定义 04.4 (路径类型)** 路径类型 $\text{Path}_A(a, b)$ 表示从 $a$ 到 $b$ 的路径。
+### 3. 近似算法理论
 
-**定义 04.5 (同伦)** 两个函数 $f, g : A \rightarrow B$ 之间的同伦是一个函数 $H : \prod_{x:A} \text{Path}_B(f(x), g(x))$。
+**定义 4.3** (近似算法)
+近似算法在多项式时间内找到接近最优解的解决方案。
+
+**定理 4.3** (近似比)
+近似算法的近似比：$\alpha = \frac{OPT}{ALG}$，其中 $OPT$ 是最优解，$ALG$ 是算法解。
 
 ## 🎯 批判性分析
 
 ### 多元理论视角
 
-- 逻辑视角：类型理论与逻辑系统通过Curry-Howard对应建立联系。
-- 计算视角：类型理论为程序提供类型安全和计算保证。
-- 语义视角：类型理论为程序提供形式化语义和意义。
-- 证明视角：类型理论将程序与数学证明对应起来。
+- 设计视角：算法理论提供系统化的算法设计方法论，包括分治、动态规划、贪心等。
+- 复杂度视角：算法理论建立算法效率的量化标准和分类体系。
+- 数据结构视角：算法理论为算法提供高效的数据组织方式。
+- 优化视角：算法理论关注算法性能优化和资源利用。
 
 ### 局限性分析
 
-- 复杂性：高阶类型系统复杂，增加了学习和使用难度。
-- 可判定性：某些类型检查问题不可判定，限制了类型系统的表达能力。
-- 表达能力：某些概念难以在类型系统中表达，需要扩展。
-- 性能问题：复杂的类型检查可能影响编译和运行时性能。
+- NP难问题：某些NP难问题缺乏有效的多项式时间解法。
+- 并行复杂性：并行算法设计复杂，负载均衡和通信开销难以优化。
+- 理论差距：实际性能与理论分析存在差距，需要工程验证。
+- 可扩展性：大规模数据处理的算法可扩展性挑战。
 
 ### 争议与分歧
 
-- 类型系统设计：简单类型vs复杂类型系统的设计哲学。
-- 类型推断：显式类型vs隐式类型推断的策略选择。
-- 类型安全：类型安全vs表达能力的权衡。
-- 证明对应：类型与证明对应的实际意义和应用价值。
+- 算法选择：不同算法设计策略的适用性和效率权衡。
+- 复杂度分析：渐进复杂度vs实际性能的评估方法。
+- 并行策略：不同并行算法设计策略的选择。
+- 优化目标：时间vs空间复杂度的优化优先级。
 
 ### 应用前景
 
-- 编程语言：现代编程语言的类型系统设计。
-- 形式验证：程序的形式化验证和证明。
-- 函数式编程：函数式编程语言的类型理论。
-- 定理证明：计算机辅助定理证明系统。
+- 大数据处理：大规模数据分析和处理算法。
+- 人工智能：机器学习和深度学习算法。
+- 分布式系统：分布式算法和一致性协议。
+- 实时系统：实时算法和调度策略。
 
 ### 改进建议
 
-- 发展更智能的类型推断算法，减少显式类型注解。
-- 建立更友好的类型错误报告系统，提高用户体验。
-- 加强类型理论与实际编程实践的结合。
-- 促进类型理论的教育和普及。
+- 发展智能化的算法设计方法，减少人工设计成本。
+- 建立自动化的算法性能分析和优化工具。
+- 加强算法理论的实际应用验证。
+- 适应新兴应用场景的算法理论创新。
 
-## 相关链接
+## 📚 参考文献 / References & Further Reading
 
-- [02.02 逻辑理论](../../02_Mathematical_Foundations/02.02_Logic/README.md)
-- [03.01 自动机理论](../../03_Formal_Language_Theory/03.1_Automata_Theory/README.md)
-- [08.01 语言设计理论](../../08_Programming_Language_Theory/07.1_Language_Design_Theory/README.md)
+1. Cormen, T. H., et al. (2009). "Introduction to Algorithms"
+2. Knuth, D. E. (1997). "The Art of Computer Programming"
+3. Sedgewick, R., Wayne, K. (2011). "Algorithms"
+4. Aho, A. V., et al. (2006). "Compilers: Principles, Techniques, and Tools"
+5. Papadimitriou, C. H. (1994). "Computational Complexity"
+6. <https://en.wikipedia.org/wiki/Algorithm>
+7. <https://en.wikipedia.org/wiki/Computational_complexity_theory>
 
 ---
 
-**最后更新**：2025-01-17  
-**模块状态**：✅ 完成
+*本模块为形式科学知识库的重要组成部分，为算法设计和分析提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。*
