@@ -1,0 +1,303 @@
+# 数学符号标准
+
+## 概述
+
+本文档定义了信息论多视角分析项目中使用的数学符号标准，确保所有文档中符号使用的一致性和准确性。
+
+## 1. 基础信息论符号
+
+### 1.1 熵与信息量
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $H(X)$ | 香农熵 | $H(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i)$ | bits |
+| $H(X\|Y)$ | 条件熵 | $H(X\|Y) = -\sum_{x,y} p(x,y) \log_2 p(x\|y)$ | bits |
+| $I(X;Y)$ | 互信息 | $I(X;Y) = H(X) - H(X\|Y)$ | bits |
+| $I(X;Y\|Z)$ | 条件互信息 | $I(X;Y\|Z) = H(X\|Z) - H(X\|Y,Z)$ | bits |
+| $D(p\|q)$ | KL散度 | $D(p\|q) = \sum_i p(i) \log_2 \frac{p(i)}{q(i)}$ | bits |
+
+### 1.2 信道与容量
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $C$ | 信道容量 | $C = \max_{p(x)} I(X;Y)$ | bits/symbol |
+| $R(D)$ | 率-失真函数 | $R(D) = \min_{p(\hat{x}\|x): \mathbb{E}[d(X,\hat{X})] \leq D} I(X;\hat{X})$ | bits/symbol |
+| $W(y\|x)$ | 信道转移概率 | $W(y\|x) = P(Y=y\|X=x)$ | - |
+| $p(x)$ | 输入分布 | $p(x) = P(X=x)$ | - |
+| $p(y)$ | 输出分布 | $p(y) = P(Y=y)$ | - |
+
+## 2. 量子信息论符号
+
+### 2.1 量子态与密度矩阵
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $\|\psi\rangle$ | 量子态向量 | $\|\psi\rangle \in \mathcal{H}$ | 纯态 |
+| $\langle\psi\|$ | 对偶向量 | $\langle\psi\| = \|\psi\rangle^\dagger$ | 对偶态 |
+| $\rho$ | 密度矩阵 | $\rho = \sum_i p_i \|\psi_i\rangle\langle\psi_i\|$ | 混合态 |
+| $\text{Tr}(\rho)$ | 矩阵的迹 | $\text{Tr}(\rho) = \sum_i \rho_{ii}$ | 归一化条件 |
+| $\rho_A$ | 约化密度矩阵 | $\rho_A = \text{Tr}_B(\rho_{AB})$ | 子系统A |
+
+### 2.2 量子熵
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $S(\rho)$ | von Neumann熵 | $S(\rho) = -\text{Tr}(\rho \log_2 \rho)$ | bits |
+| $S(A\|B)$ | 量子条件熵 | $S(A\|B) = S(\rho_{AB}) - S(\rho_B)$ | bits |
+| $I(A:B)$ | 量子互信息 | $I(A:B) = S(\rho_A) + S(\rho_B) - S(\rho_{AB})$ | bits |
+| $D(\rho\|\sigma)$ | 量子相对熵 | $D(\rho\|\sigma) = \text{Tr}(\rho \log_2 \rho) - \text{Tr}(\rho \log_2 \sigma)$ | bits |
+
+### 2.3 量子信道
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $\mathcal{E}$ | 量子信道 | $\mathcal{E}: \mathcal{B}(\mathcal{H}_A) \rightarrow \mathcal{B}(\mathcal{H}_B)$ | 完全正保迹映射 |
+| $E_k$ | Kraus算子 | $\mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger$ | 信道表示 |
+| $C$ | 经典容量 | $C = \max_{\{p_i, \rho_i\}} \chi(\mathcal{E})$ | bits/use |
+| $Q$ | 量子容量 | $Q = \max_{\rho} I_c(\rho, \mathcal{E})$ | qubits/use |
+
+## 3. 复杂度理论符号
+
+### 3.1 时间复杂度
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $T(n)$ | 时间复杂度 | $T(n) = O(f(n))$ | 大O记号 |
+| $\Omega(f(n))$ | 下界 | $T(n) = \Omega(f(n))$ | 下界记号 |
+| $\Theta(f(n))$ | 紧界 | $T(n) = \Theta(f(n))$ | 紧界记号 |
+| $O^*(f(n))$ | 忽略多项式因子 | $O^*(f(n)) = O(f(n) \cdot n^c)$ | 参数化复杂度 |
+
+### 3.2 空间复杂度
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $S(n)$ | 空间复杂度 | $S(n) = O(f(n))$ | bits |
+| $A(n)$ | 辅助空间 | $A(n) = S(n) - n$ | bits |
+| $R(n)$ | 递归深度 | $R(n) = \max\{\text{depth of recursion}\}$ | levels |
+
+### 3.3 通信复杂度
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $CC(f)$ | 通信复杂度 | $CC(f) = \min\{\text{bits exchanged}\}$ | bits |
+| $R(f)$ | 随机通信复杂度 | $R(f) = \min\{\text{random bits}\}$ | bits |
+| $D(f)$ | 确定性通信复杂度 | $D(f) = \min\{\text{deterministic bits}\}$ | bits |
+
+## 4. 算法复杂度符号
+
+### 4.1 Kolmogorov复杂度
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $K(x)$ | Kolmogorov复杂度 | $K(x) = \min\{\|p\| : U(p) = x\}$ | bits |
+| $K(x\|y)$ | 条件Kolmogorov复杂度 | $K(x\|y) = \min\{\|p\| : U(p,y) = x\}$ | bits |
+| $I_K(x;y)$ | 算法互信息 | $I_K(x;y) = K(x) + K(y) - K(x,y)$ | bits |
+
+### 4.2 描述长度
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $L(x)$ | 描述长度 | $L(x) = \|code(x)\|$ | bits |
+| $L(x\|y)$ | 条件描述长度 | $L(x\|y) = \|code(x\|y)\|$ | bits |
+| $MDL$ | 最小描述长度 | $MDL = \min\{L(M) + L(D\|M)\}$ | bits |
+
+## 5. 热力学信息论符号
+
+### 5.1 热力学熵
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $S$ | 热力学熵 | $S = k_B \ln \Omega$ | J/K |
+| $k_B$ | 玻尔兹曼常数 | $k_B = 1.38 \times 10^{-23}$ J/K | J/K |
+| $T$ | 温度 | $T$ | K |
+| $\beta$ | 逆温度 | $\beta = \frac{1}{k_B T}$ | 1/J |
+
+### 5.2 信息-能量关系
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $W$ | 功 | $W$ | J |
+| $Q$ | 热量 | $Q$ | J |
+| $F$ | 自由能 | $F = E - TS$ | J |
+| $G$ | 吉布斯自由能 | $G = H - TS$ | J |
+
+### 5.3 Landauer原理
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $W_{min}$ | 最小功 | $W_{min} = k_B T \ln 2$ | J/bit |
+| $\Delta S$ | 熵变化 | $\Delta S = \frac{Q}{T}$ | J/K |
+| $\eta$ | 效率 | $\eta = \frac{W_{useful}}{W_{total}}$ | - |
+
+## 6. 几何信息论符号
+
+### 6.1 统计流形
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $\mathcal{M}$ | 统计流形 | $\mathcal{M} = \{p(x;\theta) : \theta \in \Theta\}$ | 参数化概率分布族 |
+| $g_{ij}$ | Fisher信息矩阵 | $g_{ij} = \mathbb{E}[\partial_i \log p \cdot \partial_j \log p]$ | 黎曼度量 |
+| $ds^2$ | 线元 | $ds^2 = g_{ij} d\theta^i d\theta^j$ | 距离元素 |
+| $\Gamma_{ij}^k$ | 克里斯托费尔符号 | $\Gamma_{ij}^k = \frac{1}{2} g^{kl}(\partial_i g_{jl} + \partial_j g_{il} - \partial_l g_{ij})$ | 联络系数 |
+
+### 6.2 自然梯度
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $\nabla L$ | 梯度 | $\nabla L = \frac{\partial L}{\partial \theta}$ | 欧几里得梯度 |
+| $\tilde{\nabla} L$ | 自然梯度 | $\tilde{\nabla} L = g^{-1} \nabla L$ | 黎曼梯度 |
+| $\eta$ | 学习率 | $\eta$ | 步长参数 |
+| $\theta_{t+1}$ | 参数更新 | $\theta_{t+1} = \theta_t - \eta \tilde{\nabla} L$ | 自然梯度下降 |
+
+## 7. 语义信息论符号
+
+### 7.1 语义熵
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $H_s(X)$ | 语义熵 | $H_s(X) = -\sum_i p(x_i) \log_2 p(x_i) \cdot w(x_i)$ | semantic bits |
+| $w(x_i)$ | 语义权重 | $w(x_i) \in [0,1]$ | - |
+| $I_s(X;Y)$ | 语义互信息 | $I_s(X;Y) = H_s(X) - H_s(X\|Y)$ | semantic bits |
+| $V(R)$ | 价值-信息率 | $V(R) = \max_{p(x): R} I_s(X;Y)$ | semantic bits/symbol |
+
+### 7.2 DIKWP模型
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $D$ | 数据层 | $D = \{d_i\}$ | 原始符号 |
+| $I$ | 信息层 | $I: D \rightarrow \Delta$ | 差异语义 |
+| $K$ | 知识层 | $K = (N, E)$ | 结构语义 |
+| $W$ | 智慧层 | $W: K \times P \rightarrow \mathbb{R}$ | 价值语义 |
+| $P$ | 目的层 | $P = (Input, Output)$ | 意图语义 |
+
+## 8. 生物信息论符号
+
+### 8.1 遗传信息
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $L$ | 序列长度 | $L$ | nucleotides |
+| $\mu$ | 突变率 | $\mu$ | mutations/site/generation |
+| $N_e$ | 有效群体大小 | $N_e$ | individuals |
+| $s$ | 选择系数 | $s = \frac{f_{mut} - f_{wt}}{f_{wt}}$ | - |
+| $\sigma$ | 适合度优势 | $\sigma = \frac{f_{max}}{f_{avg}}$ | - |
+
+### 8.2 进化信息
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $I_{sel}$ | 选择信息 | $I_{sel} = I(environment; genotype)$ | bits |
+| $\varepsilon_c$ | 错误阈值 | $\varepsilon_c = \frac{\ln \sigma}{L}$ | mutations/site/generation |
+| $H_{ev}$ | 进化熵 | $H_{ev} = -\sum_g p(g) \log_2 p(g)$ | bits |
+| $I_{fitness}$ | 适合度信息 | $I_{fitness} = \log_2 \frac{f(s)}{f_{avg}}$ | bits |
+
+## 9. 网络信息论符号
+
+### 9.1 网络拓扑
+
+| 符号 | 含义 | 定义 | 备注 |
+|------|------|------|------|
+| $G = (V, E)$ | 图 | $V$: 节点集, $E$: 边集 | 网络拓扑 |
+| $N$ | 节点数 | $N = \|V\|$ | 网络规模 |
+| $M$ | 边数 | $M = \|E\|$ | 连接数 |
+| $d_i$ | 节点度 | $d_i = \|\{j : (i,j) \in E\}\|$ | 连接数 |
+| $\langle d \rangle$ | 平均度 | $\langle d \rangle = \frac{2M}{N}$ | 平均连接数 |
+
+### 9.2 网络信息流
+
+| 符号 | 含义 | 定义 | 单位 |
+|------|------|------|------|
+| $C_{ij}$ | 链路容量 | $C_{ij}$ | bits/s |
+| $f_{ij}$ | 流量 | $f_{ij}$ | bits/s |
+| $R$ | 端到端速率 | $R$ | bits/s |
+| $I_{network}$ | 网络互信息 | $I_{network} = \sum_{i,j} I(node_i; node_j)$ | bits |
+
+## 10. 符号使用规范
+
+### 10.1 字体规范
+
+| 符号类型 | 字体 | 示例 | 说明 |
+|---------|------|------|------|
+| 标量 | 斜体 | $x, y, z$ | 小写斜体 |
+| 向量 | 粗体斜体 | $\mathbf{x}, \mathbf{y}$ | 粗体斜体 |
+| 矩阵 | 大写斜体 | $A, B, C$ | 大写斜体 |
+| 集合 | 大写正体 | $\mathbb{R}, \mathbb{C}$ | 大写正体 |
+| 函数 | 正体 | $\sin, \log, \exp$ | 正体函数名 |
+
+### 10.2 下标和上标
+
+| 符号 | 含义 | 示例 | 说明 |
+|------|------|------|------|
+| 下标 | 索引或条件 | $x_i, H(X\|Y)$ | 右下角 |
+| 上标 | 幂次或转置 | $x^2, A^T$ | 右上角 |
+| 双重下标 | 矩阵元素 | $A_{ij}$ | 行列索引 |
+
+### 10.3 特殊符号
+
+| 符号 | 含义 | 使用场景 | 示例 |
+|------|------|---------|------|
+| $\mathbb{E}[\cdot]$ | 期望 | 概率论 | $\mathbb{E}[X]$ |
+| $\text{Var}[\cdot]$ | 方差 | 概率论 | $\text{Var}[X]$ |
+| $\text{Tr}(\cdot)$ | 迹 | 线性代数 | $\text{Tr}(A)$ |
+| $\det(\cdot)$ | 行列式 | 线性代数 | $\det(A)$ |
+| $\|\cdot\|$ | 范数 | 线性代数 | $\|x\|_2$ |
+| $\langle\cdot,\cdot\rangle$ | 内积 | 线性代数 | $\langle x,y \rangle$ |
+
+## 11. 单位制
+
+### 11.1 信息单位
+
+| 单位 | 名称 | 换算关系 | 使用场景 |
+|------|------|---------|---------|
+| bit | 比特 | 1 bit | 二进制信息 |
+| nat | 奈特 | 1 nat = $\ln 2$ bit | 自然对数 |
+| dit | 十进制位 | 1 dit = $\log_2 10$ bit | 十进制信息 |
+| qubit | 量子比特 | 1 qubit | 量子信息 |
+
+### 11.2 物理单位
+
+| 单位 | 名称 | 换算关系 | 使用场景 |
+|------|------|---------|---------|
+| J | 焦耳 | 1 J = 1 N·m | 能量 |
+| K | 开尔文 | 绝对温度 | 热力学 |
+| s | 秒 | 时间单位 | 时间 |
+| Hz | 赫兹 | 1 Hz = 1/s | 频率 |
+
+## 12. 符号检查清单
+
+### 12.1 文档编写检查
+
+- [ ] 所有数学符号使用标准字体
+- [ ] 下标和上标位置正确
+- [ ] 单位标注完整
+- [ ] 符号定义清晰
+- [ ] 符号使用一致
+
+### 12.2 公式验证检查
+
+- [ ] 公式语法正确
+- [ ] 变量定义明确
+- [ ] 单位匹配
+- [ ] 物理意义合理
+- [ ] 数值范围合理
+
+## 13. 更新记录
+
+| 版本 | 日期 | 更新内容 | 更新人 |
+|------|------|---------|--------|
+| 1.0 | 2024-01-15 | 初始版本 | 项目团队 |
+| 1.1 | 2024-01-20 | 添加量子信息论符号 | 项目团队 |
+| 1.2 | 2024-01-25 | 添加生物信息论符号 | 项目团队 |
+
+## 14. 参考文献
+
+1. Cover, T. M., & Thomas, J. A. (2006). *Elements of Information Theory*. Wiley-Interscience.
+2. Nielsen, M. A., & Chuang, I. L. (2010). *Quantum Computation and Quantum Information*. Cambridge University Press.
+3. Wikipedia contributors. (2024). "Mathematical Notation". Wikipedia, The Free Encyclopedia.
+
+---
+
+**文档版本**：1.2  
+**最后更新**：2024-01-25  
+**维护者**：信息论多视角分析项目团队  
+**审核**：数学符号标准化委员会
