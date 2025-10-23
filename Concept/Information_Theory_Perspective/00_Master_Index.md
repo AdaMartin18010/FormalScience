@@ -10,8 +10,12 @@
 ### 00_FOUNDATIONAL_CONCEPTS - 基础概念与权威定义
 
 - **00_FOUNDATIONAL_CONCEPTS.md** - 信息论基础概念的权威定义与形式化
+- **2025_LATEST_ADVANCES.md** - 2025年10月最新研究进展和理论突破
+- **2025_10_23_WEB_ALIGNED_UPDATE.md** - 2025年10月23日Web对标更新 🆕
 - **CONTENT_IMPROVEMENT_PLAN.md** - 内容改进计划
 - **CONTENT_VERIFICATION_SYSTEM.md** - 内容验证和质量保证系统
+- **CONTENT_IMPROVEMENT_SUMMARY.md** - 内容改进总结报告
+- **IMPROVED_EXAMPLE_Engineering_Communication.md** - 工程-通信视角改进示例
 
 ### 01_Complexity_Analysis - 复杂度分析
 
@@ -176,6 +180,15 @@
   - 建立内容验证和质量保证系统
   - 整合Wikipedia和权威来源引用
   - 提供完整的数学形式化和证明
+- **2025-10-23**：对标最新web信息，持续完善
+  - 整合2025年最新研究进展
+  - 添加语义信息论突破性成果（张平团队）
+  - 更新量子信息论最新进展
+  - 补充机器学习信息论理论（Transformer样本复杂度）
+  - 完善复杂系统信息论（IIT 4.0、因果涌现）
+  - 更新6G语义通信技术
+  - 扩展跨领域应用（金融、社会、环境）
+  - 更新工具和软件生态系统
 
 ---
 
