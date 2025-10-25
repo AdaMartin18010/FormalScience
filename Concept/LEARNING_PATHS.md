@@ -68,7 +68,7 @@
     - [视角专题文档](#视角专题文档)
     - [案例研究](#案例研究)
   - [💡 学习建议](#-学习建议)
-    - [学习方法](#学习方法-1)
+    - [学习方法1](#学习方法1)
     - [常见陷阱](#常见陷阱)
     - [进度追踪](#进度追踪)
   - [🎯 学习目标检验](#-学习目标检验)
@@ -129,10 +129,10 @@
 
 ### 按目标
 
-5. [AI/机器学习专精路径](#5-ai机器学习专精路径) - 深入AI理论
-6. [系统架构专精路径](#6-系统架构专精路径) - 掌握系统设计
-7. [跨学科研究路径](#7-跨学科研究路径) - 理论整合创新
-8. [快速概览路径](#8-快速概览路径) - 1-2天速成
+1. [AI/机器学习专精路径](#5-ai机器学习专精路径) - 深入AI理论
+2. [系统架构专精路径](#6-系统架构专精路径) - 掌握系统设计
+3. [跨学科研究路径](#7-跨学科研究路径) - 理论整合创新
+4. [快速概览路径](#8-快速概览路径) - 1-2天速成
 
 ---
 
@@ -146,20 +146,20 @@
 
 ### 第1周：理论基础建立
 
-**Day 1-2: 框架概览**
+**Day 1-2: 框架概览**:
 
 - 📖 [统一框架](UNIFIED_FRAMEWORK.md) - 理解七视角体系
 - 🎯 目标：掌握七视角的核心问题和相互关系
 - ⏱️ 时间：4-6小时
 
-**Day 3-4: 形式语言入门**
+**Day 3-4: 形式语言入门**:
 
 - 📖 [形式语言视角](formal_language_view.md)
 - 📖 [Chomsky层级](CONCEPT_CROSS_INDEX.md#chomsky层级-chomsky-hierarchy-七视角)
 - 🎯 目标：理解语法-语义映射，掌握TYPE-0到TYPE-3
 - ⏱️ 时间：6-8小时
 
-**Day 5-7: 计算理论**
+**Day 5-7: 计算理论**:
 
 - 📖 [图灵完备性](CONCEPT_CROSS_INDEX.md#图灵完备性-turing-completeness-七视角)
 - 📖 [停机问题](CONCEPT_CROSS_INDEX.md#停机问题-halting-problem-七视角)
@@ -169,14 +169,14 @@
 
 ### 第2周：AI与学习理论
 
-**Day 8-10: 学习理论基础**
+**Day 8-10: 学习理论基础**:
 
 - 📖 [Gold可学习性](CONCEPT_CROSS_INDEX.md#gold可学习性-gold-learnability-theory-七视角)
 - 📖 [VC维](CONCEPT_CROSS_INDEX.md#vc维-vapnik-chervonenkis-dimension-七视角)
 - 🎯 目标：理解PAC学习和样本复杂度
 - ⏱️ 时间：8-10小时
 
-**Day 11-14: 信息论**
+**Day 11-14: 信息论**:
 
 - 📖 [熵](CONCEPT_CROSS_INDEX.md#熵-entropy-七视角)
 - 📖 [互信息](CONCEPT_CROSS_INDEX.md#互信息-mutual-information-七视角)
@@ -186,7 +186,7 @@
 
 ### 第3周：系统与分布式
 
-**Day 15-17: 虚拟化与隔离**
+**Day 15-17: 虚拟化与隔离**:
 
 - 📖 [虚拟化](CONCEPT_CROSS_INDEX.md#虚拟化-virtualization-七视角)
 - 📖 [Popek-Goldberg定理](CONCEPT_CROSS_INDEX.md#popek-goldberg定理-popek-goldberg-virtualization-theorem-七视角)
@@ -194,7 +194,7 @@
 - 🎯 目标：理解系统隔离机制
 - ⏱️ 时间：8-10小时
 
-**Day 18-21: 分布式系统**
+**Day 18-21: 分布式系统**:
 
 - 📖 [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 - 📖 [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
@@ -204,7 +204,7 @@
 
 ### 第4周：控制与架构
 
-**Day 22-24: 控制论**
+**Day 22-24: 控制论**:
 
 - 📖 [Ashby定律](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
 - 📖 [Data Rate定理](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
@@ -212,7 +212,7 @@
 - 🎯 目标：理解系统控制和稳定性
 - ⏱️ 时间：8-10小时
 
-**Day 25-28: 案例综合**
+**Day 25-28: 案例综合**:
 
 - 📖 [智能电网案例](CASE_STUDY_SMART_GRID.md)
 - 📖 [量子计算案例](CASE_STUDY_QUANTUM_COMPUTING.md)
@@ -323,7 +323,7 @@
 
 **深度学习/AI方向**:
 
-```
+```text
 Day 3-5:   Gold可学习性 → VC维 → 样本复杂度
 Day 6-8:   互信息 → 信息瓶颈 → 模型压缩
 Day 9-10:  Meta-learning → 迁移学习
@@ -333,7 +333,7 @@ Day 13-14: 实践项目：应用理论优化模型
 
 **容器编排/K8s方向**:
 
-```
+```text
 Day 3-5:   虚拟化 → Popek-Goldberg → 容器化
 Day 6-8:   主权矩阵 → 隔离熵 → 安全边界
 Day 9-10:  资源调度 → Ashby定律应用
@@ -343,7 +343,7 @@ Day 13-14: 实践项目：优化K8s配置
 
 **区块链/Web3方向**:
 
-```
+```text
 Day 3-5:   CAP定理 → FLP不可能 → 拜占庭容错
 Day 6-8:   共识算法 → 一致性模型
 Day 9-10:  反身性 → 链上治理
@@ -353,7 +353,7 @@ Day 13-14: 实践项目：设计共识协议
 
 **系统架构方向**:
 
-```
+```text
 Day 3-5:   三票理论 → 耗散经济链
 Day 6-8:   控制论 → 系统稳定性
 Day 9-10:  冯·诺依曼架构 → 性能优化
@@ -459,10 +459,10 @@ Day 13-14: 实践项目：架构设计评审
 
 ### 高级理论 (深入)
 
-5. [Meta-learning](CONCEPT_CROSS_INDEX.md#meta-learning-七视角) - 学习如何学习
-6. [反身性](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角) - 自我改进系统
-7. [互信息](CONCEPT_CROSS_INDEX.md#互信息-mutual-information-七视角) - 特征选择和压缩
-8. [Gödel不完备定理](CONCEPT_CROSS_INDEX.md#gödel不完备定理-gödels-incompleteness-theorems-七视角) - AI对齐限制
+1. [Meta-learning](CONCEPT_CROSS_INDEX.md#meta-learning-七视角) - 学习如何学习
+2. [反身性](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角) - 自我改进系统
+3. [互信息](CONCEPT_CROSS_INDEX.md#互信息-mutual-information-七视角) - 特征选择和压缩
+4. [Gödel不完备定理](CONCEPT_CROSS_INDEX.md#gödel不完备定理-gödels-incompleteness-theorems-七视角) - AI对齐限制
 
 ### 实践应用
 
@@ -489,15 +489,15 @@ Day 13-14: 实践项目：架构设计评审
 
 ### 分布式系统
 
-5. [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
-6. [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
-7. [拜占庭容错](TuningCompute/)
+1. [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
+2. [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
+3. [拜占庭容错](TuningCompute/)
 
 ### 控制与优化
 
-8. [Ashby定律](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
-9. [Data Rate定理](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
-10. [三票理论](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
+1. [Ashby定律](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
+2. [Data Rate定理](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
+3. [三票理论](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
 
 ### 案例学习
 
@@ -675,7 +675,7 @@ Day 13-14: 实践项目：架构设计评审
 
 ## 💡 学习建议
 
-### 学习方法
+### 学习方法1
 
 1. **先框架后细节**
    - 先理解七视角整体架构
@@ -795,4 +795,4 @@ Day 13-14: 实践项目：架构设计评审
 **维护状态**: ✅ 活跃维护  
 **适用范围**: 整个形式科学项目
 
-**🎓 选择适合您的学习路径，开始探索形式科学的世界！🎓**
+**🎓 选择适合您的学习路径，开始探索形式科学的世界！🎓**-
