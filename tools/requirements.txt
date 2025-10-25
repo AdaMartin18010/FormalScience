@@ -1,0 +1,27 @@
+# Formal Science Tools - Python Dependencies
+
+# 美化输出（链接检查器、目录生成器等）
+rich>=13.0.0
+
+# 图谱生成（未来使用）
+networkx>=3.0
+pyvis>=0.3.0
+
+# 数据处理
+pandas>=2.0.0
+
+# 可视化
+matplotlib>=3.7.0
+plotly>=5.14.0
+
+# Web框架（决策支持系统）
+fastapi>=0.100.0
+uvicorn>=0.23.0
+
+# NLP支持（可选）
+# spacy>=3.6.0
+# transformers>=4.30.0
+
+# 代码分析
+pylint>=2.17.0
+
