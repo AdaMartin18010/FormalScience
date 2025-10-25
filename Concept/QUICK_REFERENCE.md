@@ -96,6 +96,8 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
        = D_KL(P(X,Y) || P(X)P(Y))
 ```
 
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: 互信息](CONCEPT_CROSS_INDEX.md#互信息-mutual-information-七视角)
+
 **[INFO-03] 条件互信息**:
 
 ```text
@@ -138,11 +140,15 @@ K(x|y) = min{|p| : U(p,y) = x}
 K(x,y) ≤ K(x) + K(y) + O(1)
 ```
 
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: Kolmogorov复杂度](CONCEPT_CROSS_INDEX.md#kolmogorov复杂度-kolmogorov-complexity-七视角)
+
 **[PHYS-01] Landauer极限**:
 
 ```text
 E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 ```
+
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: Landauer极限](CONCEPT_CROSS_INDEX.md#landauer极限-landauer-limit-七视角)
 
 ### 学习理论
 
@@ -151,6 +157,8 @@ E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 ```text
 m ≥ O((d/ε²) log(1/δ))   # d = VC维
 ```
+
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: VC维](CONCEPT_CROSS_INDEX.md#vc维-vapnik-chervonenkis-dimension-七视角)
 
 **[LEARN-02] 泛化误差界（PAC）**:
 
@@ -189,6 +197,8 @@ V_controller ≥ V_system
 
 其中 V = log |S| (系统状态空间大小)
 ```
+
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: Ashby定律](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
 
 **[CTRL-02] Data Rate定理**:
 
@@ -266,6 +276,8 @@ T_convergence = O(log n)   # Gossip协议
 Consistency ∧ Availability ∧ Partition-tolerance
 任选其二
 ```
+
+> 💡 **详细分析**: 七视角深度解析见 [概念索引: CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 
 ---
 

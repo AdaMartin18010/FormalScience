@@ -146,26 +146,26 @@ SUPPLEMENTARY_PERSPECTIVES.md:
 **消除策略**:
 
 ```markdown
-【创建公式参考系统】:
+    【创建公式参考系统】:
 
-在 QUICK_REFERENCE.md 中建立公式表:
+    在 QUICK_REFERENCE.md 中建立公式表:
 
-```
+    ```
 
-## 核心公式参考
+    ## 核心公式参考
 
-| 编号 | 名称 | 公式 | 单位 | 来源 |
-|-----|------|------|------|------|
-| [INFO-01] | Shannon熵 | H(X) = -Σ p(x) log p(x) | bit | Shannon 1948 |
-| [INFO-02] | 互信息 | I(X;Y) = H(X) + H(Y) - H(X,Y) | bit | Shannon 1948 |
-| [PHYS-01] | Landauer极限 | E ≥ kT ln2 | J | Landauer 1961 |
-| ... |
+    | 编号 | 名称 | 公式 | 单位 | 来源 |
+    |-----|------|------|------|------|
+    | [INFO-01] | Shannon熵 | H(X) = -Σ p(x) log p(x) | bit | Shannon 1948 |
+    | [INFO-02] | 互信息 | I(X;Y) = H(X) + H(Y) - H(X,Y) | bit | Shannon 1948 |
+    | [PHYS-01] | Landauer极限 | E ≥ kT ln2 | J | Landauer 1961 |
+    | ... |
 
-```
+    ```
 
-【其他文档引用方式】:
-- 简洁引用: "Shannon熵 [INFO-01] 定义了..."
-- 完整引用: "根据Shannon熵公式 [INFO-01]: H(X) = -Σ p(x) log p(x)，..."
+    【其他文档引用方式】:
+    - 简洁引用: "Shannon熵 [INFO-01] 定义了..."
+    - 完整引用: "根据Shannon熵公式 [INFO-01]: H(X) = -Σ p(x) log p(x)，..."
 ```
 
 ---
