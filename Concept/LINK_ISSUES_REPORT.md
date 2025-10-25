@@ -43,7 +43,7 @@
 
 **现状**:
 
-```
+```text
 实际位置：
 ├── AI_model_Perspective/
 │   ├── LEARNING_PATHS.md  ← 只针对AI模型视角

@@ -49,13 +49,13 @@
 
 ### C
 
-**CAP定理 (CAP Theorem)**
+**CAP定理 (CAP Theorem)**-
 
 - 定义：C(一致性) ∧ A(可用性) ∧ P(分区容错)不可兼得
 - 视角：分布式系统（核心）、信息论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 
-**Chomsky层级 (Chomsky Hierarchy)**
+**Chomsky层级 (Chomsky Hierarchy)**-
 
 - 定义：形式语言的四层分类（TYPE-0到TYPE-3）
 - 映射：RE ⊃ CSL ⊃ CFL ⊃ REG
@@ -64,13 +64,13 @@
 
 ### D
 
-**Data Rate定理 (Data Rate Theorem)**
+**Data Rate定理 (Data Rate Theorem)**-
 
 - 定义：R ≥ Σlog₂λᵢ（信息速率下界）
 - 视角：控制论（核心）、信息论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
 
-**DIKWP模型**
+**DIKWP模型**-
 
 - 定义：数据(D)→信息(I)→知识(K)→智慧(W)→目的(P)
 - 视角：信息论、AI模型、形式语言
@@ -78,7 +78,7 @@
 
 ### E
 
-**Entropy (熵)**
+**Entropy (熵)**-
 
 - 定义：H(X) = -Σ p(x)log p(x)（不确定性度量）
 - 视角：信息论（核心）、控制论、分布式
@@ -86,13 +86,13 @@
 
 ### F
 
-**FLP不可能定理 (FLP Impossibility Theorem)**
+**FLP不可能定理 (FLP Impossibility Theorem)**-
 
 - 定义：异步网络中不存在同时满足一致性、终止性、容错性的共识协议
 - 视角：分布式系统（核心）
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
 
-**反身性 (Reflexivity)**
+**反身性 (Reflexivity)**-
 
 - 定义：系统重写自身规则的能力
 - 形式化：公理A5: ⟦φ⟧ ∈ 𝒮 → ∃ψ. ⟦ψ⟧ = ⟦φ⟧
@@ -101,14 +101,14 @@
 
 ### G
 
-**Gödel不完备定理 (Gödel's Incompleteness Theorems)**
+**Gödel不完备定理 (Gödel's Incompleteness Theorems)**-
 
 - 第一定理：任何一致的、足够强的形式系统都包含不可证命题
 - 第二定理：系统无法证明自身一致性
 - 视角：形式语言（核心）、AI模型、图灵可计算
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#gödel不完备定理-gödels-incompleteness-theorems-七视角)
 
-**Gold可学习性 (Gold Learnability Theory)**
+**Gold可学习性 (Gold Learnability Theory)**-
 
 - 定义：从正例（或完全文本）在极限意义下学习语言类的理论
 - 核心结果：超限类不可从正例学习
@@ -117,7 +117,7 @@
 
 ### H
 
-**停机问题 (Halting Problem)**
+**停机问题 (Halting Problem)**-
 
 - 定义：判定任意程序是否停机是不可判定的
 - 证明：对角线论证（Cantor, Gödel, Turing）
@@ -126,14 +126,14 @@
 
 ### I
 
-**隔离 (Isolation)**
+**隔离 (Isolation)**-
 
 - 定义：系统间信息流受控的性质
 - 度量：隔离熵 H_isolation = H(S₁|S₂)
 - 视角：图灵可计算（核心）、信息论、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#隔离-isolation-七视角)
 
-**互信息 (Mutual Information)**
+**互信息 (Mutual Information)**-
 
 - 定义：I(X;Y) = H(X) + H(Y) - H(X,Y)
 - 直观：X和Y共享的信息量
@@ -142,7 +142,7 @@
 
 ### K
 
-**Kolmogorov复杂度 (Kolmogorov Complexity)**
+**Kolmogorov复杂度 (Kolmogorov Complexity)**-
 
 - 定义：K(x) = min{|p| : U(p) = x}（最短程序长度）
 - 性质：不可计算
@@ -151,7 +151,7 @@
 
 ### L
 
-**Landauer极限 (Landauer Limit)**
+**Landauer极限 (Landauer Limit)**-
 
 - 定义：E_min = kT ln2（擦除1比特信息的最小能耗）
 - 意义：信息擦除的物理代价
@@ -160,14 +160,14 @@
 
 ### M
 
-**Meta-learning (元学习)**
+**Meta-learning (元学习)**-
 
 - 定义：学习如何学习
 - 等价性：≡ 2阶反身性 ≡ 2阶反馈控制
 - 视角：AI模型（核心）、形式语言、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#meta-learning-七视角)
 
-**冯·诺依曼瓶颈 (Von Neumann Bottleneck)**
+**冯·诺依曼瓶颈 (Von Neumann Bottleneck)**-
 
 - 定义：CPU与内存间的速度差距（数千倍）
 - 根源：指令与数据共享总线
@@ -176,21 +176,21 @@
 
 ### P
 
-**PAC学习 (Probably Approximately Correct Learning)**
+**PAC学习 (Probably Approximately Correct Learning)**-
 
 - 定义：以高概率学习近似正确假设的框架
 - 关键参数：ε（误差）、δ（置信度）
 - 视角：AI模型（核心）
 - 相关：[VC维](#vc维), [样本复杂度](#样本复杂度)
 
-**P vs NP问题**
+**P vs NP问题**-
 
 - 问题：P = NP?（P是否等于NP）
 - 意义：高效算法是否总能找到
 - 视角：计算理论（核心）、AI模型
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#p-vs-np问题-p-versus-np-problem-七视角)
 
-**Popek-Goldberg定理**
+**Popek-Goldberg定理**-
 
 - 定义：虚拟化的充要条件（敏感指令⊆特权指令）
 - 反例：x86未满足（后续通过硬件辅助解决）
@@ -199,7 +199,7 @@
 
 ### R
 
-**Rice定理 (Rice's Theorem)**
+**Rice定理 (Rice's Theorem)**-
 
 - 定义：所有非平凡的语义性质都是不可判定的
 - 证明：归约到停机问题
@@ -208,18 +208,18 @@
 
 ### S
 
-**三票理论 (Three Tickets Theory)**
+**三票理论 (Three Tickets Theory)**-
 
 - 定义：文明三要素 = 能量盈余 + 信息外化 + 冗余容错
 - 2025状态：三票齐备，文明加速
 - 视角：信息论、图灵可计算、分布式
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
 
-**Shannon熵 (Shannon Entropy)**
+**Shannon熵 (Shannon Entropy)**-
 
 - 同：[熵 (Entropy)](#entropy-熵)
 
-**主权矩阵 (Sovereignty Matrix)**
+**主权矩阵 (Sovereignty Matrix)**-
 
 - 定义：九维系统控制能力度量
 - 维度：指令拦截、地址重映射、系统调用、内核模块、硬件直通、网络协议、文件系统、内存限制、生命周期
@@ -228,7 +228,7 @@
 
 ### T
 
-**图灵完备性 (Turing Completeness)**
+**图灵完备性 (Turing Completeness)**-
 
 - 定义：计算能力等价于图灵机（可模拟任何算法）
 - 条件：无限内存 + 条件分支 + 循环
@@ -237,7 +237,7 @@
 
 ### V
 
-**VC维 (Vapnik-Chervonenkis Dimension)**
+**VC维 (Vapnik-Chervonenkis Dimension)**-
 
 - 定义：假设空间能打散的最大点数
 - 意义：模型容量的度量
@@ -245,7 +245,7 @@
 - 视角：AI模型（核心）
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#vc维-vapnik-chervonenkis-dimension-七视角)
 
-**虚拟化 (Virtualization)**
+**虚拟化 (Virtualization)**-
 
 - 定义：通过软件抽象层将物理资源映射为虚拟资源
 - 类型：全虚拟化、半虚拟化、硬件辅助
@@ -254,7 +254,7 @@
 
 ### X
 
-**形式语言 (Formal Language)**
+**形式语言 (Formal Language)**-
 
 - 定义：L ⊆ Σ*（字母表上的字符串集合）
 - 分类：[Chomsky层级](#chomsky层级-chomsky-hierarchy)
@@ -469,4 +469,4 @@
 **维护状态**: ✅ 活跃维护  
 **术语总数**: 120+
 
-**💡 遇到生词就查本术语表！💡**
+**💡 遇到生词就查本术语表！💡**-

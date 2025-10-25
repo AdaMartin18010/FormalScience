@@ -116,7 +116,7 @@
 
 **精确定位AI能力**：
 
-```
+```text
 理论：ℒ_RE (递归可枚举)
 实际：≈ REG ~ 简单CFL
 差距：整个Chomsky层次
@@ -384,7 +384,7 @@
 
 ### APA格式
 
-```
+```text
 [作者], (2025). AI模型视角：完整理论体系. 
 Retrieved from [GitHub URL or Website]
 ```
