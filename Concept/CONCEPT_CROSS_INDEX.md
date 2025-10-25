@@ -1992,7 +1992,7 @@ TYPE-3 (REG) ↔ 实际可行性（物理约束）
 | **信息论** | H_isolation ≈ 1.5 | 低开销 | 侧信道风险 |
 | **图灵可计算** | C = (NS,CG,FS,RT) | 主权适中 | 无硬件直通 |
 
-### CAP定理 (CAP Theorem) 【新增：分布式核心】
+### CAP定理 (CAP Theorem) 【七视角】
 
 **定理内容**：分布式系统最多同时满足以下三个特性中的两个：
 
@@ -17029,7 +17029,7 @@ eBPF方案：
 | 1 | [反身性 (Reflexivity)](#反身性-reflexivity-七视角) | ~1.2K | 3 | 2025-10-25 |
 | 2 | [隔离 (Isolation)](#隔离-isolation-七视角) | ~2.8K | 4 | 2025-10-25 |
 | 3 | [虚拟化 (Virtualization)](#虚拟化-virtualization-七视角) | ~3.2K | 4 | 2025-10-25 |
-| 4 | [CAP定理](#cap定理-cap-theorem-新增分布式核心) | ~2.5K | 3 | 2025-10-25 |
+| 4 | [CAP定理](#cap定理-cap-theorem-七视角) | ~2.5K | 3 | 2025-10-25 |
 | 5 | [Meta-learning](#meta-learning-七视角) | ~1.5K | 2 | 2025-10-25 |
 | 6 | [熵 (Entropy)](#熵-entropy-七视角) | ~2.0K | 3 | 2025-10-25 |
 | 7 | [Chomsky层级](#chomsky层级-chomsky-hierarchy-七视角) | ~1.8K | 2 | 2025-10-25 |
