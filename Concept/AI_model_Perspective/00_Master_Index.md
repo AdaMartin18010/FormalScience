@@ -68,7 +68,7 @@
 - **08.2_Formal_Language_Perspective.md** - 形式语言视角的AI分析
 - **08.3_Resource_Bounded_Computation.md** - 资源受限计算
 - **08.4_Finite_vs_Infinite_Resources.md** - 有限资源 vs 无限资源
-- **08.5_Language_Classes_Recognition.md** - 语言类识别能力分析
+- **08.5_Theoretical_vs_Practical_Capabilities.md** - 理论能力vs实际能力综合对比
 
 ### 09_AI_Factory_Model (AI工厂模型)
 
@@ -278,6 +278,16 @@ AI不是"图灵机 2.0"，而是**图灵机之外的另一种"计算物种"**：
 
 ## 使用指南
 
+### 📚 辅助文档
+
+**强烈推荐先阅读**：
+
+- 📖 **[GLOSSARY.md](./GLOSSARY.md)** - 术语表（200+关键术语快速查询）
+- ⚡ **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** - 快速参考（核心概念速查手册）
+- 🎓 **[LEARNING_PATHS.md](./LEARNING_PATHS.md)** - 学习路径（7种定制化学习路径）
+- ❓ **[FAQ.md](./FAQ.md)** - 常见问题（30个高频问题详细解答）
+- 📋 **[PROJECT_COMPLETION_REPORT.md](./PROJECT_COMPLETION_REPORT.md)** - 项目完成报告
+
 ### 快速导航
 
 1. **初学者**：从01_Foundational_Theory开始，了解计算理论基础
@@ -287,6 +297,10 @@ AI不是"图灵机 2.0"，而是**图灵机之外的另一种"计算物种"**：
 5. **未来展望**：查看10_Future_Directions
 
 ### 学习路径
+
+推荐使用 **[LEARNING_PATHS.md](./LEARNING_PATHS.md)** 获取详细学习指导。
+
+**快速路径**：
 
 1. **基础路径**：01 → 02 → 03 → 06
 2. **理论路径**：01 → 05 → 08 → 07

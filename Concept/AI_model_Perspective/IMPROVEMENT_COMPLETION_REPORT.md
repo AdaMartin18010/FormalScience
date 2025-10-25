@@ -20,7 +20,7 @@
 
 创建了10个主要目录，共规划50+个专题文档：
 
-```
+```text
 AI_model_Perspective/
 ├── 00_Master_Index.md                    ✅ 完成
 ├── 01_Foundational_Theory/               ✅ 核心文档完成
@@ -113,30 +113,36 @@ AI_model_Perspective/
 #### 关键引用示例
 
 **计算理论**：
+
 - [Turing, 1936](https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf) - On Computable Numbers
 - [Sipser, 2012](https://en.wikipedia.org/wiki/Introduction_to_the_Theory_of_Computation) - Introduction to the Theory of Computation
 - [Hopcroft et al., 2006](https://en.wikipedia.org/wiki/Introduction_to_Automata_Theory,_Languages,_and_Computation)
 
 **形式语言**：
+
 - [Chomsky, 1956](https://www.chomsky.info/articles/195609--.pdf) - Three Models for the Description of Language
 - [Chomsky, 1959](https://www.chomsky.info/articles/19590615.pdf) - On Certain Formal Properties of Grammars
 
 **神经网络计算能力**：
+
 - [Siegelmann & Sontag, 1995](https://www.sciencedirect.com/science/article/pii/S0022000085710136) - On the Computational Power of Neural Nets
 - [Pérez et al., 2019](https://arxiv.org/abs/1901.03429) - On the Turing Completeness of Modern Neural Network Architectures
 - [Weiss et al., 2018](https://arxiv.org/abs/1805.04908) - On the Practical Computational Power of RNNs
 
 **学习理论**：
+
 - [Gold, 1967](https://www.sciencedirect.com/science/article/pii/S001999586790165X) - Language Identification in the Limit
 - [Valiant, 1984](https://dl.acm.org/doi/10.1145/1968.1972) - A Theory of the Learnable
 - [Angluin, 1987](https://link.springer.com/article/10.1007/BF00116828) - Learning Regular Sets
 
 **AI哲学**：
+
 - [Searle, 1980](https://www.cambridge.org/core/journals/behavioral-and-brain-sciences/article/abs/minds-brains-and-programs/DC644B47A4299C637C89772FACC2706A) - Minds, Brains, and Programs
 - [Stanford Encyclopedia: Chinese Room](https://plato.stanford.edu/entries/chinese-room/)
 - [Stanford Encyclopedia: Intentionality](https://plato.stanford.edu/entries/intentionality/)
 
 **大语言模型**：
+
 - [Brown et al., 2020](https://arxiv.org/abs/2005.14165) - Language Models are Few-Shot Learners (GPT-3)
 - [Vaswani et al., 2017](https://arxiv.org/abs/1706.03762) - Attention is All You Need
 - [Goodfellow et al., 2016](https://www.deeplearningbook.org/) - Deep Learning
@@ -183,9 +189,9 @@ AI_model_Perspective/
 
 #### 关键论证示例
 
-**论证1：AI与图灵机不在形式语言意义上等价**
+**论证1：AI与图灵机不在形式语言意义上等价**:
 
-```
+```text
 前提1：ℒNN(ℝ∞) = ℒRE （理论结果，需无限资源）
 前提2：ℒNN(𝔽64) ⊆ REG （实践结果，有限资源）
 前提3：图灵机识别 ℒRE
@@ -195,9 +201,9 @@ AI_model_Perspective/
 引用：[Weiss et al., 2018] 实验证据
 ```
 
-**论证2：大模型不能从正例学习正则语言**
+**论证2：大模型不能从正例学习正则语言**:
 
-```
+```text
 前提1：Gold定理 - 包含所有有限语言的语言类不可从正例学习
 前提2：正则语言类包含所有有限语言
 前提3：大模型训练只有正例（语料库）
@@ -206,9 +212,9 @@ AI_model_Perspective/
 引用：[Gold, 1967] 定理证明
 ```
 
-**论证3：语义模型是新范式但非超图灵**
+**论证3：语义模型是新范式但非超图灵**:
 
-```
+```text
 层面1（计算能力）：
   - 语义模型 ≤ 图灵可计算
   - 结论：不是新模型 ❌
@@ -230,7 +236,7 @@ AI_model_Perspective/
 
 建立了清晰的概念层次：
 
-```
+```text
 可计算性理论
 ├── 图灵机
 │   ├── 停机问题
@@ -322,12 +328,13 @@ AI哲学
 
 **精确定位AI的计算能力**：
 
-```
+```text
 ℒNN(ℝ∞) = ℒRE （理论，需无限资源）
 ℒNN(𝔽64) ⊆ REG （实践，有限资源）
 ```
 
 **揭示理论与实践的鸿沟**：
+
 - 理论图灵完备性需要不现实的假设
 - 实际能力受限于有限资源
 - "能模拟"≠"等价"
@@ -335,6 +342,7 @@ AI哲学
 ### 2. 学习理论洞察
 
 **Gold定理的应用**：
+
 - 大模型训练场景正是Gold定理禁止的
 - 成功依赖于：自然语言分布特性、归纳偏置、海量数据、近似学习
 - 不能期望精确学习形式语言
@@ -342,6 +350,7 @@ AI哲学
 ### 3. 哲学澄清
 
 **中文房间论证的现代意义**：
+
 - AI确实只是符号/向量操作
 - 但"理解"的定义本身有争议
 - 规模、学习、涌现可能改变情况
@@ -350,6 +359,7 @@ AI哲学
 ### 4. 范式转换
 
 **语义模型的三层评估**：
+
 1. 计算能力：不超越图灵机
 2. 抽象范式：连续-统计-语义，全新范式
 3. 工程系统：AI工厂，革命性
@@ -382,11 +392,13 @@ AI哲学
 ### 原 ai_model_view.md
 
 **优点**：
+
 - ✅ 核心洞察深刻
 - ✅ 问题提出准确
 - ✅ 分析思路清晰
 
 **不足**（已改进）：
+
 - ⚠️ 缺少系统组织
 - ⚠️ 引用不够完整
 - ⚠️ 某些论证跳跃
@@ -481,4 +493,3 @@ AI哲学
 **项目状态**：核心框架完成，持续扩充中
 
 **质量评级**：学术出版水平 ⭐⭐⭐⭐⭐
-
