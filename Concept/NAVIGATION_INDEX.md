@@ -119,25 +119,25 @@
 
 **Path 1: 理论基础** (形式语言背景)
 
-```
+```text
 统一框架 → 形式语言视角 → Chomsky层级 → 反身性 → Meta-learning
 ```
 
 **Path 2: AI应用** (机器学习背景)
 
-```
+```text
 AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → VC维
 ```
 
 **Path 3: 系统工程** (计算机系统背景)
 
-```
+```text
 图灵可计算 → 虚拟化 → 容器化 → 主权矩阵 → 三票理论
 ```
 
 **Path 4: 控制与优化** (控制理论背景)
 
-```
+```text
 控制论 → Ashby定律 → Data Rate定理 → MPC → 反馈控制
 ```
 
@@ -238,7 +238,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 </td><td width="33%">
 
-**分布式系统**
+**分布式系统**-
 
 - [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 - [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
@@ -247,7 +247,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 </td><td width="33%">
 
-**控制与优化**
+**控制与优化**-
 
 - [Ashby定律](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
 - [Data Rate定理](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
@@ -262,7 +262,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 <table>
 <tr><td width="50%">
 
-**元理论与反身性**
+**元理论与反身性**-
 
 - [反身性](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角)
 - [Meta-learning](CONCEPT_CROSS_INDEX.md#meta-learning-七视角)
@@ -271,7 +271,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 </td><td width="50%">
 
-**文明与经济**
+**文明与经济**-
 
 - [三票理论](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
 - [DIKWP模型](CONCEPT_CROSS_INDEX.md#dikwp模型-七视角)
@@ -529,7 +529,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 **概念分析框架**:
 
-```
+```text
 1. 定义（形式化）
 2. 七视角分析（形式语言、AI、信息论、图灵、控制、冯·诺依曼、分布式）
 3. 跨视角定理（统一性）
@@ -539,7 +539,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 **问题分析决策树**:
 
-```
+```text
 问题类型 → 选择主视角 → 辅助视角 → 概念工具 → 解决方案
 ```
 
@@ -636,7 +636,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 ### 目录结构
 
-```
+```text
 Concept/
 ├── README.md                           # 项目主入口
 ├── NAVIGATION_INDEX.md                 # 本导航文档
@@ -664,7 +664,7 @@ Concept/
 
 ### 核心文档依赖关系
 
-```
+```text
 NAVIGATION_INDEX (本文档)
     ↓
 README.md (项目主入口)
@@ -744,4 +744,4 @@ UNIFIED_FRAMEWORK.md (理论框架)
 
 ---
 
-**🎯 选择您的入口，开始探索形式科学的世界！🎯**
+**🎯 选择您的入口，开始探索形式科学的世界！🎯**-
