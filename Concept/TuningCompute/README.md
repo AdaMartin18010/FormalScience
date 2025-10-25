@@ -91,8 +91,7 @@
 
 ## 📋 快速导航
 
-<details>
-<summary><b>📖 目录</b> (点击展开)</summary>
+### 📖 目录
 
 ### 核心模块概览
 
@@ -127,8 +126,6 @@
 - **返回**: [项目主索引](../README.md)
 - **统一框架**: [UNIFIED_FRAMEWORK.md](../UNIFIED_FRAMEWORK.md)
 - **概念索引**: [CONCEPT_CROSS_INDEX.md](../CONCEPT_CROSS_INDEX.md)
-
-</details>
 
 ---
 

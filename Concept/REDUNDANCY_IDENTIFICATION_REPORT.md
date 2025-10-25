@@ -30,20 +30,20 @@
 **消除策略**:
 
 ```markdown
-【主定义位置】: CONCEPT_CROSS_INDEX.md
-  - 保留完整的七视角分析
-  - 保留信息论证明
-  - 保留系统分类表格
-  
-【次要位置】: SUPPLEMENTARY_PERSPECTIVES.md
-  - 精简为核心定理陈述（3-5行）
-  - 添加链接引用CONCEPT_CROSS_INDEX.md
-  - 保留与控制论/Von Neumann/分布式的特定关联
-  
-【预期效果】:
-  - 减少 ~40行重复内容
-  - 提升跨文档一致性
-  - 改善可维护性
+    【主定义位置】: CONCEPT_CROSS_INDEX.md
+    - 保留完整的七视角分析
+    - 保留信息论证明
+    - 保留系统分类表格
+    
+    【次要位置】: SUPPLEMENTARY_PERSPECTIVES.md
+    - 精简为核心定理陈述（3-5行）
+    - 添加链接引用CONCEPT_CROSS_INDEX.md
+    - 保留与控制论/Von Neumann/分布式的特定关联
+    
+    【预期效果】:
+    - 减少 ~40行重复内容
+    - 提升跨文档一致性
+    - 改善可维护性
 ```
 
 **具体操作**:
@@ -56,19 +56,18 @@ SUPPLEMENTARY_PERSPECTIVES.md:
 - 【删除】: 实例列表（行407-416）
 - 【删除】: 信息论证明（行436-442）
 + 【替换为】: 
-  ```markdown
-  #### 3.1.1 CAP定理（Brewer 2000）
-  
-  **定理**: 分布式系统最多同时满足一致性(C)、可用性(A)、分区容错性(P)中的两个。
-  
-  > 详细定义、证明和七视角分析见 [概念索引: CAP定理](CONCEPT_CROSS_INDEX.md#CAP定理-cap-theorem-新增分布式核心)
-  
-  **与补充视角的关联**:
-  - **控制论**: CAP ≈ 全局控制 vs 局部响应权衡
-  - **Von Neumann**: CAP ≈ 共享内存 vs 独立CPU权衡
-  - **分布式**: CAP是核心不可能三角
-  ```
-
+    ```markdown
+        #### 3.1.1 CAP定理（Brewer 2000）
+        
+        **定理**: 分布式系统最多同时满足一致性(C)、可用性(A)、分区容错性(P)中的两个。
+        
+        > 详细定义、证明和七视角分析见 [概念索引: CAP定理](CONCEPT_CROSS_INDEX.md#CAP定理-cap-theorem-新增分布式核心)
+        
+        **与补充视角的关联**:
+        - **控制论**: CAP ≈ 全局控制 vs 局部响应权衡
+        - **Von Neumann**: CAP ≈ 共享内存 vs 独立CPU权衡
+        - **分布式**: CAP是核心不可能三角
+    ```
 ```
 
 ---
@@ -78,12 +77,14 @@ SUPPLEMENTARY_PERSPECTIVES.md:
 **问题**: 反身性在多个文档中有详细解释，但程度不同
 
 **涉及文档**:
+
 1. `FormalLanguage_Perspective/01_Philosophical_Foundations/01.2_Reflexivity_Paradigm.md` (~400行专门文档)
 2. `CONCEPT_CROSS_INDEX.md` (行76-102, 表格式快速参考)
 3. `FAQ.md` (行178-210, 问答式简介)
 4. `formal_language_view.md` (多处提及)
 
 **分析**:
+
 - ✅ 专门文档（01.2）：深度分析，**应保留**
 - ✅ 概念索引：表格式参考，**应保留**
 - ✅ FAQ：问答式简介，**应保留**

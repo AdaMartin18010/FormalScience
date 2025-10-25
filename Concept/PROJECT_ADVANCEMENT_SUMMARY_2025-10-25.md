@@ -215,7 +215,7 @@
 
 ### 项目总结 (1份)
 
-1.  `PROJECT_ADVANCEMENT_SUMMARY_2025-10-25.md` - 本文档（项目推进总结）
+1. `PROJECT_ADVANCEMENT_SUMMARY_2025-10-25.md` - 本文档（项目推进总结）
 
 ---
 

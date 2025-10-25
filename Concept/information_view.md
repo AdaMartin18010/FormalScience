@@ -9,8 +9,7 @@
 
 ## 📖 目录
 
-<details>
-<summary><b>展开完整目录</b></summary>
+### 展开完整目录
 
 ### 核心理论
 
@@ -34,8 +33,6 @@
 - **信息论视角**: [InformationTheory_Perspective/](InformationTheory_Perspective/)
 - **统一框架**: [UNIFIED_FRAMEWORK.md](UNIFIED_FRAMEWORK.md)
 - **概念索引**: [CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md)
-
-</details>
 
 ---
 
