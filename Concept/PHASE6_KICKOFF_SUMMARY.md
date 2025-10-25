@@ -13,12 +13,14 @@
 #### 1. 下一阶段路线图（NEXT_PHASE_ROADMAP_2025-10.md）
 
 **内容**:
+
 - 📅 **15-18个月完整规划**（2025年11月-2027年）
 - 🔧 **Phase 6**: 工具开发与应用扩展（2025年11月-2026年3月）
 - 📚 **Phase 7**: 学术产出与教育资源（2026年Q1-Q2）
 - 🌍 **Phase 8**: 社区建设与国际推广（2026年Q3-2027年）
 
 **核心内容**:
+
 ```text
 6个自动化工具:
 ├─ P0工具（文档质量）
@@ -48,12 +50,14 @@
 #### 2. 立即行动计划（IMMEDIATE_ACTION_PLAN.md）
 
 **内容**:
+
 - 🎯 **本周可执行的3个任务**
 - 📝 **详细代码实现方案**
 - 📅 **Week 1-2行动计划**
 - 💡 **快速开始指南**
 
 **核心特色**:
+
 - 每个任务都有完整的代码框架
 - 预估工作量精确到小时
 - 立即可上手执行
@@ -67,6 +71,7 @@
 #### 1. 链接检查器（link_validator.py）✅
 
 **功能**:
+
 ```python
 ✅ 扫描所有markdown文件
 ✅ 验证内部链接有效性
@@ -77,6 +82,7 @@
 ```
 
 **核心特性**:
+
 - 智能锚点匹配（支持中英文标题）
 - 相似锚点建议
 - 按文件分组显示
@@ -85,6 +91,7 @@
 **代码规模**: 425行，功能完整
 
 **使用方法**:
+
 ```bash
 python tools/link_validator.py                    # 检查Concept/
 python tools/link_validator.py --dir docs/        # 指定目录
@@ -96,6 +103,7 @@ python tools/link_validator.py --report report.md # 保存报告
 #### 2. 目录生成器（toc_generator.py）✅
 
 **功能**:
+
 ```python
 ✅ 自动提取所有标题
 ✅ 生成多级目录树
@@ -107,6 +115,7 @@ python tools/link_validator.py --report report.md # 保存报告
 ```
 
 **核心特性**:
+
 - GitHub兼容的锚点格式
 - 自动移除旧目录
 - 可配置最大层级
@@ -115,6 +124,7 @@ python tools/link_validator.py --report report.md # 保存报告
 **代码规模**: 360行，功能完整
 
 **使用方法**:
+
 ```bash
 python tools/toc_generator.py file.md              # 单文件
 python tools/toc_generator.py Concept/*.md         # 批量
@@ -451,4 +461,3 @@ Phase 6-8: 工具化与应用
 ---
 
 **🎉 Phase 6 启动成功！从理论走向实践的新征程开始了！🎉**
-
