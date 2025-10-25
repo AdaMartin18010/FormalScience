@@ -162,7 +162,7 @@
 
 ### 修复后的文档结构
 
-```
+```text
 Concept/
 ├── README.md                          ✅ (链接全部有效)
 ├── NAVIGATION_INDEX.md                ✅ (链接全部有效)
