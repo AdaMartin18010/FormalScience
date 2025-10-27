@@ -125,7 +125,7 @@
 - `LEARNING_PATHS.md` - 学习路径
 - `QUICK_REFERENCE.md` - 快速参考
 
-#### TuningCompute/
+#### TuringCompute/
 - 25个主题文档
 
 ---

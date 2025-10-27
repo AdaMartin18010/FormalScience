@@ -10,7 +10,7 @@
 
 ### 1.1 三大技术形态的形式化定义
 
-基于`TuningCompute/Analysis/06_虚拟化容器化沙盒化形式化论证与理论证明_2025.md`：
+基于`TuringCompute/06_虚拟化容器化沙盒化形式化论证与理论证明_2025.md`：
 
 ```text
 【虚拟化】五元组
@@ -56,7 +56,7 @@ Bell-LaPadula模型：
 
 ### 1.2 隔离熵理论（HoTT视角）
 
-基于`TuningCompute/Analysis/07_虚拟化容器化沙盒化统一理论框架_HoTT视角_2025.md`：
+基于`TuringCompute/07_虚拟化容器化沙盒化统一理论框架_HoTT视角_2025.md`：
 
 ```text
 【隔离熵定义】
@@ -78,7 +78,7 @@ C_Sandbox = 10⁷ bit/s   (最弱隔离)
 
 ### 1.3 硅片主权（Silicon Sovereignty）
 
-基于`TuningCompute/Analysis/08_硅片主权与硬件边界形式化论证_2025.md`：
+基于`TuringCompute/08_硅片主权与硬件边界形式化论证_2025.md`：
 
 ```text
 【硅片主权五元组】
@@ -99,7 +99,7 @@ SiliconSovereignty = (H, M, D, I, P)
 
 ### 1.4 主权矩阵（九维空间）
 
-基于`TuningCompute/Analysis/11_虚拟化容器化沙盒化九维主权矩阵形式化论证_2025.md`：
+基于`TuringCompute/11_虚拟化容器化沙盒化九维主权矩阵形式化论证_2025.md`：
 
 ```text
 【九维主权空间】
@@ -360,7 +360,7 @@ s.t. 𝔼[d(X, X̂)] ≤ D
 
 ## 五、三票理论（Three Tickets Theory）的深度解读
 
-基于`TuningCompute/Analysis/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md`：
+基于`TuringCompute/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md`：
 
 ### 5.1 三票定义
 
@@ -443,7 +443,7 @@ Container：
 
 ## 六、裸机反超理论（Bare Metal Comeback）
 
-基于`TuningCompute/Analysis/12_...宇宙记账本视角_2025.md`中的深度分析：
+基于`TuringCompute/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md`中的深度分析：
 
 ### 6.1 裸机反超的四条临界条件
 
@@ -514,7 +514,7 @@ Meta Llama训练：
 
 ## 七、图灵机递归涂层理论（Turing Machine Recursive Coating）
 
-基于`TuningCompute/Analysis/12_...宇宙记账本视角_2025.md`最新补充：
+基于`TuringCompute/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md`最新补充：
 
 ### 7.1 核心命题
 
@@ -833,9 +833,9 @@ Balance(2025) = (E=0.84, I=37, R=89h)
 **关联文档**：
 
 - `UNIFIED_FRAMEWORK.md`
-- `TuningCompute/Analysis/*.md`
+- `TuringCompute/*.md`
 - `AI_model_Perspective/*.md`
 - `Information_Theory_Perspective/*.md`
 - `FormalLanguage_Perspective/*.md`
 
-**维护说明**：本文档随TuningCompute项目持续更新
+**维护说明**：本文档随TuringCompute项目持续更新

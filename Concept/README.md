@@ -101,7 +101,7 @@
 
 ---
 
-### 4. 图灵可计算视角 (`TuningCompute/`)
+### 4. 图灵可计算视角 (`TuringCompute/`)
 
 **核心问题**：如何实现安全隔离？系统主权如何量化？
 
@@ -126,7 +126,7 @@
 
 **完成度**：100%（所有核心理论完成）
 
-**文档**：[TuningCompute/README.md](TuningCompute/README.md)
+**文档**：[TuringCompute/README.md](TuringCompute/README.md)
 
 ---
 

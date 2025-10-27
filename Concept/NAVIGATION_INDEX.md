@@ -164,7 +164,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 | | [FormalLanguage_Perspective/README](FormalLanguage_Perspective/README.md) | 哲学科学对应、历史发展 | 264 |
 | **AI模型** | [AI模型视角](ai_model_view.md) | 神经网络、学习理论、对齐问题 | - |
 | **信息论** | [信息论视角](information_view.md) | 熵、互信息、Kolmogorov复杂度 | 1207 |
-| **图灵可计算** | [TuningCompute/](TuningCompute/) | 虚拟化、容器化、三票理论 | 25+文档 |
+| **图灵可计算** | [TuringCompute/](TuringCompute/) | 虚拟化、容器化、三票理论 | 25+文档 |
 
 ### 🎓 辅助学习文档
 
@@ -243,7 +243,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 - [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 - [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
 - [拜占庭容错](CONCEPT_CROSS_INDEX.md#概念索引)
-- [共识算法](TuningCompute/)
+- [共识算法](TuringCompute/)
 
 </td><td width="33%">
 
@@ -275,8 +275,8 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 - [三票理论](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
 - [DIKWP模型](CONCEPT_CROSS_INDEX.md#dikwp模型-七视角)
-- [耗散经济链](TuningCompute/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md)
-- [硅片主权](TuningCompute/)
+- [耗散经济链](TuringCompute/12_人类文明三票理论形式化论证_宇宙记账本视角_2025.md)
+- [硅片主权](TuringCompute/)
 
 </td></tr>
 </table>
@@ -359,7 +359,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 
 **主要文档**:
 
-- 📂 [TuningCompute/](TuningCompute/) (25+文档)
+- 📂 [TuringCompute/](TuringCompute/) (25+文档)
 - 📄 [图灵可计算整合](TURINGCOMPUTE_INTEGRATION.md)
 
 **代表性定理**:
@@ -402,7 +402,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 **主要文档**:
 
 - 📄 [补充视角：冯·诺依曼](SUPPLEMENTARY_PERSPECTIVES.md#冯·诺依曼架构视角)
-- 📄 [硬件架构论证](TuningCompute/13_硬件架构形式化论证_CPU北桥南桥IO设备对标_2025.md)
+- 📄 [硬件架构论证](TuringCompute/13_硬件架构形式化论证_CPU北桥南桥IO设备对标_2025.md)
 
 **代表性定理**:
 
@@ -422,7 +422,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 **主要文档**:
 
 - 📄 [补充视角：分布式](SUPPLEMENTARY_PERSPECTIVES.md#分布式系统理论视角)
-- 📂 [TuningCompute/](TuningCompute/) (共识算法、区块链)
+- 📂 [TuringCompute/](TuringCompute/) (共识算法、区块链)
 
 **代表性定理**:
 
@@ -454,11 +454,11 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 - Sovereignty(T) = (S₁, S₂, ..., S₉)
 - 隔离熵 H_isolation
 
-**推荐路径**: 图灵可计算 → TuningCompute → 主权矩阵
+**推荐路径**: 图灵可计算 → TuringCompute → 主权矩阵
 
 ### 区块链 / Web3
 
-**相关概念**: [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心) | [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角) | [拜占庭容错](TuningCompute/) | [反身性](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角)
+**相关概念**: [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心) | [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角) | [拜占庭容错](TuringCompute/) | [反身性](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角)
 
 **关键公式**:
 
@@ -651,7 +651,7 @@ Concept/
 ├── FormalLanguage_Perspective/         # 形式语言专题 (85+文档)
 ├── Information_Theory_Perspective/     # 信息论专题 (83+文档)
 ├── AI_model_Perspective/               # AI模型专题 (15+文档)
-├── TuningCompute/                      # 图灵可计算专题 (25+文档)
+├── TuringCompute/                      # 图灵可计算专题 (25+文档)
 │
 ├── CASE_STUDY_SMART_GRID.md           # 案例：智能电网
 ├── CASE_STUDY_QUANTUM_COMPUTING.md    # 案例：量子计算

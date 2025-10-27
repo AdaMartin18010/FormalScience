@@ -68,7 +68,7 @@
 1. **AI模型视角** (`AI_model_Perspective/`)
 2. **形式语言视角** (`FormalLanguage_Perspective/`)
 3. **信息论视角** (`Information_Theory_Perspective/`)
-4. **图灵可计算视角** (`TuningCompute/`)
+4. **图灵可计算视角** (`TuringCompute/`)
 
 **基础三视角**（补充）：
 5. **控制论视角** - 反馈与自我调节

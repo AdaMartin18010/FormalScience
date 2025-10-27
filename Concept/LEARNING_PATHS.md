@@ -337,7 +337,7 @@ Day 13-14: 实践项目：应用理论优化模型
 Day 3-5:   虚拟化 → Popek-Goldberg → 容器化
 Day 6-8:   主权矩阵 → 隔离熵 → 安全边界
 Day 9-10:  资源调度 → Ashby定律应用
-Day 11-12: TuningCompute专题文档
+Day 11-12: TuringCompute专题文档
 Day 13-14: 实践项目：优化K8s配置
 ```
 
@@ -491,7 +491,7 @@ Day 13-14: 实践项目：架构设计评审
 
 1. [CAP定理](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-新增分布式核心)
 2. [FLP不可能定理](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
-3. [拜占庭容错](TuningCompute/)
+3. [拜占庭容错](TuringCompute/)
 
 ### 控制与优化
 
@@ -502,7 +502,7 @@ Day 13-14: 实践项目：架构设计评审
 ### 案例学习
 
 - [智能电网](CASE_STUDY_SMART_GRID.md)
-- TuningCompute专题文档
+- TuringCompute专题文档
 
 **学习顺序**: 1→3→2→5→8→4→6→9→10→7
 
@@ -619,7 +619,7 @@ Day 13-14: 实践项目：架构设计评审
 
 **起点**: [图灵可计算整合](TURINGCOMPUTE_INTEGRATION.md)
 **核心**: 虚拟化、容器化、三票理论
-**专题**: [TuningCompute/](TuningCompute/)
+**专题**: [TuringCompute/](TuringCompute/)
 
 ### 控制论视角
 
@@ -631,7 +631,7 @@ Day 13-14: 实践项目：架构设计评审
 
 **起点**: [补充视角：冯·诺依曼](SUPPLEMENTARY_PERSPECTIVES.md#冯·诺依曼架构视角)
 **核心**: 三大祸根、冯·诺依曼瓶颈、指令集
-**专题**: [TuningCompute/13_硬件架构形式化论证](TuningCompute/)
+**专题**: [TuringCompute/13_硬件架构形式化论证](TuringCompute/)
 
 ### 分布式系统视角
 
@@ -664,7 +664,7 @@ Day 13-14: 实践项目：架构设计评审
 - [FormalLanguage_Perspective/](FormalLanguage_Perspective/) - 85+文档
 - [AI_model_Perspective/](AI_model_Perspective/) - 15+文档
 - [Information_Theory_Perspective/](Information_Theory_Perspective/) - 83+文档
-- [TuningCompute/](TuningCompute/) - 25+文档
+- [TuringCompute/](TuringCompute/) - 25+文档
 
 ### 案例研究
 

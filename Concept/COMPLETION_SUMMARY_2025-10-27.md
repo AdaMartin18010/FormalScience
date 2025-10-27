@@ -55,7 +55,7 @@ Concept/
 ├── FormalLanguage_Perspective/                [62个文档]
 ├── Information_Theory_Perspective/            [55+个文档]
 ├── AI_model_Perspective/                      [54个文档]
-├── TuningCompute/                             [25个文档]
+├── TuringCompute/                             [25个文档]
 ├── README.md                                  [项目主页]
 ├── formal_language_view.md                    [核心视角1]
 ├── information_view.md                        [核心视角2]

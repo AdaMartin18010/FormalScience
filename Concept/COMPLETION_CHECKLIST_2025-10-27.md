@@ -77,7 +77,7 @@
 | FormalLanguage_Perspective | 21 | 62 | ✅ 100% |
 | Information_Theory_Perspective | 10 | 55+ | ✅ 100% |
 | AI_model_Perspective | 10 | 54 | ✅ 100% |
-| TuningCompute | 1 | 25 | ✅ 100% |
+| TuringCompute | 1 | 25 | ✅ 100% |
 | **总计** | **42** | **196+** | ✅ **100%** |
 
 ---

@@ -130,7 +130,7 @@ AI模型视角      ████████████████████
 
 ### 4️⃣ 图灵计算视角
 
-**路径**: `TuningCompute/`
+**路径**: `TuringCompute/`
 
 ```yaml
 子目录数: 1
@@ -184,7 +184,7 @@ Concept/
 ├── FormalLanguage_Perspective/     [62文档, 21目录]
 ├── Information_Theory_Perspective/ [55+文档, 10目录]
 ├── AI_model_Perspective/          [54文档, 10目录]
-├── TuningCompute/                 [25文档]
+├── TuringCompute/                 [25文档]
 │
 └── [18个核心参考文档]
     ├── README.md
@@ -317,7 +317,7 @@ Concept/
   FormalLanguage: 62
   Information_Theory: 55+
   AI_model: 54
-  TuningCompute: 25
+  TuringCompute: 25
 
 平均文档长度: 400-1200行
 总字数: ~500,000+
@@ -494,7 +494,7 @@ Concept/
 - [形式语言视角](FormalLanguage_Perspective/README.md)
 - [信息论视角](Information_Theory_Perspective/README.md)
 - [AI模型视角](AI_model_Perspective/README.md)
-- [图灵计算视角](TuningCompute/README.md)
+- [图灵计算视角](TuringCompute/README.md)
 
 ---
 
