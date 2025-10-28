@@ -188,8 +188,8 @@ Wikipedia contributors. (年份). "条目标题". Wikipedia, The Free Encycloped
 #### 示例
 
 ```text
-Wikipedia contributors. (2024). "Information Theory". Wikipedia, The Free Encyclopedia. 
-https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2024-01-15
+Wikipedia contributors. (2025). "Information Theory". Wikipedia, The Free Encyclopedia. 
+https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2025-10-28
 ```
 
 ## 5. 术语标准化
@@ -285,6 +285,6 @@ https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2024-01-15
 ---
 
 **文档版本**：1.0  
-**最后更新**：2024-01-15  
-**下次更新**：2024-04-15  
+**最后更新**：2025-10-28  
+**下次更新**：2026-01-28  
 **维护者**：信息论多视角分析项目团队

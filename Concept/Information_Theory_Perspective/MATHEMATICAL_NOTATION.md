@@ -344,16 +344,17 @@
 | 1.0 | 2024-01-15 | 初始版本 | 项目团队 |
 | 1.1 | 2024-01-20 | 添加量子信息论符号 | 项目团队 |
 | 1.2 | 2024-01-25 | 添加生物信息论符号 | 项目团队 |
+| 1.3 | 2025-10-28 | 更新日期和引用 | 项目团队 |
 
 ## 14. 参考文献
 
 1. Cover, T. M., & Thomas, J. A. (2006). *Elements of Information Theory*. Wiley-Interscience.
 2. Nielsen, M. A., & Chuang, I. L. (2010). *Quantum Computation and Quantum Information*. Cambridge University Press.
-3. Wikipedia contributors. (2024). "Mathematical Notation". Wikipedia, The Free Encyclopedia.
+3. Wikipedia contributors. (2025). "Mathematical Notation". Wikipedia, The Free Encyclopedia.
 
 ---
 
-**文档版本**：1.2  
-**最后更新**：2024-01-25  
+**文档版本**：1.3  
+**最后更新**：2025-10-28  
 **维护者**：信息论多视角分析项目团队  
 **审核**：数学符号标准化委员会
