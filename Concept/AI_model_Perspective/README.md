@@ -319,6 +319,35 @@ AI（特别是大语言模型）不是传统图灵机的简单替代或升级，
 
 ---
 
+## 导航 | Navigation
+
+**开始学习**: [01.1 图灵机与可计算性 →](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)  
+**总览索引**: [00 完整索引 →](./00_Master_Index.md)  
+**返回上级**: [↑ Concept总目录](../README.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [00 完整索引](./00_Master_Index.md)
+- [术语表](./GLOSSARY.md)
+- [快速参考](./QUICK_REFERENCE.md)
+- [学习路径](./LEARNING_PATHS.md)
+- [常见问题](./FAQ.md)
+
+### 推荐起点
+- [01.1 图灵机与可计算性](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- [02.1 神经网络基础](./02_Neural_Network_Theory/02.1_Neural_Network_Foundations.md)
+- [03.3 Transformer LLM理论](./03_Language_Models/03.3_Transformer_LLM_Theory.md)
+
+### 跨视角链接
+- [Software_Perspective](../Software_Perspective/README.md)
+- [FormalLanguage_Perspective](../FormalLanguage_Perspective/README.md)
+- [Information_Theory_Perspective](../Information_Theory_Perspective/README.md)
+
+---
+
 **最后更新**: 2025-10-25
 
 **项目状态**: ✅ **核心内容全部完成（100%）**

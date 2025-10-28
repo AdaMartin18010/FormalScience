@@ -711,4 +711,31 @@
 
 完整定义和详细讨论请参阅各章节文档。
 
+---
+
+## 导航 | Navigation
+
+**返回主页**: [← AI模型视角总览](./README.md)  
+**相关文档**: [快速参考 →](./QUICK_REFERENCE.md) | [常见问题 →](./FAQ.md)  
+**学习指南**: [学习路径 →](./LEARNING_PATHS.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [AI模型视角总览](./README.md)
+- [完整索引](./00_Master_Index.md)
+- [快速参考](./QUICK_REFERENCE.md)
+- [学习路径](./LEARNING_PATHS.md)
+- [常见问题](./FAQ.md)
+
+### 核心章节
+- [01 基础理论](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- [02 神经网络理论](./02_Neural_Network_Theory/02.1_Neural_Network_Foundations.md)
+- [03 语言模型](./03_Language_Models/03.1_Statistical_Language_Models.md)
+- [05 学习理论](./05_Learning_Theory/05.1_PAC_Learning_Framework.md)
+
+---
+
 **最后更新**：2025-10-25

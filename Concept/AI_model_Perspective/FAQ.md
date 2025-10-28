@@ -1016,6 +1016,30 @@ GitHub: https://github.com/[repo]/Concept/AI_model_Perspective/
 
 ---
 
+## 导航 | Navigation
+
+**返回主页**: [← AI模型视角总览](./README.md)  
+**相关文档**: [术语表 →](./GLOSSARY.md) | [快速参考 →](./QUICK_REFERENCE.md)  
+**学习指南**: [学习路径 →](./LEARNING_PATHS.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [AI模型视角总览](./README.md)
+- [完整索引](./00_Master_Index.md)
+- [术语表](./GLOSSARY.md)
+- [快速参考](./QUICK_REFERENCE.md)
+- [学习路径](./LEARNING_PATHS.md)
+
+### 推荐章节
+- [01 基础理论](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- [07 AI哲学](./07_AI_Philosophy/07.1_Chinese_Room_Argument.md)
+- [10 未来方向](./10_Future_Directions/10.1_AGI_Pathways.md)
+
+---
+
 **最后更新**：2025-10-25
 
 **配套文档**：

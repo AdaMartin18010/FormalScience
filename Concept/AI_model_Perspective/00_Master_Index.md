@@ -322,3 +322,26 @@ AI不是"图灵机 2.0"，而是**图灵机之外的另一种"计算物种"**：
 ---
 
 *本索引建立了AI模型视角的完整分析框架，从计算理论、神经网络、语言模型、语义模型、学习理论、计算范式、AI哲学等多个维度，系统性地阐述了AI的本质、能力边界和未来方向。所有内容均基于严格的理论论证和权威文献引用，确保学术严谨性和概念准确性。*
+
+---
+
+## 导航 | Navigation
+
+**返回主页**: [← AI模型视角总览](./README.md)  
+**开始学习**: [01.1 图灵机与可计算性 →](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)  
+**学习指南**: [学习路径 →](./LEARNING_PATHS.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [术语表](./GLOSSARY.md)
+- [快速参考](./QUICK_REFERENCE.md)
+- [学习路径](./LEARNING_PATHS.md)
+- [常见问题](./FAQ.md)
+
+### 跨视角链接
+- [Software_Perspective](../Software_Perspective/README.md)
+- [FormalLanguage_Perspective](../FormalLanguage_Perspective/README.md)
+- [Information_Theory_Perspective](../Information_Theory_Perspective/README.md)

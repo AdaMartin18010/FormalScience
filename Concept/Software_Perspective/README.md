@@ -7,6 +7,20 @@
 
 ---
 
+## 目录 | Table of Contents
+
+- [Software Perspective - 软件透视](#software-perspective---软件透视)
+  - [目录 | Table of Contents](#目录--table-of-contents)
+  - [简介](#简介)
+  - [核心主张](#核心主张)
+  - [核心框架](#核心框架)
+  - [十大模块概览](#十大模块概览)
+  - [阅读路径](#阅读路径)
+  - [关键洞察](#关键洞察)
+  - [相关主题](#相关主题)
+
+---
+
 ## 简介
 
 **软件透视**（Software Perspective）是 FormalScience 项目的核心透视维度之一，专注于从软件工程、架构演进和计算平台的角度，理解人类认知的形式化过程。

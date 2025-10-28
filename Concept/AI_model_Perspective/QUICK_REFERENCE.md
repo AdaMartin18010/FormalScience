@@ -609,6 +609,30 @@ cos(θ) = (u · v) / (||u|| · ||v||)
 
 ---
 
+## 导航 | Navigation
+
+**返回主页**: [← AI模型视角总览](./README.md)  
+**相关文档**: [术语表 →](./GLOSSARY.md) | [常见问题 →](./FAQ.md)  
+**学习指南**: [学习路径 →](./LEARNING_PATHS.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [AI模型视角总览](./README.md)
+- [完整索引](./00_Master_Index.md)
+- [术语表](./GLOSSARY.md)
+- [学习路径](./LEARNING_PATHS.md)
+- [常见问题](./FAQ.md)
+
+### 推荐起点
+- [01.1 图灵机与可计算性](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- [02.4 Transformer架构](./02_Neural_Network_Theory/02.4_Transformer_Architecture.md)
+- [03.3 Transformer LLM理论](./03_Language_Models/03.3_Transformer_LLM_Theory.md)
+
+---
+
 **最后更新**：2025-10-25
 
 **配套文档**：

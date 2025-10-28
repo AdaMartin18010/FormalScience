@@ -819,6 +819,31 @@
 
 ---
 
+## 导航 | Navigation
+
+**返回主页**: [← AI模型视角总览](./README.md)  
+**相关文档**: [术语表 →](./GLOSSARY.md) | [快速参考 →](./QUICK_REFERENCE.md)  
+**问题解答**: [常见问题 →](./FAQ.md)
+
+---
+
+## 相关主题 | Related Topics
+
+### 辅助文档
+- [AI模型视角总览](./README.md)
+- [完整索引](./00_Master_Index.md)
+- [术语表](./GLOSSARY.md)
+- [快速参考](./QUICK_REFERENCE.md)
+- [常见问题](./FAQ.md)
+
+### 各路径起点
+- **初学者**: [01.1 图灵机基础](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- **工程师**: [02.1 神经网络基础](./02_Neural_Network_Theory/02.1_Neural_Network_Foundations.md)
+- **研究者**: [01章完整理论](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
+- **哲学家**: [07.1 中文房间论证](./07_AI_Philosophy/07.1_Chinese_Room_Argument.md)
+
+---
+
 **最后更新**：2025-10-25
 
 **配套文档**：
