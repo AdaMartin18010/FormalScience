@@ -151,7 +151,6 @@ Week 3-4: 弹性工程
 - CQRS读写分离
 - Event Sourcing事件溯源
 
-**实施路径**：见 `09.7_Case_Study_Ecommerce_Microservices.md`
 
 ### 案例 2：高并发秒杀系统
 **场景**：双11秒杀系统设计
@@ -318,14 +317,9 @@ CAP定理：
 
 **核心模式**：
 - [09.1 微服务拆分策略](./09.1_Microservices_Decomposition.md)
-- [09.2 服务间通信模式](./09.2_Inter_Service_Communication.md)
 - [09.3 断路器与容错](./09.3_Circuit_Breaker_Resilience.md)
-- [09.4 分布式数据管理](./09.4_Distributed_Data_Management.md)
-- [09.5 金丝雀发布实战](./09.5_Canary_Deployment_Practice.md)
-- [09.6 多级缓存架构](./09.6_Multi_Level_Caching.md)
 
 **实战案例**：
-- [09.7 电商微服务改造](./09.7_Case_Study_Ecommerce_Microservices.md)
 - [09.8 秒杀系统设计](./09.8_Case_Study_Flash_Sale_System.md)
 
 ## 延伸阅读
@@ -348,5 +342,4 @@ CAP定理：
 
 ---
 
-**导航**：[← 上一章：平台工程](../08_Platform_Engineering/README.md) | [下一章：未来方向 →](../10_Future_Directions/README.md)
 

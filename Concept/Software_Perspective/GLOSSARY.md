@@ -52,7 +52,6 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 **认知负载**  
 开发者在理解和操作系统时需要保持在工作记忆中的信息量。
 
-**相关**：[8.5 认知负载管理](./08_Platform_Engineering/08.5_Cognitive_Load_Management.md)
 
 ### Complexity Conservation
 **复杂度守恒**  
@@ -127,7 +126,6 @@ DevOps Research and Assessment 定义的四个关键指标：
 ### HPA (Horizontal Pod Autoscaler)
 Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自动调整副本数。
 
-**相关**：[5.3 HPA 与 KEDA](./05_Configuration_Scaling/05.3_HPA_KEDA.md)
 
 ## I
 
@@ -143,7 +141,6 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 **内部开发者平台**  
 企业内部构建的平台，为开发者提供自助服务能力，降低认知负载。
 
-**相关**：[8.2 内部开发者平台](./08_Platform_Engineering/08.2_Internal_Developer_Platform.md)
 
 ### Intent-Driven
 **意图驱动**  
@@ -156,7 +153,6 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 ### KEDA (Kubernetes Event-Driven Autoscaler)
 基于事件源（Kafka、SQS、Prometheus 等）的 Kubernetes 自动扩缩容器。
 
-**相关**：[5.3 HPA 与 KEDA](./05_Configuration_Scaling/05.3_HPA_KEDA.md)
 
 ## L
 
@@ -215,7 +211,6 @@ OpenTelemetry 项目定义的统一可观测性协议，支持 Metrics、Traces�
 
 **工具**：OPA、Kyverno、Gatekeeper
 
-**相关**：[6.3 策略即代码](./06_Observability_Governance/06.3_Policy_as_Code.md)
 
 ## R
 
@@ -239,7 +234,6 @@ allow {
 - 市场不确定性（2020 年代缺口）
 - AI 伦理（未来缺口）
 
-**相关**：[3.2 语义缺口识别](./03_Semantic_Formal_Duality/03.2_Semantic_Gap_Formalization.md)
 
 ### Semantic Layer
 **语义层**  
@@ -363,5 +357,4 @@ allow {
 
 ---
 
-**导航**：[返回主页](./README.md) | [快速参考 →](./QUICK_REFERENCE.md)
 

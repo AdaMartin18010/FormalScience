@@ -70,7 +70,6 @@
 
 #### Week 4: 综合理解
 - [3.3 从泰勒斯到晶体管](./03_Semantic_Formal_Duality/03.3_Thales_to_Transistor.md)
-- [README - 完整框架](./README.md)
 - **作业**：写一篇文章"我理解的软件演进"
 
 ### 推荐阅读顺序
@@ -141,16 +140,13 @@
 
 #### Phase 2: 平台工程（3 周）
 - [8.1 平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md) ⭐️
-- [8.2 内部开发者平台](./08_Platform_Engineering/08.2_Internal_Developer_Platform.md)
 - [8.3 黄金路径](./08_Platform_Engineering/08.3_Golden_Path.md)
 - **项目**：设计一个最小 IDP
 
 #### Phase 3: 认知负载（1 周）
-- [8.5 认知负载管理](./08_Platform_Engineering/08.5_Cognitive_Load_Management.md)
 - **评估**：测量当前团队的认知负载
 
 #### Phase 4: 实施策略（2 周）
-- [8.4 平台团队拓扑](./08_Platform_Engineering/08.4_Platform_Team_Topology.md)
 - **计划**：为你的组织规划平台团队
 
 ### 关键里程碑
@@ -179,7 +175,6 @@
 
 #### Phase 2: 可观测性（3 周）
 - [4.2 OTLP 可观测性](./04_Self_Healing_Systems/04.2_OTLP_Observability.md)
-- [6.2 OpenTelemetry 标准](./06_Observability_Governance/06.2_OpenTelemetry_Standard.md)
 - **实践**：
   - Week 1: 部署 OTLP Collector
   - Week 2: 接入 Prometheus + Grafana
@@ -187,7 +182,6 @@
 
 #### Phase 3: 策略引擎（2 周）
 - [4.3 OPA 策略引擎](./04_Self_Healing_Systems/04.3_OPA_Policy_Engine.md)
-- [6.3 策略即代码](./06_Observability_Governance/06.3_Policy_as_Code.md)
 - **实践**：
   - Week 1: 部署 OPA + 写 5 条策略
   - Week 2: 集成到 K8s 准入控制
@@ -222,18 +216,14 @@
 
 #### Week 1-2: 配置管理
 - [5.1 配置管理全景](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md) ⭐️
-- [5.4 GitOps 配置即代码](./05_Configuration_Scaling/05.4_GitOps_Configuration_as_Code.md)
 - **实践**：迁移到 GitOps 配置管理
 
 #### Week 3-4: 自动扩缩容
-- [5.2 自主扩缩容机制](./05_Configuration_Scaling/05.2_Autoscaling_Mechanisms.md)
-- [5.3 HPA 与 KEDA](./05_Configuration_Scaling/05.3_HPA_KEDA.md) ⭐️
 - **实践**：
   - Week 3: 配置 HPA
   - Week 4: 配置 KEDA (事件驱动)
 
 #### Week 5-6: 选型与优化
-- [5.5 选型决策矩阵](./05_Configuration_Scaling/05.5_Selection_Decision_Matrix.md)
 - **项目**：优化现有系统的资源利用率
 
 ### 效果目标
@@ -269,8 +259,6 @@
   - Week 4: 提示词工程（Copilot/GPT）
 
 #### Phase 3: 商业对接（2 周）
-- [7.5 商业洞察编译器](./07_Developer_Evolution/07.5_Business_Insight_Compiler.md)
-- [7.2 从编码到提示工程](./07_Developer_Evolution/07.2_From_Coding_to_Prompt_Engineering.md)
 - **项目**：完成一个"商业需求→可运行系统"的端到端案例
 
 ### 转型检查清单
@@ -299,14 +287,10 @@
 - **输出**：形成自己的架构哲学
 
 #### Phase 2: 模式精通（4 周）
-- [9.2 微服务架构模式](./09_Cloud_Native_Patterns/09.2_Microservices_Patterns.md)
 - [9.3 Service Mesh](./09_Cloud_Native_Patterns/09.3_Service_Mesh.md)
-- [9.5 事件驱动架构](./09_Cloud_Native_Patterns/09.5_Event_Driven_Architecture.md)
 - **实践**：为 3 个不同场景设计架构
 
 #### Phase 3: 治理体系（3 周）
-- [6.3 策略即代码](./06_Observability_Governance/06.3_Policy_as_Code.md)
-- [6.4 合规性自动化](./06_Observability_Governance/06.4_Compliance_Automation.md)
 - **输出**：设计完整的治理体系
 
 #### Phase 4: 未来趋势（2 周）
@@ -380,15 +364,12 @@
 - **理解**：螺旋加速的规律
 
 #### Phase 2: 当下定位（2 周）
-- [README - 2025 冬视角](./README.md)
 - [2.5 下沉阶段模型](./02_Architecture_Sink/02.5_Sink_Stage_Model.md)
 - **定位**：我们在 L2→L3 拐点
 
 #### Phase 3: 未来推演（4 周）
 - [10.1 意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md) ⭐️
-- [10.2 硅片级策略](./10_Future_Directions/10.2_Silicon_Level_Policy.md)
 - [10.3 AI 辅助软件工程](./10_Future_Directions/10.3_AI_Assisted_Software_Engineering.md)
-- [10.4 零代码态预测](./10_Future_Directions/10.4_Zero_Code_State_Prediction.md)
 - **预测**：写一篇"2030 年的软件工程"
 
 ### 研究方向
@@ -537,5 +518,4 @@
 
 ---
 
-**导航**：[返回主页](./README.md) | [完整索引](./00_Master_Index.md) | [快速参考](./QUICK_REFERENCE.md)
 

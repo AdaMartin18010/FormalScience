@@ -247,7 +247,6 @@ CRUD 程序员
 - 基础设施：云（K8s、数据库）
 - 应用平台：内部（GitOps、监控、治理）
 
-**详见**：[8.2 内部开发者平台](./08_Platform_Engineering/08.2_Internal_Developer_Platform.md)
 
 ---
 
@@ -383,7 +382,6 @@ CRUD 程序员
 - 系统设计
 - 沟通能力（平台服务于业务）
 
-**详见**：[8.4 平台团队拓扑](./08_Platform_Engineering/08.4_Platform_Team_Topology.md)
 
 ---
 
@@ -511,5 +509,4 @@ kubectl get pods --all-namespaces
 
 **还有问题？** 欢迎提 Issue 或 PR！
 
-**导航**：[返回主页](./README.md)
 

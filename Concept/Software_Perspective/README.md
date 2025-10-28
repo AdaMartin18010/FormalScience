@@ -134,13 +134,14 @@
 
 ### 实践模式
 - [自愈系统实现](./04_Self_Healing_Systems/04.5_Self_Healing_Loop_Implementation.md)
-- [配置管理选型](./05_Configuration_Scaling/05.5_Selection_Decision_Matrix.md)
-- [平台工程实践](./08_Platform_Engineering/08.2_Internal_Developer_Platform.md)
+- [配置管理全景](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md)
+- [平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
+- [内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### 未来方向
 - [意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md)
-- [硅片级策略](./10_Future_Directions/10.2_Silicon_Level_Policy.md)
-- [AI 辅助工程](./10_Future_Directions/10.3_AI_Assisted_Software_Engineering.md)
+- [量子计算集成](./10_Future_Directions/10.3_Quantum_Computing_Integration.md)
+- [意识机器集成](./10_Future_Directions/10.5_Consciousness_Machine_Integration.md)
 
 ## 快速开始
 
@@ -151,13 +152,13 @@
 
 ### 对于实践者
 1. 部署 [自愈系统闭环](./04_Self_Healing_Systems/04.5_Self_Healing_Loop_Implementation.md)
-2. 应用 [GitOps 配置管理](./05_Configuration_Scaling/05.4_GitOps_Configuration_as_Code.md)
-3. 构建 [内部开发者平台](./08_Platform_Engineering/08.2_Internal_Developer_Platform.md)
+2. 应用 [配置管理方案](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md)
+3. 构建 [内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### 对于架构师
-1. 研究 [平台工程演进](./02_Architecture_Sink/02.4_Platform_Engineering_Evolution.md)
-2. 设计 [黄金路径](./08_Platform_Engineering/08.3_Golden_Path.md)
-3. 规划 [认知负载管理](./08_Platform_Engineering/08.5_Cognitive_Load_Management.md)
+1. 研究 [架构下沉原理](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
+2. 学习 [下沉阶段模型](./02_Architecture_Sink/02.5_Sink_Stage_Model.md)
+3. 规划 [平台工程实施](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
 
 ## 核心价值主张
 
