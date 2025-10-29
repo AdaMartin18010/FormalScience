@@ -2,16 +2,6 @@
 
 ## 📋 目录
 
-  - [01_Foundational_Theory (基础理论)](#01-foundational-theory-基础理论)
-  - [02_Neural_Network_Theory (神经网络理论)](#02-neural-network-theory-神经网络理论)
-  - [03_Language_Models (语言模型)](#03-language-models-语言模型)
-  - [04_Semantic_Models (语义模型)](#04-semantic-models-语义模型)
-  - [05_Learning_Theory (学习理论)](#05-learning-theory-学习理论)
-  - [06_Computational_Paradigms (计算范式)](#06-computational-paradigms-计算范式)
-  - [07_AI_Philosophy (AI哲学)](#07-ai-philosophy-ai哲学)
-  - [08_Comparison_Analysis (对比分析)](#08-comparison-analysis-对比分析)
-  - [09_AI_Factory_Model (AI工厂模型)](#09-ai-factory-model-ai工厂模型)
-  - [10_Future_Directions (未来方向)](#10-future-directions-未来方向)
 - [核心理念概述](#核心理念概述)
   - [AI的本质定位](#ai的本质定位)
   - [图灵机 vs AI 的关键区别](#图灵机-vs-ai-的关键区别)
@@ -40,12 +30,12 @@
   - [学术严谨性](#学术严谨性)
   - [参考文献要求](#参考文献要求)
 - [使用指南](#使用指南)
-  - [📚 辅助文档](#辅助文档)
+  - [📚 辅助文档](#-辅助文档)
   - [快速导航](#快速导航)
   - [学习路径](#学习路径)
 - [项目状态](#项目状态)
-- [导航 | Navigation](#导航-navigation)
-- [相关主题 | Related Topics](#相关主题-related-topics)
+- [导航 | Navigation](#导航--navigation)
+- [相关主题 | Related Topics](#相关主题--related-topics)
   - [辅助文档](#辅助文档)
   - [跨视角链接](#跨视角链接)
 

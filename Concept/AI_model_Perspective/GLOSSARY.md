@@ -93,11 +93,10 @@
   - [注意力机制（Attention Mechanism）](#注意力机制attention-mechanism)
 - [缩略语索引](#缩略语索引)
 - [参考资料](#参考资料)
-- [导航 | Navigation](#导航-navigation)
-- [相关主题 | Related Topics](#相关主题-related-topics)
+- [导航 | Navigation](#导航--navigation)
+- [相关主题 | Related Topics](#相关主题--related-topics)
   - [辅助文档](#辅助文档)
   - [核心章节](#核心章节)
-
 
 ---
 

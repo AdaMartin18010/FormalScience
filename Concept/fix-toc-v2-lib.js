@@ -12,15 +12,34 @@ class TOCFixerV2 {
     this.fixedFiles = [];
   }
 
-  // 生成 GitHub 风格的 anchor
+  // 生成 Markdown linter 兼容的 anchor
   generateAnchor(text) {
-    return text
+    // 先标记键帽数字emoji序列（保护它们不被转换）
+    // 使用私用区Unicode字符作为占位符（U+E000-U+F8FF）
+    const placeholders = [];
+    let processed = text.replace(/[\u0030-\u0039][\u{FE0F}]?[\u{20E3}]/gu, (match) => {
+      const id = placeholders.length;
+      placeholders.push(match);
+      return `\uE000${id}\uE001`;  // 使用私用区字符作为分隔符
+    });
+    
+    // 处理其他emoji（转为单连字符）
+    processed = processed
       .toLowerCase()
-      .replace(/[^\w\s\u4e00-\u9fff_-]/g, '')
-      .replace(/\s+/g, '-')
+      .replace(/[\u{1F000}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{FE00}-\u{FE0F}\u{200D}]/gu, '-')
+      // 移除其他非法字符（但保留私用区占位符）
+      .replace(/[^\w\s\u4e00-\u9fff\uE000-\uE001_-]/g, '')
+      .replace(/\s/g, '-')  // 每个空格单独转为-，保留连续空格产生的--
       .replace(/_/g, '-')
-      // .replace(/-+/g, '-')  // ❌ 移除：GitHub保留多个连续的-
-      .replace(/^-+|-+$/g, '');  // ✅ 只移除开头和结尾的-
+      .replace(/^-{2,}/g, '-')  // 只移除开头2个以上的连续-，保留单个-
+      .replace(/-{2,}$/g, '');
+    
+    // 恢复键帽数字emoji
+    processed = processed.replace(/\uE000(\d+)\uE001/g, (_, index) => {
+      return placeholders[parseInt(index)].toLowerCase();
+    });
+    
+    return processed;
   }
 
   // 提取标题（跳过 <details> 块内的内容）

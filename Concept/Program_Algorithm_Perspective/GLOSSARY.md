@@ -9,7 +9,7 @@
 
 ## 📋 目录
 
-- [📋 索引](#索引)
+- [📋 索引](#-索引)
 - [A](#a)
   - [Abstract Factory (抽象工厂模式)](#abstract-factory-抽象工厂模式)
   - [Adaptivity (自适应性)](#adaptivity-自适应性)
@@ -56,7 +56,7 @@
   - [Operational Semantics (操作语义)](#operational-semantics-操作语义)
 - [P](#p)
   - [Petri Net (Petri 网)](#petri-net-petri-网)
-  - [π-Calculus (π-演算)](#calculus--演算)
+  - [π-Calculus (π-演算)](#-calculus--演算)
   - [Privacy Budget (隐私预算)](#privacy-budget-隐私预算)
   - [Proxy Pattern (代理模式)](#proxy-pattern-代理模式)
 - [Q](#q)
@@ -86,7 +86,6 @@
 - [缩写表](#缩写表)
 - [符号表](#符号表)
 - [扩展阅读](#扩展阅读)
-
 
 ---
 

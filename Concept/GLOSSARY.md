@@ -12,7 +12,7 @@
 
 ## 📋 目录
 
-- [📋 快速导航](#快速导航)
+- [📋 快速导航](#-快速导航)
 - [按字母索引](#按字母索引)
   - [A](#a)
     - [AGI (Artificial General Intelligence)](#agi-artificial-general-intelligence)
@@ -82,7 +82,6 @@
   - [术语说明规范](#术语说明规范)
   - [持续更新](#持续更新)
 - [相关资源](#相关资源)
-
 
 ---
 
