@@ -5,6 +5,72 @@
 
 ---
 
+
+---
+
+## 📋 目录
+
+- [📊 项目概览 (Project Overview)](#项目概览-project-overview)
+  - [核心目标](#核心目标)
+- [📁 完整文件列表 (Complete File Inventory)](#完整文件列表-complete-file-inventory)
+  - [根目录文件 (3个)](#根目录文件-3个)
+  - [第1章：形式化语义 (Formal Semantics) - 5个文件](#第1章形式化语义-formal-semantics---5个文件)
+  - [第2章：设计模式 (Design Patterns) - 6个文件](#第2章设计模式-design-patterns---6个文件)
+  - [第3章：算法复杂度 (Algorithm Complexity) - 6个文件](#第3章算法复杂度-algorithm-complexity---6个文件)
+  - [第4章：架构模式 (Architecture Patterns) - 5个文件](#第4章架构模式-architecture-patterns---5个文件)
+  - [第5章：形式化验证 (Formal Verification) - 3个文件](#第5章形式化验证-formal-verification---3个文件)
+- [📈 统计数据 (Statistics)](#统计数据-statistics)
+  - [文档数量](#文档数量)
+  - [覆盖的编程语言](#覆盖的编程语言)
+  - [覆盖的工具](#覆盖的工具)
+- [🎯 核心贡献 (Key Contributions)](#核心贡献-key-contributions)
+  - [1. UH-Cost 统一形式化框架](#1-uh-cost-统一形式化框架)
+  - [2. 三维视角 (Control-Execution-Data)](#2-三维视角-control-execution-data)
+  - [3. 模式即重写规则 (Patterns as Rewriting Rules)](#3-模式即重写规则-patterns-as-rewriting-rules)
+  - [4. 跨层验证方法论](#4-跨层验证方法论)
+- [🌐 国际标准对齐 (International Alignment)](#国际标准对齐-international-alignment)
+  - [Wikipedia 概念覆盖](#wikipedia-概念覆盖)
+  - [大学课程映射](#大学课程映射)
+  - [教材引用](#教材引用)
+- [🔗 本地项目集成 (Local Project Integration)](#本地项目集成-local-project-integration)
+  - [交叉引用](#交叉引用)
+  - [工具链复用](#工具链复用)
+- [🎓 学习路径建议 (Learning Paths)](#学习路径建议-learning-paths)
+  - [路径1：理论优先（适合研究生）](#路径1理论优先适合研究生)
+  - [路径2：工程优先（适合工业界）](#路径2工程优先适合工业界)
+  - [路径3：全栈开发者](#路径3全栈开发者)
+- [✨ 独特特色 (Unique Features)](#独特特色-unique-features)
+  - [1. 双语支持](#1-双语支持)
+  - [2. 可执行示例](#2-可执行示例)
+  - [3. 形式化与实践结合](#3-形式化与实践结合)
+  - [4. 工具链完整性](#4-工具链完整性)
+  - [5. 持续更新机制](#5-持续更新机制)
+- [🚀 未来扩展方向 (Future Directions)](#未来扩展方向-future-directions)
+  - [短期（3-6个月）](#短期3-6个月)
+  - [中期（6-12个月）](#中期6-12个月)
+  - [长期（1-2年）](#长期1-2年)
+- [🙏 致谢 (Acknowledgments)](#致谢-acknowledgments)
+  - [学术界](#学术界)
+  - [工业界](#工业界)
+  - [开源社区](#开源社区)
+- [📝 维护指南 (Maintenance Guidelines)](#维护指南-maintenance-guidelines)
+  - [文件命名规范](#文件命名规范)
+  - [更新流程](#更新流程)
+  - [验证清单](#验证清单)
+- [📌 快速访问 (Quick Access)](#快速访问-quick-access)
+  - [最受欢迎章节](#最受欢迎章节)
+  - [最具挑战性章节](#最具挑战性章节)
+  - [初学者友好章节](#初学者友好章节)
+- [📧 联系方式 (Contact)](#联系方式-contact)
+  - [问题反馈](#问题反馈)
+  - [贡献方式](#贡献方式)
+  - [许可证](#许可证)
+- [✅ 最终检查清单 (Final Checklist)](#最终检查清单-final-checklist)
+- [🎉 结语 (Conclusion)](#结语-conclusion)
+
+
+---
+
 ## 📊 项目概览 (Project Overview)
 
 本报告总结了 **Program-Algorithm-Design Perspective** 的完整构建过程，该知识体系从形式化语言视角对编程、算法、设计模式和软件架构进行了系统性扩展。

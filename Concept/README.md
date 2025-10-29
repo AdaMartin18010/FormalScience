@@ -6,6 +6,68 @@
 
 ---
 
+
+---
+
+## 📋 目录
+
+- [项目概览](#项目概览)
+  - [八视角架构图 ✨](#八视角架构图)
+- [核心四大理论视角（抽象层+应用层）](#核心四大理论视角抽象层应用层)
+  - [1. 形式语言视角 (`FormalLanguage_Perspective/`)](#1-形式语言视角-formallanguage-perspective)
+  - [2. AI模型视角 (`AI_model_Perspective/`)](#2-ai模型视角-ai-model-perspective)
+  - [3. 信息论视角 (`Information_Theory_Perspective/`)](#3-信息论视角-information-theory-perspective)
+  - [4. 图灵可计算视角 (`TuringCompute/`)](#4-图灵可计算视角-turingcompute)
+- [基础三大理论视角（物理层）](#基础三大理论视角物理层)
+  - [5. 控制论视角](#5-控制论视角)
+  - [6. 冯·诺依曼架构视角](#6-冯诺依曼架构视角)
+  - [7. 分布式系统视角](#7-分布式系统视角)
+- [工程实践视角（Engineering Practice Perspectives）](#工程实践视角engineering-practice-perspectives)
+  - [编程算法设计视角 (`Program_Algorithm_Perspective/`)](#编程算法设计视角-program-algorithm-perspective)
+- [统一框架文档](#统一框架文档)
+  - [核心整合文档](#核心整合文档)
+    - [1. 统一框架 (`UNIFIED_FRAMEWORK.md`)【v2.0更新】](#1-统一框架-unified-frameworkmdv20更新)
+    - [2. 补充视角详解 (`SUPPLEMENTARY_PERSPECTIVES.md`)【新增】](#2-补充视角详解-supplementary-perspectivesmd新增)
+    - [3. TuringCompute深度整合 (`TURINGCOMPUTE_INTEGRATION.md`)](#3-turingcompute深度整合-turingcompute-integrationmd)
+    - [4. 概念交叉索引 (`CONCEPT_CROSS_INDEX.md`)](#4-概念交叉索引-concept-cross-indexmd)
+    - [5. 推进报告 (`ADVANCEMENT_REPORT_2025-10-25.md`)](#5-推进报告-advancement-report-2025-10-25md)
+    - [6. 七视角整合报告 (`INTEGRATION_REPORT_2025-10-25_SEVEN_PERSPECTIVES.md`)【新增】](#6-七视角整合报告-integration-report-2025-10-25-seven-perspectivesmd新增)
+- [综合案例研究](#综合案例研究)
+  - [案例1：智能电网的七视角分析 (`CASE_STUDY_SMART_GRID.md`)【新增】](#案例1智能电网的七视角分析-case-study-smart-gridmd新增)
+  - [案例2：量子计算系统的七视角设计 (`CASE_STUDY_QUANTUM_COMPUTING.md`)【新增】](#案例2量子计算系统的七视角设计-case-study-quantum-computingmd新增)
+- [快速导航](#快速导航)
+  - [按需求类型查找](#按需求类型查找)
+  - [按技术栈查找](#按技术栈查找)
+  - [按问题类型查找](#按问题类型查找)
+- [核心理论图谱](#核心理论图谱)
+  - [统一原则](#统一原则)
+  - [核心公式速查](#核心公式速查)
+- [学习路径建议](#学习路径建议)
+  - [初学者（3-6个月）](#初学者3-6个月)
+  - [进阶者（6-12个月）](#进阶者6-12个月)
+  - [专家级（持续）](#专家级持续)
+- [项目统计](#项目统计)
+  - [规模](#规模)
+  - [完成度](#完成度)
+  - [里程碑](#里程碑)
+- [贡献指南](#贡献指南)
+  - [如何贡献](#如何贡献)
+  - [贡献流程](#贡献流程)
+  - [质量标准](#质量标准)
+- [常见问题（FAQ）](#常见问题faq)
+  - [Q1：这个项目与传统CS理论有什么不同？](#q1这个项目与传统cs理论有什么不同)
+  - [Q2：四个视角是否有主次之分？](#q2四个视角是否有主次之分)
+  - [Q3：需要什么背景才能学习这个框架？](#q3需要什么背景才能学习这个框架)
+  - [Q4：这个框架如何应用到实际工程？](#q4这个框架如何应用到实际工程)
+  - [Q5：项目后续有什么计划？](#q5项目后续有什么计划)
+- [引用本项目](#引用本项目)
+- [联系方式](#联系方式)
+- [许可证](#许可证)
+- [致谢](#致谢)
+
+
+---
+
 ## 项目概览
 
 本项目建立了一个**统一的形式科学分析框架**，整合了**八大视角**（7个理论视角 + 1个工程实践视角），用于分析和理解计算、智能、系统与信息的本质。

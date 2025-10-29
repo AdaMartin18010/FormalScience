@@ -7,24 +7,23 @@
 
 ---
 
-## 目录 | Table of Contents
+## 📋 目录
 
-- [信息论多视角分析 - 主索引](#信息论多视角分析-主索引)
 - [概述](#概述)
 - [目录结构](#目录结构)
-  - [00_FOUNDATIONAL_CONCEPTS - 基础概念与权威定义](#00_foundational_concepts-基础概念与权威定义)
-  - [01_Complexity_Analysis - 复杂度分析](#01_complexity_analysis-复杂度分析)
-  - [02_Semantic_Models - 语义模型](#02_semantic_models-语义模型)
-  - [03_DIKWP_Model - DIKWP模型](#03_dikwp_model-dikwp模型)
-  - [04_Multi_Perspective_Information_Theory - 多视角信息论](#04_multi_perspective_information_theory-多视角信息论)
-  - [05_Philosophy_of_Science - 科学哲学](#05_philosophy_of_science-科学哲学)
-  - [06_Natural_Sciences - 自然科学](#06_natural_sciences-自然科学)
-  - [07_Artificial_Intelligence - 人工智能](#07_artificial_intelligence-人工智能)
-  - [08_Cross_Domain_Applications - 跨域应用](#08_cross_domain_applications-跨域应用)
-  - [09_Quantum_Information_Theory - 量子信息论](#09_quantum_information_theory-量子信息论)
-  - [10_Biological_Information_Theory - 生物信息论](#10_biological_information_theory-生物信息论)
-  - [11_Advanced_Topics - 高级主题](#11_advanced_topics-高级主题)
-  - [12_Reference_Materials - 参考资料](#12_reference_materials-参考资料)
+  - [00_FOUNDATIONAL_CONCEPTS - 基础概念与权威定义](#00-foundational-concepts---基础概念与权威定义)
+  - [01_Complexity_Analysis - 复杂度分析](#01-complexity-analysis---复杂度分析)
+  - [02_Semantic_Models - 语义模型](#02-semantic-models---语义模型)
+  - [03_DIKWP_Model - DIKWP模型](#03-dikwp-model---dikwp模型)
+  - [04_Multi_Perspective_Information_Theory - 多视角信息论](#04-multi-perspective-information-theory---多视角信息论)
+  - [05_Philosophy_of_Science - 科学哲学](#05-philosophy-of-science---科学哲学)
+  - [06_Natural_Sciences - 自然科学](#06-natural-sciences---自然科学)
+  - [07_Artificial_Intelligence - 人工智能](#07-artificial-intelligence---人工智能)
+  - [08_Cross_Domain_Applications - 跨域应用](#08-cross-domain-applications---跨域应用)
+  - [09_Quantum_Information_Theory - 量子信息论](#09-quantum-information-theory---量子信息论)
+  - [10_Biological_Information_Theory - 生物信息论](#10-biological-information-theory---生物信息论)
+  - [11_Advanced_Topics - 高级主题](#11-advanced-topics---高级主题)
+  - [12_Reference_Materials - 参考资料](#12-reference-materials---参考资料)
 - [核心概念框架](#核心概念框架)
   - [信息论的本质](#信息论的本质)
   - [八视角信息论体系](#八视角信息论体系)

@@ -7,9 +7,8 @@
 
 ---
 
-## 目录 | Table of Contents
+## 📋 目录
 
-- [信息论多视角分析 - 术语词典](#信息论多视角分析-术语词典)
 - [概述](#概述)
 - [A](#a)
   - [Algorithmic Information Theory (算法信息论)](#algorithmic-information-theory-算法信息论)

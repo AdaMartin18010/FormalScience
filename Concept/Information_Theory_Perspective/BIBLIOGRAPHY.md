@@ -7,9 +7,8 @@
 
 ---
 
-## 目录 | Table of Contents
+## 📋 目录
 
-- [信息论多视角分析 - 完整参考文献](#信息论多视角分析-完整参考文献)
 - [概述](#概述)
 - [1. 经典信息论基础](#1-经典信息论基础)
   - [1.1 奠基性文献](#11-奠基性文献)
@@ -44,7 +43,7 @@
     - [Kolmogorov, A. N. (1965)](#kolmogorov-a-n-1965)
     - [Solomonoff, R. J. (1964)](#solomonoff-r-j-1964)
   - [5.2 现代发展](#52-现代发展)
-    - [Li, M., & Vitányi, P. (2019)](#li-m-vitányi-p-2019)
+    - [Li, M., & Vitányi, P. (2019)](#li-m-vitnyi-p-2019)
 - [6. 热力学信息论](#6-热力学信息论)
   - [6.1 经典文献](#61-经典文献)
     - [Landauer, R. (1961)](#landauer-r-1961)
@@ -94,7 +93,7 @@
     - [Cover, T. M., & Thomas, J. A. (2006)1](#cover-t-m-thomas-j-a-20061)
 - [13. 在线资源](#13-在线资源)
   - [13.1 权威网站](#131-权威网站)
-    - [Wikipedia - Information Theory](#wikipedia-information-theory)
+    - [Wikipedia - Information Theory](#wikipedia---information-theory)
     - [IEEE Information Theory Society](#ieee-information-theory-society)
   - [13.2 学术数据库](#132-学术数据库)
     - [IEEE Xplore](#ieee-xplore)

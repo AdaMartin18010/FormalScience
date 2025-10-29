@@ -48,16 +48,32 @@
 ### 4. 目录（必需）
 
 ```markdown
-## 目录 | Table of Contents
+## 📋 目录
 
-- [主标题](#主标题)
-  - [目录](#目录--table-of-contents)
-  - [1. 一级主题](#1-一级主题)
-    - [1.1 二级主题](#11-二级主题)
-      - [1.1.1 三级主题](#111-三级主题)
-  - [2. 另一个一级主题](#2-另一个一级主题)
-  - [相关主题](#相关主题)
-  - [导航](#导航)
+- [标准文档结构模板](#标准文档结构模板)
+  - [1. 文档标题（必须带序号）](#1-文档标题必须带序号)
+  - [2. 元数据块（必需）](#2-元数据块必需)
+  - [3. 分隔线](#3-分隔线)
+  - [4. 目录（必需）](#4-目录必需)
+  - [5. 核心概念深度分析（可选但推荐）](#5-核心概念深度分析可选但推荐)
+  - [6. 主要内容章节](#6-主要内容章节)
+  - [7. 权威参考（推荐）](#7-权威参考推荐)
+  - [8. 相关主题链接（必需）](#8-相关主题链接必需)
+  - [9. 导航（必需）](#9-导航必需)
+- [特殊格式说明](#特殊格式说明)
+  - [Mermaid图表](#mermaid图表)
+  - [数学公式](#数学公式)
+  - [表格格式](#表格格式)
+  - [代码块](#代码块)
+  - [可折叠区域](#可折叠区域)
+- [检查清单](#检查清单)
+- [各Perspective特殊要求](#各perspective特殊要求)
+  - [Software_Perspective](#software-perspective)
+  - [AI_model_Perspective](#ai-model-perspective)
+  - [FormalLanguage_Perspective](#formallanguage-perspective)
+  - [Information_Theory_Perspective](#information-theory-perspective)
+  - [TuningCompute](#tuningcompute)
+- [更新历史](#更新历史)
 
 ---
 ```

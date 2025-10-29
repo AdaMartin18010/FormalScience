@@ -1,90 +1,53 @@
 # AI 模型视角：计算范式、语义模型与新计算物种
 
-## 目录结构
+## 📋 目录
 
-### 01_Foundational_Theory (基础理论)
-
-- **01.1_Turing_Machine_Computability.md** - 图灵机与可计算性理论
-- **01.2_Computational_Models_Hierarchy.md** - 计算模型层次结构
-- **01.3_Formal_Language_Classification.md** - 形式语言分类（Chomsky层次）
-- **01.4_Decidability_Halting_Problem.md** - 可判定性与停机问题
-- **01.5_Computational_Complexity_Classes.md** - 计算复杂度类（P/NP/PSPACE等）
-
-### 02_Neural_Network_Theory (神经网络理论)
-
-- **02.1_Neural_Network_Foundations.md** - 神经网络基础理论
-- **02.2_RNN_Turing_Completeness.md** - RNN与图灵完备性
-- **02.3_CNN_Feature_Extraction.md** - CNN与特征提取理论
-- **02.4_Transformer_Architecture.md** - Transformer架构与注意力机制
-- **02.5_Universal_Approximation_Theorem.md** - 通用逼近定理
-
-### 03_Language_Models (语言模型)
-
-- **03.1_Statistical_Language_Models.md** - 统计语言模型
-- **03.2_Neural_Language_Models.md** - 神经语言模型
-- **03.3_Transformer_LLM_Theory.md** - Transformer大语言模型理论
-- **03.4_Token_Generation_Mechanisms.md** - Token生成机制
-- **03.5_Embedding_Vector_Spaces.md** - 嵌入向量空间理论
-- **03.6_Context_Window_Memory.md** - 上下文窗口与记忆机制
-
-### 04_Semantic_Models (语义模型)
-
-- **04.1_Semantic_Vector_Spaces.md** - 语义向量空间
-- **04.2_Continuous_Representation_Theory.md** - 连续表示理论
-- **04.3_Distributional_Semantics.md** - 分布式语义学
-- **04.4_Semantic_Similarity_Metrics.md** - 语义相似度度量
-- **04.5_Multimodal_Semantic_Integration.md** - 多模态语义整合
-- **04.6_Huang_Semantic_Model_Analysis.md** - 黄仁勋的"语义模型"分析
-
-### 05_Learning_Theory (学习理论)
-
-- **05.1_PAC_Learning_Framework.md** - PAC学习框架
-- **05.2_Gold_Learnability_Theory.md** - Gold可学习性理论
-- **05.3_Sample_Complexity.md** - 样本复杂度
-- **05.4_Generalization_Theory.md** - 泛化理论
-- **05.5_Inductive_Bias.md** - 归纳偏置
-- **05.6_Statistical_Learning_Theory.md** - 统计学习理论
-
-### 06_Computational_Paradigms (计算范式)
-
-- **06.1_Symbolic_AI_vs_Connectionist_AI.md** - 符号主义AI vs 连接主义AI
-- **06.2_Rule_Driven_vs_Data_Driven.md** - 规则驱动 vs 数据驱动
-- **06.3_Discrete_vs_Continuous_Computation.md** - 离散计算 vs 连续计算
-- **06.4_Deductive_vs_Inductive_Reasoning.md** - 演绎推理 vs 归纳推理
-- **06.5_Hybrid_Neurosymbolic_Systems.md** - 混合神经符号系统
-
-### 07_AI_Philosophy (AI哲学)
-
-- **07.1_Chinese_Room_Argument.md** - 中文房间论证（Searle）
-- **07.2_Consciousness_in_AI.md** - AI中的意识问题
-- **07.3_Understanding_vs_Simulation.md** - 理解 vs 模拟
-- **07.4_Chomsky_AI_Critique.md** - 乔姆斯基对AI的批评
-- **07.5_Explainability_Interpretability.md** - 可解释性与可理解性
-- **07.6_AI_Alignment_Problem.md** - AI对齐问题
-
-### 08_Comparison_Analysis (对比分析)
-
-- **08.1_AI_vs_Turing_Machine.md** - AI与图灵机的深度对比
-- **08.2_Formal_Language_Perspective.md** - 形式语言视角的AI分析
-- **08.3_Resource_Bounded_Computation.md** - 资源受限计算
-- **08.4_Finite_vs_Infinite_Resources.md** - 有限资源 vs 无限资源
-- **08.5_Theoretical_vs_Practical_Capabilities.md** - 理论能力vs实际能力综合对比
-
-### 09_AI_Factory_Model (AI工厂模型)
-
-- **09.1_Token_as_Product.md** - Token作为产品
-- **09.2_Semantic_Production_Line.md** - 语义生产线
-- **09.3_AI_Infrastructure_Architecture.md** - AI基础设施架构
-- **09.4_Computing_Power_as_Resource.md** - 算力作为资源
-- **09.5_Data_Center_AI_Factory.md** - 数据中心AI工厂
-
-### 10_Future_Directions (未来方向)
-
-- **10.1_AGI_Pathways.md** - 通用人工智能路径
-- **10.2_Quantum_AI_Computing.md** - 量子AI计算
-- **10.3_Neuromorphic_Computing.md** - 神经形态计算
-- **10.4_AI_Consciousness_Research.md** - AI意识研究
-- **10.5_Next_Generation_Architectures.md** - 下一代架构
+  - [01_Foundational_Theory (基础理论)](#01-foundational-theory-基础理论)
+  - [02_Neural_Network_Theory (神经网络理论)](#02-neural-network-theory-神经网络理论)
+  - [03_Language_Models (语言模型)](#03-language-models-语言模型)
+  - [04_Semantic_Models (语义模型)](#04-semantic-models-语义模型)
+  - [05_Learning_Theory (学习理论)](#05-learning-theory-学习理论)
+  - [06_Computational_Paradigms (计算范式)](#06-computational-paradigms-计算范式)
+  - [07_AI_Philosophy (AI哲学)](#07-ai-philosophy-ai哲学)
+  - [08_Comparison_Analysis (对比分析)](#08-comparison-analysis-对比分析)
+  - [09_AI_Factory_Model (AI工厂模型)](#09-ai-factory-model-ai工厂模型)
+  - [10_Future_Directions (未来方向)](#10-future-directions-未来方向)
+- [核心理念概述](#核心理念概述)
+  - [AI的本质定位](#ai的本质定位)
+  - [图灵机 vs AI 的关键区别](#图灵机-vs-ai-的关键区别)
+  - [形式语言视角的精确分析](#形式语言视角的精确分析)
+    - [可计算性边界](#可计算性边界)
+    - [关键结论](#关键结论)
+  - [语义模型范式](#语义模型范式)
+    - [黄仁勋的"语义模型"理论](#黄仁勋的语义模型理论)
+    - [语义模型的本质](#语义模型的本质)
+  - [AI作为新计算物种](#ai作为新计算物种)
+- [关键理论贡献](#关键理论贡献)
+  - [1. 计算模型分类](#1-计算模型分类)
+  - [2. 学习理论约束](#2-学习理论约束)
+  - [3. 语义向量空间理论](#3-语义向量空间理论)
+  - [4. 连续表示推理](#4-连续表示推理)
+- [权威参考文献](#权威参考文献)
+  - [计算理论基础](#计算理论基础)
+  - [神经网络理论](#神经网络理论)
+  - [学习理论](#学习理论)
+  - [AI哲学](#ai哲学)
+- [研究方法](#研究方法)
+- [项目目标](#项目目标)
+  - [核心问题](#核心问题)
+  - [预期成果](#预期成果)
+- [内容质量标准](#内容质量标准)
+  - [学术严谨性](#学术严谨性)
+  - [参考文献要求](#参考文献要求)
+- [使用指南](#使用指南)
+  - [📚 辅助文档](#辅助文档)
+  - [快速导航](#快速导航)
+  - [学习路径](#学习路径)
+- [项目状态](#项目状态)
+- [导航 | Navigation](#导航-navigation)
+- [相关主题 | Related Topics](#相关主题-related-topics)
+  - [辅助文档](#辅助文档)
+  - [跨视角链接](#跨视角链接)
 
 ## 核心理念概述
 
