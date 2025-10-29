@@ -30,18 +30,21 @@
 ## A
 
 ### Architecture Sink
+
 **架构下沉**  
 软件系统中重复出现的复杂性，从应用层逐步转移到平台层、运行时层、最终固化到硬件层的持续过程。
 
 **相关**：[2.1 架构下沉原理](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
 
 ### Accidental Complexity
+
 **偶然复杂度**  
 由技术实现引入的复杂度，理论上可以通过更好的抽象消除。
 
 **相关**：[1.3 复杂度守恒](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
 ### ArgoCD
+
 GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集群。
 
 **相关**：[4.4 GitOps 声明式修复](./04_Self_Healing_Systems/04.4_GitOps_Declarative_Remediation.md)
@@ -49,11 +52,12 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 ## C
 
 ### Cognitive Load
+
 **认知负载**  
 开发者在理解和操作系统时需要保持在工作记忆中的信息量。
 
-
 ### Complexity Conservation
+
 **复杂度守恒**  
 在软件系统中，总复杂度（本质复杂度 + 偶然复杂度）是守恒的，不会凭空消失，只会转移。
 
@@ -62,6 +66,7 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 **相关**：[1.3 复杂度守恒定律](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
 ### Control Loop
+
 **控制循环**  
 持续比较"期望状态"与"实际状态"，自动调整以消除差异的反馈机制。
 
@@ -70,6 +75,7 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 ## D
 
 ### Declarative
+
 **声明式**  
 描述"要什么"（What）而非"怎么做"（How）的编程范式。
 
@@ -78,7 +84,9 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 **相关**：[1.5 声明式与命令式](./01_Foundational_Theory/01.5_Declarative_Imperative_Paradigms.md)
 
 ### DORA Metrics
+
 DevOps Research and Assessment 定义的四个关键指标：
+
 1. 部署频率（Deployment Frequency）
 2. 变更前置时间（Lead Time for Changes）
 3. MTTR（平均修复时间）
@@ -87,6 +95,7 @@ DevOps Research and Assessment 定义的四个关键指标：
 ## E
 
 ### Essential Complexity
+
 **本质复杂度**  
 问题本身固有的复杂度，无法消除。
 
@@ -97,6 +106,7 @@ DevOps Research and Assessment 定义的四个关键指标：
 ## F
 
 ### Formal Layer
+
 **形式层**  
 可计算的规则世界，包括代码、类型系统、逻辑门等可机械执行的符号系统。
 
@@ -105,9 +115,11 @@ DevOps Research and Assessment 定义的四个关键指标：
 ## G
 
 ### GitOps
+
 以 Git 为唯一真实源（Single Source of Truth）的运维模式，所有变更通过 Git 提交触发。
 
 **核心原则**：
+
 1. Git 是唯一真实源
 2. 声明式配置
 3. 自动同步
@@ -116,6 +128,7 @@ DevOps Research and Assessment 定义的四个关键指标：
 **相关**：[4.4 GitOps 声明式修复](./04_Self_Healing_Systems/04.4_GitOps_Declarative_Remediation.md)
 
 ### Golden Path
+
 **黄金路径**  
 为常见场景预设的、阻力最小的开发路径，覆盖 80% 的需求。
 
@@ -124,12 +137,13 @@ DevOps Research and Assessment 定义的四个关键指标：
 ## H
 
 ### HPA (Horizontal Pod Autoscaler)
-Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自动调整副本数。
 
+Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自动调整副本数。
 
 ## I
 
 ### Imperative
+
 **命令式**  
 描述"怎么做"（How），逐步指定执行步骤的编程范式。
 
@@ -138,11 +152,12 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 **相关**：[1.5 声明式与命令式](./01_Foundational_Theory/01.5_Declarative_Imperative_Paradigms.md)
 
 ### Internal Developer Platform (IDP)
+
 **内部开发者平台**  
 企业内部构建的平台，为开发者提供自助服务能力，降低认知负载。
 
-
 ### Intent-Driven
+
 **意图驱动**  
 用户表达意图（"我要高可用"），系统自动生成具体实现的编程范式。
 
@@ -151,12 +166,13 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 ## K
 
 ### KEDA (Kubernetes Event-Driven Autoscaler)
-基于事件源（Kafka、SQS、Prometheus 等）的 Kubernetes 自动扩缩容器。
 
+基于事件源（Kafka、SQS、Prometheus 等）的 Kubernetes 自动扩缩容器。
 
 ## L
 
 ### Leaky Abstraction
+
 **抽象泄漏**  
 抽象层无法完全隐藏底层细节，导致用户被迫理解底层实现的现象。
 
@@ -167,10 +183,12 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 ## M
 
 ### MTTR (Mean Time To Repair/Recovery)
+
 **平均修复/恢复时间**  
 从故障发生到系统恢复的平均时间。
 
 **目标值**：
+
 - 传统运维：30+ 分钟
 - 平台化：5-10 分钟
 - 自愈系统：< 2 分钟
@@ -178,6 +196,7 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 ## O
 
 ### OPA (Open Policy Agent)
+
 策略引擎，使用 Rego 语言定义策略，实现 Policy-as-Code。
 
 **用途**：准入控制、自愈策略、合规检查
@@ -185,11 +204,13 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 **相关**：[4.3 OPA 策略引擎](./04_Self_Healing_Systems/04.3_OPA_Policy_Engine.md)
 
 ### OTLP (OpenTelemetry Protocol)
+
 OpenTelemetry 项目定义的统一可观测性协议，支持 Metrics、Traces、Logs 三支柱。
 
 **相关**：[4.2 OTLP 可观测性](./04_Self_Healing_Systems/04.2_OTLP_Observability.md)
 
 ### Observability
+
 **可观测性**  
 通过系统外部输出（指标、日志、追踪）推断系统内部状态的能力。
 
@@ -200,24 +221,27 @@ OpenTelemetry 项目定义的统一可观测性协议，支持 Metrics、Traces�
 ## P
 
 ### Platform Engineering
+
 **平台工程**  
 构建和维护内部开发者平台的工程实践，目标是降低认知负载、提升开发者体验。
 
 **相关**：[8.1 平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
 
 ### Policy-as-Code
+
 **策略即代码**  
 将治理策略、安全规则、合规要求以代码形式表达，可版本化、测试、自动执行。
 
 **工具**：OPA、Kyverno、Gatekeeper
 
-
 ## R
 
 ### Rego
+
 OPA 使用的策略语言，声明式、逻辑式编程语言。
 
 **示例**：
+
 ```rego
 allow {
     input.user.role == "admin"
@@ -227,15 +251,17 @@ allow {
 ## S
 
 ### Semantic Gap
+
 **语义缺口**  
 意义世界中尚未被形式化、自动化的部分。
 
 **示例**：
+
 - 市场不确定性（2020 年代缺口）
 - AI 伦理（未来缺口）
 
-
 ### Semantic Layer
+
 **语义层**  
 人类自创的意义世界，包括商业价值、用户故事、领域概念等。
 
@@ -244,6 +270,7 @@ allow {
 **相关**：[1.1 语义形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 
 ### Semantic-Formal Duality
+
 **语义-形式对偶**  
 意义世界与规则世界之间的永恒张力与相互转化。
 
@@ -252,12 +279,14 @@ allow {
 **相关**：[1.1 语义形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 
 ### Self-Healing
+
 **自愈**  
 系统自动检测异常、诊断根因、执行修复并验证效果的闭环能力。
 
 **相关**：[4.1 自愈架构原理](./04_Self_Healing_Systems/04.1_Self_Healing_Architecture.md)
 
 ### Service Mesh
+
 服务网格，为微服务提供服务发现、负载均衡、加密、可观测性等能力的基础设施层。
 
 **代表**：Istio, Linkerd
@@ -265,6 +294,7 @@ allow {
 **相关**：[9.3 Service Mesh](./09_Cloud_Native_Patterns/09.3_Service_Mesh.md)
 
 ### Sink Stage Model
+
 **下沉阶段模型**  
 描述架构下沉的五个层级（L1-L5）：运行时下沉 → 策略下沉 → 智能下沉 → 芯片级下沉 → 零代码态。
 
@@ -273,7 +303,9 @@ allow {
 ## T
 
 ### Three Pillars of Observability
+
 **可观测性三支柱**
+
 1. **Metrics**：时间序列数据（CPU、内存、QPS）
 2. **Traces**：分布式请求追踪
 3. **Logs**：事件详细记录
@@ -304,6 +336,7 @@ allow {
 ## 框架与工具
 
 ### 可观测性
+
 - **Prometheus**：指标采集与告警
 - **Grafana**：可视化
 - **Jaeger/Tempo**：分布式追踪
@@ -311,16 +344,19 @@ allow {
 - **OpenTelemetry**：统一协议
 
 ### GitOps
+
 - **ArgoCD**：声明式 CD
 - **Flux**：GitOps operator
 - **Helm**：K8s 包管理
 
 ### 策略治理
+
 - **OPA**：策略引擎
 - **Gatekeeper**：K8s 准入控制器
 - **Kyverno**：K8s 原生策略引擎
 
 ### 自动扩缩容
+
 - **HPA**：K8s 内置
 - **KEDA**：事件驱动扩缩容
 - **VPA**：垂直扩缩容
@@ -328,7 +364,7 @@ allow {
 
 ## 概念层次
 
-```
+```text
 意图层 (Intent)
     ↓
 语义层 (Semantic)
@@ -356,5 +392,3 @@ allow {
 - [学习路径](./LEARNING_PATHS.md)
 
 ---
-
-

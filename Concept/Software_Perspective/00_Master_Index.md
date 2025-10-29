@@ -31,6 +31,7 @@
 ## 知识体系结构
 
 ### [01 - 基础理论 (Foundational Theory)](./01_Foundational_Theory/)
+
 软件工程的哲学基础和理论框架
 
 - [01.1 语义层与形式层对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
@@ -40,12 +41,14 @@
 - [01.5 声明式与命令式范式](./01_Foundational_Theory/01.5_Declarative_Imperative_Paradigms.md)
 
 ### [02 - 架构下沉 (Architecture Sink)](./02_Architecture_Sink/)
+
 从应用代码到平台能力的持续下沉过程
 
 - [02.1 架构下沉原理与动因](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
 - [02.5 下沉阶段模型 (L1-L5)](./02_Architecture_Sink/02.5_Sink_Stage_Model.md)
 
 ### [03 - 语义-形式对偶 (Semantic-Formal Duality)](./03_Semantic_Formal_Duality/)
+
 意义世界与规则世界的双螺旋结构
 
 - [03.1 六段螺旋映射框架](./03_Semantic_Formal_Duality/03.1_Six_Spiral_Framework.md)
@@ -53,6 +56,7 @@
 - [03.4 软件作为即时编译器](./03_Semantic_Formal_Duality/03.4_Software_as_JIT_Compiler.md)
 
 ### [04 - 自愈系统 (Self-Healing Systems)](./04_Self_Healing_Systems/)
+
 基于可观测性和策略的自主运维
 
 - [04.1 自愈架构原理](./04_Self_Healing_Systems/04.1_Self_Healing_Architecture.md)
@@ -62,16 +66,19 @@
 - [04.5 自愈闭环实现](./04_Self_Healing_Systems/04.5_Self_Healing_Loop_Implementation.md)
 
 ### [05 - 配置管理与扩缩容 (Configuration & Scaling)](./05_Configuration_Scaling/)
+
 容器化环境下的配置与弹性
 
 - [05.1 配置管理方案全景](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md)
 
 ### [06 - 可观测性与治理 (Observability & Governance)](./06_Observability_Governance/)
+
 系统透明性与策略治理
 
 - [06.1 三支柱可观测性](./06_Observability_Governance/06.1_Three_Pillars_Observability.md)
 
 ### [07 - 开发者演进 (Developer Evolution)](./07_Developer_Evolution/)
+
 程序员角色的转型与元能力
 
 - [07.1 程序员角色可塑性分析](./07_Developer_Evolution/07.1_Developer_Role_Malleability.md)
@@ -79,12 +86,14 @@
 - [07.4 系统守门人角色](./07_Developer_Evolution/07.4_System_Gatekeeper_Role.md)
 
 ### [08 - 平台工程 (Platform Engineering)](./08_Platform_Engineering/)
+
 内部开发者平台与黄金路径
 
 - [08.1 平台工程定义与价值](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
 - [08.3 内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### [09 - 云原生模式 (Cloud Native Patterns)](./09_Cloud_Native_Patterns/)
+
 容器、微服务与云原生架构
 
 - [09.1 微服务解耦](./09_Cloud_Native_Patterns/09.1_Microservices_Decomposition.md)
@@ -93,6 +102,7 @@
 - [09 - 云原生模式总览](./09_Cloud_Native_Patterns/README.md)
 
 ### [10 - 未来方向 (Future Directions)](./10_Future_Directions/)
+
 软件工程的未来演进
 
 - [10.1 意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md)
@@ -108,7 +118,7 @@
 
 ## 核心概念关系图
 
-```
+```text
 语义层（业务需求、商业价值）
     ↓ 形式化
 形式层（代码、配置、策略）
@@ -145,12 +155,15 @@
 ## 实践案例
 
 ### 案例1：自愈系统落地
+
 OTLP + OPA + GitOps 闭环实现 60 秒自动回滚
 
 ### 案例2：配置管理演进
+
 从环境变量到 GitOps 配置即代码
 
 ### 案例3：开发者转型
+
 从 CRUD 工程师到商业洞察编译器
 
 ## 学习建议
@@ -173,4 +186,3 @@ OTLP + OPA + GitOps 闭环实现 60 秒自动回滚
 ---
 
 **导航**：[返回 Concept 主页](../README.md)
-
