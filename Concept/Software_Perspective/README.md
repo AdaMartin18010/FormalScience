@@ -14,10 +14,10 @@
   - [简介](#简介)
   - [核心主张](#核心主张)
   - [核心框架](#核心框架)
-  - [十大模块概览](#十大模块概览)
-  - [阅读路径](#阅读路径)
+  - [核心内容](#核心内容)
+  - [快速开始](#快速开始)
   - [关键洞察](#关键洞察)
-  - [相关主题](#相关主题)
+  - [相关透视](#相关透视)
 
 ---
 
@@ -118,6 +118,7 @@
 | 新时代 | Prompt IDE、Control-Plane DSL | 商业策略库 | 营收/留存/效率 |
 
 **六维元能力**：
+
 1. 形式化建模
 2. 数据叙事
 3. 实验设计
@@ -128,17 +129,20 @@
 ## 知识地图
 
 ### 基础理论
+
 - [语义-形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 - [计算抽象层次](./01_Foundational_Theory/01.2_Computational_Abstraction_Layers.md)
 - [复杂度守恒](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
 ### 实践模式
+
 - [自愈系统实现](./04_Self_Healing_Systems/04.5_Self_Healing_Loop_Implementation.md)
 - [配置管理全景](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md)
 - [平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
 - [内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### 未来方向
+
 - [意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md)
 - [量子计算集成](./10_Future_Directions/10.3_Quantum_Computing_Integration.md)
 - [意识机器集成](./10_Future_Directions/10.5_Consciousness_Machine_Integration.md)
@@ -146,16 +150,19 @@
 ## 快速开始
 
 ### 对于初学者
+
 1. 阅读 [语义-形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 2. 理解 [六段螺旋框架](./03_Semantic_Formal_Duality/03.1_Six_Spiral_Framework.md)
 3. 学习 [架构下沉原理](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
 
 ### 对于实践者
+
 1. 部署 [自愈系统闭环](./04_Self_Healing_Systems/04.5_Self_Healing_Loop_Implementation.md)
 2. 应用 [配置管理方案](./05_Configuration_Scaling/05.1_Configuration_Management_Landscape.md)
 3. 构建 [内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### 对于架构师
+
 1. 研究 [架构下沉原理](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
 2. 学习 [下沉阶段模型](./02_Architecture_Sink/02.5_Sink_Stage_Model.md)
 3. 规划 [平台工程实施](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
@@ -163,12 +170,15 @@
 ## 核心价值主张
 
 ### 1. 理论统一性
+
 将软件演进纳入"人类认知形式化"的宏大叙事，从泰勒斯到晶体管一以贯之。
 
 ### 2. 实践可操作性
+
 提供 OTLP+OPA+GitOps 等可落地的技术方案，60 秒完成自动修复。
 
 ### 3. 角色前瞻性
+
 预测程序员向"系统守门人"转型，提供六维元能力框架。
 
 ## 关键洞察
@@ -197,16 +207,19 @@
 ## 实践案例
 
 ### 案例 1：UiPath 的 GitOps+OPA
+
 - 几十种组件统一交付
 - selfHeal 默认开启
 - 配置漂移秒级纠正
 
 ### 案例 2：某车企多云运维
+
 - Crossplane + ArgoCD + Gatekeeper + Prometheus
 - CPU 告警→Webhook→Git 回滚
 - 58 秒完成闭环
 
 ### 案例 3：物流云平台
+
 - MTTR：42min → 5min
 - P1 故障：12 起/月 → 2 起/月
 - 配置漂移：120+ → 0
@@ -230,16 +243,19 @@
 ## 延伸阅读
 
 ### 书籍推荐
+
 - 《设计数据密集型应用》 - Martin Kleppmann
 - 《平台工程》 - Gregor Hohpe
 - 《凤凰项目》 - Gene Kim
 
 ### 在线资源
+
 - CNCF Landscape
 - Platform Engineering 社区
 - OpenTelemetry 文档
 
 ### 学术论文
+
 - "Out of the Tar Pit" - Moseley & Marks
 - "The Evolution of Programming Languages" - Kay
 - "End-to-End Arguments in System Design" - Saltzer et al.
@@ -247,6 +263,7 @@
 ## 贡献与反馈
 
 欢迎通过以下方式参与：
+
 - 补充实践案例
 - 完善技术细节
 - 分享工具对比
@@ -265,4 +282,3 @@
 [📖 完整索引](./00_Master_Index.md) | [📚 术语表](./GLOSSARY.md) | [⚡ 快速参考](./QUICK_REFERENCE.md) | [❓ FAQ](./FAQ.md)
 
 **返回**：[Concept 主页](../README.md) | [其他透视](../NAVIGATION_INDEX.md)
-
