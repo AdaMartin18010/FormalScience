@@ -1,9 +1,9 @@
 # 形式科学理论体系 - 常见问题解答
 
-> **文档版本**: v1.1.0  
-> **最后更新**: 2025-10-29  
-> **问题总数**: 56+  
-> **新增**: 编程算法设计视角 6 个问题（Q23-Q28）  
+> **文档版本**: v1.1.0
+> **最后更新**: 2025-10-29
+> **问题总数**: 56+
+> **新增**: 编程算法设计视角 6 个问题（Q23-Q28）
 > **覆盖范围**: 从入门到高级（含工程实践）
 
 ---
@@ -932,11 +932,11 @@ S(n) : 空间复杂度
     单例模式:
       Σ = {instances: Nat, lock: Bool}
       Φ = ∀t. instances(t) ≤ 1   # 不变量
-      ⟶ = getInstance() { 
-          if instances == 0 then 
-            acquire(lock); 
-            if instances == 0 then instances := 1 
-            release(lock) 
+      ⟶ = getInstance() {
+          if instances == 0 then
+            acquire(lock);
+            if instances == 0 then instances := 1
+            release(lock)
           }
     ```
 
@@ -963,14 +963,14 @@ S(n) : 空间复杂度
 
 **GoF 23 模式形式化**:
 
-✅ 创建型（5个）: Singleton, Factory, Builder, Prototype, Abstract Factory  
-✅ 结构型（7个）: Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy  
+✅ 创建型（5个）: Singleton, Factory, Builder, Prototype, Abstract Factory
+✅ 结构型（7个）: Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy
 ✅ 行为型（11个）: Chain, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template, Visitor
 
 **扩展到现代模式**:
 
-✅ 分布式模式: Saga, CQRS, Event Sourcing  
-✅ 并发模式: Actor, CSP, π-calculus  
+✅ 分布式模式: Saga, CQRS, Event Sourcing
+✅ 并发模式: Actor, CSP, π-calculus
 ✅ 架构模式: Microservices, Hexagonal, Clean Architecture
 
 → 详见：[Program_Algorithm_Perspective/02_Design_Patterns/](Program_Algorithm_Perspective/02_Design_Patterns/)
@@ -1023,7 +1023,7 @@ S(n) : 空间复杂度
 | 验证编译器正确性 | 图灵可计算 + 编程算法视角（Coq 证明） |
 | 形式化设计模式 | **编程算法视角**（核心） |
 
-→ 详见：[Program_Algorithm_Perspective/README.md](Program_Algorithm_Perspective/README.md)  
+→ 详见：[Program_Algorithm_Perspective/README.md](Program_Algorithm_Perspective/README.md)
 → 对比：[CONCEPT_CROSS_INDEX.md#UH-Cost](CONCEPT_CROSS_INDEX.md#uh-cost-统一元模型-unified-hypergraph-cost-model-新增编程算法视角)
 
 ---
@@ -1120,9 +1120,9 @@ Week 4: 🚀 "可以分析任何系统了！"
 
 ---
 
-**文档版本**: v1.0.0  
-**创建日期**: 2025-10-25  
-**维护状态**: ✅ 活跃维护  
+**文档版本**: v1.0.0
+**创建日期**: 2025-10-25
+**维护状态**: ✅ 活跃维护
 **问题总数**: 22 (持续增加)
 
 **❓ 有问题？先看FAQ！❓**:
