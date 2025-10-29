@@ -1263,7 +1263,7 @@ CI 输出：
 | **CPN**（颜色） | token 带类型/颜色 | `colset INT = int; var x:INT;` | `docker pull cpntools/cpntools` |
 | **TimeCPN** | 全局时钟+时间戳 | `globref clock:INT;` | 同上（内置） |
 | **TCPNIA** | 抑制弧+时延函数 | `inhibitor arc p→t; delay(t)=5` | 论文附 `.tcpnia` 文件 → `make tcpnia2uppaal` |
-| **RSDP-Net** | 数据/控制双库所 | `place p type=data|control;` | 专利附 Python 生成器 → `python gen_rsdp.py` |
+| **RSDP-Net** | 数据/控制双库所 | `place p type=data\|control;` | 专利附 Python 生成器 → `python gen_rsdp.py` |
 
 > 所有扩展都保持**经典 Petri 网五元组** `N=(P,T,F,W,M₀)` 的**超集**，因此可用同一套**状态空间工具**下游验证。
 
@@ -1426,8 +1426,8 @@ CI 输出：
 | 设计模式 | 对应算法骨架 | 资源签名 | 架构落点 | 形式化定理 |
 |---|---|---|---|---|
 | **Abstract Factory** | 参数化构造 | T=O(1), S=O(1) | 依赖注入框架 | 上下文等价 ⊢ AF₁ ≡ AF₂ |
-| **Composite 遍历** | 树扫描 | work=O(n), span=O(h) | 统一 AST | work=|leaf| 已证 |
-| **Observer** | 事件广播 | Comm=N·|st| | 消息总线 | π-演算无死锁 |
+| **Composite 遍历** | 树扫描 | work=O(n), span=O(h) | 统一 AST | work=\|leaf\| 已证 |
+| **Observer** | 事件广播 | Comm=N·\|st\| | 消息总线 | π-演算无死锁 |
 | **Saga** | 补偿链 | 2-phase, 3n msg | 分布式事务 | fold compensate σ = σ₀ |
 | **Sequence** | 顺序流 | T=2, Span=2 | BPMN 引擎 | AG !deadlock（Tina） |
 

@@ -8,13 +8,13 @@
 
 ### 统一形式化元模型：UH-Cost
 
-```
+```text
 所有计算系统 = 超图重写 + 成本语义
 ```
 
 **形式定义**：
 
-```
+```text
 UH-Cost = ⟨Σ, ⟶, κ, Φ⟩
 
 其中：
@@ -42,7 +42,7 @@ UH-Cost = ⟨Σ, ⟶, κ, Φ⟩
 
 所有系统都可分解为三个正交维度：
 
-```
+```text
 系统 Sys = ⟨C, E, D⟩
 
 控制层 C (Control):
@@ -63,7 +63,7 @@ UH-Cost = ⟨Σ, ⟶, κ, Φ⟩
 
 ### 2. 设计模式 = 可证明的重写规则
 
-```
+```text
 Pattern = ⟨Problem, Force, Context, Solution, Cost⟩
 
 Solution : Ctrl × Exec × Data → Sys
@@ -76,7 +76,7 @@ Cost     : ℕ^d → ℕ^d
 
 **示例**：Observer 模式的形式化
 
-```
+```text
 Subject ≜ νs.∏_{i∈1..N} notify_i⟨s⟩ | s⟨update⟩
 
 定理：
@@ -87,7 +87,7 @@ Subject ≜ νs.∏_{i∈1..N} notify_i⟨s⟩ | s⟨update⟩
 
 ### 3. 算法 = 资源约束下的重写搜索
 
-```
+```text
 算法设计空间 = { AST | ⊢ AST ↓ result ∧ cost(AST) ≤ Budget }
 
 搜索策略：
@@ -102,7 +102,7 @@ Subject ≜ νs.∏_{i∈1..N} notify_i⟨s⟩ | s⟨update⟩
 
 ### 核心章节
 
-```
+```text
 Program_Algorithm_Perspective/
 ├── 00_Master_Index.md           # 主索引（你现在看的上层文档）
 ├── README.md                    # 本文件：总体概述
@@ -462,7 +462,7 @@ make all   # 自动验证 100+ 定理
 
 同一个概念在不同抽象层保持形式化一致性：
 
-```
+```text
 商业模式的"均衡" ≅ 软件架构的"无死锁" ≅ 硬件的"通道不饱和"
     ↓              ↓                    ↓
   HJB 方程      π-演算模型检测       时间自动机
