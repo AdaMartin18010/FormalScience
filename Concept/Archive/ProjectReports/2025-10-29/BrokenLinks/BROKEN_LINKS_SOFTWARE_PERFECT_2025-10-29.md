@@ -12,19 +12,25 @@
 ## ❌ 断链列表 (8个)
 
 ### E:\_src\FormalScience\Concept\Software_Perspective\FAQ.md
+
 **断链数**: 1
+
 - ❌ `./09_Cloud_Native_Patterns/09.1_Containerization_Fundamentals.md`  
   - 目标: `E:\_src\FormalScience\Concept\Software_Perspective\09_Cloud_Native_Patterns\09.1_Containerization_Fundamentals.md`  
 
 ### E:\_src\FormalScience\Concept\Software_Perspective\GLOSSARY.md
+
 **断链数**: 2
+
 - ❌ `./08_Platform_Engineering/08.3_Golden_Path.md`  
   - 目标: `E:\_src\FormalScience\Concept\Software_Perspective\08_Platform_Engineering\08.3_Golden_Path.md`  
 - ❌ `./09_Cloud_Native_Patterns/09.3_Service_Mesh.md`  
   - 目标: `E:\_src\FormalScience\Concept\Software_Perspective\09_Cloud_Native_Patterns\09.3_Service_Mesh.md`  
 
 ### E:\_src\FormalScience\Concept\Software_Perspective\LEARNING_PATHS.md
+
 **断链数**: 5
+
 - ❌ `./09_Cloud_Native_Patterns/09.1_Containerization_Fundamentals.md`  
   - 目标: `E:\_src\FormalScience\Concept\Software_Perspective\09_Cloud_Native_Patterns\09.1_Containerization_Fundamentals.md`  
 - ❌ `./08_Platform_Engineering/08.3_Golden_Path.md`  
