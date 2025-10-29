@@ -1,0 +1,39 @@
+{
+  // Markdown 相关配置
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": "explicit"
+    },
+    // 自动换行
+    "editor.wordWrap": "on",
+    // 保存时删除行尾空格
+    "files.trimTrailingWhitespace": true
+  },
+  
+  // Markdownlint 配置
+  "markdownlint.config": {
+    // 允许使用 HTML 标签（用于 <details> 等）
+    "MD033": false,
+    // 允许同级标题重复（常见于文档结构）
+    "MD024": {
+      "siblings_only": true
+    },
+    // 允许行内 HTML
+    "MD013": false,
+    // 允许多个空行（某些情况下需要）
+    "MD012": false
+  },
+  
+  // 文件保存配置
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  
+  // 文件编码
+  "files.encoding": "utf8",
+  
+  // 文件末尾新行
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true
+}

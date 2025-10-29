@@ -1,15 +1,15 @@
 # 形式语言视角：理念分析与哲学科学对应
 
-> **文档版本**: v1.0.0  
-> **最后更新**: 2025-10-27  
-> **文档规模**: 309行 | 形式语言理论主索引  
+> **文档版本**: v1.0.0
+> **最后更新**: 2025-10-27
+> **文档规模**: 309行 | 形式语言理论主索引
 > **阅读建议**: 本文档探讨形式语言作为意识裸机的哲学基础，建议从哲学基础章节开始阅读
 
 ---
 
-> **文档版本**: v1.0  
-> **最后更新**: 2025-10-23  
-> **文档规模**: 10个主要章节 | 3117行 | ~145K字  
+> **文档版本**: v1.0
+> **最后更新**: 2025-10-23
+> **文档规模**: 10个主要章节 | 3117行 | ~145K字
 > **建议阅读**: 从[核心理念](#核心理念)开始，或直接查看[文件结构](#文件结构)了解子文档
 
 ---
@@ -33,14 +33,14 @@
   - [形式语言-语义模型的基本框架](#形式语言-语义模型的基本框架)
   - [动态扩展公理](#动态扩展公理)
 - [文件结构](#文件结构)
-  - [01_Philosophical_Foundations (哲学基础)](#01-philosophical-foundations-哲学基础)
-  - [02_Scientific_Correspondence (科学对应)](#02-scientific-correspondence-科学对应)
-  - [03_Historical_Development (历史发展)](#03-historical-development-历史发展)
-  - [04_Mathematical_Structures (数学结构)](#04-mathematical-structures-数学结构)
-  - [05_Computational_Models (计算模型)](#05-computational-models-计算模型)
-  - [06_Social_Applications (社会应用)](#06-social-applications-社会应用)
-  - [07_Consciousness_Studies (意识研究)](#07-consciousness-studies-意识研究)
-  - [08_Future_Projections (未来展望)](#08-future-projections-未来展望)
+  - [01_Philosophical_Foundations (哲学基础)](#01_philosophical_foundations-哲学基础)
+  - [02_Scientific_Correspondence (科学对应)](#02_scientific_correspondence-科学对应)
+  - [03_Historical_Development (历史发展)](#03_historical_development-历史发展)
+  - [04_Mathematical_Structures (数学结构)](#04_mathematical_structures-数学结构)
+  - [05_Computational_Models (计算模型)](#05_computational_models-计算模型)
+  - [06_Social_Applications (社会应用)](#06_social_applications-社会应用)
+  - [07_Consciousness_Studies (意识研究)](#07_consciousness_studies-意识研究)
+  - [08_Future_Projections (未来展望)](#08_future_projections-未来展望)
 - [主要发现](#主要发现)
   - [1. 形式语言作为意识裸机](#1-形式语言作为意识裸机)
   - [2. 反身性的核心作用](#2-反身性的核心作用)
@@ -198,7 +198,7 @@
 
 - 主索引文件：00_Master_Index.md
 - 哲学基础：3个核心文件
-- 科学对应：2个核心文件  
+- 科学对应：2个核心文件
 - 历史发展：2个核心文件
 - 数学结构：1个核心文件
 - 社会应用：1个核心文件
@@ -256,12 +256,12 @@
 
 ---
 
-[⬆️ 返回顶部](#形式语言视角理念分析与哲学科学对应) | [快速导航](#-快速导航) | [目录](#目录)
+[⬆️ 返回顶部](#形式语言视角理念分析与哲学科学对应) | [快速导航](#-快速导航) | [目录](#-目录)
 
 ---
 
-*本项目基于 Concept/formal_language_view.md 文件内容创建，旨在从形式语言视角系统分析理念与哲学科学的对应关系。*
+_本项目基于 Concept/formal_language_view.md 文件内容创建，旨在从形式语言视角系统分析理念与哲学科学的对应关系。_
 
-**文档版本**: v1.0  
-**创建日期**: 2025-10-23  
+**文档版本**: v1.0
+**创建日期**: 2025-10-23
 **维护状态**: ✅ 活跃维护
