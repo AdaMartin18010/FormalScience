@@ -1,8 +1,9 @@
 # 形式科学理论体系 - 学习路径指南
 
-> **文档版本**: v1.0.0  
-> **最后更新**: 2025-10-25  
-> **适用范围**: 整个形式科学项目（七大视角）  
+> **文档版本**: v1.1.0  
+> **最后更新**: 2025-10-29  
+> **适用范围**: 整个形式科学项目（8大视角：7个理论视角 + 1个工程实践视角）  
+> **新增**: Program_Algorithm_Perspective学习路径（编程算法设计视角）  
 > **建议**: 先完成自我评估，再选择合适的学习路径
 
 ---
@@ -112,8 +113,8 @@
 **总分评估**:
 
 - **4-8分**: 推荐[快速概览路径](#8-快速概览路径)或[计算机科学学生路径](#1-计算机科学学生路径)
-- **9-12分**: 推荐[工程师实践路径](#3-工程师实践路径)或[按目标选择](#按目标选择)
-- **13-16分**: 推荐[研究者深入路径](#4-研究者深入路径)或[按视角深入](#按视角深入)
+- **9-12分**: 推荐[工程师实践路径](#3-工程师实践路径)或[按目标](#按目标)
+- **13-16分**: 推荐[研究者深入路径](#4-研究者深入路径)或[按视角深入](#-按视角深入)
 - **17-20分**: 推荐[跨学科研究路径](#7-跨学科研究路径)
 
 ---
@@ -639,6 +640,47 @@ Day 13-14: 实践项目：架构设计评审
 **核心**: CAP定理、FLP不可能、拜占庭容错
 **案例**: 区块链分析
 
+### 编程算法设计视角 ✨ **NEW!**
+
+**起点**: [Program_Algorithm_Perspective/README_FIRST.md](Program_Algorithm_Perspective/README_FIRST.md) - 新手友好入门
+**核心**: UH-Cost统一元模型、三元视角、形式语义、设计模式形式化
+**专题**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 47+文档
+
+**推荐学习路径**:
+
+1. **初学者路径** (2-3周)
+   - Week 1: [README_FIRST.md](Program_Algorithm_Perspective/README_FIRST.md) + [操作语义](Program_Algorithm_Perspective/01_Formal_Semantics/01.1_Operational_Semantics.md)
+   - Week 2: [设计模式形式化](Program_Algorithm_Perspective/02_Design_Patterns/02.1_GoF_Formal_Analysis.md) + [Coq入门](Program_Algorithm_Perspective/05_Formal_Verification/05.1_Coq_Introduction.md)
+   - Week 3: [多维复杂度](Program_Algorithm_Perspective/03_Algorithm_Complexity/03.1_Multidimensional_Complexity.md) + 实践项目
+
+2. **进阶路径** (4-6周)
+   - [微服务架构](Program_Algorithm_Perspective/04_Architecture_Patterns/04.2_Microservices_Architecture.md) - 分布式设计模式
+   - [跨层验证](Program_Algorithm_Perspective/04_Architecture_Patterns/04.4_Cross_Layer_Verification.md) - 端到端形式化
+   - [工业应用](Program_Algorithm_Perspective/05_Formal_Verification/05.5_Industrial_Applications.md) - CompCert、seL4、Kubernetes案例
+
+3. **工程师路径** (1-2周快速上手)
+   - Day 1-2: [README.md](Program_Algorithm_Perspective/README.md) + [MINDMAP.md](Program_Algorithm_Perspective/MINDMAP.md)
+   - Day 3-7: [QUICK_REFERENCE.md](Program_Algorithm_Perspective/QUICK_REFERENCE.md) + 选择感兴趣的技术文档
+   - Week 2: [模式验证工具链](Program_Algorithm_Perspective/02_Design_Patterns/02.6_Pattern_Verification.md) + 实践
+
+**核心资源**:
+
+- 📚 [主索引](Program_Algorithm_Perspective/00_Master_Index.md) - 完整导航（对标CMU/MIT/Stanford课程）
+- 🧠 [思维导图](Program_Algorithm_Perspective/MINDMAP.md) - 11个Mermaid可视化
+- 📊 [概念对比矩阵](Program_Algorithm_Perspective/CONCEPT_MATRIX.md) - 17个对比表
+- 🗂️ [分层结构](Program_Algorithm_Perspective/LAYERED_STRUCTURE.md) - 8维分层梳理
+- 📖 [术语表](Program_Algorithm_Perspective/GLOSSARY.md) - 100+形式化术语
+- ⚡ [快速参考](Program_Algorithm_Perspective/QUICK_REFERENCE.md) - 工具速查
+
+**学习成果**:
+
+- ✅ 掌握UH-Cost统一元模型：⟨Σ, ⟶, κ, Φ⟩
+- ✅ 理解三元视角：控制·执行·数据
+- ✅ 熟悉形式语义三层体系：操作/指称/公理
+- ✅ 掌握20维复杂度理论
+- ✅ 能够使用Coq/Lean4/K-Framework/mCRL2进行形式验证
+- ✅ 理解150+形式化定理和50+可运行示例
+
 ---
 
 ## 📚 学习资源
@@ -665,11 +707,13 @@ Day 13-14: 实践项目：架构设计评审
 - [AI_model_Perspective/](AI_model_Perspective/) - 15+文档
 - [Information_Theory_Perspective/](Information_Theory_Perspective/) - 83+文档
 - [TuringCompute/](TuringCompute/) - 25+文档
+- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 47+文档 ✨ **NEW!**
 
 ### 案例研究
 
 - [智能电网](CASE_STUDY_SMART_GRID.md) - 七视角协同设计
 - [量子计算](CASE_STUDY_QUANTUM_COMPUTING.md) - 前沿技术分析
+- [Program_Algorithm_Perspective/05.5_Industrial_Applications.md](Program_Algorithm_Perspective/05_Formal_Verification/05.5_Industrial_Applications.md) - 工业级形式验证案例（CompCert, seL4, SymCrypt, Kubernetes） ✨ **NEW!**
 
 ---
 

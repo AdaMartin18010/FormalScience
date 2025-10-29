@@ -1,9 +1,10 @@
 # 🗺️ 形式科学项目 - 统一导航索引
 
-> **导航版本**: v1.0.0  
-> **最后更新**: 2025-10-25  
-> **文档总数**: 150+ | 核心文档: 15+  
-> **建议**: 根据您的背景和需求选择合适的入口
+> **导航版本**: v2.0.0 ✨  
+> **最后更新**: 2025-10-29  
+> **文档总数**: 260+ | 核心文档: 20+ | 视角数: **8个** ✨  
+> **建议**: 根据您的背景和需求选择合适的入口  
+> **新增**: 编程算法设计视角（150+定理，50+示例）、快速开始指南、视角对比
 
 ---
 
@@ -11,15 +12,17 @@
 
 **🔰 新手入门**:
 
-- [项目概述](#项目概述) - 5分钟了解整个项目
+- [**QUICK_START.md** ✨](QUICK_START.md) - **5分钟快速开始**（强烈推荐）
+- [项目概述](#项目概述) - 了解8个视角架构 ✨
 - [快速开始](#快速开始) - 根据背景选择学习路径
 - [核心概念速查](#核心概念速查) - 关键概念快速定位
 
 **🎓 深度学习**:
 
-- [按主题浏览](#按主题浏览) - 形式语言、AI模型、信息论等
-- [按视角浏览](#按视角浏览) - 七大理论视角
-- [按技术栈浏览](#按技术栈浏览) - 深度学习、区块链、分布式等
+- [**视角对比总览** ✨](PERSPECTIVES_COMPARISON.md) - **八视角对比、差异与联系**
+- [按主题浏览](#按主题浏览) - 形式语言、AI模型、信息论、编程算法等
+- [按视角浏览](#按视角浏览) - 八大视角（7理论+1工程）✨
+- [按技术栈浏览](#按技术栈浏览) - 深度学习、区块链、分布式、形式验证等 ✨
 
 **🔬 研究者**:
 
@@ -39,7 +42,9 @@
 
 ### 核心理念
 
-本项目建立了一个**七视角统一框架**，用于理解计算、智能、语言和系统的本质：
+本项目建立了一个**八视角统一框架**，用于理解计算、智能、语言和系统的本质：
+
+**理论视角（7个）**：
 
 **核心四视角**（抽象层+应用层）:
 
@@ -54,13 +59,18 @@
 - **冯·诺依曼架构**: 硬件、指令集与三大祸根
 - **分布式系统**: CAP定理、共识与容错
 
-### 核心成果
+**工程实践视角（1个）** ✨ **NEW!**:
 
-- 📚 **37+核心概念** 的七视角完整分析
-- 🎯 **42+跨视角定理** 的形式化证明
-- 📖 **150+文档** | ~2M字的系统性知识体系
-- 🔗 **15+文档网络** 的知识图谱
-- ⭐ **2个案例研究** (智能电网、量子计算)
+- **编程算法设计**: UH-Cost模型、三元视角、20维复杂度理论、设计模式形式化、形式验证工具链
+
+### 核心成果（v2.0.0）✨
+
+- 📚 **40+核心概念** 的八视角完整分析
+- 🎯 **150+跨视角定理** 的形式化证明（机器验证）✨
+- 📖 **260+文档** | ~110万字的系统性知识体系
+- 🔗 **20+文档网络** 的知识图谱
+- ⭐ **100+案例** (智能电网、量子计算、CompCert、seL4、Kubernetes等)
+- ⚡ **50+可运行示例** (Coq/Lean4/K-Framework/mCRL2/UPPAAL) ✨
 
 ---
 
@@ -165,6 +175,7 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 | **AI模型** | [AI模型视角](ai_model_view.md) | 神经网络、学习理论、对齐问题 | - |
 | **信息论** | [信息论视角](information_view.md) | 熵、互信息、Kolmogorov复杂度 | 1207 |
 | **图灵可计算** | [TuringCompute/](TuringCompute/) | 虚拟化、容器化、三票理论 | 25+文档 |
+| **编程算法** ✨ | [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) | UH-Cost、形式语义、设计模式、20维复杂度 | 47+文档 |
 
 ### 🎓 辅助学习文档
 
@@ -174,6 +185,8 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 | [**术语表**](GLOSSARY.md) | 关键术语速查 | 初学者 | ⭐⭐⭐⭐ |
 | [**快速参考**](QUICK_REFERENCE.md) | 核心公式和定理 | 研究者 | ⭐⭐⭐⭐ |
 | [**FAQ**](FAQ.md) | 常见问题解答 | 所有人 | ⭐⭐⭐⭐ |
+| [**Program 术语表**](Program_Algorithm_Perspective/GLOSSARY.md) ✨ | 形式化编程术语 (100+) | 工程师/研究者 | ⭐⭐⭐⭐⭐ |
+| [**Program 快速参考**](Program_Algorithm_Perspective/QUICK_REFERENCE.md) ✨ | 工具和命令速查 | 工程师 | ⭐⭐⭐⭐⭐ |
 
 ### 📖 案例研究
 
@@ -367,6 +380,39 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 - 停机问题：不可判定
 - Popek-Goldberg：虚拟化条件
 
+### 工程实践视角
+
+#### 🏗️ 编程算法设计视角 **NEW!**
+
+**核心问题**: 如何用形式化方法统一理解编程、算法、设计模式与架构？
+
+**关键概念**:
+
+- [UH-Cost 统一元模型](Program_Algorithm_Perspective/README.md) - ⟨Σ, ⟶, κ, Φ⟩
+- [三元视角](Program_Algorithm_Perspective/README.md) - 控制·执行·数据
+- [形式语义](Program_Algorithm_Perspective/01_Formal_Semantics/) - 操作/指称/公理语义
+- [设计模式形式化](Program_Algorithm_Perspective/02_Design_Patterns/) - GoF + 分布式/并发
+- [多维复杂度](Program_Algorithm_Perspective/03_Algorithm_Complexity/) - 20 维分析
+- [跨层验证](Program_Algorithm_Perspective/04_Architecture_Patterns/) - 5 层架构
+
+**主要文档**:
+
+- 📂 [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) (47 个文档)
+- 📚 [总体概述](Program_Algorithm_Perspective/README.md) - UH-Cost 框架
+- 🗺️ [主索引](Program_Algorithm_Perspective/00_Master_Index.md) - 完整导航
+- 🚀 [首次阅读](Program_Algorithm_Perspective/README_FIRST.md) - 新手入门
+
+**代表性成果**:
+
+- 150+ 形式化定理（Coq/Lean4/mCRL2 机器验证）
+- 50+ 可运行示例（10+ 工具和语言）
+- 对标 CMU/MIT/Stanford/Berkeley/ETH 课程
+- CompCert、seL4、SymCrypt、Kubernetes 工业案例
+
+**完成度**: ✅ **100%** (v2.0.0 - Production Ready)
+
+---
+
 ### 基础三视角（物理层）
 
 #### 5️⃣ 控制论视角
@@ -466,6 +512,33 @@ AI模型视角 → 神经网络理论 → 学习理论 → Gold可学习性 → 
 - CAP三角
 
 **推荐路径**: 分布式系统 → 共识算法 → 区块链案例
+
+### 编程 / 算法 / 设计模式 **NEW!** 🎉
+
+**专题**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 形式化编程算法设计
+
+**核心内容**:
+
+- **UH-Cost 统一元模型**: ⟨Σ, ⟶, κ, Φ⟩
+- **形式语义**: 操作语义、指称语义、公理语义
+- **设计模式形式化**: GoF 23 模式 + 分布式/并发/架构模式
+- **20 维复杂度理论**: 超越时间-空间的多维分析
+- **形式验证工具**: Coq/Lean4/K-Framework/mCRL2/UPPAAL
+
+**关键文档**:
+
+- 📚 [总体概述](Program_Algorithm_Perspective/README.md) - UH-Cost 框架
+- 🗺️ [主索引](Program_Algorithm_Perspective/00_Master_Index.md) - 完整导航
+- 🚀 [首次阅读](Program_Algorithm_Perspective/README_FIRST.md) - 新手友好
+- 🧠 [思维导图](Program_Algorithm_Perspective/MINDMAP.md) - 可视化全景
+- 📖 [术语表](Program_Algorithm_Perspective/GLOSSARY.md) - 100+ 术语
+- ⚡ [快速参考](Program_Algorithm_Perspective/QUICK_REFERENCE.md) - 工具速查
+
+**推荐路径**: README_FIRST → 操作语义 → 设计模式形式化 → Coq 证明
+
+**完成度**: ✅ 100% (v2.0.0 - Production Ready)
+
+---
 
 ### 编译器 / 程序语言
 
