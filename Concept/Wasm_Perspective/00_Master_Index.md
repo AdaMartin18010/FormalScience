@@ -6,7 +6,7 @@
 
 ### 知识体系架构
 
-```
+```text
 理论层 ━━━━━━━┓
               ┣━━> 形式化语义 ━━> 类型系统 ━━> 验证模型
 技术层 ━━━━━━━┫
@@ -16,6 +16,24 @@
 哲学层 ━━━━━━━┫
               ┗━━> 本体论 ━━> 认识论 ━━> 方法论
 ```
+
+---
+
+## 📚 实践指南（新增）
+
+**3 篇高质量实战文档**，降低入门门槛，提升工程实践：
+
+| 文档 | 描述 | 特色 | 推荐指数 |
+|------|------|------|---------|
+| **[BEST_PRACTICES.md](BEST_PRACTICES.md)** | 最佳实践与常见陷阱 | ✅ 80+ 代码示例<br>✅ 10+ 检查清单<br>✅ 12+ 陷阱解决方案 | ⭐⭐⭐⭐⭐ |
+| **[CHEAT_SHEET.md](CHEAT_SHEET.md)** | 快速参考卡（打印友好） | ✅ A4 打印优化<br>✅ 14 个速查区<br>✅ 可执行命令 | ⭐⭐⭐⭐⭐ |
+| **[ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md)** | 系统架构概览 | ✅ ASCII 架构图<br>✅ 权衡分析<br>✅ 设计决策 | ⭐⭐⭐⭐⭐ |
+
+### 快速选择指南
+
+**我想立即上手** → CHEAT_SHEET.md (10 分钟)
+**我需要避坑指南** → BEST_PRACTICES.md (30 分钟)
+**我要了解架构** → ARCHITECTURE_OVERVIEW.md (20 分钟)
 
 ---
 
@@ -215,7 +233,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ### 方法论三角
 
-```
+```text
 形式化验证 ←→ 实证测量 ←→ 哲学批判
      ↓            ↓            ↓
   定理证明      基准测试      概念分析
@@ -245,25 +263,25 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 **快速入门**（2小时）：
 
-```
+```text
 00_Master_Index → 01.1 → 02.1 → 03.1 → QUICK_REFERENCE
 ```
 
 **理论深度**（1周）：
 
-```
+```text
 01_Foundational_Theory (全部) → 06_Philosophical_Foundations (全部)
 ```
 
 **工程实践**（3天）：
 
-```
+```text
 03_Runtime_Systems → 04_System_Integration → 05_Application_Patterns
 ```
 
 **决策支持**（4小时）：
 
-```
+```text
 07_Engineering_Economics (全部) → FAQ (关键问题)
 ```
 
