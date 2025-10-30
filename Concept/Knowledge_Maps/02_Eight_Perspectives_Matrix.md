@@ -13,6 +13,7 @@
   - [📋 目录](#-目录)
   - [对比矩阵总览](#对比矩阵总览)
     - [八视角分类框架](#八视角分类框架)
+      - [视角入口链接（一键直达）](#视角入口链接一键直达)
   - [维度1：核心问题](#维度1核心问题)
     - [问题关系图](#问题关系图)
   - [维度2：理论基础](#维度2理论基础)
@@ -41,8 +42,10 @@
     - [如何使用本对比矩阵](#如何使用本对比矩阵)
     - [推荐阅读顺序](#推荐阅读顺序)
   - [更新日志](#更新日志)
+    - [v1.0.1 (2025-10-30)](#v101-2025-10-30)
     - [v1.0.0 (2025-10-30)](#v100-2025-10-30)
   - [🎯 通过对比理解，通过差异学习！](#-通过对比理解通过差异学习)
+  - [返回与总览](#返回与总览)
   - [参考与链接（权威来源）](#参考与链接权威来源)
 
 ---
@@ -60,12 +63,25 @@
 
 【物理层 - 基础3视角】
 ├── 控制论视角      (反馈与稳定性)
-├── 冯诺依曼视角    (硬件实现)
+├── 冯·诺依曼视角    (硬件实现)
 └── 分布式系统视角  (多节点协作)
 
 【工程层 - 实践1视角】
 └── 编程算法视角    (形式化工程实践)
 ```
+
+#### 视角入口链接（一键直达）
+
+| 视角 | 入口文档 |
+|---|---|
+| 形式语言 | [formal_language_view.md](../formal_language_view.md) |
+| AI 模型 | [ai_model_view.md](../ai_model_view.md) |
+| 信息论 | [information_view.md](../information_view.md) |
+| 图灵可计算 / Wasm | [Wasm 视角主索引](../Wasm_Perspective/00_Master_Index.md) |
+| 控制论 | [CRITICAL_APPENDIX_SYSTEM.md](../CRITICAL_APPENDIX_SYSTEM.md) |
+| 冯·诺依曼 | [Software_Perspective.md](../Software_Perspective.md) |
+| 分布式 | [CASE_STUDY_SMART_GRID.md](../CASE_STUDY_SMART_GRID.md) |
+| 编程算法 | [progrma_algorithm_view.md](../progrma_algorithm_view.md) |
 
 ---
 
@@ -78,7 +94,7 @@
 | **信息论** | 信息的本质是什么？如何度量？ | 度量问题 | 概率论、统计学 |
 | **图灵可计算** | 什么是可计算的？如何隔离？ | 界限问题 | 计算理论、形式系统 |
 | **控制论** | 如何稳定和优化系统？ | 控制问题 | 系统论、反馈理论 |
-| **冯诺依曼** | 硬件如何实现计算？ | 实现问题 | 计算机体系结构 |
+| **冯·诺依曼** | 硬件如何实现计算？ | 实现问题 | 计算机体系结构 |
 | **分布式** | 多节点如何协作？ | 协作问题 | 分布式理论、容错 |
 | **编程算法** | 如何形式化设计程序？ | 工程问题 | 软件工程、方法论 |
 
@@ -113,7 +129,7 @@ AI模型 ────────→ 如何学习表示？
 | **信息论** | Shannon理论、编码理论、复杂度 | 概率论、测度论、组合数学 | Shannon(1948) → Kolmogorov(1965) | ⭐⭐⭐⭐⭐ |
 | **图灵可计算** | 可计算性理论、递归论 | 数理逻辑、递归函数论 | Turing(1936) → Church-Turing论题 | ⭐⭐⭐⭐⭐ |
 | **控制论** | 反馈控制、阿什比定律、系统论 | 微分方程、稳定性理论 | Wiener(1948) → 阿什比(1956) | ⭐⭐⭐⭐ |
-| **冯诺依曼** | 计算机体系结构、指令集 | 数字逻辑、布尔代数 | Von Neumann(1945) | ⭐⭐⭐⭐⭐ |
+| **冯·诺依曼** | 计算机体系结构、指令集 | 数字逻辑、布尔代数 | Von Neumann(1945) | ⭐⭐⭐⭐⭐ |
 | **分布式** | CAP定理、共识算法、容错理论 | 图论、概率论、博弈论 | Lamport(1978) → Brewer(2000) | ⭐⭐⭐⭐ |
 | **编程算法** | 形式语义、设计模式、复杂度 | 离散数学、图论、组合学 | Dijkstra(1960s) → GoF(1994) | ⭐⭐⭐⭐ |
 
@@ -239,9 +255,9 @@ AI模型 ────────→ 如何学习表示？
 | **形式语言** | 编程语言, 形式验证, 编译器 | Coq, Isabelle, Haskell | Rust借用检查器 |
 | **AI模型** | NLP, CV, 推荐系统, 自动驾驶 | GPT-4, DALL-E, AlphaGo | ChatGPT |
 | **信息论** | 通信, 压缩, 密码学, 机器学习 | ZIP, JPEG, AES, VAE | 5G通信 |
-| **图灵可计算** | 虚拟化, 容器, WebAssembly | Docker, Wasm, JVM | 云计算 |
+| **图灵可计算** | 虚拟化, 容器, WebAssembly | Docker, [Wasm](../Wasm_Perspective/00_Master_Index.md), JVM | 云计算 |
 | **控制论** | 自动控制, 能源管理, 机器人 | PID控制器, 智能电网 | 特斯拉自动驾驶 |
-| **冯诺依曼** | 处理器设计, 嵌入式系统 | x86, ARM, RISC-V | 现代CPU |
+| **冯·诺依曼** | 处理器设计, 嵌入式系统 | x86, ARM, RISC-V | 现代CPU |
 | **分布式** | 区块链, 云计算, 数据库 | Bitcoin, Kubernetes, Raft | Ethereum |
 | **编程算法** | 软件开发, 算法竞赛, 系统设计 | LeetCode, 设计模式 | Linux内核 |
 
@@ -277,9 +293,9 @@ AI模型 ────────→ 如何学习表示？
 | **形式语言** | Coq, Agda, Lean | Haskell, OCaml, F# | 类型系统, Monad |
 | **AI模型** | TensorFlow, PyTorch | Python, Julia | Hugging Face, Keras |
 | **信息论** | Matlab, Scipy | Python, R | Compression库 |
-| **图灵可计算** | Docker, Wasm | Rust, C, Assembly | LLVM, JVM |
+| **图灵可计算** | Docker, [Wasm](../Wasm_Perspective/00_Master_Index.md) | Rust, C, Assembly | LLVM, JVM |
 | **控制论** | Simulink, LabVIEW | MATLAB, Python | ROS, PID库 |
-| **冯诺依曼** | Verilog, VHDL | C, Assembly | Qemu, Gem5 |
+| **冯·诺依曼** | Verilog, VHDL | C, Assembly | Qemu, Gem5 |
 | **分布式** | Raft, Paxos | Go, Erlang, Rust | Kubernetes, Etcd |
 | **编程算法** | Git, IDE | Java, C++, Python | Spring, STL |
 
@@ -330,7 +346,7 @@ AI模型 ────────→ 如何学习表示？
          编程算法 ⭐⭐⭐⭐⭐
          AI模型 ⭐⭐⭐⭐⭐
          分布式 ⭐⭐⭐⭐
-         冯诺依曼 ⭐⭐⭐⭐⭐
+         冯·诺依曼 ⭐⭐⭐⭐⭐
 
 【可扩展性】
          AI模型 ⭐⭐⭐⭐⭐
@@ -527,6 +543,14 @@ AI模型 ↔ 信息论       ⬛⬛⬛⬛⬜ (KL散度)
 
 ## 更新日志
 
+### v1.0.1 (2025-10-30)
+
+小幅改进：
+
+- 新增【视角入口链接】表格，8 个视角一键跳转
+- 在【应用领域】与【工具技术】中为 Wasm 添加至视角主索引的交叉链接
+- 目录与导航微调，便于横向跳读
+
 ### v1.0.0 (2025-10-30)
 
 **初始版本发布**
@@ -551,6 +575,13 @@ AI模型 ↔ 信息论       ⬛⬛⬛⬛⬜ (KL散度)
 **让每个视角的特点一目了然！** 📊✨
 
 </div>
+
+---
+
+## 返回与总览
+
+- 返回本目录索引：[`README.md`](README.md)
+- 顶层统一综述：[`00_Global_Synthesis.md`](00_Global_Synthesis.md)
 
 ---
 

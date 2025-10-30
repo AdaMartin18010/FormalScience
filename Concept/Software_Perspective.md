@@ -90,6 +90,7 @@
   - [✅ 总结：架构可行性结论](#-总结架构可行性结论)
   - [🧭 建议架构简图（文本描述）](#-建议架构简图文本描述)
   - [📌 建议下一步](#-建议下一步)
+  - [附：推理系统栈速览（vLLM / SGLang / TensorRT-LLM / FlashAttention-3 / PagedAttention v2）](#附推理系统栈速览vllm--sglang--tensorrt-llm--flashattention-3--pagedattention-v2)
 
 ---
 
@@ -1025,3 +1026,47 @@ GitOps 的不可变审计日志（Git History）确保每一次修复都可追�
 ---
 
 如需，我可为你生成一份**部署清单（YAML 集合）**或 **OPA 策略模板**用于快速落地。是否需要？
+
+---
+
+## 附：推理系统栈速览（vLLM / SGLang / TensorRT-LLM / FlashAttention-3 / PagedAttention v2）
+
+目标：在不牺牲质量的前提下，优化吞吐/时延/显存/并发与稳定性。
+
+关键组件与要点：
+
+- **vLLM**：PagedAttention（v2）页式 KV 管理，稳定承载多并发与多租户；与 continuous batching 协同良好。
+- **SGLang**：高效服务端编译与调度，擅长高并发与多路合流；prompt/缓存复用策略灵活。
+- **TensorRT-LLM**：NVIDIA 优化编译路径，融合 kernel fusions、INT8/FP8 量化、Flash-Decoding；适合单厂 GPU 深度优化。
+- **FlashAttention-3**：训练/推理通用高效注意力核，降低内存流量与提高吞吐。
+- **Speculative Decoding**：以小模型草拟，再由大模型确认，显著降低时延；需平衡“拒绝率/回退成本”。
+
+最小可复现（示意配置）：
+
+```yaml
+engine:
+  backend: vllm
+  model: your-llm
+  max_context_len: 131072
+  attention_impl: flash3
+  kv_cache:
+    type: paged
+    page_size: 16
+  batching:
+    mode: continuous
+    max_tokens_per_batch: 4096
+  speculative_decode:
+    enabled: true
+    draft_model: your-small-llm
+monitoring:
+  qps: true
+  p95_latency: true
+  memory_peaks: true
+  kv_evictions: true
+```
+
+度量基线：
+
+- 负载谱系：短上下文（≤2K）、中（8K-32K）、长（≥64K）分别压测。
+- 稳定性：p95/p99 延迟、显存峰值与 OOM/驱动重置频率；路由队列长度抖动。
+- 质量回归：启用 spec decode 与量化后，抽样回归关键评测（数学/长上下文/工具用例），设定接受阈值。
