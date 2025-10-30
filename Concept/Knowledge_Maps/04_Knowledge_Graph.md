@@ -217,29 +217,29 @@
 【从假设到定理】
 
 H₀.1 (同构假设) ──────────────────────┐
-    │                                  │
+    │                                │
     ├─→ T1.1 Curry-Howard同构        │
-    │                                  │
+    │                                │
     └─→ T1.5 Tarski真值定理           │
-                                       ↓
+                                     ↓
 H₀.2 (可形式化假设) ───────────────→ 统一框架
-    │                                  ↑
+    │                                ↑
     ├─→ T1.2 Church-Turing论题        │
-    │                                  │
+    │                                │
     └─→ T1.3 Chomsky层级              │
-                                       │
+                                      │
 H₀.3 (反身性假设) ─────────────────────┤
-    │                                  │
+    │                                 │
     └─→ T3.3 Scaling Law (涌现)       │
-                                       │
+                                      │
 H₀.4 (计算主义假设) ───────────────────┤
-    │                                  │
+    │                                 │
     ├─→ T3.1 PAC学习理论              │
-    │                                  │
+    │                                 │
     └─→ T3.2 通用逼近定理              │
-                                       │
+                                      │
 H₀.5 (语义客观性假设) ─────────────────┤
-    │                                  │
+    │                                 │
     └─→ T2.3 信息瓶颈原理              │
 ```
 
@@ -252,7 +252,7 @@ H₀.5 (语义客观性假设) ────────────────�
     ⬤ T1.1 Curry-Howard
     ⬤ T1.2 Church-Turing
     ⬤ T2.1 Shannon熵
-    ⬤ T4.1 Ashby定律
+    ⬤ T4.1 阿什比定律
          │   │   │   │
          └───┴───┴───┴─→ 中间层 (依赖基础层)
                             │
@@ -283,7 +283,7 @@ H₀.5 (语义客观性假设) ────────────────�
                  ╱  │  ╲
                 ╱   │   ╲
                ⬤────┼────⬤
-        【AI模型】  │  【图灵可计算】
+         【AI模型】  │  【图灵可计算】
                │    │    │
           KL散度    │    │ Kolmogorov
                │    │    │
@@ -371,7 +371,7 @@ Rust所有权
 
 智能电网
     ⬤
-    ├─ 控制论    ⭐⭐⭐⭐⭐ (核心-Ashby定律)
+    ├─ 控制论    ⭐⭐⭐⭐⭐ (核心-阿什比定律)
     ├─ 分布式    ⭐⭐⭐⭐ (分布式控制)
     └─ 信息论    ⭐⭐⭐ (信息流)
 
@@ -534,15 +534,15 @@ CI/CD
 【路径互联网】
 
 哲学深入路径 ─┐
-              ├──→ 意识研究 ←─┐
+             ├──→ 意识研究 ←─┐
 意识探索路径 ─┘              │
-                              │
+                            │
 数学基础路径 ─┐              │
-              ├──→ 范畴论HoTT ┤
+             ├──→ 范畴论HoTT ┤
 历史视角路径 ─┘              │
-                              │
+                            │
 计算实现路径 ─┐              │
-              ├──→ 形式验证 ──┘
+             ├──→ 形式验证 ──┘
 未来展望路径 ─┘
 
 社会应用路径 ──→ 跨学科整合
@@ -618,3 +618,20 @@ CI/CD
 **让知识关系可视化！** 🕸️✨
 
 </div>
+
+---
+
+## 参考与链接（权威来源）
+
+- 概念与语义/类型:
+  - Pierce, B. C. Types and Programming Languages. MIT Press.
+  - Sørensen & Urzyczyn. Lectures on the Curry-Howard Isomorphism.
+- 信息与复杂度:
+  - Cover, T.; Thomas, J. Elements of Information Theory.
+  - Li, M.; Vitányi, P. An Introduction to Kolmogorov Complexity.
+- 可计算与自动机:
+  - Sipser, M. Introduction to the Theory of Computation.
+  - Hopcroft, Motwani, Ullman. Automata Theory.
+- 控制/分布式/系统:
+  - Ashby, W. R. An Introduction to Cybernetics.
+  - Gilbert, Lynch (2002); Lamport et al. (1982).

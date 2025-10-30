@@ -39,6 +39,7 @@
   - [更新日志](#更新日志)
     - [v1.0.0 (2025-10-30)](#v100-2025-10-30)
   - [🎯 从案例出发，理论结合实践！](#-从案例出发理论结合实践)
+  - [参考与链接（权威来源）](#参考与链接权威来源)
 
 ---
 
@@ -108,14 +109,14 @@ AI领域
     Transformer    │    Scaling Law
             ↗      │      ↖
            ⬤───────┼───────⬤
-      【编译器】   │   【操作系统】
+      【编译器】    │   【操作系统】
            │       │       │
-     类型检查     │     虚拟化
+     类型检查       │     虚拟化
            │       │       │
            ⬤───────┼───────⬤
-      【Rust】    │   【量子计算】
+      【Rust】     │   【量子计算】
            │       │       │
-       所有权     │     量子态
+       所有权      │     量子态
            │       │       │
            └───────┼───────┘
                    │
@@ -160,7 +161,7 @@ AI领域
 │   └─ 提供: 虚拟化、进程管理
 │
 ├── 智能电网 ⬤ ← 区块链 + 数据库
-│   └─ 提供: 分布式控制、Ashby定律
+│   └─ 提供: 分布式控制、阿什比定律
 │
 └── 量子计算 ⬤ ← LLM(信息论) + 操作系统
     └─ 提供: 量子信息、量子算法
@@ -219,7 +220,7 @@ Rust:       4个主要视角 ⬛⬛⬛⬛
 ├── T4.2 CAP定理 ✓✓✓
 ├── T4.3 拜占庭将军问题 ✓✓✓
 ├── T2.1 Shannon熵 ✓
-└── T4.1 Ashby必要变异度 ✓
+└── T4.1 阿什比必要变异度 ✓
 
 Rust所有权 ⬤
 ├── T1.1 Curry-Howard同构 ✓✓
@@ -240,11 +241,11 @@ Rust所有权 ⬤
 
 操作系统 ⬤
 ├── T1.2 Church-Turing ✓✓ (虚拟化)
-├── T4.1 Ashby必要变异度 ✓ (调度)
+├── T4.1 阿什比必要变异度 ✓ (调度)
 └── T2.1 Shannon熵 ✓ (资源管理)
 
 智能电网 ⬤
-├── T4.1 Ashby必要变异度 ✓✓✓
+├── T4.1 阿什比必要变异度 ✓✓✓
 ├── T4.2 CAP定理 ✓
 └── T2.1 Shannon熵 ✓
 
@@ -513,7 +514,7 @@ Rust所有权
 | **数据库** | ACID论文 | Database System Concepts | PostgreSQL |
 | **编译器** | Dragon Book | Compilers Principles | LLVM |
 | **操作系统** | OSTEP | Modern Operating Systems | xv6 |
-| **智能电网** | Ashby原著 | Cybernetics | MATLAB/Simulink |
+| **智能电网** | 阿什比原著 | Cybernetics | MATLAB/Simulink |
 | **量子计算** | Nielsen & Chuang | Quantum Computation | Qiskit |
 
 ---
@@ -545,3 +546,30 @@ Rust所有权
 **让案例学习更系统！** 🔗✨
 
 </div>
+
+---
+
+## 参考与链接（权威来源）
+
+- 大语言模型（LLM）
+  - Vaswani et al. Attention Is All You Need (2017)
+  - Kaplan et al. Scaling Laws for Neural Language Models (2020)
+- 区块链共识/分布式
+  - Satoshi Nakamoto. Bitcoin: A Peer-to-Peer Electronic Cash System (2008)
+  - Lamport, Shostak, Pease. The Byzantine Generals Problem (1982)
+  - Gilbert, Lynch. Brewer’s conjecture and CAP (2002)
+- Rust 所有权/类型
+  - The Rust Programming Language (Rust Book)
+  - Pierce. Types and Programming Languages
+- 数据库系统
+  - Silberschatz, Korth, Sudarshan. Database System Concepts
+  - Stonebraker, Hellerstein. Readings in Database Systems
+- 编译器系统
+  - Aho, Lam, Sethi, Ullman. Compilers: Principles, Techniques, and Tools
+- 操作系统
+  - Remzi & Andrea Arpaci-Dusseau. Operating Systems: Three Easy Pieces (OSTEP)
+- 智能电网/控制
+  - Ashby. An Introduction to Cybernetics (1956)
+  - Kundur. Power System Stability and Control
+- 量子计算
+  - Nielsen, Chuang. Quantum Computation and Quantum Information
