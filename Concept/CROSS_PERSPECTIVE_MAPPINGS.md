@@ -756,23 +756,23 @@ lim(t→∞) H(state_i | state_j) → 0
 
 ```text
 程序：
-```c
-// 模拟图灵机
-struct TM {
-    int state;           // 当前状态
-    char* tape;          // 纸带（内存）
-    int head;            // 读写头位置
-    Transition* delta;   // 转移函数表
-};
+    ```c
+    // 模拟图灵机
+    struct TM {
+        int state;           // 当前状态
+        char* tape;          // 纸带（内存）
+        int head;            // 读写头位置
+        Transition* delta;   // 转移函数表
+    };
 
-void step(TM* m) {
-    char symbol = m->tape[m->head];
-    Transition t = m->delta[m->state][symbol];
-    m->state = t.next_state;
-    m->tape[m->head] = t.write_symbol;
-    m->head += t.move_direction;
-}
-```
+    void step(TM* m) {
+        char symbol = m->tape[m->head];
+        Transition t = m->delta[m->state][symbol];
+        m->state = t.next_state;
+        m->tape[m->head] = t.write_symbol;
+        m->head += t.move_direction;
+    }
+    ```
 
 映射验证：
 
@@ -1166,25 +1166,25 @@ CrossEntropy(p, q) = H(p) + D_KL(p||q)
 **案例9.2**：Lisp解释器
 
 ```text
-Lisp的核心：
-  (eval (quote expr))
+    Lisp的核心：
+      (eval (quote expr))
 
-实现：
-  1. quote：将代码转为数据（列表）
-  2. eval：将数据解释为代码执行
+    实现：
+      1. quote：将代码转为数据（列表）
+      2. eval：将数据解释为代码执行
 
-冯·诺依曼支持：
-  - Code和List在同一内存
-  - 可以互相转换
-  - 无缝集成
+    冯·诺依曼支持：
+      - Code和List在同一内存
+      - 可以互相转换
+      - 无缝集成
 
-经典Quine（自产生程序）：
-```lisp
-((lambda (x) (list x (list 'quote x)))
- '(lambda (x) (list x (list 'quote x))))
-```
+    经典Quine（自产生程序）：
+    ```lisp
+    ((lambda (x) (list x (list 'quote x)))
+    '(lambda (x) (list x (list 'quote x))))
+    ```
 
-这是R₂反身性的完美例证
+    这是R₂反身性的完美例证
 
 ```
 

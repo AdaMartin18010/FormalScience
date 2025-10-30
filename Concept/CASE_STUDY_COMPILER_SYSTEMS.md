@@ -748,7 +748,7 @@ JIT（Just-In-Time）：
    - 编译速度↑10-100x
 
 4. 更强的类型系统
-   - 依赖类型（Idris, Agda）
+   - 依赖类型（Idris, `Agda`）
    - 线性类型（Rust, Lean4）
    - 编译时证明更多性质
 

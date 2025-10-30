@@ -1,8 +1,8 @@
 # 形式科学理论体系 - 术语表
 
-> **文档版本**: v1.0.0  
-> **最后更新**: 2025-10-25  
-> **术语总数**: 120+  
+> **文档版本**: v1.0.0
+> **最后更新**: 2025-10-25
+> **术语总数**: 120+
 > **覆盖范围**: 七大视角核心术语
 
 ---
@@ -12,76 +12,78 @@
 
 ## 📋 目录
 
-- [📋 快速导航](#-快速导航)
-- [按字母索引](#按字母索引)
-  - [A](#a)
-    - [AGI (Artificial General Intelligence)](#agi-artificial-general-intelligence)
-    - [Ashby必要多样性定律 (Ashby's Law of Requisite Variety)](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
-  - [B](#b)
-    - [BFT (Byzantine Fault Tolerance)](#bft-byzantine-fault-tolerance)
-    - [BQP (Bounded-Error Quantum Polynomial Time)](#bqp-bounded-error-quantum-polynomial-time)
-  - [C](#c)
-    - [CAP定理 (CAP Theorem)](#cap定理-cap-theorem)
-    - [Chomsky层级 (Chomsky Hierarchy)](#chomsky层级-chomsky-hierarchy)
-  - [D](#d)
-    - [Data Rate定理 (Data Rate Theorem)](#data-rate定理-data-rate-theorem)
-    - [DIKWP模型](#dikwp模型)
-  - [E](#e)
-    - [Entropy (熵)](#entropy-熵)
-  - [F](#f)
-    - [FLP不可能定理 (FLP Impossibility Theorem)](#flp不可能定理-flp-impossibility-theorem)
-    - [反身性 (Reflexivity)](#反身性-reflexivity)
-  - [G](#g)
-    - [Gödel不完备定理 (Gödel's Incompleteness Theorems)](#gdel不完备定理-gdels-incompleteness-theorems)
-    - [Gold可学习性 (Gold Learnability Theory)](#gold可学习性-gold-learnability-theory)
-  - [H](#h)
-    - [停机问题 (Halting Problem)](#停机问题-halting-problem)
-  - [I](#i)
-    - [隔离 (Isolation)](#隔离-isolation)
-    - [互信息 (Mutual Information)](#互信息-mutual-information)
-  - [K](#k)
-    - [Kolmogorov复杂度 (Kolmogorov Complexity)](#kolmogorov复杂度-kolmogorov-complexity)
-  - [L](#l)
-    - [Landauer极限 (Landauer Limit)](#landauer极限-landauer-limit)
-  - [M](#m)
-    - [Meta-learning (元学习)](#meta-learning-元学习)
-    - [冯·诺依曼瓶颈 (Von Neumann Bottleneck)](#冯诺依曼瓶颈-von-neumann-bottleneck)
-  - [P](#p)
-    - [PAC学习 (Probably Approximately Correct Learning)](#pac学习-probably-approximately-correct-learning)
-    - [P vs NP问题](#p-vs-np问题)
-    - [Popek-Goldberg定理](#popek-goldberg定理)
-  - [R](#r)
-    - [Rice定理 (Rice's Theorem)](#rice定理-rices-theorem)
-  - [S](#s)
-    - [三票理论 (Three Tickets Theory)](#三票理论-three-tickets-theory)
-    - [Shannon熵 (Shannon Entropy)](#shannon熵-shannon-entropy)
-    - [主权矩阵 (Sovereignty Matrix)](#主权矩阵-sovereignty-matrix)
-  - [T](#t)
-    - [图灵完备性 (Turing Completeness)](#图灵完备性-turing-completeness)
-    - [三元视角 (Triadic Perspective)](#三元视角-triadic-perspective)
-  - [U](#u)
-    - [UH-Cost 统一元模型](#uh-cost-统一元模型)
-  - [V](#v)
-    - [VC维 (Vapnik-Chervonenkis Dimension)](#vc维-vapnik-chervonenkis-dimension)
-    - [虚拟化 (Virtualization)](#虚拟化-virtualization)
-  - [X](#x)
-    - [形式语言 (Formal Language)](#形式语言-formal-language)
-- [按视角分类](#按视角分类)
-  - [形式语言视角](#形式语言视角)
-  - [AI模型视角](#ai模型视角)
-  - [信息论视角](#信息论视角)
-  - [图灵可计算视角](#图灵可计算视角)
-  - [控制论视角](#控制论视角)
-  - [冯·诺依曼架构视角](#冯诺依曼架构视角)
-  - [分布式系统视角](#分布式系统视角)
-  - [编程算法设计视角 ✨](#编程算法设计视角)
-- [核心术语 (Top 50)](#核心术语-top-50)
-- [缩写表](#缩写表)
-- [补充说明](#补充说明)
-  - [如何使用本术语表](#如何使用本术语表)
-  - [术语说明规范](#术语说明规范)
-  - [持续更新](#持续更新)
-- [相关资源](#相关资源)
+- [形式科学理论体系 - 术语表](#形式科学理论体系---术语表)
+  - [📋 目录](#-目录)
+  - [📋 快速导航](#-快速导航)
+  - [按字母索引](#按字母索引)
+    - [A](#a)
+      - [AGI (Artificial General Intelligence)](#agi-artificial-general-intelligence)
+      - [Ashby必要多样性定律 (Ashby's Law of Requisite Variety)](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
+    - [B](#b)
+      - [BFT (Byzantine Fault Tolerance)](#bft-byzantine-fault-tolerance)
+      - [BQP (Bounded-Error Quantum Polynomial Time)](#bqp-bounded-error-quantum-polynomial-time)
+    - [C](#c)
+      - [CAP定理 (CAP Theorem)](#cap定理-cap-theorem)
+      - [Chomsky层级 (Chomsky Hierarchy)](#chomsky层级-chomsky-hierarchy)
+    - [D](#d)
+      - [Data Rate定理 (Data Rate Theorem)](#data-rate定理-data-rate-theorem)
+      - [DIKWP模型](#dikwp模型)
+    - [E](#e)
+      - [Entropy (熵)](#entropy-熵)
+    - [F](#f)
+      - [FLP不可能定理 (FLP Impossibility Theorem)](#flp不可能定理-flp-impossibility-theorem)
+      - [反身性 (Reflexivity)](#反身性-reflexivity)
+    - [G](#g)
+      - [Gödel不完备定理 (Gödel's Incompleteness Theorems)](#gödel不完备定理-gödels-incompleteness-theorems)
+      - [Gold可学习性 (Gold Learnability Theory)](#gold可学习性-gold-learnability-theory)
+    - [H](#h)
+      - [停机问题 (Halting Problem)](#停机问题-halting-problem)
+    - [I](#i)
+      - [隔离 (Isolation)](#隔离-isolation)
+      - [互信息 (Mutual Information)](#互信息-mutual-information)
+    - [K](#k)
+      - [Kolmogorov复杂度 (Kolmogorov Complexity)](#kolmogorov复杂度-kolmogorov-complexity)
+    - [L](#l)
+      - [Landauer极限 (Landauer Limit)](#landauer极限-landauer-limit)
+    - [M](#m)
+      - [Meta-learning (元学习)](#meta-learning-元学习)
+      - [冯·诺依曼瓶颈 (Von Neumann Bottleneck)](#冯诺依曼瓶颈-von-neumann-bottleneck)
+    - [P](#p)
+      - [PAC学习 (Probably Approximately Correct Learning)](#pac学习-probably-approximately-correct-learning)
+      - [P vs NP问题](#p-vs-np问题)
+      - [Popek-Goldberg定理](#popek-goldberg定理)
+    - [R](#r)
+      - [Rice定理 (Rice's Theorem)](#rice定理-rices-theorem)
+    - [S](#s)
+      - [三票理论 (Three Tickets Theory)](#三票理论-three-tickets-theory)
+      - [Shannon熵 (Shannon Entropy)](#shannon熵-shannon-entropy)
+      - [主权矩阵 (Sovereignty Matrix)](#主权矩阵-sovereignty-matrix)
+    - [T](#t)
+      - [图灵完备性 (Turing Completeness)](#图灵完备性-turing-completeness)
+      - [三元视角 (Triadic Perspective)](#三元视角-triadic-perspective)
+    - [U](#u)
+      - [UH-Cost 统一元模型](#uh-cost-统一元模型)
+    - [V](#v)
+      - [VC维 (Vapnik-Chervonenkis Dimension)](#vc维-vapnik-chervonenkis-dimension)
+      - [虚拟化 (Virtualization)](#虚拟化-virtualization)
+    - [X](#x)
+      - [形式语言 (Formal Language)](#形式语言-formal-language)
+  - [按视角分类](#按视角分类)
+    - [形式语言视角](#形式语言视角)
+    - [AI模型视角](#ai模型视角)
+    - [信息论视角](#信息论视角)
+    - [图灵可计算视角](#图灵可计算视角)
+    - [控制论视角](#控制论视角)
+    - [冯·诺依曼架构视角](#冯诺依曼架构视角)
+    - [分布式系统视角](#分布式系统视角)
+    - [编程算法设计视角 ✨](#编程算法设计视角-)
+  - [核心术语 (Top 50)](#核心术语-top-50)
+  - [缩写表](#缩写表)
+  - [补充说明](#补充说明)
+    - [如何使用本术语表](#如何使用本术语表)
+    - [术语说明规范](#术语说明规范)
+    - [持续更新](#持续更新)
+  - [相关资源](#相关资源)
 
 ---
 
@@ -588,11 +590,11 @@
 
 ---
 
-**文档版本**: v1.2.0  
-**最后更新**: 2025-10-25  
-**维护状态**: ✅ 活跃维护  
-**术语总数**: 120+  
-**链接修复**: ✅ 已全部完成  
+**文档版本**: v1.2.0
+**最后更新**: 2025-10-25
+**维护状态**: ✅ 活跃维护
+**术语总数**: 120+
+**链接修复**: ✅ 已全部完成
 **格式优化**: ✅ 已完成
 
 > 💡 遇到生词就查本术语表！💡
