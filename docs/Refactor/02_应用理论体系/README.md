@@ -202,36 +202,36 @@
 
 ### 跨域综合理论
 
-1. Checkland, P. *Systems Thinking, Systems Practice*. Wiley, 1981.
-2. Jackson, M. C. *Systems Thinking: Creative Holism for Managers*. Wiley, 2003.
-3. Midgley, G. *Systemic Intervention*. Springer, 2000.
+1. Checkland, P. _Systems Thinking, Systems Practice_. Wiley, 1981.
+2. Jackson, M. C. _Systems Thinking: Creative Holism for Managers_. Wiley, 2003.
+3. Midgley, G. _Systemic Intervention_. Springer, 2000.
 
 ### 数据科学理论
 
-1. Hastie, T., et al. *The Elements of Statistical Learning*. Springer, 2009.
-2. Bishop, C. M. *Pattern Recognition and Machine Learning*. Springer, 2006.
-3. Murphy, K. P. *Machine Learning: A Probabilistic Perspective*. MIT Press, 2012.
+1. Hastie, T., et al. _The Elements of Statistical Learning_. Springer, 2009.
+2. Bishop, C. M. _Pattern Recognition and Machine Learning_. Springer, 2006.
+3. Murphy, K. P. _Machine Learning: A Probabilistic Perspective_. MIT Press, 2012.
 
 ### 信息论
 
-1. Cover, T. M., & Thomas, J. A. *Elements of Information Theory*. Wiley, 2006.
-2. MacKay, D. J. C. *Information Theory, Inference, and Learning Algorithms*. Cambridge University Press, 2003.
-3. Shannon, C. E. *A Mathematical Theory of Communication*. Bell System Technical Journal, 1948.
+1. Cover, T. M., & Thomas, J. A. _Elements of Information Theory_. Wiley, 2006.
+2. MacKay, D. J. C. _Information Theory, Inference, and Learning Algorithms_. Cambridge University Press, 2003.
+3. Shannon, C. E. _A Mathematical Theory of Communication_. Bell System Technical Journal, 1948.
 
 ### 人工智能理论
 
-1. Russell, S. J., & Norvig, P. *Artificial Intelligence: A Modern Approach*. Pearson, 2016.
-2. Mitchell, T. M. *Machine Learning*. McGraw-Hill, 1997.
-3. Nilsson, N. J. *Principles of Artificial Intelligence*. Morgan Kaufmann, 1980.
+1. Russell, S. J., & Norvig, P. _Artificial Intelligence: A Modern Approach_. Pearson, 2016.
+2. Mitchell, T. M. _Machine Learning_. McGraw-Hill, 1997.
+3. Nilsson, N. J. _Principles of Artificial Intelligence_. Morgan Kaufmann, 1980.
 
 ### 智能系统理论
 
-1. Holland, J. H. *Adaptation in Natural and Artificial Systems*. MIT Press, 1992.
-2. Kauffman, S. A. *The Origins of Order*. Oxford University Press, 1993.
-3. Ashby, W. R. *An Introduction to Cybernetics*. Chapman & Hall, 1956.
+1. Holland, J. H. _Adaptation in Natural and Artificial Systems_. MIT Press, 1992.
+2. Kauffman, S. A. _The Origins of Order_. Oxford University Press, 1993.
+3. Ashby, W. R. _An Introduction to Cybernetics_. Chapman & Hall, 1956.
 
 ---
 
-**体系状态**：✅ 100% 重构完成  
-**最后更新**：2025年1月  
+**体系状态**：✅ 100% 重构完成
+**最后更新**：2025年1月
 **维护团队**：形式科学理论体系重构团队

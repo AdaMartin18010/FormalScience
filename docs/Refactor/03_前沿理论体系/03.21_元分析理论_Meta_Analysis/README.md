@@ -170,14 +170,14 @@ PRISMA是系统综述和元分析的首选报告项目，包括识别、筛选�
 
 ## 📚 参考文献
 
-1. Borenstein, M., et al. *Introduction to Meta-Analysis*. Wiley, 2009.
-2. Higgins, J. P. T., & Green, S. *Cochrane Handbook for Systematic Reviews of Interventions*. Wiley, 2011.
-3. Moher, D., et al. *Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement*. PLoS Medicine, 2009.
-4. Egger, M., et al. *Bias in meta-analysis detected by a simple, graphical test*. BMJ, 1997.
-5. Guyatt, G. H., et al. *GRADE: an emerging consensus on rating quality of evidence and strength of recommendations*. BMJ, 2008.
+1. Borenstein, M., et al. _Introduction to Meta-Analysis_. Wiley, 2009.
+2. Higgins, J. P. T., & Green, S. _Cochrane Handbook for Systematic Reviews of Interventions_. Wiley, 2011.
+3. Moher, D., et al. _Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement_. PLoS Medicine, 2009.
+4. Egger, M., et al. _Bias in meta-analysis detected by a simple, graphical test_. BMJ, 1997.
+5. Guyatt, G. H., et al. _GRADE: an emerging consensus on rating quality of evidence and strength of recommendations_. BMJ, 2008.
 
 ---
 
-**模块状态**：✅ 100% 重构完成  
-**最后更新**：2025年1月  
+**模块状态**：✅ 100% 重构完成
+**最后更新**：2025年1月
 **维护团队**：形式科学理论体系重构团队

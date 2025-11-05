@@ -83,22 +83,22 @@ impl DataSortingApplication {
             performance_monitor: PerformanceMonitor::new(),
         }
     }
-    
+
     /// 处理大规模数据排序
     pub fn process_large_dataset(&self, data: Vec<i32>) -> SortingResult {
         let start_time = std::time::Instant::now();
-        
+
         // 数据预处理
         let processed_data = self.data_processor.preprocess(data);
-        
+
         // 执行排序算法
         let sorted_data = self.sorting_algorithm.sort(processed_data);
-        
+
         // 数据后处理
         let final_result = self.data_processor.postprocess(sorted_data);
-        
+
         let execution_time = start_time.elapsed();
-        
+
         SortingResult {
             sorted_data: final_result,
             execution_time,
@@ -106,7 +106,7 @@ impl DataSortingApplication {
             correctness: self.verify_correctness(&final_result),
         }
     }
-    
+
     /// 验证排序正确性
     fn verify_correctness(&self, data: &[i32]) -> bool {
         for i in 1..data.len() {
@@ -133,11 +133,11 @@ impl SortingAlgorithm<i32> for QuickSort {
         if data.len() <= 1 {
             return data;
         }
-        
+
         let pivot = data.pop().unwrap();
         let mut left = Vec::new();
         let mut right = Vec::new();
-        
+
         for item in data {
             if item <= pivot {
                 left.push(item);
@@ -145,18 +145,18 @@ impl SortingAlgorithm<i32> for QuickSort {
                 right.push(item);
             }
         }
-        
+
         let mut result = self.sort(left);
         result.push(pivot);
         result.extend(self.sort(right));
-        
+
         result
     }
-    
+
     fn name(&self) -> &'static str {
         "QuickSort"
     }
-    
+
     fn time_complexity(&self) -> &'static str {
         "O(n log n)"
     }
@@ -165,17 +165,17 @@ impl SortingAlgorithm<i32> for QuickSort {
 #[cfg(test)]
 mod sorting_tests {
     use super::*;
-    
+
     #[test]
     fn test_large_dataset_sorting() {
         let quick_sort = QuickSort;
         let app = DataSortingApplication::new(Box::new(quick_sort));
-        
+
         // 生成大规模测试数据
         let test_data: Vec<i32> = (0..100000).rev().collect();
-        
+
         let result = app.process_large_dataset(test_data);
-        
+
         assert!(result.correctness);
         assert!(result.execution_time.as_millis() < 1000); // 性能要求
         println!("Sorting completed in {:?}", result.execution_time);
@@ -213,24 +213,24 @@ impl InformationRetrievalApplication {
             query_processor: QueryProcessor::new(),
         }
     }
-    
+
     /// 构建搜索索引
     pub fn build_index(&self, documents: Vec<String>) -> SearchIndex {
         self.index_builder.build(documents)
     }
-    
+
     /// 执行搜索查询
     pub fn search(&self, index: &SearchIndex, query: String) -> SearchResult {
         let start_time = std::time::Instant::now();
-        
+
         // 查询预处理
         let processed_query = self.query_processor.process(query);
-        
+
         // 执行搜索
         let search_results = self.search_algorithm.search(index, &processed_query);
-        
+
         let execution_time = start_time.elapsed();
-        
+
         SearchResult {
             results: search_results,
             execution_time,
@@ -238,12 +238,12 @@ impl InformationRetrievalApplication {
             relevance_score: self.calculate_relevance(&search_results),
         }
     }
-    
+
     fn calculate_relevance(&self, results: &[SearchMatch]) -> f64 {
         if results.is_empty() {
             return 0.0;
         }
-        
+
         let total_score: f64 = results.iter().map(|r| r.score).sum();
         total_score / results.len() as f64
     }
@@ -261,7 +261,7 @@ pub struct BinarySearch;
 impl SearchAlgorithm<String> for BinarySearch {
     fn search(&self, index: &SearchIndex, query: &String) -> Vec<SearchMatch> {
         let mut results = Vec::new();
-        
+
         for (doc_id, content) in &index.documents {
             if content.contains(query) {
                 let score = self.calculate_score(content, query);
@@ -272,30 +272,30 @@ impl SearchAlgorithm<String> for BinarySearch {
                 });
             }
         }
-        
+
         // 按相关性排序
         results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap());
         results
     }
-    
+
     fn name(&self) -> &'static str {
         "BinarySearch"
     }
-    
+
     fn calculate_score(&self, content: &str, query: &str) -> f64 {
         let query_words: Vec<&str> = query.split_whitespace().collect();
         let content_words: Vec<&str> = content.split_whitespace().collect();
-        
+
         let mut score = 0.0;
         for query_word in query_words {
             if content_words.contains(&query_word) {
                 score += 1.0;
             }
         }
-        
+
         score / query_words.len() as f64
     }
-    
+
     fn extract_snippet(&self, content: &str, query: &str) -> String {
         if let Some(pos) = content.find(query) {
             let start = pos.saturating_sub(50);
@@ -310,12 +310,12 @@ impl SearchAlgorithm<String> for BinarySearch {
 #[cfg(test)]
 mod search_tests {
     use super::*;
-    
+
     #[test]
     fn test_large_document_search() {
         let binary_search = BinarySearch;
         let app = InformationRetrievalApplication::new(Box::new(binary_search));
-        
+
         // 构建大规模文档索引
         let documents = vec![
             "This is a document about algorithms and data structures".to_string(),
@@ -323,12 +323,12 @@ mod search_tests {
             "Advanced algorithms in computer science".to_string(),
             // ... 更多文档
         ];
-        
+
         let index = app.build_index(documents);
         let query = "algorithms".to_string();
-        
+
         let result = app.search(&index, query);
-        
+
         assert!(!result.results.is_empty());
         assert!(result.execution_time.as_millis() < 100);
         println!("Search completed in {:?}", result.execution_time);
@@ -370,22 +370,22 @@ impl DatabaseQueryApplication {
             result_processor: ResultProcessor::new(),
         }
     }
-    
+
     /// 执行复杂查询
     pub fn execute_complex_query(&self, query: DatabaseQuery) -> QueryResult {
         let start_time = std::time::Instant::now();
-        
+
         // 查询优化
         let optimized_query = self.query_optimizer.optimize(query);
-        
+
         // 执行集合运算
         let intermediate_results = self.execute_set_operations(&optimized_query);
-        
+
         // 结果处理
         let final_result = self.result_processor.process(intermediate_results);
-        
+
         let execution_time = start_time.elapsed();
-        
+
         QueryResult {
             data: final_result,
             execution_time,
@@ -393,10 +393,10 @@ impl DatabaseQueryApplication {
             correctness: self.verify_query_correctness(&final_result),
         }
     }
-    
+
     fn execute_set_operations(&self, query: &OptimizedQuery) -> Vec<SetResult> {
         let mut results = Vec::new();
-        
+
         for operation in &query.operations {
             match operation {
                 SetOperation::Union(a, b) => {
@@ -417,10 +417,10 @@ impl DatabaseQueryApplication {
                 }
             }
         }
-        
+
         results
     }
-    
+
     fn verify_query_correctness(&self, result: &QueryData) -> bool {
         // 验证查询结果的正确性
         result.records.len() <= result.expected_max_records
@@ -434,7 +434,7 @@ impl SetOperations {
     pub fn new() -> Self {
         Self
     }
-    
+
     /// 并集运算
     pub fn union(&self, a: &DataSet, b: &DataSet) -> DataSet {
         let mut result = a.clone();
@@ -445,7 +445,7 @@ impl SetOperations {
         }
         result
     }
-    
+
     /// 交集运算
     pub fn intersection(&self, a: &DataSet, b: &DataSet) -> DataSet {
         let mut result = DataSet::new();
@@ -456,7 +456,7 @@ impl SetOperations {
         }
         result
     }
-    
+
     /// 差集运算
     pub fn difference(&self, a: &DataSet, b: &DataSet) -> DataSet {
         let mut result = DataSet::new();
@@ -467,7 +467,7 @@ impl SetOperations {
         }
         result
     }
-    
+
     /// 对称差集运算
     pub fn symmetric_difference(&self, a: &DataSet, b: &DataSet) -> DataSet {
         let union = self.union(a, b);
@@ -479,11 +479,11 @@ impl SetOperations {
 #[cfg(test)]
 mod database_tests {
     use super::*;
-    
+
     #[test]
     fn test_complex_database_query() {
         let app = DatabaseQueryApplication::new();
-        
+
         // 构建复杂查询
         let query = DatabaseQuery {
             operations: vec![
@@ -497,9 +497,9 @@ mod database_tests {
                 Filter::LocationIn("US".to_string()),
             ],
         };
-        
+
         let result = app.execute_complex_query(query);
-        
+
         assert!(result.correctness);
         assert!(result.execution_time.as_millis() < 500);
         println!("Database query completed in {:?}", result.execution_time);
@@ -537,37 +537,37 @@ impl KnowledgeRepresentationApplication {
             relation_analyzer: RelationAnalyzer::new(),
         }
     }
-    
+
     /// 构建知识图谱
     pub fn build_knowledge_graph(&self, entities: Vec<Entity>, relations: Vec<Relation>) -> KnowledgeGraph {
         let mut graph = self.knowledge_graph.clone();
-        
+
         for entity in entities {
             graph.add_entity(entity);
         }
-        
+
         for relation in relations {
             graph.add_relation(relation);
         }
-        
+
         graph
     }
-    
+
     /// 执行知识推理
     pub fn perform_inference(&self, graph: &KnowledgeGraph, query: Query) -> InferenceResult {
         let start_time = std::time::Instant::now();
-        
+
         // 分析集合关系
         let relations = self.relation_analyzer.analyze(graph, &query);
-        
+
         // 执行推理
         let inference_results = self.inference_engine.infer(graph, &relations);
-        
+
         // 结果验证
         let validated_results = self.validate_inference_results(&inference_results);
-        
+
         let execution_time = start_time.elapsed();
-        
+
         InferenceResult {
             results: validated_results,
             execution_time,
@@ -575,7 +575,7 @@ impl KnowledgeRepresentationApplication {
             coverage: self.calculate_coverage(&validated_results),
         }
     }
-    
+
     fn validate_inference_results(&self, results: &[Inference]) -> Vec<ValidatedInference> {
         results.iter()
             .filter(|inference| self.is_valid_inference(inference))
@@ -586,7 +586,7 @@ impl KnowledgeRepresentationApplication {
             })
             .collect()
     }
-    
+
     fn is_valid_inference(&self, inference: &Inference) -> bool {
         // 验证推理的逻辑正确性
         inference.confidence > 0.7 && !inference.evidence.is_empty()
@@ -607,19 +607,19 @@ impl KnowledgeGraph {
             relations: HashMap::new(),
         }
     }
-    
+
     pub fn add_entity(&mut self, entity: Entity) {
         self.entities.insert(entity.id.clone(), entity);
     }
-    
+
     pub fn add_relation(&mut self, relation: Relation) {
         self.relations.insert(relation.id.clone(), relation);
     }
-    
+
     pub fn get_entities(&self) -> &HashMap<String, Entity> {
         &self.entities
     }
-    
+
     pub fn get_relations(&self) -> &HashMap<String, Relation> {
         &self.relations
     }
@@ -628,34 +628,34 @@ impl KnowledgeGraph {
 #[cfg(test)]
 mod knowledge_tests {
     use super::*;
-    
+
     #[test]
     fn test_knowledge_graph_inference() {
         let app = KnowledgeRepresentationApplication::new();
-        
+
         // 构建知识图谱
         let entities = vec![
             Entity { id: "person1".to_string(), name: "Alice".to_string(), type_: "Person".to_string() },
             Entity { id: "person2".to_string(), name: "Bob".to_string(), type_: "Person".to_string() },
             Entity { id: "company1".to_string(), name: "TechCorp".to_string(), type_: "Company".to_string() },
         ];
-        
+
         let relations = vec![
             Relation { id: "r1".to_string(), from: "person1".to_string(), to: "company1".to_string(), type_: "works_for".to_string() },
             Relation { id: "r2".to_string(), from: "person2".to_string(), to: "company1".to_string(), type_: "works_for".to_string() },
         ];
-        
+
         let graph = app.build_knowledge_graph(entities, relations);
-        
+
         // 执行推理查询
         let query = Query {
             subject: "person1".to_string(),
             predicate: "colleague_of".to_string(),
             object: "person2".to_string(),
         };
-        
+
         let result = app.perform_inference(&graph, query);
-        
+
         assert!(result.confidence > 0.7);
         assert!(!result.results.is_empty());
         println!("Knowledge inference completed in {:?}", result.execution_time);
@@ -697,22 +697,22 @@ impl MachineLearningApplication {
             optimizer: Optimizer::new(),
         }
     }
-    
+
     /// 训练机器学习模型
     pub fn train_model(&self, data: TrainingData, model_config: ModelConfig) -> TrainingResult {
         let start_time = std::time::Instant::now();
-        
+
         // 数学基础应用
         let mathematical_framework = self.mathematical_foundation.apply(&data);
-        
+
         // 模型训练
         let trained_model = self.model_trainer.train(&mathematical_framework, &model_config);
-        
+
         // 模型优化
         let optimized_model = self.optimizer.optimize(trained_model);
-        
+
         let execution_time = start_time.elapsed();
-        
+
         TrainingResult {
             model: optimized_model,
             execution_time,
@@ -720,33 +720,33 @@ impl MachineLearningApplication {
             loss: self.calculate_loss(&optimized_model, &data.test_data),
         }
     }
-    
+
     fn calculate_accuracy(&self, model: &TrainedModel, test_data: &TestData) -> f64 {
         let mut correct_predictions = 0;
         let total_predictions = test_data.samples.len();
-        
+
         for sample in &test_data.samples {
             let prediction = model.predict(&sample.features);
             if prediction == sample.label {
                 correct_predictions += 1;
             }
         }
-        
+
         correct_predictions as f64 / total_predictions as f64
     }
-    
+
     fn calculate_loss(&self, model: &TrainedModel, test_data: &TestData) -> f64 {
         let mut total_loss = 0.0;
-        
+
         for sample in &test_data.samples {
             let prediction = model.predict(&sample.features);
             let loss = self.compute_loss(prediction, sample.label);
             total_loss += loss;
         }
-        
+
         total_loss / test_data.samples.len() as f64
     }
-    
+
     fn compute_loss(&self, prediction: f64, actual: f64) -> f64 {
         (prediction - actual).powi(2) // 均方误差
     }
@@ -759,7 +759,7 @@ impl MathematicalFoundation {
     pub fn new() -> Self {
         Self
     }
-    
+
     /// 应用数学基础到数据
     pub fn apply(&self, data: &TrainingData) -> MathematicalFramework {
         MathematicalFramework {
@@ -768,32 +768,32 @@ impl MathematicalFoundation {
             weights: self.initialize_weights(data.features[0].len()),
         }
     }
-    
+
     /// 特征标准化
     fn normalize_features(&self, features: &[Vec<f64>]) -> Vec<Vec<f64>> {
         let mut normalized = Vec::new();
-        
+
         for feature_vector in features {
             let mean = feature_vector.iter().sum::<f64>() / feature_vector.len() as f64;
             let variance = feature_vector.iter()
                 .map(|x| (x - mean).powi(2))
                 .sum::<f64>() / feature_vector.len() as f64;
             let std_dev = variance.sqrt();
-            
+
             let normalized_vector: Vec<f64> = feature_vector.iter()
                 .map(|x| (x - mean) / std_dev)
                 .collect();
-            
+
             normalized.push(normalized_vector);
         }
-        
+
         normalized
     }
-    
+
     /// 标签编码
     fn encode_labels(&self, labels: &[String]) -> Vec<f64> {
         let unique_labels: Vec<String> = labels.iter().cloned().collect();
-        
+
         labels.iter()
             .map(|label| {
                 unique_labels.iter()
@@ -802,7 +802,7 @@ impl MathematicalFoundation {
             })
             .collect()
     }
-    
+
     /// 初始化权重
     fn initialize_weights(&self, feature_count: usize) -> Vec<f64> {
         (0..feature_count)
@@ -814,11 +814,11 @@ impl MathematicalFoundation {
 #[cfg(test)]
 mod ml_tests {
     use super::*;
-    
+
     #[test]
     fn test_machine_learning_training() {
         let app = MachineLearningApplication::new();
-        
+
         // 构建训练数据
         let training_data = TrainingData {
             features: vec![
@@ -838,15 +838,15 @@ mod ml_tests {
                 ],
             },
         };
-        
+
         let model_config = ModelConfig {
             learning_rate: 0.01,
             epochs: 100,
             batch_size: 32,
         };
-        
+
         let result = app.train_model(training_data, model_config);
-        
+
         assert!(result.accuracy > 0.8);
         assert!(result.loss < 0.1);
         println!("ML training completed in {:?}", result.execution_time);
@@ -888,26 +888,26 @@ impl DataMiningApplication {
             pattern_discoverer: PatternDiscoverer::new(),
         }
     }
-    
+
     /// 执行数据挖掘
     pub fn perform_data_mining(&self, data: MiningData, config: MiningConfig) -> MiningResult {
         let start_time = std::time::Instant::now();
-        
+
         // 算法框架应用
         let algorithm_results = self.algorithm_framework.apply(&data);
-        
+
         // 集合论框架应用
         let set_theory_results = self.set_theory_framework.apply(&data);
-        
+
         // 模式发现
         let patterns = self.pattern_discoverer.discover_patterns(
             &algorithm_results,
             &set_theory_results,
             &config
         );
-        
+
         let execution_time = start_time.elapsed();
-        
+
         MiningResult {
             patterns,
             execution_time,
@@ -915,25 +915,25 @@ impl DataMiningApplication {
             confidence: self.calculate_confidence(&patterns),
         }
     }
-    
+
     fn calculate_coverage(&self, patterns: &[Pattern], data: &MiningData) -> f64 {
         let total_records = data.records.len();
         let covered_records = patterns.iter()
             .map(|p| p.covered_records.len())
             .sum::<usize>();
-        
+
         covered_records as f64 / total_records as f64
     }
-    
+
     fn calculate_confidence(&self, patterns: &[Pattern]) -> f64 {
         if patterns.is_empty() {
             return 0.0;
         }
-        
+
         let total_confidence: f64 = patterns.iter()
             .map(|p| p.confidence)
             .sum();
-        
+
         total_confidence / patterns.len() as f64
     }
 }
@@ -945,7 +945,7 @@ impl AlgorithmFramework {
     pub fn new() -> Self {
         Self
     }
-    
+
     pub fn apply(&self, data: &MiningData) -> AlgorithmResults {
         AlgorithmResults {
             clusters: self.perform_clustering(data),
@@ -953,12 +953,12 @@ impl AlgorithmFramework {
             sequences: self.discover_sequences(data),
         }
     }
-    
+
     fn perform_clustering(&self, data: &MiningData) -> Vec<Cluster> {
         // K-means聚类算法实现
         let k = 3; // 聚类数量
         let mut clusters = Vec::new();
-        
+
         // 初始化聚类中心
         let mut centroids: Vec<Vec<f64>> = (0..k)
             .map(|_| {
@@ -967,16 +967,16 @@ impl AlgorithmFramework {
                     .collect()
             })
             .collect();
-        
+
         // 迭代聚类
         for _ in 0..10 {
             let mut new_clusters: Vec<Cluster> = vec![Cluster { records: Vec::new() }; k];
-            
+
             // 分配记录到最近的聚类中心
             for record in &data.records {
                 let mut min_distance = f64::INFINITY;
                 let mut closest_cluster = 0;
-                
+
                 for (i, centroid) in centroids.iter().enumerate() {
                     let distance = self.calculate_distance(&record.features, centroid);
                     if distance < min_distance {
@@ -984,52 +984,52 @@ impl AlgorithmFramework {
                         closest_cluster = i;
                     }
                 }
-                
+
                 new_clusters[closest_cluster].records.push(record.clone());
             }
-            
+
             // 更新聚类中心
             for (i, cluster) in new_clusters.iter().enumerate() {
                 if !cluster.records.is_empty() {
                     let feature_count = cluster.records[0].features.len();
                     let mut new_centroid = vec![0.0; feature_count];
-                    
+
                     for record in &cluster.records {
                         for (j, feature) in record.features.iter().enumerate() {
                             new_centroid[j] += feature;
                         }
                     }
-                    
+
                     for j in 0..feature_count {
                         new_centroid[j] /= cluster.records.len() as f64;
                     }
-                    
+
                     centroids[i] = new_centroid;
                 }
             }
-            
+
             clusters = new_clusters;
         }
-        
+
         clusters
     }
-    
+
     fn calculate_distance(&self, a: &[f64], b: &[f64]) -> f64 {
         a.iter().zip(b.iter())
             .map(|(x, y)| (x - y).powi(2))
             .sum::<f64>()
             .sqrt()
     }
-    
+
     fn find_associations(&self, data: &MiningData) -> Vec<Association> {
         // Apriori算法实现
         let mut associations = Vec::new();
         let min_support = 0.1;
         let min_confidence = 0.5;
-        
+
         // 生成频繁项集
         let frequent_itemsets = self.generate_frequent_itemsets(data, min_support);
-        
+
         // 生成关联规则
         for itemset in frequent_itemsets {
             for i in 1..itemset.len() {
@@ -1039,7 +1039,7 @@ impl AlgorithmFramework {
                         .filter(|item| !antecedent.contains(item))
                         .cloned()
                         .collect();
-                    
+
                     if !consequent.is_empty() {
                         let confidence = self.calculate_confidence(&antecedent, &consequent, data);
                         if confidence >= min_confidence {
@@ -1053,10 +1053,10 @@ impl AlgorithmFramework {
                 }
             }
         }
-        
+
         associations
     }
-    
+
     fn generate_frequent_itemsets(&self, data: &MiningData, min_support: f64) -> Vec<Vec<String>> {
         // 简化实现
         vec![
@@ -1064,12 +1064,12 @@ impl AlgorithmFramework {
             vec!["item2".to_string(), "item3".to_string()],
         ]
     }
-    
+
     fn calculate_confidence(&self, antecedent: &[String], consequent: &[String], data: &MiningData) -> f64 {
         // 简化实现
         0.75
     }
-    
+
     fn discover_sequences(&self, data: &MiningData) -> Vec<Sequence> {
         // 序列模式挖掘实现
         vec![
@@ -1084,11 +1084,11 @@ impl AlgorithmFramework {
 #[cfg(test)]
 mod mining_tests {
     use super::*;
-    
+
     #[test]
     fn test_data_mining_application() {
         let app = DataMiningApplication::new();
-        
+
         // 构建挖掘数据
         let mining_data = MiningData {
             records: vec![
@@ -1097,15 +1097,15 @@ mod mining_tests {
                 MiningRecord { features: vec![7.0, 8.0, 9.0], items: vec!["A".to_string(), "C".to_string()] },
             ],
         };
-        
+
         let config = MiningConfig {
             min_support: 0.1,
             min_confidence: 0.5,
             max_patterns: 10,
         };
-        
+
         let result = app.perform_data_mining(mining_data, config);
-        
+
         assert!(!result.patterns.is_empty());
         assert!(result.coverage > 0.5);
         assert!(result.confidence > 0.7);
@@ -1191,6 +1191,6 @@ mod mining_tests {
 
 ---
 
-*案例库建立时间: 2025-01-17*  
-*验证完成时间: 2025-01-17*  
-*性能评估完成: 2025-01-17*
+_案例库建立时间: 2025-01-17_
+_验证完成时间: 2025-01-17_
+_性能评估完成: 2025-01-17_

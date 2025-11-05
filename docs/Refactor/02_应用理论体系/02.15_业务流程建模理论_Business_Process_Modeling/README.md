@@ -1,8 +1,8 @@
 # 业务流程建模理论体系
 
-**理论体系**: 02.15_业务流程建模理论_Business_Process_Modeling  
-**创建日期**: 2025-01-17  
-**状态**: 建设中  
+**理论体系**: 02.15_业务流程建模理论_Business_Process_Modeling
+**创建日期**: 2025-01-17
+**状态**: 建设中
 **目标**: 建立完整的业务流程建模理论体系，符合国际标准
 
 ## 📋 理论体系概述
@@ -236,15 +236,15 @@
 
 ### 1. 经典教材
 
-- Dumas, M., La Rosa, M., Mendling, J., & Reijers, H. A. (2018). *Fundamentals of business process management*. Springer.
-- Weske, M. (2019). *Business process management: concepts, languages, architectures*. Springer.
-- Van der Aalst, W. M. (2016). *Process mining: data science in action*. Springer.
+- Dumas, M., La Rosa, M., Mendling, J., & Reijers, H. A. (2018). _Fundamentals of business process management_. Springer.
+- Weske, M. (2019). _Business process management: concepts, languages, architectures_. Springer.
+- Van der Aalst, W. M. (2016). _Process mining: data science in action_. Springer.
 
 ### 2. 重要论文
 
-- Van der Aalst, W. M., et al. (2003). Workflow patterns. *Distributed and parallel databases*, 14(1), 5-51.
-- Reijers, H. A., & Limam, S. (2005). Product-based workflow design. *Journal of management information systems*, 22(1), 75-99.
-- Dumas, M., et al. (2018). Business process model and notation. *Encyclopedia of database systems*, 1-5.
+- Van der Aalst, W. M., et al. (2003). Workflow patterns. _Distributed and parallel databases_, 14(1), 5-51.
+- Reijers, H. A., & Limam, S. (2005). Product-based workflow design. _Journal of management information systems_, 22(1), 75-99.
+- Dumas, M., et al. (2018). Business process model and notation. _Encyclopedia of database systems_, 1-5.
 
 ### 3. 标准文档
 
@@ -277,8 +277,8 @@
 
 ---
 
-**理论体系负责人**: 业务流程建模理论团队  
-**技术负责人**: 业务流程建模技术专家  
-**质量负责人**: 业务流程建模质量专家  
-**创建时间**: 2025年1月17日  
+**理论体系负责人**: 业务流程建模理论团队
+**技术负责人**: 业务流程建模技术专家
+**质量负责人**: 业务流程建模质量专家
+**创建时间**: 2025年1月17日
 **最后更新**: 2025年1月17日

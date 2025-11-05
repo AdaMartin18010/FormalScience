@@ -105,6 +105,6 @@ PRISMA是系统综述和元分析的首选报告项目，包括识别、筛选�
 
 ## 📚 参考文献
 
-1. Moher, D., et al. *Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement*. PLoS Medicine, 2009.
-2. Higgins, J. P. T., & Green, S. *Cochrane Handbook for Systematic Reviews of Interventions*. Wiley, 2011.
-3. Liberati, A., et al. *The PRISMA statement for reporting systematic reviews and meta-analyses of studies that evaluate health care interventions*. PLoS Medicine, 2009.
+1. Moher, D., et al. _Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement_. PLoS Medicine, 2009.
+2. Higgins, J. P. T., & Green, S. _Cochrane Handbook for Systematic Reviews of Interventions_. Wiley, 2011.
+3. Liberati, A., et al. _The PRISMA statement for reporting systematic reviews and meta-analyses of studies that evaluate health care interventions_. PLoS Medicine, 2009.

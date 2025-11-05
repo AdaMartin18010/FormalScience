@@ -127,9 +127,9 @@ $$\rho = \sum_i p_i |\psi_i\rangle\langle\psi_i|$$
 ```lean
 -- 密度矩阵定义
 def density_matrix : Type :=
-{ ρ : matrix ℂ n n | 
-  ρ† = ρ ∧ 
-  ∀ (v : vector ℂ n), ⟨v|ρ|v⟩ ≥ 0 ∧ 
+{ ρ : matrix ℂ n n |
+  ρ† = ρ ∧
+  ∀ (v : vector ℂ n), ⟨v|ρ|v⟩ ≥ 0 ∧
   trace ρ = 1 }
 
 -- 纯态
@@ -143,8 +143,8 @@ sum (map (λ (ψ, p), p • |ψ⟩⟨ψ|) (zip states probabilities))
 -- 密度矩阵性质
 theorem density_matrix_properties :
   ∀ (ρ : density_matrix),
-  ρ† = ρ ∧ 
-  ∀ (v : vector ℂ n), ⟨v|ρ|v⟩ ≥ 0 ∧ 
+  ρ† = ρ ∧
+  ∀ (v : vector ℂ n), ⟨v|ρ|v⟩ ≥ 0 ∧
   trace ρ = 1
 ```
 
@@ -293,7 +293,7 @@ $$F(\mathcal{E}) = \min_{|\psi\rangle} F(|\psi\rangle, \mathcal{E}(|\psi\rangle\
 -- 量子信道定义
 def quantum_channel : Type :=
 { E : density_matrix → density_matrix |
-  completely_positive E ∧ 
+  completely_positive E ∧
   trace_preserving E }
 
 -- Kraus表示
@@ -308,8 +308,8 @@ minimize (λ ψ, fidelity ψ (E (|ψ⟩⟨ψ|))) over_all_pure_states
 theorem quantum_channel_properties :
   ∀ (E : quantum_channel) (ρ : density_matrix),
   let ρ' := E ρ in
-  ρ'† = ρ' ∧ 
-  ∀ (v : vector ℂ n), ⟨v|ρ'|v⟩ ≥ 0 ∧ 
+  ρ'† = ρ' ∧
+  ∀ (v : vector ℂ n), ⟨v|ρ'|v⟩ ≥ 0 ∧
   trace ρ' = 1
 ```
 
@@ -389,7 +389,7 @@ $$PE_i^\dagger E_j P = c_{ij} P$$
 -- 量子纠错码定义
 def quantum_error_correcting_code : Type :=
 { C : subspace (ℂ²)⊗n |
-  ∀ (E : pauli_error), 
+  ∀ (E : pauli_error),
   P E P = c_E P ∧
   ∀ (E₁ E₂ : pauli_error),
   P E₁† E₂ P = c_{E₁,E₂} P }
@@ -581,7 +581,7 @@ def bb84_protocol : Type :=
   shared_key : list bool }
 
 -- 量子密钥分发
-def quantum_key_distribution (alice_bits : list bool) (alice_bases : list basis) 
+def quantum_key_distribution (alice_bits : list bool) (alice_bases : list basis)
                            (bob_bases : list basis) : list bool :=
 filter (λ i, alice_bases[i] = bob_bases[i]) alice_bits
 
@@ -593,7 +593,7 @@ qber ≤ threshold
 theorem bb84_security :
   ∀ (eavesdropper : quantum_channel),
   let qber := measure_qber bb84_protocol eavesdropper in
-  eavesdropping_detection qber → 
+  eavesdropping_detection qber →
   security_parameter bb84_protocol ≥ security_threshold
 ```
 

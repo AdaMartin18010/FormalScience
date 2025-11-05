@@ -334,7 +334,7 @@ $$v_{ij} = x_{ij} + \phi_{ij} (x_{ij} - x_{kj})$$
 **算法 8.1** (梯度下降算法)
 
 ```lean
-def gradient_descent 
+def gradient_descent
   (f : ℝⁿ → ℝ) (x₀ : ℝⁿ) (α : ℝ) (max_iter : ℕ) : ℝⁿ :=
   let rec update (x : ℝⁿ) (iter : ℕ) : ℝⁿ :=
     if iter ≥ max_iter then x
@@ -350,7 +350,7 @@ def gradient_descent
 **算法 8.2** (粒子群优化)
 
 ```lean
-def particle_swarm_optimization 
+def particle_swarm_optimization
   (f : ℝⁿ → ℝ) (particles : List Particle) (params : PSOParams) : Solution :=
   let rec evolve (pop : List Particle) (iter : ℕ) : List Particle :=
     if iter ≥ params.max_iterations then pop
@@ -366,7 +366,7 @@ def particle_swarm_optimization
 **算法 8.3** (模拟退火)
 
 ```lean
-def simulated_annealing 
+def simulated_annealing
   (f : ℝⁿ → ℝ) (x₀ : ℝⁿ) (params : SAParams) : Solution :=
   let rec anneal (x : ℝⁿ) (T : ℝ) (iter : ℕ) : ℝⁿ :=
     if T < params.min_temperature then x
@@ -428,7 +428,7 @@ $$S_{sta}(k) = \frac{1}{N} \sum_{i=1}^N \frac{\|x_k^{(i)} - \bar{x}_k\|}{\|\bar{
 **算法 8.4** (算法性能评估)
 
 ```lean
-def algorithm_performance_assessment 
+def algorithm_performance_assessment
   (algorithm : OptimizationAlgorithm) (problem : Problem) (params : AssessmentParams) : Assessment :=
   let convergence := assess_convergence algorithm problem params
   let efficiency := assess_efficiency algorithm problem params
@@ -440,7 +440,7 @@ def algorithm_performance_assessment
 **算法 8.5** (算法比较)
 
 ```lean
-def algorithm_comparison 
+def algorithm_comparison
   (algorithms : List OptimizationAlgorithm) (problems : List Problem) (params : ComparisonParams) : Comparison :=
   let results := map (λ alg => map (λ prob => assess_algorithm alg prob params) problems) algorithms
   let rankings := compute_rankings results
@@ -590,9 +590,9 @@ def algorithm_comparison
 
 ---
 
-*最后更新时间: 2024年12月*
-*文档状态: 完成*
-*质量评分: 90/100*
-*数学规范性: 89%*
-*理论完整性: 91%*
-*批判性分析: 87%*
+_最后更新时间: 2024年12月_
+_文档状态: 完成_
+_质量评分: 90/100_
+_数学规范性: 89%_
+_理论完整性: 91%_
+_批判性分析: 87%_

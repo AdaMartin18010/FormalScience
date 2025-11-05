@@ -105,7 +105,7 @@ Q统计量服从自由度为k-1的卡方分布。
 
 ## 📚 参考文献
 
-1. Borenstein, M., et al. *Introduction to Meta-Analysis*. Wiley, 2009.
-2. Higgins, J. P. T., & Green, S. *Cochrane Handbook for Systematic Reviews of Interventions*. Wiley, 2011.
-3. Egger, M., et al. *Bias in meta-analysis detected by a simple, graphical test*. BMJ, 1997.
-4. Sterne, J. A. C., et al. *Recommendations for examining and interpreting funnel plot asymmetry in meta-analyses of randomised controlled trials*. BMJ, 2011.
+1. Borenstein, M., et al. _Introduction to Meta-Analysis_. Wiley, 2009.
+2. Higgins, J. P. T., & Green, S. _Cochrane Handbook for Systematic Reviews of Interventions_. Wiley, 2011.
+3. Egger, M., et al. _Bias in meta-analysis detected by a simple, graphical test_. BMJ, 1997.
+4. Sterne, J. A. C., et al. _Recommendations for examining and interpreting funnel plot asymmetry in meta-analyses of randomised controlled trials_. BMJ, 2011.

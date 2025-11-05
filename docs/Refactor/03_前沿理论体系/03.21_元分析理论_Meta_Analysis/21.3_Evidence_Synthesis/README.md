@@ -105,7 +105,7 @@ Q统计量用于检验研究间异质性。
 
 ## 📚 参考文献
 
-1. Borenstein, M., et al. *Introduction to Meta-Analysis*. Wiley, 2009.
-2. Higgins, J. P. T., & Green, S. *Cochrane Handbook for Systematic Reviews of Interventions*. Wiley, 2011.
-3. Salanti, G. *Indirect and mixed-treatment comparison, network, or multiple-treatments meta-analysis*. Statistics in Medicine, 2012.
-4. Spiegelhalter, D. J., et al. *Bayesian approaches to clinical trials and health-care evaluation*. Wiley, 2004.
+1. Borenstein, M., et al. _Introduction to Meta-Analysis_. Wiley, 2009.
+2. Higgins, J. P. T., & Green, S. _Cochrane Handbook for Systematic Reviews of Interventions_. Wiley, 2011.
+3. Salanti, G. _Indirect and mixed-treatment comparison, network, or multiple-treatments meta-analysis_. Statistics in Medicine, 2012.
+4. Spiegelhalter, D. J., et al. _Bayesian approaches to clinical trials and health-care evaluation_. Wiley, 2004.

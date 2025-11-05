@@ -117,16 +117,16 @@ function LZ77Encode(text, window_size, look_ahead_size):
     window = ""
     look_ahead = text[:look_ahead_size]
     encoded = []
-    
+
     while look_ahead is not empty:
         // 寻找最长匹配
         (offset, length) = find_longest_match(window, look_ahead)
-        
+
         if length > 0:
             // 找到匹配
             next_char = look_ahead[length]
             encoded.append((offset, length, next_char))
-            
+
             // 更新窗口
             window += look_ahead[:length + 1]
             if len(window) > window_size:
@@ -136,10 +136,10 @@ function LZ77Encode(text, window_size, look_ahead_size):
             next_char = look_ahead[0]
             encoded.append((0, 0, next_char))
             window += next_char
-        
+
         // 更新前瞻缓冲区
         look_ahead = text[len(window):len(window) + look_ahead_size]
-    
+
     return encoded
 ```
 
@@ -175,15 +175,15 @@ impl LZ77Compressor {
             look_ahead_size,
         }
     }
-    
+
     pub fn compress(&self, text: &str) -> Vec<LZ77Token> {
         let mut tokens = Vec::new();
         let mut window = String::new();
         let mut pos = 0;
-        
+
         while pos < text.len() {
             let look_ahead = &text[pos..std::cmp::min(pos + self.look_ahead_size, text.len())];
-            
+
             if let Some((offset, length)) = self.find_longest_match(&window, look_ahead) {
                 let next_char_pos = pos + length;
                 let next_char = if next_char_pos < text.len() {
@@ -191,13 +191,13 @@ impl LZ77Compressor {
                 } else {
                     '\0'
                 };
-                
+
                 tokens.push(LZ77Token {
                     offset,
                     length,
                     next_char,
                 });
-                
+
                 // 更新窗口
                 let matched_text = &text[pos..pos + length + 1];
                 window.push_str(matched_text);
@@ -209,46 +209,46 @@ impl LZ77Compressor {
                     length: 0,
                     next_char,
                 });
-                
+
                 window.push(next_char);
                 pos += 1;
             }
-            
+
             // 保持窗口大小
             if window.len() > self.window_size {
                 window = window[window.len() - self.window_size..].to_string();
             }
         }
-        
+
         tokens
     }
-    
+
     fn find_longest_match(&self, window: &str, look_ahead: &str) -> Option<(usize, usize)> {
         let mut best_offset = 0;
         let mut best_length = 0;
-        
+
         for start in 0..window.len() {
             for end in start + 1..=window.len() {
                 let pattern = &window[start..end];
-                
+
                 if look_ahead.starts_with(pattern) && pattern.len() > best_length {
                     best_offset = window.len() - start;
                     best_length = pattern.len();
                 }
             }
         }
-        
+
         if best_length > 0 {
             Some((best_offset, best_length))
         } else {
             None
         }
     }
-    
+
     pub fn decompress(&self, tokens: &[LZ77Token]) -> String {
         let mut result = String::new();
         let mut window = String::new();
-        
+
         for token in tokens {
             if token.length > 0 {
                 // 从窗口复制匹配的文本
@@ -258,26 +258,26 @@ impl LZ77Compressor {
                 result.push_str(matched_text);
                 window.push_str(matched_text);
             }
-            
+
             if token.next_char != '\0' {
                 result.push(token.next_char);
                 window.push(token.next_char);
             }
-            
+
             // 保持窗口大小
             if window.len() > self.window_size {
                 window = window[window.len() - self.window_size..].to_string();
             }
         }
-        
+
         result
     }
-    
+
     pub fn compression_ratio(&self, original: &str) -> f64 {
         let tokens = self.compress(original);
         let compressed_size = tokens.len() * std::mem::size_of::<LZ77Token>();
         let original_size = original.len();
-        
+
         1.0 - (compressed_size as f64 / original_size as f64)
     }
 }
@@ -285,29 +285,29 @@ impl LZ77Compressor {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_lz77_compression() {
         let compressor = LZ77Compressor::new(1024, 64);
         let text = "hello world hello world";
-        
+
         let tokens = compressor.compress(text);
         let decompressed = compressor.decompress(&tokens);
-        
+
         assert_eq!(decompressed, text);
-        
+
         let ratio = compressor.compression_ratio(text);
         assert!(ratio > 0.0); // 应该有压缩效果
     }
-    
+
     #[test]
     fn test_lz77_repetitive_text() {
         let compressor = LZ77Compressor::new(1024, 64);
         let text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        
+
         let tokens = compressor.compress(text);
         let ratio = compressor.compression_ratio(text);
-        
+
         // 重复文本应该有更好的压缩率
         assert!(ratio > 0.5);
     }
@@ -486,7 +486,7 @@ theorem rate_distortion_bound :
 theorem rate_distortion_convexity :
   ∀ (X : random_variable) (D₁ D₂ : ℝ) (λ : ℝ),
   0 ≤ λ ≤ 1 →
-  rate_distortion_function X (λ * D₁ + (1-λ) * D₂) ≤ 
+  rate_distortion_function X (λ * D₁ + (1-λ) * D₂) ≤
   λ * rate_distortion_function X D₁ + (1-λ) * rate_distortion_function X D₂
 ```
 

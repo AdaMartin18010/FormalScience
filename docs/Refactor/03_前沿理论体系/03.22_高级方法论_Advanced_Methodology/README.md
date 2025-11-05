@@ -172,42 +172,42 @@ impl SystemMethodology {
             methods: Vec::new(),
         }
     }
-    
+
     /// 添加系统元素
     pub fn add_element(&mut self, element: SystemElement) {
         self.elements.push(element);
     }
-    
+
     /// 添加系统关系
     pub fn add_relation(&mut self, relation: SystemRelation) {
         self.relations.push(relation);
     }
-    
+
     /// 系统分析
     pub fn analyze_system(&self) -> SystemAnalysis {
         let mut analysis = SystemAnalysis::new();
-        
+
         // 分析系统元素
         for element in &self.elements {
             analysis.add_element_analysis(element);
         }
-        
+
         // 分析系统关系
         for relation in &self.relations {
             analysis.add_relation_analysis(relation);
         }
-        
+
         analysis
     }
-    
+
     /// 系统设计
     pub fn design_system(&self, requirements: Vec<String>) -> SystemDesign {
         let mut design = SystemDesign::new();
-        
+
         for requirement in requirements {
             design.add_requirement(requirement);
         }
-        
+
         design
     }
 }
@@ -228,7 +228,7 @@ impl SystemAnalysis {
             system_properties: HashMap::new(),
         }
     }
-    
+
     pub fn add_element_analysis(&mut self, element: &SystemElement) {
         let analysis = ElementAnalysis {
             element_id: element.id.clone(),
@@ -237,7 +237,7 @@ impl SystemAnalysis {
         };
         self.element_analyses.push(analysis);
     }
-    
+
     pub fn add_relation_analysis(&mut self, relation: &SystemRelation) {
         let analysis = RelationAnalysis {
             from: relation.from.clone(),
@@ -282,11 +282,11 @@ impl SystemDesign {
             architecture: SystemArchitecture::new(),
         }
     }
-    
+
     pub fn add_requirement(&mut self, requirement: String) {
         self.requirements.push(requirement);
     }
-    
+
     pub fn add_component(&mut self, component: SystemComponent) {
         self.components.push(component);
     }
@@ -322,7 +322,7 @@ impl SystemArchitecture {
 // 示例使用
 fn main() {
     let mut methodology = SystemMethodology::new();
-    
+
     // 添加系统元素
     let element = SystemElement {
         id: "E1".to_string(),
@@ -331,7 +331,7 @@ fn main() {
         relationships: vec!["E2".to_string()],
     };
     methodology.add_element(element);
-    
+
     // 添加系统关系
     let relation = SystemRelation {
         from: "E1".to_string(),
@@ -340,11 +340,11 @@ fn main() {
         strength: 0.8,
     };
     methodology.add_relation(relation);
-    
+
     // 系统分析
     let analysis = methodology.analyze_system();
     println!("系统分析结果: {:?}", analysis);
-    
+
     // 系统设计
     let requirements = vec!["用户友好".to_string(), "高性能".to_string()];
     let design = methodology.design_system(requirements);
@@ -428,9 +428,9 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Checkland, P. *Systems Thinking, Systems Practice*. Wiley, 1981.
-2. Brown, T. *Design Thinking*. Harvard Business Review Press, 2009.
-3. Beck, K., et al. *Manifesto for Agile Software Development*. 2001.
-4. Mitchell, M. *Complexity: A Guided Tour*. Oxford University Press, 2009.
-5. Anderson, J. R. *Cognitive Psychology and Its Implications*. Worth Publishers, 2015.
-6. Christensen, C. M. *The Innovator's Dilemma*. Harvard Business Review Press, 1997.
+1. Checkland, P. _Systems Thinking, Systems Practice_. Wiley, 1981.
+2. Brown, T. _Design Thinking_. Harvard Business Review Press, 2009.
+3. Beck, K., et al. _Manifesto for Agile Software Development_. 2001.
+4. Mitchell, M. _Complexity: A Guided Tour_. Oxford University Press, 2009.
+5. Anderson, J. R. _Cognitive Psychology and Its Implications_. Worth Publishers, 2015.
+6. Christensen, C. M. _The Innovator's Dilemma_. Harvard Business Review Press, 1997.

@@ -84,7 +84,7 @@ inductive prefix_tree :=
 -- 唯一解码性
 theorem prefix_code_unique_decoding :
   ∀ (C : set (list bool)) (h : prefix_code C),
-  ∀ (message : list bool), 
+  ∀ (message : list bool),
   ∃! (decoded : list ℕ), decode C message = decoded
 ```
 
@@ -121,12 +121,12 @@ function HuffmanEncoding(frequencies):
     nodes = []
     for each symbol s with frequency f:
         nodes.append(Node(s, f))
-    
+
     // 构建Huffman树
     while len(nodes) > 1:
         // 找到两个最小频率的节点
         min1, min2 = find_two_minimum(nodes)
-        
+
         // 创建新节点
         new_node = Node(
             symbol = min1.symbol + min2.symbol,
@@ -134,12 +134,12 @@ function HuffmanEncoding(frequencies):
             left = min1,
             right = min2
         )
-        
+
         // 更新节点列表
         nodes.remove(min1)
         nodes.remove(min2)
         nodes.append(new_node)
-    
+
     return nodes[0]  // 返回根节点
 ```
 
@@ -200,14 +200,14 @@ impl HuffmanCode {
             codes: HashMap::new(),
         }
     }
-    
+
     pub fn build(&mut self, text: &str) {
         // 计算频率
         let mut frequencies = HashMap::new();
         for ch in text.chars() {
             *frequencies.entry(ch).or_insert(0) += 1;
         }
-        
+
         // 创建叶子节点
         let mut heap = BinaryHeap::new();
         for (symbol, frequency) in frequencies {
@@ -218,33 +218,33 @@ impl HuffmanCode {
                 right: None,
             });
         }
-        
+
         // 构建Huffman树
         while heap.len() > 1 {
             let left = heap.pop().unwrap();
             let right = heap.pop().unwrap();
-            
+
             let parent = HuffmanNode {
                 symbol: None,
                 frequency: left.frequency + right.frequency,
                 left: Some(Box::new(left)),
                 right: Some(Box::new(right)),
             };
-            
+
             heap.push(parent);
         }
-        
+
         self.root = heap.pop();
         self.generate_codes();
     }
-    
+
     fn generate_codes(&mut self) {
         self.codes.clear();
         if let Some(ref root) = self.root {
             self.generate_codes_recursive(root, String::new());
         }
     }
-    
+
     fn generate_codes_recursive(&mut self, node: &HuffmanNode, code: String) {
         if let Some(symbol) = node.symbol {
             self.codes.insert(symbol, code);
@@ -257,7 +257,7 @@ impl HuffmanCode {
             }
         }
     }
-    
+
     pub fn encode(&self, text: &str) -> String {
         let mut encoded = String::new();
         for ch in text.chars() {
@@ -267,11 +267,11 @@ impl HuffmanCode {
         }
         encoded
     }
-    
+
     pub fn decode(&self, encoded: &str) -> String {
         let mut decoded = String::new();
         let mut current = self.root.as_ref();
-        
+
         for bit in encoded.chars() {
             match current {
                 Some(node) => {
@@ -280,7 +280,7 @@ impl HuffmanCode {
                         '1' => current = node.right.as_ref(),
                         _ => continue,
                     }
-                    
+
                     if let Some(symbol) = node.symbol {
                         decoded.push(symbol);
                         current = self.root.as_ref();
@@ -289,15 +289,15 @@ impl HuffmanCode {
                 None => break,
             }
         }
-        
+
         decoded
     }
-    
+
     pub fn compression_ratio(&self, original: &str) -> f64 {
         let encoded = self.encode(original);
         let original_bits = original.len() * 8;
         let encoded_bits = encoded.len();
-        
+
         1.0 - (encoded_bits as f64 / original_bits as f64)
     }
 }
@@ -305,34 +305,34 @@ impl HuffmanCode {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_huffman_encoding() {
         let mut huffman = HuffmanCode::new();
         let text = "hello world";
-        
+
         huffman.build(text);
-        
+
         let encoded = huffman.encode(text);
         let decoded = huffman.decode(&encoded);
-        
+
         assert_eq!(decoded, text);
-        
+
         let ratio = huffman.compression_ratio(text);
         assert!(ratio > 0.0); // 应该有压缩效果
     }
-    
+
     #[test]
     fn test_huffman_frequency() {
         let mut huffman = HuffmanCode::new();
         let text = "aaaabbbcc";
-        
+
         huffman.build(text);
-        
+
         // 验证频率高的字符有更短的编码
         let a_code = huffman.codes.get(&'a').unwrap();
         let c_code = huffman.codes.get(&'c').unwrap();
-        
+
         assert!(a_code.len() <= c_code.len()); // 'a'的频率更高，应该有更短的编码
     }
 }
@@ -409,7 +409,7 @@ def build_huffman_tree (probs : list (ℕ × ℝ)) : huffman_tree :=
 match probs with
 | [] => empty_tree
 | [x] => leaf x
-| xs => 
+| xs =>
   let (min1, min2, rest) := extract_two_min xs in
   let subtree := build_huffman_tree (merge_nodes min1 min2 :: rest) in
   node min1 min2 subtree
@@ -417,7 +417,7 @@ match probs with
 -- 最优性证明
 theorem huffman_optimality :
   ∀ (probs : list (ℕ × ℝ)) (C : set (list bool)),
-  prefix_code C → 
+  prefix_code C →
   average_length (huffman_code probs) ≤ average_length C
 ```
 
@@ -596,8 +596,8 @@ sum (range (t+1)) (λ i, choose n i * (q-1)^i)
 
 -- 汉明界紧性
 theorem hamming_bound_tightness :
-  ∃ (n k t : ℕ) (q : ℕ), 
-  hamming_bound n k t q ∧ 
+  ∃ (n k t : ℕ) (q : ℕ),
+  hamming_bound n k t q ∧
   ∃ (C : code n k), corrects_t_errors C t
 ```
 

@@ -1,8 +1,8 @@
 # 人机交互理论体系
 
-**理论体系**: 02.16_人机交互理论_Human_Computer_Interaction  
-**创建日期**: 2025-01-17  
-**状态**: 建设中  
+**理论体系**: 02.16_人机交互理论_Human_Computer_Interaction
+**创建日期**: 2025-01-17
+**状态**: 建设中
 **目标**: 建立完整的人机交互理论体系，达到行业标准
 
 ## 📋 理论体系概述
@@ -236,15 +236,15 @@
 
 ### 1. 经典教材
 
-- Norman, D. (2013). *The design of everyday things: revised and expanded edition*. Basic Books.
-- Nielsen, J. (1994). *Usability engineering*. Morgan Kaufmann.
-- Preece, J., Rogers, Y., & Sharp, H. (2019). *Interaction design: beyond human-computer interaction*. John Wiley & Sons.
+- Norman, D. (2013). _The design of everyday things: revised and expanded edition_. Basic Books.
+- Nielsen, J. (1994). _Usability engineering_. Morgan Kaufmann.
+- Preece, J., Rogers, Y., & Sharp, H. (2019). _Interaction design: beyond human-computer interaction_. John Wiley & Sons.
 
 ### 2. 重要论文
 
-- Card, S. K., Moran, T. P., & Newell, A. (1983). The psychology of human-computer interaction. *Lawrence Erlbaum Associates*.
-- Shneiderman, B. (1998). Designing the user interface: strategies for effective human-computer interaction. *Addison-Wesley*.
-- Dix, A., et al. (2003). Human-computer interaction. *Prentice Hall*.
+- Card, S. K., Moran, T. P., & Newell, A. (1983). The psychology of human-computer interaction. _Lawrence Erlbaum Associates_.
+- Shneiderman, B. (1998). Designing the user interface: strategies for effective human-computer interaction. _Addison-Wesley_.
+- Dix, A., et al. (2003). Human-computer interaction. _Prentice Hall_.
 
 ### 3. 标准文档
 
@@ -277,8 +277,8 @@
 
 ---
 
-**理论体系负责人**: 人机交互理论团队  
-**技术负责人**: 人机交互技术专家  
-**质量负责人**: 人机交互质量专家  
-**创建时间**: 2025年1月17日  
+**理论体系负责人**: 人机交互理论团队
+**技术负责人**: 人机交互技术专家
+**质量负责人**: 人机交互质量专家
+**创建时间**: 2025年1月17日
 **最后更新**: 2025年1月17日

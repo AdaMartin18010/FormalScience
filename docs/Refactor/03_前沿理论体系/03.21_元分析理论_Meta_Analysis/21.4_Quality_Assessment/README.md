@@ -105,7 +105,7 @@ GRADE系统是评估证据质量的标准化方法。
 
 ## 📚 参考文献
 
-1. Higgins, J. P. T., et al. *The Cochrane Collaboration's tool for assessing risk of bias in randomised trials*. BMJ, 2011.
-2. Guyatt, G. H., et al. *GRADE: an emerging consensus on rating quality of evidence and strength of recommendations*. BMJ, 2008.
-3. Moher, D., et al. *Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement*. PLoS Medicine, 2009.
-4. Jadad, A. R., et al. *Assessing the quality of reports of randomized clinical trials*. Controlled Clinical Trials, 1996.
+1. Higgins, J. P. T., et al. _The Cochrane Collaboration's tool for assessing risk of bias in randomised trials_. BMJ, 2011.
+2. Guyatt, G. H., et al. _GRADE: an emerging consensus on rating quality of evidence and strength of recommendations_. BMJ, 2008.
+3. Moher, D., et al. _Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement_. PLoS Medicine, 2009.
+4. Jadad, A. R., et al. _Assessing the quality of reports of randomized clinical trials_. Controlled Clinical Trials, 1996.

@@ -611,7 +611,7 @@ def applicationQuality (app: IntelligentApplication) (weights: QualityWeights) :
   let userExperienceScore := evaluateUserExperience app
   let performanceScore := evaluatePerformance app
   let securityScore := evaluateSecurity app
-  let totalScore := 
+  let totalScore :=
     weights.intelligence * intelligenceScore +
     weights.userExperience * userExperienceScore +
     weights.performance * performanceScore +
@@ -707,7 +707,7 @@ def personalizedRecommendation (app: IntelligentApplication) (user: User) : List
 
 ---
 
-*最后更新时间: 2024年12月*
-*理论状态: 完整构建*
-*质量评分: 90/100*
-*应用价值: 高*
+_最后更新时间: 2024年12月_
+_理论状态: 完整构建_
+_质量评分: 90/100_
+_应用价值: 高_

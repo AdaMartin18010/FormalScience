@@ -102,7 +102,7 @@ def type : Data → DataType
 | (Data.spatial _) := DataType.spatial
 
 -- 完备性证明
-theorem type_completeness : 
+theorem type_completeness :
   ∀ (d : Data), ∃! (t : DataType), type d = t
 
 -- 构造性证明
@@ -272,24 +272,24 @@ impl OutlierDetector {
             .map(|x| (x - mean).powi(2))
             .sum::<f64>() / data.len() as f64;
         let std_dev = variance.sqrt();
-        
+
         data.iter()
             .map(|x| ((x - mean) / std_dev).abs() > self.threshold)
             .collect()
     }
-    
+
     /// IQR异常值检测
     pub fn detect_iqr(&self, data: &[f64]) -> Vec<bool> {
         let mut sorted = data.to_vec();
         sorted.sort_by(|a, b| a.partial_cmp(b).unwrap());
-        
+
         let q1 = sorted[sorted.len() / 4];
         let q3 = sorted[3 * sorted.len() / 4];
         let iqr = q3 - q1;
-        
+
         let lower_bound = q1 - 1.5 * iqr;
         let upper_bound = q3 + 1.5 * iqr;
-        
+
         data.iter()
             .map(|x| *x < lower_bound || *x > upper_bound)
             .collect()
@@ -321,12 +321,12 @@ impl DataNormalizer {
     pub fn minmax_normalize(&self, data: &[f64]) -> Vec<f64> {
         let min_val = data.iter().fold(f64::INFINITY, |a, &b| a.min(b));
         let max_val = data.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b));
-        
+
         data.iter()
             .map(|x| (x - min_val) / (max_val - min_val))
             .collect()
     }
-    
+
     /// Z-score标准化
     pub fn zscore_normalize(&self, data: &[f64]) -> Vec<f64> {
         let mean = data.iter().sum::<f64>() / data.len() as f64;
@@ -334,7 +334,7 @@ impl DataNormalizer {
             .map(|x| (x - mean).powi(2))
             .sum::<f64>() / data.len() as f64;
         let std_dev = variance.sqrt();
-        
+
         data.iter()
             .map(|x| (x - mean) / std_dev)
             .collect()
@@ -372,51 +372,51 @@ impl FrequentPatternMiner {
     pub fn apriori(&self, transactions: &[Vec<String>]) -> Vec<Pattern> {
         let mut patterns = Vec::new();
         let mut k = 1;
-        
+
         // 生成1-项集
         let mut candidates = self.generate_1_itemsets(transactions);
-        
+
         while !candidates.is_empty() {
             // 计算支持度
             let frequent_itemsets = self.calculate_support(&candidates, transactions);
-            
+
             // 添加到结果
             patterns.extend(frequent_itemsets.clone());
-            
+
             // 生成下一层候选项集
             candidates = self.generate_next_candidates(&frequent_itemsets);
             k += 1;
         }
-        
+
         patterns
     }
-    
+
     /// 生成1-项集
     fn generate_1_itemsets(&self, transactions: &[Vec<String>]) -> Vec<Vec<String>> {
         let mut items = std::collections::HashSet::new();
-        
+
         for transaction in transactions {
             for item in transaction {
                 items.insert(item.clone());
             }
         }
-        
+
         items.into_iter()
             .map(|item| vec![item])
             .collect()
     }
-    
+
     /// 计算支持度
     fn calculate_support(&self, candidates: &[Vec<String>], transactions: &[Vec<String>]) -> Vec<Pattern> {
         let mut patterns = Vec::new();
-        
+
         for candidate in candidates {
             let support = transactions.iter()
                 .filter(|transaction| {
                     candidate.iter().all(|item| transaction.contains(item))
                 })
                 .count() as f64 / transactions.len() as f64;
-            
+
             if support >= self.min_support {
                 patterns.push(Pattern {
                     items: candidate.clone(),
@@ -425,19 +425,19 @@ impl FrequentPatternMiner {
                 });
             }
         }
-        
+
         patterns
     }
-    
+
     /// 生成下一层候选项集
     fn generate_next_candidates(&self, frequent_itemsets: &[Pattern]) -> Vec<Vec<String>> {
         let mut candidates = Vec::new();
-        
+
         for i in 0..frequent_itemsets.len() {
             for j in i + 1..frequent_itemsets.len() {
                 let itemset1 = &frequent_itemsets[i].items;
                 let itemset2 = &frequent_itemsets[j].items;
-                
+
                 // 检查前k-1个元素是否相同
                 if itemset1[..itemset1.len() - 1] == itemset2[..itemset2.len() - 1] {
                     let mut new_candidate = itemset1.clone();
@@ -446,7 +446,7 @@ impl FrequentPatternMiner {
                 }
             }
         }
-        
+
         candidates
     }
 }
@@ -493,48 +493,48 @@ impl KMeansClusterer {
     pub fn cluster(&self, data: &[Vec<f64>]) -> Vec<Cluster> {
         let mut centroids = self.initialize_centroids(data);
         let mut clusters = vec![Cluster::new(); self.k];
-        
+
         for iteration in 0..self.max_iterations {
             // 分配数据点到最近的中心
             for (i, point) in data.iter().enumerate() {
                 let nearest_centroid = self.find_nearest_centroid(point, &centroids);
                 clusters[nearest_centroid].add_point(i);
             }
-            
+
             // 更新中心
             let new_centroids = self.update_centroids(data, &clusters);
-            
+
             // 检查收敛
             if self.is_converged(&centroids, &new_centroids) {
                 break;
             }
-            
+
             centroids = new_centroids;
-            
+
             // 清空聚类
             for cluster in &mut clusters {
                 cluster.clear();
             }
         }
-        
+
         clusters
     }
-    
+
     /// 初始化中心
     fn initialize_centroids(&self, data: &[Vec<f64>]) -> Vec<Vec<f64>> {
         use rand::seq::SliceRandom;
         let mut rng = rand::thread_rng();
-        
+
         data.choose_multiple(&mut rng, self.k)
             .map(|point| point.clone())
             .collect()
     }
-    
+
     /// 找到最近的中心
     fn find_nearest_centroid(&self, point: &[f64], centroids: &[Vec<f64>]) -> usize {
         let mut min_distance = f64::INFINITY;
         let mut nearest_centroid = 0;
-        
+
         for (i, centroid) in centroids.iter().enumerate() {
             let distance = self.euclidean_distance(point, centroid);
             if distance < min_distance {
@@ -542,10 +542,10 @@ impl KMeansClusterer {
                 nearest_centroid = i;
             }
         }
-        
+
         nearest_centroid
     }
-    
+
     /// 欧几里得距离
     fn euclidean_distance(&self, point1: &[f64], point2: &[f64]) -> f64 {
         point1.iter()
@@ -554,34 +554,34 @@ impl KMeansClusterer {
             .sum::<f64>()
             .sqrt()
     }
-    
+
     /// 更新中心
     fn update_centroids(&self, data: &[Vec<f64>], clusters: &[Cluster]) -> Vec<Vec<f64>> {
         let mut new_centroids = Vec::new();
-        
+
         for cluster in clusters {
             if cluster.points.is_empty() {
                 new_centroids.push(vec![0.0; data[0].len()]);
             } else {
                 let mut centroid = vec![0.0; data[0].len()];
-                
+
                 for &point_idx in &cluster.points {
                     for (i, &value) in data[point_idx].iter().enumerate() {
                         centroid[i] += value;
                     }
                 }
-                
+
                 for value in &mut centroid {
                     *value /= cluster.points.len() as f64;
                 }
-                
+
                 new_centroids.push(centroid);
             }
         }
-        
+
         new_centroids
     }
-    
+
     /// 检查收敛
     fn is_converged(&self, centroids1: &[Vec<f64>], centroids2: &[Vec<f64>]) -> bool {
         for (c1, c2) in centroids1.iter().zip(centroids2.iter()) {
@@ -606,11 +606,11 @@ impl Cluster {
             centroid: Vec::new(),
         }
     }
-    
+
     pub fn add_point(&mut self, point_idx: usize) {
         self.points.push(point_idx);
     }
-    
+
     pub fn clear(&mut self) {
         self.points.clear();
     }
@@ -654,40 +654,40 @@ impl HypothesisTester {
     pub fn t_test(&self, sample1: &[f64], sample2: &[f64]) -> TestResult {
         let mean1 = sample1.iter().sum::<f64>() / sample1.len() as f64;
         let mean2 = sample2.iter().sum::<f64>() / sample2.len() as f64;
-        
+
         let var1 = self.calculate_variance(sample1, mean1);
         let var2 = self.calculate_variance(sample2, mean2);
-        
-        let pooled_variance = ((sample1.len() - 1) as f64 * var1 + 
-                              (sample2.len() - 1) as f64 * var2) / 
+
+        let pooled_variance = ((sample1.len() - 1) as f64 * var1 +
+                              (sample2.len() - 1) as f64 * var2) /
                              (sample1.len() + sample2.len() - 2) as f64;
-        
-        let t_statistic = (mean1 - mean2) / (pooled_variance * 
+
+        let t_statistic = (mean1 - mean2) / (pooled_variance *
             (1.0 / sample1.len() as f64 + 1.0 / sample2.len() as f64)).sqrt();
-        
+
         let degrees_of_freedom = sample1.len() + sample2.len() - 2;
         let p_value = self.calculate_p_value(t_statistic, degrees_of_freedom);
-        
+
         TestResult {
             statistic: t_statistic,
             p_value,
             significant: p_value < self.significance_level,
         }
     }
-    
+
     /// 计算方差
     fn calculate_variance(&self, sample: &[f64], mean: f64) -> f64 {
         sample.iter()
             .map(|x| (x - mean).powi(2))
             .sum::<f64>() / (sample.len() - 1) as f64
     }
-    
+
     /// 计算p值（简化实现）
     fn calculate_p_value(&self, t_statistic: f64, df: usize) -> f64 {
         // 这里使用简化实现，实际应用中需要使用t分布表或数值方法
         2.0 * (1.0 - self.normal_cdf(t_statistic.abs()))
     }
-    
+
     /// 标准正态分布累积分布函数（简化实现）
     fn normal_cdf(&self, x: f64) -> f64 {
         0.5 * (1.0 + libm::erf(x / 2.0_f64.sqrt()))
@@ -725,34 +725,34 @@ impl LinearRegression {
         let n_features = X[0].len();
         let mut weights = vec![0.0; n_features];
         let mut bias = 0.0;
-        
+
         for iteration in 0..self.max_iterations {
             let mut weight_gradients = vec![0.0; n_features];
             let mut bias_gradient = 0.0;
-            
+
             // 计算梯度
             for (i, (features, target)) in X.iter().zip(y.iter()).enumerate() {
                 let prediction = self.predict_single(&weights, bias, features);
                 let error = prediction - target;
-                
+
                 // 更新权重梯度
                 for (j, feature) in features.iter().enumerate() {
                     weight_gradients[j] += error * feature;
                 }
-                
+
                 bias_gradient += error;
             }
-            
+
             // 更新参数
             for (weight, gradient) in weights.iter_mut().zip(weight_gradients.iter()) {
                 *weight -= self.learning_rate * gradient / X.len() as f64;
             }
             bias -= self.learning_rate * bias_gradient / X.len() as f64;
         }
-        
+
         LinearModel { weights, bias }
     }
-    
+
     /// 单个预测
     fn predict_single(&self, weights: &[f64], bias: f64, features: &[f64]) -> f64 {
         features.iter()
@@ -760,7 +760,7 @@ impl LinearRegression {
             .map(|(f, w)| f * w)
             .sum::<f64>() + bias
     }
-    
+
     /// 预测
     pub fn predict(&self, model: &LinearModel, X: &[Vec<f64>]) -> Vec<f64> {
         X.iter()

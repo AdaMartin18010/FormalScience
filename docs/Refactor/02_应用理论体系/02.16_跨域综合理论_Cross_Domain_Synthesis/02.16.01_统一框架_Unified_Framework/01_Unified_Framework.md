@@ -282,17 +282,17 @@ enum UnifiedType {
     Existence,
     Reality,
     Appearance,
-    
+
     // 数学类型
     Set(Box<UnifiedType>),
     Function(Box<UnifiedType>, Box<UnifiedType>),
     Number(NumberType),
-    
+
     // 形式科学类型
     DependentFunction(String, Box<UnifiedType>, Box<UnifiedType>),
     DependentProduct(String, Box<UnifiedType>, Box<UnifiedType>),
     Automaton(AutomatonType),
-    
+
     // 应用类型
     Context(ContextType),
     System(SystemType),
@@ -342,17 +342,17 @@ enum UnifiedValue {
     Exists(bool),
     Real(bool),
     Appearance(String),
-    
+
     // 数学值
     Set(HashSet<UnifiedValue>),
     Function(FunctionValue),
     Number(NumberValue),
-    
+
     // 形式科学值
     Lambda(String, Box<UnifiedValue>),
     Application(Box<UnifiedValue>, Box<UnifiedValue>),
     Automaton(AutomatonValue),
-    
+
     // 应用值
     Context(ContextValue),
     System(SystemValue),
@@ -417,12 +417,12 @@ impl UnifiedReasoner {
             type_context: HashMap::new(),
         }
     }
-    
+
     fn add_axiom(&mut self, name: String, value: UnifiedValue, ty: UnifiedType) {
         self.context.insert(name.clone(), value);
         self.type_context.insert(name, ty);
     }
-    
+
     fn infer(&self, query: &UnifiedQuery) -> Option<UnifiedValue> {
         match query {
             UnifiedQuery::Exists(entity) => {
@@ -443,7 +443,7 @@ impl UnifiedReasoner {
             }
         }
     }
-    
+
     fn infer_type(&self, value: &UnifiedValue) -> Option<UnifiedValue> {
         match value {
             UnifiedValue::Exists(_) => Some(UnifiedValue::Type(UnifiedType::Existence)),
@@ -458,7 +458,7 @@ impl UnifiedReasoner {
             _ => None,
         }
     }
-    
+
     fn find_relation(&self, source: &str, relation: &str, target: &str) -> Option<UnifiedValue> {
         // 在上下文中查找关系
         if let Some(context_value) = self.context.get("context") {
@@ -472,7 +472,7 @@ impl UnifiedReasoner {
         }
         Some(UnifiedValue::Boolean(false))
     }
-    
+
     fn compute_system_behavior(&self, system: &str, input: &UnifiedValue) -> Option<UnifiedValue> {
         if let Some(system_value) = self.context.get(system) {
             if let UnifiedValue::System(sys) = system_value {
@@ -523,11 +523,11 @@ impl UnifiedVerifier {
             theorems: Vec::new(),
         }
     }
-    
+
     fn add_theorem(&mut self, theorem: Theorem) {
         self.theorems.push(theorem);
     }
-    
+
     fn verify_theorem(&self, theorem: &Theorem) -> VerificationResult {
         match theorem {
             Theorem::Philosophical(phil_theorem) => {
@@ -544,7 +544,7 @@ impl UnifiedVerifier {
             }
         }
     }
-    
+
     fn verify_philosophical_theorem(&self, theorem: &PhilosophicalTheorem) -> VerificationResult {
         // 验证哲学定理
         match theorem {
@@ -561,7 +561,7 @@ impl UnifiedVerifier {
             }
         }
     }
-    
+
     fn verify_mathematical_theorem(&self, theorem: &MathematicalTheorem) -> VerificationResult {
         // 验证数学定理
         match theorem {
@@ -575,7 +575,7 @@ impl UnifiedVerifier {
             }
         }
     }
-    
+
     fn verify_formal_science_theorem(&self, theorem: &FormalScienceTheorem) -> VerificationResult {
         // 验证形式科学定理
         match theorem {
@@ -592,7 +592,7 @@ impl UnifiedVerifier {
             }
         }
     }
-    
+
     fn verify_application_theorem(&self, theorem: &ApplicationTheorem) -> VerificationResult {
         // 验证应用定理
         match theorem {
@@ -712,11 +712,11 @@ impl CrossDomainKnowledgeSystem {
             knowledge_base: HashMap::new(),
         }
     }
-    
+
     fn add_knowledge(&mut self, domain: String, knowledge: Knowledge) {
         let key = format!("{}:{}", domain, knowledge.name());
         self.knowledge_base.insert(key, knowledge);
-        
+
         // 添加到推理引擎
         match knowledge {
             Knowledge::Philosophical(phil) => {
@@ -733,20 +733,20 @@ impl CrossDomainKnowledgeSystem {
             }
         }
     }
-    
+
     fn query(&self, query: &CrossDomainQuery) -> Vec<UnifiedValue> {
         let mut results = Vec::new();
-        
+
         for domain in &query.domains {
             let domain_query = self.translate_query(query, domain);
             if let Some(result) = self.reasoner.infer(&domain_query) {
                 results.push(result);
             }
         }
-        
+
         results
     }
-    
+
     fn translate_query(&self, query: &CrossDomainQuery, domain: &str) -> UnifiedQuery {
         match domain {
             "philosophy" => UnifiedQuery::Exists(query.entity.clone()),
@@ -756,14 +756,14 @@ impl CrossDomainKnowledgeSystem {
             _ => UnifiedQuery::Exists(query.entity.clone()),
         }
     }
-    
+
     fn verify_cross_domain_theorem(&self, theorem: &CrossDomainTheorem) -> VerificationResult {
         match theorem {
             CrossDomainTheorem::PhilosophicalToMathematical(phil, math) => {
                 // 验证哲学概念到数学概念的映射
                 let phil_valid = self.verifier.verify_theorem(&Theorem::Philosophical(phil.clone()));
                 let math_valid = self.verifier.verify_theorem(&Theorem::Mathematical(math.clone()));
-                
+
                 match (phil_valid, math_valid) {
                     (VerificationResult::Valid, VerificationResult::Valid) => VerificationResult::Valid,
                     _ => VerificationResult::Invalid("Cross-domain mapping invalid".to_string()),
@@ -773,7 +773,7 @@ impl CrossDomainKnowledgeSystem {
                 // 验证数学概念到形式科学概念的映射
                 let math_valid = self.verifier.verify_theorem(&Theorem::Mathematical(math.clone()));
                 let formal_valid = self.verifier.verify_theorem(&Theorem::FormalScience(formal.clone()));
-                
+
                 match (math_valid, formal_valid) {
                     (VerificationResult::Valid, VerificationResult::Valid) => VerificationResult::Valid,
                     _ => VerificationResult::Invalid("Cross-domain mapping invalid".to_string()),
@@ -783,7 +783,7 @@ impl CrossDomainKnowledgeSystem {
                 // 验证形式科学概念到应用概念的映射
                 let formal_valid = self.verifier.verify_theorem(&Theorem::FormalScience(formal.clone()));
                 let app_valid = self.verifier.verify_theorem(&Theorem::Application(app.clone()));
-                
+
                 match (formal_valid, app_valid) {
                     (VerificationResult::Valid, VerificationResult::Valid) => VerificationResult::Valid,
                     _ => VerificationResult::Invalid("Cross-domain mapping invalid".to_string()),
