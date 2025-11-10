@@ -39,10 +39,21 @@
 想快速了解框架？从这里开始：
 
 1. 📋 **[案例研究索引](CASE_STUDIES_INDEX.md)** - 选择一个感兴趣的案例
-2. 🎯 **推荐案例**：
-   - AI研究者 → [大语言模型案例](CASE_STUDY_LARGE_LANGUAGE_MODELS.md)
-   - 后端工程师 → [数据库系统案例](CASE_STUDY_DATABASE_SYSTEMS.md)
-   - 系统程序员 → [操作系统案例](CASE_STUDY_OPERATING_SYSTEMS.md)
+2. 📄 **[项目总结（中文版）](SUMMARY_CN.md)** - 项目整体总结和快速概览 ✨
+3. 🗺️ **[简体中文导航索引](NAVIGATION_INDEX_CN.md)** - 完整的中文导航指南 ✨
+4. 📑 **[文档索引（中文版）](DOCUMENT_INDEX_CN.md)** - 所有中文文档的完整索引 ✨
+5. 📋 **[中文文档总结](CHINESE_DOCUMENTS_SUMMARY.md)** - 所有简体中文文档的完整总结 ✨
+6. 🚀 **[快速入门指南（中文版）](QUICK_START_GUIDE_CN.md)** - 30分钟-3小时快速入门 ✨
+7. 📊 **[执行摘要（中文版）](EXECUTIVE_SUMMARY_CN_2025-10-30.md)** - 项目批判性分析执行摘要
+8. 📖 **[快速参考（中文版）](QUICK_REFERENCE_CN.md)** - 公式、定理、常数速查表 ✨
+9. 🗺️ **[知识地图中文索引](Knowledge_Maps/README_CN.md)** - 知识地图简体中文指南 ✨
+10. 📊 **[八视角对比总览（中文版）](PERSPECTIVES_COMPARISON_CN.md)** - 八视角对比、差异与联系 ✨
+11. ❓ **[常见问题解答（中文版）](FAQ_CN.md)** - 常见问题快速解答 ✨
+12. 🎯 **推荐案例**：
+
+- AI研究者 → [大语言模型案例](CASE_STUDY_LARGE_LANGUAGE_MODELS.md)
+- 后端工程师 → [数据库系统案例](CASE_STUDY_DATABASE_SYSTEMS.md)
+- 系统程序员 → [操作系统案例](CASE_STUDY_OPERATING_SYSTEMS.md)
 
 **预期收获**：理解框架如何应用于实际系统
 

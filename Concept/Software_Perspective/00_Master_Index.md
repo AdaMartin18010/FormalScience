@@ -109,6 +109,7 @@
 内部开发者平台与黄金路径
 
 - [08.1 平台工程定义与价值](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
+- [08.2 黄金路径](./08_Platform_Engineering/08.2_Golden_Path.md)
 - [08.3 内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
 ### [09 - 云原生模式 (Cloud Native Patterns)](./09_Cloud_Native_Patterns/)
@@ -116,7 +117,9 @@
 容器、微服务与云原生架构
 
 - [09.1 微服务解耦](./09_Cloud_Native_Patterns/09.1_Microservices_Decomposition.md)
+- [09.2 容器化基础](./09_Cloud_Native_Patterns/09.2_Containerization_Fundamentals.md)
 - [09.3 断路器模式](./09_Cloud_Native_Patterns/09.3_Circuit_Breaker_Resilience.md)
+- [09.4 服务网格](./09_Cloud_Native_Patterns/09.4_Service_Mesh.md)
 - [09.8 案例研究：秒杀系统](./09_Cloud_Native_Patterns/09.8_Case_Study_Flash_Sale_System.md)
 - [09 - 云原生模式总览](./09_Cloud_Native_Patterns/README.md)
 
@@ -125,6 +128,7 @@
 软件工程的未来演进
 
 - [10.1 意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md)
+- [10.2 AI辅助软件工程](./10_Future_Directions/10.2_AI_Assisted_Software_Engineering.md)
 - [10.3 量子计算集成](./10_Future_Directions/10.3_Quantum_Computing_Integration.md)
 - [10.5 意识机器集成](./10_Future_Directions/10.5_Consciousness_Machine_Integration.md)
 

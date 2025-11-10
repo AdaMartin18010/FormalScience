@@ -21,11 +21,12 @@
     - [05\_Philosophy\_of\_Science - 科学哲学](#05_philosophy_of_science---科学哲学)
     - [06\_Natural\_Sciences - 自然科学](#06_natural_sciences---自然科学)
     - [07\_Artificial\_Intelligence - 人工智能](#07_artificial_intelligence---人工智能)
+    - [11\_AI\_Applications - AI应用领域](#11_ai_applications---ai应用领域)
     - [08\_Cross\_Domain\_Applications - 跨域应用](#08_cross_domain_applications---跨域应用)
     - [09\_Quantum\_Information\_Theory - 量子信息论](#09_quantum_information_theory---量子信息论)
     - [10\_Biological\_Information\_Theory - 生物信息论](#10_biological_information_theory---生物信息论)
-    - [11\_Advanced\_Topics - 高级主题](#11_advanced_topics---高级主题)
-    - [12\_Reference\_Materials - 参考资料](#12_reference_materials---参考资料)
+    - [12\_Advanced\_Topics - 高级主题](#12_advanced_topics---高级主题)
+    - [13\_Reference\_Materials - 参考资料](#13_reference_materials---参考资料)
   - [核心概念框架](#核心概念框架)
     - [信息论的本质](#信息论的本质)
     - [八视角信息论体系](#八视角信息论体系)
@@ -116,6 +117,18 @@
 - **07.8_Biological_Evolution_AI.md** - AI的生物-进化视角
 - **07.9_AI_Monitoring_Dashboard.md** - AI全流程信息论仪表盘
 
+### 11_AI_Applications - AI应用领域
+
+- **11.1_Machine_Learning_Information.md** - 机器学习信息论
+- **11.2_Deep_Learning_Information.md** - 深度学习信息论
+- **11.3_Natural_Language_Processing.md** - 自然语言处理信息论
+- **11.4_Computer_Vision_Information.md** - 计算机视觉信息论
+- **11.5_Robotics_Information.md** - 机器人信息论
+- **11.6_AI_Ethics_Information.md** - AI伦理信息论
+- **11.7_AI_Safety_Information.md** - AI安全信息论
+- **11.8_AI_Alignment_Information.md** - AI对齐信息论
+- **11.9_AI_Governance_Information.md** - AI治理信息论
+
 ### 08_Cross_Domain_Applications - 跨域应用
 
 - **08.1_Translation_Dictionary.md** - 跨域翻译词典
@@ -141,22 +154,22 @@
 - **10.5_Ecological_Information_Systems.md** - 生态信息系统
 - **10.6_Synthetic_Biology_Information_Design.md** - 合成生物学信息设计
 
-### 11_Advanced_Topics - 高级主题
+### 12_Advanced_Topics - 高级主题
 
-- **11.1_Network_Information_Theory.md** - 网络信息论
-- **11.2_Information_Theory_in_Finance.md** - 金融信息论
-- **11.3_Information_Theory_in_Social_Sciences.md** - 社会科学信息论
-- **11.4_Information_Theory_in_Medicine.md** - 医学信息论
-- **11.5_Information_Theory_in_Engineering.md** - 工程信息论
-- **11.6_Information_Theory_in_Art_and_Culture.md** - 艺术与文化信息论
+- **12.1_Network_Information_Theory.md** - 网络信息论
+- **12.2_Information_Theory_in_Finance.md** - 金融信息论
+- **12.3_Information_Theory_in_Social_Sciences.md** - 社会科学信息论
+- **12.4_Information_Theory_in_Medicine.md** - 医学信息论
+- **12.5_Information_Theory_in_Engineering.md** - 工程信息论
+- **12.6_Information_Theory_in_Art_and_Culture.md** - 艺术与文化信息论
 
-### 12_Reference_Materials - 参考资料
+### 13_Reference_Materials - 参考资料
 
 - **AUTHORITATIVE_REFERENCES.md** - 权威引用与定义标准
 - **MATHEMATICAL_NOTATION.md** - 数学符号标准
 - **BIBLIOGRAPHY.md** - 完整参考文献
 - **GLOSSARY.md** - 术语词典
-- **INDEX.md** - 主题索引
+- **QUICK_REFERENCE_2025_10_23.md** - 快速参考
 
 ## 核心概念框架
 

@@ -23,7 +23,7 @@
 
 ### 路线图
 
-```
+```text
 Day 1 (3h)
   ├─ README (1h)
   ├─ QUICK_REFERENCE (0.5h)

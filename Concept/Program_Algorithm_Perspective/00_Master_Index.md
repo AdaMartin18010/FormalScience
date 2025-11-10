@@ -18,13 +18,13 @@
     - [01. 形式语义与编程语言](#01-形式语义与编程语言)
       - [子主题](#子主题)
     - [02. 设计模式形式化](#02-设计模式形式化)
-      - [子主题2](#子主题2)
+      - [子主题](#子主题-1)
     - [03. 算法复杂度理论](#03-算法复杂度理论)
-      - [子主题1](#子主题1)
+      - [子主题](#子主题-2)
     - [04. 架构模式体系](#04-架构模式体系)
-      - [子主题3](#子主题3)
+      - [子主题](#子主题-3)
     - [05. 形式验证与工具](#05-形式验证与工具)
-      - [子主题4](#子主题4)
+      - [子主题](#子主题-4)
   - [🔗 跨领域关联](#-跨领域关联)
     - [与其他视角的关系](#与其他视角的关系)
     - [与项目其他部分的联系](#与项目其他部分的联系)
@@ -94,11 +94,11 @@
 
 #### 子主题
 
-1. **操作语义** - 程序如何逐步执行
-2. **指称语义** - 程序映射到数学对象
-3. **公理语义** - 逻辑公式描述程序性质
-4. **类型系统** - 依赖类型、线性类型、定量类型
-5. **语言对比** - Rust、Python、Golang 的形式化研究
+1. **[01.1 操作语义](01_Formal_Semantics/01.1_Operational_Semantics.md)** - 程序如何逐步执行
+2. **[01.2 指称语义](01_Formal_Semantics/01.2_Denotational_Semantics.md)** - 程序映射到数学对象
+3. **[01.3 公理语义](01_Formal_Semantics/01.3_Axiomatic_Semantics.md)** - 逻辑公式描述程序性质
+4. **[01.4 类型系统](01_Formal_Semantics/01.4_Type_Systems.md)** - 依赖类型、线性类型、定量类型
+5. **[01.5 语言对比](01_Formal_Semantics/01.5_Language_Comparison.md)** - Rust、Python、Golang 的形式化研究
 
 **对标课程**：
 
@@ -118,14 +118,14 @@
 
 **核心问题**：如何用形式化方法验证设计模式的正确性？
 
-#### 子主题2
+#### 子主题
 
-1. **GoF 经典模式** - 创建型、结构型、行为型
-2. **分布式模式** - Saga、CQRS、Event Sourcing
-3. **工作流模式** - Petri 网、BPMN
-4. **并发模式** - Actor、CSP、π-演算
-5. **架构模式** - 分层、微服务、事件驱动
-6. **模式验证** - 模型检测、定理证明
+1. **[02.1 GoF 经典模式](02_Design_Patterns/02.1_GoF_Formal_Analysis.md)** - 创建型、结构型、行为型
+2. **[02.2 分布式模式](02_Design_Patterns/02.2_Distributed_Patterns.md)** - Saga、CQRS、Event Sourcing
+3. **[02.3 工作流模式](02_Design_Patterns/02.3_Workflow_Patterns.md)** - Petri 网、BPMN
+4. **[02.4 并发模式](02_Design_Patterns/02.4_Concurrency_Patterns.md)** - Actor、CSP、π-演算
+5. **[02.5 架构模式](02_Design_Patterns/02.5_Architecture_Patterns.md)** - 分层、微服务、事件驱动
+6. **[02.6 模式验证](02_Design_Patterns/02.6_Pattern_Verification.md)** - 模型检测、定理证明
 
 **对标课程**：
 
@@ -144,14 +144,14 @@
 
 **核心问题**：如何全面度量算法的资源消耗？
 
-#### 子主题1
+#### 子主题
 
-1. **多维度复杂度** - 时间、空间、通讯、能量、缓存、I/O、隐私...
-2. **下界技术** - 归约法、对抗论证、信息论下界
-3. **复杂度类** - P、NP、PSPACE、#P、BPP
-4. **算法设计范式** - 分治、动态规划、贪心、随机化
-5. **并行算法** - Work-Span 模型、并行复杂度类
-6. **外部存储算法** - I/O 复杂度、缓存 oblivious
+1. **[03.1 多维度复杂度](03_Algorithm_Complexity/03.1_Multidimensional_Complexity.md)** - 时间、空间、通讯、能量、缓存、I/O、隐私...
+2. **[03.2 复杂度类](03_Algorithm_Complexity/03.2_Complexity_Classes.md)** - P、NP、PSPACE、#P、BPP
+3. **[03.3 下界技术](03_Algorithm_Complexity/03.3_Lower_Bound_Techniques.md)** - 归约法、对抗论证、信息论下界
+4. **[03.4 并行算法](03_Algorithm_Complexity/03.4_Parallel_Algorithms.md)** - Work-Span 模型、并行复杂度类
+5. **[03.5 外部存储算法](03_Algorithm_Complexity/03.5_External_Memory_Algorithms.md)** - I/O 复杂度、缓存 oblivious
+6. **[03.6 形式化算法规范](03_Algorithm_Complexity/03.6_Formal_Algorithm_Specification.md)** - 算法形式化定义与验证
 
 **对标课程**：
 
@@ -171,13 +171,13 @@
 
 **核心问题**：如何从商业模式到硬件实现建立统一的形式化框架？
 
-#### 子主题3
+#### 子主题
 
-1. **商业模式层** - 平台经济、订阅模式、免费增值
-2. **企业架构层** - 能力中心、流程工厂、主数据管理
-3. **软件架构层** - 分层、微服务、CQRS
-4. **硬件架构层** - NoC、流水线、异构计算
-5. **信息架构层** - 星型模式、Data Mesh、Lakehouse
+1. **[04.1 架构模式概述](04_Architecture_Patterns/04.1_Architecture_Overview.md)** - 五层架构模型、质量属性权衡
+2. **[04.2 分层架构](04_Architecture_Patterns/04.2_Layered_Architecture.md)** - 从业务逻辑到物理层的分层设计
+3. **[04.3 微服务架构](04_Architecture_Patterns/04.3_Microservices_Architecture.md)** - 服务分解、服务治理、分布式系统
+4. **[04.4 事件驱动架构](04_Architecture_Patterns/04.4_Event_Driven_Architecture.md)** - 事件溯源、CQRS、消息队列
+5. **[04.5 跨层验证](04_Architecture_Patterns/04.5_Cross_Layer_Verification.md)** - 从需求到实现的形式化验证
 
 **对标课程**：
 
@@ -197,13 +197,13 @@
 
 **核心问题**：如何用机器检查程序的正确性？
 
-#### 子主题4
+#### 子主题
 
-1. **定理证明器** - Coq、Lean4、Isabelle/HOL
-2. **模型检测** - mCRL2、UPPAAL、TLA+
-3. **符号执行** - KLEE、Kani、Angr
-4. **重写逻辑** - K-Framework、Maude
-5. **工业应用** - CompCert、seL4、SymCrypt
+1. **[05.1 Coq 介绍](05_Formal_Verification/05.1_Coq_Introduction.md)** - 定理证明器基础
+2. **[05.2 模型检测工具](05_Formal_Verification/05.2_Model_Checking_Tools.md)** - mCRL2、UPPAAL、TLA+
+3. **[05.3 K 框架](05_Formal_Verification/05.3_K_Framework.md)** - 重写逻辑与形式化语义
+4. **[05.4 符号执行](05_Formal_Verification/05.4_Symbolic_Execution.md)** - KLEE、Kani、Angr
+5. **[05.5 工业应用](05_Formal_Verification/05.5_Industrial_Applications.md)** - CompCert、seL4、SymCrypt
 
 **对标课程**：
 
@@ -274,9 +274,9 @@ graph TD
 
 ### 路径 3：架构设计 (实践者)
 
-1. 理解 [04_Architecture_Patterns/04.1_Multilayer_Architecture.md](04_Architecture_Patterns/04.1_Multilayer_Architecture.md)
-2. 应用 [04_Architecture_Patterns/04.3_Software_Architecture_Patterns.md](04_Architecture_Patterns/04.3_Software_Architecture_Patterns.md)
-3. 验证 [05_Formal_Verification/05.5_Industrial_Applications.md](05_Formal_Verification/05.5_Industrial_Applications.md)
+1. 理解 [04_Architecture_Patterns/04.1_Architecture_Overview.md](04_Architecture_Patterns/04.1_Architecture_Overview.md)
+2. 应用 [04_Architecture_Patterns/04.2_Layered_Architecture.md](04_Architecture_Patterns/04.2_Layered_Architecture.md)
+3. 验证 [04_Architecture_Patterns/04.5_Cross_Layer_Verification.md](04_Architecture_Patterns/04.5_Cross_Layer_Verification.md)
 
 ---
 

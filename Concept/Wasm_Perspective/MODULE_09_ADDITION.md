@@ -24,7 +24,7 @@
 
 ## 📁 新增模块结构
 
-```
+```text
 09_Software_Engineering_Practices/
 ├── 09.1_Development_Toolchain.md       ✅ 开发工具链
 ├── 09.2_Testing_Strategies.md          ✅ 测试策略
@@ -51,12 +51,14 @@
 ### 覆盖的工具与技术
 
 **编译器前端** (09.1)：
+
 - Emscripten (C/C++)
 - Rust (wasm-pack, wasm-bindgen)
 - AssemblyScript
 - CMake, Cargo 集成
 
 **调试工具** (09.1, 09.3)：
+
 - Chrome DevTools
 - Firefox Developer Tools
 - WABT (wasm-objdump, wasm-interp)
@@ -64,18 +66,21 @@
 - perf (Linux profiler)
 
 **测试框架** (09.2)：
+
 - Rust: wasm-bindgen-test, Criterion
 - C++: Google Test + Emscripten
 - JavaScript: Vitest, Playwright, Selenium
 - 模糊测试: cargo-fuzz, wasm-tools smith
 
 **CI/CD 平台** (09.4)：
+
 - GitHub Actions
 - GitLab CI/CD
 - Jenkins Pipeline
 - Docker multi-stage builds
 
 **真实案例** (09.5)：
+
 - **Figma**：在线设计工具（复杂渲染）
 - **AutoCAD Web**：CAD 应用迁移（大型代码库）
 - **Zoom**：视频会议背景虚化（AI 推理）
@@ -189,16 +194,19 @@ Module 09 (Engineering Practices)
 ### 新增目标读者
 
 **开发工程师** (09.1, 09.2, 09.3)：
+
 - 需要实际工具使用指导
 - 希望快速上手 Wasm 开发
 - 遇到具体技术问题需要解决方案
 
 **DevOps 工程师** (09.4)：
+
 - 负责 CI/CD 流水线搭建
 - 需要优化构建和部署流程
 - 关注自动化测试和质量门控
 
 **技术决策者** (09.5)：
+
 - 评估 Wasm 是否适合特定场景
 - 需要真实案例的成本收益数据
 - 希望避免常见的技术陷阱
@@ -206,11 +214,13 @@ Module 09 (Engineering Practices)
 ### 学习路径更新
 
 **工程师快速上手**（新增）：
+
 ```
 09.1 工具链 → 09.2 测试 → 09.3 调试 → 小项目实践 → 09.5 案例学习
 ```
 
 **DevOps 流水线搭建**（新增）：
+
 ```
 09.4 CI/CD → 09.1 优化工具 → 09.2 自动化测试 → 实施部署
 ```
@@ -293,16 +303,19 @@ Module 09 (Engineering Practices)
 ### 预期效果
 
 **开发效率提升**：
+
 - 减少 50% 工具选型时间
 - 减少 40% 调试时间
 - 减少 60% CI/CD 搭建时间
 
 **避免常见错误**：
+
 - 频繁跨边界调用（性能杀手）
 - 盲目使用 Wasm（过度工程化）
 - 忽略调试构建（开发体验差）
 
 **决策支持**：
+
 - 真实成本收益数据
 - 适用场景清晰界定
 - 风险提前识别
@@ -341,6 +354,7 @@ Module 09 的添加使 WebAssembly 知识库从"理论完整"走向"实践完整
 > **从理论到实践、从哲学到工程、从概念到落地的全栈知识体系**
 
 **核心价值**：
+
 - ✅ 理论严谨（Module 01, 06）
 - ✅ 技术深入（Module 02, 03, 04）
 - ✅ 应用广泛（Module 05）

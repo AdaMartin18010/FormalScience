@@ -24,6 +24,8 @@
     - [1.1 区块链的形式语言](#11-区块链的形式语言)
     - [1.2 共识协议的语言描述](#12-共识协议的语言描述)
     - [1.3 智能合约的反身性](#13-智能合约的反身性)
+  - [视角2：AI模型视角](#视角2ai模型视角)
+    - [2.1 矿工行为建模](#21-矿工行为建模)
     - [2.2 MEV（最大可提取价值）](#22-mev最大可提取价值)
     - [2.3 共识参与的学习曲线](#23-共识参与的学习曲线)
   - [视角3：信息论视角](#视角3信息论视角)
@@ -232,52 +234,52 @@ while True:
 **当前级别：R₁（部分）**
 
 ```text
-R₀（无反身性）：简单转账
-  UTXO模型（Bitcoin）
+    R₀（无反身性）：简单转账
+      UTXO模型（Bitcoin）
 
-R₁（quote）：合约调用合约
-  contract A 调用 contract B
-  → A可以"谈论"B的状态和方法
+    R₁（quote）：合约调用合约
+      contract A 调用 contract B
+      → A可以"谈论"B的状态和方法
 
-  例子（Solidity）：
-  ```solidity
-  interface IToken {
-      function balanceOf(address) external view returns (uint);
-  }
-
-  contract Wallet {
-      function checkBalance(address token) public view returns (uint) {
-          return IToken(token).balanceOf(address(this));
-          // ↑ Wallet "quote" Token合约
+      例子（Solidity）：
+      ```solidity
+      interface IToken {
+          function balanceOf(address) external view returns (uint);
       }
-  }
-  ```
 
-R₁.5（元合约）：合约工厂
-  contract Factory 创建新合约
-  → Factory可以"生成"新代码
-
-  例子：
-
-  ```solidity
-  contract Factory {
-      function createToken(string name) public returns (address) {
-          Token newToken = new Token(name);
-          return address(newToken);
-          // ↑ 动态创建新合约（代码生成代码）
+      contract Wallet {
+          function checkBalance(address token) public view returns (uint) {
+              return IToken(token).balanceOf(address(this));
+              // ↑ Wallet "quote" Token合约
+          }
       }
-  }
-  ```
+      ```
 
-R₂（自我重写）：❌ 当前不支持
-  合约部署后代码不可变
-  → 无法真正"重写"自己
+    R₁.5（元合约）：合约工厂
+      contract Factory 创建新合约
+      → Factory可以"生成"新代码
 
-  解决方案：
+      例子：
 
-- 代理模式（Proxy Pattern）
-- 可升级合约（Upgradeable Contracts）
-  → 实际上是"指针重定向"，非真正R₂
+      ```solidity
+      contract Factory {
+          function createToken(string name) public returns (address) {
+              Token newToken = new Token(name);
+              return address(newToken);
+              // ↑ 动态创建新合约（代码生成代码）
+          }
+      }
+      ```
+
+    R₂（自我重写）：❌ 当前不支持
+      合约部署后代码不可变
+      → 无法真正"重写"自己
+
+      解决方案：
+
+    - 代理模式（Proxy Pattern）
+    - 可升级合约（Upgradeable Contracts）
+      → 实际上是"指针重定向"，非真正R₂
 
 ```
 
