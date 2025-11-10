@@ -49,7 +49,15 @@
 9. 🗺️ **[知识地图中文索引](Knowledge_Maps/README_CN.md)** - 知识地图简体中文指南 ✨
 10. 📊 **[八视角对比总览（中文版）](PERSPECTIVES_COMPARISON_CN.md)** - 八视角对比、差异与联系 ✨
 11. ❓ **[常见问题解答（中文版）](FAQ_CN.md)** - 常见问题快速解答 ✨
-12. 🎯 **推荐案例**：
+12. 📖 **[术语表（中文版）](GLOSSARY_CN.md)** - 120+术语快速查找 ✨
+13. 📚 **[核心框架快速参考（中文版）](CORE_FRAMEWORK_CN.md)** - 核心框架快速总结 ✨
+14. 🎓 **[学习路径指南（中文版）](LEARNING_PATHS_CN.md)** - 定制化学习建议 ✨
+15. 📖 **[核心概念词典（中文版）](CORE_CONCEPTS_DICTIONARY_CN.md)** - 19个核心概念快速参考 ✨
+16. 📐 **[形式定理索引（中文版）](FORMAL_THEOREMS_INDEX_CN.md)** - 14个形式定理快速参考 ✨
+17. 🔗 **[跨视角映射验证（中文版）](CROSS_PERSPECTIVE_MAPPINGS_CN.md)** - 10个核心映射快速参考 ✨
+18. 📚 **[案例研究索引（中文版）](CASE_STUDIES_INDEX_CN.md)** - 6个深度案例快速参考 ✨
+19. 🤔 **[为什么是八视角？（中文版）](WHY_EIGHT_PERSPECTIVES_CN.md)** - 视角选择合理性论证 ✨
+20. 🎯 **推荐案例**：
 
 - AI研究者 → [大语言模型案例](CASE_STUDY_LARGE_LANGUAGE_MODELS.md)
 - 后端工程师 → [数据库系统案例](CASE_STUDY_DATABASE_SYSTEMS.md)

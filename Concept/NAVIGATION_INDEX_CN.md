@@ -69,6 +69,14 @@
 - [**QUICK_START.md**](QUICK_START.md) - **5分钟速览**
 - [**EXECUTIVE_SUMMARY_CN_2025-10-30.md**](EXECUTIVE_SUMMARY_CN_2025-10-30.md) - **执行摘要（中文版）**
 - [**常见问题解答（中文版）**](FAQ_CN.md) - **常见问题快速解答** ✨
+- [**术语表（中文版）**](GLOSSARY_CN.md) - **120+术语快速查找** ✨
+- [**核心框架快速参考（中文版）**](CORE_FRAMEWORK_CN.md) - **核心框架快速总结** ✨
+- [**学习路径指南（中文版）**](LEARNING_PATHS_CN.md) - **定制化学习建议** ✨
+- [**核心概念词典（中文版）**](CORE_CONCEPTS_DICTIONARY_CN.md) - **19个核心概念快速参考** ✨
+- [**形式定理索引（中文版）**](FORMAL_THEOREMS_INDEX_CN.md) - **14个形式定理快速参考** ✨
+- [**跨视角映射验证（中文版）**](CROSS_PERSPECTIVE_MAPPINGS_CN.md) - **10个核心映射快速参考** ✨
+- [**案例研究索引（中文版）**](CASE_STUDIES_INDEX_CN.md) - **6个深度案例快速参考** ✨
+- [**为什么是八视角？（中文版）**](WHY_EIGHT_PERSPECTIVES_CN.md) - **视角选择合理性论证** ✨
 - [项目概述](#项目概述) - 了解完整架构
 - [快速开始](#快速开始) - 根据背景选择学习路径
 
