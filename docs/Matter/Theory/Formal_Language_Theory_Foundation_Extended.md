@@ -1,12 +1,43 @@
 # 形式语言理论基础扩展 (Formal Language Theory Foundation Extended)
 
-## 🎯 **概述**
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 语言理论基础架构](#2-语言理论基础架构)
+  - [2.1 语言层次结构深化](#21-语言层次结构深化)
+  - [2.2 语言操作代数](#22-语言操作代数)
+- [3 高级自动机理论](#3-高级自动机理论)
+  - [3.1 双向有限自动机](#31-双向有限自动机)
+  - [3.2 交替有限自动机](#32-交替有限自动机)
+  - [3.3 概率有限自动机](#33-概率有限自动机)
+- [4 高级文法理论](#4-高级文法理论)
+  - [4.1 属性文法](#41-属性文法)
+  - [4.2 树邻接文法](#42-树邻接文法)
+  - [4.3 依赖文法](#43-依赖文法)
+- [5 语言理论算法](#5-语言理论算法)
+  - [5.1 最小化算法](#51-最小化算法)
+  - [5.2 语言等价性检查](#52-语言等价性检查)
+  - [5.3 语言包含性检查](#53-语言包含性检查)
+- [6 高级语言特性](#6-高级语言特性)
+  - [6.1 上下文敏感语言](#61-上下文敏感语言)
+  - [6.2 递归可枚举语言](#62-递归可枚举语言)
+- [7 语言理论应用](#7-语言理论应用)
+  - [7.1 编译器设计](#71-编译器设计)
+  - [7.2 自然语言处理](#72-自然语言处理)
+- [8 前沿研究方向](#8-前沿研究方向)
+  - [8.1 量子自动机](#81-量子自动机)
+  - [8.2 概率上下文无关文法](#82-概率上下文无关文法)
+- [9 结论](#9-结论)
+
+---
+
+## 1 概述
 
 本文档构建了一个全面的形式语言理论基础体系，从基础的自动机理论到高级的语言理论，为编译器设计、自然语言处理和形式化验证提供坚实的理论基础。
 
-## 1. 语言理论基础架构
+## 2 语言理论基础架构
 
-### 1.1 语言层次结构深化
+### 2.1 语言层次结构深化
 
 **定义 1.1 (扩展乔姆斯基层次)**
 语言类别的完整层次结构：
@@ -27,7 +58,7 @@
 3. **CFL vs CSL**：$L = \{a^n b^n c^n \mid n \geq 0\}$ 是CSL但不是CFL
 4. **CSL vs REL**：$L = \{w \mid w \text{ encodes a halting computation}\}$ 是REL但不是CSL
 
-### 1.2 语言操作代数
+### 2.2 语言操作代数
 
 **定义 1.2 (语言代数)**
 语言集合 $\mathcal{L}$ 上的代数结构：
@@ -49,9 +80,9 @@
 4. **连接**：通过NFA的连接构造
 5. **克林闭包**：通过NFA的克林闭包构造
 
-## 2. 高级自动机理论
+## 3 高级自动机理论
 
-### 2.1 双向有限自动机
+### 3.1 双向有限自动机
 
 **定义 2.1 (双向DFA)**
 双向确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -106,7 +137,7 @@ iterateStep dfa config =
        in newConfig : iterateStep dfa newConfig
 ```
 
-### 2.2 交替有限自动机
+### 3.2 交替有限自动机
 
 **定义 2.2 (交替DFA)**
 交替确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -148,7 +179,7 @@ acceptsConfig dfa (state, c:cs) =
   in not (null validTransitions)
 ```
 
-### 2.3 概率有限自动机
+### 3.3 概率有限自动机
 
 **定义 2.3 (概率DFA)**
 概率确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -188,9 +219,9 @@ stepProbabilistic dfa currentProbs char =
   in foldl (\m (q, p) -> Map.insertWith (+) q p m) newProbs updates
 ```
 
-## 3. 高级文法理论
+## 4 高级文法理论
 
-### 3.1 属性文法
+### 4.1 属性文法
 
 **定义 3.1 (属性文法)**
 属性文法是四元组 $G = (V, T, P, A)$，其中：
@@ -241,7 +272,7 @@ evaluateSynthesized grammar (Node production children) env =
   in env2
 ```
 
-### 3.2 树邻接文法
+### 4.2 树邻接文法
 
 **定义 3.3 (树邻接文法)**
 树邻接文法是四元组 $G = (V, T, I, A)$，其中：
@@ -289,7 +320,7 @@ generateAllDerivations grammar trees =
      else generateAllDerivations grammar (trees ++ newTrees)
 ```
 
-### 3.3 依赖文法
+### 4.3 依赖文法
 
 **定义 3.5 (依赖文法)**
 依赖文法是三元组 $G = (V, T, D)$，其中：
@@ -334,9 +365,9 @@ generateDependencies grammar words currentDeps =
   in currentDeps ++ newDeps
 ```
 
-## 4. 语言理论算法
+## 5 语言理论算法
 
-### 4.1 最小化算法
+### 5.1 最小化算法
 
 **算法 4.1 (DFA最小化)**
 
@@ -378,7 +409,7 @@ splitBlock dfa block partition =
   in map Set.fromList splits
 ```
 
-### 4.2 语言等价性检查
+### 5.2 语言等价性检查
 
 **算法 4.2 (语言等价性)**
 
@@ -407,7 +438,7 @@ constructProductDFA dfa1 dfa2 =
   }
 ```
 
-### 4.3 语言包含性检查
+### 5.3 语言包含性检查
 
 **算法 4.3 (语言包含性)**
 
@@ -427,9 +458,9 @@ isEmptyLanguage dfa =
   in Set.null reachableAccepting
 ```
 
-## 5. 高级语言特性
+## 6 高级语言特性
 
-### 5.1 上下文敏感语言
+### 6.1 上下文敏感语言
 
 **定义 5.1 (线性有界自动机)**
 线性有界自动机是五元组 $M = (Q, \Sigma, \Gamma, \delta, q_0)$，其中：
@@ -481,7 +512,7 @@ iterateLBAStep lba config =
      else newConfig : iterateLBAStep lba newConfig
 ```
 
-### 5.2 递归可枚举语言
+### 6.2 递归可枚举语言
 
 **定义 5.2 (图灵机)**
 图灵机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
@@ -527,9 +558,9 @@ iterateTMStep tm config =
   in newConfig : iterateTMStep tm newConfig
 ```
 
-## 6. 语言理论应用
+## 7 语言理论应用
 
-### 6.1 编译器设计
+### 7.1 编译器设计
 
 **算法 6.1 (词法分析器生成)**
 
@@ -563,7 +594,7 @@ tokenize lexer input =
   in finalTokens
 ```
 
-### 6.2 自然语言处理
+### 7.2 自然语言处理
 
 **算法 6.2 (句法分析器)**
 
@@ -594,9 +625,9 @@ shiftReduce parser stack input =
            Accept -> createParseTree (head s)
 ```
 
-## 7. 前沿研究方向
+## 8 前沿研究方向
 
-### 7.1 量子自动机
+### 8.1 量子自动机
 
 **定义 7.1 (量子有限自动机)**
 量子有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -630,7 +661,7 @@ stepQuantum qdfa currentState char =
   in foldl (\m (q, amp) -> Map.insertWith (+) q amp m) newState updates
 ```
 
-### 7.2 概率上下文无关文法
+### 8.2 概率上下文无关文法
 
 **定义 7.2 (PCFG)**
 概率上下文无关文法是五元组 $G = (V, T, P, S, \pi)$，其中：
@@ -675,7 +706,7 @@ buildParseTable pcfg input =
   in finalTable
 ```
 
-## 8. 结论
+## 9 结论
 
 形式语言理论基础扩展为现代计算机科学提供了强大的理论工具。从基础的自动机理论到高级的语言理论，这些概念和方法在编译器设计、自然语言处理、形式化验证等领域发挥着重要作用。随着量子计算和概率计算的发展，形式语言理论也在不断扩展和深化。
 

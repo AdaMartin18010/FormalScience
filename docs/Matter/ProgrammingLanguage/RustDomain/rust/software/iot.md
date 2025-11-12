@@ -1,12 +1,56 @@
 # IoT 相关
 
-## Embedded-HAL 当前生态支持情况
+## 📋 目录
+
+- [1 Embedded-HAL 当前生态支持情况](#1-embedded-hal-当前生态支持情况)
+- [2 广泛的实现与驱动支持](#2-广泛的实现与驱动支持)
+- [3 版本现状与生态演进](#3-版本现状与生态演进)
+- [4 社区活跃度与文档资源](#4-社区活跃度与文档资源)
+- [5 典型使用场景](#5-典型使用场景)
+- [6 总结](#6-总结)
+- [7 Rust 的 embedded-hal 在 Raspberry Pi Pico 上的应用](#7-rust-的-embedded-hal-在-raspberry-pi-pico-上的应用)
+- [8 开发环境与依赖配置](#8-开发环境与依赖配置)
+- [9 典型示例：LED 闪烁](#9-典型示例led-闪烁)
+- [10 扩展应用场景](#10-扩展应用场景)
+  - [10.1 I2CSPI 通讯](#101-i2cspi-通讯)
+  - [10.2 UART串行通信](#102-uart串行通信)
+- [11 总结](#11-总结)
+- [12 IoT 行业标准归纳及重要协议规范](#12-iot-行业标准归纳及重要协议规范)
+- [13 设备与传感器的标准与分类](#13-设备与传感器的标准与分类)
+  - [13.1 智能传感器接口标准](#131-智能传感器接口标准)
+  - [13.2 传感器数据描述与交换](#132-传感器数据描述与交换)
+- [14 通信协议层面的标准](#14-通信协议层面的标准)
+  - [14.1 物理层与链路层标准](#141-物理层与链路层标准)
+  - [14.2 网络层与传输层标准](#142-网络层与传输层标准)
+- [15 应用层协议与交互模式](#15-应用层协议与交互模式)
+  - [15.1 消息发布订阅与请求响应模式](#151-消息发布订阅与请求响应模式)
+  - [15.2 数据模型与语义互联](#152-数据模型与语义互联)
+  - [15.3 数据格式与定义](#153-数据格式与定义)
+- [16 标准化组织与行业规范](#16-标准化组织与行业规范)
+- [17 IoT 发展中的重要协议规范](#17-iot-发展中的重要协议规范)
+- [18 总结](#18-总结)
+  - [18.1 IoT 控制信息与交互信息数据格式标准规范](#181-iot-控制信息与交互信息数据格式标准规范)
+- [19 设备与应用层标准](#19-设备与应用层标准)
+  - [19.1 oneM2M](#191-onem2m)
+  - [19.2 OCF (Open Connectivity Foundation)](#192-ocf-open-connectivity-foundation)
+  - [19.3 LwM2M (Lightweight M2M)](#193-lwm2m-lightweight-m2m)
+- [20 通信协议及数据编码格式](#20-通信协议及数据编码格式)
+  - [20.1 CoAP (Constrained Application Protocol)](#201-coap-constrained-application-protocol)
+  - [20.2 MQTT (Message Queuing Telemetry Transport)](#202-mqtt-message-queuing-telemetry-transport)
+  - [20.3 OPC UA (OPC Unified Architecture)](#203-opc-ua-opc-unified-architecture)
+- [21 数据表示格式](#21-数据表示格式)
+  - [21.1 SenML (Sensor Markup Language)](#211-senml-sensor-markup-language)
+  - [21.2 通用数据格式](#212-通用数据格式)
+
+---
+
+## 1 Embedded-HAL 当前生态支持情况
 
 `embedded-hal` 是 Rust 嵌入式开发中最为关键的硬件抽象标准之一。该库定义了一系列硬件接口（如 GPIO、I2C、SPI、UART、PWM、ADC 等），使得驱动代码能够跨平台重用。目前，`embedded-hal` 的生态支持情况总体上是积极的，但也面临着一些版本演进和兼容性上的挑战。
 
 ---
 
-## 1. 广泛的实现与驱动支持
+## 2 广泛的实现与驱动支持
 
 - **设备驱动层面的广泛应用**  
   许多开源设备驱动都基于 `embedded-hal` 定义的 trait 编写。例如：
@@ -22,7 +66,7 @@
 
 ---
 
-## 2. 版本现状与生态演进
+## 3 版本现状与生态演进
 
 - **主要版本：v0.2 系列**  
   当前使用最广泛的仍是 `embedded-hal` v0.2.x 系列。该接口定义已经被大量驱动、HAL 库和 BSP 所采用，形成了较为统一的生态。
@@ -33,7 +77,7 @@
 
 ---
 
-## 3. 社区活跃度与文档资源
+## 4 社区活跃度与文档资源
 
 - **社区支持活跃**  
   Rust 社区对嵌入式开发非常重视，Rust Embedded Working Group 和众多 GitHub 仓库不断推动 `embedded-hal` 相关工具和驱动的开发与维护。
@@ -43,7 +87,7 @@
 
 ---
 
-## 4. 典型使用场景
+## 5 典型使用场景
 
 - **跨平台驱动开发**  
   驱动开发者可以基于 `embedded-hal` 编写的驱动在不同 MCU 上复用代码，而不必担心底层硬件的细节。例如，同一传感器驱动可以在 ARM Cortex-M 和 RISC-V 平台上运行，只需关联相应平台的 HAL 实现。
@@ -56,18 +100,18 @@
 
 ---
 
-## 5. 总结
+## 6 总结
 
 总体来说，`embedded-hal` 在 Rust 嵌入式生态中占据着核心地位，拥有来自众多平台和设备的广泛支持。其主要优势在于统一接口使得驱动跨平台复用成为可能，以及成熟的社区资源和文档支持。  
 不过，由于版本更新（如 v1.0 的讨论）和部分生态尚处于调整阶段，开发者在选型时应关注各 HAL 和驱动的兼容性和更新状态。随着生态的不断成熟，未来 `embedded-hal` 将为嵌入式系统开发提供更为稳定和高效的基础设施。
 
-## Rust 的 embedded-hal 在 Raspberry Pi Pico 上的应用
+## 7 Rust 的 embedded-hal 在 Raspberry Pi Pico 上的应用
 
 Raspberry Pi Pico 基于 RP2040 微控制器，得益于 Rust 强大的零成本抽象和类型安全性，开发者可以利用 [`embedded-hal`](https://github.com/rust-embedded/embedded-hal) 抽象接口，通过对应的板级支持包（BSP）如 [`rp2040-hal`](https://github.com/rp-rs/rp-hal/tree/main/rp2040-hal) 快速构建设备驱动和应用程序。本节将介绍如何在 Pico 上使用 embedded-hal，以及一些常见应用场景。
 
 ---
 
-## 1. 开发环境与依赖配置
+## 8 开发环境与依赖配置
 
 为了在 Raspberry Pi Pico 上进行嵌入式开发，需要配置如下环境与依赖：
 
@@ -93,7 +137,7 @@ panic-halt = "0.2"
 
 ---
 
-## 2. 典型示例：LED 闪烁
+## 9 典型示例：LED 闪烁
 
 使用 rp2040-hal 封装的 GPIO 接口，其返回的引脚对象已经实现了 embedded-hal 中的 `OutputPin` trait，因此可以用统一的接口控制板载 LED（通常连接在 GPIO25 上）。
 
@@ -157,9 +201,9 @@ fn main() -> ! {
 
 ---
 
-## 3. 扩展应用场景
+## 10 扩展应用场景
 
-### 3.1 I2C/SPI 通讯
+### 10.1 I2CSPI 通讯
 
 在 Pico 上，可以利用 rp2040-hal 创建 I2C 或 SPI 接口，从而连接温度传感器、加速度计等外设。由于外设驱动通常基于 embedded-hal 定义的 I2C/SPI trait 编写，因此即使在不同平台上移植代码也十分方便。
 
@@ -187,13 +231,13 @@ let i2c = I2C::i2c0(
 
 通过 `i2c` 对象，你可以调用基于 embedded-hal 定义的 `Read`、`Write` 和 `WriteRead` trait 方法，实现与外设的数据交互。
 
-### 3.2 UART/串行通信
+### 10.2 UART串行通信
 
 类似地，利用 rp2040-hal 初始化 UART 接口后，可使用 embedded-hal 的串行操作 trait 与其它设备或电脑进行数据交换，适用于调试信息传输或无线模块连接等场景。
 
 ---
 
-## 4. 总结
+## 11 总结
 
 - **统一的硬件抽象**：  
   通过 embedded-hal，开发者可以编写与硬件无关的驱动代码，使同一份代码在不同平台上复用。Raspberry Pi Pico 的 rp2040-hal 实现了这些标准接口，为 GPIO、I2C、SPI、UART 等外设提供了统一操作方法。
@@ -206,20 +250,20 @@ let i2c = I2C::i2c0(
 
 总的来说，Rust 的 embedded-hal 在 Raspberry Pi Pico 上的应用展现出高效、安全和易于维护的特点，推动了嵌入式开发进入现代化、跨平台的新阶段。
 
-## IoT 行业标准归纳及重要协议规范
+## 12 IoT 行业标准归纳及重要协议规范
 
 在 IoT（物联网）行业中，关于传感器、设备、协议定义、数据类型、交互模式等方面，已经形成了一系列标准归纳和行业标准，这些标准主要涵盖以下几个层面：
 
 ---
 
-## 1. 设备与传感器的标准与分类
+## 13 设备与传感器的标准与分类
 
-### 1.1 智能传感器接口标准
+### 13.1 智能传感器接口标准
 
 - **IEEE 1451 系列标准**  
   定义了智能传感器和执行器的接口、数据格式、通讯方式等，支持传感器数据的标准化采集和互联。
 
-### 1.2 传感器数据描述与交换
+### 13.2 传感器数据描述与交换
 
 - **OGC Sensor Web Enablement (SWE)**  
   包括 SensorML（传感器标记语言）、SOS（传感器观测服务）等标准，用于描述传感器元数据、观测数据和服务接口。
@@ -228,9 +272,9 @@ let i2c = I2C::i2c0(
 
 ---
 
-## 2. 通信协议层面的标准
+## 14 通信协议层面的标准
 
-### 2.1 物理层与链路层标准
+### 14.1 物理层与链路层标准
 
 - **IEEE 802.15.4**  
   为低速率无线个人区域网络（LR-WPAN）提供物理和链路层支持，是 ZigBee、6LoWPAN 等协议的基础。
@@ -239,7 +283,7 @@ let i2c = I2C::i2c0(
 - **ZigBee、Z-Wave、LoRaWAN、NB-IoT**  
   分别应用于家庭自动化、低功耗远距离通讯和蜂窝物联网等场景，满足各类 IoT 应用需求。
 
-### 2.2 网络层与传输层标准
+### 14.2 网络层与传输层标准
 
 - **IPv6 与 6LoWPAN**  
   为 IoT 环境中的设备地址分配和数据包传输提供标准支持，6LoWPAN 能将 IPv6 数据包压缩以适应低功耗设备。
@@ -248,9 +292,9 @@ let i2c = I2C::i2c0(
 
 ---
 
-## 3. 应用层协议与交互模式
+## 15 应用层协议与交互模式
 
-### 3.1 消息发布/订阅与请求/响应模式
+### 15.1 消息发布订阅与请求响应模式
 
 - **MQTT (Message Queue Telemetry Transport)**  
   采用轻量级的发布/订阅模式，适用于低带宽、高延迟及不稳定网络环境下的数据传输。
@@ -259,14 +303,14 @@ let i2c = I2C::i2c0(
 - **AMQP (Advanced Message Queuing Protocol)**  
   适用于需要高可靠性和复杂路由功能的企业应用。
 
-### 3.2 数据模型与语义互联
+### 15.2 数据模型与语义互联
 
 - **oneM2M**  
   是全球范围内推行的物联网服务平台标准，提出统一的架构和 API，促进设备、应用和服务的互联互操作。
 - **OCF (Open Connectivity Foundation)**  
   旨在实现跨厂商、跨平台、跨生态系统的设备互联互通，定义了设备发现、安全、数据传输等方面的标准。
 
-### 3.3 数据格式与定义
+### 15.3 数据格式与定义
 
 - **JSON、XML、CBOR**  
   被大量 IoT 应用用于数据交换，其中 SenML 基于这些格式提供轻量级的传感器数据表示。
@@ -275,7 +319,7 @@ let i2c = I2C::i2c0(
 
 ---
 
-## 4. 标准化组织与行业规范
+## 16 标准化组织与行业规范
 
 多个国际和国内标准化组织推动了 IoT 标准的制定和推广：
 
@@ -292,7 +336,7 @@ let i2c = I2C::i2c0(
 
 ---
 
-## 5. IoT 发展中的重要协议规范
+## 17 IoT 发展中的重要协议规范
 
 综合来看，当前 IoT 领域中较为重要且广泛应用的协议规范包括：
 
@@ -303,7 +347,7 @@ let i2c = I2C::i2c0(
 
 ---
 
-## 总结
+## 18 总结
 
 IoT 行业已经建立起较为完整的标准体系，涵盖从传感器接口、数据描述、低功耗通讯到应用层协议和互操作性标准。
 国际和国内多家标准化组织（如 IETF、IEEE、oneM2M、OCF）在不断推动 IoT 标准的发展，确保设备、数据和服务的统一性与互联互通。
@@ -311,7 +355,7 @@ IoT 行业已经建立起较为完整的标准体系，涵盖从传感器接口�
 
 IOT_Control_Interaction_Data_Format_Standards.md
 
-### IoT 控制信息与交互信息数据格式标准规范
+### 18.1 IoT 控制信息与交互信息数据格式标准规范
 
 在物联网 (IoT) 系统中，不同设备之间的数据交换、控制指令和交互信息的格式规范非常关键。
 不过，由于 IoT 应用场景多样、设备复杂，目前尚不存在一个涵盖所有领域的“统一”全球标准，而是形成了多个标准与协议体系，各自专注于不同的层面和应用场景。
@@ -319,23 +363,23 @@ IOT_Control_Interaction_Data_Format_Standards.md
 
 ---
 
-## 1. 设备与应用层标准
+## 19 设备与应用层标准
 
-### 1.1 oneM2M
+### 19.1 oneM2M
 
 - **核心概念**：  
   oneM2M 标准旨在为跨厂商、跨平台的 IoT 系统提供一个统一的服务层架构，定义了设备资源模型、数据表示、命令控制和服务接口等内容。
 - **控制和交互**：  
   通过统一的资源表示（如容器、内容实例、订阅等）和 RESTful 风格的 API，实现设备状态监控、控制指令和事件通知等交互机制。
 
-### 1.2 OCF (Open Connectivity Foundation)
+### 19.2 OCF (Open Connectivity Foundation)
 
 - **核心概念**：  
   OCF 定义了设备发现、数据交换、安全通信及远程控制的标准，强调设备的互操作性。
 - **数据格式**：  
   采用标准的 JSON 或 CBOR 格式来传输控制信息、状态报告及命令，确保不同设备和平台之间的无缝互联。
 
-### 1.3 LwM2M (Lightweight M2M)
+### 19.3 LwM2M (Lightweight M2M)
 
 - **核心概念**：  
   由 OMA（Open Mobile Alliance）制定，专为资源受限设备设计，定义了设备管理、监控和控制的统一模型。
@@ -344,9 +388,9 @@ IOT_Control_Interaction_Data_Format_Standards.md
 
 ---
 
-## 2. 通信协议及数据编码格式
+## 20 通信协议及数据编码格式
 
-### 2.1 CoAP (Constrained Application Protocol)
+### 20.1 CoAP (Constrained Application Protocol)
 
 - **设计目标**：  
   面向受限设备和网络环境的轻量级通讯协议，类似 HTTP，但更为精简。
@@ -355,14 +399,14 @@ IOT_Control_Interaction_Data_Format_Standards.md
 - **控制与交互**：  
   支持 RESTful 操作，使得设备可以通过标准化的 GET/PUT/POST/DELETE 方式进行状态查询和控制命令交互。
 
-### 2.2 MQTT (Message Queuing Telemetry Transport)
+### 20.2 MQTT (Message Queuing Telemetry Transport)
 
 - **设计目标**：  
   基于发布/订阅模式的轻量级消息传输协议，适用于不稳定网络环境下的 IoT 应用。
 - **数据格式**：  
   MQTT 协议本身对消息体没有强制要求，通常开发者会使用 JSON、XML、或者二进制格式（例如 CBOR）封装控制信息和交互数据，便于解析和处理。
 
-### 2.3 OPC UA (OPC Unified Architecture)
+### 20.3 OPC UA (OPC Unified Architecture)
 
 - **主要应用**：  
   工业自动化和工业物联网中常用的标准，既提供设备数据采集也支持命令控制和报警信息的交互。
@@ -371,16 +415,16 @@ IOT_Control_Interaction_Data_Format_Standards.md
 
 ---
 
-## 3. 数据表示格式
+## 21 数据表示格式
 
-### 3.1 SenML (Sensor Markup Language)
+### 21.1 SenML (Sensor Markup Language)
 
 - **主要用途**：  
   用于描述传感器的观测数据，其核心字段（如 bn、bt、v、t、u 等）也可以扩展用于简单的控制信息描述，如状态报告。
 - **序列化格式**：  
   支持 JSON、XML 和 CBOR，因其轻量级和易解析性，在 IoT 设备中被广泛使用。
 
-### 3.2 通用数据格式
+### 21.2 通用数据格式
 
 - **JSON 与 XML**：  
   被广泛采用用于数据交换和控制命令描述。JSON 格式由于其简洁性和与 JavaScript 等语言的天然兼容性，在 IoT 中应用较多。
@@ -389,7 +433,7 @@ IOT_Control_Interaction_Data_Format_Standards.md
 
 ---
 
-## *4. 总结*
+## 22 4 总结
 
 - **多标准共存**：  
   目前 IoT 控制信息与交互信息的数据格式并没有单一的国际标准，而是由 oneM2M、OCF、LwM2M、OPC UA 等多个标准体系定义不同层面的规范；

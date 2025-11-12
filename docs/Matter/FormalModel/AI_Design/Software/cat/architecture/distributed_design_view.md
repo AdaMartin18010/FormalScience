@@ -1,7 +1,37 @@
 
 # 范畴论视角下的分布式设计模式
 
-## 1. 分布式设计模式的范畴抽象
+## 📋 目录
+
+- [1 分布式设计模式的范畴抽象](#1-分布式设计模式的范畴抽象)
+  - [1.1 分布式系统范畴](#11-分布式系统范畴)
+- [2 核心分布式模式的范畴表示](#2-核心分布式模式的范畴表示)
+  - [2.1 分区模式Partitioning](#21-分区模式partitioning)
+  - [2.2 复制模式Replication](#22-复制模式replication)
+  - [2.3 一致性协议Consensus](#23-一致性协议consensus)
+- [3 消息传递模式的范畴结构](#3-消息传递模式的范畴结构)
+  - [3.1 消息通道模式](#31-消息通道模式)
+  - [3.2 消息模式范畴](#32-消息模式范畴)
+- [4 弹性设计模式的范畴表示](#4-弹性设计模式的范畴表示)
+  - [4.1 断路器模式Circuit Breaker](#41-断路器模式circuit-breaker)
+  - [4.2 舱壁模式Bulkhead](#42-舱壁模式bulkhead)
+- [5 数据一致性模式的范畴分析](#5-数据一致性模式的范畴分析)
+  - [5.1 CQRS模式命令查询责任分离](#51-cqrs模式命令查询责任分离)
+  - [5.2 事件溯源模式](#52-事件溯源模式)
+- [6 服务交互模式的范畴视角](#6-服务交互模式的范畴视角)
+  - [6.1 服务发现模式](#61-服务发现模式)
+  - [6.2 API网关模式](#62-api网关模式)
+- [7 范畴论视角的分布式模式组合](#7-范畴论视角的分布式模式组合)
+  - [7.1 模式组合函子](#71-模式组合函子)
+  - [7.2 模式转换自然变换](#72-模式转换自然变换)
+- [8 批判性分析：范畴论应用的限制](#8-批判性分析范畴论应用的限制)
+  - [8.1 形式化的边界](#81-形式化的边界)
+  - [8.2 范畴论视角的价值](#82-范畴论视角的价值)
+- [9 总结](#9-总结)
+
+---
+
+## 1 分布式设计模式的范畴抽象
 
 ### 1.1 分布式系统范畴
 
@@ -23,9 +53,9 @@ class DistributedSystemCategory d where
   partialFailure :: Node → FailureProbability  -- 部分失败
 ```
 
-## 2. 核心分布式模式的范畴表示
+## 2 核心分布式模式的范畴表示
 
-### 2.1 分区模式（Partitioning）
+### 2.1 分区模式Partitioning
 
 ```haskell
 class PartitioningCategory p where
@@ -44,7 +74,7 @@ class PartitioningCategory p where
   localityConstraint :: Partition a → Node → LocalityMeasure
 ```
 
-### 2.2 复制模式（Replication）
+### 2.2 复制模式Replication
 
 ```haskell
 class ReplicationCategory r where
@@ -64,7 +94,7 @@ class ReplicationCategory r where
   divergenceBound :: ReplicaSet a → TimePeriod → DivergenceMeasure
 ```
 
-### 2.3 一致性协议（Consensus）
+### 2.3 一致性协议Consensus
 
 ```haskell
 class ConsensusCategory c where
@@ -86,7 +116,7 @@ class ConsensusCategory c where
   latencyBound :: ConsensusProtocol → NetworkCondition → LatencyBound
 ```
 
-## 3. 消息传递模式的范畴结构
+## 3 消息传递模式的范畴结构
 
 ### 3.1 消息通道模式
 
@@ -127,9 +157,9 @@ class MessagePatternCategory p where
   failureHandlingCapability :: MessagePattern → FailureHandlingMeasure
 ```
 
-## 4. 弹性设计模式的范畴表示
+## 4 弹性设计模式的范畴表示
 
-### 4.1 断路器模式（Circuit Breaker）
+### 4.1 断路器模式Circuit Breaker
 
 ```haskell
 class CircuitBreakerCategory c where
@@ -151,7 +181,7 @@ class CircuitBreakerCategory c where
   detectionLatency :: CircuitBreaker → Latency
 ```
 
-### 4.2 舱壁模式（Bulkhead）
+### 4.2 舱壁模式Bulkhead
 
 ```haskell
 class BulkheadCategory b where
@@ -170,9 +200,9 @@ class BulkheadCategory b where
   failureContainment :: Bulkhead → Failure → ContainmentEffectiveness
 ```
 
-## 5. 数据一致性模式的范畴分析
+## 5 数据一致性模式的范畴分析
 
-### 5.1 CQRS模式（命令查询责任分离）
+### 5.1 CQRS模式命令查询责任分离
 
 ```haskell
 class CQRSCategory c where
@@ -218,7 +248,7 @@ class EventSourcingCategory e where
   temporalQueryComplexity :: EventStream → TemporalQuery → Complexity
 ```
 
-## 6. 服务交互模式的范畴视角
+## 6 服务交互模式的范畴视角
 
 ### 6.1 服务发现模式
 
@@ -260,7 +290,7 @@ class ApiGatewayCategory a where
   bottleneckCharacteristic :: Gateway → BottleneckProfile
 ```
 
-## 7. 范畴论视角的分布式模式组合
+## 7 范畴论视角的分布式模式组合
 
 ### 7.1 模式组合函子
 
@@ -292,7 +322,7 @@ patternTransformation :: NaturalTransformation PatternCategory1 PatternCategory2
   applicabilityConditions :: [Condition]  -- 适用条件
 ```
 
-## 8. 批判性分析：范畴论应用的限制
+## 8 批判性分析：范畴论应用的限制
 
 ### 8.1 形式化的边界
 
@@ -333,7 +363,7 @@ categoryTheoreticValue :: Analysis where
   ]
 ```
 
-## 9. 总结
+## 9 总结
 
 范畴论为分布式设计模式提供了精确的形式化框架，使我们能够:
 

@@ -2,7 +2,17 @@
 
 ---
 
-## 1. 知识点梳理 / Knowledge Point Overview
+## 📋 目录
+
+- [1 知识点梳理 Knowledge Point Overview](#1-知识点梳理-knowledge-point-overview)
+- [2 主流观点优缺点分析 Analysis of Mainstream Views](#2-主流观点优缺点分析-analysis-of-mainstream-views)
+- [3 学科交叉与融合 Interdisciplinary Integration](#3-学科交叉与融合-interdisciplinary-integration)
+- [4 工程论证与应用案例 Engineering Argumentation Application Cases](#4-工程论证与应用案例-engineering-argumentation-application-cases)
+- [5 创新性批判与未来展望 Innovative Critique Future Prospects](#5-创新性批判与未来展望-innovative-critique-future-prospects)
+
+---
+
+## 1 知识点梳理 Knowledge Point Overview
 
 - 主题：上下文模型（Context Models）
 - 定义：上下文模型用于形式化描述系统、环境、用户等多维上下文信息的结构、关系与动态变化，是智能系统、知识管理和人机交互的基础。
@@ -10,7 +20,7 @@
 - 主要分支：概念上下文模型、关系上下文模型、层次上下文模型、时空上下文模型、语义上下文模型、动态上下文模型等。
   (Main branches: conceptual context models, relational context models, hierarchical context models, spatiotemporal context models, semantic context models, dynamic context models, etc.)
 
-## 2. 主流观点优缺点分析 / Analysis of Mainstream Views
+## 2 主流观点优缺点分析 Analysis of Mainstream Views
 
 - 优点 / Strengths：
   - 支持多源、多模态上下文信息的结构化建模 (Supports structured modeling of multi-source, multi-modal context information)
@@ -21,7 +31,7 @@
   - 跨领域、跨模态上下文集成与一致性验证难度大 (Difficult to integrate and validate consistency across domains and modalities)
   - 标准化与定制化需求难以兼顾 (Difficult to balance standardization and customization)
 
-## 3. 学科交叉与融合 / Interdisciplinary Integration
+## 3 学科交叉与融合 Interdisciplinary Integration
 
 - 与知识工程、人工智能、物联网、认知科学、软件工程、语义网等密切相关。
   (Closely related to knowledge engineering, AI, IoT, cognitive science, software engineering, semantic web, etc.)
@@ -30,7 +40,7 @@
   - 上下文模型与语义推理、自动化决策 (Context models and semantic reasoning, automated decision-making)
   - 上下文模型与人机交互、用户建模 (Context models and HCI, user modeling)
 
-## 4. 工程论证与应用案例 / Engineering Argumentation & Application Cases
+## 4 工程论证与应用案例 Engineering Argumentation Application Cases
 
 - 工程可实现性 / Feasibility：
   - 上下文模型已在智能助手、智慧城市、医疗健康等领域落地 (Context models are implemented in intelligent assistants, smart cities, healthcare, etc.)
@@ -45,7 +55,7 @@
   - 智慧城市的时空上下文集成平台 (Spatiotemporal context integration platforms in smart cities)
   - 医疗健康领域的动态上下文建模与推理 (Dynamic context modeling and reasoning in healthcare)
 
-## 5. 创新性批判与未来展望 / Innovative Critique & Future Prospects
+## 5 创新性批判与未来展望 Innovative Critique Future Prospects
 
 - 创新方向 / Innovation：
   - 发展自适应、可演化的上下文模型与推理机制 (Develop adaptive and evolvable context models and reasoning mechanisms)

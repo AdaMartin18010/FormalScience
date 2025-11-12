@@ -1,6 +1,33 @@
 # WebAssembly 术语表 (GLOSSARY)
 
-## A
+## 📋 目录
+
+- [1 A](#1-a)
+- [2 B](#2-b)
+- [3 C](#3-c)
+- [4 D](#4-d)
+- [5 E](#5-e)
+- [6 F](#6-f)
+- [7 G](#7-g)
+- [8 H](#8-h)
+- [9 I](#9-i)
+- [10 J](#10-j)
+- [11 L](#11-l)
+- [12 M](#12-m)
+- [13 O](#13-o)
+- [14 P](#14-p)
+- [15 R](#15-r)
+- [16 S](#16-s)
+- [17 T](#17-t)
+- [18 V](#18-v)
+- [19 W](#19-w)
+- [20 Z](#20-z)
+- [21 符号表](#21-符号表)
+- [22 缩略语](#22-缩略语)
+
+---
+
+## 1 A
 
 **Abstract Machine（抽象机器）**
 形式化的计算模型，定义状态空间与转移关系。Wasm 抽象机器 = 栈 + 内存 + 表 + 全局变量。
@@ -16,7 +43,7 @@
 
 ---
 
-## B
+## 2 B
 
 **Baseline JIT**
 简单快速的即时编译，线性映射指令，性能≈50-70% 原生。
@@ -29,7 +56,7 @@
 
 ---
 
-## C
+## 3 C
 
 **Capability Security（能力安全）**
 基于不可伪造句柄的访问控制，WASI 采用此模型。
@@ -42,7 +69,7 @@
 
 ---
 
-## D
+## 4 D
 
 **Denotational Semantics（指称语义）**
 将程序映射到数学域，\( \llbracket \cdot \rrbracket : \text{Prog} \to \text{Domain} \)。
@@ -55,7 +82,7 @@
 
 ---
 
-## E
+## 5 E
 
 **Exception Handling（异常处理）**
 Stage 4 提案，`try/catch/throw` 结构化异常。
@@ -65,7 +92,7 @@ Stage 4 提案，`try/catch/throw` 结构化异常。
 
 ---
 
-## F
+## 6 F
 
 **Formal Semantics（形式化语义）**
 数学化定义程序行为，Wasm 有操作语义、指称语义、公理语义。
@@ -75,7 +102,7 @@ Stage 4 提案，`try/catch/throw` 结构化异常。
 
 ---
 
-## G
+## 7 G
 
 **GC (Garbage Collection, 垃圾回收)**
 自动内存管理，Stage 3 提案，支持 Java/Kotlin 等语言。
@@ -85,7 +112,7 @@ Stage 4 提案，`try/catch/throw` 结构化异常。
 
 ---
 
-## H
+## 8 H
 
 **Hoare Logic（霍尔逻辑）**
 公理语义，判断形式 \( \{P\} I \{Q\} \)。
@@ -95,7 +122,7 @@ Stage 4 提案，`try/catch/throw` 结构化异常。
 
 ---
 
-## I
+## 9 I
 
 **Instruction Set（指令集）**
 MVP 178 条 + SIMD 128 条 + 线程/异常/多返回值。
@@ -105,14 +132,14 @@ MVP 178 条 + SIMD 128 条 + 线程/异常/多返回值。
 
 ---
 
-## J
+## 10 J
 
 **JIT (Just-In-Time) Compilation**
 运行时编译，分 Baseline（快）和 Optimizing（慢但快速）。
 
 ---
 
-## L
+## 11 L
 
 **LEB128（小端 Base-128）**
 变长整数编码，节省空间，解码快速。
@@ -125,7 +152,7 @@ MVP 178 条 + SIMD 128 条 + 线程/异常/多返回值。
 
 ---
 
-## M
+## 12 M
 
 **Memory Model（内存模型）**
 定义并发内存访问语义，Wasm 基于 C++11 模型。
@@ -135,7 +162,7 @@ Wasm 部署单元，包含函数、内存、表、全局变量。
 
 ---
 
-## O
+## 13 O
 
 **Operational Semantics（操作语义）**
 定义状态转移规则，分小步（单步）和大步（多步）。
@@ -145,7 +172,7 @@ Wasm 部署单元，包含函数、内存、表、全局变量。
 
 ---
 
-## P
+## 14 P
 
 **Preservation（保持性）**
 类型安全定理之一，归约保持类型不变。
@@ -155,7 +182,7 @@ Wasm 部署单元，包含函数、内存、表、全局变量。
 
 ---
 
-## R
+## 15 R
 
 **Reference Types（引用类型）**
 Stage 4 提案，`funcref / externref`，支持外部对象。
@@ -165,7 +192,7 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## S
+## 16 S
 
 **Sandbox（沙箱）**
 隔离执行环境，内存不可越界，无宿主资源访问。
@@ -181,7 +208,7 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## T
+## 17 T
 
 **Table（表）**
 存放函数引用，用于间接调用 `call_indirect`。
@@ -194,7 +221,7 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## V
+## 18 V
 
 **Validation（验证）**
 静态检查模块合法性，线性时间 \( O(n) \)，保证无 UB。
@@ -204,7 +231,7 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## W
+## 19 W
 
 **WASI (WebAssembly System Interface)**
 标准系统调用接口，能力安全模型，支持文件/网络/时钟。
@@ -214,14 +241,14 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## Z
+## 20 Z
 
 **Zero-Copy（零拷贝）**
 通过共享内存避免数据复制，Wasm ↔ 宿主可通过 Memory Import 实现。
 
 ---
 
-## 符号表
+## 21 符号表
 
 | 符号 | 含义 |
 |------|------|
@@ -240,7 +267,7 @@ Stage 4 提案，`funcref / externref`，支持外部对象。
 
 ---
 
-## 缩略语
+## 22 缩略语
 
 | 缩略语 | 全称 |
 |--------|------|

@@ -15,13 +15,29 @@
    - `await` 是一个关键字，用于等待一个 `Future` 完成。在异步函数中，可以使用 `await` 来暂停当前函数的执行，直到被等待的 `Future` 完成。
    `await` 表达式只能在异步函数或异步块中使用。
 
-## 联系
+## 📋 目录
+
+- [1 联系](#1-联系)
+- [2 异步任务的执行流程](#2-异步任务的执行流程)
+  - [2.1 定义 Future Trait](#21-定义-future-trait)
+  - [2.2 Poll 类型](#22-poll-类型)
+  - [2.3 Context 类型](#23-context-类型)
+  - [2.4 实现 Future](#24-实现-future)
+  - [2.5 使用 Future](#25-使用-future)
+  - [2.6 注意事项](#26-注意事项)
+  - [2.7 Pin Trait 的定义](#27-pin-trait-的定义)
+  - [2.8 使用 Pin](#28-使用-pin)
+  - [2.9 解释和用途](#29-解释和用途)
+
+---
+
+## 1 联系
 
 - `async` 函数定义了一个异步的执行路径，它返回的是一个 `Future`。
 - `await` 用于在异步函数中等待 `Future` 的结果，它允许 Rust 的异步运行时在 `Future` 等待 I/O 操作或其他异步任务完成时，切换到其他任务。
 - `Future` 是异步操作的表示，它可以被 `await` 表达式等待，也可以在异步运行时中被轮询（通过 `poll` 方法）。
 
-## 异步任务的执行流程
+## 2 异步任务的执行流程
 
 1. 开发者使用 `async` 关键字定义一个异步函数，该函数执行体中可能包含多个 `await` 表达式。
 2. 当调用这个异步函数时，它不会立即执行，而是立即返回一个 `Future` 对象。
@@ -38,7 +54,7 @@
 这个 trait 定义了一个核心方法 `poll`，它被异步运行时（如 `tokio` 或 `async-std`）用来推动 `Future` 的执行。
 以下是 `Future` 的基本实现细节：
 
-### 定义 `Future` Trait
+### 2.1 定义 Future Trait
 
 `Future` trait 通常定义如下：
 
@@ -56,16 +72,16 @@ pub trait Future {
 - `Output`：是一个与 `Future` 关联的类型，表示 `Future` 完成时产生的结果。
 - `poll` 方法：尝试推动 `Future` 向前执行。这个方法会返回一个 `Poll` 类型，它可以是 `Poll::Ready(output)` 或 `Poll::Pending`。
 
-### `Poll` 类型
+### 2.2 Poll 类型
 
 - `Poll::Ready(T)`：表示 `Future` 已经完成，并返回了结果 `T`。
 - `Poll::Pending`：表示 `Future` 尚未完成，需要在未来再次被轮询。
 
-### `Context` 类型
+### 2.3 Context 类型
 
 - `Context` 是一个包含 `Waker` 的结构体，`Waker` 是一个当 `Future` 可以再次被轮询时，能够唤醒当前任务的句柄。
 
-### 实现 `Future`
+### 2.4 实现 Future
 
 要实现一个 `Future`，你需要定义一个结构体和一个 `poll` 方法。以下是一个简单的示例：
 
@@ -96,7 +112,7 @@ impl Future for MyFuture {
 在这个例子中，`MyFuture` 结构体包含一个简单的计数器 `state`。
 `poll` 方法检查计数器是否达到 5，如果没有，它返回 `Poll::Pending` 并增加计数器。一旦计数器达到 5，它返回 `Poll::Ready(())` 表示 `Future` 完成。
 
-### 使用 `Future`
+### 2.5 使用 Future
 
 要使用 `Future`，通常你需要将其传递给异步运行时，例如使用 `tokio::spawn`：
 
@@ -111,7 +127,7 @@ async fn main() {
 
 在这个例子中，`MyFuture` 实例被 `await`，这会导致当前异步任务在 `MyFuture` 完成之前挂起。当 `MyFuture` 完成时，`await` 表达式的执行会继续。
 
-### 注意事项
+### 2.6 注意事项
 
 - `Future` 必须能够被 `Pin`，因为 `poll` 方法接受 `Pin<&mut Self>` 作为参数。这意味着 `Future` 可能需要分配在堆上以允许安全地移动内部指针。
 - `poll` 方法的实现应该小心处理 `Waker`，确保在 `Future` 可以继续执行时能够正确唤醒任务。
@@ -121,7 +137,7 @@ async fn main() {
 在 Rust 中，`Pin` trait 是 `std::pin::Pin` 的别名，它用于保证一个值在内存中的位置（地址）在其生命周期内保持不变。
 这对于保证某些数据结构的内存布局和行为至关重要，特别是在异步编程和手动内存管理中。
 
-### `Pin` Trait 的定义
+### 2.7 Pin Trait 的定义
 
 `Pin` trait 定义了一种新的指针，称为“pin pointer”，它不允许移动它所指向的值。
 `Pin` trait 包含如下方法：
@@ -140,7 +156,7 @@ pub trait Pin<T> {
 - `as_ref` 和 `as_mut`：允许访问 `Pin` 内部的值的不可变或可变引用。
 - `get_unchecked`：提供了一种方式来获取内部值的原始指针，这需要开发者确保使用时的安全性。
 
-### 使用 `Pin`
+### 2.8 使用 Pin
 
 `Pin` 通常与实现了 `!Unpin` 的类型一起使用，`!Unpin` 是 `Pin` trait 的负特征（negative trait bound），表示一个类型不能被 `Pin` 固定在某个位置。
 如果一个类型没有实现 `!Unpin`，那么它就可以被 `Pin`。
@@ -177,7 +193,7 @@ fn main() {
 在这个例子中，`MyStruct` 结构体包含了一个 `String` 和一个 `PhantomPinned` 类型，后者是一个空的标记类型，用来指示这个结构体可以被 `Pin`。
 然后我们使用 `Pin::new` 来创建一个 `Pin` 包装器，并通过 `as_mut` 来获取内部数据的可变引用。
 
-### 解释和用途
+### 2.9 解释和用途
 
 `Pin` trait 的主要用途是确保在 Rust 的生命周期内，某些值的地址不会被改变。这对于以下情况非常重要：
 

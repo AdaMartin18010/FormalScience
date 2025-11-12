@@ -1,6 +1,19 @@
 # Rust 语言的所有权（Ownership）、移动（Move）和生命周期（Lifetime）模型是其核心概念，共同确保了内存安全和并发安全，而无需垃圾收集器
 
-## 所有权（Ownership）
+## 📋 目录
+
+- [1 所有权Ownership](#1-所有权ownership)
+- [2 移动Move](#2-移动move)
+- [3 生命周期Lifetime](#3-生命周期lifetime)
+- [4 Deref Trait](#4-deref-trait)
+- [5 Drop Trait](#5-drop-trait)
+- [6 Clone Trait](#6-clone-trait)
+- [7 Copy Trait](#7-copy-trait)
+- [8 解释和联系](#8-解释和联系)
+
+---
+
+## 1 所有权Ownership
 
 所有权是 Rust 中的一个基本特性，它意味着每个值在 Rust 中都有一个被称为其所有者（owner）的变量。所有权规则如下：
 
@@ -10,7 +23,7 @@
 
 所有权的主要目的是自动管理内存：当一个值的所有者不再需要它时，Rust 的内存管理系统会自动释放该值所占用的内存。
 
-## 移动（Move）
+## 2 移动Move
 
 移动是指将值的所有权从一个变量转移到另一个变量。
 在 Rust 中，当一个被移动的值是数据结构的一部分时（如数组或结构体），整个数据结构的所有权都会被移动。
@@ -27,7 +40,7 @@ fn take_ownership(some_string: String) { // some_string 现在拥有 String 的�
 } // 函数结束，some_string 被丢弃，String 被自动释放
 ```
 
-## 生命周期（Lifetime）
+## 3 生命周期Lifetime
 
 生命周期是 Rust 中的一个泛型概念，用于确保引用有效性。每个引用都有一个生命周期，它定义了引用保持有效的时间范围。
 生命周期的主要规则是：
@@ -71,7 +84,7 @@ Rust 中与所有权相关的主要 trait 包括 `Deref` 和 `Drop`。
 此外，`Clone` 和 `Copy` trait 也在一定程度上与所有权相关，因为它们决定了值的复制行为。
 以下是这些 trait 的定义、解释以及它们在 Rust 中的应用。
 
-## Deref Trait
+## 4 Deref Trait
 
 定义：
 
@@ -88,7 +101,7 @@ pub trait Deref {
 智能指针（如 `Box<T>`, `Rc<T>`, `Arc<T>`）实现 `Deref` 来提供对其内部数据的透明访问。
 允许使用 `*` 操作符自动解引用，简化代码。
 
-## Drop Trait
+## 5 Drop Trait
 
 定义：
 
@@ -104,7 +117,7 @@ pub trait Drop {
 自定义类型可以通过实现 `Drop` trait 来清理资源，如文件句柄、网络连接或内存。
 Rust 编译器在值离开作用域时自动调用 `drop` 方法。
 
-## Clone Trait
+## 6 Clone Trait
 
 定义：
 
@@ -119,7 +132,7 @@ pub trait Clone: Sized {
 应用：当你需要复制一个值时使用，如复制一个结构体或智能指针。
 `Clone` trait 是 `Copy` trait 的超集，意味着实现了 `Copy` 的类型也自动实现了 `Clone`。
 
-## Copy Trait
+## 7 Copy Trait
 
 定义：
 
@@ -133,7 +146,7 @@ pub trait Copy: Clone {}
 基本数据类型（如整数、浮点数）和小型枚举类型通常实现 `Copy`。
 实现 `Copy` 的类型在赋值和函数参数传递时不需要显式克隆。
 
-## 解释和联系
+## 8 解释和联系
 
 所有权：Rust 的所有权模型确保了每个值在任何时刻都有一个变量作为其所有者，或者没有所有者。
     当所有者超出作用域时，值会被自动丢弃。

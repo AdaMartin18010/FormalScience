@@ -2,11 +2,20 @@
 
 让我为您详细解析这些概念：
 
-## 1. Rust Async 编程机制
+## 📋 目录
+
+- [1 Rust Async 编程机制](#1-rust-async-编程机制)
+  - [1.1 Future trait](#11-future-trait)
+  - [1.2 Rust函数式编程与范畴论](#12-rust函数式编程与范畴论)
+  - [1.3 异步函数式编程](#13-异步函数式编程)
+
+---
+
+## 1 Rust Async 编程机制
 
 Rust的异步编程建立在以下核心概念之上：
 
-### Future trait
+### 1.1 Future trait
 
 ```rust
 pub trait Future {
@@ -43,7 +52,7 @@ async fn example() -> Result<String, Error> {
 }
 ```
 
-### 2. Rust函数式编程与范畴论
+### 1.2 Rust函数式编程与范畴论
 
 Rust的函数式编程特性：
 
@@ -81,7 +90,7 @@ where
 let closure = |x: i32| x + 1;
 ```
 
-### 3. 异步函数式编程
+### 1.3 异步函数式编程
 
 Rust确实支持将函数式编程与异步编程结合：
 

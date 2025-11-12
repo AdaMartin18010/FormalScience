@@ -57,7 +57,16 @@ Refine Language: Use precise terms. Distinguish between static structure and run
 虽然可能不存在一个单一的、能完美描述三者间所有转换的“大一统”形式理论被直接应用在这里，
 但我们可以借助不同的形式化工具和视角来分析它们在 `Architecture_Structural` 层面上的相互作用和依赖关系。
 
-## **1. 在结构层 (`Architecture_Structural`) 中三者的体现：**
+## 📋 目录
+
+  - [1.1 Petri Nets](#11-petri-nets)
+  - [1.2 Process Calculi (如 CSP π-calculus)](#12-process-calculi-如-csp-π-calculus)
+  - [1.3 Graph Theory](#13-graph-theory)
+- [1 结论与建议](#1-结论与建议)
+
+---
+
+## 1 1 在结构层 (Architecture_Structural) 中三者的体现：
 
 **控制流 (Control Flow - Structural):**
     **主要体现:**
@@ -84,7 +93,7 @@ Refine Language: Use precise terms. Distinguish between static structure and run
     Cell 代码需要被部署，其声明的 Effect 需要有兼容的、可用的 Handler 实现。
     结构层规定了执行的“演员”和他们声称能做的“动作类型”。
 
-## **2. 结构层面的相互关系与“转换”分析：**
+## 2 2 结构层面的相互关系与转换分析：
 
 它们之间不是简单的直接函数转换 `f(Control) -> Data`，
 而是更复杂的**依赖、约束和使能 (Enablement)** 关系。
@@ -143,12 +152,12 @@ Refine Language: Use precise terms. Distinguish between static structure and run
     **限制:**
     结构层保证类型匹配，但数据的**实际值**和它对后续执行逻辑的具体影响（例如，基于值的条件分支）是在运行时确定的。
 
-## **3. 更全面的分析工具/视角 (超越直接转换):**
+## 3 3 更全面的分析工具视角 (超越直接转换)
 
 由于直接的形式“转换”在结构层有限，
 我们可以引入其他形式化工具来分析这三者隐含的交互：
 
-### 3.1 **Petri Nets:**
+### 3.1 Petri Nets
   
 **建模:**
 可以将 Cell 定义为“位置 (Place)”（代表其准备好被执行或已完成），
@@ -162,7 +171,7 @@ Effect 请求/响应可以建模为特定的 Place/Transition 交互。
 **资源竞争**（如果 Effect Handler 是共享资源）。
 这有助于理解控制流和执行流的潜在**动态**交互。
 
-### 3.2 **Process Calculi (如 CSP, π-calculus):**
+### 3.2 Process Calculi (如 CSP π-calculus)
 
 **建模:**
 将 Cell 实例和 Fabric 建模为并发进程。
@@ -173,7 +182,7 @@ Effect 请求/响应是显式的通信事件。
 检测**通信死锁**或**竞争条件**。
 这侧重于执行流中的**并发交互**方面。
 
-### 3.3 **Graph Theory:**
+### 3.3 Graph Theory
 
 **建模:**
 `StaticTopology_S` 本身就是一个有向图。
@@ -182,7 +191,7 @@ Effect 请求/响应是显式的通信事件。
 **分析:**
 可以应用图算法分析路径、循环、连通性等**纯粹的控制流结构**属性。
 
-## **结论与建议:**
+## 4 结论与建议
 
 1. **没有单一的转换理论:**
     在 `Architecture_Structural` 层面，控制流、数据流、执行流之间是**相互依赖和约束**的关系，

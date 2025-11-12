@@ -1,6 +1,20 @@
 # Critical Summary and Synthesis: "Logic as a First Principle"
 
-## Table of Contents
+## 📋 目录
+
+- [1 Table of Contents](#1-table-of-contents)
+- [2 Introduction to the Critical Synthesis](#2-introduction-to-the-critical-synthesis)
+- [3 Chapter 1 Logic as a First Principle - An Introduction](#3-chapter-1-logic-as-a-first-principle---an-introduction)
+- [4 Chapter 2 Revisiting the Construction of Reality with Logic as the First Principle](#4-chapter-2-revisiting-the-construction-of-reality-with-logic-as-the-first-principle)
+- [5 Chapter 3 Revisiting Mathematics with Logic as the First Principle](#5-chapter-3-revisiting-mathematics-with-logic-as-the-first-principle)
+- [6 Chapter 4 Revisiting Human Cognitive Architecture with Logic as the First Principle](#6-chapter-4-revisiting-human-cognitive-architecture-with-logic-as-the-first-principle)
+- [7 Chapter 5 Revisiting Artificial Intelligence Cognitive Architecture with Logic as the First Principle](#7-chapter-5-revisiting-artificial-intelligence-cognitive-architecture-with-logic-as-the-first-principle)
+- [8 Chapter 6 Logic as a First Principle - Model Complementarity Integration and Future Outlook](#8-chapter-6-logic-as-a-first-principle---model-complementarity-integration-and-future-outlook)
+- [9 Text-Based Mind Map](#9-text-based-mind-map)
+
+---
+
+## 1 Table of Contents
 
 1. **Introduction to the Critical Synthesis**
 2. **Chapter 1: Logic as a First Principle - An Introduction**
@@ -70,7 +84,7 @@
 
 ---
 
-## 1. Introduction to the Critical Synthesis
+## 2 Introduction to the Critical Synthesis
 
 This document provides a critical summary and synthesis of the provided text, "Logic as a First Principle." The analysis aims to dissect the core arguments, explore the interconnections between concepts, and evaluate the strengths and weaknesses of the presented ideas across various domains: reality, mathematics, human cognition, artificial intelligence, and scientific modeling. The synthesis seeks to offer a comprehensive understanding of the implications of adopting logic as a foundational explanatory and organizational principle.
 
@@ -78,7 +92,7 @@ The approach involves a chapter-by-chapter breakdown, detailing key concepts, de
 
 ---
 
-## 2. Chapter 1: Logic as a First Principle - An Introduction
+## 3 Chapter 1 Logic as a First Principle - An Introduction
 
 This chapter introduces the central thesis of the document: the proposition that logic serves as a "first principle" for understanding and structuring knowledge across diverse domains.
 
@@ -116,7 +130,7 @@ This initial chapter sets an ambitious agenda. The success of its argument will 
 
 ---
 
-## 3. Chapter 2: Revisiting the Construction of "Reality" with Logic as the First Principle
+## 4 Chapter 2 Revisiting the Construction of Reality with Logic as the First Principle
 
 This chapter delves into the ontological claim that if logic is a first principle, then the very structure of "reality" should be fundamentally logical or, at the very least, highly compatible with logical description and understanding. The aim is to provide an ontological grounding for the orderliness, comprehensibility, and (to some extent) predictability of the universe as studied by science.
 
@@ -211,7 +225,7 @@ In summary, Chapter 2 makes a strong case for a deeply logical underpinning to r
 
 ---
 
-## 4. Chapter 3: Revisiting "Mathematics" with Logic as the First Principle
+## 5 Chapter 3 Revisiting Mathematics with Logic as the First Principle
 
 This chapter shifts the "logic as first principle" lens to mathematics, a discipline often considered the epitome of logical rigor and certainty. The core argument is that if logic is foundational, then the nature of mathematics—its concepts, the validity of its proofs, and the existence of its objects—must be deeply rooted in, or a direct extension of, logical principles.
 
@@ -275,7 +289,7 @@ In conclusion, Chapter 3 effectively argues for the intimate and indispensable r
 
 ---
 
-## 5. Chapter 4: Revisiting "Human Cognitive Architecture" with Logic as the First Principle
+## 6 Chapter 4 Revisiting Human Cognitive Architecture with Logic as the First Principle
 
 This chapter applies the "logic as first principle" framework to understand the fundamental structure and workings of human cognition. The core argument is that human thought processes, at their deepest level, are based on or strive towards logical principles, enabling rational thought, language, and learning.
 
@@ -347,7 +361,7 @@ Chapter 4 convincingly argues for a deep and pervasive role of logical structure
 
 ---
 
-## 6. Chapter 5: Revisiting "Artificial Intelligence Cognitive Architecture" with Logic as the First Principle
+## 7 Chapter 5 Revisiting Artificial Intelligence Cognitive Architecture with Logic as the First Principle
 
 This chapter extends the "logic as first principle" thesis to Artificial Intelligence (AI), arguing that the design and functioning of intelligent artificial systems are, and should be, fundamentally grounded in logical principles, whether explicitly (as in symbolic AI) or implicitly (as in connectionist AI).
 
@@ -422,7 +436,7 @@ Chapter 5 argues persuasively for the enduring and evolving importance of logic 
 
 ---
 
-## 7. Chapter 6: Logic as a First Principle - Model Complementarity, Integration, and Future Outlook
+## 8 Chapter 6 Logic as a First Principle - Model Complementarity Integration and Future Outlook
 
 This concluding chapter broadens the scope, discussing how the "logic as first principle" framework applies to scientific modeling and engineering, how it helps understand the relationship between different models (complementarity and integration), and what future directions and open questions arise from this perspective.
 
@@ -498,7 +512,7 @@ Chapter 6 effectively elevates the discussion from specific domains to the gener
 
 ---
 
-## 8. Text-Based Mind Map
+## 9 Text-Based Mind Map
 
     ```text
     Logic as a First Principle (LFP)

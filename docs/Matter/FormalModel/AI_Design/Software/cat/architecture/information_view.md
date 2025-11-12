@@ -1,7 +1,41 @@
 
 # 范畴论视角下的信息、表示与属性统一框架
 
-## 1. 信息-数据-计算范畴 (InfoCompCat)
+## 📋 目录
+
+- [1 信息-数据-计算范畴 (InfoCompCat)](#1-信息-数据-计算范畴-infocompcat)
+  - [1.1 信息范畴](#11-信息范畴)
+  - [1.2 数据-信息函子](#12-数据-信息函子)
+  - [1.3 计算单子](#13-计算单子)
+- [2 表示-表征-语义范畴 (RepresentationCat)](#2-表示-表征-语义范畴-representationcat)
+  - [2.1 表示范畴](#21-表示范畴)
+  - [2.2 表征函子](#22-表征函子)
+  - [2.3 语义单子](#23-语义单子)
+- [3 量质属性-集合-操作范畴 (PropertySetCat)](#3-量质属性-集合-操作范畴-propertysetcat)
+  - [3.1 属性范畴](#31-属性范畴)
+  - [3.2 集合函子](#32-集合函子)
+  - [3.3 操作单子](#33-操作单子)
+- [4 跨域关系与变换](#4-跨域关系与变换)
+  - [4.1 信息-表示自然变换](#41-信息-表示自然变换)
+  - [4.2 数据-属性函子](#42-数据-属性函子)
+  - [4.3 表示-计算变换](#43-表示-计算变换)
+- [5 统一范畴结构](#5-统一范畴结构)
+  - [5.1 信息-表示-属性范畴](#51-信息-表示-属性范畴)
+  - [5.2 全域函子](#52-全域函子)
+- [6 理论应用示例](#6-理论应用示例)
+  - [6.1 数据分析流](#61-数据分析流)
+  - [6.2 语义处理实例](#62-语义处理实例)
+- [7 量子信息视角扩展](#7-量子信息视角扩展)
+  - [7.1 量子信息范畴](#71-量子信息范畴)
+  - [7.2 经典-量子信息函子](#72-经典-量子信息函子)
+- [8 理论深化与哲学观点](#8-理论深化与哲学观点)
+  - [8.1 信息本体论](#81-信息本体论)
+  - [8.2 认知表示范畴](#82-认知表示范畴)
+- [9 总结：范畴论统一视角](#9-总结范畴论统一视角)
+
+---
+
+## 1 信息-数据-计算范畴 (InfoCompCat)
 
 ### 1.1 信息范畴
 
@@ -62,7 +96,7 @@ class ComputationMonad m where
   termination :: m a → Termination
 ```
 
-## 2. 表示-表征-语义范畴 (RepresentationCat)
+## 2 表示-表征-语义范畴 (RepresentationCat)
 
 ### 2.1 表示范畴
 
@@ -123,7 +157,7 @@ class SemanticMonad m where
   groundedness :: m Meaning → Groundedness
 ```
 
-## 3. 量质属性-集合-操作范畴 (PropertySetCat)
+## 3 量质属性-集合-操作范畴 (PropertySetCat)
 
 ### 3.1 属性范畴
 
@@ -184,7 +218,7 @@ class OperationMonad m where
   distributivity :: Operation → Operation → Distributivity
 ```
 
-## 4. 跨域关系与变换
+## 4 跨域关系与变换
 
 ### 4.1 信息-表示自然变换
 
@@ -242,7 +276,7 @@ representationToComputation :: NaturalTransformation Representation Computation 
   ]
 ```
 
-## 5. 统一范畴结构
+## 5 统一范畴结构
 
 ### 5.1 信息-表示-属性范畴
 
@@ -281,7 +315,7 @@ class DomainFunctor f where
   preservesRelationships :: f a → f b → Bool
 ```
 
-## 6. 理论应用示例
+## 6 理论应用示例
 
 ### 6.1 数据分析流
 
@@ -325,7 +359,7 @@ semanticProcessing text = do
   return grounded
 ```
 
-## 7. 量子信息视角扩展
+## 7 量子信息视角扩展
 
 ### 7.1 量子信息范畴
 
@@ -363,7 +397,7 @@ class ClassicalQuantumFunctor f where
   complexityChange :: f Classical → f Quantum → ComplexityRelation
 ```
 
-## 8. 理论深化与哲学观点
+## 8 理论深化与哲学观点
 
 ### 8.1 信息本体论
 
@@ -406,7 +440,7 @@ class CognitiveRepresentationCategory c where
   abstraction :: CognitiveRep → AbstractionLevel
 ```
 
-## 9. 总结：范畴论统一视角
+## 9 总结：范畴论统一视角
 
 从范畴论视角看待信息-数据-计算、表示-表征-语义、量质属性-集合-操作这三组概念，我们发现：
 

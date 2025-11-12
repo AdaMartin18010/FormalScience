@@ -3,7 +3,27 @@
 在 Rust 中，`Stream` 是一种特殊的 `Future`，它用于异步地生成一系列值。
 与普通的 `Future` 不同，`Stream` 可以多次被 `await`，每次都会生成一个新的值，直到流结束。
 
-## `Stream` Trait 定义
+## 📋 目录
+
+- [1 Stream Trait 定义](#1-stream-trait-定义)
+  - [1.1 使用 Stream](#11-使用-stream)
+    - [1.1.1 示例：实现一个简单的 Stream](#111-示例实现一个简单的-stream)
+  - [1.2 解释](#12-解释)
+  - [1.3 异步运行时](#13-异步运行时)
+- [2 Stream 的主要用途](#2-stream-的主要用途)
+- [3 典型的代码示例](#3-典型的代码示例)
+  - [3.1 示例：通过 futuresstreamiter 模拟数据流](#31-示例通过-futuresstreamiter-模拟数据流)
+  - [3.2 示例：使用 async_stream 宏构建 Stream](#32-示例使用-async_stream-宏构建-stream)
+- [4 分析](#4-分析)
+- [5 常见的反例及误区](#5-常见的反例及误区)
+  - [5.1 反例 1：在异步 Stream 内运行密集计算导致阻塞](#51-反例-1在异步-stream-内运行密集计算导致阻塞)
+  - [5.2 反例 2：错误使用同步 Iterator 替代 Stream](#52-反例-2错误使用同步-iterator-替代-stream)
+- [6 思维导图总结](#6-思维导图总结)
+- [7 总结](#7-总结)
+
+---
+
+## 1 Stream Trait 定义
 
 `Stream` trait 定义在 `futures` crate 中，它是一个生成器，可以连续产生值。以下是 `Stream` trait 的基本定义：
 
@@ -21,14 +41,14 @@ trait Stream: Future<Output = ()> {
 - `type Item`：这是一个关联类型，定义了 `Stream` 产生的值的类型。
 - `fn poll_next`：这个方法尝试从 `Stream` 中取出下一个值。如果 `Stream` 已经结束，则返回 `Poll::Ready(None)`；如果还有值，但当前不能立即提供，则返回 `Poll::Pending`；如果当前有一个值可用，则返回 `Poll::Ready(Some(item))`。
 
-### 使用 `Stream`
+### 1.1 使用 Stream
 
 使用 `Stream` 通常涉及以下步骤：
 
 1. 实现 `Stream` trait。
 2. 使用 `await` 循环地从 `Stream` 中获取值。
 
-#### 示例：实现一个简单的 `Stream`
+#### 1.1.1 示例：实现一个简单的 Stream
 
 ```rust
 use futures::Stream;
@@ -77,13 +97,13 @@ async fn main() {
 - `poll_next` 方法返回 `Stream` 的下一个值，如果没有更多值，则返回 `None`。
 - 在 `main` 函数中，我们创建了一个 `MyStream` 实例，并使用 `.collect().await` 来收集所有的值到一个 `Vec<i32>` 中。
 
-### 解释
+### 1.2 解释
 
 - `Stream` 可以被看作是一个可以多次 `await` 的 `Future`。每次 `await` `Stream` 时，它都会尝试产生一个新的值。
 - `Stream` 的 `poll_next` 方法被设计为可以被多次调用，每次调用都可能产生一个新的 `Poll`。
 - 使用 `StreamExt` 中的方法（如 `collect`）可以简化对 `Stream` 的处理，使得代码更加易读。
 
-### 异步运行时
+### 1.3 异步运行时
 
 与 `Future` 一样，`Stream` 也需要在异步运行时中执行。例如，Tokio 提供了这样的运行时环境，允许 `Stream` 被有效地调度和执行。
 
@@ -93,7 +113,7 @@ async fn main() {
 
 ---
 
-## 1. Stream 的主要用途
+## 2 Stream 的主要用途
 
 在 Rust 的 async 生态中，**Stream** 类似于同步程序里的 Iterator，但它用于按需异步产生一系列值。主要用途包括：
 
@@ -110,11 +130,11 @@ async fn main() {
 
 ---
 
-## 2. 典型的代码示例
+## 3 典型的代码示例
 
 以下示例使用 `futures` 和 `tokio` 提供的 stream 工具，展示如何创建并消费一个异步 stream。
 
-### 2.1 示例：通过 `futures::stream::iter` 模拟数据流
+### 3.1 示例：通过 futuresstreamiter 模拟数据流
 
 **文件路径：** `src/async_stream_example.rs`
 
@@ -139,7 +159,7 @@ async fn main() {
 }
 ```
 
-### 2.2 示例：使用 `async_stream` 宏构建 Stream
+### 3.2 示例：使用 async_stream 宏构建 Stream
 
 使用 [async-stream](https://crates.io/crates/async-stream) crate 可更方便地书写异步 stream。
 
@@ -172,7 +192,7 @@ async fn main() {
 
 ---
 
-## 3. 分析
+## 4 分析
 
 - **异步数据处理**  
   Stream 允许在异步环境中按需拉取数据，而不是一次性全部加载。这样既节省内存，又能应对数据源延迟或不确定性。
@@ -188,11 +208,11 @@ async fn main() {
 
 ---
 
-## 4. 常见的“反例”及误区
+## 5 常见的反例及误区
 
 下面给出两个常见反例说明不正确的用法，帮助避免常见问题。
 
-### 4.1 反例 1：在异步 Stream 内运行密集计算导致阻塞
+### 5.1 反例 1：在异步 Stream 内运行密集计算导致阻塞
 
 **问题描述：**  
 如果在 stream 的生成过程中进行长时间密集计算而不进行异步等待操作，会阻塞当前任务，影响整个异步运行时。例如：
@@ -226,7 +246,7 @@ async fn main() {
 
 ---
 
-### 4.2 反例 2：错误使用同步 Iterator 替代 Stream
+### 5.2 反例 2：错误使用同步 Iterator 替代 Stream
 
 **问题描述：**  
 在异步场景下，错误地使用同步 Iterator 进行数据处理会使得程序不能正确利用异步特性。例如：
@@ -254,7 +274,7 @@ async fn main() {
 
 ---
 
-## 5. 思维导图总结
+## 6 思维导图总结
 
 下面提供一个 Mermaid 思维导图，概括了 Rust async 中 Stream 的主要用途、正确用法以及常见错误场景：
 
@@ -282,7 +302,7 @@ flowchart TD
 
 ---
 
-## 6. 总结
+## 7 总结
 
 - **主要用途：**  
   Stream 在异步通信中用于按需异步产生一系列数据，适用于网络、文件 I/O、事件处理等场景。

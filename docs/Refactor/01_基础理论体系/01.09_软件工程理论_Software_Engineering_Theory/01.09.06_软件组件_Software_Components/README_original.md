@@ -1,42 +1,55 @@
 # 07.7 软件组件理论 (Software Component Theory)
 
-## 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 子模块](#2-子模块)
+  - [2.1 [0771 Web 组件](0771_Web_Componentsmd)](#21-0771-web-组件0771_web_componentsmd)
+  - [2.2 [0772 Web3 组件](0772_Web3_Componentsmd)](#22-0772-web3-组件0772_web3_componentsmd)
+  - [2.3 [0773 认证组件](0773_Authentication_Componentsmd)](#23-0773-认证组件0773_authentication_componentsmd)
+- [3 理论基础](#3-理论基础)
+- [4 相关理论](#4-相关理论)
+- [5 批判性分析](#5-批判性分析)
+
+---
+
+## 1 概述
 
 软件组件理论研究可重用、可组合的软件模块的设计、实现和集成。组件化开发是现代软件工程的重要范式。
 
-## 子模块
+## 2 子模块
 
-### [07.7.1 Web 组件](07.7.1_Web_Components.md)
+### 2.1 [0771 Web 组件](0771_Web_Componentsmd)
 
 - WebAssembly 高性能执行环境
 - HTTP 客户端和服务器组件
 - Web 技术栈集成
 
-### [07.7.2 Web3 组件](07.7.2_Web3_Components.md)
+### 2.2 [0772 Web3 组件](0772_Web3_Componentsmd)
 
 - P2P 网络通信
 - 区块链和智能合约
 - 去中心化应用组件
 
-### [07.7.3 认证组件](07.7.3_Authentication_Components.md)
+### 2.3 [0773 认证组件](0773_Authentication_Componentsmd)
 
 - 加密和解密功能
 - 身份验证和授权
 - 安全协议实现
 
-## 理论基础
+## 3 理论基础
 
 - 组件接口和契约
 - 组件组合和重用
 - 形式化验证
 
-## 相关理论
+## 4 相关理论
 
 - [软件架构与设计](README.md)
 - [设计模式](README.md)
 - [分布式系统理论](README.md)
 
 
-## 批判性分析
+## 5 批判性分析
 
 - 本节内容待补充：请从多元理论视角、局限性、争议点、应用前景等方面进行批判性分析。

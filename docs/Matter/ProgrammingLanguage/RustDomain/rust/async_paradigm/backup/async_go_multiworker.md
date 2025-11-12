@@ -6,7 +6,29 @@
 
 ---
 
-## 1. Rust async 多任务调度机制
+## 📋 目录
+
+- [1 Rust async 多任务调度机制](#1-rust-async-多任务调度机制)
+  - [1.1 核心原理](#11-核心原理)
+  - [1.2 关键组件与工具](#12-关键组件与工具)
+- [2 框架对比：Tokio 与 async-std](#2-框架对比tokio-与-async-std)
+  - [2.1 Tokio](#21-tokio)
+  - [2.2 async-std](#22-async-std)
+- [3 示例代码](#3-示例代码)
+  - [3.1 Tokio 示例代码](#31-tokio-示例代码)
+  - [3.2 async-std 示例代码](#32-async-std-示例代码)
+  - [3.3 实现类似 Golang 的并行机制](#33-实现类似-golang-的并行机制)
+    - [3.3.1 异步取消类似 Go 的 context](#331-异步取消类似-go-的-context)
+    - [3.3.2 类似 WaitGroup、Chan、Select 和 Goroutine 池化](#332-类似-waitgroupchanselect-和-goroutine-池化)
+- [4 Rust async 与 Golang 并发模型对比](#4-rust-async-与-golang-并发模型对比)
+  - [4.1 相似点](#41-相似点)
+  - [4.2 不同点及优缺点](#42-不同点及优缺点)
+- [5 思维导图总结](#5-思维导图总结)
+- [6 总结](#6-总结)
+
+---
+
+## 1 Rust async 多任务调度机制
 
 ### 1.1 核心原理
 
@@ -45,7 +67,7 @@
 
 ---
 
-## 2. 框架对比：Tokio 与 async-std
+## 2 框架对比：Tokio 与 async-std
 
 ### 2.1 Tokio
 
@@ -74,7 +96,7 @@
 
 ---
 
-## 3. 示例代码
+## 3 示例代码
 
 ### 3.1 Tokio 示例代码
 
@@ -209,7 +231,7 @@ async fn main() {
 
 ### 3.3 实现类似 Golang 的并行机制
 
-#### 3.3.1 异步取消（类似 Go 的 context）
+#### 3.3.1 异步取消类似 Go 的 context
 
 Rust 没有内置的 `context`，但可使用共享信号或 CancellationToken 实现。
 下面示例利用 [tokio-util](https://docs.rs/tokio-util/latest/tokio_util/sync/struct.CancellationToken.html) 提供的 CancellationToken 来模拟取消信号。
@@ -300,7 +322,7 @@ async fn main() {
 
 ---
 
-## 4. Rust async 与 Golang 并发模型对比
+## 4 Rust async 与 Golang 并发模型对比
 
 ### 4.1 相似点
 
@@ -328,7 +350,7 @@ async fn main() {
   - *Rust async*：需要依赖第三方库（如 tokio-util 的 CancellationToken）和明确的 async/await 写法，
 提供更细粒度的控制和更严格的类型安全，但实现上显得稍复杂。
 
-## 5. 思维导图总结
+## 5 思维导图总结
 
 以下使用 Mermaid 绘制思维导图，总结了 Rust async 并发模型的关键组成部分、与 Golang 并发机制的对应关系以及各自的优缺点。
 
@@ -368,7 +390,7 @@ flowchart TD
 
 ---
 
-## 6. 总结
+## 6 总结
 
 1. **Rust async 机制**  
    利用 async/await 将任务编译为状态机，通过协作式调度和多线程 Executor 实现高效且安全的多任务调度。

@@ -5,7 +5,22 @@
 
 ---
 
-## 1. 基于 OpenAPI/Swagger 的 REST API 自动生成
+## 📋 目录
+
+- [1 基于 OpenAPISwagger 的 REST API 自动生成](#1-基于-openapiswagger-的-rest-api-自动生成)
+  - [1.1 Paperclip](#11-paperclip)
+  - [1.2 utoipa](#12-utoipa)
+- [2 gRPC API 自动生成](#2-grpc-api-自动生成)
+  - [2.1 Tonic](#21-tonic)
+  - [2.2 grpcio](#22-grpcio)
+- [3 GraphQL API 自动生成](#3-graphql-api-自动生成)
+  - [3.1 async-graphql](#31-async-graphql)
+- [4 思维导图](#4-思维导图)
+- [5 小结](#5-小结)
+
+---
+
+## 1 基于 OpenAPISwagger 的 REST API 自动生成
 
 ### 1.1 Paperclip
 
@@ -67,7 +82,7 @@
 
 ---
 
-## 2. gRPC API 自动生成
+## 2 gRPC API 自动生成
 
 ### 2.1 Tonic
 
@@ -93,7 +108,7 @@
 
 ---
 
-## 3. GraphQL API 自动生成
+## 3 GraphQL API 自动生成
 
 ### 3.1 async-graphql
 
@@ -136,7 +151,7 @@
 
 ---
 
-## 4. 思维导图
+## 4 思维导图
 
 下面使用 Mermaid 语法绘制一幅思维导图，总结上述 API 自动生成工具及其相关关系：
 
@@ -166,7 +181,7 @@ graph TD
 
 ---
 
-## 小结
+## 5 小结
 
 - **REST API 自动生成**：  
   - 通过 [Paperclip](https://github.com/wafflespeanut/paperclip) 可实现与 Actix-web 集成的自动 OpenAPI 生成；  

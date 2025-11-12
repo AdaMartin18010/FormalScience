@@ -4,7 +4,17 @@
 
 ---
 
-## 1. 引发 panic
+## 📋 目录
+
+- [1 引发 panic](#1-引发-panic)
+- [2 栈展开Stack Unwinding](#2-栈展开stack-unwinding)
+- [3 panicabort 策略](#3-panicabort-策略)
+- [4 捕获 panic](#4-捕获-panic)
+- [5 小结](#5-小结)
+
+---
+
+## 1 引发 panic
 
 当调用 `panic!` 宏或者运行时出现了不可恢复的错误时，会触发一次 panic。
 这通常表明程序遇到了一种预期之外的情形。比如：
@@ -26,7 +36,7 @@ fn main() {
 
 ---
 
-## 2. 栈展开（Stack Unwinding）
+## 2 栈展开Stack Unwinding
 
 默认情况下（尤其是在调试模式下），Rust 采用**栈展开**的策略来处理 panic。具体表现为：
 
@@ -41,7 +51,7 @@ fn main() {
 
 ---
 
-## 3. panic=abort 策略
+## 3 panicabort 策略
 
 可以通过修改编译器选项（例如在 Cargo.toml 中设置 `panic = "abort"`）来改变 panic 的行为，使其直接中止程序而不进行栈展开。
 其特点是：
@@ -57,7 +67,7 @@ panic = "abort"
 
 ---
 
-## 4. 捕获 panic
+## 4 捕获 panic
 
 Rust 提供了 `std::panic::catch_unwind` 函数，可以在一个闭包中捕获 panic，从而防止 panic 迅速向上传播终止线程。
 示例如下：
@@ -82,7 +92,7 @@ fn main() {
 
 ---
 
-## 小结
+## 5 小结
 
 - **触发 panic**：调用 `panic!` 或触发不可恢复错误时发生。
 - **栈展开**：默认策略为展开调用栈，调用每个栈帧中的析构函数进行资源清理，并最终使线程终止。

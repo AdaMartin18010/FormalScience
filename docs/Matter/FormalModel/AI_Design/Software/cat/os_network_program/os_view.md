@@ -1,6 +1,35 @@
 # 范畴论视角下的操作系统核心管理机制
 
-## 1. 文件IO管理范畴 (FileIOCat)
+## 📋 目录
+
+- [1 文件IO管理范畴 (FileIOCat)](#1-文件io管理范畴-fileiocat)
+  - [1.1 文件抽象范畴](#11-文件抽象范畴)
+  - [1.2 IO操作函子](#12-io操作函子)
+  - [1.3 文件系统单子](#13-文件系统单子)
+- [2 进程管理范畴 (ProcessCat)](#2-进程管理范畴-processcat)
+  - [2.1 进程基础范畴](#21-进程基础范畴)
+  - [2.2 调度函子](#22-调度函子)
+  - [2.3 进程控制单子](#23-进程控制单子)
+- [3 内存管理范畴 (MemoryCat)](#3-内存管理范畴-memorycat)
+  - [3.1 内存抽象范畴](#31-内存抽象范畴)
+  - [3.2 内存管理函子](#32-内存管理函子)
+  - [3.3 内存保护单子](#33-内存保护单子)
+- [4 外设管理范畴 (DeviceCat)](#4-外设管理范畴-devicecat)
+  - [4.1 设备抽象范畴](#41-设备抽象范畴)
+  - [4.2 设备驱动函子](#42-设备驱动函子)
+  - [4.3 设备管理单子](#43-设备管理单子)
+- [5 系统集成与交互](#5-系统集成与交互)
+  - [5.1 系统集成范畴](#51-系统集成范畴)
+  - [5.2 资源管理函子](#52-资源管理函子)
+- [6 实际应用示例](#6-实际应用示例)
+  - [6.1 文件系统实现](#61-文件系统实现)
+  - [6.2 进程调度实现](#62-进程调度实现)
+  - [6.3 内存管理实现](#63-内存管理实现)
+- [7 总结](#7-总结)
+
+---
+
+## 1 文件IO管理范畴 (FileIOCat)
 
 ### 1.1 文件抽象范畴
 
@@ -56,7 +85,7 @@ class FileSystemMonad m where
   setAttributes :: Path → Attributes → m ()
 ```
 
-## 2. 进程管理范畴 (ProcessCat)
+## 2 进程管理范畴 (ProcessCat)
 
 ### 2.1 进程基础范畴
 
@@ -116,7 +145,7 @@ class ProcessControlMonad m where
   signal :: Condition → m ()
 ```
 
-## 3. 内存管理范畴 (MemoryCat)
+## 3 内存管理范畴 (MemoryCat)
 
 ### 3.1 内存抽象范畴
 
@@ -170,7 +199,7 @@ class MemoryProtectionMonad m where
   handleSegFault :: Address → m Action
 ```
 
-## 4. 外设管理范畴 (DeviceCat)
+## 4 外设管理范畴 (DeviceCat)
 
 ### 4.1 设备抽象范畴
 
@@ -225,7 +254,7 @@ class DeviceManagerMonad m where
   suspend :: Device → m ()
 ```
 
-## 5. 系统集成与交互
+## 5 系统集成与交互
 
 ### 5.1 系统集成范畴
 
@@ -261,7 +290,7 @@ class ResourceManagerFunctor f where
   contention :: Resource → Measure
 ```
 
-## 6. 实际应用示例
+## 6 实际应用示例
 
 ### 6.1 文件系统实现
 
@@ -300,7 +329,7 @@ memoryManagement size = do
   initializeMemory protected
 ```
 
-## 7. 总结
+## 7 总结
 
 范畴论视角下的操作系统核心管理机制提供了：
 

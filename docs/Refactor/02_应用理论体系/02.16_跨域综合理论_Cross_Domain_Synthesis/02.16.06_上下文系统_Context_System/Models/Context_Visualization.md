@@ -2,7 +2,17 @@
 
 ---
 
-## 1. 知识点梳理 / Knowledge Point Overview
+## 📋 目录
+
+- [1 知识点梳理 Knowledge Point Overview](#1-知识点梳理-knowledge-point-overview)
+- [2 主流观点优缺点分析 Analysis of Mainstream Views](#2-主流观点优缺点分析-analysis-of-mainstream-views)
+- [3 学科交叉与融合 Interdisciplinary Integration](#3-学科交叉与融合-interdisciplinary-integration)
+- [4 工程论证与应用案例 Engineering Argumentation Application Cases](#4-工程论证与应用案例-engineering-argumentation-application-cases)
+- [5 创新性批判与未来展望 Innovative Critique Future Prospects](#5-创新性批判与未来展望-innovative-critique-future-prospects)
+
+---
+
+## 1 知识点梳理 Knowledge Point Overview
 
 - 主题：上下文可视化（Context Visualization）
 - 定义：上下文可视化是将多维上下文信息以图形、图表、交互界面等形式表达，帮助用户理解、分析和管理复杂系统中的上下文关系，是智能系统、知识管理和决策支持的重要工具。
@@ -10,7 +20,7 @@
 - 主要分支：静态上下文可视化、交互式上下文可视化、时空上下文可视化、语义网络可视化、流程可视化、可视分析等。
   (Main branches: static context visualization, interactive context visualization, spatiotemporal context visualization, semantic network visualization, process visualization, visual analytics, etc.)
 
-## 2. 主流观点优缺点分析 / Analysis of Mainstream Views
+## 2 主流观点优缺点分析 Analysis of Mainstream Views
 
 - 优点 / Strengths：
   - 直观展示复杂上下文关系，提升信息传递效率 (Intuitively presents complex context relationships, improves information delivery efficiency)
@@ -21,7 +31,7 @@
   - 大规模、高维上下文数据可视化面临技术挑战 (Technical challenges in visualizing large-scale, high-dimensional context data)
   - 可视化工具与数据安全、隐私保护需兼顾 (Tools must balance visualization with data security and privacy)
 
-## 3. 学科交叉与融合 / Interdisciplinary Integration
+## 3 学科交叉与融合 Interdisciplinary Integration
 
 - 与数据可视化、图形学、认知科学、交互设计、人工智能、知识工程等密切相关。
   (Closely related to data visualization, computer graphics, cognitive science, interaction design, AI, knowledge engineering, etc.)
@@ -30,7 +40,7 @@
   - 上下文可视化与人机交互、用户体验 (Context visualization and HCI, user experience)
   - 上下文可视化与决策支持系统 (Context visualization and decision support systems)
 
-## 4. 工程论证与应用案例 / Engineering Argumentation & Application Cases
+## 4 工程论证与应用案例 Engineering Argumentation Application Cases
 
 - 工程可实现性 / Feasibility：
   - 上下文可视化平台（如Gephi、Cytoscape、D3.js）广泛应用于知识管理、网络分析等领域 (Platforms like Gephi, Cytoscape, D3.js are widely used in knowledge management, network analysis, etc.)
@@ -45,7 +55,7 @@
   - 智能制造的生产流程上下文可视化 (Production process context visualization in smart manufacturing)
   - 医疗健康领域的上下文关系可视化 (Context relationship visualization in healthcare)
 
-## 5. 创新性批判与未来展望 / Innovative Critique & Future Prospects
+## 5 创新性批判与未来展望 Innovative Critique Future Prospects
 
 - 创新方向 / Innovation：
   - 发展智能化、自动化的上下文可视化推荐与生成系统 (Develop intelligent and automated context visualization recommendation and generation systems)

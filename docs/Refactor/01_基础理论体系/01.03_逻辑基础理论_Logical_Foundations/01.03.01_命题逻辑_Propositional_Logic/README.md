@@ -1,12 +1,35 @@
 # 命题逻辑 (Propositional Logic)
 
-## 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 理论基础](#2-理论基础)
+  - [2.1 形式化定义](#21-形式化定义)
+- [3 语法实现](#3-语法实现)
+  - [3.1 公式数据结构](#31-公式数据结构)
+  - [3.2 公式解析器](#32-公式解析器)
+- [4 语义实现](#4-语义实现)
+  - [4.1 真值赋值](#41-真值赋值)
+  - [4.2 真值表生成](#42-真值表生成)
+- [5 证明系统](#5-证明系统)
+  - [5.1 自然演绎](#51-自然演绎)
+  - [5.2 证明验证器](#52-证明验证器)
+- [6 形式化验证](#6-形式化验证)
+  - [6.1 逻辑等价性](#61-逻辑等价性)
+  - [6.2 完备性证明](#62-完备性证明)
+- [7 总结](#7-总结)
+- [8 相关链接](#8-相关链接)
+- [9 批判性分析](#9-批判性分析)
+
+---
+
+## 1 概述
 
 命题逻辑是研究简单命题之间逻辑关系的数学理论，是逻辑学的基础分支。本文档详细阐述命题逻辑的语法、语义、证明系统和形式化实现。
 
-## 理论基础
+## 2 理论基础
 
-### 形式化定义
+### 2.1 形式化定义
 
 **定义 10.1.1 (命题语言)** 命题语言是一个三元组 $\mathcal{L} = (Prop, Conn, Form)$，其中：
 
@@ -19,9 +42,9 @@ $$\phi ::= p \mid \neg \phi \mid \phi \land \psi \mid \phi \lor \psi \mid \phi \
 
 其中 $p \in Prop$ 是命题变量。
 
-## 语法实现
+## 3 语法实现
 
-### 公式数据结构
+### 3.1 公式数据结构
 
 ```rust
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -151,7 +174,7 @@ impl std::fmt::Display for PropositionalFormula {
 }
 ```
 
-### 公式解析器
+### 3.2 公式解析器
 
 ```rust
 pub struct PropositionalParser {
@@ -317,9 +340,9 @@ impl PropositionalParser {
 }
 ```
 
-## 语义实现
+## 4 语义实现
 
-### 真值赋值
+### 4.1 真值赋值
 
 ```rust
 use std::collections::HashMap;
@@ -478,7 +501,7 @@ impl PropositionalSemantics {
 }
 ```
 
-### 真值表生成
+### 4.2 真值表生成
 
 ```rust
 pub struct TruthTable {
@@ -551,9 +574,9 @@ impl TruthTable {
 }
 ```
 
-## 证明系统
+## 5 证明系统
 
-### 自然演绎
+### 5.1 自然演绎
 
 ```rust
 #[derive(Debug, Clone)]
@@ -740,7 +763,7 @@ impl NaturalDeduction {
 }
 ```
 
-### 证明验证器
+### 5.2 证明验证器
 
 ```rust
 pub struct ProofVerifier;
@@ -818,9 +841,9 @@ impl ProofVerifier {
 }
 ```
 
-## 形式化验证
+## 6 形式化验证
 
-### 逻辑等价性
+### 6.1 逻辑等价性
 
 ```rust
 pub struct LogicalEquivalence;
@@ -897,7 +920,7 @@ impl LogicalEquivalence {
 }
 ```
 
-### 完备性证明
+### 6.2 完备性证明
 
 **定理 10.1.1 (命题逻辑完备性)** 对于任意命题公式 $\phi$：
 $$\vdash \phi \Leftrightarrow \models \phi$$
@@ -911,7 +934,7 @@ $$\vdash \phi \Leftrightarrow \models \phi$$
 
 **引理 10.1.2** 如果 $\phi$ 是重言式，则其CNF形式可以通过自然演绎证明。
 
-## 总结
+## 7 总结
 
 命题逻辑为形式化推理提供了坚实的基础。通过严格的语法定义、语义解释和证明系统，命题逻辑能够处理复杂的逻辑推理问题。本文档提供的实现为计算机辅助逻辑推理和形式化验证提供了实用工具。
 
@@ -921,13 +944,13 @@ $$\vdash \phi \Leftrightarrow \models \phi$$
 2. van Dalen, D. (2013). Logic and Structure.
 3. Huth, M., & Ryan, M. (2004). Logic in Computer Science.
 
-## 相关链接
+## 8 相关链接
 
 - [逻辑理论主文档](README.md)
 - [谓词逻辑](README.md)
 - [模态逻辑](README.md)
 
-## 批判性分析
+## 9 批判性分析
 
 - 多元理论视角：
   - 语法—语义—证明三元：真值表/布尔代数/自然演绎/分辨率构成命题逻辑的最小完备工具集，是更高层逻辑的入门台阶。

@@ -1,6 +1,13 @@
 # 04.3 线性/仿射类型 极简示例
 
-## Haskell LinearTypes（GHC -XLinearTypes）
+## 📋 目录
+
+- [1 Haskell LinearTypesGHC -XLinearTypes](#1-haskell-lineartypesghc--xlineartypes)
+- [2 Lean非线性示意，资源由类型刻画](#2-lean非线性示意资源由类型刻画)
+
+---
+
+## 1 Haskell LinearTypesGHC -XLinearTypes
 
 ```haskell
 {-# LANGUAGE LinearTypes #-}
@@ -18,7 +25,7 @@ linSwap (x, y) = (y, x)
 
 编译：`ghc -XLinearTypes LinearExample.hs`
 
-## Lean（非线性示意，资源由类型刻画）
+## 2 Lean非线性示意，资源由类型刻画
 
 ```lean
 -- 以长度为索引的向量，保证 map 保持长度

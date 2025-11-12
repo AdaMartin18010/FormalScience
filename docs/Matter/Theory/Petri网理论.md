@@ -1,12 +1,33 @@
 # Petri网理论 (Petri Net Theory)
 
-## 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 基础概念](#2-基础概念)
+  - [2.1 基本Petri网](#21-基本petri网)
+  - [2.2 标记和变迁规则](#22-标记和变迁规则)
+- [3 高级Petri网](#3-高级petri网)
+  - [3.1 有色Petri网 (Colored Petri Nets)](#31-有色petri网-colored-petri-nets)
+  - [3.2 时间Petri网 (Timed Petri Nets)](#32-时间petri网-timed-petri-nets)
+  - [3.3 随机Petri网 (Stochastic Petri Nets)](#33-随机petri网-stochastic-petri-nets)
+- [4 分析技术](#4-分析技术)
+  - [4.1 可达性分析](#41-可达性分析)
+  - [4.2 不变性分析](#42-不变性分析)
+  - [4.3 死锁检测](#43-死锁检测)
+- [5 应用领域](#5-应用领域)
+  - [5.1 并发系统建模](#51-并发系统建模)
+  - [5.2 工作流建模](#52-工作流建模)
+- [6 总结](#6-总结)
+
+---
+
+## 1 概述
 
 Petri网是一种用于描述和分析并发系统的数学建模工具，由Carl Adam Petri在1962年提出。Petri网特别适用于描述具有并发、同步、冲突和资源共享特性的系统。
 
-## 基础概念
+## 2 基础概念
 
-### 1. 基本Petri网
+### 2.1 基本Petri网
 
 **定义**：
 基本Petri网是一个三元组 N = (P, T, F)，其中：
@@ -54,7 +75,7 @@ impl PetriNet {
 }
 ```
 
-### 2. 标记和变迁规则
+### 2.2 标记和变迁规则
 
 **定义**：
 
@@ -143,9 +164,9 @@ impl PetriNet {
 }
 ```
 
-## 高级Petri网
+## 3 高级Petri网
 
-### 1. 有色Petri网 (Colored Petri Nets)
+### 3.1 有色Petri网 (Colored Petri Nets)
 
 **定义**：
 有色Petri网扩展了基本Petri网，允许令牌携带数据值，使模型更加紧凑和表达能力强。
@@ -226,7 +247,7 @@ impl ColoredPetriNet {
 }
 ```
 
-### 2. 时间Petri网 (Timed Petri Nets)
+### 3.2 时间Petri网 (Timed Petri Nets)
 
 **定义**：
 时间Petri网为变迁添加了时间约束，用于建模实时系统。
@@ -294,7 +315,7 @@ impl TimedPetriNet {
 }
 ```
 
-### 3. 随机Petri网 (Stochastic Petri Nets)
+### 3.3 随机Petri网 (Stochastic Petri Nets)
 
 **定义**：
 随机Petri网为变迁添加了随机延迟，用于性能分析和可靠性建模。
@@ -363,9 +384,9 @@ impl StochasticPetriNet {
 }
 ```
 
-## 分析技术
+## 4 分析技术
 
-### 1. 可达性分析
+### 4.1 可达性分析
 
 **定义**：
 可达性分析确定从初始标记可以到达的所有标记。
@@ -400,7 +421,7 @@ impl PetriNet {
 }
 ```
 
-### 2. 不变性分析
+### 4.2 不变性分析
 
 **定义**：
 不变性分析寻找在系统执行过程中保持不变的属性。
@@ -439,7 +460,7 @@ impl PetriNet {
 }
 ```
 
-### 3. 死锁检测
+### 4.3 死锁检测
 
 **定义**：
 死锁检测识别系统中可能导致死锁的状态。
@@ -472,9 +493,9 @@ impl PetriNet {
 }
 ```
 
-## 应用领域
+## 5 应用领域
 
-### 1. 并发系统建模
+### 5.1 并发系统建模
 
 ```rust
 // 生产者-消费者系统
@@ -506,7 +527,7 @@ fn producer_consumer_system() -> PetriNet {
 }
 ```
 
-### 2. 工作流建模
+### 5.2 工作流建模
 
 ```rust
 // 简单工作流系统
@@ -545,7 +566,7 @@ fn workflow_system() -> PetriNet {
 }
 ```
 
-## 总结
+## 6 总结
 
 Petri网理论为并发系统建模和分析提供了强大的工具：
 

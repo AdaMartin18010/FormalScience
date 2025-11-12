@@ -10,8 +10,8 @@
 ## 📋 目录
 
 - [信息论多视角分析 - 主索引](#信息论多视角分析---主索引)
+  - [📋 目录](#-目录)
   - [1 概述](#1-概述)
-  - [概述](#概述)
   - [目录结构](#目录结构)
     - [00\_FOUNDATIONAL\_CONCEPTS - 基础概念与权威定义](#00_foundational_concepts---基础概念与权威定义)
     - [01\_Complexity\_Analysis - 复杂度分析](#01_complexity_analysis---复杂度分析)

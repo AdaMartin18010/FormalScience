@@ -1,6 +1,34 @@
 # 范畴论视角下的算法设计
 
-## 1. 算法基础范畴 (AlgorithmCat)
+## 📋 目录
+
+- [1 算法基础范畴 (AlgorithmCat)](#1-算法基础范畴-algorithmcat)
+  - [1.1 算法抽象范畴](#11-算法抽象范畴)
+  - [1.2 问题求解函子](#12-问题求解函子)
+- [2 算法设计模式范畴](#2-算法设计模式范畴)
+  - [2.1 分治范畴](#21-分治范畴)
+  - [2.2 动态规划范畴](#22-动态规划范畴)
+  - [2.3 贪心范畴](#23-贪心范畴)
+- [3 算法优化范畴](#3-算法优化范畴)
+  - [3.1 时间优化](#31-时间优化)
+  - [3.2 空间优化](#32-空间优化)
+- [4 算法变换与组合](#4-算法变换与组合)
+  - [4.1 算法变换函子](#41-算法变换函子)
+  - [4.2 算法组合单子](#42-算法组合单子)
+- [5 特定领域算法范畴](#5-特定领域算法范畴)
+  - [5.1 搜索算法范畴](#51-搜索算法范畴)
+  - [5.2 排序算法范畴](#52-排序算法范畴)
+- [6 算法验证与分析](#6-算法验证与分析)
+  - [6.1 正确性验证](#61-正确性验证)
+  - [6.2 性能分析](#62-性能分析)
+- [7 实际应用示例](#7-实际应用示例)
+  - [7.1 排序算法实现](#71-排序算法实现)
+  - [7.2 动态规划实现](#72-动态规划实现)
+- [8 总结](#8-总结)
+
+---
+
+## 1 算法基础范畴 (AlgorithmCat)
 
 ### 1.1 算法抽象范畴
 
@@ -42,7 +70,7 @@ class ProblemSolvingFunctor f where
   isFeasible :: Solution → Bool
 ```
 
-## 2. 算法设计模式范畴
+## 2 算法设计模式范畴
 
 ### 2.1 分治范畴
 
@@ -104,7 +132,7 @@ class GreedyCategory g where
   hasMatroidStructure :: Problem → Bool
 ```
 
-## 3. 算法优化范畴
+## 3 算法优化范畴
 
 ### 3.1 时间优化
 
@@ -136,7 +164,7 @@ class SpaceOptimizationCategory s where
   predictMemoryPeaks :: Algorithm → [Peak]
 ```
 
-## 4. 算法变换与组合
+## 4 算法变换与组合
 
 ### 4.1 算法变换函子
 
@@ -168,7 +196,7 @@ class AlgorithmCompositionMonad m where
   pipeline :: [Algorithm] → m Algorithm
 ```
 
-## 5. 特定领域算法范畴
+## 5 特定领域算法范畴
 
 ### 5.1 搜索算法范畴
 
@@ -211,7 +239,7 @@ class SortCategory s where
   inPlace :: Sort → Bool
 ```
 
-## 6. 算法验证与分析
+## 6 算法验证与分析
 
 ### 6.1 正确性验证
 
@@ -243,7 +271,7 @@ class PerformanceAnalysis p where
   bottleneckDetection :: Algorithm → [Bottleneck]
 ```
 
-## 7. 实际应用示例
+## 7 实际应用示例
 
 ### 7.1 排序算法实现
 
@@ -272,7 +300,7 @@ dynamicProgramming problem = do
   extractSolution
 ```
 
-## 8. 总结
+## 8 总结
 
 范畴论视角下的算法设计提供了：
 

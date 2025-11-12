@@ -30,9 +30,20 @@ Essentially, shift the focus from "Is this necessary because others haven't done
 直接从形式理论（逻辑、类型论、计算理论）和 AI/ML 理论（可解释性、规划、学习、知识表示）的角度，
 对您的架构愿景和设计思路进行批判性审视，并提出具体的修正建议或指出根本性问题。
 
-## 1. **核心批判点：从 AI 集成视角看，当前设计可能存在的理论或实践缺陷**
+## 📋 目录
 
-### 1.1 **批判点 1: "自适应结构 Fabric" 的潜在形式不透明性 (Potential Formal Opacity of the Fabric)**
+- [1 核心批判点：从 AI 集成视角看，当前设计可能存在的理论或实践缺陷](#1-核心批判点从-ai-集成视角看当前设计可能存在的理论或实践缺陷)
+  - [1.1 批判点 1 自适应结构 Fabric 的潜在形式不透明性 (Potential Formal Opacity of the Fabric)](#11-批判点-1-自适应结构-fabric-的潜在形式不透明性-potential-formal-opacity-of-the-fabric)
+  - [1.2 批判点 2 Effect 和 Cell 契约的语义不足 (Semantic Insufficiency of Contracts)](#12-批判点-2-effect-和-cell-契约的语义不足-semantic-insufficiency-of-contracts)
+  - [1.3 批判点 3 对 Cell 内部逻辑和 Handler 实现的过度抽象 (Over-Abstraction of Internal Logic)](#13-批判点-3-对-cell-内部逻辑和-handler-实现的过度抽象-over-abstraction-of-internal-logic)
+  - [1.4 批判点 4 AI 与架构的共生演化问题 (Co-evolution Problem)](#14-批判点-4-ai-与架构的共生演化问题-co-evolution-problem)
+- [2 结论性判断与方向建议 (基于批判性原则)](#2-结论性判断与方向建议-基于批判性原则)
+
+---
+
+## 1 核心批判点：从 AI 集成视角看，当前设计可能存在的理论或实践缺陷
+
+### 1.1 批判点 1 自适应结构 Fabric 的潜在形式不透明性 (Potential Formal Opacity of the Fabric)
 
 **问题陈述:**
     虽然 Fabric 被设计为智能和自适应的，
@@ -66,7 +77,7 @@ Essentially, shift the focus from "Is this necessary because others haven't done
     **C. 核心规则加入:**
         “Fabric 的任何自适应行为必须伴随一个形式定义的可解释性接口”。
 
-### 1.2  **批判点 2: `Effect` 和 `Cell` 契约的语义不足 (Semantic Insufficiency of Contracts)**
+### 1.2 批判点 2 Effect 和 Cell 契约的语义不足 (Semantic Insufficiency of Contracts)
 
 **问题陈述:**
     当前设计强调了 `Effect` 和 `Cell` 的**类型契约**（输入/输出类型、Effect 类型声明）。
@@ -101,7 +112,7 @@ Essentially, shift the focus from "Is this necessary because others haven't done
             “所有 Cell 定义和 Effect 类型必须包含形式化的前置/后置条件断言或到领域本体的映射”。
             AI 可以利用这些语义进行规划、验证和推荐。
 
-### 1.3 **批判点 3: 对 `Cell` 内部逻辑和 `Handler` 实现的过度抽象 (Over-Abstraction of Internal Logic)**
+### 1.3 批判点 3 对 Cell 内部逻辑和 Handler 实现的过度抽象 (Over-Abstraction of Internal Logic)
 
 **问题陈述:**
     虽然 Cell 的接口是明确的，
@@ -133,7 +144,7 @@ Essentially, shift the focus from "Is this necessary because others haven't done
     **D. 核心规则加入:**
     “Cell 定义和 Handler 实现必须提供资源/性能元数据，并明确其达到的可分析性级别”。
 
-### 1.4  **批判点 4: AI 与架构的共生演化问题 (Co-evolution Problem)**
+### 1.4 批判点 4 AI 与架构的共生演化问题 (Co-evolution Problem)
 
 **问题陈述:**
     架构设计强调了自身的演化能力。
@@ -158,7 +169,7 @@ Essentially, shift the focus from "Is this necessary because others haven't done
     Fabric 必须能够向订阅的 AI 组件发布关于架构变更（已部署、已弃用等）的**结构化通知**。
     **D. 核心规则加入:** “架构演化流程必须包含对关联 AI 模型的影响分析和再验证步骤”。
 
-## 2. **结论性判断与方向建议 (基于批判性原则):**
+## 2 结论性判断与方向建议 (基于批判性原则)
 
 1. **基本方向的可行性:**
     您设计的架构核心理念（显式效应、协调日志、自适应 Fabric、模块化、形式化焦点）

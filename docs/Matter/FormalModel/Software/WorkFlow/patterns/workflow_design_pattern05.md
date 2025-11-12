@@ -1,6 +1,27 @@
 # 物联网工作流架构深度分析
 
-## 何时需要工作流架构
+## 📋 目录
+
+- [1 何时需要工作流架构](#1-何时需要工作流架构)
+- [2 工作流的多层面视角](#2-工作流的多层面视角)
+  - [2.1 执行流视角](#21-执行流视角)
+  - [2.2 数据流视角](#22-数据流视角)
+  - [2.3 控制流视角](#23-控制流视角)
+  - [2.4 容错层视角](#24-容错层视角)
+- [3 不同行业的IoT工作流应用模型](#3-不同行业的iot工作流应用模型)
+  - [3.1 工业自动化模型](#31-工业自动化模型)
+  - [3.2 智能家居模型](#32-智能家居模型)
+  - [3.3 智慧城市模型](#33-智慧城市模型)
+- [4 自动化运维与容错能力设计](#4-自动化运维与容错能力设计)
+  - [4.1 自动化故障诊断与修复系统](#41-自动化故障诊断与修复系统)
+  - [4.2 高级调度与负载均衡系统](#42-高级调度与负载均衡系统)
+- [5 IoT工作流架构的关键考量](#5-iot工作流架构的关键考量)
+  - [5.1 可伸缩性与分层设计](#51-可伸缩性与分层设计)
+- [6 总结：IoT工作流架构的设计原则](#6-总结iot工作流架构的设计原则)
+
+---
+
+## 1 何时需要工作流架构
 
 在以下情况下，IoT系统特别需要工作流架构：
 
@@ -20,9 +41,9 @@
 
 8. **高度复杂的异常处理**：需要精细化管理各种异常情况并有不同的处理策略
 
-## 工作流的多层面视角
+## 2 工作流的多层面视角
 
-### 1. 执行流视角
+### 2.1 执行流视角
 
 执行流关注"做什么"和"如何做"，包括：
 
@@ -132,7 +153,7 @@ pub fn create_equipment_calibration_workflow(equipment_id: &str) -> Manufacturin
 }
 ```
 
-### 2. 数据流视角
+### 2.2 数据流视角
 
 数据流关注"数据如何流动"和"如何转换"，包括：
 
@@ -263,7 +284,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
 }
 ```
 
-### 3. 控制流视角
+### 2.3 控制流视角
 
 控制流关注"何时执行"和"如何协调"，包括：
 
@@ -405,7 +426,7 @@ pub fn create_smart_agriculture_control_flow(farm_id: &str) -> IoTControlFlow {
 }
 ```
 
-### 4. 容错层视角
+### 2.4 容错层视角
 
 容错层关注"如何处理失败"和"如何恢复"，包括：
 
@@ -630,9 +651,9 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
 }
 ```
 
-## 不同行业的IoT工作流应用模型
+## 3 不同行业的IoT工作流应用模型
 
-### 1. 工业自动化模型
+### 3.1 工业自动化模型
 
 工业自动化强调可靠性、精确控制和生产效率：
 
@@ -792,7 +813,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
 }
 ```
 
-### 2. 智能家居模型
+### 3.2 智能家居模型
 
 智能家居注重用户体验、场景联动和能源管理：
 
@@ -954,7 +975,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
 }
 ```
 
-### 3. 智慧城市模型
+### 3.3 智慧城市模型
 
 智慧城市强调大规模协调、数据集成和面向公共服务：
 
@@ -1188,9 +1209,9 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
 }
 ```
 
-## 自动化运维与容错能力设计
+## 4 自动化运维与容错能力设计
 
-### 自动化故障诊断与修复系统
+### 4.1 自动化故障诊断与修复系统
 
 ```rust
 pub struct AutomaticDiagnosisAndRecoverySystem {
@@ -1328,7 +1349,7 @@ fn create_device_recovery_procedure(device_type: &str) -> RecoveryProcedure {
 }
 ```
 
-### 高级调度与负载均衡系统
+### 4.2 高级调度与负载均衡系统
 
 ```rust
 pub struct AdvancedSchedulingSystem {
@@ -1597,9 +1618,9 @@ fn create_energy_aware_scheduler() -> EnergyAwareConfig {
 }
 ```
 
-## IoT工作流架构的关键考量
+## 5 IoT工作流架构的关键考量
 
-### 可伸缩性与分层设计
+### 5.1 可伸缩性与分层设计
 
 ```rust
 pub struct ScalableIoTWorkflowArchitecture {
@@ -2100,7 +2121,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
 }
 ```
 
-## 总结：IoT工作流架构的设计原则
+## 6 总结：IoT工作流架构的设计原则
 
 基于以上分析，我们可以总结出IoT工作流架构的设计原则：
 

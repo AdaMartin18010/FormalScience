@@ -6,9 +6,9 @@
 ## 📋 目录
 
 - [术语表（Glossary）](#术语表glossary)
+  - [📋 目录](#-目录)
   - [1 使用说明](#1-使用说明)
   - [2 A](#2-a)
-  - [A](#a)
     - [2.1 AGI（Artificial General Intelligence，通用人工智能）](#21-agiartificial-general-intelligence通用人工智能)
     - [2.2 ANI（Artificial Narrow Intelligence，狭义人工智能）](#22-aniartificial-narrow-intelligence狭义人工智能)
     - [2.3 ASI（Artificial Superintelligence，超级人工智能）](#23-asiartificial-superintelligence超级人工智能)

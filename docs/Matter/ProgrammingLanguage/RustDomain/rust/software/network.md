@@ -6,7 +6,17 @@
 
 ---
 
-## 1. Mio
+## 📋 目录
+
+- [1 Mio](#1-mio)
+- [2 Socket2](#2-socket2)
+- [3 Smoltcp](#3-smoltcp)
+- [4 Pnetlibpnet](#4-pnetlibpnet)
+- [5 小结](#5-小结)
+
+---
+
+## 1 Mio
 
 - **简介**：  
   Mio（Metal I/O）是一个低级、非阻塞 I/O 库，它为不同平台上的 I/O 多路复用（如 Linux 的 epoll、BSD/OSX 的 kqueue、Windows 的 IOCP）提供了统一的抽象接口。  
@@ -19,7 +29,7 @@
 
 ---
 
-## 2. Socket2
+## 2 Socket2
 
 - **简介**：  
   Socket2 是对 Rust 标准库中 `std::net` 模块的扩展，提供了更丰富的 socket 操作接口和更底层的控制。  
@@ -32,7 +42,7 @@
 
 ---
 
-## 3. Smoltcp
+## 3 Smoltcp
 
 - **简介**：  
   Smoltcp 是用 Rust 编写的轻量级 TCP/IP 协议栈，专为嵌入式、裸机或实时系统设计。它独立于操作系统，支持 no-std 环境。  
@@ -45,7 +55,7 @@
 
 ---
 
-## 4. Pnet（libpnet）
+## 4 Pnetlibpnet
 
 - **简介**：  
   Pnet（也称为 libpnet）是一个跨平台的低级网络数据包处理库，专注于原始数据包的构造、解析和传输。  
@@ -58,7 +68,7 @@
 
 ---
 
-## 小结
+## 5 小结
 
 Rust 的底层网络库各有侧重：
 

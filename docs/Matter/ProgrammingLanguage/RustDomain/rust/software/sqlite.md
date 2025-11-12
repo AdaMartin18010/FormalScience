@@ -7,7 +7,22 @@
 
 ---
 
-## 1. 使用 rusqlite 集成 SQLite
+## 📋 目录
+
+- [1 使用 rusqlite 集成 SQLite](#1-使用-rusqlite-集成-sqlite)
+  - [1.1 添加依赖](#11-添加依赖)
+  - [1.2 编写示例代码](#12-编写示例代码)
+    - [2.2.1 代码说明](#221-代码说明)
+  - [1.3 关于 rusqlite 的说明](#13-关于-rusqlite-的说明)
+- [2 使用 sqlx 集成 SQLite异步方式](#2-使用-sqlx-集成-sqlite异步方式)
+  - [2.1 添加依赖](#21-添加依赖)
+  - [2.2 示例代码](#22-示例代码)
+    - [2.2.1 代码说明](#221-代码说明)
+- [3 小结](#3-小结)
+
+---
+
+## 1 使用 rusqlite 集成 SQLite
 
 ### 1.1 添加依赖
 
@@ -66,7 +81,7 @@ struct User {
 }
 ```
 
-#### 代码说明
+#### 2.2.1 代码说明
 
 - **建立数据库连接**：通过 `Connection::open("test.db")` 打开或创建一个 SQLite 数据库文件。
 - **创建表**：使用 SQL 语句创建用户表，确保表不存在时创建（通过 `IF NOT EXISTS`）。
@@ -80,7 +95,7 @@ struct User {
 
 ---
 
-## 2. 使用 sqlx 集成 SQLite（异步方式）
+## 2 使用 sqlx 集成 SQLite异步方式
 
 如果你希望在异步应用（如基于 Tokio 的应用）中使用 SQLite，可以考虑使用 [sqlx](https://crates.io/crates/sqlx)。其使用方法类似，但需要开启对应的 SQLite 功能。
 
@@ -142,14 +157,14 @@ async fn main() -> Result<(), sqlx::Error> {
 }
 ```
 
-#### *代码说明*
+#### 2.2.1 代码说明
 
 - **异步连接池**：我们使用 `SqlitePoolOptions` 创建一个连接池，这样能提高并发情况下数据库的访问效率。
 - **异步执行查询**：所有操作都以异步方式执行，适合在高并发或者异步环境下使用。
 
 ---
 
-## *小结*
+## 3 小结
 
 - 对于同步场景：推荐使用 [rusqlite](https://crates.io/crates/rusqlite)，简单易用，适合大多数桌面或服务端应用。
 - 对于异步场景：可以使用 [sqlx](https://crates.io/crates/sqlx) 集成 SQLite，配合 Tokio 等异步运行时构建高性能应用。

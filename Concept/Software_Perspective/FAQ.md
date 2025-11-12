@@ -65,7 +65,7 @@
 
 **核心循环**：
 
-```
+```text
 语义缺口（问题） → 形式化（翻译成代码） → 下沉（变成平台） → 产生新语义缺口
 ```
 
@@ -86,7 +86,7 @@
 
 **公式**：
 
-```
+```text
 Total_Complexity = Essential + Accidental = Constant
 ```
 
@@ -114,7 +114,7 @@ Total_Complexity = Essential + Accidental = Constant
 
 **工作流程**：
 
-```
+```text
 1. OTLP 检测到错误率 > 5%
 2. OPA 策略判断：允许回滚
 3. GitOps 自动提 PR 回滚到上一版本
@@ -182,7 +182,7 @@ Total_Complexity = Essential + Accidental = Constant
 
 **演进路径**：
 
-```
+```text
 CRUD 程序员
   ↓ （AI 接管基础编码）
 提示词工程师
@@ -243,7 +243,7 @@ CRUD 程序员
 
 **判断公式**：
 
-```
+```text
 下沉收益 = N × (应用成本 - 平台边际成本)
 下沉成本 = 平台开发成本 + 维护成本
 
@@ -276,7 +276,7 @@ CRUD 程序员
 
 **决策树**：
 
-```
+```text
 团队 < 50 → 云服务
 团队 > 50 且需定制 → 混合（云 + 内部平台）
 团队 > 200 或有合规要求 → 内部平台
@@ -516,7 +516,7 @@ kubectl get pods --all-namespaces
 
 **趋势 2：意图驱动编程**
 
-```
+```text
 当前：写代码 → 测试 → 部署
 未来：说意图 → AI 生成 → 自动验证
 ```

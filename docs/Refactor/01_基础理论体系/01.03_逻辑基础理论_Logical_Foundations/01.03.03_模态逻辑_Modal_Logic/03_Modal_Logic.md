@@ -1,12 +1,38 @@
 # 3. 模态逻辑 (Modal Logic)
 
-## 3.1 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 基本概念](#2-基本概念)
+  - [2.1 模态算子](#21-模态算子)
+  - [2.2 语法](#22-语法)
+  - [2.3 语义](#23-语义)
+- [3 模态逻辑系统](#3-模态逻辑系统)
+  - [3.1 基本模态逻辑 K](#31-基本模态逻辑-k)
+  - [3.2 常见模态逻辑系统](#32-常见模态逻辑系统)
+  - [3.3 对应理论](#33-对应理论)
+- [4 多模态逻辑](#4-多模态逻辑)
+  - [4.1 多智能体模态逻辑](#41-多智能体模态逻辑)
+  - [4.2 公共知识](#42-公共知识)
+- [5 时态逻辑](#5-时态逻辑)
+  - [5.1 线性时态逻辑 (LTL)](#51-线性时态逻辑-ltl)
+  - [5.2 计算树逻辑 (CTL)](#52-计算树逻辑-ctl)
+- [6 模态逻辑在计算机科学中的应用](#6-模态逻辑在计算机科学中的应用)
+  - [6.1 程序验证](#61-程序验证)
+  - [6.2 知识表示](#62-知识表示)
+  - [6.3 形式化证明](#63-形式化证明)
+- [7 总结](#7-总结)
+- [8 批判性分析](#8-批判性分析)
+
+---
+
+## 1 概述
 
 模态逻辑是研究必然性和可能性概念的逻辑系统，扩展了经典逻辑以处理模态算子。它在哲学、计算机科学、人工智能和形式化验证中有重要应用。
 
-## 3.2 基本概念
+## 2 基本概念
 
-### 3.2.1 模态算子
+### 2.1 模态算子
 
 **定义 3.1** (模态算子)
 模态逻辑在经典逻辑基础上增加两个模态算子：
@@ -18,7 +44,7 @@
 $$\Diamond \phi \equiv \neg \Box \neg \phi$$
 $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 
-### 3.2.2 语法
+### 2.2 语法
 
 **定义 3.3** (模态逻辑语法)
 模态逻辑公式按以下规则递归定义：
@@ -27,7 +53,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 2. 如果 $\phi$ 是公式，则 $\neg \phi$, $\Box \phi$, $\Diamond \phi$ 是公式
 3. 如果 $\phi, \psi$ 是公式，则 $(\phi \land \psi)$, $(\phi \lor \psi)$, $(\phi \rightarrow \psi)$, $(\phi \leftrightarrow \psi)$ 是公式
 
-### 3.2.3 语义
+### 2.3 语义
 
 **定义 3.4** (克里普克模型)
 克里普克模型 $\mathcal{M} = (W, R, V)$ 包含：
@@ -47,9 +73,9 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 6. $\mathcal{M}, w \models \Box \phi$ 当且仅当对所有 $v$ 满足 $wRv$，$\mathcal{M}, v \models \phi$
 7. $\mathcal{M}, w \models \Diamond \phi$ 当且仅当存在 $v$ 满足 $wRv$，$\mathcal{M}, v \models \phi$
 
-## 3.3 模态逻辑系统
+## 3 模态逻辑系统
 
-### 3.3.1 基本模态逻辑 K
+### 3.1 基本模态逻辑 K
 
 **定义 3.6** (系统 K)
 系统 K 的公理和推理规则：
@@ -64,7 +90,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 1. 分离规则 (MP): $\frac{\phi \quad \phi \rightarrow \psi}{\psi}$
 2. 必然化规则 (N): $\frac{\phi}{\Box \phi}$
 
-### 3.3.2 常见模态逻辑系统
+### 3.2 常见模态逻辑系统
 
 **定义 3.7** (系统 T)
 系统 T = K + T公理: $\Box \phi \rightarrow \phi$
@@ -78,7 +104,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 **定义 3.10** (系统 B)
 系统 B = T + B公理: $\phi \rightarrow \Box \Diamond \phi$
 
-### 3.3.3 对应理论
+### 3.3 对应理论
 
 **定理 3.1** (模态公理与可达关系性质对应)
 
@@ -87,9 +113,9 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 - 5公理 $\Diamond \phi \rightarrow \Box \Diamond \phi$ 对应欧几里得性: $\forall w, v, u \in W, (wRv \land wRu) \rightarrow vRu$
 - B公理 $\phi \rightarrow \Box \Diamond \phi$ 对应对称性: $\forall w, v \in W, wRv \rightarrow vRw$
 
-## 3.4 多模态逻辑
+## 4 多模态逻辑
 
-### 3.4.1 多智能体模态逻辑
+### 4.1 多智能体模态逻辑
 
 **定义 3.11** (多智能体模态逻辑)
 多智能体模态逻辑为每个智能体 $i$ 引入模态算子：
@@ -104,7 +130,7 @@ $$\Box \phi \equiv \neg \Diamond \neg \phi$$
 2. 每个智能体 $i$ 的可达关系 $R_i \subseteq W \times W$
 3. 赋值函数 $V$
 
-### 3.4.2 公共知识
+### 4.2 公共知识
 
 **定义 3.13** (公共知识)
 公共知识算子 $C_G$ 定义为：
@@ -112,9 +138,9 @@ $$C_G \phi \equiv \bigwedge_{i \in G} \Box_i C_G \phi$$
 
 其中 $G$ 是智能体集合。
 
-## 3.5 时态逻辑
+## 5 时态逻辑
 
-### 3.5.1 线性时态逻辑 (LTL)
+### 5.1 线性时态逻辑 (LTL)
 
 **定义 3.14** (LTL语法)
 LTL公式按以下规则定义：
@@ -132,7 +158,7 @@ LTL公式在无限序列 $\sigma = s_0 s_1 s_2 \ldots$ 上的真值定义为：
 4. $\sigma \models G \phi$ 当且仅当对所有 $i \geq 0$，$\sigma^i \models \phi$
 5. $\sigma \models \phi U \psi$ 当且仅当存在 $i \geq 0$，$\sigma^i \models \psi$ 且对所有 $0 \leq j < i$，$\sigma^j \models \phi$
 
-### 3.5.2 计算树逻辑 (CTL)
+### 5.2 计算树逻辑 (CTL)
 
 **定义 3.16** (CTL语法)
 CTL公式按以下规则定义：
@@ -141,9 +167,9 @@ CTL公式按以下规则定义：
 2. 如果 $\phi, \psi$ 是公式，则 $\neg \phi$, $\phi \land \psi$, $\phi \lor \psi$, $\phi \rightarrow \psi$ 是公式
 3. 如果 $\phi, \psi$ 是公式，则 $AX \phi$, $EX \phi$, $AF \phi$, $EF \phi$, $AG \phi$, $EG \phi$, $A[\phi U \psi]$, $E[\phi U \psi]$ 是公式
 
-## 3.6 模态逻辑在计算机科学中的应用
+## 6 模态逻辑在计算机科学中的应用
 
-### 3.6.1 程序验证
+### 6.1 程序验证
 
 模态逻辑在程序验证中用于描述程序性质：
 
@@ -220,7 +246,7 @@ impl ModelChecker {
 }
 ```
 
-### 3.6.2 知识表示
+### 6.2 知识表示
 
 在多智能体系统中，模态逻辑用于表示知识：
 
@@ -282,7 +308,7 @@ impl MultiAgentSystem {
 }
 ```
 
-### 3.6.3 形式化证明
+### 6.3 形式化证明
 
 在定理证明系统中，模态逻辑为形式化证明提供了基础：
 
@@ -351,7 +377,7 @@ def common_knowledge {α agents : Type*} (M : multi_agent_modal_logic α agents)
   ∀ agent ∈ agent_set, agent_knows M agent (common_knowledge M agent_set φ) w
 ```
 
-## 3.7 总结
+## 7 总结
 
 模态逻辑为形式科学提供了强大的表达和推理能力：
 
@@ -376,7 +402,7 @@ def common_knowledge {α agents : Type*} (M : multi_agent_modal_logic α agents)
 **版本**: 1.0  
 **作者**: FormalScience Team
 
-## 批判性分析
+## 8 批判性分析
 
 - 多元理论视角：
   - 多模态扩展：从基本模态逻辑到多智能体、时态、认知等模态，提供丰富的表达力。

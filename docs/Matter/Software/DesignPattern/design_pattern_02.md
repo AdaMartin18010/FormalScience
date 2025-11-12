@@ -1,8 +1,54 @@
 # Rust 2024 并发、并行与分布式设计模式实现指南
 
-## 一、Rust 2024 并发设计模式
+## 📋 目录
 
-### 1. 互斥锁模式（Mutex Pattern）
+- [1 一、Rust 2024 并发设计模式](#1-一rust-2024-并发设计模式)
+  - [1.1 互斥锁模式Mutex Pattern](#11-互斥锁模式mutex-pattern)
+  - [1.2 读写锁模式Read-Write Lock Pattern](#12-读写锁模式read-write-lock-pattern)
+  - [1.3 通道模式Channel Pattern](#13-通道模式channel-pattern)
+  - [1.4 Actor 模式Actor Pattern](#14-actor-模式actor-pattern)
+  - [1.5 异步任务模式Async Task Pattern](#15-异步任务模式async-task-pattern)
+- [2 二、Rust 2024 并行设计模式](#2-二rust-2024-并行设计模式)
+  - [2.1 分而治之模式Divide and Conquer Pattern](#21-分而治之模式divide-and-conquer-pattern)
+  - [2.2 映射归约模式Map-Reduce Pattern](#22-映射归约模式map-reduce-pattern)
+  - [2.3 工作窃取模式Work Stealing Pattern](#23-工作窃取模式work-stealing-pattern)
+  - [2.4 数据并行模式Data Parallelism Pattern](#24-数据并行模式data-parallelism-pattern)
+  - [2.5 管道并行模式Pipeline Parallelism Pattern](#25-管道并行模式pipeline-parallelism-pattern)
+- [3 三、Rust 2024 分布式设计模式](#3-三rust-2024-分布式设计模式)
+  - [3.1 主从模式Master-Worker Pattern](#31-主从模式master-worker-pattern)
+  - [3.2 发布-订阅模式Publish-Subscribe Pattern](#32-发布-订阅模式publish-subscribe-pattern)
+  - [3.3 远程过程调用模式RPC Pattern](#33-远程过程调用模式rpc-pattern)
+  - [3.4 分布式锁模式Distributed Lock Pattern](#34-分布式锁模式distributed-lock-pattern)
+  - [3.5 一致性哈希模式Consistent Hashing Pattern](#35-一致性哈希模式consistent-hashing-pattern)
+- [4 四、Rust 2024 表达能力分析](#4-四rust-2024-表达能力分析)
+  - [4.1 Rust 并发模式的表达能力](#41-rust-并发模式的表达能力)
+  - [4.2 Rust 并行模式的表达能力](#42-rust-并行模式的表达能力)
+  - [4.3 Rust 分布式模式的表达能力](#43-rust-分布式模式的表达能力)
+- [5 五、Rust 2024 设计模式实现对比分析](#5-五rust-2024-设计模式实现对比分析)
+  - [5.1 并发模式实现对比](#51-并发模式实现对比)
+    - [1.1.1 互斥锁模式对比](#111-互斥锁模式对比)
+    - [1.1.2 通道模式对比](#112-通道模式对比)
+  - [5.2 并行模式实现对比](#52-并行模式实现对比)
+    - [2.2.1 数据并行对比](#221-数据并行对比)
+    - [2.2.2 分而治之模式对比](#222-分而治之模式对比)
+  - [5.3 分布式模式实现对比](#53-分布式模式实现对比)
+    - [3.3.1 RPC 模式对比](#331-rpc-模式对比)
+- [6 六、结论与最佳实践](#6-六结论与最佳实践)
+  - [6.1 Rust 2024 并发、并行和分布式设计模式的选择指南](#61-rust-2024-并发并行和分布式设计模式的选择指南)
+    - [1.1.1 并发模式选择](#111-并发模式选择)
+    - [1.1.2 并行模式选择](#112-并行模式选择)
+    - [1.1.3 分布式模式选择](#113-分布式模式选择)
+  - [6.2 Rust 2024 设计模式实现的最佳实践](#62-rust-2024-设计模式实现的最佳实践)
+  - [6.3 并发编程最佳实践](#63-并发编程最佳实践)
+  - [6.4 并行编程最佳实践](#64-并行编程最佳实践)
+  - [6.5 分布式编程最佳实践](#65-分布式编程最佳实践)
+  - [6.6 总结](#66-总结)
+
+---
+
+## 1 一、Rust 2024 并发设计模式
+
+### 1.1 互斥锁模式Mutex Pattern
 
 ```rust
 // 互斥锁模式 - 保护共享资源
@@ -86,7 +132,7 @@ impl Clone for ThreadSafeCounter {
 }
 ```
 
-### 2. 读写锁模式（Read-Write Lock Pattern）
+### 1.2 读写锁模式Read-Write Lock Pattern
 
 ```rust
 // 读写锁模式 - 允许多读单写访问
@@ -204,7 +250,7 @@ fn rwlock_pattern_example() {
 }
 ```
 
-### 3. 通道模式（Channel Pattern）
+### 1.3 通道模式Channel Pattern
 
 ```rust
 // 通道模式 - 线程间消息传递
@@ -365,7 +411,7 @@ fn channel_pattern_example() {
 }
 ```
 
-### 4. Actor 模式（Actor Pattern）
+### 1.4 Actor 模式Actor Pattern
 
 ```rust
 // Actor 模式 - 基于消息的并发
@@ -548,7 +594,7 @@ fn actor_pattern_example() {
 }
 ```
 
-### 5. 异步任务模式（Async Task Pattern）
+### 1.5 异步任务模式Async Task Pattern
 
 ```rust
 // 异步任务模式 - 使用 async/await
@@ -641,9 +687,9 @@ async fn async_task_pattern_example() {
 }
 ```
 
-## 二、Rust 2024 并行设计模式
+## 2 二、Rust 2024 并行设计模式
 
-### 1. 分而治之模式（Divide and Conquer Pattern）
+### 2.1 分而治之模式Divide and Conquer Pattern
 
 ```rust
 // 分而治之模式 - 递归分解问题
@@ -762,7 +808,7 @@ fn divide_and_conquer_example() {
 }
 ```
 
-### 2. 映射归约模式（Map-Reduce Pattern）
+### 2.2 映射归约模式Map-Reduce Pattern
 
 ```rust
 // 映射归约模式 - 并行数据处理
@@ -897,7 +943,7 @@ fn map_reduce_example() {
 }
 ```
 
-### 3. 工作窃取模式（Work Stealing Pattern）
+### 2.3 工作窃取模式Work Stealing Pattern
 
 ```rust
 // 工作窃取模式 - 动态负载均衡
@@ -1084,7 +1130,7 @@ fn work_stealing_example() {
 }
 ```
 
-### 4. 数据并行模式（Data Parallelism Pattern）
+### 2.4 数据并行模式Data Parallelism Pattern
 
 ```rust
 // 数据并行模式 - 同时处理数据的不同部分
@@ -1258,7 +1304,7 @@ fn data_parallelism_example() {
 }
 ```
 
-### 5. 管道并行模式（Pipeline Parallelism Pattern）
+### 2.5 管道并行模式Pipeline Parallelism Pattern
 
 ```rust
 // 管道并行模式 - 流水线处理
@@ -1499,9 +1545,9 @@ fn pipeline_parallelism_example() {
 }
 ```
 
-## 三、Rust 2024 分布式设计模式
+## 3 三、Rust 2024 分布式设计模式
 
-### 1. 主从模式（Master-Worker Pattern）
+### 3.1 主从模式Master-Worker Pattern
 
 ```rust
 // 主从模式 - 中央协调器分发任务
@@ -1809,7 +1855,7 @@ fn master_worker_example() {
 }
 ```
 
-### 2. 发布-订阅模式（Publish-Subscribe Pattern）
+### 3.2 发布-订阅模式Publish-Subscribe Pattern
 
 ```rust
 // 发布-订阅模式 - 消息传递系统
@@ -2084,7 +2130,7 @@ fn publish_subscribe_example() {
 }
 ```
 
-### 3. 远程过程调用模式（RPC Pattern）
+### 3.3 远程过程调用模式RPC Pattern
 
 ```rust
 // 远程过程调用模式 - 模拟RPC系统
@@ -2303,7 +2349,7 @@ fn rpc_pattern_example() {
 }
 ```
 
-### 4. 分布式锁模式（Distributed Lock Pattern）
+### 3.4 分布式锁模式Distributed Lock Pattern
 
 ```rust
 // 分布式锁模式 - 模拟分布式锁
@@ -2637,7 +2683,7 @@ fn distributed_lock_example() {
 }
 ```
 
-### 5. 一致性哈希模式（Consistent Hashing Pattern）
+### 3.5 一致性哈希模式Consistent Hashing Pattern
 
 ```rust
 // 一致性哈希模式 - 分布式缓存
@@ -2973,9 +3019,9 @@ fn consistent_hashing_example() {
 }
 ```
 
-## 四、Rust 2024 表达能力分析
+## 4 四、Rust 2024 表达能力分析
 
-### 1. Rust 并发模式的表达能力
+### 4.1 Rust 并发模式的表达能力
 
 Rust 2024 在并发编程方面提供了强大而灵活的表达能力，主要体现在以下几个方面：
 
@@ -3072,7 +3118,7 @@ async fn async_example() {
 }
 ```
 
-### 2. Rust 并行模式的表达能力
+### 4.2 Rust 并行模式的表达能力
 
 Rust 2024 在并行编程方面的表达能力主要体现在：
 
@@ -3195,7 +3241,7 @@ fn parallel_safety_example() {
 }
 ```
 
-### 3. Rust 分布式模式的表达能力
+### 4.3 Rust 分布式模式的表达能力
 
 Rust 2024 在分布式系统设计方面的表达能力：
 
@@ -3490,13 +3536,13 @@ fn circuit_breaker_example() {
 }
 ```
 
-## 五、Rust 2024 设计模式实现对比分析
+## 5 五、Rust 2024 设计模式实现对比分析
 
-### 1. 并发模式实现对比
+### 5.1 并发模式实现对比
 
 Rust 提供了多种实现并发模式的方法，每种方法都有其优缺点：
 
-#### 互斥锁模式对比
+#### 1.1.1 互斥锁模式对比
 
 ```rust
 // 方法1: 使用标准库 Mutex
@@ -3632,7 +3678,7 @@ fn mutex_performance_comparison() {
 }
 ```
 
-#### 通道模式对比
+#### 1.1.2 通道模式对比
 
 ```rust
 // 方法1: 标准库 mpsc 通道
@@ -3768,11 +3814,11 @@ fn channel_performance_comparison() {
 }
 ```
 
-### 2. 并行模式实现对比
+### 5.2 并行模式实现对比
 
 Rust 提供了多种实现并行模式的方法，每种方法都有其优缺点：
 
-#### 数据并行对比
+#### 2.2.1 数据并行对比
 
 ```rust
 // 方法1: 手动线程管理
@@ -3886,7 +3932,7 @@ fn parallel_performance_comparison() {
 }
 ```
 
-#### 分而治之模式对比
+#### 2.2.2 分而治之模式对比
 
 ```rust
 // 方法1: 递归线程
@@ -4033,11 +4079,11 @@ fn is_sorted(slice: &[i32]) -> bool {
 }
 ```
 
-### 3. 分布式模式实现对比
+### 5.3 分布式模式实现对比
 
 Rust 提供了多种实现分布式模式的方法，每种方法都有其优缺点：
 
-#### RPC 模式对比
+#### 3.3.1 RPC 模式对比
 
 ```rust
 // 方法1: 使用 JSON-RPC
@@ -4264,13 +4310,13 @@ fn rpc_performance_comparison() {
 }
 ```
 
-## 六、结论与最佳实践
+## 6 六、结论与最佳实践
 
-### 1. Rust 2024 并发、并行和分布式设计模式的选择指南
+### 6.1 Rust 2024 并发、并行和分布式设计模式的选择指南
 
 根据上述分析，我们可以总结出以下选择指南：
 
-#### 并发模式选择
+#### 1.1.1 并发模式选择
 
 | 场景 | 推荐模式 | 理由 |
 |:----:|:----|:----|
@@ -4314,7 +4360,7 @@ async fn io_heavy_example() {
 }
 ```
 
-#### 并行模式选择
+#### 1.1.2 并行模式选择
 
 | 场景             | 推荐模式       | 理由                         |
 |------------------|---------------|------------------------------|
@@ -4360,7 +4406,7 @@ fn pipeline_example() {
 }
 ```
 
-#### 分布式模式选择
+#### 1.1.3 分布式模式选择
 
 | 场景 | 推荐模式 | 理由 |
 |------|----------|------|
@@ -4404,9 +4450,9 @@ fn load_balancing_example() {
 }
 ```
 
-### 2. Rust 2024 设计模式实现的最佳实践
+### 6.2 Rust 2024 设计模式实现的最佳实践
 
-### 并发编程最佳实践
+### 6.3 并发编程最佳实践
 
 1. **优先使用消息传递而非共享状态**
    - 使用通道（channels）传递消息
@@ -4498,7 +4544,7 @@ async fn async_best_practice() {
 }
 ```
 
-### 并行编程最佳实践
+### 6.4 并行编程最佳实践
 
 1. **使用 Rayon 简化数据并行**
    - 利用 `par_iter()` 替代手动线程管理
@@ -4625,7 +4671,7 @@ fn avoid_over_parallelization() {
 }
 ```
 
-### 分布式编程最佳实践
+### 6.5 分布式编程最佳实践
 
 1. **设计容错系统**
    - 实现重试机制
@@ -4764,7 +4810,7 @@ fn secure_communication_best_practice() {
 }
 ```
 
-### 3. 总结
+### 6.6 总结
 
 Rust 2024 为并发、并行和分布式编程提供了强大而灵活的工具和抽象。
 通过所有权系统和类型安全，Rust 能够在编译时捕获许多常见的并发错误，同时保持高性能。

@@ -139,7 +139,40 @@ Rust 作为一种多范式编程语言，支持函数式编程，并提供了多
      }
      ```
 
-## 热门的 Rust 函数式编程库
+## 📋 目录
+
+- [1 热门的 Rust 函数式编程库](#1-热门的-rust-函数式编程库)
+  - [1.1 年更新的软件库](#11-年更新的软件库)
+  - [1.2 思维总结](#12-思维总结)
+  - [1.3 闭包 (Closures)](#13-闭包-closures)
+  - [1.4 迭代器 (Iterators)](#14-迭代器-iterators)
+  - [1.5 高阶函数 (Higher-order Functions)](#15-高阶函数-higher-order-functions)
+  - [1.6 不可变性 (Immutability)](#16-不可变性-immutability)
+  - [1.7 纯函数 (Pure Functions)](#17-纯函数-pure-functions)
+  - [1.8 模式匹配 (Pattern Matching)](#18-模式匹配-pattern-matching)
+  - [1.9 枚举 (Enums)](#19-枚举-enums)
+  - [1.10 总结](#110-总结)
+  - [1.11 Definition and Characteristics](#111-definition-and-characteristics)
+  - [1.12 Benefits of Pure Functions](#112-benefits-of-pure-functions)
+  - [1.13 Examples of Pure Functions](#113-examples-of-pure-functions)
+  - [1.14 Writing Pure Functions in Rust](#114-writing-pure-functions-in-rust)
+  - [1.15 Pitfalls and Considerations](#115-pitfalls-and-considerations)
+  - [1.16 Optimization and Performance](#116-optimization-and-performance)
+  - [1.17 Conclusion](#117-conclusion)
+  - [1.18 Avoid Mutating External State](#118-avoid-mutating-external-state)
+  - [1.19 Restrict InputOutput Operations](#119-restrict-inputoutput-operations)
+  - [1.20 Eliminate Mutable State Mutations](#120-eliminate-mutable-state-mutations)
+  - [1.21 Avoid Concurrency Primitives](#121-avoid-concurrency-primitives)
+  - [1.22 Use Immutability and Ownership](#122-use-immutability-and-ownership)
+  - [1.23 Leverage Type System and Compiler](#123-leverage-type-system-and-compiler)
+  - [1.24 Use Tools and Lints](#124-use-tools-and-lints)
+  - [1.25 Testing](#125-testing)
+  - [1.26 Example Pure Rust Function](#126-example-pure-rust-function)
+  - [1.27 Summary](#127-summary)
+
+---
+
+## 1 热门的 Rust 函数式编程库
 
 1. **fp-core.rs**：
    - `fp-core.rs` 是一个专门为 Rust 语言设计的函数式编程库，提供了丰富的纯函数式数据结构和高阶函数。它旨在补充标准库中功能编程方面的需求，让开发者能够更优雅地在 Rust 中实践函数式编程范式。
@@ -149,7 +182,7 @@ Rust 作为一种多范式编程语言，支持函数式编程，并提供了多
    - `higher` 是一个为 Rust 语言设计的开源库，旨在实现函数式编程中的高阶抽象，如函子（Functor）、应用函子（Applicative）和单子（Monad）。这个库受到了 PureScript 和 Scala 的 Cats 库的启发，提供了一系列细粒度的 trait。
    - **项目地址**：[higher](https://gitcode.com/gh_mirrors/hig/higher)
 
-### 2025 年更新的软件库
+### 1.1 年更新的软件库
 
 截至 2025 年，Rust 语言本身和其生态系统仍在不断更新和发展。以下是一些 2025 年更新的软件库和工具：
 
@@ -167,7 +200,7 @@ Rust 作为一种多范式编程语言，支持函数式编程，并提供了多
      - 支持使用 `@rayon-rs/rayon` 进行批量嵌入生成和并行计算。
    - **项目地址**：[fastembed-rs](https://github.com/Anush008/fastembed-rs)
 
-### 思维总结
+### 1.2 思维总结
 
 1. **函数式编程模式**：
    - Rust 提供了多种函数式编程模式，如闭包、柯里化、部分施用、组合和高阶函数。这些模式可以提高代码的可读性和灵活性，使代码更加简洁和易于维护。
@@ -183,7 +216,7 @@ Rust 作为一种多范式编程语言，支持函数式编程，并提供了多
 Rust 支持函数式编程范式，并提供了多种特性来实现函数式编程。
 以下是 Rust 中函数式编程支持的特性及其核心概念的定义解释：
 
-### 1. 闭包 (Closures)
+### 1.3 闭包 (Closures)
 
 **定义**：
 闭包是 Rust 中的匿名函数，可以捕获其定义环境中的变量。
@@ -209,7 +242,7 @@ fn main() {
 
 在这个例子中，闭包 `greet` 捕获了变量 `name`，并在执行时使用它。
 
-### 2. 迭代器 (Iterators)
+### 1.4 迭代器 (Iterators)
 
 **定义**：
 迭代器是 Rust 中处理元素序列的一种方式。
@@ -237,7 +270,7 @@ fn main() {
 
 在这个例子中，我们使用迭代器的 `filter` 方法筛选出偶数，使用 `map` 方法对每个偶数进行平方操作，最后使用 `sum` 方法计算总和。
 
-### 3. 高阶函数 (Higher-order Functions)
+### 1.5 高阶函数 (Higher-order Functions)
 
 **定义**：
 高阶函数是指接受其他函数作为参数或返回函数作为结果的函数。
@@ -267,7 +300,7 @@ fn main() {
 
 在这个例子中，`apply` 函数接受一个闭包 `f` 和一个值 `x`，并返回 `f(x)` 的结果。
 
-### 4. 不可变性 (Immutability)
+### 1.6 不可变性 (Immutability)
 
 **定义**：
 不可变性是指数据一旦被初始化后，就不能被修改。
@@ -289,7 +322,7 @@ fn main() {
 
 在这个例子中，变量 `x` 是不可变的，不能被修改。
 
-### 5. 纯函数 (Pure Functions)
+### 1.7 纯函数 (Pure Functions)
 
 **定义**：
 纯函数是指没有副作用的函数，其输出只依赖于输入参数，而不依赖于任何外部状态。
@@ -314,7 +347,7 @@ fn main() {
 
 在这个例子中，`add` 函数是一个纯函数，其输出只依赖于输入参数 `a` 和 `b`。
 
-### 6. 模式匹配 (Pattern Matching)
+### 1.8 模式匹配 (Pattern Matching)
 
 **定义**：
 模式匹配是 Rust 中的一种强大工具，用于匹配和解构数据结构。
@@ -346,7 +379,7 @@ fn main() {
 
 在这个例子中，我们使用 `match` 表达式来匹配 `TrafficLight` 枚举的值，并根据匹配结果执行不同的操作。
 
-### 7. 枚举 (Enums)
+### 1.9 枚举 (Enums)
 
 **定义**：
 枚举是 Rust 中的一种数据类型，用于表示一组命名的值。
@@ -378,7 +411,7 @@ fn main() {
 
 在这个例子中，我们定义了一个 `TrafficLight` 枚举，用于表示交通灯的状态。
 
-### 总结
+### 1.10 总结
 
 Rust 提供了多种函数式编程特性，包括闭包、迭代器、高阶函数、不可变性、纯函数、模式匹配和枚举。
 这些特性使得 Rust 代码更加简洁、可读和可维护，同时提高了代码的安全性和性能。
@@ -386,18 +419,18 @@ Rust 提供了多种函数式编程特性，包括闭包、迭代器、高阶函
 
 In Rust, pure functions are functions that have no side effects and whose output depends only on their input parameters. Here are some key points about pure functions in Rust:
 
-### Definition and Characteristics
+### 1.11 Definition and Characteristics
 
 - **No Side Effects**: A pure function does not modify any external state, such as global variables or static variables. It only operates on its input parameters and returns a result based on those inputs.
 - **Deterministic Output**: For a given set of input parameters, a pure function will always return the same output. This predictability makes pure functions easier to reason about and test.
 
-### Benefits of Pure Functions
+### 1.12 Benefits of Pure Functions
 
 - **Easier to Test**: Since pure functions do not rely on external state, they can be tested in isolation without worrying about setup or teardown of external resources.
 - **Concurrency-Friendly**: Pure functions are thread-safe because they do not modify shared state, making them suitable for concurrent programming.
 - **Cacheable**: The results of pure functions can be cached, as the output is solely determined by the input. This can lead to performance optimizations.
 
-### Examples of Pure Functions
+### 1.13 Examples of Pure Functions
 
 - **Simple Arithmetic Operations**:
 
@@ -419,38 +452,38 @@ In Rust, pure functions are functions that have no side effects and whose output
 
   This function is pure as it only operates on the input string and returns a new string without modifying any external state.
 
-### Writing Pure Functions in Rust
+### 1.14 Writing Pure Functions in Rust
 
 - **Avoiding Mutable State**: To write pure functions, avoid using `mut` keywords for variables that are not intended to be modified. If mutation is necessary, ensure it is limited to local variables within the function.
 - **Using Immutability**: By default, variables in Rust are immutable. This encourages the use of immutable data and helps in writing pure functions.
 
-### Pitfalls and Considerations
+### 1.15 Pitfalls and Considerations
 
 - **Avoiding `unsafe` Code**: Using `unsafe` blocks can introduce side effects and violate the purity of a function. Therefore, pure functions should avoid `unsafe` code unless absolutely necessary.
 - **Handling External Dependencies**: Functions that depend on external resources (e.g., file I/O, network requests) are generally not pure. To maintain purity, consider abstracting these dependencies behind interfaces or using mocking in tests.
 
-### Optimization and Performance
+### 1.16 Optimization and Performance
 
 - **Compiler Optimizations**: Pure functions allow the compiler to perform optimizations such as common subexpression elimination and loop optimizations, as it can assume that the function's behavior is consistent across calls.
 - **Memoization**: Since pure functions produce the same output for the same input, their results can be memoized, which can significantly improve performance in scenarios with repeated computations.
 
-### Conclusion
+### 1.17 Conclusion
 
 Pure functions are a fundamental concept in functional programming and are well-supported in Rust. By adhering to the principles of no side effects and deterministic output, developers can write code that is easier to understand, test, and maintain. Rust's strict ownership model and emphasis on immutability make it well-suited for implementing pure functions, contributing to the language's reputation for safety and performance.
 
 Ensuring your Rust functions are pure involves several key practices and considerations. Here's a structured approach:
 
-### 1. **Avoid Mutating External State**
+### 1.18 Avoid Mutating External State
 
 - **No Global/Static Variables**: Pure functions shouldn't modify or rely on global/static mutable state. Use `const` or `immutable static` for constants.
 - **Interior Mutability**: Avoid `std::cell` types (e.g., `RefCell`, `Cell`) unless necessary for safe mutable statics, and ensure their usage doesn’t affect purity.
 
-### 2. **Restrict Input/Output Operations**
+### 1.19 Restrict InputOutput Operations
 
 - **No I/O**: Functions that read/write files, network, or console (e.g., `std::fs`, `std::io`, `println!`) are impure. Isolate such logic outside pure functions.
 - **External Systems**: Avoid system calls, time/date functions (unless parametersized), or external randomness.
 
-### 3. **Eliminate Mutable State Mutations**
+### 1.20 Eliminate Mutable State Mutations
 
 - **Parameters and Transforms**: Pure functions should only transform inputs into outputs. Example:
 
@@ -462,31 +495,31 @@ Ensuring your Rust functions are pure involves several key practices and conside
 
 - **No `mut` or `unsafe`**: Avoid `mut` for parameters unless adapting to external libraries. Avoid `unsafe` unless essential, and ensure it doesn’t introduce side effects.
 
-### 4. **Avoid Concurrency Primitives**
+### 1.21 Avoid Concurrency Primitives
 
 - **No Shared State**: Locks, channels (`std::sync::Mutex`, `std::sync::mpsc`), or thread-unsafe mutable data make a function impure. Use atomic primitives only if their operations are predictable (e.g., atomic reads).
 
-### 5. **Use Immutability and Ownership**
+### 1.22 Use Immutability and Ownership
 
 - **Immutable Parameters**: Functions with `&self` methods (immutably borowed) are more likely pure.
 - **Ownership**: Transferring ownership (e.g., `Vec<T>` passed by value) can retain purity if the function doesn’t mutate externally visible state.
 
-### 6. **Leverage Type System and Compiler**
+### 1.23 Leverage Type System and Compiler
 
 - **`const fn`**: Mark functions `const fn` if they can be evaluated at compile time, enforcing purity.
 - **Compiler Checks**: Rust’s borrow checker detects modifications to owned/borrowed data, helping avoid unintended mutability.
 
-### 7. **Use Tools and Lints**
+### 1.24 Use Tools and Lints
 
 - **Clippy**: Use `cargo clippy` with lints like `clippy::unnecessary_mut_passed` to catch impure patterns.
 - **Documentation**: Annotate pure functions with `#[must_use]` to signal they’re intended for their return value, not side effects.
 
-### 8. **Testing**
+### 1.25 Testing
 
 - **Deterministic Behavior**: Test functions with multiple inputs to ensure outputs are consistent.
 - **Property-Based Testing**: Tools like `proptest` help verify functions behave predictably under various inputs.
 
-### Example: Pure Rust Function
+### 1.26 Example Pure Rust Function
 
 ```rust
 // A pure Rust function
@@ -500,7 +533,7 @@ fn main() {
 }
 ```
 
-### Summary
+### 1.27 Summary
 
 To ensure purity in Rust:
 

@@ -6,7 +6,22 @@
 
 ---
 
-## 1. 一页图景（What & Why）
+## 📋 目录
+
+- [1 一页图景What Why](#1-一页图景what-why)
+- [2 顶层结构How its organized](#2-顶层结构how-its-organized)
+- [3 统一术语与记法Conventions](#3-统一术语与记法conventions)
+- [4 形式化方法锚点Formalization Anchors](#4-形式化方法锚点formalization-anchors)
+- [5 核心定理快速索引带权威引用](#5-核心定理快速索引带权威引用)
+- [6 证明与论证层次Proof Strategy Guide](#6-证明与论证层次proof-strategy-guide)
+- [7 使用入口Who reads what first](#7-使用入口who-reads-what-first)
+- [8 参考与书目优先非维基百科](#8-参考与书目优先非维基百科)
+- [9 关联导航Cross-links](#9-关联导航cross-links)
+- [10 后续计划Roadmap](#10-后续计划roadmap)
+
+---
+
+## 1 一页图景What Why
 
 - 核心问题: 以统一形式化框架整合八视角（形式语言、AI模型、信息论、图灵可计算、控制论、冯·诺依曼、分布式、编程算法），支撑概念体系、定理体系与应用案例。
 - 目标用户: 初学者（入口）、工程师（方法到实现）、研究者（理论到证明与引用）。
@@ -14,7 +29,7 @@
 
 ---
 
-## 2. 顶层结构（How it’s organized）
+## 2 顶层结构How its organized
 
 ```text
 【顶层统一视图】
@@ -34,7 +49,7 @@
 
 ---
 
-## 3. 统一术语与记法（Conventions）
+## 3 统一术语与记法Conventions
 
 - 统一术语: “阿什比定律”（Law of Requisite Variety）等专名采用中文标准译名；必要时附英文括注。
 - 形式化符号: 逻辑与类型论采用常用符号（∀, ∃, ⊢, λ）；复杂度类用标准记号（P, NP, PSPACE）。
@@ -42,7 +57,7 @@
 
 ---
 
-## 4. 形式化方法锚点（Formalization Anchors）
+## 4 形式化方法锚点Formalization Anchors
 
 - 语义与类型（形式语言视角）
   - 语义三分: 操作语义（small/big-step）、指称语义、行为等价
@@ -58,7 +73,7 @@
 
 ---
 
-## 5. 核心定理快速索引（带权威引用）
+## 5 核心定理快速索引带权威引用
 
 - 语言-计算类
   - Curry–Howard 同构 [Wadler 2015; Sørensen & Urzyczyn 2006]
@@ -83,7 +98,7 @@
 
 ---
 
-## 6. 证明与论证层次（Proof Strategy Guide）
+## 6 证明与论证层次Proof Strategy Guide
 
 - 证明层级:
   - 定义级: 严格给出对象、关系与运算
@@ -98,7 +113,7 @@
 
 ---
 
-## 7. 使用入口（Who reads what first）
+## 7 使用入口Who reads what first
 
 - 初学者: 先读 `01`（全貌）→ `02`（对比）→ `03`（层次）
 - 工程师: 先读 `05`（案例）→ `02`（选择）→ `04`（关系）
@@ -106,7 +121,7 @@
 
 ---
 
-## 8. 参考与书目（优先非维基百科）
+## 8 参考与书目优先非维基百科
 
 - 形式语言/语义/类型
   - Benjamin C. Pierce. Types and Programming Languages. MIT Press, 2002.
@@ -131,7 +146,7 @@
 
 ---
 
-## 9. 关联导航（Cross-links）
+## 9 关联导航Cross-links
 
 - 思维导图: `01_Core_Concepts_MindMap.md`
 - 八视角矩阵: `02_Eight_Perspectives_Matrix.md`
@@ -142,7 +157,7 @@
 
 ---
 
-## 10. 后续计划（Roadmap）
+## 10 后续计划Roadmap
 
 - 为核心定理补充“可机助验证脚手架”（Coq/Lean 最小示例与外链）
 - 为每个案例添加“形式化断言/不变量清单”与“检验点”

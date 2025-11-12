@@ -47,25 +47,36 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-## Rust Modbus 协议实现
+## 📋 目录
+
+- [1 Rust Modbus 协议实现](#1-rust-modbus-协议实现)
+- [2 使用场景](#2-使用场景)
+- [3 Rust 中主流的 Modbus 实现库](#3-rust-中主流的-modbus-实现库)
+- [4 代码示例](#4-代码示例)
+- [5 开源生态中的支持](#5-开源生态中的支持)
+- [6 总结](#6-总结)
+
+---
+
+## 1 Rust Modbus 协议实现
 
 在工业自动化、远程监控及嵌入式系统中，Modbus 协议被广泛用于实现设备之间的数据通信。随着 Rust 语言在安全性与高性能方面的优势不断凸显，
 越来越多的开发者选择使用 Rust 实现 Modbus 协议。
 
-## 1. 使用场景
+## 2 使用场景
 
 - **工业自动化控制**：利用 Modbus 协议在 PLC、传感器与执行器间传输数据。
 - **远程监控与 SCADA 系统**：通过 Modbus 实现数据采集和设备控制。
 - **边缘计算与 IoT 网关**：在资源受限的系统中，使用 Rust 实现轻量级且高效的 Modbus 通讯。
 
-## 2. Rust 中主流的 Modbus 实现库
+## 3 Rust 中主流的 Modbus 实现库
 
 目前，Rust 社区中有几个成熟的实现支持 Modbus 协议，其中较为知名的是：
 
 - **tokio-modbus**：基于 Tokio 异步运行时构建，支持 Modbus TCP、RTU（串口）以及 ASCII 模式。它提供了简单易用的 API，方便开发者快速集成 Modbus 功能到项目中。
 - **modbus**：另一部分实现，不过 tokio-modbus 因为异步支持和与现代网络环境的契合度较高，使用更为广泛。
 
-## 3. 代码示例
+## 4 代码示例
 
 上面的示例展示了如何利用 tokio-modbus 实现一个简单的 Modbus TCP 客户端：
 
@@ -74,7 +85,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 - 写入保持寄存器（例如配置相关参数）。
 - 断开连接。
 
-## 4. 开源生态中的支持
+## 5 开源生态中的支持
 
 Rust 社区高度重视开源项目的质量与生态建设，因此围绕 tokio-modbus 这样的重要通讯库，还存在其他支持工具：
 
@@ -82,7 +93,7 @@ Rust 社区高度重视开源项目的质量与生态建设，因此围绕 tokio
 - **日志与监控**：结合 Prometheus、Grafana 或 ELK 等流行监控方案，为生产环境中的 Modbus 通讯提供监控保障。
 - **容器化与编排**：通过 Docker 与 Kubernetes 部署基于 Rust 的 Modbus 服务，实现自动扩展和灵活部署。
 
-## 总结
+## 6 总结
 
 Rust 提供了安全且高效的语言特性，加上 tokio-modbus 等成熟的开源库，使得用 Rust 实现 Modbus 协议成为一个具备实际应用价值的方案。开发者不仅能够实现高性能的 Modbus 通讯，
 还可以利用 Rust 丰富的生态系统（如异步编程、容器化部署及监控工具）构建可靠的工业控制及远程监控系统。

@@ -1,12 +1,37 @@
 # 直觉逻辑 (Intuitionistic Logic)
 
-## 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 理论基础](#2-理论基础)
+  - [2.1 形式化定义](#21-形式化定义)
+- [3 语法实现](#3-语法实现)
+  - [3.1 数据结构](#31-数据结构)
+  - [3.2 解析器实现](#32-解析器实现)
+- [4 语义实现](#4-语义实现)
+  - [4.1 海廷代数](#41-海廷代数)
+  - [4.2 克里普克语义](#42-克里普克语义)
+- [5 证明系统](#5-证明系统)
+  - [5.1 自然演绎](#51-自然演绎)
+- [6 形式化验证](#6-形式化验证)
+  - [6.1 直觉逻辑特性](#61-直觉逻辑特性)
+  - [6.2 与经典逻辑的关系](#62-与经典逻辑的关系)
+- [7 应用领域](#7-应用领域)
+  - [7.1 类型理论](#71-类型理论)
+  - [7.2 构造性数学](#72-构造性数学)
+- [8 总结](#8-总结)
+- [9 相关链接](#9-相关链接)
+- [10 批判性分析](#10-批判性分析)
+
+---
+
+## 1 概述
 
 直觉逻辑是研究构造性证明的数学理论，强调证明的构造性而非经典逻辑的真值。本文档详细阐述直觉逻辑的语法、语义、海廷代数和克里普克语义。
 
-## 理论基础
+## 2 理论基础
 
-### 形式化定义
+### 2.1 形式化定义
 
 **定义 10.4.1 (直觉语言)** 直觉语言是一个三元组 $\mathcal{L} = (Prop, Conn, Form)$，其中：
 
@@ -21,9 +46,9 @@ $$\phi ::= p \mid \neg \phi \mid \phi \land \psi \mid \phi \lor \psi \mid \phi \
 
 **定义 10.4.3 (构造性证明)** 构造性证明是一个算法过程，能够从前提构造出结论的证明对象。
 
-## 语法实现
+## 3 语法实现
 
-### 数据结构
+### 3.1 数据结构
 
 ```rust
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -131,7 +156,7 @@ impl std::fmt::Display for IntuitionisticFormula {
 }
 ```
 
-### 解析器实现
+### 3.2 解析器实现
 
 ```rust
 pub struct IntuitionisticParser {
@@ -283,9 +308,9 @@ impl IntuitionisticParser {
 }
 ```
 
-## 语义实现
+## 4 语义实现
 
-### 海廷代数
+### 4.1 海廷代数
 
 ```rust
 use std::collections::HashMap;
@@ -453,7 +478,7 @@ impl HeytingSemantics {
 }
 ```
 
-### 克里普克语义
+### 4.2 克里普克语义
 
 ```rust
 #[derive(Debug, Clone)]
@@ -559,9 +584,9 @@ impl IntuitionisticKripkeSemantics {
 }
 ```
 
-## 证明系统
+## 5 证明系统
 
-### 自然演绎
+### 5.1 自然演绎
 
 ```rust
 #[derive(Debug, Clone)]
@@ -718,9 +743,9 @@ impl IntuitionisticNaturalDeduction {
 }
 ```
 
-## 形式化验证
+## 6 形式化验证
 
-### 直觉逻辑特性
+### 6.1 直觉逻辑特性
 
 **定理 10.4.1 (双重否定引入)** 在直觉逻辑中：
 $$\phi \vdash \neg \neg \phi$$
@@ -737,7 +762,7 @@ $$\not\vdash \phi \lor \neg \phi$$
 
 **证明** 通过反模型构造证明。
 
-### 与经典逻辑的关系
+### 6.2 与经典逻辑的关系
 
 **定理 10.4.4 (经典逻辑包含直觉逻辑)** 如果 $\vdash_I \phi$，则 $\vdash_C \phi$。
 
@@ -785,9 +810,9 @@ impl GodelGentzenTranslation {
 }
 ```
 
-## 应用领域
+## 7 应用领域
 
-### 1. 类型理论
+### 7.1 类型理论
 
 ```rust
 pub struct TypeTheory {
@@ -846,7 +871,7 @@ impl TypeTheory {
 }
 ```
 
-### 2. 构造性数学
+### 7.2 构造性数学
 
 ```rust
 pub struct ConstructiveMathematics {
@@ -908,7 +933,7 @@ impl ConstructiveMathematics {
 }
 ```
 
-## 总结
+## 8 总结
 
 直觉逻辑为构造性推理提供了严格的数学基础。通过海廷代数、克里普克语义和自然演绎系统，直觉逻辑能够处理构造性证明和算法提取问题。本文档提供的实现为计算机辅助逻辑推理和形式化验证提供了实用工具。
 
@@ -918,14 +943,14 @@ impl ConstructiveMathematics {
 2. Dummett, M. (2000). Elements of Intuitionism.
 3. van Dalen, D. (2013). Logic and Structure.
 
-## 相关链接
+## 9 相关链接
 
 - [逻辑理论主文档](README.md)
 - [命题逻辑](README.md)
 - [谓词逻辑](README.md)
 - [模态逻辑](README.md)
 
-## 批判性分析
+## 10 批判性分析
 
 - 多元理论视角：
   - 构造性与经典：直觉主义逻辑与经典逻辑在证明方法上的根本差异。

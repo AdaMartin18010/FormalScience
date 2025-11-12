@@ -1,6 +1,34 @@
 # 范畴论视角下的程序流控制与转换
 
-## 1. 基础范畴定义
+## 📋 目录
+
+- [1 基础范畴定义](#1-基础范畴定义)
+  - [1.1 流范畴 (FlowCat)](#11-流范畴-flowcat)
+  - [1.2 同步范畴 (SyncCat)](#12-同步范畴-synccat)
+  - [1.3 异步范畴 (AsyncCat)](#13-异步范畴-asynccat)
+- [2 流转换函子](#2-流转换函子)
+  - [2.1 控制流转换](#21-控制流转换)
+  - [2.2 执行流转换](#22-执行流转换)
+  - [2.3 数据流转换](#23-数据流转换)
+- [3 自然变换](#3-自然变换)
+  - [3.1 同步到异步变换](#31-同步到异步变换)
+  - [3.2 流范式变换](#32-流范式变换)
+- [4 流代数结构](#4-流代数结构)
+  - [4.1 流单子](#41-流单子)
+  - [4.2 流余单子](#42-流余单子)
+- [5 并发模式范畴](#5-并发模式范畴)
+  - [5.1 并发原语](#51-并发原语)
+  - [5.2 通信模式](#52-通信模式)
+- [6 转换定律与性质](#6-转换定律与性质)
+  - [6.1 基本定律](#61-基本定律)
+  - [6.2 保持性质](#62-保持性质)
+- [7 实际应用示例](#7-实际应用示例)
+  - [7.1 Promise转换](#71-promise转换)
+  - [7.2 响应式流转换](#72-响应式流转换)
+
+---
+
+## 1 基础范畴定义
 
 ### 1.1 流范畴 (FlowCat)
 
@@ -65,7 +93,7 @@ class AsynchronousCategory a where
   ordered :: Async → OrderingProperty
 ```
 
-## 2. 流转换函子
+## 2 流转换函子
 
 ### 2.1 控制流转换
 
@@ -115,7 +143,7 @@ class DataFlowFunctor f where
   ensureIntegrity :: f a → Integrity
 ```
 
-## 3. 自然变换
+## 3 自然变换
 
 ### 3.1 同步到异步变换
 
@@ -151,7 +179,7 @@ type FlowTransformation = NaturalTransformation FlowCat FlowCat where
     executionFlowRules :: Set Rule
 ```
 
-## 4. 流代数结构
+## 4 流代数结构
 
 ### 4.1 流单子
 
@@ -184,7 +212,7 @@ class FlowComonad w where
   observe :: w a → Observation
 ```
 
-## 5. 并发模式范畴
+## 5 并发模式范畴
 
 ### 5.1 并发原语
 
@@ -226,7 +254,7 @@ class CommunicationCategory c where
   ordering :: Communication → MessageOrder
 ```
 
-## 6. 转换定律与性质
+## 6 转换定律与性质
 
 ### 6.1 基本定律
 
@@ -258,7 +286,7 @@ preserveOrder :: Transform → OrderingRelation
 preserveConsistency :: Transform → ConsistencyLevel
 ```
 
-## 7. 实际应用示例
+## 7 实际应用示例
 
 ### 7.1 Promise转换
 

@@ -1,7 +1,40 @@
 
 # 范畴论视角下的并发与并行
 
-## 1. 并发基础范畴 (ConcurrencyCat)
+## 📋 目录
+
+- [1 并发基础范畴 (ConcurrencyCat)](#1-并发基础范畴-concurrencycat)
+  - [1.1 进程范畴](#11-进程范畴)
+  - [1.2 并发态射](#12-并发态射)
+- [2 并发原语范畴 (PrimitiveCat)](#2-并发原语范畴-primitivecat)
+  - [2.1 锁范畴](#21-锁范畴)
+  - [2.2 同步原语函子](#22-同步原语函子)
+- [3 并行模型范畴 (ParallelismCat)](#3-并行模型范畴-parallelismcat)
+  - [3.1 数据并行](#31-数据并行)
+  - [3.2 任务并行](#32-任务并行)
+- [4 并发组合范畴 (CompositionCat)](#4-并发组合范畴-compositioncat)
+  - [4.1 组合子范畴](#41-组合子范畴)
+  - [4.2 并发单子](#42-并发单子)
+- [5 通信范畴 (CommunicationCat)](#5-通信范畴-communicationcat)
+  - [5.1 共享内存](#51-共享内存)
+  - [5.2 消息传递](#52-消息传递)
+- [6 并发控制范畴 (ControlCat)](#6-并发控制范畴-controlcat)
+  - [6.1 调度范畴](#61-调度范畴)
+  - [6.2 资源管理函子](#62-资源管理函子)
+- [7 并发安全范畴 (SafetyCat)](#7-并发安全范畴-safetycat)
+  - [7.1 并发错误](#71-并发错误)
+  - [7.2 形式验证](#72-形式验证)
+- [8 并行性能范畴 (PerformanceCat)](#8-并行性能范畴-performancecat)
+  - [8.1 性能指标](#81-性能指标)
+  - [8.2 优化函子](#82-优化函子)
+- [9 实际应用示例](#9-实际应用示例)
+  - [9.1 并发控制实现](#91-并发控制实现)
+  - [9.2 并行计算实现](#92-并行计算实现)
+- [10 总结](#10-总结)
+
+---
+
+## 1 并发基础范畴 (ConcurrencyCat)
 
 ### 1.1 进程范畴
 
@@ -43,7 +76,7 @@ class ConcurrentMorphism m where
   liveness :: m a b → Liveness
 ```
 
-## 2. 并发原语范畴 (PrimitiveCat)
+## 2 并发原语范畴 (PrimitiveCat)
 
 ### 2.1 锁范畴
 
@@ -84,7 +117,7 @@ class SynchronizationFunctor f where
   starvationFree :: f a → Bool
 ```
 
-## 3. 并行模型范畴 (ParallelismCat)
+## 3 并行模型范畴 (ParallelismCat)
 
 ### 3.1 数据并行
 
@@ -129,7 +162,7 @@ class TaskParallelCategory t where
   speedup :: Sequential → Parallel → Speedup
 ```
 
-## 4. 并发组合范畴 (CompositionCat)
+## 4 并发组合范畴 (CompositionCat)
 
 ### 4.1 组合子范畴
 
@@ -170,7 +203,7 @@ class ConcurrentMonad m where
   withTimeout :: Time → m a → m (Maybe a)
 ```
 
-## 5. 通信范畴 (CommunicationCat)
+## 5 通信范畴 (CommunicationCat)
 
 ### 5.1 共享内存
 
@@ -214,7 +247,7 @@ class MessagePassingCategory m where
   fairness :: Channel → Fairness
 ```
 
-## 6. 并发控制范畴 (ControlCat)
+## 6 并发控制范畴 (ControlCat)
 
 ### 6.1 调度范畴
 
@@ -256,7 +289,7 @@ class ResourceManagerFunctor f where
   efficiency :: ResourceManagement → Efficiency
 ```
 
-## 7. 并发安全范畴 (SafetyCat)
+## 7 并发安全范畴 (SafetyCat)
 
 ### 7.1 并发错误
 
@@ -300,7 +333,7 @@ class FormalVerificationCategory v where
   complexity :: Method → Complexity
 ```
 
-## 8. 并行性能范畴 (PerformanceCat)
+## 8 并行性能范畴 (PerformanceCat)
 
 ### 8.1 性能指标
 
@@ -340,7 +373,7 @@ class OptimizationFunctor f where
   tradeoffs :: Optimization → Tradeoffs
 ```
 
-## 9. 实际应用示例
+## 9 实际应用示例
 
 ### 9.1 并发控制实现
 
@@ -372,7 +405,7 @@ parallelMap f xs = do
   return (concat results)
 ```
 
-## 10. 总结
+## 10 总结
 
 范畴论视角下的并发与并行提供了：
 

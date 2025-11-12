@@ -1,12 +1,42 @@
 # 量子类型理论综合深化 (Quantum Type Theory Comprehensive)
 
-## 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+- [2 量子计算基础理论 (Quantum Computing Foundation)](#2-量子计算基础理论-quantum-computing-foundation)
+  - [2.1 量子态与量子操作](#21-量子态与量子操作)
+  - [2.2 量子测量理论](#22-量子测量理论)
+- [3 量子类型系统 (Quantum Type System)](#3-量子类型系统-quantum-type-system)
+  - [3.1 量子线性类型](#31-量子线性类型)
+  - [3.2 量子效应系统](#32-量子效应系统)
+  - [3.3 量子资源管理](#33-量子资源管理)
+- [4 量子编程语言类型系统 (Quantum Programming Language Type System)](#4-量子编程语言类型系统-quantum-programming-language-type-system)
+  - [4.1 量子λ演算](#41-量子λ演算)
+  - [4.2 量子函数式编程](#42-量子函数式编程)
+  - [4.3 量子并发编程](#43-量子并发编程)
+- [5 量子算法类型理论 (Quantum Algorithm Type Theory)](#5-量子算法类型理论-quantum-algorithm-type-theory)
+  - [5.1 量子算法框架](#51-量子算法框架)
+  - [5.2 量子复杂度理论](#52-量子复杂度理论)
+- [6 量子错误纠正类型理论 (Quantum Error Correction Type Theory)](#6-量子错误纠正类型理论-quantum-error-correction-type-theory)
+  - [6.1 量子错误模型](#61-量子错误模型)
+  - [6.2 量子容错计算](#62-量子容错计算)
+- [7 量子机器学习类型理论 (Quantum Machine Learning Type Theory)](#7-量子机器学习类型理论-quantum-machine-learning-type-theory)
+  - [7.1 量子神经网络](#71-量子神经网络)
+  - [7.2 量子优化算法](#72-量子优化算法)
+- [8 量子密码学类型理论 (Quantum Cryptography Type Theory)](#8-量子密码学类型理论-quantum-cryptography-type-theory)
+  - [8.1 量子密钥分发](#81-量子密钥分发)
+  - [8.2 量子签名](#82-量子签名)
+- [9 结论与展望](#9-结论与展望)
+
+---
+
+## 1 概述
 
 量子类型理论是形式科学的前沿领域，将量子计算的基本原理与类型理论相结合，为量子编程语言和量子算法提供形式化基础。本文档构建了一个完整的量子类型理论体系，包括量子线性类型、量子效应系统、量子资源管理等核心概念。
 
-## 1. 量子计算基础理论 (Quantum Computing Foundation)
+## 2 量子计算基础理论 (Quantum Computing Foundation)
 
-### 1.1 量子态与量子操作
+### 2.1 量子态与量子操作
 
 **定义 1.1.1 (量子态)**
 量子态是希尔伯特空间 $\mathcal{H}$ 中的单位向量：
@@ -32,7 +62,7 @@ $$i\hbar\frac{d}{dt}|\psi(t)\rangle = H|\psi(t)\rangle$$
 2. **酉性**：演化算子必须是酉的以保持概率守恒
 3. **薛定谔方程**：描述量子态的时间演化
 
-### 1.2 量子测量理论
+### 2.2 量子测量理论
 
 **定义 1.2.1 (量子测量)**
 量子测量由测量算子 $\{M_m\}$ 描述，满足：
@@ -55,9 +85,9 @@ $$|\psi_m\rangle = \frac{M_m|\psi\rangle}{\sqrt{P(m)}}$$
 2. **不可逆性**：投影操作不可逆
 3. **信息丢失**：测量导致量子信息丢失
 
-## 2. 量子类型系统 (Quantum Type System)
+## 3 量子类型系统 (Quantum Type System)
 
-### 2.1 量子线性类型
+### 3.1 量子线性类型
 
 **定义 2.1.1 (量子线性类型)**
 量子线性类型系统 $\mathcal{Q}$ 包含以下类型构造子：
@@ -85,7 +115,7 @@ $$\frac{\Gamma_1 \vdash e_1 : \tau_1 \multimap \tau_2 \quad \Gamma_2 \vdash e_2 
 2. **量子门**：量子门操作消耗输入量子比特
 3. **测量**：测量操作消耗被测量的量子比特
 
-### 2.2 量子效应系统
+### 3.2 量子效应系统
 
 **定义 2.2.1 (量子效应)**
 量子效应 $\mathcal{E}$ 包括：
@@ -111,7 +141,7 @@ $$\frac{\Gamma_1 \vdash e_1 : \tau_1 \multimap \tau_2 \quad \Gamma_2 \vdash e_2 
 2. **线性约束**：确保量子比特线性使用
 3. **测量约束**：确保测量操作正确
 
-### 2.3 量子资源管理
+### 3.3 量子资源管理
 
 **定义 2.3.1 (量子资源)**
 量子资源包括：
@@ -151,9 +181,9 @@ class QuantumResourceManager a where
 2. **使用追踪**：追踪资源使用情况
 3. **释放追踪**：确保资源正确释放
 
-## 3. 量子编程语言类型系统 (Quantum Programming Language Type System)
+## 4 量子编程语言类型系统 (Quantum Programming Language Type System)
 
-### 3.1 量子λ演算
+### 4.1 量子λ演算
 
 **定义 3.1.1 (量子λ演算)**
 量子λ演算的语法：
@@ -196,7 +226,7 @@ measureQubit qubit = do
 2. **进展性**：良类型项要么是值，要么可以归约
 3. **线性性**：量子比特线性使用
 
-### 3.2 量子函数式编程
+### 4.2 量子函数式编程
 
 **定义 3.2.1 (量子函数类型)**
 量子函数类型系统：
@@ -236,7 +266,7 @@ instance QuantumMonad (QuantumState s) where
 2. **效应追踪**：追踪所有量子效应
 3. **资源管理**：确保资源正确管理
 
-### 3.3 量子并发编程
+### 4.3 量子并发编程
 
 **定义 3.3.1 (量子并发类型)**
 量子并发类型系统：
@@ -273,9 +303,9 @@ quantumSync p1 p2 = QParallel p1 p2
 2. **同步机制**：正确的同步机制
 3. **死锁避免**：避免量子死锁
 
-## 4. 量子算法类型理论 (Quantum Algorithm Type Theory)
+## 5 量子算法类型理论 (Quantum Algorithm Type Theory)
 
-### 4.1 量子算法框架
+### 5.1 量子算法框架
 
 **定义 4.1.1 (量子算法)**
 量子算法是量子计算过程的形式化描述：
@@ -329,7 +359,7 @@ groverAlgorithm = QAlgorithm (\oracle -> do
 2. **计算验证**：验证量子计算正确
 3. **输出验证**：验证输出类型正确
 
-### 4.2 量子复杂度理论
+### 5.2 量子复杂度理论
 
 **定义 4.2.1 (量子复杂度类)**
 量子复杂度类：
@@ -373,9 +403,9 @@ $$\text{BQNC} \subseteq \text{BQP} \subseteq \text{QCMA} \subseteq \text{QMA}$$
 2. **BQP ⊆ QCMA**：量子算法可以接受经典证明
 3. **QCMA ⊆ QMA**：经典证明是量子证明的特例
 
-## 5. 量子错误纠正类型理论 (Quantum Error Correction Type Theory)
+## 6 量子错误纠正类型理论 (Quantum Error Correction Type Theory)
 
-### 5.1 量子错误模型
+### 6.1 量子错误模型
 
 **定义 5.1.1 (量子错误)**
 量子错误类型：
@@ -418,7 +448,7 @@ data QuantumErrorCorrection where
 2. **表面码**：构造拓扑量子错误纠正码
 3. **容错性**：证明错误纠正的容错性
 
-### 5.2 量子容错计算
+### 6.2 量子容错计算
 
 **定义 5.2.1 (量子容错门)**
 量子容错门是可以在存在错误的情况下正确工作的量子门。
@@ -459,9 +489,9 @@ faultTolerantAlgorithm algorithm =
 2. **错误纠正**：纠正检测到的错误
 3. **容错性**：证明整体计算的容错性
 
-## 6. 量子机器学习类型理论 (Quantum Machine Learning Type Theory)
+## 7 量子机器学习类型理论 (Quantum Machine Learning Type Theory)
 
-### 6.1 量子神经网络
+### 7.1 量子神经网络
 
 **定义 6.1.1 (量子神经网络)**
 量子神经网络是量子计算与神经网络的结合：
@@ -511,7 +541,7 @@ quantumClassifier = QNN (\input -> do
 2. **量子纠缠**：利用量子纠缠
 3. **量子并行**：利用量子并行性
 
-### 6.2 量子优化算法
+### 7.2 量子优化算法
 
 **定义 6.2.1 (量子优化问题)**
 量子优化问题：
@@ -547,9 +577,9 @@ quantumApproximateOptimization costFunction = QAOA costFunction
 2. **量子隧穿**：利用量子隧穿效应
 3. **量子纠缠**：利用量子纠缠
 
-## 7. 量子密码学类型理论 (Quantum Cryptography Type Theory)
+## 8 量子密码学类型理论 (Quantum Cryptography Type Theory)
 
-### 7.1 量子密钥分发
+### 8.1 量子密钥分发
 
 **定义 7.1.1 (量子密钥分发)**
 量子密钥分发协议：
@@ -603,7 +633,7 @@ quantumKeyDistribution = do
 2. **测量扰动**：测量会扰动量子态
 3. **窃听检测**：通过错误率检测窃听
 
-### 7.2 量子签名
+### 8.2 量子签名
 
 **定义 7.2.1 (量子数字签名)**
 量子数字签名协议：
@@ -645,7 +675,7 @@ quantumVerify publicKey message signature = do
 2. **不可否认性**：签名不可否认
 3. **信息论安全**：基于量子力学原理
 
-## 8. 结论与展望
+## 9 结论与展望
 
 量子类型理论为量子计算提供了强大的形式化基础，将量子计算的基本原理与类型理论相结合，为量子编程语言、量子算法、量子错误纠正等提供了严格的数学框架。
 

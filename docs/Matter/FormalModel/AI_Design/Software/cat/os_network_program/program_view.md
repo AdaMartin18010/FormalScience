@@ -1,7 +1,40 @@
 
 # 范畴论视角下的程序设计
 
-## 1. 程序范畴基础
+## 📋 目录
+
+- [1 程序范畴基础](#1-程序范畴基础)
+  - [1.1 类型与值范畴](#11-类型与值范畴)
+  - [1.2 计算态射](#12-计算态射)
+- [2 函子与程序变换](#2-函子与程序变换)
+  - [2.1 数据转换函子](#21-数据转换函子)
+  - [2.2 程序转换函子](#22-程序转换函子)
+- [3 单子与计算效应](#3-单子与计算效应)
+  - [3.1 计算单子](#31-计算单子)
+  - [3.2 效应系统](#32-效应系统)
+- [4 类型系统的范畴基础](#4-类型系统的范畴基础)
+  - [4.1 多态类型函子](#41-多态类型函子)
+  - [4.2 依赖类型范畴](#42-依赖类型范畴)
+- [5 程序组合与抽象](#5-程序组合与抽象)
+  - [5.1 组合子范畴](#51-组合子范畴)
+  - [5.2 设计模式的范畴表示](#52-设计模式的范畴表示)
+- [6 代数数据类型](#6-代数数据类型)
+  - [6.1 代数类型构造](#61-代数类型构造)
+  - [6.2 递归类型和不动点](#62-递归类型和不动点)
+- [7 并发与分布式的范畴模型](#7-并发与分布式的范畴模型)
+  - [7.1 并发计算范畴](#71-并发计算范畴)
+  - [7.2 分布式系统范畴](#72-分布式系统范畴)
+- [8 语义与验证](#8-语义与验证)
+  - [8.1 程序语义范畴](#81-程序语义范畴)
+  - [8.2 程序验证范畴](#82-程序验证范畴)
+- [9 用范畴论设计编程语言](#9-用范畴论设计编程语言)
+  - [9.1 语言构造的范畴理论](#91-语言构造的范畴理论)
+  - [9.2 语言特性的范畴实现](#92-语言特性的范畴实现)
+- [10 总结与实践应用](#10-总结与实践应用)
+
+---
+
+## 1 程序范畴基础
 
 ### 1.1 类型与值范畴
 
@@ -40,7 +73,7 @@ class ProgramMorphism p where
   termination :: Program a b → Termination  -- 终止性分析
 ```
 
-## 2. 函子与程序变换
+## 2 函子与程序变换
 
 ### 2.1 数据转换函子
 
@@ -75,7 +108,7 @@ class ProgramTransformer t where
   improvesPerformance :: Program a b → t Program a b → Performance
 ```
 
-## 3. 单子与计算效应
+## 3 单子与计算效应
 
 ### 3.1 计算单子
 
@@ -113,7 +146,7 @@ class EffectSystem e where
   sequenceEffects :: Computation a e → Computation b e → Computation (a, b) e
 ```
 
-## 4. 类型系统的范畴基础
+## 4 类型系统的范畴基础
 
 ### 4.1 多态类型函子
 
@@ -148,7 +181,7 @@ class DependentTypeCategory d where
   valueEquality :: a → a → Proof
 ```
 
-## 5. 程序组合与抽象
+## 5 程序组合与抽象
 
 ### 5.1 组合子范畴
 
@@ -186,7 +219,7 @@ class DesignPatternCategory d where
   applicativePattern :: Type → ApplicativeImplementation
 ```
 
-## 6. 代数数据类型
+## 6 代数数据类型
 
 ### 6.1 代数类型构造
 
@@ -224,7 +257,7 @@ class RecursiveType r where
   anamorphism :: Coalgebra f a → a → Fix f
 ```
 
-## 7. 并发与分布式的范畴模型
+## 7 并发与分布式的范畴模型
 
 ### 7.1 并发计算范畴
 
@@ -264,7 +297,7 @@ class DistributedCategory d where
   partition :: [Node] → [Partition]
 ```
 
-## 8. 语义与验证
+## 8 语义与验证
 
 ### 8.1 程序语义范畴
 
@@ -301,7 +334,7 @@ class ProgramVerification v where
   theoremProve :: Program a b → TheoremProver → Proof
 ```
 
-## 9. 用范畴论设计编程语言
+## 9 用范畴论设计编程语言
 
 ### 9.1 语言构造的范畴理论
 
@@ -339,7 +372,7 @@ class LanguageFeatureCategory f where
   performance :: Feature → Performance
 ```
 
-## 10. 总结与实践应用
+## 10 总结与实践应用
 
 范畴论为程序设计提供了强大的形式化框架，使我们能够：
 

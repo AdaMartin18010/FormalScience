@@ -1,10 +1,48 @@
 # WebAssembly 视角：主索引
 
-## 文档体系概览
+## 📋 目录
+
+- [1 文档体系概览](#1-文档体系概览)
+  - [1.1 知识体系架构](#11-知识体系架构)
+- [2 实践指南新增](#2-实践指南新增)
+  - [2.1 快速选择指南](#21-快速选择指南)
+- [3 理论基础 (Foundational Theory)](#3-理论基础-foundational-theory)
+  - [3.1 核心命题](#31-核心命题)
+- [4 二进制格式 (Binary Format)](#4-二进制格式-binary-format)
+  - [4.1 核心命题](#41-核心命题)
+- [5 运行时系统 (Runtime Systems)](#5-运行时系统-runtime-systems)
+  - [5.1 核心命题](#51-核心命题)
+- [6 系统集成 (System Integration)](#6-系统集成-system-integration)
+  - [6.1 核心命题](#61-核心命题)
+- [7 应用模式 (Application Patterns)](#7-应用模式-application-patterns)
+  - [7.1 核心命题](#71-核心命题)
+- [8 哲学基础 (Philosophical Foundations)](#8-哲学基础-philosophical-foundations)
+  - [8.1 核心命题](#81-核心命题)
+- [9 工程经济学 (Engineering Economics)](#9-工程经济学-engineering-economics)
+  - [9.1 核心命题](#91-核心命题)
+- [10 未来方向 (Future Directions)](#10-未来方向-future-directions)
+  - [10.1 核心命题](#101-核心命题)
+- [11 软件工程实践 (Software Engineering Practices)](#11-软件工程实践-software-engineering-practices)
+  - [11.1 核心命题](#111-核心命题)
+- [12 横切关注点 (Cross-Cutting Concerns)](#12-横切关注点-cross-cutting-concerns)
+  - [12.1 方法论三角](#121-方法论三角)
+  - [12.2 批判性视角](#122-批判性视角)
+- [13 使用指南](#13-使用指南)
+  - [13.1 阅读路径](#131-阅读路径)
+  - [13.2 符号约定](#132-符号约定)
+- [14 元文档信息](#14-元文档信息)
+- [15 贡献者指南](#15-贡献者指南)
+  - [15.1 文档原则](#151-文档原则)
+  - [15.2 引用规范](#152-引用规范)
+- [16 相关资源](#16-相关资源)
+
+---
+
+## 1 文档体系概览
 
 本文档体系以 **形式化、批判性和跨学科** 的视角，系统剖析 WebAssembly (Wasm) 作为通用计算抽象的理论基础、技术实现与工程实践。
 
-### 知识体系架构
+### 1.1 知识体系架构
 
 ```text
 理论层 ━━━━━━━┓
@@ -19,7 +57,7 @@
 
 ---
 
-## 📚 实践指南（新增）
+## 2 实践指南新增
 
 **3 篇高质量实战文档**，降低入门门槛，提升工程实践：
 
@@ -29,7 +67,7 @@
 | **[CHEAT_SHEET.md](CHEAT_SHEET.md)** | 快速参考卡（打印友好） | ✅ A4 打印优化<br>✅ 14 个速查区<br>✅ 可执行命令 | ⭐⭐⭐⭐⭐ |
 | **[ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md)** | 系统架构概览 | ✅ ASCII 架构图<br>✅ 权衡分析<br>✅ 设计决策 | ⭐⭐⭐⭐⭐ |
 
-### 快速选择指南
+### 2.1 快速选择指南
 
 **我想立即上手** → CHEAT_SHEET.md (10 分钟)
 **我需要避坑指南** → BEST_PRACTICES.md (30 分钟)
@@ -37,9 +75,9 @@
 
 ---
 
-## 01 理论基础 (Foundational Theory)
+## 3 理论基础 (Foundational Theory)
 
-### 核心命题
+### 3.1 核心命题
 >
 > **WebAssembly 是一个具有形式化验证语义的栈式虚拟机，其类型安全性可在多项式时间内证明。**
 
@@ -58,9 +96,9 @@
 
 ---
 
-## 02 二进制格式 (Binary Format)
+## 4 二进制格式 (Binary Format)
 
-### 核心命题
+### 4.1 核心命题
 >
 > **Wasm 二进制格式通过 LEB128 编码与段式结构实现了流式验证与紧凑表示的双重目标。**
 
@@ -80,9 +118,9 @@
 
 ---
 
-## 03 运行时系统 (Runtime Systems)
+## 5 运行时系统 (Runtime Systems)
 
-### 核心命题
+### 5.1 核心命题
 >
 > **分层编译策略通过权衡启动延迟与峰值性能，实现了自适应优化。**
 
@@ -101,9 +139,9 @@
 
 ---
 
-## 04 系统集成 (System Integration)
+## 6 系统集成 (System Integration)
 
-### 核心命题
+### 6.1 核心命题
 >
 > **WASI 通过能力导向接口实现了安全的系统资源访问，同时保持沙箱完整性。**
 
@@ -122,9 +160,9 @@
 
 ---
 
-## 05 应用模式 (Application Patterns)
+## 7 应用模式 (Application Patterns)
 
-### 核心命题
+### 7.1 核心命题
 >
 > **Wasm 在边缘计算场景中通过函数级粒度实现了成本量级降低。**
 
@@ -143,9 +181,9 @@
 
 ---
 
-## 06 哲学基础 (Philosophical Foundations)
+## 8 哲学基础 (Philosophical Foundations)
 
-### 核心命题
+### 8.1 核心命题
 >
 > **可移植性本质上是一种抽象的本体论承诺，而确定性则是认识论的保证。**
 
@@ -164,9 +202,9 @@
 
 ---
 
-## 07 工程经济学 (Engineering Economics)
+## 9 工程经济学 (Engineering Economics)
 
-### 核心命题
+### 9.1 核心命题
 >
 > **函数级粒度带来的边际成本递减，在高密度场景下产生量级式收益。**
 
@@ -186,9 +224,9 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 08 未来方向 (Future Directions)
+## 10 未来方向 (Future Directions)
 
-### 核心命题
+### 10.1 核心命题
 >
 > **Wasm 的演化路径受限于形式化验证的可行性边界与硬件抽象的鸿沟。**
 
@@ -207,9 +245,9 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 09 软件工程实践 (Software Engineering Practices)
+## 11 软件工程实践 (Software Engineering Practices)
 
-### 核心命题
+### 11.1 核心命题
 >
 > **工具链质量决定开发效率下界，工程实践决定生产质量上界。**
 
@@ -229,9 +267,9 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 横切关注点 (Cross-Cutting Concerns)
+## 12 横切关注点 (Cross-Cutting Concerns)
 
-### 方法论三角
+### 12.1 方法论三角
 
 ```text
 形式化验证 ←→ 实证测量 ←→ 哲学批判
@@ -241,7 +279,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
   正确性        性能          适用性
 ```
 
-### 批判性视角
+### 12.2 批判性视角
 
 1. **技术乐观主义批判**
    - Wasm 非银弹：抽象层带来的性能税不可消除
@@ -257,9 +295,9 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 使用指南
+## 13 使用指南
 
-### 阅读路径
+### 13.1 阅读路径
 
 **快速入门**（2小时）：
 
@@ -285,7 +323,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 07_Engineering_Economics (全部) → FAQ (关键问题)
 ```
 
-### 符号约定
+### 13.2 符号约定
 
 - \( \llbracket \cdot \rrbracket \)：语义解释函数
 - \( \prec \)：偏序关系
@@ -295,7 +333,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 元文档信息
+## 14 元文档信息
 
 | 属性 | 值 |
 |------|-----|
@@ -310,16 +348,16 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 贡献者指南
+## 15 贡献者指南
 
-### 文档原则
+### 15.1 文档原则
 
 1. **形式化优先**：所有核心命题必须有数学表达
 2. **可证伪性**：提供反例或边界条件
 3. **跨学科视角**：融合计算机科学、哲学、经济学
 4. **批判性思维**：质疑技术乐观主义，揭示权衡
 
-### 引用规范
+### 15.2 引用规范
 
 - 学术论文：ACM/IEEE 格式
 - 规范文档：W3C 永久链接
@@ -327,7 +365,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 
 ---
 
-## 相关资源
+## 16 相关资源
 
 - **官方规范**：[WebAssembly Specification](https://webassembly.github.io/spec/)
 - **形式化验证**：[Wasm-Coq](https://github.com/WasmCert/WasmCert-Coq)

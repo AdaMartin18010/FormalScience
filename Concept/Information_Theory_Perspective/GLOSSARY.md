@@ -10,9 +10,9 @@
 ## 📋 目录
 
 - [信息论多视角分析 - 术语词典](#信息论多视角分析---术语词典)
+  - [📋 目录](#-目录)
   - [1 概述](#1-概述)
   - [2 A](#2-a)
-  - [A](#a)
     - [2.1 Algorithmic Information Theory (算法信息论)](#21-algorithmic-information-theory-算法信息论)
     - [2.2 Asymptotic Equipartition Property (AEP) (渐近等分性)](#22-asymptotic-equipartition-property-aep-渐近等分性)
     - [2.3 Autocorrelation (自相关)](#23-autocorrelation-自相关)

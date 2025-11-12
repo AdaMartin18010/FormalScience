@@ -6,11 +6,36 @@
 
 ---
 
-## 📦 工具列表
+## 📋 目录
 
-### ✅ 已实现
+- [1 工具列表](#1-工具列表)
+  - [1.1 已实现](#11-已实现)
+    - [1.1.1 链接检查器Link Validator](#111-链接检查器link-validator)
+  - [1.2 计划开发](#12-计划开发)
+    - [2.2.1 格式验证器Format Checker](#221-格式验证器format-checker)
+    - [2.2.2 概念关系图谱生成器Graph Builder](#222-概念关系图谱生成器graph-builder)
+    - [2.2.3 主权矩阵分析器Sovereignty Analyzer](#223-主权矩阵分析器sovereignty-analyzer)
+- [2 快速开始](#2-快速开始)
+  - [2.1 环境要求](#21-环境要求)
+  - [2.2 安装依赖](#22-安装依赖)
+  - [2.3 运行测试](#23-运行测试)
+- [3 工具开发进度](#3-工具开发进度)
+- [4 本周目标Week 1](#4-本周目标week-1)
+- [5 贡献指南](#5-贡献指南)
+  - [5.1 添加新工具](#51-添加新工具)
+  - [5.2 代码规范](#52-代码规范)
+- [6 文件结构](#6-文件结构)
+- [7 相关文档](#7-相关文档)
+- [8 更新日志](#8-更新日志)
+  - [8.1 -10-25](#81--10-25)
 
-#### 1. 链接检查器（Link Validator）
+---
+
+## 1 工具列表
+
+### 1.1 已实现
+
+#### 1.1.1 链接检查器Link Validator
 
 **功能**: 自动检查所有markdown文件的链接有效性
 
@@ -50,7 +75,7 @@ python tools/link_validator.py --report link_report.md
 
 ---
 
-### ⏳ 计划开发
+### 1.2 计划开发
 
 #### 2. 目录生成器（TOC Generator）
 
@@ -73,7 +98,7 @@ python tools/toc_generator.py --max-level 3 Concept/*.md
 
 ---
 
-#### 3. 格式验证器（Format Checker）
+#### 2.2.1 格式验证器Format Checker
 
 **功能**: 检查文档格式规范性
 
@@ -88,7 +113,7 @@ python tools/toc_generator.py --max-level 3 Concept/*.md
 
 ---
 
-#### 4. 概念关系图谱生成器（Graph Builder）
+#### 2.2.2 概念关系图谱生成器Graph Builder
 
 **功能**: 生成交互式概念关系图
 
@@ -98,7 +123,7 @@ python tools/toc_generator.py --max-level 3 Concept/*.md
 
 ---
 
-#### 5. 主权矩阵分析器（Sovereignty Analyzer）
+#### 2.2.3 主权矩阵分析器Sovereignty Analyzer
 
 **功能**: 分析虚拟化技术的九维主权值
 
@@ -106,15 +131,15 @@ python tools/toc_generator.py --max-level 3 Concept/*.md
 
 ---
 
-## 🚀 快速开始
+## 2 快速开始
 
-### 环境要求
+### 2.1 环境要求
 
 ```bash
 Python 3.8+
 ```
 
-### 安装依赖
+### 2.2 安装依赖
 
 ```bash
 # 基础依赖（可选，增强显示效果）
@@ -124,7 +149,7 @@ pip install rich
 pip install -r tools/requirements.txt
 ```
 
-### 运行测试
+### 2.3 运行测试
 
 ```bash
 # 测试链接检查器
@@ -136,7 +161,7 @@ python tools/link_validator.py
 
 ---
 
-## 📊 工具开发进度
+## 3 工具开发进度
 
 ```text
 Phase 6 进度: 16.7% (1/6 工具完成)
@@ -151,7 +176,7 @@ Phase 6 进度: 16.7% (1/6 工具完成)
 
 ---
 
-## 🎯 本周目标（Week 1）
+## 4 本周目标Week 1
 
 - [x] 创建tools目录
 - [x] 实现链接检查器
@@ -161,16 +186,16 @@ Phase 6 进度: 16.7% (1/6 工具完成)
 
 ---
 
-## 💡 贡献指南
+## 5 贡献指南
 
-### 添加新工具
+### 5.1 添加新工具
 
 1. 在 `tools/` 目录创建脚本
 2. 遵循命名规范: `tool_name.py`
 3. 添加文档注释和使用说明
 4. 在本README中更新工具列表
 
-### 代码规范
+### 5.2 代码规范
 
 - Python 3.8+ 类型注解
 - Docstring（Google风格）
@@ -179,7 +204,7 @@ Phase 6 进度: 16.7% (1/6 工具完成)
 
 ---
 
-## 📄 文件结构
+## 6 文件结构
 
 ```text
 tools/
@@ -196,7 +221,7 @@ tools/
 
 ---
 
-## 🔗 相关文档
+## 7 相关文档
 
 - [下一阶段路线图](../Concept/NEXT_PHASE_ROADMAP_2025-10.md)
 - [立即行动计划](../Concept/IMMEDIATE_ACTION_PLAN.md)
@@ -204,9 +229,9 @@ tools/
 
 ---
 
-## 📝 更新日志
+## 8 更新日志
 
-### 2025-10-25
+### 8.1 -10-25
 
 - ✅ 创建tools目录
 - ✅ 实现链接检查器v1.0

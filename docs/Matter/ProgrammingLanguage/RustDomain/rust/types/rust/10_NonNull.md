@@ -3,7 +3,17 @@
 在 Rust 中，`NonNull` 是一个智能指针类型，它提供了对非空裸指针的安全封装。
 `NonNull` 位于 `std::ptr` 模块中，主要用于确保指针非空，并且可以安全地转换为 `&T` 或 `&mut T` 类型的引用。
 
-## 定义
+## 📋 目录
+
+- [1 定义](#1-定义)
+- [2 解释](#2-解释)
+  - [2.1 应用](#21-应用)
+  - [2.2 创建 NonNull](#22-创建-nonnull)
+  - [2.3 使用 NonNull](#23-使用-nonnull)
+
+---
+
+## 1 定义
 
 `NonNull` 定义如下：
 
@@ -16,7 +26,7 @@ pub struct NonNull<T> {
 这里，`NonNull<T>` 包含一个 `pointer` 字段，它是一个指向 `T` 类型的不可变引用的裸指针。
     `NonNull` 保证这个指针不是空指针（null）。
 
-## 解释
+## 2 解释
 
 `NonNull` 的设计有几个关键点：
 
@@ -28,7 +38,7 @@ pub struct NonNull<T> {
 
 4. **所有权和借用规则**：`NonNull` 本身不拥有它所指向的数据，它只是对现有指针的封装。因此，使用 `NonNull` 时，需要确保遵循 Rust 的所有权和借用规则。
 
-### 应用
+### 2.1 应用
 
 `NonNull` 在 Rust 中的应用场景包括：
 
@@ -40,7 +50,7 @@ pub struct NonNull<T> {
 
 4. **类型安全**：在需要确保指针有效性的情况下，使用 `NonNull` 可以提供类型安全的保证。
 
-### 创建 `NonNull`
+### 2.2 创建 NonNull
 
 `NonNull` 的创建通常是不安全的，因为它需要调用者保证指针非空。例如：
 
@@ -54,7 +64,7 @@ let non_null: NonNull<i32> = unsafe { NonNull::new_unchecked(Box::into_raw(data)
 在这个例子中，我们使用 `Box::into_raw` 将 `Box` 转换为裸指针，然后使用 `NonNull::new_unchecked` 来创建 `NonNull` 实例。
 这个过程是 `unsafe` 的，因为需要保证指针非空。
 
-### 使用 `NonNull`
+### 2.3 使用 NonNull
 
 使用 `NonNull` 时，可以将其转换为引用，例如：
 

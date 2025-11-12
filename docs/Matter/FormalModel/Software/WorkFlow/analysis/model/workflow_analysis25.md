@@ -97,14 +97,33 @@ Here's a thinking process that leads to the detailed, layered architecture propo
 
 ---
 
-## 1. **第一层：结构形式化基础 (`Architecture_Structural`)**
+## 📋 目录
 
-### 1.1 **目标:**
+- [1 第一层：结构形式化基础 (Architecture_Structural)](#1-第一层结构形式化基础-architecture_structural)
+  - [1.1 目标](#11-目标)
+  - [1.2 2 1 核心对象 (Structural Objects)](#12-2-1-核心对象-structural-objects)
+- [2 第二层：语义形式化增强 (Architecture_Semantic)](#2-第二层语义形式化增强-architecture_semantic)
+  - [2.1 1 1 基础设定 (Semantic Layer)](#21-1-1-基础设定-semantic-layer)
+  - [2.2 2 2 核心对象 (Semantic Objects)](#22-2-2-核心对象-semantic-objects)
+  - [2.3 3 3 核心态射规则 (Semantic Rules)](#23-3-3-核心态射规则-semantic-rules)
+  - [2.4 4 4 核心不变性 (Semantic Invariants)](#24-4-4-核心不变性-semantic-invariants)
+- [3 两层架构的协同与 AI 集成](#3-两层架构的协同与-ai-集成)
+  - [3.1 基础与增强](#31-基础与增强)
+    - [1.1.1 Fabric 的角色](#111-fabric-的角色)
+    - [1.1.2 AI 的交互](#112-ai-的交互)
+    - [1.1.3 演化](#113-演化)
+- [4 结论性论证](#4-结论性论证)
+
+---
+
+## 1 第一层：结构形式化基础 (Architecture_Structural)
+
+### 1.1 目标
 
 定义架构的句法结构、类型契约和基本连接规则，确保组件可以被安全地类型检查、配置和基本调度。
 主要依赖类型系统和配置检查。
 
-### 1.2 **1. 核心对象 (Structural Objects):**
+### 1.2 1 核心对象 (Structural Objects)
 
 `EffectType_S`: 定义为一个元组 `E_S = <Name_E, ReqT, ResT, ErrT, HandlerSigT>`
     `Name_E`: String (唯一标识符)
@@ -124,7 +143,7 @@ Here's a thinking process that leads to the detailed, layered architecture propo
     `DeployedHandlers`: `Set<HandlerImpl_S>`
     `StaticTopology_S`: `Set<Connection_S>` where `Connection_S = <FromCellName, ToCellName>`
 
-## 1.2 **2. 核心态射/规则 (Structural Rules):**
+## 2 2 核心态射规则 (Structural Rules)
 
 **R1 (Type Compatibility Rule):**
 `connectable_S(C_A::Name_C, C_B::Name_C)` 谓词成立
@@ -148,7 +167,7 @@ Here's a thinking process that leads to the detailed, layered architecture propo
     **论证:** 确保部署配置中至少有一个 Handler 声称能处理此 Effect。
     **证明机制:** 部署时配置验证。
 
-## 1.3 **3. 核心不变性 (Structural Invariants):**
+## 3 3 核心不变性 (Structural Invariants)
 
 **Inv_S1 (Deployment Configuration Validity):**
 对于一个有效的部署配置 `D_S`，必须满足：
@@ -170,13 +189,13 @@ AI 可以基于这一层理解系统的结构图、依赖关系和类型流。
 
 ---
 
-## 2. **第二层：语义形式化增强 (`Architecture_Semantic`)**
+## 4 第二层：语义形式化增强 (Architecture_Semantic)
 
 **目标:**
 在结构层的基础上，增加形式化的语义信息，描述组件的行为、目的和对世界状态的影响，
 使系统行为可推理、可验证（部分），并为 AI 提供更深层次的理解和控制基础。
 
-### 2.1 **1. 基础设定 (Semantic Layer):**
+### 4.1 1 基础设定 (Semantic Layer)
 
 **逻辑框架 `L`:**
 选择一个形式逻辑，例如带有状态更新的一阶逻辑 (FOL+State) 或 LTL。
@@ -191,7 +210,7 @@ AI 可以基于这一层理解系统的结构图、依赖关系和类型流。
 
 **(可选) 领域本体 `Ont`:** 一个形式化的领域知识库 (如 OWL)，定义领域概念及其关系。
 
-### 2.2 **2. 核心对象 (Semantic Objects):**
+### 4.2 2 核心对象 (Semantic Objects)
 
 `EffectType_Sem`:
 定义为一个元组 `E_Sem = <E_S, PreCond, PostCond_S, PostCond_F, OntologyLink_E?>`
@@ -213,7 +232,7 @@ AI 可以基于这一层理解系统的结构图、依赖关系和类型流。
     包含语义增强的对象集合。
     `InitialWorldStateSpec`: 对系统启动时 `WSM` 的初始状态的规范。
 
-### 2.3 **3. 核心态射/规则 (Semantic Rules):**
+### 4.3 3 核心态射规则 (Semantic Rules)
 
 **R5 (Semantic Enablement Rule):**
 `enables(E_Sem, C_Sem)` 谓词成立
@@ -233,7 +252,7 @@ AI 可以基于这一层理解系统的结构图、依赖关系和类型流。
     **论证:** 证明整个工作流的执行能达到预期的业务目标。
     **证明机制:** 逻辑推理，可能涉及规划算法或定理证明。
 
-### 2.4 **4. 核心不变性 (Semantic Invariants):**
+### 4.4 4 核心不变性 (Semantic Invariants)
 
 **Inv_Sem1 (Precondition Safety):**
 运行时，Fabric 在分发 `Effect E` 或激活 `Cell C` 前，
@@ -262,21 +281,21 @@ Cell 执行的结果应符合 `LogicSpec_Sem` 的后置条件。
 
 ---
 
-## 3. **两层架构的协同与 AI 集成:**
+## 5 两层架构的协同与 AI 集成
 
-### 3.1  **基础与增强:**
+### 5.1 基础与增强
 
 `Architecture_Structural` 是地基，提供类型安全和基本配置有效性。
 `Architecture_Semantic` 是上层建筑，提供逻辑推理能力。
 语义规则（如 R5）必须以结构规则（如 R1）的满足为前提。
 
-#### 3.1.1  **Fabric 的角色:**
+#### 1.1.1 Fabric 的角色
 
 运行时必须至少满足**结构层**的不变性 `Inv_S1`, `Inv_S2`。
 一个更智能的 Fabric 会尝试利用**语义层**的信息来执行更安全的调度（检查 `Inv_Sem1`）、
 进行更有意义的错误恢复或提供更丰富的可观测性。
 
-#### 3.1.2  **AI 的交互:**
+#### 1.1.2 AI 的交互
 
 AI 可以读取**结构层**信息来理解系统组件和连接。
 AI 主要利用**语义层**信息 (`PreCond`, `PostCond`, `StateInv`, `LogicSpec_Sem`, `OntologyLink`) 来进行：
@@ -286,14 +305,14 @@ AI 主要利用**语义层**信息 (`PreCond`, `PostCond`, `StateInv`, `LogicSpe
     **优化:** 基于 `LogicSpec_Sem` 和 `WSM` 状态来建议更有效的路径。
     **安全控制:** 确保其发出的指令（例如，触发 Cell）满足 `PreCond`。
 
-#### 3.1.3  **演化:**
+#### 1.1.3 演化
 
 结构层的演化需要维护 `Inv_S1`, `Inv_S2`。
 语义层的演化（例如，修改 `PreCond`, `PostCond`）则需要重新进行相关的逻辑证明（R5, R6, R7），
 并重新评估对 AI 模型的影响。
 版本化和兼容性分析在语义层尤为重要。
 
-## 4. **结论性论证:**
+## 6 结论性论证
 
 这个两层架构方案提供了一条从**结构基础到语义增强**的清晰路径。
 

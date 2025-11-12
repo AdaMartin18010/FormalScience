@@ -1,6 +1,39 @@
 # 01. 时态逻辑理论基础
 
-## 1. 概述
+## 📋 目录
+
+- [1 概述](#1-概述)
+  - [1.1 时态逻辑的核心概念](#11-时态逻辑的核心概念)
+- [2 时态逻辑的形式化定义](#2-时态逻辑的形式化定义)
+  - [2.1 时态结构](#21-时态结构)
+  - [2.2 时态逻辑语义](#22-时态逻辑语义)
+- [3 线性时态逻辑 (LTL)](#3-线性时态逻辑-ltl)
+  - [3.1 LTL语法](#31-ltl语法)
+  - [3.2 LTL语义](#32-ltl语义)
+- [4 计算树逻辑 (CTL)](#4-计算树逻辑-ctl)
+  - [4.1 CTL语法](#41-ctl语法)
+  - [4.2 CTL语义](#42-ctl语义)
+- [5 时态逻辑的应用](#5-时态逻辑的应用)
+  - [5.1 模型检测](#51-模型检测)
+  - [5.2 程序验证](#52-程序验证)
+- [6 时态逻辑的扩展](#6-时态逻辑的扩展)
+  - [6.1 实时时态逻辑](#61-实时时态逻辑)
+  - [6.2 概率时态逻辑](#62-概率时态逻辑)
+- [7 时态逻辑的算法](#7-时态逻辑的算法)
+  - [7.1 模型检测算法](#71-模型检测算法)
+  - [7.2 LTL到Büchi自动机的转换](#72-ltl到büchi自动机的转换)
+- [8 时态逻辑的复杂性](#8-时态逻辑的复杂性)
+  - [8.1 计算复杂性](#81-计算复杂性)
+  - [8.2 空间复杂性](#82-空间复杂性)
+- [9 时态逻辑的工具和实现](#9-时态逻辑的工具和实现)
+  - [9.1 模型检测工具](#91-模型检测工具)
+  - [9.2 时态逻辑库](#92-时态逻辑库)
+- [10 总结](#10-总结)
+- [11 批判性分析](#11-批判性分析)
+
+---
+
+## 1 概述
 
 时态逻辑是形式逻辑的重要分支，专门研究时间相关的逻辑推理。
 它扩展了经典逻辑，引入了时间维度的概念，使得我们能够表达和推理关于时间序列、事件顺序、状态变化等概念。
@@ -44,7 +77,7 @@ data TemporalFormula = Atomic String
     deriving (Show, Eq)
 ```
 
-## 2. 时态逻辑的形式化定义
+## 2 时态逻辑的形式化定义
 
 ### 2.1 时态结构
 
@@ -137,7 +170,7 @@ satisfies structure t (Temporal Eventually phi) =
     any (\t' -> satisfies structure t' phi) (getFutureTimePoints structure t)
 ```
 
-## 3. 线性时态逻辑 (LTL)
+## 3 线性时态逻辑 (LTL)
 
 ### 3.1 LTL语法
 
@@ -251,7 +284,7 @@ evaluateLTL sequence pos (Until phi psi) =
         [pos..length sequence - 1]
 ```
 
-## 4. 计算树逻辑 (CTL)
+## 4 计算树逻辑 (CTL)
 
 ### 4.1 CTL语法
 
@@ -374,7 +407,7 @@ satisfiesCTL kripke s (AllAlways phi) =
     allPathsAlwaysSatisfy kripke s phi
 ```
 
-## 5. 时态逻辑的应用
+## 5 时态逻辑的应用
 
 ### 5.1 模型检测
 
@@ -460,7 +493,7 @@ verifyProgram program property =
        else Violation (head violations)
 ```
 
-## 6. 时态逻辑的扩展
+## 6 时态逻辑的扩展
 
 ### 6.1 实时时态逻辑
 
@@ -562,7 +595,7 @@ data ProbabilisticCTL = Atomic String
     deriving (Show, Eq)
 ```
 
-## 7. 时态逻辑的算法
+## 7 时态逻辑的算法
 
 ### 7.1 模型检测算法
 
@@ -737,7 +770,7 @@ toBuchiAutomaton formula =
     in BuchiAutomaton states initialStates acceptingStates transitions
 ```
 
-## 8. 时态逻辑的复杂性
+## 8 时态逻辑的复杂性
 
 ### 8.1 计算复杂性
 
@@ -807,7 +840,7 @@ analyzeCTLComplexity formulaSize stateSpaceSize =
     }
 ```
 
-## 9. 时态逻辑的工具和实现
+## 9 时态逻辑的工具和实现
 
 ### 9.1 模型检测工具
 
@@ -921,7 +954,7 @@ class Automaton a where
     getTransitions :: a -> [(String, String, String)]
 ```
 
-## 10. 总结
+## 10 总结
 
 时态逻辑作为形式逻辑的重要分支，为时间相关的推理提供了强大的理论基础。通过LTL、CTL等不同的时态逻辑系统，我们能够：
 
@@ -939,7 +972,7 @@ class Automaton a where
 
 通过Rust和Haskell的实现，我们展示了时态逻辑的实践应用，为形式化验证提供了可靠的工具基础。
 
-## 批判性分析
+## 11 批判性分析
 
 - 多元理论视角：
   - 语义多样：线性时间（LTL）与分支时间（CTL/CTL*）提供不同的观察者视角；μ-演算以不动点统一多种时态算子表达。
