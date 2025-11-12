@@ -64,7 +64,7 @@
 
 ### 3.1 文件扫描结果
 
-```
+```text
 总 Markdown 文件数: 325
 ├─ AI_model_Perspective/        ~60
 ├─ FormalLanguage_Perspective/  ~85
@@ -239,25 +239,25 @@ git commit -am "修复: 为所有 Markdown 添加/更新目录"
 
 1. **查看指南**
 
-   ```bash
-   cat TOC_FIX_GUIDE.md
-   ```
+    ```bash
+    cat TOC_FIX_GUIDE.md
+    ```
 
 2. **选择方案**
    - 推荐：方案A（快速全量修复）
 
 3. **执行修复**
 
-   ```bash
-   python fix_toc_and_numbering.py
-   ```
+    ```bash
+    python fix_toc_and_numbering.py
+    ```
 
 4. **审查和提交**
 
-   ```bash
-   git diff
-   git commit
-   ```
+    ```bash
+    git diff
+    git commit
+    ```
 
 ### 9.2 后续优化可选
 

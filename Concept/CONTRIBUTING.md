@@ -382,7 +382,7 @@ let s2 = s; // 所有权转移
 
 **文件结构**：
 
-```
+```text
 formal/
 ├── lean4/
 │   ├── FormalScience/
