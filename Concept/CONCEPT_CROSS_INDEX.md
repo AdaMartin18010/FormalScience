@@ -11,10 +11,10 @@
 ## 📋 目录
 
 - [形式科学概念交叉索引（七视角版）](#形式科学概念交叉索引七视角版)
+  - [📋 目录](#-目录)
   - [1 说明](#1-说明)
   - [2 核心概念索引](#2-核心概念索引)
   - [3 A](#3-a)
-  - [A](#a)
     - [3.1 反身性 (Reflexivity) 【七视角】](#31-反身性-reflexivity-七视角)
     - [3.2 AI对齐 (AI Alignment)](#32-ai对齐-ai-alignment)
     - [3.3 Ashby必要多样性定律 (Ashby's Law of Requisite Variety) 【七视角】](#33-ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
