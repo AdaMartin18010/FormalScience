@@ -622,7 +622,7 @@
 
 1. **知识栈深度**
 
-   ```
+   ```text
    层级 1：基础数学（集合论、逻辑）
    层级 2：计算理论（图灵机、λ演算）
    层级 3：类型论（依赖类型、高阶类型）
@@ -656,7 +656,7 @@
 >
 > 3. **分层阅读建议**
 >
->    ```
+>    ```text
 >    Level 0（科普）：     10小时（视频+博客）
 >    Level 1（入门）：     50小时（核心5-10文档）
 >    Level 2（进阶）：    200小时（完整一个视角）
@@ -813,7 +813,7 @@
 
 1. **明确基石假设的边界** ✨
 
-   ```
+   ```text
    建议增加文档：
    - 📄 00_Foundational_Assumptions.md
    内容：
@@ -828,7 +828,7 @@
 
 2. **补充反对意见章节**
 
-   ```
+   ```text
    建议在每个主要文档中增加：
    - "Objections and Replies"章节
    - 列出常见反对意见（如：现象学批判、具身认知批判）
@@ -837,7 +837,7 @@
 
 3. **增加"不可形式化"专题**
 
-   ```
+   ```text
    建议文档：
    - 📄 The_Limits_of_Formalization.md
    内容：
@@ -853,7 +853,7 @@
 
 1. **跨工具语义对齐**
 
-   ```
+   ```text
    建议增加章节：
    - 05_Formal_Verification/05.X_Tool_Semantics_Comparison.md
    内容：
@@ -864,7 +864,7 @@
 
 2. **视角独立性形式化**
 
-   ```
+   ```text
    建议证明（或至少明确声明）：
    - 定理：8个视角不可相互归约
    - 或者：承认视角选择是"实用分类"而非理论必然
@@ -902,7 +902,7 @@
 
 **建议案例1**（难度适中）：
 
-```
+```text
 项目：Rust标准库Vec<T>模块的形式化验证
 目标：
 - 用Coq/Lean4建立Vec的完整规范
@@ -917,7 +917,7 @@
 
 **建议案例2**（雄心勃勃）：
 
-```
+```text
 项目：一个真实微服务系统的形式化建模
 目标：
 - 选择一个开源微服务（如：Spring PetClinic）
@@ -936,7 +936,7 @@
 
 1. **在线Playground**
 
-   ```
+   ```text
    目标：类似 https://leanprover-community.github.io/lean-web-editor/
    功能：
    - 在线编辑Lean4/Coq代码
@@ -949,7 +949,7 @@
 
 2. **习题自动批改系统**
 
-   ```
+   ```text
    目标：类似LeetCode for Formal Verification
    功能：
    - 题库（100+习题，分难度）
@@ -963,7 +963,7 @@
 
 1. **VS Code插件**
 
-   ```
+   ```text
    功能：
    - 语法高亮（UH-Cost模型）
    - 自动补全（设计模式形式化）
@@ -973,7 +973,7 @@
 
 2. **可视化学习路径工具**
 
-   ```
+   ```text
    功能：
    - 交互式技能树（260+文档的依赖图）
    - 用户选择目标→自动生成最短路径
@@ -990,7 +990,7 @@
 
 1. **顶会论文投稿**
 
-   ```
+   ```text
    目标会议：POPL 2026（截稿2025年7月）
    论文选题：
    Option 1："A Unified Formal Framework: Eight Perspectives on Computation"
@@ -1003,7 +1003,7 @@
 
 2. **arXiv预印本**
 
-   ```
+   ```text
    目标：2025年11月前发布
    内容：
    - "FormalScience: A Multi-Perspective Framework for Formal Methods"（综述论文，40-50页）
@@ -1017,7 +1017,7 @@
 
 1. **Workshop组织**
 
-   ```
+   ```text
    目标：POPL/ICFP 2026 satellite event
    主题："Multi-Perspective Formal Methods"
    邀请嘉宾：
@@ -1032,7 +1032,7 @@
 
 1. **中文视频课程**（B站）
 
-   ```
+   ```text
    课程体系：
    - 入门课（10集 × 30分钟）："形式科学快速入门"
    - 进阶课（20集 × 45分钟）："八视角深度解析"
@@ -1046,7 +1046,7 @@
 
 2. **英文博客系列**（Medium/Dev.to）
 
-   ```
+   ```text
    博客计划（每月2篇）：
    - "Why Eight Perspectives? The Philosophy Behind FormalScience"
    - "From Theory to Practice: Verifying Rust Code with Lean4"
@@ -1061,7 +1061,7 @@
 
 1. **大学课程合作**
 
-   ```
+   ```text
    目标学校：
    - 清华大学（计算机系）
    - 北京大学（数学系）
@@ -1078,7 +1078,7 @@
 
 1. **GitHub社区基础设施**
 
-   ```
+   ```text
    立即设置：
    - ✅ Issues模板（Bug报告、功能请求、问题讨论）
    - ✅ Contributing指南
@@ -1089,7 +1089,7 @@
 
 2. **Discord服务器**
 
-   ```
+   ```text
    频道设置：
    - #general：一般讨论
    - #theory：理论讨论（按视角分频道）
@@ -1104,7 +1104,7 @@
 
 1. **年度会议**
 
-   ```
+   ```text
    目标：FormalScience Summit（首届2026）
    形式：线上+线下混合
    内容：
@@ -1123,7 +1123,7 @@
 
 1. **快速入门指南**
 
-   ```
+   ```text
    新建文档：00_QUICKSTART_3_DAYS.md
    目标：3天入门（每天2-4小时）
 
@@ -1144,7 +1144,7 @@
 
 2. **分层阅读指南**
 
-   ```
+   ```text
    在README.md顶部增加：
 
    ┌──────────────────────────────────────┐
@@ -1170,7 +1170,7 @@
 
 3. **可视化依赖图**
 
-   ```
+   ```text
    工具：Graphviz生成260+文档的依赖图
    格式：
    - SVG（可交互）
@@ -1184,7 +1184,7 @@
 
 1. **多语言支持**
 
-   ```
+   ```text
    目标：英文完整翻译
    策略：
    - Phase 1：核心10文档英文化（README、Tutorial等）
@@ -1198,7 +1198,7 @@
 
 2. **搜索功能增强**
 
-   ```
+   ```text
    工具：Algolia DocSearch 或 Elasticsearch
    功能：
    - 全文搜索（260+文档）
@@ -1213,7 +1213,7 @@
 
 1. **自动化测试**
 
-   ```
+   ```text
    GitHub Actions工作流：
    - Markdown linting（markdownlint）
    - 链接验证（markdown-link-check）
@@ -1224,7 +1224,7 @@
 
 2. **版本控制**
 
-   ```
+   ```text
    策略：
    - 遵循语义化版本（Semantic Versioning）
    - 主要文档使用版本号（如：README v2.1.0）
@@ -1236,7 +1236,7 @@
 
 1. **贡献者指南**
 
-   ```
+   ```text
    CONTRIBUTING.md详细化：
    - 如何报告Bug
    - 如何提议新功能
@@ -1248,7 +1248,7 @@
 
 2. **代码审核**
 
-   ```
+   ```text
    流程：
    - 所有PR需要1-2人审核
    - 审核清单：

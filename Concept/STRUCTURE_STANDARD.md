@@ -114,18 +114,18 @@
 **✅ 正确格式**:
 
 ````markdown
-```text
-伪代码或公式
-```
+    ```text
+    伪代码或公式
+    ```
 
-```python
-def example():
-    pass
-```
+    ```python
+    def example():
+        pass
+    ```
 
-```bash
-cd /path/to/dir
-```
+    ```bash
+    cd /path/to/dir
+    ```
 
 ````
 

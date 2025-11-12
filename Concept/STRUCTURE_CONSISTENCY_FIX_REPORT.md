@@ -51,7 +51,7 @@
 
 **当前结构**:
 
-```
+```text
 Information_Theory_Perspective/
 ├── 00_Master_Index.md
 ├── 00_FOUNDATIONAL_CONCEPTS.md
@@ -96,7 +96,7 @@ Information_Theory_Perspective/
 
 **当前结构**:
 
-```
+```text
 Software_Perspective/
 ├── 00_Master_Index.md
 ├── 01_Foundational_Theory/
@@ -145,7 +145,7 @@ Software_Perspective/
 
 **当前结构**:
 
-```
+```text
 Program_Algorithm_Perspective/
 ├── 00_Master_Index.md
 ├── 01_Formal_Semantics/
