@@ -2,21 +2,24 @@
 
 ## 📋 目录
 
-- [1 理论概述](#1-理论概述)
-- [2 形式化语义](#2-形式化语义)
-  - [2.1 核心定义](#21-核心定义)
-  - [2.2 核心定理](#22-核心定理)
-- [3 多表征方式](#3-多表征方式)
-  - [3.1 图形表征](#31-图形表征)
-  - [3.2 表格表征](#32-表格表征)
-  - [3.3 数学表征](#33-数学表征)
-  - [3.4 伪代码表征](#34-伪代码表征)
-- [4 Rust实现](#4-rust实现)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
+- [01.1.2 科学解释模型 (Scientific Explanation Models)](#0112-科学解释模型-scientific-explanation-models)
+  - [📋 目录](#-目录)
+  - [1 理论概述](#1-理论概述)
+  - [2 形式化语义](#2-形式化语义)
+    - [2.1 核心定义](#21-核心定义)
+    - [2.2 核心定理](#22-核心定理)
+  - [3 多表征方式](#3-多表征方式)
+    - [3.1 图形表征](#31-图形表征)
+    - [3.2 表格表征](#32-表格表征)
+    - [3.3 数学表征](#33-数学表征)
+    - [3.4 伪代码表征](#34-伪代码表征)
+  - [4 Rust实现](#4-rust实现)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -67,19 +70,19 @@ graph TD
     A[科学解释] --> B[演绎-律则模型]
     A --> C[统计解释模型]
     A --> D[因果解释模型]
-    
+
     B --> E[覆盖律]
     B --> F[初始条件]
     B --> G[演绎推理]
-    
+
     C --> H[概率律则]
     C --> I[统计条件]
     C --> J[概率推理]
-    
+
     D --> K[因果关系]
     D --> L[因果链]
     D --> M[因果网络]
-    
+
     subgraph 解释结构
         N[现象P] --> O[律则L]
         O --> P[条件C]
@@ -115,17 +118,17 @@ class ScientificExplanation:
         self.phenomenon = phenomenon
         self.laws = laws
         self.conditions = conditions
-        
+
     def deductive_nomological(self):
         """演绎-律则解释"""
         premises = self.laws + self.conditions
         return self.logical_entailment(premises, self.phenomenon)
-        
+
     def statistical_explanation(self):
         """统计解释"""
         probability = self.calculate_probability()
         return probability > 0.5
-        
+
     def causal_explanation(self):
         """因果解释"""
         cause_effect = self.identify_causality()
@@ -201,66 +204,66 @@ impl ScientificExplanation {
             explanation_type,
         }
     }
-    
+
     /// 添加解释律则
     pub fn add_law(&mut self, law: ExplanationLaw) {
         self.laws.push(law);
     }
-    
+
     /// 添加初始条件
     pub fn add_condition(&mut self, condition: InitialCondition) {
         self.conditions.push(condition);
     }
-    
+
     /// 执行演绎-律则解释
     pub fn deductive_nomological_explanation(&self) -> bool {
         if self.laws.is_empty() || self.conditions.is_empty() {
             return false;
         }
-        
+
         // 检查所有律则都是普遍律则
         let all_universal = self.laws.iter()
             .all(|law| matches!(law.law_type, LawType::Universal));
-        
+
         // 检查逻辑一致性
         let consistent = self.check_logical_consistency();
-        
+
         all_universal && consistent
     }
-    
+
     /// 执行统计解释
     pub fn statistical_explanation(&self) -> f64 {
         if self.laws.is_empty() {
             return 0.0;
         }
-        
+
         // 计算平均置信度
         let total_confidence: f64 = self.laws.iter()
             .map(|law| law.confidence)
             .sum();
-        
+
         total_confidence / self.laws.len() as f64
     }
-    
+
     /// 执行因果解释
     pub fn causal_explanation(&self) -> bool {
         // 检查是否存在因果律则
         let has_causal_laws = self.laws.iter()
             .any(|law| matches!(law.law_type, LawType::Causal));
-        
+
         // 检查是否存在因果条件
         let has_causal_conditions = self.conditions.iter()
             .any(|condition| matches!(condition.condition_type, ConditionType::Causal));
-        
+
         has_causal_laws && has_causal_conditions
     }
-    
+
     /// 检查逻辑一致性
     fn check_logical_consistency(&self) -> bool {
         // 简化的逻辑一致性检查
         !self.laws.is_empty() && !self.conditions.is_empty()
     }
-    
+
     /// 获取解释力
     pub fn explanatory_power(&self) -> f64 {
         match self.explanation_type {
@@ -286,7 +289,7 @@ impl ScientificExplanation {
             },
         }
     }
-    
+
     /// 获取预测力
     pub fn predictive_power(&self) -> f64 {
         match self.explanation_type {
@@ -308,7 +311,7 @@ impl ExplanationLaw {
             confidence,
         }
     }
-    
+
     /// 检查律则的有效性
     pub fn is_valid(&self) -> bool {
         self.confidence > 0.5 && !self.statement.is_empty()
@@ -325,7 +328,7 @@ impl InitialCondition {
             value,
         }
     }
-    
+
     /// 检查条件的相关性
     pub fn is_relevant(&self) -> bool {
         !self.description.is_empty() && !self.value.is_empty()
@@ -365,12 +368,12 @@ impl ExplanationNetwork {
             connections: Vec::new(),
         }
     }
-    
+
     /// 添加解释
     pub fn add_explanation(&mut self, explanation: ScientificExplanation) {
         self.explanations.insert(explanation.phenomenon.clone(), explanation);
     }
-    
+
     /// 添加连接
     pub fn add_connection(&mut self, from: String, to: String, connection_type: ConnectionType, strength: f64) {
         self.connections.push(ExplanationConnection {
@@ -380,7 +383,7 @@ impl ExplanationNetwork {
             strength,
         });
     }
-    
+
     /// 分析解释网络
     pub fn analyze_network(&self) -> NetworkAnalysis {
         let total_explanations = self.explanations.len();
@@ -388,7 +391,7 @@ impl ExplanationNetwork {
         let average_explanatory_power: f64 = self.explanations.values()
             .map(|exp| exp.explanatory_power())
             .sum::<f64>() / total_explanations as f64;
-        
+
         NetworkAnalysis {
             total_explanations,
             total_connections,
@@ -414,57 +417,57 @@ fn main() {
         "苹果落地".to_string(),
         ExplanationType::DeductiveNomological,
     );
-    
+
     dn_explanation.add_law(ExplanationLaw::new(
         "万有引力定律".to_string(),
         "F = G * m1 * m2 / r^2".to_string(),
         LawType::Universal,
         1.0,
     ));
-    
+
     dn_explanation.add_condition(InitialCondition::new(
         "地球质量".to_string(),
         "地球的质量".to_string(),
         ConditionType::Initial,
         "5.97e24 kg".to_string(),
     ));
-    
+
     // 创建统计解释
     let mut statistical_explanation = ScientificExplanation::new(
         "基因突变".to_string(),
         ExplanationType::Statistical,
     );
-    
+
     statistical_explanation.add_law(ExplanationLaw::new(
         "突变概率".to_string(),
         "P(mutation) = 0.001".to_string(),
         LawType::Statistical,
         0.8,
     ));
-    
+
     // 创建因果解释
     let mut causal_explanation = ScientificExplanation::new(
         "吸烟导致肺癌".to_string(),
         ExplanationType::Causal,
     );
-    
+
     causal_explanation.add_law(ExplanationLaw::new(
         "致癌机制".to_string(),
         "烟草中的致癌物质损伤DNA".to_string(),
         LawType::Causal,
         0.9,
     ));
-    
+
     // 创建解释网络
     let mut network = ExplanationNetwork::new();
     network.add_explanation(dn_explanation);
     network.add_explanation(statistical_explanation);
     network.add_explanation(causal_explanation);
-    
+
     // 分析网络
     let analysis = network.analyze_network();
     println!("解释网络分析: {:?}", analysis);
-    
+
     // 测试解释力
     for (phenomenon, explanation) in &network.explanations {
         println!("{} 的解释力: {:.2}", phenomenon, explanation.explanatory_power());
@@ -524,11 +527,11 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Hempel, C. G. *Aspects of Scientific Explanation*. Free Press, 1965.
-2. Salmon, W. C. *Four Decades of Scientific Explanation*. University of Minnesota Press, 1989.
-3. Woodward, J. *Making Things Happen*. Oxford University Press, 2003.
-4. Strevens, M. *Depth*. Harvard University Press, 2008.
-5. Kitcher, P. *Explanatory Unification*. Philosophy of Science, 1981.
-6. van Fraassen, B. C. *The Scientific Image*. Oxford University Press, 1980.
-7. Lewis, D. *Causal Explanation*. Philosophical Papers, 1986.
-8. Cartwright, N. *How the Laws of Physics Lie*. Oxford University Press, 1983.
+1. Hempel, C. G. _Aspects of Scientific Explanation_. Free Press, 1965.
+2. Salmon, W. C. _Four Decades of Scientific Explanation_. University of Minnesota Press, 1989.
+3. Woodward, J. _Making Things Happen_. Oxford University Press, 2003.
+4. Strevens, M. _Depth_. Harvard University Press, 2008.
+5. Kitcher, P. _Explanatory Unification_. Philosophy of Science, 1981.
+6. van Fraassen, B. C. _The Scientific Image_. Oxford University Press, 1980.
+7. Lewis, D. _Causal Explanation_. Philosophical Papers, 1986.
+8. Cartwright, N. _How the Laws of Physics Lie_. Oxford University Press, 1983.

@@ -2,28 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 设备管理定义](#21-设备管理定义)
-  - [2.2 设备类型分类](#22-设备类型分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 设备抽象](#31-设备抽象)
-  - [3.2 IO调度](#32-io调度)
-  - [3.3 中断处理](#33-中断处理)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 IO调度效率定理](#41-io调度效率定理)
-  - [4.2 中断延迟定理](#42-中断延迟定理)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 设备抽象层实现](#51-设备抽象层实现)
-  - [5.2 IO调度器实现](#52-io调度器实现)
-  - [5.3 中断处理系统实现](#53-中断处理系统实现)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性](#72-局限性)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [10.4.1 设备管理理论](#1041-设备管理理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 设备管理定义](#21-设备管理定义)
+    - [2.2 设备类型分类](#22-设备类型分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 设备抽象](#31-设备抽象)
+    - [3.2 IO调度](#32-io调度)
+    - [3.3 中断处理](#33-中断处理)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 IO调度效率定理](#41-io调度效率定理)
+    - [4.2 中断延迟定理](#42-中断延迟定理)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 设备抽象层实现](#51-设备抽象层实现)
+    - [5.2 IO调度器实现](#52-io调度器实现)
+    - [5.3 中断处理系统实现](#53-中断处理系统实现)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性](#72-局限性)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -148,12 +151,12 @@ impl DeviceDriver for CharacterDevice {
             Err("Device is not available".to_string())
         }
     }
-    
+
     fn close(&mut self) -> Result<(), String> {
         self.position = 0;
         Ok(())
     }
-    
+
     fn read(&mut self, buffer: &mut [u8]) -> Result<usize, String> {
         let bytes_to_read = std::cmp::min(buffer.len(), self.buffer.len() - self.position);
         if bytes_to_read > 0 {
@@ -162,12 +165,12 @@ impl DeviceDriver for CharacterDevice {
         }
         Ok(bytes_to_read)
     }
-    
+
     fn write(&mut self, buffer: &[u8]) -> Result<usize, String> {
         self.buffer.extend_from_slice(buffer);
         Ok(buffer.len())
     }
-    
+
     fn ioctl(&mut self, _command: u32, _arg: u64) -> Result<i32, String> {
         Ok(0) // 默认成功
     }
@@ -207,11 +210,11 @@ impl DeviceDriver for BlockDevice {
             Err("Device is not available".to_string())
         }
     }
-    
+
     fn close(&mut self) -> Result<(), String> {
         Ok(())
     }
-    
+
     fn read(&mut self, buffer: &mut [u8]) -> Result<usize, String> {
         let block_number = 0; // 简化实现，总是读取第一个块
         if block_number < self.total_blocks {
@@ -222,7 +225,7 @@ impl DeviceDriver for BlockDevice {
             Err("Invalid block number".to_string())
         }
     }
-    
+
     fn write(&mut self, buffer: &[u8]) -> Result<usize, String> {
         let block_number = 0; // 简化实现，总是写入第一个块
         if block_number < self.total_blocks {
@@ -233,7 +236,7 @@ impl DeviceDriver for BlockDevice {
             Err("Invalid block number".to_string())
         }
     }
-    
+
     fn ioctl(&mut self, _command: u32, _arg: u64) -> Result<i32, String> {
         Ok(0)
     }
@@ -295,12 +298,12 @@ impl IOSchedulerManager {
             direction: ScanDirection::Up,
         }
     }
-    
+
     pub fn add_request(&mut self, request: IORequest) {
         self.request_queue.push_back(request);
         self.schedule_requests();
     }
-    
+
     pub fn schedule_requests(&mut self) {
         match self.scheduler_type {
             IOScheduler::FirstComeFirstServed => {
@@ -320,36 +323,36 @@ impl IOSchedulerManager {
             },
         }
     }
-    
+
     fn sstf_schedule(&mut self) {
         // 最短寻道时间优先调度
         let mut min_distance = usize::MAX;
         let mut min_index = 0;
-        
+
         for (index, request) in self.request_queue.iter().enumerate() {
             let distance = if request.block_number > self.current_head_position {
                 request.block_number - self.current_head_position
             } else {
                 self.current_head_position - request.block_number
             };
-            
+
             if distance < min_distance {
                 min_distance = distance;
                 min_index = index;
             }
         }
-        
+
         if min_index > 0 {
             let request = self.request_queue.remove(min_index).unwrap();
             self.request_queue.push_front(request);
         }
     }
-    
+
     fn scan_schedule(&mut self) {
         // SCAN算法（电梯算法）
         let mut requests_above = Vec::new();
         let mut requests_below = Vec::new();
-        
+
         for request in self.request_queue.drain(..) {
             if request.block_number >= self.current_head_position {
                 requests_above.push(request);
@@ -357,14 +360,14 @@ impl IOSchedulerManager {
                 requests_below.push(request);
             }
         }
-        
+
         // 按方向排序
         match self.direction {
             ScanDirection::Up => {
                 requests_above.sort_by_key(|r| r.block_number);
                 requests_below.sort_by_key(|r| r.block_number);
                 requests_below.reverse();
-                
+
                 for request in requests_above {
                     self.request_queue.push_back(request);
                 }
@@ -376,7 +379,7 @@ impl IOSchedulerManager {
                 requests_above.sort_by_key(|r| r.block_number);
                 requests_below.sort_by_key(|r| r.block_number);
                 requests_below.reverse();
-                
+
                 for request in requests_below {
                     self.request_queue.push_back(request);
                 }
@@ -386,12 +389,12 @@ impl IOSchedulerManager {
             },
         }
     }
-    
+
     fn cscan_schedule(&mut self) {
         // C-SCAN算法（循环扫描）
         let mut requests_above = Vec::new();
         let mut requests_below = Vec::new();
-        
+
         for request in self.request_queue.drain(..) {
             if request.block_number >= self.current_head_position {
                 requests_above.push(request);
@@ -399,11 +402,11 @@ impl IOSchedulerManager {
                 requests_below.push(request);
             }
         }
-        
+
         // 总是向上扫描
         requests_above.sort_by_key(|r| r.block_number);
         requests_below.sort_by_key(|r| r.block_number);
-        
+
         for request in requests_above {
             self.request_queue.push_back(request);
         }
@@ -411,12 +414,12 @@ impl IOSchedulerManager {
             self.request_queue.push_back(request);
         }
     }
-    
+
     fn look_schedule(&mut self) {
         // LOOK算法（改进的SCAN）
         self.scan_schedule(); // 简化实现，使用SCAN的逻辑
     }
-    
+
     pub fn get_next_request(&mut self) -> Option<IORequest> {
         if let Some(request) = self.request_queue.pop_front() {
             self.current_head_position = request.block_number;
@@ -425,7 +428,7 @@ impl IOSchedulerManager {
             None
         }
     }
-    
+
     pub fn get_queue_length(&self) -> usize {
         self.request_queue.len()
     }
@@ -472,7 +475,7 @@ impl InterruptController {
             current_priority: 0,
         }
     }
-    
+
     pub fn register_handler(&mut self, irq_number: u32, device_id: u32, handler_function: String) {
         let handler = InterruptHandler {
             irq_number,
@@ -482,21 +485,21 @@ impl InterruptController {
         };
         self.handlers.insert(irq_number, handler);
     }
-    
+
     pub fn enable_interrupt(&mut self, irq_number: u32) {
         if let Some(handler) = self.handlers.get_mut(&irq_number) {
             handler.is_enabled = true;
             self.interrupt_mask |= 1 << irq_number;
         }
     }
-    
+
     pub fn disable_interrupt(&mut self, irq_number: u32) {
         if let Some(handler) = self.handlers.get_mut(&irq_number) {
             handler.is_enabled = false;
             self.interrupt_mask &= !(1 << irq_number);
         }
     }
-    
+
     pub fn raise_interrupt(&mut self, irq_number: u32, device_id: u32, data: Vec<u8>) {
         if let Some(handler) = self.handlers.get(&irq_number) {
             if handler.is_enabled {
@@ -514,14 +517,14 @@ impl InterruptController {
             }
         }
     }
-    
+
     pub fn handle_interrupts(&mut self) -> Vec<InterruptRequest> {
         let mut handled_interrupts = Vec::new();
-        
+
         // 按优先级排序中断请求
         let mut sorted_interrupts: Vec<_> = self.pending_interrupts.drain(..).collect();
         sorted_interrupts.sort_by_key(|irq| irq.priority);
-        
+
         for interrupt in sorted_interrupts {
             if let Some(handler) = self.handlers.get(&interrupt.irq_number) {
                 if handler.is_enabled {
@@ -531,19 +534,19 @@ impl InterruptController {
                 }
             }
         }
-        
+
         handled_interrupts
     }
-    
+
     fn execute_handler(&self, handler: &InterruptHandler, interrupt: &InterruptRequest) {
         // 简化的中断处理程序执行
         println!("Executing handler {} for IRQ {}", handler.handler_function, interrupt.irq_number);
     }
-    
+
     pub fn get_pending_count(&self) -> usize {
         self.pending_interrupts.len()
     }
-    
+
     pub fn clear_all_interrupts(&mut self) {
         self.pending_interrupts.clear();
     }
@@ -564,12 +567,12 @@ impl DeviceManager {
             io_scheduler: IOSchedulerManager::new(IOScheduler::SCAN),
         }
     }
-    
+
     pub fn register_device(&mut self, device_id: u32, device: Box<dyn DeviceDriver>) {
         let device_arc = Arc::new(Mutex::new(device));
         self.devices.insert(device_id, device_arc);
     }
-    
+
     pub fn open_device(&mut self, device_id: u32) -> Result<(), String> {
         if let Some(device) = self.devices.get(&device_id) {
             if let Ok(mut device_guard) = device.lock() {
@@ -581,7 +584,7 @@ impl DeviceManager {
             Err("Device not found".to_string())
         }
     }
-    
+
     pub fn read_device(&mut self, device_id: u32, buffer: &mut [u8]) -> Result<usize, String> {
         if let Some(device) = self.devices.get(&device_id) {
             if let Ok(mut device_guard) = device.lock() {
@@ -593,7 +596,7 @@ impl DeviceManager {
             Err("Device not found".to_string())
         }
     }
-    
+
     pub fn write_device(&mut self, device_id: u32, buffer: &[u8]) -> Result<usize, String> {
         if let Some(device) = self.devices.get(&device_id) {
             if let Ok(mut device_guard) = device.lock() {
@@ -605,7 +608,7 @@ impl DeviceManager {
             Err("Device not found".to_string())
         }
     }
-    
+
     pub fn close_device(&mut self, device_id: u32) -> Result<(), String> {
         if let Some(device) = self.devices.get(&device_id) {
             if let Ok(mut device_guard) = device.lock() {
@@ -634,8 +637,8 @@ impl DeviceManager {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

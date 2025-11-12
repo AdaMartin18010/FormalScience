@@ -3,44 +3,44 @@
 ## 📋 目录
 
 - [01. 算法基础理论 (Algorithm Foundation Theory)](#01-算法基础理论-algorithm-foundation-theory)
-  - [1 . 算法基本概念](#1-算法基本概念)
+  - [📋 目录](#-目录)
   - [1. 算法基本概念](#1-算法基本概念)
     - [1.1 算法的形式化定义](#11-算法的形式化定义)
     - [1.2 算法复杂度理论](#12-算法复杂度理论)
     - [1.3 算法正确性理论](#13-算法正确性理论)
     - [1.4 算法工程实现](#14-算法工程实现)
-  - [2 . 算法特性](#2-算法特性)
-  - [3 . 算法设计范式](#3-算法设计范式)
+  - [2. 算法特性](#2-算法特性)
+  - [3. 算法设计范式](#3-算法设计范式)
     - [3.1 分治策略](#31-分治策略)
     - [3.2 动态规划](#32-动态规划)
     - [3.3 贪心算法](#33-贪心算法)
-  - [4 . 数据结构理论](#4-数据结构理论)
+  - [4. 数据结构理论](#4-数据结构理论)
     - [4.1 线性结构](#41-线性结构)
     - [4.2 树形结构](#42-树形结构)
     - [4.3 图结构](#43-图结构)
-  - [5 . 排序算法理论](#5-排序算法理论)
+  - [5. 排序算法理论](#5-排序算法理论)
     - [5.1 比较排序](#51-比较排序)
     - [5.2 非比较排序](#52-非比较排序)
     - [5.3 排序下界](#53-排序下界)
-  - [6 . 搜索算法理论](#6-搜索算法理论)
+  - [6. 搜索算法理论](#6-搜索算法理论)
     - [6.1 线性搜索](#61-线性搜索)
     - [6.2 二分搜索](#62-二分搜索)
     - [6.2 二分搜索1](#62-二分搜索1)
     - [6.3 启发式搜索](#63-启发式搜索)
-  - [7 . 图算法理论](#7-图算法理论)
+  - [7. 图算法理论](#7-图算法理论)
     - [7.1 图的遍历](#71-图的遍历)
     - [7.2 最短路径](#72-最短路径)
     - [7.3 最小生成树](#73-最小生成树)
-  - [8 . 算法正确性理论](#8-算法正确性理论)
+  - [8. 算法正确性理论](#8-算法正确性理论)
     - [8.1 循环不变式](#81-循环不变式)
     - [8.2 归纳证明](#82-归纳证明)
     - [8.3 形式化验证](#83-形式化验证)
-  - [9 . 工程验证框架](#9-工程验证框架)
+  - [9. 工程验证框架](#9-工程验证框架)
     - [9.1 性能测试框架](#91-性能测试框架)
     - [9.2 正确性验证](#92-正确性验证)
     - [9.3 复杂度分析](#93-复杂度分析)
-  - [10 📊 总结](#10-总结)
-  - [11 深度批判性分析](#11-深度批判性分析)
+  - [📊 总结](#-总结)
+  - [深度批判性分析](#深度批判性分析)
     - [10.1 历史发展维度](#101-历史发展维度)
       - [10.1.1 算法理论的历史发展](#1011-算法理论的历史发展)
     - [10.2 哲学基础维度](#102-哲学基础维度)
@@ -165,13 +165,13 @@ $$\forall x \in \text{Input}_P: A(x) \in \text{Output}_P(x)$$
 pub trait Algorithm<T, R> {
     /// 执行算法
     fn execute(&self, input: T) -> R;
-    
+
     /// 获取算法名称
     fn name(&self) -> &'static str;
-    
+
     /// 获取时间复杂度
     fn time_complexity(&self) -> Complexity;
-    
+
     /// 获取空间复杂度
     fn space_complexity(&self) -> Complexity;
 }
@@ -218,7 +218,7 @@ pub struct AlgorithmMetrics {
 /// 算法基准测试特征
 pub trait AlgorithmBenchmark<T, R> {
     fn benchmark(&self, input: T) -> AlgorithmMetrics;
-    
+
     fn benchmark_multiple(&self, inputs: Vec<T>) -> Vec<AlgorithmMetrics> {
         inputs.into_iter().map(|input| self.benchmark(input)).collect()
     }
@@ -227,7 +227,7 @@ pub trait AlgorithmBenchmark<T, R> {
 /// 算法正确性验证特征
 pub trait AlgorithmVerification<T, R> {
     fn verify(&self, input: T, expected: R) -> bool;
-    
+
     fn verify_multiple(&self, test_cases: Vec<(T, R)>) -> bool {
         test_cases.into_iter().all(|(input, expected)| self.verify(input, expected))
     }
@@ -246,15 +246,15 @@ impl<T: PartialEq> Algorithm<(&[T], T), Option<usize>> for LinearSearch {
         }
         None
     }
-    
+
     fn name(&self) -> &'static str {
         "Linear Search"
     }
-    
+
     fn time_complexity(&self) -> Complexity {
         Complexity::Linear
     }
-    
+
     fn space_complexity(&self) -> Complexity {
         Complexity::Constant
     }
@@ -265,12 +265,12 @@ impl<T: PartialEq> AlgorithmBenchmark<(&[T], T), Option<usize>> for LinearSearch
         let (arr, _) = input;
         let start = std::time::Instant::now();
         let memory_before = std::mem::size_of_val(arr);
-        
+
         let _result = self.execute(input);
-        
+
         let duration = start.elapsed();
         let memory_after = std::mem::size_of_val(arr);
-        
+
         AlgorithmMetrics {
             execution_time: duration,
             memory_usage: memory_after.saturating_sub(memory_before),
@@ -290,45 +290,45 @@ impl<T: PartialEq> AlgorithmVerification<(&[T], T), Option<usize>> for LinearSea
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_linear_search() {
         let arr = vec![1, 2, 3, 4, 5];
         let search = LinearSearch;
-        
+
         // 测试找到元素
         assert_eq!(search.execute((&arr, 3)), Some(2));
-        
+
         // 测试未找到元素
         assert_eq!(search.execute((&arr, 6)), None);
-        
+
         // 测试空数组
         let empty: Vec<i32> = vec![];
         assert_eq!(search.execute((&empty, 1)), None);
     }
-    
+
     #[test]
     fn test_linear_search_benchmark() {
         let arr: Vec<i32> = (0..1000).collect();
         let search = LinearSearch;
-        
+
         let metrics = search.benchmark((&arr, 500));
-        
+
         assert!(metrics.execution_time.as_micros() > 0);
         assert_eq!(metrics.input_size, 1000);
     }
-    
+
     #[test]
     fn test_linear_search_verification() {
         let arr = vec![1, 2, 3, 4, 5];
         let search = LinearSearch;
-        
+
         let test_cases = vec![
             ((&arr, 3), Some(2)),
             ((&arr, 6), None),
             ((&arr, 1), Some(0)),
         ];
-        
+
         assert!(search.verify_multiple(test_cases));
     }
 }
@@ -500,17 +500,17 @@ impl Graph {
             adjacency_list: HashMap::new(),
         }
     }
-    
+
     /// 添加边
     pub fn add_edge(&mut self, from: usize, to: usize) {
         self.adjacency_list.entry(from).or_insert_with(Vec::new).push(to);
     }
-    
+
     /// 获取邻居节点
     pub fn get_neighbors(&self, vertex: usize) -> &[usize] {
         self.adjacency_list.get(&vertex).map_or(&[], |neighbors| neighbors)
     }
-    
+
     /// 深度优先搜索
     pub fn dfs(&self, start: usize) -> Vec<usize> {
         let mut visited = HashSet::new();
@@ -518,32 +518,32 @@ impl Graph {
         self.dfs_recursive(start, &mut visited, &mut result);
         result
     }
-    
+
     fn dfs_recursive(&self, vertex: usize, visited: &mut HashSet<usize>, result: &mut Vec<usize>) {
         if visited.contains(&vertex) {
             return;
         }
-        
+
         visited.insert(vertex);
         result.push(vertex);
-        
+
         for &neighbor in self.get_neighbors(vertex) {
             self.dfs_recursive(neighbor, visited, result);
         }
     }
-    
+
     /// 广度优先搜索
     pub fn bfs(&self, start: usize) -> Vec<usize> {
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
         let mut result = Vec::new();
-        
+
         visited.insert(start);
         queue.push_back(start);
-        
+
         while let Some(vertex) = queue.pop_front() {
             result.push(vertex);
-            
+
             for &neighbor in self.get_neighbors(vertex) {
                 if !visited.contains(&neighbor) {
                     visited.insert(neighbor);
@@ -551,35 +551,35 @@ impl Graph {
                 }
             }
         }
-        
+
         result
     }
-    
+
     /// 最短路径算法 (Dijkstra)
     pub fn shortest_path(&self, start: usize, end: usize) -> Option<Vec<usize>> {
         let mut distances: HashMap<usize, usize> = HashMap::new();
         let mut previous: HashMap<usize, usize> = HashMap::new();
         let mut unvisited: HashSet<usize> = HashSet::new();
-        
+
         // 初始化
         for &vertex in self.adjacency_list.keys() {
             distances.insert(vertex, usize::MAX);
             unvisited.insert(vertex);
         }
         distances.insert(start, 0);
-        
+
         while !unvisited.is_empty() {
             // 找到距离最小的未访问节点
             let current = unvisited.iter()
                 .min_by_key(|&&vertex| distances.get(&vertex).unwrap_or(&usize::MAX))
                 .copied()?;
-            
+
             if current == end {
                 break;
             }
-            
+
             unvisited.remove(&current);
-            
+
             // 更新邻居距离
             for &neighbor in self.get_neighbors(current) {
                 if unvisited.contains(&neighbor) {
@@ -591,7 +591,7 @@ impl Graph {
                 }
             }
         }
-        
+
         // 重建路径
         if distances[&end] == usize::MAX {
             None
@@ -613,7 +613,7 @@ impl Graph {
 #[cfg(test)]
 mod graph_tests {
     use super::*;
-    
+
     #[test]
     fn test_dfs() {
         let mut graph = Graph::new();
@@ -621,11 +621,11 @@ mod graph_tests {
         graph.add_edge(0, 2);
         graph.add_edge(1, 3);
         graph.add_edge(2, 3);
-        
+
         let result = graph.dfs(0);
         assert_eq!(result, vec![0, 1, 3, 2]);
     }
-    
+
     #[test]
     fn test_bfs() {
         let mut graph = Graph::new();
@@ -633,11 +633,11 @@ mod graph_tests {
         graph.add_edge(0, 2);
         graph.add_edge(1, 3);
         graph.add_edge(2, 3);
-        
+
         let result = graph.bfs(0);
         assert_eq!(result, vec![0, 1, 2, 3]);
     }
-    
+
     #[test]
     fn test_shortest_path() {
         let mut graph = Graph::new();
@@ -645,7 +645,7 @@ mod graph_tests {
         graph.add_edge(0, 2);
         graph.add_edge(1, 3);
         graph.add_edge(2, 3);
-        
+
         let path = graph.shortest_path(0, 3);
         assert_eq!(path, Some(vec![0, 1, 3]));
     }
@@ -707,23 +707,23 @@ impl QuickSort {
         if arr.len() <= 1 {
             return;
         }
-        
+
         let pivot_index = Self::partition(arr);
         Self::sort(&mut arr[..pivot_index]);
         Self::sort(&mut arr[pivot_index + 1..]);
     }
-    
+
     fn partition<T: Ord>(arr: &mut [T]) -> usize {
         let pivot_index = arr.len() - 1;
         let mut i = 0;
-        
+
         for j in 0..pivot_index {
             if arr[j] <= arr[pivot_index] {
                 arr.swap(i, j);
                 i += 1;
             }
         }
-        
+
         arr.swap(i, pivot_index);
         i
     }
@@ -732,14 +732,14 @@ impl QuickSort {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_quick_sort() {
         let mut arr = vec![3, 1, 4, 1, 5, 9, 2, 6];
         QuickSort::sort(&mut arr);
         assert_eq!(arr, vec![1, 1, 2, 3, 4, 5, 6, 9]);
     }
-    
+
     #[test]
     fn test_quick_sort_performance() {
         let mut arr: Vec<i32> = (0..10000).rev().collect();
@@ -833,21 +833,21 @@ impl MergeSort {
         if arr.len() <= 1 {
             return;
         }
-        
+
         let mid = arr.len() / 2;
         Self::sort(&mut arr[..mid]);
         Self::sort(&mut arr[mid..]);
         Self::merge(arr, mid);
     }
-    
+
     fn merge<T: Ord + Clone>(arr: &mut [T], mid: usize) {
         let left = arr[..mid].to_vec();
         let right = arr[mid..].to_vec();
-        
+
         let mut i = 0;
         let mut j = 0;
         let mut k = 0;
-        
+
         while i < left.len() && j < right.len() {
             if left[i] <= right[j] {
                 arr[k] = left[i].clone();
@@ -858,13 +858,13 @@ impl MergeSort {
             }
             k += 1;
         }
-        
+
         while i < left.len() {
             arr[k] = left[i].clone();
             i += 1;
             k += 1;
         }
-        
+
         while j < right.len() {
             arr[k] = right[j].clone();
             j += 1;
@@ -876,14 +876,14 @@ impl MergeSort {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_merge_sort() {
         let mut arr = vec![3, 1, 4, 1, 5, 9, 2, 6];
         MergeSort::sort(&mut arr);
         assert_eq!(arr, vec![1, 1, 2, 3, 4, 5, 6, 9]);
     }
-    
+
     #[test]
     fn test_merge_sort_stability() {
         #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -891,20 +891,20 @@ mod tests {
             value: i32,
             index: usize,
         }
-        
+
         let mut arr = vec![
             Item { value: 1, index: 0 },
             Item { value: 1, index: 1 },
             Item { value: 2, index: 2 },
         ];
-        
+
         MergeSort::sort(&mut arr);
-        
+
         // 验证稳定性：相等元素保持原有顺序
         assert_eq!(arr[0].index, 0);
         assert_eq!(arr[1].index, 1);
     }
-    
+
     #[test]
     fn test_merge_sort_performance() {
         let mut arr: Vec<i32> = (0..10000).rev().collect();
@@ -971,7 +971,7 @@ impl LinearSearch {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_linear_search() {
         let arr = vec![1, 3, 5, 7, 9, 11, 13];
@@ -1021,29 +1021,29 @@ impl BinarySearch {
     pub fn search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
         let mut left = 0;
         let mut right = arr.len().saturating_sub(1);
-        
+
         while left <= right {
             let mid = left + (right - left) / 2;
-            
+
             match arr[mid].cmp(target) {
                 std::cmp::Ordering::Equal => return Some(mid),
                 std::cmp::Ordering::Less => left = mid + 1,
                 std::cmp::Ordering::Greater => right = mid.saturating_sub(1),
             }
         }
-        
+
         None
     }
-    
+
     /// 查找第一个等于目标值的位置
     pub fn search_first<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
         let mut left = 0;
         let mut right = arr.len();
         let mut result = None;
-        
+
         while left < right {
             let mid = left + (right - left) / 2;
-            
+
             match arr[mid].cmp(target) {
                 std::cmp::Ordering::Equal => {
                     result = Some(mid);
@@ -1053,7 +1053,7 @@ impl BinarySearch {
                 std::cmp::Ordering::Greater => right = mid,
             }
         }
-        
+
         result
     }
 }
@@ -1061,14 +1061,14 @@ impl BinarySearch {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_binary_search() {
         let arr = vec![1, 3, 5, 7, 9, 11, 13];
         assert_eq!(BinarySearch::search(&arr, &5), Some(2));
         assert_eq!(BinarySearch::search(&arr, &10), None);
     }
-    
+
     #[test]
     fn test_binary_search_first() {
         let arr = vec![1, 2, 2, 2, 3, 4, 5];
@@ -1117,7 +1117,7 @@ function AStar(start, goal):
     gScore[start] = 0
     fScore = map with default value infinity
     fScore[start] = h(start)
-    
+
     while openSet is not empty:
         current = node in openSet with lowest fScore
         if current == goal:

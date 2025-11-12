@@ -97,7 +97,7 @@ impl Action {
 
     pub fn is_complementary(&self, other: &Action) -> bool {
         match (&self.action_type, &other.action_type) {
-            (ActionType::Input, ActionType::Output) | 
+            (ActionType::Input, ActionType::Output) |
             (ActionType::Output, ActionType::Input) => {
                 self.name == other.name
             },
@@ -173,7 +173,7 @@ impl TransitionSystem {
     pub fn new(initial_state: &str) -> Self {
         let mut states = HashSet::new();
         states.insert(initial_state.to_string());
-        
+
         TransitionSystem {
             states,
             initial_state: initial_state.to_string(),
@@ -189,7 +189,7 @@ impl TransitionSystem {
     pub fn add_transition(&mut self, from: &str, action: Action, to: &str) {
         self.add_state(from);
         self.add_state(to);
-        
+
         self.transitions.push(Transition {
             from: from.to_string(),
             action,
@@ -221,7 +221,7 @@ impl TransitionSystem {
     pub fn reachable_states(&self) -> HashSet<String> {
         let mut reachable = HashSet::new();
         let mut to_visit = vec![self.initial_state.clone()];
-        
+
         while let Some(state) = to_visit.pop() {
             if reachable.insert(state.clone()) {
                 for (_, next_state) in self.successors(&state) {
@@ -229,7 +229,7 @@ impl TransitionSystem {
                 }
             }
         }
-        
+
         reachable
     }
 }
@@ -487,11 +487,11 @@ impl ModelChecker {
     pub fn check_livelock(&self) -> Vec<String> {
         let mut livelock_states = vec![];
         let reachable = self.transition_system.reachable_states();
-        
+
         for state in &reachable {
             let mut visited = HashSet::new();
             let mut current = state.clone();
-            
+
             // 检查是否存在无限循环
             while visited.insert(current.clone()) {
                 let successors = self.transition_system.successors(&current);
@@ -500,12 +500,12 @@ impl ModelChecker {
                 }
                 current = successors[0].1.clone();
             }
-            
+
             if visited.contains(&current) {
                 livelock_states.push(state.clone());
             }
         }
-        
+
         livelock_states
     }
 }
@@ -542,23 +542,23 @@ impl CCSProcess {
     fn transitions_recursive(&self, process: &Process, state_name: &str) -> Vec<(String, Action, String)> {
         match process {
             Process::Nil => vec![],
-            
+
             Process::Action(action, continuation) => {
                 let next_state = format!("{}_after_{}", state_name, action.name);
                 let mut transitions = vec![(state_name.to_string(), action.clone(), next_state.clone())];
                 transitions.extend(self.transitions_recursive(continuation, &next_state));
                 transitions
             },
-            
+
             Process::Choice(left, right) => {
                 let mut transitions = self.transitions_recursive(left, &format!("{}_left", state_name));
                 transitions.extend(self.transitions_recursive(right, &format!("{}_right", state_name)));
                 transitions
             },
-            
+
             Process::Parallel(left, right) => {
                 let mut transitions = vec![];
-                
+
                 // 左进程的转换
                 let left_transitions = self.transitions_recursive(left, &format!("{}_left", state_name));
                 for (from, action, to) in left_transitions {
@@ -566,7 +566,7 @@ impl CCSProcess {
                     let new_to = format!("{}_par_{}", state_name, to);
                     transitions.push((new_from, action, new_to));
                 }
-                
+
                 // 右进程的转换
                 let right_transitions = self.transitions_recursive(right, &format!("{}_right", state_name));
                 for (from, action, to) in right_transitions {
@@ -574,7 +574,7 @@ impl CCSProcess {
                     let new_to = format!("{}_par_{}", state_name, to);
                     transitions.push((new_from, action, new_to));
                 }
-                
+
                 // 同步转换
                 for (from1, action1, to1) in &left_transitions {
                     for (from2, action2, to2) in &right_transitions {
@@ -586,16 +586,16 @@ impl CCSProcess {
                         }
                     }
                 }
-                
+
                 transitions
             },
-            
+
             Process::Restriction(process, action_name) => {
                 let mut transitions = self.transitions_recursive(process, state_name);
                 transitions.retain(|(_, action, _)| action.name != *action_name);
                 transitions
             },
-            
+
             Process::Variable(var_name) => {
                 if let Some(definition) = self.environment.get(var_name) {
                     self.transitions_recursive(definition, state_name)
@@ -603,7 +603,7 @@ impl CCSProcess {
                     vec![]
                 }
             },
-            
+
             _ => vec![],
         }
     }
@@ -651,24 +651,24 @@ impl CSPProcess {
 fn process_algebra_example() {
     // 创建CCS进程
     let mut ccs = CCSProcess::new("P", Process::nil());
-    
+
     // 定义进程 P = a.P + b.Q
     let action_a = Action::new("a", ActionType::Output);
     let action_b = Action::new("b", ActionType::Output);
-    
+
     let process_p = Process::choice(
         Process::action(action_a, Process::variable("P")),
         Process::action(action_b, Process::variable("Q"))
     );
-    
+
     let process_q = Process::action(
         Action::new("c", ActionType::Output),
         Process::nil()
     );
-    
+
     ccs.add_definition("P", process_p);
     ccs.add_definition("Q", process_q);
-    
+
     // 生成转换系统
     let transitions = ccs.transitions();
     println!("CCS转换:");
@@ -684,17 +684,17 @@ fn process_algebra_example() {
 fn petri_net_example() {
     // 创建Petri网
     let mut net = PetriNet::new();
-    
+
     // 添加库所
     net.add_place("p1", "Ready", None);
     net.add_place("p2", "Running", None);
     net.add_place("p3", "Blocked", None);
-    
+
     // 添加变迁
     net.add_transition("t1", "Start", None);
     net.add_transition("t2", "Block", None);
     net.add_transition("t3", "Resume", None);
-    
+
     // 添加弧
     net.add_arc("p1", "t1", 1, ArcType::PlaceToTransition);
     net.add_arc("t1", "p2", 1, ArcType::TransitionToPlace);
@@ -702,23 +702,23 @@ fn petri_net_example() {
     net.add_arc("t2", "p3", 1, ArcType::TransitionToPlace);
     net.add_arc("p3", "t3", 1, ArcType::PlaceToTransition);
     net.add_arc("t3", "p2", 1, ArcType::TransitionToPlace);
-    
+
     // 设置初始标识
     net.set_initial_marking("p1", 1);
-    
+
     // 模拟执行
     let mut marking = net.initial_marking.clone();
     println!("初始标识: {:?}", marking);
-    
+
     // 激发变迁
     if net.fire_transition("t1", &mut marking) {
         println!("激发t1后: {:?}", marking);
     }
-    
+
     if net.fire_transition("t2", &mut marking) {
         println!("激发t2后: {:?}", marking);
     }
-    
+
     // 检查可激发的变迁
     let enabled = net.enabled_transitions(&marking);
     println!("可激发的变迁: {:?}", enabled);
@@ -731,34 +731,34 @@ fn petri_net_example() {
 fn model_checking_example() {
     // 创建转换系统
     let mut ts = TransitionSystem::new("s0");
-    
+
     // 添加状态和转换
     ts.add_transition("s0", Action::new("a", ActionType::Internal), "s1");
     ts.add_transition("s1", Action::new("b", ActionType::Internal), "s2");
     ts.add_transition("s2", Action::new("c", ActionType::Internal), "s0");
-    
+
     // 添加标签
     ts.add_label("s0", "start");
     ts.add_label("s1", "middle");
     ts.add_label("s2", "end");
-    
+
     // 创建模型检测器
     let checker = ModelChecker::new(ts);
-    
+
     // 检查CTL公式
     let formula = TemporalFormula::always(
         TemporalFormula::eventually(
             TemporalFormula::atomic("end")
         )
     );
-    
+
     let result = checker.check_ctl(&formula);
     println!("满足公式的状态: {:?}", result);
-    
+
     // 检查死锁
     let deadlocks = checker.check_deadlock();
     println!("死锁状态: {:?}", deadlocks);
-    
+
     // 检查活锁
     let livelocks = checker.check_livelock();
     println!("活锁状态: {:?}", livelocks);
@@ -771,17 +771,17 @@ fn model_checking_example() {
 fn concurrency_control_example() {
     // 生产者-消费者问题
     let mut net = PetriNet::new();
-    
+
     // 添加库所
     net.add_place("empty", "Empty slots", Some(5));
     net.add_place("full", "Full slots", Some(0));
     net.add_place("producer", "Producer ready", Some(1));
     net.add_place("consumer", "Consumer ready", Some(1));
-    
+
     // 添加变迁
     net.add_transition("produce", "Produce item", None);
     net.add_transition("consume", "Consume item", None);
-    
+
     // 添加弧
     net.add_arc("empty", "produce", 1, ArcType::PlaceToTransition);
     net.add_arc("produce", "full", 1, ArcType::TransitionToPlace);
@@ -791,23 +791,23 @@ fn concurrency_control_example() {
     net.add_arc("produce", "producer", 1, ArcType::TransitionToPlace);
     net.add_arc("consumer", "consume", 1, ArcType::PlaceToTransition);
     net.add_arc("consume", "consumer", 1, ArcType::TransitionToPlace);
-    
+
     // 设置初始标识
     net.set_initial_marking("empty", 5);
     net.set_initial_marking("producer", 1);
     net.set_initial_marking("consumer", 1);
-    
+
     // 模拟执行
     let mut marking = net.initial_marking.clone();
     println!("初始标识: {:?}", marking);
-    
+
     for step in 0..10 {
         let enabled = net.enabled_transitions(&marking);
         if enabled.is_empty() {
             println!("步骤 {}: 无可用变迁", step);
             break;
         }
-        
+
         // 随机选择一个可激发的变迁
         if let Some(transition) = enabled.first() {
             if net.fire_transition(transition, &mut marking) {
@@ -881,5 +881,5 @@ fn concurrency_control_example() {
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

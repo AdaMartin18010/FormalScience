@@ -118,7 +118,7 @@ impl<K: Ord + Clone, V: Clone> BTreeNode<K, V> {
             is_leaf,
         }
     }
-    
+
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         if self.is_leaf {
             self.insert_leaf(key, value)
@@ -126,7 +126,7 @@ impl<K: Ord + Clone, V: Clone> BTreeNode<K, V> {
             self.insert_non_leaf(key, value)
         }
     }
-    
+
     fn insert_leaf(&mut self, key: K, value: V) -> Option<V> {
         let pos = self.keys.binary_search(&key);
         match pos {
@@ -144,28 +144,28 @@ impl<K: Ord + Clone, V: Clone> BTreeNode<K, V> {
             }
         }
     }
-    
+
     fn insert_non_leaf(&mut self, key: K, value: V) -> Option<V> {
         let child_index = self.find_child_index(&key);
         let child = &mut self.children[child_index];
-        
+
         if child.keys.len() >= 3 { // 简化的分裂条件
             self.split_child(child_index);
             let new_child_index = self.find_child_index(&key);
             return self.children[new_child_index].insert(key, value);
         }
-        
+
         child.insert(key, value)
     }
-    
+
     fn find_child_index(&self, key: &K) -> usize {
         self.keys.binary_search(key).unwrap_or_else(|i| i)
     }
-    
+
     fn split_child(&mut self, child_index: usize) {
         let child = &mut self.children[child_index];
         let mid = child.keys.len() / 2;
-        
+
         let right_keys = child.keys.split_off(mid + 1);
         let right_values = child.values.split_off(mid + 1);
         let right_children = if !child.is_leaf {
@@ -173,22 +173,22 @@ impl<K: Ord + Clone, V: Clone> BTreeNode<K, V> {
         } else {
             Vec::new()
         };
-        
+
         let key = child.keys.pop().unwrap();
         let value = child.values.pop().unwrap();
-        
+
         let right_node = BTreeNode {
             keys: right_keys,
             values: right_values,
             children: right_children,
             is_leaf: child.is_leaf,
         };
-        
+
         self.keys.insert(child_index, key);
         self.values.insert(child_index, value);
         self.children.insert(child_index + 1, right_node);
     }
-    
+
     pub fn search(&self, key: &K) -> Option<&V> {
         if self.is_leaf {
             self.search_leaf(key)
@@ -196,13 +196,13 @@ impl<K: Ord + Clone, V: Clone> BTreeNode<K, V> {
             self.search_non_leaf(key)
         }
     }
-    
+
     fn search_leaf(&self, key: &K) -> Option<&V> {
         self.keys.binary_search(key)
             .ok()
             .map(|index| &self.values[index])
     }
-    
+
     fn search_non_leaf(&self, key: &K) -> Option<&V> {
         let child_index = self.find_child_index(key);
         if child_index < self.children.len() {
@@ -235,11 +235,11 @@ impl<K: Hash + Eq + Clone, V: Clone> HashIndex<K, V> {
             capacity,
         }
     }
-    
+
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         let index = self.hash(&key);
         let bucket = &mut self.buckets[index];
-        
+
         // 检查是否已存在相同的键
         for (i, (existing_key, _)) in bucket.iter().enumerate() {
             if existing_key == &key {
@@ -248,36 +248,36 @@ impl<K: Hash + Eq + Clone, V: Clone> HashIndex<K, V> {
                 return Some(old_value);
             }
         }
-        
+
         // 插入新键值对
         bucket.push((key, value));
         self.size += 1;
-        
+
         // 检查是否需要重新哈希
         if self.size > self.capacity * 3 / 4 {
             self.rehash();
         }
-        
+
         None
     }
-    
+
     pub fn get(&self, key: &K) -> Option<&V> {
         let index = self.hash(key);
         let bucket = &self.buckets[index];
-        
+
         for (existing_key, value) in bucket {
             if existing_key == key {
                 return Some(value);
             }
         }
-        
+
         None
     }
-    
+
     pub fn remove(&mut self, key: &K) -> Option<V> {
         let index = self.hash(key);
         let bucket = &mut self.buckets[index];
-        
+
         for (i, (existing_key, _)) in bucket.iter().enumerate() {
             if existing_key == key {
                 let (_, value) = bucket.remove(i);
@@ -285,21 +285,21 @@ impl<K: Hash + Eq + Clone, V: Clone> HashIndex<K, V> {
                 return Some(value);
             }
         }
-        
+
         None
     }
-    
+
     fn hash(&self, key: &K) -> usize {
         let mut hasher = std::collections::hash_map::DefaultHasher::new();
         key.hash(&mut hasher);
         (hasher.finish() as usize) % self.capacity
     }
-    
+
     fn rehash(&mut self) {
         let old_buckets = std::mem::replace(&mut self.buckets, vec![Vec::new(); self.capacity * 2]);
         self.capacity *= 2;
         self.size = 0;
-        
+
         for bucket in old_buckets {
             for (key, value) in bucket {
                 self.insert(key, value);
@@ -332,17 +332,17 @@ impl<K: Ord + Clone + Hash, V: Clone> IndexManager<K, V> {
             indexes: HashMap::new(),
         }
     }
-    
+
     pub fn create_btree_index(&mut self, name: String) {
         let index = BTreeIndex::new();
         self.indexes.insert(name, Box::new(index));
     }
-    
+
     pub fn create_hash_index(&mut self, name: String, capacity: usize) {
         let index = HashIndex::new(capacity);
         self.indexes.insert(name, Box::new(index));
     }
-    
+
     pub fn insert(&mut self, index_name: &str, key: K, value: V) -> Result<Option<V>, String> {
         if let Some(index) = self.indexes.get_mut(index_name) {
             Ok(index.insert(key, value))
@@ -350,7 +350,7 @@ impl<K: Ord + Clone + Hash, V: Clone> IndexManager<K, V> {
             Err(format!("Index '{}' not found", index_name))
         }
     }
-    
+
     pub fn get(&self, index_name: &str, key: &K) -> Result<Option<&V>, String> {
         if let Some(index) = self.indexes.get(index_name) {
             Ok(index.get(key))
@@ -358,7 +358,7 @@ impl<K: Ord + Clone + Hash, V: Clone> IndexManager<K, V> {
             Err(format!("Index '{}' not found", index_name))
         }
     }
-    
+
     pub fn remove(&mut self, index_name: &str, key: &K) -> Result<Option<V>, String> {
         if let Some(index) = self.indexes.get_mut(index_name) {
             Ok(index.remove(key))
@@ -373,16 +373,16 @@ impl<K: Ord + Clone, V: Clone> Index<K, V> for BTreeNode<K, V> {
     fn insert(&mut self, key: K, value: V) -> Option<V> {
         self.insert(key, value)
     }
-    
+
     fn get(&self, key: &K) -> Option<&V> {
         self.search(key)
     }
-    
+
     fn remove(&mut self, _key: &K) -> Option<V> {
         // 简化的删除实现
         None
     }
-    
+
     fn range_query(&self, start: &K, end: &K) -> Vec<&V> {
         let mut results = Vec::new();
         self.range_query_recursive(start, end, &mut results);
@@ -419,15 +419,15 @@ impl<K: Hash + Eq + Clone, V: Clone> Index<K, V> for HashIndex<K, V> {
     fn insert(&mut self, key: K, value: V) -> Option<V> {
         self.insert(key, value)
     }
-    
+
     fn get(&self, key: &K) -> Option<&V> {
         self.get(key)
     }
-    
+
     fn remove(&mut self, key: &K) -> Option<V> {
         self.remove(key)
     }
-    
+
     fn range_query(&self, _start: &K, _end: &K) -> Vec<&V> {
         // 哈希索引不支持范围查询
         Vec::new()

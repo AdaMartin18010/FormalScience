@@ -4,36 +4,41 @@
 
 > 本索引系统梳理复杂性理论各分支，采用严格树形编号、目录结构、本地跳转锚点与交叉引用，内容持续规范化中。
 
-**文档编号**: 14-00-COMPLEXITY  
-**创建时间**: 2024-12-20  
-**最后更新**: 2025-01-02  
+**文档编号**: 14-00-COMPLEXITY
+**创建时间**: 2024-12-20
+**最后更新**: 2025-01-02
 **版本**: 1.2
 
 ---
 
 ## 📋 目录
 
-- [1 主题分层结构与导航](#1-主题分层结构与导航)
-- [2 交叉引用示例](#2-交叉引用示例)
-- [3 概述](#3-概述)
-- [4 核心目标](#4-核心目标)
-- [5 理论框架](#5-理论框架)
-  - [5.1 计算复杂性框架](#51-计算复杂性框架)
-  - [5.2 算法复杂性框架](#52-算法复杂性框架)
-  - [5.3 系统复杂性框架](#53-系统复杂性框架)
-- [6 应用领域](#6-应用领域)
-  - [6.1 理论应用](#61-理论应用)
-  - [6.2 技术应用](#62-技术应用)
-- [7 交叉领域集成](#7-交叉领域集成)
-- [8 构建状态](#8-构建状态)
-- [9 更新日志](#9-更新日志)
-  - [9.1 v10 (2025-01-16)](#91-v10-2025-01-16)
-  - [9.2 v12 (2025-01-02)](#92-v12-2025-01-02)
-- [10 批判性分析](#10-批判性分析)
-  - [10.1 主要理论观点梳理](#101-主要理论观点梳理)
-  - [10.2 理论优势与局限性](#102-理论优势与局限性)
-  - [10.3 学科交叉融合](#103-学科交叉融合)
-  - [10.4 创新批判与未来展望](#104-创新批判与未来展望)
+- [14 复杂性理论（Complexity Theory）](#14-复杂性理论complexity-theory)
+  - [📋 目录](#-目录)
+  - [14.0 主题树形编号目录](#140-主题树形编号目录)
+  - [1 主题分层结构与导航](#1-主题分层结构与导航)
+  - [2 交叉引用示例](#2-交叉引用示例)
+  - [3 概述](#3-概述)
+  - [4 核心目标](#4-核心目标)
+  - [5 理论框架](#5-理论框架)
+    - [5.1 计算复杂性框架](#51-计算复杂性框架)
+    - [5.2 算法复杂性框架](#52-算法复杂性框架)
+    - [5.3 系统复杂性框架](#53-系统复杂性框架)
+  - [6 应用领域](#6-应用领域)
+    - [6.1 理论应用](#61-理论应用)
+    - [6.2 技术应用](#62-技术应用)
+  - [7 交叉领域集成](#7-交叉领域集成)
+  - [8 构建状态](#8-构建状态)
+  - [9 更新日志](#9-更新日志)
+    - [9.1 v10 (2025-01-16)](#91-v10-2025-01-16)
+    - [9.2 v12 (2025-01-02)](#92-v12-2025-01-02)
+  - [10 批判性分析](#10-批判性分析)
+    - [10.1 主要理论观点梳理](#101-主要理论观点梳理)
+    - [10.2 理论优势与局限性](#102-理论优势与局限性)
+    - [10.3 学科交叉融合](#103-学科交叉融合)
+    - [10.4 创新批判与未来展望](#104-创新批判与未来展望)
+    - [参考文献](#参考文献)
+    - [参考文献](#参考文献-1)
 
 ---
 
@@ -260,11 +265,11 @@
 
 ### 参考文献
 
-1. Cook, S. A. "The complexity of theorem proving procedures." *STOC*, 1971.
-2. Karp, R. M. "Reducibility among combinatorial problems." *Complexity of Computer Computations*, 1972.
-3. Knuth, D. E. *The Art of Computer Programming*. Addison-Wesley, 1997.
-4. Kolmogorov, A. N. "Three approaches to the quantitative definition of information." *Problems of Information Transmission*, 1965.
-5. Shor, P. W. "Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer." *SIAM Journal on Computing*, 1997.
+1. Cook, S. A. "The complexity of theorem proving procedures." _STOC_, 1971.
+2. Karp, R. M. "Reducibility among combinatorial problems." _Complexity of Computer Computations_, 1972.
+3. Knuth, D. E. _The Art of Computer Programming_. Addison-Wesley, 1997.
+4. Kolmogorov, A. N. "Three approaches to the quantitative definition of information." _Problems of Information Transmission_, 1965.
+5. Shor, P. W. "Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer." _SIAM Journal on Computing_, 1997.
 
 **应用前景分析**：
 
@@ -282,8 +287,8 @@
 
 ### 参考文献
 
-1. Cook, S. A. "The complexity of theorem-proving procedures." *STOC*, 1971.
-2. Knuth, D. E. *The Art of Computer Programming*. Addison-Wesley, 1968.
-3. Kolmogorov, A. N. "Three approaches to the quantitative definition of information." *Problems of Information Transmission*, 1965.
-4. Simon, H. A. *The Sciences of the Artificial*. MIT Press, 1969.
-5. Shor, P. W. "Algorithms for quantum computation: discrete logarithms and factoring." *FOCS*, 1994.
+1. Cook, S. A. "The complexity of theorem-proving procedures." _STOC_, 1971.
+2. Knuth, D. E. _The Art of Computer Programming_. Addison-Wesley, 1968.
+3. Kolmogorov, A. N. "Three approaches to the quantitative definition of information." _Problems of Information Transmission_, 1965.
+4. Simon, H. A. _The Sciences of the Artificial_. MIT Press, 1969.
+5. Shor, P. W. "Algorithms for quantum computation: discrete logarithms and factoring." _FOCS_, 1994.

@@ -2,46 +2,50 @@
 
 ## 📋 目录
 
-- [1 文档信息](#1-文档信息)
-- [2 理论概述](#2-理论概述)
-- [3 基础概念](#3-基础概念)
-  - [3.1 参数化时态逻辑的定义](#31-参数化时态逻辑的定义)
-  - [3.2 参数类型](#32-参数类型)
-- [4 语法定义](#4-语法定义)
-  - [4.1 参数化时态语言](#41-参数化时态语言)
-  - [4.2 参数约束](#42-参数约束)
-- [5 语义解释](#5-语义解释)
-  - [5.1 参数化克里普克结构](#51-参数化克里普克结构)
-  - [5.2 参数化语义](#52-参数化语义)
-- [6 形式化系统](#6-形式化系统)
-  - [6.1 参数化时态逻辑的公理系统](#61-参数化时态逻辑的公理系统)
-  - [6.2 推理规则](#62-推理规则)
-- [7 定理与证明](#7-定理与证明)
-  - [7.1 参数化时态逻辑的基本定理](#71-参数化时态逻辑的基本定理)
-  - [7.2 参数化模型检测](#72-参数化模型检测)
-- [8 算法实现](#8-算法实现)
-  - [8.1 Rust实现](#81-rust实现)
-  - [8.2 Haskell实现](#82-haskell实现)
-  - [8.3 Lean形式化证明](#83-lean形式化证明)
-- [9 应用领域](#9-应用领域)
-  - [9.1 实时系统验证](#91-实时系统验证)
-  - [9.2 参数化系统分析](#92-参数化系统分析)
-  - [9.3 自适应控制](#93-自适应控制)
-- [10 前沿发展](#10-前沿发展)
-  - [10.1 量子参数化时态逻辑](#101-量子参数化时态逻辑)
-  - [10.2 生物参数化时态逻辑](#102-生物参数化时态逻辑)
-  - [10.3 神经参数化时态逻辑](#103-神经参数化时态逻辑)
-- [11 相关链接](#11-相关链接)
-- [12 批判性分析](#12-批判性分析)
+- [05. 参数化时态逻辑理论](#05-参数化时态逻辑理论)
+  - [📋 目录](#-目录)
+  - [1 文档信息](#1-文档信息)
+  - [2 理论概述](#2-理论概述)
+  - [📚 目录](#-目录-1)
+  - [3 基础概念](#3-基础概念)
+    - [3.1 参数化时态逻辑的定义](#31-参数化时态逻辑的定义)
+    - [3.2 参数类型](#32-参数类型)
+  - [4 语法定义](#4-语法定义)
+    - [4.1 参数化时态语言](#41-参数化时态语言)
+    - [4.2 参数约束](#42-参数约束)
+  - [5 语义解释](#5-语义解释)
+    - [5.1 参数化克里普克结构](#51-参数化克里普克结构)
+    - [5.2 参数化语义](#52-参数化语义)
+  - [6 形式化系统](#6-形式化系统)
+    - [6.1 参数化时态逻辑的公理系统](#61-参数化时态逻辑的公理系统)
+    - [6.2 推理规则](#62-推理规则)
+  - [7 定理与证明](#7-定理与证明)
+    - [7.1 参数化时态逻辑的基本定理](#71-参数化时态逻辑的基本定理)
+    - [7.2 参数化模型检测](#72-参数化模型检测)
+  - [8 算法实现](#8-算法实现)
+    - [8.1 Rust实现](#81-rust实现)
+    - [8.2 Haskell实现](#82-haskell实现)
+    - [8.3 Lean形式化证明](#83-lean形式化证明)
+  - [9 应用领域](#9-应用领域)
+    - [9.1 实时系统验证](#91-实时系统验证)
+    - [9.2 参数化系统分析](#92-参数化系统分析)
+    - [9.3 自适应控制](#93-自适应控制)
+  - [10 前沿发展](#10-前沿发展)
+    - [10.1 量子参数化时态逻辑](#101-量子参数化时态逻辑)
+    - [10.2 生物参数化时态逻辑](#102-生物参数化时态逻辑)
+    - [10.3 神经参数化时态逻辑](#103-神经参数化时态逻辑)
+  - [📚 参考文献](#-参考文献)
+  - [11 相关链接](#11-相关链接)
+  - [12 批判性分析](#12-批判性分析)
 
 ---
 
 ## 1 文档信息
 
-**文档编号**: 10.5  
-**创建时间**: 2024-12-21  
-**最后更新**: 2024-12-21  
-**维护状态**: 持续更新中  
+**文档编号**: 10.5
+**创建时间**: 2024-12-21
+**最后更新**: 2024-12-21
+**维护状态**: 持续更新中
 **相关文档**:
 
 - [时态逻辑基础](01_Temporal_Logic_Foundations.md)
@@ -207,20 +211,20 @@ impl ParametricKripkeStructure {
             parameters: Vec::new(),
         }
     }
-    
+
     pub fn add_state(&mut self, state: String) {
         if !self.states.contains(&state) {
             self.states.push(state);
         }
     }
-    
+
     pub fn add_transition(&mut self, from: String, param: String, to: String) {
         self.transitions.entry((from, param)).or_insert_with(Vec::new).push(to);
         if !self.parameters.contains(&param) {
             self.parameters.push(param);
         }
     }
-    
+
     pub fn add_label(&mut self, state: String, label: String) {
         self.labeling.entry(state).or_insert_with(Vec::new).push(label);
     }
@@ -239,11 +243,11 @@ impl ParametricModelChecker {
             parameter_values: HashMap::new(),
         }
     }
-    
+
     pub fn set_parameter(&mut self, param: String, value: f64) {
         self.parameter_values.insert(param, value);
     }
-    
+
     pub fn model_check(&self, state: &str, formula: &ParametricTemporalFormula) -> bool {
         match formula {
             ParametricTemporalFormula::Atom(p) => {
@@ -286,22 +290,22 @@ impl ParametricModelChecker {
             }
         }
     }
-    
+
     fn check_parameter_constraint(&self, param: &str, constraint_param: &str, value: f64) -> bool {
         // 简化的参数约束检查
         param == constraint_param
     }
-    
+
     fn check_all_reachable_states(&self, state: &str, formula: &ParametricTemporalFormula, param: &str) -> bool {
         // 实现所有可达状态的检查
         true // 简化实现
     }
-    
+
     fn check_some_reachable_states(&self, state: &str, formula: &ParametricTemporalFormula, param: &str) -> bool {
         // 实现存在可达状态的检查
         true // 简化实现
     }
-    
+
     fn check_until_condition(&self, state: &str, phi: &ParametricTemporalFormula, psi: &ParametricTemporalFormula, param: &str) -> bool {
         // 实现Until条件的检查
         true // 简化实现
@@ -311,31 +315,31 @@ impl ParametricModelChecker {
 // 使用示例
 pub fn example_parametric_model_checking() {
     let mut kripke = ParametricKripkeStructure::new();
-    
+
     // 添加状态
     kripke.add_state("s0".to_string());
     kripke.add_state("s1".to_string());
     kripke.add_state("s2".to_string());
-    
+
     // 添加转移
     kripke.add_transition("s0".to_string(), "t1".to_string(), "s1".to_string());
     kripke.add_transition("s1".to_string(), "t2".to_string(), "s2".to_string());
-    
+
     // 添加标签
     kripke.add_label("s0".to_string(), "init".to_string());
     kripke.add_label("s1".to_string(), "processing".to_string());
     kripke.add_label("s2".to_string(), "done".to_string());
-    
+
     let mut checker = ParametricModelChecker::new(kripke);
     checker.set_parameter("t1".to_string(), 1.0);
     checker.set_parameter("t2".to_string(), 2.0);
-    
+
     // 检查参数化时态公式
     let formula = ParametricTemporalFormula::Eventually(
         Box::new(ParametricTemporalFormula::Atom("done".to_string())),
         "t1".to_string()
     );
-    
+
     let result = checker.model_check("s0", &formula);
     println!("Model checking result: {}", result);
 }
@@ -374,18 +378,18 @@ data ParametricKripkeStructure a = ParametricKripkeStructure
 type ParameterAssignment = String -> Double
 
 -- 参数化模型检测器
-parametricModelCheck :: (Eq a, Show a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
+parametricModelCheck :: (Eq a, Show a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
   Bool
 parametricModelCheck kripke assignment state formula = case formula of
   Atom p -> p `elem` labeling kripke state
   Not phi -> not (parametricModelCheck kripke assignment state phi)
-  And phi psi -> parametricModelCheck kripke assignment state phi && 
+  And phi psi -> parametricModelCheck kripke assignment state phi &&
                  parametricModelCheck kripke assignment state psi
-  Or phi psi -> parametricModelCheck kripke assignment state phi || 
+  Or phi psi -> parametricModelCheck kripke assignment state phi ||
                 parametricModelCheck kripke assignment state psi
   Next phi param -> checkNext kripke assignment state phi param
   Always phi param -> checkAlways kripke assignment state phi param
@@ -393,81 +397,81 @@ parametricModelCheck kripke assignment state formula = case formula of
   Until phi psi param -> checkUntil kripke assignment state phi psi param
 
 -- 辅助函数
-checkNext :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
-  String -> 
+checkNext :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
+  String ->
   Bool
-checkNext kripke assignment state formula param = 
+checkNext kripke assignment state formula param =
   let nextStates = [s' | (s, p, s') <- transitions kripke, s == state, p == param]
   in any (\s' -> parametricModelCheck kripke assignment s' formula) nextStates
 
-checkAlways :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
-  String -> 
+checkAlways :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
+  String ->
   Bool
-checkAlways kripke assignment state formula param = 
+checkAlways kripke assignment state formula param =
   let reachableStates = getReachableStates kripke state param
   in all (\s' -> parametricModelCheck kripke assignment s' formula) reachableStates
 
-checkEventually :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
-  String -> 
+checkEventually :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
+  String ->
   Bool
-checkEventually kripke assignment state formula param = 
+checkEventually kripke assignment state formula param =
   let reachableStates = getReachableStates kripke state param
   in any (\s' -> parametricModelCheck kripke assignment s' formula) reachableStates
 
-checkUntil :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
-  ParametricTemporalFormula String -> 
-  String -> 
+checkUntil :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
+  ParametricTemporalFormula String ->
+  String ->
   Bool
-checkUntil kripke assignment state phi psi param = 
+checkUntil kripke assignment state phi psi param =
   checkUntilHelper kripke assignment state phi psi param []
 
-checkUntilHelper :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  ParameterAssignment -> 
-  a -> 
-  ParametricTemporalFormula String -> 
-  ParametricTemporalFormula String -> 
-  String -> 
-  [a] -> 
+checkUntilHelper :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  ParameterAssignment ->
+  a ->
+  ParametricTemporalFormula String ->
+  ParametricTemporalFormula String ->
+  String ->
+  [a] ->
   Bool
 checkUntilHelper kripke assignment state phi psi param visited
   | state `elem` visited = False -- 避免循环
   | parametricModelCheck kripke assignment state psi = True
   | not (parametricModelCheck kripke assignment state phi) = False
-  | otherwise = 
+  | otherwise =
       let nextStates = [s' | (s, p, s') <- transitions kripke, s == state, p == param]
       in any (\s' -> checkUntilHelper kripke assignment s' phi psi param (state:visited)) nextStates
 
 -- 获取可达状态
 getReachableStates :: (Eq a) => ParametricKripkeStructure a -> a -> String -> [a]
-getReachableStates kripke state param = 
+getReachableStates kripke state param =
   getReachableStatesHelper kripke state param []
 
-getReachableStatesHelper :: (Eq a) => 
-  ParametricKripkeStructure a -> 
-  a -> 
-  String -> 
-  [a] -> 
+getReachableStatesHelper :: (Eq a) =>
+  ParametricKripkeStructure a ->
+  a ->
+  String ->
+  [a] ->
   [a]
 getReachableStatesHelper kripke state param visited
   | state `elem` visited = visited
-  | otherwise = 
+  | otherwise =
       let newVisited = state : visited
           nextStates = [s' | (s, p, s') <- transitions kripke, s == state, p == param]
       in foldr (\s' acc -> getReachableStatesHelper kripke s' param acc) newVisited nextStates
@@ -524,7 +528,7 @@ structure ParametricKripkeStructure (α : Type) :=
 def ParameterAssignment := string → ℝ
 
 -- 参数化语义
-def parametric_satisfies {α : Type} 
+def parametric_satisfies {α : Type}
   (kripke : ParametricKripkeStructure α)
   (assignment : ParameterAssignment)
   (state : α)
@@ -532,26 +536,26 @@ def parametric_satisfies {α : Type}
 match formula with
 | ParametricTemporalFormula.atom p => p ∈ kripke.labeling state
 | ParametricTemporalFormula.not phi => ¬parametric_satisfies kripke assignment state phi
-| ParametricTemporalFormula.and phi psi => 
-    parametric_satisfies kripke assignment state phi ∧ 
+| ParametricTemporalFormula.and phi psi =>
+    parametric_satisfies kripke assignment state phi ∧
     parametric_satisfies kripke assignment state psi
-| ParametricTemporalFormula.or phi psi => 
-    parametric_satisfies kripke assignment state phi ∨ 
+| ParametricTemporalFormula.or phi psi =>
+    parametric_satisfies kripke assignment state phi ∨
     parametric_satisfies kripke assignment state psi
-| ParametricTemporalFormula.next phi param => 
-    ∃ s', s' ∈ kripke.transitions state param ∧ 
+| ParametricTemporalFormula.next phi param =>
+    ∃ s', s' ∈ kripke.transitions state param ∧
          parametric_satisfies kripke assignment s' phi
-| ParametricTemporalFormula.always phi param => 
-    ∀ s', reachable kripke state s' param → 
+| ParametricTemporalFormula.always phi param =>
+    ∀ s', reachable kripke state s' param →
          parametric_satisfies kripke assignment s' phi
-| ParametricTemporalFormula.eventually phi param => 
-    ∃ s', reachable kripke state s' param ∧ 
+| ParametricTemporalFormula.eventually phi param =>
+    ∃ s', reachable kripke state s' param ∧
          parametric_satisfies kripke assignment s' phi
-| ParametricTemporalFormula.until phi psi param => 
+| ParametricTemporalFormula.until phi psi param =>
     until_satisfies kripke assignment state phi psi param
 
 -- 可达性关系
-def reachable {α : Type} 
+def reachable {α : Type}
   (kripke : ParametricKripkeStructure α)
   (s1 s2 : α) (param : string) : Prop :=
 -- 定义可达性关系
@@ -574,10 +578,10 @@ theorem parametric_next_distribution {α : Type}
   (state : α)
   (phi psi : ParametricTemporalFormula string)
   (param : string) :
-  parametric_satisfies kripke assignment state 
+  parametric_satisfies kripke assignment state
     (ParametricTemporalFormula.next (ParametricTemporalFormula.and phi psi) param) ↔
-  parametric_satisfies kripke assignment state 
-    (ParametricTemporalFormula.and 
+  parametric_satisfies kripke assignment state
+    (ParametricTemporalFormula.and
       (ParametricTemporalFormula.next phi param)
       (ParametricTemporalFormula.next psi param)) :=
 begin
@@ -691,8 +695,8 @@ end
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 12 批判性分析

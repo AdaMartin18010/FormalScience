@@ -2,21 +2,24 @@
 
 ## 📋 目录
 
-- [1 理论概述](#1-理论概述)
-- [2 形式化语义](#2-形式化语义)
-  - [2.1 核心定义](#21-核心定义)
-  - [2.2 核心定理](#22-核心定理)
-- [3 多表征方式](#3-多表征方式)
-  - [3.1 图形表征](#31-图形表征)
-  - [3.2 表格表征](#32-表格表征)
-  - [3.3 数学表征](#33-数学表征)
-  - [3.4 伪代码表征](#34-伪代码表征)
-- [4 Rust实现](#4-rust实现)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
+- [01.1.3 科学实在论 (Scientific Realism)](#0113-科学实在论-scientific-realism)
+  - [📋 目录](#-目录)
+  - [1 理论概述](#1-理论概述)
+  - [2 形式化语义](#2-形式化语义)
+    - [2.1 核心定义](#21-核心定义)
+    - [2.2 核心定理](#22-核心定理)
+  - [3 多表征方式](#3-多表征方式)
+    - [3.1 图形表征](#31-图形表征)
+    - [3.2 表格表征](#32-表格表征)
+    - [3.3 数学表征](#33-数学表征)
+    - [3.4 伪代码表征](#34-伪代码表征)
+  - [4 Rust实现](#4-rust实现)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -67,19 +70,19 @@ graph TD
     A[科学实在论] --> B[实在论立场]
     A --> C[反实在论立场]
     A --> D[工具主义立场]
-    
+
     B --> E[理论实体存在]
     B --> F[真理对应论]
     B --> G[科学进步]
-    
+
     C --> H[理论实体不存在]
     C --> I[建构主义]
     C --> J[相对主义]
-    
+
     D --> K[理论是工具]
     D --> L[实用主义]
     D --> M[操作主义]
-    
+
     subgraph 实在论论证
         N[科学成功] --> O[奇迹论证]
         P[理论收敛] --> Q[真理逼近]
@@ -113,19 +116,19 @@ class ScientificRealism:
     def __init__(self, position, arguments):
         self.position = position
         self.arguments = arguments
-        
+
     def miracle_argument(self):
         """奇迹论证"""
         if self.scientific_success() and not self.realism():
             return "Miracle"
         else:
             return "Expected"
-            
+
     def underdetermination(self):
         """不充分决定性"""
         theories = self.get_empirically_equivalent_theories()
         return len(theories) > 1
-        
+
     def entity_realism(self):
         """实体实在论"""
         entities = self.get_theoretical_entities()
@@ -219,27 +222,27 @@ impl ScientificRealism {
             success_criteria: Vec::new(),
         }
     }
-    
+
     /// 添加论证
     pub fn add_argument(&mut self, argument: RealismArgument) {
         self.arguments.push(argument);
     }
-    
+
     /// 添加理论实体
     pub fn add_entity(&mut self, entity: TheoreticalEntity) {
         self.theoretical_entities.push(entity);
     }
-    
+
     /// 添加成功标准
     pub fn add_criterion(&mut self, criterion: SuccessCriterion) {
         self.success_criteria.push(criterion);
     }
-    
+
     /// 执行奇迹论证
     pub fn miracle_argument(&self) -> f64 {
         let success_score = self.calculate_scientific_success();
         let realism_score = self.calculate_realism_plausibility();
-        
+
         if success_score > 0.8 && realism_score < 0.2 {
             // 高成功但低实在论可能性 = 奇迹
             1.0
@@ -248,11 +251,11 @@ impl ScientificRealism {
             0.5
         }
     }
-    
+
     /// 执行不充分决定性论证
     pub fn underdetermination_argument(&self) -> f64 {
         let equivalent_theories = self.count_empirically_equivalent_theories();
-        
+
         if equivalent_theories > 1 {
             // 存在多个经验等价理论
             1.0
@@ -261,53 +264,53 @@ impl ScientificRealism {
             0.0
         }
     }
-    
+
     /// 执行收敛论证
     pub fn convergence_argument(&self) -> f64 {
         let theories = self.get_theory_sequence();
         let convergence_score = self.calculate_convergence(theories);
-        
+
         convergence_score
     }
-    
+
     /// 计算科学成功度
     fn calculate_scientific_success(&self) -> f64 {
         if self.success_criteria.is_empty() {
             return 0.0;
         }
-        
+
         let total_weight: f64 = self.success_criteria.iter()
             .map(|c| c.weight)
             .sum();
-        
+
         let weighted_success: f64 = self.success_criteria.iter()
             .map(|c| c.weight * self.evaluate_criterion(c))
             .sum();
-        
+
         weighted_success / total_weight
     }
-    
+
     /// 计算实在论合理性
     fn calculate_realism_plausibility(&self) -> f64 {
         let entity_existence_score = self.calculate_entity_existence();
         let truth_correspondence_score = self.calculate_truth_correspondence();
-        
+
         (entity_existence_score + truth_correspondence_score) / 2.0
     }
-    
+
     /// 计算实体存在性
     fn calculate_entity_existence(&self) -> f64 {
         if self.theoretical_entities.is_empty() {
             return 0.0;
         }
-        
+
         let existence_count = self.theoretical_entities.iter()
             .filter(|entity| self.entity_exists(entity))
             .count();
-        
+
         existence_count as f64 / self.theoretical_entities.len() as f64
     }
-    
+
     /// 计算真理对应性
     fn calculate_truth_correspondence(&self) -> f64 {
         // 简化的真理对应性计算
@@ -318,12 +321,12 @@ impl ScientificRealism {
             RealismPosition::Constructivism => 0.3,
         }
     }
-    
+
     /// 检查实体是否存在
     fn entity_exists(&self, entity: &TheoreticalEntity) -> bool {
         !entity.existence_evidence.is_empty()
     }
-    
+
     /// 评估成功标准
     fn evaluate_criterion(&self, criterion: &SuccessCriterion) -> f64 {
         match criterion.criterion_type {
@@ -333,21 +336,21 @@ impl ScientificRealism {
             CriterionType::Unificatory => 0.6,
         }
     }
-    
+
     /// 计算收敛度
     fn calculate_convergence(&self, theories: Vec<String>) -> f64 {
         if theories.len() < 2 {
             return 0.0;
         }
-        
+
         // 简化的收敛度计算
         let similarity_scores: Vec<f64> = theories.windows(2)
             .map(|window| self.calculate_theory_similarity(&window[0], &window[1]))
             .collect();
-        
+
         similarity_scores.iter().sum::<f64>() / similarity_scores.len() as f64
     }
-    
+
     /// 计算理论相似性
     fn calculate_theory_similarity(&self, theory1: &str, theory2: &str) -> f64 {
         // 简化的相似性计算
@@ -357,18 +360,18 @@ impl ScientificRealism {
             0.5
         }
     }
-    
+
     /// 获取理论序列
     fn get_theory_sequence(&self) -> Vec<String> {
         vec!["经典力学".to_string(), "相对论".to_string(), "量子力学".to_string()]
     }
-    
+
     /// 计算经验等价理论数量
     fn count_empirically_equivalent_theories(&self) -> usize {
         // 简化的计算
         2
     }
-    
+
     /// 获取立场强度
     pub fn get_position_strength(&self) -> f64 {
         match self.position {
@@ -390,7 +393,7 @@ impl RealismArgument {
             strength,
         }
     }
-    
+
     /// 评估论证强度
     pub fn evaluate_strength(&self) -> f64 {
         self.strength
@@ -407,12 +410,12 @@ impl TheoreticalEntity {
             existence_evidence: Vec::new(),
         }
     }
-    
+
     /// 添加存在证据
     pub fn add_evidence(&mut self, evidence: String) {
         self.existence_evidence.push(evidence);
     }
-    
+
     /// 检查实体是否可观察
     pub fn is_observable(&self) -> bool {
         matches!(self.observability, ObservabilityStatus::Observable)
@@ -457,27 +460,27 @@ impl RealismDebate {
             conclusion: None,
         }
     }
-    
+
     /// 添加参与者
     pub fn add_participant(&mut self, participant: ScientificRealism) {
         self.participants.push(participant);
     }
-    
+
     /// 添加论证
     pub fn add_argument(&mut self, argument: DebateArgument) {
         self.arguments.push(argument);
     }
-    
+
     /// 评估辩论结果
     pub fn evaluate_debate(&mut self) -> RealismPosition {
         let position_scores: HashMap<RealismPosition, f64> = self.participants.iter()
             .map(|p| (p.position.clone(), p.get_position_strength()))
             .collect();
-        
+
         let winning_position = position_scores.iter()
             .max_by(|a, b| a.1.partial_cmp(b.1).unwrap())
             .map(|(position, _)| position.clone());
-        
+
         self.conclusion = winning_position.clone();
         winning_position.unwrap_or(RealismPosition::Instrumentalism)
     }
@@ -487,7 +490,7 @@ impl RealismDebate {
 fn main() {
     // 创建实在论立场
     let mut realism = ScientificRealism::new(RealismPosition::Realism);
-    
+
     // 添加奇迹论证
     realism.add_argument(RealismArgument::new(
         "奇迹论证".to_string(),
@@ -495,14 +498,14 @@ fn main() {
         ArgumentType::Miracle,
         0.9,
     ));
-    
+
     // 添加理论实体
     realism.add_entity(TheoreticalEntity::new(
         "电子".to_string(),
         "带负电荷的基本粒子".to_string(),
         ObservabilityStatus::Unobservable,
     ));
-    
+
     // 添加成功标准
     realism.add_criterion(SuccessCriterion::new(
         "预测成功".to_string(),
@@ -510,7 +513,7 @@ fn main() {
         CriterionType::Predictive,
         0.8,
     ));
-    
+
     // 创建反实在论立场
     let mut anti_realism = ScientificRealism::new(RealismPosition::AntiRealism);
     anti_realism.add_argument(RealismArgument::new(
@@ -519,16 +522,16 @@ fn main() {
         ArgumentType::Underdetermination,
         0.8,
     ));
-    
+
     // 创建辩论
     let mut debate = RealismDebate::new();
     debate.add_participant(realism);
     debate.add_participant(anti_realism);
-    
+
     // 评估辩论
     let conclusion = debate.evaluate_debate();
     println!("辩论结论: {:?}", conclusion);
-    
+
     // 测试论证
     println!("奇迹论证强度: {:.2}", realism.miracle_argument());
     println!("不充分决定性强度: {:.2}", anti_realism.underdetermination_argument());
@@ -587,11 +590,11 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Putnam, H. *Realism and Reason*. Cambridge University Press, 1983.
-2. van Fraassen, B. C. *The Scientific Image*. Oxford University Press, 1980.
-3. Boyd, R. *The Current Status of Scientific Realism*. In Leplin (ed.), 1984.
-4. Laudan, L. *A Confutation of Convergent Realism*. Philosophy of Science, 1981.
-5. Psillos, S. *Scientific Realism*. Routledge, 1999.
-6. Chakravartty, A. *A Metaphysics for Scientific Realism*. Cambridge University Press, 2007.
-7. Kitcher, P. *The Advancement of Science*. Oxford University Press, 1993.
-8. Stanford, P. K. *Exceeding Our Grasp*. Oxford University Press, 2006.
+1. Putnam, H. _Realism and Reason_. Cambridge University Press, 1983.
+2. van Fraassen, B. C. _The Scientific Image_. Oxford University Press, 1980.
+3. Boyd, R. _The Current Status of Scientific Realism_. In Leplin (ed.), 1984.
+4. Laudan, L. _A Confutation of Convergent Realism_. Philosophy of Science, 1981.
+5. Psillos, S. _Scientific Realism_. Routledge, 1999.
+6. Chakravartty, A. _A Metaphysics for Scientific Realism_. Cambridge University Press, 2007.
+7. Kitcher, P. _The Advancement of Science_. Oxford University Press, 1993.
+8. Stanford, P. K. _Exceeding Our Grasp_. Oxford University Press, 2006.

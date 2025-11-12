@@ -234,7 +234,7 @@ impl LinearSystem {
             self.state_dim,
             self.state_dim * self.input_dim
         );
-        
+
         let mut power = DMatrix::identity(self.state_dim, self.state_dim);
         for i in 0..self.state_dim {
             let col_start = i * self.input_dim;
@@ -243,7 +243,7 @@ impl LinearSystem {
                 .copy_from(&(&power * &self.B));
             power = &power * &self.A;
         }
-        
+
         controllability_matrix.rank() == self.state_dim
     }
 
@@ -253,7 +253,7 @@ impl LinearSystem {
             self.state_dim * self.output_dim,
             self.state_dim
         );
-        
+
         let mut power = DMatrix::identity(self.state_dim, self.state_dim);
         for i in 0..self.state_dim {
             let row_start = i * self.output_dim;
@@ -262,7 +262,7 @@ impl LinearSystem {
                 .copy_from(&(&self.C * &power));
             power = &power * &self.A;
         }
-        
+
         observability_matrix.rank() == self.state_dim
     }
 }
@@ -366,9 +366,9 @@ impl Controller for PIDController {
     fn compute_control(&self, state: &State, reference: &State) -> Input {
         let error = &reference.values - &state.values;
         let error_rate = &error - &self.previous_error;
-        
+
         let control = &self.kp * &error + &self.ki * &self.integral + &self.kd * &error_rate;
-        
+
         Input {
             values: control,
             time: state.time,
@@ -439,7 +439,7 @@ impl StabilityAnalyzer {
     pub fn check_linear_stability(system: &LinearSystem) -> bool {
         // 计算特征值
         let eigenvals = system.A.eigenvalues();
-        
+
         // 检查所有特征值的实部是否小于零
         eigenvals.iter().all(|&lambda| lambda.re < 0.0)
     }
@@ -449,14 +449,14 @@ impl StabilityAnalyzer {
         // 求解李雅普诺夫方程：A^T P + P A = -Q
         // 这里使用简化的方法
         let Q = DMatrix::identity(system.state_dim, system.state_dim);
-        
+
         // 简化的李雅普诺夫方程求解
         let P = DMatrix::identity(system.state_dim, system.state_dim);
-        
+
         // 验证是否满足李雅普诺夫方程
         let left_side = system.A.transpose() * &P + &P * &system.A;
         let right_side = -Q;
-        
+
         if (left_side - right_side).norm() < 1e-6 {
             Some(P)
         } else {
@@ -471,7 +471,7 @@ impl StabilityAnalyzer {
     ) -> bool {
         // 计算雅可比矩阵
         let jacobian = Self::compute_jacobian(system, equilibrium);
-        
+
         // 检查雅可比矩阵的特征值
         let eigenvals = jacobian.eigenvalues();
         eigenvals.iter().all(|&lambda| lambda.re < 0.0)
@@ -494,43 +494,43 @@ impl StabilityAnalyzer {
 fn linear_control_example() {
     // 创建线性系统
     let mut system = LinearSystem::new(2, 1, 1);
-    
+
     // 设置系统矩阵（简单的二阶系统）
     let A = DMatrix::from_row_slice(2, 2, &[0.0, 1.0, -1.0, -2.0]);
     let B = DMatrix::from_row_slice(2, 1, &[0.0, 1.0]);
     let C = DMatrix::from_row_slice(1, 2, &[1.0, 0.0]);
     let D = DMatrix::from_row_slice(1, 1, &[0.0]);
-    
+
     system.set_A(A).unwrap();
     system.set_B(B).unwrap();
     system.set_C(C).unwrap();
     system.set_D(D).unwrap();
-    
+
     // 检查系统性质
     println!("系统可控: {}", system.is_controllable());
     println!("系统可观: {}", system.is_observable());
     println!("系统稳定: {}", StabilityAnalyzer::check_linear_stability(&system));
-    
+
     // 创建PID控制器
     let mut controller = PIDController::new(1.0, 0.1, 0.01, 1, 1);
-    
+
     // 模拟控制过程
     let mut state = State::from_vector(vec![1.0, 0.0], 0.0);
     let reference = State::from_vector(vec![0.0, 0.0], 0.0);
-    
+
     for step in 0..100 {
         let input = controller.compute_control(&state, &reference);
         let output = system.output(&state, &input);
-        
+
         // 更新状态（简化的欧拉积分）
         let dx = system.dynamics(&state, &input);
         state.values += &dx.values * 0.01; // 时间步长
         state.time += 0.01;
-        
+
         controller.update(&state, &output);
-        
+
         if step % 10 == 0 {
-            println!("时间: {:.2}, 状态: [{:.3}, {:.3}], 输出: {:.3}", 
+            println!("时间: {:.2}, 状态: [{:.3}, {:.3}], 输出: {:.3}",
                     state.time, state.values[0], state.values[1], output.values[0]);
         }
     }
@@ -543,32 +543,32 @@ fn linear_control_example() {
 fn nonlinear_control_example() {
     // 创建非线性系统
     let system = SimpleNonlinearSystem::new(2, 1, 2);
-    
+
     // 检查平衡点稳定性
     let equilibrium = system.equilibrium_point();
     let is_stable = StabilityAnalyzer::check_nonlinear_stability(&system, &equilibrium);
     println!("非线性系统在平衡点稳定: {}", is_stable);
-    
+
     // 创建控制器
     let mut controller = PIDController::new(2.0, 0.5, 0.1, 1, 2);
-    
+
     // 模拟控制过程
     let mut state = State::from_vector(vec![1.0, -0.5], 0.0);
     let reference = State::from_vector(vec![0.0, 0.0], 0.0);
-    
+
     for step in 0..50 {
         let input = controller.compute_control(&state, &reference);
         let output = system.output(&state, &input);
-        
+
         // 更新状态
         let dx = system.dynamics(&state, &input);
         state.values += &dx.values * 0.01;
         state.time += 0.01;
-        
+
         controller.update(&state, &output);
-        
+
         if step % 10 == 0 {
-            println!("时间: {:.2}, 状态: [{:.3}, {:.3}]", 
+            println!("时间: {:.2}, 状态: [{:.3}, {:.3}]",
                     state.time, state.values[0], state.values[1]);
         }
     }
@@ -638,5 +638,5 @@ $$\frac{\partial H}{\partial u} = 0$$
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

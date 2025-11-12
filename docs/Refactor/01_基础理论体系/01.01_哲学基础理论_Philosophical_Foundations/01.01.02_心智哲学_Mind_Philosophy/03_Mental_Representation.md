@@ -3,7 +3,7 @@
 ## 目录
 
 - [心理表征 (Mental Representation)](#心理表征-mental-representation)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [引言](#引言)
   - [表征的基本概念](#表征的基本概念)
     - [表征的定义](#表征的定义)
@@ -55,7 +55,7 @@
 > 其中：
 >
 > - Repr：表征载体（神经状态、符号结构等）
-> - Content：表征内容（语义内容、意向对象）  
+> - Content：表征内容（语义内容、意向对象）
 > - Subject：表征主体（具有表征的认知系统）
 
 ### 表征的基本性质
@@ -87,7 +87,7 @@
 
 #### 理论核心
 
-**主要代表**：Jerry Fodor, Zenon Pylyshyn  
+**主要代表**：Jerry Fodor, Zenon Pylyshyn
 **核心思想**：心理表征具有类似语言的符号结构，思维是对这些符号的计算操作。
 
 #### 关键概念
@@ -185,18 +185,18 @@ impl SymbolicRepresentationSystem {
             working_memory: Vec::new(),
         }
     }
-    
+
     // 添加符号及其语义
     fn add_symbol(&mut self, name: String, symbol: Symbol, content: SemanticContent) {
         self.symbols.insert(name.clone(), symbol.clone());
         self.semantic_mapping.insert(symbol, content);
     }
-    
+
     // 构造复合表征
     fn compose(&self, components: Vec<Symbol>) -> Symbol {
         Symbol::Composite(components)
     }
-    
+
     // 检查系统性：如果能表征A关系B，也能表征B关系A
     fn check_systematicity(&self, relation: &str, entity1: &str, entity2: &str) -> bool {
         let forward = Symbol::Composite(vec![
@@ -204,20 +204,20 @@ impl SymbolicRepresentationSystem {
             Symbol::Atom(entity1.to_string()),
             Symbol::Atom(entity2.to_string()),
         ]);
-        
+
         let reverse = Symbol::Composite(vec![
             Symbol::Atom(relation.to_string()),
             Symbol::Atom(entity2.to_string()),
             Symbol::Atom(entity1.to_string()),
         ]);
-        
+
         // 如果能表征正向关系，检查是否也能表征反向关系
         let can_represent_forward = self.semantic_mapping.contains_key(&forward);
         let can_represent_reverse = self.semantic_mapping.contains_key(&reverse);
-        
+
         can_represent_forward == can_represent_reverse
     }
-    
+
     // 符号操作：模式匹配
     fn pattern_match(&self, pattern: &Symbol, target: &Symbol) -> Option<HashMap<String, Symbol>> {
         let mut bindings = HashMap::new();
@@ -227,7 +227,7 @@ impl SymbolicRepresentationSystem {
             None
         }
     }
-    
+
     fn match_recursive(&self, pattern: &Symbol, target: &Symbol, bindings: &mut HashMap<String, Symbol>) -> bool {
         match (pattern, target) {
             (Symbol::Variable(var), target) => {
@@ -253,18 +253,18 @@ impl SymbolicRepresentationSystem {
             _ => false,
         }
     }
-    
+
     // 组合语义：计算复合表征的语义
     fn compose_semantics(&self, parts: &[Symbol]) -> Option<SemanticContent> {
         if parts.is_empty() {
             return None;
         }
-        
+
         // 简化的组合语义：关系-论元结构
         if parts.len() >= 3 {
-            if let (Symbol::Atom(relation), Symbol::Atom(arg1), Symbol::Atom(arg2)) = 
+            if let (Symbol::Atom(relation), Symbol::Atom(arg1), Symbol::Atom(arg2)) =
                 (&parts[0], &parts[1], &parts[2]) {
-                
+
                 return Some(SemanticContent {
                     truth_value: None,
                     propositions: vec![format!("{}({}, {})", relation, arg1, arg2)],
@@ -273,7 +273,7 @@ impl SymbolicRepresentationSystem {
                 });
             }
         }
-        
+
         None
     }
 }
@@ -283,7 +283,7 @@ impl SymbolicRepresentationSystem {
 
 #### 理论核心1
 
-**主要代表**：David Rumelhart, James McClelland  
+**主要代表**：David Rumelhart, James McClelland
 **核心思想**：心理表征是分布式的激活模式，认知是网络中激活传播的结果。
 
 #### 关键概念1
@@ -341,7 +341,7 @@ struct ConnectionistNetwork {
 impl ConnectionistNetwork {
     fn new(size: usize, learning_rate: f64) -> Self {
         let mut rng = rand::thread_rng();
-        
+
         let nodes: Vec<NetworkNode> = (0..size).map(|id| {
             NetworkNode {
                 id,
@@ -350,12 +350,12 @@ impl ConnectionistNetwork {
                 input_connections: Vec::new(),
             }
         }).collect();
-        
+
         // 随机初始化权重矩阵
         let weight_matrix = Array2::from_shape_fn((size, size), |_| {
             rng.gen_range(-0.5..0.5)
         });
-        
+
         Self {
             nodes,
             weight_matrix,
@@ -363,12 +363,12 @@ impl ConnectionistNetwork {
             learning_rate,
         }
     }
-    
+
     // Sigmoid激活函数
     fn sigmoid(&self, x: f64) -> f64 {
         1.0 / (1.0 + (-x).exp())
     }
-    
+
     // 前向传播
     fn forward_propagation(&mut self, input: &[f64]) {
         // 设置输入层激活
@@ -377,38 +377,38 @@ impl ConnectionistNetwork {
                 self.nodes[i].activation = value;
             }
         }
-        
+
         // 计算所有节点的新激活值
         let current_activations: Vec<f64> = self.nodes.iter()
             .map(|node| node.activation)
             .collect();
-        
+
         for i in 0..self.nodes.len() {
             let mut weighted_sum = self.nodes[i].bias;
-            
+
             for j in 0..self.nodes.len() {
                 weighted_sum += self.weight_matrix[[j, i]] * current_activations[j];
             }
-            
+
             self.nodes[i].activation = self.sigmoid(weighted_sum);
         }
-        
+
         // 记录激活历史
         let activations = Array1::from_vec(
             self.nodes.iter().map(|n| n.activation).collect()
         );
         self.activation_history.push(activations);
     }
-    
+
     // 分布式表征：将概念编码为激活模式
     fn encode_concept(&mut self, concept: &ConceptVector) -> Array1<f64> {
         self.forward_propagation(&concept.features);
-        
+
         Array1::from_vec(
             self.nodes.iter().map(|n| n.activation).collect()
         )
     }
-    
+
     // 模式完成：从部分输入重构完整模式
     fn pattern_completion(&mut self, partial_input: &[f64], iterations: usize) -> Array1<f64> {
         // 设置初始激活（部分输入）
@@ -417,41 +417,41 @@ impl ConnectionistNetwork {
                 self.nodes[i].activation = value;
             }
         }
-        
+
         // 迭代更新直到收敛
         for _ in 0..iterations {
             let current_activations: Vec<f64> = self.nodes.iter()
                 .map(|node| node.activation)
                 .collect();
-            
+
             for i in 0..self.nodes.len() {
                 // 只更新未指定的节点
                 if i >= partial_input.len() || partial_input[i] < 0.0 {
                     let mut weighted_sum = self.nodes[i].bias;
-                    
+
                     for j in 0..self.nodes.len() {
                         weighted_sum += self.weight_matrix[[j, i]] * current_activations[j];
                     }
-                    
+
                     self.nodes[i].activation = self.sigmoid(weighted_sum);
                 }
             }
         }
-        
+
         Array1::from_vec(
             self.nodes.iter().map(|n| n.activation).collect()
         )
     }
-    
+
     // 优雅降级：网络损伤后的性能
     fn simulate_damage(&mut self, damage_ratio: f64) {
         let mut rng = rand::thread_rng();
         let damage_count = (self.nodes.len() as f64 * damage_ratio) as usize;
-        
+
         for _ in 0..damage_count {
             let node_idx = rng.gen_range(0..self.nodes.len());
             self.nodes[node_idx].activation = 0.0;
-            
+
             // 损伤连接权重
             for i in 0..self.weight_matrix.nrows() {
                 self.weight_matrix[[i, node_idx]] *= 0.1;
@@ -503,7 +503,7 @@ impl ConceptVector {
 
 #### 2. 信息论语义学 (Informational Semantics)
 
-**代表人物**：Fred Dretske  
+**代表人物**：Fred Dretske
 **核心思想**：表征内容由其携带的信息确定。
 
 **信息条件**：
@@ -511,7 +511,7 @@ impl ConceptVector {
 
 #### 3. 目的论语义学 (Teleological Semantics)
 
-**代表人物**：Ruth Millikan  
+**代表人物**：Ruth Millikan
 **核心思想**：表征内容由其生物学功能确定。
 
 **功能条件**：

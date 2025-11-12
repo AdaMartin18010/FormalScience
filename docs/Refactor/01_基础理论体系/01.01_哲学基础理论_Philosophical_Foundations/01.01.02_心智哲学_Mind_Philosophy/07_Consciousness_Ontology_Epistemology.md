@@ -297,7 +297,7 @@ impl ConsciousnessOntology {
     pub fn analyze_material_relation(&mut self) -> MaterialRelationAnalysis {
         let relation_strength = self.calculate_relation_strength();
         let interaction_complexity = self.calculate_interaction_complexity();
-        
+
         MaterialRelationAnalysis {
             relation_strength,
             interaction_complexity,
@@ -310,7 +310,7 @@ impl ConsciousnessOntology {
     pub fn evaluate_unity(&self) -> UnityEvaluation {
         let unity_score = self.calculate_unity_score();
         let coherence_level = self.calculate_coherence_level();
-        
+
         UnityEvaluation {
             unity_score,
             coherence_level,
@@ -367,7 +367,7 @@ impl ConsciousnessEpistemology {
     pub fn evaluate_knowability(&mut self) -> KnowabilityEvaluation {
         let knowability_score = self.calculate_knowability_score();
         let limitation_analysis = self.analyze_limitations();
-        
+
         KnowabilityEvaluation {
             knowability_score,
             limitation_analysis,
@@ -384,7 +384,7 @@ impl ConsciousnessEpistemology {
     pub fn evaluate_method_effectiveness(&self) -> MethodEffectivenessEvaluation {
         let overall_effectiveness = self.calculate_overall_effectiveness();
         let method_comparison = self.compare_methods();
-        
+
         MethodEffectivenessEvaluation {
             overall_effectiveness,
             method_comparison,
@@ -396,7 +396,7 @@ impl ConsciousnessEpistemology {
     pub fn analyze_subjectivity(&mut self) -> SubjectivityAnalysis {
         let subjectivity_score = self.calculate_subjectivity_score();
         let objectification_analysis = self.analyze_objectification();
-        
+
         SubjectivityAnalysis {
             subjectivity_score,
             objectification_analysis,
@@ -408,7 +408,7 @@ impl ConsciousnessEpistemology {
     pub fn evaluate_first_person_perspective(&self) -> FirstPersonEvaluation {
         let uniqueness_score = self.calculate_uniqueness_score();
         let reliability_score = self.calculate_reliability_score();
-        
+
         FirstPersonEvaluation {
             uniqueness_score,
             reliability_score,
@@ -439,12 +439,12 @@ impl ConsciousnessEpistemology {
         if self.knowledge_methods.is_empty() {
             return 0.0;
         }
-        
+
         let total_effectiveness: f64 = self.knowledge_methods
             .iter()
             .map(|method| method.method_effectiveness)
             .sum();
-        
+
         total_effectiveness / self.knowledge_methods.len() as f64
     }
 
@@ -493,7 +493,7 @@ impl ConsciousnessTheory {
         let assumption_consistency = self.check_assumption_consistency();
         let prediction_accuracy = self.check_prediction_accuracy();
         let overall_verification = self.calculate_overall_verification();
-        
+
         TheoryVerificationResult {
             assumption_consistency,
             prediction_accuracy,
@@ -507,7 +507,7 @@ impl ConsciousnessTheory {
         let ontological_comparison = self.compare_ontological_claims(other);
         let epistemological_comparison = self.compare_epistemological_claims(other);
         let empirical_comparison = self.compare_empirical_support(other);
-        
+
         TheoryComparison {
             ontological_comparison,
             epistemological_comparison,
@@ -521,7 +521,7 @@ impl ConsciousnessTheory {
         if self.theoretical_assumptions.is_empty() {
             return 0.0;
         }
-        
+
         // 实现假设一致性检查逻辑
         0.8
     }
@@ -531,7 +531,7 @@ impl ConsciousnessTheory {
         if self.theoretical_predictions.is_empty() {
             return 0.0;
         }
-        
+
         // 实现预测准确性检查逻辑
         0.7
     }
@@ -540,7 +540,7 @@ impl ConsciousnessTheory {
     fn calculate_overall_verification(&self) -> f64 {
         let assumption_score = self.check_assumption_consistency();
         let prediction_score = self.check_prediction_accuracy();
-        
+
         (assumption_score + prediction_score) / 2.0
     }
 
@@ -550,19 +550,19 @@ impl ConsciousnessTheory {
             .iter()
             .map(|a| a.assumption_strength)
             .sum();
-        
+
         let prediction_strength: f64 = self.theoretical_predictions
             .iter()
             .map(|p| p.prediction_verifiability)
             .sum();
-        
+
         let total_assumptions = self.theoretical_assumptions.len() as f64;
         let total_predictions = self.theoretical_predictions.len() as f64;
-        
+
         if total_assumptions + total_predictions == 0.0 {
             return 0.0;
         }
-        
+
         (assumption_strength + prediction_strength) / (total_assumptions + total_predictions)
     }
 }
@@ -606,14 +606,14 @@ impl ConsciousnessTheoryComparisonSystem {
     /// 执行理论比较
     pub fn compare_theories(&mut self) -> Vec<TheoryComparison> {
         let mut comparisons = Vec::new();
-        
+
         for i in 0..self.theories.len() {
             for j in (i + 1)..self.theories.len() {
                 let comparison = self.theories[i].compare_with_other_theory(&self.theories[j]);
                 comparisons.push(comparison);
             }
         }
-        
+
         self.comparison_results = comparisons.clone();
         comparisons
     }
@@ -623,7 +623,7 @@ impl ConsciousnessTheoryComparisonSystem {
         let best_theory = self.find_best_theory();
         let theory_rankings = self.rank_theories();
         let overall_analysis = self.analyze_overall_patterns();
-        
+
         ComparisonReport {
             best_theory,
             theory_rankings,
@@ -654,7 +654,7 @@ impl ConsciousnessTheoryComparisonSystem {
                 theory_type: theory.theory_type.clone(),
             })
             .collect();
-        
+
         rankings.sort_by(|a, b| b.theory_strength.partial_cmp(&a.theory_strength).unwrap());
         rankings
     }
@@ -706,12 +706,12 @@ impl ConsciousnessOntologyVerificationSystem {
     /// 执行本体论验证
     pub fn verify_ontologies(&mut self) -> Vec<OntologyVerificationResult> {
         let mut results = Vec::new();
-        
+
         for ontology in &self.ontology_theories {
             let result = self.verify_single_ontology(ontology);
             results.push(result);
         }
-        
+
         self.verification_results = results.clone();
         results
     }
@@ -722,7 +722,7 @@ impl ConsciousnessOntologyVerificationSystem {
         let property_verification = self.verify_essential_properties(ontology);
         let relation_verification = self.verify_material_relation(ontology);
         let unity_verification = self.verify_unity(ontology);
-        
+
         OntologyVerificationResult {
             existence_verification,
             property_verification,
@@ -789,7 +789,7 @@ impl ConsciousnessOntologyVerificationSystem {
         let property_score = (property.property_consistency + property.property_completeness + property.property_coherence) / 3.0;
         let relation_score = (relation.relation_consistency + relation.relation_plausibility + relation.relation_empirical_support) / 3.0;
         let unity_score = (unity.unity_consistency + unity.unity_plausibility + unity.unity_empirical_support) / 3.0;
-        
+
         (existence_score + property_score + relation_score + unity_score) / 4.0
     }
 }

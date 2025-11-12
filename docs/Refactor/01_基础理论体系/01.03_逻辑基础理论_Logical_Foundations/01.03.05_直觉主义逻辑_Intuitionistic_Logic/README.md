@@ -2,26 +2,29 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 理论基础](#2-理论基础)
-  - [2.1 形式化定义](#21-形式化定义)
-- [3 语法实现](#3-语法实现)
-  - [3.1 数据结构](#31-数据结构)
-  - [3.2 解析器实现](#32-解析器实现)
-- [4 语义实现](#4-语义实现)
-  - [4.1 海廷代数](#41-海廷代数)
-  - [4.2 克里普克语义](#42-克里普克语义)
-- [5 证明系统](#5-证明系统)
-  - [5.1 自然演绎](#51-自然演绎)
-- [6 形式化验证](#6-形式化验证)
-  - [6.1 直觉逻辑特性](#61-直觉逻辑特性)
-  - [6.2 与经典逻辑的关系](#62-与经典逻辑的关系)
-- [7 应用领域](#7-应用领域)
-  - [7.1 类型理论](#71-类型理论)
-  - [7.2 构造性数学](#72-构造性数学)
-- [8 总结](#8-总结)
-- [9 相关链接](#9-相关链接)
-- [10 批判性分析](#10-批判性分析)
+- [直觉逻辑 (Intuitionistic Logic)](#直觉逻辑-intuitionistic-logic)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 理论基础](#2-理论基础)
+    - [2.1 形式化定义](#21-形式化定义)
+  - [3 语法实现](#3-语法实现)
+    - [3.1 数据结构](#31-数据结构)
+    - [3.2 解析器实现](#32-解析器实现)
+  - [4 语义实现](#4-语义实现)
+    - [4.1 海廷代数](#41-海廷代数)
+    - [4.2 克里普克语义](#42-克里普克语义)
+  - [5 证明系统](#5-证明系统)
+    - [5.1 自然演绎](#51-自然演绎)
+  - [6 形式化验证](#6-形式化验证)
+    - [6.1 直觉逻辑特性](#61-直觉逻辑特性)
+    - [6.2 与经典逻辑的关系](#62-与经典逻辑的关系)
+  - [7 应用领域](#7-应用领域)
+    - [7.1 类型理论](#71-类型理论)
+    - [7.2 构造性数学](#72-构造性数学)
+  - [8 总结](#8-总结)
+  - [参考文献](#参考文献)
+  - [9 相关链接](#9-相关链接)
+  - [10 批判性分析](#10-批判性分析)
 
 ---
 
@@ -190,37 +193,37 @@ impl IntuitionisticParser {
 
     fn parse_implication(&mut self) -> Result<IntuitionisticFormula, String> {
         let mut left = self.parse_or()?;
-        
+
         while self.check_token(&IntuitionisticToken::Implies) {
             self.advance();
             let right = self.parse_or()?;
             left = IntuitionisticFormula::implies(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_or(&mut self) -> Result<IntuitionisticFormula, String> {
         let mut left = self.parse_and()?;
-        
+
         while self.check_token(&IntuitionisticToken::Or) {
             self.advance();
             let right = self.parse_and()?;
             left = IntuitionisticFormula::or(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_and(&mut self) -> Result<IntuitionisticFormula, String> {
         let mut left = self.parse_not()?;
-        
+
         while self.check_token(&IntuitionisticToken::And) {
             self.advance();
             let right = self.parse_not()?;
             left = IntuitionisticFormula::and(left, right);
         }
-        
+
         Ok(left)
     }
 
@@ -253,7 +256,7 @@ impl IntuitionisticParser {
     fn tokenize(input: &str) -> Vec<IntuitionisticToken> {
         let mut tokens = Vec::new();
         let mut chars = input.chars().peekable();
-        
+
         while let Some(ch) = chars.next() {
             match ch {
                 ' ' | '\t' | '\n' => continue,
@@ -280,7 +283,7 @@ impl IntuitionisticParser {
                 }
             }
         }
-        
+
         tokens.push(IntuitionisticToken::End);
         tokens
     }
@@ -398,7 +401,7 @@ impl HeytingAlgebra {
                 let meet = a.meet(b);
                 let join = a.join(b);
                 let implies = a.implies(b);
-                
+
                 self.meet_table.insert((a.clone(), b.clone()), meet);
                 self.join_table.insert((a.clone(), b.clone()), join);
                 self.implies_table.insert((a.clone(), b.clone()), implies);
@@ -696,7 +699,7 @@ impl IntuitionisticNaturalDeduction {
         premise: IntuitionisticFormula,
     ) -> IntuitionisticProof {
         let conclusion = IntuitionisticFormula::not(IntuitionisticFormula::not(premise.clone()));
-        
+
         let mut proof = IntuitionisticProof {
             premises: vec![premise.clone()],
             conclusion,
@@ -857,15 +860,15 @@ impl TypeTheory {
 
     pub fn curry_howard_correspondence(&self) -> HashMap<Type, IntuitionisticFormula> {
         let mut correspondence = HashMap::new();
-        
+
         correspondence.insert(Type::Unit, IntuitionisticFormula::atom("⊤"));
         correspondence.insert(Type::Bool, IntuitionisticFormula::atom("Bool"));
         correspondence.insert(Type::Int, IntuitionisticFormula::atom("Int"));
-        
+
         // 函数类型对应蕴含
         // 积类型对应合取
         // 和类型对应析取
-        
+
         correspondence
     }
 }

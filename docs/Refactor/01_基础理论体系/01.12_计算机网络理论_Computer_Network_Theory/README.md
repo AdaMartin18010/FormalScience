@@ -2,28 +2,32 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 网络基础理论](#21-网络基础理论)
-  - [2.2 网络协议理论](#22-网络协议理论)
-  - [2.3 网络性能理论](#23-网络性能理论)
-- [3 Rust实现](#3-rust实现)
-  - [3.1 网络协议栈实现](#31-网络协议栈实现)
-  - [3.2 网络安全实现](#32-网络安全实现)
-- [4 应用示例](#4-应用示例)
-  - [4.1 示例1：网络服务器](#41-示例1网络服务器)
-  - [4.2 示例2：加密通信](#42-示例2加密通信)
-  - [4.3 示例3：用户认证](#43-示例3用户认证)
-- [5 理论扩展](#5-理论扩展)
-  - [5.1 网络拥塞控制](#51-网络拥塞控制)
-  - [5.2 网络路由理论](#52-网络路由理论)
-  - [5.3 网络安全理论](#53-网络安全理论)
-- [6 批判性分析](#6-批判性分析)
-  - [6.1 多元理论视角](#61-多元理论视角)
-  - [6.2 局限性分析](#62-局限性分析)
-  - [6.3 争议与分歧](#63-争议与分歧)
-  - [6.4 应用前景](#64-应用前景)
-  - [6.5 改进建议](#65-改进建议)
+- [12. 计算机网络理论 (Computer Network Theory)](#12-计算机网络理论-computer-network-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 网络基础理论](#21-网络基础理论)
+    - [2.2 网络协议理论](#22-网络协议理论)
+    - [2.3 网络性能理论](#23-网络性能理论)
+  - [3 Rust实现](#3-rust实现)
+    - [3.1 网络协议栈实现](#31-网络协议栈实现)
+    - [3.2 网络安全实现](#32-网络安全实现)
+  - [4 应用示例](#4-应用示例)
+    - [4.1 示例1：网络服务器](#41-示例1网络服务器)
+    - [4.2 示例2：加密通信](#42-示例2加密通信)
+    - [4.3 示例3：用户认证](#43-示例3用户认证)
+  - [5 理论扩展](#5-理论扩展)
+    - [5.1 网络拥塞控制](#51-网络拥塞控制)
+    - [5.2 网络路由理论](#52-网络路由理论)
+    - [5.3 网络安全理论](#53-网络安全理论)
+  - [6 批判性分析](#6-批判性分析)
+    - [6.1 多元理论视角](#61-多元理论视角)
+    - [6.2 局限性分析](#62-局限性分析)
+    - [6.3 争议与分歧](#63-争议与分歧)
+    - [6.4 应用前景](#64-应用前景)
+    - [6.5 改进建议](#65-改进建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -34,29 +38,30 @@
 ## 🏗️ 目录结构
 
 - [12. 计算机网络理论 (Computer Network Theory)](#12-计算机网络理论-computer-network-theory)
-  - [📋 模块概述](#-模块概述)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
   - [🏗️ 目录结构](#️-目录结构)
-  - [🔬 核心理论](#-核心理论)
-    - [12.1 网络基础理论](#121-网络基础理论)
-    - [12.2 网络协议理论](#122-网络协议理论)
-    - [12.3 网络性能理论](#123-网络性能理论)
-  - [💻 Rust实现](#-rust实现)
-    - [网络协议栈实现](#网络协议栈实现)
-    - [网络安全实现](#网络安全实现)
-  - [📊 应用示例](#-应用示例)
-    - [示例1：网络服务器](#示例1网络服务器)
-    - [示例2：加密通信](#示例2加密通信)
-    - [示例3：用户认证](#示例3用户认证)
-  - [🔬 理论扩展](#-理论扩展)
-    - [12.1 网络拥塞控制](#121-网络拥塞控制)
-    - [12.2 网络路由理论](#122-网络路由理论)
-    - [12.3 网络安全理论](#123-网络安全理论)
-  - [🎯 批判性分析](#-批判性分析)
-    - [多元理论视角](#多元理论视角)
-    - [局限性分析](#局限性分析)
-    - [争议与分歧](#争议与分歧)
-    - [应用前景](#应用前景)
-    - [改进建议](#改进建议)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 网络基础理论](#21-网络基础理论)
+    - [2.2 网络协议理论](#22-网络协议理论)
+    - [2.3 网络性能理论](#23-网络性能理论)
+  - [3 Rust实现](#3-rust实现)
+    - [3.1 网络协议栈实现](#31-网络协议栈实现)
+    - [3.2 网络安全实现](#32-网络安全实现)
+  - [4 应用示例](#4-应用示例)
+    - [4.1 示例1：网络服务器](#41-示例1网络服务器)
+    - [4.2 示例2：加密通信](#42-示例2加密通信)
+    - [4.3 示例3：用户认证](#43-示例3用户认证)
+  - [5 理论扩展](#5-理论扩展)
+    - [5.1 网络拥塞控制](#51-网络拥塞控制)
+    - [5.2 网络路由理论](#52-网络路由理论)
+    - [5.3 网络安全理论](#53-网络安全理论)
+  - [6 批判性分析](#6-批判性分析)
+    - [6.1 多元理论视角](#61-多元理论视角)
+    - [6.2 局限性分析](#62-局限性分析)
+    - [6.3 争议与分歧](#63-争议与分歧)
+    - [6.4 应用前景](#64-应用前景)
+    - [6.5 改进建议](#65-改进建议)
   - [📚 参考文献](#-参考文献)
 
 ```text
@@ -168,11 +173,11 @@ impl NetworkLayer {
             packet_queue: Vec::new(),
         }
     }
-    
+
     /// 路由数据包
     pub fn route_packet(&mut self, packet: Packet) -> Result<Packet, String> {
         let dest_ip = packet.destination.ip().to_string();
-        
+
         // 查找路由表
         if let Some(next_hop) = self.routing_table.get(&dest_ip) {
             let mut routed_packet = packet.clone();
@@ -182,12 +187,12 @@ impl NetworkLayer {
             Err("No route to destination".to_string())
         }
     }
-    
+
     /// 添加路由
     pub fn add_route(&mut self, destination: String, next_hop: String) {
         self.routing_table.insert(destination, next_hop);
     }
-    
+
     /// 计算校验和
     pub fn calculate_checksum(&self, data: &[u8]) -> u32 {
         let mut checksum = 0u32;
@@ -249,12 +254,12 @@ impl TransportLayer {
             next_connection_id: 1,
         }
     }
-    
+
     /// 建立连接
     pub fn establish_connection(&mut self, source: SocketAddr, destination: SocketAddr) -> u32 {
         let connection_id = self.next_connection_id;
         self.next_connection_id += 1;
-        
+
         let connection = Connection {
             id: connection_id,
             source,
@@ -273,11 +278,11 @@ impl TransportLayer {
                 packets: HashMap::new(),
             },
         };
-        
+
         self.connections.insert(connection_id, connection);
         connection_id
     }
-    
+
     /// 发送数据
     pub fn send_data(&mut self, connection_id: u32, data: Vec<u8>) -> Result<(), String> {
         if let Some(connection) = self.connections.get_mut(&connection_id) {
@@ -290,13 +295,13 @@ impl TransportLayer {
                     sequence_number: connection.send_window.next_seq,
                     checksum: 0,
                 };
-                
+
                 connection.send_window.packets.insert(
                     connection.send_window.next_seq,
                     packet.clone()
                 );
                 connection.send_window.next_seq += data.len() as u32;
-                
+
                 Ok(())
             } else {
                 Err("Connection not established".to_string())
@@ -305,13 +310,13 @@ impl TransportLayer {
             Err("Connection not found".to_string())
         }
     }
-    
+
     /// 接收数据
     pub fn receive_data(&mut self, connection_id: u32) -> Result<Vec<u8>, String> {
         if let Some(connection) = self.connections.get_mut(&connection_id) {
             if let ConnectionState::Established = connection.state {
                 let mut received_data = Vec::new();
-                
+
                 // 处理接收窗口中的数据
                 while let Some((seq, packet)) = connection.receive_window.packets
                     .iter()
@@ -321,7 +326,7 @@ impl TransportLayer {
                     connection.receive_window.packets.remove(seq);
                     connection.receive_window.base += packet.payload.len() as u32;
                 }
-                
+
                 Ok(received_data)
             } else {
                 Err("Connection not established".to_string())
@@ -350,17 +355,17 @@ pub struct HttpService;
 impl NetworkService for HttpService {
     fn handle_request(&self, request: &[u8]) -> Vec<u8> {
         let request_str = String::from_utf8_lossy(request);
-        
+
         // 简化的HTTP响应
         let response = if request_str.contains("GET /") {
             "HTTP/1.1 200 OK\r\nContent-Length: 13\r\n\r\nHello, World!"
         } else {
             "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n"
         };
-        
+
         response.as_bytes().to_vec()
     }
-    
+
     fn get_name(&self) -> &str {
         "HTTP"
     }
@@ -370,10 +375,10 @@ impl ApplicationLayer {
     pub fn new() -> Self {
         let mut services = HashMap::new();
         services.insert("HTTP".to_string(), Box::new(HttpService));
-        
+
         ApplicationLayer { services }
     }
-    
+
     /// 处理应用请求
     pub fn handle_application_request(&self, service_name: &str, request: &[u8]) -> Result<Vec<u8>, String> {
         if let Some(service) = self.services.get(service_name) {
@@ -400,23 +405,23 @@ impl NetworkStack {
             application_layer: ApplicationLayer::new(),
         }
     }
-    
+
     /// 发送数据包
     pub fn send_packet(&mut self, packet: Packet) -> Result<(), String> {
         // 网络层路由
         let routed_packet = self.network_layer.route_packet(packet)?;
-        
+
         // 传输层处理
         let connection_id = self.transport_layer.establish_connection(
             routed_packet.source,
             routed_packet.destination
         );
-        
+
         self.transport_layer.send_data(connection_id, routed_packet.payload)?;
-        
+
         Ok(())
     }
-    
+
     /// 接收数据包
     pub fn receive_packet(&mut self, packet: Packet) -> Result<Vec<u8>, String> {
         // 传输层处理
@@ -424,12 +429,12 @@ impl NetworkStack {
             packet.source,
             packet.destination
         );
-        
+
         let data = self.transport_layer.receive_data(connection_id)?;
-        
+
         // 应用层处理
         let response = self.application_layer.handle_application_request("HTTP", &data)?;
-        
+
         Ok(response)
     }
 }
@@ -448,16 +453,16 @@ impl NetworkServer {
             listener: None,
         }
     }
-    
+
     /// 启动服务器
     pub fn start(&mut self, address: &str) -> Result<(), String> {
         let listener = TcpListener::bind(address)
             .map_err(|e| format!("Failed to bind: {}", e))?;
-        
+
         self.listener = Some(listener);
-        
+
         println!("Server started on {}", address);
-        
+
         // 处理连接
         if let Some(ref listener) = self.listener {
             for stream in listener.incoming() {
@@ -466,7 +471,7 @@ impl NetworkServer {
                         let mut buffer = [0; 1024];
                         if let Ok(n) = stream.read(&mut buffer) {
                             let request = buffer[..n].to_vec();
-                            
+
                             // 创建数据包
                             let packet = Packet {
                                 source: stream.peer_addr().unwrap(),
@@ -476,7 +481,7 @@ impl NetworkServer {
                                 sequence_number: 0,
                                 checksum: 0,
                             };
-                            
+
                             // 处理请求
                             if let Ok(response) = self.stack.receive_packet(packet) {
                                 let _ = stream.write_all(&response);
@@ -487,7 +492,7 @@ impl NetworkServer {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -525,12 +530,12 @@ impl EncryptionAlgorithm for AesEncryption {
         }
         encrypted
     }
-    
+
     fn decrypt(&self, data: &[u8], key: &[u8]) -> Vec<u8> {
         // AES解密与加密相同（XOR操作）
         self.encrypt(data, key)
     }
-    
+
     fn get_name(&self) -> &str {
         "AES"
     }
@@ -552,7 +557,7 @@ impl RsaEncryption {
         let phi = (p - 1) * (q - 1);
         let e = 17; // 公钥指数
         let d = mod_inverse(e, phi).unwrap(); // 私钥指数
-        
+
         RsaEncryption {
             public_key: (e, n),
             private_key: (d, n),
@@ -564,20 +569,20 @@ impl EncryptionAlgorithm for RsaEncryption {
     fn encrypt(&self, data: &[u8], _key: &[u8]) -> Vec<u8> {
         let (e, n) = self.public_key;
         let mut encrypted = Vec::new();
-        
+
         for &byte in data {
             let m = byte as u64;
             let c = mod_pow(m, e, n);
             encrypted.extend_from_slice(&c.to_le_bytes());
         }
-        
+
         encrypted
     }
-    
+
     fn decrypt(&self, data: &[u8], _key: &[u8]) -> Vec<u8> {
         let (d, n) = self.private_key;
         let mut decrypted = Vec::new();
-        
+
         for chunk in data.chunks(8) {
             let mut bytes = [0u8; 8];
             bytes.copy_from_slice(chunk);
@@ -585,10 +590,10 @@ impl EncryptionAlgorithm for RsaEncryption {
             let m = mod_pow(c, d, n);
             decrypted.push(m as u8);
         }
-        
+
         decrypted
     }
-    
+
     fn get_name(&self) -> &str {
         "RSA"
     }
@@ -598,7 +603,7 @@ impl EncryptionAlgorithm for RsaEncryption {
 fn mod_pow(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
     let mut result = 1;
     base %= modulus;
-    
+
     while exp > 0 {
         if exp % 2 == 1 {
             result = (result * base) % modulus;
@@ -606,7 +611,7 @@ fn mod_pow(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
         base = (base * base) % modulus;
         exp /= 2;
     }
-    
+
     result
 }
 
@@ -614,13 +619,13 @@ fn mod_pow(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
 fn mod_inverse(a: u64, m: u64) -> Option<u64> {
     let mut t = (0, 1);
     let mut r = (m, a);
-    
+
     while r.1 != 0 {
         let q = r.0 / r.1;
         t = (t.1, t.0 - q * t.1);
         r = (r.1, r.0 - q * r.1);
     }
-    
+
     if r.0 > 1 {
         None
     } else {
@@ -633,10 +638,10 @@ impl Cryptography {
         let mut algorithms = HashMap::new();
         algorithms.insert("AES".to_string(), Box::new(AesEncryption));
         algorithms.insert("RSA".to_string(), Box::new(RsaEncryption::new()));
-        
+
         Cryptography { algorithms }
     }
-    
+
     /// 加密数据
     pub fn encrypt(&self, algorithm: &str, data: &[u8], key: &[u8]) -> Result<Vec<u8>, String> {
         if let Some(algo) = self.algorithms.get(algorithm) {
@@ -645,7 +650,7 @@ impl Cryptography {
             Err("Encryption algorithm not found".to_string())
         }
     }
-    
+
     /// 解密数据
     pub fn decrypt(&self, algorithm: &str, data: &[u8], key: &[u8]) -> Result<Vec<u8>, String> {
         if let Some(algo) = self.algorithms.get(algorithm) {
@@ -686,32 +691,32 @@ impl Authentication {
             sessions: HashMap::new(),
         }
     }
-    
+
     /// 注册用户
     pub fn register_user(&mut self, username: String, password: String) -> Result<(), String> {
         if self.users.contains_key(&username) {
             return Err("User already exists".to_string());
         }
-        
+
         let salt = self.generate_salt();
         let password_hash = self.hash_password(&password, &salt);
-        
+
         let user = User {
             username: username.clone(),
             password_hash,
             salt,
             permissions: vec!["read".to_string()],
         };
-        
+
         self.users.insert(username, user);
         Ok(())
     }
-    
+
     /// 用户登录
     pub fn login(&mut self, username: &str, password: &str) -> Result<String, String> {
         if let Some(user) = self.users.get(username) {
             let password_hash = self.hash_password(password, &user.salt);
-            
+
             if password_hash == user.password_hash {
                 let session_id = self.create_session(username);
                 Ok(session_id)
@@ -722,7 +727,7 @@ impl Authentication {
             Err("User not found".to_string())
         }
     }
-    
+
     /// 验证会话
     pub fn validate_session(&self, session_id: &str) -> Result<&str, String> {
         if let Some(session) = self.sessions.get(session_id) {
@@ -730,7 +735,7 @@ impl Authentication {
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_secs();
-            
+
             if current_time < session.expires_at {
                 Ok(&session.username)
             } else {
@@ -740,7 +745,7 @@ impl Authentication {
             Err("Invalid session".to_string())
         }
     }
-    
+
     /// 生成盐值
     fn generate_salt(&self) -> String {
         use rand::Rng;
@@ -750,7 +755,7 @@ impl Authentication {
             .collect();
         salt
     }
-    
+
     /// 哈希密码
     fn hash_password(&self, password: &str, salt: &str) -> String {
         use sha2::{Sha256, Digest};
@@ -759,7 +764,7 @@ impl Authentication {
         hasher.update(salt.as_bytes());
         format!("{:x}", hasher.finalize())
     }
-    
+
     /// 创建会话
     fn create_session(&mut self, username: &str) -> String {
         use rand::Rng;
@@ -767,19 +772,19 @@ impl Authentication {
         let session_id: String = (0..32)
             .map(|_| rng.sample(rand::distributions::Alphanumeric) as char)
             .collect();
-        
+
         let current_time = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         let session = Session {
             session_id: session_id.clone(),
             username: username.to_string(),
             created_at: current_time,
             expires_at: current_time + 3600, // 1小时过期
         };
-        
+
         self.sessions.insert(session_id.clone(), session);
         session_id
     }
@@ -793,13 +798,13 @@ impl Authentication {
 ```rust
 fn main() {
     let mut server = NetworkServer::new();
-    
+
     // 添加路由
     server.stack.network_layer.add_route(
         "192.168.1.100".to_string(),
         "192.168.1.1".to_string()
     );
-    
+
     // 启动服务器
     if let Err(e) = server.start("127.0.0.1:8080") {
         eprintln!("Server error: {}", e);
@@ -814,18 +819,18 @@ fn main() {
     let crypto = Cryptography::new();
     let key = b"secret_key_123";
     let data = b"Hello, secure world!";
-    
+
     // AES加密
     let encrypted = crypto.encrypt("AES", data, key).unwrap();
     println!("AES encrypted: {:?}", encrypted);
-    
+
     let decrypted = crypto.decrypt("AES", &encrypted, key).unwrap();
     println!("AES decrypted: {}", String::from_utf8_lossy(&decrypted));
-    
+
     // RSA加密
     let encrypted = crypto.encrypt("RSA", data, key).unwrap();
     println!("RSA encrypted: {:?}", encrypted);
-    
+
     let decrypted = crypto.decrypt("RSA", &encrypted, key).unwrap();
     println!("RSA decrypted: {}", String::from_utf8_lossy(&decrypted));
 }
@@ -836,14 +841,14 @@ fn main() {
 ```rust
 fn main() {
     let mut auth = Authentication::new();
-    
+
     // 注册用户
     auth.register_user("alice".to_string(), "password123".to_string()).unwrap();
-    
+
     // 用户登录
     let session_id = auth.login("alice", "password123").unwrap();
     println!("Login successful, session: {}", session_id);
-    
+
     // 验证会话
     match auth.validate_session(&session_id) {
         Ok(username) => println!("Valid session for user: {}", username),
@@ -925,4 +930,4 @@ Dijkstra算法能够找到单源最短路径。
 
 ---
 
-*本模块为形式科学知识库的重要组成部分，为网络系统设计提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。*
+_本模块为形式科学知识库的重要组成部分，为网络系统设计提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。_

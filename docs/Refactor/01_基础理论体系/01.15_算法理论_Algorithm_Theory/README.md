@@ -2,29 +2,33 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 算法设计理论](#21-算法设计理论)
-  - [2.2 复杂度理论](#22-复杂度理论)
-  - [2.3 算法设计模式](#23-算法设计模式)
-- [3 Rust实现](#3-rust实现)
-  - [3.1 算法设计模式实现](#31-算法设计模式实现)
-  - [3.2 复杂度分析实现](#32-复杂度分析实现)
-  - [3.3 数据结构实现](#33-数据结构实现)
-- [4 应用示例](#4-应用示例)
-  - [4.1 示例1：排序算法比较](#41-示例1排序算法比较)
-  - [4.2 示例2：图算法应用](#42-示例2图算法应用)
-  - [4.3 示例3：动态规划应用](#43-示例3动态规划应用)
-- [5 理论扩展](#5-理论扩展)
-  - [5.1 并行算法理论](#51-并行算法理论)
-  - [5.2 随机算法理论](#52-随机算法理论)
-  - [5.3 近似算法理论](#53-近似算法理论)
-- [6 批判性分析](#6-批判性分析)
-  - [6.1 多元理论视角](#61-多元理论视角)
-  - [6.2 局限性分析](#62-局限性分析)
-  - [6.3 争议与分歧](#63-争议与分歧)
-  - [6.4 应用前景](#64-应用前景)
-  - [6.5 改进建议](#65-改进建议)
+- [16. 算法理论 (Algorithm Theory)](#16-算法理论-algorithm-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 算法设计理论](#21-算法设计理论)
+    - [2.2 复杂度理论](#22-复杂度理论)
+    - [2.3 算法设计模式](#23-算法设计模式)
+  - [3 Rust实现](#3-rust实现)
+    - [3.1 算法设计模式实现](#31-算法设计模式实现)
+    - [3.2 复杂度分析实现](#32-复杂度分析实现)
+    - [3.3 数据结构实现](#33-数据结构实现)
+  - [4 应用示例](#4-应用示例)
+    - [4.1 示例1：排序算法比较](#41-示例1排序算法比较)
+    - [4.2 示例2：图算法应用](#42-示例2图算法应用)
+    - [4.3 示例3：动态规划应用](#43-示例3动态规划应用)
+  - [5 理论扩展](#5-理论扩展)
+    - [5.1 并行算法理论](#51-并行算法理论)
+    - [5.2 随机算法理论](#52-随机算法理论)
+    - [5.3 近似算法理论](#53-近似算法理论)
+  - [6 批判性分析](#6-批判性分析)
+    - [6.1 多元理论视角](#61-多元理论视角)
+    - [6.2 局限性分析](#62-局限性分析)
+    - [6.3 争议与分歧](#63-争议与分歧)
+    - [6.4 应用前景](#64-应用前景)
+    - [6.5 改进建议](#65-改进建议)
+  - [📚 参考文献 / References \& Further Reading](#-参考文献--references--further-reading)
 
 ---
 
@@ -63,7 +67,7 @@
 算法是解决特定问题的有限步骤序列，表示为 $A = (I, O, P)$，其中：
 
 - $I$ 是输入集合
-- $O$ 是输出集合  
+- $O$ 是输出集合
 - $P$ 是处理步骤
 
 **定义 16.1.2** (算法正确性)
@@ -122,21 +126,21 @@ impl DivideAndConquer {
         if arr.len() <= 1 {
             return arr.to_vec();
         }
-        
+
         let mid = arr.len() / 2;
         let left = Self::merge_sort(&arr[..mid]);
         let right = Self::merge_sort(&arr[mid..]);
-        
+
         Self::merge(left, right)
     }
-    
+
     fn merge<T: Ord + Clone>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
         let mut result = Vec::new();
         let mut left_iter = left.into_iter();
         let mut right_iter = right.into_iter();
         let mut left_peek = left_iter.next();
         let mut right_peek = right_iter.next();
-        
+
         while let (Some(l), Some(r)) = (&left_peek, &right_peek) {
             match l.cmp(r) {
                 Ordering::Less | Ordering::Equal => {
@@ -149,7 +153,7 @@ impl DivideAndConquer {
                 }
             }
         }
-        
+
         // 添加剩余元素
         if let Some(l) = left_peek {
             result.push(l);
@@ -157,22 +161,22 @@ impl DivideAndConquer {
         if let Some(r) = right_peek {
             result.push(r);
         }
-        
+
         result.extend(left_iter);
         result.extend(right_iter);
         result
     }
-    
+
     /// 快速排序
     pub fn quick_sort<T: Ord + Clone>(arr: &[T]) -> Vec<T> {
         if arr.len() <= 1 {
             return arr.to_vec();
         }
-        
+
         let pivot = &arr[0];
         let (less, equal, greater): (Vec<_>, Vec<_>, Vec<_>) = arr.iter()
             .partition(|&x| x < pivot);
-        
+
         let mut result = Self::quick_sort(&less);
         result.extend(equal);
         result.extend(Self::quick_sort(&greater));
@@ -189,27 +193,27 @@ impl DynamicProgramming {
         if n <= 1 {
             return n as u64;
         }
-        
+
         let mut dp = vec![0; n + 1];
         dp[0] = 0;
         dp[1] = 1;
-        
+
         for i in 2..=n {
             dp[i] = dp[i-1] + dp[i-2];
         }
-        
+
         dp[n]
     }
-    
+
     /// 最长公共子序列
     pub fn longest_common_subsequence(s1: &str, s2: &str) -> String {
         let chars1: Vec<char> = s1.chars().collect();
         let chars2: Vec<char> = s2.chars().collect();
         let m = chars1.len();
         let n = chars2.len();
-        
+
         let mut dp = vec![vec![0; n + 1]; m + 1];
-        
+
         // 填充DP表
         for i in 1..=m {
             for j in 1..=n {
@@ -220,12 +224,12 @@ impl DynamicProgramming {
                 }
             }
         }
-        
+
         // 回溯构造结果
         let mut result = String::new();
         let mut i = m;
         let mut j = n;
-        
+
         while i > 0 && j > 0 {
             if chars1[i-1] == chars2[j-1] {
                 result.insert(0, chars1[i-1]);
@@ -237,15 +241,15 @@ impl DynamicProgramming {
                 j -= 1;
             }
         }
-        
+
         result
     }
-    
+
     /// 0-1背包问题
     pub fn knapsack_01(weights: &[usize], values: &[usize], capacity: usize) -> usize {
         let n = weights.len();
         let mut dp = vec![vec![0; capacity + 1]; n + 1];
-        
+
         for i in 1..=n {
             for w in 0..=capacity {
                 if weights[i-1] <= w {
@@ -255,7 +259,7 @@ impl DynamicProgramming {
                 }
             }
         }
-        
+
         dp[n][capacity]
     }
 }
@@ -271,22 +275,22 @@ impl GreedyAlgorithm {
             .enumerate()
             .map(|(i, &(start, end))| (start, end, i))
             .collect();
-        
+
         sorted_activities.sort_by_key(|&(_, end, _)| end);
-        
+
         let mut selected = Vec::new();
         let mut last_end = 0;
-        
+
         for (start, end, index) in sorted_activities {
             if start >= last_end {
                 selected.push(index);
                 last_end = end;
             }
         }
-        
+
         selected
     }
-    
+
     /// 霍夫曼编码
     pub fn huffman_encoding(frequencies: &[usize]) -> HashMap<char, String> {
         #[derive(PartialEq, Eq)]
@@ -296,19 +300,19 @@ impl GreedyAlgorithm {
             left: Option<Box<HuffmanNode>>,
             right: Option<Box<HuffmanNode>>,
         }
-        
+
         impl PartialOrd for HuffmanNode {
             fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
                 Some(self.frequency.cmp(&other.frequency).reverse())
             }
         }
-        
+
         impl Ord for HuffmanNode {
             fn cmp(&self, other: &Self) -> Ordering {
                 self.frequency.cmp(&other.frequency).reverse()
             }
         }
-        
+
         // 构建霍夫曼树
         let mut heap = BinaryHeap::new();
         for (i, &freq) in frequencies.iter().enumerate() {
@@ -321,11 +325,11 @@ impl GreedyAlgorithm {
                 });
             }
         }
-        
+
         while heap.len() > 1 {
             let left = heap.pop().unwrap();
             let right = heap.pop().unwrap();
-            
+
             heap.push(HuffmanNode {
                 frequency: left.frequency + right.frequency,
                 character: None,
@@ -333,7 +337,7 @@ impl GreedyAlgorithm {
                 right: Some(Box::new(right)),
             });
         }
-        
+
         // 生成编码
         let mut codes = HashMap::new();
         fn generate_codes(node: &HuffmanNode, code: String, codes: &mut HashMap<char, String>) {
@@ -348,11 +352,11 @@ impl GreedyAlgorithm {
                 }
             }
         }
-        
+
         if let Some(root) = heap.pop() {
             generate_codes(&root, String::new(), &mut codes);
         }
-        
+
         codes
     }
 }
@@ -365,24 +369,24 @@ impl Backtracking {
     pub fn n_queens(n: usize) -> Vec<Vec<String>> {
         let mut solutions = Vec::new();
         let mut board = vec![vec![false; n]; n];
-        
+
         fn is_safe(board: &[Vec<bool>], row: usize, col: usize) -> bool {
             let n = board.len();
-            
+
             // 检查行
             for j in 0..n {
                 if board[row][j] {
                     return false;
                 }
             }
-            
+
             // 检查列
             for i in 0..n {
                 if board[i][col] {
                     return false;
                 }
             }
-            
+
             // 检查对角线
             for i in 0..n {
                 for j in 0..n {
@@ -391,13 +395,13 @@ impl Backtracking {
                     }
                 }
             }
-            
+
             true
         }
-        
+
         fn solve_n_queens(board: &mut Vec<Vec<bool>>, row: usize, solutions: &mut Vec<Vec<String>>) {
             let n = board.len();
-            
+
             if row >= n {
                 // 找到解
                 let mut solution = Vec::new();
@@ -415,7 +419,7 @@ impl Backtracking {
                 solutions.push(solution);
                 return;
             }
-            
+
             for col in 0..n {
                 if is_safe(board, row, col) {
                     board[row][col] = true;
@@ -424,35 +428,35 @@ impl Backtracking {
                 }
             }
         }
-        
+
         solve_n_queens(&mut board, 0, &mut solutions);
         solutions
     }
-    
+
     /// 子集和问题
     pub fn subset_sum(nums: &[i32], target: i32) -> Vec<Vec<i32>> {
         let mut solutions = Vec::new();
         let mut current = Vec::new();
-        
+
         fn backtrack(nums: &[i32], target: i32, start: usize, current: &mut Vec<i32>, solutions: &mut Vec<Vec<i32>>) {
             let sum: i32 = current.iter().sum();
-            
+
             if sum == target {
                 solutions.push(current.clone());
                 return;
             }
-            
+
             if sum > target {
                 return;
             }
-            
+
             for i in start..nums.len() {
                 current.push(nums[i]);
                 backtrack(nums, target, i + 1, current, solutions);
                 current.pop();
             }
         }
-        
+
         backtrack(nums, target, 0, &mut current, &mut solutions);
         solutions
     }
@@ -476,38 +480,38 @@ impl ComplexityAnalyzer {
             measurements: Vec::new(),
         }
     }
-    
+
     /// 测量算法性能
-    pub fn measure<F, T>(&mut self, input_size: usize, algorithm: F) -> Duration 
+    pub fn measure<F, T>(&mut self, input_size: usize, algorithm: F) -> Duration
     where F: FnOnce() -> T {
         let start = Instant::now();
         algorithm();
         let duration = start.elapsed();
-        
+
         self.measurements.push((input_size, duration));
         duration
     }
-    
+
     /// 分析时间复杂度
     pub fn analyze_time_complexity(&self) -> TimeComplexity {
         if self.measurements.len() < 2 {
             return TimeComplexity::Unknown;
         }
-        
+
         let mut ratios = Vec::new();
         for i in 1..self.measurements.len() {
             let (n1, t1) = self.measurements[i-1];
             let (n2, t2) = self.measurements[i];
-            
+
             let ratio = (t2.as_nanos() as f64) / (t1.as_nanos() as f64);
             let size_ratio = (n2 as f64) / (n1 as f64);
             let complexity_ratio = ratio / size_ratio;
-            
+
             ratios.push(complexity_ratio);
         }
-        
+
         let avg_ratio = ratios.iter().sum::<f64>() / ratios.len() as f64;
-        
+
         if avg_ratio < 1.5 {
             TimeComplexity::O1
         } else if avg_ratio < 2.5 {
@@ -522,7 +526,7 @@ impl ComplexityAnalyzer {
             TimeComplexity::OExponential
         }
     }
-    
+
     /// 估算大O复杂度
     pub fn estimate_big_o(&self) -> String {
         match self.analyze_time_complexity() {
@@ -560,66 +564,66 @@ impl AlgorithmBenchmark {
             analyzer: ComplexityAnalyzer::new(),
         }
     }
-    
+
     /// 基准测试排序算法
     pub fn benchmark_sorting_algorithms(&mut self, max_size: usize) -> HashMap<String, String> {
         let mut results = HashMap::new();
-        
+
         // 测试不同大小的输入
         for size in [100, 1000, 10000] {
             if size > max_size {
                 break;
             }
-            
+
             let mut data: Vec<i32> = (0..size).collect();
             data.reverse(); // 最坏情况
-            
+
             // 测试归并排序
             self.analyzer.measure(size, || {
                 let _ = DivideAndConquer::merge_sort(&data);
             });
         }
         results.insert("Merge Sort".to_string(), self.analyzer.estimate_big_o());
-        
+
         // 重置分析器
         self.analyzer = ComplexityAnalyzer::new();
-        
+
         // 测试快速排序
         for size in [100, 1000, 10000] {
             if size > max_size {
                 break;
             }
-            
+
             let mut data: Vec<i32> = (0..size).collect();
             data.reverse();
-            
+
             self.analyzer.measure(size, || {
                 let _ = DivideAndConquer::quick_sort(&data);
             });
         }
         results.insert("Quick Sort".to_string(), self.analyzer.estimate_big_o());
-        
+
         results
     }
-    
+
     /// 基准测试搜索算法
     pub fn benchmark_search_algorithms(&mut self, max_size: usize) -> HashMap<String, String> {
         let mut results = HashMap::new();
-        
+
         for size in [100, 1000, 10000] {
             if size > max_size {
                 break;
             }
-            
+
             let data: Vec<i32> = (0..size).collect();
             let target = size as i32 - 1; // 查找最后一个元素
-            
+
             self.analyzer.measure(size, || {
                 let _ = data.binary_search(&target);
             });
         }
         results.insert("Binary Search".to_string(), self.analyzer.estimate_big_o());
-        
+
         results
     }
 }
@@ -659,12 +663,12 @@ impl<T: Ord> BinarySearchTree<T> {
     pub fn new() -> Self {
         BinarySearchTree { root: None }
     }
-    
+
     /// 插入节点
     pub fn insert(&mut self, value: T) {
         self.root = Some(self.insert_recursive(self.root.take(), value));
     }
-    
+
     fn insert_recursive(&self, node: Option<Box<TreeNode<T>>>, value: T) -> Box<TreeNode<T>> {
         match node {
             None => Box::new(TreeNode::new(value)),
@@ -678,12 +682,12 @@ impl<T: Ord> BinarySearchTree<T> {
             }
         }
     }
-    
+
     /// 查找节点
     pub fn search(&self, value: &T) -> Option<&T> {
         self.search_recursive(self.root.as_ref(), value)
     }
-    
+
     fn search_recursive<'a>(&'a self, node: Option<&'a Box<TreeNode<T>>>, value: &T) -> Option<&'a T> {
         match node {
             None => None,
@@ -698,14 +702,14 @@ impl<T: Ord> BinarySearchTree<T> {
             }
         }
     }
-    
+
     /// 中序遍历
     pub fn inorder_traversal(&self) -> Vec<&T> {
         let mut result = Vec::new();
         self.inorder_recursive(self.root.as_ref(), &mut result);
         result
     }
-    
+
     fn inorder_recursive<'a>(&'a self, node: Option<&'a Box<TreeNode<T>>>, result: &mut Vec<&'a T>) {
         if let Some(node) = node {
             self.inorder_recursive(node.left.as_ref(), result);
@@ -729,16 +733,16 @@ impl Graph {
             directed,
         }
     }
-    
+
     /// 添加边
     pub fn add_edge(&mut self, from: usize, to: usize) {
         self.adjacency_list.entry(from).or_insert_with(Vec::new).push(to);
-        
+
         if !self.directed {
             self.adjacency_list.entry(to).or_insert_with(Vec::new).push(from);
         }
     }
-    
+
     /// 深度优先搜索
     pub fn dfs(&self, start: usize) -> Vec<usize> {
         let mut visited = HashSet::new();
@@ -746,34 +750,34 @@ impl Graph {
         self.dfs_recursive(start, &mut visited, &mut result);
         result
     }
-    
+
     fn dfs_recursive(&self, node: usize, visited: &mut HashSet<usize>, result: &mut Vec<usize>) {
         if visited.contains(&node) {
             return;
         }
-        
+
         visited.insert(node);
         result.push(node);
-        
+
         if let Some(neighbors) = self.adjacency_list.get(&node) {
             for &neighbor in neighbors {
                 self.dfs_recursive(neighbor, visited, result);
             }
         }
     }
-    
+
     /// 广度优先搜索
     pub fn bfs(&self, start: usize) -> Vec<usize> {
         let mut visited = HashSet::new();
         let mut result = Vec::new();
         let mut queue = std::collections::VecDeque::new();
-        
+
         queue.push_back(start);
         visited.insert(start);
-        
+
         while let Some(node) = queue.pop_front() {
             result.push(node);
-            
+
             if let Some(neighbors) = self.adjacency_list.get(&node) {
                 for &neighbor in neighbors {
                     if !visited.contains(&neighbor) {
@@ -783,20 +787,20 @@ impl Graph {
                 }
             }
         }
-        
+
         result
     }
-    
+
     /// 拓扑排序
     pub fn topological_sort(&self) -> Result<Vec<usize>, String> {
         if !self.directed {
             return Err("Topological sort requires directed graph".to_string());
         }
-        
+
         let mut in_degree = HashMap::new();
         let mut result = Vec::new();
         let mut queue = std::collections::VecDeque::new();
-        
+
         // 计算入度
         for (node, neighbors) in &self.adjacency_list {
             in_degree.entry(*node).or_insert(0);
@@ -804,18 +808,18 @@ impl Graph {
                 *in_degree.entry(neighbor).or_insert(0) += 1;
             }
         }
-        
+
         // 找到入度为0的节点
         for (node, &degree) in &in_degree {
             if degree == 0 {
                 queue.push_back(*node);
             }
         }
-        
+
         // 拓扑排序
         while let Some(node) = queue.pop_front() {
             result.push(node);
-            
+
             if let Some(neighbors) = self.adjacency_list.get(&node) {
                 for &neighbor in neighbors {
                     if let Some(degree) = in_degree.get_mut(&neighbor) {
@@ -827,7 +831,7 @@ impl Graph {
                 }
             }
         }
-        
+
         if result.len() == in_degree.len() {
             Ok(result)
         } else {
@@ -850,7 +854,7 @@ impl UnionFind {
             rank: vec![0; size],
         }
     }
-    
+
     /// 查找根节点
     pub fn find(&mut self, x: usize) -> usize {
         if self.parent[x] != x {
@@ -858,12 +862,12 @@ impl UnionFind {
         }
         self.parent[x]
     }
-    
+
     /// 合并两个集合
     pub fn union(&mut self, x: usize, y: usize) {
         let root_x = self.find(x);
         let root_y = self.find(y);
-        
+
         if root_x != root_y {
             if self.rank[root_x] < self.rank[root_y] {
                 self.parent[root_x] = root_y;
@@ -875,7 +879,7 @@ impl UnionFind {
             }
         }
     }
-    
+
     /// 检查两个元素是否在同一集合
     pub fn connected(&mut self, x: usize, y: usize) -> bool {
         self.find(x) == self.find(y)
@@ -890,10 +894,10 @@ impl UnionFind {
 ```rust
 fn main() {
     let mut benchmark = AlgorithmBenchmark::new();
-    
+
     // 基准测试排序算法
     let results = benchmark.benchmark_sorting_algorithms(10000);
-    
+
     println!("Sorting Algorithm Complexity Analysis:");
     for (algorithm, complexity) in results {
         println!("{}: {}", algorithm, complexity);
@@ -907,22 +911,22 @@ fn main() {
 fn main() {
     // 创建有向图
     let mut graph = Graph::new(true);
-    
+
     // 添加边
     graph.add_edge(0, 1);
     graph.add_edge(0, 2);
     graph.add_edge(1, 3);
     graph.add_edge(2, 3);
     graph.add_edge(3, 4);
-    
+
     // 深度优先搜索
     let dfs_result = graph.dfs(0);
     println!("DFS traversal: {:?}", dfs_result);
-    
+
     // 广度优先搜索
     let bfs_result = graph.bfs(0);
     println!("BFS traversal: {:?}", bfs_result);
-    
+
     // 拓扑排序
     match graph.topological_sort() {
         Ok(order) => println!("Topological order: {:?}", order),
@@ -939,13 +943,13 @@ fn main() {
     let n = 50;
     let fib = DynamicProgramming::fibonacci(n);
     println!("Fibonacci({}) = {}", n, fib);
-    
+
     // 最长公共子序列
     let s1 = "ABCDGH";
     let s2 = "AEDFHR";
     let lcs = DynamicProgramming::longest_common_subsequence(s1, s2);
     println!("LCS of '{}' and '{}': '{}'", s1, s2, lcs);
-    
+
     // 0-1背包问题
     let weights = vec![2, 1, 3, 2];
     let values = vec![12, 10, 20, 15];
@@ -1030,4 +1034,4 @@ fn main() {
 
 ---
 
-*本模块为形式科学知识库的重要组成部分，为算法设计和分析提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。*
+_本模块为形式科学知识库的重要组成部分，为算法设计和分析提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。_

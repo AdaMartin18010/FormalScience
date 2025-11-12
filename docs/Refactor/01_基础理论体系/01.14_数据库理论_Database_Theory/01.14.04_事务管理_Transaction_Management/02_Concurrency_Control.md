@@ -134,18 +134,18 @@ impl LockManager {
             wait_for_graph: Arc::new(Mutex::new(HashMap::new())),
         }
     }
-    
+
     pub fn acquire_lock(&self, resource: &str, transaction_id: &str, lock_type: LockType) -> Result<bool, String> {
         let mut locks = self.locks.lock().unwrap();
         let resource_locks = locks.entry(resource.to_string()).or_insert_with(Vec::new);
-        
+
         match lock_type {
             LockType::Shared => {
                 // 检查是否有排他锁
                 if resource_locks.iter().any(|lock| matches!(lock.lock_type, LockType::Exclusive)) {
                     return Ok(false);
                 }
-                
+
                 // 添加共享锁
                 resource_locks.push(Lock {
                     lock_type: LockType::Shared,
@@ -159,7 +159,7 @@ impl LockManager {
                 if !resource_locks.is_empty() {
                     return Ok(false);
                 }
-                
+
                 // 添加排他锁
                 resource_locks.push(Lock {
                     lock_type: LockType::Exclusive,
@@ -170,7 +170,7 @@ impl LockManager {
             }
         }
     }
-    
+
     pub fn release_lock(&self, resource: &str, transaction_id: &str) -> Result<bool, String> {
         let mut locks = self.locks.lock().unwrap();
         if let Some(resource_locks) = locks.get_mut(resource) {
@@ -180,17 +180,17 @@ impl LockManager {
             Ok(false)
         }
     }
-    
+
     pub fn detect_deadlock(&self) -> Vec<String> {
         let wait_for_graph = self.wait_for_graph.lock().unwrap();
         self.find_cycle(&wait_for_graph)
     }
-    
+
     fn find_cycle(&self, graph: &HashMap<String, HashSet<String>>) -> Vec<String> {
         let mut visited = HashSet::new();
         let mut rec_stack = HashSet::new();
         let mut cycle = Vec::new();
-        
+
         for node in graph.keys() {
             if !visited.contains(node) {
                 if self.dfs_cycle(node, graph, &mut visited, &mut rec_stack, &mut cycle) {
@@ -200,14 +200,14 @@ impl LockManager {
         }
         Vec::new()
     }
-    
-    fn dfs_cycle(&self, node: &str, graph: &HashMap<String, HashSet<String>>, 
-                 visited: &mut HashSet<String>, rec_stack: &mut HashSet<String>, 
+
+    fn dfs_cycle(&self, node: &str, graph: &HashMap<String, HashSet<String>>,
+                 visited: &mut HashSet<String>, rec_stack: &mut HashSet<String>,
                  cycle: &mut Vec<String>) -> bool {
         visited.insert(node.to_string());
         rec_stack.insert(node.to_string());
         cycle.push(node.to_string());
-        
+
         if let Some(neighbors) = graph.get(node) {
             for neighbor in neighbors {
                 if !visited.contains(neighbor) {
@@ -219,7 +219,7 @@ impl LockManager {
                 }
             }
         }
-        
+
         rec_stack.remove(node);
         cycle.pop();
         false
@@ -249,54 +249,54 @@ impl TimestampManager {
             data_timestamps: Arc::new(Mutex::new(HashMap::new())),
         }
     }
-    
+
     pub fn get_timestamp(&self) -> u64 {
         let mut current = self.current_timestamp.lock().unwrap();
         *current += 1;
         *current
     }
-    
+
     pub fn assign_timestamp(&self, transaction_id: &str) -> u64 {
         let timestamp = self.get_timestamp();
         let mut timestamps = self.transaction_timestamps.lock().unwrap();
         timestamps.insert(transaction_id.to_string(), timestamp);
         timestamp
     }
-    
+
     pub fn read_timestamp(&self, data_item: &str) -> u64 {
         let timestamps = self.data_timestamps.lock().unwrap();
         *timestamps.get(data_item).unwrap_or(&0)
     }
-    
+
     pub fn write_timestamp(&self, data_item: &str, timestamp: u64) {
         let mut timestamps = self.data_timestamps.lock().unwrap();
         timestamps.insert(data_item.to_string(), timestamp);
     }
-    
+
     pub fn validate_read(&self, transaction_id: &str, data_item: &str) -> Result<bool, String> {
         let transaction_timestamp = {
             let timestamps = self.transaction_timestamps.lock().unwrap();
             *timestamps.get(transaction_id).unwrap_or(&0)
         };
-        
+
         let write_timestamp = self.read_timestamp(data_item);
-        
+
         if transaction_timestamp < write_timestamp {
             Err("Read validation failed: transaction timestamp too old".to_string())
         } else {
             Ok(true)
         }
     }
-    
+
     pub fn validate_write(&self, transaction_id: &str, data_item: &str) -> Result<bool, String> {
         let transaction_timestamp = {
             let timestamps = self.transaction_timestamps.lock().unwrap();
             *timestamps.get(transaction_id).unwrap_or(&0)
         };
-        
+
         let read_timestamp = self.read_timestamp(data_item);
         let write_timestamp = self.read_timestamp(data_item);
-        
+
         if transaction_timestamp < read_timestamp || transaction_timestamp < write_timestamp {
             Err("Write validation failed: transaction timestamp too old".to_string())
         } else {
@@ -335,14 +335,14 @@ impl MVCCManager {
             active_transactions: Arc::new(Mutex::new(HashMap::new())),
         }
     }
-    
+
     pub fn read(&self, key: &str, transaction_id: &str) -> Result<Option<String>, String> {
         let versions = self.versions.lock().unwrap();
         let transaction_timestamp = {
             let active = self.active_transactions.lock().unwrap();
             *active.get(transaction_id).unwrap_or(&0)
         };
-        
+
         if let Some(mut current_version) = versions.get(key).cloned() {
             while let Some(version) = current_version {
                 if version.timestamp <= transaction_timestamp && version.is_committed {
@@ -351,10 +351,10 @@ impl MVCCManager {
                 current_version = version.next_version;
             }
         }
-        
+
         Ok(None)
     }
-    
+
     pub fn write(&self, key: &str, value: &str, transaction_id: &str) -> Result<(), String> {
         let transaction_timestamp = {
             let mut active = self.active_transactions.lock().unwrap();
@@ -362,7 +362,7 @@ impl MVCCManager {
             active.insert(transaction_id.to_string(), timestamp);
             timestamp
         };
-        
+
         let new_version = Version {
             data: value.to_string(),
             transaction_id: transaction_id.to_string(),
@@ -370,20 +370,20 @@ impl MVCCManager {
             is_committed: false,
             next_version: None,
         };
-        
+
         let mut versions = self.versions.lock().unwrap();
         let current_version = versions.get(key).cloned();
-        
+
         let mut new_version = new_version;
         new_version.next_version = current_version;
-        
+
         versions.insert(key.to_string(), Some(new_version));
         Ok(())
     }
-    
+
     pub fn commit(&self, transaction_id: &str) -> Result<(), String> {
         let mut versions = self.versions.lock().unwrap();
-        
+
         for (_, version_opt) in versions.iter_mut() {
             if let Some(ref mut version) = version_opt {
                 let mut current = version;
@@ -395,15 +395,15 @@ impl MVCCManager {
                 }
             }
         }
-        
+
         let mut active = self.active_transactions.lock().unwrap();
         active.remove(transaction_id);
         Ok(())
     }
-    
+
     pub fn rollback(&self, transaction_id: &str) -> Result<(), String> {
         let mut versions = self.versions.lock().unwrap();
-        
+
         for (_, version_opt) in versions.iter_mut() {
             if let Some(ref mut version) = version_opt {
                 let mut current = version;
@@ -417,16 +417,16 @@ impl MVCCManager {
                 }
             }
         }
-        
+
         let mut active = self.active_transactions.lock().unwrap();
         active.remove(transaction_id);
         Ok(())
     }
-    
+
     pub fn garbage_collect(&self) -> Result<(), String> {
         let mut versions = self.versions.lock().unwrap();
         let active = self.active_transactions.lock().unwrap();
-        
+
         for (_, version_opt) in versions.iter_mut() {
             if let Some(ref mut version) = version_opt {
                 let mut current = version;
@@ -440,7 +440,7 @@ impl MVCCManager {
                                 break;
                             }
                         }
-                        
+
                         if !is_accessible {
                             current.next_version = next.next_version.take();
                             break;

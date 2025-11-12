@@ -3,30 +3,30 @@
 ## 📋 目录
 
 - [06. 并发验证理论 (Concurrent Verification Theory)](#06-并发验证理论-concurrent-verification-theory)
-  - [1 . 理论基础](#1-理论基础)
+  - [📋 目录](#-目录)
   - [1. 理论基础](#1-理论基础)
     - [1.1 并发验证概述](#11-并发验证概述)
     - [1.2 验证方法分类](#12-验证方法分类)
     - [1.3 形式化验证框架](#13-形式化验证框架)
-  - [2 . 模型检查理论](#2-模型检查理论)
+  - [2. 模型检查理论](#2-模型检查理论)
     - [2.1 状态空间探索](#21-状态空间探索)
     - [2.2 性质规范语言](#22-性质规范语言)
     - [2.3 算法复杂度分析](#23-算法复杂度分析)
-  - [3 . 定理证明方法](#3-定理证明方法)
+  - [3. 定理证明方法](#3-定理证明方法)
     - [3.1 霍尔逻辑扩展](#31-霍尔逻辑扩展)
     - [3.2 分离逻辑](#32-分离逻辑)
-  - [4 . 抽象解释技术](#4-抽象解释技术)
+  - [4. 抽象解释技术](#4-抽象解释技术)
     - [4.1 抽象域理论](#41-抽象域理论)
     - [4.2 不动点计算](#42-不动点计算)
-  - [5 . 运行时验证](#5-运行时验证)
+  - [5. 运行时验证](#5-运行时验证)
     - [5.1 监控器理论](#51-监控器理论)
     - [5.2 动态分析](#52-动态分析)
-  - [6 . 工具实现](#6-工具实现)
+  - [6. 工具实现](#6-工具实现)
     - [6.1 验证工具架构](#61-验证工具架构)
     - [6.2 代码示例](#62-代码示例)
     - [6.3 形式化证明](#63-形式化证明)
-  - [7 📊 总结](#7-总结)
-  - [8 批判性分析](#8-批判性分析)
+  - [📊 总结](#-总结)
+  - [批判性分析](#批判性分析)
 
 ---
 
@@ -45,17 +45,17 @@
 **证明**：
 
 ```lean
-theorem verification_completeness : 
+theorem verification_completeness :
   ∀ (S : ConcurrentSystem) (φ : LTLFormula),
-  finite_state S → 
+  finite_state S →
   ∃ (algorithm : VerificationAlgorithm),
   algorithm.decides S φ
 
 -- 构造性证明
-def construct_verification_algorithm : 
-  (S : ConcurrentSystem) → 
-  (φ : LTLFormula) → 
-  finite_state S → 
+def construct_verification_algorithm :
+  (S : ConcurrentSystem) →
+  (φ : LTLFormula) →
+  finite_state S →
   VerificationAlgorithm
 | S, φ, h_finite := {
   -- 状态空间枚举
@@ -96,7 +96,7 @@ pub trait ConcurrentVerifier {
     type State;
     type Property;
     type Result;
-    
+
     fn verify(&self, system: &ConcurrentSystem, property: &Property) -> Result;
     fn is_complete(&self) -> bool;
     fn complexity(&self) -> Complexity;
@@ -129,7 +129,7 @@ data ModelChecker = ModelChecker {
 }
 
 dfsModelCheck :: ConcurrentSystem -> LTLFormula -> VerificationResult
-dfsModelCheck system property = 
+dfsModelCheck system property =
     let initialState = initial system
         checker = ModelChecker empty empty (VerificationResult False Nothing Nothing empty)
     in dfsExplore system property initialState checker
@@ -137,14 +137,14 @@ dfsModelCheck system property =
 dfsExplore :: ConcurrentSystem -> LTLFormula -> State -> ModelChecker -> VerificationResult
 dfsExplore system property state checker
     | state `member` visited checker = result checker
-    | satisfies state property = 
+    | satisfies state property =
         let newChecker = checker { visited = insert state (visited checker) }
         in foldr (dfsExplore system property) newChecker (successors system state)
-    | otherwise = 
+    | otherwise =
         let counterExample = buildCounterExample state (stack checker)
-            newResult = (result checker) { 
-                is_satisfied = False, 
-                counter_example = Just counterExample 
+            newResult = (result checker) {
+                is_satisfied = False,
+                counter_example = Just counterExample
             }
         in checker { result = newResult }
 ```
@@ -172,8 +172,8 @@ def LTL_semantics : LTLFormula → List State → Prop
 | (LTLFormula.and φ ψ) σ := LTL_semantics φ σ ∧ LTL_semantics ψ σ
 | (LTLFormula.or φ ψ) σ := LTL_semantics φ σ ∨ LTL_semantics ψ σ
 | (LTLFormula.next φ) σ := LTL_semantics φ (tail σ)
-| (LTLFormula.until φ ψ) σ := 
-    ∃ i, LTL_semantics ψ (drop i σ) ∧ 
+| (LTLFormula.until φ ψ) σ :=
+    ∃ i, LTL_semantics ψ (drop i σ) ∧
          ∀ j < i, LTL_semantics φ (drop j σ)
 | (LTLFormula.always φ) σ := ∀ i, LTL_semantics φ (drop i σ)
 | (LTLFormula.eventually φ) σ := ∃ i, LTL_semantics φ (drop i σ)
@@ -219,7 +219,7 @@ structure ConcurrentHoareTriple (P Q : State → Prop) (C : ConcurrentProgram) :
 -- 并发霍尔逻辑规则
 theorem concurrent_parallel_rule :
   ∀ (P₁ Q₁ P₂ Q₂ : State → Prop) (C₁ C₂ : ConcurrentProgram),
-  {P₁} C₁ {Q₁} → {P₂} C₂ {Q₂} → 
+  {P₁} C₁ {Q₁} → {P₂} C₂ {Q₂} →
   disjoint_vars C₁ C₂ →
   {P₁ ∧ P₂} C₁ || C₂ {Q₁ ∧ Q₂}
 
@@ -282,7 +282,7 @@ theorem galois_connection :
 pub trait AbstractInterpreter {
     type AbstractState;
     type TransferFunction;
-    
+
     fn compute_fixpoint(
         &self,
         initial: Self::AbstractState,
@@ -291,17 +291,17 @@ pub trait AbstractInterpreter {
     ) -> Self::AbstractState {
         let mut current = initial;
         let mut previous;
-        
+
         loop {
             previous = current.clone();
             current = transfer.apply(&current);
             current = widening(&previous, &current);
-            
+
             if current.leq(&previous) {
                 break;
             }
         }
-        
+
         current
     }
 }
@@ -320,7 +320,7 @@ impl AbstractDomain for IntervalDomain {
             upper: max_option(self.upper, other.upper),
         }
     }
-    
+
     fn widening(&self, other: &Self) -> Self {
         IntervalDomain {
             lower: widening_lower(self.lower, other.lower),
@@ -350,7 +350,7 @@ structure RuntimeMonitor (α : Type) :=
 theorem monitor_correctness :
   ∀ (M : RuntimeMonitor) (φ : LTLFormula) (trace : List Event),
   let final_state := foldl M.transition M.initial trace in
-  M.verdict final_state = Satisfied ↔ 
+  M.verdict final_state = Satisfied ↔
   LTL_semantics φ (map event_to_state trace)
 ```
 
@@ -369,19 +369,19 @@ data ResourceAllocationGraph = RAG {
 
 -- 死锁检测算法
 detectDeadlock :: ResourceAllocationGraph -> Bool
-detectDeadlock rag = 
+detectDeadlock rag =
     let graph = buildWaitForGraph rag
         cycles = findCycles graph
     in not (null cycles)
 
 -- 等待图构建
 buildWaitForGraph :: ResourceAllocationGraph -> Graph ProcessId
-buildWaitForGraph rag = 
+buildWaitForGraph rag =
     let edges = concatMap (buildEdges rag) (Map.keys (processes rag))
     in Graph edges
 
 buildEdges :: ResourceAllocationGraph -> ProcessId -> [(ProcessId, ProcessId)]
-buildEdges rag pid = 
+buildEdges rag pid =
     let requests = fromMaybe [] (Map.lookup pid (requests rag))
         blocking = findBlockingProcesses rag requests
     in map (\blocker -> (pid, blocker)) blocking
@@ -413,16 +413,16 @@ impl VerificationTool {
             runtime_monitor: Box::new(LTLMonitor::new()),
         }
     }
-    
+
     pub fn verify(&self, system: &ConcurrentSystem, property: &Property) -> VerificationResult {
         match property.verification_method() {
-            VerificationMethod::ModelChecking => 
+            VerificationMethod::ModelChecking =>
                 self.model_checker.verify(system, property),
-            VerificationMethod::TheoremProving => 
+            VerificationMethod::TheoremProving =>
                 self.theorem_prover.verify(system, property),
-            VerificationMethod::AbstractInterpretation => 
+            VerificationMethod::AbstractInterpretation =>
                 self.abstract_interpreter.verify(system, property),
-            VerificationMethod::RuntimeMonitoring => 
+            VerificationMethod::RuntimeMonitoring =>
                 self.runtime_monitor.verify(system, property),
         }
     }
@@ -476,36 +476,36 @@ impl Mutex {
             owner: AtomicPtr::new(ptr::null_mut()),
         }
     }
-    
+
     pub fn lock(&self) -> Result<(), ()> {
         let current_thread = thread::current();
         let thread_ptr = &current_thread as *const _ as *mut _;
-        
+
         loop {
             let expected = false;
             if self.locked.compare_exchange_weak(
-                expected, 
-                true, 
-                Ordering::Acquire, 
+                expected,
+                true,
+                Ordering::Acquire,
                 Ordering::Relaxed
             ).is_ok() {
                 self.owner.store(thread_ptr, Ordering::Relaxed);
                 return Ok(());
             }
-            
+
             // 自旋等待
             thread::yield_now();
         }
     }
-    
+
     pub fn unlock(&self) -> Result<(), ()> {
         let current_thread = thread::current();
         let thread_ptr = &current_thread as *const _ as *mut _;
-        
+
         if self.owner.load(Ordering::Relaxed) != thread_ptr {
             return Err(());
         }
-        
+
         self.owner.store(ptr::null_mut(), Ordering::Relaxed);
         self.locked.store(false, Ordering::Release);
         Ok(())
@@ -519,11 +519,11 @@ fn test_mutex_mutual_exclusion() {
     let counter = Arc::new(AtomicUsize::new(0));
     let num_threads = 10;
     let iterations = 1000;
-    
+
     let handles: Vec<_> = (0..num_threads).map(|_| {
         let mutex = Arc::clone(&mutex);
         let counter = Arc::clone(&counter);
-        
+
         thread::spawn(move || {
             for _ in 0..iterations {
                 mutex.lock().unwrap();
@@ -533,11 +533,11 @@ fn test_mutex_mutual_exclusion() {
             }
         })
     }).collect();
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     assert_eq!(counter.load(Ordering::Relaxed), num_threads * iterations);
 }
 ```
@@ -557,7 +557,7 @@ inductive MutexState : Type
 
 -- 互斥性质
 def mutual_exclusion : Prop :=
-∀ (s : MutexState), 
+∀ (s : MutexState),
 match s with
 | MutexState.unlocked := true
 | MutexState.locked tid := ∀ tid', s ≠ MutexState.locked tid'
@@ -570,13 +570,13 @@ def lock_semantics : MutexState → ThreadId → MutexState
 
 def unlock_semantics : MutexState → ThreadId → MutexState
 | MutexState.unlocked _ := MutexState.unlocked
-| MutexState.locked owner tid := 
+| MutexState.locked owner tid :=
     if owner = tid then MutexState.unlocked else MutexState.locked owner
 
 -- 互斥性质证明
 theorem mutex_mutual_exclusion :
   ∀ (s : MutexState) (tid tid' : ThreadId),
-  s = MutexState.locked tid → 
+  s = MutexState.locked tid →
   s ≠ MutexState.locked tid'
 
 -- 证明：通过反证法

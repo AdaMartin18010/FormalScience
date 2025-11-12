@@ -3,15 +3,15 @@
 ## 目录
 
 - [09.1.1 处理器架构理论](#0911-处理器架构理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
-    - [1 多元理论视角](#1-多元理论视角)
-    - [1.2 局限性分析](#12-局限性分析)
+    - [1.1 处理器架构定义](#11-处理器架构定义)
+    - [1.2 主要架构类型](#12-主要架构类型)
   - [2. 形式化定义](#2-形式化定义)
-    - [1.3 争议与分歧](#13-争议与分歧)
-    - [1.4 应用前景](#14-应用前景)
-    - [1.5 改进建议](#15-改进建议)
+    - [2.1 指令集架构](#21-指令集架构)
+    - [2.2 微架构](#22-微架构)
+    - [2.3 流水线](#23-流水线)
   - [3. 定理与证明](#3-定理与证明)
     - [3.1 性能定理](#31-性能定理)
     - [3.2 缓存定理](#32-缓存定理)
@@ -117,7 +117,7 @@ impl Processor {
             pipeline: vec![None; 5], // 5-stage pipeline
         }
     }
-    
+
     pub fn execute_instruction(&mut self, inst: &Instruction) {
         match inst {
             Instruction::Add(rd, rs1, rs2) => {
@@ -139,16 +139,16 @@ impl Processor {
             },
         }
     }
-    
+
     pub fn pipeline_step(&mut self, program: &[Instruction]) {
         // Execute stage
         if let Some(inst) = self.pipeline[3].take() {
             self.execute_instruction(&inst);
         }
-        
+
         // Decode stage
         self.pipeline[3] = self.pipeline[2].take();
-        
+
         // Fetch stage
         if self.pc < program.len() {
             self.pipeline[2] = Some(program[self.pc].clone());
@@ -189,7 +189,7 @@ impl Cache {
             };
             sets * associativity
         ];
-        
+
         Cache {
             lines,
             line_size,
@@ -197,27 +197,27 @@ impl Cache {
             sets,
         }
     }
-    
+
     pub fn access(&mut self, address: usize) -> bool {
         let set_index = (address / self.line_size) % self.sets;
         let tag = address / (self.line_size * self.sets);
-        
+
         let set_start = set_index * self.associativity;
         let set_end = set_start + self.associativity;
-        
+
         // Check for hit
         for i in set_start..set_end {
             if self.lines[i].valid && self.lines[i].tag == tag {
                 return true; // Cache hit
             }
         }
-        
+
         // Cache miss - replace a line
         let replace_index = set_start + (address % self.associativity);
         self.lines[replace_index].tag = tag;
         self.lines[replace_index].valid = true;
         self.lines[replace_index].dirty = false;
-        
+
         false // Cache miss
     }
 }
@@ -237,8 +237,8 @@ impl Cache {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

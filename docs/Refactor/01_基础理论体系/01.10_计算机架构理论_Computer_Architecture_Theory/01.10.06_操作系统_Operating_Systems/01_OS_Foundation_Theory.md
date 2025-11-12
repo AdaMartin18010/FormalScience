@@ -79,7 +79,7 @@ def os_type : OperatingSystem → OSType
 | (OperatingSystem _ _ _) := OSType.time_sharing
 
 -- 完备性证明
-theorem os_type_completeness : 
+theorem os_type_completeness :
   ∀ (os : OperatingSystem), ∃! (t : OSType), os_type os = t
 
 -- 构造性证明
@@ -113,13 +113,13 @@ structure SystemArchitecture :=
 -- 层次性定义
 def is_layered (arch : SystemArchitecture) : Prop :=
 ∀ layer₁ layer₂ : Layer,
-layer₁ ≠ layer₂ → 
+layer₁ ≠ layer₂ →
 layer₁.depends_on layer₂ ∨ layer₂.depends_on layer₁
 
 -- 层次性证明
 theorem architecture_layering :
   ∀ (arch : SystemArchitecture),
-  well_formed_architecture arch → 
+  well_formed_architecture arch →
   is_layered arch
 
 -- 证明：通过架构设计
@@ -146,13 +146,13 @@ structure ResourceManager :=
 -- 公平性定义
 def is_fair (rm : ResourceManager) : Prop :=
 ∀ process₁ process₂ : Process,
-process₁.priority = process₂.priority → 
+process₁.priority = process₂.priority →
 rm.allocation_policy process₁ = rm.allocation_policy process₂
 
 -- 公平性证明
 theorem resource_management_fairness :
   ∀ (rm : ResourceManager),
-  implements_fair_scheduling rm → 
+  implements_fair_scheduling rm →
   is_fair rm
 
 -- 证明：通过调度算法
@@ -235,7 +235,7 @@ theorem sjf_optimality :
   ∀ (processes : List Process),
   let sjf_order := sjf_scheduling processes in
   ∀ (other_order : List Process),
-  is_valid_schedule other_order processes → 
+  is_valid_schedule other_order processes →
   average_waiting_time sjf_order ≤ average_waiting_time other_order
 
 -- 证明：通过交换论证
@@ -269,36 +269,36 @@ impl ProducerConsumer {
             full: Condvar::new(),
         }
     }
-    
+
     pub fn produce(&self, item: i32) {
         let mut buffer = self.mutex.lock().unwrap();
-        
+
         // 等待缓冲区有空间
         while self.buffer.len() >= self.capacity {
             buffer = self.empty.wait(buffer).unwrap();
         }
-        
+
         self.buffer.push(item);
         println!("Produced: {}", item);
-        
+
         // 通知消费者
         self.full.notify_one();
     }
-    
+
     pub fn consume(&self) -> i32 {
         let mut buffer = self.mutex.lock().unwrap();
-        
+
         // 等待缓冲区有数据
         while self.buffer.is_empty() {
             buffer = self.full.wait(buffer).unwrap();
         }
-        
+
         let item = self.buffer.remove(0);
         println!("Consumed: {}", item);
-        
+
         // 通知生产者
         self.empty.notify_one();
-        
+
         item
     }
 }
@@ -307,7 +307,7 @@ impl ProducerConsumer {
 pub fn producer_consumer_example() {
     let pc = Arc::new(ProducerConsumer::new(5));
     let pc_clone = Arc::clone(&pc);
-    
+
     // 生产者线程
     let producer = thread::spawn(move || {
         for i in 0..10 {
@@ -315,7 +315,7 @@ pub fn producer_consumer_example() {
             thread::sleep(Duration::from_millis(100));
         }
     });
-    
+
     // 消费者线程
     let consumer = thread::spawn(move || {
         for _ in 0..10 {
@@ -323,7 +323,7 @@ pub fn producer_consumer_example() {
             thread::sleep(Duration::from_millis(200));
         }
     });
-    
+
     producer.join().unwrap();
     consumer.join().unwrap();
 }
@@ -347,43 +347,43 @@ impl ReaderWriter {
             write_cond: Condvar::new(),
         }
     }
-    
+
     pub fn start_read(&self) {
         let mut guard = self.mutex.lock().unwrap();
-        
+
         // 等待写者完成
         while self.writing {
             guard = self.read_cond.wait(guard).unwrap();
         }
-        
+
         self.readers += 1;
     }
-    
+
     pub fn end_read(&self) {
         let mut guard = self.mutex.lock().unwrap();
         self.readers -= 1;
-        
+
         // 如果没有读者，通知写者
         if self.readers == 0 {
             self.write_cond.notify_one();
         }
     }
-    
+
     pub fn start_write(&self) {
         let mut guard = self.mutex.lock().unwrap();
-        
+
         // 等待所有读者和写者完成
         while self.readers > 0 || self.writing {
             guard = self.write_cond.wait(guard).unwrap();
         }
-        
+
         self.writing = true;
     }
-    
+
     pub fn end_write(&self) {
         let mut guard = self.mutex.lock().unwrap();
         self.writing = false;
-        
+
         // 通知读者和写者
         self.read_cond.notify_all();
         self.write_cond.notify_one();
@@ -416,13 +416,13 @@ structure MemoryModel :=
 def is_protected (mm : MemoryModel) : Prop :=
 ∀ process : Process,
 ∀ address : Address,
-process.accesses address → 
+process.accesses address →
 authorized process address
 
 -- 保护证明
 theorem memory_protection :
   ∀ (mm : MemoryModel),
-  implements_protection mm → 
+  implements_protection mm →
   is_protected mm
 
 -- 证明：通过内存管理单元
@@ -496,57 +496,57 @@ impl BuddyAllocator {
     pub fn new(memory_size: usize) -> Self {
         let max_order = (memory_size as f64).log2() as usize;
         let mut free_lists = vec![Vec::new(); max_order + 1];
-        
+
         // 初始化最大块
         free_lists[max_order].push(0);
-        
+
         Self {
             free_lists,
             max_order,
             memory_size,
         }
     }
-    
+
     pub fn allocate(&mut self, size: usize) -> Option<usize> {
         let order = self.get_order(size);
-        
+
         // 查找合适的空闲块
         if let Some(block) = self.find_free_block(order) {
             return Some(block);
         }
-        
+
         // 分割更大的块
         if let Some(block) = self.split_block(order) {
             return Some(block);
         }
-        
+
         None
     }
-    
+
     pub fn deallocate(&mut self, addr: usize, size: usize) {
         let order = self.get_order(size);
         self.free_lists[order].push(addr);
-        
+
         // 尝试合并伙伴块
         self.merge_buddies(addr, order);
     }
-    
+
     fn get_order(&self, size: usize) -> usize {
         let mut order = 0;
         let mut block_size = 1;
-        
+
         while block_size < size {
             order += 1;
             block_size *= 2;
         }
-        
+
         order
     }
-    
+
     fn find_free_block(&mut self, order: usize) -> Option<usize> {
         self.free_lists[order].pop()
     }
-    
+
     fn split_block(&mut self, target_order: usize) -> Option<usize> {
         // 查找更大的空闲块
         for order in (target_order + 1)..=self.max_order {
@@ -557,13 +557,13 @@ impl BuddyAllocator {
                 return Some(block);
             }
         }
-        
+
         None
     }
-    
+
     fn merge_buddies(&mut self, addr: usize, order: usize) {
         let buddy = self.get_buddy(addr, order);
-        
+
         // 检查伙伴是否也在空闲列表中
         if let Some(buddy_index) = self.free_lists[order].iter().position(|&x| x == buddy) {
             // 移除两个块
@@ -571,16 +571,16 @@ impl BuddyAllocator {
             if let Some(addr_index) = self.free_lists[order].iter().position(|&x| x == addr) {
                 self.free_lists[order].remove(addr_index);
             }
-            
+
             // 合并到更大的块
             let merged_addr = addr.min(buddy);
             self.free_lists[order + 1].push(merged_addr);
-            
+
             // 递归尝试合并
             self.merge_buddies(merged_addr, order + 1);
         }
     }
-    
+
     fn get_buddy(&self, addr: usize, order: usize) -> usize {
         addr ^ (1 << order)
     }
@@ -589,14 +589,14 @@ impl BuddyAllocator {
 // 使用示例
 pub fn buddy_allocator_example() {
     let mut allocator = BuddyAllocator::new(1024);
-    
+
     // 分配内存
     if let Some(addr1) = allocator.allocate(64) {
         println!("Allocated 64 bytes at address {}", addr1);
-        
+
         if let Some(addr2) = allocator.allocate(128) {
             println!("Allocated 128 bytes at address {}", addr2);
-            
+
             // 释放内存
             allocator.deallocate(addr1, 64);
             allocator.deallocate(addr2, 128);
@@ -631,13 +631,13 @@ structure File :=
 def is_consistent (file : File) : Prop :=
 ∀ block₁ block₂ ∈ file.blocks,
 block₁.valid ∧ block₂.valid ∧
-block₁.next = block₂ → 
+block₁.next = block₂ →
 block₁.data_consistent block₂.data
 
 -- 一致性证明
 theorem file_consistency :
   ∀ (file : File),
-  implements_consistency_protocol file → 
+  implements_consistency_protocol file →
   is_consistent file
 
 -- 证明：通过文件系统协议
@@ -671,7 +671,7 @@ is_hierarchical child
 -- 层次性证明
 theorem directory_hierarchy :
   ∀ (dir : Directory),
-  well_formed_directory dir → 
+  well_formed_directory dir →
   is_hierarchical dir
 
 -- 证明：通过目录结构
@@ -729,7 +729,7 @@ impl SimpleFileSystem {
             inode_table: HashMap::new(),
             next_inode: 1,
         };
-        
+
         // 创建根目录的inode
         let root_inode = Inode {
             inode_number: 0,
@@ -741,15 +741,15 @@ impl SimpleFileSystem {
             created: SystemTime::now(),
             modified: SystemTime::now(),
         };
-        
+
         fs.inode_table.insert(0, root_inode);
         fs
     }
-    
+
     pub fn create_file(&mut self, path: &str, content: &[u8]) -> Result<(), String> {
         let (parent_path, filename) = self.split_path(path)?;
         let parent = self.find_directory(parent_path)?;
-        
+
         // 创建inode
         let inode = Inode {
             inode_number: self.next_inode,
@@ -761,49 +761,49 @@ impl SimpleFileSystem {
             created: SystemTime::now(),
             modified: SystemTime::now(),
         };
-        
+
         self.inode_table.insert(self.next_inode, inode);
         self.next_inode += 1;
-        
+
         // 添加到父目录
         parent.add_child(filename.to_string(), self.next_inode - 1);
-        
+
         Ok(())
     }
-    
+
     pub fn read_file(&self, path: &str) -> Result<Vec<u8>, String> {
         let inode_number = self.find_inode(path)?;
         let inode = self.inode_table.get(&inode_number)
             .ok_or("Inode not found")?;
-        
+
         if inode.file_type != FileType::Regular {
             return Err("Not a regular file".to_string());
         }
-        
+
         // 模拟从块中读取数据
         let mut content = Vec::new();
         for &block_number in &inode.blocks {
             let block_data = self.read_block(block_number)?;
             content.extend_from_slice(&block_data);
         }
-        
+
         Ok(content)
     }
-    
+
     pub fn write_file(&mut self, path: &str, content: &[u8]) -> Result<(), String> {
         let inode_number = self.find_inode(path)?;
         let inode = self.inode_table.get_mut(&inode_number)
             .ok_or("Inode not found")?;
-        
+
         if inode.file_type != FileType::Regular {
             return Err("Not a regular file".to_string());
         }
-        
+
         // 更新文件大小和块
         inode.size = content.len();
         inode.blocks = self.allocate_blocks(content.len());
         inode.modified = SystemTime::now();
-        
+
         // 模拟写入块
         for (i, &block_number) in inode.blocks.iter().enumerate() {
             let start = i * BLOCK_SIZE;
@@ -811,14 +811,14 @@ impl SimpleFileSystem {
             let block_data = &content[start..end];
             self.write_block(block_number, block_data)?;
         }
-        
+
         Ok(())
     }
-    
+
     pub fn create_directory(&mut self, path: &str) -> Result<(), String> {
         let (parent_path, dirname) = self.split_path(path)?;
         let parent = self.find_directory(parent_path)?;
-        
+
         // 创建目录inode
         let inode = Inode {
             inode_number: self.next_inode,
@@ -830,57 +830,57 @@ impl SimpleFileSystem {
             created: SystemTime::now(),
             modified: SystemTime::now(),
         };
-        
+
         self.inode_table.insert(self.next_inode, inode);
         self.next_inode += 1;
-        
+
         // 添加到父目录
         parent.add_child(dirname.to_string(), self.next_inode - 1);
-        
+
         Ok(())
     }
-    
+
     fn split_path(&self, path: &str) -> Result<(&str, &str), String> {
         let mut parts: Vec<&str> = path.split('/').filter(|s| !s.is_empty()).collect();
-        
+
         if parts.is_empty() {
             return Err("Invalid path".to_string());
         }
-        
+
         let filename = parts.pop().unwrap();
         let parent_path = if parts.is_empty() {
             "/"
         } else {
             &path[..path.rfind('/').unwrap()]
         };
-        
+
         Ok((parent_path, filename))
     }
-    
+
     fn find_directory(&self, path: &str) -> Result<&Directory, String> {
         if path == "/" {
             return Ok(&self.root);
         }
-        
+
         // 简化实现：只处理根目录
         Err("Directory not found".to_string())
     }
-    
+
     fn find_inode(&self, path: &str) -> Result<usize, String> {
         // 简化实现：假设文件存在
         Ok(1)
     }
-    
+
     fn allocate_blocks(&self, size: usize) -> Vec<usize> {
         let num_blocks = (size + BLOCK_SIZE - 1) / BLOCK_SIZE;
         (0..num_blocks).collect()
     }
-    
+
     fn read_block(&self, block_number: usize) -> Result<Vec<u8>, String> {
         // 模拟读取块
         Ok(vec![0; BLOCK_SIZE])
     }
-    
+
     fn write_block(&self, block_number: usize, data: &[u8]) -> Result<(), String> {
         // 模拟写入块
         Ok(())
@@ -914,13 +914,13 @@ structure DeviceAbstraction :=
 -- 设备独立性定义
 def is_device_independent (da : DeviceAbstraction) : Prop :=
 ∀ device₁ device₂ : Device,
-device₁.type = device₂.type → 
+device₁.type = device₂.type →
 da.interface device₁ = da.interface device₂
 
 -- 独立性证明
 theorem device_independence :
   ∀ (da : DeviceAbstraction),
-  implements_unified_interface da → 
+  implements_unified_interface da →
   is_device_independent da
 
 -- 证明：通过设备抽象层
@@ -939,7 +939,7 @@ theorem device_independence :
 pub trait DeviceDriver {
     type Device;
     type Error;
-    
+
     fn initialize(&mut self) -> Result<(), Self::Error>;
     fn read(&mut self, buffer: &mut [u8]) -> Result<usize, Self::Error>;
     fn write(&mut self, buffer: &[u8]) -> Result<usize, Self::Error>;
@@ -957,31 +957,31 @@ pub struct DiskDriver {
 impl DeviceDriver for DiskDriver {
     type Device = DiskDevice;
     type Error = DiskError;
-    
+
     fn initialize(&mut self) -> Result<(), DiskError> {
         // 初始化磁盘设备
         self.device.reset()?;
         self.device.calibrate()?;
         Ok(())
     }
-    
+
     fn read(&mut self, buffer: &mut [u8]) -> Result<usize, DiskError> {
         let sector = self.get_current_sector();
         let data = self.device.read_sector(sector)?;
-        
+
         let bytes_to_copy = buffer.len().min(data.len());
         buffer[..bytes_to_copy].copy_from_slice(&data[..bytes_to_copy]);
-        
+
         Ok(bytes_to_copy)
     }
-    
+
     fn write(&mut self, buffer: &[u8]) -> Result<usize, DiskError> {
         let sector = self.get_current_sector();
         self.device.write_sector(sector, buffer)?;
-        
+
         Ok(buffer.len())
     }
-    
+
     fn ioctl(&mut self, command: u32, arg: usize) -> Result<usize, DiskError> {
         match command {
             IOCTL_GET_SECTOR_SIZE => Ok(self.sector_size),
@@ -998,7 +998,7 @@ impl DeviceDriver for DiskDriver {
             _ => Err(DiskError::InvalidCommand),
         }
     }
-    
+
     fn shutdown(&mut self) -> Result<(), DiskError> {
         self.device.flush()?;
         self.device.park_heads()?;
@@ -1016,27 +1016,27 @@ pub struct NetworkDriver {
 impl DeviceDriver for NetworkDriver {
     type Device = NetworkDevice;
     type Error = NetworkError;
-    
+
     fn initialize(&mut self) -> Result<(), NetworkError> {
         self.device.reset()?;
         self.device.set_mac_address(self.mac_address)?;
         self.device.enable_interrupts()?;
         Ok(())
     }
-    
+
     fn read(&mut self, buffer: &mut [u8]) -> Result<usize, NetworkError> {
         let packet = self.device.receive_packet()?;
         let bytes_to_copy = buffer.len().min(packet.len());
         buffer[..bytes_to_copy].copy_from_slice(&packet[..bytes_to_copy]);
-        
+
         Ok(bytes_to_copy)
     }
-    
+
     fn write(&mut self, buffer: &[u8]) -> Result<usize, NetworkError> {
         self.device.transmit_packet(buffer)?;
         Ok(buffer.len())
     }
-    
+
     fn ioctl(&mut self, command: u32, arg: usize) -> Result<usize, NetworkError> {
         match command {
             IOCTL_GET_MTU => Ok(self.mtu),
@@ -1048,7 +1048,7 @@ impl DeviceDriver for NetworkDriver {
             _ => Err(NetworkError::InvalidCommand),
         }
     }
-    
+
     fn shutdown(&mut self) -> Result<(), NetworkError> {
         self.device.disable_interrupts()?;
         self.device.reset()?;
@@ -1067,15 +1067,15 @@ impl DeviceManager {
             drivers: HashMap::new(),
         }
     }
-    
+
     pub fn register_driver<D: DeviceDriver + 'static>(&mut self, device_type: DeviceType, driver: D) {
         self.drivers.insert(device_type, Box::new(driver));
     }
-    
+
     pub fn get_driver(&mut self, device_type: DeviceType) -> Option<&mut Box<dyn DeviceDriver>> {
         self.drivers.get_mut(&device_type)
     }
-    
+
     pub fn read_device(&mut self, device_type: DeviceType, buffer: &mut [u8]) -> Result<usize, Box<dyn std::error::Error>> {
         if let Some(driver) = self.get_driver(device_type) {
             driver.read(buffer).map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
@@ -1083,7 +1083,7 @@ impl DeviceManager {
             Err("Device driver not found".into())
         }
     }
-    
+
     pub fn write_device(&mut self, device_type: DeviceType, buffer: &[u8]) -> Result<usize, Box<dyn std::error::Error>> {
         if let Some(driver) = self.get_driver(device_type) {
             driver.write(buffer).map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
@@ -1165,13 +1165,13 @@ def maintains_integrity (ac : AccessControl) : Prop :=
 ∀ subject : Subject,
 ∀ object : Object,
 ∀ operation : Operation,
-authorized subject object operation → 
+authorized subject object operation →
 performs_operation subject object operation
 
 -- 完整性证明
 theorem access_control_integrity :
   ∀ (ac : AccessControl),
-  implements_dac ac ∨ implements_mac ac → 
+  implements_dac ac ∨ implements_mac ac →
   maintains_integrity ac
 
 -- 证明：通过访问控制模型
@@ -1198,13 +1198,13 @@ structure SecurityModel :=
 -- 正确性定义
 def is_correct (sm : SecurityModel) : Prop :=
 ∀ policy_requirement : SecurityRequirement,
-sm.security_policy.satisfies policy_requirement → 
+sm.security_policy.satisfies policy_requirement →
 sm.implementation.enforces policy_requirement
 
 -- 正确性证明
 theorem security_model_correctness :
   ∀ (sm : SecurityModel),
-  verified_model sm → 
+  verified_model sm →
   is_correct sm
 
 -- 证明：通过形式化验证
@@ -1232,13 +1232,13 @@ structure ProtectionMechanism :=
 -- 有效性定义
 def is_effective (pm : ProtectionMechanism) : Prop :=
 ∀ attack : Attack,
-known_attack attack → 
+known_attack attack →
 pm.prevents attack
 
 -- 有效性证明
 theorem protection_effectiveness :
   ∀ (pm : ProtectionMechanism),
-  implements_comprehensive_protection pm → 
+  implements_comprehensive_protection pm →
   is_effective pm
 
 -- 证明：通过安全分析

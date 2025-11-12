@@ -2,36 +2,39 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 语法](#2-语法)
-  - [2.1 命题变量](#21-命题变量)
-  - [2.2 逻辑连接词](#22-逻辑连接词)
-  - [2.3 合式公式](#23-合式公式)
-- [3 语义](#3-语义)
-  - [3.1 真值赋值](#31-真值赋值)
-  - [3.2 真值表](#32-真值表)
-- [4 逻辑等价](#4-逻辑等价)
-  - [4.1 等价定义](#41-等价定义)
-  - [4.2 基本等价律](#42-基本等价律)
-- [5 永真式与矛盾式](#5-永真式与矛盾式)
-  - [5.1 基本定义](#51-基本定义)
-  - [5.2 重要的永真式](#52-重要的永真式)
-- [6 推理系统](#6-推理系统)
-  - [6.1 自然演绎系统](#61-自然演绎系统)
-  - [6.2 公理系统](#62-公理系统)
-- [7 完备性定理](#7-完备性定理)
-  - [7.1 语义后承](#71-语义后承)
-  - [7.2 语法后承](#72-语法后承)
-  - [7.3 完备性定理](#73-完备性定理)
-- [8 范式](#8-范式)
-  - [8.1 析取范式](#81-析取范式)
-  - [8.2 合取范式](#82-合取范式)
-- [9 命题逻辑在计算机科学中的应用](#9-命题逻辑在计算机科学中的应用)
-  - [9.1 布尔函数](#91-布尔函数)
-  - [9.2 逻辑电路设计](#92-逻辑电路设计)
-  - [9.3 形式化验证](#93-形式化验证)
-- [10 总结](#10-总结)
-- [11 批判性分析](#11-批判性分析)
+- [1. 命题逻辑 (Propositional Logic)](#1-命题逻辑-propositional-logic)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 语法](#2-语法)
+    - [2.1 命题变量](#21-命题变量)
+    - [2.2 逻辑连接词](#22-逻辑连接词)
+    - [2.3 合式公式](#23-合式公式)
+  - [3 语义](#3-语义)
+    - [3.1 真值赋值](#31-真值赋值)
+    - [3.2 真值表](#32-真值表)
+  - [4 逻辑等价](#4-逻辑等价)
+    - [4.1 等价定义](#41-等价定义)
+    - [4.2 基本等价律](#42-基本等价律)
+  - [5 永真式与矛盾式](#5-永真式与矛盾式)
+    - [5.1 基本定义](#51-基本定义)
+    - [5.2 重要的永真式](#52-重要的永真式)
+  - [6 推理系统](#6-推理系统)
+    - [6.1 自然演绎系统](#61-自然演绎系统)
+    - [6.2 公理系统](#62-公理系统)
+  - [7 完备性定理](#7-完备性定理)
+    - [7.1 语义后承](#71-语义后承)
+    - [7.2 语法后承](#72-语法后承)
+    - [7.3 完备性定理](#73-完备性定理)
+  - [8 范式](#8-范式)
+    - [8.1 析取范式](#81-析取范式)
+    - [8.2 合取范式](#82-合取范式)
+  - [9 命题逻辑在计算机科学中的应用](#9-命题逻辑在计算机科学中的应用)
+    - [9.1 布尔函数](#91-布尔函数)
+    - [9.2 逻辑电路设计](#92-逻辑电路设计)
+    - [9.3 形式化验证](#93-形式化验证)
+  - [10 总结](#10-总结)
+  - [参考文献](#参考文献)
+  - [11 批判性分析](#11-批判性分析)
 
 ---
 
@@ -331,12 +334,12 @@ impl LogicGate {
             output: false,
         }
     }
-    
+
     fn set_inputs(&mut self, inputs: Vec<bool>) {
         self.inputs = inputs;
         self.compute_output();
     }
-    
+
     fn compute_output(&mut self) {
         self.output = match self.gate_type {
             GateType::AND => self.inputs.iter().all(|&x| x),
@@ -347,7 +350,7 @@ impl LogicGate {
             GateType::XOR => self.inputs.iter().fold(false, |acc, &x| acc ^ x),
         }
     }
-    
+
     fn get_output(&self) -> bool {
         self.output
     }
@@ -366,16 +369,16 @@ impl Circuit {
             connections: Vec::new(),
         }
     }
-    
+
     fn add_gate(&mut self, gate: LogicGate) -> usize {
         self.gates.push(gate);
         self.gates.len() - 1
     }
-    
+
     fn connect(&mut self, from_gate: usize, from_output: usize, to_gate: usize) {
         self.connections.push((from_gate, from_output, to_gate));
     }
-    
+
     fn simulate(&mut self, inputs: &[bool]) -> Vec<bool> {
         // 实现电路模拟
         vec![true] // 简化实现
@@ -445,15 +448,15 @@ end
 
 ## 参考文献
 
-1. Enderton, H. B. (2001). *A mathematical introduction to logic*. Academic Press.
-2. Mendelson, E. (2015). *Introduction to mathematical logic*. CRC Press.
-3. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). *Computability and logic*. Cambridge University Press.
-4. Huth, M., & Ryan, M. (2004). *Logic in computer science: Modelling and reasoning about systems*. Cambridge University Press.
+1. Enderton, H. B. (2001). _A mathematical introduction to logic_. Academic Press.
+2. Mendelson, E. (2015). _Introduction to mathematical logic_. CRC Press.
+3. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). _Computability and logic_. Cambridge University Press.
+4. Huth, M., & Ryan, M. (2004). _Logic in computer science: Modelling and reasoning about systems_. Cambridge University Press.
 
 ---
 
-**更新时间**: 2024-12-21  
-**版本**: 1.0  
+**更新时间**: 2024-12-21
+**版本**: 1.0
 **作者**: FormalScience Team
 
 ## 11 批判性分析

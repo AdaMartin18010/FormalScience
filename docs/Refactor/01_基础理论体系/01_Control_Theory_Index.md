@@ -22,14 +22,14 @@
 
 ## 📋 目录
 
-  - [1.1 [经典控制理论](051_Classical_Control_Theorymd)](#11-经典控制理论051_classical_control_theorymd)
-  - [1.2 [现代控制理论](052_Modern_Control_Theorymd)](#12-现代控制理论052_modern_control_theorymd)
-  - [1.3 [鲁棒控制理论](053_Robust_Control_Theorymd)](#13-鲁棒控制理论053_robust_control_theorymd)
-  - [1.4 [自适应控制理论](054_Adaptive_Control_Theorymd)](#14-自适应控制理论054_adaptive_control_theorymd)
-  - [1.5 [最优控制理论](055_Optimal_Control_Theorymd)](#15-最优控制理论055_optimal_control_theorymd)
-  - [1.6 [非线性控制理论](056_Nonlinear_Control_Theorymd)](#16-非线性控制理论056_nonlinear_control_theorymd)
-  - [1.7 [智能控制理论](057_Intelligent_Control_Theorymd)](#17-智能控制理论057_intelligent_control_theorymd)
-  - [1.8 [控制理论应用](058_Control_Theory_Applicationsmd)](#18-控制理论应用058_control_theory_applicationsmd)
+- [1.1 [经典控制理论](051_Classical_Control_Theorymd)](#11-经典控制理论051_classical_control_theorymd)
+- [1.2 [现代控制理论](052_Modern_Control_Theorymd)](#12-现代控制理论052_modern_control_theorymd)
+- [1.3 [鲁棒控制理论](053_Robust_Control_Theorymd)](#13-鲁棒控制理论053_robust_control_theorymd)
+- [1.4 [自适应控制理论](054_Adaptive_Control_Theorymd)](#14-自适应控制理论054_adaptive_control_theorymd)
+- [1.5 [最优控制理论](055_Optimal_Control_Theorymd)](#15-最优控制理论055_optimal_control_theorymd)
+- [1.6 [非线性控制理论](056_Nonlinear_Control_Theorymd)](#16-非线性控制理论056_nonlinear_control_theorymd)
+- [1.7 [智能控制理论](057_Intelligent_Control_Theorymd)](#17-智能控制理论057_intelligent_control_theorymd)
+- [1.8 [控制理论应用](058_Control_Theory_Applicationsmd)](#18-控制理论应用058_control_theory_applicationsmd)
 - [1 控制论理论概述](#1-控制论理论概述)
   - [1.1 核心特征](#11-核心特征)
   - [1.2 理论层次](#12-理论层次)

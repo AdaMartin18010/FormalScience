@@ -3,7 +3,7 @@
 ## 目录
 
 - [12.3.1 查询优化理论](#1231-查询优化理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 查询优化定义](#11-查询优化定义)
@@ -253,38 +253,38 @@ impl QueryOptimizer {
             },
         }
     }
-    
+
     pub fn add_table_statistics(&mut self, stats: TableStatistics) {
         self.statistics.insert(stats.table_name.clone(), stats);
     }
-    
+
     pub fn add_index_info(&mut self, index: IndexInfo) {
         self.indexes.entry(index.table_name.clone())
             .or_insert_with(Vec::new)
             .push(index);
     }
-    
+
     pub fn optimize_query(&self, query: &Query) -> QueryPlan {
         let mut plans = Vec::new();
-        
+
         // 生成所有可能的查询计划
         self.generate_plans(query, &mut plans);
-        
+
         // 选择成本最低的计划
         plans.into_iter()
             .min_by(|a, b| a.estimated_cost.partial_cmp(&b.estimated_cost).unwrap_or(Ordering::Equal))
             .unwrap_or_else(|| self.create_default_plan(query))
     }
-    
+
     fn generate_plans(&self, query: &Query, plans: &mut Vec<QueryPlan>) {
         // 为每个表生成访问计划
         let mut table_plans = HashMap::new();
-        
+
         for table in &query.tables {
             let table_plans_for_table = self.generate_table_plans(table);
             table_plans.insert(table.clone(), table_plans_for_table);
         }
-        
+
         // 生成连接计划
         if query.tables.len() > 1 {
             self.generate_join_plans(query, &table_plans, plans);
@@ -293,27 +293,27 @@ impl QueryOptimizer {
             if let Some(table_plans_for_table) = table_plans.get(&query.tables[0]) {
                 for plan in table_plans_for_table {
                     let mut final_plan = plan.clone();
-                    
+
                     // 添加过滤条件
                     if !query.where_clause.is_empty() {
                         final_plan = self.add_filter_node(final_plan, &query.where_clause);
                     }
-                    
+
                     // 添加投影
                     if !query.select_columns.is_empty() {
                         final_plan = self.add_project_node(final_plan, &query.select_columns);
                     }
-                    
+
                     // 添加排序
                     if !query.order_by.is_empty() {
                         final_plan = self.add_sort_node(final_plan, &query.order_by);
                     }
-                    
+
                     // 添加聚合
                     if !query.group_by.is_empty() || !query.aggregates.is_empty() {
                         final_plan = self.add_aggregate_node(final_plan, &query.group_by, &query.aggregates);
                     }
-                    
+
                     plans.push(QueryPlan {
                         root: final_plan,
                         estimated_cost: self.calculate_cost(&final_plan),
@@ -323,10 +323,10 @@ impl QueryOptimizer {
             }
         }
     }
-    
+
     fn generate_table_plans(&self, table_name: &str) -> Vec<PlanNode> {
         let mut plans = Vec::new();
-        
+
         // 表扫描计划
         if let Some(stats) = self.statistics.get(table_name) {
             let table_scan = TableScanNode {
@@ -337,7 +337,7 @@ impl QueryOptimizer {
             };
             plans.push(PlanNode::TableScan(table_scan));
         }
-        
+
         // 索引扫描计划
         if let Some(indexes) = self.indexes.get(table_name) {
             for index in indexes {
@@ -352,22 +352,22 @@ impl QueryOptimizer {
                 plans.push(PlanNode::IndexScan(index_scan));
             }
         }
-        
+
         plans
     }
-    
+
     fn generate_join_plans(&self, query: &Query, table_plans: &HashMap<String, Vec<PlanNode>>, plans: &mut Vec<QueryPlan>) {
         // 生成所有可能的连接顺序
         let table_names: Vec<String> = query.tables.clone();
         let join_orders = self.generate_join_orders(&table_names);
-        
+
         for join_order in join_orders {
             let mut current_plan = None;
-            
+
             for table_name in &join_order {
                 if let Some(table_plans_for_table) = table_plans.get(table_name) {
                     let table_plan = &table_plans_for_table[0]; // 选择第一个计划
-                    
+
                     if current_plan.is_none() {
                         current_plan = Some(table_plan.clone());
                     } else {
@@ -384,27 +384,27 @@ impl QueryOptimizer {
                     }
                 }
             }
-            
+
             if let Some(plan) = current_plan {
                 let mut final_plan = plan;
-                
+
                 // 添加其他操作节点
                 if !query.where_clause.is_empty() {
                     final_plan = self.add_filter_node(final_plan, &query.where_clause);
                 }
-                
+
                 if !query.select_columns.is_empty() {
                     final_plan = self.add_project_node(final_plan, &query.select_columns);
                 }
-                
+
                 if !query.order_by.is_empty() {
                     final_plan = self.add_sort_node(final_plan, &query.order_by);
                 }
-                
+
                 if !query.group_by.is_empty() || !query.aggregates.is_empty() {
                     final_plan = self.add_aggregate_node(final_plan, &query.group_by, &query.aggregates);
                 }
-                
+
                 plans.push(QueryPlan {
                     root: final_plan,
                     estimated_cost: self.calculate_cost(&final_plan),
@@ -413,35 +413,35 @@ impl QueryOptimizer {
             }
         }
     }
-    
+
     fn generate_join_orders(&self, tables: &[String]) -> Vec<Vec<String>> {
         if tables.len() <= 1 {
             return vec![tables.to_vec()];
         }
-        
+
         let mut orders = Vec::new();
         self.permute_join_order(tables, 0, &mut orders);
         orders
     }
-    
+
     fn permute_join_order(&self, tables: &[String], start: usize, orders: &mut Vec<Vec<String>>) {
         if start == tables.len() - 1 {
             orders.push(tables.to_vec());
             return;
         }
-        
+
         for i in start..tables.len() {
             let mut tables_copy = tables.to_vec();
             tables_copy.swap(start, i);
             self.permute_join_order(&tables_copy, start + 1, orders);
         }
     }
-    
+
     fn add_filter_node(&self, plan: PlanNode, condition: &str) -> PlanNode {
         let estimated_rows = self.estimate_rows(&plan);
         let selectivity = self.estimate_selectivity(condition);
         let filtered_rows = (estimated_rows as f64 * selectivity) as usize;
-        
+
         PlanNode::Filter(FilterNode {
             condition: condition.to_string(),
             child: Box::new(plan),
@@ -450,10 +450,10 @@ impl QueryOptimizer {
             cost: estimated_rows as f64 * self.cost_model.cpu_cost_per_tuple,
         })
     }
-    
+
     fn add_project_node(&self, plan: PlanNode, columns: &[String]) -> PlanNode {
         let estimated_rows = self.estimate_rows(&plan);
-        
+
         PlanNode::Project(ProjectNode {
             columns: columns.to_vec(),
             child: Box::new(plan),
@@ -461,11 +461,11 @@ impl QueryOptimizer {
             cost: estimated_rows as f64 * self.cost_model.cpu_cost_per_tuple,
         })
     }
-    
+
     fn add_sort_node(&self, plan: PlanNode, order_by: &[String]) -> PlanNode {
         let estimated_rows = self.estimate_rows(&plan);
         let sort_cost = estimated_rows as f64 * estimated_rows as f64 * self.cost_model.cpu_cost_per_tuple;
-        
+
         PlanNode::Sort(SortNode {
             columns: order_by.to_vec(),
             child: Box::new(plan),
@@ -473,11 +473,11 @@ impl QueryOptimizer {
             cost: sort_cost,
         })
     }
-    
+
     fn add_aggregate_node(&self, plan: PlanNode, group_by: &[String], aggregates: &[AggregateFunction]) -> PlanNode {
         let estimated_rows = self.estimate_rows(&plan);
         let group_count = if group_by.is_empty() { 1 } else { estimated_rows / 10 }; // 简化估算
-        
+
         PlanNode::Aggregate(AggregateNode {
             group_by: group_by.to_vec(),
             aggregates: aggregates.to_vec(),
@@ -486,7 +486,7 @@ impl QueryOptimizer {
             cost: estimated_rows as f64 * self.cost_model.cpu_cost_per_tuple,
         })
     }
-    
+
     fn calculate_cost(&self, plan: &PlanNode) -> f64 {
         match plan {
             PlanNode::TableScan(node) => node.cost,
@@ -498,7 +498,7 @@ impl QueryOptimizer {
             PlanNode::Aggregate(node) => node.cost + self.calculate_cost(&node.child),
         }
     }
-    
+
     fn estimate_rows(&self, plan: &PlanNode) -> usize {
         match plan {
             PlanNode::TableScan(node) => node.estimated_rows,
@@ -510,7 +510,7 @@ impl QueryOptimizer {
             PlanNode::Aggregate(node) => node.estimated_rows,
         }
     }
-    
+
     fn estimate_index_rows(&self, table_name: &str, index: &IndexInfo) -> usize {
         if let Some(stats) = self.statistics.get(table_name) {
             // 简化估算：假设索引选择性为10%
@@ -519,22 +519,22 @@ impl QueryOptimizer {
             1000 // 默认值
         }
     }
-    
+
     fn calculate_index_cost(&self, index: &IndexInfo) -> f64 {
         // 索引访问成本 = 索引高度 * I/O成本 + 叶子页数 * I/O成本
         (index.height + index.leaf_pages) as f64 * self.cost_model.io_cost_per_page
     }
-    
+
     fn estimate_selectivity(&self, condition: &str) -> f64 {
         // 简化估算：假设选择性为10%
         0.1
     }
-    
+
     fn find_join_condition(&self, query: &Query, left_plan: &PlanNode, right_table: &str) -> String {
         // 简化实现：返回空字符串
         String::new()
     }
-    
+
     fn create_default_plan(&self, query: &Query) -> QueryPlan {
         // 创建默认的表扫描计划
         let table_scan = TableScanNode {
@@ -543,7 +543,7 @@ impl QueryOptimizer {
             estimated_rows: 1000,
             cost: 100.0,
         };
-        
+
         QueryPlan {
             root: PlanNode::TableScan(table_scan),
             estimated_cost: 100.0,
@@ -585,7 +585,7 @@ impl CostEstimator {
             },
         }
     }
-    
+
     pub fn estimate_table_scan_cost(&self, table_name: &str) -> f64 {
         if let Some(stats) = self.statistics.get(table_name) {
             stats.page_count as f64 * self.cost_model.io_cost_per_page
@@ -593,12 +593,12 @@ impl CostEstimator {
             100.0 // 默认成本
         }
     }
-    
+
     pub fn estimate_index_scan_cost(&self, table_name: &str, index_name: &str) -> f64 {
         // 简化实现
         self.estimate_table_scan_cost(table_name) * 0.1
     }
-    
+
     pub fn estimate_join_cost(&self, left_rows: usize, right_rows: usize, join_type: &JoinType) -> f64 {
         match join_type {
             JoinType::Inner => {
@@ -619,24 +619,24 @@ impl CostEstimator {
             },
         }
     }
-    
+
     pub fn estimate_sort_cost(&self, rows: usize, columns: usize) -> f64 {
         // 排序成本 = O(n log n)
         let n = rows as f64;
         n * n.log2() * columns as f64 * self.cost_model.cpu_cost_per_tuple
     }
-    
+
     pub fn estimate_aggregate_cost(&self, input_rows: usize, group_count: usize) -> f64 {
         // 聚合成本
-        input_rows as f64 * self.cost_model.cpu_cost_per_tuple + 
+        input_rows as f64 * self.cost_model.cpu_cost_per_tuple +
         group_count as f64 * self.cost_model.memory_cost_per_tuple
     }
-    
+
     pub fn estimate_filter_cost(&self, input_rows: usize, selectivity: f64) -> f64 {
         // 过滤成本
         input_rows as f64 * self.cost_model.cpu_cost_per_tuple
     }
-    
+
     pub fn estimate_project_cost(&self, input_rows: usize, output_columns: usize) -> f64 {
         // 投影成本
         input_rows as f64 * output_columns as f64 * self.cost_model.cpu_cost_per_tuple
@@ -679,12 +679,12 @@ impl QueryRewriter {
             rules: Vec::new(),
             statistics: HashMap::new(),
         };
-        
+
         // 添加默认重写规则
         rewriter.add_default_rules();
         rewriter
     }
-    
+
     fn add_default_rules(&mut self) {
         // 规则1：谓词下推
         self.rules.push(RewriteRule {
@@ -707,7 +707,7 @@ impl QueryRewriter {
             },
             condition: Some("condition can be pushed down".to_string()),
         });
-        
+
         // 规则2：常量折叠
         self.rules.push(RewriteRule {
             name: "Constant Folding".to_string(),
@@ -729,7 +729,7 @@ impl QueryRewriter {
             },
             condition: Some("expression is constant".to_string()),
         });
-        
+
         // 规则3：子查询展开
         self.rules.push(RewriteRule {
             name: "Subquery Unnesting".to_string(),
@@ -752,54 +752,54 @@ impl QueryRewriter {
             condition: Some("subquery is simple".to_string()),
         });
     }
-    
+
     pub fn rewrite_query(&self, query: &Query) -> Vec<Query> {
         let mut rewritten_queries = Vec::new();
         rewritten_queries.push(query.clone());
-        
+
         for rule in &self.rules {
             let mut new_queries = Vec::new();
-            
+
             for query in &rewritten_queries {
                 if let Some(rewritten) = self.apply_rule(rule, query) {
                     new_queries.push(rewritten);
                 }
             }
-            
+
             rewritten_queries.extend(new_queries);
         }
-        
+
         rewritten_queries
     }
-    
+
     fn apply_rule(&self, rule: &RewriteRule, query: &Query) -> Option<Query> {
         // 检查规则是否适用
         if !self.matches_pattern(&rule.pattern, query) {
             return None;
         }
-        
+
         // 检查条件
         if let Some(condition) = &rule.condition {
             if !self.evaluate_condition(condition, query) {
                 return None;
             }
         }
-        
+
         // 应用重写规则
         Some(self.apply_replacement(&rule.replacement, query))
     }
-    
+
     fn matches_pattern(&self, pattern: &QueryPattern, query: &Query) -> bool {
         // 简化实现：检查基本结构匹配
         pattern.tables.len() == query.tables.len() &&
         pattern.select_columns.len() == query.select_columns.len()
     }
-    
+
     fn evaluate_condition(&self, condition: &str, query: &Query) -> bool {
         // 简化实现：总是返回true
         true
     }
-    
+
     fn apply_replacement(&self, replacement: &QueryPattern, query: &Query) -> Query {
         Query {
             select_columns: replacement.select_columns.clone(),
@@ -810,27 +810,27 @@ impl QueryRewriter {
             aggregates: replacement.aggregates.clone(),
         }
     }
-    
+
     pub fn add_rule(&mut self, rule: RewriteRule) {
         self.rules.push(rule);
     }
-    
+
     pub fn optimize_rewrites(&self, queries: &[Query]) -> Vec<Query> {
         let mut optimized_queries = Vec::new();
-        
+
         for query in queries {
             let rewritten = self.rewrite_query(query);
-            
+
             // 选择最优的重写结果
             if let Some(best_query) = rewritten.into_iter()
                 .min_by(|a, b| self.compare_queries(a, b)) {
                 optimized_queries.push(best_query);
             }
         }
-        
+
         optimized_queries
     }
-    
+
     fn compare_queries(&self, a: &Query, b: &Query) -> std::cmp::Ordering {
         // 简化比较：基于表数量
         a.tables.len().cmp(&b.tables.len())
@@ -852,8 +852,8 @@ impl QueryRewriter {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

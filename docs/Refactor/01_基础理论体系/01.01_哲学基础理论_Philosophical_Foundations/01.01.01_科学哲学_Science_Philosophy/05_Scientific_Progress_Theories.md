@@ -2,21 +2,24 @@
 
 ## 📋 目录
 
-- [1 理论概述](#1-理论概述)
-- [2 形式化语义](#2-形式化语义)
-  - [2.1 核心定义](#21-核心定义)
-  - [2.2 核心定理](#22-核心定理)
-- [3 多表征方式](#3-多表征方式)
-  - [3.1 图形表征](#31-图形表征)
-  - [3.2 表格表征](#32-表格表征)
-  - [3.3 数学表征](#33-数学表征)
-  - [3.4 伪代码表征](#34-伪代码表征)
-- [4 Rust实现](#4-rust实现)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
+- [01.1.5 科学进步理论 (Scientific Progress Theories)](#0115-科学进步理论-scientific-progress-theories)
+  - [📋 目录](#-目录)
+  - [1 理论概述](#1-理论概述)
+  - [2 形式化语义](#2-形式化语义)
+    - [2.1 核心定义](#21-核心定义)
+    - [2.2 核心定理](#22-核心定理)
+  - [3 多表征方式](#3-多表征方式)
+    - [3.1 图形表征](#31-图形表征)
+    - [3.2 表格表征](#32-表格表征)
+    - [3.3 数学表征](#33-数学表征)
+    - [3.4 伪代码表征](#34-伪代码表征)
+  - [4 Rust实现](#4-rust实现)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -67,19 +70,19 @@ graph TD
     A[科学进步] --> B[累积进步]
     A --> C[范式转换]
     A --> D[研究纲领]
-    
+
     B --> E[线性增长]
     B --> F[知识积累]
     B --> G[渐进发展]
-    
+
     C --> H[科学革命]
     C --> I[不可通约性]
     C --> J[范式竞争]
-    
+
     D --> K[硬核]
     D --> L[保护带]
     D --> M[启发法]
-    
+
     subgraph 进步模式
         N[理论T₁] --> O[进步度量]
         O --> P[理论T₂]
@@ -113,15 +116,15 @@ class ScientificProgress:
     def __init__(self, theories, metrics):
         self.theories = theories
         self.metrics = metrics
-        
+
     def cumulative_progress(self, theory1, theory2):
         """累积进步"""
         return theory1.issubset(theory2)
-        
+
     def paradigm_shift(self, paradigm1, paradigm2):
         """范式转换"""
         return not paradigm1.intersection(paradigm2)
-        
+
     def research_program_progress(self, program):
         """研究纲领进步"""
         novel_facts = program.get_novel_facts()
@@ -190,17 +193,17 @@ impl ScientificProgress {
             progress_type,
         }
     }
-    
+
     /// 添加理论
     pub fn add_theory(&mut self, theory: Theory) {
         self.theories.push(theory);
     }
-    
+
     /// 添加进步度量
     pub fn add_metric(&mut self, metric: ProgressMetric) {
         self.progress_metrics.push(metric);
     }
-    
+
     /// 评估累积进步
     pub fn evaluate_cumulative_progress(&self, theory1: &Theory, theory2: &Theory) -> bool {
         // 检查理论2是否包含理论1的所有内容
@@ -209,10 +212,10 @@ impl ScientificProgress {
             .all(|pred| theory2.predictions.contains(pred));
         let explanations_included = theory1.explanations.iter()
             .all(|exp| theory2.explanations.contains(exp));
-        
+
         content_included && predictions_included && explanations_included
     }
-    
+
     /// 评估范式转换
     pub fn evaluate_paradigm_shift(&self, paradigm1: &Theory, paradigm2: &Theory) -> bool {
         // 检查两个范式是否不可通约
@@ -221,34 +224,34 @@ impl ScientificProgress {
             .any(|pred| paradigm2.predictions.contains(pred));
         let explanations_disjoint = !paradigm1.explanations.iter()
             .any(|exp| paradigm2.explanations.contains(exp));
-        
+
         content_disjoint && predictions_disjoint && explanations_disjoint
     }
-    
+
     /// 评估研究纲领进步
     pub fn evaluate_research_program_progress(&self, program: &ResearchProgram) -> f64 {
         let novel_facts = program.novel_facts.len() as f64;
         let ad_hoc_hypotheses = program.ad_hoc_hypotheses.len() as f64;
-        
+
         if ad_hoc_hypotheses > 0.0 {
             novel_facts / ad_hoc_hypotheses
         } else {
             novel_facts
         }
     }
-    
+
     /// 计算进步指数
     pub fn calculate_progress_index(&self) -> f64 {
         if self.theories.len() < 2 {
             return 0.0;
         }
-        
+
         let mut progress_scores = Vec::new();
-        
+
         for i in 0..self.theories.len() - 1 {
             let theory1 = &self.theories[i];
             let theory2 = &self.theories[i + 1];
-            
+
             let progress_score = match self.progress_type {
                 ProgressType::Cumulative => {
                     if self.evaluate_cumulative_progress(theory1, theory2) {
@@ -273,43 +276,43 @@ impl ScientificProgress {
                     self.calculate_evolutionary_progress(theory1, theory2)
                 },
             };
-            
+
             progress_scores.push(progress_score);
         }
-        
+
         progress_scores.iter().sum::<f64>() / progress_scores.len() as f64
     }
-    
+
     /// 计算进化进步
     fn calculate_evolutionary_progress(&self, theory1: &Theory, theory2: &Theory) -> f64 {
         let empirical_improvement = theory2.empirical_support - theory1.empirical_support;
         let coherence_improvement = theory2.theoretical_coherence - theory1.theoretical_coherence;
-        
+
         (empirical_improvement + coherence_improvement) / 2.0
     }
-    
+
     /// 评估理论优越性
     pub fn evaluate_theory_superiority(&self, theory1: &Theory, theory2: &Theory) -> f64 {
         let empirical_superiority = theory2.empirical_support - theory1.empirical_support;
         let coherence_superiority = theory2.theoretical_coherence - theory1.theoretical_coherence;
         let predictive_superiority = theory2.predictions.len() as f64 - theory1.predictions.len() as f64;
-        
+
         (empirical_superiority + coherence_superiority + predictive_superiority) / 3.0
     }
-    
+
     /// 检测科学革命
     pub fn detect_scientific_revolution(&self) -> Vec<usize> {
         let mut revolution_points = Vec::new();
-        
+
         for i in 0..self.theories.len() - 1 {
             let theory1 = &self.theories[i];
             let theory2 = &self.theories[i + 1];
-            
+
             if self.evaluate_paradigm_shift(theory1, theory2) {
                 revolution_points.push(i + 1);
             }
         }
-        
+
         revolution_points
     }
 }
@@ -326,27 +329,27 @@ impl Theory {
             theoretical_coherence: 0.5,
         }
     }
-    
+
     /// 添加预测
     pub fn add_prediction(&mut self, prediction: String) {
         self.predictions.push(prediction);
     }
-    
+
     /// 添加解释
     pub fn add_explanation(&mut self, explanation: String) {
         self.explanations.push(explanation);
     }
-    
+
     /// 设置经验支持度
     pub fn set_empirical_support(&mut self, support: f64) {
         self.empirical_support = support.max(0.0).min(1.0);
     }
-    
+
     /// 设置理论一致性
     pub fn set_theoretical_coherence(&mut self, coherence: f64) {
         self.theoretical_coherence = coherence.max(0.0).min(1.0);
     }
-    
+
     /// 获取理论强度
     pub fn get_theory_strength(&self) -> f64 {
         (self.empirical_support + self.theoretical_coherence) / 2.0
@@ -363,7 +366,7 @@ impl ProgressMetric {
             value,
         }
     }
-    
+
     /// 评估度量质量
     pub fn evaluate_quality(&self) -> f64 {
         self.value
@@ -395,42 +398,42 @@ impl ResearchProgram {
             ad_hoc_hypotheses: Vec::new(),
         }
     }
-    
+
     /// 添加硬核
     pub fn add_hard_core(&mut self, principle: String) {
         self.hard_core.push(principle);
     }
-    
+
     /// 添加保护带
     pub fn add_protective_belt(&mut self, hypothesis: String) {
         self.protective_belt.push(hypothesis);
     }
-    
+
     /// 添加正面启发法
     pub fn add_positive_heuristic(&mut self, heuristic: String) {
         self.positive_heuristic.push(heuristic);
     }
-    
+
     /// 添加负面启发法
     pub fn add_negative_heuristic(&mut self, heuristic: String) {
         self.negative_heuristic.push(heuristic);
     }
-    
+
     /// 添加新颖事实
     pub fn add_novel_fact(&mut self, fact: String) {
         self.novel_facts.push(fact);
     }
-    
+
     /// 添加特设假说
     pub fn add_ad_hoc_hypothesis(&mut self, hypothesis: String) {
         self.ad_hoc_hypotheses.push(hypothesis);
     }
-    
+
     /// 评估纲领进步性
     pub fn evaluate_progressiveness(&self) -> f64 {
         let novel_facts_count = self.novel_facts.len() as f64;
         let ad_hoc_count = self.ad_hoc_hypotheses.len() as f64;
-        
+
         if ad_hoc_count > 0.0 {
             novel_facts_count / ad_hoc_count
         } else {
@@ -495,32 +498,32 @@ impl ScientificHistory {
             cumulative_periods: Vec::new(),
         }
     }
-    
+
     /// 添加进步事件
     pub fn add_progress_event(&mut self, event: ProgressEvent) {
         self.progress_events.push(event);
     }
-    
+
     /// 添加科学革命
     pub fn add_revolution(&mut self, revolution: Revolution) {
         self.revolutions.push(revolution);
     }
-    
+
     /// 添加累积时期
     pub fn add_cumulative_period(&mut self, period: CumulativePeriod) {
         self.cumulative_periods.push(period);
     }
-    
+
     /// 分析进步模式
     pub fn analyze_progress_pattern(&self) -> ProgressPattern {
         let total_events = self.progress_events.len();
         let total_revolutions = self.revolutions.len();
         let total_cumulative_periods = self.cumulative_periods.len();
-        
+
         let average_impact: f64 = self.progress_events.iter()
             .map(|e| e.impact)
             .sum::<f64>() / total_events as f64;
-        
+
         ProgressPattern {
             total_events,
             total_revolutions,
@@ -545,45 +548,45 @@ pub struct ProgressPattern {
 fn main() {
     // 创建累积进步
     let mut cumulative_progress = ScientificProgress::new(ProgressType::Cumulative);
-    
+
     // 创建理论序列
     let mut theory1 = Theory::new("经典力学".to_string(), "牛顿力学理论".to_string());
     theory1.add_prediction("行星轨道".to_string());
     theory1.set_empirical_support(0.8);
     theory1.set_theoretical_coherence(0.9);
-    
+
     let mut theory2 = Theory::new("相对论".to_string(), "爱因斯坦相对论".to_string());
     theory2.add_prediction("行星轨道".to_string());
     theory2.add_prediction("时间膨胀".to_string());
     theory2.set_empirical_support(0.9);
     theory2.set_theoretical_coherence(0.95);
-    
+
     cumulative_progress.add_theory(theory1.clone());
     cumulative_progress.add_theory(theory2.clone());
-    
+
     // 评估累积进步
     let is_cumulative = cumulative_progress.evaluate_cumulative_progress(&theory1, &theory2);
     println!("累积进步: {}", is_cumulative);
-    
+
     // 创建范式转换
     let mut paradigm_progress = ScientificProgress::new(ProgressType::ParadigmShift);
     paradigm_progress.add_theory(theory1.clone());
     paradigm_progress.add_theory(theory2.clone());
-    
+
     // 检测科学革命
     let revolutions = paradigm_progress.detect_scientific_revolution();
     println!("科学革命点: {:?}", revolutions);
-    
+
     // 创建研究纲领
     let mut research_program = ResearchProgram::new("量子纲领".to_string());
     research_program.add_hard_core("量子化原理".to_string());
     research_program.add_novel_fact("光电效应".to_string());
     research_program.add_novel_fact("原子光谱".to_string());
     research_program.add_ad_hoc_hypothesis("特设假设".to_string());
-    
+
     let progressiveness = research_program.evaluate_progressiveness();
     println!("研究纲领进步性: {:.2}", progressiveness);
-    
+
     // 创建科学历史
     let mut history = ScientificHistory::new();
     history.add_progress_event(ProgressEvent {
@@ -600,7 +603,7 @@ fn main() {
         year: 1905,
         impact: 0.95,
     });
-    
+
     let pattern = history.analyze_progress_pattern();
     println!("进步模式: {:?}", pattern);
 }
@@ -657,11 +660,11 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Kuhn, T. S. *The Structure of Scientific Revolutions*. University of Chicago Press, 1962.
-2. Lakatos, I. *The Methodology of Scientific Research Programmes*. Cambridge University Press, 1978.
-3. Laudan, L. *Progress and Its Problems*. University of California Press, 1977.
-4. Popper, K. R. *Conjectures and Refutations*. Routledge, 1963.
-5. Feyerabend, P. *Against Method*. Verso, 1975.
-6. Kitcher, P. *The Advancement of Science*. Oxford University Press, 1993.
-7. Shapere, D. *Reason and the Search for Knowledge*. Reidel, 1984.
-8. Worrall, J. *Structural Realism*. In Stanford Encyclopedia of Philosophy, 2008.
+1. Kuhn, T. S. _The Structure of Scientific Revolutions_. University of Chicago Press, 1962.
+2. Lakatos, I. _The Methodology of Scientific Research Programmes_. Cambridge University Press, 1978.
+3. Laudan, L. _Progress and Its Problems_. University of California Press, 1977.
+4. Popper, K. R. _Conjectures and Refutations_. Routledge, 1963.
+5. Feyerabend, P. _Against Method_. Verso, 1975.
+6. Kitcher, P. _The Advancement of Science_. Oxford University Press, 1993.
+7. Shapere, D. _Reason and the Search for Knowledge_. Reidel, 1984.
+8. Worrall, J. _Structural Realism_. In Stanford Encyclopedia of Philosophy, 2008.

@@ -3,15 +3,15 @@
 ## 目录
 
 - [09.2.1 内存系统理论](#0921-内存系统理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
-    - [1 多元理论视角](#1-多元理论视角)
-    - [1.2 局限性分析](#12-局限性分析)
+    - [1.1 内存系统定义](#11-内存系统定义)
+    - [1.2 存储层次结构](#12-存储层次结构)
   - [2. 形式化定义](#2-形式化定义)
-    - [1.3 争议与分歧](#13-争议与分歧)
-    - [1.4 应用前景](#14-应用前景)
-    - [1.5 改进建议](#15-改进建议)
+    - [2.1 存储层次](#21-存储层次)
+    - [2.2 缓存策略](#22-缓存策略)
+    - [2.3 内存一致性](#23-内存一致性)
   - [3. 定理与证明](#3-定理与证明)
     - [3.1 缓存性能定理](#31-缓存性能定理)
     - [3.2 局部性定理](#32-局部性定理)
@@ -138,11 +138,11 @@ impl MemoryHierarchy {
             main_memory_time: 200,
         }
     }
-    
+
     pub fn access(&mut self, address: usize) -> usize {
         let mut total_time = 0;
         let mut current_hit_rate = 1.0;
-        
+
         for level in &mut self.levels {
             total_time += level.access_time;
             if rand::random::<f64>() < level.hit_rate * current_hit_rate {
@@ -150,7 +150,7 @@ impl MemoryHierarchy {
             }
             current_hit_rate *= (1.0 - level.hit_rate);
         }
-        
+
         total_time + self.main_memory_time // Main memory access
     }
 }
@@ -188,11 +188,11 @@ impl PageTable {
             page_size,
         }
     }
-    
+
     pub fn translate(&mut self, virtual_address: usize) -> Option<usize> {
         let page_number = virtual_address / self.page_size;
         let offset = virtual_address % self.page_size;
-        
+
         if let Some(entry) = self.entries.get_mut(page_number) {
             if entry.present {
                 entry.accessed = true;
@@ -203,7 +203,7 @@ impl PageTable {
         }
         None // Page fault
     }
-    
+
     pub fn page_fault_handler(&mut self, page_number: usize, frame_number: usize) {
         if let Some(entry) = self.entries.get_mut(page_number) {
             entry.frame_number = Some(frame_number);
@@ -254,12 +254,12 @@ impl MemorySystem {
             coherence_state: vec![CoherenceState::Invalid; cache_size],
         }
     }
-    
+
     pub fn read(&mut self, address: usize) -> u64 {
         let cache_index = address % self.cache_lines.len();
         let tag = address / self.cache_lines.len();
-        
-        if self.cache_lines[cache_index].valid && 
+
+        if self.cache_lines[cache_index].valid &&
            self.cache_lines[cache_index].tag == tag &&
            self.coherence_state[cache_index] != CoherenceState::Invalid {
             self.cache_lines[cache_index].data
@@ -274,12 +274,12 @@ impl MemorySystem {
             data
         }
     }
-    
+
     pub fn write(&mut self, address: usize, value: u64) {
         let cache_index = address % self.cache_lines.len();
         let tag = address / self.cache_lines.len();
-        
-        if self.cache_lines[cache_index].valid && 
+
+        if self.cache_lines[cache_index].valid &&
            self.cache_lines[cache_index].tag == tag {
             // Cache hit
             self.cache_lines[cache_index].data = value;
@@ -311,8 +311,8 @@ impl MemorySystem {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

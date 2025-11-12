@@ -2,21 +2,24 @@
 
 ## 📋 目录
 
-- [1 理论概述](#1-理论概述)
-- [2 形式化语义](#2-形式化语义)
-  - [2.1 核心定义](#21-核心定义)
-  - [2.2 核心定理](#22-核心定理)
-- [3 多表征方式](#3-多表征方式)
-  - [3.1 图形表征](#31-图形表征)
-  - [3.2 表格表征](#32-表格表征)
-  - [3.3 数学表征](#33-数学表征)
-  - [3.4 伪代码表征](#34-伪代码表征)
-- [4 Rust实现](#4-rust实现)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
+- [01.1.4 科学方法论 (Scientific Methodology)](#0114-科学方法论-scientific-methodology)
+  - [📋 目录](#-目录)
+  - [1 理论概述](#1-理论概述)
+  - [2 形式化语义](#2-形式化语义)
+    - [2.1 核心定义](#21-核心定义)
+    - [2.2 核心定理](#22-核心定理)
+  - [3 多表征方式](#3-多表征方式)
+    - [3.1 图形表征](#31-图形表征)
+    - [3.2 表格表征](#32-表格表征)
+    - [3.3 数学表征](#33-数学表征)
+    - [3.4 伪代码表征](#34-伪代码表征)
+  - [4 Rust实现](#4-rust实现)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -68,19 +71,19 @@ graph TD
     A[科学方法论] --> B[归纳法]
     A --> C[演绎法]
     A --> D[假说-演绎法]
-    
+
     B --> E[观察]
     B --> F[概括]
     B --> G[假说形成]
-    
+
     C --> H[理论]
     C --> I[预测]
     C --> J[检验]
-    
+
     D --> K[假说]
     D --> L[演绎预测]
     D --> M[实验检验]
-    
+
     subgraph 科学方法流程
         N[问题] --> O[假说]
         O --> P[预测]
@@ -117,18 +120,18 @@ class ScientificMethod:
         self.hypotheses = hypotheses
         self.evidence = evidence
         self.tests = tests
-        
+
     def induction(self, observations):
         """归纳推理"""
         patterns = self.find_patterns(observations)
         hypothesis = self.generalize(patterns)
         return hypothesis
-        
+
     def deduction(self, hypothesis):
         """演绎推理"""
         predictions = self.deduce_predictions(hypothesis)
         return predictions
-        
+
     def hypothesis_deduction(self, hypothesis, evidence):
         """假说-演绎法"""
         predictions = self.deduction(hypothesis)
@@ -225,29 +228,29 @@ impl ScientificMethodology {
             methodology_type,
         }
     }
-    
+
     /// 添加假说
     pub fn add_hypothesis(&mut self, hypothesis: Hypothesis) {
         self.hypotheses.push(hypothesis);
     }
-    
+
     /// 添加证据
     pub fn add_evidence(&mut self, evidence: Evidence) {
         self.evidence.push(evidence);
     }
-    
+
     /// 添加检验
     pub fn add_test(&mut self, test: Test) {
         self.tests.push(test);
     }
-    
+
     /// 执行归纳推理
     pub fn inductive_reasoning(&self, observations: &[Evidence]) -> Vec<Hypothesis> {
         let mut hypotheses = Vec::new();
-        
+
         // 寻找模式
         let patterns = self.find_patterns(observations);
-        
+
         // 形成假说
         for pattern in patterns {
             let hypothesis = Hypothesis {
@@ -259,129 +262,129 @@ impl ScientificMethodology {
             };
             hypotheses.push(hypothesis);
         }
-        
+
         hypotheses
     }
-    
+
     /// 执行演绎推理
     pub fn deductive_reasoning(&self, hypothesis: &Hypothesis) -> Vec<String> {
         let mut predictions = Vec::new();
-        
+
         // 从假说演绎出预测
         predictions.push(format!("如果{}，那么应该观察到...", hypothesis.statement));
         predictions.push(format!("如果{}，那么实验结果应该是...", hypothesis.statement));
-        
+
         predictions
     }
-    
+
     /// 执行假说-演绎法
     pub fn hypothetical_deductive_method(&self, hypothesis: &Hypothesis, evidence: &[Evidence]) -> bool {
         // 从假说演绎出预测
         let predictions = self.deductive_reasoning(hypothesis);
-        
+
         // 检验预测
         let confirmed_predictions = self.test_predictions(&predictions, evidence);
-        
+
         // 计算确证度
         let confirmation_rate = confirmed_predictions as f64 / predictions.len() as f64;
-        
+
         confirmation_rate > 0.7 // 70%以上的预测被确证
     }
-    
+
     /// 执行证伪检验
     pub fn falsification_test(&self, hypothesis: &Hypothesis, evidence: &[Evidence]) -> bool {
         // 寻找反例
         let counter_evidence = evidence.iter()
             .filter(|e| self.is_counter_evidence(hypothesis, e))
             .count();
-        
+
         counter_evidence == 0 // 没有反例 = 未被证伪
     }
-    
+
     /// 执行贝叶斯确证
     pub fn bayesian_confirmation(&self, hypothesis: &Hypothesis, evidence: &[Evidence]) -> f64 {
         let prior_probability = hypothesis.confidence;
         let likelihood = self.calculate_likelihood(hypothesis, evidence);
         let evidence_probability = self.calculate_evidence_probability(evidence);
-        
+
         if evidence_probability > 0.0 {
             (likelihood * prior_probability) / evidence_probability
         } else {
             prior_probability
         }
     }
-    
+
     /// 寻找模式
     fn find_patterns(&self, observations: &[Evidence]) -> Vec<Evidence> {
         let mut patterns = Vec::new();
-        
+
         // 简化的模式识别
         for observation in observations {
             if observation.reliability > 0.8 {
                 patterns.push(observation.clone());
             }
         }
-        
+
         patterns
     }
-    
+
     /// 检验预测
     fn test_predictions(&self, predictions: &[String], evidence: &[Evidence]) -> usize {
         let mut confirmed = 0;
-        
+
         for prediction in predictions {
             if self.prediction_confirmed(prediction, evidence) {
                 confirmed += 1;
             }
         }
-        
+
         confirmed
     }
-    
+
     /// 检查是否为反例
     fn is_counter_evidence(&self, hypothesis: &Hypothesis, evidence: &Evidence) -> bool {
         // 简化的反例检查
         evidence.reliability > 0.9 && evidence.description.contains("矛盾")
     }
-    
+
     /// 计算似然度
     fn calculate_likelihood(&self, hypothesis: &Hypothesis, evidence: &[Evidence]) -> f64 {
         let total_evidence = evidence.len() as f64;
         let supporting_evidence = evidence.iter()
             .filter(|e| self.evidence_supports_hypothesis(hypothesis, e))
             .count() as f64;
-        
+
         if total_evidence > 0.0 {
             supporting_evidence / total_evidence
         } else {
             0.5
         }
     }
-    
+
     /// 计算证据概率
     fn calculate_evidence_probability(&self, evidence: &[Evidence]) -> f64 {
         if evidence.is_empty() {
             return 0.0;
         }
-        
+
         let total_reliability: f64 = evidence.iter()
             .map(|e| e.reliability)
             .sum();
-        
+
         total_reliability / evidence.len() as f64
     }
-    
+
     /// 检查预测是否被确证
     fn prediction_confirmed(&self, prediction: &str, evidence: &[Evidence]) -> bool {
         // 简化的预测确证检查
         evidence.iter().any(|e| e.description.contains("支持"))
     }
-    
+
     /// 检查证据是否支持假说
     fn evidence_supports_hypothesis(&self, hypothesis: &Hypothesis, evidence: &Evidence) -> bool {
         evidence.reliability > 0.7 && !evidence.description.contains("矛盾")
     }
-    
+
     /// 获取方法论强度
     pub fn get_methodology_strength(&self) -> f64 {
         match self.methodology_type {
@@ -405,12 +408,12 @@ impl Hypothesis {
             falsifiability: 0.6,
         }
     }
-    
+
     /// 检查假说是否可检验
     pub fn is_testable(&self) -> bool {
         self.testability > 0.5
     }
-    
+
     /// 检查假说是否可证伪
     pub fn is_falsifiable(&self) -> bool {
         self.falsifiability > 0.5
@@ -427,7 +430,7 @@ impl Evidence {
             reliability,
         }
     }
-    
+
     /// 检查证据是否可靠
     pub fn is_reliable(&self) -> bool {
         self.reliability > 0.7
@@ -444,7 +447,7 @@ impl Test {
             result: TestResult::Pending,
         }
     }
-    
+
     /// 执行检验
     pub fn execute(&mut self) -> TestResult {
         // 简化的检验执行
@@ -483,26 +486,26 @@ impl MethodologyEvaluation {
             overall_score: 0.0,
         }
     }
-    
+
     /// 添加评估标准
     pub fn add_criterion(&mut self, criterion: EvaluationCriterion) {
         self.evaluation_criteria.push(criterion);
     }
-    
+
     /// 计算总体评分
     pub fn calculate_overall_score(&mut self) -> f64 {
         if self.evaluation_criteria.is_empty() {
             return 0.0;
         }
-        
+
         let total_weight: f64 = self.evaluation_criteria.iter()
             .map(|c| c.weight)
             .sum();
-        
+
         let weighted_score: f64 = self.evaluation_criteria.iter()
             .map(|c| c.weight * c.score)
             .sum();
-        
+
         self.overall_score = weighted_score / total_weight;
         self.overall_score
     }
@@ -512,7 +515,7 @@ impl MethodologyEvaluation {
 fn main() {
     // 创建假说-演绎方法论
     let mut hd_methodology = ScientificMethodology::new(MethodologyType::HypotheticalDeductive);
-    
+
     // 添加假说
     let hypothesis = Hypothesis::new(
         "万有引力假说".to_string(),
@@ -520,7 +523,7 @@ fn main() {
         0.8,
     );
     hd_methodology.add_hypothesis(hypothesis.clone());
-    
+
     // 添加证据
     let evidence = Evidence::new(
         "苹果落地".to_string(),
@@ -529,23 +532,23 @@ fn main() {
         0.9,
     );
     hd_methodology.add_evidence(evidence.clone());
-    
+
     // 执行假说-演绎法
     let confirmed = hd_methodology.hypothetical_deductive_method(&hypothesis, &[evidence]);
     println!("假说-演绎法结果: {}", confirmed);
-    
+
     // 执行贝叶斯确证
     let bayesian_score = hd_methodology.bayesian_confirmation(&hypothesis, &[evidence]);
     println!("贝叶斯确证分数: {:.2}", bayesian_score);
-    
+
     // 创建证伪主义方法论
     let mut falsification_methodology = ScientificMethodology::new(MethodologyType::Falsificationist);
     falsification_methodology.add_hypothesis(hypothesis.clone());
-    
+
     // 执行证伪检验
     let not_falsified = falsification_methodology.falsification_test(&hypothesis, &[evidence]);
     println!("证伪检验结果: {}", not_falsified);
-    
+
     // 评估方法论
     let mut evaluation = MethodologyEvaluation::new(hd_methodology);
     evaluation.add_criterion(EvaluationCriterion {
@@ -566,7 +569,7 @@ fn main() {
         weight: 0.3,
         score: 0.9,
     });
-    
+
     let overall_score = evaluation.calculate_overall_score();
     println!("方法论总体评分: {:.2}", overall_score);
 }
@@ -623,11 +626,11 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Popper, K. R. *The Logic of Scientific Discovery*. Routledge, 1959.
-2. Hempel, C. G. *Philosophy of Natural Science*. Prentice-Hall, 1966.
-3. Kuhn, T. S. *The Structure of Scientific Revolutions*. University of Chicago Press, 1962.
-4. Lakatos, I. *The Methodology of Scientific Research Programmes*. Cambridge University Press, 1978.
-5. Feyerabend, P. *Against Method*. Verso, 1975.
-6. Laudan, L. *Progress and Its Problems*. University of California Press, 1977.
-7. Howson, C., & Urbach, P. *Scientific Reasoning*. Open Court, 1989.
-8. Glymour, C. *Theory and Evidence*. Princeton University Press, 1980.
+1. Popper, K. R. _The Logic of Scientific Discovery_. Routledge, 1959.
+2. Hempel, C. G. _Philosophy of Natural Science_. Prentice-Hall, 1966.
+3. Kuhn, T. S. _The Structure of Scientific Revolutions_. University of Chicago Press, 1962.
+4. Lakatos, I. _The Methodology of Scientific Research Programmes_. Cambridge University Press, 1978.
+5. Feyerabend, P. _Against Method_. Verso, 1975.
+6. Laudan, L. _Progress and Its Problems_. University of California Press, 1977.
+7. Howson, C., & Urbach, P. _Scientific Reasoning_. Open Court, 1989.
+8. Glymour, C. _Theory and Evidence_. Princeton University Press, 1980.

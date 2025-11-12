@@ -212,7 +212,7 @@ impl DistributedNode {
     // 处理消息
     pub fn handle_message(&mut self, message: &Message) -> Vec<Message> {
         let mut responses = vec![];
-        
+
         match message.message_type {
             MessageType::Heartbeat => {
                 responses.extend(self.handle_heartbeat(message));
@@ -227,21 +227,21 @@ impl DistributedNode {
                 // 处理其他消息类型
             },
         }
-        
+
         responses
     }
 
     // 处理心跳消息
     fn handle_heartbeat(&mut self, message: &Message) -> Vec<Message> {
         let mut responses = vec![];
-        
+
         if let Ok(heartbeat) = serde_json::from_slice::<HeartbeatMessage>(&message.payload) {
             if heartbeat.term >= self.term {
                 self.term = heartbeat.term;
                 self.state = NodeState::Follower;
                 self.voted_for = None;
                 self.last_heartbeat = Instant::now();
-                
+
                 // 发送心跳响应
                 let response = Message::new(
                     self.id.clone(),
@@ -255,30 +255,30 @@ impl DistributedNode {
                 responses.push(response);
             }
         }
-        
+
         responses
     }
 
     // 处理选举消息
     fn handle_election(&mut self, message: &Message) -> Vec<Message> {
         let mut responses = vec![];
-        
+
         if let Ok(vote_request) = serde_json::from_slice::<VoteRequest>(&message.payload) {
             let mut vote_granted = false;
-            
+
             if vote_request.term > self.term {
                 self.term = vote_request.term;
                 self.state = NodeState::Follower;
                 self.voted_for = None;
             }
-            
-            if vote_request.term == self.term && 
+
+            if vote_request.term == self.term &&
                (self.voted_for.is_none() || self.voted_for.as_ref().unwrap() == &vote_request.candidate_id) {
                 vote_granted = true;
                 self.voted_for = Some(vote_request.candidate_id.clone());
                 self.last_heartbeat = Instant::now();
             }
-            
+
             let response = Message::new(
                 self.id.clone(),
                 message.from.clone(),
@@ -290,34 +290,34 @@ impl DistributedNode {
             );
             responses.push(response);
         }
-        
+
         responses
     }
 
     // 处理一致性消息
     fn handle_consensus(&mut self, message: &Message) -> Vec<Message> {
         let mut responses = vec![];
-        
+
         if let Ok(append_request) = serde_json::from_slice::<AppendEntriesRequest>(&message.payload) {
             let mut success = false;
-            
+
             if append_request.term >= self.term {
                 self.term = append_request.term;
                 self.state = NodeState::Follower;
                 self.last_heartbeat = Instant::now();
-                
+
                 // 检查日志一致性
-                if append_request.prev_log_index == 0 || 
+                if append_request.prev_log_index == 0 ||
                    (append_request.prev_log_index <= self.log.len() as u64 &&
                     self.log.get(append_request.prev_log_index as usize - 1)
                         .map(|entry| entry.term == append_request.prev_log_term)
                         .unwrap_or(false)) {
-                    
+
                     // 追加日志条目
                     for entry in &append_request.entries {
                         self.log.push(entry.clone());
                     }
-                    
+
                     // 更新提交索引
                     if append_request.leader_commit > self.commit_index {
                         self.commit_index = std::cmp::min(
@@ -325,11 +325,11 @@ impl DistributedNode {
                             self.log.len() as u64
                         );
                     }
-                    
+
                     success = true;
                 }
             }
-            
+
             let response = Message::new(
                 self.id.clone(),
                 message.from.clone(),
@@ -341,7 +341,7 @@ impl DistributedNode {
             );
             responses.push(response);
         }
-        
+
         responses
     }
 
@@ -351,9 +351,9 @@ impl DistributedNode {
         self.state = NodeState::Candidate;
         self.voted_for = Some(self.id.id.clone());
         self.last_heartbeat = Instant::now();
-        
+
         println!("节点 {} 开始选举，任期: {}", self.id.id, self.term);
-        
+
         // 发送投票请求给所有其他节点
         for peer in &self.peers {
             let vote_request = VoteRequest {
@@ -362,14 +362,14 @@ impl DistributedNode {
                 last_log_index: self.log.len() as u64,
                 last_log_term: self.log.last().map(|entry| entry.term).unwrap_or(0),
             };
-            
+
             let message = Message::new(
                 self.id.clone(),
                 peer.clone(),
                 MessageType::Election,
                 serde_json::to_vec(&vote_request).unwrap(),
             );
-            
+
             // 在实际系统中，这里会通过网络发送消息
             println!("发送投票请求到节点: {}", peer.id);
         }
@@ -499,20 +499,20 @@ impl RaftProtocol {
     // 模拟选举过程
     pub fn simulate_election(&mut self) {
         println!("开始模拟选举过程...");
-        
+
         // 所有节点开始选举
         for node in self.nodes.values_mut() {
             if node.check_timeout() {
                 node.start_election();
             }
         }
-        
+
         // 模拟投票过程
         let mut votes: HashMap<String, u32> = HashMap::new();
         for (node_id, node) in &self.nodes {
             if node.state == NodeState::Candidate {
                 let mut vote_count = 1; // 自己的一票
-                
+
                 // 模拟其他节点的投票
                 for (other_id, other_node) in &self.nodes {
                     if other_id != node_id {
@@ -522,11 +522,11 @@ impl RaftProtocol {
                         }
                     }
                 }
-                
+
                 votes.insert(node_id.clone(), vote_count);
             }
         }
-        
+
         // 确定领导者
         if let Some((leader_id, vote_count)) = votes.iter()
             .max_by_key(|(_, &count)| count) {
@@ -554,14 +554,14 @@ impl RaftProtocol {
                             entries: vec![],
                             leader_commit: leader.commit_index,
                         };
-                        
+
                         let message = Message::new(
                             leader.id.clone(),
                             node.id.clone(),
                             MessageType::Heartbeat,
                             serde_json::to_vec(&heartbeat).unwrap(),
                         );
-                        
+
                         let responses = self.send_message(leader_id, node_id, message);
                         for response in responses {
                             // 处理心跳响应
@@ -610,7 +610,7 @@ impl FailureDetector {
             suspected: false,
             failure_count: 0,
         });
-        
+
         status.last_heartbeat = Instant::now();
         status.suspected = false;
         status.failure_count = 0;
@@ -620,7 +620,7 @@ impl FailureDetector {
     pub fn check_failures(&mut self) -> Vec<String> {
         let mut failed_nodes = vec![];
         let now = Instant::now();
-        
+
         for (node_id, status) in &mut self.nodes {
             if now.duration_since(status.last_heartbeat) > self.timeout {
                 if !status.suspected {
@@ -628,14 +628,14 @@ impl FailureDetector {
                     status.failure_count += 1;
                     println!("节点 {} 被怀疑故障", node_id);
                 }
-                
+
                 if status.failure_count >= 3 {
                     failed_nodes.push(node_id.clone());
                     println!("节点 {} 被确认为故障", node_id);
                 }
             }
         }
-        
+
         failed_nodes
     }
 }
@@ -668,7 +668,7 @@ impl ReplicationManager {
             ConsistencyLevel::Quorum => (nodes.len() / 2) + 1,
             ConsistencyLevel::All => nodes.len(),
         };
-        
+
         let mut success_count = 0;
         for node in nodes.iter().take(replica_count) {
             // 模拟写入操作
@@ -676,7 +676,7 @@ impl ReplicationManager {
                 success_count += 1;
             }
         }
-        
+
         success_count >= replica_count
     }
 
@@ -687,14 +687,14 @@ impl ReplicationManager {
             ConsistencyLevel::Quorum => (nodes.len() / 2) + 1,
             ConsistencyLevel::All => nodes.len(),
         };
-        
+
         let mut responses = vec![];
         for node in nodes.iter().take(replica_count) {
             if let Some(data) = self.simulate_read(node, key) {
                 responses.push(data);
             }
         }
-        
+
         // 检查一致性
         if responses.len() >= replica_count {
             // 简化的冲突解决
@@ -730,7 +730,7 @@ impl ReplicationManager {
 fn raft_protocol_example() {
     // 创建Raft协议实例
     let mut raft = RaftProtocol::new();
-    
+
     // 创建节点
     let node1 = DistributedNode::new(
         NodeId::new("node1", "127.0.0.1", 8081),
@@ -739,7 +739,7 @@ fn raft_protocol_example() {
             NodeId::new("node3", "127.0.0.1", 8083),
         ]
     );
-    
+
     let node2 = DistributedNode::new(
         NodeId::new("node2", "127.0.0.1", 8082),
         vec![
@@ -747,7 +747,7 @@ fn raft_protocol_example() {
             NodeId::new("node3", "127.0.0.1", 8083),
         ]
     );
-    
+
     let node3 = DistributedNode::new(
         NodeId::new("node3", "127.0.0.1", 8083),
         vec![
@@ -755,21 +755,21 @@ fn raft_protocol_example() {
             NodeId::new("node2", "127.0.0.1", 8082),
         ]
     );
-    
+
     // 添加节点
     raft.add_node(node1);
     raft.add_node(node2);
     raft.add_node(node3);
-    
+
     // 启动所有节点
     raft.start_all_nodes();
-    
+
     // 模拟选举过程
     raft.simulate_election();
-    
+
     // 模拟心跳机制
     raft.simulate_heartbeat();
-    
+
     println!("当前领导者: {:?}", raft.current_leader);
 }
 ```
@@ -780,14 +780,14 @@ fn raft_protocol_example() {
 fn failure_detection_example() {
     // 创建故障检测器
     let mut detector = FailureDetector::new(Duration::from_millis(1000));
-    
+
     // 模拟节点心跳
     detector.record_heartbeat("node1");
     detector.record_heartbeat("node2");
-    
+
     // 等待一段时间后检查故障
     std::thread::sleep(Duration::from_millis(1500));
-    
+
     let failed_nodes = detector.check_failures();
     println!("故障节点: {:?}", failed_nodes);
 }
@@ -799,20 +799,20 @@ fn failure_detection_example() {
 fn replication_example() {
     // 创建复制管理器
     let replication_manager = ReplicationManager::new(ConsistencyLevel::Quorum);
-    
+
     let nodes = vec![
         "node1".to_string(),
         "node2".to_string(),
         "node3".to_string(),
     ];
-    
+
     // 写入数据
     let key = "test_key";
     let value = b"test_value";
-    
+
     let write_success = replication_manager.write(key, value, &nodes);
     println!("写入成功: {}", write_success);
-    
+
     // 读取数据
     if let Some(data) = replication_manager.read(key, &nodes) {
         println!("读取数据: {:?}", data);
@@ -887,5 +887,5 @@ fn replication_example() {
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

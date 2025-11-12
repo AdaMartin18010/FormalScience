@@ -5,30 +5,30 @@
 ## 目录
 
 - [07.4 设计模式 (Design Patterns)](#074-设计模式-design-patterns)
-  - [1 概述](#1-概述)
-  - [2 分类体系](#2-分类体系)
+  - [目录](#目录)
+  - [概述](#概述)
   - [分类体系](#分类体系)
-    - [1 按目的分类](#1-按目的分类)
-    - [2.2 按范围分类](#22-按范围分类)
-  - [3 理论基础](#3-理论基础)
-    - [1 设计原则](#1-设计原则)
-    - [3.2 形式化基础](#32-形式化基础)
-  - [4 模式详解](#4-模式详解)
-    - [1 [07.4.1 创建型模式](07.4.1_Creational_Patterns.md)](#1-0741-创建型模式0741_creational_patternsmd)
-    - [4.2 [07.4.2 结构型模式](07.4.2_Structural_Patterns.md)](#42-0742-结构型模式0742_structural_patternsmd)
-    - [4.3 [07.4.3 行为型模式](07.4.3_Behavioral_Patterns.md)](#43-0743-行为型模式0743_behavioral_patternsmd)
-    - [4.4 [07.4.4 并发模式](07.4.4_Concurrent_Patterns.md)](#44-0744-并发模式0744_concurrent_patternsmd)
-  - [5 应用场景](#5-应用场景)
-    - [1 软件架构中的应用](#1-软件架构中的应用)
-    - [5.2 特定领域应用](#52-特定领域应用)
-  - [6 最佳实践](#6-最佳实践)
-    - [1 模式选择原则](#1-模式选择原则)
-    - [6.2 实现注意事项](#62-实现注意事项)
-    - [6.3 Rust 特定实践](#63-rust-特定实践)
-  - [7 相关理论](#7-相关理论)
-    - [1 软件工程理论](#1-软件工程理论)
-    - [7.2 形式化理论](#72-形式化理论)
-  - [8 批判性分析](#8-批判性分析)
+    - [按目的分类](#按目的分类)
+    - [按范围分类](#按范围分类)
+  - [理论基础](#理论基础)
+    - [设计原则](#设计原则)
+    - [形式化基础](#形式化基础)
+  - [模式详解](#模式详解)
+    - [07.4.1 创建型模式](#0741-创建型模式)
+    - [07.4.2 结构型模式](#0742-结构型模式)
+    - [07.4.3 行为型模式](#0743-行为型模式)
+    - [07.4.4 并发模式](#0744-并发模式)
+  - [应用场景](#应用场景)
+    - [软件架构中的应用](#软件架构中的应用)
+    - [特定领域应用](#特定领域应用)
+  - [最佳实践](#最佳实践)
+    - [模式选择原则](#模式选择原则)
+    - [实现注意事项](#实现注意事项)
+    - [Rust 特定实践](#rust-特定实践)
+  - [相关理论](#相关理论)
+    - [软件工程理论](#软件工程理论)
+    - [形式化理论](#形式化理论)
+  - [参考文献](#参考文献)
   - [批判性分析](#批判性分析)
 
 ---
@@ -240,11 +240,11 @@
 
 ## 参考文献
 
-1. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley.
-2. Freeman, E., Robson, E., Sierra, K., & Bates, B. (2004). *Head First Design Patterns*. O'Reilly Media.
-3. Schmidt, D., Stal, M., Rohnert, H., & Buschmann, F. (2000). *Pattern-Oriented Software Architecture, Volume 2: Patterns for Concurrent and Networked Objects*. Wiley.
-4. Martin, R. C. (2000). *Design Principles and Design Patterns*. Object Mentor.
-5. Rust Programming Language. (2021). *The Rust Programming Language*. <https://doc.rust-lang.org/book/>
+1. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). _Design Patterns: Elements of Reusable Object-Oriented Software_. Addison-Wesley.
+2. Freeman, E., Robson, E., Sierra, K., & Bates, B. (2004). _Head First Design Patterns_. O'Reilly Media.
+3. Schmidt, D., Stal, M., Rohnert, H., & Buschmann, F. (2000). _Pattern-Oriented Software Architecture, Volume 2: Patterns for Concurrent and Networked Objects_. Wiley.
+4. Martin, R. C. (2000). _Design Principles and Design Patterns_. Object Mentor.
+5. Rust Programming Language. (2021). _The Rust Programming Language_. <https://doc.rust-lang.org/book/>
 
 ---
 

@@ -3,7 +3,7 @@
 ## 目录
 
 - [11.4.1 分布式系统理论](#1141-分布式系统理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 分布式系统定义](#11-分布式系统定义)
@@ -131,12 +131,12 @@ impl PaxosNode {
             accepts: HashMap::new(),
         }
     }
-    
+
     pub fn propose(&mut self, value: String) -> Vec<Message> {
         self.proposal_id += 1;
         self.promises.clear();
         self.accepts.clear();
-        
+
         // 发送Prepare消息
         let mut messages = Vec::new();
         for node_id in 0..5 { // 假设有5个节点
@@ -152,14 +152,14 @@ impl PaxosNode {
                 });
             }
         }
-        
+
         messages
     }
-    
+
     pub fn handle_prepare(&mut self, message: &Message) -> Option<Message> {
         if message.proposal_id > self.proposal_id {
             self.proposal_id = message.proposal_id;
-            
+
             Some(Message {
                 from: self.id,
                 to: message.from,
@@ -173,25 +173,25 @@ impl PaxosNode {
             None // 拒绝
         }
     }
-    
+
     pub fn handle_promise(&mut self, message: &Message) -> Option<Vec<Message>> {
         self.promises.insert(message.from, (message.accepted_id.unwrap_or(0), message.accepted_value.clone()));
-        
+
         // 检查是否收到多数派的Promise
         if self.promises.len() >= 3 { // 多数派
             let mut messages = Vec::new();
-            
+
             // 选择值
             let mut highest_id = 0u64;
             let mut chosen_value = None;
-            
+
             for (_, (id, value)) in &self.promises {
                 if *id > highest_id {
                     highest_id = *id;
                     chosen_value = value.clone();
                 }
             }
-            
+
             // 发送Accept消息
             for node_id in 0..5 {
                 if node_id != self.id {
@@ -206,19 +206,19 @@ impl PaxosNode {
                     });
                 }
             }
-            
+
             Some(messages)
         } else {
             None
         }
     }
-    
+
     pub fn handle_accept(&mut self, message: &Message) -> Option<Message> {
         if message.proposal_id >= self.proposal_id {
             self.proposal_id = message.proposal_id;
             self.accepted_id = Some(message.proposal_id);
             self.accepted_value = message.value.clone();
-            
+
             Some(Message {
                 from: self.id,
                 to: message.from,
@@ -232,16 +232,16 @@ impl PaxosNode {
             None
         }
     }
-    
+
     pub fn handle_accepted(&mut self, message: &Message) -> Option<Vec<Message>> {
         self.accepts.insert(message.from, true);
-        
+
         // 检查是否收到多数派的Accepted
         if self.accepts.len() >= 3 {
             // 学习值
             if let Some(value) = &self.accepted_value {
                 self.learned_value = Some(value.clone());
-                
+
                 // 发送Learn消息
                 let mut messages = Vec::new();
                 for node_id in 0..5 {
@@ -257,7 +257,7 @@ impl PaxosNode {
                         });
                     }
                 }
-                
+
                 Some(messages)
             } else {
                 None
@@ -266,7 +266,7 @@ impl PaxosNode {
             None
         }
     }
-    
+
     pub fn handle_learn(&mut self, message: &Message) {
         if let Some(value) = &message.value {
             self.learned_value = Some(value.clone());
@@ -286,13 +286,13 @@ impl DistributedSystem {
         for i in 0..node_count {
             nodes.insert(i, PaxosNode::new(i));
         }
-        
+
         DistributedSystem {
             nodes,
             message_queue: Vec::new(),
         }
     }
-    
+
     pub fn propose_value(&mut self, node_id: u32, value: String) -> Result<(), String> {
         if let Some(node) = self.nodes.get_mut(&node_id) {
             let messages = node.propose(value);
@@ -302,10 +302,10 @@ impl DistributedSystem {
             Err("Node not found".to_string())
         }
     }
-    
+
     pub fn process_messages(&mut self) {
         let mut new_messages = Vec::new();
-        
+
         for message in &self.message_queue {
             let response = match message.message_type {
                 MessageType::Prepare => {
@@ -343,7 +343,7 @@ impl DistributedSystem {
                     None
                 },
             };
-            
+
             match response {
                 Some(Message { .. }) => {
                     new_messages.push(response.unwrap());
@@ -354,14 +354,14 @@ impl DistributedSystem {
                 None => {},
             }
         }
-        
+
         self.message_queue = new_messages;
     }
-    
+
     pub fn get_consensus(&self) -> Option<String> {
         let mut consensus_value = None;
         let mut consensus_count = 0;
-        
+
         for node in self.nodes.values() {
             if let Some(value) = &node.learned_value {
                 if consensus_value.is_none() {
@@ -372,7 +372,7 @@ impl DistributedSystem {
                 }
             }
         }
-        
+
         if consensus_count >= 3 { // 多数派
             consensus_value
         } else {
@@ -440,7 +440,7 @@ impl TwoPhaseCommit {
             transactions: HashMap::new(),
         }
     }
-    
+
     pub fn add_participant(&mut self, participant_id: String) {
         let participant = Participant {
             id: participant_id.clone(),
@@ -449,23 +449,23 @@ impl TwoPhaseCommit {
         };
         self.participants.insert(participant_id, participant);
     }
-    
+
     pub fn begin_transaction(&mut self, transaction_id: String) -> Result<(), String> {
         if self.transactions.contains_key(&transaction_id) {
             return Err("Transaction already exists".to_string());
         }
-        
+
         let transaction = Transaction {
             id: transaction_id.clone(),
             state: TransactionState::Active,
             operations: Vec::new(),
             participants: Vec::new(),
         };
-        
+
         self.transactions.insert(transaction_id, transaction);
         Ok(())
     }
-    
+
     pub fn add_operation(&mut self, transaction_id: &str, operation: Operation) -> Result<(), String> {
         if let Some(transaction) = self.transactions.get_mut(transaction_id) {
             transaction.operations.push(operation);
@@ -474,11 +474,11 @@ impl TwoPhaseCommit {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     pub fn prepare(&mut self, transaction_id: &str) -> Result<bool, String> {
         if let Some(transaction) = self.transactions.get_mut(transaction_id) {
             transaction.state = TransactionState::Prepared;
-            
+
             // 发送prepare消息给所有参与者
             let mut all_prepared = true;
             for participant_id in &transaction.participants {
@@ -490,17 +490,17 @@ impl TwoPhaseCommit {
                     participant.prepared_transactions.push(transaction_id.to_string());
                 }
             }
-            
+
             Ok(all_prepared)
         } else {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     pub fn commit(&mut self, transaction_id: &str) -> Result<bool, String> {
         if let Some(transaction) = self.transactions.get_mut(transaction_id) {
             transaction.state = TransactionState::Committed;
-            
+
             // 发送commit消息给所有参与者
             let mut all_committed = true;
             for participant_id in &transaction.participants {
@@ -509,17 +509,17 @@ impl TwoPhaseCommit {
                     break;
                 }
             }
-            
+
             Ok(all_committed)
         } else {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     pub fn abort(&mut self, transaction_id: &str) -> Result<bool, String> {
         if let Some(transaction) = self.transactions.get_mut(transaction_id) {
             transaction.state = TransactionState::Aborted;
-            
+
             // 发送abort消息给所有参与者
             let mut all_aborted = true;
             for participant_id in &transaction.participants {
@@ -528,30 +528,30 @@ impl TwoPhaseCommit {
                     break;
                 }
             }
-            
+
             Ok(all_aborted)
         } else {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     fn send_prepare(&self, participant_id: &str, transaction_id: &str) -> bool {
         // 模拟网络通信
         // 在实际实现中，这里会发送网络消息
         println!("Sending PREPARE to {} for transaction {}", participant_id, transaction_id);
         true // 假设总是成功
     }
-    
+
     fn send_commit(&self, participant_id: &str, transaction_id: &str) -> bool {
         println!("Sending COMMIT to {} for transaction {}", participant_id, transaction_id);
         true
     }
-    
+
     fn send_abort(&self, participant_id: &str, transaction_id: &str) -> bool {
         println!("Sending ABORT to {} for transaction {}", participant_id, transaction_id);
         true
     }
-    
+
     pub fn execute_transaction(&mut self, transaction_id: &str) -> Result<bool, String> {
         // 两阶段提交协议
         if self.prepare(transaction_id)? {
@@ -582,7 +582,7 @@ impl DistributedDatabase {
             replication_factor,
         }
     }
-    
+
     pub fn add_node(&mut self, node_id: String) {
         let node = DatabaseNode {
             id: node_id.clone(),
@@ -591,32 +591,32 @@ impl DistributedDatabase {
         };
         self.nodes.insert(node_id, node);
     }
-    
+
     pub fn write(&mut self, key: String, value: String) -> Result<(), String> {
         // 选择主节点和副本节点
         let node_ids: Vec<String> = self.nodes.keys().cloned().collect();
         if node_ids.is_empty() {
             return Err("No nodes available".to_string());
         }
-        
+
         let primary_node = &node_ids[0];
         let replica_nodes: Vec<String> = node_ids[1..std::cmp::min(self.replication_factor, node_ids.len())].to_vec();
-        
+
         // 写入主节点
         if let Some(node) = self.nodes.get_mut(primary_node) {
             node.data.insert(key.clone(), value.clone());
         }
-        
+
         // 复制到副本节点
         for replica_id in replica_nodes {
             if let Some(node) = self.nodes.get_mut(&replica_id) {
                 node.data.insert(key.clone(), value.clone());
             }
         }
-        
+
         Ok(())
     }
-    
+
     pub fn read(&self, key: &str) -> Option<String> {
         // 从任意节点读取
         for node in self.nodes.values() {
@@ -626,11 +626,11 @@ impl DistributedDatabase {
         }
         None
     }
-    
+
     pub fn get_consistency_level(&self) -> f64 {
         let mut consistent_keys = 0;
         let mut total_keys = 0;
-        
+
         // 检查所有节点的数据一致性
         let mut all_keys = std::collections::HashSet::new();
         for node in self.nodes.values() {
@@ -638,7 +638,7 @@ impl DistributedDatabase {
                 all_keys.insert(key.clone());
             }
         }
-        
+
         for key in all_keys {
             let mut values = std::collections::HashSet::new();
             for node in self.nodes.values() {
@@ -646,13 +646,13 @@ impl DistributedDatabase {
                     values.insert(value.clone());
                 }
             }
-            
+
             if values.len() == 1 {
                 consistent_keys += 1;
             }
             total_keys += 1;
         }
-        
+
         if total_keys == 0 {
             1.0
         } else {
@@ -697,7 +697,7 @@ impl LockManager {
             nodes: HashMap::new(),
         }
     }
-    
+
     pub fn add_node(&mut self, node_id: String) {
         let node = LockNode {
             id: node_id.clone(),
@@ -709,13 +709,13 @@ impl LockManager {
         };
         self.nodes.insert(node_id, node);
     }
-    
+
     pub fn acquire_lock(&mut self, resource: String, owner: String, timeout: Duration) -> Result<bool, String> {
         let current_time = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         if let Some(existing_lock) = self.locks.get(&resource) {
             // 检查锁是否过期
             if current_time - existing_lock.timestamp > timeout.as_secs() {
@@ -726,7 +726,7 @@ impl LockManager {
                 return Ok(false);
             }
         }
-        
+
         // 创建新锁
         let lock = DistributedLock {
             resource: resource.clone(),
@@ -734,29 +734,29 @@ impl LockManager {
             timestamp: current_time,
             timeout,
         };
-        
+
         self.locks.insert(resource.clone(), lock);
-        
+
         // 更新节点信息
         if let Some(node) = self.nodes.get_mut(&owner) {
             if !node.locks.contains(&resource) {
                 node.locks.push(resource);
             }
         }
-        
+
         Ok(true)
     }
-    
+
     pub fn release_lock(&mut self, resource: &str, owner: &str) -> Result<bool, String> {
         if let Some(lock) = self.locks.get(resource) {
             if lock.owner == owner {
                 self.locks.remove(resource);
-                
+
                 // 更新节点信息
                 if let Some(node) = self.nodes.get_mut(owner) {
                     node.locks.retain(|r| r != resource);
                 }
-                
+
                 Ok(true)
             } else {
                 Ok(false)
@@ -765,26 +765,26 @@ impl LockManager {
             Ok(false)
         }
     }
-    
+
     pub fn is_locked(&self, resource: &str) -> bool {
         self.locks.contains_key(resource)
     }
-    
+
     pub fn get_lock_owner(&self, resource: &str) -> Option<&String> {
         self.locks.get(resource).map(|lock| &lock.owner)
     }
-    
+
     pub fn cleanup_expired_locks(&mut self) {
         let current_time = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         let expired_resources: Vec<String> = self.locks.iter()
             .filter(|(_, lock)| current_time - lock.timestamp > lock.timeout.as_secs())
             .map(|(resource, _)| resource.clone())
             .collect();
-        
+
         for resource in expired_resources {
             if let Some(lock) = self.locks.remove(&resource) {
                 // 从节点中移除锁
@@ -794,15 +794,15 @@ impl LockManager {
             }
         }
     }
-    
+
     pub fn get_lock_statistics(&self) -> LockStatistics {
         let total_locks = self.locks.len();
         let mut node_lock_counts = HashMap::new();
-        
+
         for lock in self.locks.values() {
             *node_lock_counts.entry(lock.owner.clone()).or_insert(0) += 1;
         }
-        
+
         LockStatistics {
             total_locks,
             node_lock_counts,
@@ -833,7 +833,7 @@ impl DistributedSemaphore {
             waiters: Vec::new(),
         }
     }
-    
+
     pub fn acquire(&mut self, node_id: String) -> bool {
         if self.current_count < self.capacity {
             self.current_count += 1;
@@ -845,11 +845,11 @@ impl DistributedSemaphore {
             false
         }
     }
-    
+
     pub fn release(&mut self) -> Option<String> {
         if self.current_count > 0 {
             self.current_count -= 1;
-            
+
             // 唤醒等待的节点
             if !self.waiters.is_empty() {
                 Some(self.waiters.remove(0))
@@ -860,11 +860,11 @@ impl DistributedSemaphore {
             None
         }
     }
-    
+
     pub fn get_available_permits(&self) -> usize {
         self.capacity - self.current_count
     }
-    
+
     pub fn get_waiting_count(&self) -> usize {
         self.waiters.len()
     }
@@ -885,8 +885,8 @@ impl DistributedSemaphore {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

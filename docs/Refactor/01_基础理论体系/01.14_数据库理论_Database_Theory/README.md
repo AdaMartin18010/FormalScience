@@ -132,7 +132,7 @@ impl Relation {
             tuples: Vec::new(),
         }
     }
-    
+
     /// 插入元组
     pub fn insert(&mut self, tuple: Vec<Value>) -> Result<(), String> {
         if tuple.len() != self.schema.len() {
@@ -141,22 +141,22 @@ impl Relation {
         self.tuples.push(tuple);
         Ok(())
     }
-    
+
     /// 选择操作
-    pub fn select<F>(&self, predicate: F) -> Relation 
+    pub fn select<F>(&self, predicate: F) -> Relation
     where F: Fn(&[Value]) -> bool {
         let filtered_tuples: Vec<Vec<Value>> = self.tuples
             .iter()
             .filter(|tuple| predicate(tuple))
             .cloned()
             .collect();
-        
+
         Relation {
             schema: self.schema.clone(),
             tuples: filtered_tuples,
         }
     }
-    
+
     /// 投影操作
     pub fn project(&self, attributes: &[usize]) -> Result<Relation, String> {
         let mut new_schema = Vec::new();
@@ -166,7 +166,7 @@ impl Relation {
             }
             new_schema.push(self.schema[attr_idx].clone());
         }
-        
+
         let new_tuples: Vec<Vec<Value>> = self.tuples
             .iter()
             .map(|tuple| {
@@ -175,13 +175,13 @@ impl Relation {
                     .collect()
             })
             .collect();
-        
+
         Ok(Relation {
             schema: new_schema,
             tuples: new_tuples,
         })
     }
-    
+
     /// 自然连接
     pub fn natural_join(&self, other: &Relation) -> Relation {
         // 找到共同属性
@@ -192,13 +192,13 @@ impl Relation {
             })
             .map(|(i, _)| i)
             .collect();
-        
+
         if common_attrs.is_empty() {
             return Relation::new(vec![]);
         }
-        
+
         let mut result_tuples = Vec::new();
-        
+
         for tuple1 in &self.tuples {
             for tuple2 in &other.tuples {
                 // 检查连接条件
@@ -206,7 +206,7 @@ impl Relation {
                     let j = other.schema.iter().position(|a| a == &self.schema[i]).unwrap();
                     tuple1[i] == tuple2[j]
                 });
-                
+
                 if can_join {
                     let mut joined_tuple = tuple1.clone();
                     // 添加非共同属性
@@ -219,14 +219,14 @@ impl Relation {
                 }
             }
         }
-        
+
         let mut result_schema = self.schema.clone();
         for (i, attr) in other.schema.iter().enumerate() {
             if !self.schema.contains(attr) {
                 result_schema.push(attr.clone());
             }
         }
-        
+
         Relation {
             schema: result_schema,
             tuples: result_tuples,
@@ -270,23 +270,23 @@ impl TransactionManager {
             next_txn_id: 1,
         }
     }
-    
+
     /// 开始事务
     pub fn begin_transaction(&mut self) -> u64 {
         let txn_id = self.next_txn_id;
         self.next_txn_id += 1;
-        
+
         let transaction = Transaction {
             id: txn_id,
             state: TransactionState::Active,
             operations: Vec::new(),
             locks: HashSet::new(),
         };
-        
+
         self.active_transactions.insert(txn_id, transaction);
         txn_id
     }
-    
+
     /// 提交事务
     pub fn commit(&mut self, txn_id: u64) -> Result<(), String> {
         if let Some(transaction) = self.active_transactions.get_mut(&txn_id) {
@@ -296,7 +296,7 @@ impl TransactionManager {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     /// 回滚事务
     pub fn rollback(&mut self, txn_id: u64) -> Result<(), String> {
         if let Some(transaction) = self.active_transactions.get_mut(&txn_id) {
@@ -329,12 +329,12 @@ impl QueryOptimizer {
             },
         }
     }
-    
+
     /// 估算查询成本
     pub fn estimate_cost(&self, relation: &Relation, operation: &str) -> f64 {
         let tuple_count = relation.tuples.len() as f64;
         let page_count = (tuple_count / 100.0).ceil(); // 假设每页100个元组
-        
+
         match operation {
             "scan" => page_count * self.cost_model.io_cost_per_page,
             "select" => tuple_count * self.cost_model.cpu_cost_per_tuple,
@@ -342,7 +342,7 @@ impl QueryOptimizer {
             _ => 0.0,
         }
     }
-    
+
     /// 生成查询计划
     pub fn generate_plan(&self, query: &str) -> QueryPlan {
         // 简化的查询计划生成
@@ -387,27 +387,27 @@ impl DatabaseSystem {
             query_optimizer: QueryOptimizer::new(),
         }
     }
-    
+
     /// 创建表
     pub fn create_table(&mut self, name: String, schema: Vec<String>) {
         let relation = Relation::new(schema);
         self.relations.insert(name, relation);
     }
-    
+
     /// 执行查询
     pub fn execute_query(&self, query: &str) -> Result<Relation, String> {
         // 简化的查询执行
         let plan = self.query_optimizer.generate_plan(query);
-        
+
         // 执行查询计划
         let mut result = Relation::new(vec!["name".to_string(), "email".to_string()]);
-        
+
         // 模拟查询结果
         result.tuples.push(vec![
             Value::String("Alice".to_string()),
             Value::String("alice@example.com".to_string()),
         ]);
-        
+
         Ok(result)
     }
 }
@@ -446,11 +446,11 @@ impl LockManager {
             locks: Arc::new(Mutex::new(HashMap::new())),
         }
     }
-    
+
     /// 获取锁
     pub fn acquire_lock(&self, resource: &str, txn_id: u64, lock_type: LockType) -> Result<(), String> {
         let mut locks = self.locks.lock().unwrap();
-        
+
         if let Some(lock_info) = locks.get_mut(resource) {
             match (&lock_info.lock_type, &lock_type) {
                 (LockType::Shared, LockType::Shared) => {
@@ -479,11 +479,11 @@ impl LockManager {
             Ok(())
         }
     }
-    
+
     /// 释放锁
     pub fn release_lock(&self, resource: &str, txn_id: u64) -> Result<(), String> {
         let mut locks = self.locks.lock().unwrap();
-        
+
         if let Some(lock_info) = locks.get_mut(resource) {
             if lock_info.holder == txn_id {
                 if lock_info.waiters.is_empty() {
@@ -517,12 +517,12 @@ impl TwoPhaseLocking {
             growing_phase: HashMap::new(),
         }
     }
-    
+
     /// 开始事务
     pub fn begin_transaction(&mut self, txn_id: u64) {
         self.growing_phase.insert(txn_id, true);
     }
-    
+
     /// 获取锁
     pub fn acquire_lock(&self, resource: &str, txn_id: u64, lock_type: LockType) -> Result<(), String> {
         if let Some(&growing) = self.growing_phase.get(&txn_id) {
@@ -535,7 +535,7 @@ impl TwoPhaseLocking {
             Err("Transaction not found".to_string())
         }
     }
-    
+
     /// 进入收缩阶段
     pub fn enter_shrinking_phase(&mut self, txn_id: u64) {
         self.growing_phase.insert(txn_id, false);
@@ -588,12 +588,12 @@ impl AdvancedQueryOptimizer {
             },
         }
     }
-    
+
     /// 更新统计信息
     pub fn update_statistics(&mut self, table_name: &str, stats: TableStats) {
         self.statistics.table_stats.insert(table_name.to_string(), stats);
     }
-    
+
     /// 估算选择操作的选择性
     pub fn estimate_selectivity(&self, table: &str, predicate: &str) -> f64 {
         if let Some(table_stats) = self.statistics.table_stats.get(table) {
@@ -607,15 +607,15 @@ impl AdvancedQueryOptimizer {
             0.1 // 默认选择性
         }
     }
-    
+
     /// 生成最优查询计划
     pub fn generate_optimal_plan(&self, query: &str) -> QueryPlan {
         // 解析查询
         let parsed_query = self.parse_query(query);
-        
+
         // 生成候选计划
         let candidate_plans = self.generate_candidate_plans(&parsed_query);
-        
+
         // 选择成本最低的计划
         candidate_plans.into_iter()
             .min_by(|a, b| a.estimated_cost.partial_cmp(&b.estimated_cost).unwrap())
@@ -624,7 +624,7 @@ impl AdvancedQueryOptimizer {
                 estimated_cost: f64::INFINITY,
             })
     }
-    
+
     fn parse_query(&self, query: &str) -> ParsedQuery {
         // 简化的查询解析
         ParsedQuery {
@@ -633,10 +633,10 @@ impl AdvancedQueryOptimizer {
             projections: vec!["name".to_string(), "email".to_string()],
         }
     }
-    
+
     fn generate_candidate_plans(&self, query: &ParsedQuery) -> Vec<QueryPlan> {
         let mut plans = Vec::new();
-        
+
         // 计划1：表扫描 + 过滤 + 投影
         plans.push(QueryPlan {
             operations: vec![
@@ -646,12 +646,12 @@ impl AdvancedQueryOptimizer {
             ],
             estimated_cost: self.estimate_plan_cost(&query),
         });
-        
+
         // 计划2：如果有索引，使用索引扫描
         if self.has_index(&query.tables[0], &query.predicates[0]) {
             plans.push(QueryPlan {
                 operations: vec![
-                    PlanOperation::IndexScan { 
+                    PlanOperation::IndexScan {
                         table: query.tables[0].clone(),
                         index: "age_index".to_string(),
                     },
@@ -660,28 +660,28 @@ impl AdvancedQueryOptimizer {
                 estimated_cost: self.estimate_index_plan_cost(&query),
             });
         }
-        
+
         plans
     }
-    
+
     fn estimate_plan_cost(&self, query: &ParsedQuery) -> f64 {
         let table_name = &query.tables[0];
         let row_count = self.statistics.table_stats
             .get(table_name)
             .map(|stats| stats.row_count)
             .unwrap_or(1000);
-        
+
         let selectivity = self.estimate_selectivity(table_name, &query.predicates[0]);
         let filtered_rows = (row_count as f64 * selectivity) as usize;
-        
+
         // 成本计算
         let scan_cost = row_count as f64 * self.cost_model.cpu_cost_per_tuple;
         let filter_cost = filtered_rows as f64 * self.cost_model.cpu_cost_per_tuple;
         let project_cost = filtered_rows as f64 * self.cost_model.cpu_cost_per_tuple;
-        
+
         scan_cost + filter_cost + project_cost
     }
-    
+
     fn estimate_index_plan_cost(&self, query: &ParsedQuery) -> f64 {
         // 索引扫描成本通常更低
         let table_name = &query.tables[0];
@@ -689,17 +689,17 @@ impl AdvancedQueryOptimizer {
             .get(table_name)
             .map(|stats| stats.row_count)
             .unwrap_or(1000);
-        
+
         let selectivity = self.estimate_selectivity(table_name, &query.predicates[0]);
         let filtered_rows = (row_count as f64 * selectivity) as usize;
-        
+
         // 索引扫描成本
         let index_cost = (filtered_rows as f64).log2() * self.cost_model.cpu_cost_per_tuple;
         let project_cost = filtered_rows as f64 * self.cost_model.cpu_cost_per_tuple;
-        
+
         index_cost + project_cost
     }
-    
+
     fn has_index(&self, table: &str, predicate: &str) -> bool {
         // 简化的索引检查
         predicate.contains("age") && table == "users"
@@ -729,18 +729,18 @@ pub struct CostModel {
 fn main() {
     // 创建数据库系统
     let mut db = DatabaseSystem::new();
-    
+
     // 创建用户表
     db.create_table("users".to_string(), vec![
         "id".to_string(),
-        "name".to_string(), 
+        "name".to_string(),
         "email".to_string(),
         "age".to_string(),
     ]);
-    
+
     // 获取用户表
     let mut users = db.relations.get_mut("users").unwrap();
-    
+
     // 插入数据
     users.insert(vec![
         Value::Integer(1),
@@ -748,14 +748,14 @@ fn main() {
         Value::String("alice@example.com".to_string()),
         Value::Integer(25),
     ]).unwrap();
-    
+
     users.insert(vec![
         Value::Integer(2),
         Value::String("Bob".to_string()),
         Value::String("bob@example.com".to_string()),
         Value::Integer(30),
     ]).unwrap();
-    
+
     // 查询操作
     let young_users = users.select(|tuple| {
         if let Value::Integer(age) = tuple[3] {
@@ -764,9 +764,9 @@ fn main() {
             false
         }
     });
-    
+
     println!("Young users: {:?}", young_users);
-    
+
     // 投影操作
     let names = users.project(&[1]).unwrap();
     println!("Names: {:?}", names);
@@ -778,18 +778,18 @@ fn main() {
 ```rust
 fn main() {
     let mut txn_manager = TransactionManager::new();
-    
+
     // 开始事务
     let txn_id = txn_manager.begin_transaction();
     println!("Started transaction: {}", txn_id);
-    
+
     // 模拟事务操作
     let operation = Operation::Write {
         table: "users".to_string(),
         key: "1".to_string(),
         value: Value::String("Alice".to_string()),
     };
-    
+
     // 提交事务
     txn_manager.commit(txn_id).unwrap();
     println!("Transaction committed");
@@ -801,18 +801,18 @@ fn main() {
 ```rust
 fn main() {
     let mut optimizer = AdvancedQueryOptimizer::new();
-    
+
     // 更新统计信息
     optimizer.update_statistics("users", TableStats {
         row_count: 10000,
         page_count: 100,
         column_stats: HashMap::new(),
     });
-    
+
     // 生成查询计划
     let query = "SELECT name, email FROM users WHERE age > 18";
     let plan = optimizer.generate_optimal_plan(query);
-    
+
     println!("Optimal query plan: {:?}", plan);
     println!("Estimated cost: {}", plan.estimated_cost);
 }
@@ -891,4 +891,4 @@ fn main() {
 
 ---
 
-*本模块为形式科学知识库的重要组成部分，为数据库系统的设计、实现和优化提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。*
+_本模块为形式科学知识库的重要组成部分，为数据库系统的设计、实现和优化提供理论基础。通过严格的数学形式化和Rust代码实现，确保理论的可验证性和实用性。_

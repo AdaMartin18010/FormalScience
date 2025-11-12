@@ -3,7 +3,7 @@
 ## 📋 目录
 
 - [概率时态逻辑理论](#概率时态逻辑理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [📋 目录](#-目录)
   - [1. 理论基础](#1-理论基础)
     - [1.1 历史背景](#11-历史背景)
     - [1.2 理论基础](#12-理论基础)
@@ -247,27 +247,27 @@ impl ProbabilisticModel {
             labels: HashMap::new(),
         }
     }
-    
+
     fn add_state(&mut self, state: String) {
         if !self.states.contains(&state) {
             self.states.push(state);
         }
     }
-    
+
     fn add_transition(&mut self, from: String, to: String, probability: f64) {
         self.add_state(from.clone());
         self.add_state(to.clone());
         self.transitions.insert((from, to), probability);
     }
-    
+
     fn add_label(&mut self, state: String, label: String) {
         self.labels.entry(state).or_insert_with(Vec::new).push(label);
     }
-    
+
     fn get_transition_probability(&self, from: &str, to: &str) -> f64 {
         *self.transitions.get(&(from.to_string(), to.to_string())).unwrap_or(&0.0)
     }
-    
+
     fn get_successors(&self, state: &str) -> Vec<(String, f64)> {
         let mut successors = Vec::new();
         for (s, p) in &self.transitions {
@@ -277,12 +277,12 @@ impl ProbabilisticModel {
         }
         successors
     }
-    
+
     fn normalize_transitions(&mut self) {
         for state in &self.states {
             let total_prob = self.get_successors(state).iter()
                 .map(|(_, p)| p).sum::<f64>();
-            
+
             if total_prob > 0.0 {
                 for (to, prob) in self.get_successors(state) {
                     let normalized_prob = prob / total_prob;
@@ -327,7 +327,7 @@ impl ProbabilisticModel {
             _ => true, // 简化处理
         }
     }
-    
+
     fn compute_path_probability(&self, path_formula: &PathFormula) -> f64 {
         match path_formula {
             PathFormula::Finally(phi) => {
@@ -344,21 +344,21 @@ impl ProbabilisticModel {
             },
         }
     }
-    
+
     fn compute_finally_probability(&self, phi: &ProbabilisticFormula) -> f64 {
         // 使用迭代方法计算最终概率
         let mut probabilities = HashMap::new();
-        
+
         // 初始化
         for state in &self.states {
-            probabilities.insert(state.clone(), 
+            probabilities.insert(state.clone(),
                 if self.satisfies_atomic(state, phi) { 1.0 } else { 0.0 });
         }
-        
+
         // 迭代直到收敛
         for _ in 0..100 {
             let mut new_probabilities = HashMap::new();
-            
+
             for state in &self.states {
                 if self.satisfies_atomic(state, phi) {
                     new_probabilities.insert(state.clone(), 1.0);
@@ -370,18 +370,18 @@ impl ProbabilisticModel {
                     new_probabilities.insert(state.clone(), prob);
                 }
             }
-            
+
             probabilities = new_probabilities;
         }
-        
+
         *probabilities.get(&self.initial_state).unwrap_or(&0.0)
     }
-    
+
     fn compute_globally_probability(&self, phi: &ProbabilisticFormula) -> f64 {
         // 全局概率是最终概率的补
         1.0 - self.compute_finally_probability(&ProbabilisticFormula::Not(Box::new(phi.clone())))
     }
-    
+
     fn compute_next_probability(&self, phi: &ProbabilisticFormula) -> f64 {
         let mut prob = 0.0;
         for (successor, transition_prob) in self.get_successors(&self.initial_state) {
@@ -391,11 +391,11 @@ impl ProbabilisticModel {
         }
         prob
     }
-    
+
     fn compute_until_probability(&self, phi1: &ProbabilisticFormula, phi2: &ProbabilisticFormula) -> f64 {
         // 简化的直到概率计算
         let mut probabilities = HashMap::new();
-        
+
         // 初始化
         for state in &self.states {
             if self.satisfies_atomic(state, phi2) {
@@ -406,11 +406,11 @@ impl ProbabilisticModel {
                 probabilities.insert(state.clone(), 0.0);
             }
         }
-        
+
         // 迭代
         for _ in 0..100 {
             let mut new_probabilities = HashMap::new();
-            
+
             for state in &self.states {
                 if self.satisfies_atomic(state, phi2) {
                     new_probabilities.insert(state.clone(), 1.0);
@@ -424,13 +424,13 @@ impl ProbabilisticModel {
                     new_probabilities.insert(state.clone(), prob);
                 }
             }
-            
+
             probabilities = new_probabilities;
         }
-        
+
         *probabilities.get(&self.initial_state).unwrap_or(&0.0)
     }
-    
+
     fn satisfies_atomic(&self, state: &str, phi: &ProbabilisticFormula) -> bool {
         match phi {
             ProbabilisticFormula::Atomic(label) => {
@@ -439,7 +439,7 @@ impl ProbabilisticModel {
             _ => false, // 简化处理
         }
     }
-    
+
     fn compare_probability(&self, prob: f64, threshold: f64, op: &ProbabilityOperator) -> bool {
         match op {
             ProbabilityOperator::LessThan => prob < threshold,
@@ -454,37 +454,37 @@ impl ProbabilisticModel {
 fn main() {
     // 示例：简单的概率模型
     let mut model = ProbabilisticModel::new("s0".to_string());
-    
+
     // 添加状态和转换
     model.add_transition("s0".to_string(), "s1".to_string(), 0.7);
     model.add_transition("s0".to_string(), "s2".to_string(), 0.3);
     model.add_transition("s1".to_string(), "s0".to_string(), 0.5);
     model.add_transition("s1".to_string(), "s2".to_string(), 0.5);
     model.add_transition("s2".to_string(), "s0".to_string(), 1.0);
-    
+
     // 添加标签
     model.add_label("s0".to_string(), "start".to_string());
     model.add_label("s1".to_string(), "running".to_string());
     model.add_label("s2".to_string(), "finished".to_string());
-    
+
     // 规范化转换概率
     model.normalize_transitions();
-    
+
     // 检查概率性质
     let finally_finished = ProbabilisticFormula::Probability(
         ProbabilityOperator::GreaterEqual,
         0.8,
         Box::new(PathFormula::Finally(Box::new(ProbabilisticFormula::Atomic("finished".to_string()))))
     );
-    
+
     println!("P[F finished] >= 0.8: {}", model.check_probability(&finally_finished));
-    
+
     let next_running = ProbabilisticFormula::Probability(
         ProbabilityOperator::GreaterEqual,
         0.5,
         Box::new(PathFormula::Next(Box::new(ProbabilisticFormula::Atomic("running".to_string()))))
     );
-    
+
     println!("P[X running] >= 0.5: {}", model.check_probability(&next_running));
 }
 ```
@@ -533,39 +533,39 @@ newProbabilisticModel initState = ProbabilisticModel {
 
 -- 添加状态
 addState :: String -> ProbabilisticModel -> ProbabilisticModel
-addState state model = 
+addState state model =
     if state `elem` states model
     then model
     else model { states = state : states model }
 
 -- 添加转换
 addTransition :: String -> String -> Double -> ProbabilisticModel -> ProbabilisticModel
-addTransition from to prob model = 
+addTransition from to prob model =
     let model' = addState from (addState to model)
     in model' { transitions = Map.insert (from, to) prob (transitions model') }
 
 -- 添加标签
 addLabel :: String -> String -> ProbabilisticModel -> ProbabilisticModel
-addLabel state label model = 
+addLabel state label model =
     model { labels = Map.insertWith (++) state [label] (labels model) }
 
 -- 获取转换概率
 getTransitionProbability :: String -> String -> ProbabilisticModel -> Double
-getTransitionProbability from to model = 
+getTransitionProbability from to model =
     Map.findWithDefault 0.0 (from, to) (transitions model)
 
 -- 获取后继状态
 getSuccessors :: String -> ProbabilisticModel -> [(String, Double)]
-getSuccessors state model = 
+getSuccessors state model =
     [(to, prob) | ((from, to), prob) <- Map.toList (transitions model), from == state]
 
 -- 规范化转换概率
 normalizeTransitions :: ProbabilisticModel -> ProbabilisticModel
-normalizeTransitions model = 
+normalizeTransitions model =
     let normalizedTransitions = Map.fromList $ concatMap normalizeState (states model)
     in model { transitions = normalizedTransitions }
   where
-    normalizeState state = 
+    normalizeState state =
         let successors = getSuccessors state model
             totalProb = sum (map snd successors)
         in if totalProb > 0.0
@@ -574,7 +574,7 @@ normalizeTransitions model =
 
 -- 检查概率性质
 checkProbability :: ProbabilisticFormula -> ProbabilisticModel -> Bool
-checkProbability (Probability op threshold pathFormula) model = 
+checkProbability (Probability op threshold pathFormula) model =
     let probability = computePathProbability pathFormula model
     in compareProbability probability threshold op
 checkProbability _ _ = True
@@ -588,32 +588,32 @@ computePathProbability (Until phi1 phi2) model = computeUntilProbability phi1 ph
 
 -- 计算最终概率
 computeFinallyProbability :: ProbabilisticFormula -> ProbabilisticModel -> Double
-computeFinallyProbability phi model = 
+computeFinallyProbability phi model =
     let initialProbs = Map.fromList [(state, if satisfiesAtomic state phi model then 1.0 else 0.0) | state <- states model]
         finalProbs = iterateUntilConvergence (updateFinallyProbabilities phi) initialProbs
     in Map.findWithDefault 0.0 (initialState model) finalProbs
 
 -- 计算全局概率
 computeGloballyProbability :: ProbabilisticFormula -> ProbabilisticModel -> Double
-computeGloballyProbability phi model = 
+computeGloballyProbability phi model =
     1.0 - computeFinallyProbability (Not phi) model
 
 -- 计算下一个概率
 computeNextProbability :: ProbabilisticFormula -> ProbabilisticModel -> Double
-computeNextProbability phi model = 
+computeNextProbability phi model =
     sum [prob | (successor, prob) <- getSuccessors (initialState model) model,
                 satisfiesAtomic successor phi model]
 
 -- 计算直到概率
 computeUntilProbability :: ProbabilisticFormula -> ProbabilisticFormula -> ProbabilisticModel -> Double
-computeUntilProbability phi1 phi2 model = 
+computeUntilProbability phi1 phi2 model =
     let initialProbs = Map.fromList [(state, if satisfiesAtomic state phi2 model then 1.0 else 0.0) | state <- states model]
         finalProbs = iterateUntilConvergence (updateUntilProbabilities phi1 phi2) initialProbs
     in Map.findWithDefault 0.0 (initialState model) finalProbs
 
 -- 更新最终概率
 updateFinallyProbabilities :: ProbabilisticFormula -> Map String Double -> ProbabilisticModel -> Map String Double
-updateFinallyProbabilities phi probs model = 
+updateFinallyProbabilities phi probs model =
     Map.fromList [(state, updateFinallyProbability state phi probs model) | state <- states model]
   where
     updateFinallyProbability state phi probs model
@@ -622,7 +622,7 @@ updateFinallyProbabilities phi probs model =
 
 -- 更新直到概率
 updateUntilProbabilities :: ProbabilisticFormula -> ProbabilisticFormula -> Map String Double -> ProbabilisticModel -> Map String Double
-updateUntilProbabilities phi1 phi2 probs model = 
+updateUntilProbabilities phi1 phi2 probs model =
     Map.fromList [(state, updateUntilProbability state phi1 phi2 probs model) | state <- states model]
   where
     updateUntilProbability state phi1 phi2 probs model
@@ -632,7 +632,7 @@ updateUntilProbabilities phi1 phi2 probs model =
 
 -- 检查原子公式
 satisfiesAtomic :: String -> ProbabilisticFormula -> ProbabilisticModel -> Bool
-satisfiesAtomic state (Atomic label) model = 
+satisfiesAtomic state (Atomic label) model =
     label `elem` Map.findWithDefault [] state (labels model)
 satisfiesAtomic _ _ _ = False
 
@@ -647,11 +647,11 @@ compareProbability prob threshold op = case op of
 
 -- 迭代直到收敛
 iterateUntilConvergence :: (Map String Double -> ProbabilisticModel -> Map String Double) -> Map String Double -> ProbabilisticModel -> Map String Double
-iterateUntilConvergence updateFunc initialProbs model = 
+iterateUntilConvergence updateFunc initialProbs model =
     iterateUntilConvergence' updateFunc initialProbs model 100
   where
     iterateUntilConvergence' _ probs _ 0 = probs
-    iterateUntilConvergence' updateFunc probs model n = 
+    iterateUntilConvergence' updateFunc probs model n =
         let newProbs = updateFunc probs model
         in iterateUntilConvergence' updateFunc newProbs model (n - 1)
 
@@ -668,10 +668,10 @@ example = do
             & addLabel "s1" "running"
             & addLabel "s2" "finished"
             & normalizeTransitions
-        
+
         finallyFinished = Probability GreaterEqual 0.8 (Finally (Atomic "finished"))
         nextRunning = Probability GreaterEqual 0.5 (Next (Atomic "running"))
-    
+
     putStrLn $ "P[F finished] >= 0.8: " ++ show (checkProbability finallyFinished model)
     putStrLn $ "P[X running] >= 0.5: " ++ show (checkProbability nextRunning model)
 
@@ -723,7 +723,7 @@ def satisfies (M : ProbabilisticModel) (s : string) (φ : ProbabilisticFormula) 
   | ProbabilisticFormula.atomic p := p ∈ M.labels s
   | ProbabilisticFormula.not φ := ¬ satisfies M s φ
   | ProbabilisticFormula.and φ₁ φ₂ := satisfies M s φ₁ ∧ satisfies M s φ₂
-  | ProbabilisticFormula.probability op p ψ := 
+  | ProbabilisticFormula.probability op p ψ :=
       let prob := compute_path_probability M ψ
       in match op with
          | "<" := prob < p
@@ -755,7 +755,7 @@ def compute_globally_probability (M : ProbabilisticModel) (φ : ProbabilisticFor
   1 - compute_finally_probability M (ProbabilisticFormula.not φ)
 
 -- 迭代概率计算
-def iterate_probabilities (M : ProbabilisticModel) (φ : ProbabilisticFormula) 
+def iterate_probabilities (M : ProbabilisticModel) (φ : ProbabilisticFormula)
     (probs : string → ℝ) (state : string) : ℝ :=
   -- 简化的迭代实现
   if satisfies M state φ then 1 else 0.5
@@ -794,19 +794,19 @@ end
 
 ## 10. 参考文献
 
-1. Baier, C., & Katoen, J. P. (2008). *Principles of Model Checking*. MIT Press.
-2. Hansson, H., & Jonsson, B. (1994). *A Logic for Reasoning about Time and Reliability*. Formal Aspects of Computing, 6(5), 512-535.
-3. Kwiatkowska, M., Norman, G., & Parker, D. (2011). *PRISM 4.0: Verification of Probabilistic Real-time Systems*. In Computer Aided Verification (pp. 585-591). Springer.
-4. Bianco, A., & de Alfaro, L. (1995). *Model Checking of Probabilistic and Nondeterministic Systems*. In Foundations of Software Technology and Theoretical Computer Science (pp. 499-513). Springer.
-5. Vardi, M. Y. (1985). *Automatic Verification of Probabilistic Concurrent Finite-state Programs*. In Foundations of Computer Science (pp. 327-338). IEEE.
-6. Aziz, A., Sanwal, K., Singhal, V., & Brayton, R. K. (1996). *Model-checking Continuous-time Markov Chains*. ACM Transactions on Computational Logic, 1(1), 162-170.
+1. Baier, C., & Katoen, J. P. (2008). _Principles of Model Checking_. MIT Press.
+2. Hansson, H., & Jonsson, B. (1994). _A Logic for Reasoning about Time and Reliability_. Formal Aspects of Computing, 6(5), 512-535.
+3. Kwiatkowska, M., Norman, G., & Parker, D. (2011). _PRISM 4.0: Verification of Probabilistic Real-time Systems_. In Computer Aided Verification (pp. 585-591). Springer.
+4. Bianco, A., & de Alfaro, L. (1995). _Model Checking of Probabilistic and Nondeterministic Systems_. In Foundations of Software Technology and Theoretical Computer Science (pp. 499-513). Springer.
+5. Vardi, M. Y. (1985). _Automatic Verification of Probabilistic Concurrent Finite-state Programs_. In Foundations of Computer Science (pp. 327-338). IEEE.
+6. Aziz, A., Sanwal, K., Singhal, V., & Brayton, R. K. (1996). _Model-checking Continuous-time Markov Chains_. ACM Transactions on Computational Logic, 1(1), 162-170.
 
 ---
 
-**文档状态**: 完成  
-**最后更新**: 2024年12月21日  
-**质量等级**: A+  
-**形式化程度**: 95%  
+**文档状态**: 完成
+**最后更新**: 2024年12月21日
+**质量等级**: A+
+**形式化程度**: 95%
 **代码实现**: 完整 (Rust/Haskell/Lean)
 
 ## 批判性分析

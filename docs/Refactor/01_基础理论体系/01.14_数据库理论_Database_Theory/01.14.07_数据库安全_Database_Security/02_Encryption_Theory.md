@@ -117,24 +117,24 @@ impl AESEncryption {
         let key = Key::from_slice(key_bytes);
         Ok(AESEncryption { key })
     }
-    
+
     pub fn encrypt(&self, plaintext: &[u8]) -> Result<Vec<u8>, String> {
         let cipher = Aes256Gcm::new(&self.key);
         let nonce = self.generate_nonce();
-        
+
         cipher.encrypt(&nonce, plaintext)
             .map_err(|e| format!("Encryption failed: {}", e))
     }
-    
+
     pub fn decrypt(&self, ciphertext: &[u8]) -> Result<Vec<u8>, String> {
         let cipher = Aes256Gcm::new(&self.key);
         let nonce = Nonce::from_slice(&ciphertext[..12]);
         let encrypted_data = &ciphertext[12..];
-        
+
         cipher.decrypt(nonce, encrypted_data)
             .map_err(|e| format!("Decryption failed: {}", e))
     }
-    
+
     fn generate_nonce(&self) -> Nonce {
         let mut nonce_bytes = [0u8; 12];
         rand::thread_rng().fill(&mut nonce_bytes);
@@ -161,28 +161,28 @@ impl RSAEncryption {
         let private_key = RsaPrivateKey::new(&mut rng, 2048)
             .map_err(|e| format!("Failed to generate private key: {}", e))?;
         let public_key = RsaPublicKey::from(&private_key);
-        
+
         Ok(RSAEncryption {
             private_key,
             public_key,
         })
     }
-    
+
     pub fn encrypt(&self, plaintext: &[u8]) -> Result<Vec<u8>, String> {
         self.public_key.encrypt(&mut OsRng, Pkcs1v15Encrypt, plaintext)
             .map_err(|e| format!("RSA encryption failed: {}", e))
     }
-    
+
     pub fn decrypt(&self, ciphertext: &[u8]) -> Result<Vec<u8>, String> {
         self.private_key.decrypt(Pkcs1v15Encrypt, ciphertext)
             .map_err(|e| format!("RSA decryption failed: {}", e))
     }
-    
+
     pub fn sign(&self, message: &[u8]) -> Result<Vec<u8>, String> {
         self.private_key.sign(Pkcs1v15Encrypt, message)
             .map_err(|e| format!("RSA signing failed: {}", e))
     }
-    
+
     pub fn verify(&self, message: &[u8], signature: &[u8]) -> Result<bool, String> {
         self.public_key.verify(Pkcs1v15Encrypt, message, signature)
             .map_err(|e| format!("RSA verification failed: {}", e))
@@ -218,7 +218,7 @@ impl PaillierEncryption {
         let g = n + 1; // 简化的生成元
         let mu = mod_inverse(lambda, n)
             .ok_or("Failed to compute modular inverse")?;
-        
+
         Ok(PaillierEncryption {
             n,
             g,
@@ -226,25 +226,25 @@ impl PaillierEncryption {
             mu,
         })
     }
-    
+
     pub fn encrypt(&self, message: u64) -> HomomorphicCiphertext {
         let r = 17; // 实际应用中应随机选择
-        let c = mod_pow(self.g, message, self.n * self.n) 
+        let c = mod_pow(self.g, message, self.n * self.n)
             * mod_pow(r, self.n, self.n * self.n) % (self.n * self.n);
-        
+
         HomomorphicCiphertext {
             data: vec![c],
             modulus: self.n,
         }
     }
-    
+
     pub fn decrypt(&self, ciphertext: &HomomorphicCiphertext) -> u64 {
         let c = ciphertext.data[0];
         let x = mod_pow(c, self.lambda, self.n * self.n);
         let l = (x - 1) / self.n;
         (l * self.mu) % self.n
     }
-    
+
     pub fn add(&self, c1: &HomomorphicCiphertext, c2: &HomomorphicCiphertext) -> HomomorphicCiphertext {
         let sum = c1.data[0] * c2.data[0] % (self.n * self.n);
         HomomorphicCiphertext {
@@ -258,7 +258,7 @@ fn mod_pow(base: u64, exponent: u64, modulus: u64) -> u64 {
     let mut result = 1;
     let mut base = base % modulus;
     let mut exp = exponent;
-    
+
     while exp > 0 {
         if exp % 2 == 1 {
             result = (result * base) % modulus;
@@ -272,13 +272,13 @@ fn mod_pow(base: u64, exponent: u64, modulus: u64) -> u64 {
 fn mod_inverse(a: u64, m: u64) -> Option<u64> {
     let mut t = (0, 1);
     let mut r = (m, a);
-    
+
     while r.1 != 0 {
         let q = r.0 / r.1;
         t = (t.1, t.0 - q * t.1);
         r = (r.1, r.0 - q * r.1);
     }
-    
+
     if r.0 > 1 {
         None
     } else {

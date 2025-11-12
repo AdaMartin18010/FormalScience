@@ -128,7 +128,7 @@ impl PaxosNode {
             promised_round: 0,
         }
     }
-    
+
     pub fn prepare(&mut self, round: u64) -> bool {
         if round > self.promised_round {
             self.promised_round = round;
@@ -137,7 +137,7 @@ impl PaxosNode {
             false
         }
     }
-    
+
     pub fn accept(&mut self, proposal: Proposal) -> bool {
         if proposal.round >= self.promised_round {
             self.accepted_proposals.insert(proposal.id, proposal.clone());
@@ -188,21 +188,21 @@ impl RaftNode {
             last_applied: 0,
         }
     }
-    
+
     pub fn start_election(&mut self) {
         self.state = RaftState::Candidate;
         self.term += 1;
         self.voted_for = Some(self.id.clone());
         // 发送投票请求给其他节点
     }
-    
+
     pub fn receive_vote(&mut self, candidate_id: String, term: u64) -> bool {
         if term > self.term {
             self.term = term;
             self.state = RaftState::Follower;
             self.voted_for = None;
         }
-        
+
         if term == self.term && self.voted_for.is_none() {
             self.voted_for = Some(candidate_id);
             true
@@ -241,7 +241,7 @@ impl TwoPhaseCommit {
             prepared_count: 0,
         }
     }
-    
+
     pub fn prepare_phase(&mut self) -> bool {
         // 向所有参与者发送prepare请求
         let mut all_prepared = true;
@@ -253,7 +253,7 @@ impl TwoPhaseCommit {
                 all_prepared = false;
             }
         }
-        
+
         if all_prepared {
             self.state = TransactionState::Prepared;
             true
@@ -262,7 +262,7 @@ impl TwoPhaseCommit {
             false
         }
     }
-    
+
     pub fn commit_phase(&mut self) -> bool {
         if self.state == TransactionState::Prepared {
             // 向所有参与者发送commit请求
@@ -275,12 +275,12 @@ impl TwoPhaseCommit {
             false
         }
     }
-    
+
     fn send_prepare(&self, participant: &str) -> bool {
         // 模拟发送prepare请求
         true
     }
-    
+
     fn send_commit(&self, participant: &str) {
         // 模拟发送commit请求
     }

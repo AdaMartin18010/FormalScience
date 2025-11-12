@@ -3,7 +3,7 @@
 ## 📋 目录
 
 - [死锁理论](#死锁理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [📋 目录](#-目录)
   - [1. 理论基础](#1-理论基础)
     - [1.1 历史背景](#11-历史背景)
     - [1.2 理论基础](#12-理论基础)
@@ -239,7 +239,7 @@ impl Resource {
             available: capacity,
         }
     }
-    
+
     fn request(&mut self, amount: i32) -> bool {
         if self.available >= amount {
             self.available -= amount;
@@ -248,7 +248,7 @@ impl Resource {
             false
         }
     }
-    
+
     fn release(&mut self, amount: i32) {
         self.available = (self.available + amount).min(self.capacity);
     }
@@ -272,36 +272,36 @@ impl Process {
             max_need: HashMap::new(),
         }
     }
-    
+
     fn add_resource_need(&mut self, resource_id: String, max_amount: i32) {
         self.max_need.insert(resource_id, max_amount);
     }
-    
+
     fn request_resource(&mut self, resource_id: String, amount: i32) {
         let current = self.requested.get(&resource_id).unwrap_or(&0);
         self.requested.insert(resource_id, current + amount);
     }
-    
+
     fn allocate_resource(&mut self, resource_id: String, amount: i32) {
         let current = self.allocated.get(&resource_id).unwrap_or(&0);
         self.allocated.insert(resource_id, current + amount);
-        
+
         // 减少请求量
         let requested = self.requested.get(&resource_id).unwrap_or(&0);
         self.requested.insert(resource_id, (requested - amount).max(0));
     }
-    
+
     fn release_resource(&mut self, resource_id: String, amount: i32) {
         let current = self.allocated.get(&resource_id).unwrap_or(&0);
         self.allocated.insert(resource_id, (current - amount).max(0));
     }
-    
+
     fn get_need(&self, resource_id: &str) -> i32 {
         let max = self.max_need.get(resource_id).unwrap_or(&0);
         let allocated = self.allocated.get(resource_id).unwrap_or(&0);
         (max - allocated).max(0)
     }
-    
+
     fn is_finished(&self) -> bool {
         for (resource_id, max_need) in &self.max_need {
             let allocated = self.allocated.get(resource_id).unwrap_or(&0);
@@ -326,29 +326,29 @@ impl DeadlockDetector {
             resources: HashMap::new(),
         }
     }
-    
+
     fn add_process(&mut self, process: Process) {
         self.processes.push(process);
     }
-    
+
     fn add_resource(&mut self, resource: Resource) {
         self.resources.insert(resource.id.clone(), resource);
     }
-    
+
     // 资源分配图检测
     fn detect_deadlock_graph(&self) -> bool {
         let mut graph = self.build_resource_allocation_graph();
         self.has_cycle(&graph)
     }
-    
+
     fn build_resource_allocation_graph(&self) -> HashMap<String, Vec<String>> {
         let mut graph = HashMap::new();
-        
+
         // 初始化图
         for process in &self.processes {
             graph.insert(process.id.clone(), Vec::new());
         }
-        
+
         // 添加边
         for process in &self.processes {
             for (resource_id, requested_amount) in &process.requested {
@@ -367,14 +367,14 @@ impl DeadlockDetector {
                 }
             }
         }
-        
+
         graph
     }
-    
+
     fn has_cycle(&self, graph: &HashMap<String, Vec<String>>) -> bool {
         let mut visited = HashSet::new();
         let mut rec_stack = HashSet::new();
-        
+
         for node in graph.keys() {
             if !visited.contains(node) {
                 if self.dfs_cycle(graph, node, &mut visited, &mut rec_stack) {
@@ -382,15 +382,15 @@ impl DeadlockDetector {
                 }
             }
         }
-        
+
         false
     }
-    
-    fn dfs_cycle(&self, graph: &HashMap<String, Vec<String>>, node: &str, 
+
+    fn dfs_cycle(&self, graph: &HashMap<String, Vec<String>>, node: &str,
                  visited: &mut HashSet<String>, rec_stack: &mut HashSet<String>) -> bool {
         visited.insert(node.to_string());
         rec_stack.insert(node.to_string());
-        
+
         if let Some(neighbors) = graph.get(node) {
             for neighbor in neighbors {
                 if !visited.contains(neighbor) {
@@ -402,16 +402,16 @@ impl DeadlockDetector {
                 }
             }
         }
-        
+
         rec_stack.remove(node);
         false
     }
-    
+
     // 银行家算法检测
     fn detect_deadlock_banker(&self) -> bool {
         let mut work = self.get_available_resources();
         let mut finish = vec![false; self.processes.len()];
-        
+
         // 寻找可以完成的进程
         loop {
             let mut found = false;
@@ -425,16 +425,16 @@ impl DeadlockDetector {
                     found = true;
                 }
             }
-            
+
             if !found {
                 break;
             }
         }
-        
+
         // 检查是否所有进程都能完成
         !finish.iter().all(|&x| x)
     }
-    
+
     fn get_available_resources(&self) -> HashMap<String, i32> {
         let mut available = HashMap::new();
         for resource in self.resources.values() {
@@ -442,7 +442,7 @@ impl DeadlockDetector {
         }
         available
     }
-    
+
     fn can_allocate(&self, process: &Process, work: &HashMap<String, i32>) -> bool {
         for (resource_id, need_amount) in process.max_need.iter() {
             let allocated = process.allocated.get(resource_id).unwrap_or(&0);
@@ -469,11 +469,11 @@ impl DeadlockPreventor {
             resource_order: Vec::new(),
         }
     }
-    
+
     fn set_resource_order(&mut self, order: Vec<String>) {
         self.resource_order = order;
     }
-    
+
     // 资源有序分配预防
     fn ordered_allocation_prevention(&self, process_id: &str, resource_id: &str) -> bool {
         // 检查是否按顺序请求资源
@@ -492,7 +492,7 @@ impl DeadlockPreventor {
         }
         true
     }
-    
+
     // 资源一次性分配预防
     fn one_time_allocation_prevention(&self, process_id: &str, requested_resources: &HashMap<String, i32>) -> bool {
         for process in &self.detector.processes {
@@ -512,35 +512,35 @@ impl DeadlockPreventor {
 fn main() {
     // 创建死锁检测器
     let mut detector = DeadlockDetector::new();
-    
+
     // 添加资源
     detector.add_resource(Resource::new("R1".to_string(), "CPU".to_string(), 2));
     detector.add_resource(Resource::new("R2".to_string(), "Memory".to_string(), 3));
-    
+
     // 创建进程
     let mut p1 = Process::new("P1".to_string());
     p1.add_resource_need("R1".to_string(), 1);
     p1.add_resource_need("R2".to_string(), 2);
     p1.request_resource("R1".to_string(), 1);
     p1.request_resource("R2".to_string(), 1);
-    
+
     let mut p2 = Process::new("P2".to_string());
     p2.add_resource_need("R1".to_string(), 1);
     p2.add_resource_need("R2".to_string(), 1);
     p2.request_resource("R1".to_string(), 1);
     p2.request_resource("R2".to_string(), 1);
-    
+
     detector.add_process(p1);
     detector.add_process(p2);
-    
+
     // 检测死锁
     println!("资源分配图检测死锁: {}", detector.detect_deadlock_graph());
     println!("银行家算法检测死锁: {}", detector.detect_deadlock_banker());
-    
+
     // 死锁预防
     let preventor = DeadlockPreventor::new(detector);
     let resource_order = vec!["R1".to_string(), "R2".to_string()];
-    
+
     println!("资源有序分配预防: {}", preventor.ordered_allocation_prevention("P1", "R1"));
 }
 ```
@@ -586,36 +586,36 @@ newProcess id = Process id Map.empty Map.empty Map.empty
 
 -- 添加资源需求
 addResourceNeed :: String -> Int -> Process -> Process
-addResourceNeed resourceId amount process = 
+addResourceNeed resourceId amount process =
     process { maxNeed = Map.insert resourceId amount (maxNeed process) }
 
 -- 请求资源
 requestResource :: String -> Int -> Process -> Process
-requestResource resourceId amount process = 
+requestResource resourceId amount process =
     let current = Map.findWithDefault 0 resourceId (requested process)
     in process { requested = Map.insert resourceId (current + amount) (requested process) }
 
 -- 分配资源
 allocateResource :: String -> Int -> Process -> Process
-allocateResource resourceId amount process = 
+allocateResource resourceId amount process =
     let currentAllocated = Map.findWithDefault 0 resourceId (allocated process)
         currentRequested = Map.findWithDefault 0 resourceId (requested process)
-    in process { 
+    in process {
         allocated = Map.insert resourceId (currentAllocated + amount) (allocated process),
         requested = Map.insert resourceId (max 0 (currentRequested - amount)) (requested process)
     }
 
 -- 获取需求
 getNeed :: String -> Process -> Int
-getNeed resourceId process = 
+getNeed resourceId process =
     let maxNeed = Map.findWithDefault 0 resourceId (maxNeed process)
         allocated = Map.findWithDefault 0 resourceId (allocated process)
     in max 0 (maxNeed - allocated)
 
 -- 检查进程是否完成
 isFinished :: Process -> Bool
-isFinished process = 
-    all (\resourceId -> 
+isFinished process =
+    all (\resourceId ->
         let allocated = Map.findWithDefault 0 resourceId (allocated process)
             maxNeed = Map.findWithDefault 0 resourceId (maxNeed process)
         in allocated >= maxNeed) (Map.keys (maxNeed process))
@@ -626,32 +626,32 @@ newDeadlockDetector = DeadlockDetector [] Map.empty
 
 -- 添加进程
 addProcess :: Process -> DeadlockDetector -> DeadlockDetector
-addProcess process detector = 
+addProcess process detector =
     detector { processes = process : processes detector }
 
 -- 添加资源
 addResource :: Resource -> DeadlockDetector -> DeadlockDetector
-addResource resource detector = 
+addResource resource detector =
     detector { resources = Map.insert (resourceId resource) resource (resources detector) }
 
 -- 构建资源分配图
 buildResourceAllocationGraph :: DeadlockDetector -> Map String [String]
-buildResourceAllocationGraph detector = 
+buildResourceAllocationGraph detector =
     let initialGraph = Map.fromList [(processId p, []) | p <- processes detector]
     in foldr addEdges initialGraph (processes detector)
   where
-    addEdges process graph = 
+    addEdges process graph =
         foldr (addEdge process) graph (Map.toList (requested process))
-    
+
     addEdge process (resourceId, requestedAmount) graph
-        | requestedAmount > 0 = 
+        | requestedAmount > 0 =
             let resource = Map.lookup resourceId (resources detector)
             in case resource of
-                Just r | available r < requestedAmount -> 
+                Just r | available r < requestedAmount ->
                     foldr (addWaitEdge process) graph (processes detector)
                 _ -> graph
         | otherwise = graph
-    
+
     addWaitEdge process otherProcess graph
         | Map.findWithDefault 0 resourceId (allocated otherProcess) > 0 =
             let currentEdges = Map.findWithDefault [] (processId process) graph
@@ -660,7 +660,7 @@ buildResourceAllocationGraph detector =
 
 -- 检测环
 hasCycle :: Map String [String] -> Bool
-hasCycle graph = 
+hasCycle graph =
     let nodes = Map.keys graph
         visited = Set.empty
         recStack = Set.empty
@@ -669,7 +669,7 @@ hasCycle graph =
     dfsCycle graph node visited recStack
         | Set.member node recStack = True
         | Set.member node visited = False
-        | otherwise = 
+        | otherwise =
             let newVisited = Set.insert node visited
                 newRecStack = Set.insert node recStack
                 neighbors = Map.findWithDefault [] node graph
@@ -677,35 +677,35 @@ hasCycle graph =
 
 -- 资源分配图检测
 detectDeadlockGraph :: DeadlockDetector -> Bool
-detectDeadlockGraph detector = 
+detectDeadlockGraph detector =
     let graph = buildResourceAllocationGraph detector
     in hasCycle graph
 
 -- 获取可用资源
 getAvailableResources :: DeadlockDetector -> Map String Int
-getAvailableResources detector = 
+getAvailableResources detector =
     Map.map available (resources detector)
 
 -- 检查是否可以分配
 canAllocate :: Process -> Map String Int -> Bool
-canAllocate process work = 
-    all (\resourceId -> 
+canAllocate process work =
+    all (\resourceId ->
         let need = getNeed resourceId process
             available = Map.findWithDefault 0 resourceId work
         in need <= available) (Map.keys (maxNeed process))
 
 -- 银行家算法检测
 detectDeadlockBanker :: DeadlockDetector -> Bool
-detectDeadlockBanker detector = 
+detectDeadlockBanker detector =
     let work = getAvailableResources detector
         finish = replicate (length (processes detector)) False
     in not (isSafeState detector work finish)
   where
-    isSafeState detector work finish = 
+    isSafeState detector work finish =
         let (newWork, newFinish) = findSafeSequence detector work finish
         in all id newFinish
-    
-    findSafeSequence detector work finish = 
+
+    findSafeSequence detector work finish =
         let safeProcesses = findSafeProcesses detector work finish
         in if null safeProcesses
            then (work, finish)
@@ -714,23 +714,23 @@ detectDeadlockBanker detector =
                     newWork = addProcessResources process work
                     newFinish = updateFinish processIndex finish
                 in findSafeSequence detector newWork newFinish
-    
-    findSafeProcesses detector work finish = 
-        [p | (p, i) <- zip (processes detector) [0..], 
+
+    findSafeProcesses detector work finish =
+        [p | (p, i) <- zip (processes detector) [0..],
              not (finish !! i) && canAllocate p work]
-    
-    findProcessIndex process detector = 
+
+    findProcessIndex process detector =
         case findIndex (\p -> processId p == processId process) (processes detector) of
             Just i -> i
             Nothing -> 0
-    
-    addProcessResources process work = 
-        foldr (\resourceId work' -> 
+
+    addProcessResources process work =
+        foldr (\resourceId work' ->
             let current = Map.findWithDefault 0 resourceId work'
                 allocated = Map.findWithDefault 0 resourceId (allocated process)
             in Map.insert resourceId (current + allocated) work') work (Map.keys (allocated process))
-    
-    updateFinish index finish = 
+
+    updateFinish index finish =
         take index finish ++ [True] ++ drop (index + 1) finish
 
 -- 示例
@@ -739,8 +739,8 @@ example = do
     let detector = newDeadlockDetector
             & addResource (newResource "R1" "CPU" 2)
             & addResource (newResource "R2" "Memory" 3)
-            & addProcess (newProcess "P1" 
-                & addResourceNeed "R1" 1 
+            & addProcess (newProcess "P1"
+                & addResourceNeed "R1" 1
                 & addResourceNeed "R2" 2
                 & requestResource "R1" 1
                 & requestResource "R2" 1)
@@ -749,7 +749,7 @@ example = do
                 & addResourceNeed "R2" 1
                 & requestResource "R1" 1
                 & requestResource "R2" 1)
-    
+
     putStrLn $ "资源分配图检测死锁: " ++ show (detectDeadlockGraph detector)
     putStrLn $ "银行家算法检测死锁: " ++ show (detectDeadlockBanker detector)
 
@@ -770,19 +770,19 @@ main = example
 
 ## 10. 参考文献
 
-1. Coffman, E. G., Elphick, M. J., & Shoshani, A. (1971). *System Deadlocks*. ACM Computing Surveys, 3(2), 67-78.
-2. Dijkstra, E. W. (1965). *Solution of a Problem in Concurrent Programming Control*. Communications of the ACM, 8(9), 569.
-3. Habermann, A. N. (1969). *Prevention of System Deadlocks*. Communications of the ACM, 12(7), 373-377.
-4. Holt, R. C. (1972). *Some Deadlock Properties of Computer Systems*. ACM Computing Surveys, 4(3), 179-196.
-5. Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). *Operating System Concepts*. Wiley.
-6. Tanenbaum, A. S., & Bos, H. (2014). *Modern Operating Systems*. Pearson.
+1. Coffman, E. G., Elphick, M. J., & Shoshani, A. (1971). _System Deadlocks_. ACM Computing Surveys, 3(2), 67-78.
+2. Dijkstra, E. W. (1965). _Solution of a Problem in Concurrent Programming Control_. Communications of the ACM, 8(9), 569.
+3. Habermann, A. N. (1969). _Prevention of System Deadlocks_. Communications of the ACM, 12(7), 373-377.
+4. Holt, R. C. (1972). _Some Deadlock Properties of Computer Systems_. ACM Computing Surveys, 4(3), 179-196.
+5. Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). _Operating System Concepts_. Wiley.
+6. Tanenbaum, A. S., & Bos, H. (2014). _Modern Operating Systems_. Pearson.
 
 ---
 
-**文档状态**: 完成  
-**最后更新**: 2024年12月21日  
-**质量等级**: A+  
-**形式化程度**: 95%  
+**文档状态**: 完成
+**最后更新**: 2024年12月21日
+**质量等级**: A+
+**形式化程度**: 95%
 **代码实现**: 完整 (Rust/Haskell)
 
 ## 批判性分析

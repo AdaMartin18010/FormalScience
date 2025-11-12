@@ -91,7 +91,7 @@
 
 #### 理论核心
 
-**代表人物**：Franz Brentano  
+**代表人物**：Franz Brentano
 **核心思想**：意向性是心理现象与物理现象的根本区别特征。
 
 #### 关键概念
@@ -157,23 +157,23 @@ impl BrentanoIntentionality {
             intensity: 1.0,
         }
     }
-    
+
     // 检查意向内存在
     fn has_intentional_inexistence(&self) -> bool {
         // 心理活动总是有内在对象，无论对象是否现实存在
         true
     }
-    
+
     // 获取意向内容
     fn get_content(&self) -> &str {
         &self.object.content
     }
-    
+
     // 检查对象现实存在性
     fn object_exists_in_reality(&self) -> bool {
         self.object.exists_in_reality
     }
-    
+
     // 意向统一性：多个意向活动可以指向同一对象
     fn unify_with(&self, other: &BrentanoIntentionality) -> bool {
         self.object.content == other.object.content
@@ -185,7 +185,7 @@ impl BrentanoIntentionality {
 
 #### 2.1 理论核心
 
-**代表人物**：Edmund Husserl  
+**代表人物**：Edmund Husserl
 **核心思想**：意向性通过意识活动的构成性功能实现，对象在意识中被构成。
 
 #### 2.2 关键概念
@@ -252,13 +252,13 @@ impl HusserlIntentionality {
             constitution_rules: Vec::new(),
         }
     }
-    
+
     // 现象学悬置：暂时搁置存在判断
     fn phenomenological_epoché(&mut self) {
         // 将存在判断置入括号
         self.noema.reference = None;
     }
-    
+
     // 本质直观：把握对象的本质特征
     fn eidetic_intuition(&self) -> Vec<String> {
         // 提取对象的本质特征
@@ -268,12 +268,12 @@ impl HusserlIntentionality {
             "qualitative_properties".to_string(),
         ]
     }
-    
+
     // 构成性分析：分析对象如何在意识中被构成
     fn constitutive_analysis(&self) -> Vec<ConstitutionRule> {
         self.constitution_rules.clone()
     }
-    
+
     // 视域分析：分析意向对象的视域结构
     fn horizon_analysis(&self) -> Vec<String> {
         self.noema.horizon.clone()
@@ -285,7 +285,7 @@ impl HusserlIntentionality {
 
 #### 3.1 理论核心
 
-**代表人物**：John Searle  
+**代表人物**：John Searle
 **核心思想**：意向性是生物现象，具有内在的、不可还原的意向性特征。
 
 #### 3.2 关键概念
@@ -370,25 +370,25 @@ impl SearleIntentionalitySystem {
             },
         }
     }
-    
+
     // 检查内在意向性
     fn has_intrinsic_intentionality(&self) -> bool {
         // 生物状态具有内在的意向性
         true
     }
-    
+
     // 网络一致性检查
     fn check_network_consistency(&self) -> bool {
         // 检查意向状态网络的一致性
         !self.network.states.is_empty()
     }
-    
+
     // 背景能力支持
     fn background_supports(&self, intentional_state: &BiologicalIntentionalState) -> bool {
         // 检查背景能力是否支持特定意向状态
         self.background.skills.contains(&intentional_state.psychological_mode)
     }
-    
+
     // 集体意向性
     fn collective_intentionality(&self, group: &[BiologicalIntentionalState]) -> bool {
         // 检查是否存在集体意向性

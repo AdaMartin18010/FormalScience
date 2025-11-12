@@ -2,28 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 内存管理定义](#21-内存管理定义)
-  - [2.2 内存管理策略分类](#22-内存管理策略分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 分页系统](#31-分页系统)
-  - [3.2 页面替换算法](#32-页面替换算法)
-  - [3.3 虚拟内存](#33-虚拟内存)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 页面替换最优性定理](#41-页面替换最优性定理)
-  - [4.2 局部性原理定理](#42-局部性原理定理)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 分页系统实现](#51-分页系统实现)
-  - [5.2 页面替换算法实现](#52-页面替换算法实现)
-  - [5.3 内存分配器实现](#53-内存分配器实现)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性](#72-局限性)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [10.2.1 内存管理理论](#1021-内存管理理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 内存管理定义](#21-内存管理定义)
+    - [2.2 内存管理策略分类](#22-内存管理策略分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 分页系统](#31-分页系统)
+    - [3.2 页面替换算法](#32-页面替换算法)
+    - [3.3 虚拟内存](#33-虚拟内存)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 页面替换最优性定理](#41-页面替换最优性定理)
+    - [4.2 局部性原理定理](#42-局部性原理定理)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 分页系统实现](#51-分页系统实现)
+    - [5.2 页面替换算法实现](#52-页面替换算法实现)
+    - [5.3 内存分配器实现](#53-内存分配器实现)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性](#72-局限性)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -131,11 +134,11 @@ impl PageTable {
             page_size,
         }
     }
-    
+
     pub fn translate(&mut self, virtual_address: usize) -> Option<usize> {
         let page_number = virtual_address / self.page_size;
         let offset = virtual_address % self.page_size;
-        
+
         if let Some(entry) = self.entries.get_mut(&page_number) {
             if entry.present {
                 entry.accessed = true;
@@ -146,14 +149,14 @@ impl PageTable {
         }
         None // Page fault
     }
-    
+
     pub fn map_page(&mut self, virtual_page: usize, physical_frame: usize) {
         let mut entry = PageTableEntry::new();
         entry.frame_number = Some(physical_frame);
         entry.present = true;
         self.entries.insert(virtual_page, entry);
     }
-    
+
     pub fn unmap_page(&mut self, virtual_page: usize) {
         if let Some(entry) = self.entries.get_mut(&virtual_page) {
             entry.present = false;
@@ -195,7 +198,7 @@ impl PageReplacementAlgorithm {
             page_hits: 0,
         }
     }
-    
+
     pub fn access_page(&mut self, page_number: usize, future_references: Option<&[usize]>) -> bool {
         // 检查页面是否在内存中
         if let Some(_) = self.frames.iter().position(|&frame| frame == Some(page_number)) {
@@ -208,14 +211,14 @@ impl PageReplacementAlgorithm {
             false // Page fault
         }
     }
-    
+
     fn handle_page_fault(&mut self, page_number: usize, future_references: Option<&[usize]>) {
         // 查找空闲帧
         if let Some(free_frame) = self.frames.iter().position(|&frame| frame.is_none()) {
             self.frames[free_frame] = Some(page_number);
             return;
         }
-        
+
         // 需要页面替换
         let victim_frame = match self.algorithm_type {
             AlgorithmType::FIFO => self.fifo_replace(),
@@ -223,20 +226,20 @@ impl PageReplacementAlgorithm {
             AlgorithmType::Clock => self.clock_replace(),
             AlgorithmType::Optimal => self.optimal_replace(future_references.unwrap_or(&[])),
         };
-        
+
         self.frames[victim_frame] = Some(page_number);
     }
-    
+
     fn fifo_replace(&self) -> usize {
         // 简化的FIFO实现，总是替换第一个帧
         0
     }
-    
+
     fn lru_replace(&self) -> usize {
         // 简化的LRU实现，总是替换最后一个帧
         self.frame_count - 1
     }
-    
+
     fn clock_replace(&mut self) -> usize {
         // 时钟算法实现
         static mut CLOCK_HAND: usize = 0;
@@ -252,33 +255,33 @@ impl PageReplacementAlgorithm {
             }
         }
     }
-    
+
     fn optimal_replace(&self, future_references: &[usize]) -> usize {
         // 最优页面替换算法
         let mut max_future_distance = 0;
         let mut victim_frame = 0;
-        
+
         for (frame_index, &frame) in self.frames.iter().enumerate() {
             if let Some(page) = frame {
                 let future_distance = future_references.iter()
                     .position(|&ref_page| ref_page == page)
                     .unwrap_or(future_references.len());
-                
+
                 if future_distance > max_future_distance {
                     max_future_distance = future_distance;
                     victim_frame = frame_index;
                 }
             }
         }
-        
+
         victim_frame
     }
-    
+
     fn update_reference_info(&mut self, _page_number: usize) {
         // 更新页面引用信息（用于LRU等算法）
         // 简化实现
     }
-    
+
     pub fn get_page_fault_rate(&self) -> f64 {
         let total_accesses = self.page_faults + self.page_hits;
         if total_accesses == 0 {
@@ -325,25 +328,25 @@ impl MemoryAllocator {
             allocated: false,
             process_id: None,
         };
-        
+
         MemoryAllocator {
             total_memory,
             blocks: vec![initial_block],
             allocation_strategy: strategy,
         }
     }
-    
+
     pub fn allocate(&mut self, size: usize, process_id: u32) -> Option<usize> {
         let block_index = match self.allocation_strategy {
             AllocationStrategy::FirstFit => self.find_first_fit(size),
             AllocationStrategy::BestFit => self.find_best_fit(size),
             AllocationStrategy::WorstFit => self.find_worst_fit(size),
         };
-        
+
         if let Some(index) = block_index {
             let block = &mut self.blocks[index];
             let allocated_address = block.start_address;
-            
+
             if block.size == size {
                 // 完全匹配
                 block.allocated = true;
@@ -356,27 +359,27 @@ impl MemoryAllocator {
                     allocated: false,
                     process_id: None,
                 };
-                
+
                 block.size = size;
                 block.allocated = true;
                 block.process_id = Some(process_id);
-                
+
                 self.blocks.insert(index + 1, new_block);
             }
-            
+
             Some(allocated_address)
         } else {
             None
         }
     }
-    
+
     pub fn deallocate(&mut self, address: usize) -> bool {
         if let Some(index) = self.blocks.iter().position(|block| block.start_address == address) {
             let block = &mut self.blocks[index];
             if block.allocated {
                 block.allocated = false;
                 block.process_id = None;
-                
+
                 // 合并相邻的空闲块
                 self.merge_free_blocks();
                 true
@@ -387,46 +390,46 @@ impl MemoryAllocator {
             false
         }
     }
-    
+
     fn find_first_fit(&self, size: usize) -> Option<usize> {
         self.blocks.iter()
             .position(|block| !block.allocated && block.size >= size)
     }
-    
+
     fn find_best_fit(&self, size: usize) -> Option<usize> {
         let mut best_index = None;
         let mut best_size = usize::MAX;
-        
+
         for (index, block) in self.blocks.iter().enumerate() {
             if !block.allocated && block.size >= size && block.size < best_size {
                 best_size = block.size;
                 best_index = Some(index);
             }
         }
-        
+
         best_index
     }
-    
+
     fn find_worst_fit(&self, size: usize) -> Option<usize> {
         let mut worst_index = None;
         let mut worst_size = 0;
-        
+
         for (index, block) in self.blocks.iter().enumerate() {
             if !block.allocated && block.size >= size && block.size > worst_size {
                 worst_size = block.size;
                 worst_index = Some(index);
             }
         }
-        
+
         worst_index
     }
-    
+
     fn merge_free_blocks(&mut self) {
         let mut i = 0;
         while i < self.blocks.len() - 1 {
             let current = &self.blocks[i];
             let next = &self.blocks[i + 1];
-            
+
             if !current.allocated && !next.allocated {
                 // 合并相邻的空闲块
                 self.blocks[i].size += next.size;
@@ -436,19 +439,19 @@ impl MemoryAllocator {
             }
         }
     }
-    
+
     pub fn get_fragmentation(&self) -> f64 {
         let total_free = self.blocks.iter()
             .filter(|block| !block.allocated)
             .map(|block| block.size)
             .sum::<usize>();
-        
+
         let largest_free = self.blocks.iter()
             .filter(|block| !block.allocated)
             .map(|block| block.size)
             .max()
             .unwrap_or(0);
-        
+
         if total_free == 0 {
             0.0
         } else {
@@ -472,8 +475,8 @@ impl MemoryAllocator {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

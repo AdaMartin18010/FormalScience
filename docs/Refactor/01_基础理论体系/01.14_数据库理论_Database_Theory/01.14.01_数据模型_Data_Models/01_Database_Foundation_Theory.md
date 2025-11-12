@@ -3,37 +3,37 @@
 ## 📋 目录
 
 - [01. 数据库基础理论 (Database Foundation Theory)](#01-数据库基础理论-database-foundation-theory)
-  - [1 . 数据库理论基础](#1-数据库理论基础)
+  - [📋 目录](#-目录)
   - [1. 数据库理论基础](#1-数据库理论基础)
     - [1.1 数据库定义与分类](#11-数据库定义与分类)
     - [1.2 数据模型理论](#12-数据模型理论)
     - [1.3 数据库系统架构](#13-数据库系统架构)
-  - [2 . 关系数据库理论](#2-关系数据库理论)
+  - [2. 关系数据库理论](#2-关系数据库理论)
     - [2.1 关系模型](#21-关系模型)
     - [2.2 关系代数](#22-关系代数)
     - [2.3 关系演算](#23-关系演算)
-  - [3 . 数据库设计理论](#3-数据库设计理论)
+  - [3. 数据库设计理论](#3-数据库设计理论)
     - [3.1 规范化理论](#31-规范化理论)
     - [3.2 函数依赖](#32-函数依赖)
     - [3.3 多值依赖](#33-多值依赖)
-  - [4 . 事务理论](#4-事务理论)
+  - [4. 事务理论](#4-事务理论)
     - [4.1 ACID性质](#41-acid性质)
     - [4.2 并发控制](#42-并发控制)
     - [4.3 恢复机制](#43-恢复机制)
-  - [5 . 查询优化理论](#5-查询优化理论)
+  - [5. 查询优化理论](#5-查询优化理论)
     - [5.1 查询计划](#51-查询计划)
     - [5.2 成本模型](#52-成本模型)
     - [5.3 优化策略](#53-优化策略)
-  - [6 . 分布式数据库理论](#6-分布式数据库理论)
+  - [6. 分布式数据库理论](#6-分布式数据库理论)
     - [6.1 数据分布](#61-数据分布)
     - [6.2 一致性协议](#62-一致性协议)
     - [6.3 故障处理](#63-故障处理)
-  - [7 📊 总结](#7-总结)
-  - [8 批判性分析](#8-批判性分析)
-    - [1 主要理论观点梳理](#1-主要理论观点梳理)
-    - [8.2 理论优势与局限性](#82-理论优势与局限性)
-    - [8.3 学科交叉融合](#83-学科交叉融合)
-    - [8.4 创新批判与未来展望](#84-创新批判与未来展望)
+  - [📊 总结](#-总结)
+  - [批判性分析](#批判性分析)
+    - [主要理论观点梳理](#主要理论观点梳理)
+    - [理论优势与局限性](#理论优势与局限性)
+    - [学科交叉融合](#学科交叉融合)
+    - [创新批判与未来展望](#创新批判与未来展望)
     - [参考文献](#参考文献)
 
 ---
@@ -77,7 +77,7 @@ def database_type : Database → DatabaseType
 | (Database _ _ _) := DatabaseType.relational
 
 -- 完备性证明
-theorem database_type_completeness : 
+theorem database_type_completeness :
   ∀ (db : Database), ∃! (t : DatabaseType), database_type db = t
 
 -- 构造性证明
@@ -109,13 +109,13 @@ structure DataModel (α : Type) :=
 
 -- 有效性定义
 def is_valid_model {α : Type} (dm : DataModel α) : Prop :=
-nonempty dm.structure.data ∧ 
+nonempty dm.structure.data ∧
 ∀ op ∈ dm.operations, preserves_constraints op dm.constraints
 
 -- 存在性证明
 theorem data_model_existence :
-  ∀ (D : Set α), nonempty D → 
-  ∃ (dm : DataModel α), 
+  ∀ (D : Set α), nonempty D →
+  ∃ (dm : DataModel α),
   dm.structure.data = D ∧ is_valid_model dm
 
 -- 构造性证明
@@ -160,7 +160,7 @@ has_lock_manager dbs
 -- 完备性证明
 theorem system_completeness :
   ∀ {α : Type} (dbs : DatabaseSystem α),
-  is_complete_system dbs → 
+  is_complete_system dbs →
   can_process_queries dbs ∧
   can_manage_storage dbs ∧
   can_manage_transactions dbs
@@ -352,7 +352,7 @@ structure FunctionalDependency (α : Type) :=
 -- 传递性证明
 theorem fd_transitivity :
   ∀ {α : Type} (fd₁ fd₂ : FunctionalDependency α),
-  fd₁.dependent = fd₂.determinant → 
+  fd₁.dependent = fd₂.determinant →
   ∃ (fd₃ : FunctionalDependency α),
   fd₃.determinant = fd₁.determinant ∧
   fd₃.dependent = fd₂.dependent
@@ -376,7 +376,7 @@ theorem fd_transitivity :
 structure MultivaluedDependency (α : Type) :=
 (determinant : Set α)
 (dependent : Set α)
-(validity : ∀ t₁ t₂, t₁[X] = t₂[X] → 
+(validity : ∀ t₁ t₂, t₁[X] = t₂[X] →
   ∃ t₃ t₄, t₃[X] = t₁[X] ∧ t₃[Y] = t₁[Y] ∧ t₃[Z] = t₂[Z] ∧
              t₄[X] = t₁[X] ∧ t₄[Y] = t₂[Y] ∧ t₄[Z] = t₁[Z])
 
@@ -419,7 +419,7 @@ structure ACIDProperties :=
 -- 保证定理
 theorem acid_guarantee :
   ∀ (db : DatabaseSystem),
-  implements_acid db → 
+  implements_acid db →
   ∀ (t : Transaction),
   atomicity t ∧ consistency t ∧ isolation t ∧ durability t
 
@@ -447,7 +447,7 @@ structure TwoPhaseLocking :=
 -- 可串行化证明
 theorem two_phase_serializability :
   ∀ (tps : TwoPhaseLocking),
-  implements_2pl tps → 
+  implements_2pl tps →
   ∀ (schedule : TransactionSchedule),
   serializable schedule
 
@@ -475,7 +475,7 @@ structure LogRecovery :=
 -- 正确性证明
 theorem log_recovery_correctness :
   ∀ (lr : LogRecovery),
-  implements_log_recovery lr → 
+  implements_log_recovery lr →
   ∀ (failure : SystemFailure),
   after_recovery failure → database_consistent
 
@@ -515,7 +515,7 @@ theorem dp_optimality :
   ∀ (query : Query),
   let plan := dynamic_programming_optimization query in
   ∀ (other_plan : QueryPlan),
-  equivalent_plans plan other_plan → 
+  equivalent_plans plan other_plan →
   plan.cost ≤ other_plan.cost
 
 -- 证明：通过动态规划的最优子结构
@@ -549,7 +549,7 @@ structure Statistics :=
 -- 准确性证明
 theorem cost_estimation_accuracy :
   ∀ (cm : CostModel) (stats : Statistics),
-  uses_statistics cm stats → 
+  uses_statistics cm stats →
   ∀ (query : Query),
   let estimated := estimate_cost cm query in
   let actual := actual_cost query in
@@ -577,7 +577,7 @@ pub struct QueryOptimizer {
 pub trait OptimizationRule {
     type Query;
     type Plan;
-    
+
     fn apply(&self, query: &Self::Query) -> Option<Self::Plan>;
     fn cost(&self, plan: &Self::Plan) -> f64;
 }
@@ -595,19 +595,19 @@ impl QueryOptimizer {
             ],
         }
     }
-    
+
     pub fn optimize(&self, query: &Query) -> QueryPlan {
         let mut current_plan = self.generate_initial_plan(query);
         let mut improved = true;
-        
+
         while improved {
             improved = false;
-            
+
             for rule in &self.rules {
                 if let Some(new_plan) = rule.apply(&current_plan) {
                     let current_cost = self.cost_model.estimate_cost(&current_plan);
                     let new_cost = self.cost_model.estimate_cost(&new_plan);
-                    
+
                     if new_cost < current_cost {
                         current_plan = new_plan;
                         improved = true;
@@ -615,32 +615,32 @@ impl QueryOptimizer {
                 }
             }
         }
-        
+
         current_plan
     }
-    
+
     fn generate_initial_plan(&self, query: &Query) -> QueryPlan {
         // 生成初始查询计划
         let mut plan = QueryPlan::new();
-        
+
         // 添加扫描操作
         for table in &query.tables {
             plan.add_operation(Operation::TableScan(table.clone()));
         }
-        
+
         // 添加连接操作
         for join in &query.joins {
             plan.add_operation(Operation::Join(join.clone()));
         }
-        
+
         // 添加过滤操作
         for predicate in &query.predicates {
             plan.add_operation(Operation::Filter(predicate.clone()));
         }
-        
+
         // 添加投影操作
         plan.add_operation(Operation::Project(query.columns.clone()));
-        
+
         plan
     }
 }
@@ -651,24 +651,24 @@ pub struct PredicatePushdown;
 impl OptimizationRule for PredicatePushdown {
     type Query = Query;
     type Plan = QueryPlan;
-    
+
     fn apply(&self, query: &Query) -> Option<QueryPlan> {
         // 将过滤条件尽可能下推到数据源
         let mut optimized_plan = query.clone();
-        
+
         for predicate in &query.predicates {
             if let Some(table) = self.find_related_table(predicate) {
                 optimized_plan.push_predicate_to_table(predicate.clone(), table);
             }
         }
-        
+
         Some(optimized_plan)
     }
-    
+
     fn cost(&self, plan: &QueryPlan) -> f64 {
         plan.estimate_cost()
     }
-    
+
     fn find_related_table(&self, predicate: &Predicate) -> Option<String> {
         // 找到谓词相关的表
         predicate.referenced_tables().first().cloned()
@@ -681,32 +681,32 @@ pub struct JoinReordering;
 impl OptimizationRule for JoinReordering {
     type Query = Query;
     type Plan = QueryPlan;
-    
+
     fn apply(&self, query: &Query) -> Option<QueryPlan> {
         // 重新排序连接操作以最小化中间结果大小
         let joins = query.joins.clone();
         let optimized_joins = self.optimize_join_order(joins);
-        
+
         let mut optimized_plan = query.clone();
         optimized_plan.joins = optimized_joins;
-        
+
         Some(optimized_plan)
     }
-    
+
     fn cost(&self, plan: &QueryPlan) -> f64 {
         plan.estimate_cost()
     }
-    
+
     fn optimize_join_order(&self, joins: Vec<Join>) -> Vec<Join> {
         // 使用动态规划优化连接顺序
         let n = joins.len();
         let mut dp = vec![vec![f64::INFINITY; n]; n];
-        
+
         // 初始化对角线
         for i in 0..n {
             dp[i][i] = 0.0;
         }
-        
+
         // 动态规划
         for len in 2..=n {
             for i in 0..=n-len {
@@ -717,23 +717,23 @@ impl OptimizationRule for JoinReordering {
                 }
             }
         }
-        
+
         // 重建最优顺序
         self.reconstruct_join_order(&dp, &joins)
     }
-    
+
     fn join_cost(&self, joins: &[Join]) -> f64 {
         // 计算连接操作的代价
         joins.iter().map(|join| join.estimate_cost()).sum()
     }
-    
+
     fn reconstruct_join_order(&self, dp: &[Vec<f64>], joins: &[Join]) -> Vec<Join> {
         // 根据动态规划表重建最优连接顺序
         let mut result = Vec::new();
         self.reconstruct_helper(dp, joins, 0, joins.len()-1, &mut result);
         result
     }
-    
+
     fn reconstruct_helper(&self, dp: &[Vec<f64>], joins: &[Join], i: usize, j: usize, result: &mut Vec<Join>) {
         if i == j {
             result.push(joins[i].clone());
@@ -774,14 +774,14 @@ structure DataDistribution :=
 
 -- 一致性定义
 def is_consistent (dd : DataDistribution) : Prop :=
-∀ node₁ node₂, 
+∀ node₁ node₂,
 node₁.data = node₂.data ∨
 dd.consistency_level = eventual_consistency
 
 -- 一致性证明
 theorem distribution_consistency :
   ∀ (dd : DataDistribution),
-  implements_consistency_protocol dd → 
+  implements_consistency_protocol dd →
   is_consistent dd
 
 -- 证明：通过一致性协议
@@ -834,7 +834,7 @@ structure FaultRecovery :=
 -- 可用性证明
 theorem fault_recovery_availability :
   ∀ (fr : FaultRecovery),
-  implements_recovery fr → 
+  implements_recovery fr →
   ∀ (failure : NodeFailure),
   after_recovery failure → system_available
 
@@ -953,8 +953,8 @@ theorem fault_recovery_availability :
 
 ### 参考文献
 
-1. Codd, E. F. "A relational model of data for large shared data banks." *Communications of the ACM*, 1970.
-2. Stonebraker, M., & Cetintemel, U. "One size fits all: An idea whose time has come and gone." *ICDE*, 2005.
-3. Abadi, D. J., et al. "Column-oriented database systems." *Proceedings of the VLDB Endowment*, 2009.
-4. Brewer, E. A. "Towards robust distributed systems." *PODC*, 2000.
-5. Gray, J., & Reuter, A. *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann, 1993.
+1. Codd, E. F. "A relational model of data for large shared data banks." _Communications of the ACM_, 1970.
+2. Stonebraker, M., & Cetintemel, U. "One size fits all: An idea whose time has come and gone." _ICDE_, 2005.
+3. Abadi, D. J., et al. "Column-oriented database systems." _Proceedings of the VLDB Endowment_, 2009.
+4. Brewer, E. A. "Towards robust distributed systems." _PODC_, 2000.
+5. Gray, J., & Reuter, A. _Transaction Processing: Concepts and Techniques_. Morgan Kaufmann, 1993.

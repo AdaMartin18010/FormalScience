@@ -244,19 +244,19 @@ pub struct PrenexForm {
 
 pub fn to_prenex_form(formula: &Formula) -> PrenexForm {
     let mut result = formula.clone();
-    
+
     // 步骤1：消除蕴含和等价
     result = eliminate_implications(&result);
-    
+
     // 步骤2：否定内移
     result = move_negations_inward(&result);
-    
+
     // 步骤3：变量重命名
     result = rename_variables(&result);
-    
+
     // 步骤4：量词前移
     let (quantifiers, matrix) = move_quantifiers_forward(&result);
-    
+
     PrenexForm { quantifiers, matrix }
 }
 ```
@@ -382,13 +382,13 @@ impl ResolutionProver {
         let prenex = to_prenex_form(formula);
         let skolem = to_skolem_form(&prenex);
         let clauses = to_clauses(&skolem.matrix);
-        
+
         ResolutionProver { clauses }
     }
-    
+
     pub fn prove(&mut self) -> bool {
         let mut new_clauses = Vec::new();
-        
+
         loop {
             // 生成所有可能的归结
             for i in 0..self.clauses.len() {
@@ -403,11 +403,11 @@ impl ResolutionProver {
                     }
                 }
             }
-            
+
             if new_clauses.is_empty() {
                 return false; // 无法生成新的子句
             }
-            
+
             self.clauses.extend(new_clauses.drain(..));
         }
     }
@@ -440,17 +440,17 @@ impl FiniteModelChecker {
             functions: vec![vec![vec![0; domain_size]; domain_size]; function_count],
         }
     }
-    
+
     pub fn check_formula(&self, formula: &Formula) -> bool {
         // 枚举所有可能的赋值
         self.check_all_assignments(formula, &mut vec![0; formula.free_variables().len()], 0)
     }
-    
+
     fn check_all_assignments(&self, formula: &Formula, assignment: &mut Vec<usize>, pos: usize) -> bool {
         if pos == assignment.len() {
             return self.evaluate_formula(formula, assignment);
         }
-        
+
         for value in 0..self.domain_size {
             assignment[pos] = value;
             if !self.check_all_assignments(formula, assignment, pos + 1) {
@@ -510,11 +510,11 @@ WHERE age > 18 AND department = 'Computer Science';
 
 ## 参考文献
 
-1. Enderton, H. B. (2001). *A Mathematical Introduction to Logic*. Academic Press.
-2. Mendelson, E. (2015). *Introduction to Mathematical Logic*. CRC Press.
-3. Shoenfield, J. R. (2001). *Mathematical Logic*. A K Peters.
-4. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). *Computability and Logic*. Cambridge University Press.
-5. Chang, C. C., & Keisler, H. J. (2012). *Model Theory*. Dover Publications.
+1. Enderton, H. B. (2001). _A Mathematical Introduction to Logic_. Academic Press.
+2. Mendelson, E. (2015). _Introduction to Mathematical Logic_. CRC Press.
+3. Shoenfield, J. R. (2001). _Mathematical Logic_. A K Peters.
+4. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). _Computability and Logic_. Cambridge University Press.
+5. Chang, C. C., & Keisler, H. J. (2012). _Model Theory_. Dover Publications.
 
 ## 交叉引用
 

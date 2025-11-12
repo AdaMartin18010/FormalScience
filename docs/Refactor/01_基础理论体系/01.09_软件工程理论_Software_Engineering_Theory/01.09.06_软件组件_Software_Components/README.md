@@ -29,6 +29,11 @@
     - [形式化理论](#形式化理论)
   - [参考文献](#参考文献)
   - [批判性分析](#批判性分析)
+    - [多元理论视角](#多元理论视角)
+    - [局限性](#局限性)
+    - [争议与分歧](#争议与分歧)
+    - [应用前景](#应用前景)
+    - [改进建议](#改进建议)
 
 ---
 
@@ -301,10 +306,10 @@ impl AsyncComponent for AsyncWebComponent {
 
 ## 参考文献
 
-1. Szyperski, C. (2002). *Component Software: Beyond Object-Oriented Programming*. Addison-Wesley.
-2. Crnkovic, I., & Larsson, M. (2002). *Building Reliable Component-Based Software Systems*. Artech House.
-3. Heineman, G. T., & Councill, W. T. (2001). *Component-Based Software Engineering: Putting the Pieces Together*. Addison-Wesley.
-4. Rust Programming Language. (2021). *The Rust Programming Language*. <https://doc.rust-lang.org/book/>
+1. Szyperski, C. (2002). _Component Software: Beyond Object-Oriented Programming_. Addison-Wesley.
+2. Crnkovic, I., & Larsson, M. (2002). _Building Reliable Component-Based Software Systems_. Artech House.
+3. Heineman, G. T., & Councill, W. T. (2001). _Component-Based Software Engineering: Putting the Pieces Together_. Addison-Wesley.
+4. Rust Programming Language. (2021). _The Rust Programming Language_. <https://doc.rust-lang.org/book/>
 
 ---
 

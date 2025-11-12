@@ -2,8 +2,10 @@
 
 ## 📋 目录
 
-- [1 Haskell LinearTypesGHC -XLinearTypes](#1-haskell-lineartypesghc--xlineartypes)
-- [2 Lean非线性示意，资源由类型刻画](#2-lean非线性示意资源由类型刻画)
+- [04.3 线性/仿射类型 极简示例](#043-线性仿射类型-极简示例)
+  - [📋 目录](#-目录)
+  - [1 Haskell LinearTypesGHC -XLinearTypes](#1-haskell-lineartypesghc--xlineartypes)
+  - [2 Lean非线性示意，资源由类型刻画](#2-lean非线性示意资源由类型刻画)
 
 ---
 

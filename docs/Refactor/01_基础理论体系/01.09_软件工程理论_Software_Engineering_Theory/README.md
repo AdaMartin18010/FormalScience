@@ -288,26 +288,26 @@ impl SoftwareArchitecture {
     // 架构质量评估
     pub fn evaluate_quality(&self) -> QualityMetrics {
         let mut metrics = QualityMetrics::new();
-        
+
         // 计算耦合度
         metrics.coupling = self.calculate_coupling();
-        
+
         // 计算内聚度
         metrics.cohesion = self.calculate_cohesion();
-        
+
         // 计算复杂度
         metrics.complexity = self.calculate_complexity();
-        
+
         // 计算可维护性
         metrics.maintainability = self.calculate_maintainability();
-        
+
         metrics
     }
 
     fn calculate_coupling(&self) -> f64 {
         let total_connections = self.connections.len() as f64;
         let total_components = self.components.len() as f64;
-        
+
         if total_components > 1.0 {
             total_connections / (total_components * (total_components - 1.0))
         } else {
@@ -318,14 +318,14 @@ impl SoftwareArchitecture {
     fn calculate_cohesion(&self) -> f64 {
         let mut total_cohesion = 0.0;
         let component_count = self.components.len() as f64;
-        
+
         for component in self.components.values() {
             let responsibility_count = component.responsibilities.len() as f64;
             if responsibility_count > 0.0 {
                 total_cohesion += 1.0 / responsibility_count;
             }
         }
-        
+
         if component_count > 0.0 {
             total_cohesion / component_count
         } else {
@@ -336,7 +336,7 @@ impl SoftwareArchitecture {
     fn calculate_complexity(&self) -> f64 {
         let mut total_complexity = 0.0;
         let component_count = self.components.len() as f64;
-        
+
         for component in self.components.values() {
             let complexity_value = match component.complexity {
                 ComplexityLevel::Simple => 1.0,
@@ -346,7 +346,7 @@ impl SoftwareArchitecture {
             };
             total_complexity += complexity_value;
         }
-        
+
         if component_count > 0.0 {
             total_complexity / component_count
         } else {
@@ -358,7 +358,7 @@ impl SoftwareArchitecture {
         let coupling = self.calculate_coupling();
         let cohesion = self.calculate_cohesion();
         let complexity = self.calculate_complexity();
-        
+
         // 简化的可维护性计算公式
         (cohesion * (1.0 - coupling)) / complexity.max(1.0)
     }
@@ -400,7 +400,7 @@ impl QualityMetrics {
             self.performance,
             self.security,
         ];
-        
+
         scores.iter().zip(weights.iter())
             .map(|(score, weight)| score * weight)
             .sum()
@@ -489,7 +489,7 @@ impl DesignPattern for SingletonPattern {
         let mut singleton = Component::new("singleton", "Singleton", "单例类");
         singleton.add_responsibility("确保只有一个实例");
         singleton.add_responsibility("提供全局访问点");
-        
+
         // 添加私有构造函数约束
         let constraint = Constraint {
             name: "Private Constructor".to_string(),
@@ -497,10 +497,10 @@ impl DesignPattern for SingletonPattern {
             constraint_type: ConstraintType::Security,
             value: "private".to_string(),
         };
-        
+
         context.add_component(singleton);
         context.constraints.push(constraint);
-        
+
         Ok(())
     }
 }
@@ -533,48 +533,48 @@ impl DesignPattern for FactoryPattern {
         // 创建工厂接口
         let mut factory_interface = Component::new("factory_interface", "Factory", "工厂接口");
         factory_interface.add_responsibility("定义创建对象的接口");
-        
+
         // 创建具体工厂
         let mut concrete_factory = Component::new("concrete_factory", "ConcreteFactory", "具体工厂");
         concrete_factory.add_responsibility("实现工厂接口");
         concrete_factory.add_responsibility("创建具体产品");
-        
+
         // 创建产品接口
         let mut product_interface = Component::new("product_interface", "Product", "产品接口");
         product_interface.add_responsibility("定义产品的公共接口");
-        
+
         // 创建具体产品
         let mut concrete_product = Component::new("concrete_product", "ConcreteProduct", "具体产品");
         concrete_product.add_responsibility("实现产品接口");
-        
+
         // 添加关系
         let factory_relationship = Relationship {
             from: "concrete_factory".to_string(),
             to: "factory_interface".to_string(),
             relationship_type: RelationshipType::Inheritance,
         };
-        
+
         let product_relationship = Relationship {
             from: "concrete_product".to_string(),
             to: "product_interface".to_string(),
             relationship_type: RelationshipType::Inheritance,
         };
-        
+
         let creation_relationship = Relationship {
             from: "concrete_factory".to_string(),
             to: "concrete_product".to_string(),
             relationship_type: RelationshipType::Dependency,
         };
-        
+
         context.add_component(factory_interface);
         context.add_component(concrete_factory);
         context.add_component(product_interface);
         context.add_component(concrete_product);
-        
+
         context.add_relationship(factory_relationship);
         context.add_relationship(product_relationship);
         context.add_relationship(creation_relationship);
-        
+
         Ok(())
     }
 }
@@ -608,48 +608,48 @@ impl DesignPattern for ObserverPattern {
         let mut subject_interface = Component::new("subject_interface", "Subject", "主题接口");
         subject_interface.add_responsibility("管理观察者");
         subject_interface.add_responsibility("通知观察者");
-        
+
         // 创建具体主题
         let mut concrete_subject = Component::new("concrete_subject", "ConcreteSubject", "具体主题");
         concrete_subject.add_responsibility("维护状态");
         concrete_subject.add_responsibility("状态改变时通知观察者");
-        
+
         // 创建观察者接口
         let mut observer_interface = Component::new("observer_interface", "Observer", "观察者接口");
         observer_interface.add_responsibility("定义更新接口");
-        
+
         // 创建具体观察者
         let mut concrete_observer = Component::new("concrete_observer", "ConcreteObserver", "具体观察者");
         concrete_observer.add_responsibility("实现更新方法");
-        
+
         // 添加关系
         let subject_relationship = Relationship {
             from: "concrete_subject".to_string(),
             to: "subject_interface".to_string(),
             relationship_type: RelationshipType::Inheritance,
         };
-        
+
         let observer_relationship = Relationship {
             from: "concrete_observer".to_string(),
             to: "observer_interface".to_string(),
             relationship_type: RelationshipType::Inheritance,
         };
-        
+
         let notification_relationship = Relationship {
             from: "concrete_subject".to_string(),
             to: "concrete_observer".to_string(),
             relationship_type: RelationshipType::Dependency,
         };
-        
+
         context.add_component(subject_interface);
         context.add_component(concrete_subject);
         context.add_component(observer_interface);
         context.add_component(concrete_observer);
-        
+
         context.add_relationship(subject_relationship);
         context.add_relationship(observer_relationship);
         context.add_relationship(notification_relationship);
-        
+
         Ok(())
     }
 }
@@ -726,17 +726,17 @@ impl TestCase {
 
     pub fn execute(&mut self) -> TestResult {
         println!("执行测试用例: {}", self.name);
-        
+
         let mut result = TestResult {
             test_case_id: self.id.clone(),
             status: TestStatus::Passed,
             execution_time: std::time::Duration::from_secs(0),
             errors: vec![],
         };
-        
+
         for step in &mut self.steps {
             println!("执行步骤 {}: {}", step.step_number, step.action);
-            
+
             // 模拟测试步骤执行
             if rand::random::<bool>() {
                 step.actual = Some("成功".to_string());
@@ -746,10 +746,10 @@ impl TestCase {
                 result.errors.push(format!("步骤 {} 失败", step.step_number));
             }
         }
-        
+
         self.status = result.status.clone();
         self.actual_result = Some(format!("{:?}", result.status));
-        
+
         result
     }
 }
@@ -804,16 +804,16 @@ impl TestSuite {
 
     pub fn run_all(&mut self) -> TestSuiteResult {
         println!("运行测试套件: {}", self.name);
-        
+
         let mut results = vec![];
         let mut passed = 0;
         let mut failed = 0;
         let mut skipped = 0;
-        
+
         for test_case in &mut self.test_cases {
             let result = test_case.execute();
             results.push(result.clone());
-            
+
             match result.status {
                 TestStatus::Passed => passed += 1,
                 TestStatus::Failed => failed += 1,
@@ -821,7 +821,7 @@ impl TestSuite {
                 _ => {},
             }
         }
-        
+
         TestSuiteResult {
             suite_name: self.name.clone(),
             total_tests: self.test_cases.len(),
@@ -866,30 +866,30 @@ fn software_architecture_example() {
         "微服务架构",
         "基于微服务模式的分布式系统架构"
     );
-    
+
     // 添加组件
     let mut api_gateway = Component::new("api_gateway", "API Gateway", "API网关");
     api_gateway.add_responsibility("路由请求");
     api_gateway.add_responsibility("负载均衡");
     api_gateway.add_responsibility("认证授权");
-    
+
     let mut user_service = Component::new("user_service", "User Service", "用户服务");
     user_service.add_responsibility("用户管理");
     user_service.add_responsibility("用户认证");
-    
+
     let mut order_service = Component::new("order_service", "Order Service", "订单服务");
     order_service.add_responsibility("订单管理");
     order_service.add_responsibility("支付处理");
-    
+
     let mut database = Component::new("database", "Database", "数据库");
     database.add_responsibility("数据存储");
     database.add_responsibility("数据查询");
-    
+
     architecture.add_component(api_gateway);
     architecture.add_component(user_service);
     architecture.add_component(order_service);
     architecture.add_component(database);
-    
+
     // 添加连接
     let gateway_user_conn = Connection {
         from: "api_gateway".to_string(),
@@ -897,17 +897,17 @@ fn software_architecture_example() {
         connection_type: ConnectionType::Synchronous,
         protocol: "HTTP".to_string(),
     };
-    
+
     let gateway_order_conn = Connection {
         from: "api_gateway".to_string(),
         to: "order_service".to_string(),
         connection_type: ConnectionType::Synchronous,
         protocol: "HTTP".to_string(),
     };
-    
+
     architecture.add_connection(gateway_user_conn);
     architecture.add_connection(gateway_order_conn);
-    
+
     // 评估架构质量
     let quality_metrics = architecture.evaluate_quality();
     println!("架构质量评估:");
@@ -925,27 +925,27 @@ fn software_architecture_example() {
 fn design_pattern_example() {
     // 创建模式上下文
     let mut context = PatternContext::new();
-    
+
     // 应用单例模式
     let singleton_pattern = SingletonPattern::new();
     singleton_pattern.apply(&mut context).unwrap();
-    
+
     // 应用工厂模式
     let factory_pattern = FactoryPattern::new();
     factory_pattern.apply(&mut context).unwrap();
-    
+
     // 应用观察者模式
     let observer_pattern = ObserverPattern::new();
     observer_pattern.apply(&mut context).unwrap();
-    
+
     println!("应用的设计模式:");
     for component in context.components.values() {
         println!("- {}", component.name);
     }
-    
+
     println!("组件关系:");
     for relationship in &context.relationships {
-        println!("- {} -> {} ({:?})", 
+        println!("- {} -> {} ({:?})",
                 relationship.from, relationship.to, relationship.relationship_type);
     }
 }
@@ -957,14 +957,14 @@ fn design_pattern_example() {
 fn software_testing_example() {
     // 创建测试套件
     let mut test_suite = TestSuite::new("用户管理测试", "测试用户管理功能");
-    
+
     // 创建单元测试
     let mut unit_test = TestCase::new("UT001", "用户创建测试", "测试用户创建功能", TestType::Unit);
     unit_test.add_step(1, "创建用户对象", "用户对象创建成功");
     unit_test.add_step(2, "设置用户属性", "用户属性设置成功");
     unit_test.add_step(3, "保存用户", "用户保存成功");
     unit_test.expected_result = "用户创建成功".to_string();
-    
+
     // 创建集成测试
     let mut integration_test = TestCase::new("IT001", "用户注册流程测试", "测试完整的用户注册流程", TestType::Integration);
     integration_test.add_step(1, "用户填写注册表单", "表单数据验证通过");
@@ -972,13 +972,13 @@ fn software_testing_example() {
     integration_test.add_step(3, "验证邮箱", "邮箱验证成功");
     integration_test.add_step(4, "激活账户", "账户激活成功");
     integration_test.expected_result = "用户注册成功".to_string();
-    
+
     test_suite.add_test_case(unit_test);
     test_suite.add_test_case(integration_test);
-    
+
     // 运行测试
     let result = test_suite.run_all();
-    
+
     println!("测试结果:");
     println!("总测试数: {}", result.total_tests);
     println!("通过: {}", result.passed);
@@ -1044,5 +1044,5 @@ fn software_testing_example() {
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

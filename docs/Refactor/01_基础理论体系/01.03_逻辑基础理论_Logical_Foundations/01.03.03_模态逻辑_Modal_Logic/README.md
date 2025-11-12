@@ -2,26 +2,29 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 理论基础](#2-理论基础)
-  - [2.1 形式化定义](#21-形式化定义)
-- [3 语法实现](#3-语法实现)
-  - [3.1 数据结构](#31-数据结构)
-  - [3.2 解析器实现](#32-解析器实现)
-- [4 语义实现](#4-语义实现)
-  - [4.1 克里普克模型](#41-克里普克模型)
-  - [4.2 模态系统](#42-模态系统)
-- [5 形式化验证](#5-形式化验证)
-  - [5.1 框架对应性](#51-框架对应性)
-  - [5.2 完备性定理](#52-完备性定理)
-  - [5.3 紧致性定理](#53-紧致性定理)
-- [6 应用领域](#6-应用领域)
-  - [6.1 认知逻辑](#61-认知逻辑)
-  - [6.2 时态逻辑](#62-时态逻辑)
-  - [6.3 道义逻辑](#63-道义逻辑)
-- [7 总结](#7-总结)
-- [8 相关链接](#8-相关链接)
-- [9 批判性分析](#9-批判性分析)
+- [模态逻辑 (Modal Logic)](#模态逻辑-modal-logic)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 理论基础](#2-理论基础)
+    - [2.1 形式化定义](#21-形式化定义)
+  - [3 语法实现](#3-语法实现)
+    - [3.1 数据结构](#31-数据结构)
+    - [3.2 解析器实现](#32-解析器实现)
+  - [4 语义实现](#4-语义实现)
+    - [4.1 克里普克模型](#41-克里普克模型)
+    - [4.2 模态系统](#42-模态系统)
+  - [5 形式化验证](#5-形式化验证)
+    - [5.1 框架对应性](#51-框架对应性)
+    - [5.2 完备性定理](#52-完备性定理)
+    - [5.3 紧致性定理](#53-紧致性定理)
+  - [6 应用领域](#6-应用领域)
+    - [6.1 认知逻辑](#61-认知逻辑)
+    - [6.2 时态逻辑](#62-时态逻辑)
+    - [6.3 道义逻辑](#63-道义逻辑)
+  - [7 总结](#7-总结)
+  - [参考文献](#参考文献)
+  - [8 相关链接](#8-相关链接)
+  - [9 批判性分析](#9-批判性分析)
 
 ---
 
@@ -258,49 +261,49 @@ impl ModalParser {
 
     fn parse_implication(&mut self) -> Result<ModalFormula, String> {
         let mut left = self.parse_equivalence()?;
-        
+
         while self.check_token(&ModalToken::Implies) {
             self.advance();
             let right = self.parse_equivalence()?;
             left = ModalFormula::implies(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_equivalence(&mut self) -> Result<ModalFormula, String> {
         let mut left = self.parse_or()?;
-        
+
         while self.check_token(&ModalToken::Iff) {
             self.advance();
             let right = self.parse_or()?;
             left = ModalFormula::iff(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_or(&mut self) -> Result<ModalFormula, String> {
         let mut left = self.parse_and()?;
-        
+
         while self.check_token(&ModalToken::Or) {
             self.advance();
             let right = self.parse_and()?;
             left = ModalFormula::or(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_and(&mut self) -> Result<ModalFormula, String> {
         let mut left = self.parse_modal()?;
-        
+
         while self.check_token(&ModalToken::And) {
             self.advance();
             let right = self.parse_modal()?;
             left = ModalFormula::and(left, right);
         }
-        
+
         Ok(left)
     }
 
@@ -347,7 +350,7 @@ impl ModalParser {
     fn tokenize(input: &str) -> Vec<ModalToken> {
         let mut tokens = Vec::new();
         let mut chars = input.chars().peekable();
-        
+
         while let Some(ch) = chars.next() {
             match ch {
                 ' ' | '\t' | '\n' => continue,
@@ -377,7 +380,7 @@ impl ModalParser {
                 }
             }
         }
-        
+
         tokens.push(ModalToken::End);
         tokens
     }
@@ -762,7 +765,7 @@ impl ModalProofSystem {
                 // □φ ≡ ¬◇¬φ
                 let not_phi = ModalFormula::not(*phi.clone());
                 let not_poss_not = ModalFormula::not(ModalFormula::possibility(not_phi));
-                
+
                 proof.steps.push(ModalProofStep {
                     formula: not_poss_not,
                     rule: ModalInferenceRule::Axiom(not_poss_not.clone()),
@@ -773,7 +776,7 @@ impl ModalProofSystem {
                 // ◇φ ≡ ¬□¬φ
                 let not_phi = ModalFormula::not(*phi.clone());
                 let not_nec_not = ModalFormula::not(ModalFormula::necessity(not_phi));
-                
+
                 proof.steps.push(ModalProofStep {
                     formula: not_nec_not,
                     rule: ModalInferenceRule::Axiom(not_nec_not.clone()),

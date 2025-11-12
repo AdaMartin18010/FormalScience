@@ -2,28 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 并行计算定义](#21-并行计算定义)
-  - [2.2 并行架构分类](#22-并行架构分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 并行计算模型](#31-并行计算模型)
-  - [3.2 并行复杂度](#32-并行复杂度)
-  - [3.3 加速比](#33-加速比)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 Amdahl定律](#41-amdahl定律)
-  - [4.2 Gustafson定律](#42-gustafson定律)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 并行归约算法](#51-并行归约算法)
-  - [5.2 并行排序算法](#52-并行排序算法)
-  - [5.3 并行矩阵乘法](#53-并行矩阵乘法)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性分析](#72-局限性分析)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [09.3.1 并行计算理论](#0931-并行计算理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 并行计算定义](#21-并行计算定义)
+    - [2.2 并行架构分类](#22-并行架构分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 并行计算模型](#31-并行计算模型)
+    - [3.2 并行复杂度](#32-并行复杂度)
+    - [3.3 加速比](#33-加速比)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 Amdahl定律](#41-amdahl定律)
+    - [4.2 Gustafson定律](#42-gustafson定律)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 并行归约算法](#51-并行归约算法)
+    - [5.2 并行排序算法](#52-并行排序算法)
+    - [5.3 并行矩阵乘法](#53-并行矩阵乘法)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性分析](#72-局限性分析)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -95,32 +98,32 @@ $S_p = T_s/T_p = \alpha + (1-\alpha)p = p - \alpha(p-1)$。□
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-pub fn parallel_reduce<T, F>(data: &[T], op: F, num_threads: usize) -> T 
-where 
+pub fn parallel_reduce<T, F>(data: &[T], op: F, num_threads: usize) -> T
+where
     T: Copy + Send + Sync,
     F: Fn(T, T) -> T + Send + Sync,
 {
     let data = Arc::new(data.to_vec());
     let result = Arc::new(Mutex::new(None));
     let mut handles = vec![];
-    
+
     let chunk_size = (data.len() + num_threads - 1) / num_threads;
-    
+
     for i in 0..num_threads {
         let data = Arc::clone(&data);
         let result = Arc::clone(&result);
         let op = op.clone();
-        
+
         let handle = thread::spawn(move || {
             let start = i * chunk_size;
             let end = std::cmp::min(start + chunk_size, data.len());
-            
+
             if start < data.len() {
                 let mut local_result = data[start];
                 for j in start + 1..end {
                     local_result = op(local_result, data[j]);
                 }
-                
+
                 let mut global_result = result.lock().unwrap();
                 if let Some(ref mut current) = *global_result {
                     *current = op(*current, local_result);
@@ -131,11 +134,11 @@ where
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     result.lock().unwrap().unwrap()
 }
 ```
@@ -146,22 +149,22 @@ where
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-pub fn parallel_merge_sort<T>(data: &mut [T], num_threads: usize) 
-where 
+pub fn parallel_merge_sort<T>(data: &mut [T], num_threads: usize)
+where
     T: Ord + Copy + Send + Sync,
 {
     if data.len() <= 1 {
         return;
     }
-    
+
     if num_threads <= 1 {
         sequential_merge_sort(data);
         return;
     }
-    
+
     let mid = data.len() / 2;
     let (left, right) = data.split_at_mut(mid);
-    
+
     let left_handle = {
         let left = left.to_vec();
         thread::spawn(move || {
@@ -170,7 +173,7 @@ where
             left
         })
     };
-    
+
     let right_handle = {
         let right = right.to_vec();
         thread::spawn(move || {
@@ -179,10 +182,10 @@ where
             right
         })
     };
-    
+
     let sorted_left = left_handle.join().unwrap();
     let sorted_right = right_handle.join().unwrap();
-    
+
     merge(data, &sorted_left, &sorted_right);
 }
 
@@ -190,13 +193,13 @@ fn sequential_merge_sort<T: Ord + Copy>(data: &mut [T]) {
     if data.len() <= 1 {
         return;
     }
-    
+
     let mid = data.len() / 2;
     let (left, right) = data.split_at_mut(mid);
-    
+
     sequential_merge_sort(left);
     sequential_merge_sort(right);
-    
+
     let left = left.to_vec();
     let right = right.to_vec();
     merge(data, &left, &right);
@@ -206,7 +209,7 @@ fn merge<T: Ord + Copy>(result: &mut [T], left: &[T], right: &[T]) {
     let mut i = 0;
     let mut j = 0;
     let mut k = 0;
-    
+
     while i < left.len() && j < right.len() {
         if left[i] <= right[j] {
             result[k] = left[i];
@@ -217,13 +220,13 @@ fn merge<T: Ord + Copy>(result: &mut [T], left: &[T], right: &[T]) {
         }
         k += 1;
     }
-    
+
     while i < left.len() {
         result[k] = left[i];
         i += 1;
         k += 1;
     }
-    
+
     while j < right.len() {
         result[k] = right[j];
         j += 1;
@@ -239,36 +242,36 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 pub fn parallel_matrix_multiply(
-    a: &[Vec<f64>], 
-    b: &[Vec<f64>], 
+    a: &[Vec<f64>],
+    b: &[Vec<f64>],
     num_threads: usize
 ) -> Vec<Vec<f64>> {
     let n = a.len();
     let m = b[0].len();
     let p = b.len();
-    
+
     let mut result = vec![vec![0.0; m]; n];
     let result = Arc::new(Mutex::new(result));
     let mut handles = vec![];
-    
+
     let rows_per_thread = (n + num_threads - 1) / num_threads;
-    
+
     for thread_id in 0..num_threads {
         let a = a.to_vec();
         let b = b.to_vec();
         let result = Arc::clone(&result);
-        
+
         let handle = thread::spawn(move || {
             let start_row = thread_id * rows_per_thread;
             let end_row = std::cmp::min(start_row + rows_per_thread, n);
-            
+
             for i in start_row..end_row {
                 for j in 0..m {
                     let mut sum = 0.0;
                     for k in 0..p {
                         sum += a[i][k] * b[k][j];
                     }
-                    
+
                     let mut result = result.lock().unwrap();
                     result[i][j] = sum;
                 }
@@ -276,11 +279,11 @@ pub fn parallel_matrix_multiply(
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     Arc::try_unwrap(result).unwrap().into_inner().unwrap()
 }
 ```
@@ -299,8 +302,8 @@ pub fn parallel_matrix_multiply(
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

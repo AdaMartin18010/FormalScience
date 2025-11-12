@@ -115,13 +115,13 @@ impl DependencyAnalyzer {
             attributes: HashSet::new(),
         }
     }
-    
+
     pub fn add_dependency(&mut self, determinant: Vec<String>, dependent: Vec<String>) {
         let fd = FunctionalDependency {
             determinant: determinant.into_iter().collect(),
             dependent: dependent.into_iter().collect(),
         };
-        
+
         // 添加属性到属性集
         for attr in &fd.determinant {
             self.attributes.insert(attr.clone());
@@ -129,14 +129,14 @@ impl DependencyAnalyzer {
         for attr in &fd.dependent {
             self.attributes.insert(attr.clone());
         }
-        
+
         self.dependencies.push(fd);
     }
-    
+
     pub fn compute_closure(&self, attributes: &HashSet<String>) -> HashSet<String> {
         let mut closure = attributes.clone();
         let mut changed = true;
-        
+
         while changed {
             changed = false;
             for dependency in &self.dependencies {
@@ -150,17 +150,17 @@ impl DependencyAnalyzer {
                 }
             }
         }
-        
+
         closure
     }
-    
+
     pub fn find_candidate_keys(&self) -> Vec<HashSet<String>> {
         let mut candidate_keys = Vec::new();
         let all_attributes = &self.attributes;
-        
+
         // 生成所有可能的属性子集
         let subsets = self.generate_subsets(all_attributes);
-        
+
         for subset in subsets {
             let closure = self.compute_closure(&subset);
             if closure == *all_attributes {
@@ -175,21 +175,21 @@ impl DependencyAnalyzer {
                         }
                     }
                 }
-                
+
                 if is_minimal {
                     candidate_keys.push(subset);
                 }
             }
         }
-        
+
         candidate_keys
     }
-    
+
     fn generate_subsets(&self, attributes: &HashSet<String>) -> Vec<HashSet<String>> {
         let mut subsets = Vec::new();
         let attributes_vec: Vec<String> = attributes.iter().cloned().collect();
         let n = attributes_vec.len();
-        
+
         for i in 0..(1 << n) {
             let mut subset = HashSet::new();
             for j in 0..n {
@@ -199,7 +199,7 @@ impl DependencyAnalyzer {
             }
             subsets.push(subset);
         }
-        
+
         subsets
     }
 }
@@ -217,7 +217,7 @@ impl NormalFormChecker {
     pub fn new(analyzer: DependencyAnalyzer) -> Self {
         NormalFormChecker { analyzer }
     }
-    
+
     pub fn check_1nf(&self, relation: &Relation) -> bool {
         // 检查每个属性是否为原子值
         for tuple in &relation.tuples {
@@ -229,14 +229,14 @@ impl NormalFormChecker {
         }
         true
     }
-    
+
     pub fn check_2nf(&self, relation: &Relation) -> bool {
         let candidate_keys = self.analyzer.find_candidate_keys();
-        
+
         for dependency in &self.analyzer.dependencies {
             // 检查是否存在部分函数依赖
             for candidate_key in &candidate_keys {
-                if dependency.determinant.is_subset(candidate_key) && 
+                if dependency.determinant.is_subset(candidate_key) &&
                    dependency.determinant != *candidate_key {
                     // 存在部分函数依赖，不满足2NF
                     return false;
@@ -245,10 +245,10 @@ impl NormalFormChecker {
         }
         true
     }
-    
+
     pub fn check_3nf(&self, relation: &Relation) -> bool {
         let candidate_keys = self.analyzer.find_candidate_keys();
-        
+
         for dependency in &self.analyzer.dependencies {
             // 检查是否存在传递函数依赖
             if !self.is_superkey(&dependency.determinant, &candidate_keys) {
@@ -261,7 +261,7 @@ impl NormalFormChecker {
         }
         true
     }
-    
+
     pub fn check_bcnf(&self, relation: &Relation) -> bool {
         for dependency in &self.analyzer.dependencies {
             // 检查每个函数依赖的决定因素是否为超键
@@ -271,7 +271,7 @@ impl NormalFormChecker {
         }
         true
     }
-    
+
     fn is_superkey(&self, attributes: &HashSet<String>, candidate_keys: &[HashSet<String>]) -> bool {
         for candidate_key in candidate_keys {
             if attributes.is_superset(candidate_key) {
@@ -280,7 +280,7 @@ impl NormalFormChecker {
         }
         false
     }
-    
+
     fn is_prime_attribute(&self, attribute: &str, candidate_keys: &[HashSet<String>]) -> bool {
         for candidate_key in candidate_keys {
             if candidate_key.contains(attribute) {
@@ -323,85 +323,85 @@ impl NormalizationAlgorithm {
     pub fn new(analyzer: DependencyAnalyzer) -> Self {
         NormalizationAlgorithm { analyzer }
     }
-    
+
     pub fn decompose_to_3nf(&self, relation: &Relation) -> Vec<Relation> {
         let mut decomposed_relations = Vec::new();
         let mut remaining_attributes = relation.attributes.clone();
         let mut used_dependencies = HashSet::new();
-        
+
         // 步骤1：为每个函数依赖创建关系
         for dependency in &self.analyzer.dependencies {
             if !used_dependencies.contains(&dependency.determinant) {
                 let mut new_attributes = dependency.determinant.clone();
                 new_attributes.extend(dependency.dependent.clone());
-                
+
                 let new_relation = Relation {
                     name: format!("R_{}", decomposed_relations.len() + 1),
                     attributes: new_attributes.into_iter().collect(),
                     tuples: Vec::new(), // 简化实现，实际需要投影数据
                 };
-                
+
                 decomposed_relations.push(new_relation);
                 used_dependencies.insert(dependency.determinant.clone());
-                
+
                 // 从剩余属性中移除已使用的属性
                 for attr in &dependency.dependent {
                     remaining_attributes.retain(|a| a != attr);
                 }
             }
         }
-        
+
         // 步骤2：如果还有剩余属性，创建包含候选键的关系
         if !remaining_attributes.is_empty() {
             let candidate_keys = self.analyzer.find_candidate_keys();
             if let Some(candidate_key) = candidate_keys.first() {
                 let mut key_attributes = candidate_key.clone();
                 key_attributes.extend(remaining_attributes);
-                
+
                 let key_relation = Relation {
                     name: format!("R_{}", decomposed_relations.len() + 1),
                     attributes: key_attributes.into_iter().collect(),
                     tuples: Vec::new(),
                 };
-                
+
                 decomposed_relations.push(key_relation);
             }
         }
-        
+
         decomposed_relations
     }
-    
+
     pub fn decompose_to_bcnf(&self, relation: &Relation) -> Vec<Relation> {
         let mut decomposed_relations = Vec::new();
         let mut current_relation = relation.clone();
-        
+
         loop {
             let violation = self.find_bcnf_violation(&current_relation);
-            
+
             match violation {
                 Some(dependency) => {
                     // 分解关系
                     let mut r1_attributes = dependency.determinant.clone();
                     r1_attributes.extend(dependency.dependent.clone());
-                    
+
                     let r1 = Relation {
                         name: format!("R_{}", decomposed_relations.len() + 1),
                         attributes: r1_attributes.into_iter().collect(),
                         tuples: Vec::new(),
                     };
-                    
+
                     let r2_attributes: HashSet<String> = current_relation.attributes
                         .iter()
                         .filter(|attr| !dependency.dependent.contains(*attr))
                         .cloned()
                         .collect();
-                    
+
                     let r2 = Relation {
                         name: format!("R_{}", decomposed_relations.len() + 2),
                         attributes: r2_attributes.into_iter().collect(),
                         tuples: Vec::new(),
                     };
-                    
+
                     decomposed_relations.push(r1);
                     current_relation = r2;
                 }
@@ -414,13 +414,13 @@ impl NormalizationAlgorithm {
                 }
             }
         }
-        
+
         decomposed_relations
     }
-    
+
     fn find_bcnf_violation(&self, relation: &Relation) -> Option<&FunctionalDependency> {
         let candidate_keys = self.analyzer.find_candidate_keys();
-        
+
         for dependency in &self.analyzer.dependencies {
             // 检查是否所有属性都在当前关系中
             let all_attrs: HashSet<String> = relation.attributes.iter().cloned().collect();
@@ -428,7 +428,7 @@ impl NormalizationAlgorithm {
                 .union(&dependency.dependent)
                 .cloned()
                 .collect();
-            
+
             if dep_attrs.is_subset(&all_attrs) {
                 // 检查决定因素是否为超键
                 if !self.is_superkey(&dependency.determinant, &candidate_keys) {
@@ -436,10 +436,10 @@ impl NormalizationAlgorithm {
                 }
             }
         }
-        
+
         None
     }
-    
+
     fn is_superkey(&self, attributes: &HashSet<String>, candidate_keys: &[HashSet<String>]) -> bool {
         for candidate_key in candidate_keys {
             if attributes.is_superset(candidate_key) {

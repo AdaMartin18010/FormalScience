@@ -1,56 +1,58 @@
 # 07 时态逻辑形式化证明
 
-**创建时间**: 2025-01-17  
-**最后更新**: 2025-01-17  
-**文档状态**: 活跃  
+**创建时间**: 2025-01-17
+**最后更新**: 2025-01-17
+**文档状态**: 活跃
 **关联模块**: [07 逻辑理论](../README.md)
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 证明目标](#2-证明目标)
-- [3 理论基础](#3-理论基础)
-  - [3.1 线性时态逻辑 (LTL)](#31-线性时态逻辑-ltl)
-    - [1.1.1 LTL语法定义](#111-ltl语法定义)
-    - [1.1.2 LTL语义定义](#112-ltl语义定义)
-  - [3.2 分支时态逻辑 (CTL)](#32-分支时态逻辑-ctl)
-    - [2.2.1 CTL语法定义](#221-ctl语法定义)
-    - [2.2.2 CTL语义定义](#222-ctl语义定义)
-- [4 形式化证明](#4-形式化证明)
-  - [4.1 LTL基础定理证明](#41-ltl基础定理证明)
-    - [1.1.1 LTL双重否定律](#111-ltl双重否定律)
-    - [1.1.2 LTL分配律](#112-ltl分配律)
-    - [1.1.3 LTL时态算子关系](#113-ltl时态算子关系)
-    - [1.1.4 LTL until算子性质](#114-ltl-until算子性质)
-  - [4.2 CTL基础定理证明](#42-ctl基础定理证明)
-    - [2.2.1 CTL双重否定律](#221-ctl双重否定律)
-    - [2.2.2 CTL分配律](#222-ctl分配律)
-    - [2.2.3 CTL路径量词关系](#223-ctl路径量词关系)
-    - [2.2.4 CTL until算子性质](#224-ctl-until算子性质)
-  - [4.3 实时时态逻辑证明](#43-实时时态逻辑证明)
-    - [3.3.1 实时逻辑语法扩展](#331-实时逻辑语法扩展)
-    - [3.3.2 实时逻辑语义定义](#332-实时逻辑语义定义)
-    - [3.3.3 实时逻辑定理证明](#333-实时逻辑定理证明)
-  - [4.4 概率时态逻辑证明](#44-概率时态逻辑证明)
-    - [4.4.1 概率逻辑语法扩展](#441-概率逻辑语法扩展)
-    - [4.4.2 概率逻辑语义定义](#442-概率逻辑语义定义)
-    - [4.4.3 概率逻辑定理证明](#443-概率逻辑定理证明)
-  - [4.5 参数化时态逻辑证明](#45-参数化时态逻辑证明)
-    - [5.5.1 参数化逻辑语法扩展](#551-参数化逻辑语法扩展)
-    - [5.5.2 参数化逻辑语义定义](#552-参数化逻辑语义定义)
-    - [5.5.3 参数化逻辑定理证明](#553-参数化逻辑定理证明)
-- [5 证明统计](#5-证明统计)
-  - [5.1 证明数量统计](#51-证明数量统计)
-  - [5.2 证明类型统计](#52-证明类型统计)
-  - [5.3 质量统计](#53-质量统计)
-- [6 应用验证](#6-应用验证)
-  - [6.1 模型检查应用](#61-模型检查应用)
-  - [6.2 实时系统验证](#62-实时系统验证)
-  - [6.3 概率系统验证](#63-概率系统验证)
-- [7 未来发展方向](#7-未来发展方向)
-  - [7.1 理论扩展](#71-理论扩展)
-  - [7.2 技术发展](#72-技术发展)
-  - [7.3 应用拓展](#73-应用拓展)
+- [07 时态逻辑形式化证明](#07-时态逻辑形式化证明)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 证明目标](#2-证明目标)
+  - [3 理论基础](#3-理论基础)
+    - [3.1 线性时态逻辑 (LTL)](#31-线性时态逻辑-ltl)
+      - [1.1.1 LTL语法定义](#111-ltl语法定义)
+      - [1.1.2 LTL语义定义](#112-ltl语义定义)
+    - [3.2 分支时态逻辑 (CTL)](#32-分支时态逻辑-ctl)
+      - [2.2.1 CTL语法定义](#221-ctl语法定义)
+      - [2.2.2 CTL语义定义](#222-ctl语义定义)
+  - [4 形式化证明](#4-形式化证明)
+    - [4.1 LTL基础定理证明](#41-ltl基础定理证明)
+      - [1.1.1 LTL双重否定律](#111-ltl双重否定律)
+      - [1.1.2 LTL分配律](#112-ltl分配律)
+      - [1.1.3 LTL时态算子关系](#113-ltl时态算子关系)
+      - [1.1.4 LTL until算子性质](#114-ltl-until算子性质)
+    - [4.2 CTL基础定理证明](#42-ctl基础定理证明)
+      - [2.2.1 CTL双重否定律](#221-ctl双重否定律)
+      - [2.2.2 CTL分配律](#222-ctl分配律)
+      - [2.2.3 CTL路径量词关系](#223-ctl路径量词关系)
+      - [2.2.4 CTL until算子性质](#224-ctl-until算子性质)
+    - [4.3 实时时态逻辑证明](#43-实时时态逻辑证明)
+      - [3.3.1 实时逻辑语法扩展](#331-实时逻辑语法扩展)
+      - [3.3.2 实时逻辑语义定义](#332-实时逻辑语义定义)
+      - [3.3.3 实时逻辑定理证明](#333-实时逻辑定理证明)
+    - [4.4 概率时态逻辑证明](#44-概率时态逻辑证明)
+      - [4.4.1 概率逻辑语法扩展](#441-概率逻辑语法扩展)
+      - [4.4.2 概率逻辑语义定义](#442-概率逻辑语义定义)
+      - [4.4.3 概率逻辑定理证明](#443-概率逻辑定理证明)
+    - [4.5 参数化时态逻辑证明](#45-参数化时态逻辑证明)
+      - [5.5.1 参数化逻辑语法扩展](#551-参数化逻辑语法扩展)
+      - [5.5.2 参数化逻辑语义定义](#552-参数化逻辑语义定义)
+      - [5.5.3 参数化逻辑定理证明](#553-参数化逻辑定理证明)
+  - [5 证明统计](#5-证明统计)
+    - [5.1 证明数量统计](#51-证明数量统计)
+    - [5.2 证明类型统计](#52-证明类型统计)
+    - [5.3 质量统计](#53-质量统计)
+  - [6 应用验证](#6-应用验证)
+    - [6.1 模型检查应用](#61-模型检查应用)
+    - [6.2 实时系统验证](#62-实时系统验证)
+    - [6.3 概率系统验证](#63-概率系统验证)
+  - [7 未来发展方向](#7-未来发展方向)
+    - [7.1 理论扩展](#71-理论扩展)
+    - [7.2 技术发展](#72-技术发展)
+    - [7.3 应用拓展](#73-应用拓展)
 
 ---
 
@@ -97,7 +99,7 @@ def LTL_semantics : LTLFormula → (ℕ → Prop) → Prop
 | (LTLFormula.or φ ψ) σ := LTL_semantics φ σ ∨ LTL_semantics ψ σ
 | (LTLFormula.implies φ ψ) σ := LTL_semantics φ σ → LTL_semantics ψ σ
 | (LTLFormula.next φ) σ := LTL_semantics φ (λ n, σ (n + 1))
-| (LTLFormula.until φ ψ) σ := ∃ i, LTL_semantics ψ (λ n, σ (n + i)) ∧ 
+| (LTLFormula.until φ ψ) σ := ∃ i, LTL_semantics ψ (λ n, σ (n + i)) ∧
                                 ∀ j < i, LTL_semantics φ (λ n, σ (n + j))
 | (LTLFormula.always φ) σ := ∀ i, LTL_semantics φ (λ n, σ (n + i))
 | (LTLFormula.eventually φ) σ := ∃ i, LTL_semantics φ (λ n, σ (n + i))
@@ -137,19 +139,19 @@ def CTL_semantics : CTLFormula → (State → Prop) → State → Prop
 | (CTLFormula.implies φ ψ) σ s := CTL_semantics φ σ s → CTL_semantics ψ σ s
 | (CTLFormula.EX φ) σ s := ∃ s', R s s' ∧ CTL_semantics φ σ s'
 | (CTLFormula.AX φ) σ s := ∀ s', R s s' → CTL_semantics φ σ s'
-| (CTLFormula.EU φ ψ) σ s := ∃ π, path_from s π ∧ 
-                               ∃ i, CTL_semantics ψ σ (π i) ∧ 
+| (CTLFormula.EU φ ψ) σ s := ∃ π, path_from s π ∧
+                               ∃ i, CTL_semantics ψ σ (π i) ∧
                                ∀ j < i, CTL_semantics φ σ (π j)
-| (CTLFormula.AU φ ψ) σ s := ∀ π, path_from s π → 
-                               ∃ i, CTL_semantics ψ σ (π i) ∧ 
+| (CTLFormula.AU φ ψ) σ s := ∀ π, path_from s π →
+                               ∃ i, CTL_semantics ψ σ (π i) ∧
                                ∀ j < i, CTL_semantics φ σ (π j)
-| (CTLFormula.EG φ) σ s := ∃ π, path_from s π ∧ 
+| (CTLFormula.EG φ) σ s := ∃ π, path_from s π ∧
                              ∀ i, CTL_semantics φ σ (π i)
-| (CTLFormula.AG φ) σ s := ∀ π, path_from s π → 
+| (CTLFormula.AG φ) σ s := ∀ π, path_from s π →
                              ∀ i, CTL_semantics φ σ (π i)
-| (CTLFormula.EF φ) σ s := ∃ π, path_from s π ∧ 
+| (CTLFormula.EF φ) σ s := ∃ π, path_from s π ∧
                              ∃ i, CTL_semantics φ σ (π i)
-| (CTLFormula.AF φ) σ s := ∀ π, path_from s π → 
+| (CTLFormula.AF φ) σ s := ∀ π, path_from s π →
                              ∃ i, CTL_semantics φ σ (π i)
 ```
 
@@ -160,7 +162,7 @@ def CTL_semantics : CTLFormula → (State → Prop) → State → Prop
 #### 1.1.1 LTL双重否定律
 
 ```lean
-theorem LTL_double_negation : 
+theorem LTL_double_negation :
   ∀ φ : LTLFormula, ∀ σ : ℕ → Prop,
   LTL_semantics (LTLFormula.not (LTLFormula.not φ)) σ ↔ LTL_semantics φ σ :=
 begin
@@ -191,7 +193,7 @@ end
 ```lean
 theorem LTL_always_eventually_duality :
   ∀ φ : LTLFormula, ∀ σ : ℕ → Prop,
-  LTL_semantics (LTLFormula.always φ) σ ↔ 
+  LTL_semantics (LTLFormula.always φ) σ ↔
   ¬ LTL_semantics (LTLFormula.eventually (LTLFormula.not φ)) σ :=
 begin
   intros φ σ,
@@ -261,7 +263,7 @@ end
 ```lean
 theorem CTL_EX_AX_duality :
   ∀ φ : CTLFormula, ∀ σ : State → Prop, ∀ s : State,
-  CTL_semantics (CTLFormula.EX φ) σ s ↔ 
+  CTL_semantics (CTLFormula.EX φ) σ s ↔
   ¬ CTL_semantics (CTLFormula.AX (CTLFormula.not φ)) σ s :=
 begin
   intros φ σ s,
@@ -276,7 +278,7 @@ end
 ```lean
 theorem CTL_EU_AU_duality :
   ∀ φ ψ : CTLFormula, ∀ σ : State → Prop, ∀ s : State,
-  CTL_semantics (CTLFormula.EU φ ψ) σ s ↔ 
+  CTL_semantics (CTLFormula.EU φ ψ) σ s ↔
   ¬ CTL_semantics (CTLFormula.AU (CTLFormula.not ψ) (CTLFormula.and (CTLFormula.not φ) (CTLFormula.not ψ))) σ s :=
 begin
   intros φ ψ σ s,
@@ -318,16 +320,16 @@ def RTL_semantics : RTLLFormula → (ℕ → Prop) → Prop
 | (RTLLFormula.or φ ψ) σ := RTL_semantics φ σ ∨ RTL_semantics ψ σ
 | (RTLLFormula.implies φ ψ) σ := RTL_semantics φ σ → RTL_semantics ψ σ
 | (RTLLFormula.next φ) σ := RTL_semantics φ (λ n, σ (n + 1))
-| (RTLLFormula.until φ ψ) σ := ∃ i, RTL_semantics ψ (λ n, σ (n + i)) ∧ 
+| (RTLLFormula.until φ ψ) σ := ∃ i, RTL_semantics ψ (λ n, σ (n + i)) ∧
                                 ∀ j < i, RTL_semantics φ (λ n, σ (n + j))
 | (RTLLFormula.always φ) σ := ∀ i, RTL_semantics φ (λ n, σ (n + i))
 | (RTLLFormula.eventually φ) σ := ∃ i, RTL_semantics φ (λ n, σ (n + i))
-| (RTLLFormula.bounded_until φ ψ a b) σ := ∃ i, a ≤ i ∧ i ≤ b ∧ 
-                                           RTL_semantics ψ (λ n, σ (n + i)) ∧ 
+| (RTLLFormula.bounded_until φ ψ a b) σ := ∃ i, a ≤ i ∧ i ≤ b ∧
+                                           RTL_semantics ψ (λ n, σ (n + i)) ∧
                                            ∀ j < i, RTL_semantics φ (λ n, σ (n + j))
-| (RTLLFormula.bounded_always φ a b) σ := ∀ i, a ≤ i ∧ i ≤ b → 
+| (RTLLFormula.bounded_always φ a b) σ := ∀ i, a ≤ i ∧ i ≤ b →
                                          RTL_semantics φ (λ n, σ (n + i))
-| (RTLLFormula.bounded_eventually φ a b) σ := ∃ i, a ≤ i ∧ i ≤ b ∧ 
+| (RTLLFormula.bounded_eventually φ a b) σ := ∃ i, a ≤ i ∧ i ≤ b ∧
                                              RTL_semantics φ (λ n, σ (n + i))
 ```
 
@@ -390,7 +392,7 @@ def PTL_semantics : PTLFormula → (ℕ → Prop) → ℚ → Prop
 | (PTLFormula.or φ ψ) σ prob := PTL_semantics φ σ prob ∨ PTL_semantics ψ σ prob
 | (PTLFormula.implies φ ψ) σ prob := PTL_semantics φ σ prob → PTL_semantics ψ σ prob
 | (PTLFormula.next φ) σ prob := PTL_semantics φ (λ n, σ (n + 1)) prob
-| (PTLFormula.until φ ψ) σ prob := ∃ i, PTL_semantics ψ (λ n, σ (n + i)) prob ∧ 
+| (PTLFormula.until φ ψ) σ prob := ∃ i, PTL_semantics ψ (λ n, σ (n + i)) prob ∧
                                    ∀ j < i, PTL_semantics φ (λ n, σ (n + j)) prob
 | (PTLFormula.always φ) σ prob := ∀ i, PTL_semantics φ (λ n, σ (n + i)) prob
 | (PTLFormula.eventually φ) σ prob := ∃ i, PTL_semantics φ (λ n, σ (n + i)) prob
@@ -451,16 +453,16 @@ def ParamTL_semantics {α : Type} : ParamTLFormula α → (ℕ → Prop) → α 
 | (ParamTLFormula.or φ ψ) σ param := ParamTL_semantics φ σ param ∨ ParamTL_semantics ψ σ param
 | (ParamTLFormula.implies φ ψ) σ param := ParamTL_semantics φ σ param → ParamTL_semantics ψ σ param
 | (ParamTLFormula.next φ) σ param := ParamTL_semantics φ (λ n, σ (n + 1)) param
-| (ParamTLFormula.until φ ψ) σ param := ∃ i, ParamTL_semantics ψ (λ n, σ (n + i)) param ∧ 
+| (ParamTLFormula.until φ ψ) σ param := ∃ i, ParamTL_semantics ψ (λ n, σ (n + i)) param ∧
                                         ∀ j < i, ParamTL_semantics φ (λ n, σ (n + j)) param
 | (ParamTLFormula.always φ) σ param := ∀ i, ParamTL_semantics φ (λ n, σ (n + i)) param
 | (ParamTLFormula.eventually φ) σ param := ∃ i, ParamTL_semantics φ (λ n, σ (n + i)) param
-| (ParamTLFormula.param_until φ ψ f) σ param := ∃ i, i ≤ f param ∧ 
-                                                ParamTL_semantics ψ (λ n, σ (n + i)) param ∧ 
+| (ParamTLFormula.param_until φ ψ f) σ param := ∃ i, i ≤ f param ∧
+                                                ParamTL_semantics ψ (λ n, σ (n + i)) param ∧
                                                 ∀ j < i, ParamTL_semantics φ (λ n, σ (n + j)) param
-| (ParamTLFormula.param_always φ f) σ param := ∀ i, i ≤ f param → 
+| (ParamTLFormula.param_always φ f) σ param := ∀ i, i ≤ f param →
                                               ParamTL_semantics φ (λ n, σ (n + i)) param
-| (ParamTLFormula.param_eventually φ f) σ param := ∃ i, i ≤ f param ∧ 
+| (ParamTLFormula.param_eventually φ f) σ param := ∃ i, i ≤ f param ∧
                                                   ParamTL_semantics φ (λ n, σ (n + i)) param
 ```
 
@@ -595,6 +597,6 @@ end
 
 ---
 
-**文档版本**: 1.0  
-**最后更新**: 2025-01-17  
+**文档版本**: 1.0
+**最后更新**: 2025-01-17
 **维护者**: 形式科学项目组

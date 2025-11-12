@@ -186,75 +186,75 @@ impl ERModel {
             constraints: Vec::new(),
         }
     }
-    
+
     pub fn add_entity(&mut self, entity: Entity) -> Result<(), String> {
         if self.entities.contains_key(&entity.name) {
             return Err(format!("Entity '{}' already exists", entity.name));
         }
-        
+
         // 验证主键约束
         self.validate_primary_key(&entity)?;
-        
+
         self.entities.insert(entity.name.clone(), entity);
         Ok(())
     }
-    
+
     pub fn add_relationship(&mut self, relationship: Relationship) -> Result<(), String> {
         if self.relationships.contains_key(&relationship.name) {
             return Err(format!("Relationship '{}' already exists", relationship.name));
         }
-        
+
         // 验证关系中的实体是否存在
         for entity_name in &relationship.entities {
             if !self.entities.contains_key(entity_name) {
                 return Err(format!("Entity '{}' not found", entity_name));
             }
         }
-        
+
         // 验证基数约束
         self.validate_cardinality(&relationship)?;
-        
+
         self.relationships.insert(relationship.name.clone(), relationship);
         Ok(())
     }
-    
+
     fn validate_primary_key(&self, entity: &Entity) -> Result<(), String> {
         if entity.primary_key.is_empty() {
             return Err(format!("Entity '{}' must have a primary key", entity.name));
         }
-        
+
         // 检查主键属性是否存在
         let attribute_names: HashSet<String> = entity.attributes
             .iter()
             .map(|attr| attr.name.clone())
             .collect();
-        
+
         for pk_attr in &entity.primary_key {
             if !attribute_names.contains(pk_attr) {
-                return Err(format!("Primary key attribute '{}' not found in entity '{}'", 
+                return Err(format!("Primary key attribute '{}' not found in entity '{}'",
                                  pk_attr, entity.name));
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn validate_cardinality(&self, relationship: &Relationship) -> Result<(), String> {
         for entity_name in &relationship.entities {
             if !relationship.cardinality.contains_key(entity_name) {
-                return Err(format!("Cardinality not defined for entity '{}' in relationship '{}'", 
+                return Err(format!("Cardinality not defined for entity '{}' in relationship '{}'",
                                  entity_name, relationship.name));
             }
         }
-        
+
         // 验证基数约束的一致性
         if relationship.entities.len() == 2 {
             let entity1 = &relationship.entities[0];
             let entity2 = &relationship.entities[1];
-            
+
             let card1 = &relationship.cardinality[entity1];
             let card2 = &relationship.cardinality[entity2];
-            
+
             // 检查基数约束的逻辑一致性
             if card1.max.is_some() && card2.max.is_some() {
                 if card1.max.unwrap() == 1 && card2.max.unwrap() == 1 {
@@ -265,18 +265,18 @@ impl ERModel {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     pub fn get_entity(&self, name: &str) -> Option<&Entity> {
         self.entities.get(name)
     }
-    
+
     pub fn get_relationship(&self, name: &str) -> Option<&Relationship> {
         self.relationships.get(name)
     }
-    
+
     pub fn find_relationships_for_entity(&self, entity_name: &str) -> Vec<&Relationship> {
         self.relationships
             .values()
@@ -298,32 +298,32 @@ impl ConstraintChecker {
     pub fn new(model: ERModel) -> Self {
         ConstraintChecker { model }
     }
-    
+
     pub fn check_entity_integrity(&self) -> Vec<String> {
         let mut violations = Vec::new();
-        
+
         for entity in self.model.entities.values() {
             // 检查主键唯一性
             if entity.primary_key.len() > 1 {
-                violations.push(format!("Composite primary key in entity '{}' may cause issues", 
+                violations.push(format!("Composite primary key in entity '{}' may cause issues",
                                      entity.name));
             }
-            
+
             // 检查属性约束
             for attr in &entity.attributes {
                 if attr.is_primary_key && attr.is_nullable {
-                    violations.push(format!("Primary key attribute '{}' in entity '{}' cannot be nullable", 
+                    violations.push(format!("Primary key attribute '{}' in entity '{}' cannot be nullable",
                                          attr.name, entity.name));
                 }
             }
         }
-        
+
         violations
     }
-    
+
     pub fn check_relationship_integrity(&self) -> Vec<String> {
         let mut violations = Vec::new();
-        
+
         for relationship in self.model.relationships.values() {
             // 检查关系的参与度
             for entity_name in &relationship.entities {
@@ -332,7 +332,7 @@ impl ConstraintChecker {
                         match participation {
                             Participation::Mandatory => {
                                 if cardinality.min == 0 {
-                                    violations.push(format!("Entity '{}' in relationship '{}' is mandatory but has min cardinality 0", 
+                                    violations.push(format!("Entity '{}' in relationship '{}' is mandatory but has min cardinality 0",
                                                          entity_name, relationship.name));
                                 }
                             }
@@ -344,29 +344,29 @@ impl ConstraintChecker {
                 }
             }
         }
-        
+
         violations
     }
-    
+
     pub fn check_referential_integrity(&self) -> Vec<String> {
         let mut violations = Vec::new();
-        
+
         // 检查外键约束
         for constraint in &self.model.constraints {
             if let ConstraintType::ForeignKey = constraint.constraint_type {
                 // 解析外键约束表达式
                 if let Some((referenced_entity, referenced_attr)) = self.parse_foreign_key(constraint) {
                     if !self.model.entities.contains_key(&referenced_entity) {
-                        violations.push(format!("Referenced entity '{}' in foreign key constraint '{}' does not exist", 
+                        violations.push(format!("Referenced entity '{}' in foreign key constraint '{}' does not exist",
                                              referenced_entity, constraint.name));
                     }
                 }
             }
         }
-        
+
         violations
     }
-    
+
     fn parse_foreign_key(&self, constraint: &Constraint) -> Option<(String, String)> {
         // 简化的外键解析，实际实现需要更复杂的解析逻辑
         let parts: Vec<&str> = constraint.expression.split('.').collect();
@@ -376,36 +376,36 @@ impl ConstraintChecker {
             None
         }
     }
-    
+
     pub fn validate_model(&self) -> ValidationResult {
         let mut result = ValidationResult {
             is_valid: true,
             errors: Vec::new(),
             warnings: Vec::new(),
         };
-        
+
         // 检查实体完整性
         let entity_violations = self.check_entity_integrity();
         for violation in entity_violations {
             result.errors.push(violation);
         }
-        
+
         // 检查关系完整性
         let relationship_violations = self.check_relationship_integrity();
         for violation in relationship_violations {
             result.errors.push(violation);
         }
-        
+
         // 检查引用完整性
         let referential_violations = self.check_referential_integrity();
         for violation in referential_violations {
             result.errors.push(violation);
         }
-        
+
         if !result.errors.is_empty() {
             result.is_valid = false;
         }
-        
+
         result
     }
 }
@@ -430,27 +430,27 @@ impl ModelConverter {
     pub fn new(er_model: ERModel) -> Self {
         ModelConverter { er_model }
     }
-    
+
     pub fn convert_to_relational(&self) -> RelationalModel {
         let mut relational_model = RelationalModel::new();
-        
+
         // 转换实体为表
         for entity in self.er_model.entities.values() {
             let table = self.convert_entity_to_table(entity);
             relational_model.add_table(table);
         }
-        
+
         // 转换关系为表或外键
         for relationship in self.er_model.relationships.values() {
             self.convert_relationship(relationship, &mut relational_model);
         }
-        
+
         relational_model
     }
-    
+
     fn convert_entity_to_table(&self, entity: &Entity) -> Table {
         let mut columns = Vec::new();
-        
+
         for attr in &entity.attributes {
             let column = Column {
                 name: attr.name.clone(),
@@ -461,7 +461,7 @@ impl ModelConverter {
             };
             columns.push(column);
         }
-        
+
         Table {
             name: entity.name.clone(),
             columns,
@@ -469,18 +469,18 @@ impl ModelConverter {
             foreign_keys: Vec::new(),
         }
     }
-    
-    fn convert_relationship(&self, relationship: &Relationship, 
+
+    fn convert_relationship(&self, relationship: &Relationship,
                           relational_model: &mut RelationalModel) {
         match relationship.entities.len() {
             2 => {
                 // 二元关系
                 let entity1 = &relationship.entities[0];
                 let entity2 = &relationship.entities[1];
-                
+
                 let card1 = &relationship.cardinality[entity1];
                 let card2 = &relationship.cardinality[entity2];
-                
+
                 if card1.max == Some(1) && card2.max == Some(1) {
                     // 一对一关系：在任一表中添加外键
                     self.create_one_to_one_relationship(relationship, relational_model);
@@ -498,8 +498,8 @@ impl ModelConverter {
             }
         }
     }
-    
-    fn create_one_to_one_relationship(&self, relationship: &Relationship, 
+
+    fn create_one_to_one_relationship(&self, relationship: &Relationship,
                                     relational_model: &mut RelationalModel) {
         // 简化实现：在第一个实体对应的表中添加外键
         if let Some(table) = relational_model.get_table_mut(&relationship.entities[0]) {
@@ -511,8 +511,8 @@ impl ModelConverter {
             table.foreign_keys.push(foreign_key);
         }
     }
-    
-    fn create_one_to_many_relationship(&self, relationship: &Relationship, 
+
+    fn create_one_to_many_relationship(&self, relationship: &Relationship,
                                      relational_model: &mut RelationalModel) {
         // 在多的一方添加外键
         let many_entity = if relationship.cardinality[&relationship.entities[0]].max == Some(1) {
@@ -520,14 +520,14 @@ impl ModelConverter {
         } else {
             &relationship.entities[0]
         };
-        
+
         if let Some(table) = relational_model.get_table_mut(many_entity) {
             let one_entity = if many_entity == &relationship.entities[0] {
                 &relationship.entities[1]
             } else {
                 &relationship.entities[0]
             };
-            
+
             let foreign_key = ForeignKey {
                 column: format!("{}_id", one_entity),
                 referenced_table: one_entity.clone(),
@@ -536,12 +536,12 @@ impl ModelConverter {
             table.foreign_keys.push(foreign_key);
         }
     }
-    
-    fn create_many_to_many_relationship(&self, relationship: &Relationship, 
+
+    fn create_many_to_many_relationship(&self, relationship: &Relationship,
                                       relational_model: &mut RelationalModel) {
         // 创建中间表
         let mut columns = Vec::new();
-        
+
         for entity_name in &relationship.entities {
             columns.push(Column {
                 name: format!("{}_id", entity_name),
@@ -551,7 +551,7 @@ impl ModelConverter {
                 default_value: None,
             });
         }
-        
+
         // 添加关系属性
         for attr in &relationship.attributes {
             columns.push(Column {
@@ -562,22 +562,22 @@ impl ModelConverter {
                 default_value: attr.default_value.clone(),
             });
         }
-        
+
         let junction_table = Table {
             name: format!("{}_junction", relationship.name),
             columns,
             primary_key: relationship.entities.iter().map(|e| format!("{}_id", e)).collect(),
             foreign_keys: Vec::new(),
         };
-        
+
         relational_model.add_table(junction_table);
     }
-    
-    fn create_n_ary_relationship(&self, relationship: &Relationship, 
+
+    fn create_n_ary_relationship(&self, relationship: &Relationship,
                                relational_model: &mut RelationalModel) {
         // 创建n元关系表
         let mut columns = Vec::new();
-        
+
         for entity_name in &relationship.entities {
             columns.push(Column {
                 name: format!("{}_id", entity_name),
@@ -587,7 +587,7 @@ impl ModelConverter {
                 default_value: None,
             });
         }
-        
+
         // 添加关系属性
         for attr in &relationship.attributes {
             columns.push(Column {
@@ -598,17 +598,17 @@ impl ModelConverter {
                 default_value: attr.default_value.clone(),
             });
         }
-        
+
         let relationship_table = Table {
             name: relationship.name.clone(),
             columns,
             primary_key: relationship.entities.iter().map(|e| format!("{}_id", e)).collect(),
             foreign_keys: Vec::new(),
         };
-        
+
         relational_model.add_table(relationship_table);
     }
-    
+
     fn convert_data_type(&self, er_type: &DataType) -> String {
         match er_type {
             DataType::String => "VARCHAR(255)".to_string(),
@@ -656,11 +656,11 @@ impl RelationalModel {
             tables: HashMap::new(),
         }
     }
-    
+
     pub fn add_table(&mut self, table: Table) {
         self.tables.insert(table.name.clone(), table);
     }
-    
+
     pub fn get_table_mut(&mut self, name: &str) -> Option<&mut Table> {
         self.tables.get_mut(name)
     }

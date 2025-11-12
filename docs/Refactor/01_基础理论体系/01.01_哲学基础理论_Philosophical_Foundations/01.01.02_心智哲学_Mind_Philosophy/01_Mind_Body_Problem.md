@@ -71,7 +71,7 @@
 - **亚里士多德**：灵魂作为肉体的形式
 - **笛卡尔**：心身交感论
 
-### 现代发展  
+### 现代发展
 
 - **斯宾诺莎**：心身平行论
 - **莱布尼茨**：预定和谐论
@@ -372,7 +372,7 @@ impl MindBodyRelation {
             mental_physical_mapping: HashMap::new(),
         }
     }
-    
+
     pub fn establish_relation(&mut self, mental: MentalState, physical: PhysicalState) {
         match self.theory {
             MindBodyTheory::TypeIdentity => {
@@ -390,7 +390,7 @@ impl MindBodyRelation {
             _ => {},
         }
     }
-    
+
     pub fn get_physical_correlate(&self, mental: &MentalState) -> Option<&PhysicalState> {
         self.mental_physical_mapping.get(mental)
     }
@@ -412,15 +412,15 @@ impl FunctionalState {
             internal_transitions: HashMap::new(),
         }
     }
-    
+
     pub fn add_input(&mut self, input: String) {
         self.inputs.push(input);
     }
-    
+
     pub fn add_output(&mut self, output: String) {
         self.outputs.push(output);
     }
-    
+
     pub fn add_transition(&mut self, from: String, to: String) {
         self.internal_transitions.insert(from, to);
     }
@@ -442,11 +442,11 @@ impl ConsciousState {
             attention_focus: None,
         }
     }
-    
+
     pub fn add_quale(&mut self, quale: String) {
         self.qualitative_features.push(quale);
     }
-    
+
     pub fn set_attention(&mut self, focus: String) {
         self.attention_focus = Some(focus);
     }
@@ -455,25 +455,25 @@ impl ConsciousState {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_type_identity_theory() {
         let mut relation = MindBodyRelation::new(MindBodyTheory::TypeIdentity);
         let pain = MentalState::Pain(7);
         let c_fiber = PhysicalState::NeuralFiring("C-fiber".to_string(), 0.8);
-        
+
         relation.establish_relation(pain.clone(), c_fiber.clone());
-        
+
         assert_eq!(relation.get_physical_correlate(&pain), Some(&c_fiber));
     }
-    
+
     #[test]
     fn test_functional_state() {
         let mut func_state = FunctionalState::new();
         func_state.add_input("刺激".to_string());
         func_state.add_output("回避行为".to_string());
         func_state.add_transition("静息状态".to_string(), "痛觉状态".to_string());
-        
+
         assert!(!func_state.inputs.is_empty());
         assert!(!func_state.outputs.is_empty());
     }
@@ -536,15 +536,15 @@ mod tests {
 
 ## 参考文献
 
-1. Chalmers, D. (1996). *The Conscious Mind*
+1. Chalmers, D. (1996). _The Conscious Mind_
 2. Davidson, D. (1970). "Mental Events"
 3. Jackson, F. (1982). "Epiphenomenal Qualia"
-4. Kim, J. (2005). *Physicalism, or Something Near Enough*
+4. Kim, J. (2005). _Physicalism, or Something Near Enough_
 5. Putnam, H. (1967). "The Nature of Mental States"
 
 ## 返回
 
-[返回心灵哲学](README.md)  
+[返回心灵哲学](README.md)
 [返回哲学基础模块](README.md)
 
 ## 批判性分析

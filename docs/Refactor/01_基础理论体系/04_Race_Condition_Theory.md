@@ -3,7 +3,7 @@
 ## 📋 目录
 
 - [竞态条件理论](#竞态条件理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [📋 目录](#-目录)
   - [1. 理论基础](#1-理论基础)
     - [1.1 历史背景](#11-历史背景)
     - [1.2 理论基础](#12-理论基础)
@@ -187,35 +187,35 @@ impl RaceConditionExample {
             shared_data: Arc::new(RwLock::new(Vec::new())),
         }
     }
-    
+
     // 数据竞争示例
     fn data_race_example(&self) {
         let counter = Arc::clone(&self.counter);
-        
+
         let handle1 = thread::spawn(move || {
             for _ in 0..1000 {
                 let mut value = counter.lock().unwrap();
                 *value += 1;
             }
         });
-        
+
         let handle2 = thread::spawn(move || {
             for _ in 0..1000 {
                 let mut value = counter.lock().unwrap();
                 *value += 1;
             }
         });
-        
+
         handle1.join().unwrap();
         handle2.join().unwrap();
-        
+
         println!("Counter value: {}", *counter.lock().unwrap());
     }
-    
+
     // 顺序竞争示例
     fn order_race_example(&self) {
         let shared_data = Arc::clone(&self.shared_data);
-        
+
         let handle1 = thread::spawn(move || {
             for i in 0..5 {
                 let mut data = shared_data.write().unwrap();
@@ -224,7 +224,7 @@ impl RaceConditionExample {
                 thread::sleep(Duration::from_millis(10));
             }
         });
-        
+
         let handle2 = thread::spawn(move || {
             for i in 5..10 {
                 let mut data = shared_data.write().unwrap();
@@ -233,17 +233,17 @@ impl RaceConditionExample {
                 thread::sleep(Duration::from_millis(10));
             }
         });
-        
+
         handle1.join().unwrap();
         handle2.join().unwrap();
-        
+
         println!("Final data: {:?}", *shared_data.read().unwrap());
     }
-    
+
     // 时间竞争示例
     fn timing_race_example(&self) {
         let flag = Arc::new(Mutex::new(false));
-        
+
         let flag_clone = Arc::clone(&flag);
         let handle1 = thread::spawn(move || {
             thread::sleep(Duration::from_millis(100));
@@ -251,7 +251,7 @@ impl RaceConditionExample {
             *flag_value = true;
             println!("Thread 1: set flag to true");
         });
-        
+
         let flag_clone = Arc::clone(&flag);
         let handle2 = thread::spawn(move || {
             loop {
@@ -264,7 +264,7 @@ impl RaceConditionExample {
                 thread::sleep(Duration::from_millis(1));
             }
         });
-        
+
         handle1.join().unwrap();
         handle2.join().unwrap();
     }
@@ -283,24 +283,24 @@ impl RaceConditionDetector {
             access_patterns: Vec::new(),
         }
     }
-    
+
     fn add_shared_resource(&mut self, resource: String) {
         self.shared_resources.push(resource);
     }
-    
+
     fn add_access_pattern(&mut self, thread: String, resource: String, operation: String) {
         self.access_patterns.push((thread, resource, operation));
     }
-    
+
     fn detect_data_races(&self) -> Vec<(String, String)> {
         let mut races = Vec::new();
-        
+
         for resource in &self.shared_resources {
             let accesses = self.get_resource_accesses(resource);
             let write_accesses: Vec<_> = accesses.iter()
                 .filter(|(_, _, op)| op == "write")
                 .collect();
-            
+
             if write_accesses.len() > 1 {
                 for i in 0..write_accesses.len() {
                     for j in (i+1)..write_accesses.len() {
@@ -313,10 +313,10 @@ impl RaceConditionDetector {
                 }
             }
         }
-        
+
         races
     }
-    
+
     fn get_resource_accesses(&self, resource: &str) -> Vec<(String, String, String)> {
         self.access_patterns.iter()
             .filter(|(_, res, _)| res == resource)
@@ -338,22 +338,22 @@ impl RaceConditionPreventor {
             synchronization_strategies: Vec::new(),
         }
     }
-    
+
     fn add_synchronization_strategy(&mut self, strategy: String) {
         self.synchronization_strategies.push(strategy);
     }
-    
+
     fn suggest_prevention_methods(&self) -> Vec<String> {
         let races = self.detector.detect_data_races();
         let mut suggestions = Vec::new();
-        
+
         if !races.is_empty() {
             suggestions.push("使用互斥锁保护共享资源".to_string());
             suggestions.push("使用原子操作替代非原子操作".to_string());
             suggestions.push("使用读写锁分离读写操作".to_string());
             suggestions.push("使用内存屏障确保顺序性".to_string());
         }
-        
+
         suggestions
     }
 }
@@ -361,16 +361,16 @@ impl RaceConditionPreventor {
 fn main() {
     println!("=== 竞态条件示例 ===");
     let example = RaceConditionExample::new();
-    
+
     println!("\n--- 数据竞争示例 ---");
     example.data_race_example();
-    
+
     println!("\n--- 顺序竞争示例 ---");
     example.order_race_example();
-    
+
     println!("\n--- 时间竞争示例 ---");
     example.timing_race_example();
-    
+
     println!("\n=== 竞态条件检测 ===");
     let mut detector = RaceConditionDetector::new();
     detector.add_shared_resource("counter".to_string());
@@ -378,10 +378,10 @@ fn main() {
     detector.add_access_pattern("thread1".to_string(), "counter".to_string(), "write".to_string());
     detector.add_access_pattern("thread2".to_string(), "counter".to_string(), "read".to_string());
     detector.add_access_pattern("thread2".to_string(), "counter".to_string(), "write".to_string());
-    
+
     let races = detector.detect_data_races();
     println!("检测到的数据竞争: {:?}", races);
-    
+
     println!("\n=== 竞态条件预防 ===");
     let preventor = RaceConditionPreventor::new(detector);
     let suggestions = preventor.suggest_prevention_methods();
@@ -418,17 +418,17 @@ newRaceConditionExample = do
 dataRaceExample :: RaceConditionExample -> IO ()
 dataRaceExample example = do
     let counter = RaceConditionExample.counter example
-    
+
     forkIO $ do
         forM_ [1..1000] $ \_ -> do
             value <- readIORef counter
             writeIORef counter (value + 1)
-    
+
     forkIO $ do
         forM_ [1..1000] $ \_ -> do
             value <- readIORef counter
             writeIORef counter (value + 1)
-    
+
     threadDelay 1000000
     finalValue <- readIORef counter
     putStrLn $ "Counter value: " ++ show finalValue
@@ -437,21 +437,21 @@ dataRaceExample example = do
 orderRaceExample :: RaceConditionExample -> IO ()
 orderRaceExample example = do
     let sharedData = RaceConditionExample.sharedData example
-    
+
     forkIO $ do
         forM_ [0..4] $ \i -> do
             data <- takeMVar sharedData
             putMVar sharedData (data ++ [i])
             putStrLn $ "Thread 1: pushed " ++ show i
             threadDelay 10000
-    
+
     forkIO $ do
         forM_ [5..9] $ \i -> do
             data <- takeMVar sharedData
             putMVar sharedData (data ++ [i])
             putStrLn $ "Thread 2: pushed " ++ show i
             threadDelay 10000
-    
+
     threadDelay 1000000
     finalData <- readMVar sharedData
     putStrLn $ "Final data: " ++ show finalData
@@ -460,12 +460,12 @@ orderRaceExample example = do
 timingRaceExample :: IO ()
 timingRaceExample = do
     flag <- newMVar False
-    
+
     forkIO $ do
         threadDelay 100000
         putMVar flag True
         putStrLn "Thread 1: set flag to true"
-    
+
     forkIO $ do
         loop flag
   where
@@ -489,24 +489,24 @@ newRaceConditionDetector = RaceConditionDetector [] []
 
 -- 添加共享资源
 addSharedResource :: String -> RaceConditionDetector -> RaceConditionDetector
-addSharedResource resource detector = 
+addSharedResource resource detector =
     detector { sharedResources = resource : sharedResources detector }
 
 -- 添加访问模式
 addAccessPattern :: String -> String -> String -> RaceConditionDetector -> RaceConditionDetector
-addAccessPattern thread resource operation detector = 
+addAccessPattern thread resource operation detector =
     detector { accessPatterns = (thread, resource, operation) : accessPatterns detector }
 
 -- 检测数据竞争
 detectDataRaces :: RaceConditionDetector -> [(String, String)]
-detectDataRaces detector = 
+detectDataRaces detector =
     concatMap (detectRacesForResource detector) (sharedResources detector)
   where
-    detectRacesForResource detector resource = 
+    detectRacesForResource detector resource =
         let accesses = getResourceAccesses detector resource
             writeAccesses = filter (\(_, _, op) -> op == "write") accesses
         in if length writeAccesses > 1
-           then [(thread1, thread2) | 
+           then [(thread1, thread2) |
                  (thread1, _, _) <- writeAccesses,
                  (thread2, _, _) <- writeAccesses,
                  thread1 /= thread2]
@@ -514,7 +514,7 @@ detectDataRaces detector =
 
 -- 获取资源访问
 getResourceAccesses :: RaceConditionDetector -> String -> [(String, String, String)]
-getResourceAccesses detector resource = 
+getResourceAccesses detector resource =
     filter (\(_, res, _) -> res == resource) (accessPatterns detector)
 
 -- 竞态条件预防器
@@ -525,17 +525,17 @@ data RaceConditionPreventor = RaceConditionPreventor {
 
 -- 创建预防器
 newRaceConditionPreventor :: RaceConditionDetector -> RaceConditionPreventor
-newRaceConditionPreventor detector = 
+newRaceConditionPreventor detector =
     RaceConditionPreventor detector []
 
 -- 添加同步策略
 addSynchronizationStrategy :: String -> RaceConditionPreventor -> RaceConditionPreventor
-addSynchronizationStrategy strategy preventor = 
+addSynchronizationStrategy strategy preventor =
     preventor { synchronizationStrategies = strategy : synchronizationStrategies preventor }
 
 -- 建议预防方法
 suggestPreventionMethods :: RaceConditionPreventor -> [String]
-suggestPreventionMethods preventor = 
+suggestPreventionMethods preventor =
     let races = detectDataRaces (detector preventor)
     in if not (null races)
        then ["使用互斥锁保护共享资源",
@@ -549,16 +549,16 @@ example :: IO ()
 example = do
     putStrLn "=== 竞态条件示例 ==="
     raceExample <- newRaceConditionExample
-    
+
     putStrLn "\n--- 数据竞争示例 ---"
     dataRaceExample raceExample
-    
+
     putStrLn "\n--- 顺序竞争示例 ---"
     orderRaceExample raceExample
-    
+
     putStrLn "\n--- 时间竞争示例 ---"
     timingRaceExample
-    
+
     putStrLn "\n=== 竞态条件检测 ==="
     let detector = newRaceConditionDetector
             & addSharedResource "counter"
@@ -566,10 +566,10 @@ example = do
             & addAccessPattern "thread1" "counter" "write"
             & addAccessPattern "thread2" "counter" "read"
             & addAccessPattern "thread2" "counter" "write"
-    
+
     let races = detectDataRaces detector
     putStrLn $ "检测到的数据竞争: " ++ show races
-    
+
     putStrLn "\n=== 竞态条件预防 ==="
     let preventor = newRaceConditionPreventor detector
     let suggestions = suggestPreventionMethods preventor
@@ -585,19 +585,19 @@ main = example
 
 ## 9. 参考文献
 
-1. Adve, S. V., & Gharachorloo, K. (1996). *Shared Memory Consistency Models: A Tutorial*. IEEE Computer, 29(12), 66-76.
-2. Lamport, L. (1979). *How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs*. IEEE Transactions on Computers, 28(9), 690-691.
-3. Boehm, H. J., & Adve, S. V. (2008). *Foundations of the C++ Concurrency Memory Model*. ACM SIGPLAN Notices, 43(6), 68-78.
-4. Manson, J., Pugh, W., & Adve, S. V. (2005). *The Java Memory Model*. ACM SIGPLAN Notices, 40(1), 378-391.
-5. Owens, S., Sarkar, S., & Sewell, P. (2009). *A Better x86 Memory Model: x86-TSO*. In Theorem Proving in Higher Order Logics (pp. 391-407). Springer.
-6. Sewell, P., Sarkar, S., Owens, S., Nardelli, F. Z., & Myreen, M. O. (2010). *x86-TSO: A Rigorous and Usable Programmer's Model for x86 Multiprocessors*. Communications of the ACM, 53(7), 89-97.
+1. Adve, S. V., & Gharachorloo, K. (1996). _Shared Memory Consistency Models: A Tutorial_. IEEE Computer, 29(12), 66-76.
+2. Lamport, L. (1979). _How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs_. IEEE Transactions on Computers, 28(9), 690-691.
+3. Boehm, H. J., & Adve, S. V. (2008). _Foundations of the C++ Concurrency Memory Model_. ACM SIGPLAN Notices, 43(6), 68-78.
+4. Manson, J., Pugh, W., & Adve, S. V. (2005). _The Java Memory Model_. ACM SIGPLAN Notices, 40(1), 378-391.
+5. Owens, S., Sarkar, S., & Sewell, P. (2009). _A Better x86 Memory Model: x86-TSO_. In Theorem Proving in Higher Order Logics (pp. 391-407). Springer.
+6. Sewell, P., Sarkar, S., Owens, S., Nardelli, F. Z., & Myreen, M. O. (2010). _x86-TSO: A Rigorous and Usable Programmer's Model for x86 Multiprocessors_. Communications of the ACM, 53(7), 89-97.
 
 ---
 
-**文档状态**: 完成  
-**最后更新**: 2024年12月21日  
-**质量等级**: A+  
-**形式化程度**: 90%  
+**文档状态**: 完成
+**最后更新**: 2024年12月21日
+**质量等级**: A+
+**形式化程度**: 90%
 **代码实现**: 完整 (Rust/Haskell)
 
 ## 批判性分析

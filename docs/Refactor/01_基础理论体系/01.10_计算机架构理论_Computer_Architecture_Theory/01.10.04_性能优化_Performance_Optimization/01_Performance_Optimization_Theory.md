@@ -2,28 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 性能优化定义](#21-性能优化定义)
-  - [2.2 性能指标分类](#22-性能指标分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 性能模型](#31-性能模型)
-  - [3.2 瓶颈分析](#32-瓶颈分析)
-  - [3.3 优化目标](#33-优化目标)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 瓶颈定理](#41-瓶颈定理)
-  - [4.2 优化收益递减定理](#42-优化收益递减定理)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 性能分析器](#51-性能分析器)
-  - [5.2 缓存优化模拟](#52-缓存优化模拟)
-  - [5.3 并行优化器](#53-并行优化器)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性](#72-局限性)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [09.4.1 性能优化理论](#0941-性能优化理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 性能优化定义](#21-性能优化定义)
+    - [2.2 性能指标分类](#22-性能指标分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 性能模型](#31-性能模型)
+    - [3.2 瓶颈分析](#32-瓶颈分析)
+    - [3.3 优化目标](#33-优化目标)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 瓶颈定理](#41-瓶颈定理)
+    - [4.2 优化收益递减定理](#42-优化收益递减定理)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 性能分析器](#51-性能分析器)
+    - [5.2 缓存优化模拟](#52-缓存优化模拟)
+    - [5.3 并行优化器](#53-并行优化器)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性](#72-局限性)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -114,41 +117,41 @@ impl PerformanceProfiler {
             bottlenecks: Vec::new(),
         }
     }
-    
-    pub fn profile_function<F, T>(&mut self, name: &str, func: F) -> T 
-    where 
+
+    pub fn profile_function<F, T>(&mut self, name: &str, func: F) -> T
+    where
         F: FnOnce() -> T,
     {
         let start = Instant::now();
         let result = func();
         let execution_time = start.elapsed();
-        
+
         let metrics = PerformanceMetrics {
             execution_time,
             memory_usage: self.measure_memory_usage(),
             cpu_usage: self.measure_cpu_usage(),
             throughput: 1.0 / execution_time.as_secs_f64(),
         };
-        
+
         self.metrics.insert(name.to_string(), metrics);
         result
     }
-    
+
     fn measure_memory_usage(&self) -> usize {
         // 简化的内存使用测量
         std::mem::size_of::<Self>()
     }
-    
+
     fn measure_cpu_usage(&self) -> f64 {
         // 简化的CPU使用率测量
         0.5 // 模拟值
     }
-    
+
     pub fn identify_bottlenecks(&mut self) -> Vec<String> {
         let mut bottlenecks = Vec::new();
         let mut max_time = Duration::ZERO;
         let mut max_memory = 0;
-        
+
         for (name, metrics) in &self.metrics {
             if metrics.execution_time > max_time {
                 max_time = metrics.execution_time;
@@ -157,7 +160,7 @@ impl PerformanceProfiler {
                 max_memory = metrics.memory_usage;
             }
         }
-        
+
         for (name, metrics) in &self.metrics {
             if metrics.execution_time == max_time {
                 bottlenecks.push(format!("{}: Time bottleneck", name));
@@ -166,7 +169,7 @@ impl PerformanceProfiler {
                 bottlenecks.push(format!("{}: Memory bottleneck", name));
             }
         }
-        
+
         self.bottlenecks = bottlenecks.clone();
         bottlenecks
     }
@@ -195,12 +198,12 @@ impl CacheOptimizer {
             miss_penalty: 100,
         }
     }
-    
+
     pub fn optimize_access_pattern(&mut self, access_pattern: &[usize]) -> f64 {
         let mut hits = 0;
         let mut misses = 0;
         let mut cache = vec![0; self.cache_size / self.line_size];
-        
+
         for &address in access_pattern {
             let cache_index = (address / self.line_size) % cache.len();
             if cache[cache_index] == address / self.line_size {
@@ -210,33 +213,33 @@ impl CacheOptimizer {
                 cache[cache_index] = address / self.line_size;
             }
         }
-        
+
         let total_accesses = hits + misses;
         self.hit_rate = hits as f64 / total_accesses as f64;
-        
+
         // 计算平均访问时间
         let hit_time = 1;
         let avg_access_time = hit_time + (1.0 - self.hit_rate) * self.miss_penalty as f64;
-        
+
         avg_access_time
     }
-    
+
     pub fn suggest_optimizations(&self) -> Vec<String> {
         let mut suggestions = Vec::new();
-        
+
         if self.hit_rate < 0.8 {
             suggestions.push("Consider increasing cache size".to_string());
             suggestions.push("Optimize data access patterns".to_string());
         }
-        
+
         if self.line_size < 64 {
             suggestions.push("Consider larger cache line size".to_string());
         }
-        
+
         if self.associativity < 8 {
             suggestions.push("Consider higher associativity".to_string());
         }
-        
+
         suggestions
     }
 }
@@ -263,61 +266,61 @@ impl ParallelOptimizer {
             overhead_per_thread: 0.001, // 1ms per thread
         }
     }
-    
+
     pub fn calculate_optimal_threads(&self, sequential_time: f64) -> usize {
         let mut optimal_threads = 1;
         let mut best_speedup = 1.0;
-        
+
         for threads in 1..=self.num_threads {
-            let parallel_time = sequential_time / threads as f64 + 
+            let parallel_time = sequential_time / threads as f64 +
                               self.overhead_per_thread * threads as f64;
             let speedup = sequential_time / parallel_time;
-            
+
             if speedup > best_speedup {
                 best_speedup = speedup;
                 optimal_threads = threads;
             }
         }
-        
+
         optimal_threads
     }
-    
+
     pub fn parallel_workload<F, T>(&self, workload: Vec<T>, work_fn: F) -> Vec<T>
-    where 
+    where
         T: Send + Sync + Clone,
         F: Fn(T) -> T + Send + Sync,
     {
         let workload = Arc::new(workload);
         let result = Arc::new(Mutex::new(Vec::new()));
         let mut handles = vec![];
-        
+
         let chunk_size = (workload.len() + self.num_threads - 1) / self.num_threads;
-        
+
         for i in 0..self.num_threads {
             let workload = Arc::clone(&workload);
             let result = Arc::clone(&result);
             let work_fn = work_fn.clone();
-            
+
             let handle = thread::spawn(move || {
                 let start = i * chunk_size;
                 let end = std::cmp::min(start + chunk_size, workload.len());
-                
+
                 let mut local_result = Vec::new();
                 for j in start..end {
                     let processed = work_fn(workload[j].clone());
                     local_result.push(processed);
                 }
-                
+
                 let mut global_result = result.lock().unwrap();
                 global_result.extend(local_result);
             });
             handles.push(handle);
         }
-        
+
         for handle in handles {
             handle.join().unwrap();
         }
-        
+
         Arc::try_unwrap(result).unwrap().into_inner().unwrap()
     }
 }
@@ -337,8 +340,8 @@ impl ParallelOptimizer {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

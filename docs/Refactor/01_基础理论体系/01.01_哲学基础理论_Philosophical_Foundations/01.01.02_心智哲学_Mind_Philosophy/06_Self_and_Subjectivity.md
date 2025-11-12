@@ -276,13 +276,13 @@ impl SelfConsciousness {
     /// 进行自我反思
     pub fn reflect(&mut self, reflection: ReflectionContent) -> ReflectionResult {
         self.self_reflection.reflection_content.push(reflection);
-        
+
         // 分析反思内容
         let reflection_analysis = self.analyze_reflection(&reflection);
-        
+
         // 更新自我认同
         self.update_identity_based_on_reflection(&reflection_analysis);
-        
+
         ReflectionResult {
             insight: reflection_analysis.insight,
             growth: reflection_analysis.growth,
@@ -331,13 +331,13 @@ impl Subjectivity {
     /// 体验新内容
     pub fn experience(&mut self, content: ExperienceContent) -> ExperienceResult {
         self.subject_experience.experience_content.push(content.clone());
-        
+
         // 分析体验
         let experience_analysis = self.analyze_experience(&content);
-        
+
         // 更新主体能力
         self.update_capabilities_based_on_experience(&experience_analysis);
-        
+
         ExperienceResult {
             learning: experience_analysis.learning,
             growth: experience_analysis.growth,
@@ -348,15 +348,15 @@ impl Subjectivity {
     /// 执行主体行动
     pub fn act(&mut self, intention: ActionIntention) -> ActionResult {
         self.subject_action.action_intention = intention.clone();
-        
+
         // 执行行动
         let execution = self.execute_action(&intention);
         self.subject_action.action_execution = execution.clone();
-        
+
         // 评估结果
         let result = self.evaluate_action_result(&execution);
         self.subject_action.action_result = result.clone();
-        
+
         result
     }
 
@@ -420,7 +420,7 @@ impl PersonalIdentity {
     /// 维护心理连续性
     pub fn maintain_psychological_continuity(&mut self, state: PsychologicalState) {
         self.psychological_continuity.psychological_states.push(state);
-        
+
         // 更新心理特征
         self.update_psychological_traits();
     }
@@ -428,7 +428,7 @@ impl PersonalIdentity {
     /// 维护身体连续性
     pub fn maintain_bodily_continuity(&mut self, state: BodilyState) {
         self.bodily_continuity.bodily_states.push(state);
-        
+
         // 记录身体变化
         self.record_bodily_changes();
     }
@@ -436,7 +436,7 @@ impl PersonalIdentity {
     /// 维护记忆连续性
     pub fn maintain_memory_continuity(&mut self, content: MemoryContent) {
         self.memory_continuity.memory_contents.push(content);
-        
+
         // 建立记忆连接
         self.establish_memory_connections();
     }
@@ -444,7 +444,7 @@ impl PersonalIdentity {
     /// 维护叙事连续性
     pub fn maintain_narrative_continuity(&mut self, story: LifeStory) {
         self.narrative_continuity.life_story = story;
-        
+
         // 更新自我叙事
         self.update_self_narrative();
     }
@@ -455,9 +455,9 @@ impl PersonalIdentity {
         let bodily_score = self.assess_bodily_continuity();
         let memory_score = self.assess_memory_continuity();
         let narrative_score = self.assess_narrative_continuity();
-        
+
         let overall_score = (psychological_score + bodily_score + memory_score + narrative_score) / 4.0;
-        
+
         IdentityVerification {
             overall_score,
             psychological_score,
@@ -534,12 +534,12 @@ impl SelfDevelopmentSystem {
             timestamp: chrono::Utc::now(),
             depth: ReflectionDepth::Deep,
         };
-        
+
         let result = self.self_consciousness.reflect(reflection);
-        
+
         // 更新发展目标
         self.update_development_goals_based_on_reflection(&result);
-        
+
         ReflectionOutcome {
             insight: result.insight,
             growth: result.growth,
@@ -554,12 +554,12 @@ impl SelfDevelopmentSystem {
             quality: ExperienceQuality::Positive,
             meaning: "新体验".to_string(),
         };
-        
+
         let result = self.subjectivity.experience(experience);
-        
+
         // 更新人格同一性
         self.update_personal_identity_based_on_experience(&result);
-        
+
         ExperienceOutcome {
             learning: result.learning,
             growth: result.growth,
@@ -574,12 +574,12 @@ impl SelfDevelopmentSystem {
             motivation: action.motivation,
             plan: action.plan,
         };
-        
+
         let result = self.subjectivity.act(intention);
-        
+
         // 更新自我意识
         self.update_self_consciousness_based_on_action(&result);
-        
+
         ActionOutcome {
             success: result.success,
             value: result.value,
@@ -620,16 +620,16 @@ impl IdentityVerificationSystem {
     /// 执行身份验证
     pub fn verify_identity(&mut self) -> IdentityVerification {
         let verification = self.personal_identity.verify_identity();
-        
+
         // 记录验证历史
         self.verification_history.push(verification.clone());
-        
+
         // 分析验证趋势
         let trend_analysis = self.analyze_verification_trend();
-        
+
         // 生成验证报告
         let report = self.generate_verification_report(&verification, &trend_analysis);
-        
+
         verification
     }
 
@@ -638,14 +638,14 @@ impl IdentityVerificationSystem {
         if self.verification_history.len() < 2 {
             return VerificationTrend::Stable;
         }
-        
+
         let recent_scores: Vec<f64> = self.verification_history
             .iter()
             .map(|v| v.overall_score)
             .collect();
-        
+
         let trend = self.calculate_trend(&recent_scores);
-        
+
         match trend {
             t if t > 0.1 => VerificationTrend::Improving,
             t if t < -0.1 => VerificationTrend::Declining,
@@ -658,10 +658,10 @@ impl IdentityVerificationSystem {
         if scores.len() < 2 {
             return 0.0;
         }
-        
+
         let first = scores.first().unwrap();
         let last = scores.last().unwrap();
-        
+
         last - first
     }
 }

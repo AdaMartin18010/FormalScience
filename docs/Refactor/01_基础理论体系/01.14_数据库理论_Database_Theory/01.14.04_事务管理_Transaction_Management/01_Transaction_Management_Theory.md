@@ -3,7 +3,7 @@
 ## 目录
 
 - [12.4.1 事务管理理论](#1241-事务管理理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 事务定义](#11-事务定义)
@@ -169,11 +169,11 @@ impl TransactionManager {
             log: Vec::new(),
         }
     }
-    
+
     pub fn begin_transaction(&mut self) -> u64 {
         let transaction_id = self.next_transaction_id;
         self.next_transaction_id += 1;
-        
+
         let transaction = Transaction {
             id: transaction_id,
             status: TransactionStatus::Active,
@@ -182,9 +182,9 @@ impl TransactionManager {
             locks: HashSet::new(),
             waiting_for: None,
         };
-        
+
         self.transactions.insert(transaction_id, transaction);
-        
+
         // 记录开始日志
         self.log.push(LogEntry {
             timestamp: Instant::now(),
@@ -197,23 +197,23 @@ impl TransactionManager {
             },
             log_type: LogType::Begin,
         });
-        
+
         transaction_id
     }
-    
+
     pub fn read(&mut self, transaction_id: u64, resource: String) -> Result<Option<String>, String> {
         let transaction = self.transactions.get_mut(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err("Transaction is not active".to_string());
         }
-        
+
         // 尝试获取共享锁
         if !self.acquire_lock(transaction_id, &resource, LockType::Shared)? {
             return Err("Failed to acquire read lock".to_string());
         }
-        
+
         // 记录读操作
         let operation = Operation {
             operation_type: OperationType::Read,
@@ -221,26 +221,26 @@ impl TransactionManager {
             data: None,
             timestamp: Instant::now(),
         };
-        
+
         transaction.operations.push(operation);
-        
+
         // 模拟读取数据
         Ok(Some(format!("Data from {}", resource)))
     }
-    
+
     pub fn write(&mut self, transaction_id: u64, resource: String, data: String) -> Result<(), String> {
         let transaction = self.transactions.get_mut(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err("Transaction is not active".to_string());
         }
-        
+
         // 尝试获取排他锁
         if !self.acquire_lock(transaction_id, &resource, LockType::Exclusive)? {
             return Err("Failed to acquire write lock".to_string());
         }
-        
+
         // 记录写操作
         let operation = Operation {
             operation_type: OperationType::Write,
@@ -248,25 +248,25 @@ impl TransactionManager {
             data: Some(data),
             timestamp: Instant::now(),
         };
-        
+
         transaction.operations.push(operation);
-        
+
         Ok(())
     }
-    
+
     pub fn commit(&mut self, transaction_id: u64) -> Result<(), String> {
         let transaction = self.transactions.get_mut(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err("Transaction is not active".to_string());
         }
-        
+
         // 检查死锁
         if self.detect_deadlock() {
             return Err("Deadlock detected".to_string());
         }
-        
+
         // 记录提交日志
         self.log.push(LogEntry {
             timestamp: Instant::now(),
@@ -279,25 +279,25 @@ impl TransactionManager {
             },
             log_type: LogType::Commit,
         });
-        
+
         // 释放所有锁
         for resource in &transaction.locks {
             self.release_lock(transaction_id, resource)?;
         }
-        
+
         transaction.status = TransactionStatus::Committed;
-        
+
         Ok(())
     }
-    
+
     pub fn abort(&mut self, transaction_id: u64) -> Result<(), String> {
         let transaction = self.transactions.get_mut(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err("Transaction is not active".to_string());
         }
-        
+
         // 记录中止日志
         self.log.push(LogEntry {
             timestamp: Instant::now(),
@@ -310,17 +310,17 @@ impl TransactionManager {
             },
             log_type: LogType::Abort,
         });
-        
+
         // 释放所有锁
         for resource in &transaction.locks {
             self.release_lock(transaction_id, resource)?;
         }
-        
+
         transaction.status = TransactionStatus::Aborted;
-        
+
         Ok(())
     }
-    
+
     fn acquire_lock(&mut self, transaction_id: u64, resource: &str, lock_type: LockType) -> Result<bool, String> {
         let lock = self.locks.entry(resource.to_string()).or_insert_with(|| Lock {
             resource: resource.to_string(),
@@ -328,7 +328,7 @@ impl TransactionManager {
             holder: 0,
             waiters: VecDeque::new(),
         });
-        
+
         match lock_type {
             LockType::Shared => {
                 if lock.lock_type == LockType::Shared || lock.holder == 0 {
@@ -336,21 +336,21 @@ impl TransactionManager {
                     if lock.holder == 0 {
                         lock.holder = transaction_id;
                     }
-                    
+
                     if let Some(transaction) = self.transactions.get_mut(&transaction_id) {
                         transaction.locks.insert(resource.to_string());
                     }
-                    
+
                     Ok(true)
                 } else {
                     // 等待排他锁释放
                     lock.waiters.push_back(transaction_id);
-                    
+
                     if let Some(transaction) = self.transactions.get_mut(&transaction_id) {
                         transaction.status = TransactionStatus::Waiting;
                         transaction.waiting_for = Some(resource.to_string());
                     }
-                    
+
                     Ok(false)
                 }
             },
@@ -359,27 +359,27 @@ impl TransactionManager {
                     // 可以获取排他锁
                     lock.holder = transaction_id;
                     lock.lock_type = LockType::Exclusive;
-                    
+
                     if let Some(transaction) = self.transactions.get_mut(&transaction_id) {
                         transaction.locks.insert(resource.to_string());
                     }
-                    
+
                     Ok(true)
                 } else {
                     // 等待锁释放
                     lock.waiters.push_back(transaction_id);
-                    
+
                     if let Some(transaction) = self.transactions.get_mut(&transaction_id) {
                         transaction.status = TransactionStatus::Waiting;
                         transaction.waiting_for = Some(resource.to_string());
                     }
-                    
+
                     Ok(false)
                 }
             },
         }
     }
-    
+
     fn release_lock(&mut self, transaction_id: u64, resource: &str) -> Result<(), String> {
         if let Some(lock) = self.locks.get_mut(resource) {
             if lock.holder == transaction_id {
@@ -391,7 +391,7 @@ impl TransactionManager {
                     // 唤醒等待的事务
                     let next_waiter = lock.waiters.pop_front().unwrap();
                     lock.holder = next_waiter;
-                    
+
                     if let Some(transaction) = self.transactions.get_mut(&next_waiter) {
                         transaction.status = TransactionStatus::Active;
                         transaction.waiting_for = None;
@@ -400,14 +400,14 @@ impl TransactionManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn detect_deadlock(&self) -> bool {
         // 构建等待图
         let mut graph: HashMap<u64, Vec<u64>> = HashMap::new();
-        
+
         for transaction in self.transactions.values() {
             if let Some(waiting_for) = &transaction.waiting_for {
                 if let Some(lock) = self.locks.get(waiting_for) {
@@ -416,29 +416,29 @@ impl TransactionManager {
                 }
             }
         }
-        
+
         // 检测环路
         for &start_node in graph.keys() {
             if self.has_cycle(&graph, start_node, &mut HashSet::new(), &mut HashSet::new()) {
                 return true;
             }
         }
-        
+
         false
     }
-    
+
     fn has_cycle(&self, graph: &HashMap<u64, Vec<u64>>, node: u64, visited: &mut HashSet<u64>, rec_stack: &mut HashSet<u64>) -> bool {
         if rec_stack.contains(&node) {
             return true;
         }
-        
+
         if visited.contains(&node) {
             return false;
         }
-        
+
         visited.insert(node);
         rec_stack.insert(node);
-        
+
         if let Some(neighbors) = graph.get(&node) {
             for &neighbor in neighbors {
                 if self.has_cycle(graph, neighbor, visited, rec_stack) {
@@ -446,19 +446,19 @@ impl TransactionManager {
                 }
             }
         }
-        
+
         rec_stack.remove(&node);
         false
     }
-    
+
     pub fn get_transaction_status(&self, transaction_id: u64) -> Option<&TransactionStatus> {
         self.transactions.get(&transaction_id).map(|t| &t.status)
     }
-    
+
     pub fn get_locks(&self) -> &HashMap<String, Lock> {
         &self.locks
     }
-    
+
     pub fn get_log(&self) -> &Vec<LogEntry> {
         &self.log
     }
@@ -520,29 +520,29 @@ impl ConcurrencyController {
             },
         }
     }
-    
+
     pub fn schedule_operation(&mut self, transaction_id: u64, operation: Operation) -> Result<(), String> {
         // 分配时间戳
         if !self.timestamp_manager.transaction_timestamps.contains_key(&transaction_id) {
             self.timestamp_manager.current_timestamp += 1;
             self.timestamp_manager.transaction_timestamps.insert(transaction_id, self.timestamp_manager.current_timestamp);
         }
-        
+
         let scheduled_op = ScheduledOperation {
             transaction_id,
             operation: operation.clone(),
             timestamp: self.timestamp_manager.transaction_timestamps[&transaction_id],
         };
-        
+
         // 检查冲突
         if self.has_conflict(&scheduled_op) {
             return Err("Operation conflicts with existing schedule".to_string());
         }
-        
+
         self.scheduler.schedule.push(scheduled_op);
         Ok(())
     }
-    
+
     fn has_conflict(&self, new_op: &ScheduledOperation) -> bool {
         for existing_op in &self.scheduler.schedule {
             if existing_op.transaction_id != new_op.transaction_id &&
@@ -557,16 +557,16 @@ impl ConcurrencyController {
         }
         false
     }
-    
+
     pub fn is_serializable(&self) -> bool {
         // 检查冲突可串行化
         let mut conflict_graph: HashMap<u64, Vec<u64>> = HashMap::new();
-        
+
         for i in 0..self.scheduler.schedule.len() {
             for j in (i + 1)..self.scheduler.schedule.len() {
                 let op1 = &self.scheduler.schedule[i];
                 let op2 = &self.scheduler.schedule[j];
-                
+
                 if op1.transaction_id != op2.transaction_id &&
                    op1.operation.resource == op2.operation.resource {
                     match (&op1.operation.operation_type, &op2.operation.operation_type) {
@@ -579,15 +579,15 @@ impl ConcurrencyController {
                 }
             }
         }
-        
+
         // 检查是否有环路
         !self.has_cycle_in_graph(&conflict_graph)
     }
-    
+
     fn has_cycle_in_graph(&self, graph: &HashMap<u64, Vec<u64>>) -> bool {
         let mut visited = HashSet::new();
         let mut rec_stack = HashSet::new();
-        
+
         for &node in graph.keys() {
             if !visited.contains(&node) {
                 if self.dfs_cycle_detection(graph, node, &mut visited, &mut rec_stack) {
@@ -597,11 +597,11 @@ impl ConcurrencyController {
         }
         false
     }
-    
+
     fn dfs_cycle_detection(&self, graph: &HashMap<u64, Vec<u64>>, node: u64, visited: &mut HashSet<u64>, rec_stack: &mut HashSet<u64>) -> bool {
         visited.insert(node);
         rec_stack.insert(node);
-        
+
         if let Some(neighbors) = graph.get(&node) {
             for &neighbor in neighbors {
                 if !visited.contains(&neighbor) {
@@ -613,11 +613,11 @@ impl ConcurrencyController {
                 }
             }
         }
-        
+
         rec_stack.remove(&node);
         false
     }
-    
+
     pub fn two_phase_locking(&mut self, transaction_id: u64, resource: &str, lock_type: LockType) -> Result<bool, String> {
         let lock = self.lock_manager.locks.entry(resource.to_string()).or_insert_with(|| Lock {
             resource: resource.to_string(),
@@ -625,7 +625,7 @@ impl ConcurrencyController {
             holder: 0,
             waiters: VecDeque::new(),
         });
-        
+
         match lock_type {
             LockType::Shared => {
                 if lock.lock_type == LockType::Shared || lock.holder == 0 {
@@ -656,34 +656,34 @@ impl ConcurrencyController {
             },
         }
     }
-    
+
     pub fn optimistic_concurrency_control(&mut self, transaction_id: u64, operation: &Operation) -> Result<bool, String> {
         // 检查时间戳
         let transaction_timestamp = self.timestamp_manager.transaction_timestamps.get(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         // 模拟验证阶段
         // 在实际实现中，这里会检查数据是否被其他事务修改
         Ok(true)
     }
-    
+
     pub fn mvcc_read(&mut self, transaction_id: u64, resource: &str) -> Result<Option<String>, String> {
         // 多版本并发控制读取
         let transaction_timestamp = self.timestamp_manager.transaction_timestamps.get(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         // 返回适合该事务时间戳的数据版本
         Ok(Some(format!("MVCC data for {} at timestamp {}", resource, transaction_timestamp)))
     }
-    
+
     pub fn mvcc_write(&mut self, transaction_id: u64, resource: &str, data: String) -> Result<(), String> {
         // 多版本并发控制写入
         let transaction_timestamp = self.timestamp_manager.transaction_timestamps.get(&transaction_id)
             .ok_or("Transaction not found")?;
-        
+
         // 创建新版本的数据
         println!("Creating new version of {} at timestamp {}", resource, transaction_timestamp);
-        
+
         Ok(())
     }
 }
@@ -752,40 +752,40 @@ impl RecoveryManager {
             },
         }
     }
-    
+
     pub fn write_log(&mut self, entry: LogEntry) -> Result<(), String> {
         self.log_manager.log_buffer.push(entry);
-        
+
         // 如果缓冲区满了，刷新到磁盘
         if self.log_manager.log_buffer.len() >= self.log_manager.buffer_size {
             self.flush_log_buffer()?;
         }
-        
+
         Ok(())
     }
-    
+
     fn flush_log_buffer(&mut self) -> Result<(), String> {
         let file = OpenOptions::new()
             .create(true)
             .append(true)
             .open(&self.log_manager.log_file)
             .map_err(|e| format!("Failed to open log file: {}", e))?;
-        
+
         let mut writer = BufWriter::new(file);
-        
+
         for entry in &self.log_manager.log_buffer {
             let log_line = self.serialize_log_entry(entry);
             writeln!(writer, "{}", log_line)
                 .map_err(|e| format!("Failed to write log: {}", e))?;
         }
-        
+
         writer.flush()
             .map_err(|e| format!("Failed to flush log: {}", e))?;
-        
+
         self.log_manager.log_buffer.clear();
         Ok(())
     }
-    
+
     fn serialize_log_entry(&self, entry: &LogEntry) -> String {
         format!("{}|{}|{:?}|{:?}",
                 entry.timestamp.elapsed().as_millis(),
@@ -793,7 +793,7 @@ impl RecoveryManager {
                 entry.operation.operation_type,
                 entry.log_type)
     }
-    
+
     pub fn create_checkpoint(&mut self) -> Result<(), String> {
         let checkpoint_data = CheckpointData {
             timestamp: Instant::now(),
@@ -801,52 +801,52 @@ impl RecoveryManager {
             dirty_pages: self.buffer_manager.dirty_pages.clone(),
             lsn: self.get_current_lsn(),
         };
-        
+
         let file = File::create(&self.checkpoint_manager.checkpoint_file)
             .map_err(|e| format!("Failed to create checkpoint file: {}", e))?;
-        
+
         let mut writer = BufWriter::new(file);
         let checkpoint_json = serde_json::to_string(&checkpoint_data)
             .map_err(|e| format!("Failed to serialize checkpoint: {}", e))?;
-        
+
         writeln!(writer, "{}", checkpoint_json)
             .map_err(|e| format!("Failed to write checkpoint: {}", e))?;
-        
+
         self.checkpoint_manager.last_checkpoint = Instant::now();
         Ok(())
     }
-    
+
     pub fn recover(&mut self) -> Result<(), String> {
         println!("Starting recovery process...");
-        
+
         // 1. 分析阶段
         let (active_transactions, dirty_pages) = self.analysis_phase()?;
-        
+
         // 2. 重做阶段
         self.redo_phase(&dirty_pages)?;
-        
+
         // 3. 撤销阶段
         self.undo_phase(&active_transactions)?;
-        
+
         println!("Recovery completed successfully");
         Ok(())
     }
-    
+
     fn analysis_phase(&self) -> Result<(HashSet<u64>, HashSet<String>), String> {
         println!("Analysis phase: determining active transactions and dirty pages");
-        
+
         let mut active_transactions = HashSet::new();
         let mut dirty_pages = HashSet::new();
-        
+
         // 从检查点读取信息
         if let Ok(checkpoint_data) = self.load_checkpoint() {
             active_transactions = checkpoint_data.active_transactions;
             dirty_pages = checkpoint_data.dirty_pages;
         }
-        
+
         // 扫描日志，更新活动事务和脏页信息
         let log_entries = self.scan_log()?;
-        
+
         for entry in log_entries {
             match entry.log_type {
                 LogType::Begin => {
@@ -863,15 +863,15 @@ impl RecoveryManager {
                 },
             }
         }
-        
+
         Ok((active_transactions, dirty_pages))
     }
-    
+
     fn redo_phase(&mut self, dirty_pages: &HashSet<String>) -> Result<(), String> {
         println!("Redo phase: replaying committed transactions");
-        
+
         let log_entries = self.scan_log()?;
-        
+
         for entry in log_entries {
             if entry.log_type == LogType::Commit {
                 // 重做已提交事务的操作
@@ -880,15 +880,15 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn undo_phase(&mut self, active_transactions: &HashSet<u64>) -> Result<(), String> {
         println!("Undo phase: rolling back active transactions");
-        
+
         let log_entries = self.scan_log()?;
-        
+
         // 从后往前扫描日志
         for entry in log_entries.iter().rev() {
             if active_transactions.contains(&entry.transaction_id) {
@@ -896,10 +896,10 @@ impl RecoveryManager {
                 self.undo_operation(&entry.operation)?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn redo_operation(&mut self, operation: &Operation) -> Result<(), String> {
         match operation.operation_type {
             OperationType::Write => {
@@ -912,7 +912,7 @@ impl RecoveryManager {
         }
         Ok(())
     }
-    
+
     fn undo_operation(&mut self, operation: &Operation) -> Result<(), String> {
         match operation.operation_type {
             OperationType::Write => {
@@ -923,14 +923,14 @@ impl RecoveryManager {
         }
         Ok(())
     }
-    
+
     fn load_checkpoint(&self) -> Result<CheckpointData, String> {
         let file = File::open(&self.checkpoint_manager.checkpoint_file)
             .map_err(|e| format!("Failed to open checkpoint file: {}", e))?;
-        
+
         let reader = BufReader::new(file);
         let mut lines = reader.lines();
-        
+
         if let Some(line) = lines.next() {
             let line = line.map_err(|e| format!("Failed to read checkpoint: {}", e))?;
             serde_json::from_str(&line)
@@ -939,31 +939,31 @@ impl RecoveryManager {
             Err("Checkpoint file is empty".to_string())
         }
     }
-    
+
     fn scan_log(&self) -> Result<Vec<LogEntry>, String> {
         let file = File::open(&self.log_manager.log_file)
             .map_err(|e| format!("Failed to open log file: {}", e))?;
-        
+
         let reader = BufReader::new(file);
         let mut entries = Vec::new();
-        
+
         for line in reader.lines() {
             let line = line.map_err(|e| format!("Failed to read log line: {}", e))?;
             if let Ok(entry) = self.deserialize_log_entry(&line) {
                 entries.push(entry);
             }
         }
-        
+
         Ok(entries)
     }
-    
+
     fn deserialize_log_entry(&self, line: &str) -> Result<LogEntry, String> {
         // 简化实现
         let parts: Vec<&str> = line.split('|').collect();
         if parts.len() >= 4 {
             let transaction_id = parts[1].parse::<u64>()
                 .map_err(|_| "Invalid transaction ID".to_string())?;
-            
+
             Ok(LogEntry {
                 timestamp: Instant::now(),
                 transaction_id,
@@ -979,11 +979,11 @@ impl RecoveryManager {
             Err("Invalid log entry format".to_string())
         }
     }
-    
+
     fn get_active_transactions(&self) -> HashSet<u64> {
         HashSet::new() // 简化实现
     }
-    
+
     fn get_current_lsn(&self) -> u64 {
         0 // 简化实现
     }
@@ -1012,8 +1012,8 @@ pub struct CheckpointData {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

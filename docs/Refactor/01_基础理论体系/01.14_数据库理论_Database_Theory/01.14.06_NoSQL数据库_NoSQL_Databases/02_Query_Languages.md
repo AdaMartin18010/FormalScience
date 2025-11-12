@@ -129,34 +129,34 @@ impl DocumentQueryEngine {
             documents: Vec::new(),
         }
     }
-    
+
     pub fn execute_query(&self, query: &DocumentQuery) -> Vec<Value> {
         let mut results = self.documents.clone();
-        
+
         // 应用过滤条件
         if !query.filter.is_empty() {
             results = self.apply_filter(results, &query.filter);
         }
-        
+
         // 应用排序
         if let Some(ref sort) = query.sort {
             results = self.apply_sort(results, sort);
         }
-        
+
         // 应用限制
         if let Some(limit) = query.limit {
             results.truncate(limit);
         }
-        
+
         results
     }
-    
+
     fn apply_filter(&self, docs: Vec<Value>, filter: &HashMap<String, Value>) -> Vec<Value> {
         docs.into_iter()
             .filter(|doc| self.matches_filter(doc, filter))
             .collect()
     }
-    
+
     fn matches_filter(&self, doc: &Value, filter: &HashMap<String, Value>) -> bool {
         for (field, value) in filter {
             if let Some(doc_value) = doc.get(field) {
@@ -169,13 +169,13 @@ impl DocumentQueryEngine {
         }
         true
     }
-    
+
     fn apply_sort(&self, mut docs: Vec<Value>, sort: &[SortField]) -> Vec<Value> {
         docs.sort_by(|a, b| {
             for field in sort {
                 let a_val = a.get(&field.field);
                 let b_val = b.get(&field.field);
-                
+
                 match (a_val, b_val) {
                     (Some(a_val), Some(b_val)) => {
                         let cmp = a_val.to_string().cmp(&b_val.to_string());
@@ -245,10 +245,10 @@ impl GraphQueryEngine {
             edges: HashMap::new(),
         }
     }
-    
+
     pub fn execute_query(&self, query: &GraphQuery) -> Vec<QueryResult> {
         let mut results = Vec::new();
-        
+
         match &query.pattern {
             QueryPattern::Node(node_id) => {
                 if let Some(node) = self.nodes.get(node_id) {
@@ -270,10 +270,10 @@ impl GraphQueryEngine {
                 results = self.execute_path_query(patterns, &query.conditions);
             }
         }
-        
+
         results
     }
-    
+
     fn matches_conditions(&self, node: &GraphNode, conditions: &[QueryCondition]) -> bool {
         for condition in conditions {
             if let Some(value) = node.properties.get(&condition.field) {
@@ -286,7 +286,7 @@ impl GraphQueryEngine {
         }
         true
     }
-    
+
     fn matches_conditions_edge(&self, edge: &GraphEdge, conditions: &[QueryCondition]) -> bool {
         for condition in conditions {
             if let Some(value) = edge.properties.get(&condition.field) {
@@ -299,7 +299,7 @@ impl GraphQueryEngine {
         }
         true
     }
-    
+
     fn evaluate_condition(&self, value: &str, operator: &str, target: &str) -> bool {
         match operator {
             "=" => value == target,
@@ -308,7 +308,7 @@ impl GraphQueryEngine {
             _ => false,
         }
     }
-    
+
     fn execute_path_query(&self, patterns: &[QueryPattern], conditions: &[QueryCondition]) -> Vec<QueryResult> {
         // 实现路径查询逻辑
         Vec::new()
@@ -370,11 +370,11 @@ impl QueryOptimizer {
             },
         }
     }
-    
+
     pub fn optimize_query(&self, query: &DocumentQuery) -> QueryPlan {
         let mut operations = Vec::new();
         let mut estimated_cost = 0.0;
-        
+
         // 选择最佳索引
         if let Some(best_index) = self.select_best_index(&query.filter) {
             operations.push(QueryOperation::IndexScan(
@@ -383,7 +383,7 @@ impl QueryOptimizer {
             ));
             estimated_cost += self.estimate_index_cost(&best_index);
         }
-        
+
         // 添加过滤操作
         if !query.filter.is_empty() {
             operations.push(QueryOperation::Filter(
@@ -391,7 +391,7 @@ impl QueryOptimizer {
             ));
             estimated_cost += self.estimate_filter_cost(&query.filter);
         }
-        
+
         // 添加排序操作
         if let Some(ref sort) = query.sort {
             operations.push(QueryOperation::Sort(
@@ -399,22 +399,22 @@ impl QueryOptimizer {
             ));
             estimated_cost += self.estimate_sort_cost(sort);
         }
-        
+
         // 添加限制操作
         if let Some(limit) = query.limit {
             operations.push(QueryOperation::Limit(limit));
         }
-        
+
         QueryPlan {
             operations,
             estimated_cost,
         }
     }
-    
+
     fn select_best_index(&self, filter: &HashMap<String, Value>) -> Option<&IndexInfo> {
         let mut best_index = None;
         let mut best_selectivity = 1.0;
-        
+
         for (field, _) in filter {
             if let Some(index) = self.indexes.get(field) {
                 if index.selectivity < best_selectivity {
@@ -423,18 +423,18 @@ impl QueryOptimizer {
                 }
             }
         }
-        
+
         best_index
     }
-    
+
     fn estimate_index_cost(&self, index: &IndexInfo) -> f64 {
         (self.statistics.table_size as f64) * index.selectivity
     }
-    
+
     fn estimate_filter_cost(&self, filter: &HashMap<String, Value>) -> f64 {
         filter.len() as f64 * 10.0
     }
-    
+
     fn estimate_sort_cost(&self, sort: &[SortField]) -> f64 {
         sort.len() as f64 * 100.0
     }

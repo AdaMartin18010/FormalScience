@@ -2,16 +2,58 @@
 
 ## 目录
 
-1. [基本概念](#1-基本概念)
-2. [语法](#2-语法)
-3. [语义](#3-语义)
-4. [推理系统](#4-推理系统)
-5. [范式理论](#5-范式理论)
-6. [完备性定理](#6-完备性定理)
-7. [模型论基础](#7-模型论基础)
-8. [一阶逻辑](#8-一阶逻辑)
-9. [高阶逻辑](#9-高阶逻辑)
-10. [应用与算法](#10-应用与算法)
+- [02. 谓词逻辑 (Predicate Logic)](#02-谓词逻辑-predicate-logic)
+  - [目录](#目录)
+  - [1. 基本概念](#1-基本概念)
+    - [1.1 谓词逻辑概述](#11-谓词逻辑概述)
+    - [1.2 项与公式](#12-项与公式)
+  - [2. 语法](#2-语法)
+    - [2.1 自由变量与约束变量](#21-自由变量与约束变量)
+    - [2.2 替换](#22-替换)
+  - [3. 语义](#3-语义)
+    - [3.1 结构](#31-结构)
+    - [3.2 赋值](#32-赋值)
+    - [3.3 满足关系](#33-满足关系)
+    - [3.4 有效性、可满足性与逻辑后承](#34-有效性可满足性与逻辑后承)
+  - [4. 推理系统](#4-推理系统)
+    - [4.1 自然演绎系统](#41-自然演绎系统)
+    - [4.2 希尔伯特系统](#42-希尔伯特系统)
+    - [4.3 证明示例](#43-证明示例)
+  - [5. 范式理论](#5-范式理论)
+    - [5.1 前束范式](#51-前束范式)
+    - [5.2 斯科伦范式](#52-斯科伦范式)
+    - [5.3 合取范式与析取范式](#53-合取范式与析取范式)
+  - [6. 完备性定理](#6-完备性定理)
+    - [6.1 哥德尔完备性定理](#61-哥德尔完备性定理)
+    - [6.2 紧致性定理](#62-紧致性定理)
+    - [6.3 勒文海姆-斯科伦定理](#63-勒文海姆-斯科伦定理)
+  - [7. 模型论基础](#7-模型论基础)
+    - [7.1 初等等价](#71-初等等价)
+    - [7.2 初等嵌入](#72-初等嵌入)
+    - [7.3 饱和模型](#73-饱和模型)
+  - [8. 一阶逻辑](#8-一阶逻辑)
+    - [8.1 一阶理论](#81-一阶理论)
+    - [8.2 模型完全性](#82-模型完全性)
+    - [8.3 量词消去](#83-量词消去)
+  - [9. 高阶逻辑](#9-高阶逻辑)
+    - [9.1 二阶逻辑](#91-二阶逻辑)
+    - [9.2 高阶逻辑的性质](#92-高阶逻辑的性质)
+  - [10. 应用与算法](#10-应用与算法)
+    - [10.1 自动定理证明](#101-自动定理证明)
+      - [10.1.1 归结方法](#1011-归结方法)
+      - [10.1.2 表方法](#1012-表方法)
+    - [10.2 模型检查](#102-模型检查)
+      - [10.2.1 有限模型检查](#1021-有限模型检查)
+    - [10.3 逻辑编程](#103-逻辑编程)
+      - [10.3.1 Prolog 语言](#1031-prolog-语言)
+      - [10.3.2 约束逻辑编程](#1032-约束逻辑编程)
+    - [10.4 数据库理论](#104-数据库理论)
+      - [10.4.1 关系代数](#1041-关系代数)
+      - [10.4.2 数据库完整性约束](#1042-数据库完整性约束)
+  - [参考文献](#参考文献)
+  - [交叉引用](#交叉引用)
+  - [批判性分析](#批判性分析)
+
 
 ## 1. 基本概念
 
@@ -244,19 +286,19 @@ pub struct PrenexForm {
 
 pub fn to_prenex_form(formula: &Formula) -> PrenexForm {
     let mut result = formula.clone();
-    
+
     // 步骤1：消除蕴含和等价
     result = eliminate_implications(&result);
-    
+
     // 步骤2：否定内移
     result = move_negations_inward(&result);
-    
+
     // 步骤3：变量重命名
     result = rename_variables(&result);
-    
+
     // 步骤4：量词前移
     let (quantifiers, matrix) = move_quantifiers_forward(&result);
-    
+
     PrenexForm { quantifiers, matrix }
 }
 ```
@@ -382,13 +424,13 @@ impl ResolutionProver {
         let prenex = to_prenex_form(formula);
         let skolem = to_skolem_form(&prenex);
         let clauses = to_clauses(&skolem.matrix);
-        
+
         ResolutionProver { clauses }
     }
-    
+
     pub fn prove(&mut self) -> bool {
         let mut new_clauses = Vec::new();
-        
+
         loop {
             // 生成所有可能的归结
             for i in 0..self.clauses.len() {
@@ -403,11 +445,11 @@ impl ResolutionProver {
                     }
                 }
             }
-            
+
             if new_clauses.is_empty() {
                 return false; // 无法生成新的子句
             }
-            
+
             self.clauses.extend(new_clauses.drain(..));
         }
     }
@@ -440,17 +482,17 @@ impl FiniteModelChecker {
             functions: vec![vec![vec![0; domain_size]; domain_size]; function_count],
         }
     }
-    
+
     pub fn check_formula(&self, formula: &Formula) -> bool {
         // 枚举所有可能的赋值
         self.check_all_assignments(formula, &mut vec![0; formula.free_variables().len()], 0)
     }
-    
+
     fn check_all_assignments(&self, formula: &Formula, assignment: &mut Vec<usize>, pos: usize) -> bool {
         if pos == assignment.len() {
             return self.evaluate_formula(formula, assignment);
         }
-        
+
         for value in 0..self.domain_size {
             assignment[pos] = value;
             if !self.check_all_assignments(formula, assignment, pos + 1) {
@@ -510,11 +552,11 @@ WHERE age > 18 AND department = 'Computer Science';
 
 ## 参考文献
 
-1. Enderton, H. B. (2001). *A Mathematical Introduction to Logic*. Academic Press.
-2. Mendelson, E. (2015). *Introduction to Mathematical Logic*. CRC Press.
-3. Shoenfield, J. R. (2001). *Mathematical Logic*. A K Peters.
-4. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). *Computability and Logic*. Cambridge University Press.
-5. Chang, C. C., & Keisler, H. J. (2012). *Model Theory*. Dover Publications.
+1. Enderton, H. B. (2001). _A Mathematical Introduction to Logic_. Academic Press.
+2. Mendelson, E. (2015). _Introduction to Mathematical Logic_. CRC Press.
+3. Shoenfield, J. R. (2001). _Mathematical Logic_. A K Peters.
+4. Boolos, G. S., Burgess, J. P., & Jeffrey, R. C. (2007). _Computability and Logic_. Cambridge University Press.
+5. Chang, C. C., & Keisler, H. J. (2012). _Model Theory_. Dover Publications.
 
 ## 交叉引用
 

@@ -2,28 +2,32 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 计算机架构基础理论](#21-计算机架构基础理论)
-  - [2.2 处理器架构理论](#22-处理器架构理论)
-  - [2.3 存储系统理论](#23-存储系统理论)
-- [3 Rust实现](#3-rust实现)
-  - [3.1 处理器架构模拟](#31-处理器架构模拟)
-  - [3.2 并行计算实现](#32-并行计算实现)
-- [4 应用示例](#4-应用示例)
-  - [4.1 示例1：流水线性能分析](#41-示例1流水线性能分析)
-  - [4.2 示例2：缓存性能分析](#42-示例2缓存性能分析)
-  - [4.3 示例3：并行计算性能分析](#43-示例3并行计算性能分析)
-- [5 理论扩展](#5-理论扩展)
-  - [5.1 量子计算架构](#51-量子计算架构)
-  - [5.2 神经形态计算](#52-神经形态计算)
-  - [5.3 可重构计算](#53-可重构计算)
-- [6 批判性分析](#6-批判性分析)
-  - [6.1 多元理论视角](#61-多元理论视角)
-  - [6.2 局限性](#62-局限性)
-  - [6.3 争议与分歧](#63-争议与分歧)
-  - [6.4 应用前景](#64-应用前景)
-  - [6.5 改进建议](#65-改进建议)
+- [10. 计算机架构理论 (Computer Architecture Theory)](#10-计算机架构理论-computer-architecture-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 计算机架构基础理论](#21-计算机架构基础理论)
+    - [2.2 处理器架构理论](#22-处理器架构理论)
+    - [2.3 存储系统理论](#23-存储系统理论)
+  - [3 Rust实现](#3-rust实现)
+    - [3.1 处理器架构模拟](#31-处理器架构模拟)
+    - [3.2 并行计算实现](#32-并行计算实现)
+  - [4 应用示例](#4-应用示例)
+    - [4.1 示例1：流水线性能分析](#41-示例1流水线性能分析)
+    - [4.2 示例2：缓存性能分析](#42-示例2缓存性能分析)
+    - [4.3 示例3：并行计算性能分析](#43-示例3并行计算性能分析)
+  - [5 理论扩展](#5-理论扩展)
+    - [5.1 量子计算架构](#51-量子计算架构)
+    - [5.2 神经形态计算](#52-神经形态计算)
+    - [5.3 可重构计算](#53-可重构计算)
+  - [6 批判性分析](#6-批判性分析)
+    - [6.1 多元理论视角](#61-多元理论视角)
+    - [6.2 局限性](#62-局限性)
+    - [6.3 争议与分歧](#63-争议与分歧)
+    - [6.4 应用前景](#64-应用前景)
+    - [6.5 改进建议](#65-改进建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -145,7 +149,7 @@ impl ProcessorState {
             cycle_count: 0,
         }
     }
-    
+
     /// 读取内存
     pub fn read_memory(&self, address: u32) -> u32 {
         let mut value = 0u32;
@@ -155,7 +159,7 @@ impl ProcessorState {
         }
         value
     }
-    
+
     /// 写入内存
     pub fn write_memory(&mut self, address: u32, value: u32) {
         for i in 0..4 {
@@ -197,7 +201,7 @@ impl PipelineProcessor {
             branch_predictor: BranchPredictor::new(),
         }
     }
-    
+
     /// 执行一个时钟周期
     pub fn cycle(&mut self) {
         // 从后往前执行，避免数据冒险
@@ -206,10 +210,10 @@ impl PipelineProcessor {
         self.execute();
         self.decode();
         self.fetch();
-        
+
         self.state.cycle_count += 1;
     }
-    
+
     /// 取指阶段
     fn fetch(&mut self) {
         if self.pipeline_stages[0].is_none() {
@@ -225,7 +229,7 @@ impl PipelineProcessor {
             }
         }
     }
-    
+
     /// 译码阶段
     fn decode(&mut self) {
         if let Some(stage) = self.pipeline_stages[0].take() {
@@ -236,7 +240,7 @@ impl PipelineProcessor {
             });
         }
     }
-    
+
     /// 执行阶段
     fn execute(&mut self) {
         if let Some(stage) = self.pipeline_stages[1].take() {
@@ -252,17 +256,17 @@ impl PipelineProcessor {
                 Instruction::Branch { rs1, rs2, offset } => {
                     let rs1_val = self.state.registers[*rs1];
                     let rs2_val = self.state.registers[*rs2];
-                    
+
                     // 分支预测
                     let predicted_taken = self.branch_predictor.predict(stage.pc);
                     if predicted_taken {
                         self.state.pc = (stage.pc as i32 + offset) as u32;
                     }
-                    
+
                     // 实际分支结果
                     let actual_taken = rs1_val == rs2_val;
                     self.branch_predictor.update(stage.pc, actual_taken);
-                    
+
                     if actual_taken != predicted_taken {
                         // 分支预测错误，清空流水线
                         self.flush_pipeline();
@@ -270,7 +274,7 @@ impl PipelineProcessor {
                 }
                 _ => {}
             }
-            
+
             self.pipeline_stages[2] = Some(PipelineStage {
                 instruction: stage.instruction,
                 pc: stage.pc,
@@ -278,7 +282,7 @@ impl PipelineProcessor {
             });
         }
     }
-    
+
     /// 访存阶段
     fn memory(&mut self) {
         if let Some(stage) = self.pipeline_stages[2].take() {
@@ -295,7 +299,7 @@ impl PipelineProcessor {
                 }
                 _ => {}
             }
-            
+
             self.pipeline_stages[3] = Some(PipelineStage {
                 instruction: stage.instruction,
                 pc: stage.pc,
@@ -303,24 +307,24 @@ impl PipelineProcessor {
             });
         }
     }
-    
+
     /// 写回阶段
     fn write_back(&mut self) {
         self.pipeline_stages[4] = self.pipeline_stages[3].take();
     }
-    
+
     /// 清空流水线
     fn flush_pipeline(&mut self) {
         for stage in &mut self.pipeline_stages {
             *stage = None;
         }
     }
-    
+
     /// 模拟取指令
     fn fetch_instruction(&self, pc: u32) -> Option<Instruction> {
         // 简化的指令获取
         let instruction_data = self.state.read_memory(pc);
-        
+
         // 简化的指令解码
         match instruction_data & 0x7F {
             0x33 => Some(Instruction::Add {
@@ -350,17 +354,17 @@ impl BranchPredictor {
             prediction_table: HashMap::new(),
         }
     }
-    
+
     /// 预测分支
     pub fn predict(&self, pc: u32) -> bool {
         let counter = self.prediction_table.get(&pc).unwrap_or(&1);
         *counter >= 2
     }
-    
+
     /// 更新预测器
     pub fn update(&mut self, pc: u32, taken: bool) {
         let counter = self.prediction_table.entry(pc).or_insert(1);
-        
+
         if taken {
             *counter = (*counter + 1).min(3);
         } else {
@@ -404,7 +408,7 @@ impl Cache {
             }
             cache_sets.push(set);
         }
-        
+
         Cache {
             sets: cache_sets,
             set_size,
@@ -413,17 +417,17 @@ impl Cache {
             hit_count: 0,
         }
     }
-    
+
     /// 读取数据
     pub fn read(&mut self, address: u32) -> Option<u8> {
         self.access_count += 1;
-        
+
         let set_index = (address as usize / self.line_size) % self.sets.len();
         let tag = address >> (32 - (self.sets.len() - 1).leading_zeros());
         let offset = (address as usize) % self.line_size;
-        
+
         let set = &mut self.sets[set_index];
-        
+
         // 查找匹配的缓存行
         for line in set.iter_mut() {
             if line.valid && line.tag == tag {
@@ -432,21 +436,21 @@ impl Cache {
                 return Some(line.data[offset]);
             }
         }
-        
+
         // 缓存缺失
         None
     }
-    
+
     /// 写入数据
     pub fn write(&mut self, address: u32, data: u8) {
         self.access_count += 1;
-        
+
         let set_index = (address as usize / self.line_size) % self.sets.len();
         let tag = address >> (32 - (self.sets.len() - 1).leading_zeros());
         let offset = (address as usize) % self.line_size;
-        
+
         let set = &mut self.sets[set_index];
-        
+
         // 查找匹配的缓存行
         for line in set.iter_mut() {
             if line.valid && line.tag == tag {
@@ -457,19 +461,19 @@ impl Cache {
                 return;
             }
         }
-        
+
         // 缓存缺失，需要替换
         self.replace_line(set_index, tag, address, data, offset);
     }
-    
+
     /// 替换缓存行
     fn replace_line(&mut self, set_index: usize, tag: u32, address: u32, data: u8, offset: usize) {
         let set = &mut self.sets[set_index];
-        
+
         // 找到LRU缓存行
         let mut lru_index = 0;
         let mut min_lru = u64::MAX;
-        
+
         for (i, line) in set.iter().enumerate() {
             if !line.valid {
                 lru_index = i;
@@ -480,7 +484,7 @@ impl Cache {
                 lru_index = i;
             }
         }
-        
+
         // 替换缓存行
         let line = &mut set[lru_index];
         line.tag = tag;
@@ -489,7 +493,7 @@ impl Cache {
         line.dirty = true;
         line.lru_counter = self.access_count;
     }
-    
+
     /// 计算命中率
     pub fn hit_rate(&self) -> f64 {
         if self.access_count == 0 {
@@ -524,17 +528,17 @@ impl MemoryHierarchy {
             },
         }
     }
-    
+
     /// 读取数据
     pub fn read(&mut self, address: u32) -> (u8, u64) {
         let mut total_latency = 0;
-        
+
         // 尝试L1缓存
         if let Some(data) = self.l1_cache.read(address) {
             total_latency += self.access_latency["L1"];
             return (data, total_latency);
         }
-        
+
         // L1缺失，尝试L2缓存
         total_latency += self.access_latency["L1"];
         if let Some(data) = self.l2_cache.read(address) {
@@ -543,32 +547,32 @@ impl MemoryHierarchy {
             self.l1_cache.write(address, data);
             return (data, total_latency);
         }
-        
+
         // L2缺失，访问主存
         total_latency += self.access_latency["L2"];
         let data = self.main_memory.get(&address).unwrap_or(&0);
         total_latency += self.access_latency["Memory"];
-        
+
         // 将数据写回L2和L1
         self.l2_cache.write(address, *data);
         self.l1_cache.write(address, *data);
-        
+
         (*data, total_latency)
     }
-    
+
     /// 写入数据
     pub fn write(&mut self, address: u32, data: u8) -> u64 {
         let mut total_latency = 0;
-        
+
         // 写直达策略
         self.l1_cache.write(address, data);
         self.l2_cache.write(address, data);
         self.main_memory.insert(address, data);
-        
+
         total_latency += self.access_latency["L1"];
         total_latency += self.access_latency["L2"];
         total_latency += self.access_latency["Memory"];
-        
+
         total_latency
     }
 }
@@ -600,7 +604,7 @@ impl MulticoreProcessor {
     pub fn new(num_cores: usize) -> Self {
         let mut cores = Vec::new();
         let shared_memory = Arc::new(Mutex::new(HashMap::new()));
-        
+
         for i in 0..num_cores {
             cores.push(Core {
                 id: i,
@@ -608,20 +612,20 @@ impl MulticoreProcessor {
                 processor: PipelineProcessor::new(),
             });
         }
-        
+
         MulticoreProcessor {
             cores,
             shared_memory,
             cache_coherence: CacheCoherenceProtocol::new(),
         }
     }
-    
+
     /// 并行执行任务
     pub fn parallel_execute<F>(&mut self, tasks: Vec<F>) -> Vec<f64>
     where F: FnOnce() -> f64 + Send + 'static {
         let mut handles = Vec::new();
         let shared_memory = Arc::clone(&self.shared_memory);
-        
+
         for (i, task) in tasks.into_iter().enumerate() {
             let memory_clone = Arc::clone(&shared_memory);
             let handle = thread::spawn(move || {
@@ -632,22 +636,22 @@ impl MulticoreProcessor {
             });
             handles.push(handle);
         }
-        
+
         let mut results = Vec::new();
         for handle in handles {
             if let Ok((_, result, _)) = handle.join() {
                 results.push(result);
             }
         }
-        
+
         results
     }
-    
+
     /// 计算加速比
     pub fn calculate_speedup(&self, serial_time: f64, parallel_time: f64) -> f64 {
         serial_time / parallel_time
     }
-    
+
     /// 计算效率
     pub fn calculate_efficiency(&self, speedup: f64, num_cores: usize) -> f64 {
         speedup / num_cores as f64
@@ -674,11 +678,11 @@ impl CacheCoherenceProtocol {
             directory: HashMap::new(),
         }
     }
-    
+
     /// 处理读请求
     pub fn handle_read(&mut self, address: u32, core_id: usize) -> CacheLineState {
         let state = self.directory.entry(address).or_insert(CacheLineState::Invalid);
-        
+
         match state {
             CacheLineState::Invalid => {
                 *state = CacheLineState::Shared;
@@ -697,11 +701,11 @@ impl CacheCoherenceProtocol {
             }
         }
     }
-    
+
     /// 处理写请求
     pub fn handle_write(&mut self, address: u32, core_id: usize) -> CacheLineState {
         let state = self.directory.entry(address).or_insert(CacheLineState::Invalid);
-        
+
         match state {
             CacheLineState::Invalid => {
                 *state = CacheLineState::Modified;
@@ -747,58 +751,58 @@ impl VectorProcessor {
             },
         }
     }
-    
+
     /// 向量加法
     pub fn vector_add(&mut self, vd: usize, vs1: usize, vs2: usize) -> Vec<f64> {
         let mut result = vec![0.0; self.vector_length];
-        
+
         for i in 0..self.vector_length {
             result[i] = self.vector_registers[vs1][i] + self.vector_registers[vs2][i];
         }
-        
+
         self.vector_registers[vd] = result.clone();
         result
     }
-    
+
     /// 向量乘法
     pub fn vector_mul(&mut self, vd: usize, vs1: usize, vs2: usize) -> Vec<f64> {
         let mut result = vec![0.0; self.vector_length];
-        
+
         for i in 0..self.vector_length {
             result[i] = self.vector_registers[vs1][i] * self.vector_registers[vs2][i];
         }
-        
+
         self.vector_registers[vd] = result.clone();
         result
     }
-    
+
     /// 向量点积
     pub fn vector_dot_product(&mut self, vs1: usize, vs2: usize) -> f64 {
         let mut sum = 0.0;
-        
+
         for i in 0..self.vector_length {
             sum += self.vector_registers[vs1][i] * self.vector_registers[vs2][i];
         }
-        
+
         sum
     }
-    
+
     /// 向量化矩阵乘法
     pub fn matrix_multiply_vectorized(&mut self, a: &[Vec<f64>], b: &[Vec<f64>]) -> Vec<Vec<f64>> {
         let n = a.len();
         let mut result = vec![vec![0.0; n]; n];
-        
+
         for i in 0..n {
             for j in 0..n {
                 // 加载行向量到向量寄存器
                 self.vector_registers[0] = a[i].clone();
                 self.vector_registers[1] = b[j].clone();
-                
+
                 // 执行向量点积
                 result[i][j] = self.vector_dot_product(0, 1);
             }
         }
-        
+
         result
     }
 }
@@ -811,14 +815,14 @@ impl VectorProcessor {
 ```rust
 fn main() {
     let mut processor = PipelineProcessor::new();
-    
+
     // 模拟程序执行
     for _ in 0..100 {
         processor.cycle();
     }
-    
+
     println!("Processor state: {:?}", processor.state);
-    println!("Branch predictor accuracy: {:.2}%", 
+    println!("Branch predictor accuracy: {:.2}%",
              processor.branch_predictor.prediction_table.len() as f64 / 100.0 * 100.0);
 }
 ```
@@ -828,19 +832,19 @@ fn main() {
 ```rust
 fn main() {
     let mut cache = Cache::new(64, 4, 64);
-    
+
     // 模拟内存访问模式
     for i in 0..1000 {
         let address = (i * 4) as u32;
         cache.write(address, (i % 256) as u8);
     }
-    
+
     // 重复访问以测试缓存效果
     for i in 0..1000 {
         let address = (i * 4) as u32;
         cache.read(address);
     }
-    
+
     println!("Cache hit rate: {:.2}%", cache.hit_rate() * 100.0);
 }
 ```
@@ -850,7 +854,7 @@ fn main() {
 ```rust
 fn main() {
     let mut multicore = MulticoreProcessor::new(4);
-    
+
     // 创建并行任务
     let tasks: Vec<Box<dyn FnOnce() -> f64 + Send>> = vec![
         Box::new(|| {
@@ -882,19 +886,19 @@ fn main() {
             min
         }),
     ];
-    
+
     let start = std::time::Instant::now();
     let results = multicore.parallel_execute(tasks);
     let parallel_time = start.elapsed().as_secs_f64();
-    
+
     println!("Parallel execution time: {:.4}s", parallel_time);
     println!("Results: {:?}", results);
-    
+
     // 计算加速比
     let serial_time = parallel_time * 4.0; // 假设串行时间是并行时间的4倍
     let speedup = multicore.calculate_speedup(serial_time, parallel_time);
     let efficiency = multicore.calculate_efficiency(speedup, 4);
-    
+
     println!("Speedup: {:.2}x", speedup);
     println!("Efficiency: {:.2}%", efficiency * 100.0);
 }

@@ -2,27 +2,30 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 模态算子](#21-模态算子)
-  - [2.2 语法](#22-语法)
-  - [2.3 语义](#23-语义)
-- [3 模态逻辑系统](#3-模态逻辑系统)
-  - [3.1 基本模态逻辑 K](#31-基本模态逻辑-k)
-  - [3.2 常见模态逻辑系统](#32-常见模态逻辑系统)
-  - [3.3 对应理论](#33-对应理论)
-- [4 多模态逻辑](#4-多模态逻辑)
-  - [4.1 多智能体模态逻辑](#41-多智能体模态逻辑)
-  - [4.2 公共知识](#42-公共知识)
-- [5 时态逻辑](#5-时态逻辑)
-  - [5.1 线性时态逻辑 (LTL)](#51-线性时态逻辑-ltl)
-  - [5.2 计算树逻辑 (CTL)](#52-计算树逻辑-ctl)
-- [6 模态逻辑在计算机科学中的应用](#6-模态逻辑在计算机科学中的应用)
-  - [6.1 程序验证](#61-程序验证)
-  - [6.2 知识表示](#62-知识表示)
-  - [6.3 形式化证明](#63-形式化证明)
-- [7 总结](#7-总结)
-- [8 批判性分析](#8-批判性分析)
+- [3. 模态逻辑 (Modal Logic)](#3-模态逻辑-modal-logic)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 模态算子](#21-模态算子)
+    - [2.2 语法](#22-语法)
+    - [2.3 语义](#23-语义)
+  - [3 模态逻辑系统](#3-模态逻辑系统)
+    - [3.1 基本模态逻辑 K](#31-基本模态逻辑-k)
+    - [3.2 常见模态逻辑系统](#32-常见模态逻辑系统)
+    - [3.3 对应理论](#33-对应理论)
+  - [4 多模态逻辑](#4-多模态逻辑)
+    - [4.1 多智能体模态逻辑](#41-多智能体模态逻辑)
+    - [4.2 公共知识](#42-公共知识)
+  - [5 时态逻辑](#5-时态逻辑)
+    - [5.1 线性时态逻辑 (LTL)](#51-线性时态逻辑-ltl)
+    - [5.2 计算树逻辑 (CTL)](#52-计算树逻辑-ctl)
+  - [6 模态逻辑在计算机科学中的应用](#6-模态逻辑在计算机科学中的应用)
+    - [6.1 程序验证](#61-程序验证)
+    - [6.2 知识表示](#62-知识表示)
+    - [6.3 形式化证明](#63-形式化证明)
+  - [7 总结](#7-总结)
+  - [参考文献](#参考文献)
+  - [8 批判性分析](#8-批判性分析)
 
 ---
 
@@ -191,12 +194,12 @@ impl ProgramSpec for ConcurrentProgram {
         // 安全性质：互斥访问
         "G(¬(in_critical_section(p1) ∧ in_critical_section(p2)))".to_string()
     }
-    
+
     fn liveness_property(&self) -> String {
         // 活性性质：最终进入临界区
         "G(waiting(p1) → F in_critical_section(p1))".to_string()
     }
-    
+
     fn fairness_property(&self) -> String {
         // 公平性：无限次尝试最终成功
         "G F try_enter(p1) → F in_critical_section(p1)".to_string()
@@ -213,12 +216,12 @@ impl ModelChecker {
         // 实现LTL模型检查
         self.verify_ltl_property(formula)
     }
-    
+
     fn check_ctl(&self, formula: &str) -> bool {
         // 实现CTL模型检查
         self.verify_ctl_property(formula)
     }
-    
+
     fn verify_ltl_property(&self, formula: &str) -> bool {
         // 简化的LTL验证实现
         match formula {
@@ -233,12 +236,12 @@ impl ModelChecker {
             _ => false
         }
     }
-    
+
     fn check_mutual_exclusion(&self) -> bool {
         // 检查互斥性质的具体实现
         true // 简化实现
     }
-    
+
     fn check_liveness(&self) -> bool {
         // 检查活性性质的具体实现
         true // 简化实现
@@ -270,12 +273,12 @@ impl MultiAgentSystem {
         let agent = self.get_agent(agent_id);
         agent.knowledge.contains(&proposition.to_string())
     }
-    
+
     fn common_knowledge(&self, agents: &[AgentId], proposition: &str) -> bool {
         // 检查公共知识
         agents.iter().all(|&id| self.agent_knows(id, proposition))
     }
-    
+
     fn distributed_knowledge(&self, agents: &[AgentId], proposition: &str) -> bool {
         // 检查分布式知识
         agents.iter().any(|&id| self.agent_knows(id, proposition))
@@ -288,7 +291,7 @@ impl MultiAgentSystem {
         let agent = self.get_agent_mut(agent_id);
         agent.knowledge.push(new_knowledge.to_string());
     }
-    
+
     fn epistemic_update(&mut self, event: &EpistemicEvent) {
         // 实现认知更新
         match event {
@@ -332,8 +335,8 @@ def possibly {α : Type*} (M : modal_logic α) (φ : worlds → Prop) (w : world
 
 -- K公理
 theorem k_axiom {α : Type*} (M : modal_logic α) (φ ψ : worlds → Prop) (w : worlds) :
-  necessarily M (λ v, φ v → ψ v) w → 
-  necessarily M φ w → 
+  necessarily M (λ v, φ v → ψ v) w →
+  necessarily M φ w →
   necessarily M ψ w :=
 begin
   intros h1 h2 v hv,
@@ -343,7 +346,7 @@ begin
 end
 
 -- T公理（自反性）
-theorem t_axiom {α : Type*} (M : modal_logic α) (φ : worlds → Prop) (w : worlds) 
+theorem t_axiom {α : Type*} (M : modal_logic α) (φ : worlds → Prop) (w : worlds)
   (refl : ∀ w, M.accessibility w w) :
   necessarily M φ w → φ w :=
 begin
@@ -367,7 +370,7 @@ structure multi_agent_modal_logic (α : Type*) (agents : Type*) :=
   (valuation : α → worlds → Prop)
 
 -- 智能体知识
-def agent_knows {α agents : Type*} (M : multi_agent_modal_logic α agents) 
+def agent_knows {α agents : Type*} (M : multi_agent_modal_logic α agents)
   (agent : agents) (φ : worlds → Prop) (w : worlds) : Prop :=
   ∀ v, M.accessibility agent w v → φ v
 
@@ -391,15 +394,15 @@ def common_knowledge {α agents : Type*} (M : multi_agent_modal_logic α agents)
 
 ## 参考文献
 
-1. Blackburn, P., de Rijke, M., & Venema, Y. (2001). *Modal logic*. Cambridge University Press.
-2. Fagin, R., Halpern, J. Y., Moses, Y., & Vardi, M. Y. (2003). *Reasoning about knowledge*. MIT Press.
-3. Clarke, E. M., Grumberg, O., & Peled, D. A. (1999). *Model checking*. MIT Press.
-4. van Benthem, J. (2010). *Modal logic for open minds*. CSLI Publications.
+1. Blackburn, P., de Rijke, M., & Venema, Y. (2001). _Modal logic_. Cambridge University Press.
+2. Fagin, R., Halpern, J. Y., Moses, Y., & Vardi, M. Y. (2003). _Reasoning about knowledge_. MIT Press.
+3. Clarke, E. M., Grumberg, O., & Peled, D. A. (1999). _Model checking_. MIT Press.
+4. van Benthem, J. (2010). _Modal logic for open minds_. CSLI Publications.
 
 ---
 
-**更新时间**: 2024-12-21  
-**版本**: 1.0  
+**更新时间**: 2024-12-21
+**版本**: 1.0
 **作者**: FormalScience Team
 
 ## 8 批判性分析

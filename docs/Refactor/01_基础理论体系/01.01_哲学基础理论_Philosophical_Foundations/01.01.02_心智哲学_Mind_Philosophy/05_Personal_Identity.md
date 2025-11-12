@@ -129,54 +129,54 @@ impl PersonalIdentityJudgment {
             IdentityCriterion::Narrative(narr) => self.evaluate_narrative_criterion(narr),
         }
     }
-    
+
     fn evaluate_physical_criterion(&self, criterion: &PhysicalCriterion) -> IdentityResult {
         let mut score = 0.0;
         let mut factors = 0;
-        
+
         if criterion.body_continuity {
             score += self.compute_body_continuity();
             factors += 1;
         }
-        
+
         if criterion.brain_continuity {
             score += self.compute_brain_continuity();
             factors += 1;
         }
-        
+
         if criterion.biological_continuity {
             score += self.compute_biological_continuity();
             factors += 1;
         }
-        
+
         let final_score = if factors > 0 { score / factors as f64 } else { 0.0 };
-        
+
         IdentityResult {
             is_same_person: final_score > 0.7,
             confidence: final_score,
             reasoning: "Physical criterion evaluation".to_string(),
         }
     }
-    
+
     fn evaluate_psychological_criterion(&self, criterion: &PsychologicalCriterion) -> IdentityResult {
         let mut score = 0.0;
         let mut factors = 0;
-        
+
         if criterion.memory_continuity {
             score += self.compute_memory_continuity();
             factors += 1;
         }
-        
+
         if criterion.personality_continuity {
             score += self.compute_personality_continuity();
             factors += 1;
         }
-        
+
         score += criterion.psychological_connectedness;
         factors += 1;
-        
+
         let final_score = score / factors as f64;
-        
+
         IdentityResult {
             is_same_person: final_score > 0.6,
             confidence: final_score,
@@ -236,18 +236,18 @@ impl BodyCriterion {
         let brain_similarity = self.compute_brain_similarity(&person1.brain_state, &person2.brain_state);
         let body_similarity = self.compute_body_similarity(&person1.body_state, &person2.body_state);
         let bio_continuity = self.compute_biological_continuity(&person1.biological_markers, &person2.biological_markers);
-        
+
         (brain_similarity * self.brain_identity_weight +
          body_similarity * self.body_identity_weight +
          bio_continuity * self.biological_continuity_weight) /
         (self.brain_identity_weight + self.body_identity_weight + self.biological_continuity_weight)
     }
-    
+
     fn compute_brain_similarity(&self, brain1: &BrainState, brain2: &BrainState) -> f64 {
         // 简化的大脑相似性计算
         let structure_similarity = self.compare_brain_structures(&brain1.structure, &brain2.structure);
         let function_similarity = self.compare_brain_functions(&brain1.functions, &brain2.functions);
-        
+
         (structure_similarity + function_similarity) / 2.0
     }
 }
@@ -305,39 +305,39 @@ impl PsychologicalCriterion {
         let memory_continuity = self.evaluate_memory_continuity(person1, person2);
         let personality_continuity = self.evaluate_personality_continuity(person1, person2);
         let belief_continuity = self.evaluate_belief_continuity(person1, person2);
-        
+
         let weighted_average = (
             memory_continuity * 0.4 +
             personality_continuity * 0.3 +
             belief_continuity * 0.3
         );
-        
+
         weighted_average
     }
-    
+
     fn evaluate_memory_continuity(&self, person1: &PersonStage, person2: &PersonStage) -> f64 {
         let mut total_strength = 0.0;
         let mut chain_count = 0;
-        
+
         for chain in &self.memory_chains {
             if self.spans_persons(chain, person1, person2) {
                 total_strength += chain.strength;
                 chain_count += 1;
             }
         }
-        
+
         if chain_count > 0 {
             total_strength / chain_count as f64
         } else {
             0.0
         }
     }
-    
+
     fn create_quasi_memory_relation(&self, experience1: &Experience, memory2: &MemoryContent) -> f64 {
         // 准记忆关系：类似记忆但不要求亲身经历
         let content_similarity = self.compare_content(&experience1.content, &memory2.content);
         let temporal_consistency = self.check_temporal_consistency(&experience1.timestamp, &memory2.timestamp);
-        
+
         content_similarity * temporal_consistency
     }
 }
@@ -398,14 +398,14 @@ pub struct ExperienceStream {
 impl BundleTheory {
     pub fn analyze_person_stages(&self, experiences: &[Experience]) -> Vec<PersonalityCluster> {
         let mut clusters = Vec::new();
-        
+
         // 根据经验的关联模式分组
         for pattern in &self.association_patterns {
             let matching_experiences = experiences.iter()
                 .filter(|exp| pattern.matches(exp))
                 .cloned()
                 .collect();
-                
+
             if !matching_experiences.is_empty() {
                 clusters.push(PersonalityCluster {
                     experiences: matching_experiences,
@@ -414,16 +414,16 @@ impl BundleTheory {
                 });
             }
         }
-        
+
         clusters
     }
-    
+
     pub fn evaluate_temporal_continuity(&self, cluster1: &PersonalityCluster, cluster2: &PersonalityCluster) -> f64 {
         // 评估经验束之间的连续性
         let experience_overlap = self.compute_experience_overlap(&cluster1.experiences, &cluster2.experiences);
         let pattern_similarity = self.compute_pattern_similarity(cluster1, cluster2);
         let temporal_proximity = self.compute_temporal_proximity(cluster1, cluster2);
-        
+
         (experience_overlap + pattern_similarity + temporal_proximity) / 3.0
     }
 }
@@ -455,7 +455,7 @@ pub struct TeleportationScenario {
 impl TeleportationScenario {
     pub fn analyze_identity_judgments(&self) -> Vec<IdentityJudgment> {
         let mut judgments = Vec::new();
-        
+
         // 物理标准分析
         let physical_judgment = if self.destruction_of_original {
             IdentityJudgment {
@@ -466,13 +466,13 @@ impl TeleportationScenario {
             }
         } else {
             IdentityJudgment {
-                criterion: "Physical", 
+                criterion: "Physical",
                 same_person: false,
                 reasoning: "Multiple claimants".to_string(),
                 confidence: 0.8,
             }
         };
-        
+
         // 心理标准分析
         let psychological_judgment = IdentityJudgment {
             criterion: "Psychological",
@@ -480,7 +480,7 @@ impl TeleportationScenario {
             reasoning: format!("Psychological continuity with fidelity {}", self.copying_fidelity),
             confidence: self.copying_fidelity,
         };
-        
+
         judgments.push(physical_judgment);
         judgments.push(psychological_judgment);
         judgments
@@ -558,37 +558,37 @@ impl NarrativeIdentity {
     pub fn construct_identity(&mut self, new_experiences: &[Experience]) -> IdentityUpdate {
         // 整合新经验到生活故事中
         let updated_events = self.integrate_experiences(new_experiences);
-        
+
         // 重新评估叙事连贯性
         let new_coherence = self.compute_narrative_coherence(&updated_events);
-        
+
         // 更新主题和价值观
         let updated_themes = self.extract_life_themes(&updated_events);
-        
+
         IdentityUpdate {
             coherence_change: new_coherence - self.narrative_coherence,
             new_themes: updated_themes,
             stability_measure: self.compute_identity_stability(),
         }
     }
-    
+
     fn compute_narrative_coherence(&self, events: &[LifeEvent]) -> f64 {
         let temporal_coherence = self.evaluate_temporal_structure(events);
         let causal_coherence = self.evaluate_causal_connections(events);
         let thematic_coherence = self.evaluate_thematic_consistency(events);
-        
+
         (temporal_coherence + causal_coherence + thematic_coherence) / 3.0
     }
-    
+
     fn evaluate_meaning_integration(&self, event: &LifeEvent) -> f64 {
         let mut integration_score = 0.0;
-        
+
         for pattern in &self.meaning_making_patterns {
             if pattern.applies_to(event) {
                 integration_score += pattern.strength * event.identity_relevance;
             }
         }
-        
+
         integration_score.min(1.0)
     }
 }
@@ -694,7 +694,7 @@ impl PracticalApplication {
 
 ## 返回
 
-[返回心灵哲学](README.md)  
+[返回心灵哲学](README.md)
 [返回哲学基础模块](README.md)
 
 ## 批判性分析

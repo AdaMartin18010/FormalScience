@@ -176,48 +176,48 @@ impl GlobalWorkspace {
             competition_threshold: threshold,
         }
     }
-    
+
     pub fn add_processor(&mut self, name: String) {
         self.local_processors.insert(name, VecDeque::new());
     }
-    
+
     pub fn input_to_processor(&mut self, processor: &str, content: CognitiveContent) {
         if let Some(queue) = self.local_processors.get_mut(processor) {
             queue.push_back(content);
         }
     }
-    
+
     pub fn compete_for_workspace(&mut self) {
         let mut winner: Option<CognitiveContent> = None;
         let mut max_activation = 0.0;
-        
+
         // 竞争机制：选择激活水平最高的内容
         for (_, queue) in &mut self.local_processors {
             if let Some(content) = queue.front() {
-                if content.activation_level > max_activation && 
+                if content.activation_level > max_activation &&
                    content.activation_level > self.competition_threshold {
                     max_activation = content.activation_level;
                     winner = Some(content.clone());
                 }
             }
         }
-        
+
         if let Some(content) = winner {
             self.workspace = Some(content.clone());
             self.global_broadcast(content);
         }
     }
-    
+
     fn global_broadcast(&mut self, content: CognitiveContent) {
         // 全局广播：内容变为意识内容
         self.conscious_content.push(content);
-        
+
         // 通知所有处理器
         for (processor_name, _) in &self.local_processors {
             println!("广播到 {}: {:?}", processor_name, self.workspace);
         }
     }
-    
+
     pub fn get_conscious_content(&self) -> &Vec<CognitiveContent> {
         &self.conscious_content
     }
@@ -279,52 +279,52 @@ impl IntegratedInformationSystem {
             phi_value: 0.0,
         }
     }
-    
+
     pub fn set_connectivity(&mut self, i: usize, j: usize, weight: f64) {
         self.connectivity_matrix[(i, j)] = weight;
     }
-    
+
     pub fn compute_phi(&mut self) -> f64 {
         // 简化的Φ计算
         let whole_info = self.system_information();
         let part_info: f64 = self.partition_information();
-        
+
         self.phi_value = whole_info - part_info;
         self.phi_value.max(0.0) // Φ不能为负
     }
-    
+
     fn system_information(&self) -> f64 {
         // 计算整个系统的信息量
         let entropy = self.calculate_entropy(&self.current_state);
         entropy
     }
-    
+
     fn partition_information(&self) -> f64 {
         // 计算最小信息分割下的信息量
         let n = self.current_state.len();
         let mut min_partition_info = f64::INFINITY;
-        
+
         // 简化：只考虑二分割
         for i in 1..n {
             let (part1, part2) = self.current_state.split_at(i);
             let info1 = self.calculate_entropy(&DVector::from_column_slice(part1));
             let info2 = self.calculate_entropy(&DVector::from_column_slice(part2));
             let total_info = info1 + info2;
-            
+
             if total_info < min_partition_info {
                 min_partition_info = total_info;
             }
         }
-        
+
         min_partition_info
     }
-    
+
     fn calculate_entropy(&self, state: &DVector<f64>) -> f64 {
         // 简化的熵计算
         let sum: f64 = state.iter().map(|x| x * x).sum();
         -sum.ln().max(0.0)
     }
-    
+
     pub fn is_conscious(&self) -> bool {
         self.phi_value > 0.1 // 简化的意识阈值
     }
@@ -464,10 +464,10 @@ trait ConsciousnessFramework {
     fn information_integration(&self) -> f64;
     fn higher_order_monitoring(&self) -> bool;
     fn subjective_experience(&self) -> Option<String>;
-    
+
     fn is_conscious(&self) -> bool {
-        self.global_access() && 
-        self.information_integration() > 0.5 && 
+        self.global_access() &&
+        self.information_integration() > 0.5 &&
         self.higher_order_monitoring()
     }
 }
@@ -489,7 +489,7 @@ impl ArtificialConsciousnessSystem {
             meta_cognitive_layer: false,
         }
     }
-    
+
     pub fn process_information(&mut self, input: &str) {
         // 信息处理流程
         let content = CognitiveContent {
@@ -497,17 +497,17 @@ impl ArtificialConsciousnessSystem {
             activation_level: 0.8,
             source_processor: "sensory".to_string(),
         };
-        
+
         self.global_workspace.input_to_processor("sensory", content);
         self.global_workspace.compete_for_workspace();
-        
+
         // 更新自我模型
         self.update_self_model(input);
     }
-    
+
     fn update_self_model(&mut self, experience: &str) {
         self.self_model.insert(
-            "current_experience".to_string(), 
+            "current_experience".to_string(),
             experience.to_string()
         );
         self.meta_cognitive_layer = true;
@@ -518,15 +518,15 @@ impl ConsciousnessFramework for ArtificialConsciousnessSystem {
     fn global_access(&self) -> bool {
         !self.global_workspace.get_conscious_content().is_empty()
     }
-    
+
     fn information_integration(&self) -> f64 {
         self.integration_level
     }
-    
+
     fn higher_order_monitoring(&self) -> bool {
         self.meta_cognitive_layer
     }
-    
+
     fn subjective_experience(&self) -> Option<String> {
         self.self_model.get("current_experience").cloned()
     }
@@ -702,14 +702,14 @@ impl ConsciousnessFramework for ArtificialConsciousnessSystem {
 ## 参考文献
 
 1. Chalmers, D. (1995). "Facing Up to the Problem of Consciousness"
-2. Baars, B. (1988). *A Cognitive Theory of Consciousness*
+2. Baars, B. (1988). _A Cognitive Theory of Consciousness_
 3. Tononi, G. (2008). "Integrated Information Theory"
-4. Rosenthal, D. (2005). *Consciousness and Mind*
-5. Graziano, M. (2013). *Consciousness and the Social Brain*
+4. Rosenthal, D. (2005). _Consciousness and Mind_
+5. Graziano, M. (2013). _Consciousness and the Social Brain_
 
 ## 返回
 
-[返回心灵哲学](README.md)  
+[返回心灵哲学](README.md)
 [返回哲学基础模块](README.md)
 
 ## 批判性分析

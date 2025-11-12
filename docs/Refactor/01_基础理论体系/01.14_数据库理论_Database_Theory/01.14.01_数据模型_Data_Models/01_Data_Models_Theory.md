@@ -3,7 +3,7 @@
 ## 目录
 
 - [12.1.1 数据模型理论](#1211-数据模型理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 数据模型定义](#11-数据模型定义)
@@ -137,14 +137,14 @@ impl Relation {
             foreign_keys: Vec::new(),
         }
     }
-    
+
     pub fn add_attribute(&mut self, attribute: Attribute) {
         if attribute.is_primary_key {
             self.primary_key.push(attribute.name.clone());
         }
         self.attributes.push(attribute);
     }
-    
+
     pub fn insert_tuple(&mut self, values: HashMap<String, String>) -> Result<(), String> {
         // 验证主键约束
         if !self.primary_key.is_empty() {
@@ -156,7 +156,7 @@ impl Relation {
                     return Err(format!("Primary key attribute {} is missing", key));
                 }
             }
-            
+
             // 检查主键唯一性
             for tuple in &self.tuples {
                 let mut existing_key_values = Vec::new();
@@ -165,13 +165,13 @@ impl Relation {
                         existing_key_values.push((key.clone(), value.clone()));
                     }
                 }
-                
+
                 if key_values == existing_key_values {
                     return Err("Primary key constraint violation".to_string());
                 }
             }
         }
-        
+
         // 验证数据类型
         for attribute in &self.attributes {
             if let Some(value) = values.get(&attribute.name) {
@@ -182,12 +182,12 @@ impl Relation {
                 return Err(format!("Non-nullable attribute {} is missing", attribute.name));
             }
         }
-        
+
         let tuple = Tuple { values };
         self.tuples.push(tuple);
         Ok(())
     }
-    
+
     pub fn select(&self, condition: Option<Box<dyn Fn(&Tuple) -> bool>>) -> Vec<Tuple> {
         if let Some(predicate) = condition {
             self.tuples.iter()
@@ -198,17 +198,17 @@ impl Relation {
             self.tuples.clone()
         }
     }
-    
+
     pub fn project(&self, attributes: &[String]) -> Relation {
         let mut projected_relation = Relation::new(format!("{}_projected", self.name));
-        
+
         // 添加投影的属性
         for attr_name in attributes {
             if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                 projected_relation.add_attribute(attr.clone());
             }
         }
-        
+
         // 投影元组
         for tuple in &self.tuples {
             let mut projected_values = HashMap::new();
@@ -219,13 +219,13 @@ impl Relation {
             }
             let _ = projected_relation.insert_tuple(projected_values);
         }
-        
+
         projected_relation
     }
-    
+
     pub fn join(&self, other: &Relation, condition: Box<dyn Fn(&Tuple, &Tuple) -> bool>) -> Relation {
         let mut joined_relation = Relation::new(format!("{}_join_{}", self.name, other.name));
-        
+
         // 合并属性
         for attr in &self.attributes {
             joined_relation.add_attribute(attr.clone());
@@ -233,7 +233,7 @@ impl Relation {
         for attr in &other.attributes {
             joined_relation.add_attribute(attr.clone());
         }
-        
+
         // 执行连接
         for tuple1 in &self.tuples {
             for tuple2 in &other.tuples {
@@ -244,10 +244,10 @@ impl Relation {
                 }
             }
         }
-        
+
         joined_relation
     }
-    
+
     fn validate_data_type(&self, value: &str, data_type: &DataType) -> bool {
         match data_type {
             DataType::Integer => value.parse::<i64>().is_ok(),
@@ -264,11 +264,11 @@ impl Relation {
             },
         }
     }
-    
+
     pub fn get_cardinality(&self) -> usize {
         self.tuples.len()
     }
-    
+
     pub fn get_degree(&self) -> usize {
         self.attributes.len()
     }
@@ -325,30 +325,30 @@ impl ERModel {
             relationships: HashMap::new(),
         }
     }
-    
+
     pub fn add_entity(&mut self, entity: Entity) {
         self.entities.insert(entity.name.clone(), entity);
     }
-    
+
     pub fn add_relationship(&mut self, relationship: Relationship) {
         self.relationships.insert(relationship.name.clone(), relationship);
     }
-    
+
     pub fn get_entity(&self, name: &str) -> Option<&Entity> {
         self.entities.get(name)
     }
-    
+
     pub fn get_relationship(&self, name: &str) -> Option<&Relationship> {
         self.relationships.get(name)
     }
-    
+
     pub fn to_relational_model(&self) -> Vec<Relation> {
         let mut relations = Vec::new();
-        
+
         // 转换实体为关系
         for entity in self.entities.values() {
             let mut relation = Relation::new(entity.name.clone());
-            
+
             for attr in &entity.attributes {
                 let attribute = Attribute {
                     name: attr.name.clone(),
@@ -359,10 +359,10 @@ impl ERModel {
                 };
                 relation.add_attribute(attribute);
             }
-            
+
             relations.push(relation);
         }
-        
+
         // 转换关系为关系表
         for relationship in self.relationships.values() {
             if relationship.entities.len() == 2 {
@@ -370,12 +370,12 @@ impl ERModel {
                 let entity2 = &relationship.entities[1];
                 let cardinality1 = &relationship.cardinality[0];
                 let cardinality2 = &relationship.cardinality[1];
-                
+
                 match (cardinality1, cardinality2) {
                     (Cardinality::ManyToMany, Cardinality::ManyToMany) => {
                         // 创建连接表
                         let mut relation = Relation::new(format!("{}_relation", relationship.name));
-                        
+
                         // 添加外键
                         if let Some(entity1_obj) = self.entities.get(entity1) {
                             for pk in &entity1_obj.primary_key {
@@ -389,7 +389,7 @@ impl ERModel {
                                 relation.add_attribute(attribute);
                             }
                         }
-                        
+
                         if let Some(entity2_obj) = self.entities.get(entity2) {
                             for pk in &entity2_obj.primary_key {
                                 let attribute = Attribute {
@@ -402,7 +402,7 @@ impl ERModel {
                                 relation.add_attribute(attribute);
                             }
                         }
-                        
+
                         // 添加关系属性
                         for attr in &relationship.attributes {
                             let attribute = Attribute {
@@ -414,7 +414,7 @@ impl ERModel {
                             };
                             relation.add_attribute(attribute);
                         }
-                        
+
                         relations.push(relation);
                     },
                     (Cardinality::OneToMany, Cardinality::ManyToOne) => {
@@ -440,13 +440,13 @@ impl ERModel {
                 }
             }
         }
-        
+
         relations
     }
-    
+
     pub fn validate_model(&self) -> Vec<String> {
         let mut errors = Vec::new();
-        
+
         // 检查实体名称唯一性
         let mut entity_names = HashSet::new();
         for entity in self.entities.values() {
@@ -454,30 +454,30 @@ impl ERModel {
                 errors.push(format!("Duplicate entity name: {}", entity.name));
             }
         }
-        
+
         // 检查关系中的实体是否存在
         for relationship in self.relationships.values() {
             for entity_name in &relationship.entities {
                 if !self.entities.contains_key(entity_name) {
-                    errors.push(format!("Entity {} referenced in relationship {} does not exist", 
+                    errors.push(format!("Entity {} referenced in relationship {} does not exist",
                                       entity_name, relationship.name));
                 }
             }
         }
-        
+
         // 检查主键约束
         for entity in self.entities.values() {
             if entity.primary_key.is_empty() {
                 errors.push(format!("Entity {} has no primary key", entity.name));
             }
-            
+
             for pk in &entity.primary_key {
                 if !entity.attributes.iter().any(|attr| &attr.name == pk) {
                     errors.push(format!("Primary key {} in entity {} does not exist", pk, entity.name));
                 }
             }
         }
-        
+
         errors
     }
 }
@@ -516,19 +516,19 @@ impl Relation {
             dependencies: dependencies.to_vec(),
             normal_form: NormalForm::FirstNormalForm,
         };
-        
+
         // 检查1NF
         if self.is_first_normal_form() {
             result.normal_form = NormalForm::FirstNormalForm;
-            
+
             // 检查2NF
             if self.is_second_normal_form(dependencies) {
                 result.normal_form = NormalForm::SecondNormalForm;
-                
+
                 // 检查3NF
                 if self.is_third_normal_form(dependencies) {
                     result.normal_form = NormalForm::ThirdNormalForm;
-                    
+
                     // 检查BCNF
                     if self.is_boyce_codd_normal_form(dependencies) {
                         result.normal_form = NormalForm::BoyceCoddNormalForm;
@@ -545,10 +545,10 @@ impl Relation {
                 result.relations = self.decompose_to_2nf(dependencies);
             }
         }
-        
+
         result
     }
-    
+
     fn is_first_normal_form(&self) -> bool {
         // 检查是否有重复组
         for tuple in &self.tuples {
@@ -560,17 +560,17 @@ impl Relation {
         }
         true
     }
-    
+
     fn is_second_normal_form(&self, dependencies: &[FunctionalDependency]) -> bool {
         if self.primary_key.len() <= 1 {
             return true; // 单属性主键自动满足2NF
         }
-        
+
         // 检查是否有部分函数依赖
         for dependency in dependencies {
             if dependency.dependent.len() == 1 {
                 let dependent = &dependency.dependent[0];
-                
+
                 // 检查依赖属性是否在主键中
                 if !self.primary_key.contains(dependent) {
                     // 检查是否部分依赖
@@ -584,12 +584,12 @@ impl Relation {
         }
         true
     }
-    
+
     fn is_third_normal_form(&self, dependencies: &[FunctionalDependency]) -> bool {
         for dependency in dependencies {
             if dependency.dependent.len() == 1 {
                 let dependent = &dependency.dependent[0];
-                
+
                 // 检查是否是非主属性
                 if !self.primary_key.contains(dependent) {
                     // 检查决定因素是否是超键
@@ -601,7 +601,7 @@ impl Relation {
         }
         true
     }
-    
+
     fn is_boyce_codd_normal_form(&self, dependencies: &[FunctionalDependency]) -> bool {
         for dependency in dependencies {
             if !self.is_superkey(&dependency.determinant) {
@@ -610,25 +610,25 @@ impl Relation {
         }
         true
     }
-    
+
     fn is_superkey(&self, attributes: &[String]) -> bool {
         let attribute_set: HashSet<_> = attributes.iter().collect();
         let primary_key_set: HashSet<_> = self.primary_key.iter().collect();
         primary_key_set.is_subset(&attribute_set)
     }
-    
+
     fn decompose_to_2nf(&self, dependencies: &[FunctionalDependency]) -> Vec<Relation> {
         let mut relations = Vec::new();
-        
+
         // 创建主关系
         let mut main_relation = self.clone();
         relations.push(main_relation);
-        
+
         // 处理部分依赖
         for dependency in dependencies {
             if dependency.dependent.len() == 1 {
                 let dependent = &dependency.dependent[0];
-                
+
                 if !self.primary_key.contains(dependent) {
                     // 检查是否部分依赖
                     let mut is_partial = false;
@@ -638,100 +638,100 @@ impl Relation {
                             break;
                         }
                     }
-                    
+
                     if is_partial {
                         // 创建新关系
                         let mut new_relation = Relation::new(format!("{}_partial", self.name));
-                        
+
                         // 添加决定因素和依赖属性
                         for attr_name in &dependency.determinant {
                             if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                                 new_relation.add_attribute(attr.clone());
                             }
                         }
-                        
+
                         for attr_name in &dependency.dependent {
                             if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                                 new_relation.add_attribute(attr.clone());
                             }
                         }
-                        
+
                         relations.push(new_relation);
                     }
                 }
             }
         }
-        
+
         relations
     }
-    
+
     fn decompose_to_3nf(&self, dependencies: &[FunctionalDependency]) -> Vec<Relation> {
         let mut relations = Vec::new();
-        
+
         // 创建主关系
         let mut main_relation = self.clone();
         relations.push(main_relation);
-        
+
         // 处理传递依赖
         for dependency in dependencies {
             if dependency.dependent.len() == 1 {
                 let dependent = &dependency.dependent[0];
-                
+
                 if !self.primary_key.contains(dependent) && !self.is_superkey(&dependency.determinant) {
                     // 创建新关系
                     let mut new_relation = Relation::new(format!("{}_transitive", self.name));
-                    
+
                     // 添加决定因素和依赖属性
                     for attr_name in &dependency.determinant {
                         if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                             new_relation.add_attribute(attr.clone());
                         }
                     }
-                    
+
                     for attr_name in &dependency.dependent {
                         if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                             new_relation.add_attribute(attr.clone());
                         }
                     }
-                    
+
                     relations.push(new_relation);
                 }
             }
         }
-        
+
         relations
     }
-    
+
     fn decompose_to_bcnf(&self, dependencies: &[FunctionalDependency]) -> Vec<Relation> {
         let mut relations = Vec::new();
-        
+
         // 创建主关系
         let mut main_relation = self.clone();
         relations.push(main_relation);
-        
+
         // 处理BCNF违反
         for dependency in dependencies {
             if !self.is_superkey(&dependency.determinant) {
                 // 创建新关系
                 let mut new_relation = Relation::new(format!("{}_bcnf", self.name));
-                
+
                 // 添加决定因素和依赖属性
                 for attr_name in &dependency.determinant {
                     if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                         new_relation.add_attribute(attr.clone());
                     }
                 }
-                
+
                 for attr_name in &dependency.dependent {
                     if let Some(attr) = self.attributes.iter().find(|a| &a.name == attr_name) {
                         new_relation.add_attribute(attr.clone());
                     }
                 }
-                
+
                 relations.push(new_relation);
             }
         }
-        
+
         relations
     }
 }
@@ -751,8 +751,8 @@ impl Relation {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

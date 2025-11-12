@@ -2,24 +2,27 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 理论基础](#2-理论基础)
-  - [2.1 形式化定义](#21-形式化定义)
-- [3 语法实现](#3-语法实现)
-  - [3.1 公式数据结构](#31-公式数据结构)
-  - [3.2 公式解析器](#32-公式解析器)
-- [4 语义实现](#4-语义实现)
-  - [4.1 真值赋值](#41-真值赋值)
-  - [4.2 真值表生成](#42-真值表生成)
-- [5 证明系统](#5-证明系统)
-  - [5.1 自然演绎](#51-自然演绎)
-  - [5.2 证明验证器](#52-证明验证器)
-- [6 形式化验证](#6-形式化验证)
-  - [6.1 逻辑等价性](#61-逻辑等价性)
-  - [6.2 完备性证明](#62-完备性证明)
-- [7 总结](#7-总结)
-- [8 相关链接](#8-相关链接)
-- [9 批判性分析](#9-批判性分析)
+- [命题逻辑 (Propositional Logic)](#命题逻辑-propositional-logic)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 理论基础](#2-理论基础)
+    - [2.1 形式化定义](#21-形式化定义)
+  - [3 语法实现](#3-语法实现)
+    - [3.1 公式数据结构](#31-公式数据结构)
+    - [3.2 公式解析器](#32-公式解析器)
+  - [4 语义实现](#4-语义实现)
+    - [4.1 真值赋值](#41-真值赋值)
+    - [4.2 真值表生成](#42-真值表生成)
+  - [5 证明系统](#5-证明系统)
+    - [5.1 自然演绎](#51-自然演绎)
+    - [5.2 证明验证器](#52-证明验证器)
+  - [6 形式化验证](#6-形式化验证)
+    - [6.1 逻辑等价性](#61-逻辑等价性)
+    - [6.2 完备性证明](#62-完备性证明)
+  - [7 总结](#7-总结)
+  - [参考文献](#参考文献)
+  - [8 相关链接](#8-相关链接)
+  - [9 批判性分析](#9-批判性分析)
 
 ---
 
@@ -137,7 +140,7 @@ impl PropositionalFormula {
     }
 
     pub fn is_binary(&self) -> bool {
-        matches!(self, 
+        matches!(self,
             PropositionalFormula::And(_, _) |
             PropositionalFormula::Or(_, _) |
             PropositionalFormula::Implies(_, _) |
@@ -209,49 +212,49 @@ impl PropositionalParser {
 
     fn parse_implication(&mut self) -> Result<PropositionalFormula, String> {
         let mut left = self.parse_equivalence()?;
-        
+
         while self.check_token(&Token::Implies) {
             self.advance();
             let right = self.parse_equivalence()?;
             left = PropositionalFormula::implies(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_equivalence(&mut self) -> Result<PropositionalFormula, String> {
         let mut left = self.parse_or()?;
-        
+
         while self.check_token(&Token::Iff) {
             self.advance();
             let right = self.parse_or()?;
             left = PropositionalFormula::iff(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_or(&mut self) -> Result<PropositionalFormula, String> {
         let mut left = self.parse_and()?;
-        
+
         while self.check_token(&Token::Or) {
             self.advance();
             let right = self.parse_and()?;
             left = PropositionalFormula::or(left, right);
         }
-        
+
         Ok(left)
     }
 
     fn parse_and(&mut self) -> Result<PropositionalFormula, String> {
         let mut left = self.parse_not()?;
-        
+
         while self.check_token(&Token::And) {
             self.advance();
             let right = self.parse_not()?;
             left = PropositionalFormula::and(left, right);
         }
-        
+
         Ok(left)
     }
 
@@ -284,7 +287,7 @@ impl PropositionalParser {
     fn tokenize(input: &str) -> Vec<Token> {
         let mut tokens = Vec::new();
         let mut chars = input.chars().peekable();
-        
+
         while let Some(ch) = chars.next() {
             match ch {
                 ' ' | '\t' | '\n' => continue,
@@ -312,7 +315,7 @@ impl PropositionalParser {
                 }
             }
         }
-        
+
         tokens.push(Token::End);
         tokens
     }
@@ -401,7 +404,7 @@ impl PropositionalSemantics {
         all_atoms.extend(atoms_psi);
         all_atoms.sort();
         all_atoms.dedup();
-        
+
         Self::check_equivalence_all_valuations(phi, psi, &all_atoms, 0, &mut HashMap::new())
     }
 
@@ -519,9 +522,9 @@ impl TruthTable {
     pub fn generate(formula: &PropositionalFormula) -> Self {
         let atoms = formula.collect_atoms();
         let mut rows = Vec::new();
-        
+
         Self::generate_rows(formula, &atoms, 0, &mut HashMap::new(), &mut rows);
-        
+
         TruthTable { atoms, rows }
     }
 
@@ -555,13 +558,13 @@ impl TruthTable {
             print!("{} | ", atom);
         }
         println!("Result");
-        
+
         // 打印分隔线
         for _ in &self.atoms {
             print!("---|");
         }
         println!("-------");
-        
+
         // 打印数据行
         for row in &self.rows {
             for atom in &self.atoms {
@@ -776,7 +779,7 @@ impl ProofVerifier {
                 return false;
             }
         }
-        
+
         // 检查结论是否在最后一步
         if let Some(last_step) = proof.steps.last() {
             last_step.formula == proof.conclusion
@@ -855,7 +858,7 @@ impl LogicalEquivalence {
             PropositionalFormula::not(phi.clone()),
             PropositionalFormula::not(psi.clone()),
         );
-        
+
         PropositionalSemantics::logical_equivalence(&left, &right)
     }
 
@@ -865,7 +868,7 @@ impl LogicalEquivalence {
             PropositionalFormula::not(phi.clone()),
             PropositionalFormula::not(psi.clone()),
         );
-        
+
         PropositionalSemantics::logical_equivalence(&left, &right)
     }
 
@@ -880,7 +883,7 @@ impl LogicalEquivalence {
             PropositionalFormula::not(phi.clone()),
             psi.clone(),
         );
-        
+
         PropositionalSemantics::logical_equivalence(&implies, &or_form)
     }
 
@@ -897,7 +900,7 @@ impl LogicalEquivalence {
             PropositionalFormula::and(phi.clone(), psi.clone()),
             PropositionalFormula::and(phi.clone(), chi.clone()),
         );
-        
+
         PropositionalSemantics::logical_equivalence(&left, &right)
     }
 
@@ -914,7 +917,7 @@ impl LogicalEquivalence {
             PropositionalFormula::or(phi.clone(), psi.clone()),
             PropositionalFormula::or(phi.clone(), chi.clone()),
         );
-        
+
         PropositionalSemantics::logical_equivalence(&left, &right)
     }
 }

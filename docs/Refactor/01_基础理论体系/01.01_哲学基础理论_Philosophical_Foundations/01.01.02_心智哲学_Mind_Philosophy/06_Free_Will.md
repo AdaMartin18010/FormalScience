@@ -126,7 +126,7 @@ impl HardDeterminism {
         // 根据因果法则和初始条件预测行为
         let causal_factors = self.analyze_causal_factors(agent, situation);
         let determining_causes = self.identify_determining_causes(&causal_factors);
-        
+
         BehaviorPrediction {
             predicted_action: self.compute_determined_action(&determining_causes),
             certainty: 1.0, // 硬决定论假设完全确定性
@@ -134,22 +134,22 @@ impl HardDeterminism {
             moral_responsibility: false,
         }
     }
-    
+
     fn analyze_causal_factors(&self, agent: &Agent, situation: &Situation) -> Vec<CausalFactor> {
         let mut factors = Vec::new();
-        
+
         // 遗传因素
         factors.extend(agent.genetic_factors.iter().map(|g| CausalFactor::Genetic(g.clone())));
-        
+
         // 环境因素
         factors.extend(situation.environmental_factors.iter().map(|e| CausalFactor::Environmental(e.clone())));
-        
+
         // 历史因素
         factors.extend(agent.developmental_history.iter().map(|h| CausalFactor::Historical(h.clone())));
-        
+
         // 即时生理状态
         factors.push(CausalFactor::Physiological(agent.current_brain_state.clone()));
-        
+
         factors
     }
 }
@@ -195,9 +195,9 @@ impl Libertarianism {
         let causal_openness = self.assess_causal_openness(context);
         let agent_origination = self.assess_agent_origination(action);
         let alternative_availability = self.assess_alternatives(context);
-        
+
         let freedom_degree = (causal_openness + agent_origination + alternative_availability) / 3.0;
-        
+
         FreedomAssessment {
             freedom_degree,
             morally_responsible: freedom_degree > self.moral_responsibility_threshold,
@@ -205,26 +205,26 @@ impl Libertarianism {
             alternative_possibilities: alternative_availability > 0.6,
         }
     }
-    
+
     fn assess_causal_openness(&self, context: &ActionContext) -> f64 {
         if self.quantum_amplification {
             // 量子不确定性在宏观层面的放大
             let quantum_influence = context.neural_activity.quantum_coherence_level;
             let amplification_factor = context.brain_state.sensitivity_to_quantum_effects;
-            
+
             (quantum_influence * amplification_factor).min(1.0)
         } else {
             // 经典的因果间隙
             1.0 - context.causal_determination_level
         }
     }
-    
+
     fn assess_agent_origination(&self, action: &Action) -> f64 {
         // 评估行为者作为行动最终源头的程度
         let rational_reflection = action.deliberation_quality;
         let value_alignment = action.value_expression_degree;
         let creative_element = action.novelty_level;
-        
+
         (rational_reflection + value_alignment + creative_element) / 3.0
     }
 }
@@ -272,14 +272,14 @@ impl Compatibilism {
         let rational_endorsement = self.assess_rational_endorsement(action, agent);
         let absence_of_coercion = self.assess_coercion_absence(&action.context);
         let social_accountability = self.assess_social_accountability(action);
-        
+
         let freedom_score = (
             desire_authenticity * 0.3 +
             rational_endorsement * 0.3 +
             absence_of_coercion * 0.3 +
             social_accountability * 0.1
         );
-        
+
         CompatibilistAssessment {
             free_action: freedom_score > 0.7,
             moral_responsibility: freedom_score > 0.6,
@@ -288,16 +288,16 @@ impl Compatibilism {
             social_compatibility: social_accountability > 0.5,
         }
     }
-    
+
     fn assess_desire_authenticity(&self, motivation: &Motivation, agent: &Agent) -> f64 {
         // 评估欲望的真实性 - 是否来自行为者的深层自我
         let consistency_with_values = motivation.value_alignment_score(&agent.core_values);
         let stability_over_time = motivation.temporal_stability_score(&agent.motivational_history);
         let integration_with_identity = motivation.identity_integration_score(&agent.self_concept);
-        
+
         (consistency_with_values + stability_over_time + integration_with_identity) / 3.0
     }
-    
+
     fn determine_desire_level(&self, motivation: &Motivation, agent: &Agent) -> usize {
         // 确定欲望在等级结构中的层次
         for level in 1..=self.desire_hierarchy_levels {
@@ -385,13 +385,13 @@ impl HierarchicalTheory {
     pub fn assess_freedom(&self, action: &Action, hierarchy: &DesireHierarchy) -> HierarchicalAssessment {
         // 找到驱动行动的一阶欲望
         let driving_desire = self.identify_driving_desire(action, &hierarchy.first_order_desires);
-        
+
         // 检查等级间的和谐性
         let harmony_score = self.compute_hierarchy_harmony(&driving_desire, hierarchy);
-        
+
         // 评估认同程度
         let identification_level = self.assess_identification(&driving_desire, hierarchy);
-        
+
         HierarchicalAssessment {
             free_action: harmony_score > self.harmony_threshold,
             identification_present: identification_level > self.identification_strength,
@@ -399,12 +399,12 @@ impl HierarchicalTheory {
             conflicted_levels: self.detect_conflicts(hierarchy),
         }
     }
-    
+
     fn compute_hierarchy_harmony(&self, driving_desire: &Option<Desire>, hierarchy: &DesireHierarchy) -> f64 {
         if let Some(desire) = driving_desire {
             let mut harmony_sum = 0.0;
             let mut count = 0;
-            
+
             // 检查二阶欲望的态度
             for second_order in &hierarchy.second_order_desires {
                 if second_order.target_first_order_desire == desire.id {
@@ -416,7 +416,7 @@ impl HierarchicalTheory {
                     count += 1;
                 }
             }
-            
+
             if count > 0 {
                 harmony_sum / count as f64
             } else {
@@ -490,10 +490,10 @@ impl LibetExperiment {
         let rp_onset = trial.readiness_potential_onset;
         let w_time = trial.conscious_will_time;
         let movement_time = trial.movement_onset;
-        
+
         let rp_w_gap = w_time.duration_since(rp_onset);
         let w_movement_gap = movement_time.duration_since(w_time);
-        
+
         TimingAnalysis {
             neural_precedes_conscious: rp_onset < w_time,
             precession_duration: rp_w_gap,
@@ -501,7 +501,7 @@ impl LibetExperiment {
             conscious_veto_possible: w_movement_gap > Duration::from_millis(100),
         }
     }
-    
+
     pub fn philosophical_implications(&self, analysis: &TimingAnalysis) -> PhilosophicalImplications {
         PhilosophicalImplications {
             challenges_conscious_initiation: analysis.challenges_free_will,
@@ -614,19 +614,19 @@ impl FreeWillFramework {
                 theory.assess_impossibility(&scenario).into()
             },
         };
-        
+
         FreeWillAnalysis {
             theoretical_assessment: assessment,
             practical_implications: self.derive_practical_implications(&scenario),
             confidence_level: self.compute_confidence(&scenario),
         }
     }
-    
+
     pub fn compare_theories(&self, scenario: &MoralScenario) -> TheoryComparison {
         let hard_det = HardDeterminism::default().predict_behavior(&scenario.agent, &scenario.situation);
         let libertarian = Libertarianism::default().evaluate_free_action(&scenario.action, &scenario.context);
         let compatibilist = Compatibilism::default().assess_free_action(&scenario.action, &scenario.agent);
-        
+
         TheoryComparison {
             hard_determinism_verdict: hard_det.moral_responsibility,
             libertarian_verdict: libertarian.morally_responsible,
@@ -654,7 +654,7 @@ impl FreeWillFramework {
 
 ## 返回
 
-[返回心灵哲学](README.md)  
+[返回心灵哲学](README.md)
 [返回哲学基础模块](README.md)
 
 ## 批判性分析

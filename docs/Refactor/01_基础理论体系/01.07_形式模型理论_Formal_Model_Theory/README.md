@@ -2,21 +2,23 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心主题](#2-核心主题)
-  - [2.1 转换系统理论 (Transition System Theory)](#21-转换系统理论-transition-system-theory)
-  - [2.2 进程演算理论 (Process Calculus Theory)](#22-进程演算理论-process-calculus-theory)
-  - [2.3 Petri网理论 (Petri Net Theory)](#23-petri网理论-petri-net-theory)
-  - [2.4 行为模型理论 (Behavior Model Theory)](#24-行为模型理论-behavior-model-theory)
-  - [2.5 结构模型理论 (Structural Model Theory)](#25-结构模型理论-structural-model-theory)
-  - [2.6 语义模型理论 (Semantic Model Theory)](#26-语义模型理论-semantic-model-theory)
-- [3 批判性分析](#3-批判性分析)
-  - [3.1 多元理论视角](#31-多元理论视角)
-  - [3.2 局限性分析](#32-局限性分析)
-  - [3.3 争议与分歧](#33-争议与分歧)
-  - [3.4 应用前景](#34-应用前景)
-  - [3.5 改进建议](#35-改进建议)
-- [4 学习路径与关联](#4-学习路径与关联)
+- [05 形式模型理论 (Formal Model Theory)](#05-形式模型理论-formal-model-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [2 核心主题](#2-核心主题)
+    - [2.1 转换系统理论 (Transition System Theory)](#21-转换系统理论-transition-system-theory)
+    - [2.2 进程演算理论 (Process Calculus Theory)](#22-进程演算理论-process-calculus-theory)
+    - [2.3 Petri网理论 (Petri Net Theory)](#23-petri网理论-petri-net-theory)
+    - [2.4 行为模型理论 (Behavior Model Theory)](#24-行为模型理论-behavior-model-theory)
+    - [2.5 结构模型理论 (Structural Model Theory)](#25-结构模型理论-structural-model-theory)
+    - [2.6 语义模型理论 (Semantic Model Theory)](#26-语义模型理论-semantic-model-theory)
+  - [3 批判性分析](#3-批判性分析)
+    - [3.1 多元理论视角](#31-多元理论视角)
+    - [3.2 局限性分析](#32-局限性分析)
+    - [3.3 争议与分歧](#33-争议与分歧)
+    - [3.4 应用前景](#34-应用前景)
+    - [3.5 改进建议](#35-改进建议)
+  - [4 学习路径与关联](#4-学习路径与关联)
 
 ---
 

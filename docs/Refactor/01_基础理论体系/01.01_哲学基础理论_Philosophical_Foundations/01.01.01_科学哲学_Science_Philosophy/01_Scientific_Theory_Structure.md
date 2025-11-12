@@ -2,21 +2,24 @@
 
 ## 📋 目录
 
-- [1 理论概述](#1-理论概述)
-- [2 形式化语义](#2-形式化语义)
-  - [2.1 核心定义](#21-核心定义)
-  - [2.2 核心定理](#22-核心定理)
-- [3 多表征方式](#3-多表征方式)
-  - [3.1 图形表征](#31-图形表征)
-  - [3.2 表格表征](#32-表格表征)
-  - [3.3 数学表征](#33-数学表征)
-  - [3.4 伪代码表征](#34-伪代码表征)
-- [4 Rust实现](#4-rust实现)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
+- [01.1.1 科学理论结构 (Scientific Theory Structure)](#0111-科学理论结构-scientific-theory-structure)
+  - [📋 目录](#-目录)
+  - [1 理论概述](#1-理论概述)
+  - [2 形式化语义](#2-形式化语义)
+    - [2.1 核心定义](#21-核心定义)
+    - [2.2 核心定理](#22-核心定理)
+  - [3 多表征方式](#3-多表征方式)
+    - [3.1 图形表征](#31-图形表征)
+    - [3.2 表格表征](#32-表格表征)
+    - [3.3 数学表征](#33-数学表征)
+    - [3.4 伪代码表征](#34-伪代码表征)
+  - [4 Rust实现](#4-rust实现)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -76,19 +79,19 @@ graph TD
     A[科学理论] --> B[理论层次]
     A --> C[理论网络]
     A --> D[理论结构]
-    
+
     B --> E[基础理论]
     B --> F[中层理论]
     B --> G[应用理论]
-    
+
     C --> H[理论节点]
     C --> I[关系边]
     C --> J[网络结构]
-    
+
     D --> K[公理系统]
     D --> L[推理规则]
     D --> M[模型集合]
-    
+
     subgraph 理论层次结构
         N[物理理论] --> O[化学理论]
         O --> P[生物理论]
@@ -127,17 +130,17 @@ class ScientificTheory:
         self.axioms = axioms
         self.rules = rules
         self.models = models
-        
+
     def is_consistent(self, other_theory):
         """检查理论一致性"""
         intersection = self.axioms.intersection(other_theory.axioms)
         union = self.axioms.union(other_theory.axioms)
         return len(intersection) / len(union)
-        
+
     def can_reduce_to(self, base_theory):
         """检查理论还原性"""
         return all(axiom in base_theory.axioms for axiom in self.axioms)
-        
+
     def get_emergent_properties(self, other_theory):
         """获取涌现性质"""
         combined_axioms = self.axioms.union(other_theory.axioms)
@@ -214,49 +217,49 @@ impl ScientificTheory {
             level,
         }
     }
-    
+
     /// 添加公理
     pub fn add_axiom(&mut self, axiom: String) {
         self.axioms.insert(axiom);
     }
-    
+
     /// 添加推理规则
     pub fn add_rule(&mut self, rule: InferenceRule) {
         self.rules.push(rule);
     }
-    
+
     /// 添加模型
     pub fn add_model(&mut self, model: TheoryModel) {
         self.models.push(model);
     }
-    
+
     /// 检查理论一致性
     pub fn is_consistent_with(&self, other: &ScientificTheory) -> f64 {
         let intersection = self.axioms.intersection(&other.axioms).count();
         let union = self.axioms.union(&other.axioms).count();
-        
+
         if union == 0 {
             1.0
         } else {
             intersection as f64 / union as f64
         }
     }
-    
+
     /// 检查理论还原性
     pub fn can_reduce_to(&self, base_theory: &ScientificTheory) -> bool {
         self.axioms.is_subset(&base_theory.axioms)
     }
-    
+
     /// 获取理论复杂度
     pub fn complexity(&self) -> usize {
         self.axioms.len() + self.rules.len() + self.models.len()
     }
-    
+
     /// 获取理论层次
     pub fn get_level(&self) -> &TheoryLevel {
         &self.level
     }
-    
+
     /// 检查理论完整性
     pub fn is_complete(&self) -> bool {
         !self.axioms.is_empty() && !self.rules.is_empty()
@@ -272,17 +275,17 @@ impl TheoryLanguage {
             semantic_rules: Vec::new(),
         }
     }
-    
+
     /// 添加词汇
     pub fn add_vocabulary(&mut self, term: String) {
         self.vocabulary.insert(term);
     }
-    
+
     /// 添加语法规则
     pub fn add_syntax_rule(&mut self, rule: String) {
         self.syntax_rules.push(rule);
     }
-    
+
     /// 添加语义规则
     pub fn add_semantic_rule(&mut self, rule: String) {
         self.semantic_rules.push(rule);
@@ -299,7 +302,7 @@ impl InferenceRule {
             rule_type,
         }
     }
-    
+
     /// 应用推理规则
     pub fn apply(&self, premises: &[String]) -> Option<String> {
         if self.premises.len() == premises.len() {
@@ -320,17 +323,17 @@ impl TheoryModel {
             satisfaction: HashMap::new(),
         }
     }
-    
+
     /// 添加域元素
     pub fn add_domain_element(&mut self, element: String) {
         self.domain.push(element);
     }
-    
+
     /// 添加解释
     pub fn add_interpretation(&mut self, symbol: String, value: String) {
         self.interpretation.insert(symbol, value);
     }
-    
+
     /// 添加满足关系
     pub fn add_satisfaction(&mut self, formula: String, satisfied: bool) {
         self.satisfaction.insert(formula, satisfied);
@@ -370,12 +373,12 @@ impl TheoryNetwork {
             connections: Vec::new(),
         }
     }
-    
+
     /// 添加理论
     pub fn add_theory(&mut self, theory: ScientificTheory) {
         self.theories.insert(theory.name.clone(), theory);
     }
-    
+
     /// 添加连接
     pub fn add_connection(&mut self, from: String, to: String, connection_type: ConnectionType, strength: f64) {
         self.connections.push(TheoryConnection {
@@ -385,11 +388,11 @@ impl TheoryNetwork {
             strength,
         });
     }
-    
+
     /// 获取理论层次结构
     pub fn get_hierarchy(&self) -> Vec<Vec<String>> {
         let mut hierarchy = vec![vec![], vec![], vec![]];
-        
+
         for theory in self.theories.values() {
             match theory.get_level() {
                 TheoryLevel::Foundation => hierarchy[0].push(theory.name.clone()),
@@ -397,15 +400,15 @@ impl TheoryNetwork {
                 TheoryLevel::Application => hierarchy[2].push(theory.name.clone()),
             }
         }
-        
+
         hierarchy
     }
-    
+
     /// 分析网络连通性
     pub fn analyze_connectivity(&self) -> f64 {
         let total_possible = self.theories.len() * (self.theories.len() - 1);
         let actual_connections = self.connections.len();
-        
+
         if total_possible == 0 {
             0.0
         } else {
@@ -420,23 +423,23 @@ fn main() {
     let mut physics = ScientificTheory::new("物理学".to_string(), TheoryLevel::Foundation);
     physics.add_axiom("能量守恒".to_string());
     physics.add_axiom("动量守恒".to_string());
-    
+
     // 创建中层理论
     let mut chemistry = ScientificTheory::new("化学".to_string(), TheoryLevel::Middle);
     chemistry.add_axiom("原子结构".to_string());
     chemistry.add_axiom("分子键合".to_string());
-    
+
     // 创建应用理论
     let mut biology = ScientificTheory::new("生物学".to_string(), TheoryLevel::Application);
     biology.add_axiom("细胞结构".to_string());
     biology.add_axiom("遗传机制".to_string());
-    
+
     // 创建理论网络
     let mut network = TheoryNetwork::new();
     network.add_theory(physics.clone());
     network.add_theory(chemistry.clone());
     network.add_theory(biology.clone());
-    
+
     // 添加连接
     network.add_connection(
         "化学".to_string(),
@@ -450,11 +453,11 @@ fn main() {
         ConnectionType::Reduction,
         0.6,
     );
-    
+
     // 分析网络
     println!("网络连通性: {:.2}", network.analyze_connectivity());
     println!("理论层次: {:?}", network.get_hierarchy());
-    
+
     // 检查理论一致性
     let consistency = physics.is_consistent_with(&chemistry);
     println!("物理-化学一致性: {:.2}", consistency);
@@ -512,11 +515,11 @@ fn main() {
 
 ## 📚 参考文献
 
-1. Hempel, C. G. *Philosophy of Natural Science*. Prentice-Hall, 1966.
-2. Kuhn, T. S. *The Structure of Scientific Revolutions*. University of Chicago Press, 1962.
-3. Popper, K. R. *The Logic of Scientific Discovery*. Routledge, 1959.
-4. Lakatos, I. *The Methodology of Scientific Research Programmes*. Cambridge University Press, 1978.
-5. Feyerabend, P. *Against Method*. Verso, 1975.
-6. Laudan, L. *Progress and Its Problems*. University of California Press, 1977.
-7. Kitcher, P. *The Advancement of Science*. Oxford University Press, 1993.
-8. van Fraassen, B. C. *The Scientific Image*. Oxford University Press, 1980.
+1. Hempel, C. G. _Philosophy of Natural Science_. Prentice-Hall, 1966.
+2. Kuhn, T. S. _The Structure of Scientific Revolutions_. University of Chicago Press, 1962.
+3. Popper, K. R. _The Logic of Scientific Discovery_. Routledge, 1959.
+4. Lakatos, I. _The Methodology of Scientific Research Programmes_. Cambridge University Press, 1978.
+5. Feyerabend, P. _Against Method_. Verso, 1975.
+6. Laudan, L. _Progress and Its Problems_. University of California Press, 1977.
+7. Kitcher, P. _The Advancement of Science_. Oxford University Press, 1993.
+8. van Fraassen, B. C. _The Scientific Image_. Oxford University Press, 1980.

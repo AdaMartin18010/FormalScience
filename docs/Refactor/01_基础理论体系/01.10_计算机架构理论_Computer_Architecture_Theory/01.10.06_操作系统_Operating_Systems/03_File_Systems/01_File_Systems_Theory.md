@@ -2,26 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 文件系统定义](#21-文件系统定义)
-  - [2.2 文件系统类型分类](#22-文件系统类型分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 文件结构](#31-文件结构)
-  - [3.2 存储分配](#32-存储分配)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 文件系统一致性定理](#41-文件系统一致性定理)
-  - [4.2 存储效率定理](#42-存储效率定理)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 文件系统基本结构](#51-文件系统基本结构)
-  - [5.2 文件系统日志实现](#52-文件系统日志实现)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性](#72-局限性)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [10.3.1 文件系统理论](#1031-文件系统理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 文件系统定义](#21-文件系统定义)
+    - [2.2 文件系统类型分类](#22-文件系统类型分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 文件结构](#31-文件结构)
+    - [2.2 目录结构](#22-目录结构)
+    - [3.2 存储分配](#32-存储分配)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 文件系统一致性定理](#41-文件系统一致性定理)
+    - [4.2 存储效率定理](#42-存储效率定理)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 文件系统基本结构](#51-文件系统基本结构)
+    - [4.2 目录系统实现](#42-目录系统实现)
+    - [5.2 文件系统日志实现](#52-文件系统日志实现)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性](#72-局限性)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -125,7 +130,7 @@ impl FileMetadata {
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         FileMetadata {
             name,
             size: 0,
@@ -168,7 +173,7 @@ impl File {
             blocks: Vec::new(),
         }
     }
-    
+
     pub fn write(&mut self, data: &[u8]) {
         self.data = data.to_vec();
         self.metadata.size = data.len();
@@ -177,11 +182,11 @@ impl File {
             .unwrap()
             .as_secs();
     }
-    
+
     pub fn read(&self) -> &[u8] {
         &self.data
     }
-    
+
     pub fn append(&mut self, data: &[u8]) {
         self.data.extend_from_slice(data);
         self.metadata.size = self.data.len();
@@ -219,7 +224,7 @@ impl Directory {
             entries: HashMap::new(),
         }
     }
-    
+
     pub fn add_file(&mut self, file: File) -> Result<(), String> {
         let name = file.metadata.name.clone();
         if self.entries.contains_key(&name) {
@@ -228,7 +233,7 @@ impl Directory {
         self.entries.insert(name, DirectoryEntry::File(file));
         Ok(())
     }
-    
+
     pub fn add_directory(&mut self, dir: Directory) -> Result<(), String> {
         let name = dir.metadata.name.clone();
         if self.entries.contains_key(&name) {
@@ -237,16 +242,16 @@ impl Directory {
         self.entries.insert(name, DirectoryEntry::Directory(dir));
         Ok(())
     }
-    
+
     pub fn remove(&mut self, name: &str) -> Result<DirectoryEntry, String> {
         self.entries.remove(name)
             .ok_or_else(|| format!("Entry {} not found", name))
     }
-    
+
     pub fn get(&self, name: &str) -> Option<&DirectoryEntry> {
         self.entries.get(name)
     }
-    
+
     pub fn list(&self) -> Vec<String> {
         self.entries.keys().cloned().collect()
     }
@@ -271,26 +276,26 @@ impl FileSystem {
             free_blocks: vec![true; total_blocks],
         }
     }
-    
+
     pub fn create_file(&mut self, path: &Path, data: &[u8]) -> Result<(), String> {
         let mut current = &mut self.root;
         let path_components: Vec<_> = path.iter().collect();
-        
+
         // 导航到父目录
         for component in &path_components[..path_components.len()-1] {
-            if let Some(DirectoryEntry::Directory(ref mut dir)) = 
+            if let Some(DirectoryEntry::Directory(ref mut dir)) =
                 current.entries.get_mut(component.to_str().unwrap()) {
                 current = dir;
             } else {
                 return Err(format!("Path component {:?} is not a directory", component));
             }
         }
-        
+
         // 创建文件
         let file_name = path_components.last().unwrap().to_str().unwrap();
         let mut file = File::new(file_name.to_string(), FileType::Regular);
         file.write(data);
-        
+
         // 分配存储块
         let blocks_needed = (data.len() + self.block_size - 1) / self.block_size;
         for _ in 0..blocks_needed {
@@ -300,24 +305,24 @@ impl FileSystem {
                 return Err("No free blocks available".to_string());
             }
         }
-        
+
         current.add_file(file)
     }
-    
+
     pub fn read_file(&self, path: &Path) -> Result<Vec<u8>, String> {
         let mut current = &self.root;
         let path_components: Vec<_> = path.iter().collect();
-        
+
         // 导航到文件
         for component in &path_components[..path_components.len()-1] {
-            if let Some(DirectoryEntry::Directory(ref dir)) = 
+            if let Some(DirectoryEntry::Directory(ref dir)) =
                 current.entries.get(component.to_str().unwrap()) {
                 current = dir;
             } else {
                 return Err(format!("Path component {:?} is not a directory", component));
             }
         }
-        
+
         let file_name = path_components.last().unwrap().to_str().unwrap();
         if let Some(DirectoryEntry::File(ref file)) = current.entries.get(file_name) {
             Ok(file.read().to_vec())
@@ -325,22 +330,22 @@ impl FileSystem {
             Err(format!("File {} not found", file_name))
         }
     }
-    
+
     pub fn list_directory(&self, path: &Path) -> Result<Vec<String>, String> {
         let mut current = &self.root;
-        
+
         for component in path.iter() {
-            if let Some(DirectoryEntry::Directory(ref dir)) = 
+            if let Some(DirectoryEntry::Directory(ref dir)) =
                 current.entries.get(component.to_str().unwrap()) {
                 current = dir;
             } else {
                 return Err(format!("Path component {:?} is not a directory", component));
             }
         }
-        
+
         Ok(current.list())
     }
-    
+
     fn allocate_block(&mut self) -> Option<usize> {
         for (index, &free) in self.free_blocks.iter().enumerate() {
             if free {
@@ -350,11 +355,11 @@ impl FileSystem {
         }
         None
     }
-    
+
     pub fn get_free_space(&self) -> usize {
         self.free_blocks.iter().filter(|&&free| free).count() * self.block_size
     }
-    
+
     pub fn get_total_space(&self) -> usize {
         self.total_blocks * self.block_size
     }
@@ -390,32 +395,32 @@ impl FileSystemLog {
             checkpoint_interval,
         }
     }
-    
+
     pub fn add_entry(&mut self, entry: LogEntry) {
         self.entries.push_back(entry);
-        
+
         // 检查是否需要清理日志
         if self.entries.len() > self.max_entries {
             self.entries.pop_front();
         }
-        
+
         // 检查是否需要创建检查点
         if self.entries.len() % self.checkpoint_interval == 0 {
             self.create_checkpoint();
         }
     }
-    
+
     pub fn create_checkpoint(&mut self) {
         // 将当前文件系统状态写入检查点
         // 清空日志条目
         self.entries.clear();
     }
-    
+
     pub fn recover(&self) -> Vec<LogEntry> {
         // 从检查点恢复，然后重放日志
         self.entries.iter().cloned().collect()
     }
-    
+
     pub fn get_log_size(&self) -> usize {
         self.entries.len()
     }
@@ -434,18 +439,18 @@ impl JournalingFileSystem {
             log: FileSystemLog::new(1000, 100),
         }
     }
-    
+
     pub fn create_file(&mut self, path: &Path, data: &[u8]) -> Result<(), String> {
         // 记录日志条目
         self.log.add_entry(LogEntry::CreateFile {
             path: path.to_string_lossy().to_string(),
             size: data.len(),
         });
-        
+
         // 执行实际操作
         self.fs.create_file(path, data)
     }
-    
+
     pub fn write_file(&mut self, path: &Path, offset: usize, data: &[u8]) -> Result<(), String> {
         // 记录日志条目
         self.log.add_entry(LogEntry::WriteFile {
@@ -453,23 +458,23 @@ impl JournalingFileSystem {
             offset,
             data: data.to_vec(),
         });
-        
+
         // 执行实际操作
         // 这里需要实现文件写入逻辑
         Ok(())
     }
-    
+
     pub fn delete_file(&mut self, path: &Path) -> Result<(), String> {
         // 记录日志条目
         self.log.add_entry(LogEntry::DeleteFile {
             path: path.to_string_lossy().to_string(),
         });
-        
+
         // 执行实际操作
         // 这里需要实现文件删除逻辑
         Ok(())
     }
-    
+
     pub fn recover(&mut self) {
         // 从日志恢复文件系统状态
         let entries = self.log.recover();
@@ -514,8 +519,8 @@ impl JournalingFileSystem {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

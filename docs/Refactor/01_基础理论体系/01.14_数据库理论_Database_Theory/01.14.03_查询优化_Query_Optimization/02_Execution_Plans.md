@@ -184,12 +184,12 @@ impl ExecutionPlan {
             estimated_rows: 0,
         }
     }
-    
+
     pub fn estimate_cost(&mut self) -> f64 {
         self.estimated_cost = self.estimate_node_cost(&self.root);
         self.estimated_cost
     }
-    
+
     fn estimate_node_cost(&self, node: &PlanNode) -> f64 {
         match node {
             PlanNode::TableScan { table_name, filter } => {
@@ -201,7 +201,7 @@ impl ExecutionPlan {
                 let table_size = self.get_table_size(table_name);
                 let index_selectivity = self.get_index_selectivity(index_name);
                 let filter_selectivity = self.estimate_filter_selectivity(filter);
-                (table_size as f64 * index_selectivity * filter_selectivity).log2() + 
+                (table_size as f64 * index_selectivity * filter_selectivity).log2() +
                 (table_size as f64 * index_selectivity * filter_selectivity)
             }
             PlanNode::NestedLoopJoin { left, right, condition } => {
@@ -223,7 +223,7 @@ impl ExecutionPlan {
                 let right_cost = self.estimate_node_cost(right);
                 let left_rows = self.estimate_node_rows(left);
                 let right_rows = self.estimate_node_rows(right);
-                left_cost + right_cost + (left_rows * left_rows.log2()) as f64 + 
+                left_cost + right_cost + (left_rows * left_rows.log2()) as f64 +
                 (right_rows * right_rows.log2()) as f64
             }
             PlanNode::Aggregate { input, group_by, aggregates } => {
@@ -238,7 +238,7 @@ impl ExecutionPlan {
             }
         }
     }
-    
+
     fn estimate_node_rows(&self, node: &PlanNode) -> usize {
         match node {
             PlanNode::TableScan { table_name, filter } => {
@@ -276,7 +276,7 @@ impl ExecutionPlan {
             }
         }
     }
-    
+
     fn get_table_size(&self, table_name: &str) -> usize {
         // 简化的表大小估算
         match table_name {
@@ -286,7 +286,7 @@ impl ExecutionPlan {
             _ => 1000,
         }
     }
-    
+
     fn get_index_selectivity(&self, index_name: &str) -> f64 {
         // 简化的索引选择性估算
         match index_name {
@@ -295,7 +295,7 @@ impl ExecutionPlan {
             _ => 0.5,
         }
     }
-    
+
     fn estimate_filter_selectivity(&self, filter: &Option<FilterCondition>) -> f64 {
         match filter {
             Some(_) => 0.1, // 简化的选择性估算
@@ -343,18 +343,18 @@ impl QueryOptimizer {
             ],
         }
     }
-    
+
     pub fn optimize(&self, plan: &mut ExecutionPlan) -> ExecutionPlan {
         let mut optimized_plan = plan.clone();
-        
+
         // 应用优化规则
         for rule in &self.rules {
             optimized_plan = self.apply_rule(&optimized_plan, rule);
         }
-        
+
         optimized_plan
     }
-    
+
     fn apply_rule(&self, plan: &ExecutionPlan, rule: &OptimizationRule) -> ExecutionPlan {
         match rule.name.as_str() {
             "PushDownFilter" => self.push_down_filter(plan),
@@ -363,14 +363,14 @@ impl QueryOptimizer {
             _ => plan.clone(),
         }
     }
-    
+
     fn push_down_filter(&self, plan: &ExecutionPlan) -> ExecutionPlan {
         // 将过滤条件下推到叶子节点
         let mut new_plan = plan.clone();
         new_plan.root = self.push_down_filter_recursive(&plan.root);
         new_plan
     }
-    
+
     fn push_down_filter_recursive(&self, node: &PlanNode) -> PlanNode {
         match node {
             PlanNode::NestedLoopJoin { left, right, condition } => {
@@ -397,20 +397,20 @@ impl QueryOptimizer {
             _ => node.clone(),
         }
     }
-    
+
     fn reorder_joins(&self, plan: &ExecutionPlan) -> ExecutionPlan {
         // 重新排序连接操作
         let mut new_plan = plan.clone();
         new_plan.root = self.reorder_joins_recursive(&plan.root);
         new_plan
     }
-    
+
     fn reorder_joins_recursive(&self, node: &PlanNode) -> PlanNode {
         match node {
             PlanNode::NestedLoopJoin { left, right, condition } => {
                 let left_cost = self.estimate_node_cost(left);
                 let right_cost = self.estimate_node_cost(right);
-                
+
                 // 选择成本较低的作为左子树
                 if left_cost > right_cost {
                     PlanNode::NestedLoopJoin {
@@ -429,14 +429,14 @@ impl QueryOptimizer {
             _ => node.clone(),
         }
     }
-    
+
     fn use_index(&self, plan: &ExecutionPlan) -> ExecutionPlan {
         // 使用索引优化查询
         let mut new_plan = plan.clone();
         new_plan.root = self.use_index_recursive(&plan.root);
         new_plan
     }
-    
+
     fn use_index_recursive(&self, node: &PlanNode) -> PlanNode {
         match node {
             PlanNode::TableScan { table_name, filter } => {
@@ -453,7 +453,7 @@ impl QueryOptimizer {
             _ => node.clone(),
         }
     }
-    
+
     fn find_better_index(&self, table_name: &str, filter: &Option<FilterCondition>) -> Option<String> {
         // 简化的索引选择逻辑
         match filter {
@@ -461,7 +461,7 @@ impl QueryOptimizer {
             None => None,
         }
     }
-    
+
     fn estimate_node_cost(&self, node: &PlanNode) -> f64 {
         // 简化的成本估算
         match node {
@@ -509,7 +509,7 @@ impl CostEstimator {
             io_cost_per_page: 20.0,
             memory_cost_per_mb: 2.0,
         });
-        
+
         CostEstimator {
             statistics: QueryStatistics {
                 table_sizes: HashMap::new(),
@@ -519,11 +519,11 @@ impl CostEstimator {
             cost_models,
         }
     }
-    
+
     pub fn estimate_cost(&self, plan: &ExecutionPlan) -> f64 {
         self.estimate_node_cost(&plan.root)
     }
-    
+
     fn estimate_node_cost(&self, node: &PlanNode) -> f64 {
         match node {
             PlanNode::TableScan { table_name, filter } => {
@@ -531,9 +531,9 @@ impl CostEstimator {
                 let selectivity = self.estimate_selectivity(filter);
                 let rows = (table_size as f64 * selectivity) as usize;
                 let pages = (rows as f64 / 100.0).ceil() as usize; // 假设每页100行
-                
+
                 let model = self.cost_models.get("TableScan").unwrap();
-                rows as f64 * model.cpu_cost_per_row + 
+                rows as f64 * model.cpu_cost_per_row +
                 pages as f64 * model.io_cost_per_page
             }
             PlanNode::IndexScan { table_name, index_name, filter } => {
@@ -542,9 +542,9 @@ impl CostEstimator {
                 let filter_selectivity = self.estimate_selectivity(filter);
                 let rows = (table_size as f64 * index_selectivity * filter_selectivity) as usize;
                 let pages = (rows as f64 / 100.0).ceil() as usize;
-                
+
                 let model = self.cost_models.get("IndexScan").unwrap();
-                rows as f64 * model.cpu_cost_per_row + 
+                rows as f64 * model.cpu_cost_per_row +
                 pages as f64 * model.io_cost_per_page
             }
             PlanNode::HashJoin { left, right, condition } => {
@@ -552,15 +552,15 @@ impl CostEstimator {
                 let right_cost = self.estimate_node_cost(right);
                 let left_rows = self.estimate_node_rows(left);
                 let right_rows = self.estimate_node_rows(right);
-                
+
                 let model = self.cost_models.get("HashJoin").unwrap();
-                left_cost + right_cost + 
+                left_cost + right_cost +
                 (left_rows + right_rows) as f64 * model.cpu_cost_per_row
             }
             _ => 1000.0, // 默认成本
         }
     }
-    
+
     fn estimate_node_rows(&self, node: &PlanNode) -> usize {
         match node {
             PlanNode::TableScan { table_name, filter } => {
@@ -577,7 +577,7 @@ impl CostEstimator {
             _ => 1000, // 默认行数
         }
     }
-    
+
     fn get_table_size(&self, table_name: &str) -> usize {
         match table_name {
             "users" => 10000,
@@ -586,7 +586,7 @@ impl CostEstimator {
             _ => 1000,
         }
     }
-    
+
     fn get_index_selectivity(&self, index_name: &str) -> f64 {
         match index_name {
             "primary_key" => 0.01,
@@ -594,7 +594,7 @@ impl CostEstimator {
             _ => 0.5,
         }
     }
-    
+
     fn estimate_selectivity(&self, filter: &Option<FilterCondition>) -> f64 {
         match filter {
             Some(_) => 0.1,

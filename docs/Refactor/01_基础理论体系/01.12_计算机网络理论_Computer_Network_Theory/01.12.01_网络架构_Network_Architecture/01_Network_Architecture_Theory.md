@@ -3,7 +3,7 @@
 ## 目录
 
 - [11.1.1 网络架构理论](#1111-网络架构理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 网络架构定义](#11-网络架构定义)
@@ -129,11 +129,11 @@ impl MacAddress {
     pub fn new(bytes: [u8; 6]) -> Self {
         MacAddress(bytes)
     }
-    
+
     pub fn broadcast() -> Self {
         MacAddress([0xFF; 6])
     }
-    
+
     pub fn to_string(&self) -> String {
         self.0.iter()
             .map(|b| format!("{:02X}", b))
@@ -149,16 +149,16 @@ impl NetworkLayer {
             arp_table: HashMap::new(),
         }
     }
-    
+
     pub fn add_route(&mut self, route: Route) {
         self.routing_table.insert(route.destination, route);
     }
-    
+
     pub fn find_route(&self, destination: IpAddr) -> Option<&Route> {
         // 简化实现：直接查找
         self.routing_table.get(&destination)
     }
-    
+
     pub fn resolve_mac(&mut self, ip: IpAddr) -> Option<MacAddress> {
         if let Some(mac) = self.arp_table.get(&ip) {
             Some(mac.clone())
@@ -167,11 +167,11 @@ impl NetworkLayer {
             None
         }
     }
-    
+
     pub fn add_arp_entry(&mut self, ip: IpAddr, mac: MacAddress) {
         self.arp_table.insert(ip, mac);
     }
-    
+
     pub fn route_packet(&mut self, packet: &mut NetworkPacket) -> Result<(), String> {
         if let Some(route) = self.find_route(packet.destination.ip()) {
             // 更新TTL
@@ -180,7 +180,7 @@ impl NetworkLayer {
             } else {
                 return Err("TTL expired".to_string());
             }
-            
+
             // 解析MAC地址
             if let Some(mac) = self.resolve_mac(route.gateway) {
                 Ok(())
@@ -237,7 +237,7 @@ impl PortAllocator {
             next_port: 1024,
         }
     }
-    
+
     pub fn allocate_port(&mut self) -> u16 {
         while self.used_ports.contains(&self.next_port) {
             self.next_port = self.next_port.wrapping_add(1);
@@ -245,13 +245,13 @@ impl PortAllocator {
                 self.next_port = 1024;
             }
         }
-        
+
         let port = self.next_port;
         self.used_ports.insert(port);
         self.next_port = self.next_port.wrapping_add(1);
         port
     }
-    
+
     pub fn release_port(&mut self, port: u16) {
         self.used_ports.remove(&port);
     }
@@ -264,11 +264,11 @@ impl TransportLayer {
             port_allocator: PortAllocator::new(),
         }
     }
-    
+
     pub fn create_connection(&mut self, remote_addr: SocketAddr) -> Result<SocketAddr, String> {
         let local_port = self.port_allocator.allocate_port();
         let local_addr = SocketAddr::new(Ipv4Addr::LOCALHOST.into(), local_port);
-        
+
         let connection = Connection {
             local_addr,
             remote_addr,
@@ -277,11 +277,11 @@ impl TransportLayer {
             acknowledgment_number: 0,
             window_size: 65535,
         };
-        
+
         self.connections.insert(local_addr, connection);
         Ok(local_addr)
     }
-    
+
     pub fn establish_connection(&mut self, local_addr: SocketAddr) -> Result<(), String> {
         if let Some(connection) = self.connections.get_mut(&local_addr) {
             connection.state = ConnectionState::SynSent;
@@ -290,7 +290,7 @@ impl TransportLayer {
             Err("Connection not found".to_string())
         }
     }
-    
+
     pub fn send_data(&mut self, local_addr: SocketAddr, data: &[u8]) -> Result<(), String> {
         if let Some(connection) = self.connections.get_mut(&local_addr) {
             if connection.state == ConnectionState::Established {
@@ -303,7 +303,7 @@ impl TransportLayer {
             Err("Connection not found".to_string())
         }
     }
-    
+
     pub fn close_connection(&mut self, local_addr: SocketAddr) -> Result<(), String> {
         if let Some(connection) = self.connections.get_mut(&local_addr) {
             connection.state = ConnectionState::FinWait1;
@@ -359,7 +359,7 @@ impl NetworkGraph {
             nodes: HashMap::new(),
         }
     }
-    
+
     pub fn add_node(&mut self, node_id: u32) {
         let node = NetworkNode {
             id: node_id,
@@ -367,22 +367,22 @@ impl NetworkGraph {
         };
         self.nodes.insert(node_id, node);
     }
-    
+
     pub fn add_edge(&mut self, from: u32, to: u32, cost: u32) {
         if let Some(node) = self.nodes.get_mut(&from) {
             node.neighbors.insert(to, cost);
         }
-        
+
         // 无向图，添加反向边
         if let Some(node) = self.nodes.get_mut(&to) {
             node.neighbors.insert(from, cost);
         }
     }
-    
+
     pub fn dijkstra_shortest_path(&self, source: u32) -> HashMap<u32, DistanceEntry> {
         let mut distances: HashMap<u32, DistanceEntry> = HashMap::new();
         let mut heap = BinaryHeap::new();
-        
+
         // 初始化距离
         for &node_id in self.nodes.keys() {
             let distance = if node_id == source { 0 } else { u32::MAX };
@@ -394,21 +394,21 @@ impl NetworkGraph {
             distances.insert(node_id, entry.clone());
             heap.push(entry);
         }
-        
+
         while let Some(current) = heap.pop() {
             if current.distance == u32::MAX {
                 break; // 无法到达的节点
             }
-            
+
             if let Some(node) = self.nodes.get(&current.node_id) {
                 for (&neighbor_id, &cost) in &node.neighbors {
                     let new_distance = current.distance + cost;
-                    
+
                     if let Some(neighbor_entry) = distances.get_mut(&neighbor_id) {
                         if new_distance < neighbor_entry.distance {
                             neighbor_entry.distance = new_distance;
                             neighbor_entry.previous = Some(current.node_id);
-                            
+
                             // 重新插入到堆中
                             heap.push(neighbor_entry.clone());
                         }
@@ -416,13 +416,13 @@ impl NetworkGraph {
                 }
             }
         }
-        
+
         distances
     }
-    
+
     pub fn bellman_ford_shortest_path(&self, source: u32) -> Result<HashMap<u32, DistanceEntry>, String> {
         let mut distances: HashMap<u32, DistanceEntry> = HashMap::new();
-        
+
         // 初始化距离
         for &node_id in self.nodes.keys() {
             let distance = if node_id == source { 0 } else { u32::MAX };
@@ -433,12 +433,12 @@ impl NetworkGraph {
             };
             distances.insert(node_id, entry);
         }
-        
+
         // 执行V-1次松弛操作
         for _ in 0..self.nodes.len() - 1 {
             for (&node_id, node) in &self.nodes {
                 for (&neighbor_id, &cost) in &node.neighbors {
-                    if let (Some(current_entry), Some(neighbor_entry)) = 
+                    if let (Some(current_entry), Some(neighbor_entry)) =
                         (distances.get(&node_id), distances.get_mut(&neighbor_id)) {
                         if current_entry.distance != u32::MAX {
                             let new_distance = current_entry.distance + cost;
@@ -451,26 +451,26 @@ impl NetworkGraph {
                 }
             }
         }
-        
+
         // 检查负环
         for (&node_id, node) in &self.nodes {
             for (&neighbor_id, &cost) in &node.neighbors {
-                if let (Some(current_entry), Some(neighbor_entry)) = 
+                if let (Some(current_entry), Some(neighbor_entry)) =
                     (distances.get(&node_id), distances.get(&neighbor_id)) {
-                    if current_entry.distance != u32::MAX && 
+                    if current_entry.distance != u32::MAX &&
                        current_entry.distance + cost < neighbor_entry.distance {
                         return Err("Negative cycle detected".to_string());
                     }
                 }
             }
         }
-        
+
         Ok(distances)
     }
-    
+
     pub fn floyd_warshall_all_pairs(&self) -> HashMap<(u32, u32), u32> {
         let mut distances: HashMap<(u32, u32), u32> = HashMap::new();
-        
+
         // 初始化距离矩阵
         for &i in self.nodes.keys() {
             for &j in self.nodes.keys() {
@@ -484,12 +484,12 @@ impl NetworkGraph {
                 distances.insert((i, j), distance);
             }
         }
-        
+
         // Floyd-Warshall算法
         for &k in self.nodes.keys() {
             for &i in self.nodes.keys() {
                 for &j in self.nodes.keys() {
-                    if let (Some(&dik), Some(&dkj)) = 
+                    if let (Some(&dik), Some(&dkj)) =
                         (distances.get(&(i, k)), distances.get(&(k, j))) {
                         if dik != u32::MAX && dkj != u32::MAX {
                             if let Some(&dij) = distances.get(&(i, j)) {
@@ -502,7 +502,7 @@ impl NetworkGraph {
                 }
             }
         }
-        
+
         distances
     }
 }
@@ -538,7 +538,7 @@ impl NetworkTopology {
             edges: HashSet::new(),
         }
     }
-    
+
     pub fn add_node(&mut self, node_id: u32) {
         let node = NetworkNode {
             id: node_id,
@@ -546,15 +546,15 @@ impl NetworkTopology {
         };
         self.nodes.insert(node_id, node);
     }
-    
+
     pub fn create_star_topology(&mut self, center_node: u32) {
         self.topology_type = TopologyType::Star;
-        
+
         // 确保中心节点存在
         if !self.nodes.contains_key(&center_node) {
             self.add_node(center_node);
         }
-        
+
         // 连接所有其他节点到中心节点
         for &node_id in self.nodes.keys() {
             if node_id != center_node {
@@ -562,15 +562,15 @@ impl NetworkTopology {
             }
         }
     }
-    
+
     pub fn create_ring_topology(&mut self) {
         self.topology_type = TopologyType::Ring;
-        
+
         let node_ids: Vec<u32> = self.nodes.keys().cloned().collect();
         if node_ids.len() < 2 {
             return;
         }
-        
+
         // 连接相邻节点形成环
         for i in 0..node_ids.len() {
             let current = node_ids[i];
@@ -578,12 +578,12 @@ impl NetworkTopology {
             self.add_edge(current, next);
         }
     }
-    
+
     pub fn create_mesh_topology(&mut self) {
         self.topology_type = TopologyType::Mesh;
-        
+
         let node_ids: Vec<u32> = self.nodes.keys().cloned().collect();
-        
+
         // 连接所有节点对
         for i in 0..node_ids.len() {
             for j in i + 1..node_ids.len() {
@@ -591,31 +591,31 @@ impl NetworkTopology {
             }
         }
     }
-    
+
     pub fn create_tree_topology(&mut self, root_node: u32) {
         self.topology_type = TopologyType::Tree;
-        
+
         if !self.nodes.contains_key(&root_node) {
             self.add_node(root_node);
         }
-        
+
         let node_ids: Vec<u32> = self.nodes.keys().cloned().collect();
-        
+
         // 简化的树构建：将节点分层连接
         let mut current_level = vec![root_node];
         let mut remaining_nodes: Vec<u32> = node_ids.iter()
             .filter(|&&id| id != root_node)
             .cloned()
             .collect();
-        
+
         while !remaining_nodes.is_empty() && !current_level.is_empty() {
             let mut next_level = Vec::new();
-            
+
             for &parent in &current_level {
                 if remaining_nodes.is_empty() {
                     break;
                 }
-                
+
                 // 为每个父节点分配子节点
                 let children_count = std::cmp::min(2, remaining_nodes.len());
                 for _ in 0..children_count {
@@ -625,16 +625,16 @@ impl NetworkTopology {
                     }
                 }
             }
-            
+
             current_level = next_level;
         }
     }
-    
+
     pub fn add_edge(&mut self, from: u32, to: u32) {
         if self.nodes.contains_key(&from) && self.nodes.contains_key(&to) {
             self.edges.insert((from, to));
             self.edges.insert((to, from)); // 无向图
-            
+
             // 更新邻居信息
             if let Some(node) = self.nodes.get_mut(&from) {
                 node.neighbors.insert(to, 1); // 默认成本为1
@@ -644,11 +644,11 @@ impl NetworkTopology {
             }
         }
     }
-    
+
     pub fn remove_edge(&mut self, from: u32, to: u32) {
         self.edges.remove(&(from, to));
         self.edges.remove(&(to, from));
-        
+
         if let Some(node) = self.nodes.get_mut(&from) {
             node.neighbors.remove(&to);
         }
@@ -656,7 +656,7 @@ impl NetworkTopology {
             node.neighbors.remove(&from);
         }
     }
-    
+
     pub fn get_connectivity(&self) -> f64 {
         let total_possible_edges = self.nodes.len() * (self.nodes.len() - 1) / 2;
         if total_possible_edges == 0 {
@@ -665,14 +665,14 @@ impl NetworkTopology {
             self.edges.len() as f64 / (2.0 * total_possible_edges as f64)
         }
     }
-    
+
     pub fn get_diameter(&self) -> Option<u32> {
         if self.nodes.is_empty() {
             return None;
         }
-        
+
         let mut max_distance = 0;
-        
+
         for &source in self.nodes.keys() {
             let distances = self.dijkstra_shortest_path(source);
             for entry in distances.values() {
@@ -681,19 +681,19 @@ impl NetworkTopology {
                 }
             }
         }
-        
+
         if max_distance == 0 {
             None
         } else {
             Some(max_distance)
         }
     }
-    
+
     fn dijkstra_shortest_path(&self, source: u32) -> HashMap<u32, DistanceEntry> {
         // 复用之前的Dijkstra实现
         let mut distances: HashMap<u32, DistanceEntry> = HashMap::new();
         let mut heap = std::collections::BinaryHeap::new();
-        
+
         for &node_id in self.nodes.keys() {
             let distance = if node_id == source { 0 } else { u32::MAX };
             let entry = DistanceEntry {
@@ -704,16 +704,16 @@ impl NetworkTopology {
             distances.insert(node_id, entry.clone());
             heap.push(entry);
         }
-        
+
         while let Some(current) = heap.pop() {
             if current.distance == u32::MAX {
                 break;
             }
-            
+
             if let Some(node) = self.nodes.get(&current.node_id) {
                 for (&neighbor_id, &cost) in &node.neighbors {
                     let new_distance = current.distance + cost;
-                    
+
                     if let Some(neighbor_entry) = distances.get_mut(&neighbor_id) {
                         if new_distance < neighbor_entry.distance {
                             neighbor_entry.distance = new_distance;
@@ -724,7 +724,7 @@ impl NetworkTopology {
                 }
             }
         }
-        
+
         distances
     }
 }
@@ -744,8 +744,8 @@ impl NetworkTopology {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析

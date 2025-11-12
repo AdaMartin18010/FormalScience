@@ -2,34 +2,36 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 理论基础](#2-理论基础)
-  - [2.1 定义 841 (软件测试)](#21-定义-841-软件测试)
-  - [2.2 定理 841 (测试完备性)](#22-定理-841-测试完备性)
-- [3 测试分类](#3-测试分类)
-  - [3.1 定义 842 (测试分类)](#31-定义-842-测试分类)
-  - [3.2 定理 842 (分层测试完备性)](#32-定理-842-分层测试完备性)
-- [4 单元测试](#4-单元测试)
-  - [4.1 定义 843 (单元测试)](#41-定义-843-单元测试)
-    - [1.1.1 Rust实现](#111-rust实现)
-    - [1.1.2 Haskell实现](#112-haskell实现)
-- [5 集成测试](#5-集成测试)
-  - [5.1 定义 844 (集成测试)](#51-定义-844-集成测试)
-    - [1.1.1 Rust实现](#111-rust实现)
-- [6 系统测试](#6-系统测试)
-  - [6.1 定义 845 (系统测试)](#61-定义-845-系统测试)
-    - [1.1.1 Rust实现](#111-rust实现)
-- [7 覆盖率理论](#7-覆盖率理论)
-  - [7.1 定义 846 (代码覆盖率)](#71-定义-846-代码覆盖率)
-    - [1.1.1 Rust实现](#111-rust实现)
-- [8 测试策略](#8-测试策略)
-  - [8.1 定义 847 (测试策略)](#81-定义-847-测试策略)
-    - [1.1.1 Rust实现](#111-rust实现)
-- [9 测试框架](#9-测试框架)
-  - [9.1 Rust测试框架](#91-rust测试框架)
-  - [9.2 Haskell测试框架](#92-haskell测试框架)
-- [10 总结](#10-总结)
-- [11 批判性分析](#11-批判性分析)
+- [测试理论 (Testing Theory)](#测试理论-testing-theory)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 理论基础](#2-理论基础)
+    - [2.1 定义 841 (软件测试)](#21-定义-841-软件测试)
+    - [2.2 定理 841 (测试完备性)](#22-定理-841-测试完备性)
+  - [3 测试分类](#3-测试分类)
+    - [3.1 定义 842 (测试分类)](#31-定义-842-测试分类)
+    - [3.2 定理 842 (分层测试完备性)](#32-定理-842-分层测试完备性)
+  - [4 单元测试](#4-单元测试)
+    - [4.1 定义 843 (单元测试)](#41-定义-843-单元测试)
+      - [1.1.1 Rust实现](#111-rust实现)
+      - [1.1.2 Haskell实现](#112-haskell实现)
+  - [5 集成测试](#5-集成测试)
+    - [5.1 定义 844 (集成测试)](#51-定义-844-集成测试)
+      - [1.1.1 Rust实现](#111-rust实现-1)
+  - [6 系统测试](#6-系统测试)
+    - [6.1 定义 845 (系统测试)](#61-定义-845-系统测试)
+      - [1.1.1 Rust实现](#111-rust实现-2)
+  - [7 覆盖率理论](#7-覆盖率理论)
+    - [7.1 定义 846 (代码覆盖率)](#71-定义-846-代码覆盖率)
+      - [1.1.1 Rust实现](#111-rust实现-3)
+  - [8 测试策略](#8-测试策略)
+    - [8.1 定义 847 (测试策略)](#81-定义-847-测试策略)
+      - [1.1.1 Rust实现](#111-rust实现-4)
+  - [9 测试框架](#9-测试框架)
+    - [9.1 Rust测试框架](#91-rust测试框架)
+    - [9.2 Haskell测试框架](#92-haskell测试框架)
+  - [10 总结](#10-总结)
+  - [11 批判性分析](#11-批判性分析)
 
 ---
 
@@ -109,11 +111,11 @@ where
     pub fn new(name: String, test_function: Box<dyn Fn(T) -> U>) -> Self {
         TestSuite { name, test_cases: Vec::new(), test_function }
     }
-    
+
     pub fn add_test_case(&mut self, test_case: TestCase<T, U>) {
         self.test_cases.push(test_case);
     }
-    
+
     pub fn run(&self) -> Vec<TestResult> {
         self.test_cases.iter().map(|tc| {
             match std::panic::catch_unwind(|| (self.test_function)(tc.input.clone())) {
@@ -149,10 +151,10 @@ data TestSuite a b = TestSuite {
 }
 
 runTestCase :: (Eq b, Show b) => TestCase a b -> (a -> b) -> TestResult
-runTestCase testCase func = 
+runTestCase testCase func =
     case catch (evaluate (func (input testCase))) of
         Left (SomeException e) -> Error (show e)
-        Right actual -> 
+        Right actual ->
             if actual == expected testCase
                 then Pass
                 else Fail $ "Expected " ++ show (expected testCase) ++ ", got " ++ show actual
@@ -183,7 +185,7 @@ impl IntegrationTester {
     fn test_integration(&self, input: &str) -> Vec<String> {
         let mut results = Vec::new();
         let mut current_input = input.to_string();
-        
+
         for component in &self.components {
             let output = component.process(&current_input);
             results.push(output.clone());
@@ -218,7 +220,7 @@ impl SystemTester {
     fn run_tests(&mut self) -> Vec<TestResult> {
         let mut results = Vec::new();
         self.system.start();
-        
+
         for (input, expected) in &self.test_cases {
             let result = match self.system.execute(input) {
                 Ok(actual) => {
@@ -307,7 +309,7 @@ impl TestFramework {
     pub fn run_all(&self) -> TestReport {
         let mut report = TestReport::new();
         let start_time = Instant::now();
-        
+
         for (name, test) in &self.tests {
             for hook in &self.before_hooks { hook(); }
             let test_start = Instant::now();
@@ -316,7 +318,7 @@ impl TestFramework {
             for hook in &self.after_hooks { hook(); }
             report.add_result(name.clone(), result, test_duration);
         }
-        
+
         report.set_total_duration(start_time.elapsed());
         report
     }

@@ -2,28 +2,31 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-- [2 基本概念](#2-基本概念)
-  - [2.1 进程定义](#21-进程定义)
-  - [2.2 进程状态分类](#22-进程状态分类)
-- [3 形式化定义](#3-形式化定义)
-  - [3.1 进程控制块](#31-进程控制块)
-  - [3.2 调度算法](#32-调度算法)
-  - [3.3 进程同步](#33-进程同步)
-- [4 定理与证明](#4-定理与证明)
-  - [4.1 调度公平性定理](#41-调度公平性定理)
-  - [4.2 死锁必要条件定理](#42-死锁必要条件定理)
-- [5 Rust代码实现](#5-rust代码实现)
-  - [5.1 进程控制块实现](#51-进程控制块实现)
-  - [5.2 调度器实现](#52-调度器实现)
-  - [5.3 进程同步机制](#53-进程同步机制)
-- [6 相关理论与交叉引用](#6-相关理论与交叉引用)
-- [7 批判性分析](#7-批判性分析)
-  - [7.1 多元理论视角](#71-多元理论视角)
-  - [7.2 局限性](#72-局限性)
-  - [7.3 争议与分歧](#73-争议与分歧)
-  - [7.4 应用前景](#74-应用前景)
-  - [7.5 改进建议](#75-改进建议)
+- [10.1.1 进程管理理论](#1011-进程管理理论)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+  - [2 基本概念](#2-基本概念)
+    - [2.1 进程定义](#21-进程定义)
+    - [2.2 进程状态分类](#22-进程状态分类)
+  - [3 形式化定义](#3-形式化定义)
+    - [3.1 进程控制块](#31-进程控制块)
+    - [3.2 调度算法](#32-调度算法)
+    - [3.3 进程同步](#33-进程同步)
+  - [4 定理与证明](#4-定理与证明)
+    - [4.1 调度公平性定理](#41-调度公平性定理)
+    - [4.2 死锁必要条件定理](#42-死锁必要条件定理)
+  - [5 Rust代码实现](#5-rust代码实现)
+    - [5.1 进程控制块实现](#51-进程控制块实现)
+    - [5.2 调度器实现](#52-调度器实现)
+    - [5.3 进程同步机制](#53-进程同步机制)
+  - [6 相关理论与交叉引用](#6-相关理论与交叉引用)
+  - [6. 参考文献](#6-参考文献)
+  - [7 批判性分析](#7-批判性分析)
+    - [7.1 多元理论视角](#71-多元理论视角)
+    - [7.2 局限性](#72-局限性)
+    - [7.3 争议与分歧](#73-争议与分歧)
+    - [7.4 应用前景](#74-应用前景)
+    - [7.5 改进建议](#75-改进建议)
 
 ---
 
@@ -130,20 +133,20 @@ impl ProcessControlBlock {
             registers: vec![0; 16], // 模拟16个寄存器
         }
     }
-    
+
     pub fn update_state(&mut self, new_state: ProcessState) {
         self.state = new_state;
     }
-    
+
     pub fn execute(&mut self, time_slice: Duration) -> Duration {
         let actual_time = std::cmp::min(self.remaining_time, time_slice);
         self.remaining_time -= actual_time;
-        
+
         if self.remaining_time.is_zero() {
             self.state = ProcessState::Terminated;
             self.turnaround_time = self.arrival_time.elapsed();
         }
-        
+
         actual_time
     }
 }
@@ -179,7 +182,7 @@ impl Scheduler {
             algorithm,
         }
     }
-    
+
     pub fn add_process(&mut self, mut pcb: ProcessControlBlock) {
         pcb.state = ProcessState::Ready;
         match self.algorithm {
@@ -197,7 +200,7 @@ impl Scheduler {
             },
         }
     }
-    
+
     fn insert_sorted_by_burst_time(&mut self, pcb: ProcessControlBlock) {
         let mut inserted = false;
         for i in 0..self.ready_queue.len() {
@@ -211,7 +214,7 @@ impl Scheduler {
             self.ready_queue.push_back(pcb);
         }
     }
-    
+
     fn insert_sorted_by_priority(&mut self, pcb: ProcessControlBlock) {
         let mut inserted = false;
         for i in 0..self.ready_queue.len() {
@@ -225,7 +228,7 @@ impl Scheduler {
             self.ready_queue.push_back(pcb);
         }
     }
-    
+
     pub fn schedule(&mut self) -> Option<ProcessControlBlock> {
         // 如果当前进程还在运行，继续执行
         if let Some(ref mut current) = self.current_process {
@@ -233,14 +236,14 @@ impl Scheduler {
                 return None;
             }
         }
-        
+
         // 从就绪队列中选择下一个进程
         if let Some(mut next_process) = self.ready_queue.pop_front() {
             next_process.state = ProcessState::Running;
-            
+
             // 将当前进程放回就绪队列（如果是轮转调度且进程未完成）
             if let Some(mut current) = self.current_process.take() {
-                if current.state != ProcessState::Terminated && 
+                if current.state != ProcessState::Terminated &&
                    current.state != ProcessState::Blocked {
                     current.state = ProcessState::Ready;
                     self.ready_queue.push_back(current);
@@ -248,29 +251,29 @@ impl Scheduler {
                     self.blocked_queue.push(current);
                 }
             }
-            
+
             self.current_process = Some(next_process.clone());
             Some(next_process)
         } else {
             None
         }
     }
-    
+
     pub fn execute_current_process(&mut self) -> Option<Duration> {
         if let Some(ref mut current) = self.current_process {
             let executed_time = current.execute(self.time_slice);
-            
+
             // 更新等待时间
             for process in &mut self.ready_queue {
                 process.waiting_time += executed_time;
             }
-            
+
             Some(executed_time)
         } else {
             None
         }
     }
-    
+
     pub fn unblock_process(&mut self, pid: u32) {
         if let Some(index) = self.blocked_queue.iter().position(|p| p.pid == pid) {
             let mut process = self.blocked_queue.remove(index).unwrap();
@@ -299,7 +302,7 @@ impl Semaphore {
             waiting_processes: Vec::new(),
         }
     }
-    
+
     pub fn wait(&mut self, pid: u32) -> bool {
         self.value -= 1;
         if self.value < 0 {
@@ -309,7 +312,7 @@ impl Semaphore {
             true // 进程可以继续
         }
     }
-    
+
     pub fn signal(&mut self) -> Option<u32> {
         self.value += 1;
         if self.value <= 0 {
@@ -335,22 +338,22 @@ impl ProcessSynchronizer {
             condition_variables: std::collections::HashMap::new(),
         }
     }
-    
+
     pub fn create_semaphore(&mut self, name: &str, initial_value: i32) {
         let semaphore = Arc::new(Mutex::new(Semaphore::new(initial_value)));
         self.semaphores.insert(name.to_string(), semaphore);
     }
-    
+
     pub fn create_mutex(&mut self, name: &str) {
         let mutex = Arc::new(Mutex::new(false)); // false表示未锁定
         self.mutexes.insert(name.to_string(), mutex);
     }
-    
+
     pub fn create_condition_variable(&mut self, name: &str) {
         let cv = Arc::new((Mutex::new(false), Condvar::new()));
         self.condition_variables.insert(name.to_string(), cv);
     }
-    
+
     pub fn acquire_semaphore(&self, name: &str, pid: u32) -> bool {
         if let Some(semaphore) = self.semaphores.get(name) {
             if let Ok(mut sem) = semaphore.lock() {
@@ -359,7 +362,7 @@ impl ProcessSynchronizer {
         }
         false
     }
-    
+
     pub fn release_semaphore(&self, name: &str) -> Option<u32> {
         if let Some(semaphore) = self.semaphores.get(name) {
             if let Ok(mut sem) = semaphore.lock() {
@@ -368,7 +371,7 @@ impl ProcessSynchronizer {
         }
         None
     }
-    
+
     pub fn acquire_mutex(&self, name: &str) -> bool {
         if let Some(mutex) = self.mutexes.get(name) {
             if let Ok(mut lock) = mutex.lock() {
@@ -380,7 +383,7 @@ impl ProcessSynchronizer {
         }
         false
     }
-    
+
     pub fn release_mutex(&self, name: &str) {
         if let Some(mutex) = self.mutexes.get(name) {
             if let Ok(mut lock) = mutex.lock() {
@@ -405,8 +408,8 @@ impl ProcessSynchronizer {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 7 批判性分析

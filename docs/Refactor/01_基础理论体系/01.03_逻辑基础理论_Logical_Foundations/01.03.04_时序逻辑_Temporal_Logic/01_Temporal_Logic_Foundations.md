@@ -2,34 +2,36 @@
 
 ## 📋 目录
 
-- [1 概述](#1-概述)
-  - [1.1 时态逻辑的核心概念](#11-时态逻辑的核心概念)
-- [2 时态逻辑的形式化定义](#2-时态逻辑的形式化定义)
-  - [2.1 时态结构](#21-时态结构)
-  - [2.2 时态逻辑语义](#22-时态逻辑语义)
-- [3 线性时态逻辑 (LTL)](#3-线性时态逻辑-ltl)
-  - [3.1 LTL语法](#31-ltl语法)
-  - [3.2 LTL语义](#32-ltl语义)
-- [4 计算树逻辑 (CTL)](#4-计算树逻辑-ctl)
-  - [4.1 CTL语法](#41-ctl语法)
-  - [4.2 CTL语义](#42-ctl语义)
-- [5 时态逻辑的应用](#5-时态逻辑的应用)
-  - [5.1 模型检测](#51-模型检测)
-  - [5.2 程序验证](#52-程序验证)
-- [6 时态逻辑的扩展](#6-时态逻辑的扩展)
-  - [6.1 实时时态逻辑](#61-实时时态逻辑)
-  - [6.2 概率时态逻辑](#62-概率时态逻辑)
-- [7 时态逻辑的算法](#7-时态逻辑的算法)
-  - [7.1 模型检测算法](#71-模型检测算法)
-  - [7.2 LTL到Büchi自动机的转换](#72-ltl到büchi自动机的转换)
-- [8 时态逻辑的复杂性](#8-时态逻辑的复杂性)
-  - [8.1 计算复杂性](#81-计算复杂性)
-  - [8.2 空间复杂性](#82-空间复杂性)
-- [9 时态逻辑的工具和实现](#9-时态逻辑的工具和实现)
-  - [9.1 模型检测工具](#91-模型检测工具)
-  - [9.2 时态逻辑库](#92-时态逻辑库)
-- [10 总结](#10-总结)
-- [11 批判性分析](#11-批判性分析)
+- [01. 时态逻辑理论基础](#01-时态逻辑理论基础)
+  - [📋 目录](#-目录)
+  - [1 概述](#1-概述)
+    - [1.1 时态逻辑的核心概念](#11-时态逻辑的核心概念)
+  - [2 时态逻辑的形式化定义](#2-时态逻辑的形式化定义)
+    - [2.1 时态结构](#21-时态结构)
+    - [2.2 时态逻辑语义](#22-时态逻辑语义)
+  - [3 线性时态逻辑 (LTL)](#3-线性时态逻辑-ltl)
+    - [3.1 LTL语法](#31-ltl语法)
+    - [3.2 LTL语义](#32-ltl语义)
+  - [4 计算树逻辑 (CTL)](#4-计算树逻辑-ctl)
+    - [4.1 CTL语法](#41-ctl语法)
+    - [4.2 CTL语义](#42-ctl语义)
+  - [5 时态逻辑的应用](#5-时态逻辑的应用)
+    - [5.1 模型检测](#51-模型检测)
+    - [5.2 程序验证](#52-程序验证)
+  - [6 时态逻辑的扩展](#6-时态逻辑的扩展)
+    - [6.1 实时时态逻辑](#61-实时时态逻辑)
+    - [6.2 概率时态逻辑](#62-概率时态逻辑)
+  - [7 时态逻辑的算法](#7-时态逻辑的算法)
+    - [7.1 模型检测算法](#71-模型检测算法)
+    - [7.2 LTL到Büchi自动机的转换](#72-ltl到büchi自动机的转换)
+  - [8 时态逻辑的复杂性](#8-时态逻辑的复杂性)
+    - [8.1 计算复杂性](#81-计算复杂性)
+    - [8.2 空间复杂性](#82-空间复杂性)
+  - [9 时态逻辑的工具和实现](#9-时态逻辑的工具和实现)
+    - [9.1 模型检测工具](#91-模型检测工具)
+    - [9.2 时态逻辑库](#92-时态逻辑库)
+  - [10 总结](#10-总结)
+  - [11 批判性分析](#11-批判性分析)
 
 ---
 
@@ -158,15 +160,15 @@ impl TemporalStructure {
 ```haskell
 -- 时态逻辑语义的Haskell实现
 satisfies :: TemporalStructure -> TimePoint -> TemporalFormula -> Bool
-satisfies structure t (Atomic p) = 
+satisfies structure t (Atomic p) =
     case lookup (t, p) (valuation structure) of
         Just v -> v
         Nothing -> False
-satisfies structure t (Temporal Next phi) = 
+satisfies structure t (Temporal Next phi) =
     any (\t' -> satisfies structure t' phi) (getNextTimePoints structure t)
-satisfies structure t (Temporal Always phi) = 
+satisfies structure t (Temporal Always phi) =
     all (\t' -> satisfies structure t' phi) (getFutureTimePoints structure t)
-satisfies structure t (Temporal Eventually phi) = 
+satisfies structure t (Temporal Eventually phi) =
     any (\t' -> satisfies structure t' phi) (getFutureTimePoints structure t)
 ```
 
@@ -248,7 +250,7 @@ impl LTLFormula {
             }
             LTLFormula::Until(phi, psi) => {
                 (position..sequence.len()).any(|j| {
-                    psi.evaluate(sequence, j) && 
+                    psi.evaluate(sequence, j) &&
                     (position..j).all(|k| phi.evaluate(sequence, k))
                 })
             }
@@ -262,25 +264,25 @@ impl LTLFormula {
 ```haskell
 -- LTL语义的Haskell实现
 evaluateLTL :: [Set String] -> Int -> LTLFormula -> Bool
-evaluateLTL sequence pos (Atomic p) = 
+evaluateLTL sequence pos (Atomic p) =
     case sequence !!? pos of
         Just state -> p `member` state
         Nothing -> False
-evaluateLTL sequence pos (Not phi) = 
+evaluateLTL sequence pos (Not phi) =
     not (evaluateLTL sequence pos phi)
-evaluateLTL sequence pos (And phi psi) = 
+evaluateLTL sequence pos (And phi psi) =
     evaluateLTL sequence pos phi && evaluateLTL sequence pos psi
-evaluateLTL sequence pos (Next phi) = 
+evaluateLTL sequence pos (Next phi) =
     case sequence !!? (pos + 1) of
         Just _ -> evaluateLTL sequence (pos + 1) phi
         Nothing -> False
-evaluateLTL sequence pos (Always phi) = 
+evaluateLTL sequence pos (Always phi) =
     all (\i -> evaluateLTL sequence i phi) [pos..length sequence - 1]
-evaluateLTL sequence pos (Eventually phi) = 
+evaluateLTL sequence pos (Eventually phi) =
     any (\i -> evaluateLTL sequence i phi) [pos..length sequence - 1]
-evaluateLTL sequence pos (Until phi psi) = 
-    any (\j -> evaluateLTL sequence j psi && 
-               all (\k -> evaluateLTL sequence k phi) [pos..j-1]) 
+evaluateLTL sequence pos (Until phi psi) =
+    any (\j -> evaluateLTL sequence j psi &&
+               all (\k -> evaluateLTL sequence k phi) [pos..j-1])
         [pos..length sequence - 1]
 ```
 
@@ -393,17 +395,17 @@ data KripkeStructure = KripkeStructure {
 }
 
 satisfiesCTL :: KripkeStructure -> String -> CTLFormula -> Bool
-satisfiesCTL kripke s (Atomic p) = 
+satisfiesCTL kripke s (Atomic p) =
     case lookup s (labeling kripke) of
         Just props -> p `elem` props
         Nothing -> False
-satisfiesCTL kripke s (ExistsNext phi) = 
+satisfiesCTL kripke s (ExistsNext phi) =
     any (\s' -> satisfiesCTL kripke s' phi) (getSuccessors kripke s)
-satisfiesCTL kripke s (AllNext phi) = 
+satisfiesCTL kripke s (AllNext phi) =
     all (\s' -> satisfiesCTL kripke s' phi) (getSuccessors kripke s)
-satisfiesCTL kripke s (ExistsAlways phi) = 
+satisfiesCTL kripke s (ExistsAlways phi) =
     hasPathAlwaysSatisfying kripke s phi
-satisfiesCTL kripke s (AllAlways phi) = 
+satisfiesCTL kripke s (AllAlways phi) =
     allPathsAlwaysSatisfy kripke s phi
 ```
 
@@ -425,14 +427,14 @@ impl ModelChecker {
             satisfied: true,
             counter_examples: Vec::new(),
         };
-        
+
         for state in &self.system.initial_states {
             if !self.system.satisfies(state, &self.specification) {
                 result.satisfied = false;
                 result.counter_examples.push(state.clone());
             }
         }
-        
+
         result
     }
 }
@@ -446,7 +448,7 @@ data ModelCheckingResult = ModelCheckingResult {
 }
 
 checkModel :: KripkeStructure -> CTLFormula -> ModelCheckingResult
-checkModel kripke spec = 
+checkModel kripke spec =
     let initialStates = initialStates kripke
         unsatisfied = filter (\s -> not (satisfiesCTL kripke s spec)) initialStates
     in ModelCheckingResult {
@@ -468,13 +470,13 @@ pub struct ProgramVerifier {
 impl ProgramVerifier {
     pub fn verify_property(&self, property: &LTLFormula) -> VerificationResult {
         let traces = self.program.generate_traces();
-        
+
         for trace in traces {
             if !property.evaluate(&trace, 0) {
                 return VerificationResult::Violation(trace);
             }
         }
-        
+
         VerificationResult::Satisfied
     }
 }
@@ -485,11 +487,11 @@ impl ProgramVerifier {
 data VerificationResult = Satisfied | Violation [Set String]
 
 verifyProgram :: Program -> LTLFormula -> VerificationResult
-verifyProgram program property = 
+verifyProgram program property =
     let traces = generateTraces program
         violations = filter (\trace -> not (evaluateLTL trace 0 property)) traces
-    in if null violations 
-       then Satisfied 
+    in if null violations
+       then Satisfied
        else Violation (head violations)
 ```
 
@@ -637,11 +639,11 @@ impl KripkeStructure {
             _ => HashSet::new(),
         }
     }
-    
+
     fn compute_eg_sat(&self, phi: &CTLFormula) -> HashSet<String> {
         let mut sat_states = self.ctl_model_check(phi);
         let mut result = HashSet::new();
-        
+
         loop {
             let mut new_result = HashSet::new();
             for state in &sat_states {
@@ -649,13 +651,13 @@ impl KripkeStructure {
                     new_result.insert(state.clone());
                 }
             }
-            
+
             if new_result == result {
                 break;
             }
             result = new_result;
         }
-        
+
         result
     }
 }
@@ -664,26 +666,26 @@ impl KripkeStructure {
 ```haskell
 -- CTL模型检测算法的Haskell实现
 ctlModelCheck :: KripkeStructure -> CTLFormula -> Set String
-ctlModelCheck kripke (Atomic p) = 
-    Set.fromList [s | s <- states kripke, 
+ctlModelCheck kripke (Atomic p) =
+    Set.fromList [s | s <- states kripke,
                      let props = fromMaybe [] (lookup s (labeling kripke)),
                      p `elem` props]
-ctlModelCheck kripke (Not phi) = 
+ctlModelCheck kripke (Not phi) =
     let satStates = ctlModelCheck kripke phi
     in Set.fromList [s | s <- states kripke, s `Set.notMember` satStates]
-ctlModelCheck kripke (And phi psi) = 
+ctlModelCheck kripke (And phi psi) =
     let satPhi = ctlModelCheck kripke phi
         satPsi = ctlModelCheck kripke psi
     in Set.intersection satPhi satPsi
-ctlModelCheck kripke (ExistsNext phi) = 
+ctlModelCheck kripke (ExistsNext phi) =
     let satPhi = ctlModelCheck kripke phi
     in Set.fromList [s | s <- states kripke,
                         any (`Set.member` satPhi) (getSuccessors kripke s)]
-ctlModelCheck kripke (ExistsAlways phi) = 
+ctlModelCheck kripke (ExistsAlways phi) =
     computeEGSat kripke phi
 
 computeEGSat :: KripkeStructure -> CTLFormula -> Set String
-computeEGSat kripke phi = 
+computeEGSat kripke phi =
     let satStates = ctlModelCheck kripke phi
         result = Set.fromList [s | s <- Set.toList satStates,
                                   any (`Set.member` satStates) (getSuccessors kripke s)]
@@ -707,27 +709,27 @@ impl LTLFormula {
     pub fn to_buchi_automaton(&self) -> BuchiAutomaton {
         let closure = self.compute_closure();
         let atoms = self.compute_atoms(&closure);
-        
+
         let mut automaton = BuchiAutomaton {
             states: Vec::new(),
             initial_states: Vec::new(),
             accepting_states: Vec::new(),
             transitions: Vec::new(),
         };
-        
+
         // 构建状态和转换
         for atom in atoms {
             let state = format!("q_{}", atom.join("_"));
             automaton.states.push(state.clone());
-            
+
             if self.is_consistent(&atom) {
                 automaton.initial_states.push(state.clone());
             }
-            
+
             if self.is_accepting(&atom) {
                 automaton.accepting_states.push(state.clone());
             }
-            
+
             // 添加转换
             let next_atoms = self.compute_next_atoms(&atom);
             for next_atom in next_atoms {
@@ -736,7 +738,7 @@ impl LTLFormula {
                 automaton.transitions.push((state.clone(), label, next_state));
             }
         }
-        
+
         automaton
     }
 }
@@ -752,7 +754,7 @@ data BuchiAutomaton = BuchiAutomaton {
 }
 
 toBuchiAutomaton :: LTLFormula -> BuchiAutomaton
-toBuchiAutomaton formula = 
+toBuchiAutomaton formula =
     let closure = computeClosure formula
         atoms = computeAtoms closure
         states = map (\atom -> "q_" ++ intercalate "_" atom) atoms
@@ -760,11 +762,11 @@ toBuchiAutomaton formula =
                                 isConsistent formula atom]
         acceptingStates = [state | (state, atom) <- zip states atoms,
                                   isAccepting formula atom]
-        transitions = concatMap (\atom -> 
+        transitions = concatMap (\atom ->
             let state = "q_" ++ intercalate "_" atom
                 nextAtoms = computeNextAtoms formula atom
                 label = atomToLabel atom
-            in map (\nextAtom -> 
+            in map (\nextAtom ->
                 let nextState = "q_" ++ intercalate "_" nextAtom
                 in (state, label, nextState)) nextAtoms) atoms
     in BuchiAutomaton states initialStates acceptingStates transitions
@@ -794,18 +796,18 @@ impl ComplexityAnalyzer {
     pub fn analyze_ltl_complexity(&self) -> ComplexityResult {
         let time_complexity = self.formula_size.pow(2) * self.state_space_size;
         let space_complexity = self.formula_size * self.state_space_size;
-        
+
         ComplexityResult {
             time_complexity,
             space_complexity,
             complexity_class: "PSPACE".to_string(),
         }
     }
-    
+
     pub fn analyze_ctl_complexity(&self) -> ComplexityResult {
         let time_complexity = self.formula_size * self.state_space_size;
         let space_complexity = self.state_space_size;
-        
+
         ComplexityResult {
             time_complexity,
             space_complexity,
@@ -824,7 +826,7 @@ data ComplexityResult = ComplexityResult {
 }
 
 analyzeLTLComplexity :: Int -> Int -> ComplexityResult
-analyzeLTLComplexity formulaSize stateSpaceSize = 
+analyzeLTLComplexity formulaSize stateSpaceSize =
     ComplexityResult {
         timeComplexity = formulaSize^2 * stateSpaceSize,
         spaceComplexity = formulaSize * stateSpaceSize,
@@ -832,7 +834,7 @@ analyzeLTLComplexity formulaSize stateSpaceSize =
     }
 
 analyzeCTLComplexity :: Int -> Int -> ComplexityResult
-analyzeCTLComplexity formulaSize stateSpaceSize = 
+analyzeCTLComplexity formulaSize stateSpaceSize =
     ComplexityResult {
         timeComplexity = formulaSize * stateSpaceSize,
         spaceComplexity = stateSpaceSize,
@@ -859,7 +861,7 @@ impl ModelCheckerTool {
             algorithms: vec!["Automata-based".to_string(), "Tableau".to_string()],
         }
     }
-    
+
     pub fn new_nusmv() -> Self {
         ModelCheckerTool {
             name: "NuSMV".to_string(),
@@ -867,7 +869,7 @@ impl ModelCheckerTool {
             algorithms: vec!["Symbolic".to_string(), "Explicit".to_string()],
         }
     }
-    
+
     pub fn new_prism() -> Self {
         ModelCheckerTool {
             name: "PRISM".to_string(),
@@ -913,19 +915,19 @@ prismTool = ModelCheckerTool {
 ```rust
 pub mod temporal_logic {
     use super::*;
-    
+
     pub trait TemporalLogic {
         fn evaluate(&self, model: &dyn TemporalModel) -> bool;
         fn to_automaton(&self) -> Box<dyn Automaton>;
         fn complexity(&self) -> ComplexityResult;
     }
-    
+
     pub trait TemporalModel {
         fn get_states(&self) -> Vec<String>;
         fn get_transitions(&self) -> Vec<(String, String)>;
         fn get_labeling(&self) -> HashMap<String, HashSet<String>>;
     }
-    
+
     pub trait Automaton {
         fn get_states(&self) -> Vec<String>;
         fn get_initial_states(&self) -> Vec<String>;

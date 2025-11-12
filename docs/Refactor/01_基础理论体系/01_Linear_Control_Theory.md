@@ -307,16 +307,16 @@ impl Vector {
             size,
         }
     }
-    
+
     fn from_vec(data: Vec<f64>) -> Self {
         let size = data.len();
         Vector { data, size }
     }
-    
+
     fn norm(&self) -> f64 {
         self.data.iter().map(|x| x * x).sum::<f64>().sqrt()
     }
-    
+
     fn dot(&self, other: &Vector) -> Option<f64> {
         if self.size != other.size {
             return None;
@@ -341,7 +341,7 @@ impl Matrix {
             cols,
         }
     }
-    
+
     fn identity(size: usize) -> Self {
         let mut matrix = Matrix::new(size, size);
         for i in 0..size {
@@ -349,12 +349,12 @@ impl Matrix {
         }
         matrix
     }
-    
+
     fn multiply(&self, other: &Matrix) -> Option<Matrix> {
         if self.cols != other.rows {
             return None;
         }
-        
+
         let mut result = Matrix::new(self.rows, other.cols);
         for i in 0..self.rows {
             for j in 0..other.cols {
@@ -365,7 +365,7 @@ impl Matrix {
         }
         Some(result)
     }
-    
+
     fn transpose(&self) -> Matrix {
         let mut result = Matrix::new(self.cols, self.rows);
         for i in 0..self.rows {
@@ -375,20 +375,20 @@ impl Matrix {
         }
         result
     }
-    
+
     fn determinant(&self) -> Option<f64> {
         if self.rows != self.cols {
             return None;
         }
-        
+
         if self.rows == 1 {
             return Some(self.data[0][0]);
         }
-        
+
         if self.rows == 2 {
             return Some(self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0]);
         }
-        
+
         // 递归计算行列式
         let mut det = 0.0;
         for j in 0..self.cols {
@@ -397,7 +397,7 @@ impl Matrix {
         }
         Some(det)
     }
-    
+
     fn minor(&self, row: usize, col: usize) -> Matrix {
         let mut result = Matrix::new(self.rows - 1, self.cols - 1);
         let mut r = 0;
@@ -417,7 +417,7 @@ impl Matrix {
         }
         result
     }
-    
+
     fn eigenvalues(&self) -> Vec<Complex<f64>> {
         // 简化版本的特征值计算
         if self.rows == 2 {
@@ -425,11 +425,11 @@ impl Matrix {
             let b = self.data[0][1];
             let c = self.data[1][0];
             let d = self.data[1][1];
-            
+
             let trace = a + d;
             let det = a * d - b * c;
             let discriminant = trace * trace - 4.0 * det;
-            
+
             if discriminant >= 0.0 {
                 let sqrt_disc = discriminant.sqrt();
                 vec![
@@ -467,7 +467,7 @@ impl LinearSystem {
         let state_dim = A.rows;
         let input_dim = B.cols;
         let output_dim = C.rows;
-        
+
         LinearSystem {
             A,
             B,
@@ -478,26 +478,26 @@ impl LinearSystem {
             output_dim,
         }
     }
-    
+
     fn is_stable(&self) -> bool {
         let eigenvalues = self.A.eigenvalues();
         eigenvalues.iter().all(|λ| λ.re < 0.0)
     }
-    
+
     fn is_controllable(&self) -> bool {
         let controllability_matrix = self.build_controllability_matrix();
         controllability_matrix.rank() == self.state_dim
     }
-    
+
     fn is_observable(&self) -> bool {
         let observability_matrix = self.build_observability_matrix();
         observability_matrix.rank() == self.state_dim
     }
-    
+
     fn build_controllability_matrix(&self) -> Matrix {
         let mut result = Matrix::new(self.state_dim, self.state_dim * self.input_dim);
         let mut current_power = Matrix::identity(self.state_dim);
-        
+
         for i in 0..self.state_dim {
             let term = current_power.multiply(&self.B).unwrap();
             for j in 0..self.input_dim {
@@ -507,14 +507,14 @@ impl LinearSystem {
             }
             current_power = current_power.multiply(&self.A).unwrap();
         }
-        
+
         result
     }
-    
+
     fn build_observability_matrix(&self) -> Matrix {
         let mut result = Matrix::new(self.state_dim * self.output_dim, self.state_dim);
         let mut current_power = Matrix::identity(self.state_dim);
-        
+
         for i in 0..self.state_dim {
             let term = self.C.multiply(&current_power).unwrap();
             for j in 0..self.output_dim {
@@ -524,15 +524,15 @@ impl LinearSystem {
             }
             current_power = self.A.multiply(&current_power).unwrap();
         }
-        
+
         result
     }
-    
+
     fn rank(&self) -> usize {
         // 简化版本的秩计算
         let mut matrix = self.clone();
         let mut rank = 0;
-        
+
         for col in 0..matrix.cols.min(matrix.rows) {
             // 寻找主元
             let mut pivot_row = rank;
@@ -541,13 +541,13 @@ impl LinearSystem {
                     pivot_row = row;
                 }
             }
-            
+
             if matrix.data[pivot_row][col].abs() > 1e-10 {
                 // 交换行
                 if pivot_row != rank {
                     matrix.data.swap(rank, pivot_row);
                 }
-                
+
                 // 消元
                 for row in (rank + 1)..matrix.rows {
                     let factor = matrix.data[row][col] / matrix.data[rank][col];
@@ -555,24 +555,24 @@ impl LinearSystem {
                         matrix.data[row][c] -= factor * matrix.data[rank][c];
                     }
                 }
-                
+
                 rank += 1;
             }
         }
-        
+
         rank
     }
-    
+
     fn solve_lyapunov_equation(&self, Q: &Matrix) -> Option<Matrix> {
         // 求解李雅普诺夫方程 AᵀP + PA = -Q
         // 简化版本，实际需要更复杂的算法
         if self.A.rows != Q.rows || self.A.rows != Q.cols {
             return None;
         }
-        
+
         let n = self.A.rows;
         let mut P = Matrix::new(n, n);
-        
+
         // 使用迭代方法求解
         for _ in 0..100 {
             let A_T = self.A.transpose();
@@ -580,11 +580,11 @@ impl LinearSystem {
             let A_T_P = A_T.multiply(&P).unwrap();
             let sum = AP.add(&A_T_P).unwrap();
             let residual = sum.add(Q).unwrap();
-            
+
             if residual.norm() < 1e-6 {
                 return Some(P);
             }
-            
+
             // 更新P
             for i in 0..n {
                 for j in 0..n {
@@ -592,7 +592,7 @@ impl LinearSystem {
                 }
             }
         }
-        
+
         None
     }
 }
@@ -611,42 +611,42 @@ impl TransferFunction {
             denominator,
         }
     }
-    
+
     fn from_system(system: &LinearSystem) -> Self {
         // 从状态空间模型计算传递函数
         // 简化版本，实际需要更复杂的计算
         let n = system.state_dim;
         let mut numerator = vec![0.0; n];
         let mut denominator = vec![0.0; n + 1];
-        
+
         // 计算特征多项式
         let char_poly = system.A.characteristic_polynomial();
         denominator = char_poly;
-        
+
         // 计算传递函数分子
         numerator[0] = 1.0;
-        
+
         TransferFunction {
             numerator,
             denominator,
         }
     }
-    
+
     fn poles(&self) -> Vec<Complex<f64>> {
         // 计算极点（分母多项式的根）
         self.denominator_roots()
     }
-    
+
     fn zeros(&self) -> Vec<Complex<f64>> {
         // 计算零点（分子多项式的根）
         self.numerator_roots()
     }
-    
+
     fn is_stable(&self) -> bool {
         let poles = self.poles();
         poles.iter().all(|p| p.re < 0.0)
     }
-    
+
     fn denominator_roots(&self) -> Vec<Complex<f64>> {
         // 简化版本的多项式求根
         if self.denominator.len() == 2 {
@@ -658,7 +658,7 @@ impl TransferFunction {
             let a = self.denominator[2];
             let b = self.denominator[1];
             let c = self.denominator[0];
-            
+
             let discriminant = b * b - 4.0 * a * c;
             if discriminant >= 0.0 {
                 let sqrt_disc = discriminant.sqrt();
@@ -678,7 +678,7 @@ impl TransferFunction {
             vec![]
         }
     }
-    
+
     fn numerator_roots(&self) -> Vec<Complex<f64>> {
         // 类似分母求根
         vec![]
@@ -771,34 +771,34 @@ impl InvertedPendulum {
         let g = 9.81; // 重力加速度
         let l = 1.0;  // 摆长
         let m = 1.0;  // 质量
-        
+
         let A = Matrix::from_vec(vec![
             vec![0.0, 1.0, 0.0, 0.0],
             vec![g/l, 0.0, 0.0, 0.0],
             vec![0.0, 0.0, 0.0, 1.0],
             vec![0.0, 0.0, 0.0, 0.0],
         ]);
-        
+
         let B = Matrix::from_vec(vec![
             vec![0.0],
             vec![0.0],
             vec![0.0],
             vec![1.0],
         ]);
-        
+
         let C = Matrix::from_vec(vec![
             vec![1.0, 0.0, 0.0, 0.0],
             vec![0.0, 0.0, 1.0, 0.0],
         ]);
-        
+
         let D = Matrix::new(2, 1);
-        
+
         let system = LinearSystem::new(A, B, C, D);
         let controller = LinearController::new(&system);
-        
+
         InvertedPendulum { system, controller }
     }
-    
+
     fn design_controller(&mut self) {
         // 设计线性二次型调节器
         let Q = Matrix::from_vec(vec![
@@ -807,27 +807,27 @@ impl InvertedPendulum {
             vec![0.0, 0.0, 10.0, 0.0],
             vec![0.0, 0.0, 0.0, 1.0],
         ]);
-        
+
         let R = Matrix::from_vec(vec![vec![1.0]]);
-        
+
         self.controller = LinearController::lqr(&self.system, &Q, &R);
     }
-    
+
     fn simulate(&self, initial_state: Vector, duration: f64, dt: f64) -> Vec<Vector> {
         let mut states = Vec::new();
         let mut current_state = initial_state;
-        
+
         let steps = (duration / dt) as usize;
         for _ in 0..steps {
             states.push(current_state.clone());
-            
+
             // 计算控制输入
             let control = self.controller.compute_control(&current_state);
-            
+
             // 更新状态
             current_state = self.system.simulate_step(&current_state, &control, dt);
         }
-        
+
         states
     }
 }
@@ -842,25 +842,25 @@ impl LinearController {
         let K = Matrix::from_vec(vec![
             vec![-1.0, -2.0, -1.0, -2.0],
         ]);
-        
+
         LinearController { K }
     }
-    
+
     fn lqr(system: &LinearSystem, Q: &Matrix, R: &Matrix) -> Self {
         // 线性二次型调节器设计
         // 简化版本，实际需要求解代数黎卡提方程
         let K = Matrix::from_vec(vec![
             vec![-3.16, -4.47, -3.16, -4.47],
         ]);
-        
+
         LinearController { K }
     }
-    
+
     fn compute_control(&self, state: &Vector) -> Vector {
         // 计算控制输入 u = -Kx
         let state_matrix = Matrix::from_vec(vec![state.data.clone()]).transpose();
         let control_matrix = self.K.multiply(&state_matrix).unwrap();
-        
+
         Vector::from_vec(control_matrix.data[0].clone())
     }
 }
@@ -878,10 +878,10 @@ impl StabilityAnalyzer {
         let is_stable = system.is_stable();
         let is_controllable = system.is_controllable();
         let is_observable = system.is_observable();
-        
+
         let lyapunov_solution = system.solve_lyapunov_equation(&Matrix::identity(system.state_dim));
         let has_lyapunov_function = lyapunov_solution.is_some();
-        
+
         StabilityReport {
             eigenvalues,
             is_stable,
@@ -890,17 +890,17 @@ impl StabilityAnalyzer {
             has_lyapunov_function,
         }
     }
-    
+
     fn routh_hurwitz_criterion(denominator: &[f64]) -> bool {
         // 劳斯-赫尔维茨判据
         let n = denominator.len() - 1;
         let mut routh_table = vec![vec![0.0; n + 1]; n + 1];
-        
+
         // 填充前两行
         for i in 0..=n {
             routh_table[0][i] = denominator[n - i];
         }
-        
+
         for i in 0..n {
             routh_table[1][i] = if i % 2 == 0 && i + 1 < denominator.len() {
                 denominator[n - i - 1]
@@ -908,21 +908,21 @@ impl StabilityAnalyzer {
                 0.0
             };
         }
-        
+
         // 计算其余行
         for i in 2..=n {
             for j in 0..n {
                 if routh_table[i-1][0] != 0.0 {
-                    routh_table[i][j] = (routh_table[i-2][0] * routh_table[i-1][j+1] 
+                    routh_table[i][j] = (routh_table[i-2][0] * routh_table[i-1][j+1]
                         - routh_table[i-2][j+1] * routh_table[i-1][0]) / routh_table[i-1][0];
                 }
             }
         }
-        
+
         // 检查第一列符号变化
         let mut sign_changes = 0;
         let mut prev_sign = routh_table[0][0].signum();
-        
+
         for i in 1..=n {
             let current_sign = routh_table[i][0].signum();
             if current_sign != 0.0 && current_sign != prev_sign {
@@ -930,7 +930,7 @@ impl StabilityAnalyzer {
                 prev_sign = current_sign;
             }
         }
-        
+
         sign_changes == 0
     }
 }

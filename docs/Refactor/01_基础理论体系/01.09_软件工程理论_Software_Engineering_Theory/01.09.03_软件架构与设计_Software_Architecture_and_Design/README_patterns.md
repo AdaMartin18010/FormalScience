@@ -7,8 +7,8 @@
 ## 目录
 
 - [设计模式理论 (Design Patterns Theory)](#设计模式理论-design-patterns-theory)
-  - [1 概述](#1-概述)
-  - [2 批判性分析](#2-批判性分析)
+  - [概述](#概述)
+  - [目录](#目录)
   - [理论基础](#理论基础)
     - [定义 8.3.1 (设计模式)](#定义-831-设计模式)
     - [定理 8.3.1 (模式可重用性)](#定理-831-模式可重用性)
@@ -161,7 +161,7 @@ impl Singleton {
             data: String::from("Singleton instance"),
         }
     }
-    
+
     pub fn get_data(&self) -> &str {
         &self.data
     }
@@ -179,7 +179,7 @@ impl SingletonManager {
             once: Once::new(),
         }
     }
-    
+
     pub fn get_instance(&self) -> Arc<Mutex<Option<Singleton>>> {
         self.once.call_once(|| {
             let mut instance = self.instance.lock().unwrap();
@@ -194,7 +194,7 @@ fn main() {
     let manager = SingletonManager::new();
     let instance1 = manager.get_instance();
     let instance2 = manager.get_instance();
-    
+
     // 验证是同一个实例
     assert!(Arc::ptr_eq(&instance1, &instance2));
 }
@@ -289,7 +289,7 @@ struct ConcreteFactoryB;
 
 impl Factory for ConcreteFactoryA {
     type ProductType = ConcreteProductA;
-    
+
     fn create_product(&self) -> Box<Self::ProductType> {
         Box::new(ConcreteProductA)
     }
@@ -297,7 +297,7 @@ impl Factory for ConcreteFactoryA {
 
 impl Factory for ConcreteFactoryB {
     type ProductType = ConcreteProductB;
-    
+
     fn create_product(&self) -> Box<Self::ProductType> {
         Box::new(ConcreteProductB)
     }
@@ -307,10 +307,10 @@ impl Factory for ConcreteFactoryB {
 fn main() {
     let factory_a = ConcreteFactoryA;
     let factory_b = ConcreteFactoryB;
-    
+
     let product_a = factory_a.create_product();
     let product_b = factory_b.create_product();
-    
+
     println!("{}", product_a.operation());
     println!("{}", product_b.operation());
 }
@@ -355,10 +355,10 @@ main :: IO ()
 main = do
     let factoryA = ConcreteFactoryA
     let factoryB = ConcreteFactoryB
-    
+
     let productA = createProduct factoryA
     let productB = createProduct factoryB
-    
+
     putStrLn $ operation productA
     putStrLn $ operation productB
 ```
@@ -406,7 +406,7 @@ impl Adaptee {
             specific_request: String::from("Specific request"),
         }
     }
-    
+
     fn specific_request(&self) -> String {
         self.specific_request.clone()
     }
@@ -434,7 +434,7 @@ impl Target for Adapter {
 fn main() {
     let adaptee = Adaptee::new();
     let adapter = Adapter::new(adaptee);
-    
+
     println!("{}", adapter.request());
 }
 ```
@@ -463,7 +463,7 @@ main :: IO ()
 main = do
     let adaptee = Adaptee "Specific request"
     let adapter = Adapter adaptee
-    
+
     putStrLn $ request adapter
 ```
 
@@ -547,7 +547,7 @@ impl<T: Component> Component for ConcreteDecoratorA<T> {
 fn main() {
     let component = ConcreteComponent;
     let decorated = ConcreteDecoratorA::new(component);
-    
+
     println!("{}", decorated.operation());
 }
 ```
@@ -582,7 +582,7 @@ main :: IO ()
 main = do
     let component = ConcreteComponent
     let decorated = ConcreteDecoratorA (Decorator component)
-    
+
     putStrLn $ operation decorated
 ```
 
@@ -642,7 +642,7 @@ impl ConcreteSubject {
             state: String::new(),
         }
     }
-    
+
     fn set_state(&mut self, state: String) {
         self.state = state;
         self.notify();
@@ -653,11 +653,11 @@ impl Subject for ConcreteSubject {
     fn attach(&mut self, observer: Arc<Mutex<dyn Observer + Send>>) {
         self.observers.push(observer);
     }
-    
+
     fn detach(&mut self, observer: Arc<Mutex<dyn Observer + Send>>) {
         self.observers.retain(|obs| !Arc::ptr_eq(obs, &observer));
     }
-    
+
     fn notify(&self) {
         for observer in &self.observers {
             if let Ok(obs) = observer.lock() {
@@ -687,13 +687,13 @@ impl Observer for ConcreteObserver {
 // 使用示例
 fn main() {
     let mut subject = ConcreteSubject::new();
-    
+
     let observer1 = Arc::new(Mutex::new(ConcreteObserver::new("Observer1".to_string())));
     let observer2 = Arc::new(Mutex::new(ConcreteObserver::new("Observer2".to_string())));
-    
+
     subject.attach(Arc::clone(&observer1));
     subject.attach(Arc::clone(&observer2));
-    
+
     subject.set_state("New state".to_string());
 }
 ```
@@ -743,13 +743,13 @@ setState subject newState = do
 main :: IO ()
 main = do
     subject <- newSubject
-    
+
     let observer1 name = putStrLn $ "Observer1 received: " ++ name
     let observer2 name = putStrLn $ "Observer2 received: " ++ name
-    
+
     attach subject observer1
     attach subject observer2
-    
+
     setState subject "New state"
 ```
 
@@ -809,7 +809,7 @@ impl<T: Strategy> Context<T> {
     fn new(strategy: T) -> Self {
         Context { strategy }
     }
-    
+
     fn execute_strategy(&self, data: &str) -> String {
         self.strategy.execute(data)
     }
@@ -819,9 +819,9 @@ impl<T: Strategy> Context<T> {
 fn main() {
     let context_a = Context::new(ConcreteStrategyA);
     let context_b = Context::new(ConcreteStrategyB);
-    
+
     let data = "Hello World";
-    
+
     println!("{}", context_a.execute_strategy(data));
     println!("{}", context_b.execute_strategy(data));
 }
@@ -856,7 +856,7 @@ main = do
     let contextA = Context ConcreteStrategyA
     let contextB = Context ConcreteStrategyB
     let data = "Hello World"
-    
+
     putStrLn $ executeStrategy contextA data
     putStrLn $ executeStrategy contextB data
 ```
@@ -959,11 +959,11 @@ impl Context {
             data: HashMap::new(),
         }
     }
-    
+
     fn set<T: 'static + Send + Sync>(&mut self, key: &str, value: T) {
         self.data.insert(key.to_string(), Box::new(value));
     }
-    
+
     fn get<T: 'static + Send + Sync>(&self, key: &str) -> Option<&T> {
         self.data.get(key)?.downcast_ref::<T>()
     }
@@ -980,11 +980,11 @@ impl PatternManager {
             patterns: HashMap::new(),
         }
     }
-    
+
     fn register<P: Pattern + 'static + Send + Sync>(&mut self, name: &str, pattern: P) {
         self.patterns.insert(name.to_string(), Box::new(pattern));
     }
-    
+
     fn apply(&self, name: &str, context: &mut Context) -> Result<(), String> {
         if let Some(pattern) = self.patterns.get(name) {
             pattern.apply(context)
@@ -1063,12 +1063,12 @@ impl ValidationResult {
             warnings: Vec::new(),
         }
     }
-    
+
     fn add_error(&mut self, error: String) {
         self.is_valid = false;
         self.errors.push(error);
     }
-    
+
     fn add_warning(&mut self, warning: String) {
         self.warnings.push(warning);
     }
@@ -1080,17 +1080,17 @@ struct DesignPatternValidator;
 impl PatternValidator for DesignPatternValidator {
     fn validate(&self, pattern: &dyn Pattern, context: &Context) -> ValidationResult {
         let mut result = ValidationResult::new();
-        
+
         // 验证模式是否适合当前上下文
         if !self.is_pattern_suitable(pattern, context) {
             result.add_error("Pattern not suitable for current context".to_string());
         }
-        
+
         // 验证模式组合是否合理
         if !self.is_combination_valid(pattern, context) {
             result.add_warning("Pattern combination might cause issues".to_string());
         }
-        
+
         result
     }
 }
@@ -1100,7 +1100,7 @@ impl DesignPatternValidator {
         // 实现模式适用性检查
         true
     }
-    
+
     fn is_combination_valid(&self, _pattern: &dyn Pattern, _context: &Context) -> bool {
         // 实现组合有效性检查
         true

@@ -3,7 +3,7 @@
 ## 📋 目录
 
 - [同步理论](#同步理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [📋 目录](#-目录)
   - [1. 理论基础](#1-理论基础)
     - [1.1 历史背景](#11-历史背景)
     - [1.2 理论基础](#12-理论基础)
@@ -221,32 +221,32 @@ impl SynchronizationPrimitives {
             barrier: Arc::new(Barrier::new(3)),
         }
     }
-    
+
     // 互斥锁示例
     fn mutex_example(&self) {
         let mutex = Arc::clone(&self.mutex);
-        
+
         let handle1 = thread::spawn(move || {
             let mut value = mutex.lock().unwrap();
             *value += 1;
             println!("Thread 1: value = {}", *value);
         });
-        
+
         let handle2 = thread::spawn(move || {
             let mut value = mutex.lock().unwrap();
             *value += 1;
             println!("Thread 2: value = {}", *value);
         });
-        
+
         handle1.join().unwrap();
         handle2.join().unwrap();
     }
-    
+
     // 条件变量示例
     fn condvar_example(&self) {
         let mutex = Arc::clone(&self.mutex);
         let condvar = Arc::clone(&self.condvar);
-        
+
         let handle1 = thread::spawn(move || {
             let mut value = mutex.lock().unwrap();
             while *value < 5 {
@@ -254,7 +254,7 @@ impl SynchronizationPrimitives {
             }
             println!("Thread 1: condition met, value = {}", *value);
         });
-        
+
         let handle2 = thread::spawn(move || {
             for i in 1..=5 {
                 thread::sleep(Duration::from_millis(100));
@@ -264,15 +264,15 @@ impl SynchronizationPrimitives {
                 condvar.notify_one();
             }
         });
-        
+
         handle1.join().unwrap();
         handle2.join().unwrap();
     }
-    
+
     // 信号量示例
     fn semaphore_example(&self) {
         let semaphore = Arc::clone(&self.semaphore);
-        
+
         for i in 0..5 {
             let sem = Arc::clone(&semaphore);
             thread::spawn(move || {
@@ -282,14 +282,14 @@ impl SynchronizationPrimitives {
                 println!("Thread {}: released semaphore", i);
             });
         }
-        
+
         thread::sleep(Duration::from_millis(1000));
     }
-    
+
     // 屏障示例
     fn barrier_example(&self) {
         let barrier = Arc::clone(&self.barrier);
-        
+
         for i in 0..3 {
             let barrier = Arc::clone(&barrier);
             thread::spawn(move || {
@@ -298,7 +298,7 @@ impl SynchronizationPrimitives {
                 println!("Thread {}: passed barrier", i);
             });
         }
-        
+
         thread::sleep(Duration::from_millis(1000));
     }
 }
@@ -319,35 +319,35 @@ impl SyncExpression {
     fn empty() -> SyncExpression {
         SyncExpression::Empty
     }
-    
+
     fn event(name: String) -> SyncExpression {
         SyncExpression::Event(name)
     }
-    
+
     fn parallel(e1: SyncExpression, e2: SyncExpression) -> SyncExpression {
         SyncExpression::Parallel(Box::new(e1), Box::new(e2))
     }
-    
+
     fn sequence(e1: SyncExpression, e2: SyncExpression) -> SyncExpression {
         SyncExpression::Sequence(Box::new(e1), Box::new(e2))
     }
-    
+
     fn choice(e1: SyncExpression, e2: SyncExpression) -> SyncExpression {
         SyncExpression::Choice(Box::new(e1), Box::new(e2))
     }
-    
+
     fn repeat(e: SyncExpression) -> SyncExpression {
         SyncExpression::Repeat(Box::new(e))
     }
-    
+
     fn wait(condition: String) -> SyncExpression {
         SyncExpression::Wait(condition)
     }
-    
+
     fn signal(condition: String) -> SyncExpression {
         SyncExpression::Signal(condition)
     }
-    
+
     // 执行同步表达式
     fn execute(&self) -> Vec<String> {
         match self {
@@ -382,7 +382,7 @@ impl SyncExpression {
             },
         }
     }
-    
+
     // 检查同步等价
     fn equivalent(&self, other: &SyncExpression) -> bool {
         self.execute() == other.execute()
@@ -406,14 +406,14 @@ impl ProducerConsumer {
             capacity,
         }
     }
-    
+
     fn producer(&self, id: i32) {
         for i in 0..5 {
             let buffer = Arc::clone(&self.buffer);
             let not_full = Arc::clone(&self.not_full);
             let not_empty = Arc::clone(&self.not_empty);
             let capacity = self.capacity;
-            
+
             thread::spawn(move || {
                 let mut buffer = buffer.lock().unwrap();
                 while buffer.len() >= capacity {
@@ -425,13 +425,13 @@ impl ProducerConsumer {
             });
         }
     }
-    
+
     fn consumer(&self, id: i32) {
         for _ in 0..5 {
             let buffer = Arc::clone(&self.buffer);
             let not_empty = Arc::clone(&self.not_empty);
             let not_full = Arc::clone(&self.not_full);
-            
+
             thread::spawn(move || {
                 let mut buffer = buffer.lock().unwrap();
                 while buffer.is_empty() {
@@ -448,19 +448,19 @@ impl ProducerConsumer {
 fn main() {
     println!("=== 同步原语示例 ===");
     let primitives = SynchronizationPrimitives::new();
-    
+
     println!("\n--- 互斥锁示例 ---");
     primitives.mutex_example();
-    
+
     println!("\n--- 条件变量示例 ---");
     primitives.condvar_example();
-    
+
     println!("\n--- 信号量示例 ---");
     primitives.semaphore_example();
-    
+
     println!("\n--- 屏障示例 ---");
     primitives.barrier_example();
-    
+
     println!("\n=== 同步表达式示例 ===");
     let sync_expr = SyncExpression::parallel(
         SyncExpression::sequence(
@@ -472,14 +472,14 @@ fn main() {
             SyncExpression::event("signal".to_string())
         )
     );
-    
+
     println!("同步表达式执行结果: {:?}", sync_expr.execute());
-    
+
     println!("\n=== 生产者-消费者示例 ===");
     let pc = ProducerConsumer::new(3);
     pc.producer(1);
     pc.consumer(1);
-    
+
     thread::sleep(Duration::from_millis(2000));
 }
 ```
@@ -512,24 +512,24 @@ newSynchronizationPrimitives = do
 mutexExample :: SynchronizationPrimitives -> IO ()
 mutexExample prims = do
     let mutex = SynchronizationPrimitives.mutex prims
-    
+
     forkIO $ do
         value <- takeMVar mutex
         putMVar mutex (value + 1)
         putStrLn $ "Thread 1: value = " ++ show (value + 1)
-    
+
     forkIO $ do
         value <- takeMVar mutex
         putMVar mutex (value + 1)
         putStrLn $ "Thread 2: value = " ++ show (value + 1)
-    
+
     threadDelay 1000000
 
 -- 信号量示例
 semaphoreExample :: SynchronizationPrimitives -> IO ()
 semaphoreExample prims = do
     let semaphore = SynchronizationPrimitives.semaphore prims
-    
+
     forM_ [0..4] $ \i -> do
         forkIO $ do
             _ <- takeMVar semaphore
@@ -537,7 +537,7 @@ semaphoreExample prims = do
             threadDelay 100000
             putMVar semaphore 1
             putStrLn $ "Thread " ++ show i ++ ": released semaphore"
-    
+
     threadDelay 1000000
 
 -- 同步表达式
@@ -632,25 +632,25 @@ example :: IO ()
 example = do
     putStrLn "=== 同步原语示例 ==="
     prims <- newSynchronizationPrimitives
-    
+
     putStrLn "\n--- 互斥锁示例 ---"
     mutexExample prims
-    
+
     putStrLn "\n--- 信号量示例 ---"
     semaphoreExample prims
-    
+
     putStrLn "\n=== 同步表达式示例 ==="
     let syncExpr = parallel
             (sequence (event "start") (event "process"))
             (sequence (event "wait") (event "signal"))
-    
+
     putStrLn $ "同步表达式执行结果: " ++ show (execute syncExpr)
-    
+
     putStrLn "\n=== 生产者-消费者示例 ==="
     pc <- newProducerConsumer 3
     producer pc 1
     consumer pc 1
-    
+
     threadDelay 2000000
 
 main :: IO ()
@@ -761,19 +761,19 @@ end
 
 ## 10. 参考文献
 
-1. Lamport, L. (1978). *Time, Clocks, and the Ordering of Events in a Distributed System*. Communications of the ACM, 21(7), 558-565.
-2. Dijkstra, E. W. (1965). *Solution of a Problem in Concurrent Programming Control*. Communications of the ACM, 8(9), 569.
-3. Hoare, C. A. R. (1974). *Monitors: An Operating System Structuring Concept*. Communications of the ACM, 17(10), 549-557.
-4. Ben-Ari, M. (2006). *Principles of Concurrent and Distributed Programming*. Prentice Hall.
-5. Andrews, G. R. (2000). *Foundations of Multithreaded, Parallel, and Distributed Programming*. Addison-Wesley.
-6. Raynal, M. (2013). *Distributed Algorithms for Message-Passing Systems*. Springer.
+1. Lamport, L. (1978). _Time, Clocks, and the Ordering of Events in a Distributed System_. Communications of the ACM, 21(7), 558-565.
+2. Dijkstra, E. W. (1965). _Solution of a Problem in Concurrent Programming Control_. Communications of the ACM, 8(9), 569.
+3. Hoare, C. A. R. (1974). _Monitors: An Operating System Structuring Concept_. Communications of the ACM, 17(10), 549-557.
+4. Ben-Ari, M. (2006). _Principles of Concurrent and Distributed Programming_. Prentice Hall.
+5. Andrews, G. R. (2000). _Foundations of Multithreaded, Parallel, and Distributed Programming_. Addison-Wesley.
+6. Raynal, M. (2013). _Distributed Algorithms for Message-Passing Systems_. Springer.
 
 ---
 
-**文档状态**: 完成  
-**最后更新**: 2024年12月21日  
-**质量等级**: A+  
-**形式化程度**: 95%  
+**文档状态**: 完成
+**最后更新**: 2024年12月21日
+**质量等级**: A+
+**形式化程度**: 95%
 **代码实现**: 完整 (Rust/Haskell/Lean)
 
 ## 批判性分析

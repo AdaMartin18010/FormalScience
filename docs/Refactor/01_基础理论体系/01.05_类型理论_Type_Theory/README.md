@@ -280,34 +280,34 @@ pub enum Expression {
     String(String),
     Unit,
     Variable(String),
-    
+
     // 函数相关
     Lambda(String, Box<Expression>),
     Application(Box<Expression>, Box<Expression>),
-    
+
     // 积类型相关
     Pair(Box<Expression>, Box<Expression>),
     First(Box<Expression>),
     Second(Box<Expression>),
-    
+
     // 和类型相关
     InLeft(Box<Expression>),
     InRight(Box<Expression>),
     Case(Box<Expression>, String, Box<Expression>, String, Box<Expression>),
-    
+
     // 列表相关
     Nil,
     Cons(Box<Expression>, Box<Expression>),
     Head(Box<Expression>),
     Tail(Box<Expression>),
-    
+
     // 依赖类型相关
     DependentLambda(String, Box<Expression>),
     DependentApplication(Box<Expression>, Box<Expression>),
     DependentPair(Box<Expression>, Box<Expression>),
     DependentFirst(Box<Expression>),
     DependentSecond(Box<Expression>),
-    
+
     // 线性类型相关
     LinearLet(String, Box<Expression>, Box<Expression>),
     LinearUse(Box<Expression>),
@@ -400,13 +400,13 @@ impl TypeChecker {
             Expression::Float(_) => Ok(Type::float()),
             Expression::String(_) => Ok(Type::string()),
             Expression::Unit => Ok(Type::unit()),
-            
+
             Expression::Variable(name) => {
                 env.lookup(name)
                     .ok_or_else(|| format!("Undefined variable: {}", name))
                     .cloned()
             },
-            
+
             Expression::Lambda(param, body) => {
                 // 对于简单类型，我们假设参数类型为通用类型
                 let param_type = Type::Var(format!("T_{}", param));
@@ -414,11 +414,11 @@ impl TypeChecker {
                 let body_type = Self::type_check(&new_env, body)?;
                 Ok(Type::arrow(param_type, body_type))
             },
-            
+
             Expression::Application(func, arg) => {
                 let func_type = Self::type_check(env, func)?;
                 let arg_type = Self::type_check(env, arg)?;
-                
+
                 match func_type {
                     Type::Arrow(domain, codomain) => {
                         if *domain == arg_type {
@@ -430,13 +430,13 @@ impl TypeChecker {
                     _ => Err(format!("Expected function type, got {}", func_type)),
                 }
             },
-            
+
             Expression::Pair(first, second) => {
                 let first_type = Self::type_check(env, first)?;
                 let second_type = Self::type_check(env, second)?;
                 Ok(Type::product(first_type, second_type))
             },
-            
+
             Expression::First(pair) => {
                 let pair_type = Self::type_check(env, pair)?;
                 match pair_type {
@@ -444,7 +444,7 @@ impl TypeChecker {
                     _ => Err(format!("Expected product type, got {}", pair_type)),
                 }
             },
-            
+
             Expression::Second(pair) => {
                 let pair_type = Self::type_check(env, pair)?;
                 match pair_type {
@@ -452,27 +452,27 @@ impl TypeChecker {
                     _ => Err(format!("Expected product type, got {}", pair_type)),
                 }
             },
-            
+
             Expression::InLeft(expr) => {
                 let expr_type = Self::type_check(env, expr)?;
                 // 假设右类型为通用类型
                 let right_type = Type::Var("T_right".to_string());
                 Ok(Type::sum(expr_type, right_type))
             },
-            
+
             Expression::InRight(expr) => {
                 let expr_type = Self::type_check(env, expr)?;
                 // 假设左类型为通用类型
                 let left_type = Type::Var("T_left".to_string());
                 Ok(Type::sum(left_type, expr_type))
             },
-            
+
             Expression::LinearLet(var, value, body) => {
                 let value_type = Self::type_check(env, value)?;
                 let new_env = env.extend_linear(var, value_type);
                 Self::type_check(&new_env, body)
             },
-            
+
             _ => Err("Unsupported expression type".to_string()),
         }
     }
@@ -503,24 +503,24 @@ impl TypeInferrer {
             Expression::Float(_) => Ok(Type::float()),
             Expression::String(_) => Ok(Type::string()),
             Expression::Unit => Ok(Type::unit()),
-            
+
             Expression::Variable(name) => {
                 env.lookup(name)
                     .ok_or_else(|| format!("Undefined variable: {}", name))
                     .cloned()
             },
-            
+
             Expression::Lambda(param, body) => {
                 let param_type = Self::fresh_type_var();
                 let new_env = env.extend(param, param_type.clone());
                 let body_type = Self::infer_type(&new_env, body)?;
                 Ok(Type::arrow(param_type, body_type))
             },
-            
+
             Expression::Application(func, arg) => {
                 let func_type = Self::infer_type(env, func)?;
                 let arg_type = Self::infer_type(env, arg)?;
-                
+
                 match func_type {
                     Type::Arrow(domain, codomain) => {
                         // 这里应该进行类型统一
@@ -533,7 +533,7 @@ impl TypeInferrer {
                     _ => Err(format!("Expected function type, got {}", func_type)),
                 }
             },
-            
+
             _ => Err("Unsupported expression for type inference".to_string()),
         }
     }
@@ -547,19 +547,19 @@ impl TypeInferrer {
 ```rust
 fn simple_type_checking_example() {
     let env = TypeEnvironment::new();
-    
+
     // 检查基本表达式
     let expr = Expression::int(42);
     match TypeChecker::type_check(&env, &expr) {
         Ok(ty) => println!("42 has type: {}", ty),
         Err(e) => println!("Error: {}", e),
     }
-    
+
     // 检查函数应用
     let func = Expression::lambda("x", Expression::variable("x".to_string()));
     let arg = Expression::int(42);
     let app = Expression::application(func, arg);
-    
+
     match TypeChecker::type_check(&env, &app) {
         Ok(ty) => println!("Function application has type: {}", ty),
         Err(e) => println!("Error: {}", e),
@@ -572,14 +572,14 @@ fn simple_type_checking_example() {
 ```rust
 fn linear_type_example() {
     let env = TypeEnvironment::new();
-    
+
     // 线性绑定示例
     let linear_expr = Expression::linear_let(
         "x",
         Expression::int(42),
         Expression::variable("x".to_string())
     );
-    
+
     match TypeChecker::type_check(&env, &linear_expr) {
         Ok(ty) => println!("Linear expression has type: {}", ty),
         Err(e) => println!("Error: {}", e),
@@ -654,5 +654,5 @@ fn linear_type_example() {
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

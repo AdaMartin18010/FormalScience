@@ -2,52 +2,56 @@
 
 ## 📋 目录
 
-- [1 文档信息](#1-文档信息)
-- [2 理论概述](#2-理论概述)
-- [3 基础概念](#3-基础概念)
-  - [3.1 时态控制系统的定义](#31-时态控制系统的定义)
-  - [3.2 时态控制目标](#32-时态控制目标)
-  - [3.3 时态控制策略](#33-时态控制策略)
-- [4 时态控制系统](#4-时态控制系统)
-  - [4.1 时态自动机](#41-时态自动机)
-  - [4.2 时态控制语言](#42-时态控制语言)
-  - [4.3 时态控制可达性](#43-时态控制可达性)
-- [5 时态控制规范](#5-时态控制规范)
-  - [5.1 时态控制规范语言](#51-时态控制规范语言)
-  - [5.2 时态控制约束](#52-时态控制约束)
-  - [5.3 时态控制不变性](#53-时态控制不变性)
-- [6 时态控制算法](#6-时态控制算法)
-  - [6.1 时态控制合成算法](#61-时态控制合成算法)
-  - [6.2 时态控制验证算法](#62-时态控制验证算法)
-  - [6.3 时态控制优化算法](#63-时态控制优化算法)
-- [7 形式化验证](#7-形式化验证)
-  - [7.1 时态控制系统的形式化模型](#71-时态控制系统的形式化模型)
-  - [7.2 时态控制验证的语义](#72-时态控制验证的语义)
-  - [7.3 时态控制验证的算法](#73-时态控制验证的算法)
-- [8 算法实现](#8-算法实现)
-  - [8.1 Rust实现](#81-rust实现)
-  - [8.2 Haskell实现](#82-haskell实现)
-  - [8.3 Lean形式化证明](#83-lean形式化证明)
-- [9 应用领域](#9-应用领域)
-  - [9.1 实时系统控制](#91-实时系统控制)
-  - [9.2 嵌入式系统控制](#92-嵌入式系统控制)
-  - [9.3 网络控制系统](#93-网络控制系统)
-  - [9.4 机器人控制](#94-机器人控制)
-- [10 前沿发展](#10-前沿发展)
-  - [10.1 量子时态控制](#101-量子时态控制)
-  - [10.2 生物时态控制](#102-生物时态控制)
-  - [10.3 神经时态控制](#103-神经时态控制)
-- [11 相关链接](#11-相关链接)
-- [12 批判性分析](#12-批判性分析)
+- [06. 时态控制理论](#06-时态控制理论)
+  - [📋 目录](#-目录)
+  - [1 文档信息](#1-文档信息)
+  - [2 理论概述](#2-理论概述)
+  - [📚 目录](#-目录-1)
+  - [3 基础概念](#3-基础概念)
+    - [3.1 时态控制系统的定义](#31-时态控制系统的定义)
+    - [3.2 时态控制目标](#32-时态控制目标)
+    - [3.3 时态控制策略](#33-时态控制策略)
+  - [4 时态控制系统](#4-时态控制系统)
+    - [4.1 时态自动机](#41-时态自动机)
+    - [4.2 时态控制语言](#42-时态控制语言)
+    - [4.3 时态控制可达性](#43-时态控制可达性)
+  - [5 时态控制规范](#5-时态控制规范)
+    - [5.1 时态控制规范语言](#51-时态控制规范语言)
+    - [5.2 时态控制约束](#52-时态控制约束)
+    - [5.3 时态控制不变性](#53-时态控制不变性)
+  - [6 时态控制算法](#6-时态控制算法)
+    - [6.1 时态控制合成算法](#61-时态控制合成算法)
+    - [6.2 时态控制验证算法](#62-时态控制验证算法)
+    - [6.3 时态控制优化算法](#63-时态控制优化算法)
+  - [7 形式化验证](#7-形式化验证)
+    - [7.1 时态控制系统的形式化模型](#71-时态控制系统的形式化模型)
+    - [7.2 时态控制验证的语义](#72-时态控制验证的语义)
+    - [7.3 时态控制验证的算法](#73-时态控制验证的算法)
+  - [8 算法实现](#8-算法实现)
+    - [8.1 Rust实现](#81-rust实现)
+    - [8.2 Haskell实现](#82-haskell实现)
+    - [8.3 Lean形式化证明](#83-lean形式化证明)
+  - [9 应用领域](#9-应用领域)
+    - [9.1 实时系统控制](#91-实时系统控制)
+    - [9.2 嵌入式系统控制](#92-嵌入式系统控制)
+    - [9.3 网络控制系统](#93-网络控制系统)
+    - [9.4 机器人控制](#94-机器人控制)
+  - [10 前沿发展](#10-前沿发展)
+    - [10.1 量子时态控制](#101-量子时态控制)
+    - [10.2 生物时态控制](#102-生物时态控制)
+    - [10.3 神经时态控制](#103-神经时态控制)
+  - [📚 参考文献](#-参考文献)
+  - [11 相关链接](#11-相关链接)
+  - [12 批判性分析](#12-批判性分析)
 
 ---
 
 ## 1 文档信息
 
-**文档编号**: 10.6  
-**创建时间**: 2024-12-21  
-**最后更新**: 2024-12-21  
-**维护状态**: 持续更新中  
+**文档编号**: 10.6
+**创建时间**: 2024-12-21
+**最后更新**: 2024-12-21
+**维护状态**: 持续更新中
 **相关文档**:
 
 - [时态逻辑基础](01_Temporal_Logic_Foundations.md)
@@ -227,23 +231,23 @@ impl TemporalControlSystem {
             time_domain: (0.0, f64::INFINITY),
         }
     }
-    
+
     pub fn add_state(&mut self, state: String) {
         self.states.insert(state);
     }
-    
+
     pub fn add_input(&mut self, input: String) {
         self.inputs.insert(input);
     }
-    
+
     pub fn add_transition(&mut self, from: String, input: String, time: f64, to: String) {
         self.transitions.insert((from, input, time), to);
     }
-    
+
     pub fn add_label(&mut self, state: String, label: String) {
         self.labeling.entry(state).or_insert_with(HashSet::new).insert(label);
     }
-    
+
     pub fn set_time_domain(&mut self, min_time: f64, max_time: f64) {
         self.time_domain = (min_time, max_time);
     }
@@ -260,11 +264,11 @@ impl TemporalControlStrategy {
             strategy: HashMap::new(),
         }
     }
-    
+
     pub fn set_action(&mut self, state: String, time: f64, input: String) {
         self.strategy.insert((state, time), input);
     }
-    
+
     pub fn get_action(&self, state: &str, time: f64) -> Option<&String> {
         self.strategy.get(&(state.to_string(), time))
     }
@@ -280,7 +284,7 @@ impl TemporalControlVerifier {
     pub fn new(system: TemporalControlSystem, strategy: TemporalControlStrategy) -> Self {
         Self { system, strategy }
     }
-    
+
     /// 验证时态性质
     pub fn verify_property(&self, property: &TemporalProperty) -> bool {
         match property {
@@ -290,39 +294,39 @@ impl TemporalControlVerifier {
             TemporalProperty::Next(phi) => self.verify_next(phi),
         }
     }
-    
+
     fn verify_always(&self, phi: &AtomicProperty) -> bool {
         // 验证所有可达状态都满足性质
         let reachable_states = self.get_reachable_states();
         reachable_states.iter().all(|state| self.satisfies_atomic(state, phi))
     }
-    
+
     fn verify_eventually(&self, phi: &AtomicProperty) -> bool {
         // 验证存在可达状态满足性质
         let reachable_states = self.get_reachable_states();
         reachable_states.iter().any(|state| self.satisfies_atomic(state, phi))
     }
-    
+
     fn verify_until(&self, phi: &AtomicProperty, psi: &AtomicProperty) -> bool {
         // 验证Until条件
         self.verify_until_helper(&self.system.initial_state, phi, psi, &mut HashSet::new())
     }
-    
+
     fn verify_until_helper(&self, state: &str, phi: &AtomicProperty, psi: &AtomicProperty, visited: &mut HashSet<String>) -> bool {
         if visited.contains(state) {
             return false; // 避免循环
         }
-        
+
         if self.satisfies_atomic(state, psi) {
             return true;
         }
-        
+
         if !self.satisfies_atomic(state, phi) {
             return false;
         }
-        
+
         visited.insert(state.to_string());
-        
+
         // 检查所有可能的转移
         for ((from, input, time), to) in &self.system.transitions {
             if from == state {
@@ -335,10 +339,10 @@ impl TemporalControlVerifier {
                 }
             }
         }
-        
+
         false
     }
-    
+
     fn verify_next(&self, phi: &AtomicProperty) -> bool {
         // 验证下一个状态满足性质
         for ((from, input, time), to) in &self.system.transitions {
@@ -352,7 +356,7 @@ impl TemporalControlVerifier {
         }
         false
     }
-    
+
     fn satisfies_atomic(&self, state: &str, phi: &AtomicProperty) -> bool {
         match phi {
             AtomicProperty::Label(label) => {
@@ -364,20 +368,20 @@ impl TemporalControlVerifier {
             AtomicProperty::False => false,
         }
     }
-    
+
     fn get_reachable_states(&self) -> HashSet<String> {
         let mut reachable = HashSet::new();
         self.get_reachable_states_helper(&self.system.initial_state, &mut reachable);
         reachable
     }
-    
+
     fn get_reachable_states_helper(&self, state: &str, reachable: &mut HashSet<String>) {
         if reachable.contains(state) {
             return;
         }
-        
+
         reachable.insert(state.to_string());
-        
+
         for ((from, input, time), to) in &self.system.transitions {
             if from == state {
                 if let Some(action) = self.strategy.get_action(from, *time) {
@@ -414,15 +418,15 @@ impl TemporalControlSynthesizer {
     pub fn new(system: TemporalControlSystem) -> Self {
         Self { system }
     }
-    
+
     /// 合成时态控制策略
     pub fn synthesize_strategy(&self, goal: &TemporalProperty) -> Option<TemporalControlStrategy> {
         // 实现时态控制合成算法
         let mut strategy = TemporalControlStrategy::new();
-        
+
         // 简化的合成算法
         // 在实际应用中，这里应该实现完整的游戏理论算法
-        
+
         Some(strategy)
     }
 }
@@ -431,37 +435,37 @@ impl TemporalControlSynthesizer {
 pub fn example_temporal_control() {
     // 创建时态控制系统
     let mut system = TemporalControlSystem::new("s0".to_string());
-    
+
     // 添加状态
     system.add_state("s0".to_string());
     system.add_state("s1".to_string());
     system.add_state("s2".to_string());
-    
+
     // 添加输入
     system.add_input("a".to_string());
     system.add_input("b".to_string());
-    
+
     // 添加转移
     system.add_transition("s0".to_string(), "a".to_string(), 1.0, "s1".to_string());
     system.add_transition("s1".to_string(), "b".to_string(), 2.0, "s2".to_string());
-    
+
     // 添加标签
     system.add_label("s0".to_string(), "init".to_string());
     system.add_label("s1".to_string(), "processing".to_string());
     system.add_label("s2".to_string(), "done".to_string());
-    
+
     // 创建控制策略
     let mut strategy = TemporalControlStrategy::new();
     strategy.set_action("s0".to_string(), 1.0, "a".to_string());
     strategy.set_action("s1".to_string(), 2.0, "b".to_string());
-    
+
     // 创建验证器
     let verifier = TemporalControlVerifier::new(system, strategy);
-    
+
     // 验证性质
     let property = TemporalProperty::Eventually(AtomicProperty::Label("done".to_string()));
     let result = verifier.verify_property(&property);
-    
+
     println!("Temporal control verification result: {}", result);
 }
 ```
@@ -534,12 +538,12 @@ addInput input sys = sys { inputs = Set.insert input (inputs sys) }
 
 -- 添加转移
 addTransition :: String -> String -> Double -> String -> TemporalControlSystem -> TemporalControlSystem
-addTransition from input time to sys = sys 
+addTransition from input time to sys = sys
   { transitions = Map.insert (from, input, time) to (transitions sys) }
 
 -- 添加标签
 addLabel :: String -> String -> TemporalControlSystem -> TemporalControlSystem
-addLabel state label sys = sys 
+addLabel state label sys = sys
   { labeling = Map.insertWith Set.union state (Set.singleton label) (labeling sys) }
 
 -- 创建时态控制策略
@@ -568,19 +572,19 @@ verifyProperty verifier property = case property of
 
 -- 验证Always性质
 verifyAlways :: TemporalControlVerifier -> AtomicProperty -> Bool
-verifyAlways verifier phi = 
+verifyAlways verifier phi =
   let reachableStates = getReachableStates verifier
   in all (\state -> satisfiesAtomic verifier state phi) reachableStates
 
 -- 验证Eventually性质
 verifyEventually :: TemporalControlVerifier -> AtomicProperty -> Bool
-verifyEventually verifier phi = 
+verifyEventually verifier phi =
   let reachableStates = getReachableStates verifier
   in any (\state -> satisfiesAtomic verifier state phi) reachableStates
 
 -- 验证Until性质
 verifyUntil :: TemporalControlVerifier -> AtomicProperty -> AtomicProperty -> Bool
-verifyUntil verifier phi psi = 
+verifyUntil verifier phi psi =
   verifyUntilHelper verifier (initialState (system verifier)) phi psi Set.empty
 
 -- 验证Until性质的辅助函数
@@ -589,21 +593,21 @@ verifyUntilHelper verifier state phi psi visited
   | Set.member state visited = False -- 避免循环
   | satisfiesAtomic verifier state psi = True
   | not (satisfiesAtomic verifier state phi) = False
-  | otherwise = 
+  | otherwise =
       let newVisited = Set.insert state visited
           nextStates = getNextStates verifier state
       in any (\s -> verifyUntilHelper verifier s phi psi newVisited) nextStates
 
 -- 验证Next性质
 verifyNext :: TemporalControlVerifier -> AtomicProperty -> Bool
-verifyNext verifier phi = 
+verifyNext verifier phi =
   let nextStates = getNextStates verifier (initialState (system verifier))
   in any (\state -> satisfiesAtomic verifier state phi) nextStates
 
 -- 检查原子性质满足
 satisfiesAtomic :: TemporalControlVerifier -> String -> AtomicProperty -> Bool
 satisfiesAtomic verifier state phi = case phi of
-  Label label -> 
+  Label label ->
     case Map.lookup state (labeling (system verifier)) of
       Just labels -> Set.member label labels
       Nothing -> False
@@ -612,24 +616,24 @@ satisfiesAtomic verifier state phi = case phi of
 
 -- 获取可达状态
 getReachableStates :: TemporalControlVerifier -> [String]
-getReachableStates verifier = 
+getReachableStates verifier =
   getReachableStatesHelper verifier (initialState (system verifier)) Set.empty
 
 -- 获取可达状态的辅助函数
 getReachableStatesHelper :: TemporalControlVerifier -> String -> Set String -> [String]
 getReachableStatesHelper verifier state visited
   | Set.member state visited = []
-  | otherwise = 
+  | otherwise =
       let newVisited = Set.insert state visited
           nextStates = getNextStates verifier state
       in state : concatMap (\s -> getReachableStatesHelper verifier s newVisited) nextStates
 
 -- 获取下一个状态
 getNextStates :: TemporalControlVerifier -> String -> [String]
-getNextStates verifier state = 
+getNextStates verifier state =
   let transitions = Map.toList (transitions (system verifier))
       relevantTransitions = filter (\((from, input, time), to) -> from == state) transitions
-  in [to | ((from, input, time), to) <- relevantTransitions, 
+  in [to | ((from, input, time), to) <- relevantTransitions,
             isJust (getAction from time (strategy verifier)),
             fromJust (getAction from time (strategy verifier)) == input]
 
@@ -644,7 +648,7 @@ createTemporalControlSynthesizer sys = TemporalControlSynthesizer sys
 
 -- 合成时态控制策略
 synthesizeStrategy :: TemporalControlSynthesizer -> TemporalProperty -> Maybe TemporalControlStrategy
-synthesizeStrategy synthesizer goal = 
+synthesizeStrategy synthesizer goal =
   -- 实现时态控制合成算法
   -- 在实际应用中，这里应该实现完整的游戏理论算法
   Just createTemporalControlStrategy
@@ -656,23 +660,23 @@ exampleTemporalControl = do
   let system = createTemporalControlSystem "s0"
       system' = addState "s1" $ addState "s2" system
       system'' = addInput "a" $ addInput "b" system'
-      system''' = addTransition "s0" "a" 1.0 "s1" $ 
+      system''' = addTransition "s0" "a" 1.0 "s1" $
                   addTransition "s1" "b" 2.0 "s2" system''
-      system'''' = addLabel "s0" "init" $ 
-                   addLabel "s1" "processing" $ 
+      system'''' = addLabel "s0" "init" $
+                   addLabel "s1" "processing" $
                    addLabel "s2" "done" system'''
-  
+
   -- 创建控制策略
-  let strategy = setAction "s0" 1.0 "a" $ 
+  let strategy = setAction "s0" 1.0 "a" $
                  setAction "s1" 2.0 "b" createTemporalControlStrategy
-  
+
   -- 创建验证器
   let verifier = createTemporalControlVerifier system'''' strategy
-  
+
   -- 验证性质
   let property = Eventually (Label "done")
   let result = verifyProperty verifier property
-  
+
   putStrLn $ "Temporal control verification result: " ++ show result
 ```
 
@@ -705,18 +709,18 @@ structure TemporalControlVerifier (α : Type) :=
 (strategy : TemporalControlStrategy)
 
 -- 时态控制验证的语义
-def temporal_control_satisfies {α : Type} 
+def temporal_control_satisfies {α : Type}
   (verifier : TemporalControlVerifier α)
   (state : α)
   (property : TemporalProperty α) : Prop :=
 match property with
-| TemporalProperty.always phi => 
+| TemporalProperty.always phi =>
     ∀ s, reachable verifier state s → atomic_satisfies verifier s phi
-| TemporalProperty.eventually phi => 
+| TemporalProperty.eventually phi =>
     ∃ s, reachable verifier state s ∧ atomic_satisfies verifier s phi
-| TemporalProperty.until phi psi => 
+| TemporalProperty.until phi psi =>
     until_satisfies verifier state phi psi
-| TemporalProperty.next phi => 
+| TemporalProperty.next phi =>
     ∃ s, next_state verifier state s ∧ atomic_satisfies verifier s phi
 
 -- 原子性质满足
@@ -869,8 +873,8 @@ end
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 12 批判性分析

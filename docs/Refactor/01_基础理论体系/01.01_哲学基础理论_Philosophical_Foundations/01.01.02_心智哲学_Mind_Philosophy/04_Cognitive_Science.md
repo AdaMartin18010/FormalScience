@@ -95,7 +95,7 @@
 > 其中：
 >
 > - **C**：计算层次 (Computational Level)
-> - **I**：算法层次 (Algorithmic Level)  
+> - **I**：算法层次 (Algorithmic Level)
 > - **A**：应用层次 (Implementation Level)
 > - **N**：神经层次 (Neural Level)
 
@@ -178,27 +178,27 @@ impl CognitiveArchitecture {
             interface_layer: InterfaceManager::new(),
         }
     }
-    
+
     pub fn process_input(&mut self, input: &str) -> String {
         // 1. 感知层处理
         let perceived = self.interface_layer.perceive(input);
-        
+
         // 2. 符号层分析
         let symbols = self.symbolic_layer.analyze(&perceived);
-        
+
         // 3. 子符号层激活
         let neural_response = self.subsymbolic_layer.activate(&symbols);
-        
+
         // 4. 整合响应
         self.integrate_response(symbols, neural_response)
     }
-    
+
     fn integrate_response(&self, symbols: Vec<Symbol>, neural: Vec<f64>) -> String {
         // 简化的整合过程
         let best_symbol = symbols.iter()
             .max_by(|a, b| a.activation_level.partial_cmp(&b.activation_level).unwrap())
             .unwrap();
-        
+
         format!("Cognitive response: {}", best_symbol.content)
     }
 }
@@ -211,7 +211,7 @@ impl SymbolicProcessor {
             production_rules: Vec::new(),
         }
     }
-    
+
     pub fn analyze(&mut self, input: &str) -> Vec<Symbol> {
         // 符号分析过程
         let symbol = Symbol {
@@ -219,11 +219,11 @@ impl SymbolicProcessor {
             activation_level: 0.8,
             bindings: HashMap::new(),
         };
-        
+
         self.working_memory.push(symbol.clone());
         vec![symbol]
     }
-    
+
     pub fn apply_rules(&mut self) -> Option<Action> {
         for rule in &self.production_rules {
             if self.matches_condition(&rule.condition) {
@@ -232,7 +232,7 @@ impl SymbolicProcessor {
         }
         None
     }
-    
+
     fn matches_condition(&self, condition: &Condition) -> bool {
         // 简化的条件匹配
         !self.working_memory.is_empty()
@@ -298,7 +298,7 @@ impl MentalRepresentation {
             MentalRepresentation::Distributed(d) => format!("Vector in {}", d.semantic_space),
         }
     }
-    
+
     pub fn compose_with(&self, other: &MentalRepresentation) -> MentalRepresentation {
         // 表征组合操作
         match (self, other) {
@@ -364,7 +364,7 @@ impl ConnectionistNetwork {
     pub fn new(layer_sizes: Vec<usize>, learning_rate: f64) -> Self {
         let mut layers = Vec::new();
         let mut connections = Vec::new();
-        
+
         // 创建层
         for &size in &layer_sizes {
             layers.push(Layer {
@@ -373,7 +373,7 @@ impl ConnectionistNetwork {
                 activation_function: ActivationFunction::Sigmoid,
             });
         }
-        
+
         // 创建连接
         for i in 0..layer_sizes.len()-1 {
             connections.push(ConnectionMatrix {
@@ -382,45 +382,45 @@ impl ConnectionistNetwork {
                 to_layer: i+1,
             });
         }
-        
+
         Self {
             layers,
             connections,
             learning_rate,
         }
     }
-    
+
     pub fn forward_pass(&mut self, input: &DVector<f64>) -> DVector<f64> {
         self.layers[0].units = input.clone();
-        
+
         for conn in &self.connections {
             let input_layer = &self.layers[conn.from_layer].units;
             let mut output = &conn.weights * input_layer + &self.layers[conn.to_layer].biases;
-            
+
             // 应用激活函数
             output = output.map(|x| self.apply_activation(x, &self.layers[conn.to_layer].activation_function));
-            
+
             self.layers[conn.to_layer].units = output;
         }
-        
+
         self.layers.last().unwrap().units.clone()
     }
-    
+
     pub fn backward_pass(&mut self, target: &DVector<f64>) {
         let output = self.layers.last().unwrap().units.clone();
         let error = target - output;
-        
+
         // 简化的反向传播
         for i in (0..self.connections.len()).rev() {
             let conn = &mut self.connections[i];
             let input_layer = &self.layers[conn.from_layer].units;
-            
+
             // 更新权重
             let weight_update = self.learning_rate * (&error * input_layer.transpose());
             conn.weights += weight_update;
         }
     }
-    
+
     fn apply_activation(&self, x: f64, func: &ActivationFunction) -> f64 {
         match func {
             ActivationFunction::Sigmoid => 1.0 / (1.0 + (-x).exp()),
@@ -429,19 +429,19 @@ impl ConnectionistNetwork {
             ActivationFunction::Linear => x,
         }
     }
-    
+
     pub fn train(&mut self, inputs: &[DVector<f64>], targets: &[DVector<f64>], epochs: usize) {
         for epoch in 0..epochs {
             let mut total_error = 0.0;
-            
+
             for (input, target) in inputs.iter().zip(targets.iter()) {
                 self.forward_pass(input);
                 self.backward_pass(target);
-                
+
                 let output = self.layers.last().unwrap().units.clone();
                 total_error += (target - output).norm_squared();
             }
-            
+
             if epoch % 100 == 0 {
                 println!("Epoch {}: Error = {}", epoch, total_error);
             }
@@ -501,44 +501,44 @@ impl EmbodiedCognitiveSstem {
     pub fn perceive_act_cycle(&mut self) -> CognitiveResponse {
         // 1. 感知环境
         let perception = self.perceive_environment();
-        
+
         // 2. 更新身体图式
         self.update_body_schema(&perception);
-        
+
         // 3. 计算可供性
         let affordances = self.compute_affordances(&perception);
-        
+
         // 4. 选择行动
         let action = self.select_action(&affordances);
-        
+
         // 5. 执行行动
         self.execute_action(&action);
-        
+
         // 6. 学习更新
         self.update_sensorimotor_mappings(&perception, &action);
-        
+
         CognitiveResponse {
             perception_summary: perception.summary(),
             selected_action: action,
             learning_update: true,
         }
     }
-    
+
     fn perceive_environment(&mut self) -> PerceptionResult {
         let mut perception = PerceptionResult::new();
-        
+
         // 多模态感知
         for (sensor_name, sensor_data) in &self.sensorimotor_system.sensors {
             let processed = self.process_sensor_data(sensor_data);
             perception.add_modality(sensor_name.clone(), processed);
         }
-        
+
         perception
     }
-    
+
     fn compute_affordances(&self, perception: &PerceptionResult) -> Vec<Affordance> {
         let mut affordances = Vec::new();
-        
+
         // 基于身体-环境交互计算可供性
         for object in &self.environment_model.objects {
             for body_part in self.body_schema.body_parts.values() {
@@ -547,10 +547,10 @@ impl EmbodiedCognitiveSstem {
                 }
             }
         }
-        
+
         affordances
     }
-    
+
     fn check_affordance(&self, object: &EnvironmentObject, body_part: &BodyPart) -> Option<Affordance> {
         // 简化的可供性检测
         if object.size <= body_part.reach && object.graspable {
@@ -615,30 +615,30 @@ pub struct BayesianPerceptionModel {
 impl BayesianPerceptionModel {
     pub fn perceive(&mut self, sensory_input: &SensoryInput) -> PerceptualInterpretation {
         let mut interpretations = Vec::new();
-        
+
         for (hypothesis, prior) in &self.prior_beliefs {
             // 计算似然度
             let likelihood = self.compute_likelihood(hypothesis, sensory_input);
-            
+
             // 贝叶斯更新
             let posterior = prior * likelihood / self.compute_evidence(sensory_input);
-            
+
             self.posterior_beliefs.insert(hypothesis.clone(), posterior);
-            
+
             interpretations.push(HypothesisInterpretation {
                 hypothesis: hypothesis.clone(),
                 posterior_probability: posterior,
                 confidence: self.compute_confidence(posterior),
             });
         }
-        
+
         PerceptualInterpretation {
             interpretations,
             best_hypothesis: self.select_best_hypothesis(),
             uncertainty: self.compute_uncertainty(),
         }
     }
-    
+
     fn compute_likelihood(&self, hypothesis: &str, input: &SensoryInput) -> f64 {
         if let Some(func) = self.likelihood_functions.get(hypothesis) {
             func.evaluate(input)
@@ -694,7 +694,7 @@ impl WorkingMemory {
     pub fn process_information(&mut self, input: &Information) -> ProcessingResult {
         // 中央执行器控制
         let control_signals = self.central_executive.generate_control(&input);
-        
+
         // 分发到子系统
         match input.modality {
             Modality::Verbal => {
@@ -849,5 +849,5 @@ impl ReasoningSystem {
 
 ## 返回
 
-[返回心灵哲学](README.md)  
+[返回心灵哲学](README.md)
 [返回哲学基础模块](README.md)

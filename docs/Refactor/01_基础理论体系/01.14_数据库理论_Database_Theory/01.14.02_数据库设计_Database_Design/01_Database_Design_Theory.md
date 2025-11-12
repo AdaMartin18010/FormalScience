@@ -3,7 +3,7 @@
 ## 目录
 
 - [12.2.1 数据库设计理论](#1221-数据库设计理论)
-  - [1 批判性分析](#1-批判性分析)
+  - [目录](#目录)
   - [📋 概述](#-概述)
   - [1. 基本概念](#1-基本概念)
     - [1.1 数据库设计定义](#11-数据库设计定义)
@@ -169,82 +169,82 @@ impl RequirementAnalysis {
             constraints: Vec::new(),
         }
     }
-    
+
     pub fn add_requirement(&mut self, requirement: Requirement) {
         self.requirements.insert(requirement.id.clone(), requirement);
     }
-    
+
     pub fn add_entity(&mut self, entity: Entity) {
         self.entities.push(entity);
     }
-    
+
     pub fn add_relationship(&mut self, relationship: Relationship) {
         self.relationships.push(relationship);
     }
-    
+
     pub fn add_constraint(&mut self, constraint: Constraint) {
         self.constraints.push(constraint);
     }
-    
+
     pub fn analyze_requirements(&self) -> AnalysisReport {
         let mut report = AnalysisReport::new();
-        
+
         // 分析功能需求
         let functional_requirements: Vec<_> = self.requirements.values()
             .filter(|r| matches!(r.category, RequirementCategory::Functional))
             .collect();
-        
+
         report.functional_count = functional_requirements.len();
-        
+
         // 分析非功能需求
         let non_functional_requirements: Vec<_> = self.requirements.values()
             .filter(|r| matches!(r.category, RequirementCategory::NonFunctional))
             .collect();
-        
+
         report.non_functional_count = non_functional_requirements.len();
-        
+
         // 分析优先级分布
         let mut priority_distribution = HashMap::new();
         for requirement in self.requirements.values() {
             *priority_distribution.entry(requirement.priority.clone()).or_insert(0) += 1;
         }
         report.priority_distribution = priority_distribution;
-        
+
         // 分析实体和关系
         report.entity_count = self.entities.len();
         report.relationship_count = self.relationships.len();
         report.constraint_count = self.constraints.len();
-        
+
         // 检查需求完整性
         report.completeness_score = self.calculate_completeness();
-        
+
         // 检查一致性
         report.consistency_score = self.calculate_consistency();
-        
+
         report
     }
-    
+
     fn calculate_completeness(&self) -> f64 {
         let total_requirements = self.requirements.len();
         if total_requirements == 0 {
             return 0.0;
         }
-        
+
         let mut complete_requirements = 0;
         for requirement in self.requirements.values() {
-            if !requirement.description.is_empty() && 
+            if !requirement.description.is_empty() &&
                !requirement.acceptance_criteria.is_empty() &&
                !requirement.stakeholders.is_empty() {
                 complete_requirements += 1;
             }
         }
-        
+
         complete_requirements as f64 / total_requirements as f64
     }
-    
+
     fn calculate_consistency(&self) -> f64 {
         let mut consistency_score = 1.0;
-        
+
         // 检查实体名称唯一性
         let mut entity_names = HashSet::new();
         for entity in &self.entities {
@@ -252,67 +252,67 @@ impl RequirementAnalysis {
                 consistency_score -= 0.1; // 重复实体名称
             }
         }
-        
+
         // 检查关系中的实体是否存在
         for relationship in &self.relationships {
             let entity1_exists = self.entities.iter().any(|e| e.name == relationship.entity1);
             let entity2_exists = self.entities.iter().any(|e| e.name == relationship.entity2);
-            
+
             if !entity1_exists || !entity2_exists {
                 consistency_score -= 0.1; // 关系引用不存在的实体
             }
         }
-        
+
         consistency_score.max(0.0)
     }
-    
+
     pub fn generate_er_diagram(&self) -> ERDiagram {
         let mut diagram = ERDiagram::new();
-        
+
         // 添加实体
         for entity in &self.entities {
             diagram.add_entity(entity.clone());
         }
-        
+
         // 添加关系
         for relationship in &self.relationships {
             diagram.add_relationship(relationship.clone());
         }
-        
+
         diagram
     }
-    
+
     pub fn validate_design(&self) -> Vec<String> {
         let mut errors = Vec::new();
-        
+
         // 验证实体
         for entity in &self.entities {
             if entity.name.is_empty() {
                 errors.push(format!("Entity has empty name"));
             }
-            
+
             if entity.attributes.is_empty() {
                 errors.push(format!("Entity {} has no attributes", entity.name));
             }
         }
-        
+
         // 验证关系
         for relationship in &self.relationships {
             if relationship.entity1 == relationship.entity2 {
                 errors.push(format!("Relationship {} connects entity to itself", relationship.name));
             }
         }
-        
+
         // 验证约束
         for constraint in &self.constraints {
             for entity_name in &constraint.affected_entities {
                 if !self.entities.iter().any(|e| &e.name == entity_name) {
-                    errors.push(format!("Constraint {} references non-existent entity {}", 
+                    errors.push(format!("Constraint {} references non-existent entity {}",
                                       constraint.name, entity_name));
                 }
             }
         }
-        
+
         errors
     }
 }
@@ -342,7 +342,7 @@ impl AnalysisReport {
             consistency_score: 0.0,
         }
     }
-    
+
     pub fn print_summary(&self) {
         println!("=== 需求分析报告 ===");
         println!("功能需求数量: {}", self.functional_count);
@@ -368,37 +368,37 @@ impl ERDiagram {
             relationships: Vec::new(),
         }
     }
-    
+
     pub fn add_entity(&mut self, entity: Entity) {
         self.entities.push(entity);
     }
-    
+
     pub fn add_relationship(&mut self, relationship: Relationship) {
         self.relationships.push(relationship);
     }
-    
+
     pub fn export_dot(&self) -> String {
         let mut dot = String::new();
         dot.push_str("digraph ERDiagram {\n");
         dot.push_str("  rankdir=LR;\n");
         dot.push_str("  node [shape=record];\n\n");
-        
+
         // 添加实体
         for entity in &self.entities {
             dot.push_str(&format!("  {} [label=\"{{{}|", entity.name, entity.name));
-            
+
             for (i, attr) in entity.attributes.iter().enumerate() {
                 if i > 0 {
                     dot.push_str("|");
                 }
                 dot.push_str(&attr.name);
             }
-            
+
             dot.push_str("}}\"];\n");
         }
-        
+
         dot.push_str("\n");
-        
+
         // 添加关系
         for relationship in &self.relationships {
             let arrow = match relationship.cardinality {
@@ -407,11 +407,11 @@ impl ERDiagram {
                 Cardinality::ManyToOne => "->",
                 Cardinality::ManyToMany => "<->",
             };
-            
-            dot.push_str(&format!("  {} {} {} [label=\"{}\"];\n", 
+
+            dot.push_str(&format!("  {} {} {} [label=\"{}\"];\n",
                                  relationship.entity1, arrow, relationship.entity2, relationship.name));
         }
-        
+
         dot.push_str("}\n");
         dot
     }
@@ -543,46 +543,46 @@ impl LogicalDesign {
             constraints: Vec::new(),
         }
     }
-    
+
     pub fn add_table(&mut self, table: Table) {
         self.tables.insert(table.name.clone(), table);
     }
-    
+
     pub fn add_view(&mut self, view: View) {
         self.views.insert(view.name.clone(), view);
     }
-    
+
     pub fn add_index(&mut self, index: Index) {
         self.indexes.push(index);
     }
-    
+
     pub fn add_constraint(&mut self, constraint: TableConstraint) {
         self.constraints.push(constraint);
     }
-    
+
     pub fn normalize_tables(&mut self) -> Vec<String> {
         let mut messages = Vec::new();
-        
+
         for table in self.tables.values_mut() {
             // 检查1NF
             if !self.is_first_normal_form(table) {
                 messages.push(format!("Table {} violates 1NF", table.name));
             }
-            
+
             // 检查2NF
             if !self.is_second_normal_form(table) {
                 messages.push(format!("Table {} violates 2NF", table.name));
             }
-            
+
             // 检查3NF
             if !self.is_third_normal_form(table) {
                 messages.push(format!("Table {} violates 3NF", table.name));
             }
         }
-        
+
         messages
     }
-    
+
     fn is_first_normal_form(&self, table: &Table) -> bool {
         // 检查是否有重复组
         for column in &table.columns {
@@ -592,21 +592,21 @@ impl LogicalDesign {
         }
         true
     }
-    
+
     fn is_second_normal_form(&self, table: &Table) -> bool {
         if table.primary_key.len() <= 1 {
             return true; // 单属性主键自动满足2NF
         }
-        
+
         // 检查部分依赖（简化实现）
         true
     }
-    
+
     fn is_third_normal_form(&self, table: &Table) -> bool {
         // 检查传递依赖（简化实现）
         true
     }
-    
+
     pub fn optimize_indexes(&mut self) {
         // 为外键创建索引
         for table in self.tables.values() {
@@ -622,7 +622,7 @@ impl LogicalDesign {
                 self.indexes.push(index);
             }
         }
-        
+
         // 为经常查询的列创建索引
         for table in self.tables.values() {
             for column in &table.columns {
@@ -640,57 +640,57 @@ impl LogicalDesign {
             }
         }
     }
-    
+
     pub fn generate_sql(&self) -> String {
         let mut sql = String::new();
-        
+
         // 生成CREATE TABLE语句
         for table in self.tables.values() {
             sql.push_str(&format!("CREATE TABLE {} (\n", table.name));
-            
+
             for (i, column) in table.columns.iter().enumerate() {
                 if i > 0 {
                     sql.push_str(",\n");
                 }
                 sql.push_str(&format!("  {} {}", column.name, self.data_type_to_sql(&column.data_type)));
-                
+
                 if !column.is_nullable {
                     sql.push_str(" NOT NULL");
                 }
-                
+
                 if let Some(default) = &column.default_value {
                     sql.push_str(&format!(" DEFAULT '{}'", default));
                 }
-                
+
                 if column.auto_increment {
                     sql.push_str(" AUTO_INCREMENT");
                 }
             }
-            
+
             // 添加主键约束
             if !table.primary_key.is_empty() {
                 sql.push_str(&format!(",\n  PRIMARY KEY ({})", table.primary_key.join(", ")));
             }
-            
+
             // 添加外键约束
             for fk in &table.foreign_keys {
-                sql.push_str(&format!(",\n  CONSTRAINT {} FOREIGN KEY ({}) REFERENCES {}({})", 
+                sql.push_str(&format!(",\n  CONSTRAINT {} FOREIGN KEY ({}) REFERENCES {}({})",
                                      fk.name, fk.columns.join(", "), fk.referenced_table, fk.referenced_columns.join(", ")));
             }
-            
+
             sql.push_str("\n);\n\n");
         }
-        
+
         // 生成索引
         for index in &self.indexes {
             let unique = if index.unique { "UNIQUE " } else { "" };
-            sql.push_str(&format!("CREATE {}INDEX {} ON {} ({});\n", 
+            sql.push_str(&format!("CREATE {}INDEX {} ON {} ({});\n",
                                  unique, index.name, index.table_name, index.columns.join(", ")));
         }
-        
+
         sql
     }
-    
+
     fn data_type_to_sql(&self, data_type: &DataType) -> String {
         match data_type {
             DataType::Integer => "INT".to_string(),
@@ -708,35 +708,35 @@ impl LogicalDesign {
             DataType::Blob => "BLOB".to_string(),
         }
     }
-    
+
     pub fn calculate_statistics(&self) -> DesignStatistics {
         let mut stats = DesignStatistics::new();
-        
+
         stats.table_count = self.tables.len();
         stats.view_count = self.views.len();
         stats.index_count = self.indexes.len();
         stats.constraint_count = self.constraints.len();
-        
+
         // 计算平均表大小
         let mut total_columns = 0;
         for table in self.tables.values() {
             total_columns += table.columns.len();
         }
-        
+
         if stats.table_count > 0 {
             stats.average_columns_per_table = total_columns as f64 / stats.table_count as f64;
         }
-        
+
         // 计算外键密度
         let mut total_foreign_keys = 0;
         for table in self.tables.values() {
             total_foreign_keys += table.foreign_keys.len();
         }
-        
+
         if stats.table_count > 0 {
             stats.foreign_key_density = total_foreign_keys as f64 / stats.table_count as f64;
         }
-        
+
         stats
     }
 }
@@ -762,7 +762,7 @@ impl DesignStatistics {
             foreign_key_density: 0.0,
         }
     }
-    
+
     pub fn print_report(&self) {
         println!("=== 逻辑设计统计 ===");
         println!("表数量: {}", self.table_count);
@@ -870,27 +870,27 @@ impl PhysicalDesign {
             caching: HashMap::new(),
         }
     }
-    
+
     pub fn set_storage_engine(&mut self, engine: StorageEngine) {
         self.storage_engine = engine;
     }
-    
+
     pub fn add_tablespace(&mut self, tablespace: Tablespace) {
         self.tablespaces.insert(tablespace.name.clone(), tablespace);
     }
-    
+
     pub fn add_partitioning(&mut self, partitioning: Partitioning) {
         self.partitions.insert(partitioning.table_name.clone(), partitioning);
     }
-    
+
     pub fn add_compression(&mut self, compression: Compression) {
         self.compression.insert(compression.table_name.clone(), compression);
     }
-    
+
     pub fn add_caching(&mut self, caching: Caching) {
         self.caching.insert(caching.table_name.clone(), caching);
     }
-    
+
     pub fn optimize_for_performance(&mut self, table_name: &str, access_pattern: AccessPattern) {
         match access_pattern {
             AccessPattern::ReadHeavy => {
@@ -913,31 +913,31 @@ impl PhysicalDesign {
             },
         }
     }
-    
+
     pub fn generate_ddl(&self) -> String {
         let mut ddl = String::new();
-        
+
         // 创建表空间
         for tablespace in self.tablespaces.values() {
             ddl.push_str(&format!("CREATE TABLESPACE {}\n", tablespace.name));
             ddl.push_str(&format!("  ADD DATAFILE '{}'\n", tablespace.file_path));
             ddl.push_str(&format!("  INITIAL_SIZE {}\n", tablespace.initial_size));
-            
+
             if tablespace.auto_extend {
                 ddl.push_str("  AUTOEXTEND_SIZE 1M\n");
             }
-            
+
             if let Some(max_size) = tablespace.max_size {
                 ddl.push_str(&format!("  MAX_SIZE {}\n", max_size));
             }
-            
+
             ddl.push_str(";\n\n");
         }
-        
+
         // 创建分区
         for partitioning in self.partitions.values() {
             ddl.push_str(&format!("ALTER TABLE {} PARTITION BY ", partitioning.table_name));
-            
+
             match partitioning.partition_type {
                 PartitionType::Range => {
                     ddl.push_str(&format!("RANGE ({}) (\n", partitioning.partition_columns.join(", ")));
@@ -946,38 +946,38 @@ impl PhysicalDesign {
                     ddl.push_str(&format!("LIST ({}) (\n", partitioning.partition_columns.join(", ")));
                 },
                 PartitionType::Hash => {
-                    ddl.push_str(&format!("HASH ({}) PARTITIONS {}\n", 
-                                         partitioning.partition_columns.join(", "), 
+                    ddl.push_str(&format!("HASH ({}) PARTITIONS {}\n",
+                                         partitioning.partition_columns.join(", "),
                                          partitioning.partitions.len()));
                 },
                 PartitionType::Key => {
-                    ddl.push_str(&format!("KEY ({}) PARTITIONS {}\n", 
-                                         partitioning.partition_columns.join(", "), 
+                    ddl.push_str(&format!("KEY ({}) PARTITIONS {}\n",
+                                         partitioning.partition_columns.join(", "),
                                          partitioning.partitions.len()));
                 },
             }
-            
+
             if matches!(partitioning.partition_type, PartitionType::Range | PartitionType::List) {
                 for (i, partition) in partitioning.partitions.iter().enumerate() {
                     if i > 0 {
                         ddl.push_str(",\n");
                     }
-                    ddl.push_str(&format!("  PARTITION {} VALUES LESS THAN ({}) TABLESPACE {}", 
+                    ddl.push_str(&format!("  PARTITION {} VALUES LESS THAN ({}) TABLESPACE {}",
                                          partition.name, partition.value, partition.tablespace));
                 }
                 ddl.push_str("\n);\n\n");
             }
         }
-        
+
         ddl
     }
-    
+
     pub fn estimate_storage_requirements(&self, table_stats: &HashMap<String, TableStats>) -> StorageEstimate {
         let mut estimate = StorageEstimate::new();
-        
+
         for (table_name, stats) in table_stats {
             let mut table_size = 0u64;
-            
+
             // 计算行大小
             for column in &stats.columns {
                 let column_size = match column.data_type {
@@ -997,20 +997,20 @@ impl PhysicalDesign {
                 };
                 table_size += column_size;
             }
-            
+
             // 添加行开销
             table_size += 20; // 行头开销
-            
+
             // 计算总表大小
             let total_table_size = table_size * stats.row_count;
-            
+
             // 添加索引大小
             let index_size = total_table_size * 20 / 100; // 假设索引占20%
-            
+
             estimate.total_size += total_table_size + index_size;
             estimate.table_sizes.insert(table_name.clone(), total_table_size + index_size);
         }
-        
+
         estimate
     }
 }
@@ -1041,14 +1041,14 @@ impl StorageEstimate {
             table_sizes: HashMap::new(),
         }
     }
-    
+
     pub fn print_report(&self) {
         println!("=== 存储需求估算 ===");
-        println!("总存储需求: {} bytes ({:.2} MB)", 
+        println!("总存储需求: {} bytes ({:.2} MB)",
                 self.total_size, self.total_size as f64 / (1024.0 * 1024.0));
-        
+
         for (table_name, size) in &self.table_sizes {
-            println!("表 {}: {} bytes ({:.2} MB)", 
+            println!("表 {}: {} bytes ({:.2} MB)",
                     table_name, size, *size as f64 / (1024.0 * 1024.0));
         }
     }
@@ -1069,8 +1069,8 @@ impl StorageEstimate {
 
 ---
 
-**最后更新**: 2024年12月21日  
-**维护者**: AI助手  
+**最后更新**: 2024年12月21日
+**维护者**: AI助手
 **版本**: v1.0
 
 ## 批判性分析
