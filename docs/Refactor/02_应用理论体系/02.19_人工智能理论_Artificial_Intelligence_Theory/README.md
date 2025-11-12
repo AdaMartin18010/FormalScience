@@ -2,50 +2,54 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 理论基础](#2-理论基础)
-  - [2.1 核心概念](#21-核心概念)
-  - [2.2 基本模型](#22-基本模型)
-- [3 形式化理论基础](#3-形式化理论基础)
-  - [3.1 数学表示](#31-数学表示)
-  - [3.2 核心定理](#32-核心定理)
-- [4 工程验证框架](#4-工程验证框架)
-  - [4.1 代码实现示例](#41-代码实现示例)
-- [5 理论体系](#5-理论体系)
-  - [5.1 基础理论 (Foundations)](#51-基础理论-foundations)
-  - [5.2 核心学习理论 (Core Learning Theories)](#52-核心学习理论-core-learning-theories)
-  - [5.3 应用理论 (Application Theories)](#53-应用理论-application-theories)
-  - [5.4 智能系统 (Intelligent Systems)](#54-智能系统-intelligent-systems)
-  - [5.5 智能过程 (Intelligent Processes)](#55-智能过程-intelligent-processes)
-  - [5.6 智能优化 (Intelligent Optimization)](#56-智能优化-intelligent-optimization)
-  - [5.7 智能集成 (Intelligent Integration)](#57-智能集成-intelligent-integration)
-  - [5.8 智能应用 (Intelligent Applications)](#58-智能应用-intelligent-applications)
-  - [5.9 智能质量 (Intelligent Quality)](#59-智能质量-intelligent-quality)
-  - [5.10 智能领域 (Intelligent Domains)](#510-智能领域-intelligent-domains)
-  - [5.11 形式化AI (Formal AI)](#511-形式化ai-formal-ai)
-- [6 批判性分析](#6-批判性分析)
-  - [6.1 多元理论视角](#61-多元理论视角)
-  - [6.2 局限性分析](#62-局限性分析)
-  - [6.3 争议与分歧](#63-争议与分歧)
-  - [6.4 应用前景](#64-应用前景)
-  - [6.5 改进建议](#65-改进建议)
-- [7 相关理论与交叉引用](#7-相关理论与交叉引用)
-  - [7.1 与数学基础的交叉](#71-与数学基础的交叉)
-  - [7.2 与计算机科学的交叉](#72-与计算机科学的交叉)
-  - [7.3 与认知科学的交叉](#73-与认知科学的交叉)
-  - [7.4 经典教材](#74-经典教材)
-  - [7.5 重要论文](#75-重要论文)
-  - [7.6 在线资源](#76-在线资源)
-- [8 发展趋势](#8-发展趋势)
-  - [8.1 当前热点](#81-当前热点)
-  - [8.2 未来方向](#82-未来方向)
-- [9 学习路径](#9-学习路径)
-  - [9.1 入门路径](#91-入门路径)
-  - [9.2 进阶路径](#92-进阶路径)
-- [10 更新日志](#10-更新日志)
-  - [10.1 v30 (2024-12-19)](#101-v30-2024-12-19)
-  - [10.2 v20 (2024-12-18)](#102-v20-2024-12-18)
-  - [10.3 v10 (2024-12-17)](#103-v10-2024-12-17)
+- [19 人工智能理论 (Artificial Intelligence Theory)](#19-人工智能理论-artificial-intelligence-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [📁 目录结构](#-目录结构)
+  - [2 理论基础](#2-理论基础)
+    - [2.1 核心概念](#21-核心概念)
+    - [2.2 基本模型](#22-基本模型)
+  - [3 形式化理论基础](#3-形式化理论基础)
+    - [3.1 数学表示](#31-数学表示)
+    - [3.2 核心定理](#32-核心定理)
+  - [4 工程验证框架](#4-工程验证框架)
+    - [4.1 代码实现示例](#41-代码实现示例)
+  - [5 理论体系](#5-理论体系)
+    - [5.1 基础理论 (Foundations)](#51-基础理论-foundations)
+    - [5.2 核心学习理论 (Core Learning Theories)](#52-核心学习理论-core-learning-theories)
+    - [5.3 应用理论 (Application Theories)](#53-应用理论-application-theories)
+    - [5.4 智能系统 (Intelligent Systems)](#54-智能系统-intelligent-systems)
+    - [5.5 智能过程 (Intelligent Processes)](#55-智能过程-intelligent-processes)
+    - [5.6 智能优化 (Intelligent Optimization)](#56-智能优化-intelligent-optimization)
+    - [5.7 智能集成 (Intelligent Integration)](#57-智能集成-intelligent-integration)
+    - [5.8 智能应用 (Intelligent Applications)](#58-智能应用-intelligent-applications)
+    - [5.9 智能质量 (Intelligent Quality)](#59-智能质量-intelligent-quality)
+    - [5.10 智能领域 (Intelligent Domains)](#510-智能领域-intelligent-domains)
+    - [5.11 形式化AI (Formal AI)](#511-形式化ai-formal-ai)
+  - [6 批判性分析](#6-批判性分析)
+    - [6.1 多元理论视角](#61-多元理论视角)
+    - [6.2 局限性分析](#62-局限性分析)
+    - [6.3 争议与分歧](#63-争议与分歧)
+    - [6.4 应用前景](#64-应用前景)
+    - [6.5 改进建议](#65-改进建议)
+  - [7 相关理论与交叉引用](#7-相关理论与交叉引用)
+    - [7.1 与数学基础的交叉](#71-与数学基础的交叉)
+    - [7.2 与计算机科学的交叉](#72-与计算机科学的交叉)
+    - [7.3 与认知科学的交叉](#73-与认知科学的交叉)
+  - [📚 参考文献](#-参考文献)
+    - [7.4 经典教材](#74-经典教材)
+    - [7.5 重要论文](#75-重要论文)
+    - [7.6 在线资源](#76-在线资源)
+  - [8 发展趋势](#8-发展趋势)
+    - [8.1 当前热点](#81-当前热点)
+    - [8.2 未来方向](#82-未来方向)
+  - [9 学习路径](#9-学习路径)
+    - [9.1 入门路径](#91-入门路径)
+    - [9.2 进阶路径](#92-进阶路径)
+  - [10 更新日志](#10-更新日志)
+    - [10.1 v30 (2024-12-19)](#101-v30-2024-12-19)
+    - [10.2 v20 (2024-12-18)](#102-v20-2024-12-18)
+    - [10.3 v10 (2024-12-17)](#103-v10-2024-12-17)
 
 ---
 
@@ -232,102 +236,102 @@ impl NeuralNetwork {
     /// 创建新的神经网络
     pub fn new(layer_sizes: Vec<usize>, learning_rate: f64) -> Self {
         let mut layers = Vec::new();
-        
+
         for i in 0..layer_sizes.len() - 1 {
             let input_size = layer_sizes[i];
             let output_size = layer_sizes[i + 1];
-            
+
             // 初始化权重 (He初始化)
             let weights = Array2::random(
                 (output_size, input_size),
                 ndarray_rand::rand_distr::Normal::new(0.0, (2.0 / input_size as f64).sqrt()).unwrap()
             );
-            
+
             // 初始化偏置
             let biases = Array1::zeros(output_size);
-            
+
             let activation = if i == layer_sizes.len() - 2 {
                 ActivationFunction::Sigmoid
             } else {
                 ActivationFunction::ReLU
             };
-            
+
             layers.push(Layer {
                 weights,
                 biases,
                 activation,
             });
         }
-        
+
         Self {
             layers,
             learning_rate,
         }
     }
-    
+
     /// 前向传播
     pub fn forward(&self, input: &Array1<f64>) -> Array1<f64> {
         let mut current = input.clone();
-        
+
         for layer in &self.layers {
             current = layer.forward(&current);
         }
-        
+
         current
     }
-    
+
     /// 反向传播
     pub fn backward(&mut self, input: &Array1<f64>, target: &Array1<f64>) {
         // 前向传播
         let mut activations = vec![input.clone()];
         let mut z_values = Vec::new();
-        
+
         for layer in &self.layers {
             let (z, activation) = layer.forward_with_cache(&activations.last().unwrap());
             z_values.push(z);
             activations.push(activation);
         }
-        
+
         // 计算输出层误差
         let mut delta = activations.last().unwrap() - target;
-        
+
         // 反向传播误差
         for (i, layer) in self.layers.iter_mut().enumerate().rev() {
             let layer_index = self.layers.len() - 1 - i;
-            
+
             // 计算权重和偏置的梯度
             let weight_grad = delta.outer(&activations[layer_index]);
             let bias_grad = delta.clone();
-            
+
             // 更新权重和偏置
             layer.weights -= &(self.learning_rate * weight_grad);
             layer.biases -= &(self.learning_rate * bias_grad);
-            
+
             // 计算下一层的误差
             if layer_index > 0 {
                 delta = layer.backward_delta(&delta, &z_values[layer_index - 1]);
             }
         }
     }
-    
+
     /// 训练神经网络
     pub fn train(&mut self, training_data: &[(Array1<f64>, Array1<f64>)], epochs: usize) {
         for epoch in 0..epochs {
             let mut total_loss = 0.0;
-            
+
             for (input, target) in training_data {
                 self.backward(input, target);
-                
+
                 let output = self.forward(input);
                 total_loss += self.cross_entropy_loss(&output, target);
             }
-            
+
             if epoch % 100 == 0 {
                 println!("Epoch {}, Loss: {:.4}", epoch, total_loss / training_data.len() as f64);
             }
         }
     }
-    
+
     /// 交叉熵损失函数
     fn cross_entropy_loss(&self, output: &Array1<f64>, target: &Array1<f64>) -> f64 {
         -target.dot(&output.mapv(|x| (x + 1e-15).ln()))
@@ -340,14 +344,14 @@ impl Layer {
         let z = &self.weights.dot(input) + &self.biases;
         self.apply_activation(z)
     }
-    
+
     /// 前向传播（带缓存）
     pub fn forward_with_cache(&self, input: &Array1<f64>) -> (Array1<f64>, Array1<f64>) {
         let z = &self.weights.dot(input) + &self.biases;
         let activation = self.apply_activation(&z);
         (z.clone(), activation)
     }
-    
+
     /// 应用激活函数
     fn apply_activation(&self, z: &Array1<f64>) -> Array1<f64> {
         match self.activation {
@@ -356,13 +360,13 @@ impl Layer {
             ActivationFunction::Tanh => z.mapv(|x| x.tanh()),
         }
     }
-    
+
     /// 计算反向传播的误差
     fn backward_delta(&self, delta: &Array1<f64>, z: &Array1<f64>) -> Array1<f64> {
         let activation_derivative = self.apply_activation_derivative(z);
         self.weights.t().dot(delta) * activation_derivative
     }
-    
+
     /// 激活函数导数
     fn apply_activation_derivative(&self, z: &Array1<f64>) -> Array1<f64> {
         match self.activation {
@@ -380,7 +384,7 @@ impl Layer {
 pub trait AIPerformanceBenchmark {
     /// 运行性能测试
     fn benchmark(&self, test_data: &[Array1<f64>]) -> PerformanceResult;
-    
+
     /// 生成性能报告
     fn generate_report(&self, results: &[PerformanceResult]) -> String;
 }
@@ -398,27 +402,27 @@ pub struct PerformanceResult {
 impl AIPerformanceBenchmark for NeuralNetwork {
     fn benchmark(&self, test_data: &[Array1<f64>]) -> PerformanceResult {
         let start_time = std::time::Instant::now();
-        
+
         let mut correct_predictions = 0;
         let mut total_predictions = 0;
-        
+
         for input in test_data {
             let output = self.forward(input);
             let prediction = output.iter().enumerate()
                 .max_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap())
                 .map(|(i, _)| i)
                 .unwrap();
-            
+
             // 假设测试数据有标签（这里简化处理）
             if prediction == 0 { // 假设第一个类别为正确类别
                 correct_predictions += 1;
             }
             total_predictions += 1;
         }
-        
+
         let accuracy = correct_predictions as f64 / total_predictions as f64;
         let inference_time = start_time.elapsed();
-        
+
         PerformanceResult {
             accuracy,
             precision: accuracy, // 简化处理
@@ -428,31 +432,31 @@ impl AIPerformanceBenchmark for NeuralNetwork {
             inference_time,
         }
     }
-    
+
     fn generate_report(&self, results: &[PerformanceResult]) -> String {
         let mut report = String::new();
         report.push_str("## 神经网络性能测试报告\n\n");
         report.push_str("| 指标 | 平均值 | 标准差 |\n");
         report.push_str("|------|--------|--------|\n");
-        
+
         let accuracies: Vec<f64> = results.iter().map(|r| r.accuracy).collect();
         let avg_accuracy = accuracies.iter().sum::<f64>() / accuracies.len() as f64;
         let variance = accuracies.iter().map(|x| (x - avg_accuracy).powi(2)).sum::<f64>() / accuracies.len() as f64;
         let std_accuracy = variance.sqrt();
-        
+
         report.push_str(&format!(
             "| 准确率 | {:.4} | {:.4} |\n",
             avg_accuracy, std_accuracy
         ));
-        
+
         let inference_times: Vec<f64> = results.iter().map(|r| r.inference_time.as_millis() as f64).collect();
         let avg_inference_time = inference_times.iter().sum::<f64>() / inference_times.len() as f64;
-        
+
         report.push_str(&format!(
             "| 推理时间(ms) | {:.2} | - |\n",
             avg_inference_time
         ));
-        
+
         report
     }
 }

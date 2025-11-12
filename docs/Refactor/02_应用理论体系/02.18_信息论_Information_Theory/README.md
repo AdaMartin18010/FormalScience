@@ -101,7 +101,7 @@ impl ProbabilityDistribution {
 
     pub fn joint_entropy(&self, other: &ProbabilityDistribution) -> f64 {
         let mut joint_entropy = 0.0;
-        
+
         for (symbol1, prob1) in &self.probabilities {
             for (symbol2, prob2) in &other.probabilities {
                 let joint_prob = prob1 * prob2;
@@ -110,13 +110,13 @@ impl ProbabilityDistribution {
                 }
             }
         }
-        
+
         joint_entropy
     }
 
     pub fn conditional_entropy(&self, other: &ProbabilityDistribution) -> f64 {
         let mut conditional_entropy = 0.0;
-        
+
         for (symbol1, prob1) in &self.probabilities {
             for (symbol2, prob2) in &other.probabilities {
                 let joint_prob = prob1 * prob2;
@@ -125,7 +125,7 @@ impl ProbabilityDistribution {
                 }
             }
         }
-        
+
         conditional_entropy
     }
 }
@@ -168,25 +168,25 @@ impl Channel {
     pub fn capacity(&self) -> f64 {
         // 简化的信道容量计算
         let mut max_mutual_info = 0.0;
-        
+
         // 尝试不同的输入分布
         for i in 0..10 {
             let input_dist = self.generate_uniform_distribution();
             let mutual_info = self.mutual_information(&input_dist);
             max_mutual_info = max_mutual_info.max(mutual_info);
         }
-        
+
         max_mutual_info
     }
 
     fn generate_uniform_distribution(&self) -> ProbabilityDistribution {
         let mut dist = ProbabilityDistribution::new();
         let probability = 1.0 / self.input_alphabet.len() as f64;
-        
+
         for symbol in &self.input_alphabet {
             dist.add_symbol(symbol, probability);
         }
-        
+
         dist
     }
 
@@ -195,44 +195,44 @@ impl Channel {
         let output_dist = self.output_distribution(input_dist);
         let output_entropy = output_dist.entropy();
         let joint_entropy = self.joint_entropy(input_dist);
-        
+
         input_entropy + output_entropy - joint_entropy
     }
 
     fn output_distribution(&self, input_dist: &ProbabilityDistribution) -> ProbabilityDistribution {
         let mut output_dist = ProbabilityDistribution::new();
-        
+
         for (i, input_symbol) in self.input_alphabet.iter().enumerate() {
             let input_prob = input_dist.probabilities.get(input_symbol).unwrap_or(&0.0);
-            
+
             for (j, output_symbol) in self.output_alphabet.iter().enumerate() {
                 let transition_prob = self.transition_matrix[(j, i)];
                 let joint_prob = input_prob * transition_prob;
-                
+
                 let current_prob = output_dist.probabilities.get(output_symbol).unwrap_or(&0.0);
                 output_dist.add_symbol(output_symbol, current_prob + joint_prob);
             }
         }
-        
+
         output_dist
     }
 
     fn joint_entropy(&self, input_dist: &ProbabilityDistribution) -> f64 {
         let mut joint_entropy = 0.0;
-        
+
         for (i, input_symbol) in self.input_alphabet.iter().enumerate() {
             let input_prob = input_dist.probabilities.get(input_symbol).unwrap_or(&0.0);
-            
+
             for (j, output_symbol) in self.output_alphabet.iter().enumerate() {
                 let transition_prob = self.transition_matrix[(j, i)];
                 let joint_prob = input_prob * transition_prob;
-                
+
                 if joint_prob > 0.0 {
                     joint_entropy -= joint_prob * joint_prob.log2();
                 }
             }
         }
-        
+
         joint_entropy
     }
 }
@@ -257,18 +257,18 @@ impl Encoder {
         let mut nodes: Vec<HuffmanNode> = distribution.probabilities.iter()
             .map(|(symbol, &prob)| HuffmanNode::new_leaf(symbol.clone(), prob))
             .collect();
-        
+
         // 构建Huffman树
         while nodes.len() > 1 {
             nodes.sort_by(|a, b| b.probability.partial_cmp(&a.probability).unwrap());
-            
+
             let right = nodes.pop().unwrap();
             let left = nodes.pop().unwrap();
-            
+
             let parent = HuffmanNode::new_internal(left, right);
             nodes.push(parent);
         }
-        
+
         if let Some(root) = nodes.pop() {
             self.build_codebook(&root, "");
             self.calculate_average_length(distribution);
@@ -289,7 +289,7 @@ impl Encoder {
 
     fn calculate_average_length(&mut self, distribution: &ProbabilityDistribution) {
         self.average_length = 0.0;
-        
+
         for (symbol, probability) in &distribution.probabilities {
             if let Some(code) = self.codebook.get(symbol) {
                 self.average_length += probability * code.len() as f64;
@@ -300,13 +300,13 @@ impl Encoder {
     // 编码消息
     pub fn encode(&self, message: &str) -> String {
         let mut encoded = String::new();
-        
+
         for symbol in message.chars() {
             if let Some(code) = self.codebook.get(&symbol.to_string()) {
                 encoded.push_str(code);
             }
         }
-        
+
         encoded
     }
 
@@ -314,10 +314,10 @@ impl Encoder {
     pub fn decode(&self, encoded_message: &str) -> String {
         let mut decoded = String::new();
         let mut current_code = String::new();
-        
+
         for bit in encoded_message.chars() {
             current_code.push(bit);
-            
+
             // 查找匹配的符号
             for (symbol, code) in &self.codebook {
                 if code == &current_code {
@@ -327,7 +327,7 @@ impl Encoder {
                 }
             }
         }
-        
+
         decoded
     }
 }
@@ -358,7 +358,7 @@ impl HuffmanNode {
             (HuffmanNode::Leaf { probability: p1, .. }, HuffmanNode::Internal { probability: p2, .. }) => p1 + p2,
             (HuffmanNode::Internal { probability: p1, .. }, HuffmanNode::Internal { probability: p2, .. }) => p1 + p2,
         };
-        
+
         HuffmanNode::Internal {
             probability,
             left: Box::new(left),
@@ -380,34 +380,34 @@ pub struct ErrorCorrectionCode {
 impl ErrorCorrectionCode {
     pub fn new_hamming_code(message_length: usize) -> Self {
         let code_length = message_length + (message_length as f64).log2().ceil() as usize + 1;
-        
+
         // 构建生成矩阵
         let mut generator_matrix = DMatrix::zeros(code_length, message_length);
-        
+
         // 单位矩阵部分
         for i in 0..message_length {
             generator_matrix[(i, i)] = 1.0;
         }
-        
+
         // 奇偶校验位
         for i in 0..(code_length - message_length) {
             let parity_position = message_length + i;
             let parity_bit = 1 << i;
-            
+
             for j in 0..message_length {
                 if (j + 1) & parity_bit != 0 {
                     generator_matrix[(parity_position, j)] = 1.0;
                 }
             }
         }
-        
+
         // 构建校验矩阵
         let mut parity_check_matrix = DMatrix::zeros(code_length - message_length, code_length);
-        
+
         for i in 0..(code_length - message_length) {
             let parity_position = message_length + i;
             parity_check_matrix[(i, parity_position)] = 1.0;
-            
+
             let parity_bit = 1 << i;
             for j in 0..message_length {
                 if (j + 1) & parity_bit != 0 {
@@ -415,7 +415,7 @@ impl ErrorCorrectionCode {
                 }
             }
         }
-        
+
         ErrorCorrectionCode {
             generator_matrix,
             parity_check_matrix,
@@ -434,22 +434,22 @@ impl ErrorCorrectionCode {
     pub fn decode(&self, received: &DVector<f64>) -> DVector<f64> {
         // 计算症状
         let syndrome = &self.parity_check_matrix * received;
-        
+
         // 检查是否有错误
         if syndrome.iter().all(|&x| x == 0.0) {
             // 无错误，直接返回前message_length位
             return received.rows(0, self.message_length).into();
         }
-        
+
         // 错误纠正（简化实现）
         let mut corrected = received.clone();
-        
+
         // 找到错误位置
         let error_position = self.find_error_position(&syndrome);
         if error_position < corrected.len() {
             corrected[error_position] = if corrected[error_position] == 0.0 { 1.0 } else { 0.0 };
         }
-        
+
         // 返回消息部分
         corrected.rows(0, self.message_length).into()
     }
@@ -496,22 +496,22 @@ impl DataCompressor {
         let mut window_size = 4096;
         let mut look_ahead_size = 16;
         let mut current_pos = 0;
-        
+
         while current_pos < data.len() {
             let look_ahead_start = current_pos;
             let look_ahead_end = (current_pos + look_ahead_size).min(data.len());
             let look_ahead = &data[look_ahead_start..look_ahead_end];
-            
+
             let window_start = if current_pos > window_size {
                 current_pos - window_size
             } else {
                 0
             };
             let window = &data[window_start..current_pos];
-            
+
             // 寻找最长匹配
             let (offset, length) = self.find_longest_match(window, look_ahead);
-            
+
             if length > 2 {
                 compressed.push((offset, length, look_ahead.chars().next().unwrap()));
                 current_pos += length;
@@ -520,7 +520,7 @@ impl DataCompressor {
                 current_pos += 1;
             }
         }
-        
+
         self.calculate_compression_ratio(data.len(), compressed.len() * 3);
         compressed
     }
@@ -528,22 +528,22 @@ impl DataCompressor {
     fn find_longest_match(&self, window: &str, look_ahead: &str) -> (usize, usize) {
         let mut best_offset = 0;
         let mut best_length = 0;
-        
+
         for offset in 1..=window.len() {
             let mut length = 0;
-            while length < look_ahead.len() && 
+            while length < look_ahead.len() &&
                   length < window.len() - offset + 1 &&
-                  window.chars().nth(window.len() - offset + length) == 
+                  window.chars().nth(window.len() - offset + length) ==
                   look_ahead.chars().nth(length) {
                 length += 1;
             }
-            
+
             if length > best_length {
                 best_length = length;
                 best_offset = offset;
             }
         }
-        
+
         (best_offset, best_length)
     }
 
@@ -579,7 +579,7 @@ impl InformationMeasures {
     // 计算条件熵
     pub fn conditional_entropy(joint_probabilities: &DMatrix<f64>, marginal_probabilities: &[f64]) -> f64 {
         let mut conditional_entropy = 0.0;
-        
+
         for (i, &marginal_prob) in marginal_probabilities.iter().enumerate() {
             if marginal_prob > 0.0 {
                 for j in 0..joint_probabilities.ncols() {
@@ -590,16 +590,16 @@ impl InformationMeasures {
                 }
             }
         }
-        
+
         conditional_entropy
     }
 
     // 计算互信息
-    pub fn mutual_information(joint_probabilities: &DMatrix<f64>, 
-                             marginal_x: &[f64], 
+    pub fn mutual_information(joint_probabilities: &DMatrix<f64>,
+                             marginal_x: &[f64],
                              marginal_y: &[f64]) -> f64 {
         let mut mutual_info = 0.0;
-        
+
         for i in 0..joint_probabilities.nrows() {
             for j in 0..joint_probabilities.ncols() {
                 let joint_prob = joint_probabilities[(i, j)];
@@ -611,7 +611,7 @@ impl InformationMeasures {
                 }
             }
         }
-        
+
         mutual_info
     }
 
@@ -628,7 +628,7 @@ impl InformationMeasures {
         let m: Vec<f64> = p.iter().zip(q.iter())
             .map(|(p_val, q_val)| (p_val + q_val) / 2.0)
             .collect();
-        
+
         (Self::kl_divergence(p, &m) + Self::kl_divergence(q, &m)) / 2.0
     }
 }
@@ -647,11 +647,11 @@ fn entropy_example() {
     distribution.add_symbol("C", 0.125);
     distribution.add_symbol("D", 0.125);
     distribution.normalize();
-    
+
     // 计算熵
     let entropy = distribution.entropy();
     println!("信息熵: {:.3} bits", entropy);
-    
+
     // 验证熵的性质
     println!("熵的范围: 0 <= H(X) <= log2(n)");
     println!("最大熵: {:.3} bits", (distribution.alphabet.len() as f64).log2());
@@ -669,24 +669,24 @@ fn huffman_coding_example() {
     distribution.add_symbol("C", 0.2);
     distribution.add_symbol("D", 0.1);
     distribution.normalize();
-    
+
     // 创建Huffman编码器
     let mut encoder = Encoder::new();
     encoder.huffman_encode(&distribution);
-    
+
     println!("Huffman编码表:");
     for (symbol, code) in &encoder.codebook {
         println!("{} -> {}", symbol, code);
     }
-    
+
     println!("平均码长: {:.3} bits", encoder.average_length);
     println!("信源熵: {:.3} bits", distribution.entropy());
-    
+
     // 编码和解码
     let message = "ABACD";
     let encoded = encoder.encode(message);
     let decoded = encoder.decode(&encoded);
-    
+
     println!("原始消息: {}", message);
     println!("编码结果: {}", encoded);
     println!("解码结果: {}", decoded);
@@ -700,19 +700,19 @@ fn channel_capacity_example() {
     // 创建二元对称信道
     let mut channel = Channel::new(2, 2);
     let error_probability = 0.1;
-    
+
     // 设置转移概率
     channel.set_transition_probability(0, 0, 1.0 - error_probability); // P(Y=0|X=0)
     channel.set_transition_probability(0, 1, error_probability);        // P(Y=1|X=0)
     channel.set_transition_probability(1, 0, error_probability);        // P(Y=0|X=1)
     channel.set_transition_probability(1, 1, 1.0 - error_probability); // P(Y=1|X=1)
-    
+
     // 计算信道容量
     let capacity = channel.capacity();
     println!("二元对称信道容量: {:.3} bits/channel use", capacity);
-    
+
     // 理论值验证
-    let theoretical_capacity = 1.0 - (-error_probability * error_probability.log2() - 
+    let theoretical_capacity = 1.0 - (-error_probability * error_probability.log2() -
                                       (1.0 - error_probability) * (1.0 - error_probability).log2());
     println!("理论容量: {:.3} bits/channel use", theoretical_capacity);
 }
@@ -724,24 +724,24 @@ fn channel_capacity_example() {
 fn error_correction_example() {
     // 创建Hamming码
     let code = ErrorCorrectionCode::new_hamming_code(4);
-    
+
     // 原始消息
     let message = DVector::from_vec(vec![1.0, 0.0, 1.0, 1.0]);
     println!("原始消息: {:?}", message.as_slice());
-    
+
     // 编码
     let encoded = code.encode(&message);
     println!("编码结果: {:?}", encoded.as_slice());
-    
+
     // 模拟错误
     let mut received = encoded.clone();
     received[2] = if received[2] == 0.0 { 1.0 } else { 0.0 }; // 引入错误
     println!("接收信号: {:?}", received.as_slice());
-    
+
     // 解码
     let decoded = code.decode(&received);
     println!("解码结果: {:?}", decoded.as_slice());
-    
+
     // 验证纠错
     let is_correct = decoded == message;
     println!("纠错成功: {}", is_correct);
@@ -754,12 +754,12 @@ fn error_correction_example() {
 fn data_compression_example() {
     // 创建压缩器
     let mut compressor = DataCompressor::new(CompressionAlgorithm::LZ77);
-    
+
     // 测试数据
     let data = "TOBEORNOTTOBEORTOBEORNOT";
     println!("原始数据: {}", data);
     println!("原始大小: {} 字符", data.len());
-    
+
     // 压缩
     let compressed = compressor.lz77_compress(data);
     println!("压缩结果: {:?}", compressed);
@@ -832,5 +832,5 @@ $$H(X) \leq L < H(X) + 1$$
 
 ---
 
-**最后更新**：2025-01-17  
+**最后更新**：2025-01-17
 **模块状态**：✅ 完成

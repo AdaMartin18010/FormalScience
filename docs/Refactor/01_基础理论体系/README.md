@@ -398,27 +398,27 @@
 
 ### 7.4 哲学基础理论
 
-1. Russell, B. *The Problems of Philosophy*. Oxford University Press, 1912.
-2. Quine, W. V. O. *Word and Object*. MIT Press, 1960.
-3. Putnam, H. *Reason, Truth and History*. Cambridge University Press, 1981.
+1. Russell, B. _The Problems of Philosophy_. Oxford University Press, 1912.
+2. Quine, W. V. O. _Word and Object_. MIT Press, 1960.
+3. Putnam, H. _Reason, Truth and History_. Cambridge University Press, 1981.
 
 ### 7.5 逻辑基础理论
 
-1. Boolos, G. S., et al. *Computability and Logic*. Cambridge University Press, 2007.
-2. Enderton, H. B. *A Mathematical Introduction to Logic*. Academic Press, 2001.
-3. Mendelson, E. *Introduction to Mathematical Logic*. Chapman & Hall, 2009.
+1. Boolos, G. S., et al. _Computability and Logic_. Cambridge University Press, 2007.
+2. Enderton, H. B. _A Mathematical Introduction to Logic_. Academic Press, 2001.
+3. Mendelson, E. _Introduction to Mathematical Logic_. Chapman & Hall, 2009.
 
 ### 7.6 类型理论
 
-1. Pierce, B. C. *Types and Programming Languages*. MIT Press, 2002.
-2. Thompson, S. *Type Theory and Functional Programming*. Addison-Wesley, 1991.
-3. Martin-Löf, P. *Intuitionistic Type Theory*. Bibliopolis, 1984.
+1. Pierce, B. C. _Types and Programming Languages_. MIT Press, 2002.
+2. Thompson, S. _Type Theory and Functional Programming_. Addison-Wesley, 1991.
+3. Martin-Löf, P. _Intuitionistic Type Theory_. Bibliopolis, 1984.
 
 ### 7.7 控制理论
 
-1. Ogata, K. *Modern Control Engineering*. Prentice Hall, 2010.
-2. Franklin, G. F., et al. *Feedback Control of Dynamic Systems*. Pearson, 2015.
-3. Åström, K. J., & Murray, R. M. *Feedback Systems*. Princeton University Press, 2008.
+1. Ogata, K. _Modern Control Engineering_. Prentice Hall, 2010.
+2. Franklin, G. F., et al. _Feedback Control of Dynamic Systems_. Pearson, 2015.
+3. Åström, K. J., & Murray, R. M. _Feedback Systems_. Princeton University Press, 2008.
 
 ---
 

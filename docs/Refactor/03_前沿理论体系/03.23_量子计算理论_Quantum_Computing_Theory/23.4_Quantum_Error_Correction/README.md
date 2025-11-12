@@ -2,18 +2,22 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 量子纠错码理论](#21-量子纠错码理论)
-  - [2.2 容错量子计算理论](#22-容错量子计算理论)
-  - [2.3 量子噪声理论](#23-量子噪声理论)
-- [3 重构进度](#3-重构进度)
-  - [3.1 已完成重构的子模块](#31-已完成重构的子模块)
-  - [3.2 重构特色](#32-重构特色)
-- [4 哲学性批判与展望](#4-哲学性批判与展望)
-  - [4.1 本体论反思](#41-本体论反思)
-  - [4.2 认识论批判](#42-认识论批判)
-  - [4.3 社会影响分析](#43-社会影响分析)
+- [23.4 量子纠错 (Quantum Error Correction)](#234-量子纠错-quantum-error-correction)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 量子纠错码理论](#21-量子纠错码理论)
+    - [2.2 容错量子计算理论](#22-容错量子计算理论)
+    - [2.3 量子噪声理论](#23-量子噪声理论)
+  - [3 重构进度](#3-重构进度)
+    - [3.1 已完成重构的子模块](#31-已完成重构的子模块)
+    - [3.2 重构特色](#32-重构特色)
+  - [4 哲学性批判与展望](#4-哲学性批判与展望)
+    - [4.1 本体论反思](#41-本体论反思)
+    - [4.2 认识论批判](#42-认识论批判)
+    - [4.3 社会影响分析](#43-社会影响分析)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -71,7 +75,7 @@
 ### 3.1 已完成重构的子模块
 
 ✅ **23.4.1_Quantum_Error_Codes** - 量子纠错码
-✅ **23.4.2_Fault_Tolerant_QC** - 容错量子计算  
+✅ **23.4.2_Fault_Tolerant_QC** - 容错量子计算
 ✅ **23.4.3_Quantum_Noise** - 量子噪声
 
 ### 3.2 重构特色
@@ -109,8 +113,8 @@
 
 ## 📚 参考文献
 
-1. Nielsen, M. A., & Chuang, I. L. *Quantum Computation and Quantum Information*. Cambridge University Press, 2010.
-2. Gottesman, D. *Stabilizer codes and quantum error correction*. arXiv:quant-ph/9705052, 1997.
-3. Shor, P. W. *Fault-tolerant quantum computation*. Proceedings of 37th Conference on Foundations of Computer Science, 1996.
-4. Kitaev, A. Y. *Fault-tolerant quantum computation by anyons*. Annals of Physics, 2003.
-5. Preskill, J. *Reliable quantum computers*. Proceedings of the Royal Society of London A, 1998.
+1. Nielsen, M. A., & Chuang, I. L. _Quantum Computation and Quantum Information_. Cambridge University Press, 2010.
+2. Gottesman, D. _Stabilizer codes and quantum error correction_. arXiv:quant-ph/9705052, 1997.
+3. Shor, P. W. _Fault-tolerant quantum computation_. Proceedings of 37th Conference on Foundations of Computer Science, 1996.
+4. Kitaev, A. Y. _Fault-tolerant quantum computation by anyons_. Annals of Physics, 2003.
+5. Preskill, J. _Reliable quantum computers_. Proceedings of the Royal Society of London A, 1998.

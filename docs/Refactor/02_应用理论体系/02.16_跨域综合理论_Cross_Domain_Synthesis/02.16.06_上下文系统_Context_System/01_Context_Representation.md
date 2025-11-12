@@ -2,13 +2,39 @@
 
 ## 目录
 
-1. [基本概念](#基本概念)
-2. [上下文结构](#上下文结构)
-3. [上下文关系](#上下文关系)
-4. [上下文推理](#上下文推理)
-5. [形式化表示](#形式化表示)
-6. [证明系统](#证明系统)
-7. [与其他学科的关联](#与其他学科的关联)
+- [01. 上下文表示 (Context Representation)](#01-上下文表示-context-representation)
+  - [目录](#目录)
+  - [基本概念](#基本概念)
+    - [1.1 上下文定义](#11-上下文定义)
+    - [1.2 上下文类型](#12-上下文类型)
+  - [上下文结构](#上下文结构)
+    - [2.1 实体表示](#21-实体表示)
+    - [2.2 关系表示](#22-关系表示)
+    - [2.3 约束表示](#23-约束表示)
+  - [上下文关系](#上下文关系)
+    - [3.1 层次关系](#31-层次关系)
+    - [3.2 空间关系](#32-空间关系)
+    - [3.3 时间关系](#33-时间关系)
+  - [上下文推理](#上下文推理)
+    - [4.1 推理规则](#41-推理规则)
+    - [4.2 上下文扩展](#42-上下文扩展)
+    - [4.3 上下文合并](#43-上下文合并)
+  - [形式化表示](#形式化表示)
+    - [5.1 一阶逻辑表示](#51-一阶逻辑表示)
+    - [5.2 类型论表示](#52-类型论表示)
+  - [证明系统](#证明系统)
+    - [6.1 推理规则](#61-推理规则)
+    - [6.2 证明示例](#62-证明示例)
+  - [与其他学科的关联](#与其他学科的关联)
+    - [7.1 与哲学的关联](#71-与哲学的关联)
+    - [7.2 与数学的关联](#72-与数学的关联)
+    - [7.3 与计算机科学的关联](#73-与计算机科学的关联)
+  - [应用示例](#应用示例)
+    - [8.1 知识图谱系统](#81-知识图谱系统)
+    - [8.2 语义理解系统](#82-语义理解系统)
+  - [总结](#总结)
+  - [批判性分析](#批判性分析)
+
 
 ## 基本概念
 
@@ -394,22 +420,22 @@ impl ContextModel {
             information: HashMap::new(),
         }
     }
-    
+
     fn add_entity(&mut self, entity: Entity) {
         self.entities.insert(entity);
     }
-    
+
     fn add_relation(&mut self, relation: Relation) {
         // 检查约束
         if self.satisfies_constraints(&relation) {
             self.relations.insert(relation);
         }
     }
-    
+
     fn add_constraint(&mut self, constraint: Constraint) {
         self.constraints.push(constraint);
     }
-    
+
     fn satisfies_constraints(&self, relation: &Relation) -> bool {
         for constraint in &self.constraints {
             if !(constraint.condition)(self) {
@@ -418,17 +444,17 @@ impl ContextModel {
         }
         true
     }
-    
+
     fn get_related_entities(&self, entity: &Entity, relation_type: &RelationType) -> Vec<Entity> {
         self.relations.iter()
             .filter(|r| &r.source == entity && &r.relation_type == relation_type)
             .map(|r| r.target.clone())
             .collect()
     }
-    
+
     fn infer_relations(&self) -> HashSet<Relation> {
         let mut inferred_relations = HashSet::new();
-        
+
         // 传递性推理
         for relation in &self.relations {
             if relation.relation_type.is_transitive() {
@@ -444,7 +470,7 @@ impl ContextModel {
                 }
             }
         }
-        
+
         // 对称性推理
         for relation in &self.relations {
             if relation.relation_type.is_symmetric() {
@@ -457,41 +483,41 @@ impl ContextModel {
                 inferred_relations.insert(symmetric_relation);
             }
         }
-        
+
         inferred_relations
     }
-    
+
     fn merge(&self, other: &ContextModel) -> ContextModel {
         let mut merged = ContextModel::new();
-        
+
         // 合并实体
         merged.entities.extend(self.entities.clone());
         merged.entities.extend(other.entities.clone());
-        
+
         // 合并关系
         merged.relations.extend(self.relations.clone());
         merged.relations.extend(other.relations.clone());
-        
+
         // 合并约束
         merged.constraints.extend(self.constraints.clone());
         merged.constraints.extend(other.constraints.clone());
-        
+
         // 合并信息
         merged.information.extend(self.information.clone());
         merged.information.extend(other.information.clone());
-        
+
         merged
     }
-    
+
     fn extend(&mut self, entities: Vec<Entity>, relations: Vec<Relation>, constraints: Vec<Constraint>) {
         for entity in entities {
             self.add_entity(entity);
         }
-        
+
         for relation in relations {
             self.add_relation(relation);
         }
-        
+
         for constraint in constraints {
             self.add_constraint(constraint);
         }
@@ -503,11 +529,11 @@ impl RelationType {
     fn is_transitive(&self) -> bool {
         matches!(self, RelationType::IsA | RelationType::PartOf | RelationType::Before | RelationType::After)
     }
-    
+
     fn is_symmetric(&self) -> bool {
         matches!(self, RelationType::Near | RelationType::Far | RelationType::SimilarTo)
     }
-    
+
     fn is_reflexive(&self) -> bool {
         matches!(self, RelationType::IsA | RelationType::SimilarTo)
     }
@@ -522,19 +548,19 @@ impl ContextReasoner {
     fn new(model: ContextModel) -> Self {
         ContextReasoner { model }
     }
-    
+
     fn reason(&mut self) -> ContextModel {
         // 应用推理规则
         let inferred_relations = self.model.infer_relations();
-        
+
         // 添加推理结果
         for relation in inferred_relations {
             self.model.add_relation(relation);
         }
-        
+
         self.model.clone()
     }
-    
+
     fn query(&self, query: &ContextQuery) -> Vec<Entity> {
         match query {
             ContextQuery::FindRelated(source, relation_type) => {
@@ -554,17 +580,17 @@ impl ContextReasoner {
             }
         }
     }
-    
+
     fn validate(&self) -> Vec<ValidationError> {
         let mut errors = Vec::new();
-        
+
         // 检查约束违反
         for constraint in &self.model.constraints {
             if !(constraint.condition)(&self.model) {
                 errors.push(ValidationError::ConstraintViolation(constraint.clone()));
             }
         }
-        
+
         // 检查关系一致性
         for relation in &self.model.relations {
             if !self.model.entities.contains(&relation.source) {
@@ -574,7 +600,7 @@ impl ContextReasoner {
                 errors.push(ValidationError::InvalidTarget(relation.clone()));
             }
         }
-        
+
         errors
     }
 }
@@ -704,13 +730,13 @@ impl KnowledgeGraph {
     fn new() -> Self {
         let context_model = ContextModel::new();
         let reasoner = ContextReasoner::new(context_model.clone());
-        
+
         KnowledgeGraph {
             context_model,
             reasoner,
         }
     }
-    
+
     fn add_knowledge(&mut self, knowledge: Knowledge) {
         match knowledge {
             Knowledge::Entity(entity) => {
@@ -724,36 +750,36 @@ impl KnowledgeGraph {
             }
         }
     }
-    
+
     fn query(&self, query: &ContextQuery) -> Vec<Entity> {
         self.reasoner.query(query)
     }
-    
+
     fn reason(&mut self) {
         self.context_model = self.reasoner.reason();
     }
-    
+
     fn validate(&self) -> Vec<ValidationError> {
         self.reasoner.validate()
     }
-    
+
     fn export(&self) -> String {
         // 导出为RDF格式
         let mut rdf = String::new();
-        
+
         for entity in &self.context_model.entities {
             rdf.push_str(&format!("<{}> rdf:type <{}> .\n", entity.id, entity.entity_type));
-            
+
             for (key, value) in &entity.attributes {
                 rdf.push_str(&format!("<{}> <{}> \"{}\" .\n", entity.id, key, value));
             }
         }
-        
+
         for relation in &self.context_model.relations {
-            rdf.push_str(&format!("<{}> <{}> <{}> .\n", 
+            rdf.push_str(&format!("<{}> <{}> <{}> .\n",
                 relation.source.id, relation.relation_type, relation.target.id));
         }
-        
+
         rdf
     }
 }
@@ -782,34 +808,34 @@ impl SemanticUnderstanding {
             language_model: LanguageModel::new(),
         }
     }
-    
+
     fn understand_text(&mut self, text: &str) -> ContextModel {
         // 解析文本
         let entities = self.language_model.extract_entities(text);
         let relations = self.language_model.extract_relations(text);
-        
+
         // 添加到知识图谱
         for entity in entities {
             self.knowledge_graph.add_knowledge(Knowledge::Entity(entity));
         }
-        
+
         for relation in relations {
             self.knowledge_graph.add_knowledge(Knowledge::Relation(relation));
         }
-        
+
         // 推理
         self.knowledge_graph.reason();
-        
+
         self.knowledge_graph.context_model.clone()
     }
-    
+
     fn answer_question(&self, question: &str) -> String {
         // 解析问题
         let query = self.language_model.parse_question(question);
-        
+
         // 查询知识图谱
         let results = self.knowledge_graph.query(&query);
-        
+
         // 生成答案
         self.language_model.generate_answer(&results)
     }
@@ -823,15 +849,15 @@ impl LanguageModel {
     fn new() -> Self {
         LanguageModel {}
     }
-    
+
     fn extract_entities(&self, text: &str) -> Vec<Entity> {
         // 实体抽取
         let mut entities = Vec::new();
-        
+
         // 使用规则或机器学习模型抽取实体
         // 这里使用简化版本
         let words: Vec<&str> = text.split_whitespace().collect();
-        
+
         for (i, word) in words.iter().enumerate() {
             if word.chars().next().unwrap().is_uppercase() {
                 let entity = Entity {
@@ -842,20 +868,20 @@ impl LanguageModel {
                 entities.push(entity);
             }
         }
-        
+
         entities
     }
-    
+
     fn extract_relations(&self, text: &str) -> Vec<Relation> {
         // 关系抽取
         Vec::new() // 简化版本
     }
-    
+
     fn parse_question(&self, question: &str) -> ContextQuery {
         // 问题解析
         ContextQuery::FindByType(EntityType::Object) // 简化版本
     }
-    
+
     fn generate_answer(&self, results: &[Entity]) -> String {
         // 答案生成
         format!("Found {} entities", results.len())

@@ -2,31 +2,34 @@
 
 ## 📋 目录
 
-- [1 体系概述](#1-体系概述)
-- [2 体系结构](#2-体系结构)
-- [3 核心理论体系](#3-核心理论体系)
-  - [3.1 元分析理论 (Meta-Analysis Theory)](#31-元分析理论-meta-analysis-theory)
-  - [3.2 高级方法论 (Advanced Methodology)](#32-高级方法论-advanced-methodology)
-  - [3.3 量子计算理论 (Quantum Computing Theory)](#33-量子计算理论-quantum-computing-theory)
-- [4 重构进度](#4-重构进度)
-  - [4.1 已完成重构的模块](#41-已完成重构的模块)
-  - [4.2 重构特色](#42-重构特色)
-- [5 理论创新与贡献](#5-理论创新与贡献)
-  - [5.1 跨学科理论整合](#51-跨学科理论整合)
-  - [5.2 方法论创新](#52-方法论创新)
-  - [5.3 应用价值](#53-应用价值)
-- [6 哲学性批判与展望](#6-哲学性批判与展望)
-  - [6.1 本体论反思](#61-本体论反思)
-  - [6.2 认识论批判](#62-认识论批判)
-  - [6.3 社会影响分析](#63-社会影响分析)
-  - [6.4 终极哲学建议](#64-终极哲学建议)
-- [7 相关理论体系](#7-相关理论体系)
-  - [7.1 前沿理论体系内部关系](#71-前沿理论体系内部关系)
-  - [7.2 与其他理论体系的关系](#72-与其他理论体系的关系)
-  - [7.3 快速导航](#73-快速导航)
-  - [7.4 元分析理论](#74-元分析理论)
-  - [7.5 高级方法论](#75-高级方法论)
-  - [7.6 量子计算理论](#76-量子计算理论)
+- [03\_前沿理论体系 (Advanced Theoretical Systems)](#03_前沿理论体系-advanced-theoretical-systems)
+  - [📋 目录](#-目录)
+  - [1 体系概述](#1-体系概述)
+  - [2 体系结构](#2-体系结构)
+  - [3 核心理论体系](#3-核心理论体系)
+    - [3.1 元分析理论 (Meta-Analysis Theory)](#31-元分析理论-meta-analysis-theory)
+    - [3.2 高级方法论 (Advanced Methodology)](#32-高级方法论-advanced-methodology)
+    - [3.3 量子计算理论 (Quantum Computing Theory)](#33-量子计算理论-quantum-computing-theory)
+  - [4 重构进度](#4-重构进度)
+    - [4.1 已完成重构的模块](#41-已完成重构的模块)
+    - [4.2 重构特色](#42-重构特色)
+  - [5 理论创新与贡献](#5-理论创新与贡献)
+    - [5.1 跨学科理论整合](#51-跨学科理论整合)
+    - [5.2 方法论创新](#52-方法论创新)
+    - [5.3 应用价值](#53-应用价值)
+  - [6 哲学性批判与展望](#6-哲学性批判与展望)
+    - [6.1 本体论反思](#61-本体论反思)
+    - [6.2 认识论批判](#62-认识论批判)
+    - [6.3 社会影响分析](#63-社会影响分析)
+    - [6.4 终极哲学建议](#64-终极哲学建议)
+  - [7 相关理论体系](#7-相关理论体系)
+    - [7.1 前沿理论体系内部关系](#71-前沿理论体系内部关系)
+    - [7.2 与其他理论体系的关系](#72-与其他理论体系的关系)
+    - [7.3 快速导航](#73-快速导航)
+  - [📚 参考文献](#-参考文献)
+    - [7.4 元分析理论](#74-元分析理论)
+    - [7.5 高级方法论](#75-高级方法论)
+    - [7.6 量子计算理论](#76-量子计算理论)
 
 ---
 
@@ -225,23 +228,23 @@
 
 ### 7.4 元分析理论
 
-1. Borenstein, M., et al. *Introduction to Meta-Analysis*. Wiley, 2009.
-2. Higgins, J. P. T., & Green, S. *Cochrane Handbook for Systematic Reviews of Interventions*. Wiley, 2011.
+1. Borenstein, M., et al. _Introduction to Meta-Analysis_. Wiley, 2009.
+2. Higgins, J. P. T., & Green, S. _Cochrane Handbook for Systematic Reviews of Interventions_. Wiley, 2011.
 
 ### 7.5 高级方法论
 
-1. Checkland, P. *Systems Thinking, Systems Practice*. Wiley, 1981.
-2. Brown, T. *Design Thinking*. Harvard Business Review Press, 2009.
-3. Beck, K., et al. *Manifesto for Agile Software Development*. 2001.
+1. Checkland, P. _Systems Thinking, Systems Practice_. Wiley, 1981.
+2. Brown, T. _Design Thinking_. Harvard Business Review Press, 2009.
+3. Beck, K., et al. _Manifesto for Agile Software Development_. 2001.
 
 ### 7.6 量子计算理论
 
-1. Nielsen, M. A., & Chuang, I. L. *Quantum Computation and Quantum Information*. Cambridge University Press, 2010.
-2. Shor, P. W. *Algorithms for quantum computation: discrete logarithms and factoring*. Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994.
-3. Grover, L. K. *A fast quantum mechanical algorithm for database search*. Proceedings of the 28th Annual ACM Symposium on Theory of Computing, 1996.
+1. Nielsen, M. A., & Chuang, I. L. _Quantum Computation and Quantum Information_. Cambridge University Press, 2010.
+2. Shor, P. W. _Algorithms for quantum computation: discrete logarithms and factoring_. Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994.
+3. Grover, L. K. _A fast quantum mechanical algorithm for database search_. Proceedings of the 28th Annual ACM Symposium on Theory of Computing, 1996.
 
 ---
 
-**体系状态**：✅ 100% 重构完成  
-**最后更新**：2025年1月  
+**体系状态**：✅ 100% 重构完成
+**最后更新**：2025年1月
 **维护团队**：形式科学理论体系重构团队

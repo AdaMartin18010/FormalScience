@@ -22,14 +22,14 @@
 
 ## 📋 目录
 
-  - [1.1 [重构进度跟踪](011_Refactor_Progress_Trackingmd)](#11-重构进度跟踪011_refactor_progress_trackingmd)
-  - [1.2 [持续构建系统](012_Continuous_Build_Systemmd)](#12-持续构建系统012_continuous_build_systemmd)
-  - [1.3 [知识图谱构建](013_Knowledge_Graph_Constructionmd)](#13-知识图谱构建013_knowledge_graph_constructionmd)
-  - [1.4 [交叉引用管理](014_Cross_Reference_Managementmd)](#14-交叉引用管理014_cross_reference_managementmd)
-  - [1.5 [版本控制系统](015_Version_Control_Systemmd)](#15-版本控制系统015_version_control_systemmd)
-  - [1.6 [质量保证系统](016_Quality_Assurance_Systemmd)](#16-质量保证系统016_quality_assurance_systemmd)
-  - [1.7 [协作管理系统](017_Collaboration_Management_Systemmd)](#17-协作管理系统017_collaboration_management_systemmd)
-  - [1.8 [上下文系统应用](018_Context_System_Applicationsmd)](#18-上下文系统应用018_context_system_applicationsmd)
+- [1.1 [重构进度跟踪](011_Refactor_Progress_Trackingmd)](#11-重构进度跟踪011_refactor_progress_trackingmd)
+- [1.2 [持续构建系统](012_Continuous_Build_Systemmd)](#12-持续构建系统012_continuous_build_systemmd)
+- [1.3 [知识图谱构建](013_Knowledge_Graph_Constructionmd)](#13-知识图谱构建013_knowledge_graph_constructionmd)
+- [1.4 [交叉引用管理](014_Cross_Reference_Managementmd)](#14-交叉引用管理014_cross_reference_managementmd)
+- [1.5 [版本控制系统](015_Version_Control_Systemmd)](#15-版本控制系统015_version_control_systemmd)
+- [1.6 [质量保证系统](016_Quality_Assurance_Systemmd)](#16-质量保证系统016_quality_assurance_systemmd)
+- [1.7 [协作管理系统](017_Collaboration_Management_Systemmd)](#17-协作管理系统017_collaboration_management_systemmd)
+- [1.8 [上下文系统应用](018_Context_System_Applicationsmd)](#18-上下文系统应用018_context_system_applicationsmd)
 - [1 上下文系统概述](#1-上下文系统概述)
   - [1.1 核心特征](#11-核心特征)
   - [1.2 系统层次](#12-系统层次)

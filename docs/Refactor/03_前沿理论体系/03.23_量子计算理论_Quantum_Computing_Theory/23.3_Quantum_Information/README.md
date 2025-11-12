@@ -2,18 +2,22 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 量子纠缠理论](#21-量子纠缠理论)
-  - [2.2 量子隐形传态理论](#22-量子隐形传态理论)
-  - [2.3 量子密码学理论](#23-量子密码学理论)
-- [3 重构进度](#3-重构进度)
-  - [3.1 已完成重构的子模块](#31-已完成重构的子模块)
-  - [3.2 重构特色](#32-重构特色)
-- [4 哲学性批判与展望](#4-哲学性批判与展望)
-  - [4.1 本体论反思](#41-本体论反思)
-  - [4.2 认识论批判](#42-认识论批判)
-  - [4.3 社会影响分析](#43-社会影响分析)
+- [23.3 量子信息 (Quantum Information)](#233-量子信息-quantum-information)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 量子纠缠理论](#21-量子纠缠理论)
+    - [2.2 量子隐形传态理论](#22-量子隐形传态理论)
+    - [2.3 量子密码学理论](#23-量子密码学理论)
+  - [3 重构进度](#3-重构进度)
+    - [3.1 已完成重构的子模块](#31-已完成重构的子模块)
+    - [3.2 重构特色](#32-重构特色)
+  - [4 哲学性批判与展望](#4-哲学性批判与展望)
+    - [4.1 本体论反思](#41-本体论反思)
+    - [4.2 认识论批判](#42-认识论批判)
+    - [4.3 社会影响分析](#43-社会影响分析)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -71,7 +75,7 @@
 ### 3.1 已完成重构的子模块
 
 ✅ **23.3.1_Quantum_Entanglement** - 量子纠缠
-✅ **23.3.2_Quantum_Teleportation** - 量子隐形传态  
+✅ **23.3.2_Quantum_Teleportation** - 量子隐形传态
 ✅ **23.3.3_Quantum_Cryptography** - 量子密码学
 
 ### 3.2 重构特色
@@ -109,7 +113,7 @@
 
 ## 📚 参考文献
 
-1. Nielsen, M. A., & Chuang, I. L. *Quantum Computation and Quantum Information*. Cambridge University Press, 2010.
-2. Bennett, C. H., et al. *Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels*. Physical Review Letters, 1993.
-3. Ekert, A. K. *Quantum cryptography based on Bell's theorem*. Physical Review Letters, 1991.
-4. Bennett, C. H., & Brassard, G. *Quantum cryptography: Public key distribution and coin tossing*. Proceedings of IEEE International Conference on Computers, Systems and Signal Processing, 1984.
+1. Nielsen, M. A., & Chuang, I. L. _Quantum Computation and Quantum Information_. Cambridge University Press, 2010.
+2. Bennett, C. H., et al. _Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels_. Physical Review Letters, 1993.
+3. Ekert, A. K. _Quantum cryptography based on Bell's theorem_. Physical Review Letters, 1991.
+4. Bennett, C. H., & Brassard, G. _Quantum cryptography: Public key distribution and coin tossing_. Proceedings of IEEE International Conference on Computers, Systems and Signal Processing, 1984.

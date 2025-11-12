@@ -143,28 +143,28 @@ graph TB
     A --> D[逻辑学]
     A --> E[伦理学]
     A --> F[形而上学]
-    
+
     G[数学基础] --> H[集合论]
     G --> I[数系理论]
     G --> J[代数基础]
     G --> K[分析基础]
-    
+
     L[计算基础] --> M[计算理论]
     L --> N[算法理论]
     L --> O[数据结构]
-    
+
     P[类型理论] --> Q[基础类型]
     P --> R[高级类型]
     P --> S[时态类型]
-    
+
     T[形式语言] --> U[自动机]
     T --> V[语法理论]
     T --> W[语义理论]
-    
+
     X[系统理论] --> Y[一般系统]
     X --> Z[控制论]
     X --> AA[信息论]
-    
+
     B -.-> H
     C -.-> D
     D -.-> M
@@ -294,7 +294,7 @@ theorem = Theorem
 
 -- 证明步骤
 proofSteps :: [ProofStep]
-proofSteps = 
+proofSteps =
   [ Step "假设" assumption
   , Step "定义" definition
   , Step "推理" inference
@@ -306,7 +306,7 @@ proofSteps =
 
 ```haskell
 -- 推理规则
-data InferenceRule = 
+data InferenceRule =
   ModusPonens
   | UniversalElimination
   | ExistentialIntroduction
@@ -411,8 +411,8 @@ applyRule rule premises = case rule of
 
 ---
 
-**最后更新**：2024-12-19  
-**更新人**：AI Assistant  
+**最后更新**：2024-12-19
+**更新人**：AI Assistant
 **状态**：初始版本，持续完善中
 
 ## 🎯 批判性分析

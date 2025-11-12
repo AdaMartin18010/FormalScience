@@ -2,33 +2,37 @@
 
 ## 📋 目录
 
-- [1 模块概述](#1-模块概述)
-- [2 核心理论](#2-核心理论)
-  - [2.1 量子比特理论](#21-量子比特理论)
-  - [2.2 量子门理论](#22-量子门理论)
-  - [2.3 量子电路理论](#23-量子电路理论)
-  - [2.4 量子算法理论](#24-量子算法理论)
-  - [2.5 量子信息理论](#25-量子信息理论)
-  - [2.6 量子纠错理论](#26-量子纠错理论)
-- [3 Rust实现](#3-rust实现)
-  - [3.1 量子比特实现](#31-量子比特实现)
-  - [3.2 量子门实现](#32-量子门实现)
-  - [3.3 量子电路实现](#33-量子电路实现)
-- [4 批判性分析](#4-批判性分析)
-  - [4.1 多元理论视角](#41-多元理论视角)
-  - [4.2 局限性分析](#42-局限性分析)
-  - [4.3 争议与分歧](#43-争议与分歧)
-  - [4.4 应用前景](#44-应用前景)
-  - [4.5 改进建议](#45-改进建议)
-- [5 哲学性批判与展望](#5-哲学性批判与展望)
-  - [5.1 本体论反思](#51-本体论反思)
-  - [5.2 认识论批判](#52-认识论批判)
-  - [5.3 社会影响分析](#53-社会影响分析)
-  - [5.4 终极哲学建议](#54-终极哲学建议)
-- [6 重构进度](#6-重构进度)
-  - [6.1 已完成重构的子模块](#61-已完成重构的子模块)
-  - [6.2 重构特色](#62-重构特色)
-  - [6.3 下一步重构计划](#63-下一步重构计划)
+- [23. 量子计算理论 (Quantum Computing Theory)](#23-量子计算理论-quantum-computing-theory)
+  - [📋 目录](#-目录)
+  - [1 模块概述](#1-模块概述)
+  - [🏗️ 目录结构](#️-目录结构)
+  - [2 核心理论](#2-核心理论)
+    - [2.1 量子比特理论](#21-量子比特理论)
+    - [2.2 量子门理论](#22-量子门理论)
+    - [2.3 量子电路理论](#23-量子电路理论)
+    - [2.4 量子算法理论](#24-量子算法理论)
+    - [2.5 量子信息理论](#25-量子信息理论)
+    - [2.6 量子纠错理论](#26-量子纠错理论)
+  - [3 Rust实现](#3-rust实现)
+    - [3.1 量子比特实现](#31-量子比特实现)
+    - [3.2 量子门实现](#32-量子门实现)
+    - [3.3 量子电路实现](#33-量子电路实现)
+  - [4 批判性分析](#4-批判性分析)
+    - [4.1 多元理论视角](#41-多元理论视角)
+    - [4.2 局限性分析](#42-局限性分析)
+    - [4.3 争议与分歧](#43-争议与分歧)
+    - [4.4 应用前景](#44-应用前景)
+    - [4.5 改进建议](#45-改进建议)
+  - [5 哲学性批判与展望](#5-哲学性批判与展望)
+    - [5.1 本体论反思](#51-本体论反思)
+    - [5.2 认识论批判](#52-认识论批判)
+    - [5.3 社会影响分析](#53-社会影响分析)
+    - [5.4 终极哲学建议](#54-终极哲学建议)
+  - [6 重构进度](#6-重构进度)
+    - [6.1 已完成重构的子模块](#61-已完成重构的子模块)
+    - [6.2 重构特色](#62-重构特色)
+    - [6.3 下一步重构计划](#63-下一步重构计划)
+  - [📚 参考文献](#-参考文献)
 
 ---
 
@@ -154,7 +158,7 @@ impl Qubit {
         qubit.normalize();
         qubit
     }
-    
+
     /// 创建 |0⟩ 态
     pub fn zero() -> Self {
         Self {
@@ -162,7 +166,7 @@ impl Qubit {
             beta: Complex::new(0.0, 0.0),
         }
     }
-    
+
     /// 创建 |1⟩ 态
     pub fn one() -> Self {
         Self {
@@ -170,14 +174,14 @@ impl Qubit {
             beta: Complex::new(1.0, 0.0),
         }
     }
-    
+
     /// 归一化量子比特
     pub fn normalize(&mut self) {
         let norm = (self.alpha.norm_sqr() + self.beta.norm_sqr()).sqrt();
         self.alpha = self.alpha / norm;
         self.beta = self.beta / norm;
     }
-    
+
     /// 测量量子比特
     pub fn measure(&self) -> bool {
         let prob_1 = self.beta.norm_sqr();
@@ -202,19 +206,19 @@ impl QuantumGate {
         gate.validate_unitary();
         gate
     }
-    
+
     /// 验证酉性
     fn validate_unitary(&self) {
         let adjoint = self.adjoint();
         let product = self.multiply(&adjoint);
         // 验证酉性条件
     }
-    
+
     /// 应用门到量子比特
     pub fn apply(&self, qubit: &Qubit) -> Qubit {
         let new_alpha = self.matrix[0][0] * qubit.alpha + self.matrix[0][1] * qubit.beta;
         let new_beta = self.matrix[1][0] * qubit.alpha + self.matrix[1][1] * qubit.beta;
-        
+
         Qubit::new(new_alpha, new_beta)
     }
 }
@@ -240,20 +244,20 @@ impl QuantumCircuit {
             measurements: Vec::new(),
         }
     }
-    
+
     /// 执行电路
     pub fn execute(&self, initial_state: &mut [Qubit]) -> Vec<bool> {
         // 应用所有门
         for circuit_gate in &self.gates {
             self.apply_gate(circuit_gate, initial_state);
         }
-        
+
         // 执行测量
         let mut results = Vec::new();
         for &qubit in &self.measurements {
             results.push(initial_state[qubit].measure());
         }
-        
+
         results
     }
 }
@@ -384,11 +388,11 @@ impl QuantumCircuit {
 
 ## 📚 参考文献
 
-1. Nielsen, M. A., & Chuang, I. L. *Quantum Computation and Quantum Information*. Cambridge University Press, 2010.
-2. Barenco, A., et al. *Elementary gates for quantum computation*. Physical Review A, 1995.
-3. DiVincenzo, D. P. *Two-bit gates are universal for quantum computation*. Physical Review A, 1995.
-4. Lloyd, S. *Universal quantum simulators*. Science, 1996.
-5. Deutsch, D. *Quantum computational networks*. Proceedings of the Royal Society of London A, 1989.
-6. Feynman, R. P. *Simulating physics with computers*. International Journal of Theoretical Physics, 1982.
-7. Shor, P. W. *Algorithms for quantum computation: discrete logarithms and factoring*. Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994.
-8. Grover, L. K. *A fast quantum mechanical algorithm for database search*. Proceedings of the 28th Annual ACM Symposium on Theory of Computing, 1996.
+1. Nielsen, M. A., & Chuang, I. L. _Quantum Computation and Quantum Information_. Cambridge University Press, 2010.
+2. Barenco, A., et al. _Elementary gates for quantum computation_. Physical Review A, 1995.
+3. DiVincenzo, D. P. _Two-bit gates are universal for quantum computation_. Physical Review A, 1995.
+4. Lloyd, S. _Universal quantum simulators_. Science, 1996.
+5. Deutsch, D. _Quantum computational networks_. Proceedings of the Royal Society of London A, 1989.
+6. Feynman, R. P. _Simulating physics with computers_. International Journal of Theoretical Physics, 1982.
+7. Shor, P. W. _Algorithms for quantum computation: discrete logarithms and factoring_. Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994.
+8. Grover, L. K. _A fast quantum mechanical algorithm for database search_. Proceedings of the 28th Annual ACM Symposium on Theory of Computing, 1996.

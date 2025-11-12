@@ -394,10 +394,10 @@ def common_knowledge {α agents : Type*} (M : multi_agent_modal_logic α agents)
 
 ## 参考文献
 
-1. Blackburn, P., de Rijke, M., & Venema, Y. (2001). *Modal logic*. Cambridge University Press.
-2. Fagin, R., Halpern, J. Y., Moses, Y., & Vardi, M. Y. (2003). *Reasoning about knowledge*. MIT Press.
-3. Clarke, E. M., Grumberg, O., & Peled, D. A. (1999). *Model checking*. MIT Press.
-4. van Benthem, J. (2010). *Modal logic for open minds*. CSLI Publications.
+1. Blackburn, P., de Rijke, M., & Venema, Y. (2001). _Modal logic_. Cambridge University Press.
+2. Fagin, R., Halpern, J. Y., Moses, Y., & Vardi, M. Y. (2003). _Reasoning about knowledge_. MIT Press.
+3. Clarke, E. M., Grumberg, O., & Peled, D. A. (1999). _Model checking_. MIT Press.
+4. van Benthem, J. (2010). _Modal logic for open minds_. CSLI Publications.
 
 ---
 
