@@ -10,66 +10,66 @@
 ## 📋 目录
 
 - [信息论权威引用与定义标准](#信息论权威引用与定义标准)
-  - [📋 目录](#-目录)
-  - [概述](#概述)
+  - [1 概述](#1-概述)
+  - [1 . 核心概念权威定义](#1-核心概念权威定义)
   - [1. 核心概念权威定义](#1-核心概念权威定义)
     - [1.1 信息论基础概念](#11-信息论基础概念)
-      - [信息论 (Information Theory)](#信息论-information-theory)
-      - [熵 (Entropy)](#熵-entropy)
-      - [互信息 (Mutual Information)](#互信息-mutual-information)
-      - [信道容量 (Channel Capacity)](#信道容量-channel-capacity)
+      - [1.1.1 信息论 (Information Theory)](#111-信息论-information-theory)
+      - [1.1.2 熵 (Entropy)](#112-熵-entropy)
+      - [1.1.3 互信息 (Mutual Information)](#113-互信息-mutual-information)
+      - [1.1.4 信道容量 (Channel Capacity)](#114-信道容量-channel-capacity)
     - [1.2 语义信息论概念](#12-语义信息论概念)
-      - [语义信息 (Semantic Information)](#语义信息-semantic-information)
-      - [语义熵 (Semantic Entropy)](#语义熵-semantic-entropy)
-  - [2. 权威机构与标准](#2-权威机构与标准)
+      - [1.2.1 语义信息 (Semantic Information)](#121-语义信息-semantic-information)
+      - [1.2.2 语义熵 (Semantic Entropy)](#122-语义熵-semantic-entropy)
+  - [2 . 权威机构与标准](#2-权威机构与标准)
     - [2.1 国际标准组织](#21-国际标准组织)
-      - [IEEE信息论学会 (IEEE Information Theory Society)](#ieee信息论学会-ieee-information-theory-society)
-      - [国际电信联盟 (ITU)](#国际电信联盟-itu)
+      - [2.1.1 IEEE信息论学会 (IEEE Information Theory Society)](#211-ieee信息论学会-ieee-information-theory-society)
+      - [2.1.2 国际电信联盟 (ITU)](#212-国际电信联盟-itu)
     - [2.2 学术期刊](#22-学术期刊)
-      - [顶级期刊](#顶级期刊)
-  - [3. 经典文献引用](#3-经典文献引用)
+      - [2.2.1 顶级期刊](#221-顶级期刊)
+  - [3 . 经典文献引用](#3-经典文献引用)
     - [3.1 奠基性文献](#31-奠基性文献)
-      - [Shannon, C. E. (1948)](#shannon-c-e-1948)
-      - [Shannon, C. E. (1949)](#shannon-c-e-1949)
+      - [3.1.1 Shannon, C. E. (1948)](#311-shannon-c-e-1948)
+      - [3.1.2 Shannon, C. E. (1949)](#312-shannon-c-e-1949)
     - [3.2 现代发展文献](#32-现代发展文献)
-      - [Cover, T. M., \& Thomas, J. A. (2006)](#cover-t-m--thomas-j-a-2006)
-      - [MacKay, D. J. C. (2003)](#mackay-d-j-c-2003)
-  - [4. 引用格式标准](#4-引用格式标准)
+      - [3.2.1 Cover, T. M., & Thomas, J. A. (2006)](#321-cover-t-m-thomas-j-a-2006)
+      - [3.2.2 MacKay, D. J. C. (2003)](#322-mackay-d-j-c-2003)
+  - [4 . 引用格式标准](#4-引用格式标准)
     - [4.1 学术引用格式](#41-学术引用格式)
-      - [期刊论文](#期刊论文)
-      - [书籍](#书籍)
-      - [网页引用](#网页引用)
+      - [4.1.1 期刊论文](#411-期刊论文)
+      - [4.1.2 书籍](#412-书籍)
+      - [4.1.3 网页引用](#413-网页引用)
     - [4.2 Wikipedia引用格式](#42-wikipedia引用格式)
-      - [标准格式](#标准格式)
-      - [示例](#示例)
-  - [5. 术语标准化](#5-术语标准化)
+      - [4.2.1 标准格式](#421-标准格式)
+      - [4.2.2 示例](#422-示例)
+  - [5 . 术语标准化](#5-术语标准化)
     - [5.1 中英文对照](#51-中英文对照)
     - [5.2 数学符号标准](#52-数学符号标准)
-  - [6. 质量保证标准](#6-质量保证标准)
+  - [6 . 质量保证标准](#6-质量保证标准)
     - [6.1 内容质量标准](#61-内容质量标准)
-      - [准确性要求](#准确性要求)
-      - [完整性要求](#完整性要求)
-      - [一致性要求](#一致性要求)
+      - [6.1.1 准确性要求](#611-准确性要求)
+      - [6.1.2 完整性要求](#612-完整性要求)
+      - [6.1.3 一致性要求](#613-一致性要求)
     - [6.2 更新维护标准](#62-更新维护标准)
-      - [定期更新](#定期更新)
-      - [版本控制](#版本控制)
-  - [7. 使用指南](#7-使用指南)
+      - [6.2.1 定期更新](#621-定期更新)
+      - [6.2.2 版本控制](#622-版本控制)
+  - [7 . 使用指南](#7-使用指南)
     - [7.1 如何引用本文档](#71-如何引用本文档)
     - [7.2 如何添加新的权威引用](#72-如何添加新的权威引用)
     - [7.3 如何验证引用的准确性](#73-如何验证引用的准确性)
-  - [8. 联系信息](#8-联系信息)
+  - [8 . 联系信息](#8-联系信息)
 
 ---
 
-## 概述
+## 1 概述
 
 本文档提供信息论多视角分析项目的权威引用标准和定义规范，确保内容的准确性、权威性和一致性。
 
-## 1. 核心概念权威定义
+## 1 . 核心概念权威定义
 
 ### 1.1 信息论基础概念
 
-#### 信息论 (Information Theory)
+#### 1.1.1 信息论 (Information Theory)
 
 **权威定义**：信息论是应用数学、电气工程、计算机科学和统计学的一个分支，涉及信息的量化、存储和通信。信息论由克劳德·香农在1948年创立，其基础是概率论和统计学。
 
@@ -78,7 +78,7 @@
 - Wikipedia: [Information Theory](https://en.wikipedia.org/wiki/Information_theory)
 - Shannon, C. E. (1948). "A Mathematical Theory of Communication". Bell System Technical Journal.
 
-#### 熵 (Entropy)
+#### 1.1.2 熵 (Entropy)
 
 **权威定义**：在信息论中，熵是随机变量不确定性的度量。对于离散随机变量X，其熵定义为：
 
@@ -91,7 +91,7 @@ $$H(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i)$$
 - Wikipedia: [Entropy (Information Theory)](https://en.wikipedia.org/wiki/Entropy_(information_theory))
 - Cover, T. M., & Thomas, J. A. (2006). Elements of Information Theory.
 
-#### 互信息 (Mutual Information)
+#### 1.1.3 互信息 (Mutual Information)
 
 **权威定义**：互信息是衡量两个随机变量之间相互依赖程度的度量。对于随机变量X和Y，互信息定义为：
 
@@ -102,7 +102,7 @@ $$I(X;Y) = \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)}$$
 - Wikipedia: [Mutual Information](https://en.wikipedia.org/wiki/Mutual_information)
 - MacKay, D. J. C. (2003). Information Theory, Inference and Learning Algorithms.
 
-#### 信道容量 (Channel Capacity)
+#### 1.1.4 信道容量 (Channel Capacity)
 
 **权威定义**：信道容量是信道能够可靠传输信息的最大速率。对于离散无记忆信道，容量定义为：
 
@@ -115,7 +115,7 @@ $$C = \max_{p(x)} I(X;Y)$$
 
 ### 1.2 语义信息论概念
 
-#### 语义信息 (Semantic Information)
+#### 1.2.1 语义信息 (Semantic Information)
 
 **权威定义**：语义信息是指具有意义的信息，而不仅仅是语法或统计信息。它关注信息的内容和意义，而不仅仅是信息的传输。
 
@@ -124,7 +124,7 @@ $$C = \max_{p(x)} I(X;Y)$$
 - Wikipedia: [Semantic Information](https://en.wikipedia.org/wiki/Semantic_information)
 - Floridi, L. (2011). The Philosophy of Information.
 
-#### 语义熵 (Semantic Entropy)
+#### 1.2.2 语义熵 (Semantic Entropy)
 
 **权威定义**：语义熵是衡量语义不确定性的度量，考虑了信息的语义内容和价值。
 
@@ -137,17 +137,17 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
 - Bar-Hillel, Y., & Carnap, R. (1953). "Semantic Information". British Journal for the Philosophy of Science.
 - Floridi, L. (2004). "Outline of a Theory of Strongly Semantic Information".
 
-## 2. 权威机构与标准
+## 2 . 权威机构与标准
 
 ### 2.1 国际标准组织
 
-#### IEEE信息论学会 (IEEE Information Theory Society)
+#### 2.1.1 IEEE信息论学会 (IEEE Information Theory Society)
 
 - **网址**：<https://www.itsoc.org/>
 - **权威性**：信息论领域的顶级学术组织
 - **标准**：IEEE Transactions on Information Theory
 
-#### 国际电信联盟 (ITU)
+#### 2.1.2 国际电信联盟 (ITU)
 
 - **网址**：<https://www.itu.int/>
 - **权威性**：国际电信标准制定组织
@@ -155,7 +155,7 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
 
 ### 2.2 学术期刊
 
-#### 顶级期刊
+#### 2.2.1 顶级期刊
 
 1. **IEEE Transactions on Information Theory**
    - 影响因子：2.978 (2022)
@@ -172,11 +172,11 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
    - 发表频率：季刊
    - 权威性：信息论应用领域重要期刊
 
-## 3. 经典文献引用
+## 3 . 经典文献引用
 
 ### 3.1 奠基性文献
 
-#### Shannon, C. E. (1948)
+#### 3.1.1 Shannon, C. E. (1948)
 
 **标题**：A Mathematical Theory of Communication
 **期刊**：Bell System Technical Journal
@@ -184,7 +184,7 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
 **DOI**：10.1002/j.1538-7305.1948.tb01338.x
 **重要性**：信息论的开创性论文，奠定了整个领域的基础
 
-#### Shannon, C. E. (1949)
+#### 3.1.2 Shannon, C. E. (1949)
 
 **标题**：Communication in the Presence of Noise
 **期刊**：Proceedings of the IRE
@@ -194,37 +194,37 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
 
 ### 3.2 现代发展文献
 
-#### Cover, T. M., & Thomas, J. A. (2006)
+#### 3.2.1 Cover, T. M., & Thomas, J. A. (2006)
 
 **标题**：Elements of Information Theory
 **出版社**：Wiley-Interscience
 **ISBN**：978-0-471-24195-9
 **重要性**：信息论的标准教科书
 
-#### MacKay, D. J. C. (2003)
+#### 3.2.2 MacKay, D. J. C. (2003)
 
 **标题**：Information Theory, Inference and Learning Algorithms
 **出版社**：Cambridge University Press
 **ISBN**：978-0-521-64298-9
 **重要性**：信息论与机器学习的经典教材
 
-## 4. 引用格式标准
+## 4 . 引用格式标准
 
 ### 4.1 学术引用格式
 
-#### 期刊论文
+#### 4.1.1 期刊论文
 
 ```text
 作者. (年份). 标题. 期刊名, 卷(期), 页码. DOI: 10.xxxx/xxxxx
 ```
 
-#### 书籍
+#### 4.1.2 书籍
 
 ```text
 作者. (年份). 书名. 出版社. ISBN: 978-xxxx-xxxx-xxxx
 ```
 
-#### 网页引用
+#### 4.1.3 网页引用
 
 ```text
 作者/机构. (年份). 标题. 网站名. 网址. 访问日期: YYYY-MM-DD
@@ -232,21 +232,21 @@ $$H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$$
 
 ### 4.2 Wikipedia引用格式
 
-#### 标准格式
+#### 4.2.1 标准格式
 
 ```text
 Wikipedia contributors. (年份). "条目标题". Wikipedia, The Free Encyclopedia.
 网址. 访问日期: YYYY-MM-DD
 ```
 
-#### 示例
+#### 4.2.2 示例
 
 ```text
 Wikipedia contributors. (2025). "Information Theory". Wikipedia, The Free Encyclopedia.
 https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2025-10-28
 ```
 
-## 5. 术语标准化
+## 5 . 术语标准化
 
 ### 5.1 中英文对照
 
@@ -268,23 +268,23 @@ https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2025-10-28
 | C | 信道容量 | $C = \max_{p(x)} I(X;Y)$ | Shannon (1948) |
 | H_s(X) | 语义熵 | $H_s(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i) \cdot w(x_i)$ | Floridi (2004) |
 
-## 6. 质量保证标准
+## 6 . 质量保证标准
 
 ### 6.1 内容质量标准
 
-#### 准确性要求
+#### 6.1.1 准确性要求
 
 - 所有数学公式必须经过验证
 - 所有定义必须引用权威来源
 - 所有数据必须标注来源和日期
 
-#### 完整性要求
+#### 6.1.2 完整性要求
 
 - 每个概念必须提供完整定义
 - 每个定理必须提供证明或引用
 - 每个应用必须提供具体案例
 
-#### 一致性要求
+#### 6.1.3 一致性要求
 
 - 术语使用必须统一
 - 符号表示必须一致
@@ -292,19 +292,19 @@ https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2025-10-28
 
 ### 6.2 更新维护标准
 
-#### 定期更新
+#### 6.2.1 定期更新
 
 - 每年更新一次引用数据
 - 每季度检查链接有效性
 - 每月更新最新研究进展
 
-#### 版本控制
+#### 6.2.2 版本控制
 
 - 使用语义化版本号
 - 记录每次更新的内容
 - 维护更新日志
 
-## 7. 使用指南
+## 7 . 使用指南
 
 ### 7.1 如何引用本文档
 
@@ -328,7 +328,7 @@ https://en.wikipedia.org/wiki/Information_theory. 访问日期: 2025-10-28
 3. 确认术语定义的一致性
 4. 更新过时的信息
 
-## 8. 联系信息
+## 8 . 联系信息
 
 如有关于引用标准的问题或建议，请联系：
 

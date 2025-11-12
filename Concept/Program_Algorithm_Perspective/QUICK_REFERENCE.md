@@ -7,54 +7,54 @@
 ## 📋 目录
 
 - [快速参考 (Quick Reference)](#快速参考-quick-reference)
-  - [📋 目录](#-目录)
+  - [1 🎯 核心思想](#1-核心思想)
   - [🎯 核心思想](#-核心思想)
-    - [UH-Cost 元模型](#uh-cost-元模型)
-    - [三元视角](#三元视角)
-  - [📐 形式语义速查](#-形式语义速查)
-    - [操作语义判断](#操作语义判断)
-    - [类型系统](#类型系统)
-    - [Hoare 逻辑](#hoare-逻辑)
-  - [🎨 设计模式速查](#-设计模式速查)
-    - [GoF 分类](#gof-分类)
-    - [形式化方法](#形式化方法)
-    - [验证命令](#验证命令)
-  - [📊 复杂度速查](#-复杂度速查)
+    - [1.1 UH-Cost 元模型](#11-uh-cost-元模型)
+    - [1.2 三元视角](#12-三元视角)
+  - [2 📐 形式语义速查](#2-形式语义速查)
+    - [2.1 操作语义判断](#21-操作语义判断)
+    - [2.2 类型系统](#22-类型系统)
+    - [2.3 Hoare 逻辑](#23-hoare-逻辑)
+  - [3 🎨 设计模式速查](#3-设计模式速查)
+    - [3.1 GoF 分类](#31-gof-分类)
+    - [3.2 形式化方法](#32-形式化方法)
+    - [3.3 验证命令](#33-验证命令)
+  - [4 📊 复杂度速查](#4-复杂度速查)
     - [20 维复杂度](#20-维复杂度)
-    - [权衡定理](#权衡定理)
-    - [Master 定理](#master-定理)
-  - [🔧 工具命令速查](#-工具命令速查)
-    - [安装](#安装)
-    - [常用命令](#常用命令)
-      - [Coq](#coq)
-      - [K-Framework](#k-framework)
-      - [mCRL2](#mcrl2)
-      - [Lean4](#lean4)
-      - [TLA+](#tla)
-  - [📚 常用公式](#-常用公式)
-    - [信息论](#信息论)
-    - [通讯复杂度](#通讯复杂度)
-    - [差分隐私](#差分隐私)
-    - [Work-Span 模型](#work-span-模型)
-  - [🔗 快速导航](#-快速导航)
-    - [学习路径](#学习路径)
-    - [主要文档](#主要文档)
-    - [核心章节](#核心章节)
-  - [🎓 课程对标](#-课程对标)
-  - [📖 参考资源](#-参考资源)
-    - [在线资源](#在线资源)
-    - [经典教材](#经典教材)
-  - [💡 速记口诀](#-速记口诀)
-    - [操作语义](#操作语义)
-    - [设计模式](#设计模式)
-    - [复杂度](#复杂度)
-    - [形式验证](#形式验证)
+    - [4.1 权衡定理](#41-权衡定理)
+    - [4.2 Master 定理](#42-master-定理)
+  - [5 🔧 工具命令速查](#5-工具命令速查)
+    - [5.1 安装](#51-安装)
+    - [5.2 常用命令](#52-常用命令)
+      - [5.2.1 Coq](#521-coq)
+      - [5.2.2 K-Framework](#522-k-framework)
+      - [5.2.3 mCRL2](#523-mcrl2)
+      - [5.2.4 Lean4](#524-lean4)
+      - [5.2.5 TLA+](#525-tla)
+  - [6 📚 常用公式](#6-常用公式)
+    - [6.1 信息论](#61-信息论)
+    - [6.2 通讯复杂度](#62-通讯复杂度)
+    - [6.3 差分隐私](#63-差分隐私)
+    - [6.4 Work-Span 模型](#64-work-span-模型)
+  - [7 🔗 快速导航](#7-快速导航)
+    - [7.1 学习路径](#71-学习路径)
+    - [7.2 主要文档](#72-主要文档)
+    - [7.3 核心章节](#73-核心章节)
+  - [8 🎓 课程对标](#8-课程对标)
+  - [9 📖 参考资源](#9-参考资源)
+    - [9.1 在线资源](#91-在线资源)
+    - [9.2 经典教材](#92-经典教材)
+  - [10 💡 速记口诀](#10-速记口诀)
+    - [10.1 操作语义](#101-操作语义)
+    - [10.2 设计模式](#102-设计模式)
+    - [10.3 复杂度](#103-复杂度)
+    - [10.4 形式验证](#104-形式验证)
 
 ---
 
-## 🎯 核心思想
+## 1 🎯 核心思想
 
-### UH-Cost 元模型
+### 1.1 UH-Cost 元模型
 
 ```text
 UH-Cost = ⟨Σ, ⟶, κ, Φ⟩
@@ -65,7 +65,7 @@ UH-Cost = ⟨Σ, ⟶, κ, Φ⟩
 Φ  : 正确性谓词
 ```
 
-### 三元视角
+### 1.2 三元视角
 
 ```text
 系统 = ⟨Control, Execution, Data⟩
@@ -77,9 +77,9 @@ Data     : 移动、一致性 → Communication, I/O
 
 ---
 
-## 📐 形式语义速查
+## 2 📐 形式语义速查
 
-### 操作语义判断
+### 2.1 操作语义判断
 
 ```text
 小步语义: ⟨e, σ⟩ → ⟨e', σ'⟩
@@ -87,7 +87,7 @@ Data     : 移动、一致性 → Communication, I/O
 成本语义: ⟨e, σ, κ⟩ → ⟨e', σ', κ+δ⟩
 ```
 
-### 类型系统
+### 2.2 类型系统
 
 ```text
 简单类型: Γ ⊢ e : τ
@@ -95,7 +95,7 @@ Data     : 移动、一致性 → Communication, I/O
 线性类型: Γ ⊢ e : A ⊸ B
 ```
 
-### Hoare 逻辑
+### 2.3 Hoare 逻辑
 
 ```text
 {P} c {Q}                  (部分正确性)
@@ -105,9 +105,9 @@ Data     : 移动、一致性 → Communication, I/O
 
 ---
 
-## 🎨 设计模式速查
+## 3 🎨 设计模式速查
 
-### GoF 分类
+### 3.1 GoF 分类
 
 | 类别 | 数量 | 示例 |
 |------|------|------|
@@ -115,7 +115,7 @@ Data     : 移动、一致性 → Communication, I/O
 | 结构型 | 7 | Composite, Decorator, Proxy |
 | 行为型 | 11 | Observer, Strategy, Command |
 
-### 形式化方法
+### 3.2 形式化方法
 
 | 模式 | 工具 | 形式化 |
 |------|------|--------|
@@ -123,7 +123,7 @@ Data     : 移动、一致性 → Communication, I/O
 | Observer | mCRL2 | `Subject \| Observer₁ \| ... \| ObserverN` |
 | Composite | Coq | `Inductive Composite = Leaf \| Node [Composite]` |
 
-### 验证命令
+### 3.3 验证命令
 
 ```bash
 # Coq
@@ -140,7 +140,7 @@ krun -cPGM="new.setA(1).build()"
 
 ---
 
-## 📊 复杂度速查
+## 4 📊 复杂度速查
 
 ### 20 维复杂度
 
@@ -157,7 +157,7 @@ krun -cPGM="new.setA(1).build()"
 | 9 | I/O | Aggarwal-Vitter | 排序 Ω(n/B log_{M/B} n/B) |
 | 10 | Privacy | ε-DP | 计数 ε ≥ 1/√n |
 
-### 权衡定理
+### 4.1 权衡定理
 
 ```text
 时间-空间权衡:
@@ -170,7 +170,7 @@ krun -cPGM="new.setA(1).build()"
   E · T · ε ≥ Ω(n)
 ```
 
-### Master 定理
+### 4.2 Master 定理
 
 ```text
 T(n) = aT(n/b) + f(n)
@@ -187,9 +187,9 @@ T(n) = aT(n/b) + f(n)
 
 ---
 
-## 🔧 工具命令速查
+## 5 🔧 工具命令速查
 
-### 安装
+### 5.1 安装
 
 ```bash
 # 基础环境
@@ -210,9 +210,9 @@ docker pull cpntools/cpntools
 pip install z3-solver klee
 ```
 
-### 常用命令
+### 5.2 常用命令
 
-#### Coq
+#### 5.2.1 Coq
 
 ```bash
 # 编译
@@ -225,7 +225,7 @@ coqide file.v
 Extraction "output.ml" function_name.
 ```
 
-#### K-Framework
+#### 5.2.2 K-Framework
 
 ```bash
 # 编译定义
@@ -241,7 +241,7 @@ krun -cPGM="program" --search
 krun -cPGM="program" --prove spec.k
 ```
 
-#### mCRL2
+#### 5.2.3 mCRL2
 
 ```bash
 # 生成 LPS
@@ -258,7 +258,7 @@ lps2pbes -f formula.mcf model.lps model.pbes
 pbes2bool model.pbes
 ```
 
-#### Lean4
+#### 5.2.4 Lean4
 
 ```bash
 # 构建项目
@@ -271,7 +271,7 @@ lean --make file.lean
 lake env lean --server
 ```
 
-#### TLA+
+#### 5.2.5 TLA+
 
 ```bash
 # 模型检查
@@ -283,9 +283,9 @@ tlapm spec.tla
 
 ---
 
-## 📚 常用公式
+## 6 📚 常用公式
 
-### 信息论
+### 6.1 信息论
 
 ```text
 H(X) = -Σ p(x) log p(x)                (熵)
@@ -293,7 +293,7 @@ I(X;Y) = H(X) - H(X|Y)                  (互信息)
 K(x) = min{|p| : U(p) = x}              (Kolmogorov 复杂度)
 ```
 
-### 通讯复杂度
+### 6.2 通讯复杂度
 
 ```text
 D(f) = min_{π} max_{x,y} CC(π,x,y)      (确定性)
@@ -304,7 +304,7 @@ R(f) = min_{π} max_{x,y} E[CC(π,x,y)]   (随机)
   D(f) ≥ log det(M_f)                   (行列式下界)
 ```
 
-### 差分隐私
+### 6.3 差分隐私
 
 ```text
 Pr[A(D) ∈ S] ≤ e^ε · Pr[A(D') ∈ S] + δ
@@ -313,7 +313,7 @@ Pr[A(D) ∈ S] ≤ e^ε · Pr[A(D') ∈ S] + δ
   A₁ ∘ A₂ 是 (ε₁+ε₂, δ₁+δ₂)-DP
 ```
 
-### Work-Span 模型
+### 6.4 Work-Span 模型
 
 ```text
 T_P ≥ max{Work/P, Span}                 (Brent 定理)
@@ -327,9 +327,9 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
 
 ---
 
-## 🔗 快速导航
+## 7 🔗 快速导航
 
-### 学习路径
+### 7.1 学习路径
 
 ```text
 初学者:
@@ -349,14 +349,14 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
   → 贡献代码
 ```
 
-### 主要文档
+### 7.2 主要文档
 
 - [00_Master_Index.md](00_Master_Index.md) - 主索引
 - [README.md](README.md) - 总体概述
 - [GLOSSARY.md](GLOSSARY.md) - 术语表
 - [COMPLETION_SUMMARY.md](COMPLETION_SUMMARY.md) - 完成情况
 
-### 核心章节
+### 7.3 核心章节
 
 - [01_Formal_Semantics/](01_Formal_Semantics/) - 形式语义
 - [02_Design_Patterns/](02_Design_Patterns/) - 设计模式
@@ -366,7 +366,7 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
 
 ---
 
-## 🎓 课程对标
+## 8 🎓 课程对标
 
 | 大学 | 课程 | 对应章节 |
 |------|------|---------|
@@ -379,9 +379,9 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
 
 ---
 
-## 📖 参考资源
+## 9 📖 参考资源
 
-### 在线资源
+### 9.1 在线资源
 
 - [K-Framework](https://kframework.org/)
 - [Coq](https://coq.inria.fr/)
@@ -389,7 +389,7 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
 - [mCRL2](https://mcrl2.org/)
 - [Software Foundations](https://softwarefoundations.cis.upenn.edu/)
 
-### 经典教材
+### 9.2 经典教材
 
 - **CLRS**: Introduction to Algorithms
 - **TAPL**: Types and Programming Languages
@@ -398,30 +398,30 @@ T_P ≥ max{Work/P, Span}                 (Brent 定理)
 
 ---
 
-## 💡 速记口诀
+## 10 💡 速记口诀
 
-### 操作语义
+### 10.1 操作语义
 
 ```text
 小步慢慢走，大步一跳到
 成本带着算，资源全追踪
 ```
 
-### 设计模式
+### 10.2 设计模式
 
 ```text
 创建抽象工厂，结构组合装饰
 行为观察策略，命令责任链
 ```
 
-### 复杂度
+### 10.3 复杂度
 
 ```text
 时间空间通讯，能量缓存 I/O
 隐私样本随机，二十维度全
 ```
 
-### 形式验证
+### 10.4 形式验证
 
 ```text
 Coq 证定理，mCRL2 查死锁

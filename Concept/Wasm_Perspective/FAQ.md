@@ -12,9 +12,9 @@
 
 ---
 
-## 基础概念
+## 1 基础概念
 
-### Q1：WebAssembly 到底是什么？
+### 1.1 Q1：WebAssembly 到底是什么？
 
 **简答**：一种可移植的二进制指令格式，具有形式化验证语义和沙箱安全模型。
 
@@ -31,7 +31,7 @@
 
 ---
 
-### Q2：Wasm 与 JavaScript 的关系？
+### 1.2 Q2：Wasm 与 JavaScript 的关系？
 
 **协作关系**：
 
@@ -58,7 +58,7 @@ WebAssembly（计算核心）
 
 ---
 
-### Q3：Wasm 能替代 JavaScript 吗？
+### 1.3 Q3：Wasm 能替代 JavaScript 吗？
 
 **答案**：不能也不必要。
 
@@ -76,9 +76,9 @@ WebAssembly（计算核心）
 
 ---
 
-## 技术原理
+## 2 技术原理
 
-### Q4：为什么是栈式虚拟机而非寄存器机？
+### 2.1 Q4：为什么是栈式虚拟机而非寄存器机？
 
 **技术理由**：
 
@@ -96,7 +96,7 @@ WebAssembly（计算核心）
 
 ---
 
-### Q5：线性时间验证如何实现？
+### 2.2 Q5：线性时间验证如何实现？
 
 **算法核心**：
 
@@ -125,7 +125,7 @@ T(n) = O(n) \quad \text{（单遍扫描）}
 
 ---
 
-### Q6：浮点确定性如何保证？
+### 2.3 Q6：浮点确定性如何保证？
 
 **规范要求**：
 \[
@@ -150,9 +150,9 @@ T(n) = O(n) \quad \text{（单遍扫描）}
 
 ---
 
-## 性能与优化
+## 3 性能与优化
 
-### Q7：Wasm 性能到底如何？
+### 3.1 Q7：Wasm 性能到底如何？
 
 **基准测试**（SPEC CPU 2017，几何平均）：
 
@@ -177,7 +177,7 @@ T(n) = O(n) \quad \text{（单遍扫描）}
 
 ---
 
-### Q8：如何优化 Wasm 性能？
+### 3.2 Q8：如何优化 Wasm 性能？
 
 **编译器层**：
 
@@ -203,7 +203,7 @@ cargo build --release --features lto,pgo
 
 ---
 
-### Q9：冷启动为何如此快？
+### 3.3 Q9：冷启动为何如此快？
 
 **对比**（1 MB 模块）：
 
@@ -226,9 +226,9 @@ T_{\text{startup}} = T_{\text{validate}} + T_{\text{instantiate}} = O(n) + O(1)
 
 ---
 
-## 安全与隔离
+## 4 安全与隔离
 
-### Q10：Wasm 沙箱真的安全吗？
+### 4.1 Q10：Wasm 沙箱真的安全吗？
 
 **已防御**：
 
@@ -254,7 +254,7 @@ T_{\text{startup}} = T_{\text{validate}} + T_{\text{instantiate}} = O(n) + O(1)
 
 ---
 
-### Q11：如何防御侧信道攻击？
+### 4.2 Q11：如何防御侧信道攻击？
 
 **技术手段**：
 
@@ -280,7 +280,7 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
 
 ---
 
-### Q12：内存安全如何保证？
+### 4.3 Q12：内存安全如何保证？
 
 **形式化保证**：
 \[
@@ -305,9 +305,9 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
 
 ---
 
-## 应用场景
+## 5 应用场景
 
-### Q13：Wasm 适合哪些场景？
+### 5.1 Q13：Wasm 适合哪些场景？
 
 **强适配场景**：
 
@@ -327,7 +327,7 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
 
 ---
 
-### Q14：为什么区块链选择 Wasm？
+### 5.2 Q14：为什么区块链选择 Wasm？
 
 **技术原因**：
 
@@ -347,7 +347,7 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
 
 ---
 
-### Q15：Wasm 能用于移动端吗？
+### 5.3 Q15：Wasm 能用于移动端吗？
 
 **已落地**：
 
@@ -367,9 +367,9 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
 
 ---
 
-## 工程实践
+## 6 工程实践
 
-### Q16：如何调试 Wasm？
+### 6.1 Q16：如何调试 Wasm？
 
 **工具链**：
 
@@ -391,7 +391,7 @@ pub extern "C" fn debug_point(x: i32) {
 
 ---
 
-### Q17：如何与现有代码集成？
+### 6.2 Q17：如何与现有代码集成？
 
 **C/C++ 到 Wasm**：
 
@@ -420,7 +420,7 @@ instance.exports.my_func(42);
 
 ---
 
-### Q18：Wasm 的文件格式细节？
+### 6.3 Q18：Wasm 的文件格式细节？
 
 **魔数**：
 
@@ -443,9 +443,9 @@ instance.exports.my_func(42);
 
 ---
 
-## 批判性问题
+## 7 批判性问题
 
-### Q19：Wasm 是否是技术乐观主义的又一次失败？
+### 7.1 Q19：Wasm 是否是技术乐观主义的又一次失败？
 
 **历史类比**：
 
@@ -464,7 +464,7 @@ instance.exports.my_func(42);
 
 ---
 
-### Q20：形式化验证真的有用吗？
+### 7.2 Q20：形式化验证真的有用吗？
 
 **有用之处**：
 
@@ -487,7 +487,7 @@ instance.exports.my_func(42);
 
 ---
 
-### Q21：Wasm 会取代 Docker 吗？
+### 7.3 Q21：Wasm 会取代 Docker 吗？
 
 **相似性**：
 
@@ -512,7 +512,7 @@ instance.exports.my_func(42);
 
 ---
 
-### Q22：抽象税值得吗？
+### 7.4 Q22：抽象税值得吗？
 
 **成本**：
 \[
@@ -535,19 +535,19 @@ instance.exports.my_func(42);
 
 ---
 
-## 参考资料
+## 8 参考资料
 
-### 官方资源
+### 8.1 官方资源
 
 - [WebAssembly Spec](https://webassembly.github.io/spec/)
 - [MDN Wasm Guide](https://developer.mozilla.org/en-US/docs/WebAssembly)
 
-### 学术论文
+### 8.2 学术论文
 
 - [Haas17] "Bringing the Web up to Speed with WebAssembly." PLDI, 2017.
 - [Watt18] "Mechanising and Verifying the WebAssembly Specification." CPP, 2018.
 
-### 工具链
+### 8.3 工具链
 
 - [Emscripten](https://emscripten.org/)
 - [wasm-pack](https://rustwasm.github.io/wasm-pack/)

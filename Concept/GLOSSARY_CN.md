@@ -12,10 +12,10 @@
 ## 📋 目录
 
 - [术语表（简体中文版）](#术语表简体中文版)
-  - [📋 目录](#-目录)
-  - [📋 快速导航](#-快速导航)
+  - [1 📋 快速导航](#1-快速导航)
+  - [2 按字母索引](#2-按字母索引)
   - [按字母索引](#按字母索引)
-    - [A](#a)
+    - [2.1 A](#21-a)
     - [B](#b)
     - [C](#c)
     - [D](#d)
@@ -52,7 +52,7 @@
 
 ---
 
-## 📋 快速导航
+## 1 📋 快速导航
 
 - [按字母索引](#按字母索引) - 按字母顺序查找术语
 - [按视角分类](#按视角分类) - 按视角查找术语
@@ -61,11 +61,11 @@
 
 ---
 
-## 按字母索引
+## 2 按字母索引
 
-### A
+### 2.1 A
 
-#### AGI (Artificial General Intelligence) - 通用人工智能
+#### 2.1.1 AGI (Artificial General Intelligence) - 通用人工智能
 
 **定义**: 能够像人类一样理解和学习任何智力任务的AI系统。
 
@@ -79,7 +79,7 @@
 
 ---
 
-#### Ashby必要多样性定律 (Ashby's Law of Requisite Variety)
+#### 2.1.2 Ashby必要多样性定律 (Ashby's Law of Requisite Variety)
 
 **定义**: 控制器的多样性必须≥被控制系统的多样性。
 
@@ -98,9 +98,9 @@ V_controller ≥ V_system
 
 ---
 
-### B
+### 2.2 B
 
-#### BFT (Byzantine Fault Tolerance) - 拜占庭容错
+#### 2.2.1 BFT (Byzantine Fault Tolerance) - 拜占庭容错
 
 **定义**: 在存在恶意节点的情况下，系统仍能达成共识的能力。
 
@@ -117,7 +117,7 @@ n ≥ 3f + 1
 
 ---
 
-#### BQP (Bounded-Error Quantum Polynomial Time) - 有界误差量子多项式时间
+#### 2.2.2 BQP (Bounded-Error Quantum Polynomial Time) - 有界误差量子多项式时间
 
 **定义**: 量子计算机在多项式时间内可解决的问题类。
 
@@ -131,9 +131,9 @@ P ⊆ BQP ⊆ PSPACE
 
 ---
 
-### C
+### 2.3 C
 
-#### CAP定理 (CAP Theorem)
+#### 2.3.1 CAP定理 (CAP Theorem)
 
 **定义**: 分布式系统无法同时满足一致性(C)、可用性(A)和分区容错(P)。
 
@@ -155,7 +155,7 @@ P ⊆ BQP ⊆ PSPACE
 
 ---
 
-#### Chomsky层级 (Chomsky Hierarchy)
+#### 2.3.2 Chomsky层级 (Chomsky Hierarchy)
 
 **定义**: 形式语言的分类体系，从简单到复杂。
 
@@ -175,9 +175,9 @@ TYPE-3: 正则语言
 
 ---
 
-### D
+### 2.4 D
 
-#### Data Rate定理 (Data Rate Theorem)
+#### 2.4.1 Data Rate定理 (Data Rate Theorem)
 
 **定义**: 控制速率必须≥系统熵。
 
@@ -195,7 +195,7 @@ R_control ≥ H(系统状态)
 
 ---
 
-#### DIKWP模型
+#### 2.4.2 DIKWP模型
 
 **定义**: 数据(Data) → 信息(Information) → 知识(Knowledge) → 智慧(Wisdom) → 目的(Purpose)的信息处理模型。
 
@@ -209,9 +209,9 @@ R_control ≥ H(系统状态)
 
 ---
 
-### E
+### 2.5 E
 
-#### Entropy (熵)
+#### 2.5.1 Entropy (熵)
 
 **定义**: 系统不确定性的度量。
 
@@ -227,9 +227,9 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-### F
+### 2.6 F
 
-#### FLP不可能定理 (FLP Impossibility Theorem)
+#### 2.6.1 FLP不可能定理 (FLP Impossibility Theorem)
 
 **定义**: 在异步系统中，即使只有一个节点故障，也无法在有限时间内达成确定性共识。
 
@@ -239,7 +239,7 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-#### 反身性 (Reflexivity)
+#### 2.6.2 反身性 (Reflexivity)
 
 **定义**: 系统能够操作自身的能力。
 
@@ -260,9 +260,9 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 ---
 
-### G
+### 2.7 G
 
-#### Gödel不完备定理 (Gödel's Incompleteness Theorems)
+#### 2.7.1 Gödel不完备定理 (Gödel's Incompleteness Theorems)
 
 **定义**: 任何足够强大的形式系统都无法证明自身的所有真命题。
 
@@ -274,7 +274,7 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 ---
 
-#### Gold可学习性 (Gold Learnability Theory)
+#### 2.7.2 Gold可学习性 (Gold Learnability Theory)
 
 **定义**: 从正例学习的充要条件。
 
@@ -288,9 +288,9 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 ---
 
-### H
+### 2.8 H
 
-#### 停机问题 (Halting Problem)
+#### 2.8.1 停机问题 (Halting Problem)
 
 **定义**: 不存在算法可以判定任意程序是否停机。
 
@@ -302,9 +302,9 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 ---
 
-### I
+### 2.9 I
 
-#### 隔离 (Isolation)
+#### 2.9.1 隔离 (Isolation)
 
 **定义**: 系统组件之间的相互独立和隔离。
 
@@ -314,7 +314,7 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 ---
 
-#### 互信息 (Mutual Information)
+#### 2.9.2 互信息 (Mutual Information)
 
 **定义**: 两个随机变量之间的信息共享量。
 
@@ -332,9 +332,9 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
 
 ---
 
-### K
+### 2.10 K
 
-#### Kolmogorov复杂度 (Kolmogorov Complexity)
+#### 2.10.1 Kolmogorov复杂度 (Kolmogorov Complexity)
 
 **定义**: 描述一个对象所需的最短程序长度。
 
@@ -348,9 +348,9 @@ K(x) = min{|p| : U(p) = x}
 
 ---
 
-### L
+### 2.11 L
 
-#### Landauer极限 (Landauer Limit)
+#### 2.11.1 Landauer极限 (Landauer Limit)
 
 **定义**: 信息处理的最小能量消耗。
 
@@ -364,9 +364,9 @@ E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 
 ---
 
-### M
+### 2.12 M
 
-#### Meta-learning (元学习)
+#### 2.12.1 Meta-learning (元学习)
 
 **定义**: 学习如何学习的能力。
 
@@ -378,7 +378,7 @@ E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 
 ---
 
-#### 冯·诺依曼瓶颈 (Von Neumann Bottleneck)
+#### 2.12.2 冯·诺依曼瓶颈 (Von Neumann Bottleneck)
 
 **定义**: CPU和内存之间的数据传输速度限制。
 
@@ -388,9 +388,9 @@ E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 
 ---
 
-### P
+### 2.13 P
 
-#### PAC学习 (Probably Approximately Correct Learning)
+#### 2.13.1 PAC学习 (Probably Approximately Correct Learning)
 
 **定义**: 概率近似正确学习框架。
 
@@ -406,7 +406,7 @@ P(|R(h) - R̂(h)| ≤ ε) ≥ 1 - δ
 
 ---
 
-#### P vs NP问题
+#### 2.13.2 P vs NP问题
 
 **定义**: 是否所有可以在多项式时间内验证的问题都可以在多项式时间内解决。
 
@@ -420,7 +420,7 @@ P ⊆ NP ⊆ PSPACE
 
 ---
 
-#### Popek-Goldberg定理
+#### 2.13.3 Popek-Goldberg定理
 
 **定义**: 虚拟化需要满足的三个条件：等价性、资源控制、效率。
 
@@ -430,9 +430,9 @@ P ⊆ NP ⊆ PSPACE
 
 ---
 
-### R
+### 2.14 R
 
-#### Rice定理 (Rice's Theorem)
+#### 2.14.1 Rice定理 (Rice's Theorem)
 
 **定义**: 程序的所有非平凡性质都不可判定。
 
@@ -442,9 +442,9 @@ P ⊆ NP ⊆ PSPACE
 
 ---
 
-### S
+### 2.15 S
 
-#### 三票理论 (Three Tickets Theory)
+#### 2.15.1 三票理论 (Three Tickets Theory)
 
 **定义**: 系统需要三种"票"才能运行：计算票、数据票、控制票。
 
@@ -452,7 +452,7 @@ P ⊆ NP ⊆ PSPACE
 
 ---
 
-#### Shannon熵 (Shannon Entropy)
+#### 2.15.2 Shannon熵 (Shannon Entropy)
 
 **定义**: 信息源的平均信息量。
 
@@ -468,7 +468,7 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-#### 主权矩阵 (Sovereignty Matrix)
+#### 2.15.3 主权矩阵 (Sovereignty Matrix)
 
 **定义**: 系统组件对自身资源的控制程度。
 
@@ -484,9 +484,9 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-### T
+### 2.16 T
 
-#### 图灵完备性 (Turing Completeness)
+#### 2.16.1 图灵完备性 (Turing Completeness)
 
 **定义**: 系统能够模拟图灵机的能力。
 
@@ -496,7 +496,7 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-#### 三元视角 (Triadic Perspective)
+#### 2.16.2 三元视角 (Triadic Perspective)
 
 **定义**: 编程算法设计视角的核心：控制·执行·数据。
 
@@ -506,9 +506,9 @@ H(X) = -Σ p(x) log p(x)
 
 ---
 
-### U
+### 2.17 U
 
-#### UH-Cost 统一元模型
+#### 2.17.1 UH-Cost 统一元模型
 
 **定义**: 编程语言理论的统一成本模型。
 
@@ -524,9 +524,9 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-### V
+### 2.18 V
 
-#### VC维 (Vapnik-Chervonenkis Dimension)
+#### 2.18.1 VC维 (Vapnik-Chervonenkis Dimension)
 
 **定义**: 模型能够"打散"的最大样本数。
 
@@ -536,7 +536,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-#### 虚拟化 (Virtualization)
+#### 2.18.2 虚拟化 (Virtualization)
 
 **定义**: 在物理资源上创建虚拟资源的技术。
 
@@ -546,9 +546,9 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-### X
+### 2.19 X
 
-#### 形式语言 (Formal Language)
+#### 2.19.1 形式语言 (Formal Language)
 
 **定义**: 由形式语法定义的符号串集合。
 
@@ -560,9 +560,9 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-## 按视角分类
+## 3 按视角分类
 
-### 形式语言视角
+### 3.1 形式语言视角
 
 - [Chomsky层级](#chomsky层级-chomsky-hierarchy)
 - [形式语言](#形式语言-formal-language)
@@ -570,7 +570,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - [语义](#语义)
 - [图灵完备性](#图灵完备性-turing-completeness)
 
-### AI模型视角
+### 3.2 AI模型视角
 
 - [AGI](#agi-artificial-general-intelligence)
 - [Meta-learning](#meta-learning-元学习)
@@ -578,7 +578,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - [VC维](#vc维-vapnik-chervonenkis-dimension)
 - [Gold可学习性](#gold可学习性-gold-learnability-theory)
 
-### 信息论视角
+### 3.3 信息论视角
 
 - [Shannon熵](#shannon熵-shannon-entropy)
 - [互信息](#互信息-mutual-information)
@@ -586,7 +586,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - [Landauer极限](#landauer极限-landauer-limit)
 - [DIKWP模型](#dikwp模型)
 
-### 图灵可计算视角
+### 3.4 图灵可计算视角
 
 - [停机问题](#停机问题-halting-problem)
 - [Rice定理](#rice定理-rices-theorem)
@@ -594,28 +594,28 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - [图灵完备性](#图灵完备性-turing-completeness)
 - [BQP](#bqp-bounded-error-quantum-polynomial-time)
 
-### 控制论视角
+### 3.5 控制论视角
 
 - [Ashby必要多样性定律](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
 - [Data Rate定理](#data-rate定理-data-rate-theorem)
 - [反馈控制](#反馈控制)
 - [反身性](#反身性-reflexivity)
 
-### 冯·诺依曼架构视角
+### 3.6 冯·诺依曼架构视角
 
 - [冯·诺依曼瓶颈](#冯诺依曼瓶颈-von-neumann-bottleneck)
 - [冯·诺依曼架构](#冯诺依曼架构)
 - [虚拟化](#虚拟化-virtualization)
 - [Popek-Goldberg定理](#popek-goldberg定理)
 
-### 分布式系统视角
+### 3.7 分布式系统视角
 
 - [CAP定理](#cap定理-cap-theorem)
 - [BFT](#bft-byzantine-fault-tolerance)
 - [FLP不可能定理](#flp不可能定理-flp-impossibility-theorem)
 - [共识算法](#共识算法)
 
-### 编程算法设计视角
+### 3.8 编程算法设计视角
 
 - [UH-Cost统一元模型](#uh-cost-统一元模型)
 - [三元视角](#三元视角-triadic-perspective)
@@ -624,9 +624,9 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-## 核心术语（Top 50）
+## 4 核心术语（Top 50）
 
-### 理论基础（10个）
+### 4.1 理论基础（10个）
 
 1. [反身性](#反身性-reflexivity)
 2. [形式语言](#形式语言-formal-language)
@@ -639,7 +639,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 9. [形式化](#形式化)
 10. [验证](#验证)
 
-### 核心定理（10个）
+### 4.2 核心定理（10个）
 
 1. [CAP定理](#cap定理-cap-theorem)
 2. [Ashby定律](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
@@ -652,7 +652,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 9. [Popek-Goldberg定理](#popek-goldberg定理)
 10. [Gold可学习性](#gold可学习性-gold-learnability-theory)
 
-### 信息论（10个）
+### 4.3 信息论（10个）
 
 1. [Shannon熵](#shannon熵-shannon-entropy)
 2. [互信息](#互信息-mutual-information)
@@ -665,7 +665,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 9. [压缩极限](#压缩极限)
 10. [信息流](#信息流)
 
-### 学习理论（10个）
+### 4.4 学习理论（10个）
 
 1. [VC维](#vc维-vapnik-chervonenkis-dimension)
 2. [PAC学习](#pac学习-probably-approximately-correct-learning)
@@ -678,7 +678,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 9. [学习曲线](#学习曲线)
 10. [样本复杂度](#样本复杂度)
 
-### 系统设计（10个）
+### 4.5 系统设计（10个）
 
 1. [主权矩阵](#主权矩阵-sovereignty-matrix)
 2. [隔离](#隔离-isolation)
@@ -693,7 +693,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-## 缩写表
+## 5 缩写表
 
 | 缩写 | 全称 | 中文 |
 |-----|------|------|
@@ -709,9 +709,9 @@ Cost(程序) = Σ (操作数 × 操作成本)
 
 ---
 
-## 相关资源
+## 6 相关资源
 
-### 中文文档
+### 6.1 中文文档
 
 - [简体中文导航索引](NAVIGATION_INDEX_CN.md) - 完整的中文导航指南
 - [项目总结（中文版）](SUMMARY_CN.md) - 项目整体总结和快速概览
@@ -720,13 +720,13 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - [常见问题解答（中文版）](FAQ_CN.md) - 常见问题快速解答
 - [核心概念词典](CORE_CONCEPTS_DICTIONARY.md) - 19个核心概念精确定义
 
-### 核心文档
+### 6.2 核心文档
 
 - [README.md](README.md) - 项目主页
 - [统一框架](UNIFIED_FRAMEWORK.md) - 七视角整合体系
 - [术语表](GLOSSARY.md) - 完整版术语表（120+术语）
 
-### 学习资源
+### 6.3 学习资源
 
 - [学习路径指南](LEARNING_PATHS.md) - 定制化学习建议
 - [常见问题解答](FAQ.md) - 56+常见问题

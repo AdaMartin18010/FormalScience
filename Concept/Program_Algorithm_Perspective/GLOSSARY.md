@@ -7,96 +7,96 @@
 ## 📋 目录
 
 - [术语表 (Glossary)](#术语表-glossary)
-  - [📋 目录](#-目录)
-  - [📋 索引](#-索引)
+  - [1 📋 索引](#1-索引)
+  - [2 A](#2-a)
   - [A](#a)
-    - [Abstract Factory (抽象工厂模式)](#abstract-factory-抽象工厂模式)
-    - [Adaptivity (自适应性)](#adaptivity-自适应性)
-    - [Axiomatic Semantics (公理语义)](#axiomatic-semantics-公理语义)
-  - [B](#b)
-    - [Big-step Semantics (大步语义)](#big-step-semantics-大步语义)
-    - [Builder Pattern (建造者模式)](#builder-pattern-建造者模式)
-  - [C](#c)
-    - [Cache Complexity (缓存复杂度)](#cache-complexity-缓存复杂度)
-    - [Cache-oblivious Algorithm (缓存无关算法)](#cache-oblivious-algorithm-缓存无关算法)
-    - [Communication Complexity (通讯复杂度)](#communication-complexity-通讯复杂度)
-    - [Composite Pattern (组合模式)](#composite-pattern-组合模式)
-    - [Cost Semantics (成本语义)](#cost-semantics-成本语义)
-    - [CQRS (Command Query Responsibility Segregation)](#cqrs-command-query-responsibility-segregation)
-  - [D](#d)
-    - [Decorator Pattern (装饰器模式)](#decorator-pattern-装饰器模式)
-    - [Denotational Semantics (指称语义)](#denotational-semantics-指称语义)
-    - [Differential Privacy (差分隐私)](#differential-privacy-差分隐私)
-  - [E](#e)
-    - [Energy Complexity (能量复杂度)](#energy-complexity-能量复杂度)
-    - [Event Sourcing (事件溯源)](#event-sourcing-事件溯源)
-  - [F](#f)
-    - [Factory Method (工厂方法模式)](#factory-method-工厂方法模式)
-    - [Formal Semantics (形式语义)](#formal-semantics-形式语义)
-  - [G](#g)
-    - [GoF (Gang of Four)](#gof-gang-of-four)
-  - [H](#h)
-    - [Hoare Triple (Hoare 三元组)](#hoare-triple-hoare-三元组)
-  - [I](#i)
-    - [I/O Complexity (I/O 复杂度)](#io-complexity-io-复杂度)
-    - [Ideal-Cache Model (理想缓存模型)](#ideal-cache-model-理想缓存模型)
-  - [K](#k)
-    - [K-Framework](#k-framework)
-    - [Kolmogorov Complexity (柯尔莫哥洛夫复杂度)](#kolmogorov-complexity-柯尔莫哥洛夫复杂度)
-  - [L](#l)
-    - [Lambda Calculus (λ-演算)](#lambda-calculus-λ-演算)
-    - [Landauer's Principle (Landauer 原理)](#landauers-principle-landauer-原理)
-  - [M](#m)
-    - [Model Checking (模型检测)](#model-checking-模型检测)
-  - [N](#n)
-    - [Natural Semantics (自然语义)](#natural-semantics-自然语义)
-  - [O](#o)
-    - [Observer Pattern (观察者模式)](#observer-pattern-观察者模式)
-    - [Operational Semantics (操作语义)](#operational-semantics-操作语义)
-  - [P](#p)
-    - [Petri Net (Petri 网)](#petri-net-petri-网)
-    - [π-Calculus (π-演算)](#π-calculus-π-演算)
-    - [Privacy Budget (隐私预算)](#privacy-budget-隐私预算)
-    - [Proxy Pattern (代理模式)](#proxy-pattern-代理模式)
-  - [Q](#q)
-    - [QHL (Quantitative Hoare Logic)](#qhl-quantitative-hoare-logic)
-  - [R](#r)
-    - [Rewriting Logic (重写逻辑)](#rewriting-logic-重写逻辑)
-  - [S](#s)
-    - [Saga Pattern (Saga 模式)](#saga-pattern-saga-模式)
-    - [Sample Complexity (样本复杂度)](#sample-complexity-样本复杂度)
-    - [Singleton Pattern (单例模式)](#singleton-pattern-单例模式)
-    - [Small-step Semantics (小步语义)](#small-step-semantics-小步语义)
-    - [Span (跨度)](#span-跨度)
-    - [Strategy Pattern (策略模式)](#strategy-pattern-策略模式)
-  - [T](#t)
-    - [Theorem Prover (定理证明器)](#theorem-prover-定理证明器)
-    - [Time Complexity (时间复杂度)](#time-complexity-时间复杂度)
-    - [Type System (类型系统)](#type-system-类型系统)
-  - [U](#u)
-    - [UH-Cost (Unified Hypergraph-Cost Model)](#uh-cost-unified-hypergraph-cost-model)
-  - [V](#v)
-    - [Verifiability (可验证性)](#verifiability-可验证性)
-  - [W](#w)
-    - [Work (工作量)](#work-工作量)
-    - [Workflow Pattern (工作流模式)](#workflow-pattern-工作流模式)
-  - [Z](#z)
-    - [Z3](#z3)
-  - [缩写表](#缩写表)
-  - [符号表](#符号表)
-  - [扩展阅读](#扩展阅读)
+    - [2.1 Abstract Factory (抽象工厂模式)](#21-abstract-factory-抽象工厂模式)
+    - [2.2 Adaptivity (自适应性)](#22-adaptivity-自适应性)
+    - [2.3 Axiomatic Semantics (公理语义)](#23-axiomatic-semantics-公理语义)
+  - [3 B](#3-b)
+    - [3.1 Big-step Semantics (大步语义)](#31-big-step-semantics-大步语义)
+    - [3.2 Builder Pattern (建造者模式)](#32-builder-pattern-建造者模式)
+  - [4 C](#4-c)
+    - [4.1 Cache Complexity (缓存复杂度)](#41-cache-complexity-缓存复杂度)
+    - [4.2 Cache-oblivious Algorithm (缓存无关算法)](#42-cache-oblivious-algorithm-缓存无关算法)
+    - [4.3 Communication Complexity (通讯复杂度)](#43-communication-complexity-通讯复杂度)
+    - [4.4 Composite Pattern (组合模式)](#44-composite-pattern-组合模式)
+    - [4.5 Cost Semantics (成本语义)](#45-cost-semantics-成本语义)
+    - [4.6 CQRS (Command Query Responsibility Segregation)](#46-cqrs-command-query-responsibility-segregation)
+  - [5 D](#5-d)
+    - [5.1 Decorator Pattern (装饰器模式)](#51-decorator-pattern-装饰器模式)
+    - [5.2 Denotational Semantics (指称语义)](#52-denotational-semantics-指称语义)
+    - [5.3 Differential Privacy (差分隐私)](#53-differential-privacy-差分隐私)
+  - [6 E](#6-e)
+    - [6.1 Energy Complexity (能量复杂度)](#61-energy-complexity-能量复杂度)
+    - [6.2 Event Sourcing (事件溯源)](#62-event-sourcing-事件溯源)
+  - [7 F](#7-f)
+    - [7.1 Factory Method (工厂方法模式)](#71-factory-method-工厂方法模式)
+    - [7.2 Formal Semantics (形式语义)](#72-formal-semantics-形式语义)
+  - [8 G](#8-g)
+    - [8.1 GoF (Gang of Four)](#81-gof-gang-of-four)
+  - [9 H](#9-h)
+    - [9.1 Hoare Triple (Hoare 三元组)](#91-hoare-triple-hoare-三元组)
+  - [10 I](#10-i)
+    - [10.1 I/O Complexity (I/O 复杂度)](#101-io-complexity-io-复杂度)
+    - [10.2 Ideal-Cache Model (理想缓存模型)](#102-ideal-cache-model-理想缓存模型)
+  - [11 K](#11-k)
+    - [11.1 K-Framework](#111-k-framework)
+    - [11.2 Kolmogorov Complexity (柯尔莫哥洛夫复杂度)](#112-kolmogorov-complexity-柯尔莫哥洛夫复杂度)
+  - [12 L](#12-l)
+    - [12.1 Lambda Calculus (λ-演算)](#121-lambda-calculus-λ-演算)
+    - [12.2 Landauer's Principle (Landauer 原理)](#122-landauers-principle-landauer-原理)
+  - [13 M](#13-m)
+    - [13.1 Model Checking (模型检测)](#131-model-checking-模型检测)
+  - [14 N](#14-n)
+    - [14.1 Natural Semantics (自然语义)](#141-natural-semantics-自然语义)
+  - [15 O](#15-o)
+    - [15.1 Observer Pattern (观察者模式)](#151-observer-pattern-观察者模式)
+    - [15.2 Operational Semantics (操作语义)](#152-operational-semantics-操作语义)
+  - [16 P](#16-p)
+    - [16.1 Petri Net (Petri 网)](#161-petri-net-petri-网)
+    - [16.2 π-Calculus (π-演算)](#162-π-calculus-π-演算)
+    - [16.3 Privacy Budget (隐私预算)](#163-privacy-budget-隐私预算)
+    - [16.4 Proxy Pattern (代理模式)](#164-proxy-pattern-代理模式)
+  - [17 Q](#17-q)
+    - [17.1 QHL (Quantitative Hoare Logic)](#171-qhl-quantitative-hoare-logic)
+  - [18 R](#18-r)
+    - [18.1 Rewriting Logic (重写逻辑)](#181-rewriting-logic-重写逻辑)
+  - [19 S](#19-s)
+    - [19.1 Saga Pattern (Saga 模式)](#191-saga-pattern-saga-模式)
+    - [19.2 Sample Complexity (样本复杂度)](#192-sample-complexity-样本复杂度)
+    - [19.3 Singleton Pattern (单例模式)](#193-singleton-pattern-单例模式)
+    - [19.4 Small-step Semantics (小步语义)](#194-small-step-semantics-小步语义)
+    - [19.5 Span (跨度)](#195-span-跨度)
+    - [19.6 Strategy Pattern (策略模式)](#196-strategy-pattern-策略模式)
+  - [20 T](#20-t)
+    - [20.1 Theorem Prover (定理证明器)](#201-theorem-prover-定理证明器)
+    - [20.2 Time Complexity (时间复杂度)](#202-time-complexity-时间复杂度)
+    - [20.3 Type System (类型系统)](#203-type-system-类型系统)
+  - [21 U](#21-u)
+    - [21.1 UH-Cost (Unified Hypergraph-Cost Model)](#211-uh-cost-unified-hypergraph-cost-model)
+  - [22 V](#22-v)
+    - [22.1 Verifiability (可验证性)](#221-verifiability-可验证性)
+  - [23 W](#23-w)
+    - [23.1 Work (工作量)](#231-work-工作量)
+    - [23.2 Workflow Pattern (工作流模式)](#232-workflow-pattern-工作流模式)
+  - [24 Z](#24-z)
+    - [24.1 Z3](#241-z3)
+  - [25 缩写表](#25-缩写表)
+  - [26 符号表](#26-符号表)
+  - [27 扩展阅读](#27-扩展阅读)
 
 ---
 
-## 📋 索引
+## 1 📋 索引
 
 [A](#a) | [B](#b) | [C](#c) | [D](#d) | [E](#e) | [F](#f) | [G](#g) | [H](#h) | [I](#i) | [K](#k) | [L](#l) | [M](#m) | [N](#n) | [O](#o) | [P](#p) | [Q](#q) | [R](#r) | [S](#s) | [T](#t) | [U](#u) | [V](#v) | [W](#w) | [Z](#z)
 
 ---
 
-## A
+## 2 A
 
-### Abstract Factory (抽象工厂模式)
+### 2.1 Abstract Factory (抽象工厂模式)
 
 **定义**: 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
 
@@ -112,7 +112,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Adaptivity (自适应性)
+### 2.2 Adaptivity (自适应性)
 
 **定义**: 算法根据中间结果动态调整后续查询或决策的能力。
 
@@ -124,7 +124,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Axiomatic Semantics (公理语义)
+### 2.3 Axiomatic Semantics (公理语义)
 
 **定义**: 通过逻辑公式（前置条件、后置条件）描述程序性质的语义方法。
 
@@ -136,9 +136,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## B
+## 3 B
 
-### Big-step Semantics (大步语义)
+### 3.1 Big-step Semantics (大步语义)
 
 **定义**: 直接求值到最终结果的操作语义，也称自然语义 (Natural Semantics)。
 
@@ -150,7 +150,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Builder Pattern (建造者模式)
+### 3.2 Builder Pattern (建造者模式)
 
 **定义**: 将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
 
@@ -160,9 +160,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## C
+## 4 C
 
-### Cache Complexity (缓存复杂度)
+### 4.1 Cache Complexity (缓存复杂度)
 
 **定义**: 缓存未命中 (cache miss) 的次数。
 
@@ -174,7 +174,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Cache-oblivious Algorithm (缓存无关算法)
+### 4.2 Cache-oblivious Algorithm (缓存无关算法)
 
 **定义**: 无需知道缓存参数 Z 和 L 就能达到渐近最优缓存性能的算法。
 
@@ -186,7 +186,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Communication Complexity (通讯复杂度)
+### 4.3 Communication Complexity (通讯复杂度)
 
 **定义**: 分布式算法中传输的总比特数。
 
@@ -201,7 +201,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Composite Pattern (组合模式)
+### 4.4 Composite Pattern (组合模式)
 
 **定义**: 将对象组合成树形结构以表示"部分-整体"的层次结构，使得用户对单个对象和组合对象的使用具有一致性。
 
@@ -211,7 +211,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Cost Semantics (成本语义)
+### 4.5 Cost Semantics (成本语义)
 
 **定义**: 在操作语义上附加资源计数器，精确追踪资源消耗。
 
@@ -223,7 +223,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### CQRS (Command Query Responsibility Segregation)
+### 4.6 CQRS (Command Query Responsibility Segregation)
 
 **定义**: 命令查询职责分离，读写操作使用不同的模型。
 
@@ -235,9 +235,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## D
+## 5 D
 
-### Decorator Pattern (装饰器模式)
+### 5.1 Decorator Pattern (装饰器模式)
 
 **定义**: 动态地给一个对象添加一些额外的职责，就增加功能来说，Decorator 模式相比生成子类更为灵活。
 
@@ -249,7 +249,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Denotational Semantics (指称语义)
+### 5.2 Denotational Semantics (指称语义)
 
 **定义**: 将程序映射到数学对象（通常是函数或域）的语义方法。
 
@@ -261,7 +261,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Differential Privacy (差分隐私)
+### 5.3 Differential Privacy (差分隐私)
 
 **定义**: 保证单条记录的添加或删除对算法输出分布的影响有界。
 
@@ -273,9 +273,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## E
+## 6 E
 
-### Energy Complexity (能量复杂度)
+### 6.1 Energy Complexity (能量复杂度)
 
 **定义**: 算法执行的比特翻转次数，衡量能量消耗。
 
@@ -287,7 +287,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Event Sourcing (事件溯源)
+### 6.2 Event Sourcing (事件溯源)
 
 **定义**: 将所有状态变更存储为事件序列，当前状态通过重放事件计算得到。
 
@@ -299,9 +299,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## F
+## 7 F
 
-### Factory Method (工厂方法模式)
+### 7.1 Factory Method (工厂方法模式)
 
 **定义**: 定义一个创建对象的接口，让子类决定实例化哪一个类。
 
@@ -313,7 +313,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Formal Semantics (形式语义)
+### 7.2 Formal Semantics (形式语义)
 
 **定义**: 用数学方法精确定义程序行为的语义学。
 
@@ -329,9 +329,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## G
+## 8 G
 
-### GoF (Gang of Four)
+### 8.1 GoF (Gang of Four)
 
 **定义**: Gamma, Helm, Johnson, Vlissides 四位作者，1994 年出版《Design Patterns》。
 
@@ -343,9 +343,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## H
+## 9 H
 
-### Hoare Triple (Hoare 三元组)
+### 9.1 Hoare Triple (Hoare 三元组)
 
 **定义**: 公理语义的核心判断形式 `{P} c {Q}`
 
@@ -361,9 +361,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## I
+## 10 I
 
-### I/O Complexity (I/O 复杂度)
+### 10.1 I/O Complexity (I/O 复杂度)
 
 **定义**: 读写外部存储的块数。
 
@@ -375,7 +375,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Ideal-Cache Model (理想缓存模型)
+### 10.2 Ideal-Cache Model (理想缓存模型)
 
 **定义**: 假设全相联、LRU 替换、离线最优的缓存模型。
 
@@ -390,9 +390,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## K
+## 11 K
 
-### K-Framework
+### 11.1 K-Framework
 
 **定义**: 基于重写逻辑的编程语言语义框架。
 
@@ -408,7 +408,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Kolmogorov Complexity (柯尔莫哥洛夫复杂度)
+### 11.2 Kolmogorov Complexity (柯尔莫哥洛夫复杂度)
 
 **定义**: 生成字符串 x 的最短程序长度 K(x)。
 
@@ -423,9 +423,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## L
+## 12 L
 
-### Lambda Calculus (λ-演算)
+### 12.1 Lambda Calculus (λ-演算)
 
 **定义**: 形式化函数定义、应用和递归的计算模型。
 
@@ -439,7 +439,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Landauer's Principle (Landauer 原理)
+### 12.2 Landauer's Principle (Landauer 原理)
 
 **定义**: 擦除 1 比特信息至少需要 kT ln 2 的能量。
 
@@ -451,9 +451,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## M
+## 13 M
 
-### Model Checking (模型检测)
+### 13.1 Model Checking (模型检测)
 
 **定义**: 自动验证有限状态系统是否满足时序逻辑性质的技术。
 
@@ -467,17 +467,17 @@ Record AbstractFactory : Type := {
 
 ---
 
-## N
+## 14 N
 
-### Natural Semantics (自然语义)
+### 14.1 Natural Semantics (自然语义)
 
 **定义**: Big-step Semantics 的别名，见 [Big-step Semantics](#big-step-semantics-大步语义)。
 
 ---
 
-## O
+## 15 O
 
-### Observer Pattern (观察者模式)
+### 15.1 Observer Pattern (观察者模式)
 
 **定义**: 定义对象间的一对多依赖关系，当一个对象状态改变时，所有依赖于它的对象都得到通知并自动更新。
 
@@ -492,7 +492,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Operational Semantics (操作语义)
+### 15.2 Operational Semantics (操作语义)
 
 **定义**: 通过定义程序如何逐步执行来给出程序意义的语义方法。
 
@@ -507,9 +507,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## P
+## 16 P
 
-### Petri Net (Petri 网)
+### 16.1 Petri Net (Petri 网)
 
 **定义**: 用于并发系统建模的数学工具。
 
@@ -526,7 +526,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### π-Calculus (π-演算)
+### 16.2 π-Calculus (π-演算)
 
 **定义**: 描述并发计算的进程代数，支持通道传递。
 
@@ -540,7 +540,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Privacy Budget (隐私预算)
+### 16.3 Privacy Budget (隐私预算)
 
 **定义**: 差分隐私中的 ε 参数，越小越隐私。
 
@@ -552,7 +552,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Proxy Pattern (代理模式)
+### 16.4 Proxy Pattern (代理模式)
 
 **定义**: 为其他对象提供一种代理以控制对这个对象的访问。
 
@@ -564,9 +564,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## Q
+## 17 Q
 
-### QHL (Quantitative Hoare Logic)
+### 17.1 QHL (Quantitative Hoare Logic)
 
 **定义**: 定量霍尔逻辑，扩展 Hoare Logic 支持资源界。
 
@@ -576,9 +576,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## R
+## 18 R
 
-### Rewriting Logic (重写逻辑)
+### 18.1 Rewriting Logic (重写逻辑)
 
 **定义**: 基于项重写的逻辑系统。
 
@@ -592,9 +592,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## S
+## 19 S
 
-### Saga Pattern (Saga 模式)
+### 19.1 Saga Pattern (Saga 模式)
 
 **定义**: 分布式长事务模式，通过补偿操作保证最终一致性。
 
@@ -606,7 +606,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Sample Complexity (样本复杂度)
+### 19.2 Sample Complexity (样本复杂度)
 
 **定义**: 学习算法达到目标精度所需的样本数。
 
@@ -618,7 +618,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Singleton Pattern (单例模式)
+### 19.3 Singleton Pattern (单例模式)
 
 **定义**: 保证一个类仅有一个实例，并提供一个全局访问点。
 
@@ -630,7 +630,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Small-step Semantics (小步语义)
+### 19.4 Small-step Semantics (小步语义)
 
 **定义**: 每次执行一个原子操作的操作语义。
 
@@ -642,7 +642,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Span (跨度)
+### 19.5 Span (跨度)
 
 **定义**: 并行算法的关键路径长度（最长依赖链）。
 
@@ -656,7 +656,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Strategy Pattern (策略模式)
+### 19.6 Strategy Pattern (策略模式)
 
 **定义**: 定义一系列算法，把它们一个个封装起来，并且使它们可以互相替换。
 
@@ -668,9 +668,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## T
+## 20 T
 
-### Theorem Prover (定理证明器)
+### 20.1 Theorem Prover (定理证明器)
 
 **定义**: 交互式或自动化证明数学定理的软件工具。
 
@@ -686,7 +686,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Time Complexity (时间复杂度)
+### 20.2 Time Complexity (时间复杂度)
 
 **定义**: 算法执行的指令数或基本操作数。
 
@@ -698,7 +698,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Type System (类型系统)
+### 20.3 Type System (类型系统)
 
 **定义**: 用类型约束程序行为的形式化系统。
 
@@ -715,9 +715,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## U
+## 21 U
 
-### UH-Cost (Unified Hypergraph-Cost Model)
+### 21.1 UH-Cost (Unified Hypergraph-Cost Model)
 
 **定义**: 统一超图成本模型，本项目提出的形式化框架。
 
@@ -729,9 +729,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## V
+## 22 V
 
-### Verifiability (可验证性)
+### 22.1 Verifiability (可验证性)
 
 **定义**: 生成和验证计算正确性证明的资源消耗。
 
@@ -746,9 +746,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## W
+## 23 W
 
-### Work (工作量)
+### 23.1 Work (工作量)
 
 **定义**: 并行算法的总操作数（时间 × 处理器数）。
 
@@ -758,7 +758,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-### Workflow Pattern (工作流模式)
+### 23.2 Workflow Pattern (工作流模式)
 
 **定义**: 业务流程建模中的可复用控制流模式。
 
@@ -770,9 +770,9 @@ Record AbstractFactory : Type := {
 
 ---
 
-## Z
+## 24 Z
 
-### Z3
+### 24.1 Z3
 
 **定义**: Microsoft Research 开发的 SMT (Satisfiability Modulo Theories) 求解器。
 
@@ -784,7 +784,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-## 缩写表
+## 25 缩写表
 
 | 缩写 | 全称 | 中文 |
 |------|------|------|
@@ -823,7 +823,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-## 符号表
+## 26 符号表
 
 | 符号 | 含义 | 示例 |
 |------|------|------|
@@ -857,7 +857,7 @@ Record AbstractFactory : Type := {
 
 ---
 
-## 扩展阅读
+## 27 扩展阅读
 
 - [00_Master_Index.md](00_Master_Index.md) - 主索引
 - [README.md](README.md) - 总体概述

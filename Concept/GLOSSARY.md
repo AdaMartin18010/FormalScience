@@ -13,81 +13,81 @@
 ## 📋 目录
 
 - [形式科学理论体系 - 术语表](#形式科学理论体系---术语表)
-  - [📋 目录](#-目录)
-  - [📋 快速导航](#-快速导航)
+  - [1 📋 快速导航](#1-快速导航)
+  - [2 按字母索引](#2-按字母索引)
   - [按字母索引](#按字母索引)
-    - [A](#a)
-      - [AGI (Artificial General Intelligence)](#agi-artificial-general-intelligence)
-      - [Ashby必要多样性定律 (Ashby's Law of Requisite Variety)](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
-    - [B](#b)
-      - [BFT (Byzantine Fault Tolerance)](#bft-byzantine-fault-tolerance)
-      - [BQP (Bounded-Error Quantum Polynomial Time)](#bqp-bounded-error-quantum-polynomial-time)
-    - [C](#c)
-      - [CAP定理 (CAP Theorem)](#cap定理-cap-theorem)
-      - [Chomsky层级 (Chomsky Hierarchy)](#chomsky层级-chomsky-hierarchy)
-    - [D](#d)
-      - [Data Rate定理 (Data Rate Theorem)](#data-rate定理-data-rate-theorem)
-      - [DIKWP模型](#dikwp模型)
-    - [E](#e)
-      - [Entropy (熵)](#entropy-熵)
-    - [F](#f)
-      - [FLP不可能定理 (FLP Impossibility Theorem)](#flp不可能定理-flp-impossibility-theorem)
-      - [反身性 (Reflexivity)](#反身性-reflexivity)
-    - [G](#g)
-      - [Gödel不完备定理 (Gödel's Incompleteness Theorems)](#gödel不完备定理-gödels-incompleteness-theorems)
-      - [Gold可学习性 (Gold Learnability Theory)](#gold可学习性-gold-learnability-theory)
-    - [H](#h)
-      - [停机问题 (Halting Problem)](#停机问题-halting-problem)
-    - [I](#i)
-      - [隔离 (Isolation)](#隔离-isolation)
-      - [互信息 (Mutual Information)](#互信息-mutual-information)
-    - [K](#k)
-      - [Kolmogorov复杂度 (Kolmogorov Complexity)](#kolmogorov复杂度-kolmogorov-complexity)
-    - [L](#l)
-      - [Landauer极限 (Landauer Limit)](#landauer极限-landauer-limit)
-    - [M](#m)
-      - [Meta-learning (元学习)](#meta-learning-元学习)
-      - [冯·诺依曼瓶颈 (Von Neumann Bottleneck)](#冯诺依曼瓶颈-von-neumann-bottleneck)
-    - [P](#p)
-      - [PAC学习 (Probably Approximately Correct Learning)](#pac学习-probably-approximately-correct-learning)
-      - [P vs NP问题](#p-vs-np问题)
-      - [Popek-Goldberg定理](#popek-goldberg定理)
-    - [R](#r)
-      - [Rice定理 (Rice's Theorem)](#rice定理-rices-theorem)
-    - [S](#s)
-      - [三票理论 (Three Tickets Theory)](#三票理论-three-tickets-theory)
-      - [Shannon熵 (Shannon Entropy)](#shannon熵-shannon-entropy)
-      - [主权矩阵 (Sovereignty Matrix)](#主权矩阵-sovereignty-matrix)
-    - [T](#t)
-      - [图灵完备性 (Turing Completeness)](#图灵完备性-turing-completeness)
-      - [三元视角 (Triadic Perspective)](#三元视角-triadic-perspective)
-    - [U](#u)
-      - [UH-Cost 统一元模型](#uh-cost-统一元模型)
-    - [V](#v)
-      - [VC维 (Vapnik-Chervonenkis Dimension)](#vc维-vapnik-chervonenkis-dimension)
-      - [虚拟化 (Virtualization)](#虚拟化-virtualization)
-    - [X](#x)
-      - [形式语言 (Formal Language)](#形式语言-formal-language)
-  - [按视角分类](#按视角分类)
-    - [形式语言视角](#形式语言视角)
-    - [AI模型视角](#ai模型视角)
-    - [信息论视角](#信息论视角)
-    - [图灵可计算视角](#图灵可计算视角)
-    - [控制论视角](#控制论视角)
-    - [冯·诺依曼架构视角](#冯诺依曼架构视角)
-    - [分布式系统视角](#分布式系统视角)
-    - [编程算法设计视角 ✨](#编程算法设计视角-)
-  - [核心术语 (Top 50)](#核心术语-top-50)
-  - [缩写表](#缩写表)
-  - [补充说明](#补充说明)
-    - [如何使用本术语表](#如何使用本术语表)
-    - [术语说明规范](#术语说明规范)
-    - [持续更新](#持续更新)
-  - [相关资源](#相关资源)
+    - [2.1 A](#21-a)
+      - [2.1.1 AGI (Artificial General Intelligence)](#211-agi-artificial-general-intelligence)
+      - [2.1.2 Ashby必要多样性定律 (Ashby's Law of Requisite Variety)](#212-ashby必要多样性定律-ashbys-law-of-requisite-variety)
+    - [2.2 B](#22-b)
+      - [2.2.1 BFT (Byzantine Fault Tolerance)](#221-bft-byzantine-fault-tolerance)
+      - [2.2.2 BQP (Bounded-Error Quantum Polynomial Time)](#222-bqp-bounded-error-quantum-polynomial-time)
+    - [2.3 C](#23-c)
+      - [2.3.1 CAP定理 (CAP Theorem)](#231-cap定理-cap-theorem)
+      - [2.3.2 Chomsky层级 (Chomsky Hierarchy)](#232-chomsky层级-chomsky-hierarchy)
+    - [2.4 D](#24-d)
+      - [2.4.1 Data Rate定理 (Data Rate Theorem)](#241-data-rate定理-data-rate-theorem)
+      - [2.4.2 DIKWP模型](#242-dikwp模型)
+    - [2.5 E](#25-e)
+      - [2.5.1 Entropy (熵)](#251-entropy-熵)
+    - [2.6 F](#26-f)
+      - [2.6.1 FLP不可能定理 (FLP Impossibility Theorem)](#261-flp不可能定理-flp-impossibility-theorem)
+      - [2.6.2 反身性 (Reflexivity)](#262-反身性-reflexivity)
+    - [2.7 G](#27-g)
+      - [2.7.1 Gödel不完备定理 (Gödel's Incompleteness Theorems)](#271-gödel不完备定理-gödels-incompleteness-theorems)
+      - [2.7.2 Gold可学习性 (Gold Learnability Theory)](#272-gold可学习性-gold-learnability-theory)
+    - [2.8 H](#28-h)
+      - [2.8.1 停机问题 (Halting Problem)](#281-停机问题-halting-problem)
+    - [2.9 I](#29-i)
+      - [2.9.1 隔离 (Isolation)](#291-隔离-isolation)
+      - [2.9.2 互信息 (Mutual Information)](#292-互信息-mutual-information)
+    - [2.10 K](#210-k)
+      - [2.10.1 Kolmogorov复杂度 (Kolmogorov Complexity)](#2101-kolmogorov复杂度-kolmogorov-complexity)
+    - [2.11 L](#211-l)
+      - [2.11.1 Landauer极限 (Landauer Limit)](#2111-landauer极限-landauer-limit)
+    - [2.12 M](#212-m)
+      - [2.12.1 Meta-learning (元学习)](#2121-meta-learning-元学习)
+      - [2.12.2 冯·诺依曼瓶颈 (Von Neumann Bottleneck)](#2122-冯诺依曼瓶颈-von-neumann-bottleneck)
+    - [2.13 P](#213-p)
+      - [2.13.1 PAC学习 (Probably Approximately Correct Learning)](#2131-pac学习-probably-approximately-correct-learning)
+      - [2.13.2 P vs NP问题](#2132-p-vs-np问题)
+      - [2.13.3 Popek-Goldberg定理](#2133-popek-goldberg定理)
+    - [2.14 R](#214-r)
+      - [2.14.1 Rice定理 (Rice's Theorem)](#2141-rice定理-rices-theorem)
+    - [2.15 S](#215-s)
+      - [2.15.1 三票理论 (Three Tickets Theory)](#2151-三票理论-three-tickets-theory)
+      - [2.15.2 Shannon熵 (Shannon Entropy)](#2152-shannon熵-shannon-entropy)
+      - [2.15.3 主权矩阵 (Sovereignty Matrix)](#2153-主权矩阵-sovereignty-matrix)
+    - [2.16 T](#216-t)
+      - [2.16.1 图灵完备性 (Turing Completeness)](#2161-图灵完备性-turing-completeness)
+      - [2.16.2 三元视角 (Triadic Perspective)](#2162-三元视角-triadic-perspective)
+    - [2.17 U](#217-u)
+      - [2.17.1 UH-Cost 统一元模型](#2171-uh-cost-统一元模型)
+    - [2.18 V](#218-v)
+      - [2.18.1 VC维 (Vapnik-Chervonenkis Dimension)](#2181-vc维-vapnik-chervonenkis-dimension)
+      - [2.18.2 虚拟化 (Virtualization)](#2182-虚拟化-virtualization)
+    - [2.19 X](#219-x)
+      - [2.19.1 形式语言 (Formal Language)](#2191-形式语言-formal-language)
+  - [3 按视角分类](#3-按视角分类)
+    - [3.1 形式语言视角](#31-形式语言视角)
+    - [3.2 AI模型视角](#32-ai模型视角)
+    - [3.3 信息论视角](#33-信息论视角)
+    - [3.4 图灵可计算视角](#34-图灵可计算视角)
+    - [3.5 控制论视角](#35-控制论视角)
+    - [3.6 冯·诺依曼架构视角](#36-冯诺依曼架构视角)
+    - [3.7 分布式系统视角](#37-分布式系统视角)
+    - [3.8 编程算法设计视角 ✨](#38-编程算法设计视角-)
+  - [4 核心术语 (Top 50)](#4-核心术语-top-50)
+  - [5 缩写表](#5-缩写表)
+  - [6 补充说明](#6-补充说明)
+    - [6.1 如何使用本术语表](#61-如何使用本术语表)
+    - [6.2 术语说明规范](#62-术语说明规范)
+    - [6.3 持续更新](#63-持续更新)
+  - [7 相关资源](#7-相关资源)
 
 ---
 
-## 📋 快速导航
+## 1 📋 快速导航
 
 - [按字母索引](#按字母索引)
 - [按视角分类](#按视角分类)
@@ -96,26 +96,26 @@
 
 ---
 
-## 按字母索引
+## 2 按字母索引
 
-### A
+### 2.1 A
 
-#### AGI (Artificial General Intelligence)
+#### 2.1.1 AGI (Artificial General Intelligence)
 
 - 中文：通用人工智能
 - 定义：能够在任何智力任务上达到或超过人类水平的AI系统
 - 视角：AI模型、形式语言、控制论
 - 相关：AI对齐问题, [图灵完备性](#图灵完备性-turing-completeness)
 
-#### Ashby必要多样性定律 (Ashby's Law of Requisite Variety)
+#### 2.1.2 Ashby必要多样性定律 (Ashby's Law of Requisite Variety)
 
 - 定义：V_controller ≥ V_system（控制器复杂度必须≥被控系统）
 - 视角：控制论（核心）
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#ashby必要多样性定律-ashbys-law-of-requisite-variety-七视角)
 
-### B
+### 2.2 B
 
-#### BFT (Byzantine Fault Tolerance)
+#### 2.2.1 BFT (Byzantine Fault Tolerance)
 
 - 中文：拜占庭容错
 - 定义：系统能容忍拜占庭错误（恶意节点）的能力
@@ -123,202 +123,202 @@
 - 视角：分布式系统（核心）
 - 相关：[FLP不可能定理](#flp不可能定理-flp-impossibility-theorem), 共识算法（Paxos, Raft, PBFT）
 
-#### BQP (Bounded-Error Quantum Polynomial Time)
+#### 2.2.2 BQP (Bounded-Error Quantum Polynomial Time)
 
 - 中文：有界误差量子多项式时间
 - 定义：量子计算机在多项式时间内可解的问题类
 - 视角：计算理论、量子计算
 - 相关：[P vs NP](#p-vs-np问题), 量子计算
 
-### C
+### 2.3 C
 
-#### CAP定理 (CAP Theorem)
+#### 2.3.1 CAP定理 (CAP Theorem)
 
 - 定义：C(一致性) ∧ A(可用性) ∧ P(分区容错)不可兼得
 - 视角：分布式系统（核心）、信息论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#cap定理-cap-theorem-七视角)
 
-#### Chomsky层级 (Chomsky Hierarchy)
+#### 2.3.2 Chomsky层级 (Chomsky Hierarchy)
 
 - 定义：形式语言的四层分类（TYPE-0到TYPE-3）
 - 映射：RE ⊃ CSL ⊃ CFL ⊃ REG
 - 视角：形式语言（核心）、AI模型
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#chomsky层级-chomsky-hierarchy-七视角)
 
-### D
+### 2.4 D
 
-#### Data Rate定理 (Data Rate Theorem)
+#### 2.4.1 Data Rate定理 (Data Rate Theorem)
 
 - 定义：R ≥ Σlog₂λᵢ（信息速率下界）
 - 视角：控制论（核心）、信息论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#data-rate定理-data-rate-theorem-七视角)
 
-#### DIKWP模型
+#### 2.4.2 DIKWP模型
 
 - 定义：数据(D)→信息(I)→知识(K)→智慧(W)→目的(P)
 - 视角：信息论、AI模型、形式语言
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#dikwp模型-七视角)
 
-### E
+### 2.5 E
 
-#### Entropy (熵)
+#### 2.5.1 Entropy (熵)
 
 - 定义：H(X) = -Σ p(x)log p(x)（不确定性度量）
 - 视角：信息论（核心）、控制论、分布式
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#熵-entropy-七视角)
 
-### F
+### 2.6 F
 
-#### FLP不可能定理 (FLP Impossibility Theorem)
+#### 2.6.1 FLP不可能定理 (FLP Impossibility Theorem)
 
 - 定义：异步网络中不存在同时满足一致性、终止性、容错性的共识协议
 - 视角：分布式系统（核心）
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#flp不可能定理-flp-impossibility-theorem-七视角)
 
-#### 反身性 (Reflexivity)
+#### 2.6.2 反身性 (Reflexivity)
 
 - 定义：系统重写自身规则的能力
 - 形式化：公理A5: ⟦φ⟧ ∈ 𝒮 → ∃ψ. ⟦ψ⟧ = ⟦φ⟧
 - 视角：七视角通用核心概念
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#反身性-reflexivity-七视角)
 
-### G
+### 2.7 G
 
-#### Gödel不完备定理 (Gödel's Incompleteness Theorems)
+#### 2.7.1 Gödel不完备定理 (Gödel's Incompleteness Theorems)
 
 - 第一定理：任何一致的、足够强的形式系统都包含不可证命题
 - 第二定理：系统无法证明自身一致性
 - 视角：形式语言（核心）、AI模型、图灵可计算
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#gödel不完备定理-gödels-incompleteness-theorems-七视角)
 
-#### Gold可学习性 (Gold Learnability Theory)
+#### 2.7.2 Gold可学习性 (Gold Learnability Theory)
 
 - 定义：从正例（或完全文本）在极限意义下学习语言类的理论
 - 核心结果：超限类不可从正例学习
 - 视角：AI模型（核心）、形式语言
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#gold可学习性-gold-learnability-theory-七视角)
 
-### H
+### 2.8 H
 
-#### 停机问题 (Halting Problem)
+#### 2.8.1 停机问题 (Halting Problem)
 
 - 定义：判定任意程序是否停机是不可判定的
 - 证明：对角线论证（Cantor, Gödel, Turing）
 - 视角：图灵可计算（核心）、形式语言
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#停机问题-halting-problem-七视角)
 
-### I
+### 2.9 I
 
-#### 隔离 (Isolation)
+#### 2.9.1 隔离 (Isolation)
 
 - 定义：系统间信息流受控的性质
 - 度量：隔离熵 H_isolation = H(S₁|S₂)
 - 视角：图灵可计算（核心）、信息论、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#隔离-isolation-七视角)
 
-#### 互信息 (Mutual Information)
+#### 2.9.2 互信息 (Mutual Information)
 
 - 定义：I(X;Y) = H(X) + H(Y) - H(X,Y)
 - 直观：X和Y共享的信息量
 - 视角：信息论（核心）、AI模型、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#互信息-mutual-information-七视角)
 
-### K
+### 2.10 K
 
-#### Kolmogorov复杂度 (Kolmogorov Complexity)
+#### 2.10.1 Kolmogorov复杂度 (Kolmogorov Complexity)
 
 - 定义：K(x) = min{|p| : U(p) = x}（最短程序长度）
 - 性质：不可计算
 - 视角：信息论（核心）、图灵可计算、形式语言
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#kolmogorov复杂度-kolmogorov-complexity-七视角)
 
-### L
+### 2.11 L
 
-#### Landauer极限 (Landauer Limit)
+#### 2.11.1 Landauer极限 (Landauer Limit)
 
 - 定义：E_min = kT ln2（擦除1比特信息的最小能耗）
 - 意义：信息擦除的物理代价
 - 视角：信息论（核心）、图灵可计算、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#landauer极限-landauer-limit-七视角)
 
-### M
+### 2.12 M
 
-#### Meta-learning (元学习)
+#### 2.12.1 Meta-learning (元学习)
 
 - 定义：学习如何学习
 - 等价性：≡ 2阶反身性 ≡ 2阶反馈控制
 - 视角：AI模型（核心）、形式语言、控制论
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#meta-learning-七视角)
 
-#### 冯·诺依曼瓶颈 (Von Neumann Bottleneck)
+#### 2.12.2 冯·诺依曼瓶颈 (Von Neumann Bottleneck)
 
 - 定义：CPU与内存间的速度差距（数千倍）
 - 根源：指令与数据共享总线
 - 视角：冯·诺依曼架构（核心）
 - 相关：三大祸根（冯·诺依曼架构的三个根本缺陷）, 内存墙
 
-### P
+### 2.13 P
 
-#### PAC学习 (Probably Approximately Correct Learning)
+#### 2.13.1 PAC学习 (Probably Approximately Correct Learning)
 
 - 定义：以高概率学习近似正确假设的框架
 - 关键参数：ε（误差）、δ（置信度）
 - 视角：AI模型（核心）
 - 相关：[VC维](#vc维-vapnik-chervonenkis-dimension), 样本复杂度（m = O((1/ε) log(1/δ))）
 
-#### P vs NP问题
+#### 2.13.2 P vs NP问题
 
 - 问题：P = NP?（P是否等于NP）
 - 意义：高效算法是否总能找到
 - 视角：计算理论（核心）、AI模型
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#p-vs-np问题-p-versus-np-problem-七视角)
 
-#### Popek-Goldberg定理
+#### 2.13.3 Popek-Goldberg定理
 
 - 定义：虚拟化的充要条件（敏感指令⊆特权指令）
 - 反例：x86未满足（后续通过硬件辅助解决）
 - 视角：图灵可计算（核心）、冯·诺依曼架构
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#popek-goldberg定理-popek-goldberg-virtualization-theorem-七视角)
 
-### R
+### 2.14 R
 
-#### Rice定理 (Rice's Theorem)
+#### 2.14.1 Rice定理 (Rice's Theorem)
 
 - 定义：所有非平凡的语义性质都是不可判定的
 - 证明：归约到停机问题
 - 视角：图灵可计算（核心）、形式语言
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#rice定理-rices-theorem-七视角)
 
-### S
+### 2.15 S
 
-#### 三票理论 (Three Tickets Theory)
+#### 2.15.1 三票理论 (Three Tickets Theory)
 
 - 定义：文明三要素 = 能量盈余 + 信息外化 + 冗余容错
 - 2025状态：三票齐备，文明加速
 - 视角：信息论、图灵可计算、分布式
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#三票理论-three-tickets-theory-七视角)
 
-#### Shannon熵 (Shannon Entropy)
+#### 2.15.2 Shannon熵 (Shannon Entropy)
 
 - 同：[熵 (Entropy)](#entropy-熵)
 
-#### 主权矩阵 (Sovereignty Matrix)
+#### 2.15.3 主权矩阵 (Sovereignty Matrix)
 
 - 定义：九维系统控制能力度量
 - 维度：指令拦截、地址重映射、系统调用、内核模块、硬件直通、网络协议、文件系统、内存限制、生命周期
 - 视角：图灵可计算（核心）、控制论、分布式
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#主权矩阵-sovereignty-matrix-七视角)
 
-### T
+### 2.16 T
 
-#### 图灵完备性 (Turing Completeness)
+#### 2.16.1 图灵完备性 (Turing Completeness)
 
 - 定义：计算能力等价于图灵机（可模拟任何算法）
 - 条件：无限内存 + 条件分支 + 循环
 - 视角：图灵可计算（核心）、形式语言、AI模型
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#图灵完备性-turing-completeness-七视角)
 
-#### 三元视角 (Triadic Perspective)
+#### 2.16.2 三元视角 (Triadic Perspective)
 
 - 中文：控制·执行·数据
 - 定义：将系统分解为控制层(Control)、执行层(Execution)、数据层(Data)
@@ -327,9 +327,9 @@
 - 应用：形式语义建模、架构分析、性能优化
 - 详见：[Program_Algorithm_Perspective](Program_Algorithm_Perspective/README.md)
 
-### U
+### 2.17 U
 
-#### UH-Cost 统一元模型
+#### 2.17.1 UH-Cost 统一元模型
 
 - 英文：Unified Hypergraph-Cost Model
 - 定义：用于建模编程语言语义、算法复杂度、设计模式和系统架构的统一形式化框架
@@ -343,9 +343,9 @@
 - 工具链：Coq/Lean4/K-Framework/mCRL2/UPPAAL
 - 详见：[Program_Algorithm_Perspective](Program_Algorithm_Perspective/README.md) | [CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#uh-cost-统一元模型-unified-hypergraph-cost-model-新增编程算法视角)
 
-### V
+### 2.18 V
 
-#### VC维 (Vapnik-Chervonenkis Dimension)
+#### 2.18.1 VC维 (Vapnik-Chervonenkis Dimension)
 
 - 定义：假设空间能打散的最大点数
 - 意义：模型容量的度量
@@ -353,16 +353,16 @@
 - 视角：AI模型（核心）
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#vc维-vapnik-chervonenkis-dimension-七视角)
 
-#### 虚拟化 (Virtualization)
+#### 2.18.2 虚拟化 (Virtualization)
 
 - 定义：通过软件抽象层将物理资源映射为虚拟资源
 - 类型：全虚拟化、半虚拟化、硬件辅助
 - 视角：图灵可计算（核心）、冯·诺依曼架构
 - 详见：[CONCEPT_CROSS_INDEX.md](CONCEPT_CROSS_INDEX.md#虚拟化-virtualization-七视角)
 
-### X
+### 2.19 X
 
-#### 形式语言 (Formal Language)
+#### 2.19.1 形式语言 (Formal Language)
 
 - 定义：L ⊆ Σ*（字母表上的字符串集合）
 - 分类：[Chomsky层级](#chomsky层级-chomsky-hierarchy)
@@ -371,9 +371,9 @@
 
 ---
 
-## 按视角分类
+## 3 按视角分类
 
-### 形式语言视角
+### 3.1 形式语言视角
 
 - [Chomsky层级](#chomsky层级-chomsky-hierarchy)
 - [反身性](#反身性-reflexivity)
@@ -384,7 +384,7 @@
 - 语义域 (Semantic Domain) - 意义空间
 - 类型系统 (Type System) - 类型约束
 
-### AI模型视角
+### 3.2 AI模型视角
 
 - [Gold可学习性](#gold可学习性-gold-learnability-theory)
 - [VC维](#vc维-vapnik-chervonenkis-dimension)
@@ -395,7 +395,7 @@
 - Transformer - 现代大模型核心架构
 - 注意力机制 (Attention Mechanism) - Self-Attention, Cross-Attention
 
-### 信息论视角
+### 3.3 信息论视角
 
 - [熵 (Entropy)](#entropy-熵)
 - [互信息](#互信息-mutual-information)
@@ -406,7 +406,7 @@
 - 率失真理论 (Rate-Distortion) - 压缩与失真权衡 R(D)
 - 信息瓶颈 (Information Bottleneck) - 最小化I(X;T) + βI(T;Y)
 
-### 图灵可计算视角
+### 3.4 图灵可计算视角
 
 - [图灵完备性](#图灵完备性-turing-completeness)
 - [停机问题](#停机问题-halting-problem)
@@ -419,7 +419,7 @@
 - [隔离](#隔离-isolation)
 - [三票理论](#三票理论-three-tickets-theory)
 
-### 控制论视角
+### 3.5 控制论视角
 
 - [Ashby必要多样性定律](#ashby必要多样性定律-ashbys-law-of-requisite-variety)
 - [Data Rate定理](#data-rate定理-data-rate-theorem)
@@ -429,7 +429,7 @@
 - MPC (Model Predictive Control) - 滚动优化控制
 - PID控制 - u = Kp·e + Ki∫e + Kd·de/dt
 
-### 冯·诺依曼架构视角
+### 3.6 冯·诺依曼架构视角
 
 - [冯·诺依曼瓶颈](#冯诺依曼瓶颈-von-neumann-bottleneck)
 - 三大祸根 (Three Curses) - 瓶颈、串行、脆弱
@@ -439,7 +439,7 @@
 - DMA (Direct Memory Access) - 直接内存访问，无需CPU
 - IOMMU - IO内存管理单元，虚拟化支持
 
-### 分布式系统视角
+### 3.7 分布式系统视角
 
 - [CAP定理](#cap定理-cap-theorem)
 - [FLP不可能定理](#flp不可能定理-flp-impossibility-theorem)
@@ -450,7 +450,7 @@
 - PBFT (Practical BFT) - 实用拜占庭容错，3f+1节点
 - 最终一致性 (Eventual Consistency) - BASE模型，弱一致性
 
-### 编程算法设计视角 ✨
+### 3.8 编程算法设计视角 ✨
 
 - [UH-Cost 统一元模型](#uh-cost-统一元模型)
 - [三元视角](#三元视角-triadic-perspective)
@@ -468,7 +468,7 @@
 
 ---
 
-## 核心术语 (Top 50)
+## 4 核心术语 (Top 50)
 
 以下是最常用、最核心的50个术语，按使用频率和重要性排序：
 
@@ -525,7 +525,7 @@
 
 ---
 
-## 缩写表
+## 5 缩写表
 
 | 缩写 | 全称 | 中文 | 类别 |
 |-----|------|------|------|
@@ -550,16 +550,16 @@
 
 ---
 
-## 补充说明
+## 6 补充说明
 
-### 如何使用本术语表
+### 6.1 如何使用本术语表
 
 1. **快速查词**: 按字母索引或视角分类查找
 2. **深入学习**: 点击"详见"链接查看完整分析
 3. **跨视角理解**: 关注"视角"标签，理解概念的多维视角
 4. **建立联系**: 通过"相关"链接建立概念网络
 
-### 术语说明规范
+### 6.2 术语说明规范
 
 每个术语包含：
 
@@ -569,7 +569,7 @@
 - **相关**: 关联的其他术语
 - **详见**: 更详细文档的链接
 
-### 持续更新
+### 6.3 持续更新
 
 本术语表随项目发展持续更新：
 
@@ -579,7 +579,7 @@
 
 ---
 
-## 相关资源
+## 7 相关资源
 
 - [完整概念分析](CONCEPT_CROSS_INDEX.md) - 30个核心概念的七视角详解
 - [快速参考](QUICK_REFERENCE.md) - 核心公式和定理速查

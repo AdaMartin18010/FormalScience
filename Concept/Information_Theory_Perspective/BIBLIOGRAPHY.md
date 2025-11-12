@@ -10,118 +10,118 @@
 ## 📋 目录
 
 - [信息论多视角分析 - 完整参考文献](#信息论多视角分析---完整参考文献)
-  - [📋 目录](#-目录)
-  - [概述](#概述)
+  - [1 概述](#1-概述)
+  - [1 . 经典信息论基础](#1-经典信息论基础)
   - [1. 经典信息论基础](#1-经典信息论基础)
     - [1.1 奠基性文献](#11-奠基性文献)
-      - [Shannon, C. E. (1948)](#shannon-c-e-1948)
-      - [Shannon, C. E. (1949)](#shannon-c-e-1949)
-      - [Wiener, N. (1948)](#wiener-n-1948)
+      - [1.1.1 Shannon, C. E. (1948)](#111-shannon-c-e-1948)
+      - [1.1.2 Shannon, C. E. (1949)](#112-shannon-c-e-1949)
+      - [1.1.3 Wiener, N. (1948)](#113-wiener-n-1948)
     - [1.2 经典教科书](#12-经典教科书)
-      - [Cover, T. M., \& Thomas, J. A. (2006)](#cover-t-m--thomas-j-a-2006)
-      - [MacKay, D. J. C. (2003)](#mackay-d-j-c-2003)
-      - [Gallager, R. G. (1968)](#gallager-r-g-1968)
-  - [2. 量子信息论](#2-量子信息论)
-    - [2.1 奠基性文献](#21-奠基性文献)
-      - [Nielsen, M. A., \& Chuang, I. L. (2010)](#nielsen-m-a--chuang-i-l-2010)
-      - [Wilde, M. M. (2013)](#wilde-m-m-2013)
+      - [1.2.1 Cover, T. M., & Thomas, J. A. (2006)](#121-cover-t-m-thomas-j-a-2006)
+      - [1.2.2 MacKay, D. J. C. (2003)](#122-mackay-d-j-c-2003)
+      - [1.2.3 Gallager, R. G. (1968)](#123-gallager-r-g-1968)
+  - [2 . 量子信息论](#2-量子信息论)
+    - [2.1.1 Nielsen, M. A., & Chuang, I. L. (2010)](#211-nielsen-m-a-chuang-i-l-2010)
+      - [2.1.2 Wilde, M. M. (2013)](#212-wilde-m-m-2013)
+      - [2 Wilde, M. M. (2013)](#2-wilde-m-m-2013)
     - [2.2 重要研究论文](#22-重要研究论文)
-      - [Preskill, J. (2018)](#preskill-j-2018)
-      - [Shor, P. W. (1994)](#shor-p-w-1994)
-  - [3. 语义信息论](#3-语义信息论)
+      - [2.2.1 Preskill, J. (2018)](#221-preskill-j-2018)
+      - [2.2.2 Shor, P. W. (1994)](#222-shor-p-w-1994)
+  - [3 . 语义信息论](#3-语义信息论)
     - [3.1 经典文献](#31-经典文献)
-      - [Bar-Hillel, Y., \& Carnap, R. (1953)](#bar-hillel-y--carnap-r-1953)
-      - [Floridi, L. (2004)](#floridi-l-2004)
+      - [3.1.1 Bar-Hillel, Y., & Carnap, R. (1953)](#311-bar-hillel-y-carnap-r-1953)
+      - [3.1.2 Floridi, L. (2004)](#312-floridi-l-2004)
     - [3.2 现代发展](#32-现代发展)
-      - [Floridi, L. (2011)](#floridi-l-2011)
-  - [4. 生物信息论](#4-生物信息论)
-    - [4.1 经典文献](#41-经典文献)
-      - [Eigen, M. (1971)](#eigen-m-1971)
-      - [Maynard Smith, J. (2000)](#maynard-smith-j-2000)
-    - [4.2 现代发展](#42-现代发展)
-      - [Adami, C. (2016)](#adami-c-2016)
-  - [5. 算法复杂度理论](#5-算法复杂度理论)
-    - [5.1 经典文献](#51-经典文献)
-      - [Kolmogorov, A. N. (1965)](#kolmogorov-a-n-1965)
-      - [Solomonoff, R. J. (1964)](#solomonoff-r-j-1964)
-    - [5.2 现代发展](#52-现代发展)
-      - [Li, M., \& Vitányi, P. (2019)](#li-m--vitányi-p-2019)
-  - [6. 热力学信息论](#6-热力学信息论)
-    - [6.1 经典文献](#61-经典文献)
-      - [Landauer, R. (1961)](#landauer-r-1961)
-      - [Bennett, C. H. (1982)](#bennett-c-h-1982)
-    - [6.2 现代发展](#62-现代发展)
-      - [Parrondo, J. M. R., Horowitz, J. M., \& Sagawa, T. (2015)](#parrondo-j-m-r-horowitz-j-m--sagawa-t-2015)
-  - [7. 几何信息论](#7-几何信息论)
-    - [7.1 经典文献](#71-经典文献)
-      - [Rao, C. R. (1945)](#rao-c-r-1945)
-      - [Amari, S. (1985)](#amari-s-1985)
-    - [7.2 现代发展](#72-现代发展)
-      - [Amari, S. (2016)](#amari-s-2016)
-  - [8. 网络信息论](#8-网络信息论)
-    - [8.1 经典文献](#81-经典文献)
-      - [Ahlswede, R., Cai, N., Li, S. Y. R., \& Yeung, R. W. (2000)](#ahlswede-r-cai-n-li-s-y-r--yeung-r-w-2000)
-      - [Cover, T. M., \& El Gamal, A. (1979)](#cover-t-m--el-gamal-a-1979)
-    - [8.2 现代发展](#82-现代发展)
-      - [El Gamal, A., \& Kim, Y. H. (2011)](#el-gamal-a--kim-y-h-2011)
-  - [9. 人工智能与信息论](#9-人工智能与信息论)
-    - [9.1 经典文献](#91-经典文献)
-      - [Tishby, N., Pereira, F. C., \& Bialek, W. (1999)](#tishby-n-pereira-f-c--bialek-w-1999)
-      - [Alemi, A. A., Fischer, I., Dillon, J. V., \& Murphy, K. (2017)](#alemi-a-a-fischer-i-dillon-j-v--murphy-k-2017)
-    - [9.2 现代发展](#92-现代发展)
-      - [Belghazi, M. I., Baratin, A., Rajeswar, S., Ozair, S., Bengio, Y., Courville, A., \& Hjelm, R. D. (2018)](#belghazi-m-i-baratin-a-rajeswar-s-ozair-s-bengio-y-courville-a--hjelm-r-d-2018)
-  - [10. 哲学与信息论](#10-哲学与信息论)
-    - [10.1 经典文献](#101-经典文献)
-      - [Dretske, F. I. (1981)](#dretske-f-i-1981)
-      - [Floridi, L. (2013)](#floridi-l-2013)
-    - [10.2 现代发展](#102-现代发展)
-      - [Floridi, L. (2019)](#floridi-l-2019)
-  - [11. 应用领域](#11-应用领域)
+      - [3.2.1 Floridi, L. (2011)](#321-floridi-l-2011)
+  - [4 . 生物信息论](#4-生物信息论)
+    - [4.1.1 Eigen, M. (1971)](#411-eigen-m-1971)
+      - [4.1.2 Maynard Smith, J. (2000)](#412-maynard-smith-j-2000)
+      - [2 Maynard Smith, J. (2000)](#2-maynard-smith-j-2000)
+    - [4.2.1 Adami, C. (2016)](#421-adami-c-2016)
+      - [1 Adami, C. (2016)](#1-adami-c-2016)
+  - [5 . 算法复杂度理论](#5-算法复杂度理论)
+    - [5.1.1 Kolmogorov, A. N. (1965)](#511-kolmogorov-a-n-1965)
+      - [5.1.2 Solomonoff, R. J. (1964)](#512-solomonoff-r-j-1964)
+      - [2 Solomonoff, R. J. (1964)](#2-solomonoff-r-j-1964)
+    - [5.2.1 Li, M., & Vitányi, P. (2019)](#521-li-m-vitányi-p-2019)
+      - [1 Li, M., & Vitányi, P. (2019)](#1-li-m-vitányi-p-2019)
+  - [6 . 热力学信息论](#6-热力学信息论)
+    - [6.1.1 Landauer, R. (1961)](#611-landauer-r-1961)
+      - [6.1.2 Bennett, C. H. (1982)](#612-bennett-c-h-1982)
+      - [2 Bennett, C. H. (1982)](#2-bennett-c-h-1982)
+    - [6.2.1 Parrondo, J. M. R., Horowitz, J. M., & Sagawa, T. (2015)](#621-parrondo-j-m-r-horowitz-j-m-sagawa-t-2015)
+      - [1 Parrondo, J. M. R., Horowitz, J. M., & Sagawa, T. (2015)](#1-parrondo-j-m-r-horowitz-j-m-sagawa-t-2015)
+  - [7 . 几何信息论](#7-几何信息论)
+    - [7.1.1 Rao, C. R. (1945)](#711-rao-c-r-1945)
+      - [7.1.2 Amari, S. (1985)](#712-amari-s-1985)
+      - [2 Amari, S. (1985)](#2-amari-s-1985)
+    - [7.2.1 Amari, S. (2016)](#721-amari-s-2016)
+      - [1 Amari, S. (2016)](#1-amari-s-2016)
+  - [8 . 网络信息论](#8-网络信息论)
+    - [8.1.1 Ahlswede, R., Cai, N., Li, S. Y. R., & Yeung, R. W. (2000)](#811-ahlswede-r-cai-n-li-s-y-r-yeung-r-w-2000)
+      - [8.1.2 Cover, T. M., & El Gamal, A. (1979)](#812-cover-t-m-el-gamal-a-1979)
+      - [2 Cover, T. M., & El Gamal, A. (1979)](#2-cover-t-m-el-gamal-a-1979)
+    - [8.2.1 El Gamal, A., & Kim, Y. H. (2011)](#821-el-gamal-a-kim-y-h-2011)
+      - [1 El Gamal, A., & Kim, Y. H. (2011)](#1-el-gamal-a-kim-y-h-2011)
+  - [9 . 人工智能与信息论](#9-人工智能与信息论)
+    - [9.1.1 Tishby, N., Pereira, F. C., & Bialek, W. (1999)](#911-tishby-n-pereira-f-c-bialek-w-1999)
+      - [9.1.2 Alemi, A. A., Fischer, I., Dillon, J. V., & Murphy, K. (2017)](#912-alemi-a-a-fischer-i-dillon-j-v-murphy-k-2017)
+      - [2 Alemi, A. A., Fischer, I., Dillon, J. V., & Murphy, K. (2017)](#2-alemi-a-a-fischer-i-dillon-j-v-murphy-k-2017)
+    - [9.2.1 Belghazi, M. I., Baratin, A., Rajeswar, S., Ozair, S., Bengio, Y., Courville, A., & Hjelm, R. D. (2018)](#921-belghazi-m-i-baratin-a-rajeswar-s-ozair-s-bengio-y-courville-a-hjelm-r-d-2018)
+      - [1 Belghazi, M. I., Baratin, A., Rajeswar, S., Ozair, S., Bengio, Y., Courville, A., & Hjelm, R. D. (2018)](#1-belghazi-m-i-baratin-a-rajeswar-s-ozair-s-bengio-y-courville-a-hjelm-r-d-2018)
+  - [10 . 哲学与信息论](#10-哲学与信息论)
+    - [10.1.1 Dretske, F. I. (1981)](#1011-dretske-f-i-1981)
+      - [10.1.2 Floridi, L. (2013)](#1012-floridi-l-2013)
+      - [2 Floridi, L. (2013)](#2-floridi-l-2013)
+    - [10.2.1 Floridi, L. (2019)](#1021-floridi-l-2019)
+      - [1 Floridi, L. (2019)](#1-floridi-l-2019)
+  - [11 . 应用领域](#11-应用领域)
     - [11.1 通信系统](#111-通信系统)
-      - [Proakis, J. G., \& Salehi, M. (2008)](#proakis-j-g--salehi-m-2008)
-      - [Tse, D., \& Viswanath, P. (2005)](#tse-d--viswanath-p-2005)
+      - [11.1.1 Proakis, J. G., & Salehi, M. (2008)](#1111-proakis-j-g-salehi-m-2008)
+      - [11.1.2 Tse, D., & Viswanath, P. (2005)](#1112-tse-d-viswanath-p-2005)
     - [11.2 数据压缩](#112-数据压缩)
-      - [Salomon, D. (2007)](#salomon-d-2007)
-      - [Sayood, K. (2017)](#sayood-k-2017)
+      - [11.2.1 Salomon, D. (2007)](#1121-salomon-d-2007)
+      - [11.2.2 Sayood, K. (2017)](#1122-sayood-k-2017)
     - [11.3 机器学习](#113-机器学习)
-      - [Murphy, K. P. (2012)](#murphy-k-p-2012)
-      - [Goodfellow, I., Bengio, Y., \& Courville, A. (2016)](#goodfellow-i-bengio-y--courville-a-2016)
-  - [12. 前沿研究](#12-前沿研究)
+      - [11.3.1 Murphy, K. P. (2012)](#1131-murphy-k-p-2012)
+      - [11.3.2 Goodfellow, I., Bengio, Y., & Courville, A. (2016)](#1132-goodfellow-i-bengio-y-courville-a-2016)
+  - [12 . 前沿研究](#12-前沿研究)
     - [12.1 量子机器学习](#121-量子机器学习)
-      - [Biamonte, J., Wittek, P., Pancotti, N., Rebentrost, P., Wiebe, N., \& Lloyd, S. (2017)](#biamonte-j-wittek-p-pancotti-n-rebentrost-p-wiebe-n--lloyd-s-2017)
+      - [12.1.1 Biamonte, J., Wittek, P., Pancotti, N., Rebentrost, P., Wiebe, N., & Lloyd, S. (2017)](#1211-biamonte-j-wittek-p-pancotti-n-rebentrost-p-wiebe-n-lloyd-s-2017)
     - [12.2 信息论与生物学](#122-信息论与生物学)
-      - [Adami, C. (2012)](#adami-c-2012)
+      - [12.2.1 Adami, C. (2012)](#1221-adami-c-2012)
     - [12.3 信息论与社会科学](#123-信息论与社会科学)
-      - [Cover, T. M., \& Thomas, J. A. (2006)1](#cover-t-m--thomas-j-a-20061)
-  - [13. 在线资源](#13-在线资源)
+      - [12.3.1 Cover, T. M., & Thomas, J. A. (2006)1](#1231-cover-t-m-thomas-j-a-20061)
+  - [13 . 在线资源](#13-在线资源)
     - [13.1 权威网站](#131-权威网站)
-      - [Wikipedia - Information Theory](#wikipedia---information-theory)
-      - [IEEE Information Theory Society](#ieee-information-theory-society)
+      - [13.1.1 Wikipedia - Information Theory](#1311-wikipedia---information-theory)
+      - [13.1.2 IEEE Information Theory Society](#1312-ieee-information-theory-society)
     - [13.2 学术数据库](#132-学术数据库)
-      - [IEEE Xplore](#ieee-xplore)
-      - [arXiv](#arxiv)
-  - [14. 引用格式说明](#14-引用格式说明)
+      - [13.2.1 IEEE Xplore](#1321-ieee-xplore)
+      - [13.2.2 arXiv](#1322-arxiv)
+  - [14 . 引用格式说明](#14-引用格式说明)
     - [14.1 期刊论文格式](#141-期刊论文格式)
     - [14.2 会议论文格式](#142-会议论文格式)
     - [14.3 书籍格式](#143-书籍格式)
     - [14.4 网页格式](#144-网页格式)
-  - [15. 更新记录](#15-更新记录)
-  - [16. 使用指南](#16-使用指南)
+  - [15 . 更新记录](#15-更新记录)
+  - [16 . 使用指南](#16-使用指南)
     - [16.1 如何查找文献](#161-如何查找文献)
     - [16.2 如何引用文献](#162-如何引用文献)
     - [16.3 如何扩展文献](#163-如何扩展文献)
 
 ---
 
-## 概述
+## 1 概述
 
 本文档提供了信息论多视角分析项目的完整参考文献列表，按照主题分类组织，包含经典文献、现代发展和前沿研究。
 
-## 1. 经典信息论基础
+## 1 . 经典信息论基础
 
 ### 1.1 奠基性文献
 
-#### Shannon, C. E. (1948)
+#### 1.1.1 Shannon, C. E. (1948)
 
 **标题**：A Mathematical Theory of Communication
 **期刊**：Bell System Technical Journal
@@ -131,7 +131,7 @@
 **引用次数**：50,000+
 **关键词**：信息论、熵、信道容量、编码定理
 
-#### Shannon, C. E. (1949)
+#### 1.1.2 Shannon, C. E. (1949)
 
 **标题**：Communication in the Presence of Noise
 **期刊**：Proceedings of the IRE
@@ -141,7 +141,7 @@
 **引用次数**：15,000+
 **关键词**：噪声信道、编码定理、信道容量
 
-#### Wiener, N. (1948)
+#### 1.1.3 Wiener, N. (1948)
 
 **标题**：Cybernetics: Or Control and Communication in the Animal and the Machine
 **出版社**：MIT Press
@@ -152,7 +152,7 @@
 
 ### 1.2 经典教科书
 
-#### Cover, T. M., & Thomas, J. A. (2006)
+#### 1.2.1 Cover, T. M., & Thomas, J. A. (2006)
 
 **标题**：Elements of Information Theory
 **出版社**：Wiley-Interscience
@@ -161,7 +161,7 @@
 **引用次数**：25,000+
 **关键词**：信息论、熵、互信息、信道容量
 
-#### MacKay, D. J. C. (2003)
+#### 1.2.2 MacKay, D. J. C. (2003)
 
 **标题**：Information Theory, Inference and Learning Algorithms
 **出版社**：Cambridge University Press
@@ -170,7 +170,7 @@
 **引用次数**：20,000+
 **关键词**：信息论、机器学习、推理、学习算法
 
-#### Gallager, R. G. (1968)
+#### 1.2.3 Gallager, R. G. (1968)
 
 **标题**：Information Theory and Reliable Communication
 **出版社**：Wiley
@@ -179,11 +179,11 @@
 **引用次数**：8,000+
 **关键词**：信息论、可靠通信、编码理论
 
-## 2. 量子信息论
+## 2 . 量子信息论
 
 ### 2.1 奠基性文献
 
-#### Nielsen, M. A., & Chuang, I. L. (2010)
+#### 2.1.1 Nielsen, M. A., & Chuang, I. L. (2010)
 
 **标题**：Quantum Computation and Quantum Information
 **出版社**：Cambridge University Press
@@ -192,7 +192,7 @@
 **引用次数**：30,000+
 **关键词**：量子计算、量子信息、量子算法
 
-#### Wilde, M. M. (2013)
+#### 2.1.2 Wilde, M. M. (2013)
 
 **标题**：Quantum Information Theory
 **出版社**：Cambridge University Press
@@ -203,7 +203,7 @@
 
 ### 2.2 重要研究论文
 
-#### Preskill, J. (2018)
+#### 2.2.1 Preskill, J. (2018)
 
 **标题**：Quantum Computing in the NISQ era and beyond
 **期刊**：Quantum
@@ -213,7 +213,7 @@
 **引用次数**：3,000+
 **关键词**：量子计算、NISQ、量子优势
 
-#### Shor, P. W. (1994)
+#### 2.2.2 Shor, P. W. (1994)
 
 **标题**：Algorithms for quantum computation: discrete logarithms and factoring
 **期刊**：Proceedings of the 35th Annual Symposium on Foundations of Computer Science
@@ -223,11 +223,11 @@
 **引用次数**：8,000+
 **关键词**：量子算法、Shor算法、大数分解
 
-## 3. 语义信息论
+## 3 . 语义信息论
 
 ### 3.1 经典文献
 
-#### Bar-Hillel, Y., & Carnap, R. (1953)
+#### 3.1.1 Bar-Hillel, Y., & Carnap, R. (1953)
 
 **标题**：Semantic Information
 **期刊**：British Journal for the Philosophy of Science
@@ -237,7 +237,7 @@
 **引用次数**：2,000+
 **关键词**：语义信息、逻辑概率、信息内容
 
-#### Floridi, L. (2004)
+#### 3.1.2 Floridi, L. (2004)
 
 **标题**：Outline of a Theory of Strongly Semantic Information
 **期刊**：Minds and Machines
@@ -249,7 +249,7 @@
 
 ### 3.2 现代发展
 
-#### Floridi, L. (2011)
+#### 3.2.1 Floridi, L. (2011)
 
 **标题**：The Philosophy of Information
 **出版社**：Oxford University Press
@@ -258,11 +258,11 @@
 **引用次数**：3,000+
 **关键词**：信息哲学、语义信息、信息伦理学
 
-## 4. 生物信息论
+## 4 . 生物信息论
 
 ### 4.1 经典文献
 
-#### Eigen, M. (1971)
+#### 4.1.1 Eigen, M. (1971)
 
 **标题**：Selforganization of matter and the evolution of biological macromolecules
 **期刊**：Naturwissenschaften
@@ -272,7 +272,7 @@
 **引用次数**：5,000+
 **关键词**：分子进化、自组织、生物大分子
 
-#### Maynard Smith, J. (2000)
+#### 4.1.2 Maynard Smith, J. (2000)
 
 **标题**：The concept of information in biology
 **期刊**：Philosophy of Science
@@ -284,7 +284,7 @@
 
 ### 4.2 现代发展
 
-#### Adami, C. (2016)
+#### 4.2.1 Adami, C. (2016)
 
 **标题**：Information Theory in Molecular Biology
 **出版社**：Cambridge University Press
@@ -293,11 +293,11 @@
 **引用次数**：2,000+
 **关键词**：分子生物学、信息论、进化
 
-## 5. 算法复杂度理论
+## 5 . 算法复杂度理论
 
 ### 5.1 经典文献
 
-#### Kolmogorov, A. N. (1965)
+#### 5.1.1 Kolmogorov, A. N. (1965)
 
 **标题**：Three approaches to the quantitative definition of information
 **期刊**：Problems of Information Transmission
@@ -306,7 +306,7 @@
 **引用次数**：3,000+
 **关键词**：Kolmogorov复杂度、算法信息论
 
-#### Solomonoff, R. J. (1964)
+#### 5.1.2 Solomonoff, R. J. (1964)
 
 **标题**：A formal theory of inductive inference
 **期刊**：Information and Control
@@ -318,7 +318,7 @@
 
 ### 5.2 现代发展
 
-#### Li, M., & Vitányi, P. (2019)
+#### 5.2.1 Li, M., & Vitányi, P. (2019)
 
 **标题**：An Introduction to Kolmogorov Complexity and Its Applications
 **出版社**：Springer
@@ -327,11 +327,11 @@
 **引用次数**：5,000+
 **关键词**：Kolmogorov复杂度、算法信息论、应用
 
-## 6. 热力学信息论
+## 6 . 热力学信息论
 
 ### 6.1 经典文献
 
-#### Landauer, R. (1961)
+#### 6.1.1 Landauer, R. (1961)
 
 **标题**：Irreversibility and heat generation in the computing process
 **期刊**：IBM Journal of Research and Development
@@ -341,7 +341,7 @@
 **引用次数**：3,000+
 **关键词**：Landauer原理、计算热力学、不可逆性
 
-#### Bennett, C. H. (1982)
+#### 6.1.2 Bennett, C. H. (1982)
 
 **标题**：The thermodynamics of computation—a review
 **期刊**：International Journal of Theoretical Physics
@@ -353,7 +353,7 @@
 
 ### 6.2 现代发展
 
-#### Parrondo, J. M. R., Horowitz, J. M., & Sagawa, T. (2015)
+#### 6.2.1 Parrondo, J. M. R., Horowitz, J. M., & Sagawa, T. (2015)
 
 **标题**：Thermodynamics of information
 **期刊**：Nature Physics
@@ -363,11 +363,11 @@
 **引用次数**：1,500+
 **关键词**：信息热力学、Maxwell妖、信息引擎
 
-## 7. 几何信息论
+## 7 . 几何信息论
 
 ### 7.1 经典文献
 
-#### Rao, C. R. (1945)
+#### 7.1.1 Rao, C. R. (1945)
 
 **标题**：Information and the accuracy attainable in the estimation of statistical parameters
 **期刊**：Bulletin of the Calcutta Mathematical Society
@@ -376,7 +376,7 @@
 **引用次数**：5,000+
 **关键词**：Fisher信息、统计估计、Cramér-Rao界
 
-#### Amari, S. (1985)
+#### 7.1.2 Amari, S. (1985)
 
 **标题**：Differential-Geometrical Methods in Statistics
 **出版社**：Springer
@@ -387,7 +387,7 @@
 
 ### 7.2 现代发展
 
-#### Amari, S. (2016)
+#### 7.2.1 Amari, S. (2016)
 
 **标题**：Information Geometry and Its Applications
 **出版社**：Springer
@@ -396,11 +396,11 @@
 **引用次数**：2,000+
 **关键词**：信息几何、统计流形、应用
 
-## 8. 网络信息论
+## 8 . 网络信息论
 
 ### 8.1 经典文献
 
-#### Ahlswede, R., Cai, N., Li, S. Y. R., & Yeung, R. W. (2000)
+#### 8.1.1 Ahlswede, R., Cai, N., Li, S. Y. R., & Yeung, R. W. (2000)
 
 **标题**：Network information flow
 **期刊**：IEEE Transactions on Information Theory
@@ -410,7 +410,7 @@
 **引用次数**：3,000+
 **关键词**：网络信息流、网络编码、多播
 
-#### Cover, T. M., & El Gamal, A. (1979)
+#### 8.1.2 Cover, T. M., & El Gamal, A. (1979)
 
 **标题**：Capacity theorems for the relay channel
 **期刊**：IEEE Transactions on Information Theory
@@ -422,7 +422,7 @@
 
 ### 8.2 现代发展
 
-#### El Gamal, A., & Kim, Y. H. (2011)
+#### 8.2.1 El Gamal, A., & Kim, Y. H. (2011)
 
 **标题**：Network Information Theory
 **出版社**：Cambridge University Press
@@ -431,11 +431,11 @@
 **引用次数**：1,500+
 **关键词**：网络信息论、多用户通信、网络编码
 
-## 9. 人工智能与信息论
+## 9 . 人工智能与信息论
 
 ### 9.1 经典文献
 
-#### Tishby, N., Pereira, F. C., & Bialek, W. (1999)
+#### 9.1.1 Tishby, N., Pereira, F. C., & Bialek, W. (1999)
 
 **标题**：The information bottleneck method
 **期刊**：Proceedings of the 37th Annual Allerton Conference on Communication, Control and Computing
@@ -444,7 +444,7 @@
 **引用次数**：2,000+
 **关键词**：信息瓶颈、机器学习、特征提取
 
-#### Alemi, A. A., Fischer, I., Dillon, J. V., & Murphy, K. (2017)
+#### 9.1.2 Alemi, A. A., Fischer, I., Dillon, J. V., & Murphy, K. (2017)
 
 **标题**：Deep variational information bottleneck
 **期刊**：International Conference on Learning Representations
@@ -454,7 +454,7 @@
 
 ### 9.2 现代发展
 
-#### Belghazi, M. I., Baratin, A., Rajeswar, S., Ozair, S., Bengio, Y., Courville, A., & Hjelm, R. D. (2018)
+#### 9.2.1 Belghazi, M. I., Baratin, A., Rajeswar, S., Ozair, S., Bengio, Y., Courville, A., & Hjelm, R. D. (2018)
 
 **标题**：MINE: Mutual information neural estimation
 **期刊**：International Conference on Machine Learning
@@ -463,11 +463,11 @@
 **引用次数**：1,000+
 **关键词**：互信息估计、神经网络、表示学习
 
-## 10. 哲学与信息论
+## 10 . 哲学与信息论
 
 ### 10.1 经典文献
 
-#### Dretske, F. I. (1981)
+#### 10.1.1 Dretske, F. I. (1981)
 
 **标题**：Knowledge and the Flow of Information
 **出版社**：MIT Press
@@ -476,7 +476,7 @@
 **引用次数**：2,000+
 **关键词**：信息认识论、知识、信息流
 
-#### Floridi, L. (2013)
+#### 10.1.2 Floridi, L. (2013)
 
 **标题**：The Ethics of Information
 **出版社**：Oxford University Press
@@ -487,7 +487,7 @@
 
 ### 10.2 现代发展
 
-#### Floridi, L. (2019)
+#### 10.2.1 Floridi, L. (2019)
 
 **标题**：The Fourth Revolution: How the Infosphere is Reshaping Human Reality
 **出版社**：Oxford University Press
@@ -496,11 +496,11 @@
 **引用次数**：1,000+
 **关键词**：信息革命、数字转型、人类未来
 
-## 11. 应用领域
+## 11 . 应用领域
 
 ### 11.1 通信系统
 
-#### Proakis, J. G., & Salehi, M. (2008)
+#### 11.1.1 Proakis, J. G., & Salehi, M. (2008)
 
 **标题**：Digital Communications
 **出版社**：McGraw-Hill
@@ -509,7 +509,7 @@
 **引用次数**：10,000+
 **关键词**：数字通信、调制、编码
 
-#### Tse, D., & Viswanath, P. (2005)
+#### 11.1.2 Tse, D., & Viswanath, P. (2005)
 
 **标题**：Fundamentals of Wireless Communication
 **出版社**：Cambridge University Press
@@ -520,7 +520,7 @@
 
 ### 11.2 数据压缩
 
-#### Salomon, D. (2007)
+#### 11.2.1 Salomon, D. (2007)
 
 **标题**：Data Compression: The Complete Reference
 **出版社**：Springer
@@ -529,7 +529,7 @@
 **引用次数**：3,000+
 **关键词**：数据压缩、编码、算法
 
-#### Sayood, K. (2017)
+#### 11.2.2 Sayood, K. (2017)
 
 **标题**：Introduction to Data Compression
 **出版社**：Morgan Kaufmann
@@ -540,7 +540,7 @@
 
 ### 11.3 机器学习
 
-#### Murphy, K. P. (2012)
+#### 11.3.1 Murphy, K. P. (2012)
 
 **标题**：Machine Learning: A Probabilistic Perspective
 **出版社**：MIT Press
@@ -549,7 +549,7 @@
 **引用次数**：15,000+
 **关键词**：机器学习、概率论、贝叶斯方法
 
-#### Goodfellow, I., Bengio, Y., & Courville, A. (2016)
+#### 11.3.2 Goodfellow, I., Bengio, Y., & Courville, A. (2016)
 
 **标题**：Deep Learning
 **出版社**：MIT Press
@@ -558,11 +558,11 @@
 **引用次数**：20,000+
 **关键词**：深度学习、神经网络、人工智能
 
-## 12. 前沿研究
+## 12 . 前沿研究
 
 ### 12.1 量子机器学习
 
-#### Biamonte, J., Wittek, P., Pancotti, N., Rebentrost, P., Wiebe, N., & Lloyd, S. (2017)
+#### 12.1.1 Biamonte, J., Wittek, P., Pancotti, N., Rebentrost, P., Wiebe, N., & Lloyd, S. (2017)
 
 **标题**：Quantum machine learning
 **期刊**：Nature
@@ -574,7 +574,7 @@
 
 ### 12.2 信息论与生物学
 
-#### Adami, C. (2012)
+#### 12.2.1 Adami, C. (2012)
 
 **标题**：The use of information theory in evolutionary biology
 **期刊**：Annals of the New York Academy of Sciences
@@ -586,7 +586,7 @@
 
 ### 12.3 信息论与社会科学
 
-#### Cover, T. M., & Thomas, J. A. (2006)1
+#### 12.3.1 Cover, T. M., & Thomas, J. A. (2006)1
 
 **标题**：Elements of Information Theory
 **出版社**：Wiley-Interscience
@@ -595,18 +595,18 @@
 **引用次数**：25,000+
 **关键词**：信息论、社会科学、通信理论
 
-## 13. 在线资源
+## 13 . 在线资源
 
 ### 13.1 权威网站
 
-#### Wikipedia - Information Theory
+#### 13.1.1 Wikipedia - Information Theory
 
 **网址**：<https://en.wikipedia.org/wiki/Information_theory>
 **重要性**：信息论的权威在线参考
 **更新频率**：持续更新
 **关键词**：信息论、熵、互信息、信道容量
 
-#### IEEE Information Theory Society
+#### 13.1.2 IEEE Information Theory Society
 
 **网址**：<https://www.itsoc.org/>
 **重要性**：信息论领域的顶级学术组织
@@ -615,21 +615,21 @@
 
 ### 13.2 学术数据库
 
-#### IEEE Xplore
+#### 13.2.1 IEEE Xplore
 
 **网址**：<https://ieeexplore.ieee.org/>
 **重要性**：IEEE期刊和会议论文数据库
 **更新频率**：每日更新
 **关键词**：IEEE、信息论、通信、电子
 
-#### arXiv
+#### 13.2.2 arXiv
 
 **网址**：<https://arxiv.org/>
 **重要性**：预印本论文数据库
 **更新频率**：每日更新
 **关键词**：预印本、信息论、量子信息、机器学习
 
-## 14. 引用格式说明
+## 14 . 引用格式说明
 
 ### 14.1 期刊论文格式
 
@@ -655,7 +655,7 @@
 作者/机构. (年份). 标题. 网站名. 网址. 访问日期: YYYY-MM-DD
 ```
 
-## 15. 更新记录
+## 15 . 更新记录
 
 | 版本 | 日期 | 更新内容 | 更新人 |
 |------|------|---------|--------|
@@ -665,7 +665,7 @@
 | 1.3 | 2024-01-30 | 添加前沿研究文献 | 项目团队 |
 | 1.4 | 2025-10-28 | 更新日期和引用 | 项目团队 |
 
-## 16. 使用指南
+## 16 . 使用指南
 
 ### 16.1 如何查找文献
 

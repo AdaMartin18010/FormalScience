@@ -6,111 +6,111 @@
 ## 📋 目录
 
 - [术语表（Glossary）](#术语表glossary)
-  - [📋 目录](#-目录)
-  - [使用说明](#使用说明)
+  - [1 使用说明](#1-使用说明)
+  - [2 A](#2-a)
   - [A](#a)
-    - [AGI（Artificial General Intelligence，通用人工智能）](#agiartificial-general-intelligence通用人工智能)
-    - [ANI（Artificial Narrow Intelligence，狭义人工智能）](#aniartificial-narrow-intelligence狭义人工智能)
-    - [ASI（Artificial Superintelligence，超级人工智能）](#asiartificial-superintelligence超级人工智能)
-    - [Attention Mechanism（注意力机制）](#attention-mechanism注意力机制)
-  - [B](#b)
-    - [Bias-Variance Tradeoff（偏差-方差权衡）](#bias-variance-tradeoff偏差-方差权衡)
-  - [C](#c)
-    - [CFL（Context-Free Language，上下文无关语言）](#cflcontext-free-language上下文无关语言)
-    - [Chomsky Hierarchy（乔姆斯基层次）](#chomsky-hierarchy乔姆斯基层次)
-    - [Chinese Room Argument（中文房间论证）](#chinese-room-argument中文房间论证)
-    - [Computability（可计算性）](#computability可计算性)
-    - [Church-Turing Thesis（邱奇-图灵论题）](#church-turing-thesis邱奇-图灵论题)
-    - [Cosine Similarity（余弦相似度）](#cosine-similarity余弦相似度)
-  - [D](#d)
-    - [Decidability（可判定性）](#decidability可判定性)
-    - [Distributional Semantics（分布式语义学）](#distributional-semantics分布式语义学)
-  - [E](#e)
-    - [Embedding（嵌入）](#embedding嵌入)
-    - [Emergent Abilities（涌现能力）](#emergent-abilities涌现能力)
-  - [F](#f)
-    - [Finite Automaton（有限自动机）](#finite-automaton有限自动机)
-    - [FLOPs（Floating Point Operations）](#flopsfloating-point-operations)
-  - [G](#g)
-    - [Generalization（泛化）](#generalization泛化)
-    - [Gold's Theorem（Gold定理）](#golds-theoremgold定理)
-    - [GPU（Graphics Processing Unit）](#gpugraphics-processing-unit)
-  - [H](#h)
-    - [Halting Problem（停机问题）](#halting-problem停机问题)
-  - [I](#i)
-    - [In-context Learning（上下文学习）](#in-context-learning上下文学习)
-    - [Inductive Bias（归纳偏置）](#inductive-bias归纳偏置)
-  - [L](#l)
-    - [LLM（Large Language Model，大语言模型）](#llmlarge-language-model大语言模型)
-  - [M](#m)
-    - [Multimodal（多模态）](#multimodal多模态)
-  - [N](#n)
-    - [Neurosymbolic AI（神经符号AI）](#neurosymbolic-ai神经符号ai)
-    - [Neuromorphic Computing（神经形态计算）](#neuromorphic-computing神经形态计算)
-    - [NP-Complete（NP完全）](#np-completenp完全)
-  - [P](#p)
-    - [P vs NP](#p-vs-np)
-    - [PAC Learning（Probably Approximately Correct Learning）](#pac-learningprobably-approximately-correct-learning)
-    - [Perplexity（困惑度）](#perplexity困惑度)
-    - [Prompt（提示）](#prompt提示)
-  - [Q](#q)
-    - [Quantum Computing（量子计算）](#quantum-computing量子计算)
-  - [R](#r)
-    - [RE（Recursively Enumerable，递归可枚举）](#rerecursively-enumerable递归可枚举)
-    - [REG（Regular Language，正则语言）](#regregular-language正则语言)
-    - [RLHF（Reinforcement Learning from Human Feedback）](#rlhfreinforcement-learning-from-human-feedback)
-    - [RNN（Recurrent Neural Network，循环神经网络）](#rnnrecurrent-neural-network循环神经网络)
-  - [S](#s)
-    - [Scaling Laws（缩放法则）](#scaling-laws缩放法则)
-    - [Self-Attention（自注意力）](#self-attention自注意力)
-    - [Semantic Space（语义空间）](#semantic-space语义空间)
-    - [SNN（Spiking Neural Network，脉冲神经网络）](#snnspiking-neural-network脉冲神经网络)
-  - [T](#t)
-    - [Token](#token)
-    - [Transformer](#transformer)
-    - [Turing Completeness（图灵完备性）](#turing-completeness图灵完备性)
-    - [Turing Machine（图灵机）](#turing-machine图灵机)
-  - [U](#u)
-    - [Universal Approximation Theorem（通用逼近定理）](#universal-approximation-theorem通用逼近定理)
-    - [Undecidability（不可判定性）](#undecidability不可判定性)
-  - [V](#v)
-    - [VC Dimension（VC维）](#vc-dimensionvc维)
-    - [Vector Space（向量空间）](#vector-space向量空间)
-  - [W](#w)
-    - [Word2Vec](#word2vec)
-  - [Z](#z)
-    - [Zero-shot Learning（零样本学习）](#zero-shot-learning零样本学习)
-  - [中文术语](#中文术语)
-    - [对齐问题（Alignment Problem）](#对齐问题alignment-problem)
-    - [符号主义（Symbolicism）](#符号主义symbolicism)
-    - [归纳偏置（Inductive Bias）](#归纳偏置inductive-bias)
-    - [连接主义（Connectionism）](#连接主义connectionism)
-    - [泛化（Generalization）](#泛化generalization)
-    - [算力（Computing Power）](#算力computing-power)
-    - [停机问题（Halting Problem）](#停机问题halting-problem)
-    - [图灵机（Turing Machine）](#图灵机turing-machine)
-    - [意识（Consciousness）](#意识consciousness)
-    - [语义（Semantics）](#语义semantics)
-    - [正则语言（Regular Language）](#正则语言regular-language)
-    - [注意力机制（Attention Mechanism）](#注意力机制attention-mechanism)
-  - [缩略语索引](#缩略语索引)
-  - [参考资料](#参考资料)
+    - [2.1 AGI（Artificial General Intelligence，通用人工智能）](#21-agiartificial-general-intelligence通用人工智能)
+    - [2.2 ANI（Artificial Narrow Intelligence，狭义人工智能）](#22-aniartificial-narrow-intelligence狭义人工智能)
+    - [2.3 ASI（Artificial Superintelligence，超级人工智能）](#23-asiartificial-superintelligence超级人工智能)
+    - [2.4 Attention Mechanism（注意力机制）](#24-attention-mechanism注意力机制)
+  - [3 B](#3-b)
+    - [3.1 Bias-Variance Tradeoff（偏差-方差权衡）](#31-bias-variance-tradeoff偏差-方差权衡)
+  - [4 C](#4-c)
+    - [4.1 CFL（Context-Free Language，上下文无关语言）](#41-cflcontext-free-language上下文无关语言)
+    - [4.2 Chomsky Hierarchy（乔姆斯基层次）](#42-chomsky-hierarchy乔姆斯基层次)
+    - [4.3 Chinese Room Argument（中文房间论证）](#43-chinese-room-argument中文房间论证)
+    - [4.4 Computability（可计算性）](#44-computability可计算性)
+    - [4.5 Church-Turing Thesis（邱奇-图灵论题）](#45-church-turing-thesis邱奇-图灵论题)
+    - [4.6 Cosine Similarity（余弦相似度）](#46-cosine-similarity余弦相似度)
+  - [5 D](#5-d)
+    - [5.1 Decidability（可判定性）](#51-decidability可判定性)
+    - [5.2 Distributional Semantics（分布式语义学）](#52-distributional-semantics分布式语义学)
+  - [6 E](#6-e)
+    - [6.1 Embedding（嵌入）](#61-embedding嵌入)
+    - [6.2 Emergent Abilities（涌现能力）](#62-emergent-abilities涌现能力)
+  - [7 F](#7-f)
+    - [7.1 Finite Automaton（有限自动机）](#71-finite-automaton有限自动机)
+    - [7.2 FLOPs（Floating Point Operations）](#72-flopsfloating-point-operations)
+  - [8 G](#8-g)
+    - [8.1 Generalization（泛化）](#81-generalization泛化)
+    - [8.2 Gold's Theorem（Gold定理）](#82-golds-theoremgold定理)
+    - [8.3 GPU（Graphics Processing Unit）](#83-gpugraphics-processing-unit)
+  - [9 H](#9-h)
+    - [9.1 Halting Problem（停机问题）](#91-halting-problem停机问题)
+  - [10 I](#10-i)
+    - [10.1 In-context Learning（上下文学习）](#101-in-context-learning上下文学习)
+    - [10.2 Inductive Bias（归纳偏置）](#102-inductive-bias归纳偏置)
+  - [11 L](#11-l)
+    - [11.1 LLM（Large Language Model，大语言模型）](#111-llmlarge-language-model大语言模型)
+  - [12 M](#12-m)
+    - [12.1 Multimodal（多模态）](#121-multimodal多模态)
+  - [13 N](#13-n)
+    - [13.1 Neurosymbolic AI（神经符号AI）](#131-neurosymbolic-ai神经符号ai)
+    - [13.2 Neuromorphic Computing（神经形态计算）](#132-neuromorphic-computing神经形态计算)
+    - [13.3 NP-Complete（NP完全）](#133-np-completenp完全)
+  - [14 P](#14-p)
+    - [14.1 P vs NP](#141-p-vs-np)
+    - [14.2 PAC Learning（Probably Approximately Correct Learning）](#142-pac-learningprobably-approximately-correct-learning)
+    - [14.3 Perplexity（困惑度）](#143-perplexity困惑度)
+    - [14.4 Prompt（提示）](#144-prompt提示)
+  - [15 Q](#15-q)
+    - [15.1 Quantum Computing（量子计算）](#151-quantum-computing量子计算)
+  - [16 R](#16-r)
+    - [16.1 RE（Recursively Enumerable，递归可枚举）](#161-rerecursively-enumerable递归可枚举)
+    - [16.2 REG（Regular Language，正则语言）](#162-regregular-language正则语言)
+    - [16.3 RLHF（Reinforcement Learning from Human Feedback）](#163-rlhfreinforcement-learning-from-human-feedback)
+    - [16.4 RNN（Recurrent Neural Network，循环神经网络）](#164-rnnrecurrent-neural-network循环神经网络)
+  - [17 S](#17-s)
+    - [17.1 Scaling Laws（缩放法则）](#171-scaling-laws缩放法则)
+    - [17.2 Self-Attention（自注意力）](#172-self-attention自注意力)
+    - [17.3 Semantic Space（语义空间）](#173-semantic-space语义空间)
+    - [17.4 SNN（Spiking Neural Network，脉冲神经网络）](#174-snnspiking-neural-network脉冲神经网络)
+  - [18 T](#18-t)
+    - [18.1 Token](#181-token)
+    - [18.2 Transformer](#182-transformer)
+    - [18.3 Turing Completeness（图灵完备性）](#183-turing-completeness图灵完备性)
+    - [18.4 Turing Machine（图灵机）](#184-turing-machine图灵机)
+  - [19 U](#19-u)
+    - [19.1 Universal Approximation Theorem（通用逼近定理）](#191-universal-approximation-theorem通用逼近定理)
+    - [19.2 Undecidability（不可判定性）](#192-undecidability不可判定性)
+  - [20 V](#20-v)
+    - [20.1 VC Dimension（VC维）](#201-vc-dimensionvc维)
+    - [20.2 Vector Space（向量空间）](#202-vector-space向量空间)
+  - [21 W](#21-w)
+    - [21.1 Word2Vec](#211-word2vec)
+  - [22 Z](#22-z)
+    - [22.1 Zero-shot Learning（零样本学习）](#221-zero-shot-learning零样本学习)
+  - [23 中文术语](#23-中文术语)
+    - [23.1 对齐问题（Alignment Problem）](#231-对齐问题alignment-problem)
+    - [23.2 符号主义（Symbolicism）](#232-符号主义symbolicism)
+    - [23.3 归纳偏置（Inductive Bias）](#233-归纳偏置inductive-bias)
+    - [23.4 连接主义（Connectionism）](#234-连接主义connectionism)
+    - [23.5 泛化（Generalization）](#235-泛化generalization)
+    - [23.6 算力（Computing Power）](#236-算力computing-power)
+    - [23.7 停机问题（Halting Problem）](#237-停机问题halting-problem)
+    - [23.8 图灵机（Turing Machine）](#238-图灵机turing-machine)
+    - [23.9 意识（Consciousness）](#239-意识consciousness)
+    - [23.10 语义（Semantics）](#2310-语义semantics)
+    - [23.11 正则语言（Regular Language）](#2311-正则语言regular-language)
+    - [23.12 注意力机制（Attention Mechanism）](#2312-注意力机制attention-mechanism)
+  - [24 缩略语索引](#24-缩略语索引)
+  - [25 参考资料](#25-参考资料)
   - [导航 | Navigation](#导航--navigation)
   - [相关主题 | Related Topics](#相关主题--related-topics)
-    - [辅助文档](#辅助文档)
-    - [核心章节](#核心章节)
+    - [25.1 辅助文档](#251-辅助文档)
+    - [25.2 核心章节](#252-核心章节)
 
 ---
 
-## 使用说明
+## 1 使用说明
 
 本术语表收录《AI模型视角》项目中的核心术语，按字母顺序排列（中文拼音首字母），提供简明定义和相关章节链接。
 
 ---
 
-## A
+## 2 A
 
-### AGI（Artificial General Intelligence，通用人工智能）
+### 2.1 AGI（Artificial General Intelligence，通用人工智能）
 
 **定义**：具有人类级别通用智能的AI系统，能够跨领域学习、推理和迁移。
 
@@ -120,7 +120,7 @@
 
 ---
 
-### ANI（Artificial Narrow Intelligence，狭义人工智能）
+### 2.2 ANI（Artificial Narrow Intelligence，狭义人工智能）
 
 **定义**：仅在单一任务或领域具有智能的AI系统，当前所有AI都属于ANI。
 
@@ -130,7 +130,7 @@
 
 ---
 
-### ASI（Artificial Superintelligence，超级人工智能）
+### 2.3 ASI（Artificial Superintelligence，超级人工智能）
 
 **定义**：在所有领域都超越人类智能的AI系统。
 
@@ -140,7 +140,7 @@
 
 ---
 
-### Attention Mechanism（注意力机制）
+### 2.4 Attention Mechanism（注意力机制）
 
 **定义**：Transformer的核心机制，通过计算查询-键-值三元组实现序列建模。
 
@@ -152,9 +152,9 @@
 
 ---
 
-## B
+## 3 B
 
-### Bias-Variance Tradeoff（偏差-方差权衡）
+### 3.1 Bias-Variance Tradeoff（偏差-方差权衡）
 
 **定义**：学习理论中的核心权衡，偏差高则欠拟合，方差高则过拟合。
 
@@ -164,9 +164,9 @@
 
 ---
 
-## C
+## 4 C
 
-### CFL（Context-Free Language，上下文无关语言）
+### 4.1 CFL（Context-Free Language，上下文无关语言）
 
 **定义**：Chomsky层次第2级，由上下文无关文法生成，可由下推自动机识别。
 
@@ -178,7 +178,7 @@
 
 ---
 
-### Chomsky Hierarchy（乔姆斯基层次）
+### 4.2 Chomsky Hierarchy（乔姆斯基层次）
 
 **定义**：形式语言的四级分类：REG, CFL, CSL, RE。
 
@@ -188,7 +188,7 @@
 
 ---
 
-### Chinese Room Argument（中文房间论证）
+### 4.3 Chinese Room Argument（中文房间论证）
 
 **定义**：John Searle提出的哲学论证，质疑AI是否真正"理解"。
 
@@ -198,7 +198,7 @@
 
 ---
 
-### Computability（可计算性）
+### 4.4 Computability（可计算性）
 
 **定义**：某问题是否存在算法可以解决的性质。
 
@@ -208,7 +208,7 @@
 
 ---
 
-### Church-Turing Thesis（邱奇-图灵论题）
+### 4.5 Church-Turing Thesis（邱奇-图灵论题）
 
 **定义**：任何可以被有效计算的函数都可以被图灵机计算。
 
@@ -218,7 +218,7 @@
 
 ---
 
-### Cosine Similarity（余弦相似度）
+### 4.6 Cosine Similarity（余弦相似度）
 
 **定义**：测量向量夹角余弦值的相似度度量，范围[-1, 1]。
 
@@ -230,9 +230,9 @@
 
 ---
 
-## D
+## 5 D
 
-### Decidability（可判定性）
+### 5.1 Decidability（可判定性）
 
 **定义**：某问题是否存在算法总能给出正确答案（是/否）的性质。
 
@@ -242,7 +242,7 @@
 
 ---
 
-### Distributional Semantics（分布式语义学）
+### 5.2 Distributional Semantics（分布式语义学）
 
 **定义**："词的意义由其上下文决定"的语义学理论。
 
@@ -252,9 +252,9 @@
 
 ---
 
-## E
+## 6 E
 
-### Embedding（嵌入）
+### 6.1 Embedding（嵌入）
 
 **定义**：将离散符号（词、token）映射到连续向量空间的表示。
 
@@ -264,7 +264,7 @@
 
 ---
 
-### Emergent Abilities（涌现能力）
+### 6.2 Emergent Abilities（涌现能力）
 
 **定义**：大模型在规模增长到一定程度后突然出现的新能力。
 
@@ -274,9 +274,9 @@
 
 ---
 
-## F
+## 7 F
 
-### Finite Automaton（有限自动机）
+### 7.1 Finite Automaton（有限自动机）
 
 **定义**：识别正则语言的最简单计算模型。
 
@@ -288,7 +288,7 @@
 
 ---
 
-### FLOPs（Floating Point Operations）
+### 7.2 FLOPs（Floating Point Operations）
 
 **定义**：浮点运算次数，衡量计算量的单位。
 
@@ -298,9 +298,9 @@
 
 ---
 
-## G
+## 8 G
 
-### Generalization（泛化）
+### 8.1 Generalization（泛化）
 
 **定义**：模型在未见过的数据上表现良好的能力。
 
@@ -310,7 +310,7 @@
 
 ---
 
-### Gold's Theorem（Gold定理）
+### 8.2 Gold's Theorem（Gold定理）
 
 **定义**：超有限语言类（包括CFL、CSL、RE）无法从正例中可识别学习。
 
@@ -320,7 +320,7 @@
 
 ---
 
-### GPU（Graphics Processing Unit）
+### 8.3 GPU（Graphics Processing Unit）
 
 **定义**：图形处理单元，现代AI训练和推理的核心硬件。
 
@@ -330,9 +330,9 @@
 
 ---
 
-## H
+## 9 H
 
-### Halting Problem（停机问题）
+### 9.1 Halting Problem（停机问题）
 
 **定义**：判定任意程序是否会停机的问题，证明为不可判定。
 
@@ -342,9 +342,9 @@
 
 ---
 
-## I
+## 10 I
 
-### In-context Learning（上下文学习）
+### 10.1 In-context Learning（上下文学习）
 
 **定义**：大语言模型在推理时从提示中的示例学习，无需更新参数。
 
@@ -354,7 +354,7 @@
 
 ---
 
-### Inductive Bias（归纳偏置）
+### 10.2 Inductive Bias（归纳偏置）
 
 **定义**：学习算法对未见数据做出预测时的假设倾向。
 
@@ -364,9 +364,9 @@
 
 ---
 
-## L
+## 11 L
 
-### LLM（Large Language Model，大语言模型）
+### 11.1 LLM（Large Language Model，大语言模型）
 
 **定义**：参数量在数百亿以上的语言模型，如GPT-4、Claude等。
 
@@ -376,9 +376,9 @@
 
 ---
 
-## M
+## 12 M
 
-### Multimodal（多模态）
+### 12.1 Multimodal（多模态）
 
 **定义**：处理多种数据类型（文本、图像、音频等）的AI系统。
 
@@ -388,9 +388,9 @@
 
 ---
 
-## N
+## 13 N
 
-### Neurosymbolic AI（神经符号AI）
+### 13.1 Neurosymbolic AI（神经符号AI）
 
 **定义**：结合神经网络和符号推理的混合AI系统。
 
@@ -400,7 +400,7 @@
 
 ---
 
-### Neuromorphic Computing（神经形态计算）
+### 13.2 Neuromorphic Computing（神经形态计算）
 
 **定义**：模拟生物神经系统的计算范式，使用脉冲神经网络。
 
@@ -410,7 +410,7 @@
 
 ---
 
-### NP-Complete（NP完全）
+### 13.3 NP-Complete（NP完全）
 
 **定义**：NP类中最难的问题，所有NP问题都可多项式时间归约到它。
 
@@ -420,9 +420,9 @@
 
 ---
 
-## P
+## 14 P
 
-### P vs NP
+### 14.1 P vs NP
 
 **定义**：计算机科学最重要的开放问题，问P（多项式时间）是否等于NP（非确定性多项式时间）。
 
@@ -432,7 +432,7 @@
 
 ---
 
-### PAC Learning（Probably Approximately Correct Learning）
+### 14.2 PAC Learning（Probably Approximately Correct Learning）
 
 **定义**：Valiant提出的学习理论框架，定义了"可学习"的形式化标准。
 
@@ -442,7 +442,7 @@
 
 ---
 
-### Perplexity（困惑度）
+### 14.3 Perplexity（困惑度）
 
 **定义**：语言模型评估指标，测量模型对测试数据的"惊讶"程度。
 
@@ -454,7 +454,7 @@
 
 ---
 
-### Prompt（提示）
+### 14.4 Prompt（提示）
 
 **定义**：提供给大语言模型的输入文本，引导模型生成期望输出。
 
@@ -464,9 +464,9 @@
 
 ---
 
-## Q
+## 15 Q
 
-### Quantum Computing（量子计算）
+### 15.1 Quantum Computing（量子计算）
 
 **定义**：利用量子力学（叠加、纠缠）进行计算的范式。
 
@@ -476,9 +476,9 @@
 
 ---
 
-## R
+## 16 R
 
-### RE（Recursively Enumerable，递归可枚举）
+### 16.1 RE（Recursively Enumerable，递归可枚举）
 
 **定义**：Chomsky层次最高级，图灵机可识别的语言类。
 
@@ -488,7 +488,7 @@
 
 ---
 
-### REG（Regular Language，正则语言）
+### 16.2 REG（Regular Language，正则语言）
 
 **定义**：Chomsky层次第0级，有限自动机可识别的最简单语言类。
 
@@ -498,7 +498,7 @@
 
 ---
 
-### RLHF（Reinforcement Learning from Human Feedback）
+### 16.3 RLHF（Reinforcement Learning from Human Feedback）
 
 **定义**：从人类反馈中学习的强化学习方法，用于对齐AI行为。
 
@@ -508,7 +508,7 @@
 
 ---
 
-### RNN（Recurrent Neural Network，循环神经网络）
+### 16.4 RNN（Recurrent Neural Network，循环神经网络）
 
 **定义**：具有循环连接的神经网络，可处理序列数据。
 
@@ -518,9 +518,9 @@
 
 ---
 
-## S
+## 17 S
 
-### Scaling Laws（缩放法则）
+### 17.1 Scaling Laws（缩放法则）
 
 **定义**：描述模型性能如何随参数量、数据量、计算量变化的经验规律。
 
@@ -530,7 +530,7 @@
 
 ---
 
-### Self-Attention（自注意力）
+### 17.2 Self-Attention（自注意力）
 
 **定义**：序列中每个位置关注所有位置的注意力机制。
 
@@ -540,7 +540,7 @@
 
 ---
 
-### Semantic Space（语义空间）
+### 17.3 Semantic Space（语义空间）
 
 **定义**：高维向量空间，其中语义相近的概念距离接近。
 
@@ -550,7 +550,7 @@
 
 ---
 
-### SNN（Spiking Neural Network，脉冲神经网络）
+### 17.4 SNN（Spiking Neural Network，脉冲神经网络）
 
 **定义**：更接近生物神经元的网络模型，神经元通过脉冲（spike）通信。
 
@@ -560,9 +560,9 @@
 
 ---
 
-## T
+## 18 T
 
-### Token
+### 18.1 Token
 
 **定义**：语言模型处理的基本单位，通常是子词或词片段。
 
@@ -572,7 +572,7 @@
 
 ---
 
-### Transformer
+### 18.2 Transformer
 
 **定义**：基于自注意力机制的神经网络架构，现代大语言模型的基础。
 
@@ -584,7 +584,7 @@
 
 ---
 
-### Turing Completeness（图灵完备性）
+### 18.3 Turing Completeness（图灵完备性）
 
 **定义**：计算系统能够模拟图灵机的性质，即可计算所有可计算函数。
 
@@ -594,7 +594,7 @@
 
 ---
 
-### Turing Machine（图灵机）
+### 18.4 Turing Machine（图灵机）
 
 **定义**：Alan Turing提出的理论计算模型，现代计算机的数学模型。
 
@@ -606,9 +606,9 @@
 
 ---
 
-## U
+## 19 U
 
-### Universal Approximation Theorem（通用逼近定理）
+### 19.1 Universal Approximation Theorem（通用逼近定理）
 
 **定义**：单隐层前馈神经网络可以逼近任意连续函数。
 
@@ -618,7 +618,7 @@
 
 ---
 
-### Undecidability（不可判定性）
+### 19.2 Undecidability（不可判定性）
 
 **定义**：某问题不存在总能给出正确答案的算法。
 
@@ -630,9 +630,9 @@
 
 ---
 
-## V
+## 20 V
 
-### VC Dimension（VC维）
+### 20.1 VC Dimension（VC维）
 
 **定义**：衡量假设空间复杂度的指标，与样本复杂度相关。
 
@@ -642,7 +642,7 @@
 
 ---
 
-### Vector Space（向量空间）
+### 20.2 Vector Space（向量空间）
 
 **定义**：数学结构，向量可进行加法和标量乘法运算。
 
@@ -654,9 +654,9 @@
 
 ---
 
-## W
+## 21 W
 
-### Word2Vec
+### 21.1 Word2Vec
 
 **定义**：学习词嵌入的经典模型，包括CBOW和Skip-gram。
 
@@ -666,9 +666,9 @@
 
 ---
 
-## Z
+## 22 Z
 
-### Zero-shot Learning（零样本学习）
+### 22.1 Zero-shot Learning（零样本学习）
 
 **定义**：模型在未见过任何示例的情况下完成任务的能力。
 
@@ -678,9 +678,9 @@
 
 ---
 
-## 中文术语
+## 23 中文术语
 
-### 对齐问题（Alignment Problem）
+### 23.1 对齐问题（Alignment Problem）
 
 **定义**：确保AI系统的目标和行为与人类价值一致的挑战。
 
@@ -690,7 +690,7 @@
 
 ---
 
-### 符号主义（Symbolicism）
+### 23.2 符号主义（Symbolicism）
 
 **定义**：基于符号操作和逻辑推理的AI范式。
 
@@ -700,13 +700,13 @@
 
 ---
 
-### 归纳偏置（Inductive Bias）
+### 23.3 归纳偏置（Inductive Bias）
 
 见 Inductive Bias
 
 ---
 
-### 连接主义（Connectionism）
+### 23.4 连接主义（Connectionism）
 
 **定义**：基于神经网络和分布式表示的AI范式。
 
@@ -716,13 +716,13 @@
 
 ---
 
-### 泛化（Generalization）
+### 23.5 泛化（Generalization）
 
 见 Generalization
 
 ---
 
-### 算力（Computing Power）
+### 23.6 算力（Computing Power）
 
 **定义**：单位时间内可执行的计算操作数量。
 
@@ -734,19 +734,19 @@
 
 ---
 
-### 停机问题（Halting Problem）
+### 23.7 停机问题（Halting Problem）
 
 见 Halting Problem
 
 ---
 
-### 图灵机（Turing Machine）
+### 23.8 图灵机（Turing Machine）
 
 见 Turing Machine
 
 ---
 
-### 意识（Consciousness）
+### 23.9 意识（Consciousness）
 
 **定义**：主观体验和自我意识的哲学概念。
 
@@ -758,7 +758,7 @@
 
 ---
 
-### 语义（Semantics）
+### 23.10 语义（Semantics）
 
 **定义**：符号或表达式的意义。
 
@@ -768,19 +768,19 @@
 
 ---
 
-### 正则语言（Regular Language）
+### 23.11 正则语言（Regular Language）
 
 见 REG
 
 ---
 
-### 注意力机制（Attention Mechanism）
+### 23.12 注意力机制（Attention Mechanism）
 
 见 Attention Mechanism
 
 ---
 
-## 缩略语索引
+## 24 缩略语索引
 
 - **AGI**: Artificial General Intelligence
 - **ANI**: Artificial Narrow Intelligence
@@ -809,7 +809,7 @@
 
 ---
 
-## 参考资料
+## 25 参考资料
 
 完整定义和详细讨论请参阅各章节文档。
 
@@ -825,7 +825,7 @@
 
 ## 相关主题 | Related Topics
 
-### 辅助文档
+### 25.1 辅助文档
 
 - [AI模型视角总览](./README.md)
 - [完整索引](./00_Master_Index.md)
@@ -833,7 +833,7 @@
 - [学习路径](./LEARNING_PATHS.md)
 - [常见问题](./FAQ.md)
 
-### 核心章节
+### 25.2 核心章节
 
 - [01 基础理论](./01_Foundational_Theory/01.1_Turing_Machine_Computability.md)
 - [02 神经网络理论](./02_Neural_Network_Theory/02.1_Neural_Network_Foundations.md)

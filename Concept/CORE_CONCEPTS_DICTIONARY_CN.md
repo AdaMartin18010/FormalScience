@@ -12,43 +12,43 @@
 ## 📋 目录
 
 - [核心概念词典（简体中文版）- 快速参考](#核心概念词典简体中文版--快速参考)
-  - [📋 目录](#-目录)
-  - [使用说明](#使用说明)
+  - [1 使用说明](#1-使用说明)
+  - [2 A. 基础概念（元理论）](#2-a-基础概念元理论)
   - [A. 基础概念（元理论）](#a-基础概念元理论)
-    - [A.1 同构（Isomorphism, ≃）](#a1-同构isomorphism-)
-    - [A.2 反身性（Reflexivity）](#a2-反身性reflexivity)
-    - [A.3 形式语言（Formal Language）](#a3-形式语言formal-language)
-    - [A.4 语义（Semantics）](#a4-语义semantics)
-    - [A.5 语义域（Semantic Domain, 𝒟）](#a5-语义域semantic-domain-𝒟)
-  - [B. 操作概念](#b-操作概念)
-    - [B.1 内部化（Internalization, ι）](#b1-内部化internalization-ι)
-    - [B.2 外化（Externalization）](#b2-外化externalization)
-    - [B.3 quote操作](#b3-quote操作)
-    - [B.4 跨视角映射（Cross-Perspective Mapping）](#b4-跨视角映射cross-perspective-mapping)
-  - [C. 模型概念](#c-模型概念)
-    - [C.1 26阶升链模型](#c1-26阶升链模型)
-    - [C.2 形式语言-语义模型](#c2-形式语言-语义模型)
-    - [C.3 八视角框架](#c3-八视角框架)
-  - [D. 认识论概念](#d-认识论概念)
-    - [D.1 假设（Assumption）](#d1-假设assumption)
-    - [D.2 元理论（Meta-theory）](#d2-元理论meta-theory)
-    - [D.3 假说（Hypothesis）](#d3-假说hypothesis)
-    - [D.4 叙事（Narrative）](#d4-叙事narrative)
-    - [D.5 理想型构（Ideal Type）](#d5-理想型构ideal-type)
-  - [E. 技术概念](#e-技术概念)
-    - [E.1 图灵完备（Turing Completeness）](#e1-图灵完备turing-completeness)
-    - [E.2 主权（Sovereignty）](#e2-主权sovereignty)
-    - [E.3 熵（Entropy）](#e3-熵entropy)
-    - [E.4 语言类（Language Class）](#e4-语言类language-class)
-  - [概念关系图](#概念关系图)
-  - [相关资源](#相关资源)
-    - [中文文档](#中文文档)
-    - [核心文档](#核心文档)
-    - [学习资源](#学习资源)
+    - [2.1 A.1 同构（Isomorphism, ≃）](#21-a1-同构isomorphism-)
+    - [2.2 A.2 反身性（Reflexivity）](#22-a2-反身性reflexivity)
+    - [2.3 A.3 形式语言（Formal Language）](#23-a3-形式语言formal-language)
+    - [2.4 A.4 语义（Semantics）](#24-a4-语义semantics)
+    - [2.5 A.5 语义域（Semantic Domain, 𝒟）](#25-a5-语义域semantic-domain-𝒟)
+  - [3 B. 操作概念](#3-b-操作概念)
+    - [3.1 B.1 内部化（Internalization, ι）](#31-b1-内部化internalization-ι)
+    - [3.2 B.2 外化（Externalization）](#32-b2-外化externalization)
+    - [3.3 B.3 quote操作](#33-b3-quote操作)
+    - [3.4 B.4 跨视角映射（Cross-Perspective Mapping）](#34-b4-跨视角映射cross-perspective-mapping)
+  - [4 C. 模型概念](#4-c-模型概念)
+    - [4.1 C.1 26阶升链模型](#41-c1-26阶升链模型)
+    - [4.2 C.2 形式语言-语义模型](#42-c2-形式语言-语义模型)
+    - [4.3 C.3 八视角框架](#43-c3-八视角框架)
+  - [5 D. 认识论概念](#5-d-认识论概念)
+    - [5.1 D.1 假设（Assumption）](#51-d1-假设assumption)
+    - [5.2 D.2 元理论（Meta-theory）](#52-d2-元理论meta-theory)
+    - [5.3 D.3 假说（Hypothesis）](#53-d3-假说hypothesis)
+    - [5.4 D.4 叙事（Narrative）](#54-d4-叙事narrative)
+    - [5.5 D.5 理想型构（Ideal Type）](#55-d5-理想型构ideal-type)
+  - [6 E. 技术概念](#6-e-技术概念)
+    - [6.1 E.1 图灵完备（Turing Completeness）](#61-e1-图灵完备turing-completeness)
+    - [6.2 E.2 主权（Sovereignty）](#62-e2-主权sovereignty)
+    - [6.3 E.3 熵（Entropy）](#63-e3-熵entropy)
+    - [6.4 E.4 语言类（Language Class）](#64-e4-语言类language-class)
+  - [7 概念关系图](#7-概念关系图)
+  - [8 相关资源](#8-相关资源)
+    - [8.1 中文文档](#81-中文文档)
+    - [8.2 核心文档](#82-核心文档)
+    - [8.3 学习资源](#83-学习资源)
 
 ---
 
-## 使用说明
+## 1 使用说明
 
 本文档提供19个核心概念的**快速参考**，每个概念包含：
 
@@ -62,9 +62,9 @@
 
 ---
 
-## A. 基础概念（元理论）
+## 2 A. 基础概念（元理论）
 
-### A.1 同构（Isomorphism, ≃）
+### 2.1 A.1 同构（Isomorphism, ≃）
 
 **简要定义**：
 
@@ -92,7 +92,7 @@
 
 ---
 
-### A.2 反身性（Reflexivity）
+### 2.2 A.2 反身性（Reflexivity）
 
 **简要定义**：
 
@@ -123,7 +123,7 @@ Rₙ：n层反身性
 
 ---
 
-### A.3 形式语言（Formal Language）
+### 2.3 A.3 形式语言（Formal Language）
 
 **简要定义**：
 
@@ -163,7 +163,7 @@ Type-3：正则语言（有限自动机）- 最弱
 
 ---
 
-### A.4 语义（Semantics）
+### 2.4 A.4 语义（Semantics）
 
 **简要定义**：
 
@@ -203,7 +203,7 @@ Type-3：正则语言（有限自动机）- 最弱
 
 ---
 
-### A.5 语义域（Semantic Domain, 𝒟）
+### 2.5 A.5 语义域（Semantic Domain, 𝒟）
 
 **简要定义**：
 
@@ -239,9 +239,9 @@ Type-3：正则语言（有限自动机）- 最弱
 
 ---
 
-## B. 操作概念
+## 3 B. 操作概念
 
-### B.1 内部化（Internalization, ι）
+### 3.1 B.1 内部化（Internalization, ι）
 
 **简要定义**：
 
@@ -275,7 +275,7 @@ Type-3：正则语言（有限自动机）- 最弱
 
 ---
 
-### B.2 外化（Externalization）
+### 3.2 B.2 外化（Externalization）
 
 **简要定义**：
 
@@ -310,7 +310,7 @@ E : 意识结构 → 符号系统 Σ
 
 ---
 
-### B.3 quote操作
+### 3.3 B.3 quote操作
 
 **简要定义**：
 
@@ -344,7 +344,7 @@ quote = "把东西变成关于它的话"
 
 ---
 
-### B.4 跨视角映射（Cross-Perspective Mapping）
+### 3.4 B.4 跨视角映射（Cross-Perspective Mapping）
 
 **简要定义**：
 
@@ -387,9 +387,9 @@ Gödel不完备 ≡ 停机问题 ≡ AI完美对齐不可能
 
 ---
 
-## C. 模型概念
+## 4 C. 模型概念
 
-### C.1 26阶升链模型
+### 4.1 C.1 26阶升链模型
 
 **简要定义**：
 
@@ -423,7 +423,7 @@ Gödel不完备 ≡ 停机问题 ≡ AI完美对齐不可能
 
 ---
 
-### C.2 形式语言-语义模型
+### 4.2 C.2 形式语言-语义模型
 
 **简要定义**：
 
@@ -464,7 +464,7 @@ A₅：反身接口（元语言能力）
 
 ---
 
-### C.3 八视角框架
+### 4.3 C.3 八视角框架
 
 **简要定义**：
 
@@ -497,9 +497,9 @@ A₅：反身接口（元语言能力）
 
 ---
 
-## D. 认识论概念
+## 5 D. 认识论概念
 
-### D.1 假设（Assumption）
+### 5.1 D.1 假设（Assumption）
 
 **简要定义**：
 
@@ -529,7 +529,7 @@ A₅：反身接口（元语言能力）
 
 ---
 
-### D.2 元理论（Meta-theory）
+### 5.2 D.2 元理论（Meta-theory）
 
 **简要定义**：
 
@@ -552,7 +552,7 @@ A₅：反身接口（元语言能力）
 
 ---
 
-### D.3 假说（Hypothesis）
+### 5.3 D.3 假说（Hypothesis）
 
 **简要定义**：
 
@@ -573,7 +573,7 @@ A₅：反身接口（元语言能力）
 
 ---
 
-### D.4 叙事（Narrative）
+### 5.4 D.4 叙事（Narrative）
 
 **简要定义**：
 
@@ -595,7 +595,7 @@ A₅：反身接口（元语言能力）
 
 ---
 
-### D.5 理想型构（Ideal Type）
+### 5.5 D.5 理想型构（Ideal Type）
 
 **简要定义**：
 
@@ -617,9 +617,9 @@ A₅：反身接口（元语言能力）
 
 ---
 
-## E. 技术概念
+## 6 E. 技术概念
 
-### E.1 图灵完备（Turing Completeness）
+### 6.1 E.1 图灵完备（Turing Completeness）
 
 **简要定义**：
 
@@ -647,7 +647,7 @@ S 可以模拟任意图灵机
 
 ---
 
-### E.2 主权（Sovereignty）
+### 6.2 E.2 主权（Sovereignty）
 
 **简要定义**：
 
@@ -687,7 +687,7 @@ S₉：演化主权（自主演化能力）
 
 ---
 
-### E.3 熵（Entropy）
+### 6.3 E.3 熵（Entropy）
 
 **简要定义**：
 
@@ -734,7 +734,7 @@ I(X;Y) = H(X) − H(X|Y)
 
 ---
 
-### E.4 语言类（Language Class）
+### 6.4 E.4 语言类（Language Class）
 
 **简要定义**：
 
@@ -787,7 +787,7 @@ TYPE-3：正则语言
 
 ---
 
-## 概念关系图
+## 7 概念关系图
 
 ```text
 基础假设层：
@@ -817,23 +817,23 @@ TYPE-3：正则语言
 
 ---
 
-## 相关资源
+## 8 相关资源
 
-### 中文文档
+### 8.1 中文文档
 
 - [核心概念词典（完整版）](CORE_CONCEPTS_DICTIONARY.md) - 详细定义、跨视角映射、常见误解
 - [核心框架快速参考（中文版）](CORE_FRAMEWORK_CN.md) - 核心框架快速总结
 - [术语表（中文版）](GLOSSARY_CN.md) - 120+术语快速查找
 - [快速参考（中文版）](QUICK_REFERENCE_CN.md) - 公式、定理速查表
 
-### 核心文档
+### 8.2 核心文档
 
 - [统一框架](UNIFIED_FRAMEWORK.md) - 七视角整合体系
 - [基础假设](00_Foundational_Assumptions.md) - 5个基础假设的完整论证
 - [形式定理索引](FORMAL_THEOREMS_INDEX.md) - 14个形式定理索引
 - [跨视角映射](CROSS_PERSPECTIVE_MAPPINGS.md) - 10个跨视角映射验证
 
-### 学习资源
+### 8.3 学习资源
 
 - [学习路径指南（中文版）](LEARNING_PATHS_CN.md) - 定制化学习建议
 - [案例研究索引](CASE_STUDIES_INDEX.md) - 所有案例研究的导航中心

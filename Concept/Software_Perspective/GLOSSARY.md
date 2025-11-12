@@ -11,95 +11,95 @@
 
 - [Software Perspective - 术语表](#software-perspective---术语表)
   - [📋 目录](#-目录)
-  - [A](#a)
-    - [Architecture Sink](#architecture-sink)
-    - [Accidental Complexity](#accidental-complexity)
-    - [ArgoCD](#argocd)
-  - [C](#c)
-    - [Cognitive Load](#cognitive-load)
-    - [Complexity Conservation](#complexity-conservation)
-    - [Control Loop](#control-loop)
-  - [D](#d)
-    - [Declarative](#declarative)
-    - [DORA Metrics](#dora-metrics)
-  - [E](#e)
-    - [Essential Complexity](#essential-complexity)
-  - [F](#f)
-    - [Formal Layer](#formal-layer)
-  - [G](#g)
-    - [GitOps](#gitops)
-    - [Golden Path](#golden-path)
-  - [H](#h)
-    - [HPA (Horizontal Pod Autoscaler)](#hpa-horizontal-pod-autoscaler)
-  - [I](#i)
-    - [Imperative](#imperative)
-    - [Internal Developer Platform (IDP)](#internal-developer-platform-idp)
-    - [Intent-Driven](#intent-driven)
-  - [K](#k)
-    - [KEDA (Kubernetes Event-Driven Autoscaler)](#keda-kubernetes-event-driven-autoscaler)
-  - [L](#l)
-    - [Leaky Abstraction](#leaky-abstraction)
-  - [M](#m)
-    - [MTTR (Mean Time To Repair/Recovery)](#mttr-mean-time-to-repairrecovery)
-  - [O](#o)
-    - [OPA (Open Policy Agent)](#opa-open-policy-agent)
-    - [OTLP (OpenTelemetry Protocol)](#otlp-opentelemetry-protocol)
-    - [Observability](#observability)
-  - [P](#p)
-    - [Platform Engineering](#platform-engineering)
-    - [Policy-as-Code](#policy-as-code)
-  - [R](#r)
-    - [Rego](#rego)
-  - [S](#s)
-    - [Semantic Gap](#semantic-gap)
-    - [Semantic Layer](#semantic-layer)
-    - [Semantic-Formal Duality](#semantic-formal-duality)
-    - [Self-Healing](#self-healing)
-    - [Service Mesh](#service-mesh)
-    - [Sink Stage Model](#sink-stage-model)
-  - [T](#t)
-    - [Three Pillars of Observability](#three-pillars-of-observability)
-  - [缩写对照](#缩写对照)
-  - [框架与工具](#框架与工具)
-    - [可观测性](#可观测性)
-    - [GitOps](#gitops-1)
-    - [策略治理](#策略治理)
-    - [自动扩缩容](#自动扩缩容)
-  - [概念层次](#概念层次)
-  - [延伸阅读](#延伸阅读)
+  - [1 A](#1-a)
+    - [1.1 Architecture Sink](#11-architecture-sink)
+    - [1.2 Accidental Complexity](#12-accidental-complexity)
+    - [1.3 ArgoCD](#13-argocd)
+  - [2 C](#2-c)
+    - [2.1 Cognitive Load](#21-cognitive-load)
+    - [2.2 Complexity Conservation](#22-complexity-conservation)
+    - [2.3 Control Loop](#23-control-loop)
+  - [3 D](#3-d)
+    - [3.1 Declarative](#31-declarative)
+    - [3.2 DORA Metrics](#32-dora-metrics)
+  - [4 E](#4-e)
+    - [4.1 Essential Complexity](#41-essential-complexity)
+  - [5 F](#5-f)
+    - [5.1 Formal Layer](#51-formal-layer)
+  - [6 G](#6-g)
+    - [6.1 GitOps](#61-gitops)
+    - [6.2 Golden Path](#62-golden-path)
+  - [7 H](#7-h)
+    - [7.1 HPA (Horizontal Pod Autoscaler)](#71-hpa-horizontal-pod-autoscaler)
+  - [8 I](#8-i)
+    - [8.1 Imperative](#81-imperative)
+    - [8.2 Internal Developer Platform (IDP)](#82-internal-developer-platform-idp)
+    - [8.3 Intent-Driven](#83-intent-driven)
+  - [9 K](#9-k)
+    - [9.1 KEDA (Kubernetes Event-Driven Autoscaler)](#91-keda-kubernetes-event-driven-autoscaler)
+  - [10 L](#10-l)
+    - [10.1 Leaky Abstraction](#101-leaky-abstraction)
+  - [11 M](#11-m)
+    - [11.1 MTTR (Mean Time To Repair/Recovery)](#111-mttr-mean-time-to-repairrecovery)
+  - [12 O](#12-o)
+    - [12.1 OPA (Open Policy Agent)](#121-opa-open-policy-agent)
+    - [12.2 OTLP (OpenTelemetry Protocol)](#122-otlp-opentelemetry-protocol)
+    - [12.3 Observability](#123-observability)
+  - [13 P](#13-p)
+    - [13.1 Platform Engineering](#131-platform-engineering)
+    - [13.2 Policy-as-Code](#132-policy-as-code)
+  - [14 R](#14-r)
+    - [14.1 Rego](#141-rego)
+  - [15 S](#15-s)
+    - [15.1 Semantic Gap](#151-semantic-gap)
+    - [15.2 Semantic Layer](#152-semantic-layer)
+    - [15.3 Semantic-Formal Duality](#153-semantic-formal-duality)
+    - [15.4 Self-Healing](#154-self-healing)
+    - [15.5 Service Mesh](#155-service-mesh)
+    - [15.6 Sink Stage Model](#156-sink-stage-model)
+  - [16 T](#16-t)
+    - [16.1 Three Pillars of Observability](#161-three-pillars-of-observability)
+  - [17 缩写对照](#17-缩写对照)
+  - [18 框架与工具](#18-框架与工具)
+    - [18.1 可观测性](#181-可观测性)
+    - [18.2 GitOps](#182-gitops)
+    - [18.3 策略治理](#183-策略治理)
+    - [18.4 自动扩缩容](#184-自动扩缩容)
+  - [19 概念层次](#19-概念层次)
+  - [20 延伸阅读](#20-延伸阅读)
 
 ---
 
-## A
+## 1 A
 
-### Architecture Sink
+### 1.1 Architecture Sink
 
 **架构下沉**
 软件系统中重复出现的复杂性，从应用层逐步转移到平台层、运行时层、最终固化到硬件层的持续过程。
 
 **相关**：[2.1 架构下沉原理](./02_Architecture_Sink/02.1_Sink_Principles_Drivers.md)
 
-### Accidental Complexity
+### 1.2 Accidental Complexity
 
 **偶然复杂度**
 由技术实现引入的复杂度，理论上可以通过更好的抽象消除。
 
 **相关**：[1.3 复杂度守恒](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
-### ArgoCD
+### 1.3 ArgoCD
 
 GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集群。
 
 **相关**：[4.4 GitOps 声明式修复](./04_Self_Healing_Systems/04.4_GitOps_Declarative_Remediation.md)
 
-## C
+## 2 C
 
-### Cognitive Load
+### 2.1 Cognitive Load
 
 **认知负载**
 开发者在理解和操作系统时需要保持在工作记忆中的信息量。
 
-### Complexity Conservation
+### 2.2 Complexity Conservation
 
 **复杂度守恒**
 在软件系统中，总复杂度（本质复杂度 + 偶然复杂度）是守恒的，不会凭空消失，只会转移。
@@ -108,16 +108,16 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 
 **相关**：[1.3 复杂度守恒定律](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
-### Control Loop
+### 2.3 Control Loop
 
 **控制循环**
 持续比较"期望状态"与"实际状态"，自动调整以消除差异的反馈机制。
 
 **相关**：[4.1 自愈架构原理](./04_Self_Healing_Systems/04.1_Self_Healing_Architecture.md)
 
-## D
+## 3 D
 
-### Declarative
+### 3.1 Declarative
 
 **声明式**
 描述"要什么"（What）而非"怎么做"（How）的编程范式。
@@ -126,7 +126,7 @@ GitOps 工具，持续监听 Git 仓库变化并自动同步到 Kubernetes 集�
 
 **相关**：[1.5 声明式与命令式](./01_Foundational_Theory/01.5_Declarative_Imperative_Paradigms.md)
 
-### DORA Metrics
+### 3.2 DORA Metrics
 
 DevOps Research and Assessment 定义的四个关键指标：
 
@@ -135,9 +135,9 @@ DevOps Research and Assessment 定义的四个关键指标：
 3. MTTR（平均修复时间）
 4. 变更失败率（Change Failure Rate）
 
-## E
+## 4 E
 
-### Essential Complexity
+### 4.1 Essential Complexity
 
 **本质复杂度**
 问题本身固有的复杂度，无法消除。
@@ -146,18 +146,18 @@ DevOps Research and Assessment 定义的四个关键指标：
 
 **相关**：[1.3 复杂度守恒](./01_Foundational_Theory/01.3_Software_Complexity_Conservation.md)
 
-## F
+## 5 F
 
-### Formal Layer
+### 5.1 Formal Layer
 
 **形式层**
 可计算的规则世界，包括代码、类型系统、逻辑门等可机械执行的符号系统。
 
 **相关**：[1.1 语义形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 
-## G
+## 6 G
 
-### GitOps
+### 6.1 GitOps
 
 以 Git 为唯一真实源（Single Source of Truth）的运维模式，所有变更通过 Git 提交触发。
 
@@ -170,22 +170,22 @@ DevOps Research and Assessment 定义的四个关键指标：
 
 **相关**：[4.4 GitOps 声明式修复](./04_Self_Healing_Systems/04.4_GitOps_Declarative_Remediation.md)
 
-### Golden Path
+### 6.2 Golden Path
 
 **黄金路径**
 为常见场景预设的、阻力最小的开发路径，覆盖 80% 的需求。
 
 **相关**：[8.3 黄金路径](./08_Platform_Engineering/08.3_Golden_Path.md)
 
-## H
+## 7 H
 
-### HPA (Horizontal Pod Autoscaler)
+### 7.1 HPA (Horizontal Pod Autoscaler)
 
 Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自动调整副本数。
 
-## I
+## 8 I
 
-### Imperative
+### 8.1 Imperative
 
 **命令式**
 描述"怎么做"（How），逐步指定执行步骤的编程范式。
@@ -194,27 +194,27 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 
 **相关**：[1.5 声明式与命令式](./01_Foundational_Theory/01.5_Declarative_Imperative_Paradigms.md)
 
-### Internal Developer Platform (IDP)
+### 8.2 Internal Developer Platform (IDP)
 
 **内部开发者平台**
 企业内部构建的平台，为开发者提供自助服务能力，降低认知负载。
 
-### Intent-Driven
+### 8.3 Intent-Driven
 
 **意图驱动**
 用户表达意图（"我要高可用"），系统自动生成具体实现的编程范式。
 
 **相关**：[10.1 意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md)
 
-## K
+## 9 K
 
-### KEDA (Kubernetes Event-Driven Autoscaler)
+### 9.1 KEDA (Kubernetes Event-Driven Autoscaler)
 
 基于事件源（Kafka、SQS、Prometheus 等）的 Kubernetes 自动扩缩容器。
 
-## L
+## 10 L
 
-### Leaky Abstraction
+### 10.1 Leaky Abstraction
 
 **抽象泄漏**
 抽象层无法完全隐藏底层细节，导致用户被迫理解底层实现的现象。
@@ -223,9 +223,9 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 
 **相关**：[1.2 计算抽象层次](./01_Foundational_Theory/01.2_Computational_Abstraction_Layers.md)
 
-## M
+## 11 M
 
-### MTTR (Mean Time To Repair/Recovery)
+### 11.1 MTTR (Mean Time To Repair/Recovery)
 
 **平均修复/恢复时间**
 从故障发生到系统恢复的平均时间。
@@ -236,9 +236,9 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 - 平台化：5-10 分钟
 - 自愈系统：< 2 分钟
 
-## O
+## 12 O
 
-### OPA (Open Policy Agent)
+### 12.1 OPA (Open Policy Agent)
 
 策略引擎，使用 Rego 语言定义策略，实现 Policy-as-Code。
 
@@ -246,13 +246,13 @@ Kubernetes 水平 Pod 自动扩缩容器，根据 CPU/内存/自定义指标自�
 
 **相关**：[4.3 OPA 策略引擎](./04_Self_Healing_Systems/04.3_OPA_Policy_Engine.md)
 
-### OTLP (OpenTelemetry Protocol)
+### 12.2 OTLP (OpenTelemetry Protocol)
 
 OpenTelemetry 项目定义的统一可观测性协议，支持 Metrics、Traces、Logs 三支柱。
 
 **相关**：[4.2 OTLP 可观测性](./04_Self_Healing_Systems/04.2_OTLP_Observability.md)
 
-### Observability
+### 12.3 Observability
 
 **可观测性**
 通过系统外部输出（指标、日志、追踪）推断系统内部状态的能力。
@@ -261,25 +261,25 @@ OpenTelemetry 项目定义的统一可观测性协议，支持 Metrics、Traces�
 
 **相关**：[6.1 三支柱可观测性](./06_Observability_Governance/06.1_Three_Pillars_Observability.md)
 
-## P
+## 13 P
 
-### Platform Engineering
+### 13.1 Platform Engineering
 
 **平台工程**
 构建和维护内部开发者平台的工程实践，目标是降低认知负载、提升开发者体验。
 
 **相关**：[8.1 平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md)
 
-### Policy-as-Code
+### 13.2 Policy-as-Code
 
 **策略即代码**
 将治理策略、安全规则、合规要求以代码形式表达，可版本化、测试、自动执行。
 
 **工具**：OPA、Kyverno、Gatekeeper
 
-## R
+## 14 R
 
-### Rego
+### 14.1 Rego
 
 OPA 使用的策略语言，声明式、逻辑式编程语言。
 
@@ -291,9 +291,9 @@ allow {
 }
 ```
 
-## S
+## 15 S
 
-### Semantic Gap
+### 15.1 Semantic Gap
 
 **语义缺口**
 意义世界中尚未被形式化、自动化的部分。
@@ -303,7 +303,7 @@ allow {
 - 市场不确定性（2020 年代缺口）
 - AI 伦理（未来缺口）
 
-### Semantic Layer
+### 15.2 Semantic Layer
 
 **语义层**
 人类自创的意义世界，包括商业价值、用户故事、领域概念等。
@@ -312,7 +312,7 @@ allow {
 
 **相关**：[1.1 语义形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 
-### Semantic-Formal Duality
+### 15.3 Semantic-Formal Duality
 
 **语义-形式对偶**
 意义世界与规则世界之间的永恒张力与相互转化。
@@ -321,14 +321,14 @@ allow {
 
 **相关**：[1.1 语义形式对偶](./01_Foundational_Theory/01.1_Semantic_Formal_Duality.md)
 
-### Self-Healing
+### 15.4 Self-Healing
 
 **自愈**
 系统自动检测异常、诊断根因、执行修复并验证效果的闭环能力。
 
 **相关**：[4.1 自愈架构原理](./04_Self_Healing_Systems/04.1_Self_Healing_Architecture.md)
 
-### Service Mesh
+### 15.5 Service Mesh
 
 服务网格，为微服务提供服务发现、负载均衡、加密、可观测性等能力的基础设施层。
 
@@ -336,16 +336,16 @@ allow {
 
 **相关**：[9.3 Service Mesh](./09_Cloud_Native_Patterns/09.3_Service_Mesh.md)
 
-### Sink Stage Model
+### 15.6 Sink Stage Model
 
 **下沉阶段模型**
 描述架构下沉的五个层级（L1-L5）：运行时下沉 → 策略下沉 → 智能下沉 → 芯片级下沉 → 零代码态。
 
 **相关**：[2.5 下沉阶段模型](./02_Architecture_Sink/02.5_Sink_Stage_Model.md)
 
-## T
+## 16 T
 
-### Three Pillars of Observability
+### 16.1 Three Pillars of Observability
 
 **可观测性三支柱**
 
@@ -355,7 +355,7 @@ allow {
 
 **相关**：[6.1 三支柱可观测性](./06_Observability_Governance/06.1_Three_Pillars_Observability.md)
 
-## 缩写对照
+## 17 缩写对照
 
 | 缩写 | 全称 | 中文 |
 |-----|------|------|
@@ -376,9 +376,9 @@ allow {
 | **SRE** | Site Reliability Engineering | 站点可靠性工程 |
 | **VPA** | Vertical Pod Autoscaler | 垂直 Pod 自动扩缩容器 |
 
-## 框架与工具
+## 18 框架与工具
 
-### 可观测性
+### 18.1 可观测性
 
 - **Prometheus**：指标采集与告警
 - **Grafana**：可视化
@@ -386,26 +386,26 @@ allow {
 - **Loki**：日志聚合
 - **OpenTelemetry**：统一协议
 
-### GitOps
+### 18.2 GitOps
 
 - **ArgoCD**：声明式 CD
 - **Flux**：GitOps operator
 - **Helm**：K8s 包管理
 
-### 策略治理
+### 18.3 策略治理
 
 - **OPA**：策略引擎
 - **Gatekeeper**：K8s 准入控制器
 - **Kyverno**：K8s 原生策略引擎
 
-### 自动扩缩容
+### 18.4 自动扩缩容
 
 - **HPA**：K8s 内置
 - **KEDA**：事件驱动扩缩容
 - **VPA**：垂直扩缩容
 - **Cluster Autoscaler**：节点扩缩容
 
-## 概念层次
+## 19 概念层次
 
 ```text
 意图层 (Intent)
@@ -427,7 +427,7 @@ allow {
 硅片层 (Silicon)
 ```
 
-## 延伸阅读
+## 20 延伸阅读
 
 - [完整索引](./00_Master_Index.md)
 - [快速参考](./QUICK_REFERENCE.md)

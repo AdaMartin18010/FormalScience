@@ -4,8 +4,8 @@
 
 - [Rust 泛型](#rust-泛型)
   - [目录](#目录)
-    - [1. 引言](#1-引言)
-    - [2. Rust 泛型基础 (Rust Generics Fundamentals)](#2-rust-泛型基础-rust-generics-fundamentals)
+    - [1 . 引言](#1-引言)
+    - [2 . Rust 泛型基础 (Rust Generics Fundamentals)](#2-rust-泛型基础-rust-generics-fundamentals)
       - [2.1 什么是泛型？](#21-什么是泛型)
       - [2.2 泛型语法](#22-泛型语法)
         - [2.2.1 泛型函数](#221-泛型函数)
@@ -27,7 +27,7 @@
         - [2.8.2 显式生命周期](#282-显式生命周期)
         - [2.8.3 生命周期约束](#283-生命周期约束)
         - [2.8.4 高阶 Trait Bounds (HRTBs - Higher-Rank Trait Bounds)](#284-高阶-trait-bounds-hrtbs---higher-rank-trait-bounds)
-    - [3. Rust 泛型进阶与应用 (Advanced Rust Generics and Applications)](#3-rust-泛型进阶与应用-advanced-rust-generics-and-applications)
+    - [3 . Rust 泛型进阶与应用 (Advanced Rust Generics and Applications)](#3-rust-泛型进阶与应用-advanced-rust-generics-and-applications)
       - [3.1 设计模式](#31-设计模式)
         - [3.1.1 类型状态模式 (Type State Pattern)](#311-类型状态模式-type-state-pattern)
         - [3.1.2 构建器模式 (Builder Pattern)](#312-构建器模式-builder-pattern)
@@ -51,7 +51,7 @@
       - [3.8 迭代与递归](#38-迭代与递归)
         - [3.8.1 泛型迭代器](#381-泛型迭代器)
         - [3.8.2 泛型递归结构与函数](#382-泛型递归结构与函数)
-    - [4. 总结 (Conclusion)](#4-总结-conclusion)
+    - [4 . 总结 (Conclusion)](#4-总结-conclusion)
 
 ---
 

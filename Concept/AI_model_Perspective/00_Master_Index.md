@@ -5,8 +5,8 @@
 - [AI 模型视角：计算范式、语义模型与新计算物种](#ai-模型视角计算范式语义模型与新计算物种)
   - [📋 目录](#-目录)
   - [核心理念概述](#核心理念概述)
-    - [AI的本质定位](#ai的本质定位)
-    - [图灵机 vs AI 的关键区别](#图灵机-vs-ai-的关键区别)
+    - [1.1 辅助文档](#11-辅助文档)
+    - [1.1 跨视角链接](#11-跨视角链接)
     - [形式语言视角的精确分析](#形式语言视角的精确分析)
       - [可计算性边界](#可计算性边界)
       - [关键结论](#关键结论)
@@ -289,14 +289,14 @@ _本索引建立了AI模型视角的完整分析框架，从计算理论、神�
 
 ## 相关主题 | Related Topics
 
-### 辅助文档
+### 1.1 辅助文档
 
 - [术语表](./GLOSSARY.md)
 - [快速参考](./QUICK_REFERENCE.md)
 - [学习路径](./LEARNING_PATHS.md)
 - [常见问题](./FAQ.md)
 
-### 跨视角链接
+### 1.1 跨视角链接
 
 - [Software_Perspective](../Software_Perspective/README.md)
 - [FormalLanguage_Perspective](../FormalLanguage_Perspective/README.md)

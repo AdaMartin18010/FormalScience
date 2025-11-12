@@ -3,7 +3,7 @@
 ## 目录
 
 - [representation](#representation)
-  - [目录](#目录)
+  - [9 . 文本思维导图 (此部分保持不变，因其是对原始提纲的结构化呈现)](#9-文本思维导图-此部分保持不变因其是对原始提纲的结构化呈现)
   - [1. 引言：表示论、认知结构与现实的基本概念](#1-引言表示论认知结构与现实的基本概念)
   - [2. 表示论（Representational Theory of Mind, RTM）](#2-表示论representational-theory-of-mind-rtm)
     - [2.1 核心主张与基本概念](#21-核心主张与基本概念)

@@ -10,7 +10,7 @@
 
 - [Rust 生态中用于构建分布式系统的开源框架和关键库](#rust-生态中用于构建分布式系统的开源框架和关键库)
   - [目录](#目录)
-    - [1. 核心异步运行时 (Foundational Async Runtime)](#1-核心异步运行时-foundational-async-runtime)
+    - [10 . 思维导图 (Text Format)](#10-思维导图-text-format)
     - [2. RPC 与网络通信 (RPC \& Network Communication)](#2-rpc-与网络通信-rpc--network-communication)
     - [3. 分布式一致性 (Distributed Consensus)](#3-分布式一致性-distributed-consensus)
     - [4. 分布式工作流/编排 (Distributed Workflow/Orchestration)](#4-分布式工作流编排-distributed-workfloworchestration)
