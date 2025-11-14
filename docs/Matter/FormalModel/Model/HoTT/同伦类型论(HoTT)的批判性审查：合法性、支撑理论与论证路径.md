@@ -381,7 +381,7 @@ HoTT在AI系统中的可能应用：
 J-rule形式上表达为：
 
 ```math
-J : ∀(A:Type)(a:A)(C:∀(x:A), a=x→Type), 
+J : ∀(A:Type)(a:A)(C:∀(x:A), a=x→Type),
     C(a,refl_a) → ∀(x:A)(p:a=x), C(x,p)
 ```
 

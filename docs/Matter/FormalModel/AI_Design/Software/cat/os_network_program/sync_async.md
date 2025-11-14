@@ -2,29 +2,31 @@
 
 ## 📋 目录
 
-- [1 基础范畴定义](#1-基础范畴定义)
-  - [1.1 流范畴 (FlowCat)](#11-流范畴-flowcat)
-  - [1.2 同步范畴 (SyncCat)](#12-同步范畴-synccat)
-  - [1.3 异步范畴 (AsyncCat)](#13-异步范畴-asynccat)
-- [2 流转换函子](#2-流转换函子)
-  - [2.1 控制流转换](#21-控制流转换)
-  - [2.2 执行流转换](#22-执行流转换)
-  - [2.3 数据流转换](#23-数据流转换)
-- [3 自然变换](#3-自然变换)
-  - [3.1 同步到异步变换](#31-同步到异步变换)
-  - [3.2 流范式变换](#32-流范式变换)
-- [4 流代数结构](#4-流代数结构)
-  - [4.1 流单子](#41-流单子)
-  - [4.2 流余单子](#42-流余单子)
-- [5 并发模式范畴](#5-并发模式范畴)
-  - [5.1 并发原语](#51-并发原语)
-  - [5.2 通信模式](#52-通信模式)
-- [6 转换定律与性质](#6-转换定律与性质)
-  - [6.1 基本定律](#61-基本定律)
-  - [6.2 保持性质](#62-保持性质)
-- [7 实际应用示例](#7-实际应用示例)
-  - [7.1 Promise转换](#71-promise转换)
-  - [7.2 响应式流转换](#72-响应式流转换)
+- [范畴论视角下的程序流控制与转换](#范畴论视角下的程序流控制与转换)
+  - [📋 目录](#-目录)
+  - [1 基础范畴定义](#1-基础范畴定义)
+    - [1.1 流范畴 (FlowCat)](#11-流范畴-flowcat)
+    - [1.2 同步范畴 (SyncCat)](#12-同步范畴-synccat)
+    - [1.3 异步范畴 (AsyncCat)](#13-异步范畴-asynccat)
+  - [2 流转换函子](#2-流转换函子)
+    - [2.1 控制流转换](#21-控制流转换)
+    - [2.2 执行流转换](#22-执行流转换)
+    - [2.3 数据流转换](#23-数据流转换)
+  - [3 自然变换](#3-自然变换)
+    - [3.1 同步到异步变换](#31-同步到异步变换)
+    - [3.2 流范式变换](#32-流范式变换)
+  - [4 流代数结构](#4-流代数结构)
+    - [4.1 流单子](#41-流单子)
+    - [4.2 流余单子](#42-流余单子)
+  - [5 并发模式范畴](#5-并发模式范畴)
+    - [5.1 并发原语](#51-并发原语)
+    - [5.2 通信模式](#52-通信模式)
+  - [6 转换定律与性质](#6-转换定律与性质)
+    - [6.1 基本定律](#61-基本定律)
+    - [6.2 保持性质](#62-保持性质)
+  - [7 实际应用示例](#7-实际应用示例)
+    - [7.1 Promise转换](#71-promise转换)
+    - [7.2 响应式流转换](#72-响应式流转换)
 
 ---
 
@@ -35,7 +37,7 @@
 ```haskell
 class FlowCategory f where
   -- 基本类型
-  data Flow = 
+  data Flow =
     ControlFlow    -- 控制流
     | ExecutionFlow -- 执行流
     | DataFlow     -- 数据流
@@ -56,7 +58,7 @@ class FlowCategory f where
 ```haskell
 class SynchronousCategory s where
   -- 同步原语
-  data Sync = 
+  data Sync =
     Barrier     -- 同步屏障
     | Lock      -- 锁
     | Semaphore -- 信号量
@@ -77,7 +79,7 @@ class SynchronousCategory s where
 ```haskell
 class AsynchronousCategory a where
   -- 异步原语
-  data Async = 
+  data Async =
     Promise     -- 承诺
     | Future    -- 期货
     | Callback  -- 回调
@@ -101,11 +103,11 @@ class AsynchronousCategory a where
 class ControlFlowFunctor f where
   -- 控制流变换
   mapControl :: (a → b) → f a → f b
-  
+
   -- 特殊转换
   sequentialToParallel :: SequentialFlow → ParallelFlow
   synchronousToAsync :: SyncFlow → AsyncFlow
-  
+
   -- 控制属性保持
   preserveOrder :: f a → f b → Bool
   preserveCorrectness :: f a → f b → Bool
@@ -117,11 +119,11 @@ class ControlFlowFunctor f where
 class ExecutionFlowFunctor f where
   -- 执行流变换
   mapExecution :: (Process a) → (Process b) → f a → f b
-  
+
   -- 调度转换
   transformScheduling :: Schedule → NewSchedule
   optimizeExecution :: ExecutionFlow → OptimizedFlow
-  
+
   -- 执行属性
   guaranteeProgress :: f a → Progress
   resourceEfficiency :: f a → Efficiency
@@ -133,11 +135,11 @@ class ExecutionFlowFunctor f where
 class DataFlowFunctor f where
   -- 数据流变换
   mapData :: (Data a) → (Data b) → f a → f b
-  
+
   -- 流模式转换
   pushToPull :: PushFlow → PullFlow
   streamToEvent :: StreamFlow → EventFlow
-  
+
   -- 数据属性
   preserveConsistency :: f a → Consistency
   ensureIntegrity :: f a → Integrity
@@ -151,9 +153,9 @@ class DataFlowFunctor f where
 type SyncToAsync = NaturalTransformation SyncCat AsyncCat where
   -- 变换定义
   transform :: ∀a. Sync a → Async a
-  
+
   -- 变换属性
-  properties :: 
+  properties ::
     -- 保持语义
     preserveSemantics :: Sync a → Async a → Bool
     -- 保持顺序
@@ -168,7 +170,7 @@ type SyncToAsync = NaturalTransformation SyncCat AsyncCat where
 type FlowTransformation = NaturalTransformation FlowCat FlowCat where
   -- 流转换
   transform :: ∀a. Flow a → Flow a
-  
+
   -- 转换规则
   rules ::
     -- 控制流转换规则
@@ -188,11 +190,11 @@ class FlowMonad m where
   -- 单子操作
   return :: a → m a
   bind :: m a → (a → m b) → m b
-  
+
   -- 流组合
   sequence :: [m a] → m [a]
   mapM :: (a → m b) → [a] → m [b]
-  
+
   -- 流控制
   join :: m (m a) → m a
   filter :: (a → Bool) → m a → m a
@@ -206,7 +208,7 @@ class FlowComonad w where
   extract :: w a → a
   duplicate :: w a → w (w a)
   extend :: (w a → b) → w a → w b
-  
+
   -- 流分析
   analyze :: w a → Analysis
   observe :: w a → Observation
@@ -219,16 +221,16 @@ class FlowComonad w where
 ```haskell
 class ConcurrencyCategory c where
   -- 并发结构
-  data Concurrent = 
+  data Concurrent =
     Parallel     -- 并行执行
     | Interleaved -- 交错执行
     | Distributed -- 分布式执行
-    
+
   -- 并发操作
   fork :: Process → Concurrent Process
   join :: Concurrent a → a
   coordinate :: [Concurrent a] → Coordination
-  
+
   -- 并发属性
   raceFree :: Concurrent → Bool
   deadlockFree :: Concurrent → Bool
@@ -239,16 +241,16 @@ class ConcurrencyCategory c where
 ```haskell
 class CommunicationCategory c where
   -- 通信模式
-  data Communication = 
+  data Communication =
     MessagePassing -- 消息传递
     | SharedMemory -- 共享内存
     | EventBased   -- 事件基础
-    
+
   -- 通信操作
   send :: Message → Channel → ()
   receive :: Channel → Message
   broadcast :: Message → [Channel] → ()
-  
+
   -- 通信属性
   reliability :: Communication → Reliability
   ordering :: Communication → MessageOrder

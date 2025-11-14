@@ -339,7 +339,7 @@ trait DistributedLock {
     /// 尝试获取锁
     /// 返回锁句柄或获取失败错误
     fn acquire(&self, resource: &ResourceId) -> Result<LockHandle, LockError>;
-    
+
     /// 释放锁
     /// 只有锁的持有者才能释放
     fn release(&self, lock: LockHandle) -> Result<(), LockError>;
@@ -350,13 +350,13 @@ trait DistributedLock {
 fn test_mutex_property() {
     let lock_service = ZookeeperLock::new();
     let resource = ResourceId::new("test");
-    
+
     // 客户端1获取锁
     let lock1 = lock_service.acquire(&resource).unwrap();
-    
+
     // 客户端2尝试获取同一资源的锁应当失败
     assert!(lock_service.acquire(&resource).is_err());
-    
+
     // 释放后可再次获取
     lock_service.release(lock1).unwrap();
     assert!(lock_service.acquire(&resource).is_ok());
@@ -390,7 +390,7 @@ Definition release {r : Resource} (c : Client) (s : LockState r) : LockState r :
 
 (* 互斥性定理 *)
 Theorem mutex : forall (r : Resource) (c1 c2 : Client) (s : LockState r),
-  c1 <> c2 -> 
+  c1 <> c2 ->
   match acquire c1 s with
   | inl _ => match acquire c2 s with
              | inl _ => False
@@ -492,9 +492,9 @@ HoTT为系统架构设计提供了新的思维框架和形式化工具。
 例如，一个电子商务系统的架构可表示为：
 
 ```text
-EcommerceSystem = 
-  UserService × 
-  (ProductCatalog + ProductSearch) × 
+EcommerceSystem =
+  UserService ×
+  (ProductCatalog + ProductSearch) ×
   (OrderService × PaymentService × ShippingService)
 ```
 
@@ -604,9 +604,9 @@ fn main() {
     let v = Vec::<i32, Zero>::new()  // 空向量
         .push(1)                     // 现在是长度为1的向量
         .push(2);                    // 现在是长度为2的向量
-        
+
     let first = v.head();  // 类型安全：编译器保证向量非空
-    
+
     // 以下代码将导致编译错误
     // let empty = Vec::<i32, Zero>::new();
     // empty.head();  // 错误：Zero类型没有head方法
@@ -669,15 +669,15 @@ abstract class Account[S <: AccountState] {
 // 活跃账户实现，支持取款和关闭操作
 class ActiveAccount private (val balance: BigDecimal) extends Account[Active.type] {
   // 取款操作，只有当余额充足时才返回Some，否则返回None
-  def withdraw(amount: BigDecimal): Option[ActiveAccount] = 
+  def withdraw(amount: BigDecimal): Option[ActiveAccount] =
     if (balance >= amount) Some(new ActiveAccount(balance - amount))
     else None
-    
+
   // 冻结账户，状态转换到Frozen
   def freeze: FrozenAccount = new FrozenAccount(balance)
-  
+
   // 关闭账户，只有余额为0时才能关闭
-  def close: Option[ClosedAccount] = 
+  def close: Option[ClosedAccount] =
     if (balance == 0) Some(new ClosedAccount)
     else None
 }
@@ -763,15 +763,15 @@ object Account {
 
 ```text
 // 线性一致性(最强)
-LinearConsistency := 
+LinearConsistency :=
   ∀(ops: List Operation)(r: Result).
     ∃(linearOrder: TotalOrder ops).
       r = execute(linearOrder)
 
 // 最终一致性(较弱)
-EventualConsistency := 
+EventualConsistency :=
   ∀(ops: List Operation)(r1,r2: Result).
-    ∃(t: Time). 
+    ∃(t: Time).
       (after(t) → r1 = r2)
 ```
 
@@ -781,17 +781,17 @@ CAP定理可以在HoTT中得到优雅的形式化证明：
 
 ```math
 // 一致性
-Consistency := 
-  ∀(n1,n2: Node)(t: Time). 
+Consistency :=
+  ∀(n1,n2: Node)(t: Time).
     state(n1, t) = state(n2, t)
 
 // 可用性
-Availability := 
+Availability :=
   ∀(n: Node)(op: Operation)(t: Time).
     ∃(t': Time). t < t' ∧ completed(n, op, t')
 
 // 分区容忍性
-PartitionTolerance := 
+PartitionTolerance :=
   □(∃(n1,n2: Node)(t: Time).
       ¬connected(n1, n2, t))
 
@@ -826,7 +826,7 @@ Accept : Ballot → Value → Node → Type
 Learn : Ballot → Value → Node → Type
 
 // 安全性定理
-Theorem paxos_safety : 
+Theorem paxos_safety :
   ∀(n1,n2: Node)(b1,b2: Ballot)(v1,v2: Value).
     Learn(b1, v1, n1) → Learn(b2, v2, n2) → v1 = v2
 ```
@@ -839,11 +839,11 @@ Theorem paxos_safety :
 
 ```math
 // 整体式架构
-MonolithSystem := 
+MonolithSystem :=
   UserModule × OrderModule × PaymentModule × ...  // 强耦合积类型
 
 // 微服务架构
-MicroserviceSystem := 
+MicroserviceSystem :=
   UserService + OrderService + PaymentService + ...  // 松耦合和类型
 ```
 
@@ -857,7 +857,7 @@ RequestResponse(A, B) := A → B → A
 AsyncMessage(A, B) := A → □(B)  // □表示"最终"
 
 // 事件发布-订阅
-PubSub(Publisher, Subscriber) := 
+PubSub(Publisher, Subscriber) :=
   Publish: Publisher → Event → Unit
   Subscribe: Subscriber → (Event → Unit) → Unit
 ```
@@ -918,7 +918,7 @@ filter : (A → Bool) → Stream(A) → Stream(A)
 flatMap : (A → Stream(B)) → Stream(A) → Stream(B)
 
 // 反应式系统
-ReactiveSystem := 
+ReactiveSystem :=
   Source: Stream(Input)
   Processor: Stream(Input) → Stream(Output)
   Sink: Stream(Output) → Effect
@@ -938,14 +938,14 @@ ReactiveSystem :=
 
 ```math
 // 故障类型层次
-Failure := 
+Failure :=
   CrashFailure +           // 节点完全停止
   OmissionFailure +        // 消息丢失
   TimingFailure +          // 时序违反
   ByzantineFailure         // 任意错误行为
 
 // 节点故障
-NodeFailure := 
+NodeFailure :=
   { nf : Node × Failure | affects(nf.2, nf.1) }
 
 // 系统层次故障
@@ -959,17 +959,17 @@ SystemFailure :=
 
 ```math
 // 容错系统类型
-FaultTolerant(System, FailureSet) := 
-  ∀(f: FailureSet). ∃(p: Path). 
+FaultTolerant(System, FailureSet) :=
+  ∀(f: FailureSet). ∃(p: Path).
     correct_behavior(System, p) ∧
     tolerates(System, f, p)
 
 // 常见容错机制
-Replication(System) := 
+Replication(System) :=
   ∀(n: Node). ∃(replicas: Set Node).
     behavior(n) = ⋂_{r ∈ replicas} behavior(r)
 
-Checkpointing(System) := 
+Checkpointing(System) :=
   ∀(s: State)(f: Failure). ∃(c: Checkpoint).
     recover(s, f, c) = s'  ∧ equivalent(s, s')
 ```
@@ -980,11 +980,11 @@ Checkpointing(System) :=
 
 ```math
 // 幂等性定义
-Idempotent(op: Operation) := 
+Idempotent(op: Operation) :=
   ∀(s: State). apply(op, apply(op, s)) = apply(op, s)
 
 // 幂等操作的重试安全性
-RetryIdempotent := 
+RetryIdempotent :=
   ∀(op: Operation)(s: State)(n: Nat).
     Idempotent(op) →
       apply_n_times(op, s, n) = apply(op, s)
@@ -1006,17 +1006,17 @@ impl<T> IdempotentOperation<T> {
         if self.executed_operations.contains(&self.operation_id) {
             return Ok(self.get_result(&self.operation_id)?);
         }
-        
+
         // 执行操作
         let result = (self.operation)()?;
-        
+
         // 记录执行结果
         self.store_result(&self.operation_id, &result)?;
         self.executed_operations.insert(self.operation_id.clone());
-        
+
         Ok(result)
     }
-    
+
     // 存储和获取结果的辅助方法
     fn store_result(&self, op_id: &str, result: &T) -> Result<(), Error> { /* ... */ }
     fn get_result(&self, op_id: &str) -> Result<T, Error> { /* ... */ }
@@ -1048,7 +1048,7 @@ State := Key → Value
 apply : Operation → State → (State × Result)
 
 // 分布式系统
-System := 
+System :=
   Nodes : Set Node
   LocalState : Node → State
   execute : Node → Operation → Result
@@ -1065,7 +1065,7 @@ EXTENDS Naturals, FiniteSets, Sequences
 
 CONSTANTS Keys, Values, Nodes
 
-VARIABLES 
+VARIABLES
   localState,  \* 每个节点的本地状态
   ops,         \* 已提交的操作
   pending      \* 待复制的操作
@@ -1085,12 +1085,12 @@ Read(n, k) ==
 Write(n, k, v) ==
   /\ localState' = [localState EXCEPT ![n][k] = v]
   /\ ops' = Append(ops, <<n, "write", k, v>>)
-  /\ pending' = [pending EXCEPT ![n] = pending[n] \cup 
+  /\ pending' = [pending EXCEPT ![n] = pending[n] \cup
                  {<<m, "write", k, v>> : m \in Nodes \ {n}}]
 
 \* 复制操作
 Replicate(src, dst) ==
-  /\ \E op \in pending[dst] : 
+  /\ \E op \in pending[dst] :
        /\ op[1] = src
        /\ op[2] = "write"
        /\ LET k == op[3]
@@ -1101,7 +1101,7 @@ Replicate(src, dst) ==
 
 \* 最终一致性：所有挂起复制完成后，所有节点状态相同
 EventualConsistency ==
-  []<>((\A n \in Nodes : pending[n] = {}) => 
+  []<>((\A n \in Nodes : pending[n] = {}) =>
         (\A n1, n2 \in Nodes : localState[n1] = localState[n2]))
 
 \* 初始状态
@@ -1176,11 +1176,11 @@ type ECommerceSystem = (ProductService, OrderService, PaymentService)
 // 事务定义
 def purchaseTransaction(
   system: ECommerceSystem,
-  userId: UUID, 
+  userId: UUID,
   items: List[OrderItem]
 ): Either[TransactionError, (Order, Payment)] = {
   val (productService, orderService, paymentService) = system
-  
+
   // 1. 创建订单
   orderService.createOrder(userId, items).flatMap { order =>
     // 2. 处理支付
@@ -1189,7 +1189,7 @@ def purchaseTransaction(
       val inventoryUpdates = items.map { item =>
         productService.updateInventory(item.productId, -item.quantity)
       }
-      
+
       // 确保所有库存更新成功
       if (inventoryUpdates.forall(_.isRight)) {
         // 4. 更新订单状态
@@ -1215,56 +1215,56 @@ import org.scalacheck.{Gen, Properties}
 import org.scalacheck.Prop.forAll
 
 object ECommerceSystemProperties extends Properties("ECommerceSystem") {
-  
+
   // 生成测试数据
   val productGen: Gen[Product] = for {
     id <- Gen.uuid
     name <- Gen.alphaStr.suchThat(_.nonEmpty)
     price <- Gen.posNum[BigDecimal]
   } yield Product(id, name, price)
-  
+
   val orderItemGen: Gen[OrderItem] = for {
     productId <- Gen.uuid
     quantity <- Gen.chooseNum(1, 10)
   } yield OrderItem(productId, quantity)
-  
-  val orderItemsGen: Gen[List[OrderItem]] = 
+
+  val orderItemsGen: Gen[List[OrderItem]] =
     Gen.listOfN(5, orderItemGen)
-  
+
   // 测试属性：订单创建后总能找到对应的订单
-  property("order-creation-persistence") = forAll(Gen.uuid, orderItemsGen) { 
+  property("order-creation-persistence") = forAll(Gen.uuid, orderItemsGen) {
     (userId, items) =>
       val system = createTestSystem()
       val result = purchaseTransaction(system, userId, items)
-      
+
       result match {
-        case Right((order, _)) => 
+        case Right((order, _)) =>
           system._2.getOrder(order.id).isDefined
         case _ => true // 忽略失败的事务
       }
   }
-  
+
   // 测试属性：支付成功则订单必须成功
   property("payment-implies-order") = forAll(Gen.uuid, orderItemsGen) {
     (userId, items) =>
       val system = createTestSystem()
       val result = purchaseTransaction(system, userId, items)
-      
+
       result match {
-        case Right((order, payment)) => 
-          payment.status == PaymentStatus.Completed && 
+        case Right((order, payment)) =>
+          payment.status == PaymentStatus.Completed &&
           order.status == OrderStatus.Confirmed
         case _ => true
       }
   }
-  
+
   // 测试属性：库存不足时事务应回滚
   property("insufficient-inventory-rollback") = {
     val system = createTestSystemWithLimitedInventory()
     val largeOrder = OrderItem(lowStockProductId, 1000) :: Nil
-    
+
     val result = purchaseTransaction(system, Gen.uuid.sample.get, largeOrder)
-    
+
     result.isLeft && {
       // 验证没有部分状态变化
       val order = result.left.get.associatedOrderId.flatMap(system._2.getOrder)
@@ -1304,12 +1304,12 @@ object ECommerceSystemProperties extends Properties("ECommerceSystem") {
 // 简化的智能合约
 contract TokenExchange {
     mapping(address => uint256) public balances;
-    
+
     // 存入代币
     function deposit() public payable {
         balances[msg.sender] += msg.value;
     }
-    
+
     // 提取代币
     function withdraw(uint256 amount) public {
         require(balances[msg.sender] >= amount, "Insufficient balance");
@@ -1317,7 +1317,7 @@ contract TokenExchange {
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Transfer failed");
     }
-    
+
     // 交换代币
     function exchange(address to, uint256 amount) public {
         require(balances[msg.sender] >= amount, "Insufficient balance");
@@ -1337,7 +1337,7 @@ State := {
 }
 
 // 不变量
-Invariant(s: State) := 
+Invariant(s: State) :=
   sum(s.balances) = s.totalSupply
 
 // 操作语义
@@ -1350,8 +1350,8 @@ withdraw(s: State, sender: Address, amount: Uint256) :=
 
 exchange(s: State, sender: Address, to: Address, amount: Uint256) :=
   require(s.balances[sender] >= amount)
-  s with { 
-    balances[sender] -= amount, 
+  s with {
+    balances[sender] -= amount,
     balances[to] += amount
   }
 ```
@@ -1389,7 +1389,7 @@ module TOKEN-EXCHANGE-SPEC
     <k> exchange(TO, AMOUNT) => . </k>
     <state>
       <balances>
-        BALANCES => 
+        BALANCES =>
           BALANCES[SENDER <- BALANCES[SENDER] - AMOUNT]
                    [TO <- BALANCES[TO] + AMOUNT]
       </balances>
@@ -1400,20 +1400,20 @@ module TOKEN-EXCHANGE-SPEC
     ensures sum(BALANCES) == sum(BALANCES[SENDER <- BALANCES[SENDER] - AMOUNT]
                                 [TO <- BALANCES[TO] + AMOUNT])
     ensures sum(BALANCES) == TOTAL
-    
+
   // 检查重入攻击
   rule
     <k> withdraw(AMOUNT) => . </k>
     <state>
-      <balances> 
-        BALANCES => BALANCES[SENDER <- BALANCES[SENDER] - AMOUNT] 
+      <balances>
+        BALANCES => BALANCES[SENDER <- BALANCES[SENDER] - AMOUNT]
       </balances>
       <reentrancyLock> false => true => false </reentrancyLock>
     </state>
     <caller> SENDER </caller>
     requires BALANCES[SENDER] >= AMOUNT
-    ensures \forall CALL. 
-      occurs(CALL) and isWithdraw(CALL) implies 
+    ensures \forall CALL.
+      occurs(CALL) and isWithdraw(CALL) implies
         after(lockAcquired, CALL) and before(CALL, lockReleased)
 endmodule
 ```
@@ -1426,7 +1426,7 @@ EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANT Addresses, InitialBalances
 
-VARIABLES 
+VARIABLES
   balances,    \* 每个地址的余额
   totalSupply, \* 总供应量
   locked       \* 重入锁状态
@@ -1459,7 +1459,7 @@ Withdraw(addr, amount) ==
 Exchange(from, to, amount) ==
   /\ from /= to
   /\ balances[from] >= amount
-  /\ balances' = [balances EXCEPT 
+  /\ balances' = [balances EXCEPT
                   ![from] = @ - amount,
                   ![to] = @ + amount]
   /\ UNCHANGED <<totalSupply, locked>>
@@ -1498,7 +1498,7 @@ THEOREM Safety == Spec => [](BalanceInvariant /\ TypeInvariant)
 contract TokenExchange {
     mapping(address => uint256) public balances;
     bool private locked;
-    
+
     // 重入锁修饰器
     modifier nonReentrant() {
         require(!locked, "Reentrant call");
@@ -1506,24 +1506,24 @@ contract TokenExchange {
         _;
         locked = false;
     }
-    
+
     // 存入代币
     function deposit() public payable {
         balances[msg.sender] += msg.value;
     }
-    
+
     // 提取代币 - 修复了重入漏洞
     function withdraw(uint256 amount) public nonReentrant {
         require(balances[msg.sender] >= amount, "Insufficient balance");
-        
+
         // 先更新状态再交互
         balances[msg.sender] -= amount;
-        
+
         // 外部调用
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Transfer failed");
     }
-    
+
     // 交换代币
     function exchange(address to, uint256 amount) public {
         require(balances[msg.sender] >= amount, "Insufficient balance");
@@ -1578,8 +1578,8 @@ contract TokenExchange {
 1. **混合工具方法**：
 
    ```math
-   需求规范 → 形式化规范(TLA+) → 
-   实现(Scala/Rust) + 
+   需求规范 → 形式化规范(TLA+) →
+   实现(Scala/Rust) +
    验证(ScalaCheck/属性测试) →
    关键组件证明(Coq/Agda)
    ```
@@ -1646,7 +1646,7 @@ graph TD
     B --> C[形式化规范]
     C --> D[局部形式证明]
     D --> E[全面形式验证]
-    
+
     A1[边界清晰化] -.-> A
     A2[类型设计模式] -.-> A
     A3[不变量编码] -.-> B
@@ -2007,14 +2007,14 @@ function exchange(address to, uint256 amount) public {
 
 ```coq
 (* 用依赖类型表示余额约束 *)
-Definition ValidBalance (addr : Address) (bal : Nat) := 
+Definition ValidBalance (addr : Address) (bal : Nat) :=
   bal <= totalSupply.
 
 (* 交易操作的类型定义，确保状态转换的安全性 *)
-Definition Exchange := 
+Definition Exchange :=
   Σ (from to : Address) (amount : Nat),
-    ValidBalance from amount × 
-    (ValidBalance from (balanceOf from - amount) × 
+    ValidBalance from amount ×
+    (ValidBalance from (balanceOf from - amount) ×
      ValidBalance to (balanceOf to + amount)).
 ```
 

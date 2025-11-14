@@ -3,37 +3,37 @@
 ## 目录
 
 - [几何概念的认知结构、分析与建构](#几何概念的认知结构分析与建构)
-  - [1 . 引言：空间认知与几何学的本质](#1-引言空间认知与几何学的本质)
+  - [目录](#目录)
   - [1. 引言：空间认知与几何学的本质](#1-引言空间认知与几何学的本质)
-    - [1.1 . 人类对空间的直觉认知](#11-人类对空间的直觉认知)
-    - [1.2 . 几何学：空间理念的形式化表达](#12-几何学空间理念的形式化表达)
-    - [1.3 . 研究目标与方法论：综合性分析与批判性评价](#13-研究目标与方法论综合性分析与批判性评价)
-  - [2 . 人脑对空间的认知与理念建构](#2-人脑对空间的认知与理念建构)
-    - [2.1 . 空间感知的神经生理基础 (简述)](#21-空间感知的神经生理基础-简述)
-    - [2.2 . 空间表象的形成与心理操作](#22-空间表象的形成与心理操作)
-    - [2.3 . 从直观空间到抽象几何概念的跃迁](#23-从直观空间到抽象几何概念的跃迁)
-  - [3 . 数学几何内部概念体系的全面分析](#3-数学几何内部概念体系的全面分析)
-    - [3.1 . 基本几何元素与初始定义](#31-基本几何元素与初始定义)
-    - [3.2 . 基本几何关系与性质](#32-基本几何关系与性质)
-    - [3.3 . 几何图形的分类](#33-几何图形的分类)
-    - [3.4 . 公理化体系：定义、公理、定理与证明 (Axiomatic System: Definitions, Axioms, Theorems, and Proofs)](#34-公理化体系定义公理定理与证明-axiomatic-system-definitions-axioms-theorems-and-proofs)
-    - [3.5 . 几何变换 (Geometric Transformations)](#35-几何变换-geometric-transformations)
-  - [4 . 几何概念的层次结构与关联网络](#4-几何概念的层次结构与关联网络)
-    - [4.1 . 概念的纵向层次 (Vertical Hierarchy of Concepts)](#41-概念的纵向层次-vertical-hierarchy-of-concepts)
-    - [4.2 . 概念间的横向关联 (Horizontal Connections between Concepts)](#42-概念间的横向关联-horizontal-connections-between-concepts)
-    - [4.3 . 不同几何分支间的关系映射 (Mapping Relations between Different Geometric Branches)](#43-不同几何分支间的关系映射-mapping-relations-between-different-geometric-branches)
-    - [4.4 . 概念的认知层级 (Cognitive Levels of Geometric Concepts)](#44-概念的认知层级-cognitive-levels-of-geometric-concepts)
-  - [5 . 批判性分析与综合评价](#5-批判性分析与综合评价)
-    - [5.1 . 对几何概念完备性的审视 (Scrutiny of the Completeness of Geometric Concepts)](#51-对几何概念完备性的审视-scrutiny-of-the-completeness-of-geometric-concepts)
-    - [5.2 . 对公理化方法局限性的思考 (Reflection on the Limitations of the Axiomatic Method)](#52-对公理化方法局限性的思考-reflection-on-the-limitations-of-the-axiomatic-method)
-    - [5.3 . 几何学在不同文化和历史时期的演变 (Evolution of Geometry in Different Cultures and Historical Periods)](#53-几何学在不同文化和历史时期的演变-evolution-of-geometry-in-different-cultures-and-historical-periods)
-    - [5.4 . 几何直观与逻辑严谨性的关系 (The Relationship between Geometric Intuition and Logical Rigor)](#54-几何直观与逻辑严谨性的关系-the-relationship-between-geometric-intuition-and-logical-rigor)
-    - [5.5 . 总结：几何学的统一性、多样性与持续发展 (Conclusion: Unity, Diversity, and Continuous Development of Geometry)](#55-总结几何学的统一性多样性与持续发展-conclusion-unity-diversity-and-continuous-development-of-geometry)
-  - [6 . 结论](#6-结论)
-    - [6.1 . 几何概念体系的复杂性与丰富性总结](#61-几何概念体系的复杂性与丰富性总结)
-    - [6.2 . 人类空间认知与数学形式化之间的互动张力](#62-人类空间认知与数学形式化之间的互动张力)
-    - [6.3 . 对未来研究的展望与建议](#63-对未来研究的展望与建议)
-  - [7 思维导图 (Text-Based Mind Map Structure)](#7-思维导图-text-based-mind-map-structure)
+    - [1.1. 人类对空间的直觉认知](#11-人类对空间的直觉认知)
+    - [1.2. 几何学：空间理念的形式化表达](#12-几何学空间理念的形式化表达)
+    - [1.3. 研究目标与方法论：综合性分析与批判性评价](#13-研究目标与方法论综合性分析与批判性评价)
+  - [2. 人脑对空间的认知与理念建构](#2-人脑对空间的认知与理念建构)
+    - [2.1. 空间感知的神经生理基础 (简述)](#21-空间感知的神经生理基础-简述)
+    - [2.2. 空间表象的形成与心理操作](#22-空间表象的形成与心理操作)
+    - [2.3. 从直观空间到抽象几何概念的跃迁](#23-从直观空间到抽象几何概念的跃迁)
+  - [3. 数学几何内部概念体系的全面分析](#3-数学几何内部概念体系的全面分析)
+    - [3.1. 基本几何元素与初始定义](#31-基本几何元素与初始定义)
+    - [3.2. 基本几何关系与性质](#32-基本几何关系与性质)
+    - [3.3. 几何图形的分类](#33-几何图形的分类)
+    - [3.4. 公理化体系：定义、公理、定理与证明 (Axiomatic System: Definitions, Axioms, Theorems, and Proofs)](#34-公理化体系定义公理定理与证明-axiomatic-system-definitions-axioms-theorems-and-proofs)
+    - [3.5. 几何变换 (Geometric Transformations)](#35-几何变换-geometric-transformations)
+  - [4. 几何概念的层次结构与关联网络](#4-几何概念的层次结构与关联网络)
+    - [4.1. 概念的纵向层次 (Vertical Hierarchy of Concepts)](#41-概念的纵向层次-vertical-hierarchy-of-concepts)
+    - [4.2. 概念间的横向关联 (Horizontal Connections between Concepts)](#42-概念间的横向关联-horizontal-connections-between-concepts)
+    - [4.3. 不同几何分支间的关系映射 (Mapping Relations between Different Geometric Branches)](#43-不同几何分支间的关系映射-mapping-relations-between-different-geometric-branches)
+    - [4.4. 概念的认知层级 (Cognitive Levels of Geometric Concepts)](#44-概念的认知层级-cognitive-levels-of-geometric-concepts)
+  - [5. 批判性分析与综合评价](#5-批判性分析与综合评价)
+    - [5.1. 对几何概念完备性的审视 (Scrutiny of the Completeness of Geometric Concepts)](#51-对几何概念完备性的审视-scrutiny-of-the-completeness-of-geometric-concepts)
+    - [5.2. 对公理化方法局限性的思考 (Reflection on the Limitations of the Axiomatic Method)](#52-对公理化方法局限性的思考-reflection-on-the-limitations-of-the-axiomatic-method)
+    - [5.3. 几何学在不同文化和历史时期的演变 (Evolution of Geometry in Different Cultures and Historical Periods)](#53-几何学在不同文化和历史时期的演变-evolution-of-geometry-in-different-cultures-and-historical-periods)
+    - [5.4. 几何直观与逻辑严谨性的关系 (The Relationship between Geometric Intuition and Logical Rigor)](#54-几何直观与逻辑严谨性的关系-the-relationship-between-geometric-intuition-and-logical-rigor)
+    - [5.5. 总结：几何学的统一性、多样性与持续发展 (Conclusion: Unity, Diversity, and Continuous Development of Geometry)](#55-总结几何学的统一性多样性与持续发展-conclusion-unity-diversity-and-continuous-development-of-geometry)
+  - [6. 结论](#6-结论)
+    - [6.1. 几何概念体系的复杂性与丰富性总结](#61-几何概念体系的复杂性与丰富性总结)
+    - [6.2. 人类空间认知与数学形式化之间的互动张力](#62-人类空间认知与数学形式化之间的互动张力)
+    - [6.3. 对未来研究的展望与建议](#63-对未来研究的展望与建议)
+  - [思维导图 (Text-Based Mind Map Structure)](#思维导图-text-based-mind-map-structure)
 
 ---
 
@@ -468,7 +468,7 @@
     - **独立性 (Independence)**：系统中任何一条公理都不能由其他公理推导出来。如果一条公理可以被其他公理证明，那么它更像一个定理，可以从公理集合中移除（尽管有时为了教学或表达方便会保留冗余公理）。
     - **完备性 (Completeness)**：指公理系统足以证明其领域内所有真命题。然而，哥德尔不完备定理表明，任何包含足够算术的相容形式系统必然是不完备的，即存在该系统内既不能被证明也不能被否证的真命题。对于几何学而言，塔斯基证明了初等欧氏几何是完备和可判定的。
     - **简洁性与数量**：公理应尽可能简洁，数量尽可能少，但足以支撑整个理论体系。
-  - **3.4.2.1. 欧几里得《几何原本》中的公理与公设 (Euclid's Axioms and Postulates in *Elements*)**
+  - **3.4.2.1. 欧几里得《几何原本》中的公理与公设 (Euclid's Axioms and Postulates in _Elements_)**
         欧几里得区分了“公理”（common notions，适用于所有科学的普遍真理）和“公设”（postulates，几何学特有的基本假设）。
     - **五个公设 (Postulates)**：
             1. 任意两个点可以通过一条直线连接。 (To draw a straight line from any point to any point.)
@@ -848,7 +848,7 @@
 - **5.3.2. 古希腊的公理化与逻辑演绎体系 (Axiomatization and Deductive System in Ancient Greece)**
   - **理性转向**：从泰勒斯开始，古希腊几何学逐渐从实用转向对几何图形内在性质和逻辑关系的纯粹理性探究。
   - **公理化方法的奠基**：毕达哥拉斯学派强调数与形的统一，追求证明的严谨性。欧多克索斯解决了比例论和穷竭法的难题。
-  - **欧几里得《几何原本》 (Euclid's *Elements*)**：公元前300年左右，集古希腊几何学之大成，建立了第一个系统的公理化演绎体系。以少数公理和公设为基础，通过逻辑推理证明了大量定理。其严谨的逻辑结构对后世科学和哲学产生了深远影响，成为理性思维的典范。
+  - **欧几里得《几何原本》 (Euclid's _Elements_)**：公元前300年左右，集古希腊几何学之大成，建立了第一个系统的公理化演绎体系。以少数公理和公设为基础，通过逻辑推理证明了大量定理。其严谨的逻辑结构对后世科学和哲学产生了深远影响，成为理性思维的典范。
   - **阿基米德的贡献**：在面积和体积计算方面运用了接近现代积分思想的穷竭法，对杠杆原理、浮力定律等也有贡献。
   - **阿波罗尼奥斯的圆锥曲线论**：系统研究了椭圆、抛物线、双曲线的性质。
   - **特点**：强调定义的精确性、逻辑证明的严格性、公理化体系的构建，使几何学成为一门独立的演绎科学。

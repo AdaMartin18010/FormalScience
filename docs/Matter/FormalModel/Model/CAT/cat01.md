@@ -182,14 +182,14 @@ $\eta_B \circ F(f) = G(f) \circ \eta_A$
 // Option是一个函子，实现了map方法
 fn main() {
     let x: Option<i32> = Some(5);
-    
+
     // 使用map应用函数到Option内部的值，保持结构
     let y = x.map(|n| n * 2);  // Some(10)
-    
+
     // 函子应该满足以下规则（虽然Rust不强制要求）
     // 1. map(id) == id
     // 2. map(f . g) == map(f) . map(g)
-    
+
     println!("{:?}", y);
 }
 ```
@@ -200,7 +200,7 @@ fn main() {
 fn main() {
     // Option的单子行为
     let x = Some(5);
-    
+
     // bind操作 (在Rust中是and_then)
     let y = x.and_then(|n| {
         if n > 0 {
@@ -209,7 +209,7 @@ fn main() {
             None
         }
     });
-    
+
     // Result也是单子
     let result: Result<i32, &str> = Ok(42);
     let processed = result.and_then(|n| {
@@ -219,7 +219,7 @@ fn main() {
             Err("负数")
         }
     });
-    
+
     println!("{:?}, {:?}", y, processed);
 }
 ```
@@ -230,7 +230,7 @@ fn main() {
 // 使用组合子模式处理Result
 fn main() {
     let data = "42";
-    
+
     // 组合多个可能失败的操作
     let result = data
         .parse::<i32>()           // 尝试解析为i32
@@ -243,7 +243,7 @@ fn main() {
             }
         })
         .map(|n| n * 2);          // 应用函数到成功值
-    
+
     match result {
         Ok(n) => println!("成功: {}", n),
         Err(e) => println!("错误: {}", e),

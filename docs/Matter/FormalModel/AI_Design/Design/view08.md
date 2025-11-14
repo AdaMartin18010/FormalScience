@@ -1310,7 +1310,7 @@ collaborative_programming(specification):
     中期 = 协作系统(人类专长 + AI专长)
     远期 = 增强系统(人类认知 + AI能力)
     终极 = 融合系统(人机界限模糊)
-    
+
     for each transition:
         identify_challenges()
         develop_interfaces()

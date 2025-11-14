@@ -341,50 +341,50 @@ impl QuantumState {
         amplitudes[0] = Complex::new(1.0, 0.0);
         Self { amplitudes }
     }
-    
+
     /// 获取特定状态的振幅
     pub fn amplitude(&self, state: usize) -> Complex {
         self.amplitudes[state]
     }
-    
+
     /// 获取量子态的维度（对应的量子比特数）
     pub fn num_qubits(&self) -> usize {
         (self.amplitudes.len() as f64).log2() as usize
     }
-    
+
     /// 应用量子门（通过矩阵乘法）
     pub fn apply_gate(&mut self, gate: &QuantumGate) {
         self.amplitudes = gate.matrix.dot(&self.amplitudes);
-        
+
         // 归一化（处理数值误差）
         let norm: f64 = self.amplitudes.iter()
             .map(|&x| x.norm_sqr())
             .sum::<f64>()
             .sqrt();
-        
+
         self.amplitudes.mapv_inplace(|x| x / Complex::new(norm, 0.0));
     }
-    
+
     /// 测量所有量子比特
     pub fn measure_all(&self) -> usize {
         use rand::Rng;
         let mut rng = rand::thread_rng();
-        
+
         // 计算累积概率
         let probabilities: Vec<f64> = self.amplitudes.iter()
             .map(|&amp| amp.norm_sqr())
             .collect();
-        
+
         let mut cumulative_prob = 0.0;
         let random_val = rng.gen::<f64>();
-        
+
         for (state, &prob) in probabilities.iter().enumerate() {
             cumulative_prob += prob;
             if random_val <= cumulative_prob {
                 return state;
             }
         }
-        
+
         // 理论上不应该到达这里，但处理数值误差
         probabilities.len() - 1
     }
@@ -394,19 +394,19 @@ impl fmt::Display for QuantumState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let n = self.num_qubits();
         let threshold = 1e-10; // 忽略极小振幅
-        
+
         writeln!(f, "量子态 ({} 量子比特):", n)?;
-        
+
         let mut has_terms = false;
         for (i, &amp) in self.amplitudes.iter().enumerate() {
             if amp.norm_sqr() > threshold {
                 has_terms = true;
                 let binary = format!("{:0width$b}", i, width = n);
-                
+
                 // 格式化复数
                 let re = amp.re;
                 let im = amp.im;
-                
+
                 if im == 0.0 {
                     write!(f, "{:.5}|{}⟩ ", re, binary)?;
                 } else if re == 0.0 {
@@ -418,11 +418,11 @@ impl fmt::Display for QuantumState {
                 }
             }
         }
-        
+
         if !has_terms {
             write!(f, "0")?;
         }
-        
+
         Ok(())
     }
 }
@@ -439,7 +439,7 @@ impl QuantumGate {
     pub fn new(matrix: Array2<Complex>, name: String) -> Self {
         Self { matrix, name }
     }
-    
+
     /// 创建Hadamard门
     pub fn hadamard() -> Self {
         let sqrt2_inv = 1.0 / 2.0_f64.sqrt();
@@ -450,10 +450,10 @@ impl QuantumGate {
                 Complex::new(sqrt2_inv, 0.0), Complex::new(-sqrt2_inv, 0.0),
             ],
         ).unwrap();
-        
+
         Self::new(matrix, "H".to_string())
     }
-    
+
     /// 创建X门（NOT门）
     pub fn x() -> Self {
         let matrix = Array2::from_shape_vec(
@@ -463,10 +463,10 @@ impl QuantumGate {
                 Complex::new(1.0, 0.0), Complex::new(0.0, 0.0),
             ],
         ).unwrap();
-        
+
         Self::new(matrix, "X".to_string())
     }
-    
+
     /// 创建Z门
     pub fn z() -> Self {
         let matrix = Array2::from_shape_vec(
@@ -476,10 +476,10 @@ impl QuantumGate {
                 Complex::new(0.0, 0.0), Complex::new(-1.0, 0.0),
             ],
         ).unwrap();
-        
+
         Self::new(matrix, "Z".to_string())
     }
-    
+
     /// 创建Y门
     pub fn y() -> Self {
         let matrix = Array2::from_shape_vec(
@@ -489,10 +489,10 @@ impl QuantumGate {
                 Complex::new(0.0, 1.0), Complex::new(0.0, 0.0),
             ],
         ).unwrap();
-        
+
         Self::new(matrix, "Y".to_string())
     }
-    
+
     /// 创建CNOT门（用于2个量子比特）
     pub fn cnot() -> Self {
         let matrix = Array2::from_shape_vec(
@@ -504,15 +504,15 @@ impl QuantumGate {
                 Complex::new(0.0, 0.0), Complex::new(0.0, 0.0), Complex::new(1.0, 0.0), Complex::new(0.0, 0.0),
             ],
         ).unwrap();
-        
+
         Self::new(matrix, "CNOT".to_string())
     }
-    
+
     /// 创建作用在特定量子比特上的单量子比特门
     pub fn single_qubit_gate(gate: &QuantumGate, target: usize, num_qubits: usize) -> Self {
         let size = 1 << num_qubits;
         let mut matrix = Array2::zeros((size, size));
-        
+
         for i in 0..size {
             for j in 0..size {
                 // 检查目标量子位以外的所有位是否相同
@@ -520,13 +520,13 @@ impl QuantumGate {
                     // 提取目标比特
                     let i_target = (i >> target) & 1;
                     let j_target = (j >> target) & 1;
-                    
+
                     // 应用单量子比特门
                     matrix[[i, j]] = gate.matrix[[i_target, j_target]];
                 }
             }
         }
-        
+
         let name = format!("{}({})", gate.name, target);
         Self::new(matrix, name)
     }
@@ -547,7 +547,7 @@ impl QuantumCircuit {
             gates: Vec::new(),
         }
     }
-    
+
     /// 添加Hadamard门
     pub fn h(&mut self, qubit: usize) -> &mut Self {
         assert!(qubit < self.num_qubits, "量子比特索引越界");
@@ -555,7 +555,7 @@ impl QuantumCircuit {
         self.gates.push(gate);
         self
     }
-    
+
     /// 添加X门
     pub fn x(&mut self, qubit: usize) -> &mut Self {
         assert!(qubit < self.num_qubits, "量子比特索引越界");
@@ -563,7 +563,7 @@ impl QuantumCircuit {
         self.gates.push(gate);
         self
     }
-    
+
     /// 添加Z门
     pub fn z(&mut self, qubit: usize) -> &mut Self {
         assert!(qubit < self.num_qubits, "量子比特索引越界");
@@ -571,17 +571,17 @@ impl QuantumCircuit {
         self.gates.push(gate);
         self
     }
-    
+
     /// 添加CNOT门
     pub fn cnot(&mut self, control: usize, target: usize) -> &mut Self {
         assert!(control < self.num_qubits && target < self.num_qubits, "量子比特索引越界");
         assert!(control != target, "控制比特和目标比特必须不同");
-        
+
         // CNOT实现较复杂，此处简化
         // 完整实现需要考虑任意控制和目标比特位置
         let size = 1 << self.num_qubits;
         let mut matrix = Array2::zeros((size, size));
-        
+
         for i in 0..size {
             let control_bit = (i >> control) & 1;
             if control_bit == 0 {
@@ -593,34 +593,34 @@ impl QuantumCircuit {
                 matrix[[i, j]] = Complex::new(1.0, 0.0);
             }
         }
-        
+
         let name = format!("CNOT({},{})", control, target);
         self.gates.push(QuantumGate::new(matrix, name));
         self
     }
-    
+
     /// 执行量子电路
     pub fn execute(&self) -> QuantumState {
         let mut state = QuantumState::new_zero(self.num_qubits);
-        
+
         for gate in &self.gates {
             state.apply_gate(gate);
         }
-        
+
         state
     }
-    
+
     /// 多次测量电路，返回计数结果
     pub fn sample(&self, shots: usize) -> std::collections::HashMap<usize, usize> {
         use std::collections::HashMap;
         let mut results = HashMap::new();
-        
+
         for _ in 0..shots {
             let state = self.execute();
             let outcome = state.measure_all();
             *results.entry(outcome).or_insert(0) += 1;
         }
-        
+
         results
     }
 }
@@ -632,35 +632,35 @@ impl QuantumCircuit {
 /// 实现格罗弗搜索算法
 pub fn grover_search(target: usize, num_qubits: usize) -> QuantumCircuit {
     assert!(target < (1 << num_qubits), "目标状态超出量子系统范围");
-    
+
     let iterations = ((std::f64::consts::PI / 4.0) * (1 << num_qubits) as f64).sqrt() as usize;
     let mut circuit = QuantumCircuit::new(num_qubits);
-    
+
     // 1. 初始化为均匀叠加态
     for i in 0..num_qubits {
         circuit.h(i);
     }
-    
+
     // 2. 应用Grover迭代
     for _ in 0..iterations {
         // 2.1 Oracle - 标记目标状态
         oracle_for_target(&mut circuit, target, num_qubits);
-        
+
         // 2.2 扩散算子（Diffusion Operator）
         // a. 应用H门到所有量子比特
         for i in 0..num_qubits {
             circuit.h(i);
         }
-        
+
         // b. 应用条件相位反转
         phase_flip_zero(&mut circuit, num_qubits);
-        
+
         // c. 再次应用H门
         for i in 0..num_qubits {
             circuit.h(i);
         }
     }
-    
+
     circuit
 }
 
@@ -668,11 +668,11 @@ pub fn grover_search(target: usize, num_qubits: usize) -> QuantumCircuit {
 fn oracle_for_target(circuit: &mut QuantumCircuit, target: usize, num_qubits: usize) {
     // 为目标状态翻转相位
     // 实现比较复杂，这里只给出简化版本
-    
+
     // 创建一个特殊的Z门组合，只对目标状态翻转相位
     let size = 1 << num_qubits;
     let mut matrix = Array2::zeros((size, size));
-    
+
     for i in 0..size {
         if i == target {
             matrix[[i, i]] = Complex::new(-1.0, 0.0);
@@ -680,7 +680,7 @@ fn oracle_for_target(circuit: &mut QuantumCircuit, target: usize, num_qubits: us
             matrix[[i, i]] = Complex::new(1.0, 0.0);
         }
     }
-    
+
     let oracle = QuantumGate::new(matrix, "Oracle".to_string());
     circuit.gates.push(oracle);
 }
@@ -689,7 +689,7 @@ fn oracle_for_target(circuit: &mut QuantumCircuit, target: usize, num_qubits: us
 fn phase_flip_zero(circuit: &mut QuantumCircuit, num_qubits: usize) {
     let size = 1 << num_qubits;
     let mut matrix = Array2::zeros((size, size));
-    
+
     for i in 0..size {
         if i == 0 {
             matrix[[i,
@@ -702,7 +702,7 @@ fn phase_flip_zero(circuit: &mut QuantumCircuit, num_qubits: usize) {
 fn phase_flip_zero(circuit: &mut QuantumCircuit, num_qubits: usize) {
     let size = 1 << num_qubits;
     let mut matrix = Array2::zeros((size, size));
-    
+
     for i in 0..size {
         if i == 0 {
             matrix[[i, i]] = Complex::new(-1.0, 0.0);
@@ -710,7 +710,7 @@ fn phase_flip_zero(circuit: &mut QuantumCircuit, num_qubits: usize) {
             matrix[[i, i]] = Complex::new(1.0, 0.0);
         }
     }
-    
+
     let diffusion = QuantumGate::new(matrix, "Diffusion".to_string());
     circuit.gates.push(diffusion);
 }
@@ -722,23 +722,23 @@ fn phase_flip_zero(circuit: &mut QuantumCircuit, num_qubits: usize) {
 /// 实现量子傅里叶变换
 pub fn quantum_fourier_transform(num_qubits: usize) -> QuantumCircuit {
     let mut circuit = QuantumCircuit::new(num_qubits);
-    
+
     // QFT实现
     for i in 0..num_qubits {
         // Hadamard门
         circuit.h(i);
-        
+
         // 受控旋转门
         for j in (i+1)..num_qubits {
             controlled_phase_rotation(&mut circuit, j, i, num_qubits - (j - i));
         }
     }
-    
+
     // 交换量子比特顺序（QFT需要）
     for i in 0..num_qubits/2 {
         swap_qubits(&mut circuit, i, num_qubits - i - 1);
     }
-    
+
     circuit
 }
 
@@ -748,14 +748,14 @@ fn controlled_phase_rotation(circuit: &mut QuantumCircuit, control: usize, targe
     // 简化实现
     let theta = 2.0 * std::f64::consts::PI / (1 << k) as f64;
     let phase = Complex::new(theta.cos(), theta.sin());
-    
+
     let size = 1 << circuit.num_qubits;
     let mut matrix = Array2::zeros((size, size));
-    
+
     for i in 0..size {
         let control_bit = (i >> control) & 1;
         let target_bit = (i >> target) & 1;
-        
+
         if control_bit == 0 || target_bit == 0 {
             // 控制位为0或目标位为0，不旋转
             matrix[[i, i]] = Complex::new(1.0, 0.0);
@@ -764,7 +764,7 @@ fn controlled_phase_rotation(circuit: &mut QuantumCircuit, control: usize, targe
             matrix[[i, i]] = phase;
         }
     }
-    
+
     let name = format!("RP({},{})", control, target);
     circuit.gates.push(QuantumGate::new(matrix, name));
 }
@@ -774,7 +774,7 @@ fn swap_qubits(circuit: &mut QuantumCircuit, a: usize, b: usize) {
     if a == b {
         return;
     }
-    
+
     circuit.cnot(a, b);
     circuit.cnot(b, a);
     circuit.cnot(a, b);
@@ -788,22 +788,22 @@ fn swap_qubits(circuit: &mut QuantumCircuit, a: usize, b: usize) {
 pub fn quantum_phase_estimation(unitary_gate: &QuantumGate, precision_qubits: usize) -> QuantumCircuit {
     let target_qubits = unitary_gate.matrix.shape()[0].trailing_zeros() as usize;
     let num_qubits = precision_qubits + target_qubits;
-    
+
     let mut circuit = QuantumCircuit::new(num_qubits);
-    
+
     // 1. 初始化精度寄存器为均匀叠加态
     for i in 0..precision_qubits {
         circuit.h(i);
     }
-    
+
     // 2. 初始化目标寄存器为特征向量（简化，假设为|1⟩）
     circuit.x(precision_qubits);
-    
+
     // 3. 应用受控-U^(2^j)操作
     for j in 0..precision_qubits {
         controlled_power_u(&mut circuit, j, precision_qubits, target_qubits, unitary_gate, 1 << j);
     }
-    
+
     // 4. 应用逆QFT到精度寄存器
     let mut qft_circuit = quantum_fourier_transform(precision_qubits);
     // 反转QFT电路中的门顺序
@@ -812,17 +812,17 @@ pub fn quantum_phase_estimation(unitary_gate: &QuantumGate, precision_qubits: us
     for gate in qft_circuit.gates {
         circuit.gates.push(gate);
     }
-    
+
     circuit
 }
 
 /// 受控U^power操作
 fn controlled_power_u(
-    circuit: &mut QuantumCircuit, 
-    control: usize, 
-    target_offset: usize, 
+    circuit: &mut QuantumCircuit,
+    control: usize,
+    target_offset: usize,
     target_size: usize,
-    u_gate: &QuantumGate, 
+    u_gate: &QuantumGate,
     power: usize
 ) {
     // 计算U^power
@@ -831,14 +831,14 @@ fn controlled_power_u(
         let new_matrix = u_power.matrix.dot(&u_gate.matrix);
         u_power = QuantumGate::new(new_matrix, format!("{}^{}", u_gate.name, power));
     }
-    
+
     // 创建受控版本
     let size = 1 << circuit.num_qubits;
     let mut matrix = Array2::zeros((size, size));
-    
+
     for i in 0..size {
         let control_bit = (i >> control) & 1;
-        
+
         if control_bit == 0 {
             // 控制位为0，不操作
             matrix[[i, i]] = Complex::new(1.0, 0.0);
@@ -846,14 +846,14 @@ fn controlled_power_u(
             // 控制位为1，应用U^power到目标寄存器
             let target_mask = ((1 << target_size) - 1) << target_offset;
             let target_value = (i & target_mask) >> target_offset;
-            
+
             for j in 0..(1 << target_size) {
                 let base_state_j = (i & !target_mask) | (j << target_offset);
                 matrix[[i, base_state_j]] = u_power.matrix[[target_value, j]];
             }
         }
     }
-    
+
     let name = format!("CU^{}({})", power, control);
     circuit.gates.push(QuantumGate::new(matrix, name));
 }
@@ -867,36 +867,36 @@ fn main() {
     let num_qubits = 3;
     let search_space_size = 1 << num_qubits;
     let target = 6; // 搜索目标：110
-    
+
     println!("【量子搜索演示】");
     println!("搜索空间大小: {}", search_space_size);
     println!("目标状态: {} (二进制: {:0width$b})", target, target, width = num_qubits);
-    
+
     // 创建格罗弗搜索电路
     let circuit = grover_search(target, num_qubits);
-    
+
     // 理论最优迭代次数
     let iterations = ((std::f64::consts::PI / 4.0) * (1 << num_qubits) as f64).sqrt() as usize;
     println!("格罗弗迭代次数: {}", iterations);
-    
+
     // 运行电路并获得结果
     let shots = 1000;
     let results = circuit.sample(shots);
-    
+
     // 分析结果
     println!("\n测量结果 ({} 次采样):", shots);
     let mut sorted_results: Vec<_> = results.iter().collect();
     sorted_results.sort_by(|a, b| b.1.cmp(a.1));
-    
+
     for (state, count) in sorted_results {
         let probability = *count as f64 / shots as f64;
         println!(
-            "状态 |{:0width$b}⟩: {} 次 ({:.2}%){}", 
+            "状态 |{:0width$b}⟩: {} 次 ({:.2}%){}",
             state, count, probability * 100.0, width = num_qubits,
             if *state == target { " ← 目标状态" } else { "" }
         );
     }
-    
+
     // 成功率
     let success_rate = *results.get(&target).unwrap_or(&0) as f64 / shots as f64;
     println!("\n搜索成功率: {:.2}%", success_rate * 100.0);

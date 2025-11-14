@@ -68,11 +68,11 @@
 - **时序逻辑模型**：用于描述事件顺序和因果关系
   - Lamport的逻辑时钟与向量时钟
   - 时序逻辑CTL (Computation Tree Logic)和LTL (Linear Temporal Logic)
-  
+
 - **进程代数**：用于描述并发进程的交互
   - π-calculus：描述动态通信结构
   - CSP (Communicating Sequential Processes)：通信顺序进程
-  
+
 - **状态机模型**：
   - I/O自动机模型
   - TLA+ (Temporal Logic of Actions)：描述系统行为和属性

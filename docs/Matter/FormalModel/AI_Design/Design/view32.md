@@ -595,13 +595,13 @@ func (engine *SupportEngine) ProcessTicket(ctx context.Context, ticket *SupportT
         return fmt.Errorf("AI分析失败: %w", err)
     }
     ticket.AIAnalysis = aiAssessment
-    
+
     // 2. 根据复杂度和AI置信度决定路由策略
-    if aiAssessment.Complexity < ThresholdLowComplexity && 
+    if aiAssessment.Complexity < ThresholdLowComplexity &&
        aiAssessment.Confidence > ThresholdHighConfidence {
         // 简单问题，AI高置信度，自动回复
         return engine.handleAutomatedResponse(ctx, ticket)
-    } else if aiAssessment.Complexity > ThresholdHighComplexity || 
+    } else if aiAssessment.Complexity > ThresholdHighComplexity ||
               aiAssessment.Urgency > ThresholdHighUrgency {
         // 复杂或紧急问题，转人工处理
         return engine.routeToHumanAgent(ctx, ticket)
@@ -641,9 +641,9 @@ VARIABLES orderStatus,  \* 订单状态映射
           messageQueue  \* 消息队列
 
 (* 状态类型定义 *)
-OrderStatus == {"CREATED", "VALIDATED", "PROCESSING", 
+OrderStatus == {"CREATED", "VALIDATED", "PROCESSING",
                "WAITING_HUMAN", "COMPLETED", "FAILED"}
-               
+
 AgentStatus == {"IDLE", "BUSY", "OFFLINE"}
 
 (* 系统初始状态 *)
@@ -656,7 +656,7 @@ Init ==
 (* 系统行为：AI验证订单 *)
 AIValidateOrder(order) ==
     /\ orderStatus[order] = "CREATED"
-    /\ \E agent \in Agents : 
+    /\ \E agent \in Agents :
         /\ agentStatus[agent] = "IDLE"
         /\ agentStatus' = [agentStatus EXCEPT ![agent] = "BUSY"]
         /\ orderStatus' = [orderStatus EXCEPT ![order] = "VALIDATED"]
@@ -724,7 +724,7 @@ OrdersEventuallyComplete ==
 
 (* 安全属性：不会永久卡在处理状态 *)
 NoOrderStuck ==
-    [][\A o \in Orders : orderStatus[o] = "PROCESSING" => 
+    [][\A o \in Orders : orderStatus[o] = "PROCESSING" =>
         <>(orderStatus[o] /= "PROCESSING")]_<<orderStatus>>
 
 (* 系统规约 *)

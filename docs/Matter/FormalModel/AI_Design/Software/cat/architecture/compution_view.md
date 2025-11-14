@@ -3,35 +3,37 @@
 
 ## 📋 目录
 
-- [1 基础计算范畴 (ComputationCat)](#1-基础计算范畴-computationcat)
-  - [1.1 计算抽象基础](#11-计算抽象基础)
-  - [1.2 通用计算函子](#12-通用计算函子)
-- [2 计算模式之间的关系](#2-计算模式之间的关系)
-  - [2.1 序列到并发函子](#21-序列到并发函子)
-  - [2.2 并发到并行函子](#22-并发到并行函子)
-  - [2.3 并行到分布式函子](#23-并行到分布式函子)
-- [3 算法与计算模式关系](#3-算法与计算模式关系)
-  - [3.1 算法到并行实现函子](#31-算法到并行实现函子)
-  - [3.2 算法到分布式实现自然变换](#32-算法到分布式实现自然变换)
-- [4 程序设计与计算模式的整合](#4-程序设计与计算模式的整合)
-  - [4.1 程序范式单子](#41-程序范式单子)
-  - [4.2 程序设计语言函子](#42-程序设计语言函子)
-- [5 各范式共享的代数结构](#5-各范式共享的代数结构)
-  - [5.1 组合半群](#51-组合半群)
-  - [5.2 并行应用函子](#52-并行应用函子)
-- [6 跨范式设计模式范畴](#6-跨范式设计模式范畴)
-  - [6.1 通用设计模式](#61-通用设计模式)
-  - [6.2 范式间转换函子](#62-范式间转换函子)
-- [7 具体领域之间的关联](#7-具体领域之间的关联)
-  - [7.1 算法到并发程序变换](#71-算法到并发程序变换)
-  - [7.2 分布式到并行算法转换](#72-分布式到并行算法转换)
-- [8 范畴论视角下的统一特性](#8-范畴论视角下的统一特性)
-  - [8.1 共同的态射](#81-共同的态射)
-  - [8.2 全范式自然变换](#82-全范式自然变换)
-- [9 实际应用示例](#9-实际应用示例)
-  - [9.1 跨范式算法实现](#91-跨范式算法实现)
-  - [9.2 范式转换实例](#92-范式转换实例)
-- [10 统一视图总结](#10-统一视图总结)
+- [范畴论视角下的计算范式统一框架](#范畴论视角下的计算范式统一框架)
+  - [📋 目录](#-目录)
+  - [1 基础计算范畴 (ComputationCat)](#1-基础计算范畴-computationcat)
+    - [1.1 计算抽象基础](#11-计算抽象基础)
+    - [1.2 通用计算函子](#12-通用计算函子)
+  - [2 计算模式之间的关系](#2-计算模式之间的关系)
+    - [2.1 序列到并发函子](#21-序列到并发函子)
+    - [2.2 并发到并行函子](#22-并发到并行函子)
+    - [2.3 并行到分布式函子](#23-并行到分布式函子)
+  - [3 算法与计算模式关系](#3-算法与计算模式关系)
+    - [3.1 算法到并行实现函子](#31-算法到并行实现函子)
+    - [3.2 算法到分布式实现自然变换](#32-算法到分布式实现自然变换)
+  - [4 程序设计与计算模式的整合](#4-程序设计与计算模式的整合)
+    - [4.1 程序范式单子](#41-程序范式单子)
+    - [4.2 程序设计语言函子](#42-程序设计语言函子)
+  - [5 各范式共享的代数结构](#5-各范式共享的代数结构)
+    - [5.1 组合半群](#51-组合半群)
+    - [5.2 并行应用函子](#52-并行应用函子)
+  - [6 跨范式设计模式范畴](#6-跨范式设计模式范畴)
+    - [6.1 通用设计模式](#61-通用设计模式)
+    - [6.2 范式间转换函子](#62-范式间转换函子)
+  - [7 具体领域之间的关联](#7-具体领域之间的关联)
+    - [7.1 算法到并发程序变换](#71-算法到并发程序变换)
+    - [7.2 分布式到并行算法转换](#72-分布式到并行算法转换)
+  - [8 范畴论视角下的统一特性](#8-范畴论视角下的统一特性)
+    - [8.1 共同的态射](#81-共同的态射)
+    - [8.2 全范式自然变换](#82-全范式自然变换)
+  - [9 实际应用示例](#9-实际应用示例)
+    - [9.1 跨范式算法实现](#91-跨范式算法实现)
+    - [9.2 范式转换实例](#92-范式转换实例)
+  - [10 统一视图总结](#10-统一视图总结)
 
 ---
 
@@ -42,17 +44,17 @@
 ```haskell
 class ComputationCategory c where
   -- 计算类型
-  data Computation = 
+  data Computation =
     Sequential    -- 顺序计算
     | Concurrent  -- 并发计算
     | Parallel    -- 并行计算
     | Distributed -- 分布式计算
-    
+
   -- 基本操作
   compose :: Computation → Computation → Computation  -- 组合计算
   transform :: Computation → Computation              -- 变换计算
   execute :: Computation → Result                     -- 执行计算
-  
+
   -- 共同属性
   correctness :: Computation → Proof                  -- 正确性
   complexity :: Computation → Complexity              -- 复杂度
@@ -65,7 +67,7 @@ class ComputationCategory c where
 class ComputationFunctor f where
   -- 计算变换
   fmap :: (Computation a → Computation b) → f a → f b
-  
+
   -- 变换特性
   preserveCorrectness :: f a → f b → Bool      -- 保持正确性
   preserveTermination :: f a → f b → Bool      -- 保持终止性
@@ -79,12 +81,12 @@ class ComputationFunctor f where
 ```haskell
 -- 从顺序计算到并发计算的函子映射
 seqToConcurrentFunctor :: SequentialComputation → ConcurrentComputation where
-  transform seq = 
+  transform seq =
     identifyIndependentOperations seq
       |> createConcurrentUnits
       |> addSynchronization
       |> ensureSafetyProperties
-  
+
   -- 转换属性
   properties = [
     PreservesSemantics,         -- 保持语义
@@ -98,12 +100,12 @@ seqToConcurrentFunctor :: SequentialComputation → ConcurrentComputation where
 ```haskell
 -- 从并发计算到并行计算的函子映射
 concurrentToParallelFunctor :: ConcurrentComputation → ParallelComputation where
-  transform conc = 
+  transform conc =
     analyzeDataAndControlDependencies conc
       |> partitionForParallelExecution
       |> optimizeForHardwareUtilization
       |> scheduleForExecution
-  
+
   -- 转换属性
   properties = [
     RequiresParallelHardware,   -- 需要并行硬件
@@ -117,12 +119,12 @@ concurrentToParallelFunctor :: ConcurrentComputation → ParallelComputation whe
 ```haskell
 -- 从并行计算到分布式计算的函子映射
 parallelToDistributedFunctor :: ParallelComputation → DistributedComputation where
-  transform para = 
+  transform para =
     partitionAcrossNodes para
       |> addCommunicationMechanisms
       |> handlePartialFailures
       |> ensureConsistency
-  
+
   -- 转换属性
   properties = [
     IntroducesNetworkLatency,   -- 引入网络延迟
@@ -138,12 +140,12 @@ parallelToDistributedFunctor :: ParallelComputation → DistributedComputation w
 ```haskell
 -- 从算法抽象到并行实现的函子
 algorithmToParallelFunctor :: Algorithm → ParallelImplementation where
-  transform algo = 
+  transform algo =
     analyzeAlgorithmStructure algo
       |> identifyParallelizableComponents
       |> applyParallelPatterns
       |> optimizeForTarget
-  
+
   -- 变换特性
   characteristics = [
     DependsOnAlgorithmClass,     -- 依赖算法类别
@@ -156,16 +158,16 @@ algorithmToParallelFunctor :: Algorithm → ParallelImplementation where
 
 ```haskell
 -- 算法不同实现之间的自然变换
-algorithmImplementationsTransform :: 
+algorithmImplementationsTransform ::
   NaturalTransformation Algorithm ParallelImplementation DistributedImplementation where
-  
+
   transform :: ∀a. Algorithm a → (ParallelImplementation a → DistributedImplementation a)
-  transform algo parallelImpl = 
+  transform algo parallelImpl =
     partitionAlgorithm algo
       |> distributeComputation
       |> addCoordination
       |> handleDistributedState
-  
+
   -- 变换保持的性质
   preserves = [
     AlgorithmCorrectness,        -- 算法正确性
@@ -183,12 +185,12 @@ class ProgrammingParadigmMonad m where
   -- 单子操作
   return :: a → m a
   bind :: m a → (a → m b) → m b
-  
+
   -- 范式特定操作
   imperativeSequence :: [Operation] → m Result    -- 命令式序列
   functionalComposition :: [a → b] → m (a → b)    -- 函数式组合
   declarativeSpecification :: Constraint → m Solution -- 声明式规约
-  
+
   -- 通用计算控制
   parallel :: [m a] → m [a]      -- 并行执行
   concurrent :: [m a] → m [a]    -- 并发执行
@@ -201,11 +203,11 @@ class ProgrammingParadigmMonad m where
 class LanguageFunctor f where
   -- 语言映射
   fmap :: (Language a → Language b) → f Program → f Program
-  
+
   -- 语言转换
   translateSyntax :: Language a → Language b → Program → Program
   preserveSemantics :: Program → Program → Bool
-  
+
   -- 特性映射
   mapConcurrency :: ConcurrencyModel a → ConcurrencyModel b
   mapTypeSystem :: TypeSystem a → TypeSystem b
@@ -220,7 +222,7 @@ class LanguageFunctor f where
 class Semigroup computation where
   -- 组合操作
   (<>) :: computation → computation → computation  -- 组合
-  
+
   -- 组合规则
   associativity :: (a <> b) <> c = a <> (b <> c)  -- 结合律
 ```
@@ -232,7 +234,7 @@ class ApplicativeFunctor f where
   -- 应用函子操作
   pure :: a → f a
   (<*>) :: f (a → b) → f a → f b
-  
+
   -- 并行特化
   parApply :: f (a → b) → f a → f b  -- 并行应用
   parMap :: (a → b) → f a → f b      -- 并行映射
@@ -246,17 +248,17 @@ class ApplicativeFunctor f where
 ```haskell
 class DesignPatternCategory d where
   -- 模式类型
-  data Pattern = 
+  data Pattern =
     MapReduce      -- 映射-归约
     | PipeFilter   -- 管道-过滤器
     | ForkJoin     -- 分叉-合并
     | Producer     -- 生产者消费者
     | MasterWorker -- 主从
-    
+
   -- 模式应用
   applyPattern :: Pattern → Problem → Solution
   composePatterns :: [Pattern] → CompositePattern
-  
+
   -- 模式属性
   applicability :: Pattern → Domain → Fitness
   scalability :: Pattern → Scalability
@@ -269,12 +271,12 @@ class DesignPatternCategory d where
 class ParadigmTransformFunctor f where
   -- 范式转换
   fmap :: (Paradigm a → Paradigm b) → f Solution → f Solution
-  
+
   -- 特化转换
   sequentialToConcurrent :: Sequential → Concurrent
   concurrentToDistributed :: Concurrent → Distributed
   functionalToParallel :: Functional → Parallel
-  
+
   -- 转换属性
   preservesPerfOrdClarity :: Trace → Bool  -- 保持性能、顺序性与清晰度
 ```
@@ -287,12 +289,12 @@ class ParadigmTransformFunctor f where
 -- 算法到并发程序的自然变换
 algorithmToConcurrentProgram :: NaturalTransformation Algorithm ConcurrentProgram where
   transform :: ∀a. Algorithm a → (SequentialProgram a → ConcurrentProgram a)
-  transform algo seqProg = 
+  transform algo seqProg =
     identifyIndependentComponents algo
       |> determineGranularity
       |> insertSynchronizationPoints
       |> generateConcurrentCode
-  
+
   properties :: [
     MaintainsCorrectness,       -- 保持正确性
     ImprovesResourceUtilization,-- 改善资源利用
@@ -306,12 +308,12 @@ algorithmToConcurrentProgram :: NaturalTransformation Algorithm ConcurrentProgra
 -- 分布式算法到并行算法的自然变换
 distributedToParallelAlgorithm :: NaturalTransformation DistributedAlgorithm ParallelAlgorithm where
   transform :: ∀a. DistributedAlgorithm a → (Distributed a → Parallel a)
-  transform distAlgo distributed = 
+  transform distAlgo distributed =
     localizeDistributedAlgorithm distAlgo
       |> eliminateMessagePassing
       |> optimizeForSharedMemory
       |> preserveLoadBalancing
-      
+
   requirements :: [
     SharedMemoryArchitecture,   -- 共享内存架构
     LimitedProblemScale,        -- 有限问题规模
@@ -329,7 +331,7 @@ class ComputationalMorphism m where
   -- 基本态射
   identity :: a → m a a                        -- 恒等态射
   compose :: m a b → m b c → m a c             -- 态射组合
-  
+
   -- 共享的计算态射
   transform :: a → b → m a b                   -- 转换
   optimize :: m a b → Criterion → m a b        -- 优化
@@ -349,7 +351,7 @@ computationalTransformationNetwork :: TransformationNetwork where
     AlgorithmicNode,
     ProgrammaticNode
   ]
-  
+
   edges = [
     seqToConcurrent,
     concurrentToParallel,
@@ -357,7 +359,7 @@ computationalTransformationNetwork :: TransformationNetwork where
     algorithmToProgram,
     programToDistributed
   ]
-  
+
   -- 网络特性
   properties = [
     FormsCategoryOfCategories,  -- 形成范畴的范畴
@@ -378,20 +380,20 @@ mergeSort [x] = return [x]
 mergeSort xs = do
   -- 分解阶段
   let (left, right) = splitAt (length xs `div` 2) xs
-  
+
   -- 基于计算范式的递归解决
-  sortedLeft ← 
+  sortedLeft ←
     case computationParadigm of
       Sequential → mergeSort left
       Parallel → fork (mergeSort left)
       Distributed → remoteExecute node1 (mergeSort left)
-  
-  sortedRight ← 
+
+  sortedRight ←
     case computationParadigm of
       Sequential → mergeSort right
       Parallel → fork (mergeSort right)
       Distributed → remoteExecute node2 (mergeSort right)
-      
+
   -- 合并阶段
   case computationParadigm of
     Sequential → return (merge sortedLeft sortedRight)
@@ -404,7 +406,7 @@ mergeSort xs = do
 ```haskell
 -- 从顺序算法到分布式系统的转换
 transformAlgorithm :: Algorithm → DistributedSystem
-transformAlgorithm algo = 
+transformAlgorithm algo =
   seqToConcurrentFunctor algo
     |> concurrentToParallelFunctor
     |> parallelToDistributedFunctor

@@ -2,31 +2,33 @@
 
 ## 📋 目录
 
-- [1 程序范畴基础](#1-程序范畴基础)
-  - [1.1 程序范畴定义](#11-程序范畴定义)
-  - [1.2 算法范畴定义](#12-算法范畴定义)
-- [2 函子与变换](#2-函子与变换)
-  - [2.1 程序转换函子](#21-程序转换函子)
-  - [2.2 算法转换函子](#22-算法转换函子)
-- [3 程序构造的代数结构](#3-程序构造的代数结构)
-  - [3.1 组合子代数](#31-组合子代数)
-  - [3.2 类型代数](#32-类型代数)
-- [4 算法设计模式的范畴表示](#4-算法设计模式的范畴表示)
-  - [4.1 分治模式](#41-分治模式)
-  - [4.2 动态规划](#42-动态规划)
-- [5 程序正确性与验证](#5-程序正确性与验证)
-  - [5.1 类型系统](#51-类型系统)
-  - [5.2 程序逻辑](#52-程序逻辑)
-- [6 算法复杂度分析](#6-算法复杂度分析)
-  - [6.1 时间复杂度范畴](#61-时间复杂度范畴)
-  - [6.2 空间复杂度范畴](#62-空间复杂度范畴)
-- [7 程序优化与转换](#7-程序优化与转换)
-  - [7.1 优化范畴](#71-优化范畴)
-  - [7.2 程序变换](#72-程序变换)
-- [8 实际应用示例](#8-实际应用示例)
-  - [8.1 函数式编程](#81-函数式编程)
-  - [8.2 算法实现](#82-算法实现)
-- [9 总结](#9-总结)
+- [范畴论视角下的程序设计与算法分析](#范畴论视角下的程序设计与算法分析)
+  - [📋 目录](#-目录)
+  - [1 程序范畴基础](#1-程序范畴基础)
+    - [1.1 程序范畴定义](#11-程序范畴定义)
+    - [1.2 算法范畴定义](#12-算法范畴定义)
+  - [2 函子与变换](#2-函子与变换)
+    - [2.1 程序转换函子](#21-程序转换函子)
+    - [2.2 算法转换函子](#22-算法转换函子)
+  - [3 程序构造的代数结构](#3-程序构造的代数结构)
+    - [3.1 组合子代数](#31-组合子代数)
+    - [3.2 类型代数](#32-类型代数)
+  - [4 算法设计模式的范畴表示](#4-算法设计模式的范畴表示)
+    - [4.1 分治模式](#41-分治模式)
+    - [4.2 动态规划](#42-动态规划)
+  - [5 程序正确性与验证](#5-程序正确性与验证)
+    - [5.1 类型系统](#51-类型系统)
+    - [5.2 程序逻辑](#52-程序逻辑)
+  - [6 算法复杂度分析](#6-算法复杂度分析)
+    - [6.1 时间复杂度范畴](#61-时间复杂度范畴)
+    - [6.2 空间复杂度范畴](#62-空间复杂度范畴)
+  - [7 程序优化与转换](#7-程序优化与转换)
+    - [7.1 优化范畴](#71-优化范畴)
+    - [7.2 程序变换](#72-程序变换)
+  - [8 实际应用示例](#8-实际应用示例)
+    - [8.1 函数式编程](#81-函数式编程)
+    - [8.2 算法实现](#82-算法实现)
+  - [9 总结](#9-总结)
 
 ---
 
@@ -37,16 +39,16 @@
 ```haskell
 class ProgramCategory p where
   -- 基本构造
-  data Program = 
+  data Program =
     Atomic Operation     -- 原子操作
     | Composition        -- 程序组合
     | Abstraction        -- 抽象
     | Application        -- 应用
-    
+
   -- 基本态射
   compose :: Program → Program → Program
   identity :: Program → Program
-  
+
   -- 程序属性
   correctness :: Program → Proof
   complexity :: Program → Complexity
@@ -57,16 +59,16 @@ class ProgramCategory p where
 ```haskell
 class AlgorithmCategory a where
   -- 算法结构
-  data Algorithm = 
+  data Algorithm =
     Sequential    -- 顺序算法
     | Recursive   -- 递归算法
     | Iterative   -- 迭代算法
     | Parallel    -- 并行算法
-    
+
   -- 算法变换
   transform :: Algorithm → Algorithm
   optimize :: Algorithm → Algorithm
-  
+
   -- 算法性质
   complexity :: Algorithm → ComplexityClass
   correctness :: Algorithm → Proof
@@ -80,11 +82,11 @@ class AlgorithmCategory a where
 class ProgramFunctor f where
   -- 程序转换
   fmap :: (a → b) → Program a → Program b
-  
+
   -- 转换属性
   preserveSemantics :: Program a → Program b → Bool
   preserveComplexity :: Program a → Program b → Bool
-  
+
   -- 优化转换
   optimize :: Program a → Program b
   refactor :: Program a → Program b
@@ -96,11 +98,11 @@ class ProgramFunctor f where
 class AlgorithmFunctor f where
   -- 算法转换
   fmap :: (a → b) → Algorithm a → Algorithm b
-  
+
   -- 算法优化
   improveComplexity :: Algorithm → Algorithm
   improveSpace :: Algorithm → Algorithm
-  
+
   -- 转换验证
   verifyCorrectness :: Algorithm → Algorithm → Proof
   analyzeEfficiency :: Algorithm → Algorithm → Comparison
@@ -116,7 +118,7 @@ class Combinator c where
   identity :: a → a
   compose :: (b → c) → (a → b) → (a → c)
   apply :: (a → b) → a → b
-  
+
   -- 高阶组合子
   map :: (a → b) → [a] → [b]
   fold :: (a → b → b) → b → [a] → b
@@ -131,7 +133,7 @@ class TypeAlgebra t where
   product :: Type a → Type b → Type (a, b)
   sum :: Type a → Type b → Type (Either a b)
   function :: Type a → Type b → Type (a → b)
-  
+
   -- 类型变换
   covariant :: (a → b) → f a → f b
   contravariant :: (b → a) → f a → f b
@@ -147,7 +149,7 @@ class DivideConquer d where
   divide :: Problem → [Problem]
   conquer :: Problem → Solution
   combine :: [Solution] → Solution
-  
+
   -- 分治性质
   isBaseCase :: Problem → Bool
   subproblemsIndependent :: [Problem] → Bool
@@ -161,7 +163,7 @@ class DynamicProgramming d where
   subproblem :: Problem → Set Problem
   memoize :: Problem → Solution → Memory
   recurrence :: Problem → [Solution] → Solution
-  
+
   -- 最优子结构
   hasOptimalSubstructure :: Problem → Bool
   overlappingSubproblems :: Problem → Bool
@@ -176,11 +178,11 @@ class TypeSystem t where
   -- 类型检查
   typeCheck :: Program → Type → Bool
   typeInfer :: Program → Type
-  
+
   -- 类型安全
   typeSafety :: Program → Safety
   typePreservation :: Transform → Bool
-  
+
   -- 类型关系
   subtype :: Type → Type → Bool
   typeEquivalence :: Type → Type → Bool
@@ -194,7 +196,7 @@ class ProgramLogic p where
   precondition :: Program → Condition
   postcondition :: Program → Condition
   invariant :: Program → Condition
-  
+
   -- 证明系统
   verify :: Program → Specification → Proof
   inferProperties :: Program → Set Property
@@ -210,7 +212,7 @@ class TimeComplexity t where
   analyzeWorstCase :: Algorithm → Complexity
   analyzeAverageCase :: Algorithm → Complexity
   analyzeBestCase :: Algorithm → Complexity
-  
+
   -- 复杂度关系
   compareComplexity :: Complexity → Complexity → Ordering
   asymptoticBound :: Algorithm → Bound
@@ -223,7 +225,7 @@ class SpaceComplexity s where
   -- 空间分析
   analyzeMemoryUsage :: Algorithm → Memory
   analyzeAuxiliarySpace :: Algorithm → Space
-  
+
   -- 空间优化
   optimizeMemory :: Algorithm → Algorithm
   tradeSpaceForTime :: Algorithm → Algorithm
@@ -238,11 +240,11 @@ class Optimization o where
   -- 优化策略
   localOptimize :: Program → Program
   globalOptimize :: Program → Program
-  
+
   -- 优化性质
   preservesSemantics :: Program → Program → Bool
   improvesPerformance :: Program → Program → Bool
-  
+
   -- 优化分析
   analyzeBottlenecks :: Program → Set Bottleneck
   suggestOptimizations :: Program → Set Optimization
@@ -255,7 +257,7 @@ class ProgramTransformation t where
   -- 变换操作
   refactor :: Program → Pattern → Program
   restructure :: Program → Architecture → Program
-  
+
   -- 变换验证
   validateTransformation :: Program → Program → Validation
   analyzeImpact :: Transformation → Impact

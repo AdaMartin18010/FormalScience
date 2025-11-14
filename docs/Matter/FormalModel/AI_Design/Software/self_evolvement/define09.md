@@ -2,36 +2,38 @@
 
 ## 📋 目录
 
-- [1 一、高阶范畴Higher Categories](#1-一高阶范畴higher-categories)
-  - [1.1 n-范畴结构](#11-n-范畴结构)
-  - [1.2 多重态射系统](#12-多重态射系统)
-- [2 二、范畴网络Category Networks](#2-二范畴网络category-networks)
-  - [2.1 范畴图Category Graphs](#21-范畴图category-graphs)
-  - [2.2 交织范畴Interwoven Categories](#22-交织范畴interwoven-categories)
-- [3 三、演化动力学Evolutionary Dynamics](#3-三演化动力学evolutionary-dynamics)
-  - [3.1 范畴动力系统](#31-范畴动力系统)
-  - [3.2 涌现性质Emergent Properties](#32-涌现性质emergent-properties)
-- [4 四、深化的形式结构](#4-四深化的形式结构)
-  - [4.1 多层次模态逻辑](#41-多层次模态逻辑)
-  - [4.2 依赖类型系统](#42-依赖类型系统)
-- [5 五、扩展的关系网络](#5-五扩展的关系网络)
-  - [5.1 多重函子关系](#51-多重函子关系)
-  - [5.2 复合变换网络](#52-复合变换网络)
-- [6 六、预测框架Prediction Framework](#6-六预测框架prediction-framework)
-  - [6.1 范畴预测器](#61-范畴预测器)
-  - [6.2 演化路径分析](#62-演化路径分析)
-- [7 七、深化的理论基础](#7-七深化的理论基础)
-  - [7.1 范畴论公理系统](#71-范畴论公理系统)
-  - [7.2 证明系统](#72-证明系统)
-- [8 八、应用扩展](#8-八应用扩展)
-  - [8.1 智能系统范畴](#81-智能系统范畴)
-  - [8.2 社会-技术系统整合](#82-社会-技术系统整合)
-- [9 九、元级别分析Meta-level Analysis](#9-九元级别分析meta-level-analysis)
-  - [9.1 元范畴](#91-元范畴)
-  - [9.2 反思机制](#92-反思机制)
-- [10 十、未来展望](#10-十未来展望)
-  - [10.1 理论拓展方向](#101-理论拓展方向)
-  - [10.2 实践应用路径](#102-实践应用路径)
+- [扩展的范畴论框架：软件工程的多维度深化分析](#扩展的范畴论框架软件工程的多维度深化分析)
+  - [📋 目录](#-目录)
+  - [1 一、高阶范畴Higher Categories](#1-一高阶范畴higher-categories)
+    - [1.1 n-范畴结构](#11-n-范畴结构)
+    - [1.2 多重态射系统](#12-多重态射系统)
+  - [2 二、范畴网络Category Networks](#2-二范畴网络category-networks)
+    - [2.1 范畴图Category Graphs](#21-范畴图category-graphs)
+    - [2.2 交织范畴Interwoven Categories](#22-交织范畴interwoven-categories)
+  - [3 三、演化动力学Evolutionary Dynamics](#3-三演化动力学evolutionary-dynamics)
+    - [3.1 范畴动力系统](#31-范畴动力系统)
+    - [3.2 涌现性质Emergent Properties](#32-涌现性质emergent-properties)
+  - [4 四、深化的形式结构](#4-四深化的形式结构)
+    - [4.1 多层次模态逻辑](#41-多层次模态逻辑)
+    - [4.2 依赖类型系统](#42-依赖类型系统)
+  - [5 五、扩展的关系网络](#5-五扩展的关系网络)
+    - [5.1 多重函子关系](#51-多重函子关系)
+    - [5.2 复合变换网络](#52-复合变换网络)
+  - [6 六、预测框架Prediction Framework](#6-六预测框架prediction-framework)
+    - [6.1 范畴预测器](#61-范畴预测器)
+    - [6.2 演化路径分析](#62-演化路径分析)
+  - [7 七、深化的理论基础](#7-七深化的理论基础)
+    - [7.1 范畴论公理系统](#71-范畴论公理系统)
+    - [7.2 证明系统](#72-证明系统)
+  - [8 八、应用扩展](#8-八应用扩展)
+    - [8.1 智能系统范畴](#81-智能系统范畴)
+    - [8.2 社会-技术系统整合](#82-社会-技术系统整合)
+  - [9 九、元级别分析Meta-level Analysis](#9-九元级别分析meta-level-analysis)
+    - [9.1 元范畴](#91-元范畴)
+    - [9.2 反思机制](#92-反思机制)
+  - [10 十、未来展望](#10-十未来展望)
+    - [10.1 理论拓展方向](#101-理论拓展方向)
+    - [10.2 实践应用路径](#102-实践应用路径)
 
 ---
 
@@ -110,7 +112,7 @@ type Emergence = {
 ### 4.1 多层次模态逻辑
 
 ```haskell
-data Modal a = 
+data Modal a =
   Necessary a    // 必然性
   | Possible a   // 可能性
   | Eventually a // 最终性
@@ -134,7 +136,7 @@ type System (props: Properties) = {
 
 ```haskell
 class MultiFunctor f where
-  fmap :: (Category c1, Category c2) ⇒ 
+  fmap :: (Category c1, Category c2) ⇒
          (c1 a b) → (c2 (f a) (f b))
   preserve :: Structure s ⇒ s → f s
 ```

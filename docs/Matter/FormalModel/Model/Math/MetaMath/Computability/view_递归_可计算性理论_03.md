@@ -3,15 +3,15 @@
 ## 目录
 
 - [递归论 (Recursion Theory) OR 可计算性理论 (Computability Theory)](#递归论-recursion-theory-or-可计算性理论-computability-theory)
-  - [1 A. 核心概念与定义 (What are its core concepts and definitions?)](#1-a-核心概念与定义-what-are-its-core-concepts-and-definitions)
-  - [2 B. 历史渊源与发展 (What are its historical origins and development?)](#2-b-历史渊源与发展-what-are-its-historical-origins-and-development)
-  - [3 C. 核心内容与主要理论 (What are its core contents and main theories?)](#3-c-核心内容与主要理论-what-are-its-core-contents-and-main-theories)
-  - [4 D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)](#4-d-内部结构与逻辑组织-what-is-its-internal-structure-and-logical-organization)
-  - [5 E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)](#5-e-与其他数学分支的联系-what-are-its-connections-to-other-branches-of-mathematics)
-  - [6 F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)](#6-f-在现实世界中的应用与影响-what-are-its-applications-and-impacts-in-the-real-world)
-  - [7 G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)](#7-g-哲学反思与批判性审视-what-are-its-philosophical-reflections-and-critical-examinations)
-  - [8 H. 未来展望与开放问题 (What are its future prospects and open questions?)](#8-h-未来展望与开放问题-what-are-its-future-prospects-and-open-questions)
-  - [9 I. 总结与反思 (Summary and Reflection)](#9-i-总结与反思-summary-and-reflection)
+  - [目录](#目录)
+  - [A. 核心概念与定义 (What are its core concepts and definitions?)](#a-核心概念与定义-what-are-its-core-concepts-and-definitions)
+  - [B. 历史渊源与发展 (What are its historical origins and development?)](#b-历史渊源与发展-what-are-its-historical-origins-and-development)
+  - [C. 核心内容与主要理论 (What are its core contents and main theories?)](#c-核心内容与主要理论-what-are-its-core-contents-and-main-theories)
+  - [D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)](#d-内部结构与逻辑组织-what-is-its-internal-structure-and-logical-organization)
+  - [E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)](#e-与其他数学分支的联系-what-are-its-connections-to-other-branches-of-mathematics)
+  - [F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)](#f-在现实世界中的应用与影响-what-are-its-applications-and-impacts-in-the-real-world)
+  - [G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)](#g-哲学反思与批判性审视-what-are-its-philosophical-reflections-and-critical-examinations)
+  - [H. 未来展望与开放问题 (What are its future prospects and open questions?)](#h-未来展望与开放问题-what-are-its-future-prospects-and-open-questions)
   - [I. 总结与反思 (Summary and Reflection)](#i-总结与反思-summary-and-reflection)
 
 对 “递归论 (Recursion Theory)”，

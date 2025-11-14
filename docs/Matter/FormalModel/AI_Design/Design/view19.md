@@ -112,7 +112,7 @@
    ├── 功能需求确定
    ├── 非功能需求量化 (可用性、一致性、延迟、吞吐量)
    └── 约束条件识别 (预算、时间、团队技能)
-   
+
 2. 一致性模型选择 (基于CAP/PACELC权衡)
    ├── 强一致性需求? [是] → 选择线性一致性/CP系统
    │                     ├── 系统规模小 → 使用主从复制+2PC
@@ -125,7 +125,7 @@
 
 3. 数据管理策略
    ├── 访问模式分析 (读写比例、热点数据)
-   ├── 数据分区策略选择 
+   ├── 数据分区策略选择
    │   ├── 统一访问要求高 → 哈希/范围分区
    │   └── 局部性要求高 → 地理分区
    └── 复制策略确定 (主从/多主/无主)
@@ -198,25 +198,25 @@
    ```math
    (* TLA+ 伪代码：一个简单的分布式锁协议 *)
    VARIABLES lockOwner, queue
-   
+
    TypeOK == /\ lockOwner \in {NULL} \cup Processes
              /\ queue \in Seq(Processes)
-   
+
    Init == /\ lockOwner = NULL
            /\ queue = <<>>
-   
-   Request(p) == 
+
+   Request(p) ==
        /\ queue' = Append(queue, p)
        /\ UNCHANGED lockOwner
-   
-   Acquire(p) == 
+
+   Acquire(p) ==
        /\ lockOwner = NULL
        /\ queue # <<>>
        /\ Head(queue) = p
        /\ lockOwner' = p
        /\ queue' = Tail(queue)
-   
-   Release(p) == 
+
+   Release(p) ==
        /\ lockOwner = p
        /\ lockOwner' = NULL
        /\ UNCHANGED queue
@@ -232,13 +232,13 @@
        owner  string
        ttl    time.Duration
    }
-   
+
    func (l *DistributedLock) Acquire() (bool, error) {
        // SET with NX option (仅当key不存在时设置)
        // 使用唯一ID作为owner，确保只有持有者能释放锁
        return l.client.SetNX(l.key, l.owner, l.ttl).Result()
    }
-   
+
    func (l *DistributedLock) Release() error {
        // 使用Lua脚本实现原子性检查和删除
        script := `
@@ -247,7 +247,7 @@
        else
            return 0
        end`
-       
+
        _, err := l.client.Eval(script, []string{l.key}, l.owner).Result()
        return err
    }
@@ -266,7 +266,7 @@
    type ResourcePool struct {
        resources chan struct{}
    }
-   
+
    func NewResourcePool(size int) *ResourcePool {
        pool := &ResourcePool{
            resources: make(chan struct{}, size),
@@ -277,7 +277,7 @@
        }
        return pool
    }
-   
+
    func (p *ResourcePool) Acquire(ctx context.Context) error {
        select {
        case <-p.resources:
@@ -286,11 +286,11 @@
            return ctx.Err() // 超时或取消
        }
    }
-   
+
    func (p *ResourcePool) Release() {
        p.resources <- struct{}{}
    }
-   
+
    // 工作流实现
    func ApprovalWorkflow(ctx context.Context, request Request, approvers []Approver, resourcePool *ResourcePool) (bool, error) {
        // 获取资源，避免系统过载
@@ -298,7 +298,7 @@
            return false, fmt.Errorf("无法启动工作流: %w", err)
        }
        defer resourcePool.Release()
-       
+
        // 并行审批逻辑
        approvalResults := make(chan bool, len(approvers))
        for _, approver := range approvers {
@@ -306,7 +306,7 @@
                approvalResults <- a.Review(request)
            }(approver)
        }
-       
+
        // 收集所有审批结果
        approved := true
        for i := 0; i < len(approvers); i++ {
@@ -314,7 +314,7 @@
                approved = false
            }
        }
-       
+
        return approved, nil
    }
    ```
@@ -359,7 +359,7 @@ func setupRaft(nodeID string, dataDir string) (*raft.Raft, error) {
     if err != nil {
         return nil, err
     }
-    
+
     // 传输层
     addr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:8000")
     if err != nil {
@@ -369,20 +369,20 @@ func setupRaft(nodeID string, dataDir string) (*raft.Raft, error) {
     if err != nil {
         return nil, err
     }
-    
+
     // Raft配置
     config := raft.DefaultConfig()
     config.LocalID = raft.ServerID(nodeID)
-    
+
     // 状态机实现
     fsm := &MyFSM{} // 自定义状态机实现
-    
+
     // 创建Raft实例
     r, err := raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
     if err != nil {
         return nil, err
     }
-    
+
     // 配置集群
     // 对于单节点开发/测试场景
     configuration := raft.Configuration{
@@ -394,7 +394,7 @@ func setupRaft(nodeID string, dataDir string) (*raft.Raft, error) {
         },
     }
     r.BootstrapCluster(configuration)
-    
+
     return r, nil
 }
 
@@ -408,13 +408,13 @@ type MyFSM struct {
 func (f *MyFSM) Apply(log *raft.Log) interface{} {
     f.mu.Lock()
     defer f.mu.Unlock()
-    
+
     // 解析命令
     cmd := &Command{}
     if err := json.Unmarshal(log.Data, cmd); err != nil {
         return err
     }
-    
+
     // 应用命令
     switch cmd.Op {
     case "SET":
@@ -441,7 +441,7 @@ func setKey(r *raft.Raft, key, value string) error {
     if err != nil {
         return err
     }
-    
+
     // 提交到Raft日志
     future := r.Apply(data, 5*time.Second)
     return future.Error()
@@ -482,30 +482,30 @@ func NewCausalStore(nodeID string) *CausalStore {
 func (cs *CausalStore) Write(key, value string) VersionVector {
     cs.mu.Lock()
     defer cs.mu.Unlock()
-    
+
     // 递增本地时钟
     cs.clock++
-    
+
     // 创建或更新版本向量
     vector := cs.getOrCreateVector(key)
     vector[cs.nodeID] = cs.clock
-    
+
     // 存储数据和向量
     cs.data[key] = value
     cs.vectors[key] = vector
-    
+
     return copyVector(vector)
 }
 
 func (cs *CausalStore) Read(key string) (string, VersionVector) {
     cs.mu.RLock()
     defer cs.mu.RUnlock()
-    
+
     value, ok := cs.data[key]
     if !ok {
         return "", nil
     }
-    
+
     vector := cs.vectors[key]
     return value, copyVector(vector)
 }
@@ -514,7 +514,7 @@ func (cs *CausalStore) Read(key string) (string, VersionVector) {
 func (cs *CausalStore) Happens(a, b VersionVector) bool {
     // 如果a包含b中的所有事件，且至少有一个更大，则a发生在b之后
     atLeastOneGreater := false
-    
+
     for node, bClock := range b {
         aClock, exists := a[node]
         if !exists || aClock < bClock {
@@ -524,7 +524,7 @@ func (cs *CausalStore) Happens(a, b VersionVector) bool {
             atLeastOneGreater = true
         }
     }
-    
+
     return atLeastOneGreater || len(a) > len(b)
 }
 
@@ -532,7 +532,7 @@ func (cs *CausalStore) Happens(a, b VersionVector) bool {
 func (cs *CausalStore) Merge(key, value string, remoteVector VersionVector) bool {
     cs.mu.Lock()
     defer cs.mu.Unlock()
-    
+
     localVector, exists := cs.vectors[key]
     // 如果本地没有该键或远程版本因果上"更新"，则接受更新
     if !exists || cs.Happens(remoteVector, localVector) {
@@ -540,7 +540,7 @@ func (cs *CausalStore) Merge(key, value string, remoteVector VersionVector) bool
         cs.vectors[key] = copyVector(remoteVector)
         return true
     }
-    
+
     // 处理并发更新
     if !cs.Happens(localVector, remoteVector) {
         // 并发更新，需要解决冲突
@@ -553,7 +553,7 @@ func (cs *CausalStore) Merge(key, value string, remoteVector VersionVector) bool
             return true
         }
     }
-    
+
     return false // 远程版本较旧，拒绝更新
 }
 
@@ -649,7 +649,7 @@ func NewCircuitBreaker(failureThreshold int, resetTimeout time.Duration, success
 
 func (cb *CircuitBreaker) Execute(operation func() (interface{}, error)) (interface{}, error) {
     cb.mu.Lock()
-    
+
     // 检查断路器状态
     if cb.state == Open {
         // 检查是否超过重置超时
@@ -661,15 +661,15 @@ func (cb *CircuitBreaker) Execute(operation func() (interface{}, error)) (interf
             return nil, fmt.Errorf("circuit breaker is open")
         }
     }
-    
+
     cb.mu.Unlock()
-    
+
     // 执行操作
     result, err := operation()
-    
+
     cb.mu.Lock()
     defer cb.mu.Unlock()
-    
+
     // 处理结果
     if err != nil {
         cb.handleFailure()
@@ -715,15 +715,15 @@ func (cb *CircuitBreaker) handleSuccess() {
 func main() {
     // 创建断路器: 5次失败后开启，10秒后尝试半开，2次连续成功后关闭
     cb := NewCircuitBreaker(5, 10*time.Second, 2)
-    
+
     service := NewUnreliableService() // 假设这是一个不稳定的远程服务
-    
+
     // 使用断路器包装服务调用
     for i := 0; i < 100; i++ {
         result, err := cb.Execute(func() (interface{}, error) {
             return service.Call()
         })
-        
+
         if err != nil {
             if strings.Contains(err.Error(), "circuit breaker is open") {
                 log.Println("服务调用被断路器阻止")
@@ -733,7 +733,7 @@ func main() {
                 log.Printf("服务调用失败: %v", err)
             }
         }
-        
+
         processResult(result)
         time.Sleep(1 * time.Second)
     }
@@ -819,19 +819,19 @@ type IncidentWorkflow struct {
     detectedTime  time.Time
     services      []string
     status        string
-    
+
     // 子系统依赖
     detector      *AnomalyDetector
     classifier    *IncidentClassifier
     recommender   *ActionRecommender
     executor      *ActionExecutor
     notifier      *TeamNotifier
-    
+
     // 人机协同控制
     humanDecision chan Decision
     ctx           context.Context
     cancel        context.CancelFunc
-    
+
     // 状态追踪
     actionLog     []Action
     stateChanges  []StateChange
@@ -841,17 +841,17 @@ type IncidentWorkflow struct {
 func (w *IncidentWorkflow) Start() error {
     // 创建上下文，支持超时和取消
     w.ctx, w.cancel = context.WithTimeout(context.Background(), 24*time.Hour)
-    
+
     // 启动主工作流
     go w.execute()
-    
+
     return nil
 }
 
 // 工作流主执行逻辑
 func (w *IncidentWorkflow) execute() {
     defer w.recordCompletion()
-    
+
     // 1. 事件分类与初始评估
     w.status = "classifying"
     classification, confidence := w.classifier.Classify(w.ctx, w.incidentID)
@@ -859,7 +859,7 @@ func (w *IncidentWorkflow) execute() {
         "classification": classification,
         "confidence":     confidence,
     })
-    
+
     // 2. 基于分类和置信度决定处理路径
     if confidence > 0.85 && w.severity < 3 {
         // 高置信度&低严重性：AI自动处理路径
@@ -876,21 +876,21 @@ func (w *IncidentWorkflow) execute() {
 // AI自动处理路径
 func (w *IncidentWorkflow) handleAutomated(classification string) {
     w.status = "auto_remediation"
-    
+
     // 获取推荐操作
     actions := w.recommender.GetActions(w.ctx, classification, w.services)
-    
+
     // 执行自动修复
     for _, action := range actions {
         // 记录准备执行的操作
         w.recordAction("auto", action)
-        
+
         // 执行操作
         result, err := w.executor.Execute(w.ctx, action)
-        
+
         // 记录执行结果
         w.recordActionResult(action.ID, result, err)
-        
+
         // 检查是否需要人工介入
         if err != nil && isHumanRequiredError(err) {
             // 转为协作模式
@@ -898,7 +898,7 @@ func (w *IncidentWorkflow) handleAutomated(classification string) {
             return
         }
     }
-    
+
     // 验证修复结果
     if w.detector.IsResolved(w.ctx, w.incidentID) {
         w.status = "resolved_auto"
@@ -911,13 +911,13 @@ func (w *IncidentWorkflow) handleAutomated(classification string) {
 // AI+人工协作处理路径
 func (w *IncidentWorkflow) handleCollaborative(classification string) {
     w.status = "collaborative"
-    
+
     // 获取推荐操作
     actions := w.recommender.GetActions(w.ctx, classification, w.services)
-    
+
     // 通知相关团队
     w.notifier.NotifyTeam(w.ctx, w.incidentID, w.severity, actions)
-    
+
     // 等待人工决策
     select {
     case decision := <-w.humanDecision:
@@ -937,7 +937,7 @@ func (w *IncidentWorkflow) processHumanDecision(decision Decision, recommendedAc
         "decision_type": decision.Type,
         "decided_by":    decision.OperatorID,
     })
-    
+
     switch decision.Type {
     case "approve_recommended":
         // 执行推荐的操作
@@ -946,7 +946,7 @@ func (w *IncidentWorkflow) processHumanDecision(decision Decision, recommendedAc
             result, err := w.executor.Execute(w.ctx, action)
             w.recordActionResult(action.ID, result, err)
         }
-    
+
     case "custom_actions":
         // 执行自定义操作
         for _, action := range decision.CustomActions {
@@ -954,13 +954,13 @@ func (w *IncidentWorkflow) processHumanDecision(decision Decision, recommendedAc
             result, err := w.executor.Execute(w.ctx, action)
             w.recordActionResult(action.ID, result, err)
         }
-    
+
     case "take_manual_control":
         // 转为完全人工控制
         w.handleManual(w.classifier.GetClassification(w.incidentID))
         return
     }
-    
+
     // 验证修复结果
     if w.detector.IsResolved(w.ctx, w.incidentID) {
         w.status = "resolved_collaborative"
@@ -973,14 +973,14 @@ func (w *IncidentWorkflow) processHumanDecision(decision Decision, recommendedAc
 // 人工接管处理路径
 func (w *IncidentWorkflow) handleManual(classification string) {
     w.status = "manual_control"
-    
+
     // 通知运维团队接管
     w.notifier.AssignToTeam(w.ctx, w.incidentID, w.severity)
-    
+
     // 持续监控状态直到解决或超时
     ticker := time.NewTicker(5 * time.Minute)
     defer ticker.Stop()
-    
+
     for {
         select {
         case <-ticker.C:
@@ -1097,14 +1097,14 @@ type RecommendationWorkflow struct {
     userID         string
     sessionID      string
     context        UserContext
-    
+
     // 系统依赖
     modelRegistry  *ModelRegistry
     featureStore   *FeatureStore
     modelService   *ModelService
     catalogService *CatalogService
     abTestService  *ABTestService
-    
+
     // 结果跟踪
     recommendations []Recommendation
     explanations    []Explanation
@@ -1118,10 +1118,10 @@ func (w *RecommendationWorkflow) GenerateRecommendations(ctx context.Context) ([
     if err != nil {
         return nil, fmt.Errorf("特征获取失败: %w", err)
     }
-    
+
     // 2. 确定推荐策略（自动/人工）
     strategy := w.determineStrategy(features)
-    
+
     // 3. 根据策略生成推荐
     var recs []Recommendation
     switch strategy.Type {
@@ -1135,21 +1135,21 @@ func (w *RecommendationWorkflow) GenerateRecommendations(ctx context.Context) ([
         // 降级策略（用于冷启动或故障情况）
         recs, err = w.generateFallbackRecommendations(ctx)
     }
-    
+
     if err != nil {
         return nil, err
     }
-    
+
     // 4. 后处理与记录
     w.postProcessRecommendations(recs)
     w.recordRecommendationEvent(recs)
-    
+
     return recs, nil
 }
 
 // 自动推荐生成
 func (w *RecommendationWorkflow) generateAutomatedRecommendations(
-    ctx context.Context, 
+    ctx context.Context,
     features map[string]interface{},
 ) ([]Recommendation, error) {
     // 1. 确定要使用的模型及其配置
@@ -1157,7 +1157,7 @@ func (w *RecommendationWorkflow) generateAutomatedRecommendations(
     if err != nil {
         return nil, err
     }
-    
+
     // 2. 调用模型服务
     modelRequest := ModelRequest{
         ModelID:  modelConfig.ModelID,
@@ -1165,14 +1165,14 @@ func (w *RecommendationWorkflow) generateAutomatedRecommendations(
         Config:   modelConfig.Parameters,
         Limit:    modelConfig.RecommendationCount,
     }
-    
+
     modelResponse, err := w.modelService.Predict(ctx, modelRequest)
     if err != nil {
         // 失败记录并降级
         w.recordModelFailure(modelConfig.ModelID, err)
         return w.generateFallbackRecommendations(ctx)
     }
-    
+
     // 3. 转换模型输出为推荐
     recommendations := make([]Recommendation, 0, len(modelResponse.Items))
     for _, item := range modelResponse.Items {
@@ -1181,7 +1181,7 @@ func (w *RecommendationWorkflow) generateAutomatedRecommendations(
         if err != nil {
             continue // 跳过无法获取的商品
         }
-        
+
         // 创建推荐项
         rec := Recommendation{
             ProductID:  item.ProductID,
@@ -1191,16 +1191,16 @@ func (w *RecommendationWorkflow) generateAutomatedRecommendations(
             Confidence: item.Confidence,
             Features:   item.TopFeatures,
         }
-        
+
         recommendations = append(recommendations, rec)
     }
-    
+
     return recommendations, nil
 }
 
 // 人工策划+AI混合推荐
 func (w *RecommendationWorkflow) generateCuratedRecommendations(
-    ctx context.Context, 
+    ctx context.Context,
     features map[string]interface{},
     curationID string,
 ) ([]Recommendation, error) {
@@ -1209,16 +1209,16 @@ func (w *RecommendationWorkflow) generateCuratedRecommendations(
     if err != nil {
         return nil, err
     }
-    
+
     // 2. 应用人工规则过滤/调整
     baseRecs, err := w.generateAutomatedRecommendations(ctx, features)
     if err != nil {
         return nil, err
     }
-    
+
     // 3. 应用策划规则
     result := make([]Recommendation, 0, len(baseRecs))
-    
+
     // 首先添加必选项
     for _, mustInclude := range curation.MustInclude {
         product, err := w.catalogService.GetProduct(ctx, mustInclude.ProductID)
@@ -1234,7 +1234,7 @@ func (w *RecommendationWorkflow) generateCuratedRecommendations(
             result = append(result, rec)
         }
     }
-    
+
     // 应用排除规则
     filteredRecs := make([]Recommendation, 0, len(baseRecs))
     for _, rec := range baseRecs {
@@ -1245,7 +1245,7 @@ func (w *RecommendationWorkflow) generateCuratedRecommendations(
                 break
             }
         }
-        
+
         if !excluded {
             // 应用人工调整权重
             for _, adjust := range curation.Adjustments {
@@ -1258,16 +1258,16 @@ func (w *RecommendationWorkflow) generateCuratedRecommendations(
             filteredRecs = append(filteredRecs, rec)
         }
     }
-    
+
     // 合并并排序结果
     result = append(result, filteredRecs...)
     sort.Slice(result, func(i, j int) bool {
         return result[i].Score > result[j].Score
     })
-    
+
     // 应用展示规则（例如多样性）
     result = applyDiversityRules(result, curation.DiversityRules)
-    
+
     return result, nil
 }
 
@@ -1283,13 +1283,13 @@ func (w *RecommendationWorkflow) determineStrategy(features map[string]interface
             CurationID: activeCuration,
         }
     }
-    
+
     // 2. 检查是否是新用户（冷启动问题）
     isNewUser := features["session_count"].(int) < 3
     if isNewUser {
         return RecommendationStrategy{Type: "fallback"}
     }
-    
+
     // 3. 默认使用自动推荐
     return RecommendationStrategy{Type: "automated"}
 }
@@ -1305,12 +1305,12 @@ func (w *RecommendationWorkflow) postProcessRecommendations(recs []Recommendatio
             sourceCounts["automated"]++
         }
     }
-    
+
     // 记录指标
     w.metrics["curated_count"] = float64(sourceCounts["curated"])
     w.metrics["automated_count"] = float64(sourceCounts["automated"])
     w.metrics["total_count"] = float64(len(recs))
-    
+
     // 提取解释信息
     for _, rec := range recs {
         if len(rec.Features) > 0 {
@@ -1334,13 +1334,13 @@ type OrderWorkflow struct {
     userID      string
     items       []OrderItem
     status      string
-    
+
     // 系统依赖
     inventory   *InventoryService
     payment     *PaymentService
     fraud       *FraudDetectionService
     notification *NotificationService
-    
+
     // 控制和监控
     compensations []CompensationAction
     events        []OrderEvent
@@ -1352,7 +1352,7 @@ type OrderWorkflow struct {
 func (w *OrderWorkflow) Process() error {
     // 创建Saga协调器
     w.sagas = NewSagaCoordinator()
-    
+
     // 1. 创建库存预留Saga步骤
     w.sagas.AddStep(
         // 正向操作: 预留库存
@@ -1364,7 +1364,7 @@ func (w *OrderWorkflow) Process() error {
             return w.releaseInventory()
         },
     )
-    
+
     // 2. 添加欺诈检测步骤
     w.sagas.AddStep(
         // 正向操作: 欺诈检测
@@ -1374,7 +1374,7 @@ func (w *OrderWorkflow) Process() error {
         // 补偿操作: 无需补偿
         nil,
     )
-    
+
     // 3. 添加支付处理步骤
     w.sagas.AddStep(
         // 正向操作: 处理付款
@@ -1386,7 +1386,7 @@ func (w *OrderWorkflow) Process() error {
             return w.refundPayment()
         },
     )
-    
+
     // 4. 添加确认订单步骤
     w.sagas.AddStep(
         // 正向操作: 确认订单
@@ -1398,7 +1398,7 @@ func (w *OrderWorkflow) Process() error {
             return w.cancelOrder()
         },
     )
-    
+
     // 5. 添加通知步骤
     w.sagas.AddStep(
         // 正向操作: 发送通知
@@ -1408,14 +1408,14 @@ func (w *OrderWorkflow) Process() error {
         // 补偿操作: 无需补偿
         nil,
     )
-    
+
     // 执行Saga
     err := w.sagas.Execute()
     if err != nil {
         w.status = "failed"
         return err
     }
-    
+
     w.status = "completed"
     return nil
 }
@@ -1423,24 +1423,24 @@ func (w *OrderWorkflow) Process() error {
 // 预留库存
 func (w *OrderWorkflow) reserveInventory() error {
     w.recordEvent("INVENTORY_RESERVATION_STARTED")
-    
+
     // 创建库存请求
     request := &InventoryRequest{
         OrderID: w.orderID,
         Items:   make([]InventoryItem, len(w.items)),
     }
-    
+
     for i, item := range w.items {
         request.Items[i] = InventoryItem{
             ProductID: item.ProductID,
             Quantity:  item.Quantity,
         }
     }
-    
+
     // 调用库存服务
     ctx, cancel := context.WithTimeout(w.ctx, 5*time.Second)
     defer cancel()
-    
+
     response, err := w.inventory.Reserve(ctx, request)
     if err != nil {
         w.recordEvent("INVENTORY_RESERVATION_FAILED", map[string]interface{}{
@@ -1448,25 +1448,25 @@ func (w *OrderWorkflow) reserveInventory() error {
         })
         return err
     }
-    
+
     // 检查是否有部分失败
     if len(response.Failures) > 0 {
         w.recordEvent("INVENTORY_RESERVATION_PARTIALLY_FAILED", map[string]interface{}{
             "failures": response.Failures,
         })
-        
+
         // 构建用户友好的错误信息
         var outOfStock []string
         for _, f := range response.Failures {
             outOfStock = append(outOfStock, f.ProductName)
         }
-        
+
         return &OrderError{
             Code:    "INVENTORY_ERROR",
             Message: fmt.Sprintf("以下商品库存不足: %s", strings.Join(outOfStock, ", ")),
         }
     }
-    
+
     w.recordEvent("INVENTORY_RESERVED")
     return nil
 }
@@ -1474,20 +1474,20 @@ func (w *OrderWorkflow) reserveInventory() error {
 // 释放库存 (补偿操作)
 func (w *OrderWorkflow) releaseInventory() error {
     w.recordEvent("INVENTORY_RELEASE_STARTED")
-    
+
     request := &ReleaseRequest{
         OrderID: w.orderID,
     }
-    
+
     ctx, cancel := context.WithTimeout(w.ctx, 5*time.Second)
     defer cancel()
-    
+
     err := w.inventory.Release(ctx, request)
     if err != nil {
         w.recordEvent("INVENTORY_RELEASE_FAILED", map[string]interface{}{
             "error": err.Error(),
         })
-        
+
         // 这是补偿操作，添加到补偿队列以便后续重试
         w.compensations = append(w.compensations, CompensationAction{
             Type:      "INVENTORY_RELEASE",
@@ -1495,11 +1495,11 @@ func (w *OrderWorkflow) releaseInventory() error {
             Timestamp: time.Now(),
             Status:    "PENDING",
         })
-        
+
         // 返回nil以允许补偿逻辑继续
         return nil
     }
-    
+
     w.recordEvent("INVENTORY_RELEASED")
     return nil
 }
@@ -1507,7 +1507,7 @@ func (w *OrderWorkflow) releaseInventory() error {
 // 欺诈检测
 func (w *OrderWorkflow) checkFraud() error {
     w.recordEvent("FRAUD_CHECK_STARTED")
-    
+
     request := &FraudCheckRequest{
         OrderID:      w.orderID,
         UserID:       w.userID,
@@ -1516,68 +1516,68 @@ func (w *OrderWorkflow) checkFraud() error {
         DeviceInfo:   w.ctx.Value("device_info").(map[string]string),
         PaymentInfo:  w.ctx.Value("payment_info").(PaymentInfo),
     }
-    
+
     ctx, cancel := context.WithTimeout(w.ctx, 3*time.Second)
     defer cancel()
-    
+
     response, err := w.fraud.Check(ctx, request)
     if err != nil {
         w.recordEvent("FRAUD_CHECK_ERROR", map[string]interface{}{
             "error": err.Error(),
         })
-        
+
         // 欺诈检测服务故障，基于风险决定是否继续
         if w.shouldContinueDespiteFraudServiceFailure() {
             w.recordEvent("FRAUD_CHECK_BYPASSED")
             return nil
         }
-        
+
         return &OrderError{
             Code:    "FRAUD_SERVICE_ERROR",
             Message: "风险评估服务暂时不可用，请稍后再试",
         }
     }
-    
+
     if response.Action == "REJECT" {
         w.recordEvent("FRAUD_DETECTED", map[string]interface{}{
             "risk_score": response.Score,
             "factors":    response.Factors,
         })
-        
+
         return &OrderError{
             Code:    "FRAUD_REJECTED",
             Message: "订单无法处理，请联系客服",
         }
     }
-    
+
     if response.Action == "REVIEW" {
         // 添加到人工审核队列
         w.recordEvent("FRAUD_REVIEW_REQUIRED", map[string]interface{}{
             "risk_score": response.Score,
             "factors":    response.Factors,
         })
-        
+
         // 创建人工审核任务
         w.createFraudReviewTask(response)
-        
+
         return &OrderError{
             Code:    "MANUAL_REVIEW",
             Message: "您的订单需要额外审核，我们会尽快处理",
         }
     }
-    
+
     // 通过欺诈检测
     w.recordEvent("FRAUD_CHECK_PASSED", map[string]interface{}{
         "risk_score": response.Score,
     })
-    
+
     return nil
 }
 
 // 支付处理
 func (w *OrderWorkflow) processPayment() error {
     w.recordEvent("PAYMENT_STARTED")
-    
+
     // 创建支付请求
     paymentInfo := w.ctx.Value("payment_info").(PaymentInfo)
     request := &PaymentRequest{
@@ -1586,27 +1586,27 @@ func (w *OrderWorkflow) processPayment() error {
         Currency:    "CNY",
         PaymentInfo: paymentInfo,
     }
-    
+
     // 调用支付服务
     ctx, cancel := context.WithTimeout(w.ctx, 10*time.Second)
     defer cancel()
-    
+
     response, err := w.payment.Process(ctx, request)
     if err != nil {
         w.recordEvent("PAYMENT_FAILED", map[string]interface{}{
             "error": err.Error(),
         })
-        
+
         return &OrderError{
             Code:    "PAYMENT_ERROR",
             Message: fmt.Sprintf("支付处理失败: %s", err.Error()),
         }
     }
-    
+
     w.recordEvent("PAYMENT_PROCESSED", map[string]interface{}{
         "transaction_id": response.TransactionID,
     })
-    
+
     return nil
 }
 
@@ -1616,16 +1616,16 @@ func (w *OrderWorkflow) recordEvent(eventType string, data ...map[string]interfa
     if len(data) > 0 {
         eventData = data[0]
     }
-    
+
     event := OrderEvent{
         OrderID:   w.orderID,
         Type:      eventType,
         Timestamp: time.Now(),
         Data:      eventData,
     }
-    
+
     w.events = append(w.events, event)
-    
+
     // 异步持久化事件
     go func() {
         // 实际实现会将事件写入事件存储
@@ -1644,14 +1644,14 @@ type SupportTicketWorkflow struct {
     messages  []Message
     status    string
     priority  int
-    
+
     // 协同系统
     classifier   *IssueClassifier
     knowledgeBase *KnowledgeBase
     aiAssistant  *AIAssistant
     agentPool    *AgentPool
     notification *NotificationService
-    
+
     // 控制
     ctx          context.Context
     transitions  []StateTransition
@@ -1662,27 +1662,27 @@ func (w *SupportTicketWorkflow) Process() error {
     // 初始状态
     w.status = "new"
     w.recordTransition("created", nil)
-    
+
     // 1. 自动分类
     classification, confidence := w.classifier.Classify(
         w.ctx, w.subject, w.messages,
     )
-    
+
     w.recordTransition("classified", map[string]interface{}{
         "classification": classification,
         "confidence":     confidence,
     })
-    
+
     // 2. 尝试自动回复
     if confidence > 0.7 {
         autoResponse, responseConfidence := w.attemptAutoResponse(classification)
-        
+
         if responseConfidence > 0.85 {
             // 高置信度回复，应用自动回复
             w.recordTransition("auto_response_generated", map[string]interface{}{
                 "confidence": responseConfidence,
             })
-            
+
             err := w.applyAutoResponse(autoResponse)
             if err == nil {
                 // 更新状态为等待用户反馈
@@ -1695,11 +1695,11 @@ func (w *SupportTicketWorkflow) Process() error {
             w.recordTransition("semi_auto_response", map[string]interface{}{
                 "confidence": responseConfidence,
             })
-            
+
             return w.processCollaborative(classification, autoResponse)
         }
     }
-    
+
     // 无法自动回复，转为人工处理
     return w.processManual(classification)
 }
@@ -1710,16 +1710,16 @@ func (w *SupportTicketWorkflow) attemptAutoResponse(classification string) (stri
     kbMatch, kbConfidence := w.knowledgeBase.FindMatch(
         w.ctx, classification, w.subject, w.messages,
     )
-    
+
     if kbConfidence > 0.7 {
         return kbMatch.Response, kbConfidence
     }
-    
+
     // 2. 使用AI生成回复
     aiResponse, aiConfidence := w.aiAssistant.GenerateResponse(
         w.ctx, w.subject, w.messages, classification,
     )
-    
+
 
     // 返回置信度更高的回复
     if kbConfidence > aiConfidence {
@@ -1732,7 +1732,7 @@ func (w *SupportTicketWorkflow) attemptAutoResponse(classification string) (stri
 // AI+人工协作处理
 func (w *SupportTicketWorkflow) processCollaborative(classification string, suggestedResponse string) error {
     w.status = "pending_agent_review"
-    
+
     // 创建审核任务
     task := ReviewTask{
         TicketID:          w.ticketID,
@@ -1741,60 +1741,60 @@ func (w *SupportTicketWorkflow) processCollaborative(classification string, sugg
         Priority:          w.priority,
         CreatedAt:         time.Now(),
     }
-    
+
     // 分配给合适的客服人员
     agent, err := w.agentPool.AssignReviewTask(w.ctx, task)
     if err != nil {
         // 分配失败，转为完全人工处理
         return w.processManual(classification)
     }
-    
+
     w.recordTransition("assigned_for_review", map[string]interface{}{
         "agent_id": agent.ID,
     })
-    
+
     // 通知客服人员
     w.notification.NotifyAgent(agent.ID, "review_task", map[string]interface{}{
         "ticket_id":      w.ticketID,
         "subject":        w.subject,
         "classification": classification,
     })
-    
+
     return nil
 }
 
 // 完全人工处理
 func (w *SupportTicketWorkflow) processManual(classification string) error {
     w.status = "pending_agent_assignment"
-    
+
     // 根据分类和优先级选择合适的客服人员
     agent, err := w.agentPool.AssignTicket(
         w.ctx, w.ticketID, classification, w.priority,
     )
-    
+
     if err != nil {
         w.recordTransition("agent_assignment_failed", map[string]interface{}{
             "error": err.Error(),
         })
-        
+
         // 放入等待队列
         w.status = "queued"
         w.recordTransition("queued", nil)
         return nil
     }
-    
+
     // 分配成功
     w.recordTransition("assigned_to_agent", map[string]interface{}{
         "agent_id": agent.ID,
     })
-    
+
     // 通知客服人员
     w.notification.NotifyAgent(agent.ID, "new_ticket", map[string]interface{}{
         "ticket_id":      w.ticketID,
         "subject":        w.subject,
         "classification": classification,
     })
-    
+
     w.status = "in_progress"
     return nil
 }
@@ -1808,7 +1808,7 @@ func (w *SupportTicketWorkflow) recordTransition(toState string, data map[string
         Timestamp:  time.Now(),
         Data:       data,
     }
-    
+
     w.transitions = append(w.transitions, transition)
 }
 ```
@@ -1861,12 +1861,12 @@ func ProcessOrder(ctx context.Context, order Order) error {
     if err := validateOrder(ctx, order); err != nil {
         return fmt.Errorf("验证失败: %w", err)
     }
-    
+
     // 2. 预留库存
     if err := reserveInventory(ctx, order); err != nil {
         return fmt.Errorf("库存预留失败: %w", err)
     }
-    
+
     // 3. 处理付款
     payment, err := processPayment(ctx, order)
     if err != nil {
@@ -1874,7 +1874,7 @@ func ProcessOrder(ctx context.Context, order Order) error {
         releaseInventory(ctx, order)
         return fmt.Errorf("支付失败: %w", err)
     }
-    
+
     // 4. 确认订单
     if err := confirmOrder(ctx, order, payment); err != nil {
         // 回滚支付和库存
@@ -1882,13 +1882,13 @@ func ProcessOrder(ctx context.Context, order Order) error {
         releaseInventory(ctx, order)
         return fmt.Errorf("确认失败: %w", err)
     }
-    
+
     // 5. 发送通知
     if err := sendNotifications(ctx, order); err != nil {
         log.Printf("通知发送失败: %v", err)
         // 非关键错误，继续流程
     }
-    
+
     return nil
 }
 ```
@@ -1921,7 +1921,7 @@ func (w *OrderWorkflow) Run(ctx context.Context) error {
     for {
         var nextState OrderState
         var err error
-        
+
         switch w.State {
         case OrderCreated:
             nextState, err = w.validate(ctx)
@@ -1940,16 +1940,16 @@ func (w *OrderWorkflow) Run(ctx context.Context) error {
         default:
             return fmt.Errorf("未知状态: %s", w.State)
         }
-        
+
         if err != nil {
             w.State = OrderFailed
             w.Error = err
             return err
         }
-        
+
         // 更新状态
         w.State = nextState
-        
+
         // 持久化工作流状态
         if err := w.save(ctx); err != nil {
             return fmt.Errorf("状态保存失败: %w", err)
@@ -1977,27 +1977,27 @@ func ProcessOrderConcurrent(ctx context.Context, order Order) error {
     paymentProcessed := make(chan *Payment, 1)
     paymentError := make(chan error, 1)
     confirmed := make(chan error, 1)
-    
+
     // 1. 验证
     go func() {
         validated <- validateOrder(ctx, order)
     }()
-    
+
     // 等待验证
     if err := <-validated; err != nil {
         return err
     }
-    
+
     // 2. 预留库存
     go func() {
         inventoryReserved <- reserveInventory(ctx, order)
     }()
-    
+
     // 等待库存预留
     if err := <-inventoryReserved; err != nil {
         return err
     }
-    
+
     // 3. 处理付款
     go func() {
         payment, err := processPayment(ctx, order)
@@ -2007,7 +2007,7 @@ func ProcessOrderConcurrent(ctx context.Context, order Order) error {
         }
         paymentProcessed <- payment
     }()
-    
+
     // 等待付款结果
     var payment *Payment
     select {
@@ -2018,17 +2018,17 @@ func ProcessOrderConcurrent(ctx context.Context, order Order) error {
     case payment = <-paymentProcessed:
         // 付款成功，继续
     }
-    
+
     // 4. 确认订单与发送通知可以并行
     go func() {
         confirmed <- confirmOrder(ctx, order, payment)
     }()
-    
+
     notificationSent := make(chan error, 1)
     go func() {
         notificationSent <- sendNotifications(ctx, order)
     }()
-    
+
     // 等待确认
     if err := <-confirmed; err != nil {
         // 回滚支付和库存
@@ -2038,12 +2038,12 @@ func ProcessOrderConcurrent(ctx context.Context, order Order) error {
         }()
         return err
     }
-    
+
     // 通知发送错误可以忽略
     if err := <-notificationSent; err != nil {
         log.Printf("通知发送失败: %v", err)
     }
-    
+
     return nil
 }
 ```
@@ -2114,12 +2114,12 @@ func handleWorkflowError(ctx context.Context, err error, step string) (bool, err
             }
             // 超过重试次数
             return false, wfErr
-            
+
         case BusinessError, ValidationError:
             // 业务错误和验证错误不应重试
             log.Printf("步骤 %s 遇到业务错误，不再重试: %v", step, wfErr)
             return false, wfErr
-            
+
         case ResourceError:
             // 资源错误可能需要特殊处理
             if isResourceRetryable(ctx, wfErr) {
@@ -2129,13 +2129,13 @@ func handleWorkflowError(ctx context.Context, err error, step string) (bool, err
             return false, wfErr
         }
     }
-    
+
     // 未知错误类型，默认作为技术错误处理
     if isRetryable(ctx, err) {
         log.Printf("步骤 %s 遇到未知错误，准备重试: %v", step, err)
         return true, nil
     }
-    
+
     return false, err
 }
 ```
@@ -2146,31 +2146,31 @@ func handleWorkflowError(ctx context.Context, err error, step string) (bool, err
 // 指数退避重试
 func RetryWithBackoff(ctx context.Context, operation func() error, maxRetries int) error {
     var err error
-    
+
     for attempt := 0; attempt <= maxRetries; attempt++ {
         // 执行操作
         err = operation()
         if err == nil {
             return nil // 成功
         }
-        
+
         // 检查是否继续重试
         shouldRetry, retryErr := handleWorkflowError(ctx, err, "当前操作")
         if !shouldRetry {
             return retryErr // 不应重试的错误
         }
-        
+
         // 检查是否达到最大重试次数
         if attempt == maxRetries {
             break
         }
-        
+
         // 计算退避时间
         backoff := time.Duration(math.Pow(2, float64(attempt))) * 100 * time.Millisecond
         // 添加一些随机性，避免惊群效应
         jitter := time.Duration(rand.Int63n(int64(backoff) / 2))
         sleepTime := backoff + jitter
-        
+
         // 使用带有上下文的睡眠
         select {
         case <-time.After(sleepTime):
@@ -2179,7 +2179,7 @@ func RetryWithBackoff(ctx context.Context, operation func() error, maxRetries in
             return ctx.Err() // 上下文取消或超时
         }
     }
-    
+
     return fmt.Errorf("操作失败，达到最大重试次数(%d): %w", maxRetries, err)
 }
 ```
@@ -2211,7 +2211,7 @@ func RecoverOrCreateWorkflow(ctx context.Context, id string, steps []WorkflowSte
         log.Printf("从检查点 %d 恢复工作流 %s", wf.CurrentStep, id)
         return wf, nil
     }
-    
+
     // 创建新工作流
     return &CheckpointedWorkflow{
         ID:          id,
@@ -2228,7 +2228,7 @@ func (w *CheckpointedWorkflow) Execute(ctx context.Context) error {
     for i := w.CurrentStep; i < len(w.Steps); i++ {
         step := w.Steps[i]
         log.Printf("执行步骤 %d: %s", i, step.Name)
-        
+
         // 执行步骤
         err := step.Execute(ctx, w.StateData)
         if err != nil {
@@ -2241,7 +2241,7 @@ func (w *CheckpointedWorkflow) Execute(ctx context.Context) error {
             }
             // 错误已处理，继续执行
         }
-        
+
         // 更新当前步骤并保存检查点
         w.CurrentStep = i + 1
         if err := w.Store.SaveCheckpoint(ctx, w); err != nil {
@@ -2249,7 +2249,7 @@ func (w *CheckpointedWorkflow) Execute(ctx context.Context) error {
             // 继续执行，但记录错误
         }
     }
-    
+
     return nil
 }
 
@@ -2283,7 +2283,7 @@ type ResourceManager struct {
     redisPool    *redis.Pool
     httpClient   *http.Client
     workerPool   *WorkerPool
-    
+
     // 监控指标
     metrics      *Metrics
 }
@@ -2302,7 +2302,7 @@ func NewWorkerPool(workers int, queueSize int) *WorkerPool {
         tasks:   make(chan Task, queueSize),
         workers: workers,
     }
-    
+
     pool.start()
     return pool
 }
@@ -2310,11 +2310,11 @@ func NewWorkerPool(workers int, queueSize int) *WorkerPool {
 // 启动工作池
 func (p *WorkerPool) start() {
     p.wg.Add(p.workers)
-    
+
     for i := 0; i < p.workers; i++ {
         go func() {
             defer p.wg.Done()
-            
+
             for task := range p.tasks {
                 task()
             }
@@ -2342,18 +2342,18 @@ func (rm *ResourceManager) ExecuteDBOp(ctx context.Context, op func(*sql.Conn) e
         return fmt.Errorf("获取数据库连接失败: %w", err)
     }
     defer conn.Close()
-    
+
     // 执行数据库操作
     startTime := time.Now()
     err = op(conn)
     duration := time.Since(startTime)
-    
+
     // 记录指标
     rm.metrics.HistogramObserve("db_op_duration", duration.Seconds())
     if err != nil {
         rm.metrics.CounterInc("db_op_errors")
     }
-    
+
     return err
 }
 ```
@@ -2369,7 +2369,7 @@ type BatchProcessor struct {
     maxWait    time.Duration
     lastFlush  time.Time
     processor  func([]interface{}) error
-    
+
     // 控制通道
     itemCh     chan interface{}
     flushCh    chan struct{}
@@ -2388,7 +2388,7 @@ func NewBatchProcessor(maxItems int, maxWait time.Duration, processor func([]int
         flushCh:   make(chan struct{}),
         doneCh:    make(chan struct{}),
     }
-    
+
     go bp.run()
     return bp
 }
@@ -2412,10 +2412,10 @@ func (bp *BatchProcessor) Close() {
 // 运行批处理循环
 func (bp *BatchProcessor) run() {
     defer close(bp.doneCh)
-    
+
     ticker := time.NewTicker(bp.maxWait)
     defer ticker.Stop()
-    
+
     for {
         select {
         case item, ok := <-bp.itemCh:
@@ -2424,30 +2424,30 @@ func (bp *BatchProcessor) run() {
                 bp.processItems()
                 return
             }
-            
+
             bp.mu.Lock()
             bp.items = append(bp.items, item)
             itemCount := len(bp.items)
             bp.mu.Unlock()
-            
+
             // 达到批处理大小阈值
             if itemCount >= bp.maxItems {
                 bp.processItems()
                 ticker.Reset(bp.maxWait)
             }
-            
+
         case <-ticker.C:
             // 达到时间阈值
             bp.mu.Lock()
             timeSinceLastFlush := time.Since(bp.lastFlush)
             hasItems := len(bp.items) > 0
             bp.mu.Unlock()
-            
+
             if hasItems && timeSinceLastFlush >= bp.maxWait {
                 bp.processItems()
                 ticker.Reset(bp.maxWait)
             }
-            
+
         case <-bp.flushCh:
             // 手动刷新请求
             bp.processItems()
@@ -2459,20 +2459,20 @@ func (bp *BatchProcessor) run() {
 // 处理批处理项目
 func (bp *BatchProcessor) processItems() {
     bp.mu.Lock()
-    
+
     // 没有项目可处理
     if len(bp.items) == 0 {
         bp.mu.Unlock()
         return
     }
-    
+
     // 获取当前批次并重置
     batch := bp.items
     bp.items = make([]interface{}, 0, bp.maxItems)
     bp.lastFlush = time.Now()
-    
+
     bp.mu.Unlock()
-    
+
     // 处理批次（不持有锁）
     if err := bp.processor(batch); err != nil {
         log.Printf("批处理失败: %v", err)
@@ -2510,18 +2510,18 @@ func (e *ContextEnhancer) WithTimeout(timeout time.Duration) (context.Context, c
 func (e *ContextEnhancer) WithWorkflowDeadline(deadline time.Time, callback func()) context.Context {
     ctx, cancel := context.WithDeadline(e.baseCtx, deadline)
     e.cancelFuncs = append(e.cancelFuncs, cancel)
-    
+
     // 设置定时器在截止日期前触发，以进行清理
     now := time.Now()
     if deadline.After(now) {
         warningTime := deadline.Add(-5 * time.Second)
         delay := time.Until(warningTime)
-        
+
         if delay > 0 {
             e.deadlineTimer = time.AfterFunc(delay, callback)
         }
     }
-    
+
     return ctx
 }
 
@@ -2530,7 +2530,7 @@ func (e *ContextEnhancer) Cleanup() {
     for _, cancel := range e.cancelFuncs {
         cancel()
     }
-    
+
     if e.deadlineTimer != nil {
         e.deadlineTimer.Stop()
     }
@@ -2614,27 +2614,27 @@ type RecommendationExplainer struct {
 
 // 生成用户友好的解释
 func (e *RecommendationExplainer) GenerateExplanation(
-    ctx context.Context, 
+    ctx context.Context,
     recommendation Recommendation,
 ) (*ExplanationView, error) {
     // 1. 获取顶部特征
     features := recommendation.Features
-    
+
     // 2. 获取特征的用户友好解释
     featureExplanations := make([]FeatureExplanation, 0, len(features))
     for _, f := range features {
         friendlyName, description := e.getFeatureFriendlyDescription(f.Name)
-        
+
         explanation := FeatureExplanation{
             Feature:     friendlyName,
             Description: description,
             Importance:  f.Weight,
             Value:       formatFeatureValue(f),
         }
-        
+
         featureExplanations = append(featureExplanations, explanation)
     }
-    
+
     // 3. 获取用户上下文相关解释
     userContext, err := e.userContext.GetContext(ctx, recommendation.UserID)
     if err == nil {
@@ -2642,13 +2642,13 @@ func (e *RecommendationExplainer) GenerateExplanation(
         contextExplanations := e.generateContextExplanations(userContext, recommendation)
         featureExplanations = append(featureExplanations, contextExplanations...)
     }
-    
+
     // 4. 生成产品特定解释
     productExplanation := e.generateProductSpecificExplanation(recommendation.Product)
-    
+
     // 5. 生成自然语言总结
     summary := e.generateSummary(featureExplanations, recommendation)
-    
+
     return &ExplanationView{
         Summary:             summary,
         TopFeatures:         featureExplanations,
@@ -2661,29 +2661,29 @@ func (e *RecommendationExplainer) GenerateExplanation(
 
 // 生成自然语言摘要
 func (e *RecommendationExplainer) generateSummary(
-    explanations []FeatureExplanation, 
+    explanations []FeatureExplanation,
     rec Recommendation,
 ) string {
     // 简单起见，这里只使用模板
     // 实际系统可能会使用更复杂的NLG
-    
+
     if len(explanations) == 0 {
         return fmt.Sprintf("我们推荐 %s 是因为它很受欢迎", rec.Product.Name)
     }
-    
+
     // 取前两个最重要的特征
     top := explanations
     if len(top) > 2 {
         top = top[:2]
     }
-    
+
     reasons := make([]string, len(top))
     for i, exp := range top {
         reasons[i] = fmt.Sprintf("%s", exp.Description)
     }
-    
+
     return fmt.Sprintf(
-        "我们向您推荐「%s」，主要原因是：%s", 
+        "我们向您推荐「%s」，主要原因是：%s",
         rec.Product.Name,
         strings.Join(reasons, "，以及"),
     )
@@ -2705,7 +2705,7 @@ type TrustBuildingUI struct {
 
 // 生成信任建立视图
 func (ui *TrustBuildingUI) GenerateTrustView(
-    ctx context.Context, 
+    ctx context.Context,
     recommendation Recommendation,
     userID string,
 ) (*TrustView, error) {
@@ -2714,7 +2714,7 @@ func (ui *TrustBuildingUI) GenerateTrustView(
     if err != nil {
         accuracy = nil // 可选指标
     }
-    
+
     // 2. 获取用户之前接受的类似推荐
     prevAccepted, err := ui.RecommendationHistory.GetSimilarAccepted(
         ctx, userID, recommendation.ProductID,
@@ -2722,7 +2722,7 @@ func (ui *TrustBuildingUI) GenerateTrustView(
     if err != nil {
         prevAccepted = nil // 可选信息
     }
-    
+
     // 3. 获取社会证明数据
     socialProof, err
 
@@ -2734,7 +2734,7 @@ func (ui *TrustBuildingUI) GenerateTrustView(
     if err != nil {
         socialProof = nil // 可选信息
     }
-    
+
     // 4. 获取解释
     explanation, err := ui.ExplanationService.GenerateExplanation(ctx, recommendation)
     if err != nil {
@@ -2742,7 +2742,7 @@ func (ui *TrustBuildingUI) GenerateTrustView(
             Summary: "我们根据您的兴趣推荐了这个产品",
         }
     }
-    
+
     // 5. 准备信任构建视图
     trustView := &TrustView{
         Explanation:        explanation,
@@ -2753,7 +2753,7 @@ func (ui *TrustBuildingUI) GenerateTrustView(
         TransparencyLevel:  determineBestTransparencyLevel(userID),
         FeedbackOptions:    ui.FeedbackCollector.GetFeedbackOptions(recommendation.ModelID),
     }
-    
+
     return trustView, nil
 }
 
@@ -2803,7 +2803,7 @@ func (m *CognitiveLoadManager) GetOptimalInterface(
         // 使用默认配置
         prefs = &UserPreference{DetailLevel: "medium"}
     }
-    
+
     // 2. 获取用户近期活动指标
     metrics, err := m.userMetrics.GetRecent(ctx, userID, 30*time.Minute)
     if err == nil {
@@ -2819,7 +2819,7 @@ func (m *CognitiveLoadManager) GetOptimalInterface(
             }, nil
         }
     }
-    
+
     // 3. 分析任务复杂度
     complexity, err := m.complexityAnalyzer.Analyze(taskType, taskData)
     if err == nil {
@@ -2835,10 +2835,10 @@ func (m *CognitiveLoadManager) GetOptimalInterface(
             }, nil
         }
     }
-    
+
     // 4. 根据用户经验生成配置
     expLevel := m.getUserExperienceLevel(ctx, userID, taskType)
-    
+
     config := &InterfaceConfig{
         DetailLevel:       prefs.DetailLevel,
         AutomationLevel:   automationForExperience(expLevel),
@@ -2847,7 +2847,7 @@ func (m *CognitiveLoadManager) GetOptimalInterface(
         SimplifiedView:    false,
         HighlightKeyInfo:  expLevel != "expert",
     }
-    
+
     return config, nil
 }
 
@@ -2922,14 +2922,14 @@ func NewProgressiveController(userID, areaID string) (*ProgressiveAutomationCont
         userID:        userID,
         serviceAreaID: areaID,
     }
-    
+
     // 加载历史与配置
     tracker, err := NewUserAutomationTracker(userID)
     if err != nil {
         return nil, err
     }
     controller.historyTracker = tracker
-    
+
     // 根据历史确定起始阶段
     stage, err := controller.determineInitialStage()
     if err != nil {
@@ -2937,7 +2937,7 @@ func NewProgressiveController(userID, areaID string) (*ProgressiveAutomationCont
         stage = controller.configManager.GetStage(1)
     }
     controller.currentStage = stage
-    
+
     return controller, nil
 }
 
@@ -2948,12 +2948,12 @@ func (c *ProgressiveAutomationController) determineInitialStage() (AutomationSta
     if err != nil {
         return AutomationStage{}, err
     }
-    
+
     // 2. 如果是新用户，从第一阶段开始
     if history.TotalInteractions < 10 {
         return c.configManager.GetStage(1), nil
     }
-    
+
     // 3. 评估AI表现
     performance, err := c.performanceTracker.GetPerformance(
         c.userID, c.serviceAreaID, 30*time.Day,
@@ -2961,16 +2961,16 @@ func (c *ProgressiveAutomationController) determineInitialStage() (AutomationSta
     if err != nil {
         return AutomationStage{}, err
     }
-    
+
     // 4. 评估用户信任度
     trust, err := c.feedbackCollector.GetTrustMetrics(c.userID, c.serviceAreaID)
     if err != nil {
         return AutomationStage{}, err
     }
-    
+
     // 5. 根据历史、性能和信任计算合适的级别
     level := calculateOptimalLevel(history, performance, trust)
-    
+
     return c.configManager.GetStage(level), nil
 }
 
@@ -2980,7 +2980,7 @@ func (c *ProgressiveAutomationController) CheckForUpgrade(ctx context.Context) (
     if c.currentStage.Level >= 5 {
         return false, c.currentStage
     }
-    
+
     // 1. 获取最近表现
     performance, err := c.performanceTracker.GetPerformance(
         c.userID, c.serviceAreaID, 14*time.Day,
@@ -2988,26 +2988,26 @@ func (c *ProgressiveAutomationController) CheckForUpgrade(ctx context.Context) (
     if err != nil {
         return false, c.currentStage
     }
-    
+
     // 2. 满足升级条件?
     readyForUpgrade := c.evaluateUpgradeReadiness(performance)
     if !readyForUpgrade {
         return false, c.currentStage
     }
-    
+
     // 3. 获取下一级别
     nextStage := c.configManager.GetStage(c.currentStage.Level + 1)
-    
+
     // 4. 记录升级
     c.historyTracker.RecordUpgrade(
-        c.currentStage.Level, 
+        c.currentStage.Level,
         nextStage.Level,
         performance,
     )
-    
+
     // 5. 更新当前级别
     c.currentStage = nextStage
-    
+
     return true, nextStage
 }
 
@@ -3018,28 +3018,28 @@ func (c *ProgressiveAutomationController) evaluateUpgradeReadiness(perf Performa
     case 1: // 从监督模式到协作模式
         // 需要高准确率和足够的交互量
         return perf.Accuracy > 0.92 && perf.InteractionCount > 30
-        
+
     case 2: // 从协作模式到半自动模式
         // 需要持续良好表现和积极反馈
-        return perf.Accuracy > 0.94 && 
+        return perf.Accuracy > 0.94 &&
                perf.InteractionCount > 50 &&
                perf.UserSatisfaction > 4.0
-               
+
     case 3: // 从半自动到主要自动
         // 需要非常高的准确率和信任度
-        return perf.Accuracy > 0.96 && 
+        return perf.Accuracy > 0.96 &&
                perf.InteractionCount > 100 &&
                perf.UserSatisfaction > 4.2 &&
                perf.OverrideRate < 0.05
-               
+
     case 4: // 从主要自动到完全自动
         // 极高要求
-        return perf.Accuracy > 0.98 && 
+        return perf.Accuracy > 0.98 &&
                perf.InteractionCount > 200 &&
                perf.UserSatisfaction > 4.5 &&
                perf.OverrideRate < 0.02
     }
-    
+
     return false
 }
 
@@ -3047,18 +3047,18 @@ func (c *ProgressiveAutomationController) evaluateUpgradeReadiness(perf Performa
 func (c *ProgressiveAutomationController) ProcessFeedback(feedback NegativeFeedback) bool {
     // 记录反馈
     c.feedbackCollector.RecordFeedback(feedback)
-    
+
     // 评估是否需要降级
     needsDowngrade := c.evaluateForDowngrade(feedback)
     if !needsDowngrade {
         return false
     }
-    
+
     // 不能低于1级
     if c.currentStage.Level <= 1 {
         return false
     }
-    
+
     // 降级到前一级别
     prevStage := c.configManager.GetStage(c.currentStage.Level - 1)
     c.historyTracker.RecordDowngrade(
@@ -3066,7 +3066,7 @@ func (c *ProgressiveAutomationController) ProcessFeedback(feedback NegativeFeedb
         prevStage.Level,
         feedback,
     )
-    
+
     c.currentStage = prevStage
     return true
 }
@@ -3077,21 +3077,21 @@ func (c *ProgressiveAutomationController) evaluateForDowngrade(feedback Negative
     if feedback.Severity == "critical" || feedback.IssueType == "safety" {
         return true
     }
-    
+
     // 计算最近负面反馈比例
     recentFeedbacks, _ := c.feedbackCollector.GetRecentFeedback(
         c.userID, c.serviceAreaID, 7*24*time.Hour,
     )
-    
+
     negativeCount := 0
     for _, fb := range recentFeedbacks {
         if fb.Sentiment == "negative" {
             negativeCount++
         }
     }
-    
+
     negativeRate := float64(negativeCount) / float64(len(recentFeedbacks))
-    
+
     // 负面反馈比例过高时降级
     threshold := 0.2 // 20%的负面反馈率作为降级阈值
     return negativeRate > threshold
@@ -3145,7 +3145,7 @@ func (c *ProgressiveAutomationController) evaluateForDowngrade(feedback Negative
     [_] 是否实现了AI行为的监控?
     [_] 是否有模型性能下降的检测?
     [_] 模型更新策略是否安全?
-    
+
 [_] 人机协同检查
     [_] 界面是否提供了足够的解释性?
     [_] 是否有清晰的责任划分?
@@ -3229,23 +3229,23 @@ func (c *HealthMetricsCollector) RegisterHealthMetrics() {
     c.metricsClient.RegisterCounter("request_count", []string{"endpoint", "method"})
     c.metricsClient.RegisterCounter("error_count", []string{"endpoint", "method", "error_type"})
     c.metricsClient.RegisterHistogram("request_duration_ms", []string{"endpoint", "method"})
-    
+
     // 资源利用率指标
     c.metricsClient.RegisterGauge("cpu_usage_percent", []string{"node"})
     c.metricsClient.RegisterGauge("memory_usage_percent", []string{"node"})
     c.metricsClient.RegisterGauge("disk_usage_percent", []string{"node", "disk"})
     c.metricsClient.RegisterGauge("network_io_bytes", []string{"node", "direction"})
-    
+
     // 队列和连接池指标
     c.metricsClient.RegisterGauge("queue_depth", []string{"queue_name"})
     c.metricsClient.RegisterGauge("queue_lag_ms", []string{"queue_name"})
     c.metricsClient.RegisterGauge("connection_pool_usage", []string{"pool_name"})
     c.metricsClient.RegisterGauge("connection_wait_time_ms", []string{"pool_name"})
-    
+
     // 缓存指标
     c.metricsClient.RegisterGauge("cache_hit_ratio", []string{"cache_name"})
     c.metricsClient.RegisterGauge("cache_size_bytes", []string{"cache_name"})
-    
+
     // 服务特定指标
     c.registerServiceSpecificMetrics()
 }
@@ -3256,17 +3256,17 @@ func (c *HealthMetricsCollector) registerServiceSpecificMetrics() {
     case "api_gateway":
         c.metricsClient.RegisterGauge("active_routes", nil)
         c.metricsClient.RegisterCounter("rate_limited_requests", []string{"client_id"})
-        
+
     case "database":
         c.metricsClient.RegisterGauge("active_connections", nil)
         c.metricsClient.RegisterGauge("replication_lag_ms", []string{"replica"})
         c.metricsClient.RegisterHistogram("query_duration_ms", []string{"query_type"})
-        
+
     case "workflow_engine":
         c.metricsClient.RegisterGauge("active_workflows", []string{"workflow_type"})
         c.metricsClient.RegisterHistogram("workflow_completion_time_ms", []string{"workflow_type"})
         c.metricsClient.RegisterCounter("workflow_failures", []string{"workflow_type", "failure_reason"})
-        
+
     case "ai_service":
         c.metricsClient.RegisterHistogram("inference_time_ms", []string{"model_id", "operation"})
         c.metricsClient.RegisterGauge("model_memory_usage_mb", []string{"model_id"})
@@ -3292,19 +3292,19 @@ func (c *AIHCSMetricsCollector) RegisterMetrics() {
     c.metricsClient.RegisterHistogram("ai_confidence_score", []string{"model", "operation"})
     c.metricsClient.RegisterCounter("ai_failures", []string{"model", "operation", "reason"})
     c.metricsClient.RegisterCounter("ai_invocations", []string{"model", "operation"})
-    
+
     // 人机交互指标
     c.metricsClient.RegisterHistogram("human_response_time_ms", []string{"operation", "interface"})
     c.metricsClient.RegisterGauge("human_queue_depth", []string{"operation"})
     c.metricsClient.RegisterHistogram("human_decision_time_ms", []string{"decision_type"})
     c.metricsClient.RegisterCounter("human_override_count", []string{"model", "operation"})
-    
+
     // 协同效果指标
     c.metricsClient.RegisterHistogram("task_completion_time_ms", []string{"task_type", "automation_level"})
     c.metricsClient.RegisterGauge("user_satisfaction_score", []string{"interface", "operation"})
     c.metricsClient.RegisterGauge("ai_acceptance_rate", []string{"model", "operation"})
     c.metricsClient.RegisterHistogram("cognitive_load_score", []string{"interface", "operation"})
-    
+
     // 业务价值指标
     c.metricsClient.RegisterCounter("business_errors", []string{"operation", "automation_level"})
     c.metricsClient.RegisterGauge("throughput_per_hour", []string{"operation", "automation_level"})
@@ -3325,7 +3325,7 @@ func (c *AIHCSMetricsCollector) RecordDecisionComparison(
         "agreed":       agreement,
         "ai_confidence": aiDecision.Confidence,
     })
-    
+
     // 如果不一致，记录差异
     if !agreement {
         c.feedbackClient.RecordAIFeedback(ctx, AIFeedback{
@@ -3337,11 +3337,11 @@ func (c *AIHCSMetricsCollector) RecordDecisionComparison(
             Context:       extractDecisionContext(ctx),
         })
     }
-    
+
     // 记录决策时间差异
     aiTime := aiDecision.ProcessingTime.Milliseconds()
     humanTime := humanDecision.ProcessingTime.Milliseconds()
-    
+
     c.metricsClient.RecordGauge("time_efficiency_ratio", float64(aiTime)/float64(humanTime), map[string]string{
         "operation": operationType,
     })
@@ -3386,29 +3386,29 @@ type ServiceInfo struct {
 // 识别最适合Serverless的候选服务
 func (m *ServerlessMigrationManager) IdentifyCandidates() []ServiceInfo {
     var candidates []ServiceInfo
-    
+
     for _, service := range m.services {
         score := m.calculateServerlessFitScore(service)
-        
+
         if score > 0.7 {
             candidates = append(candidates, service)
         }
     }
-    
+
     // 按适合度排序
     sort.Slice(candidates, func(i, j int) bool {
         scoreI := m.calculateServerlessFitScore(candidates[i])
         scoreJ := m.calculateServerlessFitScore(candidates[j])
         return scoreI > scoreJ
     })
-    
+
     return candidates
 }
 
 // 计算服务适合Serverless的分数
 func (m *ServerlessMigrationManager) calculateServerlessFitScore(service ServiceInfo) float64 {
     var score float64 = 0
-    
+
     // 状态因素 (无状态最适合)
     switch service.StateLevel {
     case "stateless":
@@ -3418,7 +3418,7 @@ func (m *ServerlessMigrationManager) calculateServerlessFitScore(service Service
     case "heavy_state":
         score += 0.0
     }
-    
+
     // 流量模式 (峰值流量最适合)
     switch service.TrafficPattern {
     case "spiky":
@@ -3428,7 +3428,7 @@ func (m *ServerlessMigrationManager) calculateServerlessFitScore(service Service
     case "steady":
         score += 0.1
     }
-    
+
     // 根据性能指标调整分数
     metrics, err := m.performanceMonitor.GetServiceMetrics(service.ID)
     if err == nil {
@@ -3439,13 +3439,13 @@ func (m *ServerlessMigrationManager) calculateServerlessFitScore(service Service
         } else if utilization < 0.6 {
             score += 0.1
         }
-        
+
         // 延迟不敏感的服务更适合
         if !metrics.IsLatencySensitive() {
             score += 0.1
         }
     }
-    
+
     // 考虑依赖关系 - 减少依赖多的服务分数
     dependencyCount := len(service.Dependencies)
     if dependencyCount <= 2 {
@@ -3453,14 +3453,14 @@ func (m *ServerlessMigrationManager) calculateServerlessFitScore(service Service
     } else if dependencyCount >= 6 {
         score -= 0.1
     }
-    
+
     // 标准化分数到0-1
     if score > 1.0 {
         score = 1.0
     } else if score < 0.0 {
         score = 0.0
     }
-    
+
     return score
 }
 
@@ -3472,11 +3472,11 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
         CurrentPhase: service.MigrationPhase,
         Steps:        make([]MigrationStep, 0),
     }
-    
+
     // 根据服务当前阶段添加步骤
     switch service.MigrationPhase {
     case 0: // 未开始
-        plan.Steps = append(plan.Steps, 
+        plan.Steps = append(plan.Steps,
             MigrationStep{
                 Name: "初始评估",
                 Tasks: []string{
@@ -3496,7 +3496,7 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
                 },
             },
         )
-        
+
     case 1: // 规划阶段
         plan.Steps = append(plan.Steps,
             MigrationStep{
@@ -3518,7 +3518,7 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
                 },
             },
         )
-        
+
     case 2: // 转换阶段
         plan.Steps = append(plan.Steps,
             MigrationStep{
@@ -3547,7 +3547,7 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
                 },
             },
         )
-        
+
     case 3: // 已Serverless化
         plan.Steps = append(plan.Steps,
             MigrationStep{
@@ -3570,7 +3570,7 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
             },
         )
     }
-    
+
     return plan
 }
 
@@ -3578,14 +3578,14 @@ func (m *ServerlessMigrationManager) CreateMigrationPlan(service ServiceInfo) *M
 func (m *ServerlessMigrationManager) AnalyzeMigrationImpact(service ServiceInfo) *MigrationImpact {
     // 获取当前性能数据作为基线
     baselineMetrics, _ := m.performanceMonitor.GetServiceMetrics(service.ID)
-    
+
     // 估算Serverless迁移后的成本
     currentCost := m.costAnalyzer.CalculateCurrentCost(service.ID)
     projectedCost := m.costAnalyzer.ProjectServerlessCost(service.ID)
-    
+
     // 估算延迟影响
     latencyImpact := m.estimateLatencyImpact(service)
-    
+
     return &MigrationImpact{
         ServiceID:          service.ID,
         CostChange:         (projectedCost - currentCost) / currentCost * 100, // 百分比变化
@@ -3620,18 +3620,18 @@ func (a *TechnologyInvestmentAnalyzer) EvaluateTechnology(
 ) *InvestmentAnalysis {
     // 1. 计算总成本
     costs := a.calculateTotalCost(techName, scenarios, timeframe)
-    
+
     // 2. 评估总收益
     benefits := a.evaluateBenefits(techName, scenarios, timeframe)
-    
+
     // 3. 评估风险
     risks := a.assessRisks(techName, scenarios)
-    
+
     // 4. 计算ROI和其他指标
     roi := a.calculateROI(costs, benefits, timeframe)
     paybackPeriod := a.calculatePaybackPeriod(costs, benefits)
     npv := a.calculateNPV(costs, benefits, timeframe)
-    
+
     return &InvestmentAnalysis{
         Technology:    techName,
         Scenarios:     scenarios,
@@ -3654,26 +3654,26 @@ func (a *TechnologyInvestmentAnalyzer) calculateTotalCost(
 ) *TotalCost {
     // 初始成本
     initialCosts := a.costCalculator.CalculateInitialCosts(techName, scenarios)
-    
+
     // 运营成本
     operationalCosts := a.costCalculator.CalculateOperationalCosts(techName, scenarios, timeframe)
-    
+
     // 人力成本
     personnelCosts := a.costCalculator.CalculatePersonnelCosts(techName, scenarios, timeframe)
-    
+
     // 迁移成本
     migrationCosts := a.costCalculator.CalculateMigrationCosts(techName, scenarios)
-    
+
     // 学习曲线成本
     learningCosts := a.costCalculator.CalculateLearningCosts(techName, scenarios)
-    
+
     // 总成本
-    totalAmount := initialCosts.Amount + 
-                  operationalCosts.Amount + 
-                  personnelCosts.Amount + 
-                  migrationCosts.Amount + 
+    totalAmount := initialCosts.Amount +
+                  operationalCosts.Amount +
+                  personnelCosts.Amount +
+                  migrationCosts.Amount +
                   learningCosts.Amount
-    
+
     return &TotalCost{
         Amount:          totalAmount,
         InitialCosts:    initialCosts,
@@ -3692,16 +3692,16 @@ func (a *TechnologyInvestmentAnalyzer) evaluateBenefits(
 ) *TotalBenefit {
     // 直接收益 (成本节约)
     directBenefits := a.benefitAnalyzer.CalculateDirectBenefits(techName, scenarios, timeframe)
-    
+
     // 间接收益 (效率提升)
     indirectBenefits := a.benefitAnalyzer.CalculateIndirectBenefits(techName, scenarios, timeframe)
-    
+
     // 战略收益 (市场定位)
     strategicBenefits := a.benefitAnalyzer.CalculateStrategicBenefits(techName, scenarios, timeframe)
-    
+
     // 总收益
     totalValue := directBenefits.Value + indirectBenefits.Value + strategicBenefits.Value
-    
+
     return &TotalBenefit{
         Value:            totalValue,
         DirectBenefits:   directBenefits,
@@ -3717,19 +3717,19 @@ func (a *TechnologyInvestmentAnalyzer) assessRisks(
 ) *RiskAssessment {
     // 技术风险
     technicalRisks := a.riskAssessor.AssessTechnicalRisks(techName, scenarios)
-    
+
     // 组织风险
     organizationalRisks := a.riskAssessor.AssessOrganizationalRisks(techName, scenarios)
-    
+
     // 市场风险
     marketRisks := a.riskAssessor.AssessMarketRisks(techName, scenarios)
-    
+
     // 合规风险
     complianceRisks := a.riskAssessor.AssessComplianceRisks(techName, scenarios)
-    
+
     // 厂商风险
     vendorRisks := a.riskAssessor.AssessVendorRisks(techName)
-    
+
     // 计算风险调整因子
     riskAdjustmentFactor := a.calculateRiskAdjustmentFactor(
         technicalRisks,
@@ -3738,7 +3738,7 @@ func (a *TechnologyInvestmentAnalyzer) assessRisks(
         complianceRisks,
         vendorRisks,
     )
-    
+
     return &RiskAssessment{
         OverallRiskLevel:     calculateOverallRiskLevel(technicalRisks, organizationalRisks, marketRisks, complianceRisks, vendorRisks),
         RiskAdjustmentFactor: riskAdjustmentFactor,
@@ -3779,7 +3779,7 @@ func (a *TechnologyInvestmentAnalyzer) generateSummary(
     } else {
         recommendation = "不推荐"
     }
-    
+
     return fmt.Sprintf(
         "技术投资分析: %s\n\n" +
         "总成本: %.2f\n" +
@@ -3850,7 +3850,7 @@ func (a *TechnologyInvestmentAnalyzer) generateSummary(
 │   ├── 有效界面设计原则 (解释性设计, 信任建立设计, 负载平衡设计)
 │   └── 常见陷阱与解决方案 (过度依赖, 责任模糊, 工作流断裂, 信任危机, 认知失调)
 │
-├── 7. 实施检查清单与评估框架 
+├── 7. 实施检查清单与评估框架
 │   ├── 架构设计检查清单 (可靠性, 可伸缩性, 可观测性, 一致性, AI集成, 人机协同)
 │   ├── 实施准备度评估 (技术, 组织, 业务, 数据, AI准备度评分)
 │   └── 运行状态评估指标 (系统健康指标, AI-HCS特定指标)

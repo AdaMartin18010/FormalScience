@@ -7,7 +7,7 @@ I'll continue with the exploration of homotopy type theory and its applications 
 1. More direct applications and case studies
 2. Concrete bridges between theory and practice
 3. Teaching methodologies for these concepts
-4. Future research directions 
+4. Future research directions
 5. Social and philosophical implications
 
 I'll maintain the depth and breadth of the analysis, focusing on the interconnections between these fields rather than using a dialectical approach of thesis-antithesis-synthesis.
@@ -125,7 +125,7 @@ impl TcpConnection<Closed> {
             _state: PhantomData,
         }
     }
-    
+
     fn listen(self) -> TcpConnection<Listen> {
         // 实现状态转换...
         TcpConnection {
@@ -160,7 +160,7 @@ impl TcpConnection<Established> {
         // 只有Established状态可以发送数据
         self.socket.send(data)
     }
-    
+
     fn close(self) -> TcpConnection<Closed> {
         // 实现状态转换...
         TcpConnection {
@@ -1011,14 +1011,14 @@ mod domain {
     pub enum OrderStatus {
         Created, Paid, Shipped, Delivered, Cancelled
     }
-    
+
     pub struct Order {
         id: OrderId,
         status: OrderStatus,
         items: Vec<OrderItem>,
         // ...其他字段
     }
-    
+
     // 领域不变量验证
     impl Order {
         // 确保订单创建时的有效性
@@ -1027,14 +1027,14 @@ mod domain {
                 return Err(DomainError::EmptyOrder);
             }
             // 更多验证...
-            
+
             Ok(Self {
                 id,
                 status: OrderStatus::Created,
                 items,
             })
         }
-        
+
         // 状态转换，强制类型安全
         pub fn pay(mut self) -> Result<Self, DomainError> {
             match self.status {
@@ -1045,7 +1045,7 @@ mod domain {
                 _ => Err(DomainError::InvalidStateTransition)
             }
         }
-        
+
         // 更多领域方法...
     }
 }
@@ -1053,50 +1053,50 @@ mod domain {
 // 2. 应用服务层
 mod application {
     use crate::domain::*;
-    
+
     pub struct OrderService {
         order_repository: Box<dyn OrderRepository>,
         payment_gateway: Box<dyn PaymentGateway>,
         // 其他依赖...
     }
-    
+
     impl OrderService {
-        pub async fn create_order(&self, request: CreateOrderRequest) 
+        pub async fn create_order(&self, request: CreateOrderRequest)
             -> Result<OrderId, ApplicationError> {
             // 验证请求
             let items = self.validate_items(&request.items)?;
-            
+
             // 创建领域对象
             let order = Order::new(
                 self.order_repository.next_id().await?,
                 items
             )?;
-            
+
             // 持久化
             self.order_repository.save(&order).await?;
-            
+
             Ok(order.id)
         }
-        
+
         pub async fn process_payment(&self, order_id: OrderId, payment_details: PaymentDetails)
             -> Result<(), ApplicationError> {
             // 获取订单
             let order = self.order_repository.find_by_id(order_id).await?;
-            
+
             // 处理支付
             let payment_result = self.payment_gateway.process(
-                order_id, 
+                order_id,
                 order.total_amount(),
                 payment_details
             ).await?;
-            
+
             // 更新订单状态
             let updated_order = order.pay()?;
             self.order_repository.save(&updated_order).await?;
-            
+
             Ok(())
         }
-        
+
         // 更多应用服务方法...
     }
 }
@@ -1105,35 +1105,35 @@ mod application {
 mod infrastructure {
     use crate::domain::*;
     use crate::application::*;
-    
+
     // 数据库仓库实现
     pub struct PostgresOrderRepository {
         pool: PgPool,
     }
-    
+
     impl OrderRepository for PostgresOrderRepository {
         async fn find_by_id(&self, id: OrderId) -> Result<Order, RepositoryError> {
             // 实现数据库查询...
         }
-        
+
         async fn save(&self, order: &Order) -> Result<(), RepositoryError> {
             // 实现数据库保存...
         }
-        
+
         // 其他方法...
     }
-    
+
     // 更多基础设施实现...
 }
 
 // 4. 接口层
 mod interface {
     use crate::application::*;
-    
+
     pub struct OrderController {
         order_service: OrderService,
     }
-    
+
     impl OrderController {
         // REST API端点
         pub async fn create_order(&self, req: HttpRequest) -> HttpResponse {
@@ -1142,14 +1142,14 @@ mod interface {
                 Ok(req) => req,
                 Err(e) => return HttpResponse::bad_request(e),
             };
-            
+
             // 调用应用服务
             match self.order_service.create_order(order_req).await {
                 Ok(order_id) => HttpResponse::created().json(order_id),
                 Err(e) => map_error_to_response(e),
             }
         }
-        
+
         // 更多接口方法...
     }
 }
@@ -1179,28 +1179,28 @@ pub mod workflow_dsl {
         Choice(Box<dyn Fn(&T) -> bool>, Box<Activity<T, E>>, Box<Activity<T, E>>),
         Repeat(Box<dyn Fn(&T) -> bool>, Box<Activity<T, E>>),
     }
-    
+
     // 工作流构建器
     pub struct WorkflowBuilder<T, E> {
         activities: Vec<Activity<T, E>>,
     }
-    
+
     impl<T, E> WorkflowBuilder<T, E> {
         pub fn new() -> Self {
             Self { activities: Vec::new() }
         }
-        
-        pub fn task<F>(mut self, task: F) -> Self 
+
+        pub fn task<F>(mut self, task: F) -> Self
         where F: Fn(T) -> Result<T, E> + 'static {
             self.activities.push(Activity::Task(Box::new(task)));
             self
         }
-        
+
         pub fn parallel(mut self, branches: Vec<Activity<T, E>>) -> Self {
             self.activities.push(Activity::Parallel(branches));
             self
         }
-        
+
         pub fn choice<F>(mut self, condition: F, if_true: Activity<T, E>, if_false: Activity<T, E>) -> Self
         where F: Fn(&T) -> bool + 'static {
             self.activities.push(Activity::Choice(
@@ -1210,7 +1210,7 @@ pub mod workflow_dsl {
             ));
             self
         }
-        
+
         pub fn repeat<F>(mut self, condition: F, activity: Activity<T, E>) -> Self
         where F: Fn(&T) -> bool + 'static {
             self.activities.push(Activity::Repeat(
@@ -1219,7 +1219,7 @@ pub mod workflow_dsl {
             ));
             self
         }
-        
+
         pub fn build(self) -> Activity<T, E> {
             Activity::Sequence(self.activities)
         }
@@ -1229,7 +1229,7 @@ pub mod workflow_dsl {
 // 2. 工作流验证器
 pub mod workflow_validator {
     use super::workflow_dsl::*;
-    
+
     // 工作流属性
     pub enum Property<T, E> {
         Terminates,                      // 终止性：工作流最终会结束
@@ -1238,27 +1238,27 @@ pub mod workflow_validator {
         Eventually(Box<dyn Fn(&T) -> bool>),    // 最终性质：某条件最终会满足
         NoDeadlock,                      // 无死锁
     }
-    
+
     // 验证结果
     pub enum ValidationResult {
         Valid,
         Invalid(String),
         Unknown(String),
     }
-    
+
     // 验证器接口
     pub trait WorkflowValidator<T, E> {
         fn validate(&self, workflow: &Activity<T, E>, property: Property<T, E>) -> ValidationResult;
     }
-    
+
     // 模型检查验证器实现
     pub struct ModelCheckingValidator;
-    
+
     impl<T: Clone + 'static, E: 'static> WorkflowValidator<T, E> for ModelCheckingValidator {
         fn validate(&self, workflow: &Activity<T, E>, property: Property<T, E>) -> ValidationResult {
             // 构建工作流状态空间
             let state_space = build_state_space(workflow);
-            
+
             // 根据属性类型进行验证
             match property {
                 Property::Terminates => validate_termination(&state_space),
@@ -1269,46 +1269,46 @@ pub mod workflow_validator {
             }
         }
     }
-    
+
     // 状态空间构建与验证函数（实现略）
     fn build_state_space<T, E>(workflow: &Activity<T, E>) -> StateSpace<T> {
         // 实现状态空间构建...
         unimplemented!()
     }
-    
+
     fn validate_termination<T>(state_space: &StateSpace<T>) -> ValidationResult {
         // 实现终止性验证...
         unimplemented!()
     }
-    
+
     // 其他验证函数...
 }
 
 // 3. 工作流执行引擎
 pub mod workflow_engine {
     use super::workflow_dsl::*;
-    
+
     // 执行上下文
     pub struct ExecutionContext<T, E> {
         state: T,
         history: Vec<ExecutionEvent>,
         // 其他执行时信息...
     }
-    
+
     // 执行事件记录
     pub struct ExecutionEvent {
         activity_id: String,
         timestamp: std::time::Instant,
         status: ExecutionStatus,
     }
-    
+
     pub enum ExecutionStatus {
         Started, Completed, Failed(String)
     }
-    
+
     // 执行引擎
     pub struct WorkflowEngine;
-    
+
     impl WorkflowEngine {
         pub async fn execute<T: Clone, E>(
             workflow: &Activity<T, E>,
@@ -1319,10 +1319,10 @@ pub mod workflow_engine {
                 history: Vec::new(),
                 // 初始化其他字段...
             };
-            
+
             Self::execute_activity(workflow, &mut context).await
         }
-        
+
         async fn execute_activity<T: Clone, E>(
             activity: &Activity<T, E>,
             context: &mut ExecutionContext<T, E>
@@ -1335,10 +1335,10 @@ pub mod workflow_engine {
                         timestamp: std::time::Instant::now(),
                         status: ExecutionStatus::Started,
                     });
-                    
+
                     // 执行任务
                     let result = task(context.state.clone());
-                    
+
                     // 记录执行结果
                     context.history.push(ExecutionEvent {
                         activity_id: "task".into(),
@@ -1348,15 +1348,15 @@ pub mod workflow_engine {
                             Err(e) => ExecutionStatus::Failed(format!("{:?}", e)),
                         },
                     });
-                    
+
                     // 更新状态
                     if let Ok(new_state) = &result {
                         context.state = new_state.clone();
                     }
-                    
+
                     result
                 },
-                
+
                 Activity::Sequence(activities) => {
                     // 顺序执行活动
                     for act in activities {
@@ -1367,39 +1367,39 @@ pub mod workflow_engine {
                     }
                     Ok(context.state.clone())
                 },
-                
+
                 Activity::Parallel(branches) => {
                     // 创建任务
                     let mut tasks = Vec::new();
                     let state = context.state.clone();
-                    
+
                     for branch in branches {
                         let branch_clone = branch.clone();
                         let mut context_clone = context.clone();
                         context_clone.state = state.clone();
-                        
+
                         tasks.push(tokio::spawn(async move {
                             Self::execute_activity(&branch_clone, &mut context_clone).await
                         }));
                     }
-                    
+
                     // 等待所有分支完成
                     let mut results = Vec::new();
                     for task in tasks {
                         results.push(task.await.unwrap());
                     }
-                    
+
                     // 合并结果
                     for result in results {
                         if let Err(e) = result {
                             return Err(e);
                         }
                     }
-                    
+
                     // 简化实现，实际需要更复杂的状态合并逻辑
                     Ok(context.state.clone())
                 },
-                
+
                 Activity::Choice(condition, if_true, if_false) => {
                     if condition(&context.state) {
                         Self::execute_activity(if_true, context).await
@@ -1407,7 +1407,7 @@ pub mod workflow_engine {
                         Self::execute_activity(if_false, context).await
                     }
                 },
-                
+
                 Activity::Repeat(condition, activity) => {
                     while condition(&context.state) {
                         let result = Self::execute_activity(activity, context).await;
@@ -1442,19 +1442,19 @@ fn order_processing_workflow() -> Activity<OrderState, OrderError> {
 fn verify_order_workflow() {
     let workflow = order_processing_workflow();
     let validator = ModelCheckingValidator;
-    
+
     // 验证工作流终止性
     let result = validator.validate(
         &workflow,
         Property::Terminates
     );
-    
+
     // 验证工作流最终达到已完成状态
     let result = validator.validate(
         &workflow,
         Property::Eventually(Box::new(|state| state.status == OrderStatus::Completed))
     );
-    
+
     // 验证工作流保持库存一致性
     let result = validator.validate(
         &workflow,
@@ -1534,7 +1534,7 @@ PathSpaceDevelopment = {
         定义不变量: "标识类型空间的不变性质",
         指定类型边界: "定义系统边界和接口"
     },
-    
+
     // 2. 路径设计阶段
     PathDesign: {
         设计函数签名: "定义类型间的转换函数（路径）",
@@ -1542,7 +1542,7 @@ PathSpaceDevelopment = {
         设计组合模式: "定义函数组合策略（路径组合）",
         路径验证: "证明路径满足期望属性"
     },
-    
+
     // 3. 实现阶段
     Implementation: {
         类型驱动实现: "根据类型签名实现函数体",
@@ -1550,7 +1550,7 @@ PathSpaceDevelopment = {
         局部正确性: "验证每个函数满足其契约",
         组合正确性: "验证组合保持全局属性"
     },
-    
+
     // 4. 验证阶段
     Verification: {
         静态验证: "利用类型系统和静态分析",
@@ -1558,7 +1558,7 @@ PathSpaceDevelopment = {
         属性测试: "基于属性的随机测试",
         运行时断言: "动态检查关键不变量"
     },
-    
+
     // 5. 演化阶段
     Evolution: {
         类型引导重构: "通过类型系统指导重构",
@@ -1590,7 +1590,7 @@ HomopyArchitectureEvaluation = {
         抽象适当性: "抽象粒度和边界的适当性",
         类型完备性: "类型系统覆盖关键概念的完整性"
     },
-    
+
     // 路径维度评估（转换映射）
     PathDimension: {
         函数纯净度: "函数的纯净度和副作用隔离",
@@ -1598,7 +1598,7 @@ HomopyArchitectureEvaluation = {
         转换一致性: "类型转换的一致性和可预测性",
         路径清晰度: "执行路径的清晰度和可理解性"
     },
-    
+
     // 同伦维度评估（等价关系）
     HomotopyDimension: {
         重构安全性: "架构在重构下的稳定性",
@@ -1606,7 +1606,7 @@ HomopyArchitectureEvaluation = {
         变体管理: "处理系统变体的能力",
         版本兼容性: "向后兼容性管理"
     },
-    
+
     // 实用维度评估（工程实用性）
     PracticalDimension: {
         开发效率: "架构对开发效率的影响",
@@ -1650,7 +1650,7 @@ AIEnhancedFormalMethods = {
         反例生成: "自动生成反例辅助调试",
         证明自动化: "自动完成常规证明任务"
     },
-    
+
     // 机器学习型验证
     MLBasedVerification: {
         属性学习: "从代码学习隐含属性",
@@ -1658,7 +1658,7 @@ AIEnhancedFormalMethods = {
         风险预测: "预测可能的验证风险点",
         验证优先级: "智能确定验证优先级"
     },
-    
+
     // 语言模型辅助
     LLMAssistance: {
         规范生成: "从自然语言生成形式规范",
@@ -1666,7 +1666,7 @@ AIEnhancedFormalMethods = {
         解释生成: "为形式化概念生成解释",
         文档生成: "生成形式化方法的文档"
     },
-    
+
     // 形式化AI
     FormalizedAI: {
         验证神经网络: "形式化验证神经网络属性",
@@ -1697,7 +1697,7 @@ QuantumHomotopyTypeSystem = {
         量子电路: "量子操作的序列",
         量子测量: "将量子状态映射到经典结果"
     },
-    
+
     // 量子路径
     QuantumPaths: {
         幺正变换: "保持内积的量子状态转换",
@@ -1705,7 +1705,7 @@ QuantumHomotopyTypeSystem = {
         干涉路径: "路径振幅的叠加",
         纠缠路径: "不可分解的多粒子路径"
     },
-    
+
     // 量子同伦
     QuantumHomotopy: {
         电路等价: "等价的量子电路变换",
@@ -1713,7 +1713,7 @@ QuantumHomotopyTypeSystem = {
         拓扑量子计算: "基于拓扑不变量的量子计算",
         量子相变: "量子系统的相变和不变量"
     },
-    
+
     // 量子-经典交互
     QuantumClassical: {
         混合系统类型: "量子和经典组件的混合系统",
@@ -1745,7 +1745,7 @@ HyperTuringComputationTheory = {
         无限精度计算: "利用无限精度实数的计算",
         极限计算: "通过序列极限定义计算"
     },
-    
+
     // 交互式计算
     InteractiveComputation: {
         持续交互系统: "永久运行的交互式系统",
@@ -1753,7 +1753,7 @@ HyperTuringComputationTheory = {
         共同进化计算: "系统与环境共同进化",
         社会计算: "多主体交互计算系统"
     },
-    
+
     // 生物启发计算
     BiologicalComputation: {
         DNA计算: "基于DNA分子的计算",
@@ -1761,7 +1761,7 @@ HyperTuringComputationTheory = {
         进化计算: "基于进化过程的计算",
         神经形态计算: "模拟神经系统的计算"
     },
-    
+
     // 量子与超越量子
     QuantumAndBeyond: {
         量子计算: "基于量子力学的计算",
@@ -1806,7 +1806,7 @@ HomotoypyTransformationRoadmap = [
             "风险缓解策略"
         ]
     },
-    
+
     // 阶段2：试点与证明（6-12个月）
     {
         名称: "试点与证明",
@@ -1825,7 +1825,7 @@ HomotoypyTransformationRoadmap = [
             "商业价值证明"
         ]
     },
-    
+
     // 阶段3：扩展与整合（12-24个月）
     {
         名称: "扩展与整合",
@@ -1844,7 +1844,7 @@ HomotoypyTransformationRoadmap = [
             "定制化工具链"
         ]
     },
-    
+
     // 阶段4：制度化与优化（18-36个月）
     {
         名称: "制度化与优化",
@@ -1863,7 +1863,7 @@ HomotoypyTransformationRoadmap = [
             "企业同伦知识库"
         ]
     },
-    
+
     // 阶段5：创新与领导（36+个月）
     {
         名称: "创新与领导",
@@ -1905,7 +1905,7 @@ mod domain {
     // 货币类型（细化类型确保非负金额）
     #[derive(Clone, Debug, PartialEq)]
     pub struct Money(f64);
-    
+
     impl Money {
         pub fn new(amount: f64) -> Result<Self, DomainError> {
             if amount < 0.0 {
@@ -1914,22 +1914,22 @@ mod domain {
                 Ok(Money(amount))
             }
         }
-        
+
         pub fn amount(&self) -> f64 {
             self.0
         }
-        
+
         // 加法运算（保证类型安全）
         pub fn add(&self, other: &Money) -> Money {
             Money(self.0 + other.0)
         }
-        
+
         // 乘法运算（保证类型安全）
         pub fn multiply(&self, factor: f64) -> Result<Money, DomainError> {
             Self::new(self.0 * factor)
         }
     }
-    
+
     // 账户类型（代数数据类型表示不同账户状态）
     #[derive(Clone, Debug)]
     pub enum AccountStatus {
@@ -1937,7 +1937,7 @@ mod domain {
         Frozen { reason: String },
         Closed { closed_date: chrono::DateTime<chrono::Utc> }
     }
-    
+
     #[derive(Clone, Debug)]
     pub struct Account {
         id: String,
@@ -1946,7 +1946,7 @@ mod domain {
         status: AccountStatus,
         transaction_history: Vec<Transaction>,
     }
-    
+
     impl Account {
         // 创建账户（确保初始状态有效）
         pub fn new(id: String, holder: String, initial_balance: Money) -> Self {
@@ -1958,7 +1958,7 @@ mod domain {
                 transaction_history: Vec::new(),
             }
         }
-        
+
         // 存款操作（状态验证与类型安全）
         pub fn deposit(&mut self, amount: Money) -> Result<(), DomainError> {
             match self.status {
@@ -1970,7 +1970,7 @@ mod domain {
                         None,
                         Some(self.id.clone())
                     );
-                    
+
                     // 更新余额
                     self.balance = self.balance.add(&amount);
                     self.transaction_history.push(transaction);
@@ -1984,7 +1984,7 @@ mod domain {
                 }
             }
         }
-        
+
         // 取款操作（状态验证、类型安全与业务规则）
         pub fn withdraw(&mut self, amount: Money) -> Result<Money, DomainError> {
             match self.status {
@@ -1993,7 +1993,7 @@ mod domain {
                     if self.balance.amount() < amount.amount() {
                         return Err(DomainError::InsufficientFunds);
                     }
-                    
+
                     // 记录交易
                     let transaction = Transaction::new(
                         TransactionType::Withdrawal,
@@ -2001,7 +2001,7 @@ mod domain {
                         Some(self.id.clone()),
                         None
                     );
-                    
+
                     // 更新余额（安全减法）
                     self.balance = Money::new(self.balance.amount() - amount.amount())?;
                     self.transaction_history.push(transaction);
@@ -2015,7 +2015,7 @@ mod domain {
                 }
             }
         }
-        
+
         // 转账操作（复合操作保持不变量）
         pub fn transfer(&mut self, target: &mut Account, amount: Money) -> Result<(), DomainError> {
             // 验证源账户状态
@@ -2028,7 +2028,7 @@ mod domain {
                     return Err(DomainError::AccountClosed(closed_date));
                 }
             }
-            
+
             // 验证目标账户状态
             match target.status {
                 AccountStatus::Active => {},
@@ -2039,12 +2039,12 @@ mod domain {
                     return Err(DomainError::TargetAccountClosed(closed_date));
                 }
             }
-            
+
             // 验证余额充足
             if self.balance.amount() < amount.amount() {
                 return Err(DomainError::InsufficientFunds);
             }
-            
+
             // 创建转账交易
             let transaction = Transaction::new(
                 TransactionType::Transfer,
@@ -2052,19 +2052,19 @@ mod domain {
                 Some(self.id.clone()),
                 Some(target.id.clone())
             );
-            
+
             // 原子性更新两个账户（保证一致性）
             self.balance = Money::new(self.balance.amount() - amount.amount())?;
             target.balance = target.balance.add(&amount);
-            
+
             // 记录交易历史
             self.transaction_history.push(transaction.clone());
             target.transaction_history.push(transaction);
-            
+
             Ok(())
         }
     }
-    
+
     // 交易类型和记录
     #[derive(Clone, Debug)]
     pub enum TransactionType {
@@ -2074,7 +2074,7 @@ mod domain {
         Interest,
         Fee
     }
-    
+
     #[derive(Clone, Debug)]
     pub struct Transaction {
         id: uuid::Uuid,
@@ -2084,7 +2084,7 @@ mod domain {
         target_account: Option<String>,
         timestamp: chrono::DateTime<chrono::Utc>,
     }
-    
+
     impl Transaction {
         pub fn new(
             transaction_type: TransactionType,
@@ -2102,7 +2102,7 @@ mod domain {
             }
         }
     }
-    
+
     // 领域错误类型
     #[derive(Debug)]
     pub enum DomainError {
@@ -2120,13 +2120,13 @@ mod domain {
 // 2. 应用服务层（业务逻辑与事务管理）
 mod application {
     use super::domain::*;
-    
+
     pub struct AccountService {
         account_repository: Box<dyn AccountRepository>,
         transaction_log: Box<dyn TransactionLog>,
         // 其他依赖...
     }
-    
+
     impl AccountService {
         // 开户操作
         pub async fn open_account(
@@ -2137,22 +2137,22 @@ mod application {
             // 验证参数
             let initial_amount = Money::new(initial_deposit)
                 .map_err(|e| ApplicationError::DomainError(e))?;
-            
+
             // 生成账户ID
             let account_id = self.account_repository.next_id().await?;
-            
+
             // 创建账户
             let account = Account::new(account_id.clone(), holder, initial_amount);
-            
+
             // 持久化账户
             self.account_repository.save(&account).await?;
-            
+
             // 记录审计日志
             self.transaction_log.log_account_creation(&account).await?;
-            
+
             Ok(account_id)
         }
-        
+
         // 转账操作（事务管理）
         pub async fn transfer(
             &self,
@@ -2163,41 +2163,41 @@ mod application {
             // 验证金额
             let transfer_amount = Money::new(amount)
                 .map_err(|e| ApplicationError::DomainError(e))?;
-            
+
             // 开始数据库事务
             let mut transaction = self.account_repository.begin_transaction().await?;
-            
+
             // 读取账户（带锁）
             let mut source_account = self.account_repository
                 .find_by_id_for_update(&source_id, &mut transaction).await?;
-                
+
             let mut target_account = self.account_repository
                 .find_by_id_for_update(&target_id, &mut transaction).await?;
-            
+
             // 执行转账
             source_account.transfer(&mut target_account, transfer_amount)
                 .map_err(|e| ApplicationError::DomainError(e))?;
-            
+
             // 保存更新后的账户
             self.account_repository.save_in_transaction(&source_account, &mut transaction).await?;
             self.account_repository.save_in_transaction(&target_account, &mut transaction).await?;
-            
+
             // 提交事务
             transaction.commit().await?;
-            
+
             // 记录审计日志
             self.transaction_log.log_transfer(
-                &source_id, 
-                &target_id, 
+                &source_id,
+                &target_id,
                 &transfer_amount
             ).await?;
-            
+
             Ok(())
         }
-        
+
         // 其他应用服务方法...
     }
-    
+
     // 应用服务错误类型
     #[derive(Debug)]
     pub enum ApplicationError {
@@ -2207,43 +2207,43 @@ mod application {
         ConcurrencyError,
         // 其他应用错误...
     }
-    
+
     // 仓储和日志接口
     pub trait AccountRepository {
         async fn next_id(&self) -> Result<String, RepositoryError>;
         async fn find_by_id(&self, id: &str) -> Result<Account, RepositoryError>;
-        async fn find_by_id_for_update(&self, id: &str, tx: &mut Transaction) 
+        async fn find_by_id_for_update(&self, id: &str, tx: &mut Transaction)
             -> Result<Account, RepositoryError>;
         async fn save(&self, account: &Account) -> Result<(), RepositoryError>;
-        async fn save_in_transaction(&self, account: &Account, tx: &mut Transaction) 
+        async fn save_in_transaction(&self, account: &Account, tx: &mut Transaction)
             -> Result<(), RepositoryError>;
         async fn begin_transaction(&self) -> Result<Transaction, RepositoryError>;
     }
-    
+
     pub trait TransactionLog {
         async fn log_account_creation(&self, account: &Account) -> Result<(), LogError>;
-        async fn log_transfer(&self, source_id: &str, target_id: &str, amount: &Money) 
+        async fn log_transfer(&self, source_id: &str, target_id: &str, amount: &Money)
             -> Result<(), LogError>;
         // 其他日志方法...
     }
-    
+
     // 事务和错误类型
     pub struct Transaction {
         // 事务实现细节...
     }
-    
+
     impl Transaction {
         pub async fn commit(self) -> Result<(), RepositoryError> {
             // 提交事务实现...
             Ok(())
         }
-        
+
         pub async fn rollback(self) -> Result<(), RepositoryError> {
             // 回滚事务实现...
             Ok(())
         }
     }
-    
+
     #[derive(Debug)]
     pub enum RepositoryError {
         NotFound,
@@ -2251,7 +2251,7 @@ mod application {
         ConnectionError,
         // 其他仓储错误...
     }
-    
+
     #[derive(Debug)]
     pub enum LogError {
         LoggingFailure,
@@ -2262,21 +2262,21 @@ mod application {
 // 3. 验证与属性
 mod verification {
     use super::domain::*;
-    
+
     // 系统不变量规范
     pub struct SystemInvariants;
-    
+
     impl SystemInvariants {
         // 账户余额非负性
         pub fn verify_non_negative_balance(account: &Account) -> bool {
             account.balance().amount() >= 0.0
         }
-        
+
         // 交易历史记录完整性
         pub fn verify_transaction_history_integrity(account: &Account) -> bool {
             // 验证所有交易历史记录的总和等于当前余额
             let initial_balance = Money::new(0.0).unwrap();
-            
+
             let calculated_balance = account.transaction_history()
                 .iter()
                 .fold(initial_balance, |acc, tx| {
@@ -2291,48 +2291,48 @@ mod verification {
                                 acc
                             }
                         },
-                        TransactionType::Withdrawal => 
+                        TransactionType::Withdrawal =>
                             Money::new(acc.amount() - tx.amount().amount()).unwrap(),
                         TransactionType::Interest => acc.add(&tx.amount()),
-                        TransactionType::Fee => 
+                        TransactionType::Fee =>
                             Money::new(acc.amount() - tx.amount().amount()).unwrap(),
                     }
                 });
-            
+
             calculated_balance == account.balance()
         }
-        
+
         // 系统总资金守恒（每笔交易前后总额不变）
         pub fn verify_money_conservation(
-            accounts_before: &[Account], 
+            accounts_before: &[Account],
             accounts_after: &[Account]
         ) -> bool {
             let total_before: f64 = accounts_before
                 .iter()
                 .map(|acc| acc.balance().amount())
                 .sum();
-                
+
             let total_after: f64 = accounts_after
                 .iter()
                 .map(|acc| acc.balance().amount())
                 .sum();
-                
+
             (total_before - total_after).abs() < 0.0001  // 允许浮点误差
         }
     }
-    
+
     // 形式化属性（使用trait定义）
     pub trait VerifiableAccount {
         fn verify_deposit_increases_balance(&self, amount: Money) -> bool;
         fn verify_withdrawal_decreases_balance(&self, amount: Money) -> bool;
         fn verify_transfer_preserves_total(&self, target: &Account, amount: Money) -> bool;
     }
-    
+
     impl VerifiableAccount for Account {
         fn verify_deposit_increases_balance(&self, amount: Money) -> bool {
             let initial_balance = self.balance().amount();
             let mut account_copy = self.clone();
-            
+
             if let Ok(()) = account_copy.deposit(amount.clone()) {
                 let new_balance = account_copy.balance().amount();
                 (new_balance - initial_balance - amount.amount()).abs() < 0.0001
@@ -2340,11 +2340,11 @@ mod verification {
                 false
             }
         }
-        
+
         fn verify_withdrawal_decreases_balance(&self, amount: Money) -> bool {
             let initial_balance = self.balance().amount();
             let mut account_copy = self.clone();
-            
+
             if let Ok(_) = account_copy.withdraw(amount.clone()) {
                 let new_balance = account_copy.balance().amount();
                 (initial_balance - new_balance - amount.amount()).abs() < 0.0001
@@ -2352,89 +2352,89 @@ mod verification {
                 false
             }
         }
-        
+
         fn verify_transfer_preserves_total(&self, target: &Account, amount: Money) -> bool {
             let source_initial = self.balance().amount();
             let target_initial = target.balance().amount();
             let total_initial = source_initial + target_initial;
-            
+
             let mut source_copy = self.clone();
             let mut target_copy = target.clone();
-            
+
             if let Ok(()) = source_copy.transfer(&mut target_copy, amount) {
                 let source_final = source_copy.balance().amount();
                 let target_final = target_copy.balance().amount();
                 let total_final = source_final + target_final;
-                
+
                 (total_initial - total_final).abs() < 0.0001
             } else {
                 false
             }
         }
     }
-    
+
     // 属性测试
     #[cfg(test)]
     mod property_tests {
         use super::*;
         use proptest::prelude::*;
-        
+
         proptest! {
             // 测试任意有效存款都增加余额
             #[test]
             fn deposit_increases_balance(initial_amount in 0.0..10000.0, deposit_amount in 0.0..5000.0) {
                 let initial = Money::new(initial_amount).unwrap();
                 let deposit = Money::new(deposit_amount).unwrap();
-                
+
                 let account = Account::new(
-                    "test-123".to_string(), 
-                    "Test User".to_string(), 
+                    "test-123".to_string(),
+                    "Test User".to_string(),
                     initial
                 );
-                
+
                 assert!(account.verify_deposit_increases_balance(deposit));
             }
-            
+
             // 测试任意有效取款都减少余额
             #[test]
             fn withdrawal_decreases_balance(initial_amount in 0.0..10000.0, withdrawal_amount in 0.0..5000.0) {
                 let initial = Money::new(initial_amount).unwrap();
                 let withdrawal = Money::new(withdrawal_amount).unwrap();
-                
+
                 let account = Account::new(
-                    "test-123".to_string(), 
-                    "Test User".to_string(), 
+                    "test-123".to_string(),
+                    "Test User".to_string(),
                     initial
                 );
-                
+
                 if initial_amount >= withdrawal_amount {
                     assert!(account.verify_withdrawal_decreases_balance(withdrawal));
                 }
             }
-            
+
             // 测试任意有效转账保持总额不变
             #[test]
             fn transfer_preserves_total(
-                source_amount in 0.0..10000.0, 
-                target_amount in 0.0..10000.0, 
+                source_amount in 0.0..10000.0,
+                target_amount in 0.0..10000.0,
                 transfer_amount in 0.0..5000.0
             ) {
                 let source_initial = Money::new(source_amount).unwrap();
                 let target_initial = Money::new(target_amount).unwrap();
                 let transfer = Money::new(transfer_amount).unwrap();
-                
+
                 let source = Account::new(
-                    "source-123".to_string(), 
-                    "Source User".to_string(), 
+                    "source-123".to_string(),
+                    "Source User".to_string(),
                     source_initial
                 );
-                
+
                 let target = Account::new(
-                    "target-456".to_string(), 
-                    "Target User".to_string(), 
+                    "target-456".to_string(),
+                    "Target User".to_string(),
                     target_initial
                 );
-                
+
                 if source_amount >= transfer_amount {
                     assert!(source.verify_transfer_preserves_total(&target, transfer));
                 }
@@ -2447,14 +2447,14 @@ mod verification {
 mod workflows {
     use super::domain::*;
     use super::application::*;
-    
+
     // 开户工作流
     pub struct AccountOpeningWorkflow {
         account_service: AccountService,
         kyc_service: KYCService,
         notification_service: NotificationService,
     }
-    
+
     impl AccountOpeningWorkflow {
         pub async fn execute(
             &self,
@@ -2463,23 +2463,23 @@ mod workflows {
         ) -> Result<AccountOpeningResult, WorkflowError> {
             // 1. KYC检查
             let kyc_result = self.kyc_service.verify_customer(&customer_details).await?;
-            
+
             if !kyc_result.is_approved() {
                 return Err(WorkflowError::KYCRejection(kyc_result.reason()));
             }
-            
+
             // 2. 创建账户
             let account_id = self.account_service.open_account(
                 customer_details.name().to_string(),
                 initial_deposit
             ).await?;
-            
+
             // 3. 发送通知
             self.notification_service.send_welcome_message(
                 &customer_details.email(),
                 &account_id
             ).await?;
-            
+
             // 4. 返回结果
             Ok(AccountOpeningResult {
                 account_id,
@@ -2488,16 +2488,16 @@ mod workflows {
             })
         }
     }
-    
+
     // 支持服务接口
     pub trait KYCService {
         async fn verify_customer(&self, details: &CustomerDetails) -> Result<KYCResult, ServiceError>;
     }
-    
+
     pub trait NotificationService {
         async fn send_welcome_message(&self, email: &str, account_id: &str) -> Result<(), ServiceError>;
     }
-    
+
     // 数据结构
     pub struct CustomerDetails {
         name: String,
@@ -2506,37 +2506,37 @@ mod workflows {
         identification: String,
         // 其他KYC信息...
     }
-    
+
     impl CustomerDetails {
         pub fn name(&self) -> &str { &self.name }
         pub fn email(&self) -> &str { &self.email }
         // 其他访问器...
     }
-    
+
     pub struct KYCResult {
         approved: bool,
         reason: Option<String>,
         risk_score: u32,
     }
-    
+
     impl KYCResult {
         pub fn is_approved(&self) -> bool { self.approved }
         pub fn reason(&self) -> String { self.reason.clone().unwrap_or_default() }
         // 其他访问器...
     }
-    
+
     pub struct AccountOpeningResult {
         account_id: String,
         opening_date: chrono::DateTime<chrono::Utc>,
         status: AccountOpeningStatus,
     }
-    
+
     pub enum AccountOpeningStatus {
         Success,
         Failed(String),
         Pending(String),
     }
-    
+
     // 错误类型
     #[derive(Debug)]
     pub enum WorkflowError {
@@ -2544,7 +2544,7 @@ mod workflows {
         ServiceError(ServiceError),
         ApplicationError(ApplicationError),
     }
-    
+
     #[derive(Debug)]
     pub enum ServiceError {
         ExternalServiceUnavailable,
@@ -2592,7 +2592,7 @@ LearningPathways = {
             "B站Rust编程视频"
         ]
     },
-    
+
     // 中级路径
     Intermediate: {
         概念理解: [
@@ -2616,7 +2616,7 @@ LearningPathways = {
             "《Rust设计模式》中文版"
         ]
     },
-    
+
     // 高级路径
     Advanced: {
         概念理解: [
@@ -2652,7 +2652,7 @@ CommunityResources = {
         "验证模式库",
         "同伦类型实现"
     ],
-    
+
     // 学习社区
     LearningCommunities: [
         "同伦学习小组WeChat群",
@@ -2661,7 +2661,7 @@ CommunityResources = {
         "类型理论学习QQ群",
         "知乎同伦类型理论专栏"
     ],
-    
+
     // 定期活动
     RegularEvents: [
         "每月同伦类型理论线上讲座",
@@ -2682,7 +2682,7 @@ TeachingMethods = {
         "同伦概念动画",
         "协作证明开发"
     ],
-    
+
     // 项目驱动
     ProjectDriven: [
         "验证小型系统",
@@ -2691,7 +2691,7 @@ TeachingMethods = {
         "形式化规范编写",
         "属性测试开发"
     ],
-    
+
     // 案例研究
     CaseStudies: [
         "金融系统验证",
@@ -2710,78 +2710,78 @@ TeachingMethods = {
 通过同伦类型论视角看待软件工程、Rust和工作流系统的核心洞见：
 
 1. **类型即空间**：类型不仅是数据容器，还是具有拓扑结构的空间，使我们能用空间直觉思考软件
-   - *示例*：Rust的借用系统形成了资源使用的路径空间，确保安全访问
+   - _示例_：Rust的借用系统形成了资源使用的路径空间，确保安全访问
 
 2. **函数即路径**：函数是类型空间之间的路径，代码结构形成了连接这些空间的路径网络
-   - *示例*：Rust中的转换函数构成了数据转换的安全路径
+   - _示例_：Rust中的转换函数构成了数据转换的安全路径
 
 3. **等价即证明**：等价关系（同伦）是软件系统正确性的基础，形式化方法提供了证明手段
-   - *示例*：工作流的正确转换需要保持关键不变量，这是同伦关系的体现
+   - _示例_：工作流的正确转换需要保持关键不变量，这是同伦关系的体现
 
 4. **不变量即拓扑**：系统的关键不变量构成了软件"拓扑"结构，重构必须保持这些不变量
-   - *示例*：工作流系统必须保持事务完整性，无论如何演化
+   - _示例_：工作流系统必须保持事务完整性，无论如何演化
 
 5. **组合即高阶结构**：模块、组件、服务的组合遵循高阶空间的结构规律
-   - *示例*：Rust的特质系统提供了类型安全的组合机制
+   - _示例_：Rust的特质系统提供了类型安全的组合机制
 
 6. **验证即导航**：形式化验证是在类型空间中找到有效路径的过程
-   - *示例*：Rust的类型检查确保程序遵循资源生命周期的安全路径
+   - _示例_：Rust的类型检查确保程序遵循资源生命周期的安全路径
 
 7. **演化即同伦变换**：软件演化是保持核心属性的同伦变换
-   - *示例*：工作流升级必须保持业务不变量，这是同伦演化的实例
+   - _示例_：工作流升级必须保持业务不变量，这是同伦演化的实例
 
 ### 113.2 未解决的挑战
 
 尽管同伦类型论为软件工程提供了强大框架，但仍存在重要挑战：
 
 1. **可用性挑战**：形式化方法的学习曲线仍然陡峭
-   - *潜在解决方向*：开发更直观的可视化工具和交互式学习材料
+   - _潜在解决方向_：开发更直观的可视化工具和交互式学习材料
 
 2. **扩展性挑战**：形式化方法在大型系统中的应用仍有局限
-   - *潜在解决方向*：开发模块化验证技术和增量验证方法
+   - _潜在解决方向_：开发模块化验证技术和增量验证方法
 
 3. **工具成熟度**：支持工具仍不够成熟和集成
-   - *潜在解决方向*：投资开发集成IDE的验证工具和自动化证明助手
+   - _潜在解决方向_：投资开发集成IDE的验证工具和自动化证明助手
 
 4. **性能权衡**：类型安全和验证有时带来性能开销
-   - *潜在解决方向*：研究更高效的类型擦除和验证时优化
+   - _潜在解决方向_：研究更高效的类型擦除和验证时优化
 
 5. **工程文化**：形式化方法需要工程文化转变
-   - *潜在解决方向*：强调渐进式采用和混合方法
+   - _潜在解决方向_：强调渐进式采用和混合方法
 
 ### 113.3 未来研究方向
 
 同伦类型论与软件工程、Rust和工作流系统融合的重要研究方向：
 
 1. **可用性研究**：使形式化方法更易于普通开发者使用
-   - *具体方向*：开发直觉性形式化工具和可视化证明助手
+   - _具体方向_：开发直觉性形式化工具和可视化证明助手
 
 2. **自动化证明**：减少手动证明的负担
-   - *具体方向*：将AI与证明助手结合，自动生成和验证常见证明
+   - _具体方向_：将AI与证明助手结合，自动生成和验证常见证明
 
 3. **渐进式形式化**：允许部分系统采用形式化方法
-   - *具体方向*：开发支持不同验证级别的混合系统架构
+   - _具体方向_：开发支持不同验证级别的混合系统架构
 
 4. **领域特定验证**：为特定领域开发专用验证框架
-   - *具体方向*：金融领域的交易正确性、医疗系统的安全性验证框架
+   - _具体方向_：金融领域的交易正确性、医疗系统的安全性验证框架
 
 5. **分布式系统验证**：扩展同伦框架到分布式环境
-   - *具体方向*：利用高阶类型表达和验证分布式系统一致性属性
+   - _具体方向_：利用高阶类型表达和验证分布式系统一致性属性
 
 6. **量子计算准备**：研究同伦类型论在量子计算中的应用
-   - *具体方向*：为量子算法开发特化的类型系统和验证方法
+   - _具体方向_：为量子算法开发特化的类型系统和验证方法
 
 7. **形式化工作流DSL**：开发专用于工作流的形式化语言
-   - *具体方向*：结合线性类型和过程代数的工作流描述语言
+   - _具体方向_：结合线性类型和过程代数的工作流描述语言
 
 8. **编译期验证**：将更多验证移至编译期
-   - *具体方向*：扩展Rust编译器以支持更高级的不变量验证
+   - _具体方向_：扩展Rust编译器以支持更高级的不变量验证
 
 9. **跨语言形式化接口**：定义语言间的形式化交互规范
-   - *具体方向*：开发保证不同语言间安全交互的类型系统扩展
+   - _具体方向_：开发保证不同语言间安全交互的类型系统扩展
 
 10. **同伦优化**：利用同伦结构指导程序优化
-    - *具体方向*：基于类型信息的自动并行化和计算重排
+    - _具体方向_：基于类型信息的自动并行化和计算重排
 
 ### 113.4 最终思考：桥接理论与实践
 
@@ -2797,7 +2797,7 @@ TheoryPracticeBridge = {
         "指导系统设计",
         "建立形式基础"
     ],
-    
+
     实践丰富理论: [
         "验证理论假设",
         "提出实际问题",
@@ -2805,7 +2805,7 @@ TheoryPracticeBridge = {
         "促进理论调整",
         "创造新研究方向"
     ],
-    
+
     持续循环: {
         观察: "识别软件工程中的模式和挑战",
         建模: "利用理论构建形式模型",

@@ -516,25 +516,25 @@ Kubernetes控制器可以形式化为观察-比较-行动循环的状态机：
 //     image: String,
 //     command: Option<Vec<String>>,
 // }
-// 
+//
 // #[derive(Serialize, Deserialize, Clone, Debug, JsonSchema)]
 // struct MyAppStatus {
 //     ready_replicas: i32,
 //     phase: String,
 // }
-// 
+//
 // impl MyApp {
 //     // 调谐函数 - 控制器的核心逻辑
 //     async fn reconcile(app: Arc<MyApp>, ctx: Arc<Context>) -> Result<Action, Error> {
 //         let ns = app.namespace().unwrap();
 //         let app_name = app.name_any();
-//         
+//
 //         // 1. 检查关联的Deployment是否存在
 //         let client = ctx.client.clone();
 //         let deployments: Api<Deployment> = Api::namespaced(client.clone(), &ns);
-//         
+//
 //         let labels = BTreeMap::from([("app", app_name.as_str())]);
-//         
+//
 //         match deployments.get(&app_name).await {
 //             Ok(deploy) => {
 //                 // 已存在，检查是否需要更新
@@ -559,29 +559,29 @@ Kubernetes控制器可以形式化为观察-比较-行动循环的状态机：
 //                 deployments.create(&PostParams::default(), &deploy).await?;
 //             }
 //         }
-//         
+//
 //         // 2. 更新状态
 //         let mut app_status = app.status.clone().unwrap_or(MyAppStatus {
 //             ready_replicas: 0,
 //             phase: "Pending".into(),
 //         });
-//         
+//
 //         // 查询实际ready的pod数量
 //         let pods: Api<Pod> = Api::namespaced(client, &ns);
 //         let pod_list = pods.list(&ListParams::default()
 //             .labels(&format!("app={}", app_name))).await?;
-//             
+//
 //         let ready_pods = pod_list.items.iter()
 //             .filter(|pod| is_pod_ready(pod))
 //             .count() as i32;
-//             
+//
 //         app_status.ready_replicas = ready_pods;
 //         app_status.phase = if ready_pods == app.spec.replicas {
 //             "Running".into()
 //         } else {
 //             "Pending".into()
 //         };
-//         
+//
 //         // 更新CR状态
 //         let apps: Api<MyApp> = Api::namespaced(ctx.client.clone(), &ns);
 //         let status_patch = json!({ "status": app_status });
@@ -590,7 +590,7 @@ Kubernetes控制器可以形式化为观察-比较-行动循环的状态机：
 //             &PatchParams::default(),
 //             &Patch::Merge(status_patch),
 //         ).await?;
-//         
+//
 //         // 设置下一次调谐时间
 //         Ok(Action::requeue(Duration::from_secs(300)))
 //     }
@@ -718,7 +718,7 @@ Kubernetes控制器可以形式化为观察-比较-行动循环的状态机：
 ### 12.2 跨层设计原则的形式化表达
 
 ```math
-层间通信原则: ∀s∈System, ∀t∈System, L(s)>L(t) ⟹ 
+层间通信原则: ∀s∈System, ∀t∈System, L(s)>L(t) ⟹
   (s可通过接口I与t通信) ∧ (t不能依赖s的实现细节)
 
 单一责任原则: ∀c∈Component, |{r | r∈Responsibility, responsible(c,r)}| = 1
@@ -739,8 +739,8 @@ Kubernetes控制器可以形式化为观察-比较-行动循环的状态机：
 使用Docker和Kubernetes的形式模型，可以定义微服务部署规则：
 
 ```math
-部署约束: ∀s∈Service, ∀n∈Node, deploy(s,n) ⟹ 
-  resources(n) ≥ requirements(s) ∧ 
+部署约束: ∀s∈Service, ∀n∈Node, deploy(s,n) ⟹
+  resources(n) ≥ requirements(s) ∧
   affinity_rules(s,n) = true
 ```
 
@@ -876,7 +876,7 @@ EXTENDS Naturals, FiniteSets, Sequences, TLC
 
 CONSTANTS Nodes, MaxReplicaCount
 
-VARIABLES 
+VARIABLES
   nodeState,     \* 每个节点的当前状态
   etcdLog,       \* 共识日志
   currentTerm,   \* 当前任期
@@ -1018,7 +1018,7 @@ Rust的类型系统可用于形式化容器配置验证：
 //         if !self.image.contains('/') && !self.image.contains(':') {
 //             return Err(ValidationError::new("Image must include registry or tag"));
 //         }
-//         
+//
 //         // 验证端口映射
 //         for port in &self.ports {
 //             if port.host_port < 1024 && !self.security_context.privileged {
@@ -1027,7 +1027,7 @@ Rust的类型系统可用于形式化容器配置验证：
 //                 ));
 //             }
 //         }
-//         
+//
 //         // 验证资源请求与限制关系
 //         if let Some(limits) = &self.resource_limits {
 //             if limits.memory_limit < limits.memory_request {
@@ -1036,7 +1036,7 @@ Rust的类型系统可用于形式化容器配置验证：
 //                 ));
 //             }
 //         }
-//         
+//
 //         Ok(())
 //     }
 // }
@@ -1076,7 +1076,7 @@ Rust的类型系统可用于形式化容器配置验证：
 //     fn transition(&mut self, cmd: ContainerCommand) -> Result<(), StateError> {
 //         use ContainerState::*;
 //         use ContainerCommand::*;
-//         
+//
 //         self.state = match (&self.state, cmd) {
 //             (Created, Start) => Running,
 //             (Running, Pause) => Paused,
@@ -1088,15 +1088,15 @@ Rust的类型系统可用于形式化容器配置验证：
 //                 format!("Invalid transition: {:?} -> {:?}", s, c)
 //             )),
 //         };
-//         
+//
 //         // 记录退出时间
 //         if matches!(self.state, Exited(_)) {
 //             self.exit_time = Some(Utc::now());
 //         }
-//         
+//
 //         Ok(())
 //     }
-//     
+//
 //     // 验证状态机不变量
 //     fn validate(&self) -> bool {
 //         match &self.state {

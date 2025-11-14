@@ -112,21 +112,21 @@ S = (P, C, M)
 以Paxos算法为例，其可通过状态转换系统形式化:
 
 ```math
-Proposer(p, v) := 
+Proposer(p, v) :=
   send Prepare(p) to Acceptors →
   receive Promise(p, v_old?) from majority →
   send Accept(p, v' ∈ {v, v_old}) to Acceptors →
   receive Accepted(p) from majority →
   Decided(v')
 
-Acceptor := 
+Acceptor :=
   receive Prepare(p) →
-  if p > p_max then 
-    p_max := p; 
+  if p > p_max then
+    p_max := p;
     send Promise(p, v_last?) →
     receive Accept(p, v) →
-    if p ≥ p_max then 
-      v_last := v; 
+    if p ≥ p_max then
+      v_last := v;
       send Accepted(p)
 ```
 
@@ -179,7 +179,7 @@ R_system = 1 - ∏_{i=1}^k (1 - R_i)
   - 哈希分区: hash(key) mod n
   - 一致性哈希: 减少重平衡影响
   - 地理分区: 基于物理位置
-  
+
 **复制模式**:
 
 - 主从复制 (Master-Slave)

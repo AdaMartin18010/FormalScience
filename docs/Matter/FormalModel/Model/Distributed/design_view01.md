@@ -2,24 +2,26 @@
 
 ## 📋 目录
 
-- [1 分布式系统设计](#1-分布式系统设计)
-  - [1.1 综合应用01-简单的示例应用，展示如何使用所有这些组件](#11-综合应用01-简单的示例应用展示如何使用所有这些组件)
-  - [1.2 综合应用02-分布式事务协调器](#12-综合应用02-分布式事务协调器)
-  - [1.3 综合应用03-Redis实现的延迟任务存储](#13-综合应用03-redis实现的延迟任务存储)
-  - [1.4 综合应用04-分布式数据库系统](#14-综合应用04-分布式数据库系统)
-  - [1.5 综合应用05-分布式日志系统](#15-综合应用05-分布式日志系统)
-  - [1.6 综合应用06-分布式搜索引擎](#16-综合应用06-分布式搜索引擎)
-  - [1.7 综合应用07-分布式时序数据库](#17-综合应用07-分布式时序数据库)
-  - [1.8 综合应用08-分布式图数据库](#18-综合应用08-分布式图数据库)
-  - [1.9 综合应用09-分布式锁服务](#19-综合应用09-分布式锁服务)
-  - [1.10 综合应用10-分布式配置服务](#110-综合应用10-分布式配置服务)
-  - [1.11 综合应用11-分布式消息队列](#111-综合应用11-分布式消息队列)
-  - [1.12 综合应用12-分布式共识引擎](#112-综合应用12-分布式共识引擎)
-  - [1.13 综合应用13-分布式数据库系统](#113-综合应用13-分布式数据库系统)
-  - [1.14 综合应用14-分布式搜索引擎](#114-综合应用14-分布式搜索引擎)
-  - [1.15 综合应用15-分布式监控系统](#115-综合应用15-分布式监控系统)
-  - [1.16 综合应用16-分布式任务调度系统](#116-综合应用16-分布式任务调度系统)
-  - [1.17 综合应用17-分布式流处理系统](#117-综合应用17-分布式流处理系统)
+- [综合应用](#综合应用)
+  - [📋 目录](#-目录)
+  - [1 分布式系统设计](#1-分布式系统设计)
+    - [1.1 综合应用01-简单的示例应用，展示如何使用所有这些组件](#11-综合应用01-简单的示例应用展示如何使用所有这些组件)
+    - [1.2 综合应用02-分布式事务协调器](#12-综合应用02-分布式事务协调器)
+    - [1.3 综合应用03-Redis实现的延迟任务存储](#13-综合应用03-redis实现的延迟任务存储)
+    - [1.4 综合应用04-分布式数据库系统](#14-综合应用04-分布式数据库系统)
+    - [1.5 综合应用05-分布式日志系统](#15-综合应用05-分布式日志系统)
+    - [1.6 综合应用06-分布式搜索引擎](#16-综合应用06-分布式搜索引擎)
+    - [1.7 综合应用07-分布式时序数据库](#17-综合应用07-分布式时序数据库)
+    - [1.8 综合应用08-分布式图数据库](#18-综合应用08-分布式图数据库)
+    - [1.9 综合应用09-分布式锁服务](#19-综合应用09-分布式锁服务)
+    - [1.10 综合应用10-分布式配置服务](#110-综合应用10-分布式配置服务)
+    - [1.11 综合应用11-分布式消息队列](#111-综合应用11-分布式消息队列)
+    - [1.12 综合应用12-分布式共识引擎](#112-综合应用12-分布式共识引擎)
+    - [1.13 综合应用13-分布式数据库系统](#113-综合应用13-分布式数据库系统)
+    - [1.14 综合应用14-分布式搜索引擎](#114-综合应用14-分布式搜索引擎)
+    - [1.15 综合应用15-分布式监控系统](#115-综合应用15-分布式监控系统)
+    - [1.16 综合应用16-分布式任务调度系统](#116-综合应用16-分布式任务调度系统)
+    - [1.17 综合应用17-分布式流处理系统](#117-综合应用17-分布式流处理系统)
 
 ---
 
@@ -73,17 +75,17 @@ impl UserRepository {
             metrics_registry,
         }
     }
-    
+
     fn find_by_id(&self, id: &str) -> Result<Option<User>, String> {
         // 创建度量
         let timer = self.metrics_registry.timer(
             "repository.user.find_by_id",
             "查找用户通过ID的时间",
         );
-        
+
         // 开始计时
         let timer_id = timer.start();
-        
+
         // 模拟数据库调用
         let result = self.db_connection.execute_query(&format!("SELECT * FROM users WHERE id = '{}'", id))
             .map(|rows| {
@@ -101,34 +103,34 @@ impl UserRepository {
                     })
                 }
             });
-        
+
         // 停止计时
         timer.stop(&timer_id);
-        
+
         result
     }
-    
+
     fn save(&self, user: &User) -> Result<(), String> {
         // 创建度量
         let timer = self.metrics_registry.timer(
             "repository.user.save",
             "保存用户的时间",
         );
-        
+
         // 开始计时
         let timer_id = timer.start();
-        
+
         // 模拟保存用户
         let query = format!(
             "INSERT INTO users (id, username, email, created_at, updated_at) VALUES ('{}', '{}', '{}', NOW(), NOW()) ON DUPLICATE KEY UPDATE username = '{}', email = '{}', updated_at = NOW()",
             user.id, user.username, user.email, user.username, user.email
         );
-        
+
         let result = self.db_connection.execute_update(&query);
-        
+
         // 停止计时
         timer.stop(&timer_id);
-        
+
         result
     }
 }
@@ -143,17 +145,17 @@ impl DatabaseConnection {
             }),
         }
     }
-    
+
     fn get_connection(&self) -> Result<Arc<Connection>, String> {
         let mut connections = self.connection_pool.connections.lock().unwrap();
-        
+
         // 查找可用连接
         if let Some(conn) = connections.pop() {
             let connection = Arc::new(conn);
             *connection.last_used.lock().unwrap() = Instant::now();
             return Ok(connection);
         }
-        
+
         // 如果没有可用连接且未达到最大连接数，创建新连接
         if connections.len() < self.connection_pool.max_connections {
             let connection = Arc::new(Connection {
@@ -161,20 +163,20 @@ impl DatabaseConnection {
                 created_at: Instant::now(),
                 last_used: Mutex::new(Instant::now()),
             });
-            
+
             return Ok(connection);
         }
-        
+
         Err("无法获取数据库连接：连接池已满".to_string())
     }
-    
+
     fn execute_query(&self, query: &str) -> Result<Vec<HashMap<String, String>>, String> {
         // 获取连接
         let connection = self.get_connection()?;
-        
+
         // 模拟执行查询
         println!("执行查询: {}", query);
-        
+
         // 模拟返回结果
         let mut result = Vec::new();
         if query.contains("WHERE id = '1'") {
@@ -184,17 +186,17 @@ impl DatabaseConnection {
             row.insert("email".to_string(), "admin@example.com".to_string());
             result.push(row);
         }
-        
+
         Ok(result)
     }
-    
+
     fn execute_update(&self, query: &str) -> Result<(), String> {
         // 获取连接
         let connection = self.get_connection()?;
-        
+
         // 模拟执行更新
         println!("执行更新: {}", query);
-        
+
         Ok(())
     }
 }
@@ -211,17 +213,17 @@ impl UserService {
             user_repository,
         }
     }
-    
+
     fn get_user(&self, id: &str) -> Result<Option<User>, String> {
         // 创建一个跟踪跨度
         let tracer = &self.framework.tracer;
         let span = tracer.start_span("UserService.get_user");
         tracer.set_tag(&span, "user_id", id);
-        
+
         // 从缓存获取
         let cache_key = format!("user:{}", id);
         let cache_result = self.cache_client.get::<User>(&cache_key);
-        
+
         let result = match cache_result {
             Ok(Some(user)) => {
                 // 缓存命中
@@ -231,7 +233,7 @@ impl UserService {
             Ok(None) => {
                 // 缓存未命中，从数据库获取
                 tracer.set_tag(&span, "cache_hit", "false");
-                
+
                 match self.user_repository.find_by_id(id) {
                     Ok(Some(user)) => {
                         // 找到用户，缓存结果
@@ -254,7 +256,7 @@ impl UserService {
             Err(err) => {
                 // 缓存错误，直接从数据库获取
                 tracer.set_tag(&span, "cache_error", "true");
-                
+
                 match self.user_repository.find_by_id(id) {
                     Ok(Some(user)) => Ok(Some(user)),
                     Ok(None) => Ok(None),
@@ -262,18 +264,18 @@ impl UserService {
                 }
             }
         };
-        
+
         // 完成跟踪跨度
         tracer.finish_span(&span);
-        
+
         result
     }
-    
+
     fn create_user(&self, username: &str, email: &str) -> Result<User, String> {
         // 创建一个跟踪跨度
         let tracer = &self.framework.tracer;
         let span = tracer.start_span("UserService.create_user");
-        
+
         // 创建用户
         let user = User {
             id: uuid::Uuid::new_v4().to_string(),
@@ -282,22 +284,22 @@ impl UserService {
             created_at: SystemTime::now(),
             updated_at: SystemTime::now(),
         };
-        
+
         // 保存用户
         match self.user_repository.save(&user) {
             Ok(_) => {
                 // 缓存用户
                 let cache_key = format!("user:{}", user.id);
                 let _ = self.cache_client.set(&cache_key, &user, Some(Duration::from_secs(300)));
-                
+
                 // 发布用户创建事件
                 let mut payload = serde_json::Map::new();
                 payload.insert("user_id".to_string(), serde_json::Value::String(user.id.clone()));
                 payload.insert("username".to_string(), serde_json::Value::String(user.username.clone()));
                 payload.insert("email".to_string(), serde_json::Value::String(user.email.clone()));
-                
+
                 let _ = self.event_publisher.publish("user.created", serde_json::Value::Object(payload));
-                
+
                 Ok(user)
             },
             Err(err) => {
@@ -308,18 +310,18 @@ impl UserService {
                     fields.insert("error.message".to_string(), err.clone());
                     fields
                 });
-                
+
                 Err(err)
             }
         }
     }
-    
+
     fn update_user(&self, id: &str, username: &str, email: &str) -> Result<User, String> {
         // 创建一个跟踪跨度
         let tracer = &self.framework.tracer;
         let span = tracer.start_span("UserService.update_user");
         tracer.set_tag(&span, "user_id", id);
-        
+
         // 检查用户是否存在
         match self.get_user(id) {
             Ok(Some(mut user)) => {
@@ -327,22 +329,22 @@ impl UserService {
                 user.username = username.to_string();
                 user.email = email.to_string();
                 user.updated_at = SystemTime::now();
-                
+
                 // 保存用户
                 match self.user_repository.save(&user) {
                     Ok(_) => {
                         // 更新缓存
                         let cache_key = format!("user:{}", user.id);
                         let _ = self.cache_client.set(&cache_key, &user, Some(Duration::from_secs(300)));
-                        
+
                         // 发布用户更新事件
                         let mut payload = serde_json::Map::new();
                         payload.insert("user_id".to_string(), serde_json::Value::String(user.id.clone()));
                         payload.insert("username".to_string(), serde_json::Value::String(user.username.clone()));
                         payload.insert("email".to_string(), serde_json::Value::String(user.email.clone()));
-                        
+
                         let _ = self.event_publisher.publish("user.updated", serde_json::Value::Object(payload));
-                        
+
                         Ok(user)
                     },
                     Err(err) => {
@@ -353,7 +355,7 @@ impl UserService {
                             fields.insert("error.message".to_string(), err.clone());
                             fields
                         });
-                        
+
                         Err(err)
                     }
                 }
@@ -366,7 +368,7 @@ impl UserService {
                     fields.insert("error.message".to_string(), format!("用户 {} 不存在", id));
                     fields
                 });
-                
+
                 Err(format!("用户 {} 不存在", id))
             },
             Err(err) => {
@@ -377,35 +379,35 @@ impl UserService {
                     fields.insert("error.message".to_string(), err.clone());
                     fields
                 });
-                
+
                 Err(err)
             }
         }
     }
-    
+
     fn delete_user(&self, id: &str) -> Result<(), String> {
         // 创建一个跟踪跨度
         let tracer = &self.framework.tracer;
         let span = tracer.start_span("UserService.delete_user");
         tracer.set_tag(&span, "user_id", id);
-        
+
         // 检查用户是否存在
         match self.get_user(id) {
             Ok(Some(_)) => {
                 // 模拟删除用户
                 // 在实际应用中应该调用repository.delete方法
                 println!("删除用户: {}", id);
-                
+
                 // 删除缓存
                 let cache_key = format!("user:{}", id);
                 let _ = self.cache_client.delete(&cache_key);
-                
+
                 // 发布用户删除事件
                 let mut payload = serde_json::Map::new();
                 payload.insert("user_id".to_string(), serde_json::Value::String(id.to_string()));
-                
+
                 let _ = self.event_publisher.publish("user.deleted", serde_json::Value::Object(payload));
-                
+
                 Ok(())
             },
             Ok(None) => {
@@ -416,7 +418,7 @@ impl UserService {
                     fields.insert("error.message".to_string(), format!("用户 {} 不存在", id));
                     fields
                 });
-                
+
                 Err(format!("用户 {} 不存在", id))
             },
             Err(err) => {
@@ -427,7 +429,7 @@ impl UserService {
                     fields.insert("error.message".to_string(), err.clone());
                     fields
                 });
-                
+
                 Err(err)
             }
         }
@@ -503,7 +505,7 @@ impl DeploymentManager {
             config_system,
         }
     }
-    
+
     fn deploy_service(&self, deployment: ServiceDeployment) -> Result<(), String> {
         // 创建服务注册
         let service_registration = ServiceRegistration {
@@ -530,7 +532,7 @@ impl DeploymentManager {
             }),
             ttl: Some(Duration::from_secs(30)),
         };
-        
+
         // 存储配置
         for (key, value) in &deployment.environment_variables {
             let config_key = format!("services.{}.{}", deployment.service_name, key);
@@ -538,7 +540,7 @@ impl DeploymentManager {
                 return Err(format!("无法设置配置 {}: {}", config_key, err.message));
             }
         }
-        
+
         // 部署服务实例
         match deployment.deployment_strategy {
             DeploymentStrategy::RollingUpdate { max_surge, max_unavailable } => {
@@ -552,12 +554,12 @@ impl DeploymentManager {
             }
         }
     }
-    
+
     fn deploy_rolling_update(&self, deployment: &ServiceDeployment, max_surge: usize, max_unavailable: usize) -> Result<(), String> {
         println!("使用滚动更新策略部署服务 {}", deployment.service_name);
         println!("最大超量: {}, 最大不可用: {}", max_surge, max_unavailable);
         println!("期望实例数: {}", deployment.desired_instances);
-        
+
         // 模拟部署
         for i in 0..deployment.desired_instances {
             let instance = ServiceDeploymentInstance {
@@ -569,19 +571,19 @@ impl DeploymentManager {
                 started_at: SystemTime::now(),
                 last_checked: SystemTime::now(),
             };
-            
+
             println!("部署实例 {} 到 {}:{}", instance.instance_id, instance.host, instance.port);
-            
+
             // 在实际应用中，这里应该进行实际的容器部署和服务注册
         }
-        
+
         Ok(())
     }
-    
+
     fn deploy_blue_green(&self, deployment: &ServiceDeployment) -> Result<(), String> {
         println!("使用蓝绿部署策略部署服务 {}", deployment.service_name);
         println!("期望实例数: {}", deployment.desired_instances);
-        
+
         // 模拟蓝绿部署
         println!("部署绿色环境");
         for i in 0..deployment.desired_instances {
@@ -594,28 +596,28 @@ impl DeploymentManager {
                 started_at: SystemTime::now(),
                 last_checked: SystemTime::now(),
             };
-            
+
             println!("部署实例 {} 到 {}:{}", instance.instance_id, instance.host, instance.port);
         }
-        
+
         println!("绿色环境部署完成，进行健康检查");
         println!("健康检查通过，切换流量到绿色环境");
         println!("等待确认，绿色环境稳定运行");
         println!("移除蓝色环境");
-        
+
         Ok(())
     }
-    
+
     fn deploy_canary(&self, deployment: &ServiceDeployment, percentage: u8) -> Result<(), String> {
         println!("使用金丝雀部署策略部署服务 {}", deployment.service_name);
         println!("期望实例数: {}, 金丝雀百分比: {}%", deployment.desired_instances, percentage);
-        
+
         // 计算金丝雀实例数和稳定实例数
         let canary_instances = (deployment.desired_instances as f32 * (percentage as f32 / 100.0)).ceil() as usize;
         let stable_instances = deployment.desired_instances - canary_instances;
-        
+
         println!("部署 {} 个金丝雀实例和 {} 个稳定实例", canary_instances, stable_instances);
-        
+
         // 模拟部署稳定实例
         for i in 0..stable_instances {
             let instance = ServiceDeploymentInstance {
@@ -627,10 +629,10 @@ impl DeploymentManager {
                 started_at: SystemTime::now(),
                 last_checked: SystemTime::now(),
             };
-            
+
             println!("部署稳定实例 {} 到 {}:{}", instance.instance_id, instance.host, instance.port);
         }
-        
+
         // 模拟部署金丝雀实例
         for i in 0..canary_instances {
             let instance = ServiceDeploymentInstance {
@@ -642,45 +644,45 @@ impl DeploymentManager {
                 started_at: SystemTime::now(),
                 last_checked: SystemTime::now(),
             };
-            
+
             println!("部署金丝雀实例 {} 到 {}:{}", instance.instance_id, instance.host, instance.port);
         }
-        
+
         println!("金丝雀部署完成，监控金丝雀实例的性能和错误率");
-        
+
         Ok(())
     }
-    
+
     fn undeploy_service(&self, service_name: &str) -> Result<(), String> {
         println!("卸载服务 {}", service_name);
-        
+
         // 在实际应用中，这里应该进行实际的服务卸载和注册中心清理
-        
+
         Ok(())
     }
-    
+
     fn scale_service(&self, service_name: &str, instances: usize) -> Result<(), String> {
         println!("缩放服务 {} 到 {} 个实例", service_name, instances);
-        
+
         // 在实际应用中，这里应该进行实际的服务缩放
-        
+
         Ok(())
     }
-    
+
     fn restart_service(&self, service_name: &str) -> Result<(), String> {
         println!("重启服务 {}", service_name);
-        
+
         // 在实际应用中，这里应该进行实际的服务重启
-        
+
         Ok(())
     }
-    
+
     fn get_service_status(&self, service_name: &str) -> Result<Vec<ServiceDeploymentInstance>, String> {
         println!("获取服务 {} 的状态", service_name);
-        
+
         // 在实际应用中，这里应该从注册中心和健康检查系统获取服务状态
         let instances = Vec::new();
-        
+
         Ok(instances)
     }
 }
@@ -688,10 +690,10 @@ impl DeploymentManager {
 // 使用示例
 fn main() {
     println!("创建分布式系统框架");
-    
+
     // 创建各种组件（在实际应用中，这些应该使用实际的实现而不是空实现）
     // 这里仅展示框架的使用方式
-    
+
     // 创建框架
     let framework = Arc::new(DistributedSystemFramework::new(
         Arc::new(ServiceRegistry::new()),
@@ -712,37 +714,37 @@ fn main() {
             Box::new(NoopReporter {}),
         )),
     ));
-    
+
     // 创建数据库连接
     let db_connection = Arc::new(DatabaseConnection::new("jdbc:mysql://localhost:3306/mydb", 10));
-    
+
     // 创建用户仓库
     let user_repository = Arc::new(UserRepository::new(
         db_connection,
         framework.metrics_registry.clone(),
     ));
-    
+
     // 创建用户服务
     let user_service = UserService::new(
         framework.clone(),
         user_repository,
     );
-    
+
     // 使用服务
     match user_service.create_user("alice", "alice@example.com") {
         Ok(user) => {
             println!("创建用户: {}", user.id);
-            
+
             // 获取用户
             match user_service.get_user(&user.id) {
                 Ok(Some(found_user)) => {
                     println!("找到用户: {}, {}", found_user.username, found_user.email);
-                    
+
                     // 更新用户
                     match user_service.update_user(&user.id, "alice2", "alice2@example.com") {
                         Ok(updated_user) => {
                             println!("更新用户: {}, {}", updated_user.username, updated_user.email);
-                            
+
                             // 删除用户
                             match user_service.delete_user(&user.id) {
                                 Ok(_) => println!("删除用户成功"),
@@ -758,14 +760,14 @@ fn main() {
         },
         Err(err) => println!("创建用户失败: {}", err),
     }
-    
+
     // 部署服务
     let deployment_manager = DeploymentManager::new(
         framework.service_registry.clone(),
         framework.health_check_registry.clone(),
         Arc::new(DistributedConfigSystem::new("memory")),
     );
-    
+
     let service_deployment = ServiceDeployment {
         service_id: uuid::Uuid::new_v4().to_string(),
         service_name: "user-service".to_string(),
@@ -791,7 +793,7 @@ fn main() {
         created_at: SystemTime::now(),
         updated_at: SystemTime::now(),
     };
-    
+
     match deployment_manager.deploy_service(service_deployment) {
         Ok(_) => println!("服务部署成功"),
         Err(err) => println!("服务部署失败: {}", err),
@@ -879,7 +881,7 @@ impl RaftNode {
         rpc_client: Box<dyn RaftRpcClient>,
     ) -> Result<Self, String> {
         let (current_term, voted_for) = storage.load_state()?;
-        
+
         let mut node = RaftNode {
             id: id.to_string(),
             state: RaftState::Follower,
@@ -899,21 +901,21 @@ impl RaftNode {
             state_machine,
             rpc_client,
         };
-        
+
         // 加载日志
         node.log = node.storage.get_log_entries(0, u64::MAX)?;
-        
+
         Ok(node)
     }
-    
+
     fn start(&mut self) {
         // 在实际实现中，这会启动多个线程来处理选举、日志复制等
         println!("启动Raft节点: {}", self.id);
-        
+
         // 启动主循环
         self.main_loop();
     }
-    
+
     fn main_loop(&mut self) {
         loop {
             match self.state {
@@ -921,15 +923,15 @@ impl RaftNode {
                 RaftState::Candidate => self.candidate_tick(),
                 RaftState::Leader => self.leader_tick(),
             }
-            
+
             // 应用提交的日志到状态机
             self.apply_logs();
-            
+
             // 短暂休眠以避免CPU占用过高
             std::thread::sleep(Duration::from_millis(10));
         }
     }
-    
+
     fn follower_tick(&mut self) {
         // 检查是否超时
         if self.last_heartbeat.elapsed() > self.random_election_timeout {
@@ -937,7 +939,7 @@ impl RaftNode {
             self.become_candidate();
         }
     }
-    
+
     fn candidate_tick(&mut self) {
         // 检查是否超时
         if self.last_heartbeat.elapsed() > self.random_election_timeout {
@@ -945,7 +947,7 @@ impl RaftNode {
             self.start_election();
         }
     }
-    
+
     fn leader_tick(&mut self) {
         // 检查是否需要发送心跳
         if self.last_heartbeat.elapsed() > self.heartbeat_interval {
@@ -954,36 +956,36 @@ impl RaftNode {
             self.last_heartbeat = Instant::now();
         }
     }
-    
+
     fn become_candidate(&mut self) {
         self.state = RaftState::Candidate;
         self.current_term += 1;
         self.voted_for = Some(self.id.clone());
         self.last_heartbeat = Instant::now();
         self.random_election_timeout = Duration::from_millis(300 + rand::random::<u64>() % 300);
-        
+
         // 保存状态
         if let Err(err) = self.storage.save_state(self.current_term, self.voted_for.clone()) {
             println!("保存状态失败: {}", err);
         }
-        
+
         // 开始选举
         self.start_election();
     }
-    
+
     fn start_election(&mut self) {
         println!("开始选举，任期: {}", self.current_term);
-        
+
         let mut votes_received = 1; // 给自己投票
-        
+
         let last_log_index = if self.log.is_empty() { 0 } else { self.log.last().unwrap().index };
         let last_log_term = if self.log.is_empty() { 0 } else { self.log.last().unwrap().term };
-        
+
         for peer in &self.peers {
             if peer == &self.id {
                 continue; // 跳过自己
             }
-            
+
             // 发送请求投票RPC
             match self.rpc_client.request_vote(
                 peer,
@@ -998,10 +1000,10 @@ impl RaftNode {
                         self.become_follower(term);
                         return;
                     }
-                    
+
                     if vote_granted {
                         votes_received += 1;
-                        
+
                         // 检查是否获得多数票
                         if votes_received * 2 > self.peers.len() + 1 {
                             println!("获得多数票，成为领导者: {}", self.id);
@@ -1016,7 +1018,7 @@ impl RaftNode {
             }
         }
     }
-    
+
     fn become_follower(&mut self, term: u64) {
         println!("成为跟随者，任期: {}", term);
         self.state = RaftState::Follower;
@@ -1024,36 +1026,36 @@ impl RaftNode {
         self.voted_for = None;
         self.last_heartbeat = Instant::now();
         self.random_election_timeout = Duration::from_millis(300 + rand::random::<u64>() % 300);
-        
+
         // 保存状态
         if let Err(err) = self.storage.save_state(self.current_term, self.voted_for.clone()) {
             println!("保存状态失败: {}", err);
         }
     }
-    
+
     fn become_leader(&mut self) {
         println!("成为领导者，任期: {}", self.current_term);
         self.state = RaftState::Leader;
-        
+
         // 初始化领导者数据
         let last_log_index = if self.log.is_empty() { 0 } else { self.log.last().unwrap().index };
-        
+
         for peer in &self.peers {
             self.next_index.insert(peer.clone(), last_log_index + 1);
             self.match_index.insert(peer.clone(), 0);
         }
-        
+
         // 发送心跳
         self.send_heartbeats();
         self.last_heartbeat = Instant::now();
     }
-    
+
     fn send_heartbeats(&mut self) {
         for peer in &self.peers {
             if peer == &self.id {
                 continue; // 跳过自己
             }
-            
+
             let next_idx = *self.next_index.get(peer).unwrap_or(&1);
             let prev_log_index = next_idx - 1;
             let prev_log_term = if prev_log_index == 0 {
@@ -1065,13 +1067,13 @@ impl RaftNode {
                 println!("找不到前一个日志，可能需要发送快照");
                 continue;
             };
-            
+
             // 获取要发送的日志条目
             let entries: Vec<LogEntry> = self.log.iter()
                 .filter(|e| e.index >= next_idx)
                 .cloned()
                 .collect();
-            
+
             // 发送附加日志RPC（或心跳）
             match self.rpc_client.append_entries(
                 peer,
@@ -1088,14 +1090,14 @@ impl RaftNode {
                         self.become_follower(term);
                         return;
                     }
-                    
+
                     if success {
                         // 更新复制进度
                         if !entries.is_empty() {
                             let last_entry = entries.last().unwrap();
                             self.next_index.insert(peer.clone(), last_entry.index + 1);
                             self.match_index.insert(peer.clone(), last_entry.index);
-                            
+
                             // 更新提交索引
                             self.update_commit_index();
                         }
@@ -1111,15 +1113,15 @@ impl RaftNode {
             }
         }
     }
-    
+
     fn update_commit_index(&mut self) {
         // 找到已经复制到多数节点的最大日志索引
         let mut sorted_indices: Vec<u64> = self.match_index.values().cloned().collect();
         sorted_indices.push(self.log.last().map_or(0, |e| e.index)); // 包括自己
         sorted_indices.sort_unstable();
-        
+
         let majority_index = sorted_indices[sorted_indices.len() / 2];
-        
+
         // 确保日志条目属于当前任期
         if majority_index > self.commit_index {
             if let Some(entry) = self.log.iter().find(|e| e.index == majority_index) {
@@ -1130,11 +1132,11 @@ impl RaftNode {
             }
         }
     }
-    
+
     fn apply_logs(&mut self) {
         while self.last_applied < self.commit_index {
             self.last_applied += 1;
-            
+
             if let Some(entry) = self.log.iter().find(|e| e.index == self.last_applied) {
                 match self.state_machine.apply(&entry.command) {
                     Ok(_) => {
@@ -1151,120 +1153,120 @@ impl RaftNode {
             }
         }
     }
-    
+
     fn propose_command(&mut self, command: &[u8]) -> Result<(), String> {
         if !matches!(self.state, RaftState::Leader) {
             return Err(format!("节点 {} 不是领导者", self.id));
         }
-        
+
         let index = if self.log.is_empty() { 1 } else { self.log.last().unwrap().index + 1 };
-        
+
         let entry = LogEntry {
             term: self.current_term,
             index,
             command: command.to_vec(),
         };
-        
+
         // 添加到本地日志
         self.log.push(entry.clone());
-        
+
         // 持久化日志
         if let Err(err) = self.storage.append_log_entries(&[entry]) {
             return Err(format!("持久化日志失败: {}", err));
         }
-        
+
         // 尝试复制日志
         self.send_heartbeats();
-        
+
         Ok(())
     }
-    
+
     // RPC处理方法
-    
+
     fn handle_request_vote(&mut self, term: u64, candidate_id: &str, last_log_index: u64, last_log_term: u64) -> (u64, bool) {
         println!("收到请求投票，来自：{}，任期：{}", candidate_id, term);
-        
+
         if term < self.current_term {
             return (self.current_term, false);
         }
-        
+
         if term > self.current_term {
             self.become_follower(term);
         }
-        
+
         let vote_granted = (self.voted_for.is_none() || self.voted_for.as_ref() == Some(candidate_id)) &&
                            self.is_candidate_log_up_to_date(last_log_index, last_log_term);
-        
+
         if vote_granted {
             self.voted_for = Some(candidate_id.to_string());
             self.last_heartbeat = Instant::now(); // 重置选举超时
-            
+
             // 保存状态
             if let Err(err) = self.storage.save_state(self.current_term, self.voted_for.clone()) {
                 println!("保存状态失败: {}", err);
             }
         }
-        
+
         (self.current_term, vote_granted)
     }
-    
+
     fn is_candidate_log_up_to_date(&self, last_log_index: u64, last_log_term: u64) -> bool {
         let own_last_term = if self.log.is_empty() { 0 } else { self.log.last().unwrap().term };
         let own_last_index = if self.log.is_empty() { 0 } else { self.log.last().unwrap().index };
-        
+
         // 先比较任期，任期大的日志更新；任期相同则索引大的更新
         last_log_term > own_last_term || (last_log_term == own_last_term && last_log_index >= own_last_index)
     }
-    
+
     fn handle_append_entries(&mut self, term: u64, leader_id: &str, prev_log_index: u64, prev_log_term: u64, entries: &[LogEntry], leader_commit: u64) -> (u64, bool) {
         println!("收到附加日志，来自：{}，任期：{}", leader_id, term);
-        
+
         if term < self.current_term {
             return (self.current_term, false);
         }
-        
+
         // 收到心跳或日志，重置选举超时
         self.last_heartbeat = Instant::now();
-        
+
         if term > self.current_term || !matches!(self.state, RaftState::Follower) {
             self.become_follower(term);
         }
-        
+
         // 检查前一个日志条目
-        let log_ok = prev_log_index == 0 || 
+        let log_ok = prev_log_index == 0 ||
                      self.log.iter().any(|e| e.index == prev_log_index && e.term == prev_log_term);
-        
+
         if !log_ok {
             return (self.current_term, false);
         }
-        
+
         // 处理日志条目
         if !entries.is_empty() {
             // 查找冲突并删除
             let conflict_idx = self.log.iter()
                 .position(|e| e.index == entries[0].index && e.term != entries[0].term);
-            
+
             if let Some(idx) = conflict_idx {
                 // 删除冲突及其后的所有日志
                 self.log.truncate(idx);
-                
+
                 // 从持久化存储中删除
                 if let Err(err) = self.storage.delete_logs_from(entries[0].index) {
                     println!("删除冲突日志失败: {}", err);
                     return (self.current_term, false);
                 }
             }
-            
+
             // 追加新日志
             let new_entries: Vec<LogEntry> = entries.iter()
                 .filter(|&e| !self.log.iter().any(|existing| existing.index == e.index))
                 .cloned()
                 .collect();
-            
+
             if !new_entries.is_empty() {
                 // 追加到内存日志
                 self.log.extend(new_entries.clone());
-                
+
                 // 持久化日志
                 if let Err(err) = self.storage.append_log_entries(&new_entries) {
                     println!("持久化日志失败: {}", err);
@@ -1272,13 +1274,13 @@ impl RaftNode {
                 }
             }
         }
-        
+
         // 更新提交索引
         if leader_commit > self.commit_index {
             let last_new_index = if self.log.is_empty() { 0 } else { self.log.last().unwrap().index };
             self.commit_index = leader_commit.min(last_new_index);
         }
-        
+
         (self.current_term, true)
     }
 }
@@ -1312,24 +1314,24 @@ impl ShardingManager {
             shard_info: Vec::with_capacity(shard_count),
         }
     }
-    
+
     fn initialize_shards(&mut self, nodes: &[String]) {
         if nodes.is_empty() {
             return;
         }
-        
+
         // 为每个分片分配节点
         for shard_id in 0..self.shard_count {
             let primary_idx = shard_id % nodes.len();
             let primary_node = nodes[primary_idx].clone();
-            
+
             // 选择副本节点（简单策略：选择主节点后的几个节点）
             let mut replica_nodes = Vec::new();
             for i in 1..3 { // 假设我们想要2个副本
                 let replica_idx = (primary_idx + i) % nodes.len();
                 replica_nodes.push(nodes[replica_idx].clone());
             }
-            
+
             self.shard_info.push(ShardInfo {
                 shard_id,
                 primary_node,
@@ -1338,43 +1340,43 @@ impl ShardingManager {
             });
         }
     }
-    
+
     fn get_shard_for_key(&self, key: &[u8]) -> usize {
         let hash = (self.hash_algorithm)(key);
         (hash as usize) % self.shard_count
     }
-    
+
     fn get_node_for_key(&self, key: &[u8]) -> Option<String> {
         let shard_id = self.get_shard_for_key(key);
         self.shard_info.get(shard_id).map(|info| info.primary_node.clone())
     }
-    
+
     fn get_replicas_for_key(&self, key: &[u8]) -> Option<Vec<String>> {
         let shard_id = self.get_shard_for_key(key);
         self.shard_info.get(shard_id).map(|info| info.replica_nodes.clone())
     }
-    
+
     fn rebalance_shards(&mut self, nodes: &[String]) -> Result<(), String> {
         if nodes.is_empty() {
             return Err("节点列表为空".to_string());
         }
-        
+
         println!("开始重新平衡分片");
-        
+
         // 计算每个节点应该持有的分片数
         let shards_per_node = (self.shard_count as f64 / nodes.len() as f64).ceil() as usize;
-        
+
         // 跟踪每个节点拥有的分片数
         let mut node_shard_counts = HashMap::new();
         for node in nodes {
             node_shard_counts.insert(node.clone(), 0);
         }
-        
+
         // 标记所有分片为重新平衡状态
         for shard in &mut self.shard_info {
             shard.status = ShardStatus::Rebalancing;
         }
-        
+
         // 重新分配分片
         for shard in &mut self.shard_info {
             // 找到拥有最少分片的节点
@@ -1382,21 +1384,21 @@ impl ShardingManager {
                 .min_by_key(|(_, &count)| count)
                 .map(|(node, _)| node.clone())
                 .unwrap();
-            
+
             // 更新分片信息
             shard.primary_node = min_node.clone();
-            
+
             // 更新计数
             *node_shard_counts.get_mut(&min_node).unwrap() += 1;
-            
+
             // 选择副本节点
             shard.replica_nodes.clear();
             let mut sorted_nodes: Vec<(String, usize)> = node_shard_counts.iter()
                 .map(|(node, &count)| (node.clone(), count))
                 .collect();
-            
+
             sorted_nodes.sort_by_key(|(_, count)| *count);
-            
+
             for i in 0..2.min(sorted_nodes.len() - 1) {
                 let (node, _) = &sorted_nodes[i];
                 if node != &shard.primary_node {
@@ -1404,13 +1406,13 @@ impl ShardingManager {
                     *node_shard_counts.get_mut(node).unwrap() += 1;
                 }
             }
-            
+
             // 恢复分片状态
             shard.status = ShardStatus::Available;
         }
-        
+
         println!("分片重新平衡完成");
-        
+
         Ok(())
     }
 }
@@ -1430,7 +1432,7 @@ impl ConsistentHash {
             hash_algorithm,
         }
     }
-    
+
     fn add_node(&mut self, node: &str) {
         for i in 0..self.virtual_nodes {
             let key = format!("{}:{}", node, i);
@@ -1438,7 +1440,7 @@ impl ConsistentHash {
             self.ring.insert(hash, node.to_string());
         }
     }
-    
+
     fn remove_node(&mut self, node: &str) {
         for i in 0..self.virtual_nodes {
             let key = format!("{}:{}", node, i);
@@ -1446,31 +1448,31 @@ impl ConsistentHash {
             self.ring.remove(&hash);
         }
     }
-    
+
     fn get_node(&self, key: &str) -> Option<String> {
         if self.ring.is_empty() {
             return None;
         }
-        
+
         let hash = (self.hash_algorithm)(key);
-        
+
         let entry = self.ring.range(hash..).next()
             .or_else(|| self.ring.iter().next())
             .map(|(_, node)| node.clone());
-        
+
         entry
     }
-    
+
     fn get_nodes(&self, key: &str, count: usize) -> Vec<String> {
         if self.ring.is_empty() {
             return Vec::new();
         }
-        
+
         let mut result = Vec::new();
         let mut seen = HashSet::new();
-        
+
         let hash = (self.hash_algorithm)(key);
-        
+
         // 从哈希开始遍历环
         let mut iter = self.ring.range(hash..);
         while result.len() < count {
@@ -1484,7 +1486,7 @@ impl ConsistentHash {
                 None => {
                     // 到达环的末尾，从开始继续
                     iter = self.ring.iter();
-                    
+
                     // 避免无限循环
                     if seen.len() == self.ring.values().collect::<HashSet<_>>().len() {
                         break;
@@ -1492,7 +1494,7 @@ impl ConsistentHash {
                 }
             }
         }
-        
+
         result
     }
 }
@@ -1566,27 +1568,27 @@ impl MultiRegionDeployment {
             routing_strategy,
         }
     }
-    
+
     fn register_service(&mut self, service_name: &str, regional_services: Vec<RegionalService>) -> Result<(), String> {
         if self.services.contains_key(service_name) {
             return Err(format!("服务 {} 已存在", service_name));
         }
-        
+
         // 验证所有区域是否有效
         for service in &regional_services {
             if !self.regions.iter().any(|r| r.id == service.region_id) {
                 return Err(format!("区域 {} 不存在", service.region_id));
             }
         }
-        
+
         self.services.insert(service_name.to_string(), regional_services);
         Ok(())
     }
-    
+
     fn route_request(&self, service_name: &str, client_location: &str, request_type: RequestType) -> Result<ServiceInstance, String> {
         let regional_services = self.services.get(service_name)
             .ok_or_else(|| format!("服务 {} 不存在", service_name))?;
-        
+
         // 根据路由策略选择区域
         let selected_region = match self.routing_strategy {
             RoutingStrategy::GeoProximity => self.select_by_geo_proximity(regional_services, client_location),
@@ -1594,7 +1596,7 @@ impl MultiRegionDeployment {
             RoutingStrategy::LatencyBased => self.select_by_latency(regional_services, client_location),
             RoutingStrategy::LoadBased => self.select_by_load(regional_services),
         }?;
-        
+
         // 对于写请求，可能需要根据数据策略进一步路由
         if request_type == RequestType::Write {
             match &self.data_strategy {
@@ -1611,16 +1613,16 @@ impl MultiRegionDeployment {
                 _ => {} // ActiveActive允许在任何区域写入
             }
         }
-        
+
         // 从选定区域中随机选择一个实例
         if selected_region.instances.is_empty() {
             return Err(format!("区域 {} 中没有可用的服务实例", selected_region.region_id));
         }
-        
+
         let instance_index = rand::random::<usize>() % selected_region.instances.len();
         Ok(selected_region.instances[instance_index].clone())
     }
-    
+
     fn select_by_geo_proximity(&self, services: &[RegionalService], client_location: &str) -> Result<&RegionalService, String> {
         // 简化实现，实际上需要地理位置计算
         // 这里假设client_location是一个区域ID
@@ -1633,7 +1635,7 @@ impl MultiRegionDeployment {
                     // 简单模拟距离
                     let region = self.regions.iter().find(|r| r.id == s.region_id).unwrap();
                     let client_region = self.regions.iter().find(|r| r.id == client_location);
-                    
+
                     if let Some(client_region) = client_region {
                         (region.location.len() as i32 - client_region.location.len() as i32).abs() as u32
                     } else {
@@ -1643,7 +1645,7 @@ impl MultiRegionDeployment {
             })
             .ok_or_else(|| "没有找到活跃的区域服务".to_string())
     }
-    
+
     fn select_by_region_priority(&self, services: &[RegionalService]) -> Result<&RegionalService, String> {
         services.iter()
             .filter(|s| s.status == RegionalServiceStatus::Active)
@@ -1655,13 +1657,13 @@ impl MultiRegionDeployment {
             })
             .ok_or_else(|| "没有找到活跃的区域服务".to_string())
     }
-    
+
     fn select_by_latency(&self, services: &[RegionalService], client_location: &str) -> Result<&RegionalService, String> {
         // 简化实现，实际上需要真实延迟测量
         // 这里假设与geo_proximity相同的逻辑
         self.select_by_geo_proximity(services, client_location)
     }
-    
+
     fn select_by_load(&self, services: &[RegionalService]) -> Result<&RegionalService, String> {
         // 简化实现，选择实例数最多的区域
         services.iter()
@@ -1669,29 +1671,29 @@ impl MultiRegionDeployment {
             .max_by_key(|s| s.instances.len())
             .ok_or_else(|| "没有找到活跃的区域服务".to_string())
     }
-    
+
     fn find_service_in_region(&self, services: &[RegionalService], region_id: &str) -> Result<ServiceInstance, String> {
         let service = services.iter()
             .find(|s| s.region_id == *region_id && s.status == RegionalServiceStatus::Active)
             .ok_or_else(|| format!("在区域 {} 中没有找到活跃的服务", region_id))?;
-        
+
         if service.instances.is_empty() {
             return Err(format!("区域 {} 中没有可用的服务实例", region_id));
         }
-        
+
         let instance_index = rand::random::<usize>() % service.instances.len();
         Ok(service.instances[instance_index].clone())
     }
-    
+
     fn handle_region_failure(&mut self, region_id: &str) -> Result<(), String> {
         // 更新区域状态
         let region = self.regions.iter_mut()
             .find(|r| r.id == *region_id)
             .ok_or_else(|| format!("区域 {} 不存在", region_id))?;
-        
+
         println!("区域 {} 发生故障", region_id);
         region.is_active = false;
-        
+
         // 更新所有受影响的服务
         for (_, regional_services) in &mut self.services {
             for service in regional_services {
@@ -1700,12 +1702,12 @@ impl MultiRegionDeployment {
                 }
             }
         }
-        
+
         // 如果使用ActivePassive策略且主区域故障，执行故障转移
         if let DataReplicationStrategy::ActivePassive { primary_region, failover_regions } = &mut self.data_strategy {
             if *primary_region == *region_id {
                 println!("主区域 {} 故障，执行故障转移", region_id);
-                
+
                 // 选择新的主区域
                 for failover in failover_regions {
                     if self.regions.iter().any(|r| r.id == *failover && r.is_active) {
@@ -1719,19 +1721,19 @@ impl MultiRegionDeployment {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn handle_region_recovery(&mut self, region_id: &str) -> Result<(), String> {
         // 更新区域状态
         let region = self.regions.iter_mut()
             .find(|r| r.id == *region_id)
             .ok_or_else(|| format!("区域 {} 不存在", region_id))?;
-        
+
         println!("区域 {} 恢复", region_id);
         region.is_active = true;
-        
+
         // 更新所有受影响的服务，但不自动将其设为Active
         for (_, regional_services) in &mut self.services {
             for service in regional_services {
@@ -1740,27 +1742,27 @@ impl MultiRegionDeployment {
                 }
             }
         }
-        
+
         // 如果使用ActivePassive策略，可能需要手动决定是否故障恢复
         if let DataReplicationStrategy::ActivePassive { primary_region, .. } = &self.data_strategy {
             println!("当前主区域: {}", primary_region);
             println!("区域 {} 已恢复，但需要手动决定是否将其恢复为主区域", region_id);
         }
-        
+
         Ok(())
     }
-    
+
     fn promote_region(&mut self, region_id: &str) -> Result<(), String> {
         // 验证区域是否存在且活跃
         let region_active = self.regions.iter()
             .any(|r| r.id == *region_id && r.is_active);
-        
+
         if !region_active {
             return Err(format!("区域 {} 不存在或不活跃", region_id));
         }
-        
+
         println!("提升区域 {} 状态", region_id);
-        
+
         // 更新所有在该区域的服务为Active
         for (_, regional_services) in &mut self.services {
             for service in regional_services {
@@ -1769,13 +1771,13 @@ impl MultiRegionDeployment {
                 }
             }
         }
-        
+
         // 如果使用ActivePassive策略，更新主区域
         if let DataReplicationStrategy::ActivePassive { primary_region, .. } = &mut self.data_strategy {
             println!("更新主区域：{} -> {}", primary_region, region_id);
             *primary_region = region_id.to_string();
         }
-        
+
         Ok(())
     }
 }
@@ -1788,10 +1790,10 @@ enum RequestType {
 // CRDT: 冲突解决数据类型
 trait CRDT {
     type Value;
-    
+
     // 合并两个CRDT实例
     fn merge(&mut self, other: &Self);
-    
+
     // 获取当前值
     fn value(&self) -> Self::Value;
 }
@@ -1806,13 +1808,13 @@ impl GCounter {
     fn new(node_id: &str) -> Self {
         let mut counts = HashMap::new();
         counts.insert(node_id.to_string(), 0);
-        
+
         GCounter {
             counts,
             node_id: node_id.to_string(),
         }
     }
-    
+
     fn increment(&mut self, amount: u64) {
         let count = self.counts.entry(self.node_id.clone()).or_insert(0);
         *count += amount;
@@ -1821,14 +1823,14 @@ impl GCounter {
 
 impl CRDT for GCounter {
     type Value = u64;
-    
+
     fn merge(&mut self, other: &Self) {
         for (node, &count) in &other.counts {
             let entry = self.counts.entry(node.clone()).or_insert(0);
             *entry = (*entry).max(count);
         }
     }
-    
+
     fn value(&self) -> Self::Value {
         self.counts.values().sum()
     }
@@ -1847,11 +1849,11 @@ impl PNCounter {
             decrements: GCounter::new(node_id),
         }
     }
-    
+
     fn increment(&mut self, amount: u64) {
         self.increments.increment(amount);
     }
-    
+
     fn decrement(&mut self, amount: u64) {
         self.decrements.increment(amount);
     }
@@ -1859,12 +1861,12 @@ impl PNCounter {
 
 impl CRDT for PNCounter {
     type Value = i64;
-    
+
     fn merge(&mut self, other: &Self) {
         self.increments.merge(&other.increments);
         self.decrements.merge(&other.decrements);
     }
-    
+
     fn value(&self) -> Self::Value {
         self.increments.value() as i64 - self.decrements.value() as i64
     }
@@ -1881,11 +1883,11 @@ impl<T: Clone + Eq + Hash> GSet<T> {
             elements: HashSet::new(),
         }
     }
-    
+
     fn add(&mut self, element: T) {
         self.elements.insert(element);
     }
-    
+
     fn contains(&self, element: &T) -> bool {
         self.elements.contains(element)
     }
@@ -1893,13 +1895,13 @@ impl<T: Clone + Eq + Hash> GSet<T> {
 
 impl<T: Clone + Eq + Hash> CRDT for GSet<T> {
     type Value = HashSet<T>;
-    
+
     fn merge(&mut self, other: &Self) {
         for element in &other.elements {
             self.elements.insert(element.clone());
         }
     }
-    
+
     fn value(&self) -> Self::Value {
         self.elements.clone()
     }
@@ -1918,17 +1920,17 @@ impl<T: Clone + Eq + Hash> TwoPhaseSet<T> {
             removals: GSet::new(),
         }
     }
-    
+
     fn add(&mut self, element: T) {
         self.additions.add(element);
     }
-    
+
     fn remove(&mut self, element: T) {
         if self.additions.contains(&element) {
             self.removals.add(element);
         }
     }
-    
+
     fn contains(&self, element: &T) -> bool {
         self.additions.contains(element) && !self.removals.contains(element)
     }
@@ -1936,21 +1938,21 @@ impl<T: Clone + Eq + Hash> TwoPhaseSet<T> {
 
 impl<T: Clone + Eq + Hash> CRDT for TwoPhaseSet<T> {
     type Value = HashSet<T>;
-    
+
     fn merge(&mut self, other: &Self) {
         self.additions.merge(&other.additions);
         self.removals.merge(&other.removals);
     }
-    
+
     fn value(&self) -> Self::Value {
         let mut result = HashSet::new();
-        
+
         for element in &self.additions.elements {
             if !self.removals.contains(element) {
                 result.insert(element.clone());
             }
         }
-        
+
         result
     }
 }
@@ -1965,45 +1967,45 @@ impl VectorClock {
     fn new(node_id: &str) -> Self {
         let mut timestamps = HashMap::new();
         timestamps.insert(node_id.to_string(), 0);
-        
+
         VectorClock {
             timestamps,
             node_id: node_id.to_string(),
         }
     }
-    
+
     fn increment(&mut self) {
         let timestamp = self.timestamps.entry(self.node_id.clone()).or_insert(0);
         *timestamp += 1;
     }
-    
+
     fn merge(&mut self, other: &Self) {
         for (node, &timestamp) in &other.timestamps {
             let entry = self.timestamps.entry(node.clone()).or_insert(0);
             *entry = (*entry).max(timestamp);
         }
     }
-    
+
     fn compare(&self, other: &Self) -> VectorClockOrder {
         let mut less = false;
         let mut greater = false;
-        
+
         // 检查所有节点
         let all_nodes: HashSet<String> = self.timestamps.keys().chain(other.timestamps.keys())
             .cloned()
             .collect();
-        
+
         for node in all_nodes {
             let self_timestamp = *self.timestamps.get(&node).unwrap_or(&0);
             let other_timestamp = *other.timestamps.get(&node).unwrap_or(&0);
-            
+
             if self_timestamp < other_timestamp {
                 less = true;
             } else if self_timestamp > other_timestamp {
                 greater = true;
             }
         }
-        
+
         if less && !greater {
             VectorClockOrder::Less
         } else if greater && !less {
@@ -2038,14 +2040,14 @@ impl<T: Clone> LWWRegister<T> {
             node_id: node_id.to_string(),
         }
     }
-    
+
     fn write(&mut self, value: T, timestamp: u64) {
         if timestamp > self.timestamp || (timestamp == self.timestamp && self.node_id < value.to_string()) {
             self.value = value;
             self.timestamp = timestamp;
         }
     }
-    
+
     fn read(&self) -> T {
         self.value.clone()
     }
@@ -2053,16 +2055,16 @@ impl<T: Clone> LWWRegister<T> {
 
 impl<T: Clone> CRDT for LWWRegister<T> {
     type Value = T;
-    
+
     fn merge(&mut self, other: &Self) {
-        if other.timestamp > self.timestamp || 
+        if other.timestamp > self.timestamp ||
            (other.timestamp == self.timestamp && other.node_id < self.node_id) {
             self.value = other.value.clone();
             self.timestamp = other.timestamp;
             self.node_id = other.node_id.clone();
         }
     }
-    
+
     fn value(&self) -> Self::Value {
         self.value.clone()
     }
@@ -2083,24 +2085,24 @@ impl<T: Clone> MVRegister<T> {
             node_id: node_id.to_string(),
         }
     }
-    
+
     fn write(&mut self, value: T) {
         // 增加本地向量时钟
         let mut new_clock = self.context.clone();
         new_clock.increment();
-        
+
         // 清除被新时钟覆盖的值
         self.values.retain(|clock, _| {
             clock.compare(&new_clock) == VectorClockOrder::Concurrent
         });
-        
+
         // 添加新值
         self.values.insert(new_clock.clone(), value);
-        
+
         // 更新上下文
         self.context = new_clock;
     }
-    
+
     fn read(&self) -> Vec<T> {
         self.values.values().cloned().collect()
     }
@@ -2108,15 +2110,15 @@ impl<T: Clone> MVRegister<T> {
 
 impl<T: Clone> CRDT for MVRegister<T> {
     type Value = Vec<T>;
-    
+
     fn merge(&mut self, other: &Self) {
         // 合并上下文
         self.context.merge(&other.context);
-        
+
         // 合并值，保留所有并发写入
         for (clock, value) in &other.values {
             let mut dominated = false;
-            
+
             // 检查是否被现有时钟覆盖
             for existing_clock in self.values.keys() {
                 if existing_clock.compare(clock) == VectorClockOrder::Greater {
@@ -2124,19 +2126,19 @@ impl<T: Clone> CRDT for MVRegister<T> {
                     break;
                 }
             }
-            
+
             if !dominated {
                 // 移除被这个时钟覆盖的值
                 self.values.retain(|existing_clock, _| {
                     existing_clock.compare(clock) != VectorClockOrder::Less
                 });
-                
+
                 // 添加新值
                 self.values.insert(clock.clone(), value.clone());
             }
         }
     }
-    
+
     fn value(&self) -> Self::Value {
         self.values.values().cloned().collect()
     }
@@ -2192,7 +2194,7 @@ impl DataSyncFramework {
             peers,
         }
     }
-    
+
     fn start_sync(&self) {
         match &self.sync_strategy {
             SyncStrategy::PullBased { interval } => {
@@ -2209,35 +2211,35 @@ impl DataSyncFramework {
             },
         }
     }
-    
+
     fn sync_with_peer(&mut self, peer: &str) -> Result<SyncStats, String> {
         println!("与节点 {} 同步", peer);
-        
+
         let mut stats = SyncStats {
             keys_synced: 0,
             bytes_transferred: 0,
             conflicts_resolved: 0,
             failed_keys: Vec::new(),
         };
-        
+
         // 获取远程密钥列表
         let remote_keys = self.get_keys_from_peer(peer)?;
-        
+
         // 获取本地密钥列表
         let local_keys = self.storage.list_keys("")?;
-        
+
         // 找出所有唯一密钥
         let all_keys: HashSet<String> = local_keys.iter().chain(remote_keys.iter())
             .cloned()
             .collect();
-        
+
         // 同步每个密钥
         for key in all_keys {
             match self.sync_key(&key, peer) {
                 Ok((bytes, had_conflict)) => {
                     stats.keys_synced += 1;
                     stats.bytes_transferred += bytes;
-                    
+
                     if had_conflict {
                         stats.conflicts_resolved += 1;
                     }
@@ -2248,33 +2250,33 @@ impl DataSyncFramework {
                 }
             }
         }
-        
+
         Ok(stats)
     }
-    
+
     fn sync_key(&mut self, key: &str, peer: &str) -> Result<(usize, bool), String> {
         // 获取本地值和元数据
         let local_data = self.storage.get_with_metadata(key)?;
-        
+
         // 获取远程值和元数据
         let remote_data = self.get_from_peer(peer, key)?;
-        
+
         let (local_value, local_metadata) = match local_data {
             Some((value, metadata)) => (Some(value), metadata),
             None => (None, None),
         };
-        
+
         let (remote_value, remote_metadata) = match remote_data {
             Some((value, metadata)) => (Some(value), metadata),
             None => (None, None),
         };
-        
+
         // 检查是否存在冲突
         let has_conflict = match (&local_value, &remote_value) {
             (Some(_), Some(_)) => true, // 简化处理，实际上应该基于元数据判断
             _ => false,
         };
-        
+
         // 如果有冲突，使用冲突解决器
         if has_conflict {
             let resolved = self.conflict_resolver.resolve(
@@ -2284,24 +2286,24 @@ impl DataSyncFramework {
                 local_metadata.as_deref(),
                 remote_metadata.as_deref(),
             )?;
-            
+
             // 存储解决后的值
             if let Some(value) = resolved {
                 // 生成新的元数据
                 let new_metadata = self.generate_metadata(key)?;
-                
+
                 // 保存到本地存储
                 self.storage.put(key, &value, Some(&new_metadata))?;
-                
+
                 // 也将解决后的值推送到对方
                 self.put_to_peer(peer, key, &value, Some(&new_metadata))?;
-                
+
                 return Ok((value.len() * 2, true)); // 双向传输
             }
-            
+
             return Ok((0, true)); // 冲突解决为删除
         }
-        
+
         // 没有冲突，使用较新的值
         match (&local_value, &remote_value) {
             (Some(local), None) => {
@@ -2324,32 +2326,32 @@ impl DataSyncFramework {
             }
         }
     }
-    
+
     fn generate_metadata(&self, key: &str) -> Result<Vec<u8>, String> {
         // 简化实现，使用时间戳作为元数据
         let timestamp = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .map_err(|e| format!("获取系统时间失败: {}", e))?
             .as_secs();
-        
+
         let metadata = format!("{}:{}:{}", self.node_id, key, timestamp);
         Ok(metadata.into_bytes())
     }
-    
+
     // 以下方法在实际应用中需要通过网络调用远程节点
-    
+
     fn get_keys_from_peer(&self, peer: &str) -> Result<Vec<String>, String> {
         // 模拟从对等节点获取键列表
         println!("从节点 {} 获取键列表", peer);
         Ok(Vec::new()) // 简化实现
     }
-    
+
     fn get_from_peer(&self, peer: &str, key: &str) -> Result<Option<(Vec<u8>, Option<Vec<u8>>)>, String> {
         // 模拟从对等节点获取值和元数据
         println!("从节点 {} 获取键 {}", peer, key);
         Ok(None) // 简化实现
     }
-    
+
     fn put_to_peer(&self, peer: &str, key: &str, value: &[u8], metadata: Option<&[u8]>) -> Result<(), String> {
         // 模拟向对等节点发送值和元数据
         println!("向节点 {} 发送键 {}", peer, key);
@@ -2374,12 +2376,12 @@ impl ConflictResolver for LastWriteWinsResolver {
             let s = String::from_utf8_lossy(md);
             s.split(':').last().and_then(|ts| ts.parse::<u64>().ok())
         }).unwrap_or(0);
-        
+
         let remote_ts = remote_metadata.and_then(|md| {
             let s = String::from_utf8_lossy(md);
             s.split(':').last().and_then(|ts| ts.parse::<u64>().ok())
         }).unwrap_or(0);
-        
+
         if remote_ts > local_ts {
             // 远程更新，使用远程值
             Ok(remote.map(|v| v.to_vec()))
@@ -2397,13 +2399,13 @@ impl ConflictResolver for VectorClockResolver {
     fn resolve(&self, _key: &str, local: Option<&[u8]>, remote: Option<&[u8]>, local_metadata: Option<&[u8]>, remote_metadata: Option<&[u8]>) -> Result<Option<Vec<u8>>, String> {
         // 解析元数据中的向量时钟
         // 简化实现，假设元数据是序列化的向量时钟
-        
+
         // 在实际应用中，这里需要解析向量时钟并比较它们
         // 现在只是基于长度做一个简单的模拟
-        
+
         let local_len = local_metadata.map_or(0, |m| m.len());
         let remote_len = remote_metadata.map_or(0, |m| m.len());
-        
+
         if remote_len > local_len {
             // 假设远程更新
             Ok(remote.map(|v| v.to_vec()))
@@ -2560,36 +2562,36 @@ impl TransactionCoordinator {
             recovery_manager,
         }
     }
-    
+
     fn start_transaction(&self) -> Result<String, String> {
         let tx_id = format!("tx-{}-{}", self.coordinator_id, uuid::Uuid::new_v4());
-        
+
         // 创建事务状态
         let state = TransactionState::Created {
             created_at: SystemTime::now(),
         };
-        
+
         // 存储事务
         self.storage.create_transaction(&tx_id)?;
         self.storage.update_transaction_state(&tx_id, &state)?;
-        
+
         // 添加到活动事务
         let mut active_transactions = self.active_transactions.write().unwrap();
         active_transactions.insert(tx_id.clone(), state);
-        
+
         println!("创建事务: {}", tx_id);
-        
+
         Ok(tx_id)
     }
-    
+
     fn prepare(&self, tx_id: &str, actions: &[TransactionAction]) -> Result<bool, String> {
         // 确保事务存在
         if !self.transaction_exists(tx_id)? {
             return Err(format!("事务 {} 不存在", tx_id));
         }
-        
+
         println!("准备事务: {}", tx_id);
-        
+
         // 将状态更新为"准备中"
         let mut prepared_participants = HashSet::new();
         let preparing_state = TransactionState::Preparing {
@@ -2597,7 +2599,7 @@ impl TransactionCoordinator {
             started_at: SystemTime::now(),
         };
         self.update_transaction_state(tx_id, &preparing_state)?;
-        
+
         // 按参与者分组操作
         let mut actions_by_participant: HashMap<String, Vec<TransactionAction>> = HashMap::new();
         for action in actions {
@@ -2606,13 +2608,13 @@ impl TransactionCoordinator {
                 .or_insert_with(Vec::new)
                 .push(action.clone());
         }
-        
+
         // 请求每个参与者准备
         let mut all_prepared = true;
         for (participant_id, participant_actions) in &actions_by_participant {
             let participant = self.participants.get(participant_id)
                 .ok_or_else(|| format!("参与者 {} 不存在", participant_id))?;
-            
+
             // 使用重试策略
             let prepare_result = self.retry_policy.execute_with_check(
                 || participant.prepare(tx_id, participant_actions),
@@ -2621,12 +2623,12 @@ impl TransactionCoordinator {
                     !err.contains("永久失败")
                 },
             );
-            
+
             match prepare_result {
                 Ok(prepared) => {
                     if prepared {
                         prepared_participants.insert(participant_id.clone());
-                        
+
                         // 更新准备好的参与者列表
                         let updating_state = TransactionState::Preparing {
                             prepared_participants: prepared_participants.clone(),
@@ -2645,7 +2647,7 @@ impl TransactionCoordinator {
                 }
             }
         }
-        
+
         // 如果所有参与者都准备好了，更新状态为"已准备"
         if all_prepared {
             let prepared_state = TransactionState::Prepared {
@@ -2659,7 +2661,7 @@ impl TransactionCoordinator {
             Ok(false)
         }
     }
-    
+
     fn commit_transaction(&self, tx_id: &str) -> Result<bool, String> {
         // 确保事务存在且处于正确状态
         let current_state = self.get_transaction_state(tx_id)?;
@@ -2671,33 +2673,33 @@ impl TransactionCoordinator {
                 return Err(format!("事务 {} 不在可提交状态", tx_id));
             }
         }
-        
+
         println!("提交事务: {}", tx_id);
-        
+
         // 更新状态为"提交中"
         let committing_state = TransactionState::Committing {
             committed_participants: HashSet::new(),
             started_at: SystemTime::now(),
         };
         self.update_transaction_state(tx_id, &committing_state)?;
-        
+
         // 获取准备好的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 提交每个参与者
         let mut committed_participants = HashSet::new();
         let mut all_committed = true;
-        
+
         for participant_id in prepared_participants {
             if let Some(participant) = self.participants.get(&participant_id) {
                 // 使用重试策略
                 match self.retry_policy.execute(|| participant.commit(tx_id)) {
                     Ok(true) => {
                         committed_participants.insert(participant_id.clone());
-                        
+
                         // 更新已提交的参与者列表
                         let updating_state = TransactionState::Committing {
                             committed_participants: committed_participants.clone(),
@@ -2716,7 +2718,7 @@ impl TransactionCoordinator {
                 }
             }
         }
-        
+
         // 更新最终状态
         if all_committed {
             let committed_state = TransactionState::Committed {
@@ -2724,52 +2726,52 @@ impl TransactionCoordinator {
             };
             self.update_transaction_state(tx_id, &committed_state)?;
             self.storage.mark_transaction_completed(tx_id)?;
-            
+
             // 从活动事务中移除
             let mut active_transactions = self.active_transactions.write().unwrap();
             active_transactions.remove(tx_id);
-            
+
             Ok(true)
         } else {
             // 理想情况下，提交不应该失败，但如果失败，记录为未知状态
             let unknown_state = TransactionState::Unknown;
             self.update_transaction_state(tx_id, &unknown_state)?;
-            
+
             Err("部分参与者提交失败，事务处于未知状态".to_string())
         }
     }
-    
+
     fn abort_transaction(&self, tx_id: &str, reason: &str) -> Result<bool, String> {
         // 确保事务存在
         if !self.transaction_exists(tx_id)? {
             return Err(format!("事务 {} 不存在", tx_id));
         }
-        
+
         println!("中止事务: {}, 原因: {}", tx_id, reason);
-        
+
         // 更新状态为"中止中"
         let aborting_state = TransactionState::Aborting {
             aborted_participants: HashSet::new(),
             started_at: SystemTime::now(),
         };
         self.update_transaction_state(tx_id, &aborting_state)?;
-        
+
         // 获取已准备的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 中止每个参与者
         let mut aborted_participants = HashSet::new();
-        
+
         for participant_id in prepared_participants {
             if let Some(participant) = self.participants.get(&participant_id) {
                 // 使用重试策略
                 match self.retry_policy.execute(|| participant.abort(tx_id)) {
                     Ok(true) => {
                         aborted_participants.insert(participant_id.clone());
-                        
+
                         // 更新已中止的参与者列表
                         let updating_state = TransactionState::Aborting {
                             aborted_participants: aborted_participants.clone(),
@@ -2786,7 +2788,7 @@ impl TransactionCoordinator {
                 }
             }
         }
-        
+
         // 更新最终状态
         let aborted_state = TransactionState::Aborted {
             aborted_at: SystemTime::now(),
@@ -2794,14 +2796,14 @@ impl TransactionCoordinator {
         };
         self.update_transaction_state(tx_id, &aborted_state)?;
         self.storage.mark_transaction_completed(tx_id)?;
-        
+
         // 从活动事务中移除
         let mut active_transactions = self.active_transactions.write().unwrap();
         active_transactions.remove(tx_id);
-        
+
         Ok(true)
     }
-    
+
     fn transaction_exists(&self, tx_id: &str) -> Result<bool, String> {
         // 首先检查内存中的活动事务
         {
@@ -2810,14 +2812,14 @@ impl TransactionCoordinator {
                 return Ok(true);
             }
         }
-        
+
         // 如果不在内存中，检查存储
         match self.storage.get_transaction_state(tx_id)? {
             Some(_) => Ok(true),
             None => Ok(false),
         }
     }
-    
+
     fn get_transaction_state(&self, tx_id: &str) -> Result<TransactionState, String> {
         // 首先检查内存中的活动事务
         {
@@ -2826,28 +2828,28 @@ impl TransactionCoordinator {
                 return Ok(state.clone());
             }
         }
-        
+
         // 如果不在内存中，从存储获取
         match self.storage.get_transaction_state(tx_id)? {
             Some(state) => Ok(state),
             None => Err(format!("事务 {} 不存在", tx_id)),
         }
     }
-    
+
     fn update_transaction_state(&self, tx_id: &str, state: &TransactionState) -> Result<(), String> {
         // 更新存储
         self.storage.update_transaction_state(tx_id, state)?;
-        
+
         // 更新内存状态
         let mut active_transactions = self.active_transactions.write().unwrap();
         active_transactions.insert(tx_id.to_string(), state.clone());
-        
+
         Ok(())
     }
-    
+
     fn start_recovery(&self) {
         println!("启动事务恢复进程");
-        
+
         // 启动恢复管理器
         let coordinator_id = self.coordinator_id.clone();
         std::thread::spawn(move || {
@@ -2860,10 +2862,10 @@ impl TransactionCoordinator {
 impl RecoveryManager {
     fn recover_transactions(&self) -> Result<(), String> {
         println!("开始恢复未完成事务");
-        
+
         // 获取所有活动事务
         let active_transactions = self.storage.list_active_transactions()?;
-        
+
         for (tx_id, state) in active_transactions {
             match state {
                 TransactionState::Created { created_at } => {
@@ -2901,26 +2903,26 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn abort_transaction(&self, tx_id: &str, reason: &str) -> Result<(), String> {
         println!("恢复: 中止事务 {}, 原因: {}", tx_id, reason);
-        
+
         // 更新事务状态为中止中
         let aborting_state = TransactionState::Aborting {
             aborted_participants: HashSet::new(),
             started_at: SystemTime::now(),
         };
         self.storage.update_transaction_state(tx_id, &aborting_state)?;
-        
+
         // 获取已准备的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 中止每个参与者
         for participant_id in prepared_participants {
             if let Some(participant) = self.participants.get(&participant_id) {
@@ -2930,7 +2932,7 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         // 更新最终状态
         let aborted_state = TransactionState::Aborted {
             aborted_at: SystemTime::now(),
@@ -2938,26 +2940,26 @@ impl RecoveryManager {
         };
         self.storage.update_transaction_state(tx_id, &aborted_state)?;
         self.storage.mark_transaction_completed(tx_id)?;
-        
+
         Ok(())
     }
-    
+
     fn commit_transaction(&self, tx_id: &str) -> Result<(), String> {
         println!("恢复: 提交事务 {}", tx_id);
-        
+
         // 更新事务状态为提交中
         let committing_state = TransactionState::Committing {
             committed_participants: HashSet::new(),
             started_at: SystemTime::now(),
         };
         self.storage.update_transaction_state(tx_id, &committing_state)?;
-        
+
         // 获取已准备的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 提交每个参与者
         for participant_id in prepared_participants {
             if let Some(participant) = self.participants.get(&participant_id) {
@@ -2967,35 +2969,35 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         // 更新最终状态
         let committed_state = TransactionState::Committed {
             committed_at: SystemTime::now(),
         };
         self.storage.update_transaction_state(tx_id, &committed_state)?;
         self.storage.mark_transaction_completed(tx_id)?;
-        
+
         Ok(())
     }
-    
+
     fn retry_commit(&self, tx_id: &str) -> Result<(), String> {
         println!("恢复: 重试提交事务 {}", tx_id);
-        
+
         // 获取已提交的参与者
         let committed_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Committing { committed_participants, .. }) => committed_participants,
             _ => HashSet::new(),
         };
-        
+
         // 获取已准备的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 找出尚未提交的参与者
         let uncommitted = prepared_participants.difference(&committed_participants);
-        
+
         // 尝试提交每个未提交的参与者
         for participant_id in uncommitted {
             if let Some(participant) = self.participants.get(participant_id) {
@@ -3005,35 +3007,35 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         // 更新最终状态
         let committed_state = TransactionState::Committed {
             committed_at: SystemTime::now(),
         };
         self.storage.update_transaction_state(tx_id, &committed_state)?;
         self.storage.mark_transaction_completed(tx_id)?;
-        
+
         Ok(())
     }
-    
+
     fn retry_abort(&self, tx_id: &str) -> Result<(), String> {
         println!("恢复: 重试中止事务 {}", tx_id);
-        
+
         // 获取已中止的参与者
         let aborted_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Aborting { aborted_participants, .. }) => aborted_participants,
             _ => HashSet::new(),
         };
-        
+
         // 获取已准备的参与者
         let prepared_participants = match self.storage.get_transaction_state(tx_id)? {
             Some(TransactionState::Preparing { prepared_participants, .. }) => prepared_participants,
             _ => HashSet::new(),
         };
-        
+
         // 找出尚未中止的参与者
         let unaborted = prepared_participants.difference(&aborted_participants);
-        
+
         // 尝试中止每个未中止的参与者
         for participant_id in unaborted {
             if let Some(participant) = self.participants.get(participant_id) {
@@ -3043,7 +3045,7 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         // 更新最终状态
         let aborted_state = TransactionState::Aborted {
             aborted_at: SystemTime::now(),
@@ -3051,7 +3053,7 @@ impl RecoveryManager {
         };
         self.storage.update_transaction_state(tx_id, &aborted_state)?;
         self.storage.mark_transaction_completed(tx_id)?;
-        
+
         Ok(())
     }
 }
@@ -3080,20 +3082,20 @@ impl RedLock {
             clock_drift_factor: 0.01, // 默认时钟漂移因子
         }
     }
-    
+
     fn acquire_lock(&self, resource: &str) -> Result<Option<Lock>, String> {
         if self.nodes.is_empty() {
             return Err("没有可用的锁节点".to_string());
         }
-        
+
         let lock_id = uuid::Uuid::new_v4().to_string();
-        
+
         for _ in 0..self.retry_count {
             let start_time = Instant::now();
-            
+
             // 记录成功获取锁的节点数
             let mut acquired_nodes = 0;
-            
+
             // 尝试在每个节点上获取锁
             for node in &self.nodes {
                 match node.acquire(resource, &lock_id, self.lock_timeout) {
@@ -3108,15 +3110,15 @@ impl RedLock {
                     }
                 }
             }
-            
+
             // 计算获取锁所花费的时间
             let elapsed = start_time.elapsed();
-            
+
             // 计算锁有效时间
             let drift = (self.lock_timeout.as_millis() as f64 * self.clock_drift_factor) as u64;
             let valid_time = self.lock_timeout.checked_sub(Duration::from_millis(drift))
                                             .and_then(|t| t.checked_sub(elapsed));
-            
+
             // 检查是否获得多数节点锁
             let quorum = self.nodes.len() / 2 + 1;
             if acquired_nodes >= quorum {
@@ -3131,22 +3133,22 @@ impl RedLock {
                     }
                 }
             }
-            
+
             // 锁获取失败，释放所有节点上的锁
             for node in &self.nodes {
                 let _ = node.release(resource, &lock_id);
             }
-            
+
             // 等待一段时间后重试
             std::thread::sleep(self.retry_delay);
         }
-        
+
         Ok(None)
     }
-    
+
     fn release_lock(&self, resource: &str, lock_id: &str) -> Result<(), String> {
         let mut release_errors = Vec::new();
-        
+
         // 尝试释放所有节点上的锁
         for node in &self.nodes {
             match node.release(resource, lock_id) {
@@ -3161,11 +3163,11 @@ impl RedLock {
                 }
             }
         }
-        
+
         if !release_errors.is_empty() {
             return Err(format!("释放锁时发生错误: {:?}", release_errors));
         }
-        
+
         Ok(())
     }
 }
@@ -3195,7 +3197,7 @@ struct RedisLockNode {
 impl RedisLockNode {
     fn new(redis_url: &str, name: &str) -> Result<Self, redis::RedisError> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(RedisLockNode {
             client,
             name: name.to_string(),
@@ -3211,11 +3213,11 @@ impl LockNode for RedisLockNode {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 使用SET NX命令尝试获取锁
         let lock_key = format!("lock:{}", resource);
         let ttl_millis = ttl.as_millis() as usize;
-        
+
         let result: bool = redis::cmd("SET")
             .arg(&lock_key)
             .arg(lock_id)
@@ -3224,10 +3226,10 @@ impl LockNode for RedisLockNode {
             .arg(ttl_millis)
             .query(&mut conn)
             .map_err(|err| format!("Redis SET操作失败: {}", err))?;
-        
+
         Ok(result)
     }
-    
+
     fn release(&self, resource: &str, lock_id: &str) -> Result<bool, String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3235,9 +3237,9 @@ impl LockNode for RedisLockNode {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let lock_key = format!("lock:{}", resource);
-        
+
         // 使用Lua脚本确保只删除自己的锁
         let script = r"
             if redis.call('get', KEYS[1]) == ARGV[1] then
@@ -3246,13 +3248,13 @@ impl LockNode for RedisLockNode {
                 return 0
             end
         ";
-        
+
         let result: i32 = redis::Script::new(script)
             .key(&lock_key)
             .arg(lock_id)
             .invoke(&mut conn)
             .map_err(|err| format!("Redis脚本执行失败: {}", err))?;
-        
+
         Ok(result == 1)
     }
 }
@@ -3289,7 +3291,7 @@ impl TimeServer {
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap()
             .as_nanos() as u64;
-        
+
         TimeServer {
             server_id: server_id.to_string(),
             reference_clock: Arc::new(AtomicU64::new(now)),
@@ -3298,7 +3300,7 @@ impl TimeServer {
             clients: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn start(&self) {
         // 启动时钟更新线程
         let reference_clock = self.reference_clock.clone();
@@ -3309,22 +3311,22 @@ impl TimeServer {
                     .duration_since(SystemTime::UNIX_EPOCH)
                     .unwrap()
                     .as_nanos() as u64;
-                
+
                 reference_clock.store(now, Ordering::SeqCst);
-                
+
                 // 每100毫秒更新一次
                 std::thread::sleep(Duration::from_millis(100));
             }
         });
     }
-    
+
     fn register_client(&self, client_id: &str) -> Result<(), String> {
         let mut clients = self.clients.write().unwrap();
-        
+
         if clients.contains_key(client_id) {
             return Err(format!("客户端 {} 已存在", client_id));
         }
-        
+
         clients.insert(client_id.to_string(), TimeClient {
             client_id: client_id.to_string(),
             last_sync: SystemTime::now(),
@@ -3332,42 +3334,42 @@ impl TimeServer {
             round_trip_delay: AtomicU64::new(0),
             dispersion: AtomicU64::new(0),
         });
-        
+
         Ok(())
     }
-    
+
     fn handle_query(&self, query: TimeQuery) -> Result<(), String> {
         // 更新客户端状态
         let clients = self.clients.read().unwrap();
-        
+
         let client = clients.get(&query.client_id)
             .ok_or_else(|| format!("客户端 {} 不存在", query.client_id))?;
-        
+
         // 计算往返延迟和偏移
         let rtt = (query.t4 - query.t1) - (query.t3 - query.t2);
         let offset = ((query.t2 - query.t1) + (query.t3 - query.t4)) / 2;
-        
+
         // 更新客户端状态
         client.round_trip_delay.store(rtt, Ordering::SeqCst);
         client.offset.store(offset as i64, Ordering::SeqCst);
-        
+
         // 计算分散度（简化版本）
         let dispersion = rtt / 2;
         client.dispersion.store(dispersion, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn get_current_time(&self) -> u64 {
         self.reference_clock.load(Ordering::SeqCst)
     }
-    
+
     fn get_client_stats(&self, client_id: &str) -> Result<(i64, u64, u64), String> {
         let clients = self.clients.read().unwrap();
-        
+
         let client = clients.get(client_id)
             .ok_or_else(|| format!("客户端 {} 不存在", client_id))?;
-        
+
         Ok((
             client.offset.load(Ordering::SeqCst),
             client.round_trip_delay.load(Ordering::SeqCst),
@@ -3378,7 +3380,7 @@ impl TimeServer {
 
 // 分布式率限制器（基于令牌桶算法）
 struct TokenBucketRateLimiter {
-    
+
 
 ```rust
 struct TokenBucketRateLimiter {
@@ -3410,7 +3412,7 @@ impl TokenBucketRateLimiter {
             lock_timeout,
         }
     }
-    
+
     fn try_acquire(&self, key: &str, tokens: u32) -> Result<bool, String> {
         // 获取分布式锁防止并发问题
         let lock_resource = format!("rate_limiter:{}", key);
@@ -3418,23 +3420,23 @@ impl TokenBucketRateLimiter {
             Some(lock) => lock,
             None => return Err("无法获取速率限制器锁".to_string()),
         };
-        
+
         // 获取当前令牌数
         let current_time = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         let (token_count, last_refill_time) = match self.storage.get_token_count(key)? {
             Some((count, time)) => (count, time),
             None => (self.bucket_size, current_time), // 初始状态，桶是满的
         };
-        
+
         // 计算新的令牌数
         let time_elapsed = current_time.saturating_sub(last_refill_time);
         let new_tokens = (time_elapsed as f64 * self.rate as f64 / 1.0).floor() as u32;
         let current_tokens = (token_count + new_tokens).min(self.bucket_size);
-        
+
         // 尝试消费令牌
         if current_tokens >= tokens {
             // 更新令牌数
@@ -3446,17 +3448,17 @@ impl TokenBucketRateLimiter {
             self.storage.update_token_count(key, current_tokens, current_time)?;
             Ok(false)
         }
-        
+
         // 锁会在作用域结束时自动释放
     }
-    
+
     fn get_token_count(&self, key: &str) -> Result<u32, String> {
         // 获取当前令牌数
         let current_time = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        
+
         match self.storage.get_token_count(key)? {
             Some((count, time)) => {
                 // 计算新的令牌数
@@ -3479,14 +3481,14 @@ struct RedisRateLimiterStorage {
 impl RedisRateLimiterStorage {
     fn new(redis_url: &str, key_prefix: &str, ttl: Duration) -> Result<Self, redis::RedisError> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(RedisRateLimiterStorage {
             client,
             key_prefix: key_prefix.to_string(),
             ttl,
         })
     }
-    
+
     fn get_storage_key(&self, key: &str) -> String {
         format!("{}:{}", self.key_prefix, key)
     }
@@ -3500,9 +3502,9 @@ impl RateLimiterStorage for RedisRateLimiterStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 获取令牌数和时间戳
         let result: Option<(String, String)> = redis::cmd("HMGET")
             .arg(&storage_key)
@@ -3510,20 +3512,20 @@ impl RateLimiterStorage for RedisRateLimiterStorage {
             .arg("timestamp")
             .query(&mut conn)
             .map_err(|err| format!("Redis HMGET操作失败: {}", err))?;
-        
+
         match result {
             Some((count_str, timestamp_str)) => {
                 let count = count_str.parse::<u32>()
                     .map_err(|_| format!("无效的令牌数: {}", count_str))?;
                 let timestamp = timestamp_str.parse::<u64>()
                     .map_err(|_| format!("无效的时间戳: {}", timestamp_str))?;
-                
+
                 Ok(Some((count, timestamp)))
             },
             None => Ok(None),
         }
     }
-    
+
     fn update_token_count(&self, key: &str, count: u32, timestamp: u64) -> Result<(), String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3531,9 +3533,9 @@ impl RateLimiterStorage for RedisRateLimiterStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 设置令牌数和时间戳
         let _: () = redis::cmd("HMSET")
             .arg(&storage_key)
@@ -3543,14 +3545,14 @@ impl RateLimiterStorage for RedisRateLimiterStorage {
             .arg(timestamp.to_string())
             .query(&mut conn)
             .map_err(|err| format!("Redis HMSET操作失败: {}", err))?;
-        
+
         // 设置过期时间
         let _: () = redis::cmd("EXPIRE")
             .arg(&storage_key)
             .arg(self.ttl.as_secs() as usize)
             .query(&mut conn)
             .map_err(|err| format!("Redis EXPIRE操作失败: {}", err))?;
-        
+
         Ok(())
     }
 }
@@ -3572,15 +3574,15 @@ impl HLLCounter {
             storage,
         }
     }
-    
+
     fn add(&self, counter_name: &str, value: &str) -> Result<bool, String> {
         self.storage.add(counter_name, value)
     }
-    
+
     fn count(&self, counter_name: &str) -> Result<u64, String> {
         self.storage.count(counter_name)
     }
-    
+
     fn merge(&self, destination: &str, sources: &[String]) -> Result<(), String> {
         self.storage.merge(destination, sources)
     }
@@ -3595,13 +3597,13 @@ struct RedisHLLStorage {
 impl RedisHLLStorage {
     fn new(redis_url: &str, key_prefix: &str) -> Result<Self, redis::RedisError> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(RedisHLLStorage {
             client,
             key_prefix: key_prefix.to_string(),
         })
     }
-    
+
     fn get_storage_key(&self, key: &str) -> String {
         format!("{}:{}", self.key_prefix, key)
     }
@@ -3615,19 +3617,19 @@ impl HLLStorage for RedisHLLStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 使用PFADD命令添加元素
         let result: i32 = redis::cmd("PFADD")
             .arg(&storage_key)
             .arg(value)
             .query(&mut conn)
             .map_err(|err| format!("Redis PFADD操作失败: {}", err))?;
-        
+
         Ok(result == 1)
     }
-    
+
     fn count(&self, key: &str) -> Result<u64, String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3635,18 +3637,18 @@ impl HLLStorage for RedisHLLStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 使用PFCOUNT命令获取计数
         let count: u64 = redis::cmd("PFCOUNT")
             .arg(&storage_key)
             .query(&mut conn)
             .map_err(|err| format!("Redis PFCOUNT操作失败: {}", err))?;
-        
+
         Ok(count)
     }
-    
+
     fn merge(&self, destination: &str, sources: &[String]) -> Result<(), String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3654,21 +3656,21 @@ impl HLLStorage for RedisHLLStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let dest_key = self.get_storage_key(destination);
-        
+
         // 转换源键
         let source_keys: Vec<String> = sources.iter()
             .map(|s| self.get_storage_key(s))
             .collect();
-        
+
         // 使用PFMERGE命令合并HyperLogLog
         let _: () = redis::cmd("PFMERGE")
             .arg(&dest_key)
             .arg(source_keys)
             .query(&mut conn)
             .map_err(|err| format!("Redis PFMERGE操作失败: {}", err))?;
-        
+
         Ok(())
     }
 }
@@ -3698,7 +3700,7 @@ impl BloomFilter {
         // 计算布隆过滤器参数
         let bits_per_item = -1.0 * (false_positive_rate.ln() / (2.0_f64.ln().powi(2)));
         let size = (bits_per_item * expected_items as f64).ceil() as usize;
-        
+
         BloomFilter {
             storage,
             hash_functions,
@@ -3707,47 +3709,47 @@ impl BloomFilter {
             items_count: 0,
         }
     }
-    
+
     fn add(&mut self, item: &str, key: &str) -> Result<(), String> {
         // 计算所有哈希值
         let bit_positions = self.calculate_bit_positions(item);
-        
+
         // 设置所有位
         for bit in &bit_positions {
             self.storage.set_bit(key, *bit)?;
         }
-        
+
         self.items_count += 1;
-        
+
         Ok(())
     }
-    
+
     fn contains(&self, item: &str, key: &str) -> Result<bool, String> {
         // 计算所有哈希值
         let bit_positions = self.calculate_bit_positions(item);
-        
+
         // 检查所有位
         let bits = self.storage.get_many_bits(key, &bit_positions)?;
-        
+
         // 如果有任何一位为0，则项不在集合中
         Ok(bits.iter().all(|&bit| bit))
     }
-    
+
     fn calculate_bit_positions(&self, item: &str) -> Vec<usize> {
         self.hash_functions.iter()
             .map(|hash_fn| (hash_fn(item) % (self.size as u64)) as usize)
             .collect()
     }
-    
+
     fn estimate_items_count(&self) -> usize {
         self.items_count
     }
-    
+
     fn estimate_current_false_positive_rate(&self) -> f64 {
         let m = self.size as f64;
         let k = self.hash_functions.len() as f64;
         let n = self.items_count as f64;
-        
+
         // 计算假阳性率：(1 - e^(-k*n/m))^k
         (1.0 - (-k * n / m).exp()).powf(k)
     }
@@ -3762,13 +3764,13 @@ struct RedisBloomFilterStorage {
 impl RedisBloomFilterStorage {
     fn new(redis_url: &str, key_prefix: &str) -> Result<Self, redis::RedisError> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(RedisBloomFilterStorage {
             client,
             key_prefix: key_prefix.to_string(),
         })
     }
-    
+
     fn get_storage_key(&self, key: &str) -> String {
         format!("{}:{}", self.key_prefix, key)
     }
@@ -3782,9 +3784,9 @@ impl BloomFilterStorage for RedisBloomFilterStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 使用SETBIT命令设置位
         let result: i32 = redis::cmd("SETBIT")
             .arg(&storage_key)
@@ -3792,10 +3794,10 @@ impl BloomFilterStorage for RedisBloomFilterStorage {
             .arg(1)
             .query(&mut conn)
             .map_err(|err| format!("Redis SETBIT操作失败: {}", err))?;
-        
+
         Ok(result == 1)
     }
-    
+
     fn get_bit(&self, key: &str, bit: usize) -> Result<bool, String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3803,19 +3805,19 @@ impl BloomFilterStorage for RedisBloomFilterStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 使用GETBIT命令获取位
         let result: i32 = redis::cmd("GETBIT")
             .arg(&storage_key)
             .arg(bit)
             .query(&mut conn)
             .map_err(|err| format!("Redis GETBIT操作失败: {}", err))?;
-        
+
         Ok(result == 1)
     }
-    
+
     fn get_many_bits(&self, key: &str, bits: &[usize]) -> Result<Vec<bool>, String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -3823,18 +3825,18 @@ impl BloomFilterStorage for RedisBloomFilterStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         let storage_key = self.get_storage_key(key);
-        
+
         // 使用管道一次性获取多个位
         let mut pipe = redis::pipe();
         for &bit in bits {
             pipe.cmd("GETBIT").arg(&storage_key).arg(bit);
         }
-        
+
         let results: Vec<i32> = pipe.query(&mut conn)
             .map_err(|err| format!("Redis pipeline操作失败: {}", err))?;
-        
+
         Ok(results.iter().map(|&r| r == 1).collect())
     }
 }
@@ -3880,22 +3882,22 @@ impl DelayedTaskQueue {
             polling_interval,
         }
     }
-    
+
     fn register_handler<F>(&self, task_type: &str, handler: F) -> Result<(), String>
     where
         F: Fn(&Task) -> Result<(), String> + Send + Sync + 'static,
     {
         let mut handlers = self.task_handlers.write().unwrap();
-        
+
         if handlers.contains_key(task_type) {
             return Err(format!("处理器已存在: {}", task_type));
         }
-        
+
         handlers.insert(task_type.to_string(), Box::new(handler));
-        
+
         Ok(())
     }
-    
+
     fn schedule_task(&self, task_type: &str, payload: &[u8], execute_at: SystemTime, max_retries: u32, retry_delay: Duration) -> Result<String, String> {
         // 验证处理器是否存在
         {
@@ -3904,7 +3906,7 @@ impl DelayedTaskQueue {
                 return Err(format!("未注册的任务类型: {}", task_type));
             }
         }
-        
+
         // 创建任务
         let task_id = uuid::Uuid::new_v4().to_string();
         let task = Task {
@@ -3918,20 +3920,20 @@ impl DelayedTaskQueue {
             retry_delay,
             last_error: None,
         };
-        
+
         // 添加到存储
         self.storage.add_task(&task)?;
-        
+
         Ok(task_id)
     }
-    
+
     fn start(&self) {
         // 启动任务轮询线程
         let storage = Arc::new(self.storage.clone());
         let task_handlers = self.task_handlers.clone();
         let worker_pool = self.worker_pool.clone();
         let polling_interval = self.polling_interval;
-        
+
         std::thread::spawn(move || {
             loop {
                 // 获取准备好的任务
@@ -3945,11 +3947,11 @@ impl DelayedTaskQueue {
                                 let handler_clone = handler.clone();
                                 let storage_clone = storage.clone();
                                 let task_clone = task.clone();
-                                
+
                                 // 提交任务到工作池
                                 worker_pool.execute(move || {
                                     let task_id = task_clone.id.clone();
-                                    
+
                                     // 执行任务
                                     match handler_clone(&task_clone) {
                                         Ok(_) => {
@@ -3960,13 +3962,13 @@ impl DelayedTaskQueue {
                                         },
                                         Err(err) => {
                                             println!("任务 {} 执行失败: {}", task_id, err);
-                                            
+
                                             // 处理重试
                                             if task_clone.retries < task_clone.max_retries {
                                                 // 计算下次执行时间
                                                 let retry_delay = task_clone.retry_delay * (2_u32.pow(task_clone.retries)) as u32;
                                                 let next_execute_at = SystemTime::now() + retry_delay;
-                                                
+
                                                 // 重新安排任务
                                                 if let Err(reschedule_err) = storage_clone.reschedule_task(&task_id, next_execute_at) {
                                                     println!("重新安排任务失败: {}", reschedule_err);
@@ -3989,7 +3991,7 @@ impl DelayedTaskQueue {
                         println!("获取准备好的任务失败: {}", err);
                     }
                 }
-                
+
                 // 等待下一个轮询间隔
                 std::thread::sleep(polling_interval);
             }
@@ -4022,14 +4024,14 @@ struct RedisDelayedTaskStorage {
 impl RedisDelayedTaskStorage {
     fn new(redis_url: &str, queue_name: &str) -> Result<Self, redis::RedisError> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(RedisDelayedTaskStorage {
             client,
             tasks_key: format!("delayed_tasks:{}:tasks", queue_name),
             scheduled_set_key: format!("delayed_tasks:{}:schedule", queue_name),
         })
     }
-    
+
     fn task_to_json(&self, task: &Task) -> Result<String, String> {
         let json = serde_json::json!({
             "id": task.id,
@@ -4042,22 +4044,22 @@ impl RedisDelayedTaskStorage {
             "retry_delay": task.retry_delay.as_secs(),
             "last_error": task.last_error,
         });
-        
+
         serde_json::to_string(&json)
             .map_err(|err| format!("序列化任务失败: {}", err))
     }
-    
+
     fn json_to_task(&self, json: &str) -> Result<Task, String> {
         let value: serde_json::Value = serde_json::from_str(json)
             .map_err(|err| format!("解析任务JSON失败: {}", err))?;
-        
+
         let payload = base64::decode(value["payload"].as_str().unwrap_or(""))
             .map_err(|err| format!("解码任务载荷失败: {}", err))?;
-        
+
         let created_at_secs = value["created_at"].as_u64().unwrap_or(0);
         let execute_at_secs = value["execute_at"].as_u64().unwrap_or(0);
         let retry_delay_secs = value["retry_delay"].as_u64().unwrap_or(0);
-        
+
         Ok(Task {
             id: value["id"].as_str().unwrap_or("").to_string(),
             task_type: value["task_type"].as_str().unwrap_or("").to_string(),
@@ -4080,38 +4082,38 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 序列化任务
         let task_json = self.task_to_json(task)?;
-        
+
         // 计算执行时间的分数
         let score = task.execute_at
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap_or(Duration::from_secs(0))
             .as_secs() as f64;
-        
+
         // 使用管道执行事务
         let mut pipe = redis::pipe();
         pipe.atomic();
-        
+
         // 存储任务对象
         pipe.cmd("HSET")
             .arg(&self.tasks_key)
             .arg(&task.id)
             .arg(&task_json);
-        
+
         // 将任务添加到优先级队列（有序集合）
         pipe.cmd("ZADD")
             .arg(&self.scheduled_set_key)
             .arg(score)
             .arg(&task.id);
-        
+
         let _: () = pipe.query(&mut conn)
             .map_err(|err| format!("Redis管道操作失败: {}", err))?;
-        
+
         Ok(())
     }
-    
+
     fn get_ready_tasks(&self, limit: usize) -> Result<Vec<Task>, String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -4119,13 +4121,13 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 计算当前时间作为分数
         let now = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap_or(Duration::from_secs(0))
             .as_secs() as f64;
-        
+
         // 获取准备好的任务ID（分数小于等于当前时间）
         let task_ids: Vec<String> = redis::cmd("ZRANGEBYSCORE")
             .arg(&self.scheduled_set_key)
@@ -4136,27 +4138,27 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
             .arg(limit)
             .query(&mut conn)
             .map_err(|err| format!("Redis ZRANGEBYSCORE操作失败: {}", err))?;
-        
+
         if task_ids.is_empty() {
             return Ok(Vec::new());
         }
-        
+
         // 从集合中移除这些任务
         let _: () = redis::cmd("ZREM")
             .arg(&self.scheduled_set_key)
             .arg(&task_ids)
             .query(&mut conn)
             .map_err(|err| format!("Redis ZREM操作失败: {}", err))?;
-        
+
         // 获取任务JSON
         let mut pipe = redis::pipe();
         for task_id in &task_ids {
             pipe.cmd("HGET").arg(&self.tasks_key).arg(task_id);
         }
-        
+
         let task_jsons: Vec<Option<String>> = pipe.query(&mut conn)
             .map_err(|err| format!("Redis管道操作失败: {}", err))?;
-        
+
         // 解析任务
         let mut tasks = Vec::new();
         for json_opt in task_jsons {
@@ -4167,10 +4169,10 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 }
             }
         }
-        
+
         Ok(tasks)
     }
-    
+
     fn mark_task_complete(&self, task_id: &str) -> Result<(), String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -4178,17 +4180,17 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 从哈希表中删除任务
         let _: () = redis::cmd("HDEL")
             .arg(&self.tasks_key)
             .arg(task_id)
             .query(&mut conn)
             .map_err(|err| format!("Redis HDEL操作失败: {}", err))?;
-        
+
         Ok(())
     }
-    
+
     fn mark_task_failed(&self, task_id: &str, error: &str) -> Result<(), String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -4196,25 +4198,25 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 获取任务JSON
         let task_json: Option<String> = redis::cmd("HGET")
             .arg(&self.tasks_key)
             .arg(task_id)
             .query(&mut conn)
             .map_err(|err| format!("Redis HGET操作失败: {}", err))?;
-        
+
         if let Some(json) = task_json {
             // 解析任务
             let mut task = self.json_to_task(&json)?;
-            
+
             // 更新任务状态
             task.last_error = Some(error.to_string());
             task.retries = task.max_retries; // 确保不会重试
-            
+
             // 序列化任务
             let updated_json = self.task_to_json(&task)?;
-            
+
             // 更新任务
             let _: () = redis::cmd("HSET")
                 .arg(&self.tasks_key)
@@ -4223,10 +4225,10 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 .query(&mut conn)
                 .map_err(|err| format!("Redis HSET操作失败: {}", err))?;
         }
-        
+
         Ok(())
     }
-    
+
     fn reschedule_task(&self, task_id: &str, execute_at: SystemTime) -> Result<(), String> {
         let mut conn = match self.client.get_connection() {
             Ok(conn) => conn,
@@ -4234,53 +4236,53 @@ impl DelayedTaskStorage for RedisDelayedTaskStorage {
                 return Err(format!("无法连接到Redis: {}", err));
             }
         };
-        
+
         // 获取任务JSON
         let task_json: Option<String> = redis::cmd("HGET")
             .arg(&self.tasks_key)
             .arg(task_id)
             .query(&mut conn)
             .map_err(|err| format!("Redis HGET操作失败: {}", err))?;
-        
+
         if let Some(json) = task_json {
             // 解析任务
             let mut task = self.json_to_task(&json)?;
-            
+
             // 更新任务状态
             task.execute_at = execute_at;
             task.retries += 1;
-            
+
             // 序列化任务
             let updated_json = self.task_to_json(&task)?;
-            
+
             // 计算执行时间的分数
             let score = task.execute_at
                 .duration_since(SystemTime::UNIX_EPOCH)
                 .unwrap_or(Duration::from_secs(0))
                 .as_secs() as f64;
-            
+
             // 使用管道执行事务
             let mut pipe = redis::pipe();
             pipe.atomic();
-            
+
             // 更新任务
             pipe.cmd("HSET")
                 .arg(&self.tasks_key)
                 .arg(task_id)
                 .arg(&updated_json);
-            
+
             // 将任务添加到优先级队列
             pipe.cmd("ZADD")
                 .arg(&self.scheduled_set_key)
                 .arg(score)
                 .arg(task_id);
-            
+
             let _: () = pipe.query(&mut conn)
                 .map_err(|err| format!("Redis管道操作失败: {}", err))?;
         } else {
             return Err(format!("任务 {} 不存在", task_id));
         }
-        
+
         Ok(())
     }
 }
@@ -4326,14 +4328,14 @@ impl P2PNetwork {
             message_handlers: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn start(&self) -> Result<(), String> {
         // 启动监听线程
         let node_id = self.node_id.clone();
         let listen_addr = self.listen_addr;
         let peers = self.peers.clone();
         let message_handlers = self.message_handlers.clone();
-        
+
         std::thread::spawn(move || {
             // 创建监听套接字
             let listener = match TcpListener::bind(listen_addr) {
@@ -4343,9 +4345,9 @@ impl P2PNetwork {
                     return;
                 }
             };
-            
+
             println!("节点 {} 正在监听 {}", node_id, listen_addr);
-            
+
             for stream in listener.incoming() {
                 match stream {
                     Ok(stream) => {
@@ -4353,7 +4355,7 @@ impl P2PNetwork {
                         let node_id = node_id.clone();
                         let peers = peers.clone();
                         let message_handlers = message_handlers.clone();
-                        
+
                         std::thread::spawn(move || {
                             if let Err(err) = handle_connection(stream, &node_id, &peers, &message_handlers) {
                                 println!("处理连接失败: {}", err);
@@ -4366,10 +4368,10 @@ impl P2PNetwork {
                 }
             }
         });
-        
+
         Ok(())
     }
-    
+
     fn connect_to_peer(&self, peer_id: &str, addr: SocketAddr) -> Result<(), String> {
         // 检查是否已连接
         {
@@ -4380,11 +4382,11 @@ impl P2PNetwork {
                 }
             }
         }
-        
+
         // 连接到对等节点
         let stream = TcpStream::connect(addr)
             .map_err(|err| format!("连接到对等节点失败: {}", err))?;
-        
+
         // 注册对等节点
         let peer_info = PeerInfo {
             id: peer_id.to_string(),
@@ -4392,38 +4394,38 @@ impl P2PNetwork {
             last_seen: Instant::now(),
             status: PeerStatus::Connected,
         };
-        
+
         let mut peers = self.peers.write().unwrap();
         peers.insert(peer_id.to_string(), peer_info);
-        
+
         // 启动发送线程
         let node_id = self.node_id.clone();
         let peer_id = peer_id.to_string();
-        
+
         std::thread::spawn(move || {
             if let Err(err) = handle_outbound_connection(stream, &node_id, &peer_id) {
                 println!("处理出站连接失败: {}", err);
             }
         });
-        
+
         Ok(())
     }
-    
+
     fn register_message_handler<F>(&self, message_type: &str, handler: F) -> Result<(), String>
     where
         F: Fn(&NetworkMessage) -> Result<Vec<u8>, String> + Send + Sync + 'static,
     {
         let mut handlers = self.message_handlers.write().unwrap();
-        
+
         if handlers.contains_key(message_type) {
             return Err(format!("消息处理器已存在: {}", message_type));
         }
-        
+
         handlers.insert(message_type.to_string(), Box::new(handler));
-        
+
         Ok(())
     }
-    
+
     fn send_message(&self, receiver: &str, message_type: &str, content: &[u8]) -> Result<String, String> {
         // 创建消息
         let message_id = uuid::Uuid::new_v4().to_string();
@@ -4437,11 +4439,11 @@ impl P2PNetwork {
             ttl: 10, // 默认TTL
             hops: 0,
         };
-        
+
         // 序列化消息
         let message_data = serde_json::to_vec(&message)
             .map_err(|err| format!("序列化消息失败: {}", err))?;
-        
+
         // 查找接收节点
         let peers = self.peers.read().unwrap();
         if let Some(peer) = peers.get(receiver) {
@@ -4449,42 +4451,42 @@ impl P2PNetwork {
                 // 连接到对等节点并发送消息
                 let mut stream = TcpStream::connect(peer.addr)
                     .map_err(|err| format!("连接到对等节点失败: {}", err))?;
-                
+
                 // 发送消息长度
                 let length = message_data.len() as u32;
                 let length_bytes = length.to_be_bytes();
                 stream.write_all(&length_bytes)
                     .map_err(|err| format!("发送消息长度失败: {}", err))?;
-                
+
                 // 发送消息数据
                 stream.write_all(&message_data)
                     .map_err(|err| format!("发送消息数据失败: {}", err))?;
-                
+
                 return Ok(message_id);
             }
         }
-        
+
         // 如果直接连接不可用，尝试洪泛
         self.flood_message(&message)?;
-        
+
         Ok(message_id)
     }
-    
+
     fn flood_message(&self, message: &NetworkMessage) -> Result<(), String> {
         // 检查TTL
         if message.ttl == 0 {
             return Ok(());
         }
-        
+
         // 创建新消息（递减TTL并增加跳数）
         let mut new_message = message.clone();
         new_message.ttl -= 1;
         new_message.hops += 1;
-        
+
         // 序列化消息
         let message_data = serde_json::to_vec(&new_message)
             .map_err(|err| format!("序列化消息失败: {}", err))?;
-        
+
         // 向所有连接的对等节点广播消息
         let peers = self.peers.read().unwrap();
         for (_, peer) in peers.iter() {
@@ -4498,7 +4500,7 @@ impl P2PNetwork {
                         println!("发送消息长度失败: {}", err);
                         continue;
                     }
-                    
+
                     // 发送消息数据
                     if let Err(err) = stream.write_all(&message_data) {
                         println!("发送消息数据失败: {}", err);
@@ -4507,13 +4509,13 @@ impl P2PNetwork {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn discover_peers(&self, bootstrap_nodes: &[SocketAddr]) -> Result<usize, String> {
         let mut discovered = 0;
-        
+
         // 连接到引导节点并请求对等节点列表
         for &addr in bootstrap_nodes {
             match TcpStream::connect(addr) {
@@ -4529,7 +4531,7 @@ impl P2PNetwork {
                         ttl: 1,
                         hops: 0,
                     };
-                    
+
                     // 序列化消息
                     let message_data = match serde_json::to_vec(&message) {
                         Ok(data) => data,
@@ -4538,7 +4540,7 @@ impl P2PNetwork {
                             continue;
                         }
                     };
-                    
+
                     // 发送消息长度
                     let length = message_data.len() as u32;
                     let length_bytes = length.to_be_bytes();
@@ -4546,29 +4548,29 @@ impl P2PNetwork {
                         println!("发送消息长度失败: {}", err);
                         continue;
                     }
-                    
+
                     // 发送消息数据
                     if let Err(err) = stream.write_all(&message_data) {
                         println!("发送消息数据失败: {}", err);
                         continue;
                     }
-                    
+
                     // 读取响应长度
                     let mut length_bytes = [0u8; 4];
                     if let Err(err) = stream.read_exact(&mut length_bytes) {
                         println!("读取响应长度失败: {}", err);
                         continue;
                     }
-                    
+
                     let length = u32::from_be_bytes(length_bytes) as usize;
-                    
+
                     // 读取响应数据
                     let mut response_data = vec![0u8; length];
                     if let Err(err) = stream.read_exact(&mut response_data) {
                         println!("读取响应数据失败: {}", err);
                         continue;
                     }
-                    
+
                     // 解析响应
                     let response: NetworkMessage = match serde_json::from_slice(&response_data) {
                         Ok(resp) => resp,
@@ -4577,7 +4579,7 @@ impl P2PNetwork {
                             continue;
                         }
                     };
-                    
+
                     // 处理对等节点列表
                     if response.message_type == "DISCOVER_RESPONSE" {
                         let peer_list: Vec<(String, SocketAddr)> = match serde_json::from_slice(&response.content) {
@@ -4587,7 +4589,7 @@ impl P2PNetwork {
                                 continue;
                             }
                         };
-                        
+
                         // 连接到新发现的对等节点
                         for (peer_id, peer_addr) in peer_list {
                             if peer_id != self.node_id {
@@ -4605,7 +4607,7 @@ impl P2PNetwork {
                 }
             }
         }
-        
+
         Ok(discovered)
     }
 }
@@ -4619,23 +4621,23 @@ fn handle_connection(
     // 设置非阻塞模式
     stream.set_nonblocking(true)
         .map_err(|err| format!("设置非阻塞模式失败: {}", err))?;
-    
+
     let mut reader = BufReader::new(stream.try_clone().unwrap());
     let mut writer = BufWriter::new(stream);
-    
+
     loop {
         // 读取消息长度
         let mut length_bytes = [0u8; 4];
         match reader.read_exact(&mut length_bytes) {
             Ok(_) => {
                 let length = u32::from_be_bytes(length_bytes) as usize;
-                
+
                 // 读取消息数据
                 let mut message_data = vec![0u8; length];
                 if let Err(err) = reader.read_exact(&mut message_data) {
                     return Err(format!("读取消息数据失败: {}", err));
                 }
-                
+
                 // 解析消息
                 let message: NetworkMessage = match serde_json::from_slice(&message_data) {
                     Ok(msg) => msg,
@@ -4643,7 +4645,7 @@ fn handle_connection(
                         return Err(format!("解析消息失败: {}", err));
                     }
                 };
-                
+
                 // 更新对等节点信息
                 {
                     let mut peers_guard = peers.write().unwrap();
@@ -4654,7 +4656,7 @@ fn handle_connection(
                         status: PeerStatus::Connected,
                     });
                 }
-                
+
                 // 处理消息
                 if message.receiver == node_id || message.receiver == "any" {
                     let handlers = message_handlers.read().unwrap();
@@ -4672,7 +4674,7 @@ fn handle_connection(
                                     ttl: 1,
                                     hops: 0,
                                 };
-                                
+
                                 // 序列化响应
                                 let response_data = match serde_json::to_vec(&response_message) {
                                     Ok(data) => data,
@@ -4680,17 +4682,17 @@ fn handle_connection(
                                         return Err(format!("序列化响应失败: {}", err));
                                     }
                                 };
-                                
+
                                 // 发送响应长度
                                 let length = response_data.len() as u32;
                                 let length_bytes = length.to_be_bytes();
                                 writer.write_all(&length_bytes)
                                     .map_err(|err| format!("发送响应长度失败: {}", err))?;
-                                
+
                                 // 发送响应数据
                                 writer.write_all(&response_data)
                                     .map_err(|err| format!("发送响应数据失败: {}", err))?;
-                                
+
                                 writer.flush()
                                     .map_err(|err| format!("刷新响应失败: {}", err))?;
                             },
@@ -4712,7 +4714,7 @@ fn handle_connection(
                                     continue;
                                 }
                             };
-                            
+
                             // 发送消息长度
                             let length = message_data.len() as u32;
                             let length_bytes = length.to_be_bytes();
@@ -4720,7 +4722,7 @@ fn handle_connection(
                                 println!("发送转发消息长度失败: {}", err);
                                 continue;
                             }
-                            
+
                             // 发送消息数据
                             if let Err(err) = forward_stream.write_all(&message_data) {
                                 println!("发送转发消息数据失败: {}", err);
@@ -4749,10 +4751,10 @@ fn handle_outbound_connection(
     // 设置非阻塞模式
     stream.set_nonblocking(true)
         .map_err(|err| format!("设置非阻塞模式失败: {}", err))?;
-    
+
     // 发送节点信息
     let mut writer = BufWriter::new(stream);
-    
+
     // 创建握手消息
     let handshake_message = NetworkMessage {
         id: uuid::Uuid::new_v4().to_string(),
@@ -4764,29 +4766,29 @@ fn handle_outbound_connection(
         ttl: 1,
         hops: 0,
     };
-    
+
     // 序列化握手消息
     let handshake_data = serde_json::to_vec(&handshake_message)
         .map_err(|err| format!("序列化握手消息失败: {}", err))?;
-    
+
     // 发送握手消息长度
     let length = handshake_data.len() as u32;
     let length_bytes = length.to_be_bytes();
     writer.write_all(&length_bytes)
         .map_err(|err| format!("发送握手消息长度失败: {}", err))?;
-    
+
     // 发送握手消息数据
     writer.write_all(&handshake_data)
         .map_err(|err| format!("发送握手消息数据失败: {}", err))?;
-    
+
     writer.flush()
         .map_err(|err| format!("刷新握手消息失败: {}", err))?;
-    
+
     // 保持连接活跃（可以实现心跳机制）
     loop {
         // 发送心跳
         std::thread::sleep(Duration::from_secs(30));
-        
+
         // 创建心跳消息
         let heartbeat_message = NetworkMessage {
             id: uuid::Uuid::new_v4().to_string(),
@@ -4798,7 +4800,7 @@ fn handle_outbound_connection(
             ttl: 1,
             hops: 0,
         };
-        
+
         // 序列化心跳消息
         let heartbeat_data = match serde_json::to_vec(&heartbeat_message) {
             Ok(data) => data,
@@ -4806,19 +4808,19 @@ fn handle_outbound_connection(
                 return Err(format!("序列化心跳消息失败: {}", err));
             }
         };
-        
+
         // 发送心跳消息长度
         let length = heartbeat_data.len() as u32;
         let length_bytes = length.to_be_bytes();
         if let Err(err) = writer.write_all(&length_bytes) {
             return Err(format!("发送心跳消息长度失败: {}", err));
         }
-        
+
         // 发送心跳消息数据
         if let Err(err) = writer.write_all(&heartbeat_data) {
             return Err(format!("发送心跳消息数据失败: {}", err));
         }
-        
+
         if let Err(err) = writer.flush() {
             return Err(format!("刷新心跳消息失败: {}", err));
         }
@@ -5038,39 +5040,39 @@ impl DistributedDatabase {
                 hasher.finish()
             }),
         ));
-        
+
         let partition_manager = PartitionManager {
             node_id: node_id.to_string(),
             partitioning_strategy,
             partitions: RwLock::new(HashMap::new()),
             ring: ring.clone(),
         };
-        
+
         let partition_manager_arc = Arc::new(partition_manager);
-        
+
         let statistics = Arc::new(Statistics {
             table_stats: RwLock::new(HashMap::new()),
         });
-        
+
         let query_optimizer = QueryOptimizer {
             statistics: statistics.clone(),
             cost_models: HashMap::new(),
         };
-        
+
         let query_processor = QueryProcessor {
             node_id: node_id.to_string(),
             query_handlers: RwLock::new(HashMap::new()),
             query_optimizer,
             partition_manager: partition_manager_arc.clone(),
         };
-        
+
         let replication_manager = ReplicationManager {
             node_id: node_id.to_string(),
             replication_factor,
             replication_strategy,
             peers: RwLock::new(HashMap::new()),
         };
-        
+
         let transaction_coordinator = Arc::new(TransactionCoordinator::new(
             node_id,
             Box::new(InMemoryTransactionStorage::new()),
@@ -5079,13 +5081,13 @@ impl DistributedDatabase {
             Duration::from_secs(10),
             3,
         ));
-        
+
         let transaction_manager = TransactionManager {
             node_id: node_id.to_string(),
             active_transactions: RwLock::new(HashMap::new()),
             coordinator: transaction_coordinator,
         };
-        
+
         DistributedDatabase {
             node_id: node_id.to_string(),
             storage_engine,
@@ -5095,30 +5097,30 @@ impl DistributedDatabase {
             transaction_manager,
         }
     }
-    
+
     fn start(&self) -> Result<(), String> {
         println!("启动分布式数据库节点: {}", self.node_id);
-        
+
         // 在实际实现中，这里会启动各个组件
-        
+
         Ok(())
     }
-    
+
     fn execute_query(&self, query: &Query) -> Result<QueryResult, String> {
         let start_time = Instant::now();
-        
+
         // 获取查询处理器
         let handlers = self.query_processor.query_handlers.read().unwrap();
-        
+
         let handler = handlers.get(&query.query_type)
             .ok_or_else(|| format!("不支持的查询类型: {:?}", query.query_type))?;
-        
+
         // 执行查询
         let result = handler(query)?;
-        
+
         // 计算执行时间
         let execution_time = start_time.elapsed();
-        
+
         Ok(QueryResult {
             success: result.success,
             result_data: result.result_data,
@@ -5126,15 +5128,15 @@ impl DistributedDatabase {
             affected_rows: result.affected_rows,
         })
     }
-    
+
     fn add_node(&self, node_id: &str, address: SocketAddr) -> Result<(), String> {
         // 向复制管理器添加对等节点
         let mut peers = self.replication_manager.peers.write().unwrap();
-        
+
         if peers.contains_key(node_id) {
             return Err(format!("节点 {} 已存在", node_id));
         }
-        
+
         peers.insert(node_id.to_string(), ReplicationPeer {
             node_id: node_id.to_string(),
             address,
@@ -5142,93 +5144,93 @@ impl DistributedDatabase {
             last_heartbeat: Instant::now(),
             replication_lag: Duration::from_secs(0),
         });
-        
+
         // 向一致性哈希环添加节点
         self.partition_manager.ring.add_node(node_id);
-        
+
         // 重新平衡分区
         self.rebalance_partitions()?;
-        
+
         Ok(())
     }
-    
+
     fn remove_node(&self, node_id: &str) -> Result<(), String> {
         // 从复制管理器移除对等节点
         let mut peers = self.replication_manager.peers.write().unwrap();
-        
+
         if !peers.contains_key(node_id) {
             return Err(format!("节点 {} 不存在", node_id));
         }
-        
+
         peers.remove(node_id);
-        
+
         // 从一致性哈希环移除节点
         self.partition_manager.ring.remove_node(node_id);
-        
+
         // 重新平衡分区
         self.rebalance_partitions()?;
-        
+
         Ok(())
     }
-    
+
     fn rebalance_partitions(&self) -> Result<(), String> {
         println!("开始重新平衡分区");
-        
+
         // 获取所有分区
         let mut partitions = self.partition_manager.partitions.write().unwrap();
-        
+
         // 获取所有节点
         let peers = self.replication_manager.peers.read().unwrap();
         let nodes: Vec<String> = peers.keys().cloned().collect();
-        
+
         if nodes.is_empty() {
             return Err("没有可用节点进行分区重新平衡".to_string());
         }
-        
+
         // 重新分配分区
         for (_, partition) in partitions.iter_mut() {
             // 设置分区状态为重新平衡
             partition.status = PartitionStatus::Rebalancing;
-            
+
             // 计算分区的哈希值
             let partition_key = format!("partition:{}", partition.id);
             let assigned_node = self.partition_manager.ring.get_node(&partition_key)
                 .unwrap_or_else(|| nodes[0].clone());
-            
+
             // 更新主节点
             partition.primary_node = assigned_node.clone();
-            
+
             // 选择复制节点
             partition.nodes.clear();
             partition.nodes.push(assigned_node.clone());
-            
+
             let replica_count = self.replication_manager.replication_factor - 1;
             if replica_count > 0 {
                 let replica_nodes = self.partition_manager.ring.get_nodes(&partition_key, replica_count + 1);
-                
+
                 for node in replica_nodes {
                     if node != assigned_node && !partition.nodes.contains(&node) {
                         partition.nodes.push(node);
-                        
+
                         if partition.nodes.len() >= self.replication_manager.replication_factor {
                             break;
                         }
                     }
                 }
             }
-            
+
             // 恢复分区状态
             partition.status = PartitionStatus::Normal;
         }
-        
+
         println!("分区重新平衡完成");
-        
+
         Ok(())
     }
-    
+
     fn begin_transaction(&self, isolation_level: IsolationLevel) -> Result<String, String> {
         let tx_id = self.transaction_manager.coordinator.start_transaction()?;
-        
+
         // 创建事务上下文
         let tx_context = TransactionContext {
             id: tx_id.clone(),
@@ -5239,28 +5241,28 @@ impl DistributedDatabase {
             locks: Vec::new(),
             operations: Vec::new(),
         };
-        
+
         // 添加到活动事务
         let mut active_transactions = self.transaction_manager.active_transactions.write().unwrap();
         active_transactions.insert(tx_id.clone(), tx_context);
-        
+
         Ok(tx_id)
     }
-    
+
     fn commit_transaction(&self, tx_id: &str) -> Result<bool, String> {
         // 获取事务上下文
         let tx_context = {
             let mut active_transactions = self.transaction_manager.active_transactions.write().unwrap();
-            
+
             if !active_transactions.contains_key(tx_id) {
                 return Err(format!("事务 {} 不存在", tx_id));
             }
-            
+
             let mut tx_context = active_transactions.remove(tx_id).unwrap();
             tx_context.status = TransactionStatus::Prepared;
             tx_context
         };
-        
+
         // 准备事务操作
         let actions: Vec<TransactionAction> = tx_context.operations.iter().map(|op| {
             TransactionAction {
@@ -5278,35 +5280,35 @@ impl DistributedDatabase {
                 }),
             }
         }).collect();
-        
+
         // 准备阶段
         if !self.transaction_manager.coordinator.prepare(tx_id, &actions)? {
             // 准备失败，回滚事务
             self.transaction_manager.coordinator.abort_transaction(tx_id, "准备阶段失败")?;
             return Ok(false);
         }
-        
+
         // 提交阶段
         self.transaction_manager.coordinator.commit_transaction(tx_id)?;
-        
+
         Ok(true)
     }
-    
+
     fn abort_transaction(&self, tx_id: &str) -> Result<bool, String> {
         // 获取事务上下文
         {
             let mut active_transactions = self.transaction_manager.active_transactions.write().unwrap();
-            
+
             if !active_transactions.contains_key(tx_id) {
                 return Err(format!("事务 {} 不存在", tx_id));
             }
-            
+
             active_transactions.remove(tx_id);
         }
-        
+
         // 中止事务
         self.transaction_manager.coordinator.abort_transaction(tx_id, "用户请求中止")?;
-        
+
         Ok(true)
     }
 }
@@ -5330,33 +5332,33 @@ impl StorageEngine for InMemoryStorageEngine {
         data.insert(key.to_vec(), value.to_vec());
         Ok(())
     }
-    
+
     fn get(&self, key: &[u8]) -> Result<Option<Vec<u8>>, String> {
         let data = self.data.read().unwrap();
         Ok(data.get(key).cloned())
     }
-    
+
     fn delete(&self, key: &[u8]) -> Result<bool, String> {
         let mut data = self.data.write().unwrap();
         Ok(data.remove(key).is_some())
     }
-    
+
     fn scan(&self, start_key: &[u8], end_key: &[u8], limit: usize) -> Result<Vec<(Vec<u8>, Vec<u8>)>, String> {
         let data = self.data.read().unwrap();
-        
+
         let mut result = Vec::new();
-        
+
         for (key, value) in data.range(start_key.to_vec()..end_key.to_vec()) {
             if result.len() >= limit {
                 break;
             }
-            
+
             result.push((key.clone(), value.clone()));
         }
-        
+
         Ok(result)
     }
-    
+
     fn flush(&self) -> Result<(), String> {
         // 内存存储引擎不需要刷新
         Ok(())
@@ -5379,38 +5381,38 @@ impl InMemoryTransactionStorage {
 impl TransactionStorage for InMemoryTransactionStorage {
     fn create_transaction(&self, tx_id: &str) -> Result<(), String> {
         let mut transactions = self.transactions.write().unwrap();
-        
+
         if transactions.contains_key(tx_id) {
             return Err(format!("事务 {} 已存在", tx_id));
         }
-        
+
         transactions.insert(tx_id.to_string(), TransactionState::Created {
             created_at: SystemTime::now(),
         });
-        
+
         Ok(())
     }
-    
+
     fn update_transaction_state(&self, tx_id: &str, state: &TransactionState) -> Result<(), String> {
         let mut transactions = self.transactions.write().unwrap();
-        
+
         if !transactions.contains_key(tx_id) {
             return Err(format!("事务 {} 不存在", tx_id));
         }
-        
+
         transactions.insert(tx_id.to_string(), state.clone());
-        
+
         Ok(())
     }
-    
+
     fn get_transaction_state(&self, tx_id: &str) -> Result<Option<TransactionState>, String> {
         let transactions = self.transactions.read().unwrap();
         Ok(transactions.get(tx_id).cloned())
     }
-    
+
     fn list_active_transactions(&self) -> Result<Vec<(String, TransactionState)>, String> {
         let transactions = self.transactions.read().unwrap();
-        
+
         Ok(transactions.iter()
             .filter(|(_, state)| {
                 match state {
@@ -5422,16 +5424,16 @@ impl TransactionStorage for InMemoryTransactionStorage {
             .map(|(id, state)| (id.clone(), state.clone()))
             .collect())
     }
-    
+
     fn mark_transaction_completed(&self, tx_id: &str) -> Result<(), String> {
         let mut transactions = self.transactions.write().unwrap();
-        
+
         if !transactions.contains_key(tx_id) {
             return Err(format!("事务 {} 不存在", tx_id));
         }
-        
+
         // 在实际实现中，可能会将事务移动到已完成列表或从活动列表中删除
-        
+
         Ok(())
     }
 }
@@ -5505,27 +5507,27 @@ impl DistributedFileSystem {
             available_space: Arc::new(AtomicU64::new(total_space)),
             total_space,
         };
-        
+
         let storage_manager_arc = Arc::new(storage_manager);
-        
+
         let metadata_manager = MetadataManager {
             node_id: node_id.to_string(),
             metadata_store,
         };
-        
+
         let replication_manager = ReplicationManager {
             node_id: node_id.to_string(),
             replication_factor,
             replication_strategy: ReplicationStrategy::Asynchronous,
             peers: RwLock::new(HashMap::new()),
         };
-        
+
         let chunk_manager = ChunkManager {
             node_id: node_id.to_string(),
             chunk_size,
             storage_manager: storage_manager_arc.clone(),
         };
-        
+
         DistributedFileSystem {
             node_id: node_id.to_string(),
             storage_manager: *storage_manager_arc,
@@ -5534,90 +5536,90 @@ impl DistributedFileSystem {
             chunk_manager,
         }
     }
-    
+
     fn create_file(&self, path: &str, size: u64, owner: &str, permissions: u32) -> Result<FileMetadata, String> {
         // 检查可用空间
         if size > self.storage_manager.available_space.load(Ordering::SeqCst) {
-            return Err(format!("空间不足：需要 {} 字节，但只有 {} 字节可用", 
+            return Err(format!("空间不足：需要 {} 字节，但只有 {} 字节可用",
                 size, self.storage_manager.available_space.load(Ordering::SeqCst)));
         }
-        
+
         // 创建文件元数据
         let metadata = self.metadata_manager.metadata_store.create_file(path, size, owner, permissions)?;
-        
+
         // 更新可用空间
         self.storage_manager.available_space.fetch_sub(size, Ordering::SeqCst);
-        
+
         Ok(metadata)
     }
-    
+
     fn read_file(&self, path: &str, offset: u64, length: usize) -> Result<Vec<u8>, String> {
         // 获取文件元数据
         let metadata = match self.metadata_manager.metadata_store.get_file(path)? {
             Some(metadata) => metadata,
             None => return Err(format!("文件不存在: {}", path)),
         };
-        
+
         // 计算需要读取的块
         let start_chunk_index = (offset / self.chunk_manager.chunk_size as u64) as usize;
         let end_chunk_index = ((offset + length as u64) / self.chunk_manager.chunk_size as u64) as usize;
-        
+
         if start_chunk_index >= metadata.chunks.len() || end_chunk_index >= metadata.chunks.len() {
             return Err(format!("读取范围超出文件边界"));
         }
-        
+
         let mut result = Vec::with_capacity(length);
-        
+
         for chunk_index in start_chunk_index..=end_chunk_index {
             let chunk = &metadata.chunks[chunk_index];
-            
+
             // 计算在块内的偏移和长度
             let chunk_offset = if chunk_index == start_chunk_index {
                 offset - (chunk_index as u64 * self.chunk_manager.chunk_size as u64)
             } else {
                 0
             };
-            
+
             let chunk_length = if chunk_index == end_chunk_index {
                 ((offset + length as u64) % self.chunk_manager.chunk_size as u64) as usize
             } else {
                 self.chunk_manager.chunk_size - chunk_offset as usize
             };
-            
+
             // 读取块数据
             let chunk_data = self.read_chunk(chunk, chunk_offset, chunk_length)?;
             result.extend_from_slice(&chunk_data);
         }
-        
+
         // 更新访问时间
         let mut updated_metadata = metadata.clone();
         updated_metadata.accessed_at = SystemTime::now();
         self.metadata_manager.metadata_store.update_file(path, &updated_metadata)?;
-        
+
         Ok(result)
     }
-    
+
     fn write_file(&self, path: &str, offset: u64, data: &[u8]) -> Result<u64, String> {
         // 获取文件元数据
         let mut metadata = match self.metadata_manager.metadata_store.get_file(path)? {
             Some(metadata) => metadata,
             None => return Err(format!("文件不存在: {}", path)),
         };
-        
+
         // 计算新文件大小
         let new_size = (offset + data.len() as u64).max(metadata.size);
         let size_increase = new_size - metadata.size;
-        
+
         // 检查空间
         if size_increase > 0 && size_increase > self.storage_manager.available_space.load(Ordering::SeqCst) {
-            return Err(format!("空间不足：需要额外 {} 字节，但只有 {} 字节可用", 
+            return Err(format!("空间不足：需要额外 {} 字节，但只有 {} 字节可用",
                 size_increase, self.storage_manager.available_space.load(Ordering::SeqCst)));
         }
-        
+
         // 计算需要写入的块
         let start_chunk_index = (offset / self.chunk_manager.chunk_size as u64) as usize;
         let end_chunk_index = ((offset + data.len() as u64 - 1) / self.chunk_manager.chunk_size as u64) as usize;
-        
+
         // 如果需要，创建新的块
         while metadata.chunks.len() <= end_chunk_index {
             let chunk_id = uuid::Uuid::new_v4().to_string();
@@ -5629,59 +5631,59 @@ impl DistributedFileSystem {
                 locations: vec![self.node_id.clone()],
             });
         }
-        
+
         let mut bytes_written = 0;
         let mut data_offset = 0;
-        
+
         for chunk_index in start_chunk_index..=end_chunk_index {
             let chunk = &mut metadata.chunks[chunk_index];
-            
+
             // 计算在块内的偏移和长度
             let chunk_offset = if chunk_index == start_chunk_index {
                 offset - (chunk_index as u64 * self.chunk_manager.chunk_size as u64)
             } else {
                 0
             };
-            
+
             let chunk_length = if chunk_index == end_chunk_index {
                 data.len() - data_offset
             } else {
                 self.chunk_manager.chunk_size - chunk_offset as usize
             };
-            
+
             // 写入块数据
             let written = self.write_chunk(chunk, chunk_offset, &data[data_offset..(data_offset + chunk_length)])?;
             bytes_written += written;
             data_offset += chunk_length;
-            
+
             // 更新块元数据
             chunk.size = (chunk_offset + written as u64).max(chunk.size);
             // 在实际实现中，需要计算新的校验和
         }
-        
+
         // 更新文件元数据
         metadata.size = new_size;
         metadata.modified_at = SystemTime::now();
         self.metadata_manager.metadata_store.update_file(path, &metadata)?;
-        
+
         // 更新可用空间
         if size_increase > 0 {
             self.storage_manager.available_space.fetch_sub(size_increase, Ordering::SeqCst);
         }
-        
+
         Ok(bytes_written as u64)
     }
-    
+
     fn delete_file(&self, path: &str) -> Result<bool, String> {
         // 获取文件元数据
         let metadata = match self.metadata_manager.metadata_store.get_file(path)? {
             Some(metadata) => metadata,
             None => return Err(format!("文件不存在: {}", path)),
         };
-        
+
         // 删除文件元数据
         let deleted = self.metadata_manager.metadata_store.delete_file(path)?;
-        
+
         if deleted {
             // 删除块数据
             for chunk in &metadata.chunks {
@@ -5689,39 +5691,39 @@ impl DistributedFileSystem {
                     self.delete_chunk(chunk)?;
                 }
             }
-            
+
             // 更新可用空间
             self.storage_manager.available_space.fetch_add(metadata.size, Ordering::SeqCst);
         }
-        
+
         Ok(deleted)
     }
-    
+
     fn list_directory(&self, path: &str) -> Result<Vec<FileMetadata>, String> {
         self.metadata_manager.metadata_store.list_directory(path)
     }
-    
+
     fn read_chunk(&self, chunk: &ChunkMetadata, offset: u64, length: usize) -> Result<Vec<u8>, String> {
         // 检查块位置
         if !chunk.locations.contains(&self.node_id) {
             // 在实际实现中，需要从其他节点获取块数据
             return Err(format!("块 {} 不在本地", chunk.id));
         }
-        
+
         // 构造块文件路径
         let chunk_path = self.storage_manager.base_path.join(&chunk.id);
-        
+
         // 打开文件
         let mut file = match File::open(&chunk_path) {
             Ok(file) => file,
             Err(err) => return Err(format!("打开块文件失败: {}", err)),
         };
-        
+
         // 定位到偏移位置
         if let Err(err) = file.seek(SeekFrom::Start(offset)) {
             return Err(format!("文件定位失败: {}", err));
         }
-        
+
         // 读取数据
         let mut buffer = vec![0u8; length];
         match file.read_exact(&mut buffer) {
@@ -5729,11 +5731,11 @@ impl DistributedFileSystem {
             Err(err) => Err(format!("读取块数据失败: {}", err)),
         }
     }
-    
+
     fn write_chunk(&self, chunk: &ChunkMetadata, offset: u64, data: &[u8]) -> Result<usize, String> {
         // 构造块文件路径
         let chunk_path = self.storage_manager.base_path.join(&chunk.id);
-        
+
         // 打开或创建文件
         let mut file = match OpenOptions::new()
             .write(true)
@@ -5742,23 +5744,23 @@ impl DistributedFileSystem {
             Ok(file) => file,
             Err(err) => return Err(format!("打开块文件失败: {}", err)),
         };
-        
+
         // 定位到偏移位置
         if let Err(err) = file.seek(SeekFrom::Start(offset)) {
             return Err(format!("文件定位失败: {}", err));
         }
-        
+
         // 写入数据
         match file.write(data) {
             Ok(written) => Ok(written),
             Err(err) => Err(format!("写入块数据失败: {}", err)),
         }
     }
-    
+
     fn delete_chunk(&self, chunk: &ChunkMetadata) -> Result<(), String> {
         // 构造块文件路径
         let chunk_path = self.storage_manager.base_path.join(&chunk.id);
-        
+
         // 删除文件
         match fs::remove_file(&chunk_path) {
             Ok(_) => Ok(()),
@@ -5778,7 +5780,7 @@ impl InMemoryMetadataStore {
             files: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn get_parent_path(path: &str) -> String {
         let path_obj = Path::new(path);
         path_obj.parent().unwrap_or(Path::new("")).to_string_lossy().to_string()
@@ -5788,19 +5790,19 @@ impl InMemoryMetadataStore {
 impl MetadataStore for InMemoryMetadataStore {
     fn create_file(&self, path: &str, size: u64, owner: &str, permissions: u32) -> Result<FileMetadata, String> {
         let mut files = self.files.write().unwrap();
-        
+
         if files.contains_key(path) {
             return Err(format!("文件已存在: {}", path));
         }
-        
+
         // 检查父目录是否存在
         let parent_path = Self::get_parent_path(path);
         if parent_path != "" && !files.contains_key(&parent_path) {
             return Err(format!("父目录不存在: {}", parent_path));
         }
-        
+
         let now = SystemTime::now();
-        
+
         let metadata = FileMetadata {
             path: path.to_string(),
             size,
@@ -5811,47 +5813,47 @@ impl MetadataStore for InMemoryMetadataStore {
             owner: owner.to_string(),
             permissions,
         };
-        
+
         files.insert(path.to_string(), metadata.clone());
-        
+
         Ok(metadata)
     }
-    
+
     fn get_file(&self, path: &str) -> Result<Option<FileMetadata>, String> {
         let files = self.files.read().unwrap();
         Ok(files.get(path).cloned())
     }
-    
+
     fn update_file(&self, path: &str, metadata: &FileMetadata) -> Result<(), String> {
         let mut files = self.files.write().unwrap();
-        
+
         if !files.contains_key(path) {
             return Err(format!("文件不存在: {}", path));
         }
-        
+
         files.insert(path.to_string(), metadata.clone());
-        
+
         Ok(())
     }
-    
+
     fn delete_file(&self, path: &str) -> Result<bool, String> {
         let mut files = self.files.write().unwrap();
         Ok(files.remove(path).is_some())
     }
-    
+
     fn list_directory(&self, path: &str) -> Result<Vec<FileMetadata>, String> {
         let files = self.files.read().unwrap();
-        
+
         // 检查目录是否存在
         if !path.ends_with('/') && !files.contains_key(path) {
             return Err(format!("目录不存在: {}", path));
         }
-        
+
         // 查找以指定路径开头的所有文件
         let prefix = if path.ends_with('/') { path.to_string() } else { format!("{}/", path) };
-        
+
         let mut result = Vec::new();
-        
+
         for (file_path, metadata) in files.iter() {
             if file_path.starts_with(&prefix) {
                 // 只包含直接子项
@@ -5861,7 +5863,7 @@ impl MetadataStore for InMemoryMetadataStore {
                 }
             }
         }
-        
+
         Ok(result)
     }
 }
@@ -6062,13 +6064,13 @@ impl DistributedComputeFramework {
             completed_tasks: RwLock::new(HashMap::new()),
             scheduling_policy: SchedulingPolicy::ResourceAware,
         };
-        
+
         let worker_manager = WorkerManager {
             node_id: node_id.to_string(),
             workers: RwLock::new(HashMap::new()),
             worker_capacity,
         };
-        
+
         let resource_manager = ResourceManager {
             node_id: node_id.to_string(),
             total_resources,
@@ -6080,14 +6082,14 @@ impl DistributedComputeFramework {
             }),
             resource_reservation_policy: ResourceReservationPolicy::BestEffort,
         };
-        
+
         let data_manager = DataManager {
             node_id: node_id.to_string(),
             data_cache: RwLock::new(HashMap::new()),
             cache_size_limit_mb,
             cache_policy: CachePolicy::LRU,
         };
-        
+
         DistributedComputeFramework {
             node_id: node_id.to_string(),
             task_scheduler,
@@ -6096,7 +6098,7 @@ impl DistributedComputeFramework {
             data_manager,
         }
     }
-    
+
     fn submit_task(&self, task: Task) -> Result<String, String> {
         // 验证任务
         if task.resource_requirements.cpu_cores > self.resource_manager.total_resources.cpu_cores ||
@@ -6105,7 +6107,7 @@ impl DistributedComputeFramework {
            task.resource_requirements.disk_space_mb > self.resource_manager.total_resources.disk_space_mb {
             return Err("任务资源需求超过系统总资源".to_string());
         }
-        
+
         // 检查依赖任务是否完成
         let completed_tasks = self.task_scheduler.completed_tasks.read().unwrap();
         for dep_id in &task.dependencies {
@@ -6113,11 +6115,11 @@ impl DistributedComputeFramework {
                 return Err(format!("依赖任务未完成: {}", dep_id));
             }
         }
-        
+
         // 添加到任务队列
         let mut task_queue = self.task_scheduler.task_queue.write().unwrap();
         task_queue.push(task.clone());
-        
+
         // 初始化任务状态
         let mut active_tasks = self.task_scheduler.active_tasks.write().unwrap();
         active_tasks.insert(task.id.clone(), TaskStatus {
@@ -6128,29 +6130,29 @@ impl DistributedComputeFramework {
             progress: 0.0,
             error_message: None,
         });
-        
+
         println!("提交任务: {}", task.id);
-        
+
         // 尝试调度任务
         drop(task_queue);
         drop(active_tasks);
         self.schedule_tasks()?;
-        
+
         Ok(task.id)
     }
-    
+
     fn schedule_tasks(&self) -> Result<usize, String> {
         println!("开始调度任务...");
-        
+
         let mut scheduled_count = 0;
-        
+
         // 获取任务队列
         let mut task_queue = self.task_scheduler.task_queue.write().unwrap();
         if task_queue.is_empty() {
             println!("没有任务需要调度");
             return Ok(0);
         }
-        
+
         // 根据调度策略对任务排序
         match self.task_scheduler.scheduling_policy {
             SchedulingPolicy::FIFO => {
@@ -6176,60 +6178,60 @@ impl DistributedComputeFramework {
                 });
             },
         }
-        
+
         // 获取可用工作节点
         let workers = self.worker_manager.workers.read().unwrap();
         if workers.is_empty() {
             println!("没有可用的工作节点");
             return Ok(0);
         }
-        
+
         // 获取已分配的资源
         let mut allocated_resources = self.resource_manager.allocated_resources.write().unwrap();
-        
+
         // 获取活动任务状态
         let mut active_tasks = self.task_scheduler.active_tasks.write().unwrap();
-        
+
         // 尝试为每个任务分配资源和工作节点
         let mut i = 0;
         while i < task_queue.len() {
             let task = &task_queue[i];
-            
+
             // 检查是否有足够的资源
             let has_resources = allocated_resources.cpu_cores + task.resource_requirements.cpu_cores <= self.resource_manager.total_resources.cpu_cores &&
                               allocated_resources.memory_mb + task.resource_requirements.memory_mb <= self.resource_manager.total_resources.memory_mb &&
                               allocated_resources.gpu_count + task.resource_requirements.gpu_count <= self.resource_manager.total_resources.gpu_count &&
                               allocated_resources.disk_space_mb + task.resource_requirements.disk_space_mb <= self.resource_manager.total_resources.disk_space_mb;
-            
+
             if !has_resources {
                 println!("资源不足，无法调度任务: {}", task.id);
                 i += 1;
                 continue;
             }
-            
+
             // 查找合适的工作节点
             let mut selected_worker = None;
-            
+
             for (worker_id, worker_info) in workers.iter() {
                 if worker_info.status != WorkerStatus::Online {
                     continue;
                 }
-                
+
                 // 检查工作节点是否有足够资源
                 let worker_has_resources = worker_info.capabilities.cpu_cores >= task.resource_requirements.cpu_cores &&
                                          worker_info.capabilities.memory_mb >= task.resource_requirements.memory_mb &&
                                          worker_info.capabilities.gpu_count >= task.resource_requirements.gpu_count &&
                                          worker_info.capabilities.disk_space_mb >= task.resource_requirements.disk_space_mb;
-                
+
                 if worker_has_resources {
                     selected_worker = Some(worker_id.clone());
                     break;
                 }
             }
-            
+
             if let Some(worker_id) = selected_worker {
                 println!("为任务 {} 分配工作节点: {}", task.id, worker_id);
-                
+
                 // 更新任务状态
                 let task_id = task.id.clone();
                 active_tasks.insert(task_id.clone(), TaskStatus {
@@ -6240,63 +6242,63 @@ impl DistributedComputeFramework {
                     progress: 0.0,
                     error_message: None,
                 });
-                
+
                 // 更新已分配资源
                 allocated_resources.cpu_cores += task.resource_requirements.cpu_cores;
                 allocated_resources.memory_mb += task.resource_requirements.memory_mb;
                 allocated_resources.gpu_count += task.resource_requirements.gpu_count;
                 allocated_resources.disk_space_mb += task.resource_requirements.disk_space_mb;
-                
+
                 // 从队列中移除任务
                 task_queue.remove(i);
-                
+
                 // 将任务分派给工作节点（在实际实现中，这里会涉及网络通信）
                 // self.dispatch_task_to_worker(&task, &worker_id);
-                
+
                 scheduled_count += 1;
             } else {
                 println!("没有合适的工作节点用于任务: {}", task.id);
                 i += 1;
             }
         }
-        
+
         println!("成功调度 {} 个任务", scheduled_count);
-        
+
         Ok(scheduled_count)
     }
-    
+
     fn register_worker(&self, worker_info: WorkerInfo) -> Result<(), String> {
         println!("注册工作节点: {}", worker_info.id);
-        
+
         let mut workers = self.worker_manager.workers.write().unwrap();
-        
+
         if workers.len() >= self.worker_manager.worker_capacity as usize {
             return Err("已达到工作节点容量上限".to_string());
         }
-        
+
         workers.insert(worker_info.id.clone(), worker_info);
-        
+
         Ok(())
     }
-    
+
     fn update_task_status(&self, task_id: &str, status: TaskStatus) -> Result<(), String> {
         println!("更新任务状态: {}, 状态: {:?}", task_id, status.state);
-        
+
         let mut active_tasks = self.task_scheduler.active_tasks.write().unwrap();
-        
+
         if !active_tasks.contains_key(task_id) {
             return Err(format!("任务 {} 不存在或已完成", task_id));
         }
-        
+
         // 更新任务状态
         active_tasks.insert(task_id.to_string(), status.clone());
-        
+
         // 如果任务已完成或失败，释放资源
         if let TaskState::Completed | TaskState::Failed | TaskState::Cancelled | TaskState::Timeout = status.state {
             // 获取任务信息
             let task_queue = self.task_scheduler.task_queue.read().unwrap();
             let task = task_queue.iter().find(|t| t.id == task_id);
-            
+
             if let Some(task) = task {
                 // 释放资源
                 let mut allocated_resources = self.resource_manager.allocated_resources.write().unwrap();
@@ -6305,10 +6307,10 @@ impl DistributedComputeFramework {
                 allocated_resources.gpu_count -= task.resource_requirements.gpu_count;
                 allocated_resources.disk_space_mb -= task.resource_requirements.disk_space_mb;
             }
-            
+
             // 从活动任务中移除
             active_tasks.remove(task_id);
-            
+
             // 如果任务完成，添加到完成任务列表
             if let TaskState::Completed = status.state {
                 let mut completed_tasks = self.task_scheduler.completed_tasks.write().unwrap();
@@ -6330,17 +6332,17 @@ impl DistributedComputeFramework {
                 });
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn get_task_status(&self, task_id: &str) -> Result<Option<TaskStatus>, String> {
         // 首先检查活动任务
         let active_tasks = self.task_scheduler.active_tasks.read().unwrap();
         if let Some(status) = active_tasks.get(task_id) {
             return Ok(Some(status.clone()));
         }
-        
+
         // 然后检查已完成任务
         let completed_tasks = self.task_scheduler.completed_tasks.read().unwrap();
         if let Some(result) = completed_tasks.get(task_id) {
@@ -6349,7 +6351,7 @@ impl DistributedComputeFramework {
             } else {
                 TaskState::Failed
             };
-            
+
             return Ok(Some(TaskStatus {
                 task_id: task_id.to_string(),
                 state,
@@ -6359,24 +6361,24 @@ impl DistributedComputeFramework {
                 error_message: result.error_message.clone(),
             }));
         }
-        
+
         Ok(None)
     }
-    
+
     fn cancel_task(&self, task_id: &str) -> Result<bool, String> {
         println!("取消任务: {}", task_id);
-        
+
         // 首先检查任务队列
         let mut task_queue = self.task_scheduler.task_queue.write().unwrap();
         let queue_index = task_queue.iter().position(|t| t.id == task_id);
-        
+
         if let Some(index) = queue_index {
             // 任务还在队列中，直接移除
             task_queue.remove(index);
             println!("从队列中移除任务: {}", task_id);
             return Ok(true);
         }
-        
+
         // 检查活动任务
         let mut active_tasks = self.task_scheduler.active_tasks.write().unwrap();
         if let Some(status) = active_tasks.get(task_id) {
@@ -6389,25 +6391,25 @@ impl DistributedComputeFramework {
                     let mut new_status = status.clone();
                     new_status.state = TaskState::Cancelled;
                     active_tasks.insert(task_id.to_string(), new_status);
-                    
+
                     // 在实际实现中，这里会通知工作节点取消任务
-                    
+
                     println!("取消活动任务: {}", task_id);
                     return Ok(true);
                 }
             }
         }
-        
+
         Err(format!("任务 {} 不存在", task_id))
     }
-    
+
     fn cache_data(&self, data_id: &str, data: &[u8]) -> Result<(), String> {
         let mut data_cache = self.data_manager.data_cache.write().unwrap();
-        
+
         // 检查缓存大小
         let data_size = data.len() as u64 / (1024 * 1024); // 转换为MB
         let current_cache_size: u64 = data_cache.values().map(|d| d.size).sum();
-        
+
         if current_cache_size + data_size > self.data_manager.cache_size_limit_mb {
             // 缓存空间不足，需要清理
             match self.data_manager.cache_policy {
@@ -6415,7 +6417,7 @@ impl DistributedComputeFramework {
                     // 按最近访问时间排序
                     let mut entries: Vec<_> = data_cache.iter().collect();
                     entries.sort_by(|a, b| a.1.last_accessed.cmp(&b.1.last_accessed));
-                    
+
                     // 清理缓存直到有足够空间
                     let mut freed_space = 0;
                     for (key, entry) in entries {
@@ -6430,7 +6432,7 @@ impl DistributedComputeFramework {
                     // 按访问次数排序
                     let mut entries: Vec<_> = data_cache.iter().collect();
                     entries.sort_by(|a, b| a.1.access_count.cmp(&b.1.access_count));
-                    
+
                     // 清理缓存直到有足够空间
                     let mut freed_space = 0;
                     for (key, entry) in entries {
@@ -6445,7 +6447,7 @@ impl DistributedComputeFramework {
                     // 按添加顺序排序（简化，使用最后访问时间作为代理）
                     let mut entries: Vec<_> = data_cache.iter().collect();
                     entries.sort_by(|a, b| a.1.last_accessed.cmp(&b.1.last_accessed));
-                    
+
                     // 清理缓存直到有足够空间
                     let mut freed_space = 0;
                     for (key, entry) in entries {
@@ -6458,7 +6460,7 @@ impl DistributedComputeFramework {
                 },
             }
         }
-        
+
         // 添加到缓存
         data_cache.insert(data_id.to_string(), CachedData {
             id: data_id.to_string(),
@@ -6467,23 +6469,23 @@ impl DistributedComputeFramework {
             last_accessed: SystemTime::now(),
             access_count: 1,
         });
-        
+
         println!("数据已缓存: {}, 大小: {} MB", data_id, data_size);
-        
+
         Ok(())
     }
-    
+
     fn get_cached_data(&self, data_id: &str) -> Result<Option<Vec<u8>>, String> {
         let mut data_cache = self.data_manager.data_cache.write().unwrap();
-        
+
         if let Some(entry) = data_cache.get_mut(data_id) {
             // 更新访问信息
             entry.last_accessed = SystemTime::now();
             entry.access_count += 1;
-            
+
             return Ok(Some(entry.data.clone()));
         }
-        
+
         Ok(None)
     }
 }
@@ -6574,7 +6576,7 @@ impl MicroserviceRegistry {
             running: AtomicBool::new(false),
             check_thread: None,
         };
-        
+
         MicroserviceRegistry {
             node_id: node_id.to_string(),
             services: RwLock::new(HashMap::new()),
@@ -6582,197 +6584,197 @@ impl MicroserviceRegistry {
             health_checker,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动微服务注册中心: {}", self.node_id);
-        
+
         // 启动健康检查线程
         let registry_services = Arc::clone(&self.services);
         let registry_instances = Arc::clone(&self.instances);
         let check_interval = self.health_checker.check_interval;
-        
+
         self.health_checker.running.store(true, Ordering::SeqCst);
-        
+
         let thread = thread::spawn(move || {
             while running_flag.load(Ordering::SeqCst) {
                 // 执行健康检查
                 Self::check_instances_health(&registry_services, &registry_instances);
-                
+
                 // 等待下一次检查
                 thread::sleep(check_interval);
             }
         });
-        
+
         self.health_checker.check_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止微服务注册中心: {}", self.node_id);
-        
+
         // 停止健康检查线程
         self.health_checker.running.store(false, Ordering::SeqCst);
-        
+
         if let Some(thread) = self.health_checker.check_thread.take() {
             if let Err(err) = thread.join() {
                 println!("健康检查线程关闭出错: {:?}", err);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn register_service(&self, service: ServiceInfo) -> Result<(), String> {
         println!("注册服务: {}", service.name);
-        
+
         let mut services = self.services.write().unwrap();
-        
+
         if services.contains_key(&service.id) {
             return Err(format!("服务 {} 已存在", service.id));
         }
-        
+
         services.insert(service.id.clone(), service);
-        
+
         Ok(())
     }
-    
+
     fn register_instance(&self, instance: ServiceInstance) -> Result<(), String> {
         println!("注册服务实例: {}, 服务: {}", instance.id, instance.service_id);
-        
+
         // 检查服务是否存在
         let services = self.services.read().unwrap();
         if !services.contains_key(&instance.service_id) {
             return Err(format!("服务 {} 不存在", instance.service_id));
         }
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         // 获取或创建服务实例列表
         let service_instances = instances.entry(instance.service_id.clone()).or_insert_with(Vec::new);
-        
+
         // 检查实例是否已存在
         if let Some(pos) = service_instances.iter().position(|i| i.id == instance.id) {
             service_instances[pos] = instance;
         } else {
             service_instances.push(instance);
         }
-        
+
         Ok(())
     }
-    
+
     fn deregister_instance(&self, service_id: &str, instance_id: &str) -> Result<bool, String> {
         println!("注销服务实例: {}, 服务: {}", instance_id, service_id);
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         if let Some(service_instances) = instances.get_mut(service_id) {
             let len_before = service_instances.len();
             service_instances.retain(|i| i.id != instance_id);
             let removed = len_before > service_instances.len();
-            
+
             if service_instances.is_empty() {
                 instances.remove(service_id);
             }
-            
+
             return Ok(removed);
         }
-        
+
         Ok(false)
     }
-    
+
     fn deregister_service(&self, service_id: &str) -> Result<bool, String> {
         println!("注销服务: {}", service_id);
-        
+
         let mut services = self.services.write().unwrap();
         let removed_service = services.remove(service_id).is_some();
-        
+
         // 删除所有相关的实例
         let mut instances = self.instances.write().unwrap();
         instances.remove(service_id);
-        
+
         Ok(removed_service)
     }
-    
+
     fn get_service(&self, service_id: &str) -> Result<Option<ServiceInfo>, String> {
         let services = self.services.read().unwrap();
         Ok(services.get(service_id).cloned())
     }
-    
+
     fn get_service_by_name(&self, name: &str, version: Option<&str>) -> Result<Vec<ServiceInfo>, String> {
         let services = self.services.read().unwrap();
-        
+
         let matching_services: Vec<ServiceInfo> = services.values()
             .filter(|s| s.name == name && (version.is_none() || Some(s.version.as_str()) == version))
             .cloned()
             .collect();
-        
+
         Ok(matching_services)
     }
-    
+
     fn get_instances(&self, service_id: &str) -> Result<Vec<ServiceInstance>, String> {
         let instances = self.instances.read().unwrap();
-        
+
         if let Some(service_instances) = instances.get(service_id) {
             return Ok(service_instances.clone());
         }
-        
+
         Ok(Vec::new())
     }
-    
+
     fn get_instance(&self, service_id: &str, instance_id: &str) -> Result<Option<ServiceInstance>, String> {
         let instances = self.instances.read().unwrap();
-        
+
         if let Some(service_instances) = instances.get(service_id) {
             return Ok(service_instances.iter()
                 .find(|i| i.id == instance_id)
                 .cloned());
         }
-        
+
         Ok(None)
     }
-    
+
     fn heartbeat(&self, service_id: &str, instance_id: &str) -> Result<bool, String> {
         println!("接收心跳: 实例 {}, 服务 {}", instance_id, service_id);
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         if let Some(service_instances) = instances.get_mut(service_id) {
             if let Some(instance) = service_instances.iter_mut().find(|i| i.id == instance_id) {
                 instance.last_heartbeat = SystemTime::now();
-                
+
                 // 如果实例状态为DOWN，更新为UP
                 if instance.status == InstanceStatus::DOWN {
                     instance.status = InstanceStatus::UP;
                 }
-                
+
                 return Ok(true);
             }
         }
-        
+
         Ok(false)
     }
-    
+
     fn set_instance_status(&self, service_id: &str, instance_id: &str, status: InstanceStatus) -> Result<bool, String> {
         println!("设置实例状态: 实例 {}, 服务 {}, 状态: {:?}", instance_id, service_id, status);
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         if let Some(service_instances) = instances.get_mut(service_id) {
             if let Some(instance) = service_instances.iter_mut().find(|i| i.id == instance_id) {
                 instance.status = status;
                 return Ok(true);
             }
         }
-        
+
         Ok(false)
     }
-    
+
     fn check_instances_health(services: &RwLock<HashMap<String, ServiceInfo>>, instances: &RwLock<HashMap<String, Vec<ServiceInstance>>>) {
         println!("执行服务实例健康检查");
-        
+
         let mut instances_write = instances.write().unwrap();
-        
+
         for (service_id, service_instances) in instances_write.iter_mut() {
             for instance in service_instances.iter_mut() {
                 // 检查上次心跳时间
@@ -6784,7 +6786,7 @@ impl MicroserviceRegistry {
                         continue;
                     }
                 }
-                
+
                 // 根据健康检查类型执行检查
                 match instance.health_check.check_type {
                     HealthCheckType::HTTP => {
@@ -6807,7 +6809,7 @@ impl MicroserviceRegistry {
                 }
             }
         }
-        
+
         println!("健康检查完成");
     }
 }
@@ -6862,7 +6864,7 @@ impl LoadBalancer for RoundRobinLoadBalancer {
         if instances.is_empty() {
             return None;
         }
-        
+
         // 只选择状态为UP的实例
         let up_instances: Vec<&ServiceInstance> = instances.iter()
             .filter
@@ -6870,24 +6872,24 @@ impl LoadBalancer for RoundRobinLoadBalancer {
 ```rust
             .filter(|i| i.status == InstanceStatus::UP)
             .collect();
-        
+
         if up_instances.is_empty() {
             return None;
         }
-        
+
         // 获取或创建计数器
         let service_id = if !up_instances.is_empty() {
             up_instances[0].service_id.clone()
         } else {
             return None;
         };
-        
+
         let mut counters = self.counters.write().unwrap();
         let counter = counters.entry(service_id).or_insert_with(|| AtomicUsize::new(0));
-        
+
         // 递增计数器并取模
         let index = counter.fetch_add(1, Ordering::SeqCst) % up_instances.len();
-        
+
         Some(up_instances[index])
     }
 }
@@ -6899,20 +6901,20 @@ impl LoadBalancer for RandomLoadBalancer {
         if instances.is_empty() {
             return None;
         }
-        
+
         // 只选择状态为UP的实例
         let up_instances: Vec<&ServiceInstance> = instances.iter()
             .filter(|i| i.status == InstanceStatus::UP)
             .collect();
-        
+
         if up_instances.is_empty() {
             return None;
         }
-        
+
         // 随机选择一个实例
         let mut rng = rand::thread_rng();
         let index = rng.gen_range(0, up_instances.len());
-        
+
         Some(up_instances[index])
     }
 }
@@ -6934,10 +6936,10 @@ impl RateLimiter {
             rate_limits: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn add_rate_limit(&self, key: &str, requests_per_second: u32, burst: u32) {
         let mut rate_limits = self.rate_limits.write().unwrap();
-        
+
         rate_limits.insert(key.to_string(), TokenBucket {
             tokens: AtomicUsize::new(burst as usize),
             capacity: burst as usize,
@@ -6945,14 +6947,14 @@ impl RateLimiter {
             last_refill: Mutex::new(Instant::now()),
         });
     }
-    
+
     fn try_acquire(&self, key: &str, tokens: usize) -> bool {
         let rate_limits = self.rate_limits.read().unwrap();
-        
+
         if let Some(bucket) = rate_limits.get(key) {
             // 尝试刷新令牌
             self.refill_tokens(bucket);
-            
+
             // 尝试获取令牌
             let current = bucket.tokens.load(Ordering::SeqCst);
             if current >= tokens {
@@ -6970,19 +6972,19 @@ impl RateLimiter {
                     }
                 }
             }
-            
+
             false
         } else {
             // 如果没有针对此键的速率限制，则允许请求
             true
         }
     }
-    
+
     fn refill_tokens(&self, bucket: &TokenBucket) {
         let mut last_refill = bucket.last_refill.lock().unwrap();
         let now = Instant::now();
         let elapsed = now.duration_since(*last_refill).as_secs_f64();
-        
+
         if elapsed > 0.0 {
             let new_tokens = (elapsed * bucket.refill_rate) as usize;
             if new_tokens > 0 {
@@ -7023,10 +7025,10 @@ impl CircuitBreaker {
             circuits: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn add_circuit(&self, key: &str, config: CircuitBreakerConfig) {
         let mut circuits = self.circuits.write().unwrap();
-        
+
         circuits.insert(key.to_string(), Circuit {
             state: AtomicU8::new(0), // 0 = Closed, 1 = Open, 2 = HalfOpen
             failure_threshold: config.failure_threshold,
@@ -7038,10 +7040,10 @@ impl CircuitBreaker {
             total_count: AtomicUsize::new(0),
         });
     }
-    
+
     fn allow_request(&self, key: &str) -> bool {
         let circuits = self.circuits.read().unwrap();
-        
+
         if let Some(circuit) = circuits.get(key) {
             // 获取当前状态
             let state = match circuit.state.load(Ordering::SeqCst) {
@@ -7049,7 +7051,7 @@ impl CircuitBreaker {
                 1 => CircuitState::Open,
                 _ => CircuitState::HalfOpen,
             };
-            
+
             match state {
                 CircuitState::Closed => {
                     // 在关闭状态下，始终允许请求
@@ -7060,7 +7062,7 @@ impl CircuitBreaker {
                     let mut last_state_change = circuit.last_state_change.lock().unwrap();
                     let now = Instant::now();
                     let elapsed = now.duration_since(*last_state_change);
-                    
+
                     if elapsed >= circuit.reset_timeout {
                         // 切换到半开状态
                         circuit.state.store(2, Ordering::SeqCst);
@@ -7089,28 +7091,28 @@ impl CircuitBreaker {
             true
         }
     }
-    
+
     fn record_success(&self, key: &str) {
         let circuits = self.circuits.read().unwrap();
-        
+
         if let Some(circuit) = circuits.get(key) {
             // 增加成功计数
             circuit.success_count.fetch_add(1, Ordering::SeqCst);
             circuit.total_count.fetch_add(1, Ordering::SeqCst);
-            
+
             // 获取当前状态
             let state = match circuit.state.load(Ordering::SeqCst) {
                 0 => CircuitState::Closed,
                 1 => CircuitState::Open,
                 _ => CircuitState::HalfOpen,
             };
-            
+
             if state == CircuitState::HalfOpen {
                 // 在半开状态下，如果成功，我们切换回关闭状态
                 circuit.state.store(0, Ordering::SeqCst);
                 let mut last_state_change = circuit.last_state_change.lock().unwrap();
                 *last_state_change = Instant::now();
-                
+
                 // 重置计数器
                 circuit.success_count.store(0, Ordering::SeqCst);
                 circuit.failure_count.store(0, Ordering::SeqCst);
@@ -7118,29 +7120,29 @@ impl CircuitBreaker {
             }
         }
     }
-    
+
     fn record_failure(&self, key: &str) {
         let circuits = self.circuits.read().unwrap();
-        
+
         if let Some(circuit) = circuits.get(key) {
             // 增加失败计数
             circuit.failure_count.fetch_add(1, Ordering::SeqCst);
             circuit.total_count.fetch_add(1, Ordering::SeqCst);
-            
+
             // 获取当前状态
             let state = match circuit.state.load(Ordering::SeqCst) {
                 0 => CircuitState::Closed,
                 1 => CircuitState::Open,
                 _ => CircuitState::HalfOpen,
             };
-            
+
             match state {
                 CircuitState::Closed => {
                     // 在关闭状态下，我们检查是否应该打开断路器
                     let total = circuit.total_count.load(Ordering::SeqCst);
                     let failures = circuit.failure_count.load(Ordering::SeqCst);
-                    
-                    if total >= circuit.request_volume_threshold as usize && 
+
+                    if total >= circuit.request_volume_threshold as usize &&
                        (failures as f64 / total as f64) >= circuit.failure_threshold {
                         // 切换到开路状态
                         circuit.state.store(1, Ordering::SeqCst);
@@ -7175,15 +7177,15 @@ impl ServiceGateway {
             circuit_breaker: Arc::new(CircuitBreaker::new()),
         }
     }
-    
+
     fn add_route(&self, route: RouteConfig) -> Result<(), String> {
         println!("添加路由: {}", route.path);
-        
+
         // 验证服务是否存在
         if self.service_registry.get_service(&route.service_id)?.is_none() {
             return Err(format!("服务 {} 不存在", route.service_id));
         }
-        
+
         // 添加速率限制（如果配置了）
         if let Some(rate_limit) = &route.rate_limit {
             self.rate_limiter.add_rate_limit(
@@ -7192,7 +7194,7 @@ impl ServiceGateway {
                 rate_limit.burst,
             );
         }
-        
+
         // 添加断路器（如果配置了）
         if let Some(circuit_breaker) = &route.circuit_breaker {
             self.circuit_breaker.add_circuit(
@@ -7200,28 +7202,28 @@ impl ServiceGateway {
                 circuit_breaker.clone(),
             );
         }
-        
+
         // 添加路由
         let mut routes = self.routes.write().unwrap();
         routes.insert(route.id.clone(), route);
-        
+
         Ok(())
     }
-    
+
     fn remove_route(&self, route_id: &str) -> Result<bool, String> {
         println!("移除路由: {}", route_id);
-        
+
         let mut routes = self.routes.write().unwrap();
         Ok(routes.remove(route_id).is_some())
     }
-    
+
     fn handle_request(&self, request_path: &str, request_method: HttpMethod, request_body: &[u8]) -> Result<Vec<u8>, String> {
         println!("处理请求: {}, 方法: {:?}", request_path, request_method);
-        
+
         // 查找匹配的路由
         let routes = self.routes.read().unwrap();
         let mut matching_route = None;
-        
+
         for route in routes.values() {
             // 简单的路径匹配（在实际实现中会使用更复杂的匹配逻辑）
             if request_path.starts_with(&route.path) {
@@ -7229,33 +7231,33 @@ impl ServiceGateway {
                 break;
             }
         }
-        
+
         let route = matching_route.ok_or_else(|| format!("没有匹配的路由: {}", request_path))?;
-        
+
         // 检查速率限制
         if let Some(rate_limit) = &route.rate_limit {
             if !self.rate_limiter.try_acquire(&route.id, 1) {
                 return Err("请求被速率限制".to_string());
             }
         }
-        
+
         // 检查断路器
         if let Some(_) = &route.circuit_breaker {
             if !self.circuit_breaker.allow_request(&route.id) {
                 return Err("断路器开路，请求被拒绝".to_string());
             }
         }
-        
+
         // 获取服务实例
         let instances = self.service_registry.get_instances(&route.service_id)?;
         if instances.is_empty() {
             return Err(format!("服务 {} 没有可用实例", route.service_id));
         }
-        
+
         // 使用负载均衡器选择实例
         let instance = self.load_balancer.choose_instance(&instances)
             .ok_or_else(|| format!("没有可用的服务实例: {}", route.service_id))?;
-        
+
         // 构建目标URL
         let target_path = if route.strip_prefix {
             // 移除前缀
@@ -7263,7 +7265,7 @@ impl ServiceGateway {
         } else {
             request_path
         };
-        
+
         let target_path = if let Some(rewrite) = &route.rewrite_path {
             // 使用正则表达式进行路径重写
             // 这里简化处理，只是替换路径
@@ -7271,13 +7273,13 @@ impl ServiceGateway {
         } else {
             target_path.to_string()
         };
-        
+
         // 在实际实现中，这里会发送HTTP请求到目标服务
         println!("转发请求到 {}:{}{}", instance.host, instance.port, target_path);
-        
+
         // 模拟调用服务
         let result = self.call_service(instance, &target_path, &request_method, request_body);
-        
+
         match result {
             Ok(response) => {
                 // 记录成功
@@ -7295,22 +7297,22 @@ impl ServiceGateway {
             }
         }
     }
-    
+
     fn call_service(&self, instance: &ServiceInstance, path: &str, method: &HttpMethod, body: &[u8]) -> Result<Vec<u8>, String> {
         // 在实际实现中，这里会发送HTTP请求并返回响应
         // 这里只是简单模拟
-        
+
         // 模拟服务可能的故障
         let failure_rate = 0.1; // 10%的故障率
         let mut rng = rand::thread_rng();
         if rng.gen::<f64>() < failure_rate {
             return Err("服务调用失败".to_string());
         }
-        
+
         println!("调用服务成功: {}:{}{}", instance.host, instance.port, path);
-        
+
         // 生成一个简单的响应
-        Ok(format!("来自 {}:{} 的响应: 成功处理 {:?} 请求到 {}", 
+        Ok(format!("来自 {}:{} 的响应: 成功处理 {:?} 请求到 {}",
                   instance.host, instance.port, method, path).into_bytes())
     }
 }
@@ -7329,7 +7331,7 @@ struct MerkleNode {
 }
 
 impl MerkleTree {
-    fn new<F>(hash_function: F) -> Self 
+    fn new<F>(hash_function: F) -> Self
     where
         F: Fn(&[u8]) -> Vec<u8> + Send + Sync + 'static
     {
@@ -7338,13 +7340,13 @@ impl MerkleTree {
             hash_function: Box::new(hash_function),
         }
     }
-    
+
     fn build(&mut self, data: &[Vec<u8>]) {
         if data.is_empty() {
             self.root = None;
             return;
         }
-        
+
         // 创建叶节点
         let mut nodes: Vec<MerkleNode> = data.iter().map(|item| {
             let hash = (self.hash_function)(item);
@@ -7355,25 +7357,25 @@ impl MerkleTree {
                 data: Some(item.clone()),
             }
         }).collect();
-        
+
         // 如果节点数为奇数，复制最后一个节点
         if nodes.len() % 2 == 1 {
             nodes.push(nodes.last().unwrap().clone());
         }
-        
+
         // 自底向上构建树
         while nodes.len() > 1 {
             let mut new_level = Vec::new();
-            
+
             for i in (0..nodes.len()).step_by(2) {
                 let left = Box::new(nodes[i].clone());
                 let right = Box::new(nodes[i + 1].clone());
-                
+
                 // 合并两个子节点的哈希
                 let mut combined = left.hash.clone();
                 combined.extend_from_slice(&right.hash);
                 let parent_hash = (self.hash_function)(&combined);
-                
+
                 new_level.push(MerkleNode {
                     hash: parent_hash,
                     left: Some(left),
@@ -7381,26 +7383,26 @@ impl MerkleTree {
                     data: None,
                 });
             }
-            
+
             nodes = new_level;
         }
-        
+
         self.root = Some(Box::new(nodes[0].clone()));
     }
-    
+
     fn get_root_hash(&self) -> Option<Vec<u8>> {
         self.root.as_ref().map(|node| node.hash.clone())
     }
-    
+
     fn verify(&self, data: &[u8], proof: &[Vec<u8>], index: usize, root_hash: &[u8]) -> bool {
         // 计算数据的哈希
         let mut current_hash = (self.hash_function)(data);
-        
+
         // 应用证明
         let mut current_index = index;
         for sibling_hash in proof {
             let mut combined = Vec::new();
-            
+
             if current_index % 2 == 0 {
                 // 当前节点是左子节点
                 combined.extend_from_slice(&current_hash);
@@ -7410,24 +7412,24 @@ impl MerkleTree {
                 combined.extend_from_slice(sibling_hash);
                 combined.extend_from_slice(&current_hash);
             }
-            
+
             current_hash = (self.hash_function)(&combined);
             current_index /= 2;
         }
-        
+
         // 验证根哈希
         current_hash == root_hash
     }
-    
+
     fn generate_proof(&self, index: usize) -> Option<Vec<Vec<u8>>> {
         if self.root.is_none() {
             return None;
         }
-        
+
         let mut proof = Vec::new();
         let mut path = Vec::new();
         let mut current_index = index;
-        
+
         // 计算从根节点到目标节点的路径
         let mut i = index;
         let mut height = 0;
@@ -7437,10 +7439,10 @@ impl MerkleTree {
             height += 1;
         }
         path.reverse();
-        
+
         // 从根节点开始遍历
         let mut current_node = self.root.as_ref().unwrap();
-        
+
         for &is_right in &path {
             if is_right {
                 // 如果路径指向右子节点，添加左子节点的哈希到证明
@@ -7460,7 +7462,7 @@ impl MerkleTree {
                 }
             }
         }
-        
+
         Some(proof)
     }
 }
@@ -7503,7 +7505,7 @@ struct Transaction {
 }
 
 impl Blockchain {
-    fn new<F>(mining_reward: f64, difficulty: u32, hash_function: F) -> Self 
+    fn new<F>(mining_reward: f64, difficulty: u32, hash_function: F) -> Self
     where
         F: Fn(&[u8]) -> Vec<u8> + Send + Sync + 'static
     {
@@ -7514,16 +7516,16 @@ impl Blockchain {
             mining_reward,
             hash_function: Box::new(hash_function),
         };
-        
+
         // 创建创世区块
         blockchain.create_genesis_block();
-        
+
         blockchain
     }
-    
+
     fn create_genesis_block(&mut self) {
         println!("创建创世区块");
-        
+
         let genesis_block = Block {
             index: 0,
             timestamp: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(),
@@ -7532,22 +7534,22 @@ impl Blockchain {
             nonce: 0,
             hash: vec![0; 32],
         };
-        
+
         // 计算并设置创世区块的哈希
         let hash = self.calculate_hash(&genesis_block);
         let mut genesis_block = genesis_block;
         genesis_block.hash = hash;
-        
+
         self.chain.push(genesis_block);
     }
-    
+
     fn get_latest_block(&self) -> &Block {
         self.chain.last().unwrap()
     }
-    
+
     fn mine_pending_transactions(&mut self, miner_address: &str) -> Result<u64, String> {
         println!("挖掘新区块...");
-        
+
         // 创建挖矿奖励交易
         let reward_tx = Transaction {
             sender: "system".to_string(),
@@ -7556,11 +7558,11 @@ impl Blockchain {
             timestamp: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(),
             signature: None,
         };
-        
+
         // 添加奖励交易到待处理交易
         let mut block_transactions = self.pending_transactions.clone();
         block_transactions.push(reward_tx);
-        
+
         // 创建新区块
         let previous_block = self.get_latest_block();
         let new_block = Block {
@@ -7571,32 +7573,32 @@ impl Blockchain {
             nonce: 0,
             hash: Vec::new(),
         };
-        
+
         // 挖掘区块（工作量证明）
         let mined_block = self.proof_of_work(new_block)?;
-        
+
         // 将新区块添加到链中
         self.chain.push(mined_block);
-        
+
         // 清空待处理交易
         self.pending_transactions = Vec::new();
-        
+
         Ok(self.chain.last().unwrap().index)
     }
-    
+
     fn proof_of_work(&self, mut block: Block) -> Result<Block, String> {
         println!("执行工作量证明...");
-        
+
         let target = vec![0; (self.difficulty / 8) as usize];
         let target_prefix = target.as_slice();
-        
+
         let start_time = Instant::now();
         let mut iterations = 0;
-        
+
         loop {
             // 计算区块哈希
             let hash = self.calculate_hash(&block);
-            
+
             // 检查哈希是否满足难度要求
             if hash.starts_with(target_prefix) {
                 block.hash = hash;
@@ -7604,11 +7606,11 @@ impl Blockchain {
                 println!("工作量证明完成，耗时: {:?}，迭代次数: {}", elapsed, iterations);
                 return Ok(block);
             }
-            
+
             // 增加nonce并重试
             block.nonce += 1;
             iterations += 1;
-            
+
             // 超时检查
             if iterations % 100000 == 0 {
                 let elapsed = start_time.elapsed();
@@ -7618,7 +7620,7 @@ impl Blockchain {
             }
         }
     }
-    
+
     fn calculate_hash(&self, block: &Block) -> Vec<u8> {
         // 序列化区块数据
         let mut data = Vec::new();
@@ -7626,7 +7628,7 @@ impl Blockchain {
         data.extend_from_slice(&block.timestamp.to_le_bytes());
         data.extend_from_slice(&block.nonce.to_le_bytes());
         data.extend_from_slice(&block.previous_hash);
-        
+
         // 添加交易数据
         for tx in &block.transactions {
             data.extend_from_slice(tx.sender.as_bytes());
@@ -7634,73 +7636,73 @@ impl Blockchain {
             data.extend_from_slice(&tx.amount.to_le_bytes());
             data.extend_from_slice(&tx.timestamp.to_le_bytes());
         }
-        
+
         // 计算哈希
         (self.hash_function)(&data)
     }
-    
+
     fn add_transaction(&mut self, transaction: Transaction) -> Result<(), String> {
         // 验证交易
         if transaction.sender.is_empty() || transaction.recipient.is_empty() {
             return Err("无效的发送者或接收者".to_string());
         }
-        
+
         if transaction.amount <= 0.0 {
             return Err("交易金额必须为正数".to_string());
         }
-        
+
         // 验证发送者余额（在实际实现中）
         // if self.get_balance(&transaction.sender) < transaction.amount {
         //     return Err("余额不足".to_string());
         // }
-        
+
         // 验证签名（在实际实现中）
         // if !self.verify_signature(&transaction) {
         //     return Err("无效的交易签名".to_string());
         // }
-        
+
         self.pending_transactions.push(transaction);
-        
+
         Ok(())
     }
-    
+
     fn is_chain_valid(&self) -> bool {
         for i in 1..self.chain.len() {
             let current_block = &self.chain[i];
             let previous_block = &self.chain[i - 1];
-            
+
             // 验证区块哈希
             if current_block.hash != self.calculate_hash(current_block) {
                 println!("区块 {} 的哈希无效", current_block.index);
                 return false;
             }
-            
+
             // 验证区块链接
             if current_block.previous_hash != previous_block.hash {
                 println!("区块 {} 的前序哈希无效", current_block.index);
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     fn get_balance(&self, address: &str) -> f64 {
         let mut balance = 0.0;
-        
+
         // 计算所有区块中与此地址相关的交易
         for block in &self.chain {
             for tx in &block.transactions {
                 if tx.recipient == address {
                     balance += tx.amount;
                 }
-                
+
                 if tx.sender == address {
                     balance -= tx.amount;
                 }
             }
         }
-        
+
         balance
     }
 }
@@ -7755,7 +7757,7 @@ impl DistributedLogSystem {
             size_based: Some(1024 * 1024 * 1024), // 1GB
             compaction_enabled: true,
         };
-        
+
         DistributedLogSystem {
             node_id: node_id.to_string(),
             storage,
@@ -7765,11 +7767,11 @@ impl DistributedLogSystem {
             peers: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn append(&self, topic: &str, key: Option<&[u8]>, value: &[u8], headers: Option<HashMap<String, String>>) -> Result<(u32, u64), String> {
         // 计算分区
         let partition = self.calculate_partition(topic, key);
-        
+
         // 创建日志条目
         let entry = LogEntry {
             offset: 0, // 占位符，实际值将由存储层设置
@@ -7778,26 +7780,26 @@ impl DistributedLogSystem {
             value: value.to_vec(),
             headers: headers.unwrap_or_default(),
         };
-        
+
         // 追加到本地存储
         let offset = self.storage.append(partition, &[entry])?;
-        
+
         // 将日志条目复制到副本
         self.replicate_to_peers(partition, &[entry])?;
-        
+
         Ok((partition, offset))
     }
-    
+
     fn read(&self, topic: &str, partition: u32, start_offset: u64, max_entries: usize) -> Result<Vec<LogEntry>, String> {
         // 验证分区
         if partition >= self.partitions {
             return Err(format!("无效的分区: {}", partition));
         }
-        
+
         // 从存储中读取日志条目
         self.storage.read(partition, start_offset, max_entries)
     }
-    
+
     fn calculate_partition(&self, topic: &str, key: Option<&[u8]>) -> u32 {
         if let Some(key) = key {
             // 使用键的哈希值计算分区
@@ -7810,44 +7812,44 @@ impl DistributedLogSystem {
             (timestamp % self.partitions as u128) as u32
         }
     }
-    
+
     fn replicate_to_peers(&self, partition: u32, entries: &[LogEntry]) -> Result<(), String> {
         let peers = self.peers.read().unwrap();
-        
+
         // 查找负责此分区的对等节点
         let responsible_peers: Vec<_> = peers.values()
             .filter(|p| p.partitions.contains(&partition) && p.status == PeerStatus::Connected)
             .collect();
-        
+
         if responsible_peers.len() < self.replication_factor - 1 {
             // 警告：没有足够的对等节点进行复制
-            println!("警告：可用的复制对等节点数量不足，当前为 {}, 需要 {}", 
+            println!("警告：可用的复制对等节点数量不足，当前为 {}, 需要 {}",
                     responsible_peers.len(), self.replication_factor - 1);
         }
-        
+
         // 向对等节点复制条目
         for peer in &responsible_peers {
             println!("将分区 {} 的条目复制到对等节点 {}", partition, peer.node_id);
-            
+
             // 实际实现中，这里会通过网络发送条目
             // self.send_entries_to_peer(peer, partition, entries)?;
         }
-        
+
         Ok(())
     }
-    
+
     fn apply_retention_policy(&self) -> Result<(), String> {
         println!("应用保留策略...");
-        
+
         for partition in 0..self.partitions {
             // 应用基于时间的保留策略
             if let Some(time_limit) = self.retention_policy.time_based {
                 let cutoff_time = SystemTime::now().duration_since(UNIX_EPOCH).unwrap()
                     .checked_sub(time_limit).unwrap().as_secs();
-                
+
                 // 读取日志以找到时间戳小于cutoff_time的最新偏移量
                 let entries = self.storage.read(partition, 0, 1000)?;
-                
+
                 if let Some(cutoff_offset) = entries.iter()
                     .filter(|e| e.timestamp < cutoff_time)
                     .map(|e| e.offset)
@@ -7856,63 +7858,63 @@ impl DistributedLogSystem {
                     self.storage.delete_before(partition, cutoff_offset)?;
                 }
             }
-            
+
             // 应用基于大小的保留策略（在实际实现中）
             // ...
-            
+
             // 应用压缩（在实际实现中）
             // ...
         }
-        
+
         Ok(())
     }
-    
+
     fn add_peer(&self, peer: LogPeer) -> Result<(), String> {
         let mut peers = self.peers.write().unwrap();
-        
+
         if peers.contains_key(&peer.node_id) {
             return Err(format!("对等节点 {} 已存在", peer.node_id));
         }
-        
+
         peers.insert(peer.node_id.clone(), peer);
-        
+
         Ok(())
     }
-    
+
     fn rebalance_partitions(&self) -> Result<(), String> {
         println!("重新平衡分区...");
-        
+
         let mut peers = self.peers.write().unwrap();
         let peer_count = peers.len();
-        
+
         if peer_count == 0 {
             return Ok(());
         }
-        
+
         // 为每个分区分配副本
         for partition in 0..self.partitions {
             // 选择 replication_factor 个节点作为副本
             let replica_count = std::cmp::min(self.replication_factor, peer_count);
-            
+
             // 使用一致性哈希或其他策略选择节点
             let partition_key = format!("partition:{}", partition);
             let mut selected_peers = Vec::new();
-            
+
             // 简单的示例：使用循环分配
             for (i, (peer_id, peer)) in peers.iter_mut().enumerate() {
                 if i % self.partitions as usize == partition as usize % peer_count {
                     peer.partitions.push(partition);
                     selected_peers.push(peer_id.clone());
-                    
+
                     if selected_peers.len() >= replica_count {
                         break;
                     }
                 }
             }
-            
+
             println!("分区 {} 的副本: {:?}", partition, selected_peers);
         }
-        
+
         Ok(())
     }
 }
@@ -7996,13 +7998,13 @@ impl Sampler for RateLimitingSampler {
         // 检查是否需要重置计数器
         let mut last_reset = self.last_reset.lock().unwrap();
         let now = Instant::now();
-        
+
         if now.duration_since(*last_reset).as_secs() >= 1 {
             // 重置计数器
             self.counter.store(0, Ordering::SeqCst);
             *last_reset = now;
         }
-        
+
         // 增加计数器并检查是否低于限制
         let count = self.counter.fetch_add(1, Ordering::SeqCst);
         count < self.traces_per_second as usize
@@ -8023,7 +8025,7 @@ impl DistributedTracingSystem {
             exporter,
         }
     }
-    
+
     fn start_span(&self, operation_name: &str, parent_span: Option<&Span>) -> Span {
         // 生成或继承trace_id
         let trace_id = if let Some(parent) = parent_span {
@@ -8031,13 +8033,13 @@ impl DistributedTracingSystem {
         } else {
             uuid::Uuid::new_v4().to_string()
         };
-        
+
         // 生成span_id
         let span_id = uuid::Uuid::new_v4().to_string();
-        
+
         // 提取父span_id
         let parent_span_id = parent_span.map(|p| p.span_id.clone());
-        
+
         // 创建span
         Span {
             span_id,
@@ -8051,51 +8053,51 @@ impl DistributedTracingSystem {
             service_name: self.node_id.clone(),
         }
     }
-    
+
     fn finish_span(&self, mut span: Span) -> Result<(), String> {
         // 设置结束时间
         span.end_time = Some(SystemTime::now());
-        
+
         // 存储span
         self.trace_storage.store_span(&span)?;
-        
+
         // 如果是根span，检查是否应该导出
         if span.parent_span_id.is_none() && self.sampler.should_sample(&span.trace_id, &span.operation_name) {
             // 获取完整的trace
             let spans = self.trace_storage.get_trace(&span.trace_id)?;
-            
+
             // 构建trace结构
             if !spans.is_empty() {
                 let root_span = spans.iter().find(|s| s.parent_span_id.is_none()).unwrap().clone();
                 let child_spans = spans.iter().filter(|s| s.parent_span_id.is_some()).cloned().collect();
-                
+
                 let trace = Trace {
                     trace_id: span.trace_id.clone(),
                     root_span,
                     child_spans,
                 };
-                
+
                 // 导出trace
                 self.exporter.export_traces(&[trace])?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn add_tag(&self, span: &mut Span, key: &str, value: &str) {
         span.tags.insert(key.to_string(), value.to_string());
     }
-    
+
     fn log(&self, span: &mut Span, fields: HashMap<String, String>) {
         let log = SpanLog {
             timestamp: SystemTime::now(),
             fields,
         };
-        
+
         span.logs.push(log);
     }
-    
+
     fn query_traces(&self, query: &TraceQuery) -> Result<Vec<Trace>, String> {
         self.trace_storage.query_traces(query)
     }
@@ -8135,24 +8137,24 @@ impl DistributedLockManager {
             storage,
         }
     }
-    
+
     fn acquire_lock(&self, lock_name: &str, wait_timeout: Option<Duration>) -> Result<bool, String> {
         println!("尝试获取锁: {}", lock_name);
-        
+
         let start_time = Instant::now();
         let wait_timeout = wait_timeout.unwrap_or(Duration::from_secs(0));
-        
+
         loop {
             // 尝试获取锁
             let acquired = self.storage.acquire_lock(lock_name, &self.node_id, self.lock_timeout)?;
-            
+
             if acquired {
                 println!("成功获取锁: {}", lock_name);
-                
+
                 // 添加到本地锁集合
                 let now = SystemTime::now();
                 let expires_at = now + self.lock_timeout;
-                
+
                 let lock_info = LockInfo {
                     name: lock_name.to_string(),
                     owner: self.node_id.clone(),
@@ -8160,24 +8162,24 @@ impl DistributedLockManager {
                     expires_at,
                     metadata: HashMap::new(),
                 };
-                
+
                 let mut locks = self.locks.write().unwrap();
                 locks.insert(lock_name.to_string(), lock_info);
-                
+
                 // 启动心跳刷新
                 let node_id = self.node_id.clone();
                 let lock_name = lock_name.to_string();
                 let heartbeat_interval = self.heartbeat_interval;
                 let lock_timeout = self.lock_timeout;
                 let storage = Arc::clone(&self.storage);
-                
+
                 thread::spawn(move || {
                     let mut heartbeat_failed = false;
-                    
+
                     while !heartbeat_failed {
                         // 等待心跳间隔
                         thread::sleep(heartbeat_interval);
-                        
+
                         // 刷新锁
                         match storage.refresh_lock(&lock_name, &node_id, lock_timeout) {
                             Ok(true) => {
@@ -8194,32 +8196,32 @@ impl DistributedLockManager {
                         }
                     }
                 });
-                
+
                 return Ok(true);
             }
-            
+
             // 检查是否超时
             if wait_timeout == Duration::from_secs(0) || start_time.elapsed() >= wait_timeout {
                 println!("获取锁超时: {}", lock_name);
                 return Ok(false);
             }
-            
+
             // 等待一段时间后重试
             thread::sleep(Duration::from_millis(100));
         }
     }
-    
+
     fn release_lock(&self, lock_name: &str) -> Result<bool, String> {
         println!("释放锁: {}", lock_name);
-        
+
         // 从本地锁集合中移除
         let mut locks = self.locks.write().unwrap();
         locks.remove(lock_name);
-        
+
         // 从存储中释放
         self.storage.release_lock(lock_name, &self.node_id)
     }
-    
+
     fn get_lock_info(&self, lock_name: &str) -> Result<Option<LockInfo>, String> {
         self.storage.get_lock_info(lock_name)
     }
@@ -8271,7 +8273,7 @@ impl MultiDCManager {
             replication_strategy: ReplicationStrategy::Asynchronous,
             peers: RwLock::new(HashMap::new()),
         };
-        
+
         MultiDCManager {
             node_id: node_id.to_string(),
             data_centers: RwLock::new(HashMap::new()),
@@ -8280,21 +8282,21 @@ impl MultiDCManager {
             service_registry,
         }
     }
-    
+
     fn register_data_center(&self, dc: DataCenterInfo) -> Result<(), String> {
         println!("注册数据中心: {}", dc.name);
-        
+
         let mut data_centers = self.data_centers.write().unwrap();
         data_centers.insert(dc.id.clone(), dc);
-        
+
         Ok(())
     }
-    
+
     fn update_data_center_status(&self, dc_id: &str, status: DataCenterStatus) -> Result<(), String> {
         println!("更新数据中心状态: {}, 状态: {:?}", dc_id, status);
-        
+
         let mut data_centers = self.data_centers.write().unwrap();
-        
+
         if let Some(dc) = data_centers.get_mut(dc_id) {
             dc.status = status;
             Ok(())
@@ -8302,60 +8304,60 @@ impl MultiDCManager {
             Err(format!("数据中心不存在: {}", dc_id))
         }
     }
-    
+
     fn get_active_data_centers(&self) -> Vec<DataCenterInfo> {
         let data_centers = self.data_centers.read().unwrap();
-        
+
         data_centers.values()
             .filter(|dc| dc.status == DataCenterStatus::Active)
             .cloned()
             .collect()
     }
-    
+
     fn route_request(&self, service_name: &str, affinity_dc: Option<&str>) -> Result<String, String> {
         // 首先尝试使用指定的亲和性数据中心
         if let Some(dc_id) = affinity_dc {
             let data_centers = self.data_centers.read().unwrap();
-            
+
             if let Some(dc) = data_centers.get(dc_id) {
                 if dc.status == DataCenterStatus::Active && dc.services.contains(&service_name.to_string()) {
                     return Ok(dc_id.to_string());
                 }
             }
         }
-        
+
         // 然后尝试使用当前数据中心
         {
             let data_centers = self.data_centers.read().unwrap();
-            
+
             if let Some(dc) = data_centers.get(&self.current_dc) {
                 if dc.status == DataCenterStatus::Active && dc.services.contains(&service_name.to_string()) {
                     return Ok(self.current_dc.clone());
                 }
             }
         }
-        
+
         // 最后尝试使用任何活动的数据中心
         let active_dcs = self.get_active_data_centers();
-        
+
         for dc in active_dcs {
             if dc.services.contains(&service_name.to_string()) {
                 return Ok(dc.id);
             }
         }
-        
+
         Err(format!("没有可用的数据中心提供服务: {}", service_name))
     }
-    
+
     fn handle_data_center_failure(&self, dc_id: &str, policy: &DCFailoverPolicy) -> Result<(), String> {
         println!("处理数据中心故障: {}", dc_id);
-        
+
         // 检查是否允许自动故障转移
         if !policy.automatic {
             println!("自动故障转移已禁用，需要手动干预");
             return Ok(());
         }
-        
+
         // 检查冷却期
         if let Some(last_failover) = policy.last_failover {
             let elapsed = SystemTime::now().duration_since(last_failover).unwrap();
@@ -8364,16 +8366,16 @@ impl MultiDCManager {
                 return Ok(());
             }
         }
-        
+
         // 更新数据中心状态
         self.update_data_center_status(dc_id, DataCenterStatus::Down)?;
-        
+
         // 获取数据中心信息
         let dc_info = {
             let data_centers = self.data_centers.read().unwrap();
             data_centers.get(dc_id).cloned().ok_or_else(|| format!("数据中心不存在: {}", dc_id))?
         };
-        
+
         // 查找备用数据中心
         let standby_dc = {
             let data_centers = self.data_centers.read().unwrap();
@@ -8382,51 +8384,51 @@ impl MultiDCManager {
                 .max_by_key(|dc| dc.priority)
                 .cloned()
         };
-        
+
         // 如果找到备用数据中心，激活它
         if let Some(standby_dc) = standby_dc {
             println!("将备用数据中心激活: {}", standby_dc.id);
             self.update_data_center_status(&standby_dc.id, DataCenterStatus::Active)?;
-            
+
             // 在实际实现中，这里会有更多的步骤来确保服务的迁移和数据同步
         } else {
             println!("没有可用的备用数据中心进行故障转移");
         }
-        
+
         // 更新失效数据中心的服务实例状态
         for service_id in &dc_info.services {
             let instances = self.service_registry.get_instances(service_id)?;
-            
+
             for instance in instances {
                 // 简化：实际实现中会检查实例是否在失效的数据中心
                 self.service_registry.set_instance_status(service_id, &instance.id, InstanceStatus::DOWN)?;
             }
         }
-        
+
         println!("数据中心故障处理完成: {}", dc_id);
-        
+
         Ok(())
     }
-    
+
     fn sync_data_between_dcs(&self, source_dc: &str, target_dc: &str, data_type: &str) -> Result<(), String> {
         println!("同步数据从 {} 到 {}, 类型: {}", source_dc, target_dc, data_type);
-        
+
         // 在实际实现中，这里会根据数据类型执行不同的同步策略
         // 例如，服务注册信息、配置数据、业务数据等
-        
+
         // 验证源和目标数据中心
         {
             let data_centers = self.data_centers.read().unwrap();
-            
+
             if !data_centers.contains_key(source_dc) {
                 return Err(format!("源数据中心不存在: {}", source_dc));
             }
-            
+
             if !data_centers.contains_key(target_dc) {
                 return Err(format!("目标数据中心不存在: {}", target_dc));
             }
         }
-        
+
         // 根据数据类型执行同步
         match data_type {
             "service_registry" => {
@@ -8448,9 +8450,9 @@ impl MultiDCManager {
                 return Err(format!("不支持的数据类型: {}", data_type));
             },
         }
-        
+
         println!("数据同步完成");
-        
+
         Ok(())
     }
 }
@@ -8550,29 +8552,29 @@ impl AutoScalingManager {
             cooldown_periods: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn add_scaling_policy(&self, policy: ScalingPolicy) -> Result<(), String> {
         println!("添加伸缩策略: {}", policy.id);
-        
+
         let mut policies = self.scaling_policies.write().unwrap();
         policies.insert(policy.id.clone(), policy);
-        
+
         Ok(())
     }
-    
+
     fn remove_scaling_policy(&self, policy_id: &str) -> Result<bool, String> {
         println!("移除伸缩策略: {}", policy_id);
-        
+
         let mut policies = self.scaling_policies.write().unwrap();
         Ok(policies.remove(policy_id).is_some())
     }
-    
+
     fn check_scaling_policies(&self) -> Result<(), String> {
         println!("检查伸缩策略...");
-        
+
         let policies = self.scaling_policies.read().unwrap();
         let mut cooldown_periods = self.cooldown_periods.write().unwrap();
-        
+
         for policy in policies.values() {
             // 检查冷却期
             if let Some(last_scaling) = cooldown_periods.get(&policy.id) {
@@ -8582,23 +8584,23 @@ impl AutoScalingManager {
                     continue;
                 }
             }
-            
+
             // 获取服务指标
             let metrics = self.metrics_collector.collect_metrics(&policy.service_id)?;
-            
+
             // 获取当前节点数
             let nodes = self.cluster_manager.get_nodes(Some(&policy.node_type))?;
             let current_nodes = nodes.len();
-            
+
             // 检查是否需要扩展
             if metrics.avg_cpu_utilization > policy.target_cpu_utilization && current_nodes < policy.max_nodes {
                 // 需要扩展
                 let nodes_to_add = policy.scaling_step.min(policy.max_nodes - current_nodes);
                 println!("触发扩展: 服务 {}, 添加 {} 个节点", policy.service_id, nodes_to_add);
-                
+
                 let new_nodes = self.cluster_manager.add_node(&policy.node_type, nodes_to_add)?;
                 println!("新节点已添加: {:?}", new_nodes);
-                
+
                 // 更新冷却期
                 cooldown_periods.insert(policy.id.clone(), SystemTime::now());
             }
@@ -8607,7 +8609,7 @@ impl AutoScalingManager {
                 // 需要收缩
                 let nodes_to_remove = policy.scaling_step.min(current_nodes - policy.min_nodes);
                 println!("触发收缩: 服务 {}, 移除 {} 个节点", policy.service_id, nodes_to_remove);
-                
+
                 // 选择要移除的节点（按CPU使用率最低的顺序）
                 let mut node_metrics: Vec<_> = nodes.iter()
                     .map(|node| {
@@ -8623,9 +8625,9 @@ impl AutoScalingManager {
                         (node, metrics)
                     })
                     .collect();
-                
+
                 node_metrics.sort_by(|a, b| a.1.cpu_utilization.partial_cmp(&b.1.cpu_utilization).unwrap());
-                
+
                 // 移除节点
                 for i in 0..nodes_to_remove {
                     if i < node_metrics.len() {
@@ -8634,48 +8636,48 @@ impl AutoScalingManager {
                         self.cluster_manager.remove_node(node_id)?;
                     }
                 }
-                
+
                 // 更新冷却期
                 cooldown_periods.insert(policy.id.clone(), SystemTime::now());
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn manual_scale(&self, service_id: &str, node_count: usize) -> Result<(), String> {
         println!("手动伸缩服务 {} 到 {} 个节点", service_id, node
 
 ```rust
         println!("手动伸缩服务 {} 到 {} 个节点", service_id, node_count);
-        
+
         // 查找服务对应的伸缩策略
         let policies = self.scaling_policies.read().unwrap();
         let policy = policies.values().find(|p| p.service_id == service_id)
             .ok_or_else(|| format!("没有找到服务的伸缩策略: {}", service_id))?;
-        
+
         // 验证节点数是否在允许范围内
         if node_count < policy.min_nodes || node_count > policy.max_nodes {
-            return Err(format!("节点数 {} 超出允许范围 ({} - {})", 
+            return Err(format!("节点数 {} 超出允许范围 ({} - {})",
                 node_count, policy.min_nodes, policy.max_nodes));
         }
-        
+
         // 获取当前节点
         let nodes = self.cluster_manager.get_nodes(Some(&policy.node_type))?;
         let current_count = nodes.len();
-        
+
         if current_count < node_count {
             // 需要添加节点
             let nodes_to_add = node_count - current_count;
             println!("添加 {} 个节点", nodes_to_add);
-            
+
             let new_nodes = self.cluster_manager.add_node(&policy.node_type, nodes_to_add)?;
             println!("新节点已添加: {:?}", new_nodes);
         } else if current_count > node_count {
             // 需要移除节点
             let nodes_to_remove = current_count - node_count;
             println!("移除 {} 个节点", nodes_to_remove);
-            
+
             // 选择要移除的节点（按CPU使用率最低的顺序）
             let mut node_metrics: Vec<_> = nodes.iter()
                 .map(|node| {
@@ -8691,9 +8693,9 @@ impl AutoScalingManager {
                     (node, metrics)
                 })
                 .collect();
-            
+
             node_metrics.sort_by(|a, b| a.1.cpu_utilization.partial_cmp(&b.1.cpu_utilization).unwrap());
-            
+
             // 移除节点
             for i in 0..nodes_to_remove {
                 if i < node_metrics.len() {
@@ -8705,36 +8707,36 @@ impl AutoScalingManager {
         } else {
             println!("当前节点数已经是目标数量: {}", node_count);
         }
-        
+
         // 更新冷却期
         let mut cooldown_periods = self.cooldown_periods.write().unwrap();
         cooldown_periods.insert(policy.id.clone(), SystemTime::now());
-        
+
         Ok(())
     }
-    
+
     fn get_scaling_recommendations(&self) -> Result<Vec<ScalingRecommendation>, String> {
         println!("生成伸缩建议...");
-        
+
         let mut recommendations = Vec::new();
         let policies = self.scaling_policies.read().unwrap();
-        
+
         for policy in policies.values() {
             // 获取服务指标
             let metrics = self.metrics_collector.collect_metrics(&policy.service_id)?;
-            
+
             // 获取当前节点数
             let nodes = self.cluster_manager.get_nodes(Some(&policy.node_type))?;
             let current_nodes = nodes.len();
-            
+
             // 计算建议的节点数
             let cpu_factor = metrics.avg_cpu_utilization / policy.target_cpu_utilization;
             let memory_factor = metrics.avg_memory_utilization / policy.target_memory_utilization;
             let scale_factor = cpu_factor.max(memory_factor);
-            
+
             let recommended_nodes = (current_nodes as f64 * scale_factor).round() as usize;
             let clamped_nodes = recommended_nodes.clamp(policy.min_nodes, policy.max_nodes);
-            
+
             if (clamped_nodes as f64 / current_nodes as f64) > 1.1 || (clamped_nodes as f64 / current_nodes as f64) < 0.9 {
                 // 只有当推荐的变化超过10%时才推荐
                 recommendations.push(ScalingRecommendation {
@@ -8747,7 +8749,7 @@ impl AutoScalingManager {
                 });
             }
         }
-        
+
         Ok(recommendations)
     }
 }
@@ -8894,7 +8896,7 @@ impl EdgeComputeGateway {
                 preferred_targets: Vec::new(),
             },
         };
-        
+
         let central_sync_manager = CentralSyncManager {
             central_endpoint: central_endpoint.to_string(),
             sync_interval: Duration::from_secs(300), // 5分钟
@@ -8902,7 +8904,7 @@ impl EdgeComputeGateway {
             sync_items: RwLock::new(HashMap::new()),
             offline_queue: RwLock::new(Vec::new()),
         };
-        
+
         EdgeComputeGateway {
             node_id: node_id.to_string(),
             location,
@@ -8913,166 +8915,166 @@ impl EdgeComputeGateway {
             central_sync_manager,
         }
     }
-    
+
     fn register_device(&self, device: EdgeDevice) -> Result<(), String> {
         println!("注册边缘设备: {}", device.id);
-        
+
         let mut devices = self.devices.write().unwrap();
         devices.insert(device.id.clone(), device);
-        
+
         // 添加到同步项目
         let mut sync_items = self.central_sync_manager.sync_items.write().unwrap();
         sync_items.insert(format!("device:{}", device.id), SystemTime::now());
-        
+
         Ok(())
     }
-    
+
     fn update_device_status(&self, device_id: &str, status: DeviceStatus) -> Result<(), String> {
         println!("更新设备状态: {}, 状态: {:?}", device_id, status);
-        
+
         let mut devices = self.devices.write().unwrap();
-        
+
         if let Some(device) = devices.get_mut(device_id) {
             device.status = status;
             device.last_heartbeat = SystemTime::now();
-            
+
             // 添加到同步项目
             let mut sync_items = self.central_sync_manager.sync_items.write().unwrap();
             sync_items.insert(format!("device:{}", device_id), SystemTime::now());
-            
+
             Ok(())
         } else {
             Err(format!("设备不存在: {}", device_id))
         }
     }
-    
+
     fn register_function(&self, function: EdgeFunction) -> Result<(), String> {
         println!("注册边缘函数: {}", function.name);
-        
+
         let mut functions = self.functions.write().unwrap();
         functions.insert(function.id.clone(), function);
-        
+
         // 添加到同步项目
         let mut sync_items = self.central_sync_manager.sync_items.write().unwrap();
         sync_items.insert(format!("function:{}", function.id), SystemTime::now());
-        
+
         Ok(())
     }
-    
+
     fn execute_function(&self, function_id: &str, input: &[u8]) -> Result<Vec<u8>, String> {
         println!("执行函数: {}", function_id);
-        
+
         let functions = self.functions.read().unwrap();
-        
+
         let function = functions.get(function_id)
             .ok_or_else(|| format!("函数不存在: {}", function_id))?;
-        
+
         // 检查是否应该卸载函数执行
         let should_offload = self.should_offload_function(function)?;
-        
+
         if should_offload {
             println!("卸载函数执行到云端");
             return self.offload_function_execution(function_id, input);
         }
-        
+
         // 在本地执行函数
         println!("在本地执行函数: {}", function.name);
-        
+
         // 在实际实现中，这里会创建适当的运行时环境并执行函数代码
         // 这里简单模拟函数执行
         let result = format!("函数 {} 执行结果：输入大小 {}", function.name, input.len()).into_bytes();
-        
+
         Ok(result)
     }
-    
+
     fn should_offload_function(&self, function: &EdgeFunction) -> Result<bool, String> {
         // 获取当前系统指标
         let metrics = self.metrics_collector.collect_node_metrics(&self.node_id)?;
-        
+
         // 检查资源使用率是否超过阈值
         if metrics.cpu_utilization > self.data_router.offload_policy.cpu_threshold ||
            metrics.memory_utilization > self.data_router.offload_policy.memory_threshold {
             return Ok(true);
         }
-        
+
         // 检查函数内存需求是否超过可用内存
         let available_memory_mb = (1.0 - metrics.memory_utilization) * 1024.0; // 假设总内存为1GB
         if function.memory_mb as f64 > available_memory_mb {
             return Ok(true);
         }
-        
+
         // 在实际实现中，还可以考虑更多因素，如网络延迟、带宽使用率等
-        
+
         Ok(false)
     }
-    
+
     fn offload_function_execution(&self, function_id: &str, input: &[u8]) -> Result<Vec<u8>, String> {
         // 在实际实现中，这里会调用云端API执行函数
         // 这里简单模拟
         println!("将函数 {} 卸载到云端执行", function_id);
-        
+
         // 模拟网络延迟
         thread::sleep(Duration::from_millis(100));
-        
+
         let result = format!("云端执行函数 {} 的结果：输入大小 {}", function_id, input.len()).into_bytes();
-        
+
         Ok(result)
     }
-    
+
     fn process_device_data(&self, device_id: &str, data_type: &str, data: &[u8]) -> Result<(), String> {
         println!("处理设备数据: 设备 {}, 数据类型 {}", device_id, data_type);
-        
+
         // 验证设备
         let devices = self.devices.read().unwrap();
         let device = devices.get(device_id)
             .ok_or_else(|| format!("设备不存在: {}", device_id))?;
-        
+
         if device.status != DeviceStatus::Online {
             return Err(format!("设备不在线: {}", device_id));
         }
-        
+
         // 查找与数据类型匹配的函数触发器
         let functions = self.functions.read().unwrap();
         let matching_functions: Vec<_> = functions.values()
             .filter(|f| f.triggers.iter().any(|t| matches!(t, FunctionTrigger::DeviceData { device_type, data_type: dt } if *device_type == device.device_type && *dt == data_type)))
             .collect();
-        
+
         // 执行匹配的函数
         for function in matching_functions {
             println!("触发函数 {} 处理设备数据", function.name);
             self.execute_function(&function.id, data)?;
         }
-        
+
         // 应用路由规则
         self.route_data(device_id, data_type, data)?;
-        
+
         Ok(())
     }
-    
+
     fn route_data(&self, source: &str, data_type: &str, data: &[u8]) -> Result<(), String> {
         println!("路由数据: 来源 {}, 类型 {}", source, data_type);
-        
+
         let rules = self.data_router.rules.read().unwrap();
-        
+
         // 按优先级排序规则
         let mut sorted_rules = rules.clone();
         sorted_rules.sort_by(|a, b| b.priority.cmp(&a.priority));
-        
+
         // 查找匹配的规则
         for rule in &sorted_rules {
             // 在实际实现中，这里会评估条件表达式
             let condition_matches = true; // 简化：假设所有规则都匹配
-            
+
             if condition_matches {
                 println!("数据匹配规则: {}", rule.id);
                 self.apply_routing_action(&rule.action, source, data_type, data)?;
                 break;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn apply_routing_action(&self, action: &RoutingAction, source: &str, data_type: &str, data: &[u8]) -> Result<(), String> {
         match action {
             RoutingAction::Forward { target } => {
@@ -9094,7 +9096,7 @@ impl EdgeComputeGateway {
             },
             RoutingAction::Cache { ttl, then } => {
                 println!("缓存数据，TTL: {:?}", ttl);
-                
+
                 // 将数据添加到本地缓存
                 let key = format!("{}:{}", source, data_type);
                 let mut local_cache = self.data_router.local_cache.write().unwrap();
@@ -9105,16 +9107,16 @@ impl EdgeComputeGateway {
                     last_accessed: SystemTime::now(),
                     access_count: 1,
                 });
-                
+
                 // 继续处理
                 self.apply_routing_action(then, source, data_type, data)?;
             },
             RoutingAction::Filter { criteria, then } => {
                 println!("过滤数据，使用条件: {}", criteria);
-                
+
                 // 在实际实现中，这里会评估过滤条件
                 let passes_filter = true; // 简化：假设所有数据都通过过滤
-                
+
                 if passes_filter {
                     self.apply_routing_action(then, source, data_type, data)?;
                 } else {
@@ -9126,39 +9128,39 @@ impl EdgeComputeGateway {
                 self.execute_function(function_id, data)?;
             },
         }
-        
+
         Ok(())
     }
-    
+
     fn sync_with_central(&self) -> Result<(), String> {
         println!("与中央服务器同步...");
-        
+
         // 更新上次同步时间
         {
             let mut last_sync = self.central_sync_manager.last_sync.write().unwrap();
             *last_sync = SystemTime::now();
         }
-        
+
         // 获取需要同步的项目
         let sync_items = self.central_sync_manager.sync_items.read().unwrap();
         let items_to_sync: Vec<_> = sync_items.iter().collect();
-        
+
         for (item_key, timestamp) in items_to_sync {
             println!("同步项目: {}, 时间戳: {:?}", item_key, timestamp);
-            
+
             // 在实际实现中，这里会将项目数据发送到中央服务器
         }
-        
+
         // 处理离线队列
         let mut offline_queue = self.central_sync_manager.offline_queue.write().unwrap();
-        
+
         if !offline_queue.is_empty() {
             println!("处理离线队列中的 {} 个项目", offline_queue.len());
-            
+
             // 在实际实现中，这里会尝试将离线队列中的项目发送到中央服务器
             offline_queue.clear();
         }
-        
+
         Ok(())
     }
 }
@@ -9310,7 +9312,7 @@ impl IoTGateway {
                 triggers: RwLock::new(HashMap::new()),
             },
         };
-        
+
         let security_manager = SecurityManager {
             device_credentials: RwLock::new(HashMap::new()),
             certificate_manager: CertificateManager {
@@ -9321,7 +9323,7 @@ impl IoTGateway {
                 policies: RwLock::new(HashMap::new()),
             },
         };
-        
+
         IoTGateway {
             node_id: node_id.to_string(),
             protocols: RwLock::new(HashMap::new()),
@@ -9331,36 +9333,36 @@ impl IoTGateway {
             security_manager,
         }
     }
-    
+
     fn register_protocol(&self, protocol: Box<dyn IoTProtocol>) -> Result<(), String> {
         let protocol_name = protocol.get_name();
         println!("注册协议: {}", protocol_name);
-        
+
         let mut protocols = self.protocols.write().unwrap();
         protocols.insert(protocol_name, protocol);
-        
+
         Ok(())
     }
-    
+
     fn start_protocols(&self) -> Result<(), String> {
         println!("启动所有协议...");
-        
+
         let protocols = self.protocols.read().unwrap();
-        
+
         for (name, protocol) in protocols.iter() {
             println!("初始化协议: {}", name);
             protocol.initialize()?;
-            
+
             println!("启动协议: {}", name);
             protocol.start()?;
         }
-        
+
         Ok(())
     }
-    
+
     fn register_device(&self, device: IoTDevice) -> Result<(), String> {
         println!("注册设备: {}", device.name);
-        
+
         // 验证设备协议
         {
             let protocols = self.protocols.read().unwrap();
@@ -9368,36 +9370,36 @@ impl IoTGateway {
                 return Err(format!("不支持的协议: {}", device.protocol));
             }
         }
-        
+
         // 添加设备
         let mut devices = self.devices.write().unwrap();
         devices.insert(device.id.clone(), device);
-        
+
         Ok(())
     }
-    
+
     fn process_device_message(&self, device_id: &str, payload: &[u8]) -> Result<(), String> {
         println!("处理设备消息: {}", device_id);
-        
+
         // 验证设备
         let mut devices = self.devices.write().unwrap();
         let device = devices.get_mut(device_id)
             .ok_or_else(|| format!("设备不存在: {}", device_id))?;
-        
+
         // 更新设备状态
         device.status = DeviceStatus::Online;
         device.last_seen = SystemTime::now();
-        
+
         // 解析消息（简化，实际实现中需要根据协议解析）
         // 这里假设消息是JSON格式
         let json_result: Result<serde_json::Value, _> = serde_json::from_slice(payload);
-        
+
         match json_result {
             Ok(json) => {
                 // 提取遥测数据
                 if let Some(telemetry) = json.get("telemetry").and_then(|t| t.as_object()) {
                     let mut device_telemetry = device.telemetry.write().unwrap();
-                    
+
                     for (key, value) in telemetry {
                         device_telemetry.insert(key.clone(), TelemetryValue {
                             name: key.clone(),
@@ -9407,11 +9409,11 @@ impl IoTGateway {
                         });
                     }
                 }
-                
+
                 // 发布消息到消息代理
                 let topic = format!("devices/{}/messages", device_id);
                 self.message_broker.publish(&topic, payload, 1)?;
-                
+
                 // 处理规则
                 self.process_rules(device_id, &json)?;
             },
@@ -9420,125 +9422,125 @@ impl IoTGateway {
                 return Err(format!("解析消息失败: {}", err));
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn process_rules(&self, device_id: &str, data: &serde_json::Value) -> Result<(), String> {
         println!("处理设备规则: {}", device_id);
-        
+
         let rules = self.data_processor.rules_engine.rules.read().unwrap();
-        
+
         for rule in rules.iter() {
             if !rule.enabled {
                 continue;
             }
-            
+
             // 评估规则条件（简化，实际实现中需要解析和评估条件表达式）
             let condition_met = true; // 假设条件总是满足
-            
+
             if condition_met {
                 println!("规则条件满足: {}", rule.name);
-                
+
                 // 执行规则动作
                 for action in &rule.actions {
                     self.execute_rule_action(action, device_id, data)?;
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn execute_rule_action(&self, action: &RuleAction, device_id: &str, data: &serde_json::Value) -> Result<(), String> {
         match action {
             RuleAction::SendCommand { device_id, command, params } => {
                 println!("发送命令 '{}' 到设备 {}", command, device_id);
-                
+
                 // 构造命令消息
                 let command_data = serde_json::json!({
                     "command": command,
                     "params": params,
                     "timestamp": SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs()
                 });
-                
+
                 // 获取设备协议
                 let devices = self.devices.read().unwrap();
                 let device = devices.get(device_id)
                     .ok_or_else(|| format!("设备不存在: {}", device_id))?;
-                
+
                 let protocols = self.protocols.read().unwrap();
                 let protocol = protocols.get(&device.protocol)
                     .ok_or_else(|| format!("协议不存在: {}", device.protocol))?;
-                
+
                 // 发送命令
                 protocol.send_message(device_id, &command_data.to_string().into_bytes())?;
             },
             RuleAction::PublishEvent { topic, payload } => {
                 println!("发布事件到主题: {}", topic);
-                
+
                 // 替换负载中的占位符（简化）
                 let payload = payload.replace("${deviceId}", device_id);
-                
+
                 // 发布事件
                 self.message_broker.publish(topic, payload.as_bytes(), 1)?;
             },
             RuleAction::UpdateState { key, value } => {
                 println!("更新状态: {} = {}", key, value);
-                
+
                 // 在实际实现中，这里会更新设备或系统状态
             },
             RuleAction::InvokeWebhook { url, method, headers, body } => {
                 println!("调用Webhook: {} {}", method, url);
-                
+
                 // 在实际实现中，这里会发送HTTP请求
             },
             RuleAction::SendAlert { severity, message, targets } => {
                 println!("发送警报: {:?} - {}", severity, message);
-                
+
                 // 在实际实现中，这里会向指定目标发送警报
                 for target in targets {
                     println!("发送警报到目标: {}", target);
                 }
             },
         }
-        
+
         Ok(())
     }
-    
+
     fn send_command_to_device(&self, device_id: &str, command: &str, params: &HashMap<String, String>) -> Result<(), String> {
         println!("发送命令到设备: {}, 命令: {}", device_id, command);
-        
+
         // 验证设备
         let devices = self.devices.read().unwrap();
         let device = devices.get(device_id)
             .ok_or_else(|| format!("设备不存在: {}", device_id))?;
-        
+
         if device.status != DeviceStatus::Online {
             return Err(format!("设备不在线: {}", device_id));
         }
-        
+
         // 构造命令消息
         let command_data = serde_json::json!({
             "command": command,
             "params": params,
             "timestamp": SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs()
         });
-        
+
         // 获取设备协议
         let protocols = self.protocols.read().unwrap();
         let protocol = protocols.get(&device.protocol)
             .ok_or_else(|| format!("协议不存在: {}", device.protocol))?;
-        
+
         // 发送命令
         protocol.send_message(device_id, &command_data.to_string().into_bytes())?;
-        
+
         Ok(())
     }
-    
+
     fn add_device_credential(&self, credential: DeviceCredential) -> Result<(), String> {
         println!("添加设备凭证: {}", credential.device_id);
-        
+
         // 验证设备
         {
             let devices = self.devices.read().unwrap();
@@ -9546,32 +9548,32 @@ impl IoTGateway {
                 return Err(format!("设备不存在: {}", credential.device_id));
             }
         }
-        
+
         // 添加凭证
         let mut credentials = self.security_manager.device_credentials.write().unwrap();
         credentials.insert(credential.device_id.clone(), credential);
-        
+
         Ok(())
     }
-    
+
     fn authenticate_device(&self, device_id: &str, credential_type: CredentialType, credential_data: &HashMap<String, String>) -> Result<bool, String> {
         println!("验证设备: {}", device_id);
-        
+
         let credentials = self.security_manager.device_credentials.read().unwrap();
-        
+
         if let Some(stored_credential) = credentials.get(device_id) {
             // 检查凭证类型
             if std::mem::discriminant(&stored_credential.credential_type) != std::mem::discriminant(&credential_type) {
                 return Ok(false);
             }
-            
+
             // 检查过期时间
             if let Some(expires_at) = stored_credential.expires_at {
                 if SystemTime::now() > expires_at {
                     return Ok(false);
                 }
             }
-            
+
             // 验证凭证数据（简化，实际实现中需要根据凭证类型进行适当的验证）
             match credential_type {
                 CredentialType::Password => {
@@ -9579,7 +9581,7 @@ impl IoTGateway {
                         .ok_or_else(|| "存储的凭证中没有密码".to_string())?;
                     let provided_password = credential_data.get("password")
                         .ok_or_else(|| "提供的凭证中没有密码".to_string())?;
-                    
+
                     Ok(stored_password == provided_password)
                 },
                 CredentialType::Token => {
@@ -9590,7 +9592,7 @@ impl IoTGateway {
 ```rust
                     let provided_token = credential_data.get("token")
                         .ok_or_else(|| "提供的凭证中没有令牌".to_string())?;
-                    
+
                     Ok(stored_token == provided_token)
                 },
                 CredentialType::X509Certificate => {
@@ -9600,7 +9602,7 @@ impl IoTGateway {
                         .ok_or_else(|| "存储的凭证中没有证书指纹".to_string())?;
                     let provided_fingerprint = credential_data.get("fingerprint")
                         .ok_or_else(|| "提供的凭证中没有证书指纹".to_string())?;
-                    
+
                     Ok(stored_fingerprint == provided_fingerprint)
                 },
                 CredentialType::SymmetricKey => {
@@ -9610,7 +9612,7 @@ impl IoTGateway {
                         .ok_or_else(|| "存储的凭证中没有对称密钥".to_string())?;
                     let provided_key = credential_data.get("key")
                         .ok_or_else(|| "提供的凭证中没有对称密钥".to_string())?;
-                    
+
                     Ok(stored_key == provided_key)
                 },
             }
@@ -9618,26 +9620,26 @@ impl IoTGateway {
             Ok(false)
         }
     }
-    
+
     fn add_access_policy(&self, policy: AccessPolicy) -> Result<(), String> {
         println!("添加访问策略: {}", policy.name);
-        
+
         let mut policies = self.security_manager.access_control.policies.write().unwrap();
         policies.insert(policy.id.clone(), policy);
-        
+
         Ok(())
     }
-    
+
     fn check_access(&self, subject: &str, resource: &str, permission: &str) -> Result<bool, String> {
         println!("检查访问权限: 主体 {}, 资源 {}, 权限 {}", subject, resource, permission);
-        
+
         let policies = self.security_manager.access_control.policies.read().unwrap();
-        
+
         for policy in policies.values() {
             // 检查主体是否匹配
-            let subject_matches = policy.subjects.contains(&subject.to_string()) || 
+            let subject_matches = policy.subjects.contains(&subject.to_string()) ||
                                  policy.subjects.contains(&"*".to_string());
-            
+
             // 检查资源是否匹配
             let resource_matches = policy.resources.iter().any(|r| {
                 if r.ends_with("*") {
@@ -9648,40 +9650,40 @@ impl IoTGateway {
                     r == resource
                 }
             });
-            
+
             // 检查权限是否匹配
-            let permission_matches = policy.permissions.contains(&permission.to_string()) || 
+            let permission_matches = policy.permissions.contains(&permission.to_string()) ||
                                     policy.permissions.contains(&"*".to_string());
-            
+
             if subject_matches && resource_matches && permission_matches {
                 return Ok(true);
             }
         }
-        
+
         Ok(false)
     }
-    
+
     fn add_data_pipeline(&self, pipeline: DataPipeline) -> Result<(), String> {
         println!("添加数据处理管道: {}", pipeline.name);
-        
+
         let mut pipelines = self.data_processor.pipelines.write().unwrap();
         pipelines.insert(pipeline.id.clone(), pipeline);
-        
+
         Ok(())
     }
-    
+
     fn process_data_through_pipeline(&self, pipeline_id: &str, data: &[u8]) -> Result<Vec<u8>, String> {
         println!("通过管道处理数据: {}", pipeline_id);
-        
+
         let pipelines = self.data_processor.pipelines.read().unwrap();
-        
+
         let pipeline = pipelines.get(pipeline_id)
             .ok_or_else(|| format!("管道不存在: {}", pipeline_id))?;
-        
+
         // 解析输入数据
         let mut processed_data: serde_json::Value = serde_json::from_slice(data)
             .map_err(|e| format!("解析数据失败: {}", e))?;
-        
+
         // 通过管道的每个阶段处理数据
         for stage in &pipeline.stages {
             match stage {
@@ -9696,7 +9698,7 @@ impl IoTGateway {
                     // 在实际实现中，这里会应用数据转换
                     // 简化处理，只添加处理时间戳
                     let obj = processed_data.as_object_mut().unwrap();
-                    obj.insert("processed_at".to_string(), 
+                    obj.insert("processed_at".to_string(),
                         serde_json::Value::Number(serde_json::Number::from(
                             SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs())));
                 },
@@ -9723,30 +9725,30 @@ impl IoTGateway {
                 },
             }
         }
-        
+
         // 将处理后的数据转换回字节
         let result = serde_json::to_vec(&processed_data)
             .map_err(|e| format!("序列化数据失败: {}", e))?;
-        
+
         Ok(result)
     }
-    
+
     fn add_rule(&self, rule: Rule) -> Result<(), String> {
         println!("添加规则: {}", rule.name);
-        
+
         // 添加规则
         let mut rules = self.data_processor.rules_engine.rules.write().unwrap();
         rules.push(rule.clone());
-        
+
         // 更新触发器映射
         // 在实际实现中，这里会解析规则条件，提取触发器
         // 简化处理，假设所有规则都由设备消息触发
         let mut triggers = self.data_processor.rules_engine.triggers.write().unwrap();
-        
+
         let trigger_key = "device_message".to_string();
         let rule_list = triggers.entry(trigger_key).or_insert_with(Vec::new);
         rule_list.push(rule.id);
-        
+
         Ok(())
     }
 }
@@ -9861,20 +9863,20 @@ impl DataFlowSystem {
         let stream_manager = StreamManager {
             streams: RwLock::new(HashMap::new()),
         };
-        
+
         let topology_manager = TopologyManager {
             topologies: RwLock::new(HashMap::new()),
         };
-        
+
         let state_manager = StateManager {
             state_stores: RwLock::new(HashMap::new()),
         };
-        
+
         let scheduler = Scheduler {
             workers: RwLock::new(HashMap::new()),
             scheduling_policy: SchedulingPolicy::ResourceAware,
         };
-        
+
         DataFlowSystem {
             node_id: node_id.to_string(),
             stream_manager,
@@ -9883,362 +9885,362 @@ impl DataFlowSystem {
             scheduler,
         }
     }
-    
+
     fn create_stream(&self, stream: Stream) -> Result<(), String> {
         println!("创建数据流: {}", stream.name);
-        
+
         let mut streams = self.stream_manager.streams.write().unwrap();
-        
+
         if streams.contains_key(&stream.id) {
             return Err(format!("数据流已存在: {}", stream.id));
         }
-        
+
         streams.insert(stream.id.clone(), stream);
-        
+
         Ok(())
     }
-    
+
     fn delete_stream(&self, stream_id: &str) -> Result<bool, String> {
         println!("删除数据流: {}", stream_id);
-        
+
         // 检查是否有拓扑依赖此数据流
         {
             let topologies = self.topology_manager.topologies.read().unwrap();
-            
+
             for topology in topologies.values() {
                 // 检查源
                 for source in &topology.sources {
                     if source.output_streams.contains(&stream_id.to_string()) {
-                        return Err(format!("数据流被拓扑 {} 的源 {} 使用，无法删除", 
+                        return Err(format!("数据流被拓扑 {} 的源 {} 使用，无法删除",
                             topology.name, source.id));
                     }
                 }
-                
+
                 // 检查处理器
                 for processor in &topology.processors {
                     if processor.input_streams.contains(&stream_id.to_string()) ||
                        processor.output_streams.contains(&stream_id.to_string()) {
-                        return Err(format!("数据流被拓扑 {} 的处理器 {} 使用，无法删除", 
+                        return Err(format!("数据流被拓扑 {} 的处理器 {} 使用，无法删除",
                             topology.name, processor.id));
                     }
                 }
-                
+
                 // 检查接收器
                 for sink in &topology.sinks {
                     if sink.input_streams.contains(&stream_id.to_string()) {
-                        return Err(format!("数据流被拓扑 {} 的接收器 {} 使用，无法删除", 
+                        return Err(format!("数据流被拓扑 {} 的接收器 {} 使用，无法删除",
                             topology.name, sink.id));
                     }
                 }
             }
         }
-        
+
         // 删除数据流
         let mut streams = self.stream_manager.streams.write().unwrap();
         Ok(streams.remove(stream_id).is_some())
     }
-    
+
     fn create_topology(&self, topology: Topology) -> Result<(), String> {
         println!("创建拓扑: {}", topology.name);
-        
+
         // 验证拓扑配置
         self.validate_topology(&topology)?;
-        
+
         let mut topologies = self.topology_manager.topologies.write().unwrap();
-        
+
         if topologies.contains_key(&topology.id) {
             return Err(format!("拓扑已存在: {}", topology.id));
         }
-        
+
         topologies.insert(topology.id.clone(), topology);
-        
+
         Ok(())
     }
-    
+
     fn validate_topology(&self, topology: &Topology) -> Result<(), String> {
         // 验证所有引用的数据流都存在
         let streams = self.stream_manager.streams.read().unwrap();
-        
+
         for source in &topology.sources {
             for stream_id in &source.output_streams {
                 if !streams.contains_key(stream_id) {
-                    return Err(format!("源 {} 引用的数据流 {} 不存在", 
+                    return Err(format!("源 {} 引用的数据流 {} 不存在",
                         source.id, stream_id));
                 }
             }
         }
-        
+
         for processor in &topology.processors {
             for stream_id in &processor.input_streams {
                 if !streams.contains_key(stream_id) {
-                    return Err(format!("处理器 {} 引用的输入数据流 {} 不存在", 
+                    return Err(format!("处理器 {} 引用的输入数据流 {} 不存在",
                         processor.id, stream_id));
                 }
             }
-            
+
             for stream_id in &processor.output_streams {
                 if !streams.contains_key(stream_id) {
-                    return Err(format!("处理器 {} 引用的输出数据流 {} 不存在", 
+                    return Err(format!("处理器 {} 引用的输出数据流 {} 不存在",
                         processor.id, stream_id));
                 }
             }
         }
-        
+
         for sink in &topology.sinks {
             for stream_id in &sink.input_streams {
                 if !streams.contains_key(stream_id) {
-                    return Err(format!("接收器 {} 引用的数据流 {} 不存在", 
+                    return Err(format!("接收器 {} 引用的数据流 {} 不存在",
                         sink.id, stream_id));
                 }
             }
         }
-        
+
         // 验证所有引用的状态存储都存在
         let state_stores = self.state_manager.state_stores.read().unwrap();
-        
+
         for processor in &topology.processors {
             for store_id in &processor.state_stores {
                 if !state_stores.contains_key(store_id) {
-                    return Err(format!("处理器 {} 引用的状态存储 {} 不存在", 
+                    return Err(format!("处理器 {} 引用的状态存储 {} 不存在",
                         processor.id, store_id));
                 }
             }
         }
-        
+
         // 验证拓扑连接
         for connection in &topology.connections {
             // 验证源节点存在
             let source_exists = topology.sources.iter().any(|s| s.id == connection.from_id) ||
                                topology.processors.iter().any(|p| p.id == connection.from_id);
-            
+
             if !source_exists {
                 return Err(format!("连接中的源节点 {} 不存在", connection.from_id));
             }
-            
+
             // 验证目标节点存在
             let target_exists = topology.processors.iter().any(|p| p.id == connection.to_id) ||
                                topology.sinks.iter().any(|s| s.id == connection.to_id);
-            
+
             if !target_exists {
                 return Err(format!("连接中的目标节点 {} 不存在", connection.to_id));
             }
-            
+
             // 验证数据流存在
             if !streams.contains_key(&connection.stream_id) {
                 return Err(format!("连接引用的数据流 {} 不存在", connection.stream_id));
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_topology(&self, topology_id: &str) -> Result<(), String> {
         println!("启动拓扑: {}", topology_id);
-        
+
         let mut topologies = self.topology_manager.topologies.write().unwrap();
-        
+
         let topology = topologies.get_mut(topology_id)
             .ok_or_else(|| format!("拓扑不存在: {}", topology_id))?;
-        
+
         if topology.status == TopologyStatus::Running {
             return Err(format!("拓扑已在运行中: {}", topology_id));
         }
-        
+
         // 在实际实现中，这里会调度拓扑到工作节点
         // 分配工作节点
         let assigned_workers = self.assign_workers_to_topology(topology)?;
-        
+
         // 将任务部署到工作节点
         self.deploy_topology_to_workers(topology, &assigned_workers)?;
-        
+
         // 更新拓扑状态
         topology.status = TopologyStatus::Running;
-        
+
         Ok(())
     }
-    
+
     fn assign_workers_to_topology(&self, topology: &Topology) -> Result<HashMap<String, String>, String> {
         println!("为拓扑分配工作节点: {}", topology.name);
-        
+
         let mut assigned_workers = HashMap::new();
         let mut workers = self.scheduler.workers.write().unwrap();
-        
+
         // 计算所需资源
         let sources_count = topology.sources.len();
         let processors_count = topology.processors.len();
         let sinks_count = topology.sinks.len();
         let total_tasks = sources_count + processors_count + sinks_count;
-        
+
         // 简单策略：尝试均匀分配任务到可用工作节点
         let available_workers: Vec<_> = workers.values_mut()
             .filter(|w| w.status == WorkerStatus::Running)
             .collect();
-        
+
         if available_workers.is_empty() {
             return Err("没有可用的工作节点".to_string());
         }
-        
+
         let tasks_per_worker = (total_tasks as f64 / available_workers.len() as f64).ceil() as usize;
-        
+
         let mut current_worker_index = 0;
-        
+
         // 分配源
         for source in &topology.sources {
             let worker = &mut available_workers[current_worker_index];
             assigned_workers.insert(source.id.clone(), worker.id.clone());
             worker.assigned_tasks.push(source.id.clone());
-            
+
             current_worker_index = (current_worker_index + 1) % available_workers.len();
         }
-        
+
         // 分配处理器
         for processor in &topology.processors {
             let worker = &mut available_workers[current_worker_index];
             assigned_workers.insert(processor.id.clone(), worker.id.clone());
             worker.assigned_tasks.push(processor.id.clone());
-            
+
             current_worker_index = (current_worker_index + 1) % available_workers.len();
         }
-        
+
         // 分配接收器
         for sink in &topology.sinks {
             let worker = &mut available_workers[current_worker_index];
             assigned_workers.insert(sink.id.clone(), worker.id.clone());
             worker.assigned_tasks.push(sink.id.clone());
-            
+
             current_worker_index = (current_worker_index + 1) % available_workers.len();
         }
-        
+
         Ok(assigned_workers)
     }
-    
+
     fn deploy_topology_to_workers(&self, topology: &Topology, assigned_workers: &HashMap<String, String>) -> Result<(), String> {
         println!("将拓扑部署到工作节点: {}", topology.name);
-        
+
         // 在实际实现中，这里会将任务部署到对应的工作节点
         // 包括发送配置、建立连接等
-        
+
         for (task_id, worker_id) in assigned_workers {
             println!("任务 {} 部署到工作节点 {}", task_id, worker_id);
         }
-        
+
         Ok(())
     }
-    
+
     fn stop_topology(&self, topology_id: &str) -> Result<(), String> {
         println!("停止拓扑: {}", topology_id);
-        
+
         let mut topologies = self.topology_manager.topologies.write().unwrap();
-        
+
         let topology = topologies.get_mut(topology_id)
             .ok_or_else(|| format!("拓扑不存在: {}", topology_id))?;
-        
-        if topology.status != TopologyStatus::Running && 
+
+        if topology.status != TopologyStatus::Running &&
            topology.status != TopologyStatus::Paused {
             return Err(format!("拓扑未运行或暂停: {}", topology_id));
         }
-        
+
         // 在实际实现中，这里会向工作节点发送停止命令
-        
+
         // 更新拓扑状态
         topology.status = TopologyStatus::Stopped;
-        
+
         // 从工作节点释放任务
         self.release_topology_tasks(topology)?;
-        
+
         Ok(())
     }
-    
+
     fn release_topology_tasks(&self, topology: &Topology) -> Result<(), String> {
         println!("从工作节点释放拓扑任务: {}", topology.name);
-        
+
         let mut workers = self.scheduler.workers.write().unwrap();
-        
+
         // 收集所有任务ID
         let mut task_ids = Vec::new();
-        
+
         for source in &topology.sources {
             task_ids.push(source.id.clone());
         }
-        
+
         for processor in &topology.processors {
             task_ids.push(processor.id.clone());
         }
-        
+
         for sink in &topology.sinks {
             task_ids.push(sink.id.clone());
         }
-        
+
         // 从工作节点移除任务
         for worker in workers.values_mut() {
             worker.assigned_tasks.retain(|id| !task_ids.contains(id));
         }
-        
+
         Ok(())
     }
-    
+
     fn create_state_store(&self, store: StateStore) -> Result<(), String> {
         println!("创建状态存储: {}", store.id);
-        
+
         let mut stores = self.state_manager.state_stores.write().unwrap();
-        
+
         if stores.contains_key(&store.id) {
             return Err(format!("状态存储已存在: {}", store.id));
         }
-        
+
         stores.insert(store.id.clone(), store);
-        
+
         Ok(())
     }
-    
+
     fn register_worker(&self, worker: Worker) -> Result<(), String> {
         println!("注册工作节点: {}", worker.id);
-        
+
         let mut workers = self.scheduler.workers.write().unwrap();
-        
+
         if workers.contains_key(&worker.id) {
             return Err(format!("工作节点已存在: {}", worker.id));
         }
-        
+
         workers.insert(worker.id.clone(), worker);
-        
+
         Ok(())
     }
-    
+
     fn process_metrics(&self, worker_id: &str, metrics: &WorkerMetrics) -> Result<(), String> {
         println!("处理工作节点指标: {}", worker_id);
-        
+
         let mut workers = self.scheduler.workers.write().unwrap();
-        
+
         let worker = workers.get_mut(worker_id)
             .ok_or_else(|| format!("工作节点不存在: {}", worker_id))?;
-        
+
         // 更新工作节点状态
         worker.last_heartbeat = SystemTime::now();
-        
+
         // 在实际实现中，这里会处理和存储指标
-        
+
         // 检查是否需要重新平衡
         if self.should_rebalance(metrics) {
             self.rebalance_topologies()?;
         }
-        
+
         Ok(())
     }
-    
+
     fn should_rebalance(&self, metrics: &WorkerMetrics) -> bool {
         // 在实际实现中，这里会评估是否需要重新平衡
         // 例如，检查CPU或内存使用率是否超过阈值
-        
+
         // 简化实现，总是返回false
         false
     }
-    
+
     fn rebalance_topologies(&self) -> Result<(), String> {
         println!("重新平衡拓扑...");
-        
+
         // 在实际实现中，这里会重新分配任务到工作节点
-        
+
         Ok(())
     }
 }
@@ -10264,9 +10266,9 @@ struct TaskMetrics {
 // 最后，测试代码
 fn main() {
     println!("分布式系统示例");
-    
+
     // 这里可以添加各种组件的示例代码
-    
+
     println!("示例结束");
 }
 ```
@@ -10481,13 +10483,13 @@ impl DistributedSearchEngine {
         let index_manager = IndexManager {
             indices: RwLock::new(HashMap::new()),
         };
-        
+
         let document_store = DocumentStore {
             store_type: StoreType::Memory,
             connection_string: String::new(),
             cache: Arc::new(LruCache::new(10000)),
         };
-        
+
         let search_query_processor = SearchQueryProcessor {
             parsers: HashMap::new(),
             execution_engine: ExecutionEngine {
@@ -10496,17 +10498,17 @@ impl DistributedSearchEngine {
                 max_concurrent_searches: 8,
             },
         };
-        
+
         let shard_manager = ShardManager {
             shards: RwLock::new(HashMap::new()),
             allocation_strategy: AllocationStrategy::Balanced,
         };
-        
+
         let replica_manager = ReplicaManager {
             replicas: RwLock::new(HashMap::new()),
             recovery_strategy: RecoveryStrategy::Incremental,
         };
-        
+
         DistributedSearchEngine {
             node_id: node_id.to_string(),
             index_manager,
@@ -10516,16 +10518,16 @@ impl DistributedSearchEngine {
             replica_manager,
         }
     }
-    
+
     fn create_index(&self, name: &str, mappings: HashMap<String, FieldMapping>, settings: IndexSettings) -> Result<(), String> {
         println!("创建索引: {}", name);
-        
+
         let mut indices = self.index_manager.indices.write().unwrap();
-        
+
         if indices.contains_key(name) {
             return Err(format!("索引已存在: {}", name));
         }
-        
+
         let metadata = IndexMetadata {
             name: name.to_string(),
             mappings,
@@ -10539,25 +10541,25 @@ impl DistributedSearchEngine {
                 query_latency: Duration::from_millis(0),
             },
         };
-        
+
         indices.insert(name.to_string(), metadata);
-        
+
         // 创建分片
         self.create_shards(name, settings.number_of_shards, settings.number_of_replicas)?;
-        
+
         Ok(())
     }
-    
+
     fn create_shards(&self, index_name: &str, num_shards: u32, num_replicas: u32) -> Result<(), String> {
         println!("为索引 {} 创建 {} 个分片和 {} 个副本", index_name, num_shards, num_replicas);
-        
+
         let mut shards = self.shard_manager.shards.write().unwrap();
         let mut replicas = self.replica_manager.replicas.write().unwrap();
-        
+
         // 创建主分片
         for shard_num in 0..num_shards {
             let shard_id = format!("{}_{}", index_name, shard_num);
-            
+
             let shard_info = ShardInfo {
                 id: shard_id.clone(),
                 index_name: index_name.to_string(),
@@ -10568,13 +10570,13 @@ impl DistributedSearchEngine {
                 primary: true,
                 node_id: self.node_id.clone(), // 简化：所有主分片都分配给当前节点
             };
-            
+
             shards.insert(shard_id.clone(), shard_info);
-            
+
             // 创建副本
             for replica_num in 0..num_replicas {
                 let replica_id = format!("{}_{}_{}", index_name, shard_num, replica_num);
-                
+
                 let replica_info = ReplicaInfo {
                     id: replica_id.clone(),
                     shard_id: shard_id.clone(),
@@ -10586,47 +10588,47 @@ impl DistributedSearchEngine {
                         bytes_behind: 0,
                     },
                 };
-                
+
                 replicas.insert(replica_id, replica_info);
             }
         }
-        
+
         // 启动所有分片
         for shard in shards.values_mut() {
             if shard.index_name == index_name {
                 shard.state = ShardState::Started;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn index_document(&self, index_name: &str, doc_id: &str, document: HashMap<String, serde_json::Value>) -> Result<(), String> {
         println!("为索引 {} 索引文档 {}", index_name, doc_id);
-        
+
         // 检查索引是否存在
         let indices = self.index_manager.indices.read().unwrap();
         let index = indices.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 验证文档结构与索引映射匹配
         self.validate_document(&document, &index.mappings)?;
-        
+
         // 路由文档到适当的分片
         let shard_num = self.route_document(index_name, doc_id, &document)?;
-        
+
         // 获取分片信息
         let mut shards = self.shard_manager.shards.write().unwrap();
         let shard_id = format!("{}_{}", index_name, shard_num);
-        
+
         let shard = shards.get_mut(&shard_id)
             .ok_or_else(|| format!("分片不存在: {}", shard_id))?;
-        
+
         // 检查分片状态
         if shard.state != ShardState::Started {
             return Err(format!("分片不可用: {}", shard_id));
         }
-        
+
         // 存储文档
         let doc = Document {
             id: doc_id.to_string(),
@@ -10634,94 +10636,94 @@ impl DistributedSearchEngine {
             indexed_at: SystemTime::now(),
             version: 1, // 简化：始终使用版本1
         };
-        
+
         // 在实际实现中，这里会将文档添加到索引中
         // 并更新文档存储
-        
+
         // 更新分片统计信息
         shard.doc_count += 1;
         shard.size_in_bytes += 1000; // 假设每个文档约1KB
-        
+
         // 更新索引统计信息
         let mut indices = self.index_manager.indices.write().unwrap();
         if let Some(index) = indices.get_mut(index_name) {
             index.stats.doc_count += 1;
             index.stats.size_in_bytes += 1000;
         }
-        
+
         // 将更改复制到副本
         self.replicate_changes(shard_id, &doc)?;
-        
+
         Ok(())
     }
-    
+
     fn validate_document(&self, document: &HashMap<String, serde_json::Value>, mappings: &HashMap<String, FieldMapping>) -> Result<(), String> {
         // 简化：在实际实现中，这里会验证文档字段与映射定义是否兼容
         Ok(())
     }
-    
+
     fn route_document(&self, index_name: &str, doc_id: &str, document: &HashMap<String, serde_json::Value>) -> Result<u32, String> {
         // 简化：使用文档ID的哈希来确定分片
         let indices = self.index_manager.indices.read().unwrap();
         let index = indices.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         let mut hasher = DefaultHasher::new();
         doc_id.hash(&mut hasher);
         let hash = hasher.finish();
-        
+
         Ok((hash % index.settings.number_of_shards as u64) as u32)
     }
-    
+
     fn replicate_changes(&self, shard_id: String, document: &Document) -> Result<(), String> {
         // 找到分片的所有副本
         let replicas = self.replica_manager.replicas.read().unwrap();
         let shard_replicas: Vec<_> = replicas.values()
             .filter(|r| r.shard_id == shard_id)
             .collect();
-        
+
         // 在实际实现中，这里会将变更异步复制到所有副本
         for replica in shard_replicas {
             println!("将文档 {} 复制到副本 {}", document.id, replica.id);
         }
-        
+
         Ok(())
     }
-    
+
     fn search(&self, index_name: &str, query_string: &str, size: usize, from: usize) -> Result<SearchResults, String> {
         println!("在索引 {} 中搜索: {}", index_name, query_string);
-        
+
         // 检查索引是否存在
         let indices = self.index_manager.indices.read().unwrap();
         let index = indices.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 解析查询
         let query = self.parse_query(query_string)?;
-        
+
         // 确定要搜索的分片
         let shards = self.shard_manager.shards.read().unwrap();
         let index_shards: Vec<_> = shards.values()
             .filter(|s| s.index_name == index_name && s.state == ShardState::Started)
             .collect();
-        
+
         if index_shards.is_empty() {
             return Err(format!("索引 {} 没有可用分片", index_name));
         }
-        
+
         // 在每个分片上执行搜索
         let mut all_hits = Vec::new();
-        
+
         for shard in &index_shards {
             // 在实际实现中，这里会在分片上执行查询
             // 简化：生成一些模拟结果
             let hits = self.execute_query_on_shard(shard, &query)?;
             all_hits.extend(hits);
         }
-        
+
         // 合并和排序结果
         all_hits.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap());
-        
+
         // 分页
         let total = all_hits.len();
         let hits = if from < all_hits.len() {
@@ -10732,7 +10734,7 @@ impl DistributedSearchEngine {
         } else {
             Vec::new()
         };
-        
+
         // 构建结果
         let results = SearchResults {
             took: Duration::from_millis(100), // 模拟耗时
@@ -10740,14 +10742,14 @@ impl DistributedSearchEngine {
             total,
             hits,
         };
-        
+
         Ok(results)
     }
-    
+
     fn parse_query(&self, query_string: &str) -> Result<Query, String> {
         // 简化：解析为简单的匹配查询
         let parts: Vec<_> = query_string.splitn(2, ':').collect();
-        
+
         if parts.len() == 2 {
             // 字段:值 格式
             Ok(Query {
@@ -10768,11 +10770,11 @@ impl DistributedSearchEngine {
             })
         }
     }
-    
+
     fn execute_query_on_shard(&self, shard: &ShardInfo, query: &Query) -> Result<Vec<SearchHit>, String> {
         // 简化：生成一些模拟结果
         let mut hits = Vec::new();
-        
+
         // 在实际实现中，这里会在倒排索引上执行查询
         for i in 0..5 {
             let hit = SearchHit {
@@ -10781,42 +10783,42 @@ impl DistributedSearchEngine {
                 score: 1.0 - (i as f32 * 0.1),
                 source: HashMap::new(), // 实际实现中会填充文档内容
             };
-            
+
             hits.push(hit);
         }
-        
+
         Ok(hits)
     }
-    
+
     fn get_document(&self, index_name: &str, doc_id: &str) -> Result<Option<Document>, String> {
         println!("获取索引 {} 中的文档 {}", index_name, doc_id);
-        
+
         // 检查索引是否存在
         let indices = self.index_manager.indices.read().unwrap();
         if !indices.contains_key(index_name) {
             return Err(format!("索引不存在: {}", index_name));
         }
-        
+
         // 确定文档所在的分片
         let shard_num = self.route_document(index_name, doc_id, &HashMap::new())?;
         let shard_id = format!("{}_{}", index_name, shard_num);
-        
+
         // 检查分片状态
         let shards = self.shard_manager.shards.read().unwrap();
         let shard = match shards.get(&shard_id) {
             Some(s) => s,
             None => return Err(format!("分片不存在: {}", shard_id)),
         };
-        
+
         if shard.state != ShardState::Started {
             return Err(format!("分片不可用: {}", shard_id));
         }
-        
+
         // 尝试从缓存获取
         if let Some(doc) = self.document_store.cache.borrow().get(&format!("{}_{}", index_name, doc_id)) {
             return Ok(Some(doc.clone()));
         }
-        
+
         // 在实际实现中，这里会从文档存储中获取文档
         // 简化：返回一个模拟文档
         let doc = Document {
@@ -10825,40 +10827,40 @@ impl DistributedSearchEngine {
             indexed_at: SystemTime::now(),
             version: 1,
         };
-        
+
         Ok(Some(doc))
     }
-    
+
     fn delete_document(&self, index_name: &str, doc_id: &str) -> Result<bool, String> {
         println!("从索引 {} 中删除文档 {}", index_name, doc_id);
-        
+
         // 检查索引是否存在
         let indices = self.index_manager.indices.read().unwrap();
         if !indices.contains_key(index_name) {
             return Err(format!("索引不存在: {}", index_name));
         }
-        
+
         // 确定文档所在的分片
         let shard_num = self.route_document(index_name, doc_id, &HashMap::new())?;
         let shard_id = format!("{}_{}", index_name, shard_num);
-        
+
         // 检查分片状态
         let mut shards = self.shard_manager.shards.write().unwrap();
         let shard = match shards.get_mut(&shard_id) {
             Some(s) => s,
             None => return Err(format!("分片不存在: {}", shard_id)),
         };
-        
+
         if shard.state != ShardState::Started {
             return Err(format!("分片不可用: {}", shard_id));
         }
-        
+
         // 在实际实现中，这里会从索引中删除文档
         // 更新分片统计信息
         if shard.doc_count > 0 {
             shard.doc_count -= 1;
         }
-        
+
         // 更新索引统计信息
         let mut indices = self.index_manager.indices.write().unwrap();
         if let Some(index) = indices.get_mut(index_name) {
@@ -10866,7 +10868,7 @@ impl DistributedSearchEngine {
                 index.stats.doc_count -= 1;
             }
         }
-        
+
         // 将删除操作复制到副本
         let delete_op = Document {
             id: doc_id.to_string(),
@@ -10874,45 +10876,45 @@ impl DistributedSearchEngine {
             indexed_at: SystemTime::now(),
             version: 0, // 版本0表示删除
         };
-        
+
         self.replicate_changes(shard_id, &delete_op)?;
-        
+
         Ok(true)
     }
-    
+
     fn delete_index(&self, index_name: &str) -> Result<bool, String> {
         println!("删除索引: {}", index_name);
-        
+
         // 删除索引元数据
         let mut indices = self.index_manager.indices.write().unwrap();
         if !indices.contains_key(index_name) {
             return Err(format!("索引不存在: {}", index_name));
         }
-        
+
         indices.remove(index_name);
-        
+
         // 删除索引的分片
         let mut shards = self.shard_manager.shards.write().unwrap();
         let shard_ids: Vec<_> = shards.keys()
             .filter(|id| id.starts_with(&format!("{}_", index_name)))
             .cloned()
             .collect();
-        
+
         for shard_id in &shard_ids {
             shards.remove(shard_id);
         }
-        
+
         // 删除索引的副本
         let mut replicas = self.replica_manager.replicas.write().unwrap();
         let replica_ids: Vec<_> = replicas.keys()
             .filter(|id| id.starts_with(&format!("{}_", index_name)))
             .cloned()
             .collect();
-        
+
         for replica_id in &replica_ids {
             replicas.remove(replica_id);
         }
-        
+
         Ok(true)
     }
 }
@@ -10943,11 +10945,11 @@ impl<K: Eq + Hash + Clone, V: Clone> LruCache<K, V> {
             cache: HashMap::with_capacity(capacity),
         }
     }
-    
+
     fn get(&self, key: &K) -> Option<&V> {
         self.cache.get(key)
     }
-    
+
     fn insert(&mut self, key: K, value: V) {
         if self.cache.len() >= self.capacity {
             // 简化：在实际实现中应该移除最近最少使用的项
@@ -10955,7 +10957,7 @@ impl<K: Eq + Hash + Clone, V: Clone> LruCache<K, V> {
                 self.cache.remove(&k);
             }
         }
-        
+
         self.cache.insert(key, value);
     }
 }
@@ -11060,7 +11062,7 @@ struct WorkflowExecutionEngine {
 }
 
 trait TaskHandler: Send + Sync {
-    fn execute(&self, task: &WorkflowTask, input: &HashMap<String, serde_json::Value>) 
+    fn execute(&self, task: &WorkflowTask, input: &HashMap<String, serde_json::Value>)
         -> Result<HashMap<String, serde_json::Value>, String>;
 }
 
@@ -11128,23 +11130,23 @@ impl WorkflowEngine {
             workflow_instances: RwLock::new(HashMap::new()),
             task_definitions: RwLock::new(HashMap::new()),
         };
-        
+
         let execution_engine = WorkflowExecutionEngine {
             max_concurrent_workflows: 100,
             task_handlers: HashMap::new(),
         };
-        
+
         let scheduler = WorkflowScheduler {
             schedule_configs: RwLock::new(HashMap::new()),
             next_execution_times: RwLock::new(BinaryHeap::new()),
         };
-        
+
         let task_queue = TaskQueue {
             pending_tasks: RwLock::new(Vec::new()),
             processing_tasks: RwLock::new(HashMap::new()),
             max_concurrent_tasks: 100,
         };
-        
+
         WorkflowEngine {
             node_id: node_id.to_string(),
             workflow_store,
@@ -11153,100 +11155,100 @@ impl WorkflowEngine {
             task_queue,
         }
     }
-    
+
     fn register_workflow(&self, workflow: Workflow) -> Result<(), String> {
         println!("注册工作流: {}", workflow.name);
-        
+
         // 验证工作流
         self.validate_workflow(&workflow)?;
-        
+
         // 存储工作流
         let mut workflows = self.workflow_store.workflows.write().unwrap();
-        
+
         // 检查是否已存在同名但不同版本的工作流
         for (_, existing) in workflows.iter() {
             if existing.name == workflow.name && existing.version != workflow.version {
                 println!("发现工作流 {} 的新版本: {}", workflow.name, workflow.version);
             }
         }
-        
+
         workflows.insert(workflow.id.clone(), workflow);
-        
+
         Ok(())
     }
-    
+
     fn validate_workflow(&self, workflow: &Workflow) -> Result<(), String> {
         // 检查任务定义
         let task_definitions = self.workflow_store.task_definitions.read().unwrap();
-        
+
         for task in &workflow.tasks {
             if !task_definitions.contains_key(&task.task_type) {
                 return Err(format!("未知的任务类型: {}", task.task_type));
             }
         }
-        
+
         // 检查任务转换
         let task_ids: HashSet<_> = workflow.tasks.iter().map(|t| &t.id).collect();
-        
+
         for transition in &workflow.transitions {
             if !task_ids.contains(&transition.from_task_id) {
                 return Err(format!("转换中的源任务不存在: {}", transition.from_task_id));
             }
-            
+
             if !task_ids.contains(&transition.to_task_id) {
                 return Err(format!("转换中的目标任务不存在: {}", transition.to_task_id));
             }
         }
-        
+
         // 检查是否有环
         // 在实际实现中，这里会检测工作流图中的环
-        
+
         Ok(())
     }
-    
+
     fn register_task_definition(&self, task_def: TaskDefinition) -> Result<(), String> {
         println!("注册任务定义: {}", task_def.name);
-        
+
         let mut task_definitions = self.workflow_store.task_definitions.write().unwrap();
         task_definitions.insert(task_def.id.clone(), task_def);
-        
+
         Ok(())
     }
-    
+
     fn start_workflow(&self, workflow_id: &str, input: HashMap<String, serde_json::Value>) -> Result<String, String> {
         println!("启动工作流: {}", workflow_id);
-        
+
         // 查找工作流
         let workflows = self.workflow_store.workflows.read().unwrap();
         let workflow = workflows.get(workflow_id)
             .ok_or_else(|| format!("工作流不存在: {}", workflow_id))?;
-        
+
         // 验证输入
         if let Some(schema) = &workflow.input_schema {
             // 在实际实现中，这里会验证输入是否符合模式
         }
-        
+
         // 创建工作流实例
         let instance_id = uuid::Uuid::new_v4().to_string();
-        
+
         // 找到起始任务（没有入边的任务）
         let mut start_tasks = Vec::new();
         let task_ids_with_incoming: HashSet<_> = workflow.transitions.iter()
             .map(|t| &t.to_task_id)
             .collect();
-        
+
         for task in &workflow.tasks {
             if !task_ids_with_incoming.contains(&task.id) {
                 start_tasks.push(task.id.clone());
             }
         }
-        
+
         if start_tasks.is_empty() {
             return Err("工作流没有起始任务".to_string());
         }
-        
+
         let now = SystemTime::now();
-        
+
         let instance = WorkflowInstance {
             id: instance_id.clone(),
             workflow_id: workflow_id.to_string(),
@@ -11260,22 +11262,22 @@ impl WorkflowEngine {
             updated_at: now,
             completed_at: None,
         };
-        
+
         // 存储工作流实例
         let mut instances = self.workflow_store.workflow_instances.write().unwrap();
         instances.insert(instance_id.clone(), instance);
-        
+
         // 将起始任务加入队列
         for task_id in start_tasks {
             self.queue_task(&instance_id, &task_id, &input)?;
         }
-        
+
         Ok(instance_id)
     }
-    
+
     fn queue_task(&self, instance_id: &str, task_id: &str, input: &HashMap<String, serde_json::Value>) -> Result<(), String> {
         println!("将任务 {} 加入队列，实例 {}", task_id, instance_id);
-        
+
         // 创建队列任务
         let queued_task = QueuedTask {
             id: uuid::Uuid::new_v4().to_string(),
@@ -11285,17 +11287,17 @@ impl WorkflowEngine {
             input: input.clone(),
             queued_at: SystemTime::now(),
         };
-        
+
         // 添加到待处理队列
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
         pending_tasks.push(queued_task);
-        
+
         // 按优先级排序
         pending_tasks.sort_by(|a, b| b.priority.cmp(&a.priority));
-        
+
         Ok(())
     }
-    
+
     fn process_next_task(&self) -> Result<bool, String> {
         // 检查是否有可用任务槽
         let processing_tasks = self.task_queue.processing_tasks.read().unwrap();
@@ -11303,50 +11305,50 @@ impl WorkflowEngine {
             return Ok(false);
         }
         drop(processing_tasks);
-        
+
         // 获取下一个待处理任务
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
         if pending_tasks.is_empty() {
             return Ok(false);
         }
-        
+
         let task = pending_tasks.remove(0);
         drop(pending_tasks);
-        
+
         // 将任务移动到处理中队列
         let mut processing_tasks = self.task_queue.processing_tasks.write().unwrap();
-        
+
 
 ```rust
         processing_tasks.insert(task.id.clone(), task.clone());
         drop(processing_tasks);
-        
+
         // 获取工作流实例
         let instances = self.workflow_store.workflow_instances.read().unwrap();
         let instance = instances.get(&task.workflow_instance_id)
             .ok_or_else(|| format!("工作流实例不存在: {}", task.workflow_instance_id))?;
-        
+
         // 检查工作流实例状态
         if instance.status != WorkflowStatus::Running {
             return Err(format!("工作流实例不在运行状态: {}", task.workflow_instance_id));
         }
-        
+
         // 获取工作流
         let workflows = self.workflow_store.workflows.read().unwrap();
         let workflow = workflows.get(&instance.workflow_id)
             .ok_or_else(|| format!("工作流不存在: {}", instance.workflow_id))?;
-        
+
         // 查找任务定义
         let workflow_task = workflow.tasks.iter()
             .find(|t| t.id == task.task_id)
             .ok_or_else(|| format!("任务不存在: {}", task.task_id))?;
-        
+
         // 获取任务处理器
         let task_handler = self.execution_engine.task_handlers.get(&workflow_task.task_type)
             .ok_or_else(|| format!("任务处理器不存在: {}", workflow_task.task_type))?;
-        
+
         println!("执行任务: {}", task.task_id);
-        
+
         // 执行任务
         let result = match task_handler.execute(workflow_task, &task.input) {
             Ok(output) => {
@@ -11362,7 +11364,7 @@ impl WorkflowEngine {
             },
             Err(err) => {
                 println!("任务执行失败: {}, 错误: {}", task.task_id, err);
-                
+
                 // 检查重试策略
                 if workflow_task.retry_policy.max_attempts > 1 {
                     // 重新加入队列进行重试
@@ -11376,14 +11378,14 @@ impl WorkflowEngine {
                         queued_at: SystemTime::now(),
                     });
                     pending_tasks.sort_by(|a, b| b.priority.cmp(&a.priority));
-                    
+
                     // 任务将重试，暂时不更新工作流实例
                     let mut processing_tasks = self.task_queue.processing_tasks.write().unwrap();
                     processing_tasks.remove(&task.id);
-                    
+
                     return Ok(true);
                 }
-                
+
                 TaskResult {
                     task_id: task.task_id.clone(),
                     status: TaskStatus::Failed,
@@ -11395,34 +11397,34 @@ impl WorkflowEngine {
                 }
             }
         };
-        
+
         // 更新工作流实例
         self.update_workflow_instance(&task.workflow_instance_id, &task.task_id, result)?;
-        
+
         // 从处理中队列移除任务
         let mut processing_tasks = self.task_queue.processing_tasks.write().unwrap();
         processing_tasks.remove(&task.id);
-        
+
         Ok(true)
     }
-    
+
     fn update_workflow_instance(&self, instance_id: &str, task_id: &str, result: TaskResult) -> Result<(), String> {
         println!("更新工作流实例: {}, 任务: {}", instance_id, task_id);
-        
+
         let mut instances = self.workflow_store.workflow_instances.write().unwrap();
         let instance = instances.get_mut(instance_id)
             .ok_or_else(|| format!("工作流实例不存在: {}", instance_id))?;
-        
+
         // 更新当前任务和已完成任务
         instance.current_tasks.retain(|id| id != task_id);
         instance.completed_tasks.insert(task_id.to_string(), result.clone());
         instance.updated_at = SystemTime::now();
-        
+
         // 获取工作流
         let workflows = self.workflow_store.workflows.read().unwrap();
         let workflow = workflows.get(&instance.workflow_id)
             .ok_or_else(|| format!("工作流不存在: {}", instance.workflow_id))?;
-        
+
         // 如果任务失败且没有重试，则将工作流标记为失败
         if result.status == TaskStatus::Failed {
             instance.status = WorkflowStatus::Failed;
@@ -11430,15 +11432,15 @@ impl WorkflowEngine {
             instance.completed_at = Some(SystemTime::now());
             return Ok(());
         }
-        
+
         // 查找下一个任务
         let next_tasks = self.find_next_tasks(workflow, task_id, &result)?;
-        
+
         // 如果没有下一个任务，并且当前没有其他任务在运行，则工作流完成
         if next_tasks.is_empty() && instance.current_tasks.is_empty() {
             instance.status = WorkflowStatus::Completed;
             instance.completed_at = Some(SystemTime::now());
-            
+
             // 收集所有输出
             let mut final_output = HashMap::new();
             for (_, task_result) in &instance.completed_tasks {
@@ -11448,34 +11450,34 @@ impl WorkflowEngine {
                     }
                 }
             }
-            
+
             instance.output = Some(final_output);
         } else {
             // 将下一个任务添加到当前任务列表并加入队列
             for task_id in &next_tasks {
                 instance.current_tasks.push(task_id.clone());
-                
+
                 // 准备任务输入
                 let mut task_input = instance.input.clone();
-                
+
                 // 添加前一个任务的输出
                 if let Some(output) = result.output.as_ref() {
                     for (key, value) in output {
                         task_input.insert(format!("previous.{}", key), value.clone());
                     }
                 }
-                
+
                 // 加入队列
                 self.queue_task(instance_id, task_id, &task_input)?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn find_next_tasks(&self, workflow: &Workflow, task_id: &str, result: &TaskResult) -> Result<Vec<String>, String> {
         let mut next_tasks = Vec::new();
-        
+
         for transition in &workflow.transitions {
             if transition.from_task_id == task_id {
                 // 检查条件
@@ -11489,55 +11491,55 @@ impl WorkflowEngine {
                 }
             }
         }
-        
+
         Ok(next_tasks)
     }
-    
+
     fn schedule_workflow(&self, config: ScheduleConfig) -> Result<(), String> {
         println!("调度工作流: {}", config.workflow_id);
-        
+
         // 验证工作流是否存在
         let workflows = self.workflow_store.workflows.read().unwrap();
         if !workflows.contains_key(&config.workflow_id) {
             return Err(format!("工作流不存在: {}", config.workflow_id));
         }
-        
+
         // 验证cron表达式
         // 在实际实现中，这里会验证cron表达式的有效性
-        
+
         // 计算下一个执行时间
         // 在实际实现中，这里会基于cron表达式计算下一次执行时间
         let next_execution = SystemTime::now() + Duration::from_secs(60);
-        
+
         let mut config = config;
         config.next_execution = Some(next_execution);
-        
+
         // 存储调度配置
         let mut schedule_configs = self.scheduler.schedule_configs.write().unwrap();
         schedule_configs.insert(config.id.clone(), config.clone());
-        
+
         // 更新执行队列
         let mut next_executions = self.scheduler.next_execution_times.write().unwrap();
         next_executions.push(ScheduledExecution {
             schedule_id: config.id.clone(),
             execution_time: next_execution,
         });
-        
+
         Ok(())
     }
-    
+
     fn process_scheduled_workflows(&self) -> Result<usize, String> {
         println!("处理调度的工作流...");
-        
+
         let now = SystemTime::now();
         let mut count = 0;
-        
+
         // 获取所有应该执行的工作流
         let mut to_execute = Vec::new();
-        
+
         {
             let mut next_executions = self.scheduler.next_execution_times.write().unwrap();
-            
+
             while let Some(scheduled) = next_executions.peek() {
                 if scheduled.execution_time <= now {
                     let scheduled = next_executions.pop().unwrap();
@@ -11547,11 +11549,11 @@ impl WorkflowEngine {
                 }
             }
         }
-        
+
         // 执行工作流
         for scheduled in to_execute {
             let mut schedule_configs = self.scheduler.schedule_configs.write().unwrap();
-            
+
             if let Some(config) = schedule_configs.get_mut(&scheduled.schedule_id) {
                 if config.enabled {
                     // 启动工作流
@@ -11564,15 +11566,15 @@ impl WorkflowEngine {
                             println!("调度工作流 {} 失败: {}", config.workflow_id, err);
                         }
                     }
-                    
+
                     // 更新上次执行时间
                     config.last_execution = Some(now);
-                    
+
                     // 计算下一次执行时间
                     // 在实际实现中，这里会基于cron表达式计算下一次执行时间
                     let next_execution = now + Duration::from_secs(60);
                     config.next_execution = Some(next_execution);
-                    
+
                     // 重新加入执行队列
                     let mut next_executions = self.scheduler.next_execution_times.write().unwrap();
                     next_executions.push(ScheduledExecution {
@@ -11582,53 +11584,53 @@ impl WorkflowEngine {
                 }
             }
         }
-        
+
         Ok(count)
     }
-    
+
     fn get_workflow_instance(&self, instance_id: &str) -> Result<WorkflowInstance, String> {
         let instances = self.workflow_store.workflow_instances.read().unwrap();
-        
+
         instances.get(instance_id)
             .cloned()
             .ok_or_else(|| format!("工作流实例不存在: {}", instance_id))
     }
-    
+
     fn cancel_workflow_instance(&self, instance_id: &str) -> Result<(), String> {
         println!("取消工作流实例: {}", instance_id);
-        
+
         let mut instances = self.workflow_store.workflow_instances.write().unwrap();
-        
+
         let instance = instances.get_mut(instance_id)
             .ok_or_else(|| format!("工作流实例不存在: {}", instance_id))?;
-        
+
         if instance.status != WorkflowStatus::Running {
             return Err(format!("工作流实例不在运行状态: {}", instance_id));
         }
-        
+
         // 更新工作流状态
         instance.status = WorkflowStatus::Cancelled;
         instance.completed_at = Some(SystemTime::now());
-        
+
         // 从队列中移除该实例的所有任务
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
         pending_tasks.retain(|task| task.workflow_instance_id != instance_id);
-        
+
         // 取消处理中的任务
         let processing_tasks = self.task_queue.processing_tasks.read().unwrap();
         let tasks_to_cancel: Vec<_> = processing_tasks.values()
             .filter(|task| task.workflow_instance_id == instance_id)
             .map(|task| task.id.clone())
             .collect();
-        
+
         drop(processing_tasks);
-        
+
         for task_id in tasks_to_cancel {
             // 在实际实现中，这里会发送取消信号给任务处理器
             let mut processing_tasks = self.task_queue.processing_tasks.write().unwrap();
             processing_tasks.remove(&task_id);
         }
-        
+
         Ok(())
     }
 }
@@ -11818,34 +11820,34 @@ impl DistributedMLSystem {
             models: RwLock::new(HashMap::new()),
             model_versions: RwLock::new(HashMap::new()),
         };
-        
+
         let worker_pool = WorkerPool {
             workers: RwLock::new(HashMap::new()),
             max_workers: 10,
         };
-        
+
         let training_manager = TrainingManager {
             jobs: RwLock::new(HashMap::new()),
             job_queue: RwLock::new(Vec::new()),
             worker_pool,
         };
-        
+
         let request_handler = RequestHandler {
             model_cache: LruCache::new(10),
             max_concurrent_requests: 100,
             timeout: Duration::from_secs(30),
         };
-        
+
         let inference_service = InferenceService {
             endpoints: RwLock::new(HashMap::new()),
             request_handler,
         };
-        
+
         let data_manager = MLDataManager {
             datasets: RwLock::new(HashMap::new()),
             features: RwLock::new(HashMap::new()),
         };
-        
+
         DistributedMLSystem {
             node_id: node_id.to_string(),
             model_registry,
@@ -11854,145 +11856,145 @@ impl DistributedMLSystem {
             data_manager,
         }
     }
-    
+
     fn register_model(&self, metadata: ModelMetadata) -> Result<(), String> {
         println!("注册模型: {}", metadata.name);
-        
+
         let mut models = self.model_registry.models.write().unwrap();
-        
+
         if models.contains_key(&metadata.id) {
             return Err(format!("模型已存在: {}", metadata.id));
         }
-        
+
         models.insert(metadata.id.clone(), metadata);
-        
+
         // 初始化版本列表
         let mut versions = self.model_registry.model_versions.write().unwrap();
         versions.insert(metadata.id.clone(), Vec::new());
-        
+
         Ok(())
     }
-    
+
     fn create_model_version(&self, version: ModelVersion) -> Result<(), String> {
         println!("创建模型版本: {}:{}", version.model_id, version.version);
-        
+
         // 检查模型是否存在
         let models = self.model_registry.models.read().unwrap();
         if !models.contains_key(&version.model_id) {
             return Err(format!("模型不存在: {}", version.model_id));
         }
-        
+
         // 添加版本
         let mut versions = self.model_registry.model_versions.write().unwrap();
-        
+
         let model_versions = versions.get_mut(&version.model_id)
             .ok_or_else(|| format!("模型版本列表不存在: {}", version.model_id))?;
-        
+
         // 检查版本是否已存在
         if model_versions.iter().any(|v| v.version == version.version) {
             return Err(format!("模型版本已存在: {}:{}", version.model_id, version.version));
         }
-        
+
         model_versions.push(version);
-        
+
         Ok(())
     }
-    
+
     fn get_model(&self, model_id: &str) -> Result<ModelMetadata, String> {
         let models = self.model_registry.models.read().unwrap();
-        
+
         models.get(model_id)
             .cloned()
             .ok_or_else(|| format!("模型不存在: {}", model_id))
     }
-    
+
     fn get_model_versions(&self, model_id: &str) -> Result<Vec<ModelVersion>, String> {
         let versions = self.model_registry.model_versions.read().unwrap();
-        
+
         versions.get(model_id)
             .cloned()
             .ok_or_else(|| format!("模型版本列表不存在: {}", model_id))
     }
-    
+
     fn register_dataset(&self, dataset: Dataset) -> Result<(), String> {
         println!("注册数据集: {}", dataset.name);
-        
+
         let mut datasets = self.data_manager.datasets.write().unwrap();
-        
+
         if datasets.contains_key(&dataset.id) {
             return Err(format!("数据集已存在: {}", dataset.id));
         }
-        
+
         datasets.insert(dataset.id.clone(), dataset);
-        
+
         Ok(())
     }
-    
+
     fn create_training_job(&self, job: TrainingJob) -> Result<(), String> {
         println!("创建训练任务: {}", job.id);
-        
+
         // 检查模型是否存在
         let models = self.model_registry.models.read().unwrap();
         if !models.contains_key(&job.model_id) {
             return Err(format!("模型不存在: {}", job.model_id));
         }
-        
+
         // 检查数据集是否存在
         let datasets = self.data_manager.datasets.read().unwrap();
         if !datasets.contains_key(&job.dataset_id) {
             return Err(format!("数据集不存在: {}", job.dataset_id));
         }
-        
+
         // 添加训练任务
         let mut jobs = self.training_manager.jobs.write().unwrap();
-        
+
         if jobs.contains_key(&job.id) {
             return Err(format!("训练任务已存在: {}", job.id));
         }
-        
+
         jobs.insert(job.id.clone(), job.clone());
-        
+
         // 将任务添加到队列
         let mut job_queue = self.training_manager.job_queue.write().unwrap();
         job_queue.push(job.id.clone());
-        
+
         Ok(())
     }
-    
+
     fn process_training_job(&self) -> Result<bool, String> {
         // 检查是否有可用的工作节点
         let workers = self.training_manager.worker_pool.workers.read().unwrap();
         let available_workers: Vec<_> = workers.values()
             .filter(|w| w.status == WorkerStatus::Running && w.current_tasks.is_empty())
             .collect();
-        
+
         if available_workers.is_empty() {
             return Ok(false);
         }
-        
+
         // 获取下一个待处理任务
         let mut job_queue = self.training_manager.job_queue.write().unwrap();
         if job_queue.is_empty() {
             return Ok(false);
         }
-        
+
         let job_id = job_queue.remove(0);
         drop(job_queue);
-        
+
         // 获取训练任务
         let mut jobs = self.training_manager.jobs.write().unwrap();
         let job = jobs.get_mut(&job_id)
             .ok_or_else(|| format!("训练任务不存在: {}", job_id))?;
-        
+
         // 更新任务状态
         job.status = JobStatus::Running;
         job.started_at = Some(SystemTime::now());
-        
+
         println!("开始处理训练任务: {}", job_id);
-        
+
         // 在实际实现中，这里会将任务分配给工作节点
         // 简化：模拟训练过程
-        
+
         // 创建模型版本
         let model_version = ModelVersion {
             model_id: job.model_id.clone(),
@@ -12004,70 +12006,70 @@ impl DistributedMLSystem {
             created_at: SystemTime::now(),
             experiment_id: None,
         };
-        
+
         self.create_model_version(model_version)?;
-        
+
         Ok(true)
     }
-    
+
     fn create_inference_endpoint(&self, endpoint: InferenceEndpoint) -> Result<(), String> {
         println!("创建推理端点: {}", endpoint.name);
-        
+
         // 检查模型是否存在
         let versions = self.model_registry.model_versions.read().unwrap();
         let model_versions = versions.get(&endpoint.model_id)
             .ok_or_else(|| format!("模型版本列表不存在: {}", endpoint.model_id))?;
-        
+
         let model_version = model_versions.iter()
             .find(|v| v.version == endpoint.model_version)
             .ok_or_else(|| format!("模型版本不存在: {}:{}", endpoint.model_id, endpoint.model_version))?;
-        
-        if model_version.status != ModelStatus::Trained && 
-           model_version.status != ModelStatus::Validated && 
+
+        if model_version.status != ModelStatus::Trained &&
+           model_version.status != ModelStatus::Validated &&
            model_version.status != ModelStatus::Deployed {
             return Err(format!("模型版本不可用于推理: {}:{}", endpoint.model_id, endpoint.model_version));
         }
-        
+
         // 添加端点
         let mut endpoints = self.inference_service.endpoints.write().unwrap();
-        
+
         if endpoints.contains_key(&endpoint.id) {
             return Err(format!("推理端点已存在: {}", endpoint.id));
         }
-        
+
         endpoints.insert(endpoint.id.clone(), endpoint);
-        
+
         Ok(())
     }
-    
+
     fn predict(&self, endpoint_id: &str, input: &HashMap<String, serde_json::Value>) -> Result<HashMap<String, serde_json::Value>, String> {
         println!("使用端点 {} 进行预测", endpoint_id);
-        
+
         // 获取端点信息
         let endpoints = self.inference_service.endpoints.read().unwrap();
         let endpoint = endpoints.get(endpoint_id)
             .ok_or_else(|| format!("推理端点不存在: {}", endpoint_id))?;
-        
+
         if endpoint.status != EndpointStatus::Running {
             return Err(format!("推理端点不可用: {}", endpoint_id));
         }
-        
+
         // 获取模型版本
         let versions = self.model_registry.model_versions.read().unwrap();
         let model_versions = versions.get(&endpoint.model_id)
             .ok_or_else(|| format!("模型版本列表不存在: {}", endpoint.model_id))?;
-        
+
         let model_version = model_versions.iter()
             .find(|v| v.version == endpoint.model_version)
             .ok_or_else(|| format!("模型版本不存在: {}:{}", endpoint.model_id, endpoint.model_version))?;
-        
+
         // 在实际实现中，这里会加载模型并执行预测
         // 简化：返回一个模拟的预测结果
-        
+
         let mut result = HashMap::new();
         result.insert("prediction".to_string(), serde_json::json!([0.1, 0.2, 0.7]));
         result.insert("model_version".to_string(), serde_json::json!(model_version.version));
-        
+
         Ok(result)
     }
 }
@@ -12285,47 +12287,47 @@ impl TimeSeriesDB {
             sync_interval: Duration::from_secs(1),
             max_size_bytes: 1024 * 1024 * 1024, // 1GB
         };
-        
+
         let storage_engine = TimeSeriesStorage {
             storage_type,
             base_path,
             partitions: RwLock::new(HashMap::new()),
             wal,
         };
-        
+
         let schema_manager = SchemaManager {
             measurements: RwLock::new(HashMap::new()),
             field_dictionary: RwLock::new(HashMap::new()),
             tags_dictionary: RwLock::new(HashMap::new()),
         };
-        
+
         let parser = TSQueryParser {
             max_query_length: 10000,
             timeout: Duration::from_secs(30),
         };
-        
+
         let planner = TSQueryPlanner {
             optimizers: Vec::new(),
         };
-        
+
         let executor = TSQueryExecutor {
             max_concurrent_queries: 10,
             max_points_per_query: 1_000_000,
             timeout: Duration::from_secs(60),
         };
-        
+
         let query_processor = TSQueryProcessor {
             parser,
             planner,
             executor,
         };
-        
+
         let partition_manager = TimePartitionManager {
             partition_interval: Duration::from_secs(86400), // 1 day
             max_partitions: 100,
             active_partitions: RwLock::new(Vec::new()),
         };
-        
+
         let compaction_manager = CompactionManager {
             enabled: true,
             compaction_interval: Duration::from_secs(3600), // 1 hour
@@ -12334,7 +12336,7 @@ impl TimeSeriesDB {
             threshold_series_count: 1_000_000,
             compaction_worker: None,
         };
-        
+
         TimeSeriesDB {
             node_id: node_id.to_string(),
             storage_engine,
@@ -12345,61 +12347,61 @@ impl TimeSeriesDB {
             compaction_manager,
         }
     }
-    
+
     fn create_retention_policy(&self, name: &str, duration: Duration, replication_factor: u32, default: bool) -> Result<(), String> {
         println!("创建保留策略: {}", name);
-        
+
         let policy = RetentionPolicy {
             name: name.to_string(),
             duration,
             replication_factor,
         };
-        
+
         let mut policies = self.retention_policies.write().unwrap();
-        
+
         if policies.contains_key(name) {
             return Err(format!("保留策略已存在: {}", name));
         }
-        
+
         policies.insert(name.to_string(), policy);
-        
+
         Ok(())
     }
-    
+
     fn write_point(&self, point: TimeSeriesPoint) -> Result<(), String> {
         // 验证点
         self.validate_point(&point)?;
-        
+
         // 确保测量存在
         self.ensure_measurement_exists(&point)?;
-        
+
         // 获取时间分区
         let partition_id = self.get_partition_for_time(point.timestamp)?;
-        
+
         // 写入到存储引擎
         self.write_to_storage(partition_id, point)?;
-        
+
         Ok(())
     }
-    
+
     fn validate_point(&self, point: &TimeSeriesPoint) -> Result<(), String> {
         if point.measurement.is_empty() {
             return Err("测量名称不能为空".to_string());
         }
-        
+
         if point.fields.is_empty() {
             return Err("点必须至少有一个字段".to_string());
         }
-        
+
         Ok(())
     }
-    
+
     fn ensure_measurement_exists(&self, point: &TimeSeriesPoint) -> Result<(), String> {
         let measurements = self.schema_manager.measurements.read().unwrap();
-        
+
         if !measurements.contains_key(&point.measurement) {
             drop(measurements);
-            
+
             // 创建新测量
             let mut fields = HashMap::new();
             for (field_name, field_value) in &point.fields {
@@ -12410,13 +12412,13 @@ impl TimeSeriesDB {
                     serde_json::Value::Bool(_) => FieldType::Boolean,
                     _ => return Err(format!("不支持的字段类型: {:?}", field_value)),
                 };
-                
+
                 fields.insert(field_name.clone(), Field {
                     name: field_name.clone(),
                     field_type,
                     is_indexed: false,
                 });
-                
+
                 // 更新字段字典
                 let mut field_dict = self.schema_manager.field_dictionary.write().unwrap();
                 field_dict.insert(field_name.clone(), Field {
@@ -12425,7 +12427,7 @@ impl TimeSeriesDB {
                     is_indexed: false,
                 });
             }
-            
+
             // 更新标签字典
             let mut tags_dict = self.schema_manager.tags_dictionary.write().unwrap();
             for tag_name in point.tags.keys() {
@@ -12437,7 +12439,7 @@ impl TimeSeriesDB {
                     });
                 }
             }
-            
+
             let measurement = Measurement {
                 name: point.measurement.clone(),
                 fields,
@@ -12445,29 +12447,29 @@ impl TimeSeriesDB {
                 retention_policy: "default".to_string(), // 使用默认保留策略
                 created_at: Utc::now(),
             };
-            
+
             let mut measurements = self.schema_manager.measurements.write().unwrap();
             measurements.insert(point.measurement.clone(), measurement);
         }
-        
+
         Ok(())
     }
-    
+
     fn get_partition_for_time(&self, timestamp: DateTime<Utc>) -> Result<String, String> {
         let partition_interval = self.partition_manager.partition_interval;
-        
+
         // 计算分区时间范围
         let start_time = timestamp - Duration::seconds(timestamp.timestamp() % partition_interval.as_secs() as i64);
         let end_time = start_time + partition_interval;
-        
+
         let partition_id = format!("{}_{}", start_time.format("%Y%m%d%H"), end_time.format("%Y%m%d%H"));
-        
+
         // 检查分区是否存在，如果不存在则创建
         let mut partitions = self.storage_engine.partitions.write().unwrap();
-        
+
         if !partitions.contains_key(&partition_id) {
             println!("创建新分区: {}", partition_id);
-            
+
             let partition = TimePartition {
                 id: partition_id.clone(),
                 time_range: (start_time, end_time),
@@ -12483,13 +12485,13 @@ impl TimeSeriesDB {
                     compression_ratio: 1.0,
                 },
             };
-            
+
             partitions.insert(partition_id.clone(), partition);
-            
+
             // 更新活动分区列表
             let mut active_partitions = self.partition_manager.active_partitions.write().unwrap();
             active_partitions.push(partition_id.clone());
-            
+
             // 如果活动分区超过限制，清理最旧的
             if active_partitions.len() > self.partition_manager.max_partitions {
                 // 按时间排序
@@ -12503,15 +12505,15 @@ impl TimeSeriesDB {
                 }
             }
         }
-        
+
         Ok(partition_id)
     }
-    
+
     fn write_to_storage(&self, partition_id: String, point: TimeSeriesPoint) -> Result<(), String> {
         // 在实际实现中，这里会将点写入存储引擎
-        println!("写入点到分区 {}: {} @ {}", 
+        println!("写入点到分区 {}: {} @ {}",
                 partition_id, point.measurement, point.timestamp);
-        
+
         // 更新分区统计信息
         let mut partitions = self.storage_engine.partitions.write().unwrap();
         if let Some(partition) = partitions.get_mut(&partition_id) {
@@ -12519,22 +12521,22 @@ impl TimeSeriesDB {
             partition.stats.latest_time = std::cmp::max(partition.stats.latest_time, point.timestamp);
             // 其他统计更新...
         }
-        
+
         Ok(())
     }
-    
+
     fn query(&self, query_string: &str) -> Result<TSQueryResult, String> {
         println!("执行查询: {}", query_string);
-        
+
         // 解析查询
         let plan = self.query_processor.parser.parse(query_string)?;
-        
+
         // 优化查询
         let mut optimized_plan = plan.clone();
         for optimizer in &self.query_processor.planner.optimizers {
             optimizer.optimize(&mut optimized_plan)?;
         }
-        
+
         // 执行查询
         self.query_processor.executor.execute(&optimized_plan)
     }
@@ -12558,12 +12560,12 @@ impl TSQueryParser {
     fn parse(&self, query_string: &str) -> Result<QueryPlan, String> {
         // 在实际实现中，这里会解析查询语言
         // 简化：创建一个基本的查询计划
-        
+
         if query_string.len() > self.max_query_length {
-            return Err(format!("查询长度超过限制: {} > {}", 
+            return Err(format!("查询长度超过限制: {} > {}",
                     query_string.len(), self.max_query_length));
         }
-        
+
         let plan = QueryPlan {
             id: uuid::Uuid::new_v4().to_string(),
             query_type: TSQueryType::Select,
@@ -12576,7 +12578,7 @@ impl TSQueryParser {
             offset: None,
             order_by: None,
         };
-        
+
         Ok(plan)
     }
 }
@@ -12584,43 +12586,43 @@ impl TSQueryParser {
 impl TSQueryExecutor {
     fn execute(&self, plan: &QueryPlan) -> Result<TSQueryResult, String> {
         println!("执行查询计划: {:?}", plan.query_type);
-        
+
         // 在实际实现中，这里会根据计划从存储中读取数据
         // 简化：返回一些模拟数据
-        
+
         let columns = plan.projections.clone();
         let mut data = Vec::new();
-        
+
         // 模拟数据点
         for i in 0..10 {
             let timestamp = (Utc::now() - Duration::from_secs(i * 60)).to_rfc3339();
             let value = rand::random::<f64>() * 100.0;
-            
+
             let row = vec![
                 serde_json::Value::String(timestamp),
                 serde_json::Value::Number(serde_json::Number::from_f64(value).unwrap()),
             ];
-            
+
             data.push(row);
         }
-        
+
         let mut tags = HashMap::new();
         tags.insert("host".to_string(), "server01".to_string());
-        
+
         let series = Series {
             name: plan.measurements[0].clone(),
             tags,
             columns: vec!["time".to_string(), plan.projections[0].clone()],
             values: data.clone(),
         };
-        
+
         let result = TSQueryResult {
             columns,
             data,
             series: vec![series],
             execution_time: Duration::from_millis(10),
         };
-        
+
         Ok(result)
     }
 }
@@ -12854,37 +12856,37 @@ impl RealTimeEventProcessingSystem {
             max_threads: 32,
             keep_alive: Duration::from_secs(60),
         };
-        
+
         let scheduler = Scheduler {
             // ...省略实现细节
         };
-        
+
         let buffer_manager = BufferManager {
             buffers: RwLock::new(HashMap::new()),
         };
-        
+
         let execution_engine = ExecutionEngine {
             thread_pool,
             scheduler,
             buffer_manager,
         };
-        
+
         let metrics_collector = MetricsCollector {
             collection_interval: Duration::from_secs(10),
             retention_period: Duration::from_secs(86400), // 1 day
             metrics_store: MetricsStore::Memory,
         };
-        
+
         let alerting_system = AlertingSystem {
             rules: RwLock::new(HashMap::new()),
             notifiers: RwLock::new(HashMap::new()),
         };
-        
+
         let monitoring = MonitoringSystem {
             metrics_collector,
             alerting: alerting_system,
         };
-        
+
         RealTimeEventProcessingSystem {
             node_id: node_id.to_string(),
             event_sources: RwLock::new(HashMap::new()),
@@ -12895,66 +12897,66 @@ impl RealTimeEventProcessingSystem {
             monitoring,
         }
     }
-    
+
     fn add_source(&self, source: EventSource) -> Result<(), String> {
         println!("添加事件源: {}", source.name);
-        
+
         let mut sources = self.event_sources.write().unwrap();
-        
+
         if sources.contains_key(&source.id) {
             return Err(format!("事件源已存在: {}", source.id));
         }
-        
+
         sources.insert(source.id.clone(), source);
-        
+
         Ok(())
     }
-    
+
     fn add_processor(&self, processor: EventProcessor) -> Result<(), String> {
         println!("添加事件处理器: {}", processor.name);
-        
+
         let mut processors = self.processors.write().unwrap();
-        
+
         if processors.contains_key(&processor.id) {
             return Err(format!("事件处理器已存在: {}", processor.id));
         }
-        
+
         processors.insert(processor.id.clone(), processor);
-        
+
         Ok(())
     }
-    
+
     fn add_sink(&self, sink: EventSink) -> Result<(), String> {
         println!("添加事件接收器: {}", sink.name);
-        
+
         let mut sinks = self.sinks.write().unwrap();
-        
+
         if sinks.contains_key(&sink.id) {
             return Err(format!("事件接收器已存在: {}", sink.id));
         }
-        
+
         sinks.insert(sink.id.clone(), sink);
-        
+
         Ok(())
     }
-    
+
     fn create_pipeline(&self, pipeline: Pipeline) -> Result<(), String> {
         println!("创建事件管道: {}", pipeline.name);
-        
+
         // 验证管道配置
         self.validate_pipeline(&pipeline)?;
-        
+
         let mut pipelines = self.pipelines.write().unwrap();
-        
+
         if pipelines.contains_key(&pipeline.id) {
             return Err(format!("事件管道已存在: {}", pipeline.id));
         }
-        
+
         pipelines.insert(pipeline.id.clone(), pipeline);
-        
+
         Ok(())
     }
-    
+
     fn validate_pipeline(&self, pipeline: &Pipeline) -> Result<(), String> {
         // 检查所有源是否存在
         let sources = self.event_sources.read().unwrap();
@@ -12963,7 +12965,7 @@ impl RealTimeEventProcessingSystem {
                 return Err(format!("事件源不存在: {}", source_id));
             }
         }
-        
+
         // 检查所有处理器是否存在
         let processors = self.processors.read().unwrap();
         for processor in &pipeline.processors {
@@ -12971,7 +12973,7 @@ impl RealTimeEventProcessingSystem {
                 return Err(format!("事件处理器不存在: {}", processor.processor_id));
             }
         }
-        
+
         // 检查所有接收器是否存在
         let sinks = self.sinks.read().unwrap();
         for sink_id in &pipeline.sinks {
@@ -12979,44 +12981,44 @@ impl RealTimeEventProcessingSystem {
                 return Err(format!("事件接收器不存在: {}", sink_id));
             }
         }
-        
+
         // 验证图连接
         // ...省略具体实现
-        
+
         Ok(())
     }
-    
+
     fn start_pipeline(&self, pipeline_id: &str) -> Result<(), String> {
         println!("启动事件管道: {}", pipeline_id);
-        
+
         let mut pipelines = self.pipelines.write().unwrap();
-        
+
         let pipeline = pipelines.get_mut(pipeline_id)
             .ok_or_else(|| format!("事件管道不存在: {}", pipeline_id))?;
-        
+
         if pipeline.status == PipelineStatus::Running {
             return Err(format!("事件管道已在运行中: {}", pipeline_id));
         }
-        
+
         // 创建管道所需的缓冲区
         self.create_pipeline_buffers(pipeline)?;
-        
+
         // 启动所有组件
         self.start_pipeline_components(pipeline)?;
-        
+
         // 更新管道状态
         pipeline.status = PipelineStatus::Running;
-        
+
         Ok(())
     }
-    
+
     fn create_pipeline_buffers(&self, pipeline: &Pipeline) -> Result<(), String> {
         let mut buffers = self.execution_engine.buffer_manager.buffers.write().unwrap();
-        
+
         // 为每个源和处理器输出创建缓冲区
         for source_id in &pipeline.sources {
             let buffer_id = format!("source_{}_{}", source_id, pipeline.id);
-            
+
             if !buffers.contains_key(&buffer_id) {
                 buffers.insert(buffer_id, EventBuffer {
                     id: buffer_id.clone(),
@@ -13026,11 +13028,11 @@ impl RealTimeEventProcessingSystem {
                 });
             }
         }
-        
+
         for processor in &pipeline.processors {
             for output in &processor.outputs {
                 let buffer_id = format!("processor_{}_{}_{}", processor.processor_id, output, pipeline.id);
-                
+
                 if !buffers.contains_key(&buffer_id) {
                     buffers.insert(buffer_id, EventBuffer {
                         id: buffer_id.clone(),
@@ -13041,10 +13043,10 @@ impl RealTimeEventProcessingSystem {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_pipeline_components(&self, pipeline: &Pipeline) -> Result<(), String> {
         // 启动所有源
         let mut sources = self.event_sources.write().unwrap();
@@ -13054,7 +13056,7 @@ impl RealTimeEventProcessingSystem {
                 println!("启动事件源: {}", source.name);
             }
         }
-        
+
         // 启动所有处理器
         let mut processors = self.processors.write().unwrap();
         for pipeline_processor in &pipeline.processors {
@@ -13063,7 +13065,7 @@ impl RealTimeEventProcessingSystem {
                 println!("启动事件处理器: {}", processor.name);
             }
         }
-        
+
         // 启动所有接收器
         let mut sinks = self.sinks.write().unwrap();
         for sink_id in &pipeline.sinks {
@@ -13072,31 +13074,31 @@ impl RealTimeEventProcessingSystem {
                 println!("启动事件接收器: {}", sink.name);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn stop_pipeline(&self, pipeline_id: &str) -> Result<(), String> {
         println!("停止事件管道: {}", pipeline_id);
-        
+
         let mut pipelines = self.pipelines.write().unwrap();
-        
+
         let pipeline = pipelines.get_mut(pipeline_id)
             .ok_or_else(|| format!("事件管道不存在: {}", pipeline_id))?;
-        
+
         if pipeline.status != PipelineStatus::Running {
             return Err(format!("事件管道未运行: {}", pipeline_id));
         }
-        
+
         // 停止所有组件
         self.stop_pipeline_components(pipeline)?;
-        
+
         // 更新管道状态
         pipeline.status = PipelineStatus::Stopped;
-        
+
         Ok(())
     }
-    
+
     fn stop_pipeline_components(&self, pipeline: &Pipeline) -> Result<(), String> {
         // 停止所有源
         let mut sources = self.event_sources.write().unwrap();
@@ -13106,7 +13108,7 @@ impl RealTimeEventProcessingSystem {
                 println!("停止事件源: {}", source.name);
             }
         }
-        
+
         // 停止所有处理器
         let mut processors = self.processors.write().unwrap();
         for pipeline_processor in &pipeline.processors {
@@ -13115,7 +13117,7 @@ impl RealTimeEventProcessingSystem {
                 println!("停止事件处理器: {}", processor.name);
             }
         }
-        
+
         // 停止所有接收器
         let mut sinks = self.sinks.write().unwrap();
         for sink_id in &pipeline.sinks {
@@ -13124,42 +13126,42 @@ impl RealTimeEventProcessingSystem {
                 println!("停止事件接收器: {}", sink.name);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn process_event(&self, event: Event) -> Result<(), String> {
         println!("处理事件: {}", event.id);
-        
+
         // 查找包含此事件源的管道
         let pipelines = self.pipelines.read().unwrap();
         let matching_pipelines: Vec<_> = pipelines.values()
             .filter(|p| p.status == PipelineStatus::Running && p.sources.contains(&event.source))
             .collect();
-        
+
         if matching_pipelines.is_empty() {
             return Err(format!("没有找到处理事件源 {} 的运行中的管道", event.source));
         }
-        
+
         // 将事件发送到所有匹配的管道
         for pipeline in matching_pipelines {
             println!("将事件 {} 发送到管道 {}", event.id, pipeline.name);
-            
+
             // 在实际实现中，这里会将事件放入相应的缓冲区，然后由处理器处理
         }
-        
+
         Ok(())
     }
-    
+
     fn add_alert_rule(&self, rule: AlertRule) -> Result<(), String> {
         println!("添加告警规则: {}", rule.name);
-        
+
         let mut rules = self.monitoring.alerting.rules.write().unwrap();
-        
+
         if rules.contains_key(&rule.id) {
             return Err(format!("告警规则已存在: {}", rule.id));
         }
-        
+
         // 验证通知器是否存在
         let notifiers = self.monitoring.alerting.notifiers.read().unwrap();
         for notifier_id in &rule.notifiers {
@@ -13167,23 +13169,23 @@ impl RealTimeEventProcessingSystem {
                 return Err(format!("通知器不存在: {}", notifier_id));
             }
         }
-        
+
         rules.insert(rule.id.clone(), rule);
-        
+
         Ok(())
     }
-    
+
     fn add_notifier(&self, notifier: Notifier) -> Result<(), String> {
         println!("添加通知器: {}", notifier.name);
-        
+
         let mut notifiers = self.monitoring.alerting.notifiers.write().unwrap();
-        
+
         if notifiers.contains_key(&notifier.id) {
             return Err(format!("通知器已存在: {}", notifier.id));
         }
-        
+
         notifiers.insert(notifier.id.clone(), notifier);
-        
+
         Ok(())
     }
 }
@@ -13385,16 +13387,16 @@ impl SpatialDatabase {
             storage_type: SpatialStorageType::Memory,
             tables: RwLock::new(HashMap::new()),
         };
-        
+
         let index_manager = SpatialIndexManager {
             indices: RwLock::new(HashMap::new()),
         };
-        
+
         let parser = SpatialQueryParser {
             supported_langs: vec!["SQL".to_string(), "GeoJSON".to_string()],
             max_query_length: 10000,
         };
-        
+
         let optimizer = SpatialQueryOptimizer {
             optimization_level: 2,
             strategies: vec![
@@ -13403,23 +13405,23 @@ impl SpatialDatabase {
                 OptimizationStrategy::SpatialPredicatePushdown,
             ],
         };
-        
+
         let executor = SpatialQueryExecutor {
             max_concurrent_queries: 10,
             max_memory_usage: 1024 * 1024 * 1024, // 1GB
             timeout: Duration::from_secs(30),
         };
-        
+
         let query_processor = SpatialQueryProcessor {
             parser,
             optimizer,
             executor,
         };
-        
+
         let geo_functions = GeoFunctionLibrary {
             functions: HashMap::new(),
         };
-        
+
         SpatialDatabase {
             node_id: node_id.to_string(),
             storage_engine,
@@ -13428,39 +13430,39 @@ impl SpatialDatabase {
             geo_functions,
         }
     }
-    
+
     fn create_table(&self, table: SpatialTable) -> Result<(), String> {
         println!("创建空间表: {}", table.name);
-        
+
         // 验证表结构
         self.validate_table(&table)?;
-        
+
         let mut tables = self.storage_engine.tables.write().unwrap();
-        
+
         if tables.contains_key(&table.name) {
             return Err(format!("表已存在: {}", table.name));
         }
-        
+
         tables.insert(table.name.clone(), table);
-        
+
         Ok(())
     }
-    
+
     fn validate_table(&self, table: &SpatialTable) -> Result<(), String> {
         // 检查表名
         if table.name.is_empty() {
             return Err("表名不能为空".to_string());
         }
-        
+
         // 检查是否有列
         if table.columns.is_empty() {
             return Err("表必须至少有一列".to_string());
         }
-        
+
         // 验证几何列
         let geom_column = table.columns.iter()
             .find(|c| c.name == table.geometry_column);
-        
+
         if let Some(column) = geom_column {
             match &column.data_type {
                 DataType::Geometry(_) => {}, // 有效的几何类型
@@ -13469,29 +13471,29 @@ impl SpatialDatabase {
         } else {
             return Err(format!("找不到几何列: {}", table.geometry_column));
         }
-        
+
         // 验证SRID
         if table.srid < 0 {
             return Err(format!("无效的SRID: {}", table.srid));
         }
-        
+
         Ok(())
     }
-    
+
     fn create_spatial_index(&self, index: SpatialIndex) -> Result<(), String> {
         println!("创建空间索引: {}", index.id);
-        
+
         // 验证表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
         if !tables.contains_key(&index.table_name) {
             return Err(format!("表不存在: {}", index.table_name));
         }
-        
+
         // 验证列是否存在
         let table = tables.get(&index.table_name).unwrap();
         let column = table.columns.iter()
             .find(|c| c.name == index.column_name);
-        
+
         if let Some(column) = column {
             match &column.data_type {
                 DataType::Geometry(_) => {}, // 有效的几何类型
@@ -13500,36 +13502,36 @@ impl SpatialDatabase {
         } else {
             return Err(format!("表 {} 中找不到列: {}", index.table_name, index.column_name));
         }
-        
+
         let mut indices = self.index_manager.indices.write().unwrap();
-        
+
         if indices.contains_key(&index.id) {
             return Err(format!("索引已存在: {}", index.id));
         }
-        
+
         indices.insert(index.id.clone(), index);
-        
+
         Ok(())
     }
-    
+
     fn execute_query(&self, query: SpatialQuery) -> Result<SpatialQueryResult, String> {
         println!("执行空间查询: {:?} on {}", query.query_type, query.target_table);
-        
+
         let start_time = Instant::now();
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
         if !tables.contains_key(&query.target_table) {
             return Err(format!("表不存在: {}", query.target_table));
         }
-        
+
         // 在实际实现中，这里会：
         // 1. 解析和优化查询
         // 2. 选择合适的空间索引
         // 3. 执行空间过滤
         // 4. 应用非空间过滤条件
         // 5. 返回结果
-        
+
         // 简化：返回一些模拟数据
         let mut rows = Vec::new();
         let columns = if query.columns.is_empty() {
@@ -13537,7 +13539,7 @@ impl SpatialDatabase {
         } else {
             query.columns.clone()
         };
-        
+
         for i in 0..5 {
             let mut row = Vec::new();
             row.push(serde_json::json!(i + 1)); // id
@@ -13546,56 +13548,56 @@ impl SpatialDatabase {
                 "type": "Point",
                 "coordinates": [10.0 + i as f64, 20.0 + i as f64]
             })); // geom
-            
+
             rows.push(row);
         }
-        
+
         let execution_time = start_time.elapsed();
-        
+
         let result = SpatialQueryResult {
             columns,
             rows,
             row_count: rows.len(),
             execution_time,
         };
-        
+
         Ok(result)
     }
-    
+
     fn register_geo_function(&self, function: GeoFunction) -> Result<(), String> {
         println!("注册地理函数: {}", function.name);
-        
+
         let mut functions = self.geo_functions.functions.clone();
-        
+
         if functions.contains_key(&function.name) {
             return Err(format!("函数已存在: {}", function.name));
         }
-        
+
         functions.insert(function.name.clone(), function);
-        
+
         Ok(())
     }
-    
+
     fn import_data(&self, table_name: &str, data: &str, format: &str) -> Result<usize, String> {
         println!("导入数据到表 {}, 格式: {}", table_name, format);
-        
+
         // 检查表是否存在
         let mut tables = self.storage_engine.tables.write().unwrap();
         let table = tables.get_mut(table_name)
             .ok_or_else(|| format!("表不存在: {}", table_name))?;
-        
+
         // 在实际实现中，这里会：
         // 1. 解析输入数据（GeoJSON、WKT、Shapefile等）
         // 2. 验证数据是否符合表结构
         // 3. 将数据转换为内部格式并存储
         // 4. 更新表统计信息
-        
+
         // 简化：假设导入了5条记录
         let imported_count = 5;
-        
+
         // 更新表统计信息
         table.row_count += imported_count as u64;
-        
+
         // 更新表的边界框
         let new_bbox = BoundingBox {
             min_x: -180.0,
@@ -13603,32 +13605,32 @@ impl SpatialDatabase {
             max_x: 180.0,
             max_y: 90.0,
         };
-        
+
         table.bbox = new_bbox;
-        
+
         Ok(imported_count)
     }
-    
+
     fn export_data(&self, query: SpatialQuery, format: &str) -> Result<String, String> {
         println!("导出查询结果, 格式: {}", format);
-        
+
         // 执行查询
         let result = self.execute_query(query)?;
-        
+
         // 在实际实现中，这里会：
         // 1. 将查询结果转换为请求的输出格式（GeoJSON、WKT、Shapefile等）
-        
+
         // 简化：返回GeoJSON格式的数据
         match format.to_lowercase().as_str() {
             "geojson" => {
                 let mut features = Vec::new();
-                
+
                 for row in &result.rows {
                     if row.len() >= 3 {
                         let id = &row[0];
                         let name = &row[1];
                         let geom = &row[2];
-                        
+
                         let feature = serde_json::json!({
                             "type": "Feature",
                             "id": id,
@@ -13637,16 +13639,16 @@ impl SpatialDatabase {
                             },
                             "geometry": geom
                         });
-                        
+
                         features.push(feature);
                     }
                 }
-                
+
                 let geojson = serde_json::json!({
                     "type": "FeatureCollection",
                     "features": features
                 });
-                
+
                 Ok(geojson.to_string())
             },
             _ => Err(format!("不支持的导出格式: {}", format)),
@@ -13746,22 +13748,22 @@ impl DistributedTransactionManager {
             transactions: RwLock::new(HashMap::new()),
             storage,
         };
-        
+
         let coordinator = TransactionCoordinator {
             prepare_timeout: Duration::from_secs(30),
             commit_timeout: Duration::from_secs(30),
             heartbeat_interval: Duration::from_secs(5),
         };
-        
+
         let participant_manager = ParticipantManager {
             participants: RwLock::new(HashMap::new()),
         };
-        
+
         let recovery_manager = RecoveryManager {
             recovery_interval: Duration::from_secs(60),
             max_recovery_attempts: 3,
         };
-        
+
         DistributedTransactionManager {
             node_id: node_id.to_string(),
             transaction_store,
@@ -13770,12 +13772,12 @@ impl DistributedTransactionManager {
             recovery_manager,
         }
     }
-    
+
     fn start_transaction(&self) -> Result<String, String> {
         let tx_id = uuid::Uuid::new_v4().to_string();
-        
+
         println!("启动事务: {}", tx_id);
-        
+
         let now = Utc::now();
         let transaction = Transaction {
             id: tx_id.clone(),
@@ -13786,34 +13788,34 @@ impl DistributedTransactionManager {
             updated_at: now,
             completed_at: None,
         };
-        
+
         // 存储事务
         let mut transactions = self.transaction_store.transactions.write().unwrap();
         transactions.insert(tx_id.clone(), transaction.clone());
-        
+
         // 持久化事务
         self.transaction_store.storage.create_transaction(&tx_id)?;
-        
+
         Ok(tx_id)
     }
-    
+
     fn register_participant(&self, tx_id: &str, participant_id: &str, resource_id: &str) -> Result<(), String> {
         println!("注册参与者 {} 到事务 {}", participant_id, tx_id);
-        
+
         let mut transactions = self.transaction_store.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不处于活动状态: {}", tx_id));
         }
-        
+
         // 检查参与者是否已注册
         if transaction.participants.iter().any(|p| p.id == participant_id) {
             return Err(format!("参与者已注册: {}", participant_id));
         }
-        
+
         // 添加参与者
         let participant = ParticipantInfo {
             id: participant_id.to_string(),
@@ -13823,51 +13825,51 @@ impl DistributedTransactionManager {
             prepare_time: None,
             commit_time: None,
         };
-        
+
         transaction.participants.push(participant);
         transaction.updated_at = Utc::now();
-        
+
         // 更新事务存储
         self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Active {
             participants: transaction.participants.iter().map(|p| p.id.clone()).collect(),
         })?;
-        
+
         Ok(())
     }
-    
+
     fn prepare(&self, tx_id: &str) -> Result<bool, String> {
         println!("准备事务: {}", tx_id);
-        
+
         let mut transactions = self.transaction_store.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不处于活动状态: {}", tx_id));
         }
-        
+
         if transaction.participants.is_empty() {
             return Err(format!("事务没有参与者: {}", tx_id));
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Preparing;
         transaction.updated_at = Utc::now();
-        
+
         // 更新事务存储
         self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Preparing {
             started_at: transaction.updated_at,
         })?;
-        
+
         // 准备所有参与者
         let prepared = self.prepare_participants(transaction)?;
-        
+
         if prepared {
             // 所有参与者都准备好了
             transaction.status = TransactionStatus::Prepared;
             transaction.updated_at = Utc::now();
-            
+
             // 更新事务存储
             self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Prepared {
                 prepared_at: transaction.updated_at,
@@ -13876,63 +13878,63 @@ impl DistributedTransactionManager {
             // 至少有一个参与者投票中止
             transaction.status = TransactionStatus::Aborting;
             transaction.updated_at = Utc::now();
-            
+
             // 更新事务存储
             self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Aborting {
                 abort_reason: "参与者投票中止".to_string(),
                 started_at: transaction.updated_at,
             })?;
         }
-        
+
         Ok(prepared)
     }
-    
+
     fn prepare_participants(&self, transaction: &mut Transaction) -> Result<bool, String> {
         let all_prepared = true;
-        
+
         for participant in &mut transaction.participants {
             // 在实际实现中，这里会向参与者发送准备请求
             println!("请求参与者 {} 准备", participant.id);
-            
+
             // 简化：假设所有参与者都准备好并投票提交
             participant.status = ParticipantStatus::Prepared;
             participant.vote = Some(Vote::Commit);
             participant.prepare_time = Some(Utc::now());
         }
-        
+
         Ok(all_prepared)
     }
-    
+
     fn commit_transaction(&self, tx_id: &str) -> Result<bool, String> {
         println!("提交事务: {}", tx_id);
-        
+
         let mut transactions = self.transaction_store.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         if transaction.status != TransactionStatus::Prepared {
             return Err(format!("事务未准备好: {}", tx_id));
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Committing;
         transaction.updated_at = Utc::now();
-        
+
         // 更新事务存储
         self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Committing {
             started_at: transaction.updated_at,
         })?;
-        
+
         // 提交所有参与者
         let all_committed = self.commit_participants(transaction)?;
-        
+
         if all_committed {
             // 所有参与者都已提交
             transaction.status = TransactionStatus::Committed;
             transaction.updated_at = Utc::now();
             transaction.completed_at = Some(transaction.updated_at);
-            
+
             // 更新事务存储
             self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Committed {
                 committed_at: transaction.updated_at,
@@ -13942,64 +13944,64 @@ impl DistributedTransactionManager {
             // 在实际实现中，这可能需要协调员干预
             return Err("提交阶段出现错误，需要手动干预".to_string());
         }
-        
+
         Ok(all_committed)
     }
-    
+
     fn commit_participants(&self, transaction: &mut Transaction) -> Result<bool, String> {
         let mut all_committed = true;
-        
+
         for participant in &mut transaction.participants {
             if participant.status != ParticipantStatus::Prepared || participant.vote != Some(Vote::Commit) {
                 continue;
             }
-            
+
             // 在实际实现中，这里会向参与者发送提交请求
             println!("请求参与者 {} 提交", participant.id);
-            
+
             // 简化：假设所有参与者都成功提交
             participant.status = ParticipantStatus::Committed;
             participant.commit_time = Some(Utc::now());
         }
-        
+
         Ok(all_committed)
     }
-    
+
     fn abort_transaction(&self, tx_id: &str, reason: &str) -> Result<bool, String> {
         println!("中止事务: {}, 原因: {}", tx_id, reason);
-        
+
         let mut transactions = self.transaction_store.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         // 只有活动、准备中或已准备的事务可以被中止
         match transaction.status {
-            TransactionStatus::Active | 
-            TransactionStatus::Preparing | 
+            TransactionStatus::Active |
+            TransactionStatus::Preparing |
             TransactionStatus::Prepared => {},
             _ => return Err(format!("无法中止处于 {:?} 状态的事务", transaction.status)),
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Aborting;
         transaction.updated_at = Utc::now();
-        
+
         // 更新事务存储
         self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Aborting {
             abort_reason: reason.to_string(),
             started_at: transaction.updated_at,
         })?;
-        
+
         // 中止所有参与者
         let all_aborted = self.abort_participants(transaction)?;
-        
+
         if all_aborted {
             // 所有参与者都已中止
             transaction.status = TransactionStatus::Aborted;
             transaction.updated_at = Utc::now();
             transaction.completed_at = Some(transaction.updated_at);
-            
+
             // 更新事务存储
             self.transaction_store.storage.update_transaction_state(tx_id, &TransactionState::Aborted {
                 aborted_at: transaction.updated_at,
@@ -14010,44 +14012,44 @@ impl DistributedTransactionManager {
             // 在实际实现中，这可能需要协调员干预
             return Err("中止阶段出现错误，需要手动干预".to_string());
         }
-        
+
         Ok(all_aborted)
     }
-    
+
     fn abort_participants(&self, transaction: &mut Transaction) -> Result<bool, String> {
         let mut all_aborted = true;
-        
+
         for participant in &mut transaction.participants {
             // 在实际实现中，这里会向参与者发送中止请求
             println!("请求参与者 {} 中止", participant.id);
-            
+
             // 简化：假设所有参与者都成功中止
             participant.status = ParticipantStatus::Aborted;
         }
-        
+
         Ok(all_aborted)
     }
-    
+
     fn get_transaction_status(&self, tx_id: &str) -> Result<TransactionStatus, String> {
         let transactions = self.transaction_store.transactions.read().unwrap();
-        
+
         let transaction = transactions.get(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         Ok(transaction.status.clone())
     }
-    
+
     fn recover_transactions(&self) -> Result<usize, String> {
         println!("恢复未完成的事务...");
-        
+
         // 获取所有未完成的事务
         let active_transactions = self.transaction_store.storage.list_active_transactions()?;
-        
+
         let mut recovered_count = 0;
-        
+
         for (tx_id, state) in active_transactions {
             println!("恢复事务: {}", tx_id);
-            
+
             match state {
                 TransactionState::Prepared { .. } => {
                     // 已准备好的事务应该继续提交
@@ -14102,9 +14104,9 @@ impl DistributedTransactionManager {
                 }
             }
         }
-        
+
         println!("恢复了 {} 个事务", recovered_count);
-        
+
         Ok(recovered_count)
     }
 }
@@ -14360,7 +14362,7 @@ impl DistributedGraphDB {
             edges: RwLock::new(HashMap::new()),
             properties: RwLock::new(HashMap::new()),
         };
-        
+
         let parser = GraphQueryParser {
             supported_languages: vec![
                 GraphQueryLanguage::Gremlin,
@@ -14368,14 +14370,14 @@ impl DistributedGraphDB {
             ],
             max_query_length: 10000,
         };
-        
+
         let statistics = GraphStatistics {
             vertex_count: 0,
             edge_count: 0,
             label_statistics: HashMap::new(),
             property_statistics: HashMap::new(),
         };
-        
+
         let optimizer = GraphQueryOptimizer {
             optimization_rules: vec![
                 OptimizationRule::IndexUsage,
@@ -14384,33 +14386,33 @@ impl DistributedGraphDB {
             ],
             statistics,
         };
-        
+
         let executor = GraphQueryExecutor {
             max_concurrent_queries: 10,
             timeout: Duration::from_secs(60),
             max_result_size: 10000,
         };
-        
+
         let query_processor = GraphQueryProcessor {
             parser,
             optimizer,
             executor,
         };
-        
+
         let index_manager = GraphIndexManager {
             indices: RwLock::new(HashMap::new()),
         };
-        
+
         let partition_manager = GraphPartitionManager {
             partitions: RwLock::new(HashMap::new()),
             partitioning_strategy: PartitioningStrategy::Hash,
         };
-        
+
         let transaction_manager = GraphTransactionManager {
             active_transactions: RwLock::new(HashMap::new()),
             isolation_level: IsolationLevel::ReadCommitted,
         };
-        
+
         DistributedGraphDB {
             node_id: node_id.to_string(),
             storage_engine,
@@ -14420,18 +14422,18 @@ impl DistributedGraphDB {
             transaction_manager,
         }
     }
-    
+
     fn add_vertex(&self, label: &str, properties: HashMap<String, PropertyValue>) -> Result<String, String> {
         println!("添加顶点: {}", label);
-        
+
         // 生成顶点ID
         let vertex_id = uuid::Uuid::new_v4().to_string();
-        
+
         // 分配分区
         let partition_id = self.assign_partition_for_vertex(&vertex_id, label, &properties)?;
-        
+
         let now = Utc::now();
-        
+
         // 创建顶点
         let vertex = Vertex {
             id: vertex_id.clone(),
@@ -14443,17 +14445,17 @@ impl DistributedGraphDB {
             created_at: now,
             updated_at: now,
         };
-        
+
         // 存储顶点
         let mut vertices = self.storage_engine.vertices.write().unwrap();
         vertices.insert(vertex_id.clone(), vertex);
-        
+
         // 更新统计信息
         // 在实际实现中，这里会更新各种统计信息
-        
+
         Ok(vertex_id)
     }
-    
+
     fn assign_partition_for_vertex(&self, vertex_id: &str, label: &str, properties: &HashMap<String, PropertyValue>) -> Result<String, String> {
         // 根据分区策略分配分区
         match self.partition_manager.partitioning_strategy {
@@ -14462,16 +14464,16 @@ impl DistributedGraphDB {
                 let mut hasher = DefaultHasher::new();
                 vertex_id.hash(&mut hasher);
                 let hash = hasher.finish();
-                
+
                 // 假设有N个分区，选择一个
                 let partitions = self.partition_manager.partitions.read().unwrap();
                 let partition_count = partitions.len().max(1);
                 let partition_index = (hash % partition_count as u64) as usize;
-                
+
                 let partition_id = partitions.keys().nth(partition_index)
                     .cloned()
                     .unwrap_or_else(|| "default".to_string());
-                
+
                 Ok(partition_id)
             },
             PartitioningStrategy::Range => {
@@ -14485,29 +14487,29 @@ impl DistributedGraphDB {
             }
         }
     }
-    
+
     fn add_edge(&self, from_vertex: &str, to_vertex: &str, label: &str, properties: HashMap<String, PropertyValue>) -> Result<String, String> {
         println!("添加边: {} -> {}, 标签: {}", from_vertex, to_vertex, label);
-        
+
         // 检查顶点是否存在
         let vertices = self.storage_engine.vertices.read().unwrap();
-        
+
         if !vertices.contains_key(from_vertex) {
             return Err(format!("源顶点不存在: {}", from_vertex));
         }
-        
+
         if !vertices.contains_key(to_vertex) {
             return Err(format!("目标顶点不存在: {}", to_vertex));
         }
-        
+
         // 生成边ID
         let edge_id = uuid::Uuid::new_v4().to_string();
-        
+
         // 分配分区
         let partition_id = self.assign_partition_for_edge(from_vertex, to_vertex, label, &properties)?;
-        
+
         let now = Utc::now();
-        
+
         // 创建边
         let edge = Edge {
             id: edge_id.clone(),
@@ -14519,31 +14521,31 @@ impl DistributedGraphDB {
             created_at: now,
             updated_at: now,
         };
-        
+
         // 存储边
         let mut edges = self.storage_engine.edges.write().unwrap();
         edges.insert(edge_id.clone(), edge);
-        
+
         // 更新顶点的边引用
         drop(vertices);
         let mut vertices = self.storage_engine.vertices.write().unwrap();
-        
+
         if let Some(from) = vertices.get_mut(from_vertex) {
             from.out_edges.push(edge_id.clone());
             from.updated_at = now;
         }
-        
+
         if let Some(to) = vertices.get_mut(to_vertex) {
             to.in_edges.push(edge_id.clone());
             to.updated_at = now;
         }
-        
+
         // 更新统计信息
         // 在实际实现中，这里会更新各种统计信息
-        
+
         Ok(edge_id)
     }
-    
+
     fn assign_partition_for_edge(&self, from_vertex: &str, to_vertex: &str, label: &str, properties: &HashMap<String, PropertyValue>) -> Result<String, String> {
         // 根据分区策略分配分区
         match self.partition_manager.partitioning_strategy {
@@ -14553,7 +14555,7 @@ impl DistributedGraphDB {
                 if let Some(from) = vertices.get(from_vertex) {
                     return Ok(from.partition_id.clone());
                 }
-                
+
                 Ok("default".to_string())
             },
             PartitioningStrategy::VertexCut => {
@@ -14563,15 +14565,15 @@ impl DistributedGraphDB {
                 let mut hasher = DefaultHasher::new();
                 edge_id.hash(&mut hasher);
                 let hash = hasher.finish();
-                
+
                 let partitions = self.partition_manager.partitions.read().unwrap();
                 let partition_count = partitions.len().max(1);
                 let partition_index = (hash % partition_count as u64) as usize;
-                
+
                 let partition_id = partitions.keys().nth(partition_index)
                     .cloned()
                     .unwrap_or_else(|| "default".to_string());
-                
+
                 Ok(partition_id)
             },
             _ => {
@@ -14580,59 +14582,59 @@ impl DistributedGraphDB {
             }
         }
     }
-    
+
     fn get_vertex(&self, vertex_id: &str) -> Result<Vertex, String> {
         let vertices = self.storage_engine.vertices.read().unwrap();
-        
+
         vertices.get(vertex_id)
             .cloned()
             .ok_or_else(|| format!("顶点不存在: {}", vertex_id))
     }
-    
+
     fn get_edge(&self, edge_id: &str) -> Result<Edge, String> {
         let edges = self.storage_engine.edges.read().unwrap();
-        
+
         edges.get(edge_id)
             .cloned()
             .ok_or_else(|| format!("边不存在: {}", edge_id))
     }
-    
+
     fn query(&self, query: GraphQuery) -> Result<GraphQueryResult, String> {
         println!("执行图查询: {}", query.query_text);
-        
+
         // 解析查询
         let parsed_query = self.query_processor.parser.parse(&query)?;
-        
+
         // 优化查询
         let optimized_query = self.query_processor.optimizer.optimize(parsed_query)?;
-        
+
         // 执行查询
         let result = self.query_processor.executor.execute(optimized_query, query.parameters)?;
-        
+
         Ok(result)
     }
-    
+
     fn create_index(&self, index: GraphIndex) -> Result<(), String> {
         println!("创建索引: {}", index.id);
-        
+
         let mut indices = self.index_manager.indices.write().unwrap();
-        
+
         if indices.contains_key(&index.id) {
             return Err(format!("索引已存在: {}", index.id));
         }
-        
+
         // 验证索引配置
         self.validate_index(&index)?;
-        
+
         // 构建索引
         self.build_index(&index)?;
-        
+
         // 存储索引
         indices.insert(index.id.clone(), index);
-        
+
         Ok(())
     }
-    
+
     fn validate_index(&self, index: &GraphIndex) -> Result<(), String> {
         // 检查索引类型
         match index.index_type {
@@ -14658,24 +14660,24 @@ impl DistributedGraphDB {
                 // ...省略实现
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn build_index(&self, index: &GraphIndex) -> Result<(), String> {
         println!("构建索引: {}", index.id);
-        
+
         // 在实际实现中，这里会扫描图数据，构建索引
         // 简化：假设索引已成功构建
-        
+
         Ok(())
     }
-    
+
     fn begin_transaction(&self) -> Result<String, String> {
         let tx_id = uuid::Uuid::new_v4().to_string();
-        
+
         println!("开始事务: {}", tx_id);
-        
+
         let transaction = GraphTransaction {
             id: tx_id.clone(),
             operations: Vec::new(),
@@ -14683,54 +14685,54 @@ impl DistributedGraphDB {
             started_at: Utc::now(),
             timeout: Duration::from_secs(60),
         };
-        
+
         let mut transactions = self.transaction_manager.active_transactions.write().unwrap();
         transactions.insert(tx_id.clone(), transaction);
-        
+
         Ok(tx_id)
     }
-    
+
     fn commit_transaction(&self, tx_id: &str) -> Result<(), String> {
         println!("提交事务: {}", tx_id);
-        
+
         let mut transactions = self.transaction_manager.active_transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(tx_id)
             .ok_or_else(|| format!("事务不存在: {}", tx_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不处于活动状态: {}", tx_id));
         }
-        
+
         // 执行事务中的所有操作
         for operation in &transaction.operations {
             self.execute_operation(operation)?;
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Committed;
-        
+
         // 删除事务
         transactions.remove(tx_id);
-        
+
         Ok(())
     }
-    
+
     fn rollback_transaction(&self, tx_id: &str) -> Result<(), String> {
         println!("回滚事务: {}", tx_id);
-        
+
         let mut transactions = self.transaction_manager.active_transactions.write().unwrap();
-        
+
         if !transactions.contains_key(tx_id) {
             return Err(format!("事务不存在: {}", tx_id));
         }
-        
+
         // 删除事务，不执行任何操作
         transactions.remove(tx_id);
-        
+
         Ok(())
     }
-    
+
     fn execute_operation(&self, operation: &GraphOperation) -> Result<(), String> {
         match operation {
             GraphOperation::AddVertex(vertex) => {
@@ -14740,15 +14742,15 @@ impl DistributedGraphDB {
             GraphOperation::AddEdge(edge) => {
                 let mut edges = self.storage_engine.edges.write().unwrap();
                 edges.insert(edge.id.clone(), edge.clone());
-                
+
                 // 更新顶点的边引用
                 let mut vertices = self.storage_engine.vertices.write().unwrap();
-                
+
                 if let Some(from) = vertices.get_mut(&edge.from_vertex) {
                     from.out_edges.push(edge.id.clone());
                     from.updated_at = Utc::now();
                 }
-                
+
                 if let Some(to) = vertices.get_mut(&edge.to_vertex) {
                     to.in_edges.push(edge.id.clone());
                     to.updated_at = Utc::now();
@@ -14756,7 +14758,7 @@ impl DistributedGraphDB {
             },
             GraphOperation::UpdateVertex { id, properties } => {
                 let mut vertices = self.storage_engine.vertices.write().unwrap();
-                
+
                 if let Some(vertex) = vertices.get_mut(id) {
                     for (key, value) in properties {
                         vertex.properties.insert(key.clone(), value.clone());
@@ -14766,7 +14768,7 @@ impl DistributedGraphDB {
             },
             GraphOperation::UpdateEdge { id, properties } => {
                 let mut edges = self.storage_engine.edges.write().unwrap();
-                
+
                 if let Some(edge) = edges.get_mut(id) {
                     for (key, value) in properties {
                         edge.properties.insert(key.clone(), value.clone());
@@ -14778,11 +14780,11 @@ impl DistributedGraphDB {
                 // 获取顶点
                 let mut vertices = self.storage_engine.vertices.write().unwrap();
                 let vertex = vertices.get(vertex_id).cloned();
-                
+
                 if let Some(vertex) = vertex {
                     // 删除所有关联的边
                     let mut edges = self.storage_engine.edges.write().unwrap();
-                    
+
                     // 删除入边
                     for edge_id in &vertex.in_edges {
                         if let Some(edge) = edges.get(edge_id) {
@@ -14792,7 +14794,7 @@ impl DistributedGraphDB {
                         }
                         edges.remove(edge_id);
                     }
-                    
+
                     // 删除出边
                     for edge_id in &vertex.out_edges {
                         if let Some(edge) = edges.get(edge_id) {
@@ -14802,7 +14804,7 @@ impl DistributedGraphDB {
                         }
                         edges.remove(edge_id);
                     }
-                    
+
                     // 删除顶点
                     vertices.remove(vertex_id);
                 }
@@ -14811,19 +14813,19 @@ impl DistributedGraphDB {
                 // 获取边
                 let edges = self.storage_engine.edges.read().unwrap();
                 let edge = edges.get(edge_id).cloned();
-                
+
                 if let Some(edge) = edge {
                     // 从顶点中移除边引用
                     let mut vertices = self.storage_engine.vertices.write().unwrap();
-                    
+
                     if let Some(from_vertex) = vertices.get_mut(&edge.from_vertex) {
                         from_vertex.out_edges.retain(|id| id != edge_id);
                     }
-                    
+
                     if let Some(to_vertex) = vertices.get_mut(&edge.to_vertex) {
                         to_vertex.in_edges.retain(|id| id != edge_id);
                     }
-                    
+
                     // 删除边
                     drop(edges);
                     let mut edges = self.storage_engine.edges.write().unwrap();
@@ -14835,7 +14837,7 @@ impl DistributedGraphDB {
                 properties.insert(property.key.clone(), property.clone());
             },
         }
-        
+
         Ok(())
     }
 }
@@ -14843,10 +14845,10 @@ impl DistributedGraphDB {
 impl GraphQueryParser {
     fn parse(&self, query: &GraphQuery) -> Result<ParsedQuery, String> {
         println!("解析查询: {}", query.query_text);
-        
+
         // 在实际实现中，这里会根据查询语言解析查询
         // 简化：返回一个模拟的解析结果
-        
+
         let parsed_query = ParsedQuery {
             query_type: QueryType::PathQuery,
             start_vertices: vec!["v1".to_string()],
@@ -14861,7 +14863,7 @@ impl GraphQueryParser {
             projections: vec!["name".to_string()],
             limit: query.max_results.unwrap_or(100),
         };
-        
+
         Ok(parsed_query)
     }
 }
@@ -14869,10 +14871,10 @@ impl GraphQueryParser {
 impl GraphQueryOptimizer {
     fn optimize(&self, query: ParsedQuery) -> Result<OptimizedQuery, String> {
         println!("优化查询");
-        
+
         // 在实际实现中，这里会应用各种优化规则
         // 简化：返回一个简单的优化查询
-        
+
         let optimized_query = OptimizedQuery {
             execution_plan: vec![
                 ExecutionStep::GetVertices {
@@ -14894,7 +14896,7 @@ impl GraphQueryOptimizer {
                 },
             ],
         };
-        
+
         Ok(optimized_query)
     }
 }
@@ -14902,25 +14904,25 @@ impl GraphQueryOptimizer {
 impl GraphQueryExecutor {
     fn execute(&self, query: OptimizedQuery, parameters: HashMap<String, PropertyValue>) -> Result<GraphQueryResult, String> {
         println!("执行查询");
-        
+
         let start_time = Instant::now();
-        
+
         // 在实际实现中，这里会执行查询计划
         // 简化：返回一些模拟数据
-        
+
         let mut vertices = Vec::new();
         let mut edges = Vec::new();
         let mut values = Vec::new();
-        
+
         // 模拟执行结果
         for i in 0..5 {
             let vertex_id = format!("v{}", i + 1);
             let now = Utc::now();
-            
+
             let mut properties = HashMap::new();
             properties.insert("name".to_string(), PropertyValue::String(format!("Person {}", i + 1)));
             properties.insert("age".to_string(), PropertyValue::Integer(20 + i));
-            
+
             let vertex = Vertex {
                 id: vertex_id.clone(),
                 label: "person".to_string(),
@@ -14931,15 +14933,15 @@ impl GraphQueryExecutor {
                 created_at: now,
                 updated_at: now,
             };
-            
+
             vertices.push(vertex);
-            
+
             // 添加一些值作为结果
             values.push(PropertyValue::String(format!("Person {}", i + 1)));
         }
-        
+
         let execution_time = start_time.elapsed();
-        
+
         let result = GraphQueryResult {
             vertices,
             edges,
@@ -14947,7 +14949,7 @@ impl GraphQueryExecutor {
             values,
             execution_time,
         };
-        
+
         Ok(result)
     }
 }
@@ -15143,16 +15145,16 @@ impl VectorDatabase {
         let storage_engine = VectorStorageEngine {
             collections: RwLock::new(HashMap::new()),
         };
-        
+
         let index_manager = VectorIndexManager {
             indices: RwLock::new(HashMap::new()),
         };
-        
+
         let query_processor = VectorQueryProcessor {
             max_concurrent_queries: 10,
             timeout: Duration::from_secs(30),
         };
-        
+
         VectorDatabase {
             node_id: node_id.to_string(),
             storage_engine,
@@ -15160,22 +15162,22 @@ impl VectorDatabase {
             query_processor,
         }
     }
-    
+
     fn create_collection(&self, name: &str, dimension: usize) -> Result<(), String> {
         println!("创建向量集合: {}", name);
-        
+
         if dimension == 0 {
             return Err("维度必须大于0".to_string());
         }
-        
+
         let mut collections = self.storage_engine.collections.write().unwrap();
-        
+
         if collections.contains_key(name) {
             return Err(format!("集合已存在: {}", name));
         }
-        
+
         let now = Utc::now();
-        
+
         let collection = VectorCollection {
             name: name.to_string(),
             dimension,
@@ -15184,32 +15186,32 @@ impl VectorDatabase {
             created_at: now,
             updated_at: now,
         };
-        
+
         collections.insert(name.to_string(), collection);
-        
+
         Ok(())
     }
-    
+
     fn add_vector(&self, collection_name: &str, id: &str, values: Vec<f32>, metadata: Option<HashMap<String, serde_json::Value>>) -> Result<(), String> {
         println!("添加向量: {} 到集合 {}", id, collection_name);
-        
+
         let mut collections = self.storage_engine.collections.write().unwrap();
-        
+
         let collection = collections.get_mut(collection_name)
             .ok_or_else(|| format!("集合不存在: {}", collection_name))?;
-        
+
         // 验证向量维度
         if values.len() != collection.dimension {
             return Err(format!("向量维度不匹配: 期望 {}, 实际 {}", collection.dimension, values.len()));
         }
-        
+
         // 检查ID是否已存在
         if collection.vectors.contains_key(id) {
             return Err(format!("向量ID已存在: {}", id));
         }
-        
+
         let now = Utc::now();
-        
+
         // 创建向量
         let vector = Vector {
             id: id.to_string(),
@@ -15217,53 +15219,53 @@ impl VectorDatabase {
             created_at: now,
             updated_at: now,
         };
-        
+
         // 存储向量
         collection.vectors.insert(id.to_string(), vector);
-        
+
         // 存储元数据
         if let Some(metadata) = metadata {
             collection.metadata.insert(id.to_string(), metadata);
         }
-        
+
         collection.updated_at = now;
-        
+
         // 更新索引
         // 在实际实现中，这里会更新向量索引
-        
+
         Ok(())
     }
-    
+
     fn search(&self, query: VectorQuery) -> Result<VectorSearchResult, String> {
         println!("搜索向量, 集合: {}, 返回前 {} 个", query.collection_name, query.top_k);
-        
+
         let start_time = Instant::now();
-        
+
         let collections = self.storage_engine.collections.read().unwrap();
-        
+
         let collection = collections.get(&query.collection_name)
             .ok_or_else(|| format!("集合不存在: {}", query.collection_name))?;
-        
+
         // 验证查询向量维度
         if query.query_vector.len() != collection.dimension {
-            return Err(format!("查询向量维度不匹配: 期望 {}, 实际 {}", 
+            return Err(format!("查询向量维度不匹配: 期望 {}, 实际 {}",
                      collection.dimension, query.query_vector.len()));
         }
-        
+
         // 在实际实现中，这里会使用向量索引进行快速相似度搜索
         // 简化：计算所有向量与查询向量的余弦相似度
         let mut matches = Vec::new();
-        
+
         for (id, vector) in &collection.vectors {
             // 计算余弦相似度
             let similarity = compute_cosine_similarity(&query.query_vector, &vector.values);
-            
+
             // 应用过滤器（如果有）
             if let Some(filter) = &query.filter {
                 // 在实际实现中，这里会解析并应用过滤条件
                 // 简化：假设所有向量都通过过滤器
             }
-            
+
             // 创建匹配项
             let mut match_item = VectorMatch {
                 id: id.clone(),
@@ -15271,7 +15273,7 @@ impl VectorDatabase {
                 values: None,
                 metadata: None,
             };
-            
+
             // 包含向量值（如果请求）
             if query.include_values {
                 match_item.values = Some(vector.
@@ -15279,74 +15281,74 @@ impl VectorDatabase {
 ```rust
                 match_item.values = Some(vector.values.clone());
             }
-            
+
             // 包含元数据（如果请求）
             if query.include_metadata {
                 if let Some(meta) = collection.metadata.get(id) {
                     match_item.metadata = Some(meta.clone());
                 }
             }
-            
+
             matches.push(match_item);
         }
-        
+
         // 按相似度排序（降序）
         matches.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         // 截取前top_k个结果
         if matches.len() > query.top_k {
             matches.truncate(query.top_k);
         }
-        
+
         let execution_time = start_time.elapsed();
-        
+
         let result = VectorSearchResult {
             matches,
             execution_time,
         };
-        
+
         Ok(result)
     }
-    
+
     fn compute_cosine_similarity(a: &[f32], b: &[f32]) -> f32 {
         if a.len() != b.len() {
             return 0.0;
         }
-        
+
         let mut dot_product = 0.0;
         let mut norm_a = 0.0;
         let mut norm_b = 0.0;
-        
+
         for i in 0..a.len() {
             dot_product += a[i] * b[i];
             norm_a += a[i] * a[i];
             norm_b += b[i] * b[i];
         }
-        
+
         norm_a = norm_a.sqrt();
         norm_b = norm_b.sqrt();
-        
+
         if norm_a == 0.0 || norm_b == 0.0 {
             return 0.0;
         }
-        
+
         dot_product / (norm_a * norm_b)
     }
-    
+
     fn create_index(&self, collection_name: &str, index_type: VectorIndexType, parameters: HashMap<String, serde_json::Value>) -> Result<String, String> {
         println!("为集合 {} 创建向量索引", collection_name);
-        
+
         // 验证集合是否存在
         let collections = self.storage_engine.collections.read().unwrap();
         if !collections.contains_key(collection_name) {
             return Err(format!("集合不存在: {}", collection_name));
         }
-        
+
         // 为索引生成ID
         let index_id = uuid::Uuid::new_v4().to_string();
-        
+
         let now = Utc::now();
-        
+
         // 创建索引
         let index = VectorIndex {
             id: index_id.clone(),
@@ -15356,20 +15358,20 @@ impl VectorDatabase {
             created_at: now,
             updated_at: now,
         };
-        
+
         // 验证索引参数
         self.validate_index_parameters(&index)?;
-        
+
         // 构建索引
         self.build_index(&index, &collections.get(collection_name).unwrap())?;
-        
+
         // 存储索引
         let mut indices = self.index_manager.indices.write().unwrap();
         indices.insert(index_id.clone(), index);
-        
+
         Ok(index_id)
     }
-    
+
     fn validate_index_parameters(&self, index: &VectorIndex) -> Result<(), String> {
         match index.index_type {
             VectorIndexType::HNSW => {
@@ -15400,13 +15402,13 @@ impl VectorDatabase {
                 // 其他索引类型的验证
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn build_index(&self, index: &VectorIndex, collection: &VectorCollection) -> Result<(), String> {
         println!("构建索引: {}", index.id);
-        
+
         // 在实际实现中，这里会构建向量索引
         // 不同类型的索引需要不同的构建逻辑
         match index.index_type {
@@ -15423,7 +15425,7 @@ impl VectorDatabase {
                 let ef_construction = index.parameters.get("ef_construction")
                     .and_then(|v| v.as_u64())
                     .unwrap_or(200) as usize;
-                
+
                 // 在实际实现中，这里会构建HNSW索引
             },
             VectorIndexType::IVF => {
@@ -15432,7 +15434,7 @@ impl VectorDatabase {
                 let nlist = index.parameters.get("nlist")
                     .and_then(|v| v.as_u64())
                     .unwrap_or(100) as usize;
-                
+
                 // 在实际实现中，这里会构建IVF索引
             },
             VectorIndexType::PQ => {
@@ -15444,43 +15446,43 @@ impl VectorDatabase {
                 let nbits = index.parameters.get("nbits")
                     .and_then(|v| v.as_u64())
                     .unwrap_or(8) as usize;
-                
+
                 // 在实际实现中，这里会构建PQ索引
             },
             _ => {
                 return Err(format!("不支持的索引类型: {:?}", index.index_type));
             }
         }
-        
+
         // 简化：假设索引已成功构建
-        
+
         Ok(())
     }
-    
+
     fn delete_vector(&self, collection_name: &str, id: &str) -> Result<(), String> {
         println!("从集合 {} 中删除向量: {}", collection_name, id);
-        
+
         let mut collections = self.storage_engine.collections.write().unwrap();
-        
+
         let collection = collections.get_mut(collection_name)
             .ok_or_else(|| format!("集合不存在: {}", collection_name))?;
-        
+
         // 删除向量
         if !collection.vectors.contains_key(id) {
             return Err(format!("向量不存在: {}", id));
         }
-        
+
         collection.vectors.remove(id);
-        
+
         // 删除元数据
         collection.metadata.remove(id);
-        
+
         // 更新集合时间戳
         collection.updated_at = Utc::now();
-        
+
         // 更新索引
         // 在实际实现中，这里会更新向量索引
-        
+
         Ok(())
     }
 }
@@ -15749,13 +15751,13 @@ impl DistributedAnalyticsEngine {
                 },
             },
         };
-        
+
         let execution_engine = AnalyticsExecutionEngine {
             executors: HashMap::new(),
             max_memory: 1024 * 1024 * 1024, // 1GB
             max_concurrent_queries: 10,
         };
-        
+
         let storage_manager = AnalyticsStorageManager {
             storage_adapters: HashMap::new(),
             cache_manager: CacheManager {
@@ -15764,13 +15766,13 @@ impl DistributedAnalyticsEngine {
                 cached_data: RwLock::new(HashMap::new()),
             },
         };
-        
+
         let scheduler = AnalyticsScheduler {
             max_workers: 10,
             scheduling_policy: SchedulingPolicy::FIFO,
             priority_queue: PriorityQueue::new(),
         };
-        
+
         let monitor = AnalyticsMonitor {
             metrics: Metrics {
                 query_count: 0,
@@ -15782,7 +15784,7 @@ impl DistributedAnalyticsEngine {
             },
             alerts: Vec::new(),
         };
-        
+
         DistributedAnalyticsEngine {
             node_id: node_id.to_string(),
             query_engine,
@@ -15792,13 +15794,13 @@ impl DistributedAnalyticsEngine {
             monitor,
         }
     }
-    
+
     fn submit_query(&self, query: &str, priority: u32) -> Result<String, String> {
         println!("提交查询: {}", query);
-        
+
         // 生成作业ID
         let job_id = uuid::Uuid::new_v4().to_string();
-        
+
         // 创建分析作业
         let job = AnalyticsJob {
             id: job_id.clone(),
@@ -15809,61 +15811,61 @@ impl DistributedAnalyticsEngine {
             started_at: None,
             completed_at: None,
         };
-        
+
         // 添加到调度器队列
         self.scheduler.priority_queue.push(job, priority);
-        
+
         // 尝试调度作业
         self.schedule_next_job()?;
-        
+
         Ok(job_id)
     }
-    
+
     fn schedule_next_job(&self) -> Result<bool, String> {
         // 检查是否有可用的工作线程
         if self.scheduler.priority_queue.is_empty() {
             return Ok(false);
         }
-        
+
         // 获取下一个作业
         if let Some((mut job, _)) = self.scheduler.priority_queue.pop() {
             println!("调度作业: {}", job.id);
-            
+
             // 更新作业状态
             job.status = JobStatus::Running;
             job.started_at = Some(Utc::now());
-            
+
             // 解析查询
             let parser = self.select_parser(&job.query)?;
             let plan = parser.parse(&job.query)?;
-            
+
             // 优化查询
             let optimized_plan = self.query_engine.optimizer.optimize(&plan)?;
-            
+
             // 执行查询
             let executor = self.select_executor(&optimized_plan)?;
             let result = executor.execute(&optimized_plan)?;
-            
+
             // 更新作业状态
             job.status = JobStatus::Completed;
             job.completed_at = Some(Utc::now());
-            
+
             // 更新监控指标
             // 在实际实现中，这里会更新各种统计信息
-            
+
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     fn select_parser(&self, query: &str) -> Result<&Box<dyn AnalyticsQueryParser>, String> {
         // 根据查询语法选择合适的解析器
         // 简化：假设只有SQL解析器
         self.query_engine.parsers.get("SQL")
             .ok_or_else(|| "没有可用的查询解析器".to_string())
     }
-    
+
     fn select_executor(&self, plan: &AnalyticsQueryPlan) -> Result<&Box<dyn QueryExecutor>, String> {
         // 根据查询计划选择合适的执行器
         // 简化：假设只有一个通用执行器
@@ -15875,14 +15877,14 @@ impl DistributedAnalyticsEngine {
 impl AnalyticsQueryOptimizer {
     fn optimize(&self, plan: &AnalyticsQueryPlan) -> Result<AnalyticsQueryPlan, String> {
         println!("优化查询计划");
-        
+
         let mut optimized_plan = plan.clone();
-        
+
         // 应用优化规则
         for rule in &self.optimization_rules {
             rule.optimize(&mut optimized_plan)?;
         }
-        
+
         Ok(optimized_plan)
     }
 }
@@ -15897,16 +15899,16 @@ impl<T> PriorityQueue<T> {
             items: Vec::new(),
         }
     }
-    
+
     fn push(&mut self, item: T, priority: u32) {
         self.items.push((item, priority));
         self.items.sort_by(|a, b| b.1.cmp(&a.1)); // 按优先级降序排序
     }
-    
+
     fn pop(&mut self) -> Option<(T, u32)> {
         self.items.pop()
     }
-    
+
     fn is_empty(&self) -> bool {
         self.items.is_empty()
     }
@@ -16145,22 +16147,22 @@ impl DistributedLockService {
         let lock_manager = LockManager {
             locks: RwLock::new(HashMap::new()),
         };
-        
+
         let watch_manager = WatchManager {
             watches: RwLock::new(HashMap::new()),
         };
-        
+
         let session_manager = SessionManager {
             sessions: RwLock::new(HashMap::new()),
             session_timeout: Duration::from_secs(30),
         };
-        
+
         let heartbeat_manager = HeartbeatManager {
             running: AtomicBool::new(false),
             heartbeat_interval: Duration::from_secs(10),
             heartbeat_thread: None,
         };
-        
+
         DistributedLockService {
             node_id: node_id.to_string(),
             lock_manager,
@@ -16170,22 +16172,22 @@ impl DistributedLockService {
             heartbeat_manager,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式锁服务");
-        
+
         // 从存储中恢复锁
         self.recover_locks()?;
-        
+
         // 启动心跳线程
         self.start_heartbeat()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式锁服务");
-        
+
         // 停止心跳线程
         self.heartbeat_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.heartbeat_manager.heartbeat_thread.take() {
@@ -16194,46 +16196,46 @@ impl DistributedLockService {
                 Err(e) => println!("心跳线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn recover_locks(&self) -> Result<(), String> {
         println!("从存储中恢复锁");
-        
+
         let locks = self.storage_provider.list_locks()?;
         let mut lock_map = self.lock_manager.locks.write().unwrap();
-        
+
         for lock in locks {
             // 检查锁是否过期
             if lock.expires_at > Utc::now() {
                 lock_map.insert(lock.resource_id.clone(), lock);
             }
         }
-        
+
         println!("恢复了 {} 个锁", lock_map.len());
-        
+
         Ok(())
     }
-    
+
     fn start_heartbeat(&mut self) -> Result<(), String> {
         println!("启动心跳线程");
-        
+
         let node_id = self.node_id.clone();
         let lock_manager = self.lock_manager.locks.clone();
         let storage_provider = Arc::new(Mutex::new(self.storage_provider.clone()));
         let interval = self.heartbeat_manager.heartbeat_interval;
-        
+
         self.heartbeat_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.heartbeat_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 移除过期的锁
                 let now = Utc::now();
                 let mut expired_resources = Vec::new();
-                
+
                 {
                     let locks = lock_manager.read().unwrap();
                     for (resource_id, lock) in locks.iter() {
@@ -16242,7 +16244,7 @@ impl DistributedLockService {
                         }
                     }
                 }
-                
+
                 if !expired_resources.is_empty() {
                     let mut locks = lock_manager.write().unwrap();
                     for (resource_id, version) in expired_resources {
@@ -16250,7 +16252,7 @@ impl DistributedLockService {
                             if lock.version == version {
                                 locks.remove(&resource_id);
                                 println!("锁过期: {}", resource_id);
-                                
+
                                 // 在实际实现中，这里会通知存储提供者删除锁
                                 let mut provider = storage_provider.lock().unwrap();
                                 match provider.delete_lock(&resource_id, version) {
@@ -16261,23 +16263,23 @@ impl DistributedLockService {
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.heartbeat_manager.heartbeat_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn create_session(&self, owner: &str) -> Result<String, String> {
         println!("创建会话: {}", owner);
-        
+
         let session_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let session = SessionInfo {
             id: session_id.clone(),
             owner: owner.to_string(),
@@ -16285,45 +16287,45 @@ impl DistributedLockService {
             last_heartbeat: now,
             resources: Vec::new(),
         };
-        
+
         let mut sessions = self.session_manager.sessions.write().unwrap();
         sessions.insert(session_id.clone(), session);
-        
+
         Ok(session_id)
     }
-    
+
     fn session_heartbeat(&self, session_id: &str) -> Result<(), String> {
         let mut sessions = self.session_manager.sessions.write().unwrap();
-        
+
         let session = sessions.get_mut(session_id)
             .ok_or_else(|| format!("会话不存在: {}", session_id))?;
-        
+
         session.last_heartbeat = Utc::now();
-        
+
         Ok(())
     }
-    
+
     fn acquire_lock(&self, resource_id: &str, owner: &str, session_id: &str, lock_type: LockType, lease_duration: Duration) -> Result<bool, String> {
         println!("尝试获取锁: {}, 所有者: {}", resource_id, owner);
-        
+
         // 验证会话
         let mut sessions = self.session_manager.sessions.write().unwrap();
-        
+
         let session = sessions.get_mut(session_id)
             .ok_or_else(|| format!("会话不存在: {}", session_id))?;
-        
+
         // 检查会话是否过期
         let now = Utc::now();
         if session.last_heartbeat + self.session_manager.session_timeout < now {
             return Err(format!("会话已过期: {}", session_id));
         }
-        
+
         // 更新会话心跳
         session.last_heartbeat = now;
-        
+
         // 尝试获取锁
         let mut locks = self.lock_manager.locks.write().unwrap();
-        
+
         // 检查锁是否已存在
         if let Some(existing_lock) = locks.get(resource_id) {
             // 如果是同一所有者，可以重新获取或升级锁
@@ -16335,26 +16337,26 @@ impl DistributedLockService {
                 updated_lock.lease_duration = lease_duration;
                 updated_lock.expires_at = expires_at;
                 updated_lock.version += 1;
-                
+
                 // 保存到存储
                 self.storage_provider.save_lock(&updated_lock)?;
-                
+
                 // 更新内存中的锁
                 locks.insert(resource_id.to_string(), updated_lock);
-                
+
                 return Ok(true);
             }
-            
+
             // 检查锁是否可共享
             if let (LockType::Shared, LockType::Shared) = (&existing_lock.lock_type, &lock_type) {
                 // 可以共享锁（实际实现需要更复杂的逻辑）
                 return Ok(true);
             }
-            
+
             // 锁被其他所有者持有
             return Ok(false);
         }
-        
+
         // 创建新锁
         let expires_at = now + lease_duration;
         let lock = LockEntry {
@@ -16367,16 +16369,16 @@ impl DistributedLockService {
             data: None,
             version: 1,
         };
-        
+
         // 保存到存储
         self.storage_provider.save_lock(&lock)?;
-        
+
         // 更新内存中的锁
         locks.insert(resource_id.to_string(), lock.clone());
-        
+
         // 更新会话资源
         session.resources.push(resource_id.to_string());
-        
+
         // 触发监视事件
         drop(locks);
         drop(sessions);
@@ -16384,37 +16386,37 @@ impl DistributedLockService {
             resource_id: resource_id.to_string(),
             owner: owner.to_string(),
         })?;
-        
+
         Ok(true)
     }
-    
+
     fn release_lock(&self, resource_id: &str, owner: &str, session_id: &str) -> Result<bool, String> {
         println!("释放锁: {}, 所有者: {}", resource_id, owner);
-        
+
         // 验证会话
         let mut sessions = self.session_manager.sessions.write().unwrap();
-        
+
         let session = sessions.get_mut(session_id)
             .ok_or_else(|| format!("会话不存在: {}", session_id))?;
-        
+
         // 尝试释放锁
         let mut locks = self.lock_manager.locks.write().unwrap();
-        
+
         if let Some(lock) = locks.get(resource_id) {
             if lock.owner != owner {
                 return Err(format!("锁不属于此所有者: {}", owner));
             }
-            
+
             // 从内存中移除锁
             let version = lock.version;
             locks.remove(resource_id);
-            
+
             // 从存储中删除锁
             self.storage_provider.delete_lock(resource_id, version)?;
-            
+
             // 从会话资源中移除
             session.resources.retain(|r| r != resource_id);
-            
+
             // 触发监视事件
             drop(locks);
             drop(sessions);
@@ -16422,18 +16424,18 @@ impl DistributedLockService {
                 resource_id: resource_id.to_string(),
                 owner: owner.to_string(),
             })?;
-            
+
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     fn add_watch(&self, resource_id: &str, owner: &str, callback: Box<dyn Fn(WatchEvent) -> Result<(), String> + Send + Sync>) -> Result<String, String> {
         println!("添加监视: {}, 所有者: {}", resource_id, owner);
-        
+
         let watch_id = uuid::Uuid::new_v4().to_string();
-        
+
         let watch = WatchEntry {
             id: watch_id.clone(),
             resource_id: resource_id.to_string(),
@@ -16441,48 +16443,48 @@ impl DistributedLockService {
             callback,
             created_at: Utc::now(),
         };
-        
+
         let mut watches = self.watch_manager.watches.write().unwrap();
-        
+
         let resource_watches = watches.entry(resource_id.to_string())
             .or_insert_with(Vec::new);
-        
+
         resource_watches.push(watch);
-        
+
         Ok(watch_id)
     }
-    
+
     fn remove_watch(&self, watch_id: &str, resource_id: &str) -> Result<bool, String> {
         println!("移除监视: {}, 资源: {}", watch_id, resource_id);
-        
+
         let mut watches = self.watch_manager.watches.write().unwrap();
-        
+
         if let Some(resource_watches) = watches.get_mut(resource_id) {
             let len_before = resource_watches.len();
             resource_watches.retain(|w| w.id != watch_id);
-            
+
             let removed = len_before > resource_watches.len();
-            
+
             // 如果没有更多的监视，移除资源条目
             if resource_watches.is_empty() {
                 watches.remove(resource_id);
             }
-            
+
             return Ok(removed);
         }
-        
+
         Ok(false)
     }
-    
+
     fn trigger_watch_event(&self, event: WatchEvent) -> Result<(), String> {
         let resource_id = match &event {
             WatchEvent::Acquired { resource_id, .. } => resource_id,
             WatchEvent::Released { resource_id, .. } => resource_id,
             WatchEvent::Expired { resource_id, .. } => resource_id,
         };
-        
+
         let watches = self.watch_manager.watches.read().unwrap();
-        
+
         if let Some(resource_watches) = watches.get(resource_id) {
             for watch in resource_watches {
                 match (watch.callback)(event.clone()) {
@@ -16491,7 +16493,7 @@ impl DistributedLockService {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -16695,23 +16697,23 @@ impl DistributedScheduler {
         let job_manager = JobManager {
             jobs: RwLock::new(HashMap::new()),
         };
-        
+
         let worker_manager = WorkerManager {
             workers: RwLock::new(HashMap::new()),
         };
-        
+
         let task_queue = TaskQueue {
             pending_tasks: RwLock::new(Vec::new()),
             running_tasks: RwLock::new(HashMap::new()),
         };
-        
+
         let failure_detector = FailureDetector {
             heartbeat_timeout: Duration::from_secs(30),
             detection_interval: Duration::from_secs(10),
             running: AtomicBool::new(false),
             detector_thread: None,
         };
-        
+
         DistributedScheduler {
             node_id: node_id.to_string(),
             job_manager,
@@ -16722,25 +16724,25 @@ impl DistributedScheduler {
             failure_detector,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式调度器");
-        
+
         // 从持久化存储加载作业
         self.load_jobs()?;
-        
+
         // 启动失败检测器
         self.start_failure_detector()?;
-        
+
         // 启动调度循环
         self.schedule_pending_tasks()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式调度器");
-        
+
         // 停止失败检测器
         self.failure_detector.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.failure_detector.detector_thread.take() {
@@ -16749,70 +16751,70 @@ impl DistributedScheduler {
                 Err(e) => println!("失败检测线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn load_jobs(&self) -> Result<(), String> {
         println!("从存储中加载作业");
-        
+
         let jobs = self.persistence.list_jobs()?;
         let mut job_map = self.job_manager.jobs.write().unwrap();
-        
+
         for job in jobs {
             job_map.insert(job.id.clone(), job);
         }
-        
+
         println!("加载了 {} 个作业", job_map.len());
-        
+
         Ok(())
     }
-    
+
     fn start_failure_detector(&mut self) -> Result<(), String> {
         println!("启动失败检测器");
-        
+
         let worker_manager = self.worker_manager.workers.clone();
         let task_queue = self.task_queue.running_tasks.clone();
         let heartbeat_timeout = self.failure_detector.heartbeat_timeout;
         let interval = self.failure_detector.detection_interval;
-        
+
         self.failure_detector.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.failure_detector.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检测工作节点失败
                 let now = Utc::now();
                 let mut failed_workers = Vec::new();
-                
+
                 {
                     let workers = worker_manager.read().unwrap();
                     for (worker_id, worker) in workers.iter() {
-                        if worker.status == WorkerStatus::Active && 
+                        if worker.status == WorkerStatus::Active &&
                            worker.last_heartbeat + heartbeat_timeout < now {
                             failed_workers.push(worker_id.clone());
                         }
                     }
                 }
-                
+
                 if !failed_workers.is_empty() {
                     let mut workers = worker_manager.write().unwrap();
                     for worker_id in &failed_workers {
                         if let Some(worker) = workers.get_mut(worker_id) {
                             println!("工作节点故障: {}", worker_id);
                             worker.status = WorkerStatus::Offline;
-                            
+
                             // 恢复此节点上的任务
                             let mut running_tasks = task_queue.write().unwrap();
                             let mut tasks_to_requeue = Vec::new();
-                            
+
                             for (task_id, task) in running_tasks.iter() {
                                 if let Some(worker_tasks) = worker.current_tasks.get(task_id) {
                                     tasks_to_requeue.push(task.clone());
                                 }
                             }
-                            
+
                             for task in tasks_to_requeue {
                                 running_tasks.remove(&task.id);
                                 // 在实际实现中，这里会将任务重新加入队列
@@ -16820,76 +16822,76 @@ impl DistributedScheduler {
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.failure_detector.detector_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn register_worker(&self, worker: Worker) -> Result<(), String> {
         println!("注册工作节点: {}", worker.name);
-        
+
         let mut workers = self.worker_manager.workers.write().unwrap();
-        
+
         if workers.contains_key(&worker.id) {
             return Err(format!("工作节点已存在: {}", worker.id));
         }
-        
+
         workers.insert(worker.id.clone(), worker);
-        
+
         Ok(())
     }
-    
+
     fn worker_heartbeat(&self, worker_id: &str) -> Result<(), String> {
         let mut workers = self.worker_manager.workers.write().unwrap();
-        
+
         let worker = workers.get_mut(worker_id)
             .ok_or_else(|| format!("工作节点不存在: {}", worker_id))?;
-        
+
         worker.last_heartbeat = Utc::now();
-        
+
         Ok(())
     }
-    
+
     fn create_job(&self, job: Job) -> Result<(), String> {
         println!("创建作业: {}", job.name);
-        
+
         // 验证作业
         self.validate_job(&job)?;
-        
+
         let mut jobs = self.job_manager.jobs.write().unwrap();
-        
+
         if jobs.contains_key(&job.id) {
             return Err(format!("作业已存在: {}", job.id));
         }
-        
+
         // 保存到持久化存储
         self.persistence.save_job(&job)?;
-        
+
         // 保存到内存
         jobs.insert(job.id.clone(), job);
-        
+
         Ok(())
     }
-    
+
     fn validate_job(&self, job: &Job) -> Result<(), String> {
         // 检查任务
         if job.tasks.is_empty() {
             return Err("作业必须至少有一个任务".to_string());
         }
-        
+
         // 检查依赖关系
         for (task_id, deps) in &job.dependencies {
             // 检查任务是否存在
             if !job.tasks.iter().any(|t| t.id == *task_id) {
                 return Err(format!("任务不存在: {}", task_id));
             }
-            
+
             // 检查依赖任务是否存在
             for dep_id in deps {
                 if !job.tasks.iter().any(|t| t.id == *dep_id) {
@@ -16897,29 +16899,29 @@ impl DistributedScheduler {
                 }
             }
         }
-        
+
         // 检查是否有循环依赖
         // 在实际实现中，这里需要更复杂的图算法
-        
+
         Ok(())
     }
-    
+
     fn schedule_job(&self, job_id: &str) -> Result<String, String> {
         println!("调度作业: {}", job_id);
-        
+
         let jobs = self.job_manager.jobs.read().unwrap();
-        
+
         let job = jobs.get(job_id)
             .ok_or_else(|| format!("作业不存在: {}", job_id))?;
-        
+
         if job.status == JobStatus::Running {
             return Err(format!("作业已在运行中: {}", job_id));
         }
-        
+
         // 创建作业运行
         let run_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let job_run = JobRun {
             id: run_id.clone(),
             job_id: job_id.to_string(),
@@ -16928,45 +16930,45 @@ impl DistributedScheduler {
             status: RunStatus::Running,
             task_runs: HashMap::new(),
         };
-        
+
         // 保存作业运行
         self.persistence.save_job_run(&job_run)?;
-        
+
         // 将任务加入队列
         self.enqueue_job_tasks(job, &run_id)?;
-        
+
         // 更新作业状态
         drop(jobs);
         let mut jobs = self.job_manager.jobs.write().unwrap();
-        
+
         if let Some(job) = jobs.get_mut(job_id) {
             job.status = JobStatus::Running;
             job.updated_at = now;
             job.last_run = Some(job_run);
-            
+
             // 保存更新后的作业
             self.persistence.save_job(&job)?;
         }
-        
+
         // 尝试调度任务
         drop(jobs);
         self.schedule_pending_tasks()?;
-        
+
         Ok(run_id)
     }
-    
+
     fn enqueue_job_tasks(&self, job: &Job, run_id: &str) -> Result<(), String> {
         println!("将作业 {} 的任务加入队列", job.id);
-        
+
         let now = Utc::now();
-        
+
         // 找出没有依赖的任务
         let root_tasks: Vec<_> = job.tasks.iter()
             .filter(|t| !job.dependencies.contains_key(&t.id) || job.dependencies[&t.id].is_empty())
             .collect();
-        
+
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
-        
+
         for task in root_tasks {
             let queued_task = QueuedTask {
                 id: uuid::Uuid::new_v4().to_string(),
@@ -16976,16 +16978,16 @@ impl DistributedScheduler {
                 dependencies: Vec::new(),
                 created_at: now,
             };
-            
+
             pending_tasks.push(queued_task);
         }
-        
+
         // 按策略排序
         self.sort_pending_tasks(&mut pending_tasks);
-        
+
         Ok(())
     }
-    
+
     fn sort_pending_tasks(&self, tasks: &mut Vec<QueuedTask>) {
         match self.scheduler_policy {
             SchedulerPolicy::FIFO => {
@@ -17006,69 +17008,69 @@ impl DistributedScheduler {
             },
         }
     }
-    
+
     fn schedule_pending_tasks(&self) -> Result<usize, String> {
         println!("调度待处理任务");
-        
+
         let mut scheduled_count = 0;
-        
+
         // 获取可用工作节点
         let workers = self.worker_manager.workers.read().unwrap();
         let available_workers: Vec<_> = workers.values()
             .filter(|w| w.status == WorkerStatus::Active)
             .collect();
-        
+
         if available_workers.is_empty() {
             return Ok(0);
         }
-        
+
         // 获取待处理任务
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
-        
+
         if pending_tasks.is_empty() {
             return Ok(0);
         }
-        
+
         // 尝试为每个任务分配工作节点
         let mut i = 0;
         while i < pending_tasks.len() {
             let task = &pending_tasks[i];
-            
+
             // 检查是否有合适的工作节点
             let mut assigned_worker = None;
-            
+
             for worker in &available_workers {
                 // 检查工作节点是否有所需的能力
                 // 在实际实现中，这里会有更复杂的匹配逻辑
-                
+
                 assigned_worker = Some(worker.id.clone());
                 break;
             }
-            
+
             if let Some(worker_id) = assigned_worker {
                 println!("将任务 {} 分配给工作节点 {}", task.id, worker_id);
-                
+
                 // 从待处理队列移除任务
                 let task = pending_tasks.remove(i);
-                
+
                 // 添加到运行中队列
                 let mut running_tasks = self.task_queue.running_tasks.write().unwrap();
                 running_tasks.insert(task.id.clone(), task);
-                
+
                 // 更新工作节点状态
                 drop(workers);
                 let mut workers = self.worker_manager.workers.write().unwrap();
-                
+
                 if let Some(worker) = workers.get_mut(&worker_id) {
                     worker.current_tasks.insert(task.id.clone(), Utc::now());
-                    
+
                     if worker.current_tasks.len() >= 10 { // 简化：假设每个节点最多10个任务
                         worker.status = WorkerStatus::Busy;
                     }
                 }
-                
+
                 scheduled_count += 1;
-                
+
                 // 恢复工作节点读锁以便继续循环
                 drop(workers);
                 let workers = self.worker_manager.workers.read().unwrap();
@@ -17077,28 +17079,28 @@ impl DistributedScheduler {
                 i += 1;
             }
         }
-        
+
         println!("调度了 {} 个任务", scheduled_count);
-        
+
         Ok(scheduled_count)
     }
-    
+
     fn task_completed(&self, task_id: &str, success: bool, output: Option<String>, error: Option<String>) -> Result<(), String> {
         println!("任务完成: {}, 成功: {}", task_id, success);
-        
+
         // 获取任务信息
         let mut running_tasks = self.task_queue.running_tasks.write().unwrap();
-        
+
         let task = running_tasks.remove(task_id)
             .ok_or_else(|| format!("任务不在运行中: {}", task_id))?;
-        
+
         // 更新工作节点状态
         let mut workers = self.worker_manager.workers.write().unwrap();
-        
+
         for worker in workers.values_mut() {
             if worker.current_tasks.contains_key(task_id) {
                 worker.current_tasks.remove(task_id);
-                
+
 
 ```rust
                 if worker.current_tasks.is_empty() && worker.status == WorkerStatus::Busy {
@@ -17107,16 +17109,16 @@ impl DistributedScheduler {
                 break;
             }
         }
-        
+
         // 更新作业运行状态
         let jobs = self.job_manager.jobs.read().unwrap();
         let job = jobs.get(&task.job_id)
             .ok_or_else(|| format!("作业不存在: {}", task.job_id))?;
-        
+
         if let Some(last_run) = &job.last_run {
             // 更新任务运行状态
             let mut job_run = last_run.clone();
-            
+
             let now = Utc::now();
             let mut task_run = TaskRun {
                 id: uuid::Uuid::new_v4().to_string(),
@@ -17129,7 +17131,7 @@ impl DistributedScheduler {
                 output,
                 error,
             };
-            
+
             // 找到运行此任务的工作节点
             for worker in workers.values() {
                 if worker.current_tasks.contains_key(&task.id) {
@@ -17137,63 +17139,63 @@ impl DistributedScheduler {
                     break;
                 }
             }
-            
+
             job_run.task_runs.insert(task.task_id.clone(), task_run);
-            
+
             // 检查是否所有任务都完成
             let all_tasks_completed = job.tasks.iter()
                 .all(|t| job_run.task_runs.contains_key(&t.id));
-            
+
             let any_task_failed = job_run.task_runs.values()
                 .any(|tr| tr.status == RunStatus::Failed);
-            
+
             if all_tasks_completed {
                 job_run.end_time = Some(now);
                 job_run.status = if any_task_failed { RunStatus::Failed } else { RunStatus::Succeeded };
-                
+
                 // 更新作业状态
                 drop(jobs);
                 let mut jobs = self.job_manager.jobs.write().unwrap();
-                
+
                 if let Some(job) = jobs.get_mut(&task.job_id) {
                     job.status = if any_task_failed { JobStatus::Failed } else { JobStatus::Succeeded };
                     job.updated_at = now;
                     job.last_run = Some(job_run.clone());
-                    
+
                     // 保存更新后的作业
                     self.persistence.save_job(job)?;
                 }
-                
+
                 // 保存作业运行
                 self.persistence.save_job_run(&job_run)?;
             } else if success {
                 // 任务成功，检查是否可以调度依赖此任务的其他任务
                 let completed_task_id = task.task_id.clone();
-                
+
                 // 找出所有依赖此任务的任务
                 let dependent_tasks: Vec<_> = job.dependencies.iter()
                     .filter(|(_, deps)| deps.contains(&completed_task_id))
                     .map(|(task_id, _)| task_id.clone())
                     .collect();
-                
+
                 if !dependent_tasks.is_empty() {
                     // 检查每个依赖任务的所有依赖是否都已完成
                     for dep_task_id in dependent_tasks {
                         let all_deps_completed = if let Some(deps) = job.dependencies.get(&dep_task_id) {
                             deps.iter().all(|dep_id| {
-                                job_run.task_runs.contains_key(dep_id) && 
+                                job_run.task_runs.contains_key(dep_id) &&
                                 job_run.task_runs[dep_id].status == RunStatus::Succeeded
                             })
                         } else {
                             true
                         };
-                        
+
                         if all_deps_completed {
                             // 可以调度此任务
                             let task_def = job.tasks.iter()
                                 .find(|t| t.id == dep_task_id)
                                 .ok_or_else(|| format!("任务不存在: {}", dep_task_id))?;
-                            
+
                             let queued_task = QueuedTask {
                                 id: uuid::Uuid::new_v4().to_string(),
                                 job_id: job.id.clone(),
@@ -17202,24 +17204,24 @@ impl DistributedScheduler {
                                 dependencies: Vec::new(), // 已经检查了依赖
                                 created_at: now,
                             };
-                            
+
                             let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
                             pending_tasks.push(queued_task);
-                            
+
                             // 按策略排序
                             self.sort_pending_tasks(&mut pending_tasks);
                         }
                     }
                 }
-                
+
                 // 保存作业运行
                 self.persistence.save_job_run(&job_run)?;
             }
         }
-        
+
         // 尝试调度更多任务
         self.schedule_pending_tasks()?;
-        
+
         Ok(())
     }
 }
@@ -17408,28 +17410,28 @@ impl DistributedFileSystem {
             storage_nodes: RwLock::new(HashMap::new()),
             data_dir: data_dir.to_path_buf(),
         };
-        
+
         let chunk_manager = ChunkManager {
             chunks: RwLock::new(HashMap::new()),
             chunk_size: 64 * 1024 * 1024, // 64MB
             default_replication: 3,
         };
-        
+
         let metadata_manager = MetadataManager {
             files: RwLock::new(HashMap::new()),
             directories: RwLock::new(HashMap::new()),
         };
-        
+
         let replication_manager = ReplicationManager {
             replication_queue: RwLock::new(Vec::new()),
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         let client_manager = ClientManager {
             clients: RwLock::new(HashMap::new()),
         };
-        
+
         DistributedFileSystem {
             node_id: node_id.to_string(),
             storage_manager,
@@ -17439,22 +17441,22 @@ impl DistributedFileSystem {
             client_manager,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式文件系统");
-        
+
         // 创建根目录
         self.create_root_directory()?;
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式文件系统");
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -17463,19 +17465,19 @@ impl DistributedFileSystem {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn create_root_directory(&self) -> Result<(), String> {
         println!("创建根目录");
-        
+
         let mut directories = self.metadata_manager.directories.write().unwrap();
-        
+
         if directories.is_empty() {
             let root_id = "root".to_string();
             let now = Utc::now();
-            
+
             let root_dir = DirectoryMetadata {
                 id: root_id.clone(),
                 name: "/".to_string(),
@@ -17489,27 +17491,27 @@ impl DistributedFileSystem {
                 modified_at: now,
                 accessed_at: now,
             };
-            
+
             directories.insert(root_id, root_dir);
-            
+
             println!("根目录已创建");
         }
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         let replication_queue = self.replication_manager.replication_queue.clone();
         let chunks = self.chunk_manager.chunks.clone();
         let storage_nodes = self.storage_manager.storage_nodes.clone();
         let data_dir = self.storage_manager.data_dir.clone();
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 处理复制任务
@@ -17523,16 +17525,16 @@ impl DistributedFileSystem {
                         Some(queue.remove(0))
                     }
                 };
-                
+
                 if let Some(task) = task_option {
                     println!("处理复制任务: {} -> {}", task.source_node, task.target_node);
-                    
+
                     // 获取块信息
                     let chunk_info = {
                         let chunks = chunks.read().unwrap();
                         chunks.get(&task.chunk_id).cloned()
                     };
-                    
+
                     if let Some(chunk) = chunk_info {
                         // 获取源节点和目标节点信息
                         let (source_node, target_node) = {
@@ -17541,12 +17543,12 @@ impl DistributedFileSystem {
                             let target = nodes.get(&task.target_node).cloned();
                             (source, target)
                         };
-                        
+
                         if let (Some(source), Some(target)) = (source_node, target_node) {
                             if source.status == NodeStatus::Online && target.status == NodeStatus::Online {
                                 // 在实际实现中，这里会从源节点读取数据并写入目标节点
                                 // 简化：假设复制成功
-                                
+
                                 // 更新块位置
                                 let mut chunks = chunks.write().unwrap();
                                 if let Some(chunk) = chunks.get_mut(&task.chunk_id) {
@@ -17554,7 +17556,7 @@ impl DistributedFileSystem {
                                         chunk.locations.push(task.target_node.clone());
                                     }
                                 }
-                                
+
                                 println!("复制任务完成: {}", task.chunk_id);
                             } else {
                                 // 节点不可用，重新加入队列
@@ -17568,66 +17570,66 @@ impl DistributedFileSystem {
                         println!("块不存在: {}", task.chunk_id);
                     }
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn register_storage_node(&self, node: StorageNode) -> Result<(), String> {
         println!("注册存储节点: {}", node.id);
-        
+
         let mut nodes = self.storage_manager.storage_nodes.write().unwrap();
-        
+
         if nodes.contains_key(&node.id) {
             return Err(format!("存储节点已存在: {}", node.id));
         }
-        
+
         nodes.insert(node.id.clone(), node);
-        
+
         Ok(())
     }
-    
+
     fn storage_node_heartbeat(&self, node_id: &str, used: u64) -> Result<(), String> {
         let mut nodes = self.storage_manager.storage_nodes.write().unwrap();
-        
+
         let node = nodes.get_mut(node_id)
             .ok_or_else(|| format!("存储节点不存在: {}", node_id))?;
-        
+
         node.last_heartbeat = Utc::now();
         node.used = used;
-        
+
         Ok(())
     }
-    
+
     fn create_directory(&self, parent_path: &str, name: &str, owner: &str, group: &str, permissions: u32) -> Result<String, String> {
         println!("创建目录: {}/{}", parent_path, name);
-        
+
         // 验证父目录
         let parent_id = self.get_directory_by_path(parent_path)?;
-        
+
         let mut directories = self.metadata_manager.directories.write().unwrap();
-        
+
         let parent_dir = directories.get_mut(&parent_id)
             .ok_or_else(|| format!("父目录不存在: {}", parent_path))?;
-        
+
         // 验证目录名称
         if name.is_empty() || name.contains('/') {
             return Err("无效的目录名称".to_string());
         }
-        
+
         // 检查同名文件或目录是否已存在
         let path = if parent_path.ends_with('/') {
             format!("{}{}", parent_path, name)
         } else {
             format!("{}/{}", parent_path, name)
         };
-        
+
         for child_id in &parent_dir.children {
             if let Some(dir) = directories.get(child_id) {
                 if dir.name == name {
@@ -17642,11 +17644,11 @@ impl DistributedFileSystem {
                 }
             }
         }
-        
+
         // 创建新目录
         let dir_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let new_dir = DirectoryMetadata {
             id: dir_id.clone(),
             name: name.to_string(),
@@ -17660,24 +17662,24 @@ impl DistributedFileSystem {
             modified_at: now,
             accessed_at: now,
         };
-        
+
         // 更新父目录
         parent_dir.children.push(dir_id.clone());
         parent_dir.modified_at = now;
-        
+
         // 保存新目录
         directories.insert(dir_id.clone(), new_dir);
-        
+
         println!("目录已创建: {}", path);
-        
+
         Ok(dir_id)
     }
-    
+
     fn get_directory_by_path(&self, path: &str) -> Result<String, String> {
         println!("获取目录: {}", path);
-        
+
         let directories = self.metadata_manager.directories.read().unwrap();
-        
+
         // 处理根目录情况
         if path == "/" {
             for (id, dir) in directories.iter() {
@@ -17687,50 +17689,50 @@ impl DistributedFileSystem {
             }
             return Err("根目录不存在".to_string());
         }
-        
+
         // 规范化路径
         let normalized_path = if path.ends_with('/') {
             path.to_string()
         } else {
             format!("{}/", path)
         };
-        
+
         // 查找目录
         for (id, dir) in directories.iter() {
             if dir.path == path || format!("{}/", dir.path) == normalized_path {
                 return Ok(id.clone());
             }
         }
-        
+
         Err(format!("目录不存在: {}", path))
     }
-    
+
     fn create_file(&self, parent_path: &str, name: &str, owner: &str, group: &str, permissions: u32) -> Result<String, String> {
         println!("创建文件: {}/{}", parent_path, name);
-        
+
         // 验证父目录
         let parent_id = self.get_directory_by_path(parent_path)?;
-        
+
         let mut directories = self.metadata_manager.directories.write().unwrap();
-        
+
         let parent_dir = directories.get_mut(&parent_id)
             .ok_or_else(|| format!("父目录不存在: {}", parent_path))?;
-        
+
         // 验证文件名称
         if name.is_empty() || name.contains('/') {
             return Err("无效的文件名称".to_string());
         }
-        
+
         // 检查同名文件或目录是否已存在
         let path = if parent_path.ends_with('/') {
             format!("{}{}", parent_path, name)
         } else {
             format!("{}/{}", parent_path, name)
         };
-        
+
         for child_id in &parent_dir.children {
             let dir_exists = directories.contains_key(child_id);
-            
+
             if dir_exists {
                 let dir = directories.get(child_id).unwrap();
                 if dir.name == name {
@@ -17745,11 +17747,11 @@ impl DistributedFileSystem {
                 }
             }
         }
-        
+
         // 创建新文件
         let file_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let new_file = FileMetadata {
             id: file_id.clone(),
             name: name.to_string(),
@@ -17764,35 +17766,35 @@ impl DistributedFileSystem {
             modified_at: now,
             accessed_at: now,
         };
-        
+
         // 更新父目录
         parent_dir.children.push(file_id.clone());
         parent_dir.modified_at = now;
-        
+
         // 保存新文件
         drop(directories);
         let mut files = self.metadata_manager.files.write().unwrap();
         files.insert(file_id.clone(), new_file);
-        
+
         println!("文件已创建: {}", path);
-        
+
         Ok(file_id)
     }
-    
+
     fn write_chunk(&self, file_id: &str, offset: u64, data: &[u8]) -> Result<String, String> {
         println!("写入块: {}, 偏移量: {}, 大小: {}", file_id, offset, data.len());
-        
+
         // 验证文件
         let mut files = self.metadata_manager.files.write().unwrap();
-        
+
         let file = files.get_mut(file_id)
             .ok_or_else(|| format!("文件不存在: {}", file_id))?;
-        
+
         // 计算需要的块数
         let chunk_size = self.chunk_manager.chunk_size;
         let chunk_index = offset / chunk_size;
         let chunk_offset = offset % chunk_size;
-        
+
         // 检查是否需要创建新块
         let chunk_id = if chunk_index as usize >= file.chunks.len() {
             // 创建新块
@@ -17803,20 +17805,20 @@ impl DistributedFileSystem {
             // 使用现有块
             file.chunks[chunk_index as usize].clone()
         };
-        
+
         // 选择存储节点
         let selected_nodes = self.select_storage_nodes(
             self.chunk_manager.default_replication as usize
         )?;
-        
+
         if selected_nodes.is_empty() {
             return Err("没有可用的存储节点".to_string());
         }
-        
+
         // 创建或更新块信息
         let now = Utc::now();
         let mut chunks = self.chunk_manager.chunks.write().unwrap();
-        
+
         let chunk = chunks.entry(chunk_id.clone())
             .or_insert_with(|| ChunkInfo {
                 id: chunk_id.clone(),
@@ -17828,52 +17830,52 @@ impl DistributedFileSystem {
                 created_at: now,
                 modified_at: now,
             });
-        
+
         // 更新块大小
         let new_size = chunk_offset + data.len() as u64;
         if new_size > chunk.size {
             chunk.size = new_size;
         }
-        
+
         // 更新块位置
         chunk.locations = selected_nodes.clone();
         chunk.modified_at = now;
-        
+
         // 计算校验和
         let mut hasher = sha2::Sha256::new();
         hasher.update(data);
         let checksum = format!("{:x}", hasher.finalize());
         chunk.checksum = checksum;
-        
+
         // 更新文件大小
         let end_offset = offset + data.len() as u64;
         if end_offset > file.size {
             file.size = end_offset;
         }
         file.modified_at = now;
-        
+
         // 在实际实现中，这里会将数据写入所选的存储节点
         println!("数据已写入选定的存储节点: {:?}", selected_nodes);
-        
+
         Ok(chunk_id)
     }
-    
+
     fn select_storage_nodes(&self, count: usize) -> Result<Vec<String>, String> {
         let nodes = self.storage_manager.storage_nodes.read().unwrap();
-        
+
         if nodes.is_empty() {
             return Err("没有可用的存储节点".to_string());
         }
-        
+
         // 筛选在线节点
         let online_nodes: Vec<_> = nodes.values()
             .filter(|n| n.status == NodeStatus::Online)
             .collect();
-        
+
         if online_nodes.is_empty() {
             return Err("没有在线的存储节点".to_string());
         }
-        
+
         // 按可用空间排序（简化：按已用空间的百分比）
         let mut sorted_nodes = online_nodes.clone();
         sorted_nodes.sort_by(|a, b| {
@@ -17881,36 +17883,36 @@ impl DistributedFileSystem {
             let b_used_percent = b.used as f64 / b.capacity as f64;
             a_used_percent.partial_cmp(&b_used_percent).unwrap()
         });
-        
+
         // 选择前N个节点
         let selected_count = std::cmp::min(count, sorted_nodes.len());
         let selected_nodes: Vec<_> = sorted_nodes.iter()
             .take(selected_count)
             .map(|n| n.id.clone())
             .collect();
-        
+
         Ok(selected_nodes)
     }
-    
+
     fn read_chunk(&self, chunk_id: &str, offset: u64, size: u64) -> Result<Vec<u8>, String> {
         println!("读取块: {}, 偏移量: {}, 大小: {}", chunk_id, offset, size);
-        
+
         // 获取块信息
         let chunks = self.chunk_manager.chunks.read().unwrap();
-        
+
         let chunk = chunks.get(chunk_id)
             .ok_or_else(|| format!("块不存在: {}", chunk_id))?;
-        
+
         if offset >= chunk.size {
             return Err(format!("偏移量超出块大小: {} >= {}", offset, chunk.size));
         }
-        
+
         // 计算实际读取大小
         let read_size = std::cmp::min(size, chunk.size - offset);
-        
+
         // 选择一个可用的存储节点
         let nodes = self.storage_manager.storage_nodes.read().unwrap();
-        
+
         let mut available_locations = Vec::new();
         for loc in &chunk.locations {
             if let Some(node) = nodes.get(loc) {
@@ -17919,108 +17921,108 @@ impl DistributedFileSystem {
                 }
             }
         }
-        
+
         if available_locations.is_empty() {
             return Err("没有可用的存储节点来读取数据".to_string());
         }
-        
+
         // 简单地选择第一个可用位置
         let selected_node = &available_locations[0];
-        
+
         // 在实际实现中，这里会从所选的存储节点读取数据
         println!("从存储节点 {} 读取数据", selected_node);
-        
+
         // 模拟读取数据
         let data = vec![0; read_size as usize];
-        
+
         Ok(data)
     }
-    
+
     fn read_file(&self, file_id: &str, offset: u64, size: u64) -> Result<Vec<u8>, String> {
         println!("读取文件: {}, 偏移量: {}, 大小: {}", file_id, offset, size);
-        
+
         // 验证文件
         let mut files = self.metadata_manager.files.write().unwrap();
-        
+
         let file = files.get_mut(file_id)
             .ok_or_else(|| format!("文件不存在: {}", file_id))?;
-        
+
         // 检查偏移量
         if offset >= file.size {
             return Err(format!("偏移量超出文件大小: {} >= {}", offset, file.size));
         }
-        
+
         // 更新访问时间
         file.accessed_at = Utc::now();
-        
+
         // 计算实际读取大小
         let read_size = std::cmp::min(size, file.size - offset);
-        
+
         // 计算需要读取的块
         let chunk_size = self.chunk_manager.chunk_size;
         let start_chunk = offset / chunk_size;
         let end_chunk = (offset + read_size - 1) / chunk_size;
-        
+
         let mut result = Vec::with_capacity(read_size as usize);
-        
+
         for chunk_index in start_chunk..=end_chunk {
             if chunk_index as usize >= file.chunks.len() {
                 break;
             }
-            
+
             let chunk_id = &file.chunks[chunk_index as usize];
-            
+
             // 计算在块内的偏移量和大小
             let chunk_offset = if chunk_index == start_chunk {
                 offset % chunk_size
             } else {
                 0
             };
-            
+
             let remaining = read_size - result.len() as u64;
             let chunk_size_to_read = std::cmp::min(chunk_size - chunk_offset, remaining);
-            
+
             // 读取块数据
             let data = self.read_chunk(chunk_id, chunk_offset, chunk_size_to_read)?;
-            
+
             // 添加到结果
             result.extend_from_slice(&data);
         }
-        
+
         Ok(result)
     }
-    
+
     fn delete_file(&self, file_id: &str) -> Result<(), String> {
         println!("删除文件: {}", file_id);
-        
+
         // 验证文件
         let mut files = self.metadata_manager.files.write().unwrap();
-        
+
         let file = files.get(file_id)
             .ok_or_else(|| format!("文件不存在: {}", file_id))?;
-        
+
         // 从父目录中移除
         let parent_id = file.parent_dir.clone();
         let mut directories = self.metadata_manager.directories.write().unwrap();
-        
+
         if let Some(parent) = directories.get_mut(&parent_id) {
             parent.children.retain(|id| id != file_id);
             parent.modified_at = Utc::now();
         }
-        
+
         // 删除块
         let mut chunks = self.chunk_manager.chunks.write().unwrap();
         for chunk_id in &file.chunks {
             chunks.remove(chunk_id);
-            
+
             // 在实际实现中，这里会通知存储节点删除块数据
         }
-        
+
         // 删除文件元数据
         files.remove(file_id);
-        
+
         println!("文件已删除: {}", file.path);
-        
+
         Ok(())
     }
 }
@@ -18180,24 +18182,24 @@ impl DistributedConfigService {
         let config_store = ConfigStore {
             items: RwLock::new(HashMap::new()),
         };
-        
+
         let watch_manager = ConfigWatchManager {
             watches: RwLock::new(HashMap::new()),
         };
-        
+
         let version_manager = VersionManager {
             versions: RwLock::new(HashMap::new()),
             max_versions: 10,
         };
-        
+
         let acl_manager = AccessControlManager {
             rules: RwLock::new(HashMap::new()),
         };
-        
+
         let namespace_manager = NamespaceManager {
             namespaces: RwLock::new(HashMap::new()),
         };
-        
+
         DistributedConfigService {
             node_id: node_id.to_string(),
             config_store,
@@ -18207,34 +18209,34 @@ impl DistributedConfigService {
             namespace_manager,
         }
     }
-    
+
     fn start(&self) -> Result<(), String> {
         println!("启动分布式配置服务");
-        
+
         // 创建默认命名空间
         self.create_namespace("default", None, "system")?;
-        
+
         // 创建默认访问控制规则
         self.create_access_rule(
-            "/**", 
-            "default", 
-            "system", 
+            "/**",
+            "default",
+            "system",
             vec![AccessAction::Read, AccessAction::Write, AccessAction::Delete, AccessAction::List, AccessAction::ChangeACL],
             AccessEffect::Allow
         )?;
-        
+
         Ok(())
     }
-    
+
     fn create_namespace(&self, name: &str, description: Option<&str>, creator: &str) -> Result<(), String> {
         println!("创建命名空间: {}", name);
-        
+
         let mut namespaces = self.namespace_manager.namespaces.write().unwrap();
-        
+
         if namespaces.contains_key(name) {
             return Err(format!("命名空间已存在: {}", name));
         }
-        
+
         let namespace = NamespaceInfo {
             name: name.to_string(),
             description: description.map(|s| s.to_string()),
@@ -18242,28 +18244,28 @@ impl DistributedConfigService {
             created_by: creator.to_string(),
             config_count: 0,
         };
-        
+
         namespaces.insert(name.to_string(), namespace);
-        
+
         Ok(())
     }
-    
+
     fn create_access_rule(
-        &self, 
-        path: &str, 
-        namespace: &str, 
-        principal: &str, 
+        &self,
+        path: &str,
+        namespace: &str,
+        principal: &str,
         actions: Vec<AccessAction>,
         effect: AccessEffect
     ) -> Result<(), String> {
         println!("创建访问控制规则: {}", path);
-        
+
         // 验证命名空间
         let namespaces = self.namespace_manager.namespaces.read().unwrap();
         if !namespaces.contains_key(namespace) {
             return Err(format!("命名空间不存在: {}", namespace));
         }
-        
+
         // 创建规则
         let rule = AccessRule {
             path: path.to_string(),
@@ -18272,54 +18274,54 @@ impl DistributedConfigService {
             actions: actions.into_iter().collect(),
             effect,
         };
-        
+
         let mut rules = self.acl_manager.rules.write().unwrap();
-        
+
         let path_rules = rules.entry(path.to_string())
             .or_insert_with(Vec::new);
-        
+
         path_rules.push(rule);
-        
+
         Ok(())
     }
-    
+
     fn check_access(
-        &self, 
-        path: &str, 
-        namespace: &str, 
-        principal: &str, 
+        &self,
+        path: &str,
+        namespace: &str,
+        principal: &str,
         action: AccessAction
     ) -> Result<bool, String> {
         // 读取所有规则
         let rules = self.acl_manager.rules.read().unwrap();
-        
+
         // 匹配规则
         let mut matched_rules = Vec::new();
-        
+
         for (rule_path, path_rules) in rules.iter() {
             if self.path_matches(rule_path, path) {
                 for rule in path_rules {
-                    if (rule.namespace == namespace || rule.namespace == "*") && 
-                       (rule.principal == principal || rule.principal == "*") && 
+                    if (rule.namespace == namespace || rule.namespace == "*") &&
+                       (rule.principal == principal || rule.principal == "*") &&
                        rule.actions.contains(&action) {
                         matched_rules.push(rule);
                     }
                 }
             }
         }
-        
+
         // 排序规则（优先级：具体路径 > 通配路径，Deny > Allow）
         matched_rules.sort_by(|a, b| {
             // 首先按路径具体程度排序
             let a_specificity = a.path.matches('*').count();
             let b_specificity = b.path.matches('*').count();
-            
+
             let specificity_cmp = a_specificity.cmp(&b_specificity);
-            
+
             if specificity_cmp != std::cmp::Ordering::Equal {
                 return specificity_cmp;
             }
-            
+
             // 然后按效果排序（Deny > Allow）
             match (&a.effect, &b.effect) {
                 (AccessEffect::Deny, AccessEffect::Allow) => std::cmp::Ordering::Less,
@@ -18327,109 +18329,109 @@ impl DistributedConfigService {
                 _ => std::cmp::Ordering::Equal,
             }
         });
-        
+
         // 应用第一个匹配的规则
         if let Some(rule) = matched_rules.first() {
             return Ok(matches!(rule.effect, AccessEffect::Allow));
         }
-        
+
         // 默认拒绝
         Ok(false)
     }
-    
+
     fn path_matches(&self, pattern: &str, path: &str) -> bool {
         if pattern == path {
             return true;
         }
-        
+
         // 简单的通配符匹配逻辑
         if pattern.contains('*') {
             let pattern_parts: Vec<_> = pattern.split('/').collect();
             let path_parts: Vec<_> = path.split('/').collect();
-            
+
             if pattern == "/**" {
                 return true;
             }
-            
+
             if pattern_parts.len() > path_parts.len() {
                 return false;
             }
-            
+
             for (i, p) in pattern_parts.iter().enumerate() {
                 if *p == "**" {
                     return true;
                 }
-                
+
                 if *p == "*" {
                     continue;
                 }
-                
+
                 if i >= path_parts.len() || *p != path_parts[i] {
                     return false;
                 }
             }
-            
+
             return pattern_parts.len() == path_parts.len() || pattern_parts.last() == Some(&"**");
         }
-        
+
         false
     }
-    
+
     fn set_config(
-        &self, 
-        path: &str, 
-        value: ConfigValue, 
-        namespace: &str, 
+        &self,
+        path: &str,
+        value: ConfigValue,
+        namespace: &str,
         principal: &str
     ) -> Result<u64, String> {
         println!("设置配置: {}", path);
-        
+
         // 验证路径
         if !self.validate_path(path) {
             return Err(format!("无效的配置路径: {}", path));
         }
-        
+
         // 检查访问权限
         let has_access = self.check_access(path, namespace, principal, AccessAction::Write)?;
         if !has_access {
             return Err(format!("没有写入权限: {}", path));
         }
-        
+
         // 验证命名空间
         let mut namespaces = self.namespace_manager.namespaces.write().unwrap();
         let namespace_info = namespaces.get_mut(namespace)
             .ok_or_else(|| format!("命名空间不存在: {}", namespace))?;
-        
+
         let now = Utc::now();
         let mut items = self.config_store.items.write().unwrap();
-        
+
         // 检查是否更新现有配置或创建新配置
         let (is_new, new_version) = if let Some(item) = items.get_mut(path) {
             // 更新现有配置
             let old_value = item.value.clone();
             let old_version = item.metadata.version;
             let new_version = old_version + 1;
-            
+
             item.value = value.clone();
             item.metadata.version = new_version;
             item.metadata.modified_at = now;
             item.metadata.modified_by = principal.to_string();
-            
+
             // 保存版本历史
             self.save_version_history(path, old_version, &old_value, &item.metadata)?;
-            
+
             // 触发更新事件
             self.trigger_watch_event(ConfigWatchEvent::Updated {
                 path: path.to_string(),
                 old_value: Some(old_value),
                 new_value: value.clone(),
             })?;
-            
+
             (false, new_version)
         } else {
             // 创建新配置
             let new_version = 1;
-            
+
             let metadata = ConfigMetadata {
                 version: new_version,
                 created_at: now,
@@ -18440,63 +18442,63 @@ impl DistributedConfigService {
                 labels: HashMap::new(),
                 annotations: HashMap::new(),
             };
-            
+
             let item = ConfigItem {
                 path: path.to_string(),
                 value: value.clone(),
                 metadata,
             };
-            
+
             items.insert(path.to_string(), item);
-            
+
             // 更新命名空间配置计数
             namespace_info.config_count += 1;
-            
+
             // 触发创建事件
             self.trigger_watch_event(ConfigWatchEvent::Created {
                 path: path.to_string(),
                 value: value.clone(),
             })?;
-            
+
             (true, new_version)
         };
-        
+
         println!("配置{}：{}, 版本: {}", if is_new { "已创建" } else { "已更新" }, path, new_version);
-        
+
         Ok(new_version)
     }
-    
+
     fn validate_path(&self, path: &str) -> bool {
         if path.is_empty() || !path.starts_with('/') {
             return false;
         }
-        
+
         // 路径格式验证
         let valid_chars = Regex::new(r"^[a-zA-Z0-9_\-./]+$").unwrap();
         if !valid_chars.is_match(path) {
             return false;
         }
-        
+
         // 检查是否有连续的斜杠
         if path.contains("//") {
             return false;
         }
-        
+
         true
     }
-    
+
     fn save_version_history(
-        &self, 
-        path: &str, 
-        version: u64, 
-        value: &ConfigValue, 
+        &self,
+        path: &str,
+        version: u64,
+        value: &ConfigValue,
         metadata: &ConfigMetadata
     ) -> Result<(), String> {
         let mut versions = self.version_manager.versions.write().unwrap();
-        
+
         let path_versions = versions.entry(path.to_string())
             .or_insert_with(Vec::new);
-        
+
         let config_version = ConfigVersion {
             path: path.to_string(),
             version,
@@ -18504,60 +18506,60 @@ impl DistributedConfigService {
             metadata: metadata.clone(),
             timestamp: Utc::now(),
         };
-        
+
         path_versions.push(config_version);
-        
+
         // 限制版本历史数量
         if path_versions.len() > self.version_manager.max_versions {
             path_versions.sort_by(|a, b| b.version.cmp(&a.version));
             path_versions.truncate(self.version_manager.max_versions);
         }
-        
+
         Ok(())
     }
-    
+
     fn get_config(
-        &self, 
-        path: &str, 
-        namespace: &str, 
+        &self,
+        path: &str,
+        namespace: &str,
         principal: &str
     ) -> Result<Option<ConfigItem>, String> {
         println!("获取配置: {}", path);
-        
+
         // 检查访问权限
         let has_access = self.check_access(path, namespace, principal, AccessAction::Read)?;
         if !has_access {
             return Err(format!("没有读取权限: {}", path));
         }
-        
+
         let items = self.config_store.items.read().unwrap();
-        
+
         if let Some(item) = items.get(path) {
             if item.metadata.namespace == namespace {
                 return Ok(Some(item.clone()));
             }
         }
-        
+
         Ok(None)
     }
-    
+
     fn get_config_version(
-        &self, 
-        path: &str, 
-        version: u64, 
-        namespace: &str, 
+        &self,
+        path: &str,
+        version: u64,
+        namespace: &str,
         principal: &str
     ) -> Result<Option<ConfigVersion>, String> {
         println!("获取配置版本: {}, 版本: {}", path, version);
-        
+
         // 检查访问权限
         let has_access = self.check_access(path, namespace, principal, AccessAction::Read)?;
         if !has_access {
             return Err(format!("没有读取权限: {}", path));
         }
-        
+
         let versions = self.version_manager.versions.read().unwrap();
-        
+
         if let Some(path_versions) = versions.get(path) {
             for ver in path_versions {
                 if ver.version == version && ver.metadata.namespace == namespace {
@@ -18565,91 +18567,91 @@ impl DistributedConfigService {
                 }
             }
         }
-        
+
         Ok(None)
     }
-    
+
     fn delete_config(
-        &self, 
-        path: &str, 
-        namespace: &str, 
+        &self,
+        path: &str,
+        namespace: &str,
         principal: &str
     ) -> Result<bool, String> {
         println!("删除配置: {}", path);
-        
+
         // 检查访问权限
         let has_access = self.check_access(path, namespace, principal, AccessAction::Delete)?;
         if !has_access {
             return Err(format!("没有删除权限: {}", path));
         }
-        
+
         let mut items = self.config_store.items.write().unwrap();
-        
+
         if let Some(item) = items.get(path) {
             if item.metadata.namespace != namespace {
                 return Ok(false);
             }
-            
+
             let old_value = item.value.clone();
-            
+
             // 删除配置
             items.remove(path);
-            
+
             // 更新命名空间配置计数
             let mut namespaces = self.namespace_manager.namespaces.write().unwrap();
             if let Some(namespace_info) = namespaces.get_mut(namespace) {
                 namespace_info.config_count -= 1;
             }
-            
+
             // 触发删除事件
             self.trigger_watch_event(ConfigWatchEvent::Deleted {
                 path: path.to_string(),
                 old_value: Some(old_value),
             })?;
-            
+
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     fn list_config(
-        &self, 
-        prefix: &str, 
-        namespace: &str, 
+        &self,
+        prefix: &str,
+        namespace: &str,
         principal: &str
     ) -> Result<Vec<ConfigItem>, String> {
         println!("列出配置: 前缀 {}", prefix);
-        
+
         // 检查访问权限
         let has_access = self.check_access(prefix, namespace, principal, AccessAction::List)?;
         if !has_access {
             return Err(format!("没有列表权限: {}", prefix));
         }
-        
+
         let items = self.config_store.items.read().unwrap();
-        
+
         let mut result = Vec::new();
-        
+
         for (path, item) in items.iter() {
             if path.starts_with(prefix) && item.metadata.namespace == namespace {
                 result.push(item.clone());
             }
         }
-        
+
         Ok(result)
     }
-    
+
     fn add_watch(
-        &self, 
-        path: &str, 
+        &self,
+        path: &str,
         recursive: bool,
         callback: Box<dyn Fn(ConfigWatchEvent) -> Result<(), String> + Send + Sync>
     ) -> Result<String, String> {
         println!("添加监视: {}, 递归: {}", path, recursive);
-        
+
         let watch_id = uuid::Uuid::new_v4().to_string();
-        
+
         let watch = ConfigWatchEntry {
             id: watch_id.clone(),
             path: path.to_string(),
@@ -18657,48 +18659,48 @@ impl DistributedConfigService {
             callback,
             created_at: Utc::now(),
         };
-        
+
         let mut watches = self.watch_manager.watches.write().unwrap();
-        
+
         let path_watches = watches.entry(path.to_string())
             .or_insert_with(Vec::new);
-        
+
         path_watches.push(watch);
-        
+
         Ok(watch_id)
     }
-    
+
     fn remove_watch(&self, watch_id: &str, path: &str) -> Result<bool, String> {
         println!("移除监视: {}, 路径: {}", watch_id, path);
-        
+
         let mut watches = self.watch_manager.watches.write().unwrap();
-        
+
         if let Some(path_watches) = watches.get_mut(path) {
             let len_before = path_watches.len();
             path_watches.retain(|w| w.id != watch_id);
-            
+
             let removed = len_before > path_watches.len();
-            
+
             // 如果没有更多的监视，移除路径条目
             if path_watches.is_empty() {
                 watches.remove(path);
             }
-            
+
             return Ok(removed);
         }
-        
+
         Ok(false)
     }
-    
+
     fn trigger_watch_event(&self, event: ConfigWatchEvent) -> Result<(), String> {
         let path = match &event {
             ConfigWatchEvent::Created { path, .. } => path,
             ConfigWatchEvent::Updated { path, .. } => path,
             ConfigWatchEvent::Deleted { path, .. } => path,
         };
-        
+
         let watches = self.watch_manager.watches.read().unwrap();
-        
+
         // 直接路径监视
         if let Some(path_watches) = watches.get(path) {
             for watch in path_watches {
@@ -18708,7 +18710,7 @@ impl DistributedConfigService {
                 }
             }
         }
-        
+
         // 递归路径监视
         let path_parts: Vec<_> = path.split('/').collect();
         for i in 1..path_parts.len() {
@@ -18716,7 +18718,7 @@ impl DistributedConfigService {
             if parent_path.is_empty() {
                 continue;
             }
-            
+
             if let Some(parent_watches) = watches.get(&parent_path) {
                 for watch in parent_watches {
                     if watch.recursive {
@@ -18728,7 +18730,7 @@ impl DistributedConfigService {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -18899,26 +18901,26 @@ impl DistributedCacheSystem {
         let cache_manager = CacheManager {
             caches: RwLock::new(HashMap::new()),
         };
-        
+
         let eviction_manager = EvictionManager {
             running: AtomicBool::new(false),
             check_interval: Duration::from_secs(10),
             eviction_thread: None,
         };
-        
+
         let replication_manager = CacheReplicationManager {
             replication_tasks: RwLock::new(Vec::new()),
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         let stats_manager = CacheStatsManager {
             stats_snapshots: RwLock::new(HashMap::new()),
             running: AtomicBool::new(false),
             snapshot_interval: Duration::from_secs(60),
             stats_thread: None,
         };
-        
+
         DistributedCacheSystem {
             node_id: node_id.to_string(),
             cache_manager,
@@ -18927,25 +18929,25 @@ impl DistributedCacheSystem {
             stats_manager,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式缓存系统");
-        
+
         // 启动驱逐管理器
         self.start_eviction_manager()?;
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         // 启动统计管理器
         self.start_stats_manager()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式缓存系统");
-        
+
         // 停止驱逐管理器
         self.eviction_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.eviction_manager.eviction_thread.take() {
@@ -18954,7 +18956,7 @@ impl DistributedCacheSystem {
                 Err(e) => println!("驱逐线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -18963,7 +18965,7 @@ impl DistributedCacheSystem {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止统计管理器
         self.stats_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.stats_manager.stats_thread.take() {
@@ -18972,20 +18974,20 @@ impl DistributedCacheSystem {
                 Err(e) => println!("统计线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_eviction_manager(&mut self) -> Result<(), String> {
         println!("启动驱逐管理器");
-        
+
         let caches = self.cache_manager.caches.clone();
         let interval = self.eviction_manager.check_interval;
-        
+
         self.eviction_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.eviction_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查所有缓存的过期项
@@ -18993,14 +18995,14 @@ impl DistributedCacheSystem {
                     let caches = caches.read().unwrap();
                     caches.keys().cloned().collect()
                 };
-                
+
                 for cache_name in cache_names {
                     let caches = caches.read().unwrap();
                     if let Some(cache) = caches.get(&cache_name) {
                         // 执行过期项清理
                         let now = Utc::now();
                         let mut expired_keys = Vec::new();
-                        
+
                         {
                             let items = cache.items.read().unwrap();
                             for (key, item) in items.iter() {
@@ -19011,7 +19013,7 @@ impl DistributedCacheSystem {
                                 }
                             }
                         }
-                        
+
                         if !expired_keys.is_empty() {
                             let mut items = cache.items.write().unwrap();
                             for key in &expired_keys {
@@ -19022,19 +19024,19 @@ impl DistributedCacheSystem {
                                     cache.stats.item_count.fetch_sub(1, Ordering::SeqCst);
                                 }
                             }
-                            
+
                             println!("从缓存 {} 中移除了 {} 个过期项", cache_name, expired_keys.len());
                         }
-                        
+
                         // 检查大小限制
                         if let Some(max_size) = cache.config.max_size {
                             let current_size = cache.stats.total_size.load(Ordering::SeqCst);
-                            
+
                             if current_size > max_size {
                                 // 需要驱逐
                                 let mut items = cache.items.write().unwrap();
                                 let mut item_list: Vec<_> = items.iter().collect();
-                                
+
                                 // 根据驱逐策略排序
                                 match cache.config.eviction_policy {
                                     EvictionPolicy::LRU => {
@@ -19051,38 +19053,38 @@ impl DistributedCacheSystem {
                                         item_list.shuffle(&mut rng);
                                     },
                                 }
-                                
+
                                 let mut size_to_remove = current_size - max_size + max_size / 10; // 多移除一些，避免频繁驱逐
                                 let mut removed_count = 0;
-                                
+
                                 while size_to_remove > 0 && !item_list.is_empty() {
                                     let (key, _) = item_list.remove(0);
-                                    
+
                                     if let Some(item) = items.remove(key) {
                                         size_to_remove = size_to_remove.saturating_sub(item.size);
-                                        
+
                                         // 更新统计
                                         cache.stats.eviction_count.fetch_add(1, Ordering::SeqCst);
                                         cache.stats.total_size.fetch_sub(item.size, Ordering::SeqCst);
                                         cache.stats.item_count.fetch_sub(1, Ordering::SeqCst);
-                                        
+
                                         removed_count += 1;
                                     }
                                 }
-                                
+
                                 println!("从缓存 {} 中驱逐了 {} 个项目以满足大小限制", cache_name, removed_count);
                             }
                         }
-                        
+
                         // 检查项目数量限制
                         if let Some(max_items) = cache.config.max_items {
                             let current_items = cache.stats.item_count.load(Ordering::SeqCst);
-                            
+
                             if current_items > max_items {
                                 // 需要驱逐
                                 let mut items = cache.items.write().unwrap();
                                 let mut item_list: Vec<_> = items.iter().collect();
-                                
+
                                 // 根据驱逐策略排序
                                 match cache.config.eviction_policy {
                                     EvictionPolicy::LRU => {
@@ -19099,12 +19101,12 @@ impl DistributedCacheSystem {
                                         item_list.shuffle(&mut rng);
                                     },
                                 }
-                                
+
                                 let items_to_remove = current_items - max_items + max_items / 10; // 多移除一些，避免频繁驱逐
-                                
+
                                 for i in 0..std::cmp::min(items_to_remove, item_list.len()) {
                                     let (key, _) = item_list[i];
-                                    
+
                                     if let Some(item) = items.remove(key) {
                                         // 更新统计
                                         cache.stats.eviction_count.fetch_add(1, Ordering::SeqCst);
@@ -19112,35 +19114,35 @@ impl DistributedCacheSystem {
                                         cache.stats.item_count.fetch_sub(1, Ordering::SeqCst);
                                     }
                                 }
-                                
+
                                 println!("从缓存 {} 中驱逐了 {} 个项目以满足数量限制", cache_name, items_to_remove);
                             }
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.eviction_manager.eviction_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         let replication_tasks = self
 
 ```rust
         let replication_tasks = self.replication_manager.replication_tasks.clone();
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 处理复制任务
@@ -19150,47 +19152,47 @@ impl DistributedCacheSystem {
                     tasks.clear();
                     result
                 };
-                
+
                 for task in tasks_to_process {
                     println!("处理缓存复制任务: {} -> {:?}", task.key, task.target_nodes);
-                    
+
                     // 在实际实现中，这里会将缓存项发送到目标节点
                     // 简化：假设复制成功
-                    
+
                     println!("缓存复制完成: {}", task.key);
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_stats_manager(&mut self) -> Result<(), String> {
         println!("启动统计管理器");
-        
+
         let caches = self.cache_manager.caches.clone();
         let stats_snapshots = self.stats_manager.stats_snapshots.clone();
         let interval = self.stats_manager.snapshot_interval;
-        
+
         self.stats_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.stats_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 为所有缓存创建统计快照
                 let now = Utc::now();
-                
+
                 let cache_names: Vec<String> = {
                     let caches = caches.read().unwrap();
                     caches.keys().cloned().collect()
                 };
-                
+
                 for cache_name in cache_names {
                     let caches = caches.read().unwrap();
                     if let Some(cache) = caches.get(&cache_name) {
@@ -19203,13 +19205,13 @@ impl DistributedCacheSystem {
                             total_size: cache.stats.total_size.load(Ordering::SeqCst),
                             item_count: cache.stats.item_count.load(Ordering::SeqCst),
                         };
-                        
+
                         let mut snapshots = stats_snapshots.write().unwrap();
                         let cache_snapshots = snapshots.entry(cache_name.clone())
                             .or_insert_with(Vec::new);
-                        
+
                         cache_snapshots.push(snapshot);
-                        
+
                         // 限制快照数量
                         if cache_snapshots.len() > 100 {
                             cache_snapshots.sort_by(|a, b| a.timestamp.cmp(&b.timestamp));
@@ -19217,26 +19219,26 @@ impl DistributedCacheSystem {
                         }
                     }
                 }
-                
+
                 // 休眠到下一个快照时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.stats_manager.stats_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn create_cache(&self, name: &str, config: CacheConfig) -> Result<(), String> {
         println!("创建缓存: {}", name);
-        
+
         let mut caches = self.cache_manager.caches.write().unwrap();
-        
+
         if caches.contains_key(name) {
             return Err(format!("缓存已存在: {}", name));
         }
-        
+
         let stats = CacheStats {
             hit_count: AtomicU64::new(0),
             miss_count: AtomicU64::new(0),
@@ -19244,53 +19246,53 @@ impl DistributedCacheSystem {
             total_size: AtomicUsize::new(0),
             item_count: AtomicUsize::new(0),
         };
-        
+
         let cache = Cache {
             name: name.to_string(),
             items: RwLock::new(HashMap::new()),
             config,
             stats,
         };
-        
+
         caches.insert(name.to_string(), cache);
-        
+
         // 初始化统计快照
         let mut snapshots = self.stats_manager.stats_snapshots.write().unwrap();
         snapshots.insert(name.to_string(), Vec::new());
-        
+
         Ok(())
     }
-    
+
     fn put(
-        &self, 
-        cache_name: &str, 
-        key: &str, 
-        value: Vec<u8>, 
+        &self,
+        cache_name: &str,
+        key: &str,
+        value: Vec<u8>,
         ttl: Option<Duration>
     ) -> Result<(), String> {
         println!("设置缓存: {}/{}", cache_name, key);
-        
+
         let caches = self.cache_manager.caches.read().unwrap();
-        
+
         let cache = caches.get(cache_name)
             .ok_or_else(|| format!("缓存不存在: {}", cache_name))?;
-        
+
         let now = Utc::now();
         let expires_at = ttl.map(|duration| now + duration);
-        
+
         // 检查是否更新现有项或创建新项
         let size = value.len();
         let mut items = cache.items.write().unwrap();
-        
+
         if let Some(existing_item) = items.get_mut(key) {
             // 更新现有项
             let old_size = existing_item.size;
-            
+
             existing_item.value = value.clone();
             existing_item.last_accessed = now;
             existing_item.expires_at = expires_at;
             existing_item.size = size;
-            
+
             // 更新统计
             if old_size != size {
                 let size_diff = if size > old_size {
@@ -19298,17 +19300,17 @@ impl DistributedCacheSystem {
                 } else {
                     0
                 };
-                
+
                 let size_reduction = if old_size > size {
                     old_size - size
                 } else {
                     0
                 };
-                
+
                 if size_diff > 0 {
                     cache.stats.total_size.fetch_add(size_diff, Ordering::SeqCst);
                 }
-                
+
                 if size_reduction > 0 {
                     cache.stats.total_size.fetch_sub(size_reduction, Ordering::SeqCst);
                 }
@@ -19324,14 +19326,14 @@ impl DistributedCacheSystem {
                 access_count: 0,
                 size,
             };
-            
+
             items.insert(key.to_string(), item);
-            
+
             // 更新统计
             cache.stats.total_size.fetch_add(size, Ordering::SeqCst);
             cache.stats.item_count.fetch_add(1, Ordering::SeqCst);
         }
-        
+
         // 创建复制任务
         if cache.config.replication_factor > 1 {
             // 在实际实现中，这里会选择目标节点
@@ -19339,7 +19341,7 @@ impl DistributedCacheSystem {
                 format!("node-{}", uuid::Uuid::new_v4().to_string()),
                 format!("node-{}", uuid::Uuid::new_v4().to_string()),
             ];
-            
+
             let replication_task = CacheReplicationTask {
                 cache_name: cache_name.to_string(),
                 key: key.to_string(),
@@ -19348,22 +19350,22 @@ impl DistributedCacheSystem {
                 target_nodes,
                 created_at: now,
             };
-            
+
             let mut tasks = self.replication_manager.replication_tasks.write().unwrap();
             tasks.push(replication_task);
         }
-        
+
         Ok(())
     }
-    
+
     fn get(&self, cache_name: &str, key: &str) -> Result<Option<Vec<u8>>, String> {
         let caches = self.cache_manager.caches.read().unwrap();
-        
+
         let cache = caches.get(cache_name)
             .ok_or_else(|| format!("缓存不存在: {}", cache_name))?;
-        
+
         let mut items = cache.items.write().unwrap();
-        
+
         if let Some(item) = items.get_mut(key) {
             // 检查是否过期
             let now = Utc::now();
@@ -19371,82 +19373,82 @@ impl DistributedCacheSystem {
                 if expires_at <= now {
                     // 项目已过期，移除它
                     let removed_item = items.remove(key).unwrap();
-                    
+
                     // 更新统计
                     cache.stats.miss_count.fetch_add(1, Ordering::SeqCst);
                     cache.stats.total_size.fetch_sub(removed_item.size, Ordering::SeqCst);
                     cache.stats.item_count.fetch_sub(1, Ordering::SeqCst);
-                    
+
                     return Ok(None);
                 }
             }
-            
+
             // 更新访问统计
             item.last_accessed = now;
             item.access_count += 1;
-            
+
             // 更新缓存命中统计
             cache.stats.hit_count.fetch_add(1, Ordering::SeqCst);
-            
+
             return Ok(Some(item.value.clone()));
         }
-        
+
         // 缓存未命中
         cache.stats.miss_count.fetch_add(1, Ordering::SeqCst);
-        
+
         Ok(None)
     }
-    
+
     fn remove(&self, cache_name: &str, key: &str) -> Result<bool, String> {
         println!("移除缓存: {}/{}", cache_name, key);
-        
+
         let caches = self.cache_manager.caches.read().unwrap();
-        
+
         let cache = caches.get(cache_name)
             .ok_or_else(|| format!("缓存不存在: {}", cache_name))?;
-        
+
         let mut items = cache.items.write().unwrap();
-        
+
         if let Some(item) = items.remove(key) {
             // 更新统计
             cache.stats.total_size.fetch_sub(item.size, Ordering::SeqCst);
             cache.stats.item_count.fetch_sub(1, Ordering::SeqCst);
-            
+
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     fn clear(&self, cache_name: &str) -> Result<usize, String> {
         println!("清空缓存: {}", cache_name);
-        
+
         let caches = self.cache_manager.caches.read().unwrap();
-        
+
         let cache = caches.get(cache_name)
             .ok_or_else(|| format!("缓存不存在: {}", cache_name))?;
-        
+
         let mut items = cache.items.write().unwrap();
-        
+
         let item_count = items.len();
-        
+
         if item_count > 0 {
             // 更新统计
             cache.stats.total_size.store(0, Ordering::SeqCst);
             cache.stats.item_count.store(0, Ordering::SeqCst);
-            
+
             items.clear();
         }
-        
+
         Ok(item_count)
     }
-    
+
     fn get_stats(&self, cache_name: &str) -> Result<CacheStatsSnapshot, String> {
         let caches = self.cache_manager.caches.read().unwrap();
-        
+
         let cache = caches.get(cache_name)
             .ok_or_else(|| format!("缓存不存在: {}", cache_name))?;
-        
+
         let snapshot = CacheStatsSnapshot {
             cache_name: cache_name.to_string(),
             timestamp: Utc::now(),
@@ -19456,16 +19458,16 @@ impl DistributedCacheSystem {
             total_size: cache.stats.total_size.load(Ordering::SeqCst),
             item_count: cache.stats.item_count.load(Ordering::SeqCst),
         };
-        
+
         Ok(snapshot)
     }
-    
+
     fn get_stats_history(&self, cache_name: &str) -> Result<Vec<CacheStatsSnapshot>, String> {
         let snapshots = self.stats_manager.stats_snapshots.read().unwrap();
-        
+
         let cache_snapshots = snapshots.get(cache_name)
             .ok_or_else(|| format!("缓存不存在或没有统计历史: {}", cache_name))?;
-        
+
         Ok(cache_snapshots.clone())
     }
 }
@@ -19576,7 +19578,7 @@ impl ServiceRegistry {
             check_interval: Duration::from_secs(10),
             checker_thread: None,
         };
-        
+
         ServiceRegistry {
             node_id: node_id.to_string(),
             services: RwLock::new(HashMap::new()),
@@ -19585,19 +19587,19 @@ impl ServiceRegistry {
             watchers: RwLock::new(HashMap::new()),
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动服务注册表");
-        
+
         // 启动健康检查器
         self.start_health_checker()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止服务注册表");
-        
+
         // 停止健康检查器
         self.health_checker.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.health_checker.checker_thread.take() {
@@ -19606,48 +19608,48 @@ impl ServiceRegistry {
                 Err(e) => println!("健康检查线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_health_checker(&mut self) -> Result<(), String> {
         println!("启动健康检查器");
-        
+
         let instances = self.instances.clone();
         let watchers = self.watchers.clone();
         let interval = self.health_checker.check_interval;
-        
+
         self.health_checker.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.health_checker.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查所有实例的健康状态
                 let now = Utc::now();
-                
+
                 // 获取所有服务和实例
                 let services_instances: HashMap<String, HashMap<String, ServiceInstance>> = {
                     let instances = instances.read().unwrap();
                     instances.clone()
                 };
-                
+
                 for (service_id, service_instances) in &services_instances {
                     for (instance_id, instance) in service_instances {
                         // 检查TTL健康检查
                         if let Some(health_check) = &instance.health_check {
                             if matches!(health_check.check_type, HealthCheckType::TTL) {
                                 let heartbeat_timeout = instance.last_heartbeat + health_check.interval + health_check.timeout;
-                                
+
                                 if heartbeat_timeout < now && instance.status != ServiceStatus::DOWN {
                                     // 实例超时，标记为DOWN
                                     let mut instances_map = instances.write().unwrap();
-                                    
+
                                     if let Some(instances) = instances_map.get_mut(service_id) {
                                         if let Some(instance) = instances.get_mut(instance_id) {
                                             let old_status = instance.status.clone();
                                             instance.status = ServiceStatus::DOWN;
-                                            
+
                                             // 触发状态变更事件
                                             ServiceRegistry::trigger_instance_changed_event(
                                                 &watchers,
@@ -19656,28 +19658,28 @@ impl ServiceRegistry {
                                                 old_status,
                                                 ServiceStatus::DOWN,
                                             );
-                                            
+
                                             println!("实例健康检查失败: {}/{}", service_id, instance_id);
                                         }
                                     }
                                 }
                             }
                         }
-                        
+
                         // 在实际实现中，这里会执行HTTP、TCP、脚本等健康检查
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.health_checker.checker_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn trigger_instance_changed_event(
         watchers: &RwLock<HashMap<String, Vec<ServiceWatcher>>>,
         service_id: &str,
@@ -19686,7 +19688,7 @@ impl ServiceRegistry {
         new_status: ServiceStatus,
     ) {
         let watchers_map = watchers.read().unwrap();
-        
+
         if let Some(service_watchers) = watchers_map.get(service_id) {
             let event = ServiceEvent::InstanceChanged {
                 service_id: service_id.to_string(),
@@ -19694,7 +19696,7 @@ impl ServiceRegistry {
                 old_status,
                 new_status: new_status.clone(),
             };
-            
+
             for watcher in service_watchers {
                 match (watcher.callback)(event.clone()) {
                     Ok(_) => {},
@@ -19703,80 +19705,80 @@ impl ServiceRegistry {
             }
         }
     }
-    
+
     fn register_service(&self, service: ServiceInfo) -> Result<(), String> {
         println!("注册服务: {}", service.name);
-        
+
         let mut services = self.services.write().unwrap();
-        
+
         if services.contains_key(&service.id) {
             return Err(format!("服务已存在: {}", service.id));
         }
-        
+
         services.insert(service.id.clone(), service);
-        
+
         // 创建实例映射
         let mut instances = self.instances.write().unwrap();
         instances.insert(service.id.clone(), HashMap::new());
-        
+
         // 创建监视器映射
         let mut watchers = self.watchers.write().unwrap();
         watchers.insert(service.id.clone(), Vec::new());
-        
+
         Ok(())
     }
-    
+
     fn deregister_service(&self, service_id: &str) -> Result<(), String> {
         println!("注销服务: {}", service_id);
-        
+
         // 检查服务是否存在
         let mut services = self.services.write().unwrap();
-        
+
         if !services.contains_key(service_id) {
             return Err(format!("服务不存在: {}", service_id));
         }
-        
+
         // 移除所有实例
         let mut instances = self.instances.write().unwrap();
         instances.remove(service_id);
-        
+
         // 移除所有监视器
         let mut watchers = self.watchers.write().unwrap();
         watchers.remove(service_id);
-        
+
         // 移除服务
         services.remove(service_id);
-        
+
         Ok(())
     }
-    
+
     fn register_instance(&self, instance: ServiceInstance) -> Result<(), String> {
         println!("注册实例: {}/{}", instance.service_id, instance.id);
-        
+
         // 检查服务是否存在
         let services = self.services.read().unwrap();
-        
+
         if !services.contains_key(&instance.service_id) {
             return Err(format!("服务不存在: {}", instance.service_id));
         }
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         let service_instances = instances.get_mut(&instance.service_id)
             .ok_or_else(|| format!("服务实例映射不存在: {}", instance.service_id))?;
-        
+
         // 添加实例
         service_instances.insert(instance.id.clone(), instance.clone());
-        
+
         // 触发实例注册事件
         let watchers = self.watchers.read().unwrap();
-        
+
         if let Some(service_watchers) = watchers.get(&instance.service_id) {
             let event = ServiceEvent::InstanceRegistered {
                 service_id: instance.service_id.clone(),
                 instance_id: instance.id.clone(),
             };
-            
+
             for watcher in service_watchers {
                 match (watcher.callback)(event.clone()) {
                     Ok(_) => {},
@@ -19784,34 +19786,34 @@ impl ServiceRegistry {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn deregister_instance(&self, service_id: &str, instance_id: &str) -> Result<(), String> {
         println!("注销实例: {}/{}", service_id, instance_id);
-        
+
         let mut instances = self.instances.write().unwrap();
-        
+
         let service_instances = instances.get_mut(service_id)
             .ok_or_else(|| format!("服务不存在: {}", service_id))?;
-        
+
         if !service_instances.contains_key(instance_id) {
             return Err(format!("实例不存在: {}/{}", service_id, instance_id));
         }
-        
+
         // 移除实例
         service_instances.remove(instance_id);
-        
+
         // 触发实例注销事件
         let watchers = self.watchers.read().unwrap();
-        
+
         if let Some(service_watchers) = watchers.get(service_id) {
             let event = ServiceEvent::InstanceDeregistered {
                 service_id: service_id.to_string(),
                 instance_id: instance_id.to_string(),
             };
-            
+
             for watcher in service_watchers {
                 match (watcher.callback)(event.clone()) {
                     Ok(_) => {},
@@ -19819,31 +19821,31 @@ impl ServiceRegistry {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn heartbeat(&self, service_id: &str, instance_id: &str) -> Result<(), String> {
         let mut instances = self.instances.write().unwrap();
-        
+
         let service_instances = instances.get_mut(service_id)
             .ok_or_else(|| format!("服务不存在: {}", service_id))?;
-        
+
         let instance = service_instances.get_mut(instance_id)
             .ok_or_else(|| format!("实例不存在: {}/{}", service_id, instance_id))?;
-        
+
         let now = Utc::now();
         instance.last_heartbeat = now;
-        
+
         // 如果实例当前为DOWN状态，更新为UP
         if instance.status == ServiceStatus::DOWN {
             let old_status = instance.status.clone();
             instance.status = ServiceStatus::UP;
-            
+
             // 触发状态变更事件
             drop(instances);
             let watchers = self.watchers.read().unwrap();
-            
+
             if let Some(service_watchers) = watchers.get(service_id) {
                 let event = ServiceEvent::InstanceChanged {
                     service_id: service_id.to_string(),
@@ -19851,7 +19853,7 @@ impl ServiceRegistry {
                     old_status,
                     new_status: ServiceStatus::UP,
                 };
-                
+
                 for watcher in service_watchers {
                     match (watcher.callback)(event.clone()) {
                         Ok(_) => {},
@@ -19860,82 +19862,82 @@ impl ServiceRegistry {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn get_services(&self) -> Vec<ServiceInfo> {
         let services = self.services.read().unwrap();
         services.values().cloned().collect()
     }
-    
+
     fn get_service(&self, service_id: &str) -> Option<ServiceInfo> {
         let services = self.services.read().unwrap();
         services.get(service_id).cloned()
     }
-    
+
     fn get_instances(&self, service_id: &str) -> Result<Vec<ServiceInstance>, String> {
         let instances = self.instances.read().unwrap();
-        
+
         let service_instances = instances.get(service_id)
             .ok_or_else(|| format!("服务不存在: {}", service_id))?;
-        
+
         Ok(service_instances.values().cloned().collect())
     }
-    
+
     fn get_instance(&self, service_id: &str, instance_id: &str) -> Result<Option<ServiceInstance>, String> {
         let instances = self.instances.read().unwrap();
-        
+
         let service_instances = instances.get(service_id)
             .ok_or_else(|| format!("服务不存在: {}", service_id))?;
-        
+
         Ok(service_instances.get(instance_id).cloned())
     }
-    
+
     fn watch_service(
-        &self, 
-        service_id: &str, 
+        &self,
+        service_id: &str,
         callback: Box<dyn Fn(ServiceEvent) -> Result<(), String> + Send + Sync>
     ) -> Result<String, String> {
         println!("监视服务: {}", service_id);
-        
+
         // 检查服务是否存在
         let services = self.services.read().unwrap();
-        
+
         if !services.contains_key(service_id) {
             return Err(format!("服务不存在: {}", service_id));
         }
-        
+
         let watcher_id = uuid::Uuid::new_v4().to_string();
-        
+
         let watcher = ServiceWatcher {
             id: watcher_id.clone(),
             service_id: service_id.to_string(),
             callback,
             created_at: Utc::now(),
         };
-        
+
         let mut watchers = self.watchers.write().unwrap();
-        
+
         let service_watchers = watchers.get_mut(service_id)
             .ok_or_else(|| format!("服务监视器映射不存在: {}", service_id))?;
-        
+
         service_watchers.push(watcher);
-        
+
         Ok(watcher_id)
     }
-    
+
     fn unwatch_service(&self, service_id: &str, watcher_id: &str) -> Result<bool, String> {
         println!("取消监视服务: {}/{}", service_id, watcher_id);
-        
+
         let mut watchers = self.watchers.write().unwrap();
-        
+
         let service_watchers = watchers.get_mut(service_id)
             .ok_or_else(|| format!("服务监视器映射不存在: {}", service_id))?;
-        
+
         let len_before = service_watchers.len();
         service_watchers.retain(|w| w.id != watcher_id);
-        
+
         Ok(len_before > service_watchers.len())
     }
 }
@@ -20232,40 +20234,40 @@ impl DistributedMessageQueue {
         let topic_manager = TopicManager {
             topics: RwLock::new(HashMap::new()),
         };
-        
+
         let segment_manager = SegmentManager {
             active_segments: RwLock::new(HashMap::new()),
             segments_path: data_path.join("segments"),
             max_segment_size: 1024 * 1024 * 1024, // 1GB
             segment_roll_hours: 24,
         };
-        
+
         let message_store = MessageStore {
             messages: RwLock::new(HashMap::new()),
             indices: RwLock::new(HashMap::new()),
             segment_manager,
         };
-        
+
         let consumer_manager = ConsumerManager {
             consumers: RwLock::new(HashMap::new()),
             groups: RwLock::new(HashMap::new()),
         };
-        
+
         let transaction_coordinator = TransactionCoordinator {
             transactions: RwLock::new(HashMap::new()),
         };
-        
+
         let producer_manager = ProducerManager {
             producers: RwLock::new(HashMap::new()),
             transaction_coordinator,
         };
-        
+
         let replication_manager = MessageReplicationManager {
             replication_tasks: RwLock::new(Vec::new()),
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         DistributedMessageQueue {
             node_id: node_id.to_string(),
             topic_manager,
@@ -20275,10 +20277,10 @@ impl DistributedMessageQueue {
             replication_manager,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式消息队列");
-        
+
         // 创建必要的目录
         let segments_path = &self.message_store.segment_manager.segments_path;
         if !segments_path.exists() {
@@ -20287,16 +20289,16 @@ impl DistributedMessageQueue {
                 Err(e) => return Err(format!("创建段目录失败: {}", e)),
             }
         }
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式消息队列");
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -20305,7 +20307,7 @@ impl DistributedMessageQueue {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         // 关闭所有活动段
         let mut active_segments = self.message_store.segment_manager.active_segments.write().unwrap();
         for (_, segment) in active_segments.drain() {
@@ -20316,7 +20318,7 @@ impl DistributedMessageQueue {
                     Err(e) => println!("刷新段文件失败: {}", e),
                 }
             }
-            
+
             if let Some(mut handle) = segment.index_handle {
                 match handle.flush() {
                     Ok(_) => {},
@@ -20324,20 +20326,20 @@ impl DistributedMessageQueue {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         let replication_tasks = self.replication_manager.replication_tasks.clone();
         let message_store = &self.message_store;
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 处理复制任务
@@ -20347,37 +20349,37 @@ impl DistributedMessageQueue {
                     tasks.clear();
                     result
                 };
-                
+
                 for task in tasks_to_process {
                     println!("处理消息复制任务: {}/{} -> {}", task.topic, task.partition, task.target_node);
-                    
+
                     // 在实际实现中，这里会将消息发送到目标节点
                     // 简化：假设复制成功
-                    
+
                     println!("消息复制完成: {}/{}", task.topic, task.partition);
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn create_topic(&self, name: &str, config: TopicConfig) -> Result<(), String> {
         println!("创建主题: {}", name);
-        
+
         let mut topics = self.topic_manager.topics.write().unwrap();
-        
+
         if topics.contains_key(name) {
             return Err(format!("主题已存在: {}", name));
         }
-        
+
         let now = Utc::now();
-        
+
         // 创建分区
         let mut partitions = Vec::new();
         for i in 0..config.partitions {
@@ -20389,10 +20391,10 @@ impl DistributedMessageQueue {
                 isr: Vec::new(),
                 last_offset: AtomicI64::new(0),
             };
-            
+
             partitions.push(partition);
         }
-        
+
         let topic = Topic {
             name: name.to_string(),
             partitions,
@@ -20400,84 +20402,84 @@ impl DistributedMessageQueue {
             created_at: now,
             updated_at: now,
         };
-        
+
         topics.insert(name.to_string(), topic);
-        
+
         // 初始化消息存储
         let mut messages = self.message_store.messages.write().unwrap();
         let mut indices = self.message_store.indices.write().unwrap();
-        
+
         messages.insert(name.to_string(), HashMap::new());
         indices.insert(name.to_string(), HashMap::new());
-        
+
         // 初始化分区消息存储
         let topic_messages = messages.get_mut(name).unwrap();
         for i in 0..config.partitions {
             topic_messages.insert(i, HashMap::new());
         }
-        
+
         Ok(())
     }
-    
+
     fn delete_topic(&self, name: &str) -> Result<(), String> {
         println!("删除主题: {}", name);
-        
+
         let mut topics = self.topic_manager.topics.write().unwrap();
-        
+
         if !topics.contains_key(name) {
             return Err(format!("主题不存在: {}", name));
         }
-        
+
         // 移除消息存储
         let mut messages = self.message_store.messages.write().unwrap();
         let mut indices = self.message_store.indices.write().unwrap();
-        
+
         messages.remove(name);
         indices.remove(name);
-        
+
         // 移除所有相关段
         let mut active_segments = self.message_store.segment_manager.active_segments.write().unwrap();
         active_segments.retain(|key, _| key.topic != name);
-        
+
         // 在实际实现中，这里会删除磁盘上的段文件
-        
+
         // 移除主题
         topics.remove(name);
-        
+
         Ok(())
     }
-    
+
     fn get_topic(&self, name: &str) -> Result<Topic, String> {
         let topics = self.topic_manager.topics.read().unwrap();
-        
+
         let topic = topics.get(name)
             .ok_or_else(|| format!("主题不存在: {}", name))?;
-        
+
         Ok(topic.clone())
     }
-    
+
     fn list_topics(&self) -> Vec<String> {
         let topics = self.topic_manager.topics.read().unwrap();
         topics.keys().cloned().collect()
     }
-    
+
     fn produce_message(
-        &self, 
-        topic: &str, 
-        partition: Option<u32>, 
-        key: Option<Vec<u8>>, 
-        value: Vec<u8>, 
+        &self,
+        topic: &str,
+        partition: Option<u32>,
+        key: Option<Vec<u8>>,
+        value: Vec<u8>,
         headers: HashMap<String, Vec<u8>>,
         transaction_id: Option<&str>
     ) -> Result<(u32, i64), String> {
         println!("生产消息: {}", topic);
-        
+
         // 检查主题是否存在
         let topics = self.topic_manager.topics.read().unwrap();
-        
+
         let topic_info = topics.get(topic)
             .ok_or_else(|| format!("主题不存在: {}", topic))?;
-        
+
         // 选择分区
         let partition_id = match partition {
             Some(p) => {
@@ -20499,16 +20501,16 @@ impl DistributedMessageQueue {
                         rand::random::<u64>()
                     },
                 };
-                
+
                 (key_hash % topic_info.config.partitions as u64) as u32
             },
         };
-        
+
         // 检查事务
         if let Some(tx_id) = transaction_id {
             let producers = self.producer_manager.producers.read().unwrap();
             let mut found = false;
-            
+
             for producer in producers.values() {
                 if let Some(producer_tx_id) = &producer.transaction_id {
                     if producer_tx_id == tx_id {
@@ -20517,13 +20519,13 @@ impl DistributedMessageQueue {
                     }
                 }
             }
-            
+
             if !found {
                 return Err(format!("事务不存在: {}", tx_id));
             }
-            
+
             let transactions = self.producer_manager.transaction_coordinator.transactions.read().unwrap();
-            
+
             if let Some(tx) = transactions.get(tx_id) {
                 match tx.state {
                     TransactionState::Ongoing => {
@@ -20537,11 +20539,11 @@ impl DistributedMessageQueue {
                 return Err(format!("事务不存在: {}", tx_id));
             }
         }
-        
+
         // 获取下一个偏移量
         let partition = &topic_info.partitions[partition_id as usize];
         let next_offset = partition.last_offset.fetch_add(1, Ordering::SeqCst) + 1;
-        
+
         // 创建消息
         let now = Utc::now();
         let message = Message {
@@ -20553,31 +20555,31 @@ impl DistributedMessageQueue {
             partition: partition_id,
             topic: topic.to_string(),
         };
-        
+
         // 存储消息
         let mut messages = self.message_store.messages.write().unwrap();
-        
+
         let topic_messages = messages.get_mut(topic)
             .ok_or_else(|| format!("主题消息存储不存在: {}", topic))?;
-        
+
         let partition_messages = topic_messages.get_mut(&partition_id)
             .ok_or_else(|| format!("分区消息存储不存在: {}/{}", topic, partition_id))?;
-        
+
         partition_messages.insert(next_offset, message.clone());
-        
+
         // 添加到活动段
         let result = self.add_message_to_segment(&message);
-        
+
         // 如果是事务性消息，更新事务状态
         if let Some(tx_id) = transaction_id {
             let mut transactions = self.producer_manager.transaction_coordinator.transactions.write().unwrap();
-            
+
             if let Some(tx) = transactions.get_mut(tx_id) {
                 tx.topic_partitions.insert((topic.to_string(), partition_id));
                 tx.last_update_time = now;
             }
         }
-        
+
         // 触发复制
         if topic_info.config.replication_factor > 1 {
             // 在实际实现中，这里会选择目标节点
@@ -20585,7 +20587,7 @@ impl DistributedMessageQueue {
                 format!("node-{}", uuid::Uuid::new_v4().to_string()),
                 format!("node-{}", uuid::Uuid::new_v4().to_string()),
             ];
-            
+
             for target_node in target_nodes {
                 let replication_task = MessageReplicationTask {
                     topic: topic.to_string(),
@@ -20596,27 +20598,27 @@ impl DistributedMessageQueue {
                     end_offset: next_offset,
                     created_at: now,
                 };
-                
+
                 let mut tasks = self.replication_manager.replication_tasks.write().unwrap();
                 tasks.push(replication_task);
             }
         }
-        
+
         match result {
             Ok(_) => Ok((partition_id, next_offset)),
             Err(e) => Err(e),
         }
     }
-    
+
     fn add_message_to_segment(&self, message: &Message) -> Result<(), String> {
         let mut active_segments = self.message_store.segment_manager.active_segments.write().unwrap();
-        
+
         let segment_key = SegmentKey {
             topic: message.topic.clone(),
             partition: message.partition,
             base_offset: message.offset / 1000 * 1000, // 按1000个消息分段
         };
-        
+
         let segment = if let Some(segment) = active_segments.get_mut(&segment_key) {
             segment
         } else {
@@ -20625,14 +20627,14 @@ impl DistributedMessageQueue {
             active_segments.insert(segment_key.clone(), segment);
             active_segments.get_mut(&segment_key).unwrap()
         };
-        
+
         // 更新段元数据
         segment.max_offset.store(message.offset, Ordering::SeqCst);
         segment.message_count.fetch_add(1, Ordering::SeqCst);
-        
+
         // 序列化消息
         let serialized = self.serialize_message(message)?;
-        
+
         // 写入文件
         if let Some(file_handle) = &mut segment.file_handle {
             match file_handle.write_all(&serialized) {
@@ -20644,7 +20646,7 @@ impl DistributedMessageQueue {
         } else {
             return Err("段文件句柄未初始化".to_string());
         }
-        
+
         // 写入索引（简化，实际实现会更复杂）
         if let Some(index_handle) = &mut segment.index_handle {
             let index_entry = format!("{},{},{}\n", message.offset, serialized.len(), segment.current_size.load(Ordering::SeqCst));
@@ -20653,13 +20655,13 @@ impl DistributedMessageQueue {
                 Err(e) => return Err(format!("写入段索引文件失败: {}", e)),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn create_new_segment(&self, key: &SegmentKey) -> Result<Segment, String> {
         let segments_path = &self.message_store.segment_manager.segments_path;
-        
+
         // 创建主题目录
         let topic_dir = segments_path.join(&key.topic);
         if !topic_dir.exists() {
@@ -20668,7 +20670,7 @@ impl DistributedMessageQueue {
                 Err(e) => return Err(format!("创建主题目录失败: {}", e)),
             }
         }
-        
+
         // 创建分区目录
         let partition_dir = topic_dir.join(format!("p-{}", key.partition));
         if !partition_dir.exists() {
@@ -20677,11 +20679,11 @@ impl DistributedMessageQueue {
                 Err(e) => return Err(format!("创建分区目录失败: {}", e)),
             }
         }
-        
+
         // 创建段文件
         let segment_file_path = partition_dir.join(format!("{}.log", key.base_offset));
         let segment_index_path = partition_dir.join(format!("{}.index", key.base_offset));
-        
+
         let file_handle = match std::fs::OpenOptions::new()
             .create(true)
             .write(true)
@@ -20690,7 +20692,7 @@ impl DistributedMessageQueue {
             Ok(file) => Some(Box::new(file) as Box<dyn Write + Send + Sync>),
             Err(e) => return Err(format!("创建段文件失败: {}", e)),
         };
-        
+
         let index_handle = match std::fs::OpenOptions::new()
             .create(true)
             .write(true)
@@ -20699,7 +20701,7 @@ impl DistributedMessageQueue {
             Ok(file) => Some(Box::new(file) as Box<dyn Write + Send + Sync>),
             Err(e) => return Err(format!("创建段索引文件失败: {}", e)),
         };
-        
+
         let segment = Segment {
             key: key.clone(),
             start_time: Utc::now(),
@@ -20710,21 +20712,21 @@ impl DistributedMessageQueue {
             file_handle,
             index_handle,
         };
-        
+
         Ok(segment)
     }
-    
+
     fn serialize_message(&self, message: &Message) -> Result<Vec<u8>, String> {
         // 简化的消息序列化
         let mut data = Vec::new();
-        
+
         // 写入元数据
         data.extend_from_slice(&message.offset.to_be_bytes());
         data.extend_from_slice(&message.partition.to_be_bytes());
-        
+
         let timestamp_millis = message.timestamp.timestamp_millis();
         data.extend_from_slice(&timestamp_millis.to_be_bytes());
-        
+
         // 写入键
         if let Some(key) = &message.key {
             data.extend_from_slice(&(key.len() as u32).to_be_bytes());
@@ -20732,62 +20734,62 @@ impl DistributedMessageQueue {
         } else {
             data.extend_from_slice(&(0_u32).to_be_bytes());
         }
-        
+
         // 写入值
         data.extend_from_slice(&(message.value.len() as u32).to_be_bytes());
         data.extend_from_slice(&message.value);
-        
+
         // 写入头部数量
         data.extend_from_slice(&(message.headers.len() as u32).to_be_bytes());
-        
+
         // 写入每个头部
         for (name, value) in &message.headers {
             data.extend_from_slice(&(name.len() as u32).to_be_bytes());
             data.extend_from_slice(name.as_bytes());
-            
+
             data.extend_from_slice(&(value.len() as u32).to_be_bytes());
             data.extend_from_slice(value);
         }
-        
+
         Ok(data)
     }
-    
+
     fn consume_messages(
-        &self, 
-        topic: &str, 
-        partition: u32, 
-        offset: i64, 
+        &self,
+        topic: &str,
+        partition: u32,
+        offset: i64,
         max_bytes: usize,
         consumer_id: &str,
         group_id: Option<&str>
     ) -> Result<Vec<Message>, String> {
         println!("消费消息: {}/{} 从偏移量 {}", topic, partition, offset);
-        
+
         // 检查主题是否存在
         let topics = self.topic_manager.topics.read().unwrap();
-        
+
         let topic_info = topics.get(topic)
             .ok_or_else(|| format!("主题不存在: {}", topic))?;
-        
+
         // 检查分区是否存在
         if partition >= topic_info.config.partitions {
             return Err(format!("分区不存在: {}/{}", topic, partition));
         }
-        
+
         // 检查消费者
         let consumers = self.consumer_manager.consumers.read().unwrap();
-        
+
         if !consumers.contains_key(consumer_id) {
             return Err(format!("消费者不存在: {}", consumer_id));
         }
-        
+
         // 如果指定了消费者组，检查分区分配
         if let Some(group_id) = group_id {
             let groups = self.consumer_manager.groups.read().unwrap();
-            
+
             let group = groups.get(group_id)
                 .ok_or_else(|| format!("消费者组不存在: {}", group_id))?;
-            
+
             if let Some(topic_assignments) = group.partitions_assignment.get(topic) {
                 if let Some(assigned_consumer) = topic_assignments.get(&partition) {
                     if assigned_consumer != consumer_id {
@@ -20800,46 +20802,46 @@ impl DistributedMessageQueue {
                 return Err(format!("主题未分配: {}", topic));
             }
         }
-        
+
         // 获取消息
         let messages = self.message_store.messages.read().unwrap();
-        
+
         let topic_messages = messages.get(topic)
             .ok_or_else(|| format!("主题消息存储不存在: {}", topic))?;
-        
+
         let partition_messages = topic_messages.get(&partition)
             .ok_or_else(|| format!("分区消息存储不存在: {}/{}", topic, partition))?;
-        
+
         // 查找从给定偏移量开始的消息
         let mut result = Vec::new();
         let mut total_bytes = 0;
-        
+
         for (msg_offset, message) in partition_messages.iter().filter(|(o, _)| **o >= offset).take(1000) {
-            let msg_size = message.value.len() + 
-                           message.key.as_ref().map_or(0, |k| k.len()) + 
-                           message.headers.iter().map(|(k, v)| k.len() + v.len()).sum::<usize>() + 
+            let msg_size = message.value.len() +
+                           message.key.as_ref().map_or(0, |k| k.len()) +
+                           message.headers.iter().map(|(k, v)| k.len() + v.len()).sum::<usize>() +
                            100; // 估计的额外开销
-            
+
             if total_bytes + msg_size > max_bytes && !result.is_empty() {
                 // 已达到最大字节数，停止添加消息
                 break;
             }
-            
+
             result.push(message.clone());
             total_bytes += msg_size;
         }
-        
+
         // 更新消费者的当前偏移量
         if let Some(group_id) = group_id {
             let mut groups = self.consumer_manager.groups.write().unwrap();
-            
+
             if let Some(group) = groups.get_mut(group_id) {
                 if let Some(member) = group.members.get_mut(consumer_id) {
                     member.last_heartbeat = Utc::now();
                 }
             }
         }
-        
+
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
         if let Some(consumer) = consumers.get_mut(consumer_id) {
             for sub in &mut consumer.subscriptions {
@@ -20854,24 +20856,24 @@ impl DistributedMessageQueue {
                 }
             }
         }
-        
+
         Ok(result)
     }
-    
+
     fn create_consumer(
-        &self, 
-        id: &str, 
-        client_id: &str, 
+        &self,
+        id: &str,
+        client_id: &str,
         group_id: Option<&str>
     ) -> Result<(), String> {
         println!("创建消费者: {}", id);
-        
+
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
-        
+
         if consumers.contains_key(id) {
             return Err(format!("消费者已存在: {}", id));
         }
-        
+
         let consumer = Consumer {
             id: id.to_string(),
             client_id: client_id.to_string(),
@@ -20879,13 +20881,13 @@ impl DistributedMessageQueue {
             last_poll: Utc::now(),
             metadata: HashMap::new(),
         };
-        
+
         consumers.insert(id.to_string(), consumer);
-        
+
         // 如果指定了消费者组，将消费者添加到组
         if let Some(group_id) = group_id {
             let mut groups = self.consumer_manager.groups.write().unwrap();
-            
+
             let group = groups.entry(group_id.to_string())
                 .or_insert_with(|| ConsumerGroup {
                     name: group_id.to_string(),
@@ -20896,7 +20898,7 @@ impl DistributedMessageQueue {
                     state: GroupState::Empty,
                     partitions_assignment: HashMap::new(),
                 });
-            
+
             let member = GroupMember {
                 id: id.to_string(),
                 client_id: client_id.to_string(),
@@ -20904,57 +20906,57 @@ impl DistributedMessageQueue {
                 metadata: Vec::new(),
                 last_heartbeat: Utc::now(),
             };
-            
+
             group.members.insert(id.to_string(), member);
-            
+
             // 如果这是第一个成员，将其设为领导者
             if group.leader.is_none() {
                 group.leader = Some(id.to_string());
             }
-            
+
             // 更新组状态
             if matches!(group.state, GroupState::Empty) {
                 group.state = GroupState::Stable;
             } else {
                 group.state = GroupState::PreparingRebalance;
             }
-            
+
             // 增加世代
             group.generation += 1;
         }
-        
+
         Ok(())
     }
-    
+
     fn subscribe(
-        &self, 
-        consumer_id: &str, 
+        &self,
+        consumer_id: &str,
         topics: Vec<String>
     ) -> Result<(), String> {
         println!("订阅主题: 消费者 {} -> {:?}", consumer_id, topics);
-        
+
         // 检查主题是否存在
         let topic_manager = self.topic_manager.topics.read().unwrap();
-        
+
         for topic in &topics {
             if !topic_manager.contains_key(topic) {
                 return Err(format!("主题不存在: {}", topic));
             }
         }
-        
+
         // 更新消费者订阅
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
-        
+
         let consumer = consumers.get_mut(consumer_id)
             .ok_or_else(|| format!("消费者不存在: {}", consumer_id))?;
-        
+
         // 清除现有订阅
         consumer.subscriptions.clear();
-        
+
         // 添加新订阅
         for topic_name in &topics {
             let topic = topic_manager.get(topic_name).unwrap();
-            
+
             let mut assignments = Vec::new();
             for partition in &topic.partitions {
                 let assignment = PartitionAssignment {
@@ -20963,53 +20965,53 @@ impl DistributedMessageQueue {
                     committed_offset: 0,
                     last_fetch_timestamp: Utc::now(),
                 };
-                
+
                 assignments.push(assignment);
             }
-            
+
             let subscription = TopicSubscription {
                 topic: topic_name.clone(),
                 assignment: assignments,
             };
-            
+
             consumer.subscriptions.push(subscription);
         }
-        
+
         // 查找消费者所属的组
         let mut groups = self.consumer_manager.groups.write().unwrap();
-        
+
         for group in groups.values_mut() {
             if let Some(member) = group.members.get_mut(consumer_id) {
                 member.subscriptions = topics.clone();
-                
+
                 // 触发重平衡
                 group.state = GroupState::PreparingRebalance;
-                
+
                 // 需要分配分区
                 self.assign_partitions(group)?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn assign_partitions(&self, group: &mut ConsumerGroup) -> Result<(), String> {
         println!("分配分区给消费者组: {}", group.name);
-        
+
         // 收集所有主题和分区
         let topics = self.topic_manager.topics.read().unwrap();
-        
+
         let mut all_topic_partitions = HashMap::new();
         let mut all_subscriptions = HashMap::new();
-        
+
         for member in group.members.values() {
             all_subscriptions.insert(member.id.clone(), member.subscriptions.clone());
-            
+
             for topic in &member.subscriptions {
                 if let Some(topic_info) = topics.get(topic) {
                     let topic_partitions = all_topic_partitions.entry(topic.clone())
                         .or_insert_with(Vec::new);
-                    
+
                     for partition in &topic_info.partitions {
                         if !topic_partitions.contains(&partition.id) {
                             topic_partitions.push(partition.id);
@@ -21018,41 +21020,41 @@ impl DistributedMessageQueue {
                 }
             }
         }
-        
+
         // 实现简单的分区分配策略（轮询）
         let mut assignments = HashMap::new();
-        
+
         for (topic, partitions) in all_topic_partitions {
             let mut topic_assignments = HashMap::new();
-            
+
             // 找出订阅此主题的成员
             let members: Vec<_> = all_subscriptions.iter()
                 .filter(|(_, topics)| topics.contains(&topic))
                 .map(|(id, _)| id.clone())
                 .collect();
-            
+
             if members.is_empty() {
                 continue;
             }
-            
+
             // 轮询分配
             for (i, partition) in partitions.iter().enumerate() {
                 let member_index = i % members.len();
                 let member_id = &members[member_index];
-                
+
                 topic_assignments.insert(*partition, member_id.clone());
             }
-            
+
             assignments.insert(topic, topic_assignments);
         }
-        
+
         // 更新组的分区分配
         group.partitions_assignment = assignments;
         group.state = GroupState::Stable;
-        
+
         // 更新消费者的分区分配
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
-        
+
         for (topic, partitions) in &group.partitions_assignment {
             for (partition, consumer_id) in partitions {
                 if let Some(consumer) = consumers.get_mut(consumer_id) {
@@ -21060,11 +21062,11 @@ impl DistributedMessageQueue {
                         if &subscription.topic == topic {
                             // 找到是否已有此分区的分配
                             let has_assignment = subscription.assignment.iter().any(|a| a.partition == *partition);
-                            
+
                             if !has_assignment {
                                 // 添加新分配
                                 let assignment = PartitionAssignment {
-                                    
+
 
 ```rust
                                 let assignment = PartitionAssignment {
@@ -21073,7 +21075,7 @@ impl DistributedMessageQueue {
                                     committed_offset: 0,
                                     last_fetch_timestamp: Utc::now(),
                                 };
-                                
+
                                 subscription.assignment.push(assignment);
                             }
                         }
@@ -21081,24 +21083,24 @@ impl DistributedMessageQueue {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn create_producer(
-        &self, 
-        id: &str, 
-        client_id: &str, 
+        &self,
+        id: &str,
+        client_id: &str,
         transaction_id: Option<&str>
     ) -> Result<(), String> {
         println!("创建生产者: {}", id);
-        
+
         let mut producers = self.producer_manager.producers.write().unwrap();
-        
+
         if producers.contains_key(id) {
             return Err(format!("生产者已存在: {}", id));
         }
-        
+
         let producer = Producer {
             id: id.to_string(),
             client_id: client_id.to_string(),
@@ -21106,13 +21108,13 @@ impl DistributedMessageQueue {
             last_activity: Utc::now(),
             metadata: HashMap::new(),
         };
-        
+
         producers.insert(id.to_string(), producer);
-        
+
         // 如果指定了事务ID，初始化事务
         if let Some(tx_id) = transaction_id {
             let now = Utc::now();
-            
+
             let transaction = Transaction {
                 id: tx_id.to_string(),
                 producer_id: id.to_string(),
@@ -21122,29 +21124,29 @@ impl DistributedMessageQueue {
                 last_update_time: now,
                 topic_partitions: HashSet::new(),
             };
-            
+
             let mut transactions = self.producer_manager.transaction_coordinator.transactions.write().unwrap();
             transactions.insert(tx_id.to_string(), transaction);
         }
-        
+
         Ok(())
     }
-    
+
     fn begin_transaction(&self, producer_id: &str) -> Result<String, String> {
         println!("开始事务: 生产者 {}", producer_id);
-        
+
         let producers = self.producer_manager.producers.read().unwrap();
-        
+
         let producer = producers.get(producer_id)
             .ok_or_else(|| format!("生产者不存在: {}", producer_id))?;
-        
+
         if producer.transaction_id.is_some() {
             return Err("生产者已有一个活跃的事务".to_string());
         }
-        
+
         let tx_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let transaction = Transaction {
             id: tx_id.clone(),
             producer_id: producer_id.to_string(),
@@ -21154,141 +21156,141 @@ impl DistributedMessageQueue {
             last_update_time: now,
             topic_partitions: HashSet::new(),
         };
-        
+
         let mut transactions = self.producer_manager.transaction_coordinator.transactions.write().unwrap();
         transactions.insert(tx_id.clone(), transaction);
-        
+
         // 更新生产者
         drop(producers);
         let mut producers = self.producer_manager.producers.write().unwrap();
-        
+
         if let Some(producer) = producers.get_mut(producer_id) {
             producer.transaction_id = Some(tx_id.clone());
             producer.last_activity = now;
         }
-        
+
         Ok(tx_id)
     }
-    
+
     fn commit_transaction(&self, producer_id: &str, transaction_id: &str) -> Result<(), String> {
         println!("提交事务: {} 生产者 {}", transaction_id, producer_id);
-        
+
         let producers = self.producer_manager.producers.read().unwrap();
-        
+
         let producer = producers.get(producer_id)
             .ok_or_else(|| format!("生产者不存在: {}", producer_id))?;
-        
+
         if producer.transaction_id.as_deref() != Some(transaction_id) {
             return Err("生产者未关联此事务".to_string());
         }
-        
+
         let mut transactions = self.producer_manager.transaction_coordinator.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.producer_id != producer_id {
             return Err("事务不属于此生产者".to_string());
         }
-        
+
         if transaction.state != TransactionState::Ongoing {
             return Err(format!("事务状态不允许提交: {:?}", transaction.state));
         }
-        
+
         // 更新事务状态
         transaction.state = TransactionState::PrepareCommit;
         transaction.last_update_time = Utc::now();
-        
+
         // 在实际实现中，这里会协调所有参与者提交事务
-        
+
         // 完成提交
         transaction.state = TransactionState::CompleteCommit;
-        
+
         // 移除事务
         transactions.remove(transaction_id);
-        
+
         // 更新生产者
         drop(transactions);
         drop(producers);
         let mut producers = self.producer_manager.producers.write().unwrap();
-        
+
         if let Some(producer) = producers.get_mut(producer_id) {
             producer.transaction_id = None;
             producer.last_activity = Utc::now();
         }
-        
+
         Ok(())
     }
-    
+
     fn abort_transaction(&self, producer_id: &str, transaction_id: &str) -> Result<(), String> {
         println!("中止事务: {} 生产者 {}", transaction_id, producer_id);
-        
+
         let producers = self.producer_manager.producers.read().unwrap();
-        
+
         let producer = producers.get(producer_id)
             .ok_or_else(|| format!("生产者不存在: {}", producer_id))?;
-        
+
         if producer.transaction_id.as_deref() != Some(transaction_id) {
             return Err("生产者未关联此事务".to_string());
         }
-        
+
         let mut transactions = self.producer_manager.transaction_coordinator.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.producer_id != producer_id {
             return Err("事务不属于此生产者".to_string());
         }
-        
+
         if transaction.state != TransactionState::Ongoing {
             return Err(format!("事务状态不允许中止: {:?}", transaction.state));
         }
-        
+
         // 更新事务状态
         transaction.state = TransactionState::PrepareAbort;
         transaction.last_update_time = Utc::now();
-        
+
         // 在实际实现中，这里会撤销所有相关消息
-        
+
         // 完成中止
         transaction.state = TransactionState::CompleteAbort;
-        
+
         // 移除事务
         transactions.remove(transaction_id);
-        
+
         // 更新生产者
         drop(transactions);
         drop(producers);
         let mut producers = self.producer_manager.producers.write().unwrap();
-        
+
         if let Some(producer) = producers.get_mut(producer_id) {
             producer.transaction_id = None;
             producer.last_activity = Utc::now();
         }
-        
+
         Ok(())
     }
-    
+
     fn commit_offset(
-        &self, 
-        consumer_id: &str, 
-        group_id: &str, 
-        topic: &str, 
-        partition: u32, 
+        &self,
+        consumer_id: &str,
+        group_id: &str,
+        topic: &str,
+        partition: u32,
         offset: i64
     ) -> Result<(), String> {
-        println!("提交偏移量: 消费者 {} 组 {} 主题 {} 分区 {} 偏移量 {}", 
+        println!("提交偏移量: 消费者 {} 组 {} 主题 {} 分区 {} 偏移量 {}",
                 consumer_id, group_id, topic, partition, offset);
-        
+
         let mut groups = self.consumer_manager.groups.write().unwrap();
-        
+
         let group = groups.get_mut(group_id)
             .ok_or_else(|| format!("消费者组不存在: {}", group_id))?;
-        
+
         let member = group.members.get_mut(consumer_id)
             .ok_or_else(|| format!("成员不存在于消费者组: {} -> {}", consumer_id, group_id))?;
-        
+
         // 检查是否分配了此分区
         if let Some(topic_assignments) = group.partitions_assignment.get(topic) {
             if let Some(assigned_consumer) = topic_assignments.get(&partition) {
@@ -21301,13 +21303,13 @@ impl DistributedMessageQueue {
         } else {
             return Err(format!("主题未分配: {}", topic));
         }
-        
+
         // 更新提交偏移量
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
-        
+
         let consumer = consumers.get_mut(consumer_id)
             .ok_or_else(|| format!("消费者不存在: {}", consumer_id))?;
-        
+
         for subscription in &mut consumer.subscriptions {
             if subscription.topic == topic {
                 for assignment in &mut subscription.assignment {
@@ -21318,42 +21320,42 @@ impl DistributedMessageQueue {
                 }
             }
         }
-        
+
         // 更新心跳
         member.last_heartbeat = Utc::now();
-        
+
         Ok(())
     }
-    
+
     fn consumer_heartbeat(
-        &self, 
-        consumer_id: &str, 
+        &self,
+        consumer_id: &str,
         group_id: Option<&str>
     ) -> Result<(), String> {
         let now = Utc::now();
-        
+
         // 更新消费者最后活动时间
         let mut consumers = self.consumer_manager.consumers.write().unwrap();
-        
+
         let consumer = consumers.get_mut(consumer_id)
             .ok_or_else(|| format!("消费者不存在: {}", consumer_id))?;
-        
+
         consumer.last_poll = now;
-        
+
         // 如果指定了消费者组，更新组成员心跳
         if let Some(group_id) = group_id {
             let mut groups = self.consumer_manager.groups.write().unwrap();
-            
+
             let group = groups.get_mut(group_id)
                 .ok_or_else(|| format!("消费者组不存在: {}", group_id))?;
-            
+
             if let Some(member) = group.members.get_mut(consumer_id) {
                 member.last_heartbeat = now;
             } else {
                 return Err(format!("消费者不是此组的成员: {} -> {}", consumer_id, group_id));
             }
         }
-        
+
         Ok(())
     }
 }
@@ -21444,8 +21446,8 @@ impl Clone for SegmentKey {
 
 impl PartialEq for SegmentKey {
     fn eq(&self, other: &Self) -> bool {
-        self.topic == other.topic && 
-        self.partition == other.partition && 
+        self.topic == other.topic &&
+        self.partition == other.partition &&
         self.base_offset == other.base_offset
     }
 }
@@ -21623,7 +21625,7 @@ impl DistributedMonitoringSystem {
             running: AtomicBool::new(false),
             collector_thread: None,
         };
-        
+
         let alert_manager = AlertManager {
             alert_rules: RwLock::new(HashMap::new()),
             active_alerts: RwLock::new(HashMap::new()),
@@ -21631,15 +21633,15 @@ impl DistributedMonitoringSystem {
             running: AtomicBool::new(false),
             checker_thread: None,
         };
-        
+
         let dashboard_manager = DashboardManager {
             dashboards: RwLock::new(HashMap::new()),
         };
-        
+
         let notification_service = NotificationService {
             channels: RwLock::new(HashMap::new()),
         };
-        
+
         DistributedMonitoringSystem {
             node_id: node_id.to_string(),
             metric_collector,
@@ -21648,22 +21650,22 @@ impl DistributedMonitoringSystem {
             notification_service,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式监控系统");
-        
+
         // 启动指标收集器
         self.start_metric_collector()?;
-        
+
         // 启动告警检查器
         self.start_alert_checker()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式监控系统");
-        
+
         // 停止指标收集器
         self.metric_collector.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.metric_collector.collector_thread.take() {
@@ -21672,7 +21674,7 @@ impl DistributedMonitoringSystem {
                 Err(e) => println!("指标收集线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止告警检查器
         self.alert_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.alert_manager.checker_thread.take() {
@@ -21681,32 +21683,32 @@ impl DistributedMonitoringSystem {
                 Err(e) => println!("告警检查线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_metric_collector(&mut self) -> Result<(), String> {
         println!("启动指标收集器");
-        
+
         let metrics = self.metric_collector.metrics.clone();
         let time_series = self.metric_collector.time_series.clone();
         let interval = self.metric_collector.collection_interval;
         let retention = self.metric_collector.retention_period;
-        
+
         self.metric_collector.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.metric_collector.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 在实际实现中，这里会收集系统和应用程序指标
                 let now = Utc::now();
-                
+
                 // 模拟收集一些随机指标
                 {
                     let metrics_read = metrics.read().unwrap();
                     let mut time_series_write = time_series.write().unwrap();
-                    
+
                     for (name, metric) in metrics_read.iter() {
                         if let Some(samples) = time_series_write.get_mut(name) {
                             // 生成随机值
@@ -21722,16 +21724,16 @@ impl DistributedMonitoringSystem {
                                     rand::random::<f64>() * 1000.0
                                 },
                             };
-                            
+
                             let sample = MetricSample {
                                 metric_name: name.clone(),
                                 timestamp: now,
                                 value,
                                 labels: metric.labels.clone(),
                             };
-                            
+
                             samples.push(sample);
-                            
+
                             // 应用保留策略
                             let cutoff = now - retention;
                             while let Some(first) = samples.first() {
@@ -21744,47 +21746,47 @@ impl DistributedMonitoringSystem {
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.metric_collector.collector_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_alert_checker(&mut self) -> Result<(), String> {
         println!("启动告警检查器");
-        
+
         let alert_rules = self.alert_manager.alert_rules.clone();
         let active_alerts = self.alert_manager.active_alerts.clone();
         let time_series = self.metric_collector.time_series.clone();
         let interval = self.alert_manager.checking_interval;
-        
+
         self.alert_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.alert_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查所有告警规则
                 let now = Utc::now();
-                
+
                 // 获取所有规则
                 let rules: Vec<AlertRule> = {
                     let rules = alert_rules.read().unwrap();
                     rules.values().cloned().collect()
                 };
-                
+
                 for rule in rules {
                     // 执行规则查询
                     let query_result = {
                         // 简化：假设查询格式为指标名称
                         let query = rule.metric_query.trim();
                         let ts = time_series.read().unwrap();
-                        
+
                         if let Some(samples) = ts.get(query) {
                             if let Some(last_sample) = samples.last() {
                                 Some(last_sample.value)
@@ -21795,7 +21797,7 @@ impl DistributedMonitoringSystem {
                             None
                         }
                     };
-                    
+
                     if let Some(value) = query_result {
                         // 评估条件
                         let condition_met = match rule.condition {
@@ -21804,18 +21806,18 @@ impl DistributedMonitoringSystem {
                             AlertCondition::Equal => (value - rule.threshold).abs() < 0.0001,
                             AlertCondition::NotEqual => (value - rule.threshold).abs() >= 0.0001,
                         };
-                        
+
                         if condition_met {
                             // 更新或创建告警
                             let mut alerts = active_alerts.write().unwrap();
-                            
+
                             if let Some(alert) = alerts.get_mut(&rule.id) {
                                 // 如果告警已经存在但已解决，重新激活
                                 if alert.status == AlertStatus::Resolved {
                                     alert.status = AlertStatus::Firing;
                                     alert.started_at = now;
                                 }
-                                
+
                                 alert.value = value;
                                 alert.last_updated = now;
                             } else {
@@ -21831,21 +21833,21 @@ impl DistributedMonitoringSystem {
                                     acknowledged_by: None,
                                     annotations: HashMap::new(),
                                 };
-                                
+
                                 alerts.insert(rule.id.clone(), alert);
-                                
+
                                 // 通知（在实际实现中）
                                 println!("告警触发: {}", rule.name);
                             }
                         } else {
                             // 解决告警（如果存在）
                             let mut alerts = active_alerts.write().unwrap();
-                            
+
                             if let Some(alert) = alerts.get_mut(&rule.id) {
                                 if alert.status == AlertStatus::Firing {
                                     alert.status = AlertStatus::Resolved;
                                     alert.last_updated = now;
-                                    
+
                                     // 通知（在实际实现中）
                                     println!("告警解决: {}", rule.name);
                                 }
@@ -21853,32 +21855,32 @@ impl DistributedMonitoringSystem {
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.alert_manager.checker_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn register_metric(
-        &self, 
-        name: &str, 
-        description: &str, 
-        metric_type: MetricType, 
+        &self,
+        name: &str,
+        description: &str,
+        metric_type: MetricType,
         labels: HashMap<String, String>
     ) -> Result<(), String> {
         println!("注册指标: {}", name);
-        
+
         let mut metrics = self.metric_collector.metrics.write().unwrap();
-        
+
         if metrics.contains_key(name) {
             return Err(format!("指标已存在: {}", name));
         }
-        
+
         let metric = Metric {
             name: name.to_string(),
             description: description.to_string(),
@@ -21886,88 +21888,88 @@ impl DistributedMonitoringSystem {
             labels,
             created_at: Utc::now(),
         };
-        
+
         metrics.insert(name.to_string(), metric);
-        
+
         // 初始化时间序列
         let mut time_series = self.metric_collector.time_series.write().unwrap();
         time_series.insert(name.to_string(), Vec::new());
-        
+
         Ok(())
     }
-    
+
     fn update_metric(
-        &self, 
-        name: &str, 
-        value: f64, 
+        &self,
+        name: &str,
+        value: f64,
         labels: Option<HashMap<String, String>>
     ) -> Result<(), String> {
         let metrics = self.metric_collector.metrics.read().unwrap();
-        
+
         let metric = metrics.get(name)
             .ok_or_else(|| format!("指标不存在: {}", name))?;
-        
+
         let sample = MetricSample {
             metric_name: name.to_string(),
             timestamp: Utc::now(),
             value,
             labels: labels.unwrap_or_else(|| metric.labels.clone()),
         };
-        
+
         let mut time_series = self.metric_collector.time_series.write().unwrap();
-        
+
         let samples = time_series.get_mut(name)
             .ok_or_else(|| format!("指标时间序列不存在: {}", name))?;
-        
+
         samples.push(sample);
-        
+
         Ok(())
     }
-    
+
     fn query_metric(
-        &self, 
-        name: &str, 
-        start_time: DateTime<Utc>, 
+        &self,
+        name: &str,
+        start_time: DateTime<Utc>,
         end_time: DateTime<Utc>
     ) -> Result<Vec<MetricSample>, String> {
         let time_series = self.metric_collector.time_series.read().unwrap();
-        
+
         let samples = time_series.get(name)
             .ok_or_else(|| format!("指标不存在: {}", name))?;
-        
+
         let filtered: Vec<_> = samples.iter()
             .filter(|s| s.timestamp >= start_time && s.timestamp <= end_time)
             .cloned()
             .collect();
-        
+
         Ok(filtered)
     }
-    
+
     fn create_alert_rule(
-        &self, 
-        name: &str, 
-        description: &str, 
-        metric_query: &str, 
-        condition: AlertCondition, 
-        threshold: f64, 
-        duration: Duration, 
-        severity: AlertSeverity, 
+        &self,
+        name: &str,
+        description: &str,
+        metric_query: &str,
+        condition: AlertCondition,
+        threshold: f64,
+        duration: Duration,
+        severity: AlertSeverity,
         notifications: Vec<String>
     ) -> Result<String, String> {
         println!("创建告警规则: {}", name);
-        
+
         let mut alert_rules = self.alert_manager.alert_rules.write().unwrap();
-        
+
         // 检查名称是否已存在
         for rule in alert_rules.values() {
             if rule.name == name {
                 return Err(format!("告警规则名称已存在: {}", name));
             }
         }
-        
+
         let now = Utc::now();
         let id = uuid::Uuid::new_v4().to_string();
-        
+
         let rule = AlertRule {
             id: id.clone(),
             name: name.to_string(),
@@ -21981,81 +21983,81 @@ impl DistributedMonitoringSystem {
             created_at: now,
             updated_at: now,
         };
-        
+
         alert_rules.insert(id.clone(), rule);
-        
+
         Ok(id)
     }
-    
+
     fn delete_alert_rule(&self, id: &str) -> Result<(), String> {
         println!("删除告警规则: {}", id);
-        
+
         let mut alert_rules = self.alert_manager.alert_rules.write().unwrap();
-        
+
         if !alert_rules.contains_key(id) {
             return Err(format!("告警规则不存在: {}", id));
         }
-        
+
         alert_rules.remove(id);
-        
+
         // 解决相关告警
         let mut active_alerts = self.alert_manager.active_alerts.write().unwrap();
         active_alerts.remove(id);
-        
+
         Ok(())
     }
-    
+
     fn get_active_alerts(&self) -> Vec<Alert> {
         let active_alerts = self.alert_manager.active_alerts.read().unwrap();
         active_alerts.values().cloned().collect()
     }
-    
+
     fn silence_alert(&self, alert_id: &str, silenced: bool) -> Result<(), String> {
         let mut active_alerts = self.alert_manager.active_alerts.write().unwrap();
-        
+
         let alert = active_alerts.values_mut()
             .find(|a| a.id == alert_id)
             .ok_or_else(|| format!("告警不存在: {}", alert_id))?;
-        
+
         alert.silenced = silenced;
         alert.last_updated = Utc::now();
-        
+
         Ok(())
     }
-    
+
     fn acknowledge_alert(&self, alert_id: &str, user: &str) -> Result<(), String> {
         let mut active_alerts = self.alert_manager.active_alerts.write().unwrap();
-        
+
         let alert = active_alerts.values_mut()
             .find(|a| a.id == alert_id)
             .ok_or_else(|| format!("告警不存在: {}", alert_id))?;
-        
+
         alert.acknowledged_by = Some(user.to_string());
         alert.last_updated = Utc::now();
-        
+
         Ok(())
     }
-    
+
     fn create_dashboard(
-        &self, 
-        title: &str, 
-        description: Option<&str>, 
+        &self,
+        title: &str,
+        description: Option<&str>,
         creator: &str
     ) -> Result<String, String> {
         println!("创建仪表板: {}", title);
-        
+
         let mut dashboards = self.dashboard_manager.dashboards.write().unwrap();
-        
+
         // 检查名称是否已存在
         for dashboard in dashboards.values() {
             if dashboard.title == title {
                 return Err(format!("仪表板名称已存在: {}", title));
             }
         }
-        
+
         let now = Utc::now();
         let id = uuid::Uuid::new_v4().to_string();
-        
+
         let dashboard = Dashboard {
             id: id.clone(),
             title: title.to_string(),
@@ -22066,31 +22068,31 @@ impl DistributedMonitoringSystem {
             updated_at: now,
             created_by: creator.to_string(),
         };
-        
+
         dashboards.insert(id.clone(), dashboard);
-        
+
         Ok(id)
     }
-    
+
     fn add_panel(
-        &self, 
-        dashboard_id: &str, 
-        title: &str, 
-        panel_type: PanelType, 
-        position: PanelPosition, 
-        data_source: Option<&str>, 
-        query: Option<&str>, 
+        &self,
+        dashboard_id: &str,
+        title: &str,
+        panel_type: PanelType,
+        position: PanelPosition,
+        data_source: Option<&str>,
+        query: Option<&str>,
         options: HashMap<String, String>
     ) -> Result<String, String> {
         println!("添加面板: {} -> {}", dashboard_id, title);
-        
+
         let mut dashboards = self.dashboard_manager.dashboards.write().unwrap();
-        
+
         let dashboard = dashboards.get_mut(dashboard_id)
             .ok_or_else(|| format!("仪表板不存在: {}", dashboard_id))?;
-        
+
         let id = uuid::Uuid::new_v4().to_string();
-        
+
         let panel = Panel {
             id: id.clone(),
             title: title.to_string(),
@@ -22100,46 +22102,46 @@ impl DistributedMonitoringSystem {
             query: query.map(|s| s.to_string()),
             options,
         };
-        
+
         dashboard.panels.push(panel);
         dashboard.updated_at = Utc::now();
-        
+
         Ok(id)
     }
-    
+
     fn get_dashboard(&self, id: &str) -> Result<Dashboard, String> {
         let dashboards = self.dashboard_manager.dashboards.read().unwrap();
-        
+
         let dashboard = dashboards.get(id)
             .ok_or_else(|| format!("仪表板不存在: {}", id))?;
-        
+
         Ok(dashboard.clone())
     }
-    
+
     fn list_dashboards(&self) -> Vec<Dashboard> {
         let dashboards = self.dashboard_manager.dashboards.read().unwrap();
         dashboards.values().cloned().collect()
     }
-    
+
     fn create_notification_channel(
-        &self, 
-        name: &str, 
-        channel_type: NotificationType, 
+        &self,
+        name: &str,
+        channel_type: NotificationType,
         config: HashMap<String, String>
     ) -> Result<String, String> {
         println!("创建通知渠道: {}", name);
-        
+
         let mut channels = self.notification_service.channels.write().unwrap();
-        
+
         // 检查名称是否已存在
         for channel in channels.values() {
             if channel.name == name {
                 return Err(format!("通知渠道名称已存在: {}", name));
             }
         }
-        
+
         let id = uuid::Uuid::new_v4().to_string();
-        
+
         let channel = NotificationChannel {
             id: id.clone(),
             name: name.to_string(),
@@ -22147,29 +22149,29 @@ impl DistributedMonitoringSystem {
             config,
             enabled: true,
         };
-        
+
         channels.insert(id.clone(), channel);
-        
+
         Ok(id)
     }
-    
+
     fn send_notification(
-        &self, 
-        channel_id: &str, 
-        subject: &str, 
+        &self,
+        channel_id: &str,
+        subject: &str,
         message: &str
     ) -> Result<(), String> {
         println!("发送通知: {} -> {}", channel_id, subject);
-        
+
         let channels = self.notification_service.channels.read().unwrap();
-        
+
         let channel = channels.get(channel_id)
             .ok_or_else(|| format!("通知渠道不存在: {}", channel_id))?;
-        
+
         if !channel.enabled {
             return Err("通知渠道已禁用".to_string());
         }
-        
+
         // 根据通知渠道类型发送消息
         match channel.channel_type {
             NotificationType::Email => {
@@ -22193,29 +22195,29 @@ impl DistributedMonitoringSystem {
                 println!("发送SMS通知: {}", subject);
             },
         }
-        
+
         Ok(())
     }
-    
+
     fn disable_notification_channel(&self, channel_id: &str) -> Result<(), String> {
         let mut channels = self.notification_service.channels.write().unwrap();
-        
+
         let channel = channels.get_mut(channel_id)
             .ok_or_else(|| format!("通知渠道不存在: {}", channel_id))?;
-        
+
         channel.enabled = false;
-        
+
         Ok(())
     }
-    
+
     fn enable_notification_channel(&self, channel_id: &str) -> Result<(), String> {
         let mut channels = self.notification_service.channels.write().unwrap();
-        
+
         let channel = channels.get_mut(channel_id)
             .ok_or_else(|| format!("通知渠道不存在: {}", channel_id))?;
-        
+
         channel.enabled = true;
-        
+
         Ok(())
     }
 }
@@ -22485,7 +22487,7 @@ impl DistributedTracingSystem {
             running: AtomicBool::new(false),
             collector_thread: None,
         };
-        
+
         let trace_storage = TraceStorage {
             storage_type,
             retention_days: 7,
@@ -22496,18 +22498,18 @@ impl DistributedTracingSystem {
             ],
             connection_string: connection_string.to_string(),
         };
-        
+
         let sampling_manager = SamplingManager {
             strategies: RwLock::new(HashMap::new()),
             default_rate: 0.1, // 默认采样10%
         };
-        
+
         let query_service = TraceQueryService {
             max_query_size: 10000,
             max_results: 1000,
             query_timeout: Duration::from_secs(30),
         };
-        
+
         DistributedTracingSystem {
             node_id: node_id.to_string(),
             trace_collector,
@@ -22516,19 +22518,19 @@ impl DistributedTracingSystem {
             query_service,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式追踪系统");
-        
+
         // 启动跟踪收集器
         self.start_trace_collector()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式追踪系统");
-        
+
         // 停止跟踪收集器
         self.trace_collector.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.trace_collector.collector_thread.take() {
@@ -22537,39 +22539,39 @@ impl DistributedTracingSystem {
                 Err(e) => println!("跟踪收集线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_trace_collector(&mut self) -> Result<(), String> {
         println!("启动跟踪收集器");
-        
+
         let traces = self.trace_collector.traces.clone();
         let spans = self.trace_collector.spans.clone();
         let interval = self.trace_collector.flush_interval;
         let batch_size = self.trace_collector.batch_size;
         let storage_type = self.trace_storage.storage_type.clone();
         let connection_string = self.trace_storage.connection_string.clone();
-        
+
         self.trace_collector.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.trace_collector.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 查找已完成的跟踪
                 let mut completed_traces = Vec::new();
                 let mut completed_spans = Vec::new();
-                
+
                 {
                     let traces_read = traces.read().unwrap();
                     let spans_read = spans.read().unwrap();
-                    
+
                     for (trace_id, trace) in traces_read.iter() {
                         if trace.status == TraceStatus::Completed || trace.status == TraceStatus::Error {
                             // 收集跟踪及其所有跨度
                             completed_traces.push(trace.clone());
-                            
+
                             for (span_id, span) in spans_read.iter() {
                                 if span.trace_id == *trace_id {
                                     completed_spans.push(span.clone());
@@ -22578,13 +22580,13 @@ impl DistributedTracingSystem {
                         }
                     }
                 }
-                
+
                 if !completed_traces.is_empty() {
                     // 分批处理
                     for chunk in completed_traces.chunks(batch_size) {
                         // 在实际实现中，这里会将跟踪发送到存储后端
                         println!("刷新 {} 个跟踪到存储", chunk.len());
-                        
+
                         match storage_type {
                             StorageType::InMemory => {
                                 // 在内存中，已经存储，只需移除已处理的
@@ -22603,41 +22605,41 @@ impl DistributedTracingSystem {
                             },
                         }
                     }
-                    
+
                     // 移除已处理的跟踪和跨度
                     let mut traces_write = traces.write().unwrap();
                     let mut spans_write = spans.write().unwrap();
-                    
+
                     for trace in &completed_traces {
                         traces_write.remove(&trace.trace_id);
-                        
+
                         // 移除关联的跨度
                         spans_write.retain(|_, span| span.trace_id != trace.trace_id);
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.trace_collector.collector_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_trace(&self, name: &str, service_name: &str, tags: HashMap<String, String>) -> Result<String, String> {
         println!("开始跟踪: {}", name);
-        
+
         // 决定是否采样
         if !self.should_sample(service_name, name, &tags) {
             // 如果不采样，返回一个特殊的跟踪ID表示跟踪被忽略
             return Ok("00000000-0000-0000-0000-000000000000".to_string());
         }
-        
+
         let trace_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let trace = Trace {
             trace_id: trace_id.clone(),
             name: name.to_string(),
@@ -22648,27 +22650,27 @@ impl DistributedTracingSystem {
             service_name: service_name.to_string(),
             tags,
         };
-        
+
         let mut traces = self.trace_collector.traces.write().unwrap();
         traces.insert(trace_id.clone(), trace);
-        
+
         Ok(trace_id)
     }
-    
+
     fn should_sample(&self, service_name: &str, operation_name: &str, tags: &HashMap<String, String>) -> bool {
         let strategies = self.sampling_manager.strategies.read().unwrap();
-        
+
         // 首先检查基于规则的策略
         for (_, strategy) in strategies.iter() {
             if let SamplingStrategy::RulesBased { rules } = strategy {
                 for rule in rules {
                     let service_match = rule.service_name.as_ref().map_or(true, |s| s == service_name);
                     let operation_match = rule.operation_name.as_ref().map_or(true, |o| o == operation_name);
-                    
+
                     let tags_match = rule.tags.iter().all(|(k, v)| {
                         tags.get(k).map_or(false, |tag_value| tag_value == v)
                     });
-                    
+
                     if service_match && operation_match && tags_match {
                         // 匹配规则，应用采样率
                         return rand::random::<f64>() < rule.sampling_rate;
@@ -22676,7 +22678,7 @@ impl DistributedTracingSystem {
                 }
             }
         }
-        
+
         // 检查服务特定的策略
         if let Some(strategy) = strategies.get(service_name) {
             match strategy {
@@ -22690,46 +22692,46 @@ impl DistributedTracingSystem {
                 _ => {}
             }
         }
-        
+
         // 应用默认采样率
         rand::random::<f64>() < self.sampling_manager.default_rate
     }
-    
+
     fn end_trace(&self, trace_id: &str, status: TraceStatus) -> Result<(), String> {
         println!("结束跟踪: {}", trace_id);
-        
+
         let mut traces = self.trace_collector.traces.write().unwrap();
-        
+
         let trace = traces.get_mut(trace_id)
             .ok_or_else(|| format!("跟踪不存在: {}", trace_id))?;
-        
+
         trace.end_time = Some(Utc::now());
         trace.status = status;
-        
+
         Ok(())
     }
-    
+
     fn start_span(
-        &self, 
-        trace_id: &str, 
-        parent_span_id: Option<&str>, 
-        name: &str, 
-        service_name: &str, 
-        operation_name: &str, 
+        &self,
+        trace_id: &str,
+        parent_span_id: Option<&str>,
+        name: &str,
+        service_name: &str,
+        operation_name: &str,
         tags: HashMap<String, String>
     ) -> Result<String, String> {
         println!("开始跨度: {} 在跟踪 {}", name, trace_id);
-        
+
         // 检查跟踪是否存在
         let mut traces = self.trace_collector.traces.write().unwrap();
-        
+
         if !traces.contains_key(trace_id) {
             return Err(format!("跟踪不存在: {}", trace_id));
         }
-        
+
         let span_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let span = Span {
             span_id: span_id.clone(),
             trace_id: trace_id.to_string(),
@@ -22743,10 +22745,10 @@ impl DistributedTracingSystem {
             tags,
             logs: Vec::new(),
         };
-        
+
         let mut spans = self.trace_collector.spans.write().unwrap();
         spans.insert(span_id.clone(), span);
-        
+
         // 如果是根跨度，更新跟踪
         if parent_span_id.is_none() {
             if let Some(trace) = traces.get_mut(trace_id) {
@@ -22755,88 +22757,88 @@ impl DistributedTracingSystem {
                 }
             }
         }
-        
+
         Ok(span_id)
     }
-    
+
     fn end_span(&self, span_id: &str, status: SpanStatus) -> Result<(), String> {
         println!("结束跨度: {}", span_id);
-        
+
         let mut spans = self.trace_collector.spans.write().unwrap();
-        
+
         let span = spans.get_mut(span_id)
             .ok_or_else(|| format!("跨度不存在: {}", span_id))?;
-        
+
         span.end_time = Some(Utc::now());
         span.status = status;
-        
+
         Ok(())
     }
-    
+
     fn add_span_log(
-        &self, 
-        span_id: &str, 
+        &self,
+        span_id: &str,
         fields: HashMap<String, String>
     ) -> Result<(), String> {
         let mut spans = self.trace_collector.spans.write().unwrap();
-        
+
         let span = spans.get_mut(span_id)
             .ok_or_else(|| format!("跨度不存在: {}", span_id))?;
-        
+
         let log = SpanLog {
             timestamp: Utc::now(),
             fields,
         };
-        
+
         span.logs.push(log);
-        
+
         Ok(())
     }
-    
+
     fn add_span_tag(
-        &self, 
-        span_id: &str, 
-        key: &str, 
+        &self,
+        span_id: &str,
+        key: &str,
         value: &str
     ) -> Result<(), String> {
         let mut spans = self.trace_collector.spans.write().unwrap();
-        
+
         let span = spans.get_mut(span_id)
             .ok_or_else(|| format!("跨度不存在: {}", span_id))?;
-        
+
         span.tags.insert(key.to_string(), value.to_string());
-        
+
         Ok(())
     }
-    
+
     fn query_traces(
-        &self, 
-        services: Option<Vec<String>>, 
-        operations: Option<Vec<String>>, 
-        tags: Option<HashMap<String, String>>, 
-        start_time: Option<DateTime<Utc>>, 
-        end_time: Option<DateTime<Utc>>, 
+        &self,
+        services: Option<Vec<String>>,
+        operations: Option<Vec<String>>,
+        tags: Option<HashMap<String, String>>,
+        start_time: Option<DateTime<Utc>>,
+        end_time: Option<DateTime<Utc>>,
         limit: Option<usize>
     ) -> Result<Vec<Trace>, String> {
         println!("查询跟踪");
-        
+
         let traces = self.trace_collector.traces.read().unwrap();
-        
+
         let mut result: Vec<_> = traces.values().cloned().collect();
-        
+
         // 应用筛选条件
         if let Some(svcs) = &services {
             result.retain(|t| svcs.contains(&t.service_name));
         }
-        
+
         if let Some(start) = start_time {
             result.retain(|t| t.start_time >= start);
         }
-        
+
         if let Some(end) = end_time {
             result.retain(|t| t.start_time <= end);
         }
-        
+
         if let Some(tgs) = &tags {
             result.retain(|t| {
                 tgs.iter().all(|(k, v)| {
@@ -22844,65 +22846,65 @@ impl DistributedTracingSystem {
                 })
             });
         }
-        
+
         // 检查跨度的操作
         if let Some(ops) = &operations {
             let spans = self.trace_collector.spans.read().unwrap();
-            
+
             result.retain(|t| {
                 spans.values()
                     .any(|s| s.trace_id == t.trace_id && ops.contains(&s.operation_name))
             });
         }
-        
+
         // 应用限制
         let limit = limit.unwrap_or_else(|| self.query_service.max_results);
         if result.len() > limit {
             result.truncate(limit);
         }
-        
+
         Ok(result)
     }
-    
+
     fn get_trace_details(&self, trace_id: &str) -> Result<(Trace, Vec<Span>), String> {
         println!("获取跟踪详情: {}", trace_id);
-        
+
         let traces = self.trace_collector.traces.read().unwrap();
-        
+
         let trace = traces.get(trace_id)
             .ok_or_else(|| format!("跟踪不存在: {}", trace_id))?
             .clone();
-        
+
         let spans = self.trace_collector.spans.read().unwrap();
-        
+
         let trace_spans: Vec<_> = spans.values()
             .filter(|s| s.trace_id == trace_id)
             .cloned()
             .collect();
-        
+
         Ok((trace, trace_spans))
     }
-    
+
     fn set_sampling_strategy(
-        &self, 
-        service_name: &str, 
+        &self,
+        service_name: &str,
         strategy: SamplingStrategy
     ) -> Result<(), String> {
         println!("设置采样策略: {}", service_name);
-        
+
         let mut strategies = self.sampling_manager.strategies.write().unwrap();
         strategies.insert(service_name.to_string(), strategy);
-        
+
         Ok(())
     }
-    
+
     fn set_default_sampling_rate(&mut self, rate: f64) -> Result<(), String> {
         if rate < 0.0 || rate > 1.0 {
             return Err("采样率必须在0.0和1.0之间".to_string());
         }
-        
+
         self.sampling_manager.default_rate = rate;
-        
+
         Ok(())
     }
 }
@@ -23089,7 +23091,7 @@ impl RaftConsensusEngine {
             applied_index: AtomicU64::new(0),
             snapshot_index: AtomicU64::new(0),
         };
-        
+
         let log_manager = LogManager {
             log_entries: RwLock::new(BTreeMap::new()),
             last_log_index: AtomicU64::new(0),
@@ -23097,7 +23099,7 @@ impl RaftConsensusEngine {
             commit_index: AtomicU64::new(0),
             log_dir: data_dir.join("logs"),
         };
-        
+
         let state_manager = StateManager {
             current_term: AtomicU64::new(0),
             voted_for: RwLock::new(None),
@@ -23105,36 +23107,36 @@ impl RaftConsensusEngine {
             leader_id: RwLock::new(None),
             state_dir: data_dir.join("state"),
         };
-        
+
         let node_info = cluster_config.nodes.get(node_id)
             .expect("当前节点ID必须在集群配置中");
-        
+
         let network_manager = NetworkManager {
             server: None,
             clients: RwLock::new(HashMap::new()),
             running: AtomicBool::new(false),
             bind_address: node_info.address.clone(),
         };
-        
+
         // 随机选择选举超时
         let mut rng = rand::thread_rng();
         let range = cluster_config.election_timeout_max - cluster_config.election_timeout_min;
-        let random_timeout = cluster_config.election_timeout_min + 
+        let random_timeout = cluster_config.election_timeout_min +
                              Duration::from_millis(rng.gen_range(0..range.as_millis() as u64));
-        
+
         let election_timer = ElectionTimer {
             timeout: RwLock::new(random_timeout),
             last_reset: RwLock::new(Utc::now()),
             running: AtomicBool::new(false),
             timer_thread: None,
         };
-        
+
         let heartbeat_timer = HeartbeatTimer {
             interval: cluster_config.heartbeat_interval,
             running: AtomicBool::new(false),
             timer_thread: None,
         };
-        
+
         RaftConsensusEngine {
             node_id: node_id.to_string(),
             cluster_config,
@@ -23146,40 +23148,40 @@ impl RaftConsensusEngine {
             heartbeat_timer,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动Raft共识引擎");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.log_manager.log_dir) {
             return Err(format!("创建日志目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.state_manager.state_dir) {
             return Err(format!("创建状态目录失败: {}", e));
         }
-        
+
         // 恢复持久化状态
         self.recover_state()?;
-        
+
         // 启动网络服务器
         self.start_network_server()?;
-        
+
         // 初始化与其他节点的连接
         self.initialize_clients()?;
-        
+
         // 启动选举定时器
         self.start_election_timer()?;
-        
+
         // 启动心跳定时器（仅当成为领导者时使用）
         self.start_heartbeat_timer()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止Raft共识引擎");
-        
+
         // 停止心跳定时器
         self.heartbeat_timer.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.heartbeat_timer.timer_thread.take() {
@@ -23188,7 +23190,7 @@ impl RaftConsensusEngine {
                 Err(e) => println!("心跳定时器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止选举定时器
         self.election_timer.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.election_timer.timer_thread.take() {
@@ -23197,7 +23199,7 @@ impl RaftConsensusEngine {
                 Err(e) => println!("选举定时器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止网络服务器
         self.network_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.network_manager.server.take() {
@@ -23206,16 +23208,16 @@ impl RaftConsensusEngine {
                 Err(e) => println!("网络服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 持久化状态
         self.persist_state()?;
-        
+
         Ok(())
     }
-    
+
     fn recover_state(&self) -> Result<(), String> {
         println!("恢复持久化状态");
-        
+
         // 恢复元数据
         let metadata_path = self.state_manager.state_dir.join("metadata");
         if metadata_path.exists() {
@@ -23223,7 +23225,7 @@ impl RaftConsensusEngine {
                 Ok(content) => content,
                 Err(e) => return Err(format!("读取元数据文件失败: {}", e)),
             };
-            
+
             // 解析元数据（简化版本）
             for line in metadata.lines() {
                 let parts: Vec<&str> = line.split('=').collect();
@@ -23245,7 +23247,7 @@ impl RaftConsensusEngine {
                 }
             }
         }
-        
+
         // 恢复日志条目
         let log_path = self.log_manager.log_dir.join("log");
         if log_path.exists() {
@@ -23253,9 +23255,9 @@ impl RaftConsensusEngine {
                 Ok(content) => content,
                 Err(e) => return Err(format!("读取日志文件失败: {}", e)),
             };
-            
+
             let mut log_entries = self.log_manager.log_entries.write().unwrap();
-            
+
             // 解析日志（简化版本）
             for line in log_content.lines() {
                 let parts: Vec<&str> = line.split(',').collect();
@@ -23285,16 +23287,16 @@ impl RaftConsensusEngine {
                             "NOOP" => Command::Noop,
                             _ => continue,
                         };
-                        
+
                         let entry = LogEntry {
                             index,
                             term,
                             command,
                             timestamp: Utc::now(), // 无法恢复原始时间戳
                         };
-                        
+
                         log_entries.insert(index, entry);
-                        
+
                         // 更新最后日志索引和任期
                         if index > self.log_manager.last_log_index.load(Ordering::SeqCst) {
                             self.log_manager.last_log_index.store(index, Ordering::SeqCst);
@@ -23304,35 +23306,35 @@ impl RaftConsensusEngine {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn persist_state(&self) -> Result<(), String> {
         println!("持久化状态");
-        
+
         // 持久化元数据
         let metadata_path = self.state_manager.state_dir.join("metadata");
         let current_term = self.state_manager.current_term.load(Ordering::SeqCst);
         let voted_for = self.state_manager.voted_for.read().unwrap();
-        
+
         let voted_for_str = match &*voted_for {
             Some(node_id) => node_id.clone(),
             None => "null".to_string(),
         };
-        
+
         let metadata = format!("current_term={}\nvoted_for={}", current_term, voted_for_str);
-        
+
         if let Err(e) = std::fs::write(&metadata_path, metadata) {
             return Err(format!("写入元数据文件失败: {}", e));
         }
-        
+
         // 持久化日志条目
         let log_path = self.log_manager.log_dir.join("log");
         let log_entries = self.log_manager.log_entries.read().unwrap();
-        
+
         let mut log_content = String::new();
-        
+
         for entry in log_entries.values() {
             let command_str = match &entry.command {
                 Command::Put { key, value } => {
@@ -23344,53 +23346,53 @@ impl RaftConsensusEngine {
                 Command::Noop => "NOOP".to_string(),
                 _ => continue, // 跳过其他命令类型
             };
-            
+
             log_content.push_str(&format!("{},{},{}\n", entry.index, entry.term, command_str));
         }
-        
+
         if let Err(e) = std::fs::write(&log_path, log_content) {
             return Err(format!("写入日志文件失败: {}", e));
         }
-        
+
         Ok(())
     }
-    
+
     fn start_network_server(&mut self) -> Result<(), String> {
         println!("启动网络服务器");
-        
+
         let bind_address = self.network_manager.bind_address.clone();
         let node_id = self.node_id.clone();
         let state_manager = Arc::new(self.state_manager);
         let log_manager = Arc::new(self.log_manager);
         let state_machine = Arc::new(self.state_machine);
         let election_timer = Arc::new(self.election_timer);
-        
+
         self.network_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.network_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个TCP或HTTP服务器
             println!("网络服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理来自其他节点的RPC请求
             }
         });
-        
+
         self.network_manager.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn initialize_clients(&self) -> Result<(), String> {
         println!("初始化与其他节点的连接");
-        
+
         let mut clients = self.network_manager.clients.write().unwrap();
-        
+
         for (id, info) in &self.cluster_config.nodes {
             if id != &self.node_id {
                 let client = RaftClient {
@@ -23400,133 +23402,133 @@ impl RaftConsensusEngine {
                     next_index: AtomicU64::new(self.log_manager.last_log_index.load(Ordering::SeqCst) + 1),
                     match_index: AtomicU64::new(0),
                 };
-                
+
                 clients.insert(id.clone(), client);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_election_timer(&mut self) -> Result<(), String> {
         println!("启动选举定时器");
-        
+
         let timeout = *self.election_timer.timeout.read().unwrap();
         let node_id = self.node_id.clone();
         let state_manager = Arc::new(self.state_manager);
         let log_manager = Arc::new(self.log_manager);
         let network_manager = Arc::new(self.network_manager);
         let cluster_config = Arc::new(self.cluster_config);
-        
+
         self.election_timer.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.election_timer.running.clone();
         let last_reset = self.election_timer.last_reset.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 let now = Utc::now();
                 let last = *last_reset.read().unwrap();
                 let elapsed = now.signed_duration_since(last);
-                
+
                 if elapsed > timeout.to_std().unwrap().into() {
                     // 选举超时，启动新的选举
                     println!("选举超时，开始新的选举");
-                    
+
                     // 转换为候选人
                     {
                         let mut state = state_manager.node_state.write().unwrap();
                         *state = NodeState::Candidate;
                     }
-                    
+
                     // 增加当前任期
                     let new_term = state_manager.current_term.fetch_add(1, Ordering::SeqCst) + 1;
-                    
+
                     // 为自己投票
                     {
                         let mut voted_for = state_manager.voted_for.write().unwrap();
                         *voted_for = Some(node_id.clone());
                     }
-                    
+
                     // 重置选举定时器
                     *last_reset.write().unwrap() = now;
-                    
+
                     // 发送请求投票RPC
                     let last_log_index = log_manager.last_log_index.load(Ordering::SeqCst);
                     let last_log_term = log_manager.last_log_term.load(Ordering::SeqCst);
-                    
+
                     // 收集投票
                     let mut votes = 1; // 已经为自己投了一票
-                    
+
                     // 在实际实现中，这里会发送并行RPC请求
                     let clients = network_manager.clients.read().unwrap();
-                    
+
                     for client in clients.values() {
                         // 模拟发送RequestVote RPC
                         println!("向节点 {} 发送RequestVote: term={}, lastLogIndex={}, lastLogTerm={}",
                                 client.node_id, new_term, last_log_index, last_log_term);
-                        
+
                         // 模拟接收响应
                         let vote_granted = true; // 假设总是获得投票
-                        
+
                         if vote_granted {
                             votes += 1;
                         }
                     }
-                    
+
                     // 检查是否获得多数票
                     let majority = (cluster_config.nodes.len() / 2) + 1;
-                    
+
                     if votes >= majority {
                         println!("获得多数票 ({}/{}), 成为领导者", votes, cluster_config.nodes.len());
-                        
+
                         // 成为领导者
                         {
                             let mut state = state_manager.node_state.write().unwrap();
                             *state = NodeState::Leader;
                         }
-                        
+
                         {
                             let mut leader = state_manager.leader_id.write().unwrap();
                             *leader = Some(node_id.clone());
                         }
-                        
+
                         // 重置下一个索引和匹配索引
                         let next_index = log_manager.last_log_index.load(Ordering::SeqCst) + 1;
-                        
+
                         for client in clients.values() {
                             client.next_index.store(next_index, Ordering::SeqCst);
                             client.match_index.store(0, Ordering::SeqCst);
                         }
-                        
+
                         // 添加一个空操作日志条目
                         // 在实际实现中会执行此操作
                     }
                 }
-                
+
                 // 检查间隔（小于超时时间）
                 thread::sleep(Duration::from_millis(50));
             }
         });
-        
+
         self.election_timer.timer_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_heartbeat_timer(&mut self) -> Result<(), String> {
         println!("启动心跳定时器");
-        
+
         let interval = self.heartbeat_timer.interval;
         let node_id = self.node_id.clone();
         let state_manager = Arc::new(self.state_manager);
         let log_manager = Arc::new(self.log_manager);
         let network_manager = Arc::new(self.network_manager);
-        
+
         self.heartbeat_timer.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.heartbeat_timer.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 只有领导者发送心跳
@@ -23534,38 +23536,38 @@ impl RaftConsensusEngine {
                     NodeState::Leader => true,
                     _ => false,
                 };
-                
+
                 if is_leader {
                     let current_term = state_manager.current_term.load(Ordering::SeqCst);
                     let commit_index = log_manager.commit_index.load(Ordering::SeqCst);
-                    
+
                     // 发送AppendEntries RPC（心跳）
                     let clients = network_manager.clients.read().unwrap();
-                    
+
                     for client in clients.values() {
                         // 获取要发送的日志条目
                         let next_index = client.next_index.load(Ordering::SeqCst);
                         let log_entries = log_manager.log_entries.read().unwrap();
-                        
+
                         let entries: Vec<_> = log_entries.range(next_index..)
                             .map(|(_, entry)| entry.clone())
                             .take(20) // 限制批次大小
                             .collect();
-                        
+
                         let prev_log_index = next_index - 1;
                         let prev_log_term = if prev_log_index > 0 {
                             log_entries.get(&prev_log_index).map_or(0, |e| e.term)
                         } else {
                             0
                         };
-                        
+
                         // 模拟发送AppendEntries RPC
                         println!("向节点 {} 发送AppendEntries: term={}, prevLogIndex={}, prevLogTerm={}, entries.len={}, commitIndex={}",
                                 client.node_id, current_term, prev_log_index, prev_log_term, entries.len(), commit_index);
-                        
+
                         // 模拟接收响应
                         let success = true; // 假设总是成功
-                        
+
                         if success {
                             // 更新匹配索引和下一个索引
                             if !entries.is_empty() {
@@ -23582,62 +23584,62 @@ impl RaftConsensusEngine {
                             }
                         }
                     }
-                    
+
                     // 更新提交索引
                     self.update_commit_index(log_manager.clone(), state_manager.clone(), network_manager.clone());
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.heartbeat_timer.timer_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn update_commit_index(
-        &self, 
-        log_manager: Arc<LogManager>, 
-        state_manager: Arc<StateManager>, 
+        &self,
+        log_manager: Arc<LogManager>,
+        state_manager: Arc<StateManager>,
         network_manager: Arc<NetworkManager>
     ) {
         // 仅适用于领导者
         if let NodeState::Leader = *state_manager.node_state.read().unwrap() {
             let current_term = state_manager.current_term.load(Ordering::SeqCst);
             let last_log_index = log_manager.last_log_index.load(Ordering::SeqCst);
-            
+
             // 当前提交索引
             let current_commit = log_manager.commit_index.load(Ordering::SeqCst);
-            
+
             // 收集所有节点的匹配索引
             let clients = network_manager.clients.read().unwrap();
             let mut match_indices = Vec::new();
-            
+
             // 添加领导者自己的匹配索引
             match_indices.push(last_log_index);
-            
+
             // 添加所有跟随者的匹配索引
             for client in clients.values() {
                 match_indices.push(client.match_index.load(Ordering::SeqCst));
             }
-            
+
             // 排序匹配索引
             match_indices.sort();
-            
+
             // 找到过半数的匹配索引
             let majority_index = match_indices.len() / 2;
             let new_commit_index = match_indices[majority_index];
-            
+
             // 只提交当前任期的日志条目
             if new_commit_index > current_commit {
                 let log_entries = log_manager.log_entries.read().unwrap();
-                
+
                 if let Some(entry) = log_entries.get(&new_commit_index) {
                     if entry.term == current_term {
                         log_manager.commit_index.store(new_commit_index, Ordering::SeqCst);
-                        
+
                         // 应用到状态机
                         self.apply_logs_to_state_machine();
                     }
@@ -23645,15 +23647,15 @@ impl RaftConsensusEngine {
             }
         }
     }
-    
+
     fn apply_logs_to_state_machine(&self) {
         let applied_index = self.state_machine.applied_index.load(Ordering::SeqCst);
         let commit_index = self.log_manager.commit_index.load(Ordering::SeqCst);
-        
+
         if commit_index > applied_index {
             let mut state = self.state_machine.state.write().unwrap();
             let log_entries = self.log_manager.log_entries.read().unwrap();
-            
+
             for i in (applied_index + 1)..=commit_index {
                 if let Some(entry) = log_entries.get(&i) {
                     // 应用命令到状态机
@@ -23668,19 +23670,19 @@ impl RaftConsensusEngine {
                     }
                 }
             }
-            
+
             // 更新应用的索引
             self.state_machine.applied_index.store(commit_index, Ordering::SeqCst);
         }
     }
-    
+
     fn propose_command(&self, command: Command) -> Result<(u64, u64), String> {
         // 检查是否是领导者
         if let NodeState::Leader = *self.state_manager.node_state.read().unwrap() {
             let current_term = self.state_manager.current_term.load(Ordering::SeqCst);
             let last_index = self.log_manager.last_log_index.load(Ordering::SeqCst);
             let new_index = last_index + 1;
-            
+
             // 创建日志条目
             let entry = LogEntry {
                 index: new_index,
@@ -23688,21 +23690,21 @@ impl RaftConsensusEngine {
                 command,
                 timestamp: Utc::now(),
             };
-            
+
             // 添加到日志
             let mut log_entries = self.log_manager.log_entries.write().unwrap();
             log_entries.insert(new_index, entry);
-            
+
             // 更新最后日志索引和任期
             self.log_manager.last_log_index.store(new_index, Ordering::SeqCst);
             self.log_manager.last_log_term.store(current_term, Ordering::SeqCst);
-            
+
             // 持久化日志
             drop(log_entries);
             if let Err(e) = self.persist_state() {
                 return Err(e);
             }
-            
+
             // 返回索引和任期
             Ok((new_index, current_term))
         } else {
@@ -23711,12 +23713,12 @@ impl RaftConsensusEngine {
             Err(format!("节点不是领导者，当前领导者: {:?}", *leader))
         }
     }
-    
+
     fn read_state(&self, key: &str) -> Option<Vec<u8>> {
         let state = self.state_machine.state.read().unwrap();
         state.get(key).cloned()
     }
-    
+
     fn get_status(&self) -> RaftStatus {
         let current_term = self.state_manager.current_term.load(Ordering::SeqCst);
         let node_state = self.state_manager.node_state.read().unwrap().clone();
@@ -23725,7 +23727,7 @@ impl RaftConsensusEngine {
         let commit_index = self.log_manager.commit_index.load(Ordering::SeqCst);
         let last_log_index = self.log_manager.last_log_index.load(Ordering::SeqCst);
         let applied_index = self.state_machine.applied_index.load(Ordering::SeqCst);
-        
+
         RaftStatus {
             node_id: self.node_id.clone(),
             current_term,
@@ -23844,7 +23846,7 @@ impl DistributedKVStore {
             running: AtomicBool::new(false),
             bind_address: bind_address.to_string(),
         };
-        
+
         let gossip_manager = GossipManager {
             members: RwLock::new(HashMap::new()),
             seed_nodes,
@@ -23852,13 +23854,13 @@ impl DistributedKVStore {
             running: AtomicBool::new(false),
             gossip_thread: None,
         };
-        
+
         let rebalancer = Rebalancer {
             running: AtomicBool::new(false),
             check_interval: Duration::from_secs(60),
             rebalance_thread: None,
         };
-        
+
         DistributedKVStore {
             node_id: node_id.to_string(),
             raft_engine,
@@ -23867,28 +23869,28 @@ impl DistributedKVStore {
             rebalancer,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式KV存储系统");
-        
+
         // 启动Raft共识引擎
         self.raft_engine.start()?;
-        
+
         // 启动API服务器
         self.start_api_server()?;
-        
+
         // 启动Gossip管理器
         self.start_gossip_manager()?;
-        
+
         // 启动重平衡器
         self.start_rebalancer()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式KV存储系统");
-        
+
         // 停止重平衡器
         self.rebalancer.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.rebalancer.rebalance_thread.take() {
@@ -23897,7 +23899,7 @@ impl DistributedKVStore {
                 Err(e) => println!("重平衡线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止Gossip管理器
         self.gossip_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.gossip_manager.gossip_thread.take() {
@@ -23906,7 +23908,7 @@ impl DistributedKVStore {
                 Err(e) => println!("Gossip线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止API服务器
         self.api_server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.api_server.server.take() {
@@ -23915,55 +23917,55 @@ impl DistributedKVStore {
                 Err(e) => println!("API服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止Raft共识引擎
         self.raft_engine.stop()?;
-        
+
         Ok(())
     }
-    
+
     fn start_api_server(&mut self) -> Result<(), String> {
         println!("启动API服务器");
-        
+
         let bind_address = self.api_server.bind_address.clone();
         let node_id = self.node_id.clone();
-        
+
         self.api_server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.api_server.running.clone();
-        
+
         let raft_engine = Arc::new(Mutex::new(self.raft_engine));
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP服务器
             println!("API服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
 
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.api_server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_gossip_manager(&mut self) -> Result<(), String> {
         println!("启动Gossip管理器");
-        
+
         let node_id = self.node_id.clone();
         let seed_nodes = self.gossip_manager.seed_nodes.clone();
         let interval = self.gossip_manager.gossip_interval;
         let members = self.gossip_manager.members.clone();
-        
+
         // 添加自己作为成员
         {
             let mut members_map = members.write().unwrap();
-            
+
             let self_info = MemberInfo {
                 id: node_id.clone(),
                 address: self.api_server.bind_address.clone(),
@@ -23971,25 +23973,25 @@ impl DistributedKVStore {
                 last_heartbeat: Utc::now(),
                 tags: HashMap::new(),
             };
-            
+
             members_map.insert(node_id.clone(), self_info);
         }
-        
+
         self.gossip_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.gossip_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 连接到种子节点
             for seed in &seed_nodes {
                 if seed != &node_id {
                     println!("连接到种子节点: {}", seed);
-                    
+
                     // 在实际实现中，这里会尝试连接到种子节点并获取成员列表
-                    
+
                     // 模拟添加种子节点到成员列表
                     let mut members_map = members.write().unwrap();
-                    
+
                     let seed_info = MemberInfo {
                         id: seed.clone(),
                         address: format!("10.0.0.{}:7000", rand::random::<u8>()),
@@ -23997,21 +23999,21 @@ impl DistributedKVStore {
                         last_heartbeat: Utc::now(),
                         tags: HashMap::new(),
                     };
-                    
+
                     members_map.insert(seed.clone(), seed_info);
                 }
             }
-            
+
             // Gossip循环
             while running.load(Ordering::SeqCst) {
                 // 选择随机的gossip目标
                 let target = {
                     let members_map = members.read().unwrap();
-                    
+
                     let alive_members: Vec<_> = members_map.values()
                         .filter(|m| m.id != node_id && matches!(m.status, MemberStatus::Alive))
                         .collect();
-                    
+
                     if alive_members.is_empty() {
                         None
                     } else {
@@ -24019,18 +24021,18 @@ impl DistributedKVStore {
                         Some(alive_members[idx].clone())
                     }
                 };
-                
+
                 if let Some(target_member) = target {
                     println!("向节点 {} 发送gossip消息", target_member.id);
-                    
+
                     // 在实际实现中，这里会发送gossip消息并接收响应
-                    
+
                     // 模拟接收到新的成员信息
                     let mut new_members = Vec::new();
-                    
+
                     for i in 0..3 {
                         let random_id = format!("node-{}", uuid::Uuid::new_v4());
-                        
+
                         let member_info = MemberInfo {
                             id: random_id.clone(),
                             address: format!("10.0.0.{}:7000", rand::random::<u8>()),
@@ -24038,26 +24040,26 @@ impl DistributedKVStore {
                             last_heartbeat: Utc::now(),
                             tags: HashMap::new(),
                         };
-                        
+
                         new_members.push(member_info);
                     }
-                    
+
                     // 更新成员列表
                     let mut members_map = members.write().unwrap();
-                    
+
                     for member in new_members {
                         if !members_map.contains_key(&member.id) {
                             members_map.insert(member.id.clone(), member);
                         }
                     }
-                    
+
                     // 检测可疑节点
                     let now = Utc::now();
                     let timeout = Duration::from_secs(10);
-                    
+
                     for (_, member) in members_map.iter_mut() {
                         let elapsed = now.signed_duration_since(member.last_heartbeat);
-                        
+
                         if elapsed > timeout.into() && matches!(member.status, MemberStatus::Alive) {
                             member.status = MemberStatus::Suspect;
                             println!("节点 {} 被标记为可疑", member.id);
@@ -24067,129 +24069,129 @@ impl DistributedKVStore {
                         }
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.gossip_manager.gossip_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_rebalancer(&mut self) -> Result<(), String> {
         println!("启动重平衡器");
-        
+
         let node_id = self.node_id.clone();
         let interval = self.rebalancer.check_interval;
         let members = self.gossip_manager.members.clone();
-        
+
         self.rebalancer.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.rebalancer.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查是否需要重平衡
                 let need_rebalance = {
                     let members_map = members.read().unwrap();
-                    
+
                     // 计算活跃节点数
                     let alive_count = members_map.values()
                         .filter(|m| matches!(m.status, MemberStatus::Alive))
                         .count();
-                    
+
                     // 在实际实现中，这里会检查数据分布情况
                     // 简化：当活跃节点数变化时触发重平衡
                     alive_count > 0 && alive_count % 2 == 0 // 简单示例
                 };
-                
+
                 if need_rebalance {
                     println!("触发数据重平衡");
-                    
+
                     // 在实际实现中，这里会执行重平衡算法
                     // 计算新的数据分布并迁移数据
-                    
+
                     println!("数据重平衡完成");
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(interval);
             }
         });
-        
+
         self.rebalancer.rebalance_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn put(&self, key: &str, value: &[u8]) -> Result<(), String> {
         println!("设置键值对: {} -> {} bytes", key, value.len());
-        
+
         // 创建命令
         let command = Command::Put {
             key: key.to_string(),
             value: value.to_vec(),
         };
-        
+
         // 提交到Raft
         match self.raft_engine.propose_command(command) {
             Ok((index, term)) => {
                 println!("命令已提交: index={}, term={}", index, term);
-                
+
                 // 等待应用到状态机
                 // 在实际实现中，这里会等待命令被应用
-                
+
                 Ok(())
             },
             Err(e) => Err(e),
         }
     }
-    
+
     fn get(&self, key: &str) -> Result<Option<Vec<u8>>, String> {
         println!("获取键值: {}", key);
-        
+
         // 从状态机中读取
         let value = self.raft_engine.read_state(key);
-        
+
         Ok(value)
     }
-    
+
     fn delete(&self, key: &str) -> Result<(), String> {
         println!("删除键值: {}", key);
-        
+
         // 创建命令
         let command = Command::Delete {
             key: key.to_string(),
         };
-        
+
         // 提交到Raft
         match self.raft_engine.propose_command(command) {
             Ok((index, term)) => {
                 println!("命令已提交: index={}, term={}", index, term);
-                
+
                 // 等待应用到状态机
                 // 在实际实现中，这里会等待命令被应用
-                
+
                 Ok(())
             },
             Err(e) => Err(e),
         }
     }
-    
+
     fn get_cluster_status(&self) -> ClusterStatus {
         // 获取Raft状态
         let raft_status = self.raft_engine.get_status();
-        
+
         // 获取集群成员
         let members = self.gossip_manager.members.read().unwrap();
-        
+
         // 构建集群状态
         let mut alive_nodes = 0;
         let mut suspect_nodes = 0;
         let mut dead_nodes = 0;
-        
+
         for member in members.values() {
             match member.status {
                 MemberStatus::Alive => alive_nodes += 1,
@@ -24197,7 +24199,7 @@ impl DistributedKVStore {
                 MemberStatus::Dead => dead_nodes += 1,
             }
         }
-        
+
         ClusterStatus {
             node_id: self.node_id.clone(),
             leader_id: raft_status.leader_id,
@@ -24379,18 +24381,18 @@ impl DistributedObjectStore {
             default_class: StorageClass::Standard,
             retention_policy: RetentionPolicy::None,
         };
-        
+
         let data_manager = DataManager {
             objects: RwLock::new(HashMap::new()),
             data_dir: data_dir.to_path_buf(),
             storage_policy,
         };
-        
+
         let metadata_manager = ObjectMetadataManager {
             metadata: RwLock::new(HashMap::new()),
             indexes: RwLock::new(HashMap::new()),
         };
-        
+
         let placement_manager = PlacementManager {
             placement_strategy: PlacementStrategy::Consistent {
                 virtual_nodes: 256,
@@ -24398,19 +24400,19 @@ impl DistributedObjectStore {
             nodes: RwLock::new(HashMap::new()),
             partition_map: RwLock::new(HashMap::new()),
         };
-        
+
         let replication_manager = ObjectReplicationManager {
             replication_tasks: RwLock::new(Vec::new()),
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         let server = ObjectStoreServer {
             server: None,
             running: AtomicBool::new(false),
             bind_address: bind_address.to_string(),
         };
-        
+
         DistributedObjectStore {
             node_id: node_id.to_string(),
             data_manager,
@@ -24420,30 +24422,30 @@ impl DistributedObjectStore {
             server,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式对象存储系统");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.data_manager.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         // 注册当前节点
         self.register_node()?;
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式对象存储系统");
-        
+
         // 停止服务器
         self.server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.server.server.take() {
@@ -24452,7 +24454,7 @@ impl DistributedObjectStore {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -24461,15 +24463,15 @@ impl DistributedObjectStore {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn register_node(&self) -> Result<(), String> {
         println!("注册存储节点");
-        
+
         let mut nodes = self.placement_manager.nodes.write().unwrap();
-        
+
         let node = NodeStorage {
             node_id: self.node_id.clone(),
             zone: "default".to_string(),
@@ -24478,15 +24480,15 @@ impl DistributedObjectStore {
             status: NodeStorageStatus::Available,
             last_heartbeat: Utc::now(),
         };
-        
+
         nodes.insert(self.node_id.clone(), node);
-        
+
         // 更新分区映射
         self.update_partition_map()?;
-        
+
         Ok(())
     }
-    
+
     fn update_partition_map(&self) -> Result<(), String> {
         // 使用一致性哈希算法重新计算分区映射
         match &self.placement_manager.placement_strategy {
@@ -24502,62 +24504,62 @@ impl DistributedObjectStore {
                     })
                     .cloned()
                     .collect();
-                
+
                 if available_nodes.is_empty() {
                     return Err("没有可用的存储节点".to_string());
                 }
-                
+
                 // 创建虚拟节点环
                 let mut ring = Vec::new();
-                
+
                 for node_id in &available_nodes {
                     for i in 0..*virtual_nodes {
                         let key = format!("{}:{}", node_id, i);
                         let mut hasher = DefaultHasher::new();
                         key.hash(&mut hasher);
                         let hash = hasher.finish();
-                        
+
                         ring.push((hash, node_id.clone()));
                     }
                 }
-                
+
                 // 排序环
                 ring.sort_by(|a, b| a.0.cmp(&b.0));
-                
+
                 // 更新分区映射
                 let mut partition_map = self.placement_manager.partition_map.write().unwrap();
                 partition_map.clear();
-                
+
                 // 为每个分区分配节点
                 for i in 0..1024 { // 1024个分区
                     let partition_key = format!("partition:{}", i);
                     let mut hasher = DefaultHasher::new();
                     partition_key.hash(&mut hasher);
                     let hash = hasher.finish();
-                    
+
                     // 找到第一个大于等于该哈希值的节点
                     let pos = ring.binary_search_by(|probe| probe.0.cmp(&hash))
                         .unwrap_or_else(|pos| pos % ring.len());
-                    
+
                     let assigned_node = ring[pos].1.clone();
-                    
+
                     // 分配备份节点
                     let mut backup_nodes = Vec::new();
                     let backup_count = 2; // 2个备份
-                    
+
                     for i in 1..=backup_count {
                         let backup_pos = (pos + i) % ring.len();
                         let backup_node = ring[backup_pos].1.clone();
-                        
+
                         if backup_node != assigned_node && !backup_nodes.contains(&backup_node) {
                             backup_nodes.push(backup_node);
                         }
                     }
-                    
+
                     // 存储主节点和备份节点
                     let mut nodes = vec![assigned_node];
                     nodes.extend(backup_nodes);
-                    
+
                     partition_map.insert(partition_key, nodes);
                 }
             },
@@ -24566,21 +24568,21 @@ impl DistributedObjectStore {
                 return Err("不支持的放置策略".to_string());
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         let replication_tasks = self.replication_manager.replication_tasks.clone();
         let node_id = self.node_id.clone();
         let data_dir = self.data_manager.data_dir.clone();
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 处理复制任务
@@ -24590,95 +24592,95 @@ impl DistributedObjectStore {
                     tasks.clear();
                     result
                 };
-                
+
                 for task in tasks_to_process {
                     println!("处理对象复制任务: {} -> {}", task.object_key, task.target_node);
-                    
+
                     // 在实际实现中，这里会从磁盘读取对象并发送到目标节点
                     // 或者使用流式传输优化大对象的复制
-                    
+
                     println!("对象复制完成: {}", task.object_key);
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动对象存储服务器");
-        
+
         let bind_address = self.server.bind_address.clone();
         let node_id = self.node_id.clone();
-        
+
         self.server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.server.running.clone();
-        
+
         let data_manager = Arc::new(self.data_manager);
         let metadata_manager = Arc::new(self.metadata_manager);
         let placement_manager = Arc::new(self.placement_manager);
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP服务器
             println!("对象存储服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn put_object(
-        &self, 
-        key: &str, 
-        data: Vec<u8>, 
-        content_type: &str, 
-        storage_class: Option<StorageClass>, 
+        &self,
+        key: &str,
+        data: Vec<u8>,
+        content_type: &str,
+        storage_class: Option<StorageClass>,
         metadata: Option<HashMap<String, String>>,
         tags: Option<HashMap<String, String>>
     ) -> Result<ObjectMetadata, String> {
         println!("存储对象: {}, 大小: {} bytes", key, data.len());
-        
+
         // 验证对象大小
         if data.len() < self.data_manager.storage_policy.min_size {
-            return Err(format!("对象太小: {} bytes，最小要求: {} bytes", 
+            return Err(format!("对象太小: {} bytes，最小要求: {} bytes",
                              data.len(), self.data_manager.storage_policy.min_size));
         }
-        
+
         if data.len() > self.data_manager.storage_policy.max_size {
-            return Err(format!("对象太大: {} bytes，最大允许: {} bytes", 
+            return Err(format!("对象太大: {} bytes，最大允许: {} bytes",
                              data.len(), self.data_manager.storage_policy.max_size));
         }
-        
+
         // 计算校验和
         let mut hasher = sha2::Sha256::new();
         hasher.update(&data);
         let checksum = format!("{:x}", hasher.finalize());
-        
+
         // 确定存储节点
         let placement = self.find_placement_nodes(key)?;
-        
+
         if placement.is_empty() {
             return Err("无法找到合适的存储节点".to_string());
         }
-        
+
         // 创建对象元数据
         let now = Utc::now();
         let storage_class = storage_class.unwrap_or_else(|| self.data_manager.storage_policy.default_class.clone());
-        
+
         let metadata = ObjectMetadata {
             key: key.to_string(),
             size: data.len(),
@@ -24695,7 +24697,7 @@ impl DistributedObjectStore {
             tags: tags.unwrap_or_default(),
             user_metadata: metadata.unwrap_or_default(),
         };
-        
+
         // 存储对象数据（当前节点是主节点或备份节点）
         if placement.contains(&self.node_id) {
             let object_data = ObjectData {
@@ -24706,11 +24708,11 @@ impl DistributedObjectStore {
                 created_at: now,
                 last_accessed: now,
             };
-            
+
             // 存储到内存
             let mut objects = self.data_manager.objects.write().unwrap();
             objects.insert(key.to_string(), object_data);
-            
+
             // 写入磁盘
             let object_path = self.data_manager.data_dir.join(key);
             if let Some(parent) = object_path.parent() {
@@ -24720,31 +24722,31 @@ impl DistributedObjectStore {
                     }
                 }
             }
-            
+
             if let Err(e) = std::fs::write(&object_path, &data) {
                 return Err(format!("写入对象文件失败: {}", e));
             }
         }
-        
+
         // 存储元数据
         let mut metadata_map = self.metadata_manager.metadata.write().unwrap();
         metadata_map.insert(key.to_string(), metadata.clone());
-        
+
         // 更新索引
         for (tag_key, tag_value) in &metadata.tags {
             let mut indexes = self.metadata_manager.indexes.write().unwrap();
-            
+
             let tag_index = indexes.entry(format!("tag:{}", tag_key))
                 .or_insert_with(BTreeMap::new);
-            
+
             let value_keys = tag_index.entry(tag_value.clone())
                 .or_insert_with(Vec::new);
-            
+
             if !value_keys.contains(&key.to_string()) {
                 value_keys.push(key.to_string());
             }
         }
-        
+
         // 创建复制任务（如果当前节点是主节点）
         if placement[0] == self.node_id {
             for target_node in &placement[1..] {
@@ -24755,38 +24757,38 @@ impl DistributedObjectStore {
                     priority: 0,
                     created_at: now,
                 };
-                
+
                 let mut tasks = self.replication_manager.replication_tasks.write().unwrap();
                 tasks.push(replication_task);
             }
         }
-        
+
         Ok(metadata)
     }
-    
+
     fn get_object(&self, key: &str) -> Result<(Vec<u8>, ObjectMetadata), String> {
         println!("获取对象: {}", key);
-        
+
         // 检查元数据
         let metadata_map = self.metadata_manager.metadata.read().unwrap();
-        
+
         let metadata = metadata_map.get(key)
             .ok_or_else(|| format!("对象不存在: {}", key))?
             .clone();
-        
+
         // 检查本地缓存
         let mut objects = self.data_manager.objects.write().unwrap();
-        
+
         if let Some(object) = objects.get_mut(key) {
             // 更新访问时间
             object.last_accessed = Utc::now();
-            
+
             return Ok((object.data.clone(), metadata));
         }
-        
+
         // 检查本地文件
         let object_path = self.data_manager.data_dir.join(key);
-        
+
         if object_path.exists() {
             match std::fs::read(&object_path) {
                 Ok(data) => {
@@ -24794,11 +24796,11 @@ impl DistributedObjectStore {
                     let mut hasher = sha2::Sha256::new();
                     hasher.update(&data);
                     let checksum = format!("{:x}", hasher.finalize());
-                    
+
                     if checksum != metadata.checksum {
                         return Err(format!("对象校验和不匹配: {}", key));
                     }
-                    
+
                     // 添加到内存缓存
                     let now = Utc::now();
                     let object_data = ObjectData {
@@ -24809,9 +24811,9 @@ impl DistributedObjectStore {
                         created_at: metadata.created_at,
                         last_accessed: now,
                     };
-                    
+
                     objects.insert(key.to_string(), object_data);
-                    
+
                     return Ok((data, metadata));
                 },
                 Err(e) => {
@@ -24819,83 +24821,83 @@ impl DistributedObjectStore {
                 }
             }
         }
-        
+
         // 如果不在本地，尝试从其他节点获取
         let placement = self.find_placement_nodes(key)?;
-        
+
         for node_id in &placement {
             if node_id != &self.node_id {
                 // 在实际实现中，这里会从其他节点获取对象
                 println!("从节点 {} 获取对象 {}", node_id, key);
-                
+
                 // 模拟从其他节点获取数据
                 let data = vec![0; metadata.size]; // 假数据
-                
+
                 return Ok((data, metadata));
             }
         }
-        
+
         Err(format!("无法获取对象: {}", key))
     }
-    
+
     fn delete_object(&self, key: &str) -> Result<(), String> {
         println!("删除对象: {}", key);
-        
+
         // 检查元数据
         let mut metadata_map = self.metadata_manager.metadata.write().unwrap();
-        
+
         if !metadata_map.contains_key(key) {
             return Err(format!("对象不存在: {}", key));
         }
-        
+
         // 从内存缓存中移除
         let mut objects = self.data_manager.objects.write().unwrap();
         objects.remove(key);
-        
+
         // 从磁盘删除
         let object_path = self.data_manager.data_dir.join(key);
-        
+
         if object_path.exists() {
             if let Err(e) = std::fs::remove_file(&object_path) {
                 return Err(format!("删除对象文件失败: {}", e));
             }
         }
-        
+
         // 从元数据中移除
         if let Some(metadata) = metadata_map.remove(key) {
             // 从索引中移除
             for (tag_key, tag_value) in &metadata.tags {
                 let mut indexes = self.metadata_manager.indexes.write().unwrap();
-                
+
                 if let Some(tag_index) = indexes.get_mut(&format!("tag:{}", tag_key)) {
                     if let Some(value_keys) = tag_index.get_mut(tag_value) {
                         value_keys.retain(|k| k != key);
-                        
+
                         if value_keys.is_empty() {
                             tag_index.remove(tag_value);
                         }
                     }
-                    
+
                     if tag_index.is_empty() {
                         indexes.remove(&format!("tag:{}", tag_key));
                     }
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn list_objects(
-        &self, 
-        prefix: Option<&str>, 
-        delimiter: Option<&str>, 
+        &self,
+        prefix: Option<&str>,
+        delimiter: Option<&str>,
         max_keys: Option<usize>
     ) -> Result<Vec<ObjectMetadata>, String> {
         let metadata_map = self.metadata_manager.metadata.read().unwrap();
-        
+
         let mut result = Vec::new();
-        
+
         for (key, metadata) in metadata_map.iter() {
             // 应用前缀过滤
             if let Some(prefix_str) = prefix {
@@ -24903,7 +24905,7 @@ impl DistributedObjectStore {
                     continue;
                 }
             }
-            
+
             // 应用分隔符逻辑（简化）
             if let Some(delim) = delimiter {
                 if let Some(suffix) = key.strip_prefix(prefix.unwrap_or("")) {
@@ -24913,31 +24915,31 @@ impl DistributedObjectStore {
                     }
                 }
             }
-            
+
             result.push(metadata.clone());
         }
-        
+
         // 应用限制
         if let Some(limit) = max_keys {
             if result.len() > limit {
                 result.truncate(limit);
             }
         }
-        
+
         Ok(result)
     }
-    
+
     fn find_placement_nodes(&self, key: &str) -> Result<Vec<String>, String> {
         // 计算分区键
         let mut hasher = DefaultHasher::new();
         key.hash(&mut hasher);
         let hash = hasher.finish();
-        
+
         let partition_key = format!("partition:{}", hash % 1024);
-        
+
         // 查找分区映射
         let partition_map = self.placement_manager.partition_map.read().unwrap();
-        
+
         if let Some(nodes) = partition_map.get(&partition_key) {
             Ok(nodes.clone())
         } else {
@@ -25368,13 +25370,13 @@ impl DistributedDatabase {
             indexes: RwLock::new(HashMap::new()),
             data_dir: config.data_dir.clone(),
         };
-        
+
         let query_processor = QueryProcessor {
             parsers: HashMap::new(),
             optimizers: Vec::new(),
             executors: HashMap::new(),
         };
-        
+
         let transaction_manager = DBTransactionManager {
             transactions: RwLock::new(HashMap::new()),
             isolation_level: config.isolation_level.clone(),
@@ -25382,7 +25384,7 @@ impl DistributedDatabase {
                 locks: RwLock::new(HashMap::new()),
             },
         };
-        
+
         let replication_manager = ReplicationManager {
             replication_mode: ReplicationMode::Async,
             nodes: RwLock::new(HashMap::new()),
@@ -25390,18 +25392,18 @@ impl DistributedDatabase {
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         let sharding_manager = ShardingManager {
             strategy: ShardingStrategy::Hash,
             shards: RwLock::new(HashMap::new()),
             shard_count: config.shard_count,
         };
-        
+
         let schema_manager = SchemaManager {
             schemas: RwLock::new(HashMap::new()),
             version: AtomicU64::new(0),
         };
-        
+
         let server = DatabaseServer {
             server: None,
             running: AtomicBool::new(false),
@@ -25409,7 +25411,7 @@ impl DistributedDatabase {
             connections: RwLock::new(HashMap::new()),
             max_connections: config.max_connections,
         };
-        
+
         DistributedDatabase {
             node_id: node_id.to_string(),
             config,
@@ -25422,37 +25424,37 @@ impl DistributedDatabase {
             server,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式数据库系统");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.config.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.config.log_dir) {
             return Err(format!("创建日志目录失败: {}", e));
         }
-        
+
         // 加载数据和元数据
         self.load_data()?;
-        
+
         // 初始化分片
         self.initialize_shards()?;
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式数据库系统");
-        
+
         // 停止服务器
         self.server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.server.server.take() {
@@ -25461,7 +25463,7 @@ impl DistributedDatabase {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -25470,7 +25472,7 @@ impl DistributedDatabase {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         // 提交或回滚所有活跃事务
         let transactions = self.transaction_manager.transactions.read().unwrap();
         for (id, transaction) in transactions.iter() {
@@ -25479,16 +25481,16 @@ impl DistributedDatabase {
                 // 在实际实现中，这里会回滚事务
             }
         }
-        
+
         // 保存数据和元数据
         self.save_data()?;
-        
+
         Ok(())
     }
-    
+
     fn load_data(&self) -> Result<(), String> {
         println!("加载数据和元数据");
-        
+
         // 加载架构
         let schema_path = self.config.data_dir.join("schema.json");
         if schema_path.exists() {
@@ -25500,7 +25502,7 @@ impl DistributedDatabase {
                 Err(e) => return Err(format!("读取架构文件失败: {}", e)),
             }
         }
-        
+
         // 加载表数据
         let tables_dir = self.config.data_dir.join("tables");
         if tables_dir.exists() {
@@ -25513,7 +25515,7 @@ impl DistributedDatabase {
                                 if name.ends_with(".dat") {
                                     let table_name = name.trim_end_matches(".dat");
                                     println!("加载表数据: {}", table_name);
-                                    
+
                                     // 在实际实现中，这里会加载表数据
                                 }
                             }
@@ -25523,7 +25525,7 @@ impl DistributedDatabase {
                 Err(e) => return Err(format!("读取表目录失败: {}", e)),
             }
         }
-        
+
         // 加载索引
         let indexes_dir = self.config.data_dir.join("indexes");
         if indexes_dir.exists() {
@@ -25536,7 +25538,7 @@ impl DistributedDatabase {
                                 if name.ends_with(".idx") {
                                     let index_name = name.trim_end_matches(".idx");
                                     println!("加载索引: {}", index_name);
-                                    
+
                                     // 在实际实现中，这里会加载索引数据
                                 }
                             }
@@ -25546,20 +25548,20 @@ impl DistributedDatabase {
                 Err(e) => return Err(format!("读取索引目录失败: {}", e)),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn save_data(&self) -> Result<(), String> {
         println!("保存数据和元数据");
-        
+
         // 保存架构
         let schema_path = self.config.data_dir.join("schema.json");
         let schemas = self.schema_manager.schemas.read().unwrap();
-        
+
         // 在实际实现中，这里会将架构序列化为JSON并保存
         println!("保存架构文件");
-        
+
         // 创建表目录
         let tables_dir = self.config.data_dir.join("tables");
         if !tables_dir.exists() {
@@ -25567,16 +25569,16 @@ impl DistributedDatabase {
                 return Err(format!("创建表目录失败: {}", e));
             }
         }
-        
+
         // 保存表数据
         let tables = self.storage_engine.tables.read().unwrap();
         for (name, table) in tables.iter() {
             let table_path = tables_dir.join(format!("{}.dat", name));
             println!("保存表数据: {}", name);
-            
+
             // 在实际实现中，这里会将表数据序列化并保存
         }
-        
+
         // 创建索引目录
         let indexes_dir = self.config.data_dir.join("indexes");
         if !indexes_dir.exists() {
@@ -25584,24 +25586,24 @@ impl DistributedDatabase {
                 return Err(format!("创建索引目录失败: {}", e));
             }
         }
-        
+
         // 保存索引
         let indexes = self.storage_engine.indexes.read().unwrap();
         for (name, index) in indexes.iter() {
             let index_path = indexes_dir.join(format!("{}.idx", name));
             println!("保存索引: {}", name);
-            
+
             // 在实际实现中，这里会将索引数据序列化并保存
         }
-        
+
         Ok(())
     }
-    
+
     fn initialize_shards(&self) -> Result<(), String> {
         println!("初始化分片");
-        
+
         let mut shards = self.sharding_manager.shards.write().unwrap();
-        
+
         // 创建分片
         for i in 0..self.sharding_manager.shard_count {
             let shard = Shard {
@@ -25611,22 +25613,22 @@ impl DistributedDatabase {
                 key_range: None,
                 key_list: None,
             };
-            
+
             shards.insert(i, shard);
         }
-        
+
         // 在实际实现中，这里会根据集群配置分配分片
         // 对于单节点，所有分片都在当前节点
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         // 添加当前节点
         let mut nodes = self.replication_manager.nodes.write().unwrap();
-        
+
         let self_node = ReplicationNode {
             node_id: self.node_id.clone(),
             address: self.config.bind_address.clone(),
@@ -25635,14 +25637,14 @@ impl DistributedDatabase {
             last_heartbeat: Utc::now(),
             replication_lag: Duration::from_secs(0),
         };
-        
+
         nodes.insert(self.node_id.clone(), self_node);
-        
+
         // 添加其他集群节点
         for node_addr in &self.config.cluster_nodes {
             if node_addr != &self.config.bind_address {
                 let node_id = format!("node-{}", uuid::Uuid::new_v4());
-                
+
                 let node = ReplicationNode {
                     node_id: node_id.clone(),
                     address: node_addr.clone(),
@@ -25651,74 +25653,74 @@ impl DistributedDatabase {
                     last_heartbeat: Utc::now(),
                     replication_lag: Duration::from_secs(0),
                 };
-                
+
                 nodes.insert(node_id, node);
             }
         }
-        
+
         drop(nodes);
-        
+
         // 启动复制线程
         let node_id = self.node_id.clone();
         let nodes = self.replication_manager.nodes.clone();
         let log_dir = self.replication_manager.log_dir.clone();
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查节点状态
                 let mut nodes_map = nodes.write().unwrap();
                 let now = Utc::now();
-                
+
                 for (id, node) in nodes_map.iter_mut() {
                     if id != &node_id {
                         // 模拟向辅助节点发送心跳
                         println!("向节点 {} 发送心跳", id);
-                        
+
                         // 在实际实现中，这里会发送心跳并更新节点状态
                         node.last_heartbeat = now;
                         node.status = NodeStatus::Healthy;
                         node.replication_lag = Duration::from_millis(rand::random::<u64>() % 1000);
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(Duration::from_secs(5));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动数据库服务器");
-        
+
         let bind_address = self.server.bind_address.clone();
         let node_id = self.node_id.clone();
         let max_connections = self.server.max_connections;
         let connections = self.server.connections.clone();
-        
+
         self.server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.server.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个TCP服务器
             println!("数据库服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟接受新连接
                 let conn_count = connections.read().unwrap().len();
-                
+
                 if conn_count < max_connections as usize && rand::random::<u32>() % 10 == 0 {
                     let conn_id = uuid::Uuid::new_v4().to_string();
                     let client_addr = format!("192.168.1.{}:{}", rand::random::<u8>(), 10000 + rand::random::<u16>() % 10000);
-                    
+
                     let connection = Connection {
                         id: conn_id.clone(),
                         client_address: client_addr.clone(),
@@ -25727,74 +25729,74 @@ impl DistributedDatabase {
                         last_activity: Utc::now(),
                         transaction_id: None,
                     };
-                    
+
                     let mut conns = connections.write().unwrap();
                     conns.insert(conn_id.clone(), connection);
-                    
+
                     println!("接受新连接: {} 从 {}", conn_id, client_addr);
                 }
-                
+
                 // 模拟连接活动
                 let mut conns = connections.write().unwrap();
                 let now = Utc::now();
-                
+
                 for (_, conn) in conns.iter_mut() {
                     // 随机更新活动时间
                     if rand::random::<u32>() % 5 == 0 {
                         conn.last_activity = now;
                     }
                 }
-                
+
                 // 移除空闲连接
                 let timeout = Duration::from_secs(300); // 5分钟超时
                 let mut to_remove = Vec::new();
-                
+
                 for (id, conn) in conns.iter() {
                     let idle_time = now.signed_duration_since(conn.last_activity);
                     if idle_time > timeout.into() {
                         to_remove.push(id.clone());
                     }
                 }
-                
+
                 for id in to_remove {
                     if let Some(conn) = conns.remove(&id) {
                         println!("关闭空闲连接: {} 从 {}", id, conn.client_address);
                     }
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_secs(1));
             }
         });
-        
+
         self.server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn execute_query(&self, query: &str, connection_id: &str) -> Result<QueryResult, String> {
         println!("执行查询: {}", query);
-        
+
         // 检查连接
         let mut connections = self.server.connections.write().unwrap();
-        
+
         let connection = connections.get_mut(connection_id)
             .ok_or_else(|| format!("连接不存在: {}", connection_id))?;
-        
+
         // 更新活动时间
         connection.last_activity = Utc::now();
-        
+
         // 解析查询
         let parser = self.query_processor.parsers.get("sql")
             .ok_or_else(|| "SQL解析器不可用".to_string())?;
-        
+
         let mut plan = parser.parse(query)?;
-        
+
         // 优化查询
         for optimizer in &self.query_processor.optimizers {
             plan = optimizer.optimize(plan);
         }
-        
+
         // 获取或创建事务
         let transaction_id = match &connection.transaction_id {
             Some(id) => id.clone(),
@@ -25805,12 +25807,12 @@ impl DistributedDatabase {
                 tx_id
             }
         };
-        
+
         let transactions = self.transaction_manager.transactions.read().unwrap();
-        
+
         let transaction = transactions.get(&transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         // 执行查询
         let executor = self.query_processor.executors.get(match plan.operation_type {
             OperationType::Select => "select",
@@ -25822,13 +25824,13 @@ impl DistributedDatabase {
             OperationType::CreateIndex => "create_index",
             OperationType::DropIndex => "drop_index",
         }).ok_or_else(|| "查询执行器不可用".to_string())?;
-        
+
         let start_time = Utc::now();
         let result = executor.execute(plan, transaction)?;
         let end_time = Utc::now();
-        
+
         let execution_time = end_time.signed_duration_since(start_time).to_std().unwrap();
-        
+
         // 自动提交事务
         if matches!(plan.operation_type, OperationType::Select) {
             // 对于SELECT查询，不自动提交
@@ -25838,7 +25840,7 @@ impl DistributedDatabase {
                 drop(transactions);
                 drop(connections);
                 self.commit_transaction(&transaction_id)?;
-                
+
                 // 重新获取连接并清除事务ID
                 let mut connections = self.server.connections.write().unwrap();
                 if let Some(conn) = connections.get_mut(connection_id) {
@@ -25846,24 +25848,24 @@ impl DistributedDatabase {
                 }
             }
         }
-        
+
         Ok(result)
     }
-    
+
     fn begin_transaction(&self, connection_id: &str) -> Result<String, String> {
         println!("开始事务: 连接 {}", connection_id);
-        
+
         // 检查连接
         let connections = self.server.connections.read().unwrap();
-        
+
         if !connections.contains_key(connection_id) {
             return Err(format!("连接不存在: {}", connection_id));
         }
-        
+
         // 创建事务
         let transaction_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let transaction = Transaction {
             id: transaction_id.clone(),
             start_time: now,
@@ -25871,122 +25873,122 @@ impl DistributedDatabase {
             operations: Vec::new(),
             status: TransactionStatus::Active,
         };
-        
+
         // 保存事务
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
         transactions.insert(transaction_id.clone(), transaction);
-        
+
         // 更新连接
         drop(connections);
         let mut connections = self.server.connections.write().unwrap();
-        
+
         if let Some(connection) = connections.get_mut(connection_id) {
             connection.transaction_id = Some(transaction_id.clone());
             connection.last_activity = now;
         }
-        
+
         Ok(transaction_id)
     }
-    
+
     fn commit_transaction(&self, transaction_id: &str) -> Result<(), String> {
         println!("提交事务: {}", transaction_id);
-        
+
         // 获取事务
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不是活动状态: {:?}", transaction.status));
         }
-        
+
         // 在实际实现中，这里会提交所有操作
         for operation in &transaction.operations {
             println!("提交操作: 表 {}, 类型 {:?}", operation.table, operation.operation_type);
             // 实际的提交逻辑
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Committed;
-        
+
         // 释放锁
         // 在实际实现中，这里会释放事务持有的所有锁
-        
+
         Ok(())
     }
-    
+
     fn rollback_transaction(&self, transaction_id: &str) -> Result<(), String> {
         println!("回滚事务: {}", transaction_id);
-        
+
         // 获取事务
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
-        
+
         let transaction = transactions.get_mut(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不是活动状态: {:?}", transaction.status));
         }
-        
+
         // 在实际实现中，这里会回滚所有操作
         for operation in transaction.operations.iter().rev() {
             println!("回滚操作: 表 {}, 类型 {:?}", operation.table, operation.operation_type);
-            
+
             // 还原前镜像
             if let Some(before_image) = &operation.before_image {
                 // 实际的回滚逻辑
             }
         }
-        
+
         // 更新事务状态
         transaction.status = TransactionStatus::Aborted;
-        
+
         // 释放锁
         // 在实际实现中，这里会释放事务持有的所有锁
-        
+
         Ok(())
     }
-    
+
     fn create_table(&self, schema: TableSchema, name: &str) -> Result<(), String> {
         println!("创建表: {}", name);
-        
+
         // 检查表名
         if name.is_empty() || !name.chars().all(|c| c.is_alphanumeric() || c == '_') {
             return Err("无效的表名".to_string());
         }
-        
+
         // 检查表是否已存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         if tables.contains_key(name) {
             return Err(format!("表已存在: {}", name));
         }
-        
+
         // 验证架构
         if schema.columns.is_empty() {
             return Err("表必须至少有一列".to_string());
         }
-        
+
         // 检查主键
         let mut primary_key = None;
-        
+
         for constraint in &schema.constraints {
             if let Constraint::PrimaryKey(column) = constraint {
                 primary_key = Some(column.clone());
-                
+
                 // 检查列是否存在
                 if !schema.columns.iter().any(|c| c.name == *column) {
                     return Err(format!("主键列不存在: {}", column));
                 }
             }
         }
-        
+
         drop(tables);
-        
+
         // 创建表
         let now = Utc::now();
-        
+
         let table = Table {
             name: name.to_string(),
             schema,
@@ -25997,20 +25999,20 @@ impl DistributedDatabase {
             created_at: now,
             last_modified: now,
         };
-        
+
         // 更新存储引擎
         let mut tables = self.storage_engine.tables.write().unwrap();
         tables.insert(name.to_string(), table);
-        
+
         // 更新架构版本
         self.schema_manager.version.fetch_add(1, Ordering::SeqCst);
-        
+
         // 更新分片分配
         self.assign_table_to_shard(name)?;
-        
+
         Ok(())
     }
-    
+
     fn assign_table_to_shard(&self, table_name: &str) -> Result<(), String> {
         // 根据分片策略分配表
         match self.sharding_manager.strategy {
@@ -26019,18 +26021,18 @@ impl DistributedDatabase {
                 let mut hasher = DefaultHasher::new();
                 table_name.hash(&mut hasher);
                 let hash = hasher.finish();
-                
+
                 let shard_id = hash % self.sharding_manager.shard_count as u64;
-                
+
                 // 更新分片表集合
                 let mut shards = self.sharding_manager.shards.write().unwrap();
-                
+
                 if let Some(shard) = shards.get_mut(&(shard_id as u32)) {
                     shard.tables.insert(table_name.to_string());
-                    
+
                     // 设置表的分片键
                     let mut tables = self.storage_engine.tables.write().unwrap();
-                    
+
                     if let Some(table) = tables.get_mut(table_name) {
                         // 选择主键或第一列作为分片键
                         table.shard_key = table.primary_key.clone()
@@ -26043,38 +26045,38 @@ impl DistributedDatabase {
                 return Err("不支持的分片策略".to_string());
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn create_index(&self, table_name: &str, index_name: &str, columns: Vec<String>, index_type: IndexType) -> Result<(), String> {
         println!("创建索引: {} 在表 {}", index_name, table_name);
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         let table = tables.get(table_name)
             .ok_or_else(|| format!("表不存在: {}", table_name))?;
-        
+
         // 检查列是否存在
         for column in &columns {
             if !table.schema.columns.iter().any(|c| c.name == *column) {
                 return Err(format!("列不存在: {}", column));
             }
         }
-        
+
         // 检查索引名是否已存在
         let indexes = self.storage_engine.indexes.read().unwrap();
-        
+
         if indexes.contains_key(index_name) {
             return Err(format!("索引已存在: {}", index_name));
         }
-        
+
         drop(indexes);
-        
+
         // 创建索引
         let now = Utc::now();
-        
+
         let index = Index {
             name: index_name.to_string(),
             table_name: table_name.to_string(),
@@ -26083,46 +26085,46 @@ impl DistributedDatabase {
             data: RwLock::new(BTreeMap::new()),
             created_at: now,
         };
-        
+
         // 更新存储引擎
         let mut indexes = self.storage_engine.indexes.write().unwrap();
         indexes.insert(index_name.to_string(), index);
-        
+
         // 更新表的索引列表
         drop(tables);
         let mut tables = self.storage_engine.tables.write().unwrap();
-        
+
         if let Some(table) = tables.get_mut(table_name) {
             table.indexes.push(index_name.to_string());
             table.last_modified = now;
         }
-        
+
         // 填充索引（遍历表中的所有行）
         if let Some(table) = tables.get(table_name) {
             let rows = table.data.read().unwrap();
             let mut index_data = indexes.get_mut(index_name).unwrap().data.write().unwrap();
-            
+
             for row in rows.iter() {
                 // 构建索引键
                 let index_key = self.build_index_key(row, &columns)?;
-                
+
                 // 添加到索引
                 let entry = index_data.entry(index_key).or_insert_with(Vec::new);
                 entry.push(row.id);
             }
         }
-        
+
         // 更新架构版本
         self.schema_manager.version.fetch_add(1, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn build_index_key(&self, row: &Row, columns: &[String]) -> Result<IndexKey, String> {
         if columns.len() == 1 {
             // 单列索引
             let column = &columns[0];
-            
+
             if let Some(value) = row.values.get(column) {
                 match value {
                     Value::Integer(i) => Ok(IndexKey::Integer(*i)),
@@ -26140,7 +26142,7 @@ impl DistributedDatabase {
         } else {
             // 复合索引
             let mut keys = Vec::new();
-            
+
             for column in columns {
                 if let Some(value) = row.values.get(column) {
                     let key = match value {
@@ -26153,128 +26155,128 @@ impl DistributedDatabase {
                         Value::Uuid(_) => return Err("不支持将UUID列作为索引键".to_string()),
                         Value::Null => return Err("不能将NULL值作为索引键".to_string()),
                     };
-                    
+
                     keys.push(key);
                 } else {
                     return Err(format!("列不存在于行中: {}", column));
                 }
             }
-            
+
             Ok(IndexKey::Composite(keys))
         }
     }
-    
+
     fn drop_table(&self, table_name: &str) -> Result<(), String> {
         println!("删除表: {}", table_name);
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         if !tables.contains_key(table_name) {
             return Err(format!("表不存在: {}", table_name));
         }
-        
+
         // 获取表的索引
         let indexes_to_drop = if let Some(table) = tables.get(table_name) {
             table.indexes.clone()
         } else {
             Vec::new()
         };
-        
+
         drop(tables);
-        
+
         // 删除相关的索引
         let mut indexes = self.storage_engine.indexes.write().unwrap();
-        
+
         for index_name in &indexes_to_drop {
             indexes.remove(index_name);
         }
-        
+
         // 移除表
         let mut tables = self.storage_engine.tables.write().unwrap();
         tables.remove(table_name);
-        
+
         // 更新分片分配
         let mut shards = self.sharding_manager.shards.write().unwrap();
-        
+
         for shard in shards.values_mut() {
             shard.tables.remove(table_name);
         }
-        
+
         // 更新架构版本
         self.schema_manager.version.fetch_add(1, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn drop_index(&self, index_name: &str) -> Result<(), String> {
         println!("删除索引: {}", index_name);
-        
+
         // 检查索引是否存在
         let indexes = self.storage_engine.indexes.read().unwrap();
-        
+
         let table_name = if let Some(index) = indexes.get(index_name) {
             index.table_name.clone()
         } else {
             return Err(format!("索引不存在: {}", index_name));
         };
-        
+
         drop(indexes);
-        
+
         // 移除索引
         let mut indexes = self.storage_engine.indexes.write().unwrap();
         indexes.remove(index_name);
-        
+
         // 更新表的索引列表
         let mut tables = self.storage_engine.tables.write().unwrap();
-        
+
         if let Some(table) = tables.get_mut(&table_name) {
             table.indexes.retain(|i| i != index_name);
             table.last_modified = Utc::now();
         }
-        
+
         // 更新架构版本
         self.schema_manager.version.fetch_add(1, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn insert_row(&self, table_name: &str, values: HashMap<String, Value>, transaction_id: &str) -> Result<u64, String> {
         println!("插入行到表: {}", table_name);
-        
+
         // 检查事务
         let transactions = self.transaction_manager.transactions.read().unwrap();
-        
+
         let transaction = transactions.get(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不是活动状态: {:?}", transaction.status));
         }
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         let table = tables.get(table_name)
             .ok_or_else(|| format!("表不存在: {}", table_name))?;
-        
+
         // 验证列
         for column in &table.schema.columns {
             if !values.contains_key(&column.name) && column.default_value.is_none() && !column.nullable {
                 return Err(format!("缺少不可为空的列: {}", column.name));
             }
         }
-        
+
         // 验证主键
         if let Some(primary_key) = &table.primary_key {
             if !values.contains_key(primary_key) {
                 return Err(format!("缺少主键: {}", primary_key));
             }
-            
+
             // 检查主键唯一性
             let rows = table.data.read().unwrap();
             let pk_value = values.get(primary_key).unwrap();
-            
+
             for row in rows.iter() {
                 if let Some(row_pk) = row.values.get(primary_key) {
                     if row_pk == pk_value {
@@ -26283,26 +26285,26 @@ impl DistributedDatabase {
                 }
             }
         }
-        
+
         drop(tables);
-        
+
         // 获取表的写锁
         let tables = self.storage_engine.tables.read().unwrap();
         let table = tables.get(table_name).unwrap();
         let mut rows = table.data.write().unwrap();
-        
+
         // 生成行ID
         let row_id = if rows.is_empty() {
             1
         } else {
             rows.last().unwrap().id + 1
         };
-        
+
         // 创建行
         let now = Utc::now();
-        
+
         let mut row_values = HashMap::new();
-        
+
         // 填充值
         for column in &table.schema.columns {
             if let Some(value) = values.get(&column.name) {
@@ -26313,49 +26315,49 @@ impl DistributedDatabase {
                 row_values.insert(column.name.clone(), Value::Null);
             }
         }
-        
+
         let row = Row {
             id: row_id,
             values: row_values,
             created_at: now,
             updated_at: now,
         };
-        
+
         // 更新索引
         for index_name in &table.indexes {
             let indexes = self.storage_engine.indexes.read().unwrap();
-            
+
             if let Some(index) = indexes.get(index_name) {
                 let index_key = self.build_index_key(&row, &index.columns)?;
-                
+
                 // 检查唯一性（对于唯一索引）
                 if matches!(index.index_type, IndexType::Unique) {
                     let index_data = index.data.read().unwrap();
-                    
+
                     if index_data.contains_key(&index_key) {
                         return Err(format!("唯一索引冲突: {}", index_name));
                     }
                 }
-                
+
                 drop(indexes);
-                
+
                 // 添加到索引
                 let indexes = self.storage_engine.indexes.read().unwrap();
                 let index = indexes.get(index_name).unwrap();
                 let mut index_data = index.data.write().unwrap();
-                
+
                 let entry = index_data.entry(index_key).or_insert_with(Vec::new);
                 entry.push(row_id);
             }
         }
-        
+
         // 添加行
         rows.push(row);
-        
+
         // 记录事务操作
         drop(transactions);
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
-        
+
         if let Some(transaction) = transactions.get_mut(transaction_id) {
             let operation = Operation {
                 table: table_name.to_string(),
@@ -26364,44 +26366,44 @@ impl DistributedDatabase {
                 before_image: None,
                 after_image: Some([(row_id, rows.last().unwrap().clone())].iter().cloned().collect()),
             };
-            
+
             transaction.operations.push(operation);
         }
-        
+
         // 复制到辅助节点（如果是主节点）
         if self.is_primary_node() {
             self.replicate_operation(OperationType::Insert, table_name, vec![row_id])?;
         }
-        
+
         Ok(row_id)
     }
-    
+
     fn is_primary_node(&self) -> bool {
         let nodes = self.replication_manager.nodes.read().unwrap();
-        
+
         if let Some(node) = nodes.get(&self.node_id) {
             matches!(node.role, NodeRole::Primary)
         } else {
             false
         }
     }
-    
+
     fn replicate_operation(&self, op_type: OperationType, table_name: &str, row_ids: Vec<u64>) -> Result<(), String> {
         // 获取辅助节点
         let nodes = self.replication_manager.nodes.read().unwrap();
-        
+
         let secondaries: Vec<_> = nodes.values()
             .filter(|n| matches!(n.role, NodeRole::Secondary) && matches!(n.status, NodeStatus::Healthy))
             .cloned()
             .collect();
-        
+
         if secondaries.is_empty() {
             return Ok(());
         }
-        
+
         // 在实际实现中，这里会异步将操作复制到辅助节点
         // 根据复制模式决定是否等待响应
-        
+
         match self.replication_manager.replication_mode {
             ReplicationMode::Sync => {
                 // 同步复制，等待所有辅助节点确认
@@ -26412,9 +26414,9 @@ impl DistributedDatabase {
             ReplicationMode::SemiSync => {
                 // 半同步复制，等待部分辅助节点确认
                 let min_ack = (secondaries.len() + 1) / 2; // 至少一半节点确认
-                
+
                 println!("半同步复制操作，等待 {} 个节点确认", min_ack);
-                
+
                 for node in secondaries.iter().take(min_ack) {
                     println!("复制操作到节点 {}: {:?} {} {:?}", node.node_id, op_type, table_name, row_ids);
                 }
@@ -26426,63 +26428,63 @@ impl DistributedDatabase {
                 }
             },
         }
-        
+
         Ok(())
     }
-    
+
     fn update_row(&self, table_name: &str, row_id: u64, values: HashMap<String, Value>, transaction_id: &str) -> Result<(), String> {
         println!("更新表 {} 中的行 {}", table_name, row_id);
-        
+
         // 检查事务
         let transactions = self.transaction_manager.transactions.read().unwrap();
-        
+
         let transaction = transactions.get(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不是活动状态: {:?}", transaction.status));
         }
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         let table = tables.get(table_name)
             .ok_or_else(|| format!("表不存在: {}", table_name))?;
-        
+
         // 验证列
         for column_name in values.keys() {
             if !table.schema.columns.iter().any(|c| c.name == *column_name) {
                 return Err(format!("列不存在: {}", column_name));
             }
         }
-        
+
         // 获取行
         let mut rows = table.data.write().unwrap();
-        
+
         let row_index = rows.iter().position(|r| r.id == row_id)
             .ok_or_else(|| format!("行不存在: {}", row_id))?;
-        
+
         // 保存原始行（前镜像）
         let before_image = rows[row_index].clone();
-        
+
         // 更新行
         let now = Utc::now();
-        
+
         // 克隆行
         let mut updated_row = before_image.clone();
         updated_row.updated_at = now;
-        
+
         // 更新值
         for (column, value) in values.iter() {
             updated_row.values.insert(column.clone(), value.clone());
         }
-        
+
         // 验证主键
         if let Some(primary_key) = &table.primary_key {
             if values.contains_key(primary_key) {
                 // 检查主键唯一性
                 let pk_value = updated_row.values.get(primary_key).unwrap();
-                
+
                 for (i, row) in rows.iter().enumerate() {
                     if i != row_index && row.values.get(primary_key) == Some(pk_value) {
                         return Err(format!("主键冲突: {}", primary_key));
@@ -26490,27 +26492,27 @@ impl DistributedDatabase {
                 }
             }
         }
-        
+
         // 从索引中移除旧值
         for index_name in &table.indexes {
             let indexes = self.storage_engine.indexes.read().unwrap();
-            
+
             if let Some(index) = indexes.get(index_name) {
                 let old_key = self.build_index_key(&before_image, &index.columns)?;
-                
+
                 let mut index_data = index.data.write().unwrap();
-                
+
                 if let Some(ids) = index_data.get_mut(&old_key) {
                     ids.retain(|&id| id != row_id);
-                    
+
                     if ids.is_empty() {
                         index_data.remove(&old_key);
                     }
                 }
-                
+
                 // 计算新键
                 let new_key = self.build_index_key(&updated_row, &index.columns)?;
-                
+
                 // 检查唯一性（对于唯一索引）
                 if matches!(index.index_type, IndexType::Unique) {
                     if let Some(ids) = index_data.get(&new_key) {
@@ -26519,23 +26521,23 @@ impl DistributedDatabase {
                         }
                     }
                 }
-                
+
                 // 添加新键
                 let entry = index_data.entry(new_key).or_insert_with(Vec::new);
-                
+
                 if !entry.contains(&row_id) {
                     entry.push(row_id);
                 }
             }
         }
-        
+
         // 更新行
         rows[row_index] = updated_row.clone();
-        
+
         // 记录事务操作
         drop(transactions);
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
-        
+
         if let Some(transaction) = transactions.get_mut(transaction_id) {
             let operation = Operation {
                 table: table_name.to_string(),
@@ -26544,72 +26546,72 @@ impl DistributedDatabase {
                 before_image: Some([(row_id, before_image)].iter().cloned().collect()),
                 after_image: Some([(row_id, updated_row)].iter().cloned().collect()),
             };
-            
+
             transaction.operations.push(operation);
         }
-        
+
         // 复制到辅助节点（如果是主节点）
         if self.is_primary_node() {
             self.replicate_operation(OperationType::Update, table_name, vec![row_id])?;
         }
-        
+
         Ok(())
     }
-    
+
     fn delete_row(&self, table_name: &str, row_id: u64, transaction_id: &str) -> Result<(), String> {
         println!("删除表 {} 中的行 {}", table_name, row_id);
-        
+
         // 检查事务
         let transactions = self.transaction_manager.transactions.read().unwrap();
-        
+
         let transaction = transactions.get(transaction_id)
             .ok_or_else(|| format!("事务不存在: {}", transaction_id))?;
-        
+
         if transaction.status != TransactionStatus::Active {
             return Err(format!("事务不是活动状态: {:?}", transaction.status));
         }
-        
+
         // 检查表是否存在
         let tables = self.storage_engine.tables.read().unwrap();
-        
+
         let table = tables.get(table_name)
             .ok_or_else(|| format!("表不存在: {}", table_name))?;
-        
+
         // 获取行
         let mut rows = table.data.write().unwrap();
-        
+
         let row_index = rows.iter().position(|r| r.id == row_id)
             .ok_or_else(|| format!("行不存在: {}", row_id))?;
-        
+
         // 保存原始行（前镜像）
         let before_image = rows[row_index].clone();
-        
+
         // 从索引中移除
         for index_name in &table.indexes {
             let indexes = self.storage_engine.indexes.read().unwrap();
-            
+
             if let Some(index) = indexes.get(index_name) {
                 let key = self.build_index_key(&before_image, &index.columns)?;
-                
+
                 let mut index_data = index.data.write().unwrap();
-                
+
                 if let Some(ids) = index_data.get_mut(&key) {
                     ids.retain(|&id| id != row_id);
-                    
+
                     if ids.is_empty() {
                         index_data.remove(&key);
                     }
                 }
             }
         }
-        
+
         // 删除行
         rows.remove(row_index);
-        
+
         // 记录事务操作
         drop(transactions);
         let mut transactions = self.transaction_manager.transactions.write().unwrap();
-        
+
         if let Some(transaction) = transactions.get_mut(transaction_id) {
             let operation = Operation {
                 table: table_name.to_string(),
@@ -26618,58 +26620,58 @@ impl DistributedDatabase {
                 before_image: Some([(row_id, before_image)].iter().cloned().collect()),
                 after_image: None,
             };
-            
+
             transaction.operations.push(operation);
         }
-        
+
         // 复制到辅助节点（如果是主节点）
         if self.is_primary_node() {
             self.replicate_operation(OperationType::Delete, table_name, vec![row_id])?;
         }
-        
+
         Ok(())
     }
-    
+
     fn get_database_status(&self) -> DatabaseStatus {
         // 获取节点状态
         let nodes = self.replication_manager.nodes.read().unwrap();
-        
+
         let mut primary_count = 0;
         let mut secondary_count = 0;
         let mut healthy_count = 0;
-        
+
         for node in nodes.values() {
             match node.role {
                 NodeRole::Primary => primary_count += 1,
                 NodeRole::Secondary => secondary_count += 1,
                 _ => {},
             }
-            
+
             if matches!(node.status, NodeStatus::Healthy) {
                 healthy_count += 1;
             }
         }
-        
+
         // 获取表和索引信息
         let tables = self.storage_engine.tables.read().unwrap();
         let indexes = self.storage_engine.indexes.read().unwrap();
-        
+
         let mut row_count = 0;
-        
+
         for table in tables.values() {
             row_count += table.data.read().unwrap().len();
         }
-        
+
         // 获取事务信息
         let transactions = self.transaction_manager.transactions.read().unwrap();
-        
+
         let active_transactions = transactions.values()
             .filter(|tx| tx.status == TransactionStatus::Active)
             .count();
-        
+
         // 获取连接信息
         let connections = self.server.connections.read().unwrap();
-        
+
         DatabaseStatus {
             node_id: self.node_id.clone(),
             role: self.get_node_role(),
@@ -26686,10 +26688,10 @@ impl DistributedDatabase {
             schema_version: self.schema_manager.version.load(Ordering::SeqCst),
         }
     }
-    
+
     fn get_node_role(&self) -> NodeRole {
         let nodes = self.replication_manager.nodes.read().unwrap();
-        
+
         if let Some(node) = nodes.get(&self.node_id) {
             node.role.clone()
         } else {
@@ -26813,14 +26815,14 @@ impl Ord for IndexKey {
                 if len_cmp != std::cmp::Ordering::Equal {
                     return len_cmp;
                 }
-                
+
                 for (a_key, b_key) in a.iter().zip(b.iter()) {
                     let key_cmp = a_key.cmp(b_key);
                     if key_cmp != std::cmp::Ordering::Equal {
                         return key_cmp;
                     }
                 }
-                
+
                 std::cmp::Ordering::Equal
             },
             // 类型不同时的比较规则
@@ -27196,22 +27198,22 @@ impl DistributedSearchEngine {
     fn new(node_id: &str, data_dir: &Path, bind_address: &str) -> Self {
         let index_dir = data_dir.join("indexes");
         let doc_dir = data_dir.join("documents");
-        
+
         let index_manager = IndexManager {
             indexes: RwLock::new(HashMap::new()),
             index_dir,
         };
-        
+
         let document_store = DocumentStore {
             documents: RwLock::new(HashMap::new()),
             doc_dir,
         };
-        
+
         let query_processor = SearchQueryProcessor {
             parsers: HashMap::new(),
             searchers: HashMap::new(),
         };
-        
+
         let node_manager = SearchNodeManager {
             nodes: RwLock::new(HashMap::new()),
             cluster_state: RwLock::new(ClusterState {
@@ -27223,19 +27225,19 @@ impl DistributedSearchEngine {
             node_listener: None,
             running: AtomicBool::new(false),
         };
-        
+
         let replication_manager = SearchReplicationManager {
             replication_tasks: RwLock::new(Vec::new()),
             running: AtomicBool::new(false),
             replication_thread: None,
         };
-        
+
         let server = SearchServer {
             server: None,
             running: AtomicBool::new(false),
             bind_address: bind_address.to_string(),
         };
-        
+
         DistributedSearchEngine {
             node_id: node_id.to_string(),
             index_manager,
@@ -27246,37 +27248,37 @@ impl DistributedSearchEngine {
             server,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式搜索引擎");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.index_manager.index_dir) {
             return Err(format!("创建索引目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.document_store.doc_dir) {
             return Err(format!("创建文档目录失败: {}", e));
         }
-        
+
         // 加载索引
         self.load_indexes()?;
-        
+
         // 注册当前节点
         self.register_node()?;
-        
+
         // 启动复制管理器
         self.start_replication_manager()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式搜索引擎");
-        
+
         // 停止服务器
         self.server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.server.server.take() {
@@ -27285,7 +27287,7 @@ impl DistributedSearchEngine {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止复制管理器
         self.replication_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.replication_manager.replication_thread.take() {
@@ -27294,7 +27296,7 @@ impl DistributedSearchEngine {
                 Err(e) => println!("复制线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止节点监听器
         self.node_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.node_manager.node_listener.take() {
@@ -27303,7 +27305,7 @@ impl DistributedSearchEngine {
                 Err(e) => println!("节点监听器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 提交所有待处理的写入
         let indexes = self.index_manager.indexes.read().unwrap();
         for (name, index) in indexes.iter() {
@@ -27312,32 +27314,32 @@ impl DistributedSearchEngine {
                 Err(e) => println!("提交索引 {} 失败: {}", name, e),
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn load_indexes(&self) -> Result<(), String> {
         println!("加载索引");
-        
+
         let index_dir = &self.index_manager.index_dir;
-        
+
         if !index_dir.exists() {
             return Ok(());
         }
-        
+
         match std::fs::read_dir(index_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_dir() {
                             let index_name = path.file_name()
                                 .and_then(|os| os.to_str())
                                 .ok_or("无效的索引目录名".to_string())?;
-                            
+
                             println!("加载索引: {}", index_name);
-                            
+
                             match self.load_index(index_name, &path) {
                                 Ok(_) => {},
                                 Err(e) => println!("加载索引 {} 失败: {}", index_name, e),
@@ -27348,26 +27350,26 @@ impl DistributedSearchEngine {
             },
             Err(e) => return Err(format!("读取索引目录失败: {}", e)),
         }
-        
+
         Ok(())
     }
-    
+
     fn load_index(&self, name: &str, path: &Path) -> Result<(), String> {
         // 加载索引元数据
         let metadata_path = path.join("metadata.json");
-        
+
         if !metadata_path.exists() {
             return Err(format!("索引元数据不存在: {}", name));
         }
-        
+
         let metadata_json = match std::fs::read_to_string(&metadata_path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取索引元数据失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析索引元数据: {}", name);
-        
+
         // 创建索引结构
         let schema = IndexSchema {
             fields: Vec::new(),
@@ -27378,7 +27380,7 @@ impl DistributedSearchEngine {
                 similarity: Similarity::BM25 { k1: 1.2, b: 0.75 },
             },
         };
-        
+
         let metadata = IndexMetadata {
             doc_count: AtomicUsize::new(0),
             created_at: Utc::now(),
@@ -27387,7 +27389,7 @@ impl DistributedSearchEngine {
             replica_nodes: Vec::new(),
             settings: HashMap::new(),
         };
-        
+
         let index = SearchIndex {
             name: name.to_string(),
             schema,
@@ -27395,19 +27397,19 @@ impl DistributedSearchEngine {
             metadata,
             writer: RwLock::new(None),
         };
-        
+
         // 保存索引
         let mut indexes = self.index_manager.indexes.write().unwrap();
         indexes.insert(name.to_string(), index);
-        
+
         Ok(())
     }
-    
+
     fn register_node(&self) -> Result<(), String> {
         println!("注册搜索节点");
-        
+
         let mut nodes = self.node_manager.nodes.write().unwrap();
-        
+
         // 创建当前节点信息
         let node = SearchNode {
             id: self.node_id.clone(),
@@ -27423,127 +27425,127 @@ impl DistributedSearchEngine {
                 disk_used: 100 * 1024 * 1024 * 1024,   // 100GB（示例值）
             },
         };
-        
+
         nodes.insert(self.node_id.clone(), node);
-        
+
         // 启动节点发现服务
         self.start_node_listener()?;
-        
+
         // 尝试加入集群
         self.join_cluster()?;
-        
+
         Ok(())
     }
-    
+
     fn start_node_listener(&mut self) -> Result<(), String> {
         println!("启动节点监听器");
-        
+
         let nodes = self.node_manager.nodes.clone();
         let cluster_state = self.node_manager.cluster_state.clone();
         let node_id = self.node_id.clone();
-        
+
         self.node_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.node_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 更新节点心跳
                 let mut nodes_map = nodes.write().unwrap();
-                
+
                 if let Some(node) = nodes_map.get_mut(&node_id) {
                     node.last_heartbeat = Utc::now();
                     node.status = NodeStatus::Green;
-                    
+
                     // 更新资源使用情况
                     // 在实际实现中，这里会收集系统资源使用情况
                 }
-                
+
                 // 检测离线节点
                 let now = Utc::now();
                 let timeout = Duration::from_secs(30);
-                
+
                 for (id, node) in nodes_map.iter_mut() {
                     if id != &node_id {
                         let elapsed = now.signed_duration_since(node.last_heartbeat);
-                        
+
                         if elapsed > timeout.into() && node.status != NodeStatus::Offline {
                             println!("节点离线: {}", id);
                             node.status = NodeStatus::Offline;
-                            
+
                             // 在实际实现中，这里会触发重新分配
                         }
                     }
                 }
-                
+
                 // 主节点选举（简化版本）
                 let mut cluster = cluster_state.write().unwrap();
-                
-                if cluster.master_node.is_none() || 
-                   cluster.master_node.as_ref().map_or(false, |id| 
+
+                if cluster.master_node.is_none() ||
+                   cluster.master_node.as_ref().map_or(false, |id|
                         nodes_map.get(id).map_or(true, |n| n.status == NodeStatus::Offline)) {
                     // 需要选举新的主节点
                     let candidates: Vec<_> = nodes_map.iter()
                         .filter(|(_, n)| n.status == NodeStatus::Green && n.roles.contains(&NodeRole::Master))
                         .map(|(id, _)| id.clone())
                         .collect();
-                    
+
                     if !candidates.is_empty() {
                         // 简单选择第一个健康节点作为主节点
                         let new_master = candidates[0].clone();
                         cluster.master_node = Some(new_master.clone());
                         cluster.version += 1;
-                        
+
                         println!("选举新的主节点: {}", new_master);
                     }
                 }
-                
+
                 // 休眠一段时间
                 thread::sleep(Duration::from_secs(5));
             }
         });
-        
+
         self.node_manager.node_listener = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn join_cluster(&self) -> Result<(), String> {
         println!("加入搜索集群");
-        
+
         // 在实际实现中，这里会尝试连接其他已知节点
         // 并获取集群状态
-        
+
         // 简化：假设这是第一个节点，将其设为主节点
         let mut cluster_state = self.node_manager.cluster_state.write().unwrap();
-        
+
         if cluster_state.master_node.is_none() {
             let nodes = self.node_manager.nodes.read().unwrap();
-            
+
             if let Some(node) = nodes.get(&self.node_id) {
                 if node.roles.contains(&NodeRole::Master) {
                     cluster_state.master_node = Some(self.node_id.clone());
                     cluster_state.version = 1;
-                    
+
                     println!("成为主节点: {}", self.node_id);
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_replication_manager(&mut self) -> Result<(), String> {
         println!("启动复制管理器");
-        
+
         let replication_tasks = self.replication_manager.replication_tasks.clone();
         let node_id = self.node_id.clone();
         let index_dir = self.index_manager.index_dir.clone();
-        
+
         self.replication_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.replication_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 处理复制任务
@@ -27553,95 +27555,95 @@ impl DistributedSearchEngine {
                     tasks.clear();
                     result
                 };
-                
+
                 for task in tasks_to_process {
                     println!("处理索引复制任务: {} -> {}", task.index_name, task.target_node);
-                    
+
                     // 在实际实现中，这里会从磁盘读取段数据并发送到目标节点
-                    
+
                     println!("索引段复制完成: {}/{}", task.index_name, task.segment_id);
                 }
-                
+
                 // 休眠一会儿
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.replication_manager.replication_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动搜索服务器");
-        
+
         let bind_address = self.server.bind_address.clone();
         let node_id = self.node_id.clone();
-        
+
         self.server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.server.running.clone();
-        
+
         let index_manager = Arc::new(self.index_manager);
         let document_store = Arc::new(self.document_store);
         let query_processor = Arc::new(self.query_processor);
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP服务器
             println!("搜索服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn create_index(&self, name: &str, schema: IndexSchema) -> Result<(), String> {
         println!("创建索引: {}", name);
-        
+
         // 验证索引名称
         if name.is_empty() || !name.chars().all(|c| c.is_alphanumeric() || c == '_' || c == '-') {
             return Err("无效的索引名称".to_string());
         }
-        
+
         // 检查索引是否已存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         if indexes.contains_key(name) {
             return Err(format!("索引已存在: {}", name));
         }
-        
+
         drop(indexes);
-        
+
         // 验证架构
         if schema.fields.is_empty() {
             return Err("索引必须至少有一个字段".to_string());
         }
-        
+
         // 检查主键
         if let Some(pk) = &schema.index_options.primary_key {
             if !schema.fields.iter().any(|f| f.name == *pk) {
                 return Err(format!("主键字段不存在: {}", pk));
             }
         }
-        
+
         // 创建索引目录
         let index_path = self.index_manager.index_dir.join(name);
-        
+
         if let Err(e) = std::fs::create_dir_all(&index_path) {
             return Err(format!("创建索引目录失败: {}", e));
         }
-        
+
         // 创建索引写入器
         let now = Utc::now();
-        
+
         let writer = IndexWriter {
             buffer: Vec::new(),
             max_buffer_size: 1000,
@@ -27649,7 +27651,7 @@ impl DistributedSearchEngine {
             auto_commit_interval: Duration::from_secs(30),
             last_commit: now,
         };
-        
+
         // 创建索引元数据
         let metadata = IndexMetadata {
             doc_count: AtomicUsize::new(0),
@@ -27659,7 +27661,7 @@ impl DistributedSearchEngine {
             replica_nodes: Vec::new(),
             settings: HashMap::new(),
         };
-        
+
         // 创建索引
         let index = SearchIndex {
             name: name.to_string(),
@@ -27668,83 +27670,83 @@ impl DistributedSearchEngine {
             metadata,
             writer: RwLock::new(Some(writer)),
         };
-        
+
         // 保存索引
         let mut indexes = self.index_manager.indexes.write().unwrap();
         indexes.insert(name.to_string(), index);
-        
+
         // 保存元数据到磁盘
         self.save_index_metadata(name)?;
-        
+
         // 更新集群状态
         self.update_index_allocation(name)?;
-        
+
         Ok(())
     }
-    
+
     fn save_index_metadata(&self, index_name: &str) -> Result<(), String> {
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         let index = indexes.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 在实际实现中，这里会将元数据序列化为JSON
         let metadata_json = format!("{{\"name\":\"{}\",\"doc_count\":{},\"created_at\":\"{}\",\"primary_node\":\"{}\"}}",
                                    index_name,
                                    index.metadata.doc_count.load(Ordering::SeqCst),
                                    index.metadata.created_at,
                                    index.metadata.primary_node);
-        
+
         let metadata_path = self.index_manager.index_dir.join(index_name).join("metadata.json");
-        
+
         if let Err(e) = std::fs::write(&metadata_path, metadata_json) {
             return Err(format!("写入索引元数据失败: {}", e));
         }
-        
+
         Ok(())
     }
-    
+
     fn update_index_allocation(&self, index_name: &str) -> Result<(), String> {
         // 检查是否是主节点
         let cluster_state = self.node_manager.cluster_state.read().unwrap();
-        
+
         if cluster_state.master_node.as_ref() != Some(&self.node_id) {
             // 只有主节点可以更新分配
             return Ok(());
         }
-        
+
         drop(cluster_state);
-        
+
         // 获取可用节点
         let nodes = self.node_manager.nodes.read().unwrap();
-        
+
         let available_nodes: Vec<_> = nodes.iter()
             .filter(|(_, node)| node.status == NodeStatus::Green && node.roles.contains(&NodeRole::DataNode))
             .map(|(id, _)| id.clone())
             .collect();
-        
+
         if available_nodes.is_empty() {
             return Err("没有可用的数据节点".to_string());
         }
-        
+
         // 更新集群状态
         let mut cluster_state = self.node_manager.cluster_state.write().unwrap();
-        
+
         // 分配索引副本（简化：将索引分配给所有可用节点）
         cluster_state.index_allocations.insert(index_name.to_string(), available_nodes);
         cluster_state.version += 1;
-        
+
         // 更新索引元数据
         drop(cluster_state);
         drop(nodes);
-        
+
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         if let Some(index) = indexes.get(index_name) {
             // 获取副本节点
             let mut replica_nodes = Vec::new();
             let cluster_state = self.node_manager.cluster_state.read().unwrap();
-            
+
             if let Some(allocated_nodes) = cluster_state.index_allocations.get(index_name) {
                 for node_id in allocated_nodes {
                     if node_id != &self.node_id {
@@ -27752,58 +27754,58 @@ impl DistributedSearchEngine {
                     }
                 }
             }
-            
+
             // 更新索引元数据
             drop(cluster_state);
             drop(indexes);
-            
+
             let indexes = self.index_manager.indexes.read().unwrap();
-            
+
             if let Some(index) = indexes.get(index_name) {
                 let mut index_meta = index.metadata;
                 index_meta.replica_nodes = replica_nodes;
-                
+
                 // 在实际实现中，这里会更新索引元数据
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn index_document(&self, index_name: &str, document: Document) -> Result<(), String> {
         println!("索引文档: {} -> {}", index_name, document.id);
-        
+
         // 检查索引是否存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         let index = indexes.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 验证文档字段
         for field in &index.schema.fields {
             if field.name == "id" && !document.fields.contains_key(&field.name) {
                 return Err("缺少ID字段".to_string());
             }
-            
+
             if field.name != "id" && !field.nullable && !document.fields.contains_key(&field.name) {
                 return Err(format!("缺少必填字段: {}", field.name));
             }
         }
-        
+
         // 检查文档ID唯一性
         // 在实际实现中，这里会检查ID是否已存在
-        
+
         // 将文档添加到写入缓冲区
         let mut writer = index.writer.write().unwrap();
-        
+
         if let Some(w) = writer.as_mut() {
             w.buffer.push(document.clone());
-            
+
             // 自动提交
             if w.auto_commit {
                 let now = Utc::now();
                 let elapsed = now.signed_duration_since(w.last_commit);
-                
+
                 if elapsed > w.auto_commit_interval.into() || w.buffer.len() >= w.max_buffer_size {
                     drop(writer);
                     self.commit_index(index_name)?;
@@ -27812,22 +27814,22 @@ impl DistributedSearchEngine {
         } else {
             return Err(format!("索引 {} 不可写", index_name));
         }
-        
+
         // 添加到文档存储
         self.store_document(index_name, &document)?;
-        
+
         Ok(())
     }
-    
+
     fn store_document(&self, index_name: &str, document: &Document) -> Result<(), String> {
         // 创建存储文档
         let now = Utc::now();
-        
+
         let mut stored_fields = HashMap::new();
-        
+
         // 只存储标记为stored的字段
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         if let Some(index) = indexes.get(index_name) {
             for field in &index.schema.fields {
                 if field.stored {
@@ -27841,72 +27843,72 @@ impl DistributedSearchEngine {
                             FieldValue::Vector(vec) => format!("{:?}", vec).as_bytes().to_vec(),
                             FieldValue::Geo { lat, lon } => format!("{},{}", lat, lon).as_bytes().to_vec(),
                         };
-                        
+
                         stored_fields.insert(field.name.clone(), serialized);
                     }
                 }
             }
         }
-        
+
         let stored_doc = StoredDocument {
             id: document.id.clone(),
             fields: stored_fields,
             created_at: now,
             updated_at: now,
         };
-        
+
         // 保存到文档存储
         let mut documents = self.document_store.documents.write().unwrap();
         documents.insert(document.id.clone(), stored_doc);
-        
+
         // 在实际实现中，这里会将文档写入磁盘
-        
+
         Ok(())
     }
-    
+
     fn commit_index(&self, index_name: &str) -> Result<(), String> {
         println!("提交索引: {}", index_name);
-        
+
         // 检查索引是否存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         let index = indexes.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 获取写入器
         let mut writer = index.writer.write().unwrap();
-        
+
         if let Some(w) = writer.as_mut() {
             if w.buffer.is_empty() {
                 return Ok(());
             }
-            
+
             // 创建新段
             let segment_id = uuid::Uuid::new_v4().to_string();
             let now = Utc::now();
-            
+
             let doc_count = w.buffer.len();
-            
+
             // 处理文档并构建倒排索引
             let mut field_data = HashMap::new();
-            
+
             for field in &index.schema.fields {
                 if field.indexed {
                     match field.field_type {
                         FieldType::Text => {
                             let mut terms = BTreeMap::new();
-                            
+
                             for (doc_id, doc) in w.buffer.iter().enumerate() {
                                 if let Some(FieldValue::Text(text)) = doc.fields.get(&field.name) {
                                     if field.tokenized {
                                         // 在实际实现中，这里会使用分析器进行分词
                                         let tokens = text.split_whitespace().collect::<Vec<_>>();
-                                        
+
                                         for (pos, token) in tokens.iter().enumerate() {
                                             let term = token.to_lowercase();
-                                            
+
                                             let entry = terms.entry(term).or_insert_with(Vec::new);
-                                            
+
                                             let posting = if let Some(idx) = entry.iter().position(|p: &PostingList| p.doc_id == doc_id as u32) {
                                                 &mut entry[idx]
                                             } else {
@@ -27918,16 +27920,16 @@ impl DistributedSearchEngine {
                                                 });
                                                 entry.last_mut().unwrap()
                                             };
-                                            
+
                                             posting.positions.push(pos as u32);
                                             posting.term_freq += 1;
                                         }
                                     } else {
                                         // 不分词，整个文本作为一个词项
                                         let term = text.to_lowercase();
-                                        
+
                                         let entry = terms.entry(term).or_insert_with(Vec::new);
-                                        
+
                                         entry.push(PostingList {
                                             doc_id: doc_id as u32,
                                             positions: vec![0],
@@ -27937,41 +27939,41 @@ impl DistributedSearchEngine {
                                     }
                                 }
                             }
-                            
+
                             field_data.insert(field.name.clone(), FieldData::Terms(terms));
                         },
                         FieldType::Numeric => {
                             let mut values = BTreeMap::new();
-                            
+
                             for (doc_id, doc) in w.buffer.iter().enumerate() {
                                 if let Some(FieldValue::Numeric(num)) = doc.fields.get(&field.name) {
                                     let entry = values.entry(*num).or_insert_with(Vec::new);
                                     entry.push(doc_id as u32);
                                 }
                             }
-                            
+
                             field_data.insert(field.name.clone(), FieldData::Numeric(values));
                         },
                         FieldType::Vector => {
                             let mut vectors = Vec::new();
-                            
+
                             for (doc_id, doc) in w.buffer.iter().enumerate() {
                                 if let Some(FieldValue::Vector(vec)) = doc.fields.get(&field.name) {
                                     vectors.push((vec.clone(), doc_id as u32));
                                 }
                             }
-                            
+
                             field_data.insert(field.name.clone(), FieldData::Vectors(vectors));
                         },
                         FieldType::Geo => {
                             let mut points = Vec::new();
-                            
+
                             for (doc_id, doc) in w.buffer.iter().enumerate() {
                                 if let Some(FieldValue::Geo { lat, lon }) = doc.fields.get(&field.name) {
                                     points.push((*lat, *lon, doc_id as u32));
                                 }
                             }
-                            
+
                             field_data.insert(field.name.clone(), FieldData::Geo(points));
                         },
                         _ => {
@@ -27980,7 +27982,7 @@ impl DistributedSearchEngine {
                     }
                 }
             }
-            
+
             // 创建新段
             let segment = IndexSegment {
                 id: segment_id.clone(),
@@ -27992,31 +27994,31 @@ impl DistributedSearchEngine {
                 created_at: now,
                 size_bytes: 0, // 在实际实现中，这里会计算实际大小
             };
-            
+
             // 在实际实现中，这里会将段写入磁盘
             let segment_path = self.index_manager.index_dir.join(index_name).join("segments").join(&segment_id);
-            
+
             if let Err(e) = std::fs::create_dir_all(&segment_path) {
                 return Err(format!("创建段目录失败: {}", e));
             }
-            
+
             println!("新段创建: {}/{}", index_name, segment_id);
-            
+
             // 更新索引元数据
             index.metadata.doc_count.fetch_add(doc_count, Ordering::SeqCst);
             index.metadata.last_modified = now;
-            
+
             // 添加段到索引
             let segments = &mut index.segments;
             segments.push(segment);
-            
+
             // 清空缓冲区
             w.buffer.clear();
             w.last_commit = now;
-            
+
             // 创建复制任务
             let replica_nodes = index.metadata.replica_nodes.clone();
-            
+
             for target_node in replica_nodes {
                 let task = SearchReplicationTask {
                     index_name: index_name.to_string(),
@@ -28026,125 +28028,125 @@ impl DistributedSearchEngine {
                     priority: 1,
                     created_at: now,
                 };
-                
+
                 self.replication_manager.replication_tasks.write().unwrap().push(task);
             }
-            
+
             // 保存元数据
             self.save_index_metadata(index_name)?;
-            
+
             // 检查是否需要合并段
             drop(writer);
-            
+
             if segments.len() > 10 {
                 // 触发段合并
                 self.merge_segments(index_name)?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn merge_segments(&self, index_name: &str) -> Result<(), String> {
         println!("合并索引段: {}", index_name);
-        
+
         // 在实际实现中，这里会根据合并策略选择要合并的段
         // 然后合并它们并创建新段
-        
+
         Ok(())
     }
-    
+
     fn get_document(&self, index_name: &str, doc_id: &str) -> Result<Option<Document>, String> {
         // 检查索引是否存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         if !indexes.contains_key(index_name) {
             return Err(format!("索引不存在: {}", index_name));
         }
-        
+
         // 从文档存储中获取文档
         let documents = self.document_store.documents.read().unwrap();
-        
+
         if let Some(stored_doc) = documents.get(doc_id) {
             // 构建文档对象
             let mut fields = HashMap::new();
-            
+
             // 在实际实现中，这里会根据字段类型反序列化
             for (name, value) in &stored_doc.fields {
                 // 简化：假设所有字段都是文本
                 let text = String::from_utf8_lossy(value).to_string();
                 fields.insert(name.clone(), FieldValue::Text(text));
             }
-            
+
             let doc = Document {
                 id: doc_id.to_string(),
                 fields,
                 boost: 1.0,
             };
-            
+
             return Ok(Some(doc));
         }
-        
+
         Ok(None)
     }
-    
+
     fn delete_document(&self, index_name: &str, doc_id: &str) -> Result<bool, String> {
         println!("删除文档: {} -> {}", index_name, doc_id);
-        
+
         // 检查索引是否存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         if !indexes.contains_key(index_name) {
             return Err(format!("索引不存在: {}", index_name));
         }
-        
+
         // 从文档存储中删除文档
         let mut documents = self.document_store.documents.write().unwrap();
         let removed = documents.remove(doc_id).is_some();
-        
+
         if removed {
             // 在实际实现中，这里会标记文档为已删除
             // 并在下一次合并时物理删除
-            
+
             // 标记文档为已删除
             // 注意：这是一个简化实现，实际上需要根据文档ID查找对应的段和内部doc_id
         }
-        
+
         Ok(removed)
     }
-    
+
     fn search(&self, index_name: &str, query: Query, limit: usize) -> Result<SearchResults, String> {
         println!("搜索: {} -> {:?}", index_name, query);
-        
+
         // 检查索引是否存在
         let indexes = self.index_manager.indexes.read().unwrap();
-        
+
         let index = indexes.get(index_name)
             .ok_or_else(|| format!("索引不存在: {}", index_name))?;
-        
+
         // 提交任何未提交的更改
         match self.commit_index(index_name) {
             Ok(_) => {},
             Err(e) => println!("提交索引失败: {}", e),
         }
-        
+
         // 执行搜索查询
         let start_time = std::time::Instant::now();
-        
+
         let searcher = SimpleSearcher {};
-        
+
         let results = searcher.search(&query, index, limit)?;
-        
+
         // 计算搜索耗时
         let elapsed = start_time.elapsed().as_millis() as u64;
-        
+
         let mut search_results = SearchResults {
             total_hits: results.total_hits,
             max_score: results.max_score,
             hits: Vec::new(),
             took_ms: elapsed,
         };
-        
+
         // 加载文档数据
         for hit in &results.hits {
             match self.get_document(index_name, &hit.doc_id) {
@@ -28155,7 +28157,7 @@ impl DistributedSearchEngine {
                         fields: doc.fields,
                         highlights: None, // 在实际实现中，这里会添加高亮信息
                     };
-                    
+
                     search_results.hits.push(search_hit);
                 },
                 Ok(None) => {
@@ -28166,7 +28168,7 @@ impl DistributedSearchEngine {
                 }
             }
         }
-        
+
         Ok(search_results)
     }
 }
@@ -28176,10 +28178,10 @@ struct SimpleSearcher {}
 impl Searcher for SimpleSearcher {
     fn search(&self, query: &Query, index: &SearchIndex, limit: usize) -> Result<SearchResults, String> {
         println!("执行搜索查询");
-        
+
         // 在实际实现中，这里会根据查询类型执行不同的搜索算法
         // 并计算文档相关性得分
-        
+
         // 简化：返回一些模拟结果
         let results = SearchResults {
             total_hits: 0,
@@ -28187,7 +28189,7 @@ impl Searcher for SimpleSearcher {
             hits: Vec::new(),
             took_ms: 0,
         };
-        
+
         Ok(results)
     }
 }
@@ -28363,23 +28365,23 @@ impl DistributedTimeSeriesDB {
             metrics: RwLock::new(HashMap::new()),
             shard_map: RwLock::new(HashMap::new()),
         };
-        
+
         let time_series_schema = TimeSeriesSchema {
             metrics: RwLock::new(HashMap::new()),
             labels: RwLock::new(HashSet::new()),
         };
-        
+
         let partition_manager = TimeSeriesPartitionManager {
             partitions: RwLock::new(HashMap::new()),
-            partition_strategy: PartitionStrategy::TimeRange { 
+            partition_strategy: PartitionStrategy::TimeRange {
                 interval: Duration::from_secs(24 * 60 * 60) // 1天
             },
         };
-        
+
         let compression_manager = TimeSeriesCompressionManager {
             strategies: [
                 (
-                    "default".to_string(), 
+                    "default".to_string(),
                     CompressionStrategy {
                         compression_type: CompressionType::Gorilla,
                         threshold_bytes: 1024 * 1024, // 1MB
@@ -28388,26 +28390,26 @@ impl DistributedTimeSeriesDB {
                 )
             ].iter().cloned().collect(),
         };
-        
+
         let aggregation_engine = TimeSeriesAggregationEngine {
             rules: HashMap::new(),
             aggregation_queue: Vec::new(),
             thread_pool: ThreadPool::new(4),
             downsampled_metrics: HashMap::new(),
         };
-        
+
         let retention_manager = TimeSeriesRetentionManager {
             policies: HashMap::new(),
             retention_thread: None,
             running: AtomicBool::new(false),
         };
-        
+
         let server = TimeSeriesServer {
             server: None,
             running: AtomicBool::new(false),
             bind_address: bind_address.to_string(),
         };
-        
+
         DistributedTimeSeriesDB {
             node_id: node_id.to_string(),
             storage_engine,
@@ -28419,30 +28421,30 @@ impl DistributedTimeSeriesDB {
             server,
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式时序数据库");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.storage_engine.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         // 加载指标定义
         self.load_metric_definitions()?;
-        
+
         // 加载分区信息
         self.load_partitions()?;
-        
+
         // 加载数据
         self.load_data()?;
-        
+
         // 启动保留策略管理器
         self.start_retention_manager()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         Ok(())
     }
 }
@@ -28529,27 +28531,27 @@ impl Worker {
 ```rust
 impl DistributedTimeSeriesDB {
     // 已实现的 new 和 start 方法...
-    
+
     fn load_metric_definitions(&self) -> Result<(), String> {
         println!("加载指标定义");
-        
+
         let path = self.storage_engine.data_dir.join("metrics.json");
-        
+
         if !path.exists() {
             return Ok(());
         }
-        
+
         let content = match std::fs::read_to_string(&path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取指标定义文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析指标定义");
-        
+
         // 模拟一些预定义的指标
         let mut metrics = self.time_series_schema.metrics.write().unwrap();
-        
+
         let cpu_metric = MetricDefinition {
             name: "cpu_usage".to_string(),
             data_type: MetricType::Gauge,
@@ -28569,7 +28571,7 @@ impl DistributedTimeSeriesDB {
             ],
             labels: ["host", "service"].iter().map(|s| s.to_string()).collect(),
         };
-        
+
         let memory_metric = MetricDefinition {
             name: "memory_usage".to_string(),
             data_type: MetricType::Gauge,
@@ -28589,55 +28591,55 @@ impl DistributedTimeSeriesDB {
             ],
             labels: ["host", "service"].iter().map(|s| s.to_string()).collect(),
         };
-        
+
         metrics.insert("cpu_usage".to_string(), cpu_metric);
         metrics.insert("memory_usage".to_string(), memory_metric);
-        
+
         // 添加标签
         let mut labels = self.time_series_schema.labels.write().unwrap();
         labels.insert("host".to_string());
         labels.insert("service".to_string());
         labels.insert("env".to_string());
         labels.insert("region".to_string());
-        
+
         Ok(())
     }
-    
+
     fn load_partitions(&self) -> Result<(), String> {
         println!("加载分区信息");
-        
+
         let path = self.storage_engine.data_dir.join("partitions.json");
-        
+
         if !path.exists() {
             // 创建默认分区
             self.create_default_partitions()?;
             return Ok(());
         }
-        
+
         let content = match std::fs::read_to_string(&path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取分区文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析分区信息");
-        
+
         Ok(())
     }
-    
+
     fn create_default_partitions(&self) -> Result<(), String> {
         println!("创建默认分区");
-        
+
         let now = Utc::now().timestamp();
         let day_seconds = 24 * 60 * 60;
-        
+
         let mut partitions = self.partition_manager.partitions.write().unwrap();
-        
+
         // 创建过去7天的分区
         for i in 0..7 {
             let start_time = now - (i + 1) * day_seconds;
             let end_time = now - i * day_seconds;
-            
+
             let partition = TimeSeriesPartition {
                 id: format!("p_{}", start_time),
                 time_range: (start_time, end_time),
@@ -28645,10 +28647,10 @@ impl DistributedTimeSeriesDB {
                 node_id: self.node_id.clone(),
                 status: if i == 0 { PartitionStatus::Active } else { PartitionStatus::ReadOnly },
             };
-            
+
             partitions.insert(partition.id.clone(), partition);
         }
-        
+
         // 创建未来的分区
         let partition = TimeSeriesPartition {
             id: format!("p_{}", now),
@@ -28657,55 +28659,55 @@ impl DistributedTimeSeriesDB {
             node_id: self.node_id.clone(),
             status: PartitionStatus::Active,
         };
-        
+
         partitions.insert(partition.id.clone(), partition);
-        
+
         // 保存分区信息
         self.save_partitions()?;
-        
+
         Ok(())
     }
-    
+
     fn save_partitions(&self) -> Result<(), String> {
         println!("保存分区信息");
-        
+
         let partitions = self.partition_manager.partitions.read().unwrap();
-        
+
         // 在实际实现中，这里会序列化为JSON
         let json = serde_json::to_string(&*partitions).map_err(|e| format!("序列化分区信息失败: {}", e))?;
-        
+
         let path = self.storage_engine.data_dir.join("partitions.json");
-        
+
         if let Err(e) = std::fs::write(&path, json) {
             return Err(format!("写入分区信息失败: {}", e));
         }
-        
+
         Ok(())
     }
-    
+
     fn load_data(&self) -> Result<(), String> {
         println!("加载时序数据");
-        
+
         let data_dir = &self.storage_engine.data_dir;
         let metrics_dir = data_dir.join("metrics");
-        
+
         if !metrics_dir.exists() {
             return Ok(());
         }
-        
+
         match std::fs::read_dir(&metrics_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_dir() {
                             let metric_name = path.file_name()
                                 .and_then(|os| os.to_str())
                                 .ok_or("无效的指标目录名".to_string())?;
-                            
+
                             println!("加载指标数据: {}", metric_name);
-                            
+
                             match self.load_metric_data(metric_name, &path) {
                                 Ok(_) => {},
                                 Err(e) => println!("加载指标 {} 数据失败: {}", metric_name, e),
@@ -28716,26 +28718,26 @@ impl DistributedTimeSeriesDB {
             },
             Err(e) => return Err(format!("读取指标目录失败: {}", e)),
         }
-        
+
         Ok(())
     }
-    
+
     fn load_metric_data(&self, metric_name: &str, path: &Path) -> Result<(), String> {
         // 在实际实现中，这里会加载指标数据文件
         println!("加载指标 {} 的数据文件", metric_name);
-        
+
         Ok(())
     }
-    
+
     fn start_retention_manager(&mut self) -> Result<(), String> {
         println!("启动保留策略管理器");
-        
+
         // 创建保留策略
         let metrics = self.time_series_schema.metrics.read().unwrap();
-        
+
         for (name, def) in metrics.iter() {
             let mut downsampling = Vec::new();
-            
+
             for rule in &def.aggregation_rules {
                 downsampling.push(DownsamplingConfig {
                     period: rule.interval,
@@ -28749,80 +28751,80 @@ impl DistributedTimeSeriesDB {
                     retention: rule.retention,
                 });
             }
-            
+
             let policy = RetentionPolicy {
                 metric_name: name.clone(),
                 retention_period: def.default_retention,
                 downsampling,
             };
-            
+
             self.retention_manager.policies.insert(name.clone(), policy);
         }
-        
+
         // 启动保留策略线程
         let policies = self.retention_manager.policies.clone();
         let data_dir = self.storage_engine.data_dir.clone();
         let node_id = self.node_id.clone();
-        
+
         self.retention_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.retention_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 执行保留策略
                 for (name, policy) in &policies {
                     println!("执行指标 {} 的保留策略", name);
-                    
+
                     // 在实际实现中，这里会检查和删除过期数据
-                    
+
                     // 执行下采样
                     for config in &policy.downsampling {
                         println!("执行下采样: {}@{:?}", name, config.period);
-                        
+
                         // 在实际实现中，这里会执行下采样处理
                     }
                 }
-                
+
                 // 每天执行一次
                 thread::sleep(Duration::from_secs(24 * 60 * 60));
             }
         });
-        
+
         self.retention_manager.retention_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动时序数据库服务器");
-        
+
         let bind_address = self.server.bind_address.clone();
-        
+
         self.server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.server.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP服务器
             println!("时序数据库服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式时序数据库");
-        
+
         // 停止服务器
         self.server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.server.server.take() {
@@ -28831,7 +28833,7 @@ impl DistributedTimeSeriesDB {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止保留策略管理器
         self.retention_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.retention_manager.retention_thread.take() {
@@ -28840,26 +28842,26 @@ impl DistributedTimeSeriesDB {
                 Err(e) => println!("保留策略线程退出错误: {:?}", e),
             }
         }
-        
+
         // 保存分区信息
         self.save_partitions()?;
-        
+
         Ok(())
     }
-    
+
     fn write_data_point(&self, metric_name: &str, labels: HashMap<String, String>, point: DataPoint) -> Result<(), String> {
         // 检查指标是否存在
         let metrics_schema = self.time_series_schema.metrics.read().unwrap();
-        
+
         if !metrics_schema.contains_key(metric_name) {
             return Err(format!("指标不存在: {}", metric_name));
         }
-        
+
         // 查找或创建指标系列
         let mut metrics_data = self.storage_engine.metrics.write().unwrap();
-        
+
         let series_key = self.build_series_key(metric_name, &labels);
-        
+
         if !metrics_data.contains_key(&series_key) {
             // 创建新的指标系列
             let series = MetricSeries {
@@ -28869,25 +28871,25 @@ impl DistributedTimeSeriesDB {
                 chunks: Vec::new(),
                 current_chunk: RwLock::new(None),
             };
-            
+
             metrics_data.insert(series_key.clone(), series);
         }
-        
+
         // 找到适合的分区
         let partition_id = self.find_partition_for_timestamp(point.timestamp)?;
-        
+
         // 添加数据点
         if let Some(series) = metrics_data.get(&series_key) {
             let mut data_points = series.data_points.write().unwrap();
             data_points.push(point);
-            
+
             // 检查是否需要创建新的块
             let mut current_chunk = series.current_chunk.write().unwrap();
-            
+
             if current_chunk.is_none() || current_chunk.as_ref().unwrap().points.len() >= 1000 {
                 // 创建新块
                 let chunk_id = uuid::Uuid::new_v4().to_string();
-                
+
                 let chunk = TimeSeriesChunk {
                     id: chunk_id,
                     metric_name: metric_name.to_string(),
@@ -28899,7 +28901,7 @@ impl DistributedTimeSeriesDB {
                     compressed_data: None,
                     size_bytes: 0,
                 };
-                
+
                 *current_chunk = Some(chunk);
             } else {
                 // 添加到现有块
@@ -28908,65 +28910,65 @@ impl DistributedTimeSeriesDB {
                 chunk.min_time = chunk.min_time.min(point.timestamp);
                 chunk.max_time = chunk.max_time.max(point.timestamp);
             }
-            
+
             // 更新分区的指标集合
             let mut partitions = self.partition_manager.partitions.write().unwrap();
-            
+
             if let Some(partition) = partitions.get_mut(&partition_id) {
                 partition.metrics.insert(metric_name.to_string());
             }
-            
+
             // 检查是否需要触发压缩
             if data_points.len() >= 10000 {
                 self.compress_metric_data(&series_key)?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn build_series_key(&self, metric_name: &str, labels: &HashMap<String, String>) -> String {
         // 构建系列键：指标名 + 排序的标签
         let mut label_pairs: Vec<_> = labels.iter().collect();
         label_pairs.sort_by(|a, b| a.0.cmp(b.0));
-        
+
         let labels_str: Vec<String> = label_pairs.iter()
             .map(|(k, v)| format!("{}={}", k, v))
             .collect();
-        
+
         if labels_str.is_empty() {
             return metric_name.to_string();
         } else {
             return format!("{}:{}", metric_name, labels_str.join(","));
         }
     }
-    
+
     fn find_partition_for_timestamp(&self, timestamp: i64) -> Result<String, String> {
         let partitions = self.partition_manager.partitions.read().unwrap();
-        
+
         for (id, partition) in partitions.iter() {
             if timestamp >= partition.time_range.0 && timestamp < partition.time_range.1 {
                 return Ok(id.clone());
             }
         }
-        
+
         // 如果没有找到匹配的分区，创建一个新分区
         drop(partitions);
-        
+
         self.create_partition_for_timestamp(timestamp)
     }
-    
+
     fn create_partition_for_timestamp(&self, timestamp: i64) -> Result<String, String> {
         println!("为时间戳 {} 创建新分区", timestamp);
-        
+
         let day_seconds = 24 * 60 * 60;
         let start_time = (timestamp / day_seconds) * day_seconds;
         let end_time = start_time + day_seconds;
-        
+
         let partition_id = format!("p_{}", start_time);
-        
+
         let mut partitions = self.partition_manager.partitions.write().unwrap();
-        
+
         let partition = TimeSeriesPartition {
             id: partition_id.clone(),
             time_range: (start_time, end_time),
@@ -28974,100 +28976,100 @@ impl DistributedTimeSeriesDB {
             node_id: self.node_id.clone(),
             status: PartitionStatus::Active,
         };
-        
+
         partitions.insert(partition_id.clone(), partition);
-        
+
         // 保存分区信息
         drop(partitions);
         self.save_partitions()?;
-        
+
         Ok(partition_id)
     }
-    
+
     fn compress_metric_data(&self, series_key: &str) -> Result<(), String> {
         println!("压缩指标数据: {}", series_key);
-        
+
         let metrics_data = self.storage_engine.metrics.read().unwrap();
-        
+
         if let Some(series) = metrics_data.get(series_key) {
             let mut current_chunk = series.current_chunk.write().unwrap();
-            
+
             if let Some(chunk) = current_chunk.take() {
                 let compression_strategy = self.compression_manager.strategies.get("default")
                     .ok_or("默认压缩策略不存在".to_string())?;
-                
+
                 // 在实际实现中，这里会根据压缩策略执行不同的压缩算法
                 let compressed_chunk = self.compress_chunk(chunk, &compression_strategy)?;
-                
+
                 // 添加到块列表
                 let mut series_chunks = series.chunks;
                 series_chunks.push(compressed_chunk);
-                
+
                 // 清空数据点缓冲区
                 let mut data_points = series.data_points.write().unwrap();
                 data_points.clear();
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn compress_chunk(&self, chunk: TimeSeriesChunk, strategy: &CompressionStrategy) -> Result<TimeSeriesChunk, String> {
         // 在实际实现中，这里会执行实际的压缩算法
         println!("压缩块: {} ({} 个数据点)", chunk.id, chunk.points.len());
-        
+
         let mut compressed_chunk = chunk;
         compressed_chunk.compression_type = strategy.compression_type.clone();
-        
+
         // 简化：仅设置一个模拟的压缩数据
         compressed_chunk.compressed_data = Some(Vec::new());
         compressed_chunk.size_bytes = (chunk.points.len() * 16) as u64; // 假设每个点16字节
-        
+
         Ok(compressed_chunk)
     }
-    
+
     fn query_range(&self, query: TimeSeriesQuery) -> Result<TimeSeriesQueryResult, String> {
         println!("查询时间范围: {:?} -> {:?}", query.start_time, query.end_time);
-        
+
         // 查找相关分区
         let matching_partitions = self.find_partitions_for_range(query.start_time, query.end_time)?;
-        
+
         // 查找匹配的指标系列
         let matching_series = self.find_matching_series(&query.selector)?;
-        
+
         if matching_series.is_empty() {
             return Ok(TimeSeriesQueryResult {
                 series: Vec::new(),
             });
         }
-        
+
         // 从每个系列中查询数据点
         let mut result_series = Vec::new();
-        
+
         for series_key in matching_series {
             let metrics_data = self.storage_engine.metrics.read().unwrap();
-            
+
             if let Some(series) = metrics_data.get(&series_key) {
                 // 收集数据点
                 let mut all_points = Vec::new();
-                
+
                 // 从内存缓冲区收集
                 let data_points = series.data_points.read().unwrap();
-                
+
                 for point in data_points.iter() {
                     if point.timestamp >= query.start_time && point.timestamp <= query.end_time {
                         all_points.push(point.clone());
                     }
                 }
-                
+
                 // 从块中收集
                 for chunk in &series.chunks {
                     if chunk.min_time <= query.end_time && chunk.max_time >= query.start_time {
                         // 块与查询时间范围有重叠
-                        
+
                         // 在实际实现中，这里会解压缩块数据
                         println!("解压缩块: {}", chunk.id);
-                        
+
                         for point in &chunk.points {
                             if point.timestamp >= query.start_time && point.timestamp <= query.end_time {
                                 all_points.push(point.clone());
@@ -29075,16 +29077,16 @@ impl DistributedTimeSeriesDB {
                         }
                     }
                 }
-                
+
                 // 按时间戳排序
                 all_points.sort_by_key(|p| p.timestamp);
-                
+
                 // 应用聚合函数
                 if let Some(func) = &query.aggregation {
                     let step = query.step.unwrap_or(60); // 默认步长1分钟
                     all_points = self.aggregate_points(all_points, *func, step, query.start_time, query.end_time);
                 }
-                
+
                 // 添加到结果
                 if !all_points.is_empty() {
                     let result_series_data = TimeSeriesResult {
@@ -29092,12 +29094,12 @@ impl DistributedTimeSeriesDB {
                         labels: series.labels.clone(),
                         data_points: all_points,
                     };
-                    
+
                     result_series.push(result_series_data);
                 }
             }
         }
-        
+
         Ok(TimeSeriesQueryResult {
             series: result_series,
         })
@@ -29326,20 +29328,20 @@ impl DistributedMonitoringSystem {
             alert_thread: None,
             running: AtomicBool::new(false),
         };
-        
+
         let dashboard_service = DashboardService {
             dashboards: RwLock::new(HashMap::new()),
             server: None,
             running: AtomicBool::new(false),
             bind_address: format!("{}:3000", bind_address),
         };
-        
+
         let api_server = ApiServer {
             server: None,
             running: AtomicBool::new(false),
             bind_address: format!("{}:8080", bind_address),
         };
-        
+
         DistributedMonitoringSystem {
             node_id: node_id.to_string(),
             data_dir: data_dir.to_path_buf(),
@@ -29367,22 +29369,22 @@ impl InMemoryMetricStorage {
 impl MetricStorage for InMemoryMetricStorage {
     fn store_metrics(&self, metrics: Vec<Metric>) -> Result<(), String> {
         let mut storage = self.metrics.write().unwrap();
-        
+
         for metric in metrics {
             let key = format!("{}:{}", metric.name, self.labels_to_string(&metric.labels));
-            
+
             let entry = storage.entry(key).or_insert_with(Vec::new);
             entry.push(metric);
         }
-        
+
         Ok(())
     }
-    
+
     fn query_metrics(&self, query: MetricQuery) -> Result<Vec<MetricSeries>, String> {
         // 实际实现会解析查询选择器并匹配指标
         let storage = self.metrics.read().unwrap();
         let mut result = Vec::new();
-        
+
         for (key, metrics) in storage.iter() {
             // 简单匹配：检查键是否包含选择器
             if key.contains(&query.selector) {
@@ -29390,11 +29392,11 @@ impl MetricStorage for InMemoryMetricStorage {
                     .filter(|m| m.timestamp >= query.start_time && m.timestamp <= query.end_time)
                     .cloned()
                     .collect();
-                
+
                 if !filtered_metrics.is_empty() {
                     // 提取一个示例指标以获取标签
                     let sample = &filtered_metrics[0];
-                    
+
                     let series = MetricSeries {
                         metric_name: sample.name.clone(),
                         labels: sample.labels.clone(),
@@ -29405,20 +29407,20 @@ impl MetricStorage for InMemoryMetricStorage {
                         chunks: Vec::new(),
                         current_chunk: RwLock::new(None),
                     };
-                    
+
                     result.push(series);
                 }
             }
         }
-        
+
         Ok(result)
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动内存指标存储");
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止内存指标存储");
         Ok(())
@@ -29429,7 +29431,7 @@ impl InMemoryMetricStorage {
     fn labels_to_string(&self, labels: &HashMap<String, String>) -> String {
         let mut pairs: Vec<_> = labels.iter().collect();
         pairs.sort_by(|a, b| a.0.cmp(b.0));
-        
+
         pairs.iter()
             .map(|(k, v)| format!("{}={}", k, v))
             .collect::<Vec<_>>()
@@ -29444,84 +29446,84 @@ impl InMemoryMetricStorage {
 impl DistributedMonitoringSystem {
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式监控系统");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         // 启动存储后端
         self.storage_backend.start()?;
-        
+
         // 注册默认收集器
         self.register_default_collectors()?;
-        
+
         // 启动所有收集器
         for (name, collector) in &mut self.collectors {
             if let Err(e) = collector.start() {
                 println!("启动收集器 {} 失败: {}", name, e);
             }
         }
-        
+
         // 加载告警规则
         self.load_alert_rules()?;
-        
+
         // 启动告警管理器
         self.start_alert_manager()?;
-        
+
         // 加载仪表盘
         self.load_dashboards()?;
-        
+
         // 启动仪表盘服务
         self.start_dashboard_service()?;
-        
+
         // 启动API服务器
         self.start_api_server()?;
-        
+
         Ok(())
     }
-    
+
     fn register_default_collectors(&mut self) -> Result<(), String> {
         println!("注册默认指标收集器");
-        
+
         // 系统指标收集器
         let system_collector = SystemMetricCollector::new();
         self.collectors.insert(system_collector.name().to_string(), Box::new(system_collector));
-        
+
         // JVM指标收集器
         let jvm_collector = JvmMetricCollector::new();
         self.collectors.insert(jvm_collector.name().to_string(), Box::new(jvm_collector));
-        
+
         // 网络指标收集器
         let network_collector = NetworkMetricCollector::new();
         self.collectors.insert(network_collector.name().to_string(), Box::new(network_collector));
-        
+
         // 自定义收集器
         // 从配置文件加载
-        
+
         Ok(())
     }
-    
+
     fn load_alert_rules(&self) -> Result<(), String> {
         println!("加载告警规则");
-        
+
         let rules_path = self.data_dir.join("alerts").join("rules.json");
-        
+
         if !rules_path.exists() {
             return Ok(());
         }
-        
+
         let content = match std::fs::read_to_string(&rules_path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取告警规则文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析告警规则");
-        
+
         // 创建一些示例规则
         let mut rules = self.alert_manager.rules.write().unwrap();
-        
+
         let high_cpu_rule = AlertRule {
             id: "cpu-high".to_string(),
             name: "CPU使用率过高".to_string(),
@@ -29539,7 +29541,7 @@ impl DistributedMonitoringSystem {
             created_at: Utc::now(),
             updated_at: Utc::now(),
         };
-        
+
         let memory_critical_rule = AlertRule {
             id: "memory-critical".to_string(),
             name: "内存使用率严重".to_string(),
@@ -29557,16 +29559,16 @@ impl DistributedMonitoringSystem {
             created_at: Utc::now(),
             updated_at: Utc::now(),
         };
-        
+
         rules.insert(high_cpu_rule.id.clone(), high_cpu_rule);
         rules.insert(memory_critical_rule.id.clone(), memory_critical_rule);
-        
+
         Ok(())
     }
-    
+
     fn start_alert_manager(&mut self) -> Result<(), String> {
         println!("启动告警管理器");
-        
+
         // 注册通知器
         let email_notifier = EmailNotifier::new(
             "smtp.example.com",
@@ -29575,42 +29577,42 @@ impl DistributedMonitoringSystem {
             "password123",
             vec!["admin@example.com".to_string()],
         );
-        
+
         let slack_notifier = SlackNotifier::new(
             "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
             "#alerts",
         );
-        
+
         self.alert_manager.notifiers.insert("email".to_string(), Box::new(email_notifier));
         self.alert_manager.notifiers.insert("slack".to_string(), Box::new(slack_notifier));
-        
+
         // 启动告警检查线程
         let rules = self.alert_manager.rules.clone();
         let alerts = self.alert_manager.alerts.clone();
         let notifiers = self.alert_manager.notifiers.iter()
             .map(|(k, v)| (k.clone(), v.clone()))
             .collect::<HashMap<String, Box<dyn AlertNotifier>>>();
-        
+
         let check_interval = self.alert_manager.check_interval;
         let storage = self.storage_backend;
-        
+
         self.alert_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.alert_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查所有告警规则
                 let rules_copy = rules.read().unwrap().clone();
-                
+
                 for (id, rule) in rules_copy.iter() {
                     // 解析查询并执行
                     println!("检查告警规则: {}", rule.name);
-                    
+
                     // 在实际实现中，这里会解析规则查询并执行
                     // 简化：假设查询返回了一个值
                     let query_result = 85.0; // 例如，假设CPU使用率为85%
-                    
+
                     // 检查是否超过阈值
                     let alert_triggered = match rule.comparison {
                         ComparisonOperator::GreaterThan => query_result > rule.threshold,
@@ -29620,7 +29622,7 @@ impl DistributedMonitoringSystem {
                         ComparisonOperator::Equal => (query_result - rule.threshold).abs() < 0.0001,
                         ComparisonOperator::NotEqual => (query_result - rule.threshold).abs() >= 0.0001,
                     };
-                    
+
                     if alert_triggered {
                         // 检查是否处于静默期
                         if let Some(silenced_until) = rule.silenced_until {
@@ -29628,23 +29630,23 @@ impl DistributedMonitoringSystem {
                                 continue;
                             }
                         }
-                        
+
                         // 创建或更新告警
                         let mut alerts_map = alerts.write().unwrap();
-                        
+
                         let now = Utc::now();
-                        
+
                         if let Some(alert) = alerts_map.get_mut(id) {
                             // 更新现有告警
                             alert.value = query_result;
                             alert.last_updated = now;
-                            
+
                             // 如果已解决，将其重新设置为触发状态
                             if alert.status == AlertStatus::Resolved {
                                 alert.status = AlertStatus::Firing;
                                 alert.started_at = now;
                                 alert.ends_at = None;
-                                
+
                                 // 发送通知
                                 for (_, notifier) in &notifiers {
                                     if let Err(e) = notifier.notify(alert) {
@@ -29667,28 +29669,28 @@ impl DistributedMonitoringSystem {
                                 last_updated: now,
                                 ends_at: None,
                             };
-                            
+
                             // 发送通知
                             for (_, notifier) in &notifiers {
                                 if let Err(e) = notifier.notify(&alert) {
                                     println!("发送告警通知失败: {}", e);
                                 }
                             }
-                            
+
                             // 保存告警
                             alerts_map.insert(id.clone(), alert);
                         }
                     } else {
                         // 检查是否有正在触发的告警需要解决
                         let mut alerts_map = alerts.write().unwrap();
-                        
+
                         if let Some(alert) = alerts_map.get_mut(id) {
                             if alert.status == AlertStatus::Firing {
                                 // 将告警设置为已解决
                                 alert.status = AlertStatus::Resolved;
                                 alert.ends_at = Some(Utc::now());
                                 alert.last_updated = Utc::now();
-                                
+
                                 // 发送解决通知
                                 for (_, notifier) in &notifiers {
                                     if let Err(e) = notifier.notify(alert) {
@@ -29699,45 +29701,45 @@ impl DistributedMonitoringSystem {
                         }
                     }
                 }
-                
+
                 // 等待下一个检查间隔
                 thread::sleep(check_interval);
             }
         });
-        
+
         self.alert_manager.alert_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn load_dashboards(&self) -> Result<(), String> {
         println!("加载仪表盘");
-        
+
         let dashboards_dir = self.data_dir.join("dashboards");
-        
+
         if !dashboards_dir.exists() {
             if let Err(e) = std::fs::create_dir_all(&dashboards_dir) {
                 return Err(format!("创建仪表盘目录失败: {}", e));
             }
-            
+
             // 创建默认仪表盘
             self.create_default_dashboards()?;
             return Ok(());
         }
-        
+
         match std::fs::read_dir(&dashboards_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
                             let dashboard_id = path.file_stem()
                                 .and_then(|os| os.to_str())
                                 .ok_or("无效的仪表盘文件名".to_string())?;
-                            
+
                             println!("加载仪表盘: {}", dashboard_id);
-                            
+
                             match self.load_dashboard(dashboard_id, &path) {
                                 Ok(_) => {},
                                 Err(e) => println!("加载仪表盘 {} 失败: {}", dashboard_id, e),
@@ -29748,19 +29750,19 @@ impl DistributedMonitoringSystem {
             },
             Err(e) => return Err(format!("读取仪表盘目录失败: {}", e)),
         }
-        
+
         Ok(())
     }
-    
+
     fn load_dashboard(&self, id: &str, path: &Path) -> Result<(), String> {
         let content = match std::fs::read_to_string(path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取仪表盘文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析仪表盘JSON: {}", id);
-        
+
         // 简化：创建一个模拟仪表盘
         let dashboard = Dashboard {
             id: id.to_string(),
@@ -29773,16 +29775,16 @@ impl DistributedMonitoringSystem {
             creator: "admin".to_string(),
             variables: HashMap::new(),
         };
-        
+
         let mut dashboards = self.dashboard_service.dashboards.write().unwrap();
         dashboards.insert(id.to_string(), dashboard);
-        
+
         Ok(())
     }
-    
+
     fn create_default_dashboards(&self) -> Result<(), String> {
         println!("创建默认仪表盘");
-        
+
         // 系统监控仪表盘
         let system_dashboard = Dashboard {
             id: "system-overview".to_string(),
@@ -29855,7 +29857,7 @@ impl DistributedMonitoringSystem {
             creator: "system".to_string(),
             variables: HashMap::new(),
         };
-        
+
         // 应用性能仪表盘
         let app_dashboard = Dashboard {
             id: "application-performance".to_string(),
@@ -29915,93 +29917,93 @@ impl DistributedMonitoringSystem {
             creator: "system".to_string(),
             variables: HashMap::new(),
         };
-        
+
         let mut dashboards = self.dashboard_service.dashboards.write().unwrap();
         dashboards.insert(system_dashboard.id.clone(), system_dashboard);
         dashboards.insert(app_dashboard.id.clone(), app_dashboard);
-        
+
         // 保存仪表盘到磁盘
         self.save_dashboard("system-overview")?;
         self.save_dashboard("application-performance")?;
-        
+
         Ok(())
     }
-    
+
     fn save_dashboard(&self, id: &str) -> Result<(), String> {
         let dashboards = self.dashboard_service.dashboards.read().unwrap();
-        
+
         let dashboard = dashboards.get(id)
             .ok_or_else(|| format!("仪表盘不存在: {}", id))?;
-        
+
         // 在实际实现中，这里会序列化为JSON
         let json = serde_json::to_string_pretty(dashboard)
             .map_err(|e| format!("序列化仪表盘失败: {}", e))?;
-        
+
         let path = self.data_dir.join("dashboards").join(format!("{}.json", id));
-        
+
         if let Err(e) = std::fs::write(&path, json) {
             return Err(format!("写入仪表盘文件失败: {}", e));
         }
-        
+
         Ok(())
     }
-    
+
     fn start_dashboard_service(&mut self) -> Result<(), String> {
         println!("启动仪表盘服务");
-        
+
         let bind_address = self.dashboard_service.bind_address.clone();
         let dashboards = self.dashboard_service.dashboards.clone();
-        
+
         self.dashboard_service.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.dashboard_service.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP服务器
             println!("仪表盘服务绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.dashboard_service.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_api_server(&mut self) -> Result<(), String> {
         println!("启动API服务器");
-        
+
         let bind_address = self.api_server.bind_address.clone();
-        
+
         self.api_server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.api_server.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP API服务器
             println!("API服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理API请求
             }
         });
-        
+
         self.api_server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式监控系统");
-        
+
         // 停止API服务器
         self.api_server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.api_server.server.take() {
@@ -30010,7 +30012,7 @@ impl DistributedMonitoringSystem {
                 Err(e) => println!("API服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止仪表盘服务
         self.dashboard_service.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.dashboard_service.server.take() {
@@ -30019,7 +30021,7 @@ impl DistributedMonitoringSystem {
                 Err(e) => println!("仪表盘服务线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止告警管理器
         self.alert_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.alert_manager.alert_thread.take() {
@@ -30028,17 +30030,17 @@ impl DistributedMonitoringSystem {
                 Err(e) => println!("告警管理器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止所有收集器
         for (name, collector) in &mut self.collectors {
             if let Err(e) = collector.stop() {
                 println!("停止收集器 {} 失败: {}", name, e);
             }
         }
-        
+
         // 停止存储后端
         self.storage_backend.stop()?;
-        
+
         Ok(())
     }
 }
@@ -30063,15 +30065,15 @@ impl MetricCollector for SystemMetricCollector {
     fn name(&self) -> &str {
         "system"
     }
-    
+
     fn description(&self) -> &str {
         "收集系统指标（CPU、内存、磁盘、网络等）"
     }
-    
+
     fn collect(&self) -> Vec<Metric> {
         // 在实际实现中，这里会收集实际的系统指标
         let now = Utc::now().timestamp();
-        
+
         vec![
             Metric {
                 name: "cpu_usage".to_string(),
@@ -30104,47 +30106,47 @@ impl MetricCollector for SystemMetricCollector {
             },
         ]
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动系统指标收集器");
-        
+
         let interval = self.collection_interval;
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.running.clone();
         let collector = SystemMetricCollector::new();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 收集指标
                 let metrics = collector.collect();
-                
+
                 // 在实际实现中，这里会将指标发送到存储后端
                 println!("收集到 {} 个系统指标", metrics.len());
-                
+
                 // 等待下一个收集周期
                 thread::sleep(interval);
             }
         });
-        
+
         self.collection_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止系统指标收集器");
-        
+
         self.running.store(false, Ordering::SeqCst);
-        
+
         if let Some(thread) = self.collection_thread.take() {
             match thread.join() {
                 Ok(_) => {},
                 Err(e) => println!("系统指标收集器线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
 }
@@ -30169,15 +30171,15 @@ impl MetricCollector for JvmMetricCollector {
     fn name(&self) -> &str {
         "jvm"
     }
-    
+
     fn description(&self) -> &str {
         "收集JVM指标（堆内存、GC等）"
     }
-    
+
     fn collect(&self) -> Vec<Metric> {
         // 在实际实现中，这里会收集实际的JVM指标
         let now = Utc::now().timestamp();
-        
+
         vec![
             Metric {
                 name: "jvm_heap_used".to_string(),
@@ -30202,47 +30204,47 @@ impl MetricCollector for JvmMetricCollector {
             },
         ]
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动JVM指标收集器");
-        
+
         let interval = self.collection_interval;
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.running.clone();
         let collector = JvmMetricCollector::new();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 收集指标
                 let metrics = collector.collect();
-                
+
                 // 在实际实现中，这里会将指标发送到存储后端
                 println!("收集到 {} 个JVM指标", metrics.len());
-                
+
                 // 等待下一个收集周期
                 thread::sleep(interval);
             }
         });
-        
+
         self.collection_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止JVM指标收集器");
-        
+
         self.running.store(false, Ordering::SeqCst);
-        
+
         if let Some(thread) = self.collection_thread.take() {
             match thread.join() {
                 Ok(_) => {},
                 Err(e) => println!("JVM指标收集器线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
 }
@@ -30267,15 +30269,15 @@ impl MetricCollector for NetworkMetricCollector {
     fn name(&self) -> &str {
         "network"
     }
-    
+
     fn description(&self) -> &str {
         "收集网络指标（流量、连接等）"
     }
-    
+
     fn collect(&self) -> Vec<Metric> {
         // 在实际实现中，这里会收集实际的网络指标
         let now = Utc::now().timestamp();
-        
+
         vec![
             Metric {
                 name: "network_received_bytes".to_string(),
@@ -30299,47 +30301,47 @@ impl MetricCollector for NetworkMetricCollector {
             },
         ]
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动网络指标收集器");
-        
+
         let interval = self.collection_interval;
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.running.clone();
         let collector = NetworkMetricCollector::new();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 收集指标
                 let metrics = collector.collect();
-                
+
                 // 在实际实现中，这里会将指标发送到存储后端
                 println!("收集到 {} 个网络指标", metrics.len());
-                
+
                 // 等待下一个收集周期
                 thread::sleep(interval);
             }
         });
-        
+
         self.collection_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止网络指标收集器");
-        
+
         self.running.store(false, Ordering::SeqCst);
-        
+
         if let Some(thread) = self.collection_thread.take() {
             match thread.join() {
                 Ok(_) => {},
                 Err(e) => println!("网络指标收集器线程退出错误: {:?}", e),
             }
         }
-        
+
         Ok(())
     }
 }
@@ -30368,18 +30370,18 @@ impl AlertNotifier for EmailNotifier {
     fn name(&self) -> &str {
         "email"
     }
-    
+
     fn notify(&self, alert: &Alert) -> Result<(), String> {
         println!("发送邮件告警通知: {}", alert.name);
-        
+
         // 在实际实现中，这里会发送实际的电子邮件
         let status_text = match alert.status {
             AlertStatus::Firing => "触发",
             AlertStatus::Resolved => "已解决",
             AlertStatus::Acknowledged => "已确认",
         };
-        
-        let subject = format!("[{}] {} 告警: {}", 
+
+        let subject = format!("[{}] {} 告警: {}",
                              status_text,
                              match alert.severity {
                                  AlertSeverity::Critical => "严重",
@@ -30389,25 +30391,25 @@ impl AlertNotifier for EmailNotifier {
                                  AlertSeverity::Info => "信息",
                              },
                              alert.name);
-        
+
         let body = match alert.annotations.get("description") {
             Some(desc) => desc.clone(),
             None => format!("告警 {} 已 {}", alert.name, status_text),
         };
-        
+
         println!("邮件标题: {}", subject);
         println!("邮件内容: {}", body);
         println!("收件人: {}", self.recipients.join(", "));
-        
+
         Ok(())
     }
-    
+
     fn test(&self) -> Result<(), String> {
         println!("测试邮件通知");
-        
+
         // 发送测试邮件
         let now = Utc::now();
-        
+
         let test_alert = Alert {
             id: "test".to_string(),
             name: "测试告警".to_string(),
@@ -30424,7 +30426,7 @@ impl AlertNotifier for EmailNotifier {
             last_updated: now,
             ends_at: None,
         };
-        
+
         self.notify(&test_alert)
     }
 }
@@ -30447,17 +30449,17 @@ impl AlertNotifier for SlackNotifier {
     fn name(&self) -> &str {
         "slack"
     }
-    
+
     fn notify(&self, alert: &Alert) -> Result<(), String> {
         println!("发送Slack告警通知: {}", alert.name);
-        
+
         // 在实际实现中，这里会发送实际的Slack消息
         let status_text = match alert.status {
             AlertStatus::Firing => "触发",
             AlertStatus::Resolved => "已解决",
             AlertStatus::Acknowledged => "已确认",
         };
-        
+
         let color = match alert.severity {
             AlertSeverity::Critical => "#FF0000", // 红色
             AlertSeverity::High => "#FFA500",     // 橙色
@@ -30465,8 +30467,8 @@ impl AlertNotifier for SlackNotifier {
             AlertSeverity::Low => "#0000FF",      // 蓝色
             AlertSeverity::Info => "#808080",     // 灰色
         };
-        
-        let title = format!("[{}] {}", 
+
+        let title = format!("[{}] {}",
                            match alert.severity {
                                AlertSeverity::Critical => "严重",
                                AlertSeverity::High => "高",
@@ -30475,25 +30477,25 @@ impl AlertNotifier for SlackNotifier {
                                AlertSeverity::Info => "信息",
                            },
                            alert.name);
-        
+
         let text = match alert.annotations.get("description") {
             Some(desc) => desc.clone(),
             None => format!("告警 {} 已 {}", alert.name, status_text),
         };
-        
+
         println!("Slack消息标题: {}", title);
         println!("Slack消息内容: {}", text);
         println!("Slack频道: {}", self.channel);
-        
+
         Ok(())
     }
-    
+
     fn test(&self) -> Result<(), String> {
         println!("测试Slack通知");
-        
+
         // 发送测试Slack消息
         let now = Utc::now();
-        
+
         let test_alert = Alert {
             id: "test".to_string(),
             name: "测试告警".to_string(),
@@ -30510,7 +30512,7 @@ impl AlertNotifier for SlackNotifier {
             last_updated: now,
             ends_at: None,
         };
-        
+
         self.notify(&test_alert)
     }
 }
@@ -30592,204 +30594,204 @@ impl DistributedCoordinationService {
             }),
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式协调服务");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         // 加载状态
         self.load_state()?;
-        
+
         // 初始化ZooKeeper客户端
         let zk_client = ZooKeeperClient {
             connection: None,
             session_timeout: Duration::from_secs(30),
             root_path: "/coordination".to_string(),
         };
-        
+
         self.zk_client = Some(zk_client);
-        
+
         // 连接到其他节点
         self.connect_to_peers()?;
-        
+
         // 开始领导者选举
         self.start_leader_election()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         Ok(())
     }
-    
+
     fn load_state(&self) -> Result<(), String> {
         println!("加载协调服务状态");
-        
+
         let state_path = self.data_dir.join("state.json");
-        
+
         if !state_path.exists() {
             return Ok(());
         }
-        
+
         let content = match std::fs::read_to_string(&state_path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取状态文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析状态文件");
-        
+
         // 简化：创建一些初始状态
         let mut state = self.state.write().unwrap();
-        
+
         // 添加一些默认配置
         state.configuration.insert("max_session_timeout".to_string(), "60000".to_string());
         state.configuration.insert("min_session_timeout".to_string(), "5000".to_string());
         state.configuration.insert("tick_time".to_string(), "2000".to_string());
-        
+
         Ok(())
     }
-    
+
     fn connect_to_peers(&self) -> Result<(), String> {
         println!("连接到对等节点");
-        
+
         for (id, address) in &self.peers {
             println!("连接到节点 {} at {}", id, address);
-            
+
             // 在实际实现中，这里会建立到对等节点的连接
         }
-        
+
         Ok(())
     }
-    
+
     fn start_leader_election(&self) -> Result<(), String> {
         println!("开始领导者选举");
-        
+
         // 在实际实现中，这里会实现一个类似Raft或ZAB的选举算法
-        
+
         // 简化：如果没有设置领导者，我们认为自己是领导者
         let mut state = self.state.write().unwrap();
-        
+
         if state.leader.is_none() {
             state.leader = Some(self.node_id.clone());
             state.term += 1;
             state.epoch += 1;
-            
-            println!("成为领导者: {}, 任期: {}, 时代: {}", 
+
+            println!("成为领导者: {}, 任期: {}, 时代: {}",
                     self.node_id, state.term, state.epoch);
         }
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动协调服务器");
-        
+
         let bind_address = self.bind_address.clone();
         let node_id = self.node_id.clone();
         let state = self.state.clone();
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个网络服务器
             println!("协调服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 清理过期的会话和锁
                 {
                     let mut state_guard = state.write().unwrap();
                     let now = Utc::now();
-                    
+
                     // 清理过期会话
                     let expired_sessions: Vec<String> = state_guard.sessions.iter()
                         .filter(|(_, s)| now.signed_duration_since(s.last_heartbeat) > s.timeout.into())
                         .map(|(id, _)| id.clone())
                         .collect();
-                    
+
                     for session_id in &expired_sessions {
                         println!("会话过期: {}", session_id);
                         state_guard.sessions.remove(session_id);
-                        
+
                         // 删除会话拥有的锁
                         let expired_locks: Vec<String> = state_guard.locks.iter()
                             .filter(|(_, l)| l.owner.as_ref() == Some(session_id))
                             .map(|(path, _)| path.clone())
                             .collect();
-                        
+
                         for lock_path in expired_locks {
                             println!("释放锁: {}", lock_path);
-                            
+
                             if let Some(lock) = state_guard.locks.get_mut(&lock_path) {
                                 lock.owner = None;
-                                
+
                                 // 触发锁释放的监视器
                                 Self::trigger_watches(&mut state_guard, &lock_path, WatchType::Data);
                             }
                         }
-                        
+
                         // 删除会话的监视器
                         for (path, watches) in state_guard.watches.iter_mut() {
                             watches.retain(|w| w.session_id != *session_id);
                         }
                     }
-                    
+
                     // 清理空的监视器列表
                     state_guard.watches.retain(|_, watches| !watches.is_empty());
-                    
+
                     // 清理过期的锁
                     let now = Utc::now();
                     let expired_locks: Vec<String> = state_guard.locks.iter()
                         .filter(|(_, l)| l.expires_at.map_or(false, |exp| now > exp))
                         .map(|(path, _)| path.clone())
                         .collect();
-                    
+
                     for lock_path in expired_locks {
                         println!("锁过期: {}", lock_path);
-                        
+
                         if let Some(lock) = state_guard.locks.get_mut(&lock_path) {
                             lock.owner = None;
-                            
+
                             // 触发锁释放的监视器
                             Self::trigger_watches(&mut state_guard, &lock_path, WatchType::Data);
                         }
                     }
                 }
-                
+
                 // 在实际实现中，这里会处理客户端请求
             }
         });
-        
+
         self.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn trigger_watches(state: &mut CoordinationState, path: &str, watch_type: WatchType) {
         if let Some(watches) = state.watches.get(path) {
             let matching_watches: Vec<_> = watches.iter()
                 .filter(|w| std::mem::discriminant(&w.watch_type) == std::mem::discriminant(&watch_type))
                 .collect();
-            
+
             for watch in matching_watches {
                 println!("触发监视器: {} -> {}", path, watch.session_id);
-                
+
                 // 在实际实现中，这里会通知客户端
             }
         }
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式协调服务");
-        
+
         // 停止服务器
         self.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.server.take() {
@@ -30798,37 +30800,37 @@ impl DistributedCoordinationService {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 保存状态
         self.save_state()?;
-        
+
         Ok(())
     }
-    
+
     fn save_state(&self) -> Result<(), String> {
         println!("保存协调服务状态");
-        
+
         let state = self.state.read().unwrap();
-        
+
         // 在实际实现中，这里会序列化为JSON
         let json = serde_json::to_string_pretty(&*state)
             .map_err(|e| format!("序列化状态失败: {}", e))?;
-        
+
         let state_path = self.data_dir.join("state.json");
-        
+
         if let Err(e) = std::fs::write(&state_path, json) {
             return Err(format!("写入状态文件失败: {}", e));
         }
-        
+
         Ok(())
     }
-    
+
     fn create_session(&self, client_id: &str, timeout: Duration) -> Result<String, String> {
         println!("创建会话: {}", client_id);
-        
+
         let session_id = uuid::Uuid::new_v4().to_string();
         let now = Utc::now();
-        
+
         let session = SessionInfo {
             id: session_id.clone(),
             client_id: client_id.to_string(),
@@ -30836,16 +30838,16 @@ impl DistributedCoordinationService {
             last_heartbeat: now,
             timeout,
         };
-        
+
         let mut state = self.state.write().unwrap();
         state.sessions.insert(session_id.clone(), session);
-        
+
         Ok(session_id)
     }
-    
+
     fn heartbeat(&self, session_id: &str) -> Result<(), String> {
         let mut state = self.state.write().unwrap();
-        
+
         if let Some(session) = state.sessions.get_mut(session_id) {
             session.last_heartbeat = Utc::now();
             Ok(())
@@ -30853,19 +30855,19 @@ impl DistributedCoordinationService {
             Err(format!("会话不存在: {}", session_id))
         }
     }
-    
+
     fn acquire_lock(&self, session_id: &str, path: &str, wait: bool, timeout: Option<Duration>) -> Result<bool, String> {
         println!("获取锁: {} -> {}", session_id, path);
-        
+
         // 检查会话是否存在
         let mut state = self.state.write().unwrap();
-        
+
         if !state.sessions.contains_key(session_id) {
             return Err(format!("会话不存在: {}", session_id));
         }
-        
+
         let now = Utc::now();
-        
+
         // 检查锁是否存在
         if let Some(lock) = state.locks.get_mut(path) {
             if let Some(owner) = &lock.owner {
@@ -30873,12 +30875,12 @@ impl DistributedCoordinationService {
                     // 已经拥有锁
                     return Ok(true);
                 }
-                
+
                 if !wait {
                     // 不等待，直接返回失败
                     return Ok(false);
                 }
-                
+
                 // 添加监视器
                 let watch = WatchInfo {
                     path: path.to_string(),
@@ -30886,26 +30888,26 @@ impl DistributedCoordinationService {
                     created_at: now,
                     watch_type: WatchType::Data,
                 };
-                
+
                 let watches = state.watches.entry(path.to_string()).or_insert_with(Vec::new);
                 watches.push(watch);
-                
+
                 // 无法立即获取锁
                 return Ok(false);
             } else {
                 // 锁未被持有，获取它
                 lock.owner = Some(session_id.to_string());
                 lock.created_at = now;
-                
+
                 if let Some(timeout_duration) = timeout {
                     lock.expires_at = Some(now + timeout_duration.into());
                 } else {
                     lock.expires_at = None;
                 }
-                
+
                 // 触发监视器
                 Self::trigger_watches(&mut state, path, WatchType::Data);
-                
+
                 return Ok(true);
             }
         } else {
@@ -30916,36 +30918,36 @@ impl DistributedCoordinationService {
                 created_at: now,
                 expires_at: timeout.map(|t| now + t.into()),
             };
-            
+
             state.locks.insert(path.to_string(), lock);
-            
+
             // 触发监视器
             Self::trigger_watches(&mut state, path, WatchType::Data);
-            
+
             return Ok(true);
         }
     }
-    
+
     fn release_lock(&self, session_id: &str, path: &str) -> Result<bool, String> {
         println!("释放锁: {} -> {}", session_id, path);
-        
+
         // 检查会话是否存在
         let mut state = self.state.write().unwrap();
-        
+
         if !state.sessions.contains_key(session_id) {
             return Err(format!("会话不存在: {}", session_id));
         }
-        
+
         // 检查锁是否存在
         if let Some(lock) = state.locks.get_mut(path) {
             if let Some(owner) = &lock.owner {
                 if owner == session_id {
                     // 释放锁
                     lock.owner = None;
-                    
+
                     // 触发监视器
                     Self::trigger_watches(&mut state, path, WatchType::Data);
-                    
+
                     return Ok(true);
                 } else {
                     // 不是锁的拥有者
@@ -30960,30 +30962,30 @@ impl DistributedCoordinationService {
             return Err(format!("锁不存在: {}", path));
         }
     }
-    
+
     fn watch(&self, session_id: &str, path: &str, watch_type: WatchType) -> Result<(), String> {
         println!("添加监视器: {} -> {}", session_id, path);
-        
+
         // 检查会话是否存在
         let mut state = self.state.write().unwrap();
-        
+
         if !state.sessions.contains_key(session_id) {
             return Err(format!("会话不存在: {}", session_id));
         }
-        
+
         // 添加监视器
         let now = Utc::now();
-        
+
         let watch = WatchInfo {
             path: path.to_string(),
             session_id: session_id.to_string(),
             created_at: now,
             watch_type,
         };
-        
+
         let watches = state.watches.entry(path.to_string()).or_insert_with(Vec::new);
         watches.push(watch);
-        
+
         Ok(())
     }
 }
@@ -30991,27 +30993,27 @@ impl DistributedCoordinationService {
 // 在main函数中测试所有分布式系统
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("启动分布式系统测试");
-    
+
     let temp_dir = std::env::temp_dir().join("distributed_systems_demo");
-    
+
     if temp_dir.exists() {
         std::fs::remove_dir_all(&temp_dir)?;
     }
     std::fs::create_dir_all(&temp_dir)?;
-    
+
     println!("使用临时目录: {:?}", temp_dir);
-    
+
     // 测试分布式搜索引擎
     {
         println!("\n===== 测试分布式搜索引擎 =====");
-        
+
         let data_dir = temp_dir.join("search_engine");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let mut search_engine = DistributedSearchEngine::new("node1", &data_dir, "127.0.0.1:9200");
-        
+
         search_engine.start()?;
-        
+
         // 创建索引
         let schema = IndexSchema {
             fields: vec![
@@ -31055,9 +31057,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 similarity: Similarity::BM25 { k1: 1.2, b: 0.75 },
             },
         };
-        
+
         search_engine.create_index("documents", schema)?;
-        
+
         // 索引文档
         let doc1 = Document {
             id: "1".to_string(),
@@ -31069,52 +31071,52 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ].iter().cloned().collect(),
             boost: 1.0,
         };
-        
+
         search_engine.index_document("documents", doc1)?;
-        
+
         // 搜索
         let query = Query::Term {
             field: "content".to_string(),
             term: "分布式".to_string(),
             boost: 1.0,
         };
-        
+
         let results = search_engine.search("documents", query, 10)?;
-        
+
         println!("搜索结果: {} 个匹配", results.total_hits);
-        
+
         // 停止搜索引擎
         search_engine.stop()?;
     }
-    
+
     // 测试分布式时序数据库
     {
         println!("\n===== 测试分布式时序数据库 =====");
-        
+
         let data_dir = temp_dir.join("time_series_db");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let mut time_series_db = DistributedTimeSeriesDB::new("node1", &data_dir, "127.0.0.1:8086");
-        
+
         time_series_db.start()?;
-        
+
         // 写入一些数据点
         let now = Utc::now().timestamp();
-        
+
         for i in 0..10 {
             let point = DataPoint {
                 timestamp: now + i * 60,
                 value: 42.0 + (i as f64),
             };
-            
+
             let labels = [
                 ("host".to_string(), "server1".to_string()),
                 ("service".to_string(), "app1".to_string()),
             ].iter().cloned().collect();
-            
+
             time_series_db.write_data_point("cpu_usage", labels.clone(), point)?;
         }
-        
+
         // 查询数据
         let query = TimeSeriesQuery {
             selector: MetricSelector {
@@ -31132,82 +31134,82 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             step: Some(60),
             aggregation: Some(AggregationFunction::Avg),
         };
-        
+
         let result = time_series_db.query_range(query)?;
-        
+
         println!("查询结果: {} 个序列", result.series.len());
-        
+
         // 停止时序数据库
         time_series_db.stop()?;
     }
-    
+
     // 测试分布式监控系统
     {
         println!("\n===== 测试分布式监控系统 =====");
-        
+
         let data_dir = temp_dir.join("monitoring_system");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let mut monitoring_system = DistributedMonitoringSystem::new("node1", &data_dir, "127.0.0.1");
-        
+
         monitoring_system.start()?;
-        
+
         // 收集一些指标
         let system_collector = SystemMetricCollector::new();
         let metrics = system_collector.collect();
-        
+
         println!("收集到 {} 个系统指标", metrics.len());
-        
+
         // 创建仪表盘
         monitoring_system.create_default_dashboards()?;
-        
+
         // 停止监控系统
         monitoring_system.stop()?;
     }
-    
+
     // 测试分布式协调服务
     {
         println!("\n===== 测试分布式协调服务 =====");
-        
+
         let data_dir = temp_dir.join("coordination_service");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let peers = [
             ("node2".to_string(), "127.0.0.1:2182".to_string()),
             ("node3".to_string(), "127.0.0.1:2183".to_string()),
         ].iter().cloned().collect();
-        
+
         let mut coordination_service = DistributedCoordinationService::new("node1", &data_dir, "127.0.0.1:2181", peers);
-        
+
         coordination_service.start()?;
-        
+
         // 创建会话
         let session_id = coordination_service.create_session("client1", Duration::from_secs(60))?;
-        
+
         println!("创建会话: {}", session_id);
-        
+
         // 获取锁
         let lock_acquired = coordination_service.acquire_lock(&session_id, "/locks/resource1", true, None)?;
-        
+
         println!("获取锁结果: {}", lock_acquired);
-        
+
         // 释放锁
         let lock_released = coordination_service.release_lock(&session_id, "/locks/resource1")?;
-        
+
         println!("释放锁结果: {}", lock_released);
-        
+
         // 添加监视器
         coordination_service.watch(&session_id, "/config/app1", WatchType::Data)?;
-        
+
         // 停止协调服务
         coordination_service.stop()?;
     }
-    
+
     println!("\n所有分布式系统测试完成");
-    
+
     // 清理临时目录
     std::fs::remove_dir_all(&temp_dir)?;
-    
+
     Ok(())
 }
 ```
@@ -31278,11 +31280,11 @@ impl TaskPriority {
     fn high() -> Self {
         TaskPriority(0)
     }
-    
+
     fn normal() -> Self {
         TaskPriority(128)
     }
-    
+
     fn low() -> Self {
         TaskPriority(255)
     }
@@ -31376,11 +31378,11 @@ impl SchedulingPolicy for FifoSchedulingPolicy {
     fn name(&self) -> &str {
         "fifo"
     }
-    
+
     fn select_worker(&self, task: &Task, workers: &HashMap<String, Worker>) -> Option<String> {
         // 选择第一个空闲且具有所需能力的工作者
         for (id, worker) in workers {
-            if worker.status == WorkerStatus::Idle && 
+            if worker.status == WorkerStatus::Idle &&
                task.required_capabilities.iter().all(|cap| worker.capabilities.contains(cap)) {
                 return Some(id.clone());
             }
@@ -31397,23 +31399,23 @@ impl SchedulingPolicy for RoundRobinSchedulingPolicy {
     fn name(&self) -> &str {
         "round_robin"
     }
-    
+
     fn select_worker(&self, task: &Task, workers: &HashMap<String, Worker>) -> Option<String> {
         // 收集所有空闲且具有所需能力的工作者
         let available_workers: Vec<_> = workers.iter()
-            .filter(|(_, w)| w.status == WorkerStatus::Idle && 
+            .filter(|(_, w)| w.status == WorkerStatus::Idle &&
                    task.required_capabilities.iter().all(|cap| w.capabilities.contains(cap)))
             .collect();
-        
+
         if available_workers.is_empty() {
             return None;
         }
-        
+
         // 获取并更新上次使用的工作者索引
         let current_index = self.last_worker.load(Ordering::SeqCst);
         let next_index = (current_index + 1) % available_workers.len();
         self.last_worker.store(next_index, Ordering::SeqCst);
-        
+
         // 返回选择的工作者ID
         Some(available_workers[next_index].0.clone())
     }
@@ -31425,19 +31427,19 @@ impl SchedulingPolicy for ResourceAwareSchedulingPolicy {
     fn name(&self) -> &str {
         "resource_aware"
     }
-    
+
     fn select_worker(&self, task: &Task, workers: &HashMap<String, Worker>) -> Option<String> {
         // 为了简化，这里只实现一个基本的资源感知调度
         // 在实际实现中，这将考虑资源利用率和资源请求
         let available_workers: Vec<_> = workers.iter()
-            .filter(|(_, w)| w.status == WorkerStatus::Idle && 
+            .filter(|(_, w)| w.status == WorkerStatus::Idle &&
                    task.required_capabilities.iter().all(|cap| w.capabilities.contains(cap)))
             .collect();
-        
+
         if available_workers.is_empty() {
             return None;
         }
-        
+
         // 选择完成任务最少的工作者
         available_workers.iter()
             .min_by_key(|(_, w)| w.stats.tasks_completed)
@@ -31460,21 +31462,21 @@ impl DistributedTaskScheduler {
         let task_storage = TaskStorage {
             data_dir: data_dir.join("tasks"),
         };
-        
+
         let task_queue = TaskQueue {
             pending_tasks: RwLock::new(BTreeMap::new()),
             failed_tasks: RwLock::new(HashMap::new()),
             completed_tasks: RwLock::new(HashMap::new()),
             storage: task_storage,
         };
-        
+
         let task_executor = TaskExecutor {
             workers: RwLock::new(HashMap::new()),
             worker_pool: ThreadPool::new(4),
             max_concurrent_tasks: 8,
             running_tasks: RwLock::new(HashMap::new()),
         };
-        
+
         let scheduler = Scheduler {
             scheduling_policies: vec![
                 Box::new(FifoSchedulingPolicy),
@@ -31487,17 +31489,17 @@ impl DistributedTaskScheduler {
             running: AtomicBool::new(false),
             interval: Duration::from_millis(100),
         };
-        
+
         let lock_service = LockService {
             locks: RwLock::new(HashMap::new()),
         };
-        
+
         let api_server = TaskApiServer {
             server: None,
             running: AtomicBool::new(false),
             bind_address: bind_address.to_string(),
         };
-        
+
         DistributedTaskScheduler {
             node_id: node_id.to_string(),
             data_dir: data_dir.to_path_buf(),
@@ -31509,55 +31511,55 @@ impl DistributedTaskScheduler {
             running: AtomicBool::new(false),
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式任务调度系统");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.task_queue.storage.data_dir) {
             return Err(format!("创建任务数据目录失败: {}", e));
         }
-        
+
         // 加载任务
         self.load_tasks()?;
-        
+
         // 注册工作者
         self.register_workers()?;
-        
+
         // 启动调度器
         self.start_scheduler()?;
-        
+
         // 启动API服务器
         self.start_api_server()?;
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn load_tasks(&self) -> Result<(), String> {
         println!("加载任务");
-        
+
         let tasks_dir = self.task_queue.storage.data_dir.join("pending");
-        
+
         if !tasks_dir.exists() {
             if let Err(e) = std::fs::create_dir_all(&tasks_dir) {
                 return Err(format!("创建待处理任务目录失败: {}", e));
             }
             return Ok(());
         }
-        
+
         // 加载待处理任务
         match std::fs::read_dir(&tasks_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
                             match self.load_task(&path) {
                                 Ok(task) => {
@@ -31574,7 +31576,7 @@ impl DistributedTaskScheduler {
             },
             Err(e) => return Err(format!("读取任务目录失败: {}", e)),
         }
-        
+
         // 加载失败任务
         let failed_dir = self.task_queue.storage.data_dir.join("failed");
         if failed_dir.exists() {
@@ -31583,7 +31585,7 @@ impl DistributedTaskScheduler {
                     for entry in entries {
                         if let Ok(entry) = entry {
                             let path = entry.path();
-                            
+
                             if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
                                 // 在实际实现中，这里会加载失败任务
                             }
@@ -31593,28 +31595,28 @@ impl DistributedTaskScheduler {
                 Err(e) => println!("读取失败任务目录失败: {}", e),
             }
         }
-        
+
         // 加载已完成任务
         let completed_dir = self.task_queue.storage.data_dir.join("completed");
         if completed_dir.exists() {
             // 在实际实现中，这里会加载已完成任务
         }
-        
+
         Ok(())
     }
-    
+
     fn load_task(&self, path: &Path) -> Result<Task, String> {
         let content = match std::fs::read_to_string(path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取任务文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析任务文件: {}", path.display());
-        
+
         // 创建一个模拟任务
         let now = Utc::now();
-        
+
         Ok(Task {
             id: uuid::Uuid::new_v4().to_string(),
             name: format!("任务 {}", now.timestamp()),
@@ -31642,18 +31644,18 @@ impl DistributedTaskScheduler {
             required_capabilities: ["data_processing".to_string()].iter().cloned().collect(),
         })
     }
-    
+
     fn register_workers(&self) -> Result<(), String> {
         println!("注册工作者");
-        
+
         // 在实际实现中，这里会自动发现或从配置加载工作者
-        
+
         // 注册一些模拟工作者
         let mut workers = self.task_executor.workers.write().unwrap();
-        
+
         for i in 1..=4 {
             let worker_id = format!("worker-{}", i);
-            
+
             let worker = Worker {
                 id: worker_id.clone(),
                 capabilities: ["data_processing".to_string(), "computation".to_string()].iter().cloned().collect(),
@@ -31667,16 +31669,16 @@ impl DistributedTaskScheduler {
                     avg_execution_time: Duration::from_secs(0),
                 },
             };
-            
+
             workers.insert(worker_id, worker);
         }
-        
+
         Ok(())
     }
-    
+
     fn start_scheduler(&mut self) -> Result<(), String> {
         println!("启动任务调度器");
-        
+
         let pending_tasks = self.task_queue.pending_tasks.clone();
         let workers = self.task_executor.workers.clone();
         let running_tasks = self.task_executor.running_tasks.clone();
@@ -31684,17 +31686,17 @@ impl DistributedTaskScheduler {
         let worker_pool = self.task_executor.worker_pool;
         let policies = self.scheduler.scheduling_policies.clone();
         let interval = self.scheduler.interval;
-        
+
         self.scheduler.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.scheduler.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 检查是否有空闲的工作者
                 let workers_guard = workers.read().unwrap();
                 let running_tasks_guard = running_tasks.read().unwrap();
-                
+
                 if running_tasks_guard.len() >= max_concurrent_tasks {
                     // 已达到最大并发任务数
                     drop(running_tasks_guard);
@@ -31702,11 +31704,11 @@ impl DistributedTaskScheduler {
                     thread::sleep(interval);
                     continue;
                 }
-                
+
                 let idle_workers: Vec<_> = workers_guard.iter()
                     .filter(|(_, w)| w.status == WorkerStatus::Idle)
                     .collect();
-                
+
                 if idle_workers.is_empty() {
                     // 没有空闲工作者
                     drop(running_tasks_guard);
@@ -31714,24 +31716,24 @@ impl DistributedTaskScheduler {
                     thread::sleep(interval);
                     continue;
                 }
-                
+
                 drop(running_tasks_guard);
                 drop(workers_guard);
-                
+
                 // 检查是否有待处理任务
                 let mut pending_tasks_guard = pending_tasks.write().unwrap();
-                
+
                 if pending_tasks_guard.is_empty() {
                     // 没有待处理任务
                     drop(pending_tasks_guard);
                     thread::sleep(interval);
                     continue;
                 }
-                
+
                 // 提取最高优先级的任务
                 let (priority, queue) = pending_tasks_guard.iter_mut().next().unwrap();
                 let priority = priority.clone();
-                
+
                 if queue.is_empty() {
                     // 删除空队列
                     pending_tasks_guard.remove(&priority);
@@ -31739,7 +31741,7 @@ impl DistributedTaskScheduler {
                     thread::sleep(interval);
                     continue;
                 }
-                
+
                 let task = match queue.pop_front() {
                     Some(task) => task,
                     None => {
@@ -31750,19 +31752,19 @@ impl DistributedTaskScheduler {
                         continue;
                     }
                 };
-                
+
                 // 如果队列为空，删除它
                 if queue.is_empty() {
                     pending_tasks_guard.remove(&priority);
                 }
-                
+
                 drop(pending_tasks_guard);
-                
+
                 // 为任务选择工作者
                 let workers_guard = workers.read().unwrap();
-                
+
                 let mut selected_worker_id = None;
-                
+
                 // 尝试每个调度策略
                 for policy in &policies {
                     if let Some(worker_id) = policy.select_worker(&task, &workers_guard) {
@@ -31770,20 +31772,20 @@ impl DistributedTaskScheduler {
                         break;
                     }
                 }
-                
+
                 drop(workers_guard);
-                
+
                 if let Some(worker_id) = selected_worker_id {
                     // 更新工作者状态
                     let mut workers_guard = workers.write().unwrap();
-                    
+
                     if let Some(worker) = workers_guard.get_mut(&worker_id) {
                         worker.status = WorkerStatus::Busy;
                         worker.current_task = Some(task.id.clone());
                     }
-                    
+
                     drop(workers_guard);
-                    
+
                     // 创建运行任务记录
                     let running_task = RunningTask {
                         task_id: task.id.clone(),
@@ -31792,34 +31794,34 @@ impl DistributedTaskScheduler {
                         progress: 0.0,
                         last_update: Utc::now(),
                     };
-                    
+
                     let mut running_tasks_guard = running_tasks.write().unwrap();
                     running_tasks_guard.insert(task.id.clone(), running_task);
                     drop(running_tasks_guard);
-                    
+
                     // 执行任务
                     let worker_id_clone = worker_id.clone();
                     let task_id = task.id.clone();
-                    
+
                     worker_pool.execute(move || {
                         println!("工作者 {} 执行任务 {}", worker_id_clone, task_id);
-                        
+
                         // 在实际实现中，这里会执行实际任务
                         thread::sleep(Duration::from_secs(5));
-                        
+
                         println!("工作者 {} 完成任务 {}", worker_id_clone, task_id);
-                        
+
                         // 更新工作者状态
                         let mut workers_guard = workers.write().unwrap();
-                        
+
                         if let Some(worker) = workers_guard.get_mut(&worker_id_clone) {
                             worker.status = WorkerStatus::Idle;
                             worker.current_task = None;
                             worker.stats.tasks_completed += 1;
                         }
-                        
+
                         drop(workers_guard);
-                        
+
                         // 移除运行任务记录
                         let mut running_tasks_guard = running_tasks.write().unwrap();
                         running_tasks_guard.remove(&task_id);
@@ -31830,47 +31832,47 @@ impl DistributedTaskScheduler {
                     let queue = pending_tasks_guard.entry(priority).or_insert_with(VecDeque::new);
                     queue.push_back(task);
                 }
-                
+
                 thread::sleep(interval);
             }
         });
-        
+
         self.scheduler.scheduler_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_api_server(&mut self) -> Result<(), String> {
         println!("启动任务调度API服务器");
-        
+
         let bind_address = self.api_server.bind_address.clone();
-        
+
         self.api_server.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.api_server.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP API服务器
             println!("任务调度API服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理API请求
             }
         });
-        
+
         self.api_server.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式任务调度系统");
-        
+
         self.running.store(false, Ordering::SeqCst);
-        
+
         // 停止API服务器
         self.api_server.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.api_server.server.take() {
@@ -31879,7 +31881,7 @@ impl DistributedTaskScheduler {
                 Err(e) => println!("API服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止调度器
         self.scheduler.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.scheduler.scheduler_thread.take() {
@@ -31888,63 +31890,63 @@ impl DistributedTaskScheduler {
                 Err(e) => println!("调度器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 保存所有待处理任务
         self.save_tasks()?;
-        
+
         Ok(())
     }
-    
+
     fn save_tasks(&self) -> Result<(), String> {
         println!("保存待处理任务");
-        
+
         // 确保目录存在
         let pending_dir = self.task_queue.storage.data_dir.join("pending");
         if let Err(e) = std::fs::create_dir_all(&pending_dir) {
             return Err(format!("创建待处理任务目录失败: {}", e));
         }
-        
+
         // 保存待处理任务
         let pending_tasks = self.task_queue.pending_tasks.read().unwrap();
-        
+
         for (priority, queue) in pending_tasks.iter() {
             for task in queue {
                 let task_path = pending_dir.join(format!("{}.json", task.id));
-                
+
                 // 在实际实现中，这里会序列化任务为JSON
                 let json = serde_json::to_string_pretty(task)
                     .map_err(|e| format!("序列化任务失败: {}", e))?;
-                
+
                 if let Err(e) = std::fs::write(&task_path, json) {
                     println!("保存任务 {} 失败: {}", task.id, e);
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn enqueue_task(&self, task: Task) -> Result<String, String> {
         println!("将任务加入队列: {}", task.name);
-        
+
         // 为任务分配ID（如果尚未分配）
         let task_id = if task.id.is_empty() {
             uuid::Uuid::new_v4().to_string()
         } else {
             task.id.clone()
         };
-        
+
         let mut task = task;
         task.id = task_id.clone();
-        
+
         // 检查依赖项
         for dep_id in &task.dependencies {
             let completed_tasks = self.task_queue.completed_tasks.read().unwrap();
-            
+
             if !completed_tasks.contains_key(dep_id) {
                 // 检查依赖项是否在待处理队列中
                 let pending_tasks = self.task_queue.pending_tasks.read().unwrap();
-                
+
                 let mut found = false;
                 for (_, queue) in pending_tasks.iter() {
                     if queue.iter().any(|t| t.id == *dep_id) {
@@ -31952,41 +31954,41 @@ impl DistributedTaskScheduler {
                         break;
                     }
                 }
-                
+
                 if !found {
                     return Err(format!("依赖任务不存在: {}", dep_id));
                 }
             }
         }
-        
+
         // 将任务添加到队列
         let mut pending_tasks = self.task_queue.pending_tasks.write().unwrap();
         let queue = pending_tasks.entry(task.priority).or_insert_with(VecDeque::new);
         queue.push_back(task.clone());
-        
+
         // 保存任务到磁盘
         let pending_dir = self.task_queue.storage.data_dir.join("pending");
         if let Err(e) = std::fs::create_dir_all(&pending_dir) {
             return Err(format!("创建待处理任务目录失败: {}", e));
         }
-        
+
         let task_path = pending_dir.join(format!("{}.json", task_id));
-        
+
         // 在实际实现中，这里会序列化任务为JSON
         let json = serde_json::to_string_pretty(&task)
             .map_err(|e| format!("序列化任务失败: {}", e))?;
-        
+
         if let Err(e) = std::fs::write(&task_path, json) {
             return Err(format!("保存任务失败: {}", e));
         }
-        
+
         Ok(task_id)
     }
-    
+
     fn get_task_status(&self, task_id: &str) -> Result<TaskStatus, String> {
         // 检查运行中的任务
         let running_tasks = self.task_executor.running_tasks.read().unwrap();
-        
+
         if let Some(running) = running_tasks.get(task_id) {
             return Ok(TaskStatus::Running {
                 worker_id: running.worker_id.clone(),
@@ -31994,10 +31996,10 @@ impl DistributedTaskScheduler {
                 progress: running.progress,
             });
         }
-        
+
         // 检查已完成的任务
         let completed_tasks = self.task_queue.completed_tasks.read().unwrap();
-        
+
         if let Some(completed) = completed_tasks.get(task_id) {
             return Ok(TaskStatus::Completed {
                 completed_at: completed.completed_at,
@@ -32005,10 +32007,10 @@ impl DistributedTaskScheduler {
                 result: completed.result.clone(),
             });
         }
-        
+
         // 检查失败的任务
         let failed_tasks = self.task_queue.failed_tasks.read().unwrap();
-        
+
         if let Some(failed) = failed_tasks.get(task_id) {
             return Ok(TaskStatus::Failed {
                 failed_at: failed.failed_at,
@@ -32017,10 +32019,10 @@ impl DistributedTaskScheduler {
                 next_retry: failed.next_retry,
             });
         }
-        
+
         // 检查待处理的任务
         let pending_tasks = self.task_queue.pending_tasks.read().unwrap();
-        
+
         for (_, queue) in pending_tasks.iter() {
             for task in queue {
                 if task.id == task_id {
@@ -32032,7 +32034,7 @@ impl DistributedTaskScheduler {
                 }
             }
         }
-        
+
         Err(format!("任务不存在: {}", task_id))
     }
 }
@@ -32064,30 +32066,30 @@ enum TaskStatus {
 // 完善main函数，添加任务调度系统测试
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("启动分布式系统示例");
-    
+
     let temp_dir = std::env::temp_dir().join("distributed_systems_demo");
-    
+
     if temp_dir.exists() {
         std::fs::remove_dir_all(&temp_dir)?;
     }
     std::fs::create_dir_all(&temp_dir)?;
-    
+
     println!("使用临时目录: {:?}", temp_dir);
-    
+
     // 测试分布式任务调度系统
     {
         println!("\n===== 测试分布式任务调度系统 =====");
-        
+
         let data_dir = temp_dir.join("task_scheduler");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let mut task_scheduler = DistributedTaskScheduler::new("node1", &data_dir, "127.0.0.1:8070");
-        
+
         task_scheduler.start()?;
-        
+
         // 提交一些任务
         let now = Utc::now();
-        
+
         let task1 = Task {
             id: String::new(), // 自动生成ID
             name: "数据处理任务".to_string(),
@@ -32114,7 +32116,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ].iter().cloned().collect(),
             required_capabilities: ["data_processing".to_string()].iter().cloned().collect(),
         };
-        
+
         let task2 = Task {
             id: String::new(), // 自动生成ID
             name: "报告生成任务".to_string(),
@@ -32141,37 +32143,37 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ].iter().cloned().collect(),
             required_capabilities: ["computation".to_string()].iter().cloned().collect(),
         };
-        
+
         let task1_id = task_scheduler.enqueue_task(task1)?;
         let task2_id = task_scheduler.enqueue_task(task2)?;
-        
+
         println!("提交的任务ID: {}, {}", task1_id, task2_id);
-        
+
         // 等待任务处理
         thread::sleep(Duration::from_secs(2));
-        
+
         // 检查任务状态
         let status1 = task_scheduler.get_task_status(&task1_id)?;
-        
+
         match status1 {
             TaskStatus::Pending { .. } => println!("任务1状态: 待处理"),
             TaskStatus::Running { worker_id, .. } => println!("任务1状态: 运行中，工作者: {}", worker_id),
             TaskStatus::Completed { .. } => println!("任务1状态: 已完成"),
             TaskStatus::Failed { error, .. } => println!("任务1状态: 失败，错误: {}", error),
         }
-        
+
         // 再等待一段时间，让一些任务完成
         thread::sleep(Duration::from_secs(6));
-        
+
         // 停止任务调度器
         task_scheduler.stop()?;
     }
-    
+
     println!("\n所有分布式系统测试完成");
-    
+
     // 清理临时目录
     std::fs::remove_dir_all(&temp_dir)?;
-    
+
     Ok(())
 }
 ```
@@ -32484,15 +32486,15 @@ impl AtomicU64 {
     fn new(val: u64) -> Self {
         AtomicU64(AtomicUsize::new(val as usize))
     }
-    
+
     fn load(&self) -> u64 {
         self.0.load(Ordering::SeqCst) as u64
     }
-    
+
     fn store(&self, val: u64) {
         self.0.store(val as usize, Ordering::SeqCst);
     }
-    
+
     fn fetch_add(&self, val: u64) -> u64 {
         self.0.fetch_add(val as usize, Ordering::SeqCst) as u64
     }
@@ -32504,11 +32506,11 @@ impl AtomicI64 {
     fn new(val: i64) -> Self {
         AtomicI64(AtomicIsize::new(val as isize))
     }
-    
+
     fn load(&self) -> i64 {
         self.0.load(Ordering::SeqCst) as i64
     }
-    
+
     fn store(&self, val: i64) {
         self.0.store(val as isize, Ordering::SeqCst);
     }
@@ -32526,7 +32528,7 @@ impl DistributedStreamProcessor {
             running: AtomicBool::new(false),
             coordinator_thread: None,
         };
-        
+
         let checkpoint_manager = CheckpointManager {
             checkpoint_dir: data_dir.join("checkpoints"),
             checkpoint_interval: Duration::from_secs(60),
@@ -32535,23 +32537,23 @@ impl DistributedStreamProcessor {
             checkpoint_thread: None,
             running: AtomicBool::new(false),
         };
-        
+
         let topology_manager = TopologyManager {
             topologies: RwLock::new(HashMap::new()),
         };
-        
+
         let state_store = StateStore {
             store_dir: data_dir.join("state"),
             databases: RwLock::new(HashMap::new()),
         };
-        
+
         let metrics_collector = StreamMetricsCollector {
             metrics: RwLock::new(HashMap::new()),
             collection_interval: Duration::from_secs(10),
             collection_thread: None,
             running: AtomicBool::new(false),
         };
-        
+
         DistributedStreamProcessor {
             node_id: node_id.to_string(),
             data_dir: data_dir.to_path_buf(),
@@ -32569,67 +32571,67 @@ impl DistributedStreamProcessor {
             bind_address: bind_address.to_string(),
         }
     }
-    
+
     fn start(&mut self) -> Result<(), String> {
         println!("启动分布式流处理系统");
-        
+
         // 创建必要的目录
         if let Err(e) = std::fs::create_dir_all(&self.data_dir) {
             return Err(format!("创建数据目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.checkpoint_manager.checkpoint_dir) {
             return Err(format!("创建检查点目录失败: {}", e));
         }
-        
+
         if let Err(e) = std::fs::create_dir_all(&self.state_store.store_dir) {
             return Err(format!("创建状态存储目录失败: {}", e));
         }
-        
+
         // 加载拓扑定义
         self.load_topologies()?;
-        
+
         // 加载流定义
         self.load_stream_definitions()?;
-        
+
         // 初始化状态存储
         self.initialize_state_store()?;
-        
+
         // 启动检查点管理器
         self.start_checkpoint_manager()?;
-        
+
         // 启动指标收集器
         self.start_metrics_collector()?;
-        
+
         // 启动流引擎
         self.start_stream_engine()?;
-        
+
         // 启动服务器
         self.start_server()?;
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         Ok(())
     }
-    
+
     fn load_topologies(&self) -> Result<(), String> {
         println!("加载拓扑定义");
-        
+
         let topologies_dir = self.data_dir.join("topologies");
-        
+
         if !topologies_dir.exists() {
             if let Err(e) = std::fs::create_dir_all(&topologies_dir) {
                 return Err(format!("创建拓扑目录失败: {}", e));
             }
             return Ok(());
         }
-        
+
         match std::fs::read_dir(&topologies_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
                             match self.load_topology(&path) {
                                 Ok(topology) => {
@@ -32644,22 +32646,22 @@ impl DistributedStreamProcessor {
             },
             Err(e) => return Err(format!("读取拓扑目录失败: {}", e)),
         }
-        
+
         Ok(())
     }
-    
+
     fn load_topology(&self, path: &Path) -> Result<Topology, String> {
         let content = match std::fs::read_to_string(path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取拓扑文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析拓扑文件: {}", path.display());
-        
+
         // 创建一个模拟拓扑
         let now = Utc::now();
-        
+
         let topology = Topology {
             id: uuid::Uuid::new_v4().to_string(),
             name: "示例拓扑".to_string(),
@@ -32728,28 +32730,28 @@ impl DistributedStreamProcessor {
             version: 1,
             status: TopologyStatus::Created,
         };
-        
+
         Ok(topology)
     }
-    
+
     fn load_stream_definitions(&self) -> Result<(), String> {
         println!("加载流定义");
-        
+
         let streams_dir = self.data_dir.join("streams");
-        
+
         if !streams_dir.exists() {
             if let Err(e) = std::fs::create_dir_all(&streams_dir) {
                 return Err(format!("创建流目录失败: {}", e));
             }
             return Ok(());
         }
-        
+
         match std::fs::read_dir(&streams_dir) {
             Ok(entries) => {
                 for entry in entries {
                     if let Ok(entry) = entry {
                         let path = entry.path();
-                        
+
                         if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
                             match self.load_stream_definition(&path) {
                                 Ok(stream) => {
@@ -32764,27 +32766,27 @@ impl DistributedStreamProcessor {
             },
             Err(e) => return Err(format!("读取流目录失败: {}", e)),
         }
-        
+
         // 创建示例流定义
         if self.streams.read().unwrap().is_empty() {
             self.create_example_streams()?;
         }
-        
+
         Ok(())
     }
-    
+
     fn load_stream_definition(&self, path: &Path) -> Result<StreamDefinition, String> {
         let content = match std::fs::read_to_string(path) {
             Ok(content) => content,
             Err(e) => return Err(format!("读取流定义文件失败: {}", e)),
         };
-        
+
         // 在实际实现中，这里会解析JSON
         println!("解析流定义文件: {}", path.display());
-        
+
         // 创建一个模拟流定义
         let now = Utc::now();
-        
+
         let stream = StreamDefinition {
             id: uuid::Uuid::new_v4().to_string(),
             name: "示例流".to_string(),
@@ -32833,15 +32835,15 @@ impl DistributedStreamProcessor {
             created_at: now,
             created_by: "system".to_string(),
         };
-        
+
         Ok(stream)
     }
-    
+
     fn create_example_streams(&self) -> Result<(), String> {
         println!("创建示例流定义");
-        
+
         let now = Utc::now();
-        
+
         // 原始温度流
         let raw_temperature = StreamDefinition {
             id: "raw_temperature".to_string(),
@@ -32898,7 +32900,7 @@ impl DistributedStreamProcessor {
             created_at: now,
             created_by: "system".to_string(),
         };
-        
+
         // 过滤后的温度流
         let filtered_temperature = StreamDefinition {
             id: "filtered_temperature".to_string(),
@@ -32955,7 +32957,7 @@ impl DistributedStreamProcessor {
             created_at: now,
             created_by: "system".to_string(),
         };
-        
+
         // 处理后的温度流
         let processed_temperature = StreamDefinition {
             id: "processed_temperature".to_string(),
@@ -33019,114 +33021,114 @@ impl DistributedStreamProcessor {
             created_at: now,
             created_by: "system".to_string(),
         };
-        
+
         let mut streams = self.streams.write().unwrap();
         streams.insert(raw_temperature.id.clone(), raw_temperature);
         streams.insert(filtered_temperature.id.clone(), filtered_temperature);
         streams.insert(processed_temperature.id.clone(), processed_temperature);
-        
+
         // 保存流定义
         self.save_stream_definitions()?;
-        
+
         Ok(())
     }
-    
+
     fn save_stream_definitions(&self) -> Result<(), String> {
         println!("保存流定义");
-        
+
         let streams_dir = self.data_dir.join("streams");
-        
+
         if let Err(e) = std::fs::create_dir_all(&streams_dir) {
             return Err(format!("创建流目录失败: {}", e));
         }
-        
+
         let streams = self.streams.read().unwrap();
-        
+
         for (id, stream) in streams.iter() {
             let stream_path = streams_dir.join(format!("{}.json", id));
-            
+
             // 在实际实现中，这里会序列化为JSON
             let json = serde_json::to_string_pretty(stream)
                 .map_err(|e| format!("序列化流定义失败: {}", e))?;
-            
+
             if let Err(e) = std::fs::write(&stream_path, json) {
                 println!("保存流定义 {} 失败: {}", id, e);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn initialize_state_store(&self) -> Result<(), String> {
         println!("初始化状态存储");
-        
+
         // 创建状态存储目录
         if let Err(e) = std::fs::create_dir_all(&self.state_store.store_dir) {
             return Err(format!("创建状态存储目录失败: {}", e));
         }
-        
+
         // 创建一些示例数据库
         let mut databases = self.state_store.databases.write().unwrap();
-        
+
         // 温度统计数据库
         let temperature_stats = KeyValueDatabase {
             name: "temperature_stats".to_string(),
             entries: RwLock::new(HashMap::new()),
         };
-        
+
         // 传感器元数据数据库
         let sensor_metadata = KeyValueDatabase {
             name: "sensor_metadata".to_string(),
             entries: RwLock::new(HashMap::new()),
         };
-        
+
         databases.insert("temperature_stats".to_string(), temperature_stats);
         databases.insert("sensor_metadata".to_string(), sensor_metadata);
-        
+
         Ok(())
     }
-    
+
     fn start_checkpoint_manager(&mut self) -> Result<(), String> {
         println!("启动检查点管理器");
-        
+
         // 创建检查点目录
         if let Err(e) = std::fs::create_dir_all(&self.checkpoint_manager.checkpoint_dir) {
             return Err(format!("创建检查点目录失败: {}", e));
         }
-        
+
         let checkpoint_dir = self.checkpoint_manager.checkpoint_dir.clone();
         let interval = self.checkpoint_manager.checkpoint_interval;
         let checkpoints = self.checkpoint_manager.checkpoints.clone();
         let source_connectors = self.source_connectors.clone();
         let processors = self.processors.clone();
-        
+
         self.checkpoint_manager.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.checkpoint_manager.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 创建新检查点
                 let checkpoint_id = uuid::Uuid::new_v4().to_string();
                 let now = Utc::now();
-                
+
                 println!("创建检查点: {}", checkpoint_id);
-                
+
                 // 收集处理器状态
                 let mut processor_states = HashMap::new();
                 let processors_guard = processors.read().unwrap();
-                
+
                 for (id, processor) in processors_guard.iter() {
                     // 在实际实现中，这里会获取处理器的状态
                     processor_states.insert(id.clone(), Vec::new());
                 }
-                
+
                 drop(processors_guard);
-                
+
                 // 收集源连接器位置
                 let mut source_positions = HashMap::new();
                 let sources_guard = source_connectors.read().unwrap();
-                
+
                 for (id, source) in sources_guard.iter() {
                     // 在实际实现中，这里会获取源连接器的位置
                     source_positions.insert(id.clone(), SourcePosition {
@@ -33134,9 +33136,9 @@ impl DistributedStreamProcessor {
                         position: Vec::new(),
                     });
                 }
-                
+
                 drop(sources_guard);
-                
+
                 // 创建检查点
                 let checkpoint = Checkpoint {
                     id: checkpoint_id.clone(),
@@ -33145,63 +33147,63 @@ impl DistributedStreamProcessor {
                     source_positions,
                     completed: true,
                 };
-                
+
                 // 保存检查点
                 let mut checkpoints_guard = checkpoints.write().unwrap();
                 checkpoints_guard.insert(checkpoint_id.clone(), checkpoint);
-                
+
                 // 限制检查点数量
                 if checkpoints_guard.len() > 5 {
                     // 删除最旧的检查点
                     let oldest = checkpoints_guard.iter()
                         .min_by_key(|(_, c)| c.timestamp)
                         .map(|(id, _)| id.clone());
-                    
+
                     if let Some(id) = oldest {
                         checkpoints_guard.remove(&id);
                     }
                 }
-                
+
                 drop(checkpoints_guard);
-                
+
                 // 保存检查点到磁盘
                 let checkpoint_path = checkpoint_dir.join(format!("{}.json", checkpoint_id));
-                
+
                 // 在实际实现中，这里会序列化检查点为JSON
-                
+
                 // 等待下一个检查点间隔
                 thread::sleep(interval);
             }
         });
-        
+
         self.checkpoint_manager.checkpoint_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_metrics_collector(&mut self) -> Result<(), String> {
         println!("启动指标收集器");
-        
+
         let interval = self.metrics_collector.collection_interval;
         let metrics = self.metrics_collector.metrics.clone();
         let source_connectors = self.source_connectors.clone();
         let sink_connectors = self.sink_connectors.clone();
         let processors = self.processors.clone();
-        
+
         self.metrics_collector.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.metrics_collector.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 let now = Utc::now().timestamp();
-                
+
                 // 收集源连接器指标
                 let sources_guard = source_connectors.read().unwrap();
-                
+
                 for (id, source) in sources_guard.iter() {
                     let mut metric_guard = metrics.write().unwrap();
-                    
+
                     metric_guard.insert(format!("source.{}.records_read", id), Metric {
                         name: format!("source.{}.records_read", id),
                         value: source.metrics.records_read.load() as f64,
@@ -33211,7 +33213,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), source.connector_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("source.{}.bytes_read", id), Metric {
                         name: format!("source.{}.bytes_read", id),
                         value: source.metrics.bytes_read.load() as f64,
@@ -33221,7 +33223,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), source.connector_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("source.{}.errors", id), Metric {
                         name: format!("source.{}.errors", id),
                         value: source.metrics.errors.load() as f64,
@@ -33235,15 +33237,15 @@ impl DistributedStreamProcessor {
                         ].iter().cloned().collect(),
                     });
                 }
-                
+
                 drop(sources_guard);
-                
+
                 // 收集接收器连接器指标
                 let sinks_guard = sink_connectors.read().unwrap();
-                
+
                 for (id, sink) in sinks_guard.iter() {
                     let mut metric_guard = metrics.write().unwrap();
-                    
+
                     metric_guard.insert(format!("sink.{}.records_written", id), Metric {
                         name: format!("sink.{}.records_written", id),
                         value: sink.metrics.records_written.load() as f64,
@@ -33253,7 +33255,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), sink.connector_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("sink.{}.bytes_written", id), Metric {
                         name: format!("sink.{}.bytes_written", id),
                         value: sink.metrics.bytes_written.load() as f64,
@@ -33263,7 +33265,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), sink.connector_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("sink.{}.errors", id), Metric {
                         name: format!("sink.{}.errors", id),
                         value: sink.metrics.errors.load() as f64,
@@ -33274,15 +33276,15 @@ impl DistributedStreamProcessor {
                         ].iter().cloned().collect(),
                     });
                 }
-                
+
                 drop(sinks_guard);
-                
+
                 // 收集处理器指标
                 let processors_guard = processors.read().unwrap();
-                
+
                 for (id, processor) in processors_guard.iter() {
                     let mut metric_guard = metrics.write().unwrap();
-                    
+
                     metric_guard.insert(format!("processor.{}.records_processed", id), Metric {
                         name: format!("processor.{}.records_processed", id),
                         value: processor.metrics.records_processed.load() as f64,
@@ -33292,7 +33294,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), processor.processor_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("processor.{}.processing_time", id), Metric {
                         name: format!("processor.{}.processing_time", id),
                         value: processor.metrics.processing_time.load() as f64,
@@ -33302,7 +33304,7 @@ impl DistributedStreamProcessor {
                             ("type".to_string(), processor.processor_type.clone()),
                         ].iter().cloned().collect(),
                     });
-                    
+
                     metric_guard.insert(format!("processor.{}.errors", id), Metric {
                         name: format!("processor.{}.errors", id),
                         value: processor.metrics.errors.load() as f64,
@@ -33313,84 +33315,84 @@ impl DistributedStreamProcessor {
                         ].iter().cloned().collect(),
                     });
                 }
-                
+
                 // 等待下一个收集周期
                 thread::sleep(interval);
             }
         });
-        
+
         self.metrics_collector.collection_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_stream_engine(&mut self) -> Result<(), String> {
         println!("启动流处理引擎");
-        
+
         // 创建执行图
         self.build_execution_graph()?;
-        
+
         // 启动执行器
         self.start_executors()?;
-        
+
         // 启动协调器
         self.start_coordinator()?;
-        
+
         Ok(())
     }
-    
+
     fn build_execution_graph(&self) -> Result<(), String> {
         println!("构建执行图");
-        
+
         // 在实际实现中，这里会从拓扑定义构建执行图
-        
+
         // 获取拓扑定义
         let topologies = self.topology_manager.topologies.read().unwrap();
-        
+
         if topologies.is_empty() {
             println!("没有定义拓扑，跳过构建执行图");
             return Ok(());
         }
-        
+
         // 使用第一个拓扑
         let topology = topologies.values().next().unwrap();
-        
+
         // 创建处理器节点
         let mut nodes = HashMap::new();
-        
+
         for node in &topology.nodes {
             let processor_node = ProcessorNode {
                 id: node.id.clone(),
                 node_type: node.node_type.clone(),
                 config: node.config.clone(),
             };
-            
+
             nodes.insert(node.id.clone(), processor_node);
         }
-        
+
         // 创建边
         let edges = topology.edges.clone();
-        
+
         // 设置执行图
         let execution_graph = DirectedGraph {
             nodes,
             edges,
         };
-        
+
         // 在实际实现中，这里会将执行图存储在流引擎中
-        
+
         Ok(())
     }
-    
+
     fn start_executors(&self) -> Result<(), String> {
         println!("启动执行器");
-        
+
         // 在实际实现中，这里会根据执行图启动执行器
-        
+
         // 简化：创建一些模拟执行器
         for i in 1..=4 {
             let executor_id = format!("executor-{}", i);
-            
+
             let executor = StreamExecutor {
                 id: executor_id.clone(),
                 thread: None,
@@ -33405,65 +33407,65 @@ impl DistributedStreamProcessor {
                     last_processed_time: AtomicI64::new(0),
                 },
             };
-            
+
             // 在实际实现中，这里会将执行器添加到流引擎
         }
-        
+
         Ok(())
     }
-    
+
     fn start_coordinator(&mut self) -> Result<(), String> {
         println!("启动协调器");
-        
+
         self.stream_engine.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.stream_engine.running.clone();
-        
+
         let thread = thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 // 在实际实现中，这里会协调执行器、监控进度和处理故障
-                
+
                 // 休眠一段时间
                 thread::sleep(Duration::from_millis(100));
             }
         });
-        
+
         self.stream_engine.coordinator_thread = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn start_server(&mut self) -> Result<(), String> {
         println!("启动流处理服务器");
-        
+
         let bind_address = self.bind_address.clone();
-        
+
         self.running.store(true, Ordering::SeqCst);
-        
+
         let running = self.running.clone();
-        
+
         let thread = thread::spawn(move || {
             // 在实际实现中，这里会启动一个HTTP API服务器
             println!("流处理服务器绑定到: {}", bind_address);
-            
+
             while running.load(Ordering::SeqCst) {
                 // 模拟服务器循环
                 thread::sleep(Duration::from_millis(100));
-                
+
                 // 在实际实现中，这里会处理API请求
             }
         });
-        
+
         self.server = Some(thread);
-        
+
         Ok(())
     }
-    
+
     fn stop(&mut self) -> Result<(), String> {
         println!("停止分布式流处理系统");
-        
+
         self.running.store(false, Ordering::SeqCst);
-        
+
         // 停止服务器
         if let Some(thread) = self.server.take() {
             match thread.join() {
@@ -33471,7 +33473,7 @@ impl DistributedStreamProcessor {
                 Err(e) => println!("服务器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止流引擎
         self.stream_engine.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.stream_engine.coordinator_thread.take() {
@@ -33480,7 +33482,7 @@ impl DistributedStreamProcessor {
                 Err(e) => println!("协调器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止指标收集器
         self.metrics_collector.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.metrics_collector.collection_thread.take() {
@@ -33489,7 +33491,7 @@ impl DistributedStreamProcessor {
                 Err(e) => println!("指标收集器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止检查点管理器
         self.checkpoint_manager.running.store(false, Ordering::SeqCst);
         if let Some(thread) = self.checkpoint_manager.checkpoint_thread.take() {
@@ -33498,13 +33500,13 @@ impl DistributedStreamProcessor {
                 Err(e) => println!("检查点管理器线程退出错误: {:?}", e),
             }
         }
-        
+
         // 停止所有源连接器
         let mut sources = self.source_connectors.write().unwrap();
-        
+
         for (id, source) in sources.iter_mut() {
             source.running.store(false, Ordering::SeqCst);
-            
+
             if let Some(thread) = source.thread.take() {
                 match thread.join() {
                     Ok(_) => {},
@@ -33512,13 +33514,13 @@ impl DistributedStreamProcessor {
                 }
             }
         }
-        
+
         // 停止所有接收器连接器
         let mut sinks = self.sink_connectors.write().unwrap();
-        
+
         for (id, sink) in sinks.iter_mut() {
             sink.running.store(false, Ordering::SeqCst);
-            
+
             if let Some(thread) = sink.thread.take() {
                 match thread.join() {
                     Ok(_) => {},
@@ -33526,13 +33528,13 @@ impl DistributedStreamProcessor {
                 }
             }
         }
-        
+
         // 停止所有处理器
         let mut processors = self.processors.write().unwrap();
-        
+
         for (id, processor) in processors.iter_mut() {
             processor.running.store(false, Ordering::SeqCst);
-            
+
             for thread in processor.threads.drain(..) {
                 match thread.join() {
                     Ok(_) => {},
@@ -33540,166 +33542,166 @@ impl DistributedStreamProcessor {
                 }
             }
         }
-        
+
         // 保存状态
         self.save_state()?;
-        
+
         Ok(())
     }
-    
+
     fn save_state(&self) -> Result<(), String> {
         println!("保存状态");
-        
+
         // 保存流定义
         self.save_stream_definitions()?;
-        
+
         // 保存检查点
         self.save_checkpoints()?;
-        
+
         Ok(())
     }
-    
+
     fn save_checkpoints(&self) -> Result<(), String> {
         println!("保存检查点");
-        
+
         // 确保目录存在
         if let Err(e) = std::fs::create_dir_all(&self.checkpoint_manager.checkpoint_dir) {
             return Err(format!("创建检查点目录失败: {}", e));
         }
-        
+
         // 保存所有检查点
         let checkpoints = self.checkpoint_manager.checkpoints.read().unwrap();
-        
+
         for (id, checkpoint) in checkpoints.iter() {
             let checkpoint_path = self.checkpoint_manager.checkpoint_dir.join(format!("{}.json", id));
-            
+
             // 在实际实现中，这里会序列化检查点为JSON
             let json = serde_json::to_string_pretty(checkpoint)
                 .map_err(|e| format!("序列化检查点失败: {}", e))?;
-            
+
             if let Err(e) = std::fs::write(&checkpoint_path, json) {
                 println!("保存检查点 {} 失败: {}", id, e);
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn create_stream(&self, stream: StreamDefinition) -> Result<String, String> {
         println!("创建流: {}", stream.name);
-        
+
         // 验证流定义
         if stream.name.is_empty() {
             return Err("流名称不能为空".to_string());
         }
-        
+
         if stream.schema.fields.is_empty() {
             return Err("流架构必须至少有一个字段".to_string());
         }
-        
+
         // 检查是否已存在同名流
         let streams = self.streams.read().unwrap();
-        
+
         for (_, existing) in streams.iter() {
             if existing.name == stream.name {
                 return Err(format!("已存在同名流: {}", stream.name));
             }
         }
-        
+
         drop(streams);
-        
+
         // 生成流ID（如果尚未设置）
         let stream_id = if stream.id.is_empty() {
             uuid::Uuid::new_v4().to_string()
         } else {
             stream.id.clone()
         };
-        
+
         let mut stream = stream;
         stream.id = stream_id.clone();
-        
+
         // 添加流定义
         let mut streams = self.streams.write().unwrap();
         streams.insert(stream_id.clone(), stream);
-        
+
         // 保存流定义
         drop(streams);
         self.save_stream_definitions()?;
-        
+
         Ok(stream_id)
     }
-    
+
     fn deploy_topology(&self, topology: Topology) -> Result<(), String> {
         println!("部署拓扑: {}", topology.name);
-        
+
         // 验证拓扑
         if topology.name.is_empty() {
             return Err("拓扑名称不能为空".to_string());
         }
-        
+
         if topology.nodes.is_empty() {
             return Err("拓扑必须至少有一个节点".to_string());
         }
-        
+
         if topology.edges.is_empty() {
             return Err("拓扑必须至少有一条边".to_string());
         }
-        
+
         // 检查是否已存在同名拓扑
         let topologies = self.topology_manager.topologies.read().unwrap();
-        
+
         for (_, existing) in topologies.iter() {
             if existing.name == topology.name && existing.id != topology.id {
                 return Err(format!("已存在同名拓扑: {}", topology.name));
             }
         }
-        
+
         drop(topologies);
-        
+
         // 保存拓扑
         let topology_id = topology.id.clone();
-        
+
         let mut topologies = self.topology_manager.topologies.write().unwrap();
         topologies.insert(topology_id.clone(), topology);
-        
+
         // 保存拓扑定义
         drop(topologies);
         self.save_topology(&topology_id)?;
-        
+
         // 在实际实现中，这里会启动拓扑
-        
+
         Ok(())
     }
-    
+
     fn save_topology(&self, topology_id: &str) -> Result<(), String> {
         println!("保存拓扑: {}", topology_id);
-        
+
         // 获取拓扑
         let topologies = self.topology_manager.topologies.read().unwrap();
-        
+
         let topology = match topologies.get(topology_id) {
             Some(topology) => topology,
             None => return Err(format!("拓扑不存在: {}", topology_id)),
         };
-        
+
         // 确保目录存在
         let topologies_dir = self.data_dir.join("topologies");
-        
+
         if let Err(e) = std::fs::create_dir_all(&topologies_dir) {
             return Err(format!("创建拓扑目录失败: {}", e));
         }
-        
+
         // 保存拓扑定义
         let topology_path = topologies_dir.join(format!("{}.json", topology_id));
-        
+
         // 在实际实现中，这里会序列化拓扑为JSON
         let json = serde_json::to_string_pretty(topology)
             .map_err(|e| format!("序列化拓扑失败: {}", e))?;
-        
+
         if let Err(e) = std::fs::write(&topology_path, json) {
             return Err(format!("保存拓扑文件失败: {}", e));
         }
-        
+
         Ok(())
     }
 }
@@ -33707,30 +33709,30 @@ impl DistributedStreamProcessor {
 // 完善main函数，添加流处理系统测试
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("启动分布式系统示例");
-    
+
     let temp_dir = std::env::temp_dir().join("distributed_systems_demo");
-    
+
     if temp_dir.exists() {
         std::fs::remove_dir_all(&temp_dir)?;
     }
     std::fs::create_dir_all(&temp_dir)?;
-    
+
     println!("使用临时目录: {:?}", temp_dir);
-    
+
     // 测试分布式流处理系统
     {
         println!("\n===== 测试分布式流处理系统 =====");
-        
+
         let data_dir = temp_dir.join("stream_processor");
         std::fs::create_dir_all(&data_dir)?;
-        
+
         let mut stream_processor = DistributedStreamProcessor::new("node1", &data_dir, "127.0.0.1:8090");
-        
+
         stream_processor.start()?;
-        
+
         // 创建流
         let now = Utc::now();
-        
+
         let clickstream = StreamDefinition {
             id: String::new(), // 自动生成ID
             name: "点击流数据".to_string(),
@@ -33786,11 +33788,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             created_at: now,
             created_by: "admin".to_string(),
         };
-        
+
         let clickstream_id = stream_processor.create_stream(clickstream)?;
-        
+
         println!("创建的流ID: {}", clickstream_id);
-        
+
         // 创建并部署拓扑
         let clickstream_topology = Topology {
             id: uuid::Uuid::new_v4().to_string(),
@@ -33859,23 +33861,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             version: 1,
             status: TopologyStatus::Created,
         };
-        
+
         stream_processor.deploy_topology(clickstream_topology)?;
-        
+
         println!("部署拓扑成功");
-        
+
         // 等待一会儿，让系统运行
         thread::sleep(Duration::from_secs(3));
-        
+
         // 停止流处理系统
         stream_processor.stop()?;
     }
-    
+
     println!("\n所有分布式系统测试完成");
-    
+
     // 清理临时目录
     std::fs::remove_dir_all(&temp_dir)?;
-    
+
     Ok(())
 }
 ```

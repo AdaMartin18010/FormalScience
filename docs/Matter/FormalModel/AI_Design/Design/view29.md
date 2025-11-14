@@ -1020,16 +1020,16 @@ type RaftNode struct {
     state       NodeState // Follower, Candidate, Leader
     currentTerm uint64
     votedFor    string
-    
+
     // 日志管理
     log         []LogEntry
     commitIndex uint64
     lastApplied uint64
-    
+
     // 领导者状态 (仅领导者使用)
     nextIndex   map[string]uint64
     matchIndex  map[string]uint64
-    
+
     // 通信与定时器
     heartbeatTimer *time.Timer
     electionTimer  *time.Timer
@@ -1039,17 +1039,17 @@ type RaftNode struct {
 // 关键函数示例：RequestVote RPC处理
 func (n *RaftNode) handleRequestVote(args RequestVoteArgs) RequestVoteReply {
     reply := RequestVoteReply{Term: n.currentTerm, VoteGranted: false}
-    
+
     // 如果请求的任期小于当前任期，拒绝投票
     if args.Term < n.currentTerm {
         return reply
     }
-    
+
     // 如果请求任期大于当前任期，转为Follower
     if args.Term > n.currentTerm {
         n.becomeFollower(args.Term)
     }
-    
+
     // 如果尚未投票或已投给请求者，且日志至少与自己一样新，则投票
     if (n.votedFor == "" || n.votedFor == args.CandidateId) &&
        n.isLogUpToDate(args.LastLogIndex, args.LastLogTerm) {
@@ -1058,7 +1058,7 @@ func (n *RaftNode) handleRequestVote(args RequestVoteArgs) RequestVoteReply {
         // 重置选举定时器，因为我们刚投票给一个候选人
         n.resetElectionTimer()
     }
-    
+
     reply.Term = n.currentTerm
     return reply
 }
@@ -1302,33 +1302,33 @@ use std::collections::HashMap;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 创建共享状态
     let store = Arc::new(Mutex::new(HashMap::<String, Vec<u8>>::new()));
-    
+
     // 设置TCP监听器
     let listener = TcpListener::bind("127.0.0.1:8080").await?;
     println!("Server listening on port 8080");
-    
+
     loop {
         // 接受新连接
         let (mut socket, _) = listener.accept().await?;
-        
+
         // 克隆状态引用给新任务
         let store_clone = Arc::clone(&store);
-        
+
         // 为每个连接创建一个异步任务
         tokio::spawn(async move {
             let mut buffer = [0; 1024];
-            
+
             // 读取请求
             match socket.read(&mut buffer).await {
                 Ok(n) if n > 0 => {
                     // 处理请求(简化示例)
                     let request = String::from_utf8_lossy(&buffer[..n]);
                     let parts: Vec<&str> = request.split_whitespace().collect();
-                    
+
                     if parts.len() >= 3 {
                         let cmd = parts[0];
                         let key = parts[1].to_string();
-                        
+
                         let response = match cmd {
                             "GET" => {
                                 let store = store_clone.lock().unwrap();
@@ -1345,7 +1345,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             },
                             _ => "UNKNOWN COMMAND".to_string()
                         };
-                        
+
                         // 发送响应
                         if let Err(e) = socket.write_all(response.as_bytes()).await {
                             eprintln!("Failed to write to socket: {}", e);
@@ -1395,7 +1395,7 @@ import (
     "net"
     "sync"
     "time"
-    
+
     "google.golang.org/grpc"
     pb "example.com/kvstore/proto"
 )
@@ -1416,12 +1416,12 @@ func NewKVStoreServer() *KVStoreServer {
 func (s *KVStoreServer) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetResponse, error) {
     s.mu.RLock()
     defer s.mu.RUnlock()
-    
+
     value, exists := s.store[req.Key]
     if !exists {
         return &pb.GetResponse{Found: false}, nil
     }
-    
+
     return &pb.GetResponse{
         Found: true,
         Value: value,
@@ -1431,7 +1431,7 @@ func (s *KVStoreServer) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetRes
 func (s *KVStoreServer) Set(ctx context.Context, req *pb.SetRequest) (*pb.SetResponse, error) {
     s.mu.Lock()
     defer s.mu.Unlock()
-    
+
     s.store[req.Key] = req.Value
     return &pb.SetResponse{Success: true}, nil
 }
@@ -1442,12 +1442,12 @@ func main() {
     if err != nil {
         log.Fatalf("failed to listen: %v", err)
     }
-    
+
     srv := grpc.NewServer(
         grpc.UnaryInterceptor(timeoutInterceptor),
     )
     pb.RegisterKVStoreServer(srv, NewKVStoreServer())
-    
+
     log.Println("Starting gRPC server on :50051")
     if err := srv.Serve(lis); err != nil {
         log.Fatalf("failed to serve: %v", err)
@@ -1459,7 +1459,7 @@ func timeoutInterceptor(ctx context.Context, req interface{}, info *grpc.UnarySe
     // 为每个请求设置5秒超时
     ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
     defer cancel()
-    
+
     return handler(ctx, req)
 }
 ```
@@ -1867,80 +1867,80 @@ class DistributedLockServiceTest {
 
     @Mock
     private ZookeeperClient zkClient;
-    
+
     @InjectMocks
     private ZkDistributedLockService lockService;
-    
+
     @Test
     void shouldAcquireLockWhenNotAlreadyLocked() throws Exception {
         // 准备
         String lockPath = "/locks/resource1";
         String lockId = "client-1";
-        
+
         // 模拟ZK客户端行为
         when(zkClient.exists(lockPath)).thenReturn(false);
         when(zkClient.create(eq(lockPath), any(), eq(CreateMode.EPHEMERAL)))
             .thenReturn(lockPath);
-        
+
         // 执行
         boolean acquired = lockService.acquireLock("resource1", lockId, 1000);
-        
+
         // 验证
         assertTrue(acquired);
         verify(zkClient).exists(lockPath);
-        verify(zkClient).create(eq(lockPath), eq(lockId.getBytes()), 
+        verify(zkClient).create(eq(lockPath), eq(lockId.getBytes()),
                                eq(CreateMode.EPHEMERAL));
     }
-    
+
     @Test
     void shouldNotAcquireLockWhenAlreadyLocked() throws Exception {
         // 准备
         String lockPath = "/locks/resource1";
         String lockId = "client-1";
-        
+
         // 模拟ZK客户端行为 - 锁已存在
         when(zkClient.exists(lockPath)).thenReturn(true);
-        
+
         // 执行
         boolean acquired = lockService.acquireLock("resource1", lockId, 1000);
-        
+
         // 验证
         assertFalse(acquired);
         verify(zkClient).exists(lockPath);
         verify(zkClient, never()).create(any(), any(), any());
     }
-    
+
     @Test
     void shouldReleaseOwnedLock() throws Exception {
         // 准备
         String lockPath = "/locks/resource1";
         String lockId = "client-1";
-        
+
         // 模拟ZK客户端行为
         when(zkClient.getData(lockPath)).thenReturn(lockId.getBytes());
-        
+
         // 执行
         boolean released = lockService.releaseLock("resource1", lockId);
-        
+
         // 验证
         assertTrue(released);
         verify(zkClient).getData(lockPath);
         verify(zkClient).delete(lockPath);
     }
-    
+
     @Test
     void shouldNotReleaseNonOwnedLock() throws Exception {
         // 准备
         String lockPath = "/locks/resource1";
         String lockId = "client-1";
         String otherLockId = "client-2";
-        
+
         // 模拟ZK客户端行为 - 锁被其他客户端持有
         when(zkClient.getData(lockPath)).thenReturn(otherLockId.getBytes());
-        
+
         // 执行
         boolean released = lockService.releaseLock("resource1", lockId);
-        
+
         // 验证
         assertFalse(released);
         verify(zkClient).getData(lockPath);
@@ -2160,31 +2160,31 @@ spec:
 public class OrderController {
     private final Tracer tracer;
     private final OrderService orderService;
-    
+
     public OrderController(Tracer tracer, OrderService orderService) {
         this.tracer = tracer;
         this.orderService = orderService;
     }
-    
+
     @PostMapping("/orders")
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
         // 创建或继续跨度
         Span span = tracer.spanBuilder("createOrder")
             .setSpanKind(SpanKind.SERVER)
             .startSpan();
-            
+
         try (Scope scope = span.makeCurrent()) {
             // 添加请求属性
             span.setAttribute("order.customerId", request.getCustomerId());
             span.setAttribute("order.items.count", request.getItems().size());
-            
+
             // 业务逻辑处理
             Order order = orderService.createOrder(request);
-            
+
             // 记录成功指标
             span.addEvent("Order created successfully");
             span.setAttribute("order.id", order.getId());
-            
+
             return ResponseEntity.ok(new OrderResponse(order));
         } catch (Exception e) {
             // 记录异常信息
@@ -2546,22 +2546,22 @@ async def health_check():
 @app.post("/predict", response_model=PredictionResponse)
 async def predict(request: PredictionRequest):
     start_time = asyncio.get_event_loop().time()
-    
+
     try:
         # 准备输入
         input_data = np.array([request.features], dtype=np.float32)
-        
+
         # 执行推理
         results = session.run([output_name], {input_name: input_data})
         anomaly_score = float(results[0][0])
-        
+
         # 后处理结果
         is_anomaly = anomaly_score > 0.7
         confidence = 1.0 - abs(0.5 - anomaly_score) * 2
-        
+
         # 计算处理时间
         processing_time = (asyncio.get_event_loop().time() - start_time) * 1000
-        
+
         return PredictionResponse(
             anomaly_score=anomaly_score,
             is_anomaly=is_anomaly,

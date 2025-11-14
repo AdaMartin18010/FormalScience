@@ -175,39 +175,39 @@ impl VectorDB {
             dimension,
         }
     }
-    
+
     /// 添加向量
     pub fn add_vector(&mut self, id: String, vector: Array1<f32>) -> Result<(), String> {
         if vector.len() != self.dimension {
             return Err(format!(
-                "向量维度不匹配: 期望 {}, 实际 {}", 
+                "向量维度不匹配: 期望 {}, 实际 {}",
                 self.dimension, vector.len()
             ));
         }
-        
+
         self.vectors.insert(id, vector);
         Ok(())
     }
-    
+
     /// 计算余弦相似度
     fn cosine_similarity(&self, a: ArrayView1<f32>, b: ArrayView1<f32>) -> f32 {
         let dot_product = a.dot(&b);
         let norm_a = a.dot(&a).sqrt();
         let norm_b = b.dot(&b).sqrt();
-        
+
         if norm_a == 0.0 || norm_b == 0.0 {
             return 0.0;
         }
-        
+
         dot_product / (norm_a * norm_b)
     }
-    
+
     /// 查找最相似的k个向量
     pub fn search(&self, query: &Array1<f32>, k: usize) -> Vec<(String, f32)> {
         if query.len() != self.dimension {
             return Vec::new();
         }
-        
+
         let mut similarities: Vec<(String, f32)> = self.vectors
             .iter()
             .map(|(id, vector)| {
@@ -215,10 +215,10 @@ impl VectorDB {
                 (id.clone(), similarity)
             })
             .collect();
-        
+
         // 按相似度降序排序
         similarities.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
-        
+
         // 返回前k个结果
         similarities.into_iter().take(k).collect()
     }
@@ -256,46 +256,46 @@ impl HNSW {
             m,
         }
     }
-    
+
     /// 添加向量到索引
     pub fn add(&mut self, vector: Array1<f32>) {
         let node_id = self.nodes.len();
         self.nodes.push(vector);
-        
+
         // 随机选择层级
         let mut rng = rand::thread_rng();
         let mut level = 0;
         while rng.gen::<f32>() < 0.5 && level < self.max_layers - 1 {
             level += 1;
         }
-        
+
         // 确保层级结构存在
         while self.layers.len() <= level {
             self.layers.push(Vec::new());
         }
-        
+
         // 为每层添加空的邻接表
         for l in 0..=level {
             while self.layers[l].len() <= node_id {
                 self.layers[l].push(HashMap::new());
             }
         }
-        
+
         // 构建连接
         if node_id > 0 {
             // 从顶层开始构建
             let mut ep = 0; // 初始入口点
-            
+
             for l in (0..=level).rev() {
                 // 在当前层查找最近邻
                 let nearest = self.search_layer(node_id, ep, l, self.ef_construction);
-                
+
                 // 选择并建立连接
                 for &(neighbor, dist) in nearest.iter().take(self.m) {
                     self.layers[l][node_id].insert(neighbor, dist);
                     self.layers[l][neighbor].insert(node_id, dist);
                 }
-                
+
                 // 更新入口点
                 if !nearest.is_empty() {
                     ep = nearest[0].0;
@@ -303,41 +303,41 @@ impl HNSW {
             }
         }
     }
-    
+
     /// 在特定层搜索最近邻
     fn search_layer(&self, query_id: NodeId, entry_point: NodeId, layer: usize, ef: usize) -> Vec<(NodeId, Distance)> {
         let query_vector = &self.nodes[query_id];
-        
+
         let mut visited = HashSet::new();
         let mut candidates = BinaryHeap::new();
         let mut result = BinaryHeap::new();
-        
+
         // 初始化搜索
         let initial_dist = self.distance(query_id, entry_point);
         candidates.push(Reverse((NotNan::new(initial_dist).unwrap(), entry_point)));
         result.push((NotNan::new(initial_dist).unwrap(), entry_point));
         visited.insert(entry_point);
-        
+
         while !candidates.is_empty() {
             let Reverse((dist, node)) = candidates.pop().unwrap();
-            
+
             if result.peek().unwrap().0 < dist {
                 break;
             }
-            
+
             // 遍历当前节点的邻居
             for (&neighbor, _) in &self.layers[layer][node] {
                 if !visited.contains(&neighbor) {
                     visited.insert(neighbor);
-                    
+
                     let neighbor_dist = self.distance(query_id, neighbor);
                     let neighbor_dist_nn = NotNan::new(neighbor_dist).unwrap();
-                    
+
                     // 更新结果集
                     if result.len() < ef || neighbor_dist_nn < result.peek().unwrap().0 {
                         candidates.push(Reverse((neighbor_dist_nn, neighbor)));
                         result.push((neighbor_dist_nn, neighbor));
-                        
+
                         if result.len() > ef {
                             result.pop();
                         }
@@ -345,22 +345,22 @@ impl HNSW {
                 }
             }
         }
-        
+
         // 转换为向量并排序
         let mut result_vec: Vec<(NodeId, Distance)> = result
             .into_iter()
             .map(|(d, id)| (id, d.into_inner()))
             .collect();
-        
+
         result_vec.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
         result_vec
     }
-    
+
     /// 计算两点间距离
     fn distance(&self, id1: NodeId, id2: NodeId) -> Distance {
         let v1 = &self.nodes[id1];
         let v2 = &self.nodes[id2];
-        
+
         // 欧氏距离计算
         let mut sum = 0.0;
         for i in 0..v1.len() {
@@ -369,22 +369,22 @@ impl HNSW {
         }
         sum.sqrt()
     }
-    
+
     /// 查询最近的k个向量
     pub fn search(&self, query: &Array1<f32>, k: usize) -> Vec<(NodeId, Distance)> {
         if self.nodes.is_empty() {
             return Vec::new();
         }
-        
+
         // 添加查询向量以便计算距离
         let query_id = self.nodes.len();
         let mut hnsw = self.clone();
         hnsw.nodes.push(query.clone());
-        
+
         // 从顶层开始搜索
         let mut entry_point = 0;
         let max_level = hnsw.layers.len() - 1;
-        
+
         // 自顶向下搜索
         for layer in (1..=max_level).rev() {
             let nearest = hnsw.search_layer(query_id, entry_point, layer, 1);
@@ -392,7 +392,7 @@ impl HNSW {
                 entry_point = nearest[0].0;
             }
         }
-        
+
         // 在底层执行最终搜索
         hnsw.search_layer(query_id, entry_point, 0, k)
     }
@@ -407,25 +407,25 @@ use ndarray::Array1;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 创建向量数据库实例
     let mut db = VectorDB::new(128);
-    
+
     // 添加文档向量
     let doc1 = Array1::from_vec(vec![0.1; 128]);
     let doc2 = Array1::from_vec(vec![0.2; 128]);
     let doc3 = Array1::from_vec(vec![0.8; 128]);
-    
+
     db.add_vector("doc1".to_string(), doc1)?;
     db.add_vector("doc2".to_string(), doc2)?;
     db.add_vector("doc3".to_string(), doc3)?;
-    
+
     // 查询相似文档
     let query = Array1::from_vec(vec![0.15; 128]);
     let results = db.search(&query, 2);
-    
+
     println!("最相似的文档:");
     for (id, similarity) in results {
         println!("文档: {}, 相似度: {:.4}", id, similarity);
     }
-    
+
     Ok(())
 }
 ```

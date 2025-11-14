@@ -3,34 +3,36 @@
 
 ## 📋 目录
 
-- [1 并发基础范畴 (ConcurrencyCat)](#1-并发基础范畴-concurrencycat)
-  - [1.1 进程范畴](#11-进程范畴)
-  - [1.2 并发态射](#12-并发态射)
-- [2 并发原语范畴 (PrimitiveCat)](#2-并发原语范畴-primitivecat)
-  - [2.1 锁范畴](#21-锁范畴)
-  - [2.2 同步原语函子](#22-同步原语函子)
-- [3 并行模型范畴 (ParallelismCat)](#3-并行模型范畴-parallelismcat)
-  - [3.1 数据并行](#31-数据并行)
-  - [3.2 任务并行](#32-任务并行)
-- [4 并发组合范畴 (CompositionCat)](#4-并发组合范畴-compositioncat)
-  - [4.1 组合子范畴](#41-组合子范畴)
-  - [4.2 并发单子](#42-并发单子)
-- [5 通信范畴 (CommunicationCat)](#5-通信范畴-communicationcat)
-  - [5.1 共享内存](#51-共享内存)
-  - [5.2 消息传递](#52-消息传递)
-- [6 并发控制范畴 (ControlCat)](#6-并发控制范畴-controlcat)
-  - [6.1 调度范畴](#61-调度范畴)
-  - [6.2 资源管理函子](#62-资源管理函子)
-- [7 并发安全范畴 (SafetyCat)](#7-并发安全范畴-safetycat)
-  - [7.1 并发错误](#71-并发错误)
-  - [7.2 形式验证](#72-形式验证)
-- [8 并行性能范畴 (PerformanceCat)](#8-并行性能范畴-performancecat)
-  - [8.1 性能指标](#81-性能指标)
-  - [8.2 优化函子](#82-优化函子)
-- [9 实际应用示例](#9-实际应用示例)
-  - [9.1 并发控制实现](#91-并发控制实现)
-  - [9.2 并行计算实现](#92-并行计算实现)
-- [10 总结](#10-总结)
+- [范畴论视角下的并发与并行](#范畴论视角下的并发与并行)
+  - [📋 目录](#-目录)
+  - [1 并发基础范畴 (ConcurrencyCat)](#1-并发基础范畴-concurrencycat)
+    - [1.1 进程范畴](#11-进程范畴)
+    - [1.2 并发态射](#12-并发态射)
+  - [2 并发原语范畴 (PrimitiveCat)](#2-并发原语范畴-primitivecat)
+    - [2.1 锁范畴](#21-锁范畴)
+    - [2.2 同步原语函子](#22-同步原语函子)
+  - [3 并行模型范畴 (ParallelismCat)](#3-并行模型范畴-parallelismcat)
+    - [3.1 数据并行](#31-数据并行)
+    - [3.2 任务并行](#32-任务并行)
+  - [4 并发组合范畴 (CompositionCat)](#4-并发组合范畴-compositioncat)
+    - [4.1 组合子范畴](#41-组合子范畴)
+    - [4.2 并发单子](#42-并发单子)
+  - [5 通信范畴 (CommunicationCat)](#5-通信范畴-communicationcat)
+    - [5.1 共享内存](#51-共享内存)
+    - [5.2 消息传递](#52-消息传递)
+  - [6 并发控制范畴 (ControlCat)](#6-并发控制范畴-controlcat)
+    - [6.1 调度范畴](#61-调度范畴)
+    - [6.2 资源管理函子](#62-资源管理函子)
+  - [7 并发安全范畴 (SafetyCat)](#7-并发安全范畴-safetycat)
+    - [7.1 并发错误](#71-并发错误)
+    - [7.2 形式验证](#72-形式验证)
+  - [8 并行性能范畴 (PerformanceCat)](#8-并行性能范畴-performancecat)
+    - [8.1 性能指标](#81-性能指标)
+    - [8.2 优化函子](#82-优化函子)
+  - [9 实际应用示例](#9-实际应用示例)
+    - [9.1 并发控制实现](#91-并发控制实现)
+    - [9.2 并行计算实现](#92-并行计算实现)
+  - [10 总结](#10-总结)
 
 ---
 
@@ -41,17 +43,17 @@
 ```haskell
 class ProcessCategory p where
   -- 进程类型
-  data Process = 
+  data Process =
     Sequential    -- 顺序进程
     | Concurrent  -- 并发进程
     | Parallel    -- 并行进程
     | Distributed -- 分布式进程
-    
+
   -- 进程操作
   create :: Program → Process
   fork :: Process → Process
   join :: [Process] → Process
-  
+
   -- 进程属性
   state :: Process → State
   priority :: Process → Priority
@@ -65,12 +67,12 @@ class ConcurrentMorphism m where
   -- 基本态射
   compose :: m a b → m b c → m a c
   identity :: a → m a a
-  
+
   -- 并发控制
   spawn :: m () Process
   synchronize :: [Process] → m [Process] [Process]
   terminate :: Process → m Process ()
-  
+
   -- 态射属性
   safety :: m a b → Safety
   liveness :: m a b → Liveness
@@ -83,17 +85,17 @@ class ConcurrentMorphism m where
 ```haskell
 class LockCategory l where
   -- 锁类型
-  data Lock = 
+  data Lock =
     Mutex         -- 互斥锁
     | ReadWrite   -- 读写锁
     | Spin        -- 自旋锁
     | ReentrantLock -- 可重入锁
-    
+
   -- 锁操作
   acquire :: Lock → Result
   release :: Lock → Result
   tryAcquire :: Lock → Timeout → Result
-  
+
   -- 锁属性
   contention :: Lock → Contention
   fairness :: Lock → Fairness
@@ -106,12 +108,12 @@ class LockCategory l where
 class SynchronizationFunctor f where
   -- 同步变换
   fmap :: (Sync a → Sync b) → f a → f b
-  
+
   -- 同步工具
   semaphore :: Count → Semaphore
   barrier :: Count → Barrier
   latch :: Count → CountDownLatch
-  
+
   -- 同步属性
   deadlockFree :: f a → Bool
   starvationFree :: f a → Bool
@@ -124,16 +126,16 @@ class SynchronizationFunctor f where
 ```haskell
 class DataParallelCategory d where
   -- 数据分解
-  data Decomposition = 
+  data Decomposition =
     Partitioning  -- 划分
     | Replication -- 复制
     | Distribution -- 分布
-    
+
   -- 并行操作
   map :: (a → b) → [a] → [b]
   reduce :: (a → a → a) → [a] → a
   scan :: (a → a → a) → [a] → [a]
-  
+
   -- 并行属性
   scalability :: DataParallel → Scalability
   efficiency :: DataParallel → Efficiency
@@ -145,17 +147,17 @@ class DataParallelCategory d where
 ```haskell
 class TaskParallelCategory t where
   -- 任务结构
-  data TaskStructure = 
+  data TaskStructure =
     Independent    -- 独立任务
     | Dependent    -- 依赖任务
     | Pipeline     -- 流水线
     | Hierarchical -- 层次结构
-    
+
   -- 任务操作
   schedule :: [Task] → Resources → Schedule
   executeParallel :: [Task] → [Result]
   synchronize :: [Task] → Barrier
-  
+
   -- 任务属性
   criticalPath :: TaskGraph → Path
   loadBalance :: Schedule → Balance
@@ -169,17 +171,17 @@ class TaskParallelCategory t where
 ```haskell
 class CombinatorCategory c where
   -- 组合子
-  data Combinator = 
+  data Combinator =
     Sequence      -- 序列
     | Parallel    -- 并行
     | Choice      -- 选择
     | Iteration   -- 迭代
-    
+
   -- 组合操作
   seq :: Process → Process → Process
   par :: Process → Process → Process
   alt :: Process → Process → Process
-  
+
   -- 组合属性
   compositional :: Combinator → Bool
   associative :: Combinator → Bool
@@ -193,11 +195,11 @@ class ConcurrentMonad m where
   -- 单子操作
   return :: a → m a
   bind :: m a → (a → m b) → m b
-  
+
   -- 并发控制
   fork :: m () → m ThreadId
   wait :: ThreadId → m ()
-  
+
   -- 竞争处理
   race :: m a → m b → m (Either a b)
   withTimeout :: Time → m a → m (Maybe a)
@@ -210,16 +212,16 @@ class ConcurrentMonad m where
 ```haskell
 class SharedMemoryCategory s where
   -- 共享结构
-  data Shared = 
+  data Shared =
     Variable     -- 变量
     | Array      -- 数组
     | Object     -- 对象
-    
+
   -- 内存操作
   read :: Shared → Value
   write :: Shared → Value → Result
   atomicUpdate :: Shared → (Value → Value) → Result
-  
+
   -- 内存属性
   consistency :: Shared → ConsistencyModel
   visibility :: Shared → Visibility
@@ -231,16 +233,16 @@ class SharedMemoryCategory s where
 ```haskell
 class MessagePassingCategory m where
   -- 消息类型
-  data Channel = 
+  data Channel =
     Synchronous   -- 同步通道
     | Asynchronous -- 异步通道
     | Buffered    -- 缓冲通道
-    
+
   -- 通道操作
   send :: Channel → Message → Result
   receive :: Channel → Message
   select :: [Channel] → (Channel, Message)
-  
+
   -- 通道属性
   capacity :: Channel → Capacity
   backpressure :: Channel → Backpressure
@@ -254,17 +256,17 @@ class MessagePassingCategory m where
 ```haskell
 class SchedulerCategory s where
   -- 调度策略
-  data Strategy = 
+  data Strategy =
     FIFO         -- 先进先出
     | Priority   -- 优先级
     | RoundRobin -- 轮询
     | WorkStealing -- 工作窃取
-    
+
   -- 调度操作
   schedule :: [Task] → Strategy → Schedule
   dispatch :: Task → Processor
   preempt :: Task → Task → Result
-  
+
   -- 调度属性
   fairness :: Scheduler → Fairness
   throughput :: Scheduler → Throughput
@@ -277,12 +279,12 @@ class SchedulerCategory s where
 class ResourceManagerFunctor f where
   -- 资源变换
   fmap :: (Resource → Resource) → f a → f a
-  
+
   -- 资源操作
   allocate :: Resource → Process → Result
   release :: Resource → Process → Result
   monitor :: Resource → Metrics
-  
+
   -- 资源属性
   utilization :: Resource → Utilization
   contention :: Resource → Contention
@@ -296,17 +298,17 @@ class ResourceManagerFunctor f where
 ```haskell
 class ConcurrencyErrorCategory e where
   -- 错误类型
-  data Error = 
+  data Error =
     DeadLock     -- 死锁
     | LiveLock   -- 活锁
     | Starvation -- 饥饿
     | RaceCondition -- 竞态条件
-    
+
   -- 错误检测
   detect :: Program → Error → Detection
   prevent :: Error → Strategy → SafeProgram
   recover :: Error → Strategy → Recovery
-  
+
   -- 错误分析
   cause :: Error → Cause
   impact :: Error → Impact
@@ -317,16 +319,16 @@ class ConcurrencyErrorCategory e where
 ```haskell
 class FormalVerificationCategory v where
   -- 验证方法
-  data Method = 
+  data Method =
     ModelChecking -- 模型检查
     | TypeSystem  -- 类型系统
     | Theorem     -- 定理证明
-    
+
   -- 验证操作
   verify :: Program → Property → Result
   modelCheck :: ConcurrentSystem → Specification → Result
   proveCorrectness :: Algorithm → Theorem → Proof
-  
+
   -- 验证属性
   soundness :: Method → Soundness
   completeness :: Method → Completeness
@@ -340,17 +342,17 @@ class FormalVerificationCategory v where
 ```haskell
 class PerformanceCategory p where
   -- 性能度量
-  data Metric = 
+  data Metric =
     Speedup      -- 加速比
     | Efficiency -- 效率
     | Scalability -- 可扩展性
     | Throughput -- 吞吐量
-    
+
   -- 性能测量
   measure :: Program → Metric → Value
   benchmark :: Program → Workload → Results
   analyze :: Results → Analysis
-  
+
   -- 性能关系
   amdahlsLaw :: SerialFraction → Processors → Speedup
   gustafsonsLaw :: SerialFraction → Processors → Speedup
@@ -362,12 +364,12 @@ class PerformanceCategory p where
 class OptimizationFunctor f where
   -- 优化变换
   fmap :: (Program → Program) → f Program → f Program
-  
+
   -- 优化策略
   localityOptimize :: Program → Program
   loadBalance :: Program → Program
   reduceContention :: Program → Program
-  
+
   -- 优化属性
   improvement :: Program → Program → Improvement
   tradeoffs :: Optimization → Tradeoffs

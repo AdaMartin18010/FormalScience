@@ -407,9 +407,9 @@ A ⊸ B // 消耗A产生B
 
 ```text
 <think>
-The user is asking me to continue my explanation about homotopy type theory 
-in relation to software engineering, Rust, and workflow systems. 
-I'll expand on the previous response with more depth, 
+The user is asking me to continue my explanation about homotopy type theory
+in relation to software engineering, Rust, and workflow systems.
+I'll expand on the previous response with more depth,
 focusing on advanced concepts and connections that weren't covered before.
 
 I'll follow the same format but dive deeper into:
@@ -949,7 +949,7 @@ impl<T> NonEmpty<T> {
     fn new(first: T, rest: Vec<T>) -> Self {
         Self { first, rest }
     }
-    
+
     // 类型系统确保无法构造空集合
 }
 ```

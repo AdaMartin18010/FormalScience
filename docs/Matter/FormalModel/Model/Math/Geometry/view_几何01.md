@@ -3,11 +3,11 @@
 ## 目录
 
 - [人脑认知、几何与现实的交互：理论、模型与映射](#人脑认知几何与现实的交互理论模型与映射)
-  - [1 . 引言](#1-引言)
+  - [目录](#目录)
   - [1. 引言](#1-引言)
     - [1.1 核心议题](#11-核心议题)
     - [1.2 研究视角与方法论](#12-研究视角与方法论)
-  - [2 . 几何的理论与模型体系](#2-几何的理论与模型体系)
+  - [2. 几何的理论与模型体系](#2-几何的理论与模型体系)
     - [2.1 形式模型的构建：定义、解释与公理化](#21-形式模型的构建定义解释与公理化)
       - [2.1.1 基本元素的抽象与关系的符号化](#211-基本元素的抽象与关系的符号化)
       - [2.1.2 公理系统的选择与模型的特征](#212-公理系统的选择与模型的特征)
@@ -20,7 +20,7 @@
       - [2.3.1 克莱因纲领的启示：变换群与不变量](#231-克莱因纲领的启示变换群与不变量)
       - [2.3.2 范畴论的视角：结构间的态射与函子](#232-范畴论的视角结构间的态射与函子)
       - [2.3.3 模型拓展的驱动力：理论需求与现实挑战](#233-模型拓展的驱动力理论需求与现实挑战)
-  - [3 . 几何与人脑认知结构的深层关联](#3-几何与人脑认知结构的深层关联)
+  - [3. 几何与人脑认知结构的深层关联](#3-几何与人脑认知结构的深层关联)
     - [3.1 认知发展中的几何概念生成](#31-认知发展中的几何概念生成)
       - [3.1.1 从感知经验到抽象概念的跃迁](#311-从感知经验到抽象概念的跃迁)
       - [3.1.2 语言和文化在几何概念形成中的作用](#312-语言和文化在几何概念形成中的作用)
@@ -33,7 +33,7 @@
       - [3.3.1 人类中心主义倾向与几何模型的选择偏好](#331-人类中心主义倾向与几何模型的选择偏好)
       - [3.3.2 几何作为一种“认知脚手架” (Cognitive Scaffolding)](#332-几何作为一种认知脚手架-cognitive-scaffolding)
       - [3.3.3 反思几何教育：如何平衡直观与严谨，经验与抽象](#333-反思几何教育如何平衡直观与严谨经验与抽象)
-  - [4 . 几何、认知与现实的映射：过程、局限与有效性](#4-几何认知与现实的映射过程局限与有效性)
+  - [4. 几何、认知与现实的映射：过程、局限与有效性](#4-几何认知与现实的映射过程局限与有效性)
     - [4.1 几何作为现实的描述框架：从物理到宇宙](#41-几何作为现实的描述框架从物理到宇宙)
       - [4.1.1 几何在物理定律表达中的核心作用](#411-几何在物理定律表达中的核心作用)
       - [4.1.2 不同尺度下的几何适用性：微观、宏观与宇观](#412-不同尺度下的几何适用性微观宏观与宇观)
@@ -46,7 +46,7 @@
       - [4.3.1 实验数据的判决性作用 (Decisive Role of Experimental Data)](#431-实验数据的判决性作用-decisive-role-of-experimental-data)
       - [4.3.2 新技术（如高精度测量、计算机模拟）对几何研究的推动](#432-新技术如高精度测量计算机模拟对几何研究的推动)
       - [4.3.3 “反常”现象对现有几何模型的挑战 (Challenges from "Anomalous" Phenomena to Existing Geometrical Models)](#433-反常现象对现有几何模型的挑战-challenges-from-anomalous-phenomena-to-existing-geometrical-models)
-  - [5 . 几何在其他领域的应用与类比：批判性审视](#5-几何在其他领域的应用与类比批判性审视)
+  - [5. 几何在其他领域的应用与类比：批判性审视](#5-几何在其他领域的应用与类比批判性审视)
     - [5.1 跨学科应用的广度与深度](#51-跨学科应用的广度与深度)
       - [5.1.1 几何概念的迁移与“结构相似性”的识别 (Migration of Geometrical Concepts and Identification of "Structural Similarities")](#511-几何概念的迁移与结构相似性的识别-migration-of-geometrical-concepts-and-identification-of-structural-similarities)
       - [5.1.2 数据可视化中的几何方法 (Geometrical Methods in Data Visualization)](#512-数据可视化中的几何方法-geometrical-methods-in-data-visualization)
@@ -55,7 +55,7 @@
       - [5.2.1 警惕“几何拜物教”：形式覆盖实质的风险 (Beware of "Geometrical Fetishism": The Risk of Form Over Substance)](#521-警惕几何拜物教形式覆盖实质的风险-beware-of-geometrical-fetishism-the-risk-of-form-over-substance)
       - [5.2.2 类比的启发性与误导性的双刃剑效应 (The Double-Edged Sword Effect of Analogy: Heuristic Power vs. Misleading Potential)](#522-类比的启发性与误导性的双刃剑效应-the-double-edged-sword-effect-of-analogy-heuristic-power-vs-misleading-potential)
       - [5.2.3 缺乏经验证的几何模型在社会科学中的滥用 (Misuse of Unverified Geometrical Models in Social Sciences)](#523-缺乏经验证的几何模型在社会科学中的滥用-misuse-of-unverified-geometrical-models-in-social-sciences)
-  - [6 . 综合论证与展望 (Synthesis and Outlook)](#6-综合论证与展望-synthesis-and-outlook)
+  - [6. 综合论证与展望 (Synthesis and Outlook)](#6-综合论证与展望-synthesis-and-outlook)
     - [6.1 批判性综合：重估几何的角色 (Critical Synthesis: Re-evaluating the Role of Geometry)](#61-批判性综合重估几何的角色-critical-synthesis-re-evaluating-the-role-of-geometry)
       - [6.1.1 几何作为一种“解释性工具箱”与“概念透镜” (Geometry as an "Explanatory Toolbox" and a "Conceptual Lens")](#611-几何作为一种解释性工具箱与概念透镜-geometry-as-an-explanatory-toolbox-and-a-conceptual-lens)
       - [6.1.2 认知、几何、现实三者间的非线性反馈循环与共同演化 (Nonlinear Feedback Loops and Co-evolution among Cognition, Geometry, and Reality)](#612-认知几何现实三者间的非线性反馈循环与共同演化-nonlinear-feedback-loops-and-co-evolution-among-cognition-geometry-and-reality)
@@ -64,7 +64,7 @@
       - [6.2.1 基于脑机接口与神经影像的几何学习、空间认知及创造力机制研究 (Research on Geometrical Learning, Spatial Cognition, and Creativity Mechanisms based on Brain-Computer Interfaces and Neuroimaging)](#621-基于脑机接口与神经影像的几何学习空间认知及创造力机制研究-research-on-geometrical-learning-spatial-cognition-and-creativity-mechanisms-based-on-brain-computer-interfaces-and-neuroimaging)
       - [6.2.2 人工智能在发现新几何结构、定理、证明与应用中的潜力 (Potential of Artificial Intelligence in Discovering New Geometrical Structures, Theorems, Proofs, and Applications)](#622-人工智能在发现新几何结构定理证明与应用中的潜力-potential-of-artificial-intelligence-in-discovering-new-geometrical-structures-theorems-proofs-and-applications)
       - [6.2.3 发展面向复杂系统、生命现象与人工智能本身的新几何理论 (Developing New Geometrical Theories for Complex Systems, Life Phenomena, and Artificial Intelligence Itself)](#623-发展面向复杂系统生命现象与人工智能本身的新几何理论-developing-new-geometrical-theories-for-complex-systems-life-phenomena-and-artificial-intelligence-itself)
-  - [7 . 文本思维导图](#7-文本思维导图)
+  - [7. 文本思维导图](#7-文本思维导图)
 
 ---
 

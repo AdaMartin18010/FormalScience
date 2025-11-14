@@ -3,42 +3,44 @@
 
 ## 📋 目录
 
-- [1 范畴表示与基本结构](#1-范畴表示与基本结构)
-  - [1.1 架构设计范畴](#11-架构设计范畴)
-  - [1.2 编程语言范畴](#12-编程语言范畴)
-- [2 对比分析：表征与表示](#2-对比分析表征与表示)
-  - [2.1 信息概念表征 vs 变量](#21-信息概念表征-vs-变量)
-  - [2.2 核心区别](#22-核心区别)
-- [3 对比分析：组合与类型](#3-对比分析组合与类型)
-  - [3.1 组件组合 vs 类型系统](#31-组件组合-vs-类型系统)
-  - [3.2 核心区别](#32-核心区别)
-- [4 对比分析：交互与控制](#4-对比分析交互与控制)
-  - [4.1 架构元素交互 vs 控制流](#41-架构元素交互-vs-控制流)
-  - [4.2 核心区别](#42-核心区别)
-- [5 不变性保持对比](#5-不变性保持对比)
-  - [5.1 架构不变性范畴](#51-架构不变性范畴)
-  - [5.2 编程语言不变性范畴](#52-编程语言不变性范畴)
-  - [5.3 不变性保持对比](#53-不变性保持对比)
-- [6 一致性保持对比](#6-一致性保持对比)
-  - [6.1 架构一致性范畴](#61-架构一致性范畴)
-  - [6.2 编程语言一致性范畴](#62-编程语言一致性范畴)
-  - [6.3 一致性保持对比](#63-一致性保持对比)
-- [7 抽象与综合对比](#7-抽象与综合对比)
-  - [7.1 架构抽象与综合](#71-架构抽象与综合)
-  - [7.2 编程抽象与综合](#72-编程抽象与综合)
-  - [7.3 抽象机制的对比](#73-抽象机制的对比)
-- [8 语义模型对比](#8-语义模型对比)
-  - [8.1 架构语义范畴](#81-架构语义范畴)
-  - [8.2 编程语义范畴](#82-编程语义范畴)
-  - [8.3 语义模型的对比](#83-语义模型的对比)
-- [9 变换与演化对比](#9-变换与演化对比)
-  - [9.1 架构变换范畴](#91-架构变换范畴)
-  - [9.2 编程变换范畴](#92-编程变换范畴)
-  - [9.3 变换机制的对比](#93-变换机制的对比)
-- [10 总结：范畴论下的架构与编程模式对比](#10-总结范畴论下的架构与编程模式对比)
-  - [10.1 同构性分析](#101-同构性分析)
-  - [10.2 关键差异](#102-关键差异)
-  - [10.3 统一视角](#103-统一视角)
+- [从范畴论视角对比架构设计模式与编程语言设计模式](#从范畴论视角对比架构设计模式与编程语言设计模式)
+  - [📋 目录](#-目录)
+  - [1 范畴表示与基本结构](#1-范畴表示与基本结构)
+    - [1.1 架构设计范畴](#11-架构设计范畴)
+    - [1.2 编程语言范畴](#12-编程语言范畴)
+  - [2 对比分析：表征与表示](#2-对比分析表征与表示)
+    - [2.1 信息概念表征 vs 变量](#21-信息概念表征-vs-变量)
+    - [2.2 核心区别](#22-核心区别)
+  - [3 对比分析：组合与类型](#3-对比分析组合与类型)
+    - [3.1 组件组合 vs 类型系统](#31-组件组合-vs-类型系统)
+    - [3.2 核心区别](#32-核心区别)
+  - [4 对比分析：交互与控制](#4-对比分析交互与控制)
+    - [4.1 架构元素交互 vs 控制流](#41-架构元素交互-vs-控制流)
+    - [4.2 核心区别](#42-核心区别)
+  - [5 不变性保持对比](#5-不变性保持对比)
+    - [5.1 架构不变性范畴](#51-架构不变性范畴)
+    - [5.2 编程语言不变性范畴](#52-编程语言不变性范畴)
+    - [5.3 不变性保持对比](#53-不变性保持对比)
+  - [6 一致性保持对比](#6-一致性保持对比)
+    - [6.1 架构一致性范畴](#61-架构一致性范畴)
+    - [6.2 编程语言一致性范畴](#62-编程语言一致性范畴)
+    - [6.3 一致性保持对比](#63-一致性保持对比)
+  - [7 抽象与综合对比](#7-抽象与综合对比)
+    - [7.1 架构抽象与综合](#71-架构抽象与综合)
+    - [7.2 编程抽象与综合](#72-编程抽象与综合)
+    - [7.3 抽象机制的对比](#73-抽象机制的对比)
+  - [8 语义模型对比](#8-语义模型对比)
+    - [8.1 架构语义范畴](#81-架构语义范畴)
+    - [8.2 编程语义范畴](#82-编程语义范畴)
+    - [8.3 语义模型的对比](#83-语义模型的对比)
+  - [9 变换与演化对比](#9-变换与演化对比)
+    - [9.1 架构变换范畴](#91-架构变换范畴)
+    - [9.2 编程变换范畴](#92-编程变换范畴)
+    - [9.3 变换机制的对比](#93-变换机制的对比)
+  - [10 总结：范畴论下的架构与编程模式对比](#10-总结范畴论下的架构与编程模式对比)
+    - [10.1 同构性分析](#101-同构性分析)
+    - [10.2 关键差异](#102-关键差异)
+    - [10.3 统一视角](#103-统一视角)
 
 ---
 
@@ -52,12 +54,12 @@ class ArchitecturalDesignCategory a where
   data InformationConcept  -- 信息概念
   data Component           -- 组件
   data ArchitecturalElement -- 架构元素
-  
+
   -- 架构态射
   represent :: Domain → InformationConcept → Representation
   compose :: Component → Component → ComposedComponent
   interact :: ArchitecturalElement → ArchitecturalElement → Interaction
-  
+
   -- 范畴律
   identityComposition :: compose c identityComponent = c
   associativityComposition :: compose (compose a b) c = compose a (compose b c)
@@ -71,12 +73,12 @@ class ProgrammingLanguageCategory p where
   data Variable      -- 变量
   data Type          -- 类型
   data ControlFlow   -- 控制流
-  
+
   -- 编程态射
   assign :: Variable → Value → State
   typeCheck :: Expression → Type → TypedExpression
   sequence :: ControlFlow → ControlFlow → ComposedFlow
-  
+
   -- 范畴律
   identitySequence :: sequence cf identityFlow = cf
   associativitySequence :: sequence (sequence a b) c = sequence a (sequence b c)
@@ -91,12 +93,12 @@ class ProgrammingLanguageCategory p where
 class InformationRepresentationFunctor i where
   -- 信息表征映射
   fmap :: DomainConcept → ArchitecturalRepresentation
-  
+
   -- 表征方式
   entityRelationship :: "实体关系表征"
   ontologyMapping :: "本体映射表征"
   taxonomyRepresentation :: "分类表征"
-  
+
   -- 表征特性
   semanticPreservation :: "语义保持性"
   structuralCoherence :: "结构一致性"
@@ -108,12 +110,12 @@ class InformationRepresentationFunctor i where
 class VariableRepresentationFunctor v where
   -- 变量表示映射
   fmap :: AbstractValue → ProgramVariable
-  
+
   -- 表示方式
   typedVariables :: "类型化变量"
   boxedValues :: "装箱值"
   referencedValues :: "引用值"
-  
+
   -- 表示特性
   typeConsistency :: "类型一致性"
   memoryLifetime :: "内存生命周期"
@@ -135,12 +137,12 @@ class VariableRepresentationFunctor v where
 class ComponentCompositionFunctor c where
   -- 组件组合映射
   fmap :: [Component] → ComposedComponent
-  
+
   -- 组合方式
   hierarchicalComposition :: "层次化组合"
   serviceComposition :: "服务组合"
   eventBasedComposition :: "事件驱动组合"
-  
+
   -- 组合特性
   interfaceCompatibility :: "接口兼容性"
   looseCoupling :: "松耦合性"
@@ -152,12 +154,12 @@ class ComponentCompositionFunctor c where
 class TypeSystemFunctor t where
   -- 类型构建映射
   fmap :: PrimitiveType → CompositeType
-  
+
   -- 类型方式
   algebraicDataTypes :: "代数数据类型"
   objectOrientedTypes :: "面向对象类型"
   genericsAndTemplates :: "泛型与模板"
-  
+
   -- 类型特性
   typeConsistency :: "类型一致性"
   typeInference :: "类型推导"
@@ -179,12 +181,12 @@ class TypeSystemFunctor t where
 class ArchitecturalInteractionFunctor i where
   -- 交互映射
   fmap :: [InteractionPattern] → ArchitecturalInteraction
-  
+
   -- 交互方式
   synchronousInteraction :: "同步交互"
   asynchronousInteraction :: "异步交互"
   eventDrivenInteraction :: "事件驱动交互"
-  
+
   -- 交互特性
   communicationReliability :: "通信可靠性"
   interactionConsistency :: "交互一致性"
@@ -196,12 +198,12 @@ class ArchitecturalInteractionFunctor i where
 class ControlFlowFunctor c where
   -- 控制流映射
   fmap :: [Statement] → ProgramFlow
-  
+
   -- 控制方式
   sequentialControl :: "顺序控制"
   conditionalControl :: "条件控制"
   iterativeControl :: "迭代控制"
-  
+
   -- 控制特性
   executionDeterminism :: "执行确定性"
   controlPredictability :: "控制可预测性"
@@ -224,12 +226,12 @@ class ArchitecturalInvariantCategory i where
   data StructuralInvariant   -- 结构不变性
   data BehavioralInvariant   -- 行为不变性
   data QualityInvariant      -- 质量不变性
-  
+
   -- 不变性操作
   validate :: Architecture → Invariant → ValidationResult
   maintain :: Architecture → Evolution → PreservedArchitecture
   enforce :: Architecture → Design → ConstrainedDesign
-  
+
   -- 关键不变性
   interfaceStability :: "接口稳定性"
   componentCohesion :: "组件内聚性"
@@ -244,12 +246,12 @@ class ProgrammingInvariantCategory i where
   data TypeInvariant        -- 类型不变性
   data MemoryInvariant      -- 内存不变性
   data BehavioralInvariant  -- 行为不变性
-  
+
   -- 不变性操作
   check :: Program → TypeInvariant → TypeCheckResult
   verify :: Program → MemoryInvariant → VerificationResult
   assert :: Program → BehavioralInvariant → AssertionResult
-  
+
   -- 关键不变性
   typeConsistency :: "类型一致性"
   memoryLifetime :: "内存生命周期"
@@ -276,12 +278,12 @@ class ArchitecturalConsistencyCategory c where
   data StructuralConsistency   -- 结构一致性
   data BehavioralConsistency   -- 行为一致性
   data CrossViewConsistency    -- 跨视图一致性
-  
+
   -- 一致性操作
   check :: Architecture → ConsistencyRule → CheckResult
   maintain :: Architecture → Evolution → ConsistentArchitecture
   reconcile :: ArchitecturalView → ArchitecturalView → ReconciledViews
-  
+
   -- 关键一致性
   viewConsistency :: "视图间一致性"
   runtimeDesignConsistency :: "运行时与设计一致性"
@@ -296,12 +298,12 @@ class ProgrammingConsistencyCategory c where
   data TypeConsistency        -- 类型一致性
   data StateConsistency       -- 状态一致性
   data InterfaceConsistency   -- 接口一致性
-  
+
   -- 一致性操作
   typeCheck :: Program → TypeSystem → TypeCheckResult
   stateVerify :: Program → StateProperty → VerificationResult
   interfaceCheck :: Module → Interface → ComplianceResult
-  
+
   -- 关键一致性
   staticTypeConsistency :: "静态类型一致性"
   memoryStateConsistency :: "内存状态一致性"
@@ -326,17 +328,17 @@ class ProgrammingConsistencyCategory c where
 class ArchitecturalAbstractionFunctor a where
   -- 抽象映射
   fmap :: ConcreteArchitecture → AbstractPattern
-  
+
   -- 抽象形式
   patternAbstraction :: "模式抽象"
   styleAbstraction :: "风格抽象"
   referenceArchitecture :: "参考架构"
-  
+
   -- 综合形式
   viewComposition :: "视图组合"
   crossCuttingConcern :: "横切关注点"
   architecturalFramework :: "架构框架"
-  
+
   -- 抽象特性
   domainApplicability :: "领域适用性"
   reusability :: "可重用性"
@@ -349,17 +351,17 @@ class ArchitecturalAbstractionFunctor a where
 class ProgrammingAbstractionFunctor a where
   -- 抽象映射
   fmap :: ConcreteImplementation → AbstractPattern
-  
+
   -- 抽象形式
   objectAbstraction :: "对象抽象"
   functionalAbstraction :: "函数抽象"
   typeAbstraction :: "类型抽象"
-  
+
   -- 综合形式
   libraryComposition :: "库组合"
   frameworkExtension :: "框架扩展"
   aspectWeaving :: "切面织入"
-  
+
   -- 抽象特性
   expressivePower :: "表达能力"
   implementationHiding :: "实现隐藏"
@@ -386,12 +388,12 @@ class ArchitecturalSemanticCategory s where
   data StructuralSemantics  -- 结构语义
   data BehavioralSemantics  -- 行为语义
   data QualitySemantics     -- 质量语义
-  
+
   -- 语义操作
   interpret :: Architecture → SemanticDomain → Interpretation
   verify :: Architecture → SemanticProperty → VerificationResult
   transform :: Architecture → SemanticTransformation → TransformedArchitecture
-  
+
   -- 语义模型
   componentConnectorSemantics :: "组件连接器语义"
   concurrencySemantics :: "并发语义"
@@ -406,12 +408,12 @@ class ProgrammingSemanticCategory s where
   data OperationalSemantics  -- 操作语义
   data DenotationalSemantics -- 指称语义
   data AxiomaticSemantics    -- 公理语义
-  
+
   -- 语义操作
   execute :: Program → Input → Output
   denote :: Program → MathematicalObject → Denotation
   prove :: Program → Property → Proof
-  
+
   -- 语义模型
   typeSemantics :: "类型语义"
   executionSemantics :: "执行语义"
@@ -438,12 +440,12 @@ class ArchitecturalTransformationCategory t where
   data StructuralTransformation  -- 结构变换
   data StyleTransformation       -- 风格变换
   data EvolutionTransformation   -- 演化变换
-  
+
   -- 变换操作
   refactor :: Architecture → RefactoringRule → RefactoredArchitecture
   migrate :: Architecture → MigrationStrategy → MigratedArchitecture
   evolve :: Architecture → EvolutionPath → EvolvedArchitecture
-  
+
   -- 变换属性
   semanticPreservation :: "语义保持"
   qualityPreservation :: "质量保持"
@@ -458,12 +460,12 @@ class ProgrammingTransformationCategory t where
   data CodeTransformation   -- 代码变换
   data TypeTransformation   -- 类型变换
   data OptimizationTransformation  -- 优化变换
-  
+
   -- 变换操作
   refactor :: Program → RefactoringRule → RefactoredProgram
   optimize :: Program → OptimizationRule → OptimizedProgram
   translate :: Program → TargetLanguage → TranslatedProgram
-  
+
   -- 变换属性
   behaviorPreservation :: "行为保持"
   typeConsistency :: "类型一致性"

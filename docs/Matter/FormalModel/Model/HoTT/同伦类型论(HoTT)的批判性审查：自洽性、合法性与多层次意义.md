@@ -56,7 +56,7 @@ HoTT的形式系统建立在马丁-洛夫类型论(MLTT)的基础上，通过添
 路径归纳原理是HoTT处理等式证明的核心机制，形式化为：
 
 ```math
-J : ∀(A:Type)(a:A)(C:∀(x:A), a=x→Type), 
+J : ∀(A:Type)(a:A)(C:∀(x:A), a=x→Type),
     C(a,refl_a) → ∀(x:A)(p:a=x), C(x,p)
 ```
 

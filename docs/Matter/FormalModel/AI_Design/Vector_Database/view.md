@@ -210,7 +210,7 @@ fn optimized_vector_search(
     } else {
         vectors.to_vec()
     };
-    
+
     // 使用SIMD指令集加速余弦相似度计算
     let mut scores: Vec<(usize, f32)> = vectors
         .par_iter() // 并行迭代
@@ -221,12 +221,12 @@ fn optimized_vector_search(
             (idx, similarity)
         })
         .collect();
-    
+
     // 部分排序找出top_k结果
     scores.select_nth_unstable_by(top_k, |a, b| {
         b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal)
     });
-    
+
     scores.truncate(top_k);
     scores
 }

@@ -2,30 +2,32 @@
 
 ## 📋 目录
 
-- [1 文件IO管理范畴 (FileIOCat)](#1-文件io管理范畴-fileiocat)
-  - [1.1 文件抽象范畴](#11-文件抽象范畴)
-  - [1.2 IO操作函子](#12-io操作函子)
-  - [1.3 文件系统单子](#13-文件系统单子)
-- [2 进程管理范畴 (ProcessCat)](#2-进程管理范畴-processcat)
-  - [2.1 进程基础范畴](#21-进程基础范畴)
-  - [2.2 调度函子](#22-调度函子)
-  - [2.3 进程控制单子](#23-进程控制单子)
-- [3 内存管理范畴 (MemoryCat)](#3-内存管理范畴-memorycat)
-  - [3.1 内存抽象范畴](#31-内存抽象范畴)
-  - [3.2 内存管理函子](#32-内存管理函子)
-  - [3.3 内存保护单子](#33-内存保护单子)
-- [4 外设管理范畴 (DeviceCat)](#4-外设管理范畴-devicecat)
-  - [4.1 设备抽象范畴](#41-设备抽象范畴)
-  - [4.2 设备驱动函子](#42-设备驱动函子)
-  - [4.3 设备管理单子](#43-设备管理单子)
-- [5 系统集成与交互](#5-系统集成与交互)
-  - [5.1 系统集成范畴](#51-系统集成范畴)
-  - [5.2 资源管理函子](#52-资源管理函子)
-- [6 实际应用示例](#6-实际应用示例)
-  - [6.1 文件系统实现](#61-文件系统实现)
-  - [6.2 进程调度实现](#62-进程调度实现)
-  - [6.3 内存管理实现](#63-内存管理实现)
-- [7 总结](#7-总结)
+- [范畴论视角下的操作系统核心管理机制](#范畴论视角下的操作系统核心管理机制)
+  - [📋 目录](#-目录)
+  - [1 文件IO管理范畴 (FileIOCat)](#1-文件io管理范畴-fileiocat)
+    - [1.1 文件抽象范畴](#11-文件抽象范畴)
+    - [1.2 IO操作函子](#12-io操作函子)
+    - [1.3 文件系统单子](#13-文件系统单子)
+  - [2 进程管理范畴 (ProcessCat)](#2-进程管理范畴-processcat)
+    - [2.1 进程基础范畴](#21-进程基础范畴)
+    - [2.2 调度函子](#22-调度函子)
+    - [2.3 进程控制单子](#23-进程控制单子)
+  - [3 内存管理范畴 (MemoryCat)](#3-内存管理范畴-memorycat)
+    - [3.1 内存抽象范畴](#31-内存抽象范畴)
+    - [3.2 内存管理函子](#32-内存管理函子)
+    - [3.3 内存保护单子](#33-内存保护单子)
+  - [4 外设管理范畴 (DeviceCat)](#4-外设管理范畴-devicecat)
+    - [4.1 设备抽象范畴](#41-设备抽象范畴)
+    - [4.2 设备驱动函子](#42-设备驱动函子)
+    - [4.3 设备管理单子](#43-设备管理单子)
+  - [5 系统集成与交互](#5-系统集成与交互)
+    - [5.1 系统集成范畴](#51-系统集成范畴)
+    - [5.2 资源管理函子](#52-资源管理函子)
+  - [6 实际应用示例](#6-实际应用示例)
+    - [6.1 文件系统实现](#61-文件系统实现)
+    - [6.2 进程调度实现](#62-进程调度实现)
+    - [6.3 内存管理实现](#63-内存管理实现)
+  - [7 总结](#7-总结)
 
 ---
 
@@ -36,7 +38,7 @@
 ```haskell
 class FileCategory f where
   -- 文件基本抽象
-  data File = 
+  data File =
     RegularFile    -- 普通文件
     | Directory    -- 目录
     | SymbolicLink -- 符号链接
@@ -56,12 +58,12 @@ class FileCategory f where
 class IOFunctor f where
   -- IO变换
   fmap :: (IO a → IO b) → f a → f b
-  
+
   -- IO模式
   synchronous :: IO a → IO a
   asynchronous :: IO a → IO a
   buffered :: IO a → IO a
-  
+
   -- IO属性
   throughput :: IO a → Performance
   latency :: IO a → Time
@@ -75,11 +77,11 @@ class FileSystemMonad m where
   createFile :: Path → Permissions → m FileHandle
   deleteFile :: Path → m ()
   moveFile :: Path → Path → m ()
-  
+
   -- 目录操作
   createDirectory :: Path → m ()
   listDirectory :: Path → m [Entry]
-  
+
   -- 属性操作
   getAttributes :: Path → m Attributes
   setAttributes :: Path → Attributes → m ()
@@ -92,7 +94,7 @@ class FileSystemMonad m where
 ```haskell
 class ProcessCategory p where
   -- 进程状态
-  data ProcessState = 
+  data ProcessState =
     Created     -- 创建
     | Ready     -- 就绪
     | Running   -- 运行
@@ -103,7 +105,7 @@ class ProcessCategory p where
   create :: Program → ProcessConfig → Process
   schedule :: Process → CPU → Schedule
   terminate :: Process → ExitCode → ()
-  
+
   -- 进程通信
   send :: Process → Message → IO ()
   receive :: Process → IO Message
@@ -115,12 +117,12 @@ class ProcessCategory p where
 class SchedulerFunctor f where
   -- 调度变换
   fmap :: (Schedule → Schedule) → f Process → f Process
-  
+
   -- 调度策略
   roundRobin :: [Process] → Schedule
   priority :: [Process] → Schedule
   realTime :: [Process] → Schedule
-  
+
   -- 调度分析
   fairness :: Schedule → Measure
   efficiency :: Schedule → Measure
@@ -134,11 +136,11 @@ class ProcessControlMonad m where
   fork :: m ProcessId
   exec :: Program → m ()
   wait :: ProcessId → m ExitCode
-  
+
   -- 资源控制
   allocateResource :: Resource → m Handle
   releaseResource :: Handle → m ()
-  
+
   -- 同步原语
   lock :: Mutex → m ()
   unlock :: Mutex → m ()
@@ -152,7 +154,7 @@ class ProcessControlMonad m where
 ```haskell
 class MemoryCategory m where
   -- 内存结构
-  data Memory = 
+  data Memory =
     Physical    -- 物理内存
     | Virtual   -- 虚拟内存
     | Shared    -- 共享内存
@@ -171,12 +173,12 @@ class MemoryCategory m where
 class MemoryManagerFunctor f where
   -- 内存变换
   fmap :: (Memory → Memory) → f Address → f Address
-  
+
   -- 管理策略
   pageAllocation :: Size → Strategy
   segmentation :: Address → Size → Strategy
   garbage_collection :: Heap → Strategy
-  
+
   -- 性能分析
   fragmentation :: Memory → Measure
   utilization :: Memory → Measure
@@ -189,11 +191,11 @@ class MemoryProtectionMonad m where
   -- 保护操作
   protect :: Address → Size → Permissions → m ()
   unprotect :: Address → Size → m ()
-  
+
   -- 访问控制
   checkAccess :: Address → AccessType → m Bool
   validatePointer :: Pointer → m Bool
-  
+
   -- 错误处理
   handlePageFault :: Address → m Action
   handleSegFault :: Address → m Action
@@ -206,7 +208,7 @@ class MemoryProtectionMonad m where
 ```haskell
 class DeviceCategory d where
   -- 设备类型
-  data Device = 
+  data Device =
     BlockDevice    -- 块设备
     | CharDevice   -- 字符设备
     | NetworkDevice-- 网络设备
@@ -225,12 +227,12 @@ class DeviceCategory d where
 class DeviceDriverFunctor f where
   -- 驱动变换
   fmap :: (Device → Device) → f Handle → f Handle
-  
+
   -- 驱动操作
   initialize :: Device → Driver → Status
   interrupt :: Device → Handler → Response
   dma :: Device → Buffer → Transfer
-  
+
   -- 性能监控
   performance :: Device → Metrics
   reliability :: Device → Measure
@@ -243,11 +245,11 @@ class DeviceManagerMonad m where
   -- 管理操作
   register :: Device → Driver → m DeviceId
   unregister :: DeviceId → m ()
-  
+
   -- 资源管理
   allocateResources :: Device → m Resources
   releaseResources :: Resources → m ()
-  
+
   -- 电源管理
   powerOn :: Device → m ()
   powerOff :: Device → m ()
@@ -263,11 +265,11 @@ class SystemIntegrationCategory s where
   -- 集成操作
   integrateSubsystems :: [Subsystem] → s System
   coordinateResources :: [Resource] → s Coordinator
-  
+
   -- 交互处理
   handleInterrupt :: Interrupt → s Response
   scheduleTasks :: [Task] → s Schedule
-  
+
   -- 系统监控
   monitorPerformance :: System → s Metrics
   detectBottlenecks :: System → s [Bottleneck]
@@ -279,12 +281,12 @@ class SystemIntegrationCategory s where
 class ResourceManagerFunctor f where
   -- 资源变换
   fmap :: (Resource → Resource) → f Handle → f Handle
-  
+
   -- 资源策略
   allocate :: Resource → Strategy → Allocation
   balance :: [Resource] → LoadBalance
   optimize :: Resource → Optimization
-  
+
   -- 资源分析
   utilization :: Resource → Measure
   contention :: Resource → Measure

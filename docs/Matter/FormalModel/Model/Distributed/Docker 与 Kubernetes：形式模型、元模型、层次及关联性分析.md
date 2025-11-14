@@ -137,7 +137,7 @@ Docker 和 Kubernetes 分别是容器化技术和容器编排领域的领导者�
         host_ip: Option<String>,
         host_port: String,
     }
-    
+
     struct NetworkSettings {
         ports: HashMap<String, Option<Vec<PortBinding>>>, // e.g., "80/tcp": [{ HostPort: "8080"}]
         ip_address: Option<String>,
@@ -152,7 +152,7 @@ Docker 和 Kubernetes 分别是容器化技术和容器编排领域的领导者�
         status: ContainerStatus,
         created_at: String, // Timestamp
         // 运行时配置，如端口映射、卷挂载等
-        network_settings: NetworkSettings, 
+        network_settings: NetworkSettings,
         mounts: Vec<MountPoint>,
     }
 
@@ -188,7 +188,7 @@ Kubernetes 的 API 对象是其形式模型的核心。
         name: Option<String>,
         host_port: Option<u16>,
     }
-    
+
     struct PodSpec {
         containers: Vec<K8sContainer>,
         // ... volumes, restartPolicy, nodeSelector, etc.
@@ -262,7 +262,7 @@ Kubernetes 的 API 对象是其形式模型的核心。
         strategy: Option<DeploymentStrategy>, // 更新策略
         // ... minReadySeconds, revisionHistoryLimit, paused, progressDeadlineSeconds
     }
-    
+
     struct LabelSelector {
         match_labels: Option<HashMap<String, String>>,
         // match_expressions: Option<Vec<LabelSelectorRequirement>>,
@@ -315,7 +315,7 @@ Kubernetes 的 API 对象是其形式模型的核心。
         // taints: Option<Vec<Taint>>,
         // unschedulable: Option<bool>,
     }
-    
+
     struct Node {
         api_version: String, // "v1"
         kind: String, // "Node"
@@ -747,16 +747,16 @@ Operator 模式利用 Kubernetes 的可扩展性（特别是 CRDs）来创建特
 
             // 2. 获取当前实际状态 (M0) - 可能通过查询 Deployment, StatefulSet 等
             let current_deployment = k8s_client.get_deployment(appconfig_cr.metadata.name.clone())?;
-            
+
             // 3. 比较期望状态和实际状态
-            if current_deployment.spec.replicas != desired_replicas || 
+            if current_deployment.spec.replicas != desired_replicas ||
                current_deployment.spec.template.spec.containers[0].image != *desired_image {
-                
+
                 // 4. 执行操作以使 M0 -> M1
                 let mut new_deployment_spec = current_deployment.spec.clone();
                 new_deployment_spec.replicas = desired_replicas;
                 new_deployment_spec.template.spec.containers[0].image = desired_image.clone();
-                
+
                 k8s_client.update_deployment(appconfig_cr.metadata.name.clone(), new_deployment_spec)?;
                 println!("Deployment for {} updated.", appconfig_cr.metadata.name);
             }
@@ -765,7 +765,7 @@ Operator 模式利用 Kubernetes 的可扩展性（特别是 CRDs）来创建特
                 // 检查或创建 ServiceMonitor (如果使用 Prometheus Operator)
                 // ...
             }
-            
+
             // 5. 更新 CR 的 status 字段以反映当前状态
             // let new_status = ...;
             // k8s_client.update_status(appconfig_cr, new_status)?;

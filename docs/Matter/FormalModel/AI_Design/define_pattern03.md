@@ -134,11 +134,11 @@
      type: string;
      // 其他配置参数
    }
-   
+
    interface Product {
      use(): void;
    }
-   
+
    // 工厂作为态射
    class Factory {
      create(spec: Specification): Product {
@@ -167,41 +167,41 @@
    interface Component {
      operation(): string;
    }
-   
+
    // 基础组件
    class ConcreteComponent implements Component {
      operation(): string {
        return "ConcreteComponent";
      }
    }
-   
+
    // 装饰器基类
    abstract class Decorator implements Component {
      protected component: Component;
-     
+
      constructor(component: Component) {
        this.component = component;
      }
-     
+
      operation(): string {
        return this.component.operation();
      }
    }
-   
+
    // 具体装饰器A - 对应态射f
    class DecoratorA extends Decorator {
      operation(): string {
        return `DecoratorA(${super.operation()})`;
      }
    }
-   
+
    // 具体装饰器B - 对应态射g
    class DecoratorB extends Decorator {
      operation(): string {
        return `DecoratorB(${super.operation()})`;
      }
    }
-   
+
    // 组合使用 - 对应态射组合g ∘ f
    const component = new ConcreteComponent();
    const decoratedA = new DecoratorA(component);
@@ -239,14 +239,14 @@
    interface Strategy {
      execute(input: Input): Output;
    }
-   
+
    class Context {
      private strategy: Strategy;
-     
+
      setStrategy(strategy: Strategy): void {
        this.strategy = strategy;
      }
-     
+
      executeStrategy(input: Input): Output {
        return this.strategy.execute(input);
      }
@@ -295,7 +295,7 @@ SOLID原则可以通过范畴论更精确地形式化：
    ```haskell
    class Functor f where
      fmap :: (a -> b) -> f a -> f b
-   
+
    -- 示例: Maybe函子
    instance Functor Maybe where
      fmap _ Nothing = Nothing
@@ -308,22 +308,22 @@ SOLID原则可以通过范畴论更精确地形式化：
    interface Functor<T> {
      map<U>(f: (value: T) => U): Functor<U>;
    }
-   
+
    class Maybe<T> implements Functor<T> {
      private readonly value: T | null;
-     
+
      private constructor(value: T | null) {
        this.value = value;
      }
-     
+
      static just<T>(value: T): Maybe<T> {
        return new Maybe(value);
      }
-     
+
      static nothing<T>(): Maybe<T> {
        return new Maybe<T>(null);
      }
-     
+
      map<U>(f: (value: T) => U): Maybe<U> {
        if (this.value === null) return Maybe.nothing<U>();
        return Maybe.just(f(this.value));
@@ -337,7 +337,7 @@ SOLID原则可以通过范畴论更精确地形式化：
    class Monad m where
      return :: a -> m a
      (>>=) :: m a -> (a -> m b) -> m b  -- bind操作
-   
+
    -- 示例: Maybe monad
    instance Monad Maybe where
      return = Just
@@ -352,16 +352,16 @@ SOLID原则可以通过范畴论更精确地形式化：
      flatMap<U>(f: (value: T) => Monad<U>): Monad<U>;
      pure<U>(value: U): Monad<U>;
    }
-   
+
    // 扩展之前的Maybe类
    class Maybe<T> implements Monad<T> {
      // ... 前面的代码
-     
+
      flatMap<U>(f: (value: T) => Maybe<U>): Maybe<U> {
        if (this.value === null) return Maybe.nothing<U>();
        return f(this.value);
      }
-     
+
      pure<U>(value: U): Maybe<U> {
        return Maybe.just(value);
      }
@@ -414,34 +414,34 @@ SOLID原则可以通过范畴论更精确地形式化：
    ```typescript
    class Future<T> {
      constructor(private computation: () => Promise<T>) {}
-     
+
      static of<U>(value: U): Future<U> {
        return new Future(() => Promise.resolve(value));
      }
-     
+
      map<U>(f: (value: T) => U): Future<U> {
        return new Future(() => this.computation().then(f));
      }
-     
+
      flatMap<U>(f: (value: T) => Future<U>): Future<U> {
-       return new Future(() => 
+       return new Future(() =>
          this.computation().then(value => f(value).computation())
        );
      }
-     
+
      // 执行异步计算
      run(): Promise<T> {
        return this.computation();
      }
    }
-   
+
    // 使用示例
-   const fetchUser = (id: string) => 
+   const fetchUser = (id: string) =>
      new Future(() => fetch(`/api/users/${id}`).then(r => r.json()));
-     
-   const fetchUserPosts = (user: User) => 
+
+   const fetchUserPosts = (user: User) =>
      new Future(() => fetch(`/api/posts?userId=${user.id}`).then(r => r.json()));
-   
+
    // 组合操作
    const getUserPosts = (userId: string): Future<Post[]> =>
      fetchUser(userId).flatMap(fetchUserPosts);
@@ -542,14 +542,14 @@ Graph(V, E) = (V, E ⊆ V × V)
 class Graph<V, E> {
     vertices: Set<V>;
     edges: Map<V, Map<V, E>>;
-    
+
     addVertex(v: V): void {
     this.vertices.add(v);
     if (!this.edges.has(v)) {
         this.edges.set(v, new Map());
     }
     }
-    
+
     addEdge(from: V, to: V, edge: E): void {
     if (!this.vertices.has(from) || !this.vertices.has(to)) {
         throw new Error("Vertices must exist in the graph");
@@ -654,28 +654,28 @@ interface Functor<T> {
 // 实现Option函子
 class Option<T> implements Functor<T> {
     private constructor(private readonly value: T | null) {}
-    
+
     static some<T>(value: T): Option<T> {
     if (value === null || value === undefined) {
         throw new Error("Cannot create Some with null or undefined");
     }
     return new Option(value);
     }
-    
+
     static none<T>(): Option<T> {
     return new Option<T>(null);
     }
-    
+
     map<U>(f: (value: T) => U): Option<U> {
     if (this.value === null) return Option.none<U>();
     return Option.some(f(this.value));
     }
-    
+
     // 其他有用的方法
     getOrElse(defaultValue: T): T {
     return this.value === null ? defaultValue : this.value;
     }
-    
+
     isDefined(): boolean {
     return this.value !== null;
     }
@@ -703,12 +703,12 @@ interface Monad<T> extends Functor<T> {
 // 实现Option作为Monad
 class Option<T> implements Monad<T> {
     // ... 前面的代码 ...
-    
+
     flatMap<U>(f: (value: T) => Option<U>): Option<U> {
     if (this.value === null) return Option.none<U>();
     return f(this.value);
     }
-    
+
     pure<U>(value: U): Option<U> {
     return Option.some(value);
     }
@@ -740,7 +740,7 @@ class BaseComponent implements Component {
 // 装饰器作为态射转换器 (f -> g ∘ f)
 abstract class Decorator implements Component {
     constructor(protected component: Component) {}
-    
+
     abstract execute(): number;
 }
 
@@ -755,7 +755,7 @@ class AddingDecorator extends Decorator {
     constructor(component: Component, private valueToAdd: number) {
     super(component);
     }
-    
+
     execute(): number {
     return this.component.execute() + this.valueToAdd;
     }
@@ -918,19 +918,19 @@ console.log(added.execute()); // 输出: 5
      interface Functor<T> {
          <R> Functor<R> map(Function<T, R> mapper);
      }
-     
+
      class Box<T> implements Functor<T> {
          private final T value;
-         
+
          Box(T value) {
              this.value = value;
          }
-         
+
          @Override
          public <R> Box<R> map(Function<T, R> mapper) {
              return new Box<>(mapper.apply(value));
          }
-         
+
          T get() {
              return value;
          }
@@ -998,16 +998,16 @@ console.log(added.execute()); // 输出: 5
      ```typescript
      // TypeScript中的Option容器实践
      type Option<T> = Some<T> | None;
-     
+
      interface Some<T> { readonly _tag: 'Some'; readonly value: T }
      interface None { readonly _tag: 'None' }
-     
+
      const some = <T>(value: T): Option<T> => ({ _tag: 'Some', value });
      const none: Option<never> = { _tag: 'None' };
-     
-     const map = <T, U>(option: Option<T>, f: (value: T) => U): Option<U> => 
+
+     const map = <T, U>(option: Option<T>, f: (value: T) => U): Option<U> =>
        option._tag === 'Some' ? some(f(option.value)) : none;
-     
+
      // 使用示例
      const user: Option<User> = getUserById(123); // 可能返回none
      const userName: Option<string> = map(user, u => u.name);
@@ -1286,18 +1286,18 @@ console.log(added.execute()); // 输出: 5
 
 ## 参考文献
 
-1. Awodey, S. (2010). *Category Theory*. Oxford University Press.
-2. Bird, R., & de Moor, O. (1997). *Algebra of Programming*. Prentice Hall.
-3. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley.
-4. Milewski, B. (2019). *Category Theory for Programmers*. Blurb.
-5. McBride, C., & Paterson, R. (2008). "Applicative programming with effects". *Journal of Functional Programming*, 18(1), 1-13.
-6. Martin, R. C. (2002). *Agile Software Development: Principles, Patterns, and Practices*. Prentice Hall.
-7. Wadler, P. (1992). "The essence of functional programming". *19th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages*.
-8. Elliott, C. (2017). "Compiling to categories". *Proceedings of the ACM on Programming Languages*.
-9. Hinze, R. (2012). "Kan Extensions for Program Optimisation". *Mathematics of Program Construction*.
-10. Oliveira, B. C. d. S., & Cook, W. R. (2012). "Functional programming with structured graphs". *ACM SIGPLAN International Conference on Functional Programming*.
-11. Moggi, E. (1991). "Notions of computation and monads". *Information and Computation*, 93(1), 55-92.
-12. Burstall, R. M., & Darlington, J. (1977). "A transformation system for developing recursive programs". *Journal of the ACM*, 24(1), 44-67.
-13. Reynolds, J. C. (1983). "Types, abstraction and parametric polymorphism". *Information Processing 83*, 513-523.
-14. Pierce, B. C. (2002). *Types and Programming Languages*. MIT Press.
-15. Peyton Jones, S. (2003). *Haskell 98 Language and Libraries: The Revised Report*. Cambridge University Press.
+1. Awodey, S. (2010). _Category Theory_. Oxford University Press.
+2. Bird, R., & de Moor, O. (1997). _Algebra of Programming_. Prentice Hall.
+3. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). _Design Patterns: Elements of Reusable Object-Oriented Software_. Addison-Wesley.
+4. Milewski, B. (2019). _Category Theory for Programmers_. Blurb.
+5. McBride, C., & Paterson, R. (2008). "Applicative programming with effects". _Journal of Functional Programming_, 18(1), 1-13.
+6. Martin, R. C. (2002). _Agile Software Development: Principles, Patterns, and Practices_. Prentice Hall.
+7. Wadler, P. (1992). "The essence of functional programming". _19th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages_.
+8. Elliott, C. (2017). "Compiling to categories". _Proceedings of the ACM on Programming Languages_.
+9. Hinze, R. (2012). "Kan Extensions for Program Optimisation". _Mathematics of Program Construction_.
+10. Oliveira, B. C. d. S., & Cook, W. R. (2012). "Functional programming with structured graphs". _ACM SIGPLAN International Conference on Functional Programming_.
+11. Moggi, E. (1991). "Notions of computation and monads". _Information and Computation_, 93(1), 55-92.
+12. Burstall, R. M., & Darlington, J. (1977). "A transformation system for developing recursive programs". _Journal of the ACM_, 24(1), 44-67.
+13. Reynolds, J. C. (1983). "Types, abstraction and parametric polymorphism". _Information Processing 83_, 513-523.
+14. Pierce, B. C. (2002). _Types and Programming Languages_. MIT Press.
+15. Peyton Jones, S. (2003). _Haskell 98 Language and Libraries: The Revised Report_. Cambridge University Press.

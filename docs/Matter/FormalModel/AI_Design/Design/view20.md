@@ -157,23 +157,23 @@ impl DistributedSystemConfig {
             properties: HashSet::new(),
         }
     }
-    
+
     /// 尝试添加CAP属性，如果违反CAP定理则返回错误
     pub fn add_property(&mut self, property: CAPProperty) -> Result<(), &'static str> {
         // 添加属性
         self.properties.insert(property);
-        
+
         // 检查是否违反CAP定理
-        if self.properties.contains(&CAPProperty::Consistency) 
+        if self.properties.contains(&CAPProperty::Consistency)
            && self.properties.contains(&CAPProperty::Availability)
            && self.properties.contains(&CAPProperty::PartitionTolerance) {
             self.properties.remove(&property);
             return Err("违反CAP定理：无法同时满足一致性、可用性和分区容忍性");
         }
-        
+
         Ok(())
     }
-    
+
     pub fn get_properties(&self) -> &HashSet<CAPProperty> {
         &self.properties
     }
@@ -184,9 +184,9 @@ fn main() {
     let mut ca_system = DistributedSystemConfig::new();
     ca_system.add_property(CAPProperty::Consistency).unwrap();
     ca_system.add_property(CAPProperty::Availability).unwrap();
-    
+
     println!("CA系统在面对网络分区时会牺牲可用性或一致性");
-    
+
     // 尝试添加分区容忍性会失败
     let result = ca_system.add_property(CAPProperty::PartitionTolerance);
     assert!(result.is_err());
@@ -220,13 +220,13 @@ use std::thread;
 fn csp_style_communication() {
     // 创建通道
     let (tx, rx) = mpsc::channel();
-    
+
     // 发送者进程
     thread::spawn(move || {
         // c!v: 发送值
         tx.send("Hello from CSP").unwrap();
     });
-    
+
     // 接收者进程
     // c?x: 接收值
     let received = rx.recv().unwrap();
@@ -237,24 +237,24 @@ fn csp_style_communication() {
 fn pi_calculus_style_communication() {
     // 外部通道
     let (main_tx, main_rx) = mpsc::channel();
-    
+
     // 发送者进程
     thread::spawn(move || {
         // 创建新的通道(νc)
         let (inner_tx, inner_rx) = mpsc::channel();
-        
+
         // 将通道本身作为消息发送
         main_tx.send(inner_tx).unwrap();
-        
+
         // 等待在新通道上的响应
         let response = inner_rx.recv().unwrap();
         println!("Response: {}", response);
     });
-    
+
     // 接收者进程
     // 接收通道本身
     let received_tx = main_rx.recv().unwrap();
-    
+
     // 使用接收到的通道发送消息
     received_tx.send("Reply through dynamic channel").unwrap();
 }
@@ -293,7 +293,7 @@ use std::fmt::Debug;
 trait StateMachine<S, C> {
     /// 应用命令到状态机
     fn apply(&self, state: &S, command: &C) -> S;
-    
+
     /// 创建初始状态
     fn initial_state(&self) -> S;
 }
@@ -325,18 +325,18 @@ where
             last_applied: 0,
         }
     }
-    
+
     fn append_command(&mut self, command: C) {
         self.command_log.push_back(command);
     }
-    
+
     fn apply_pending_commands(&mut self) {
         while self.last_applied < self.command_log.len() {
             let command = &self.command_log[self.last_applied];
             let new_state = self.state_machine.apply(&self.state, command);
             self.state = new_state;
             self.last_applied += 1;
-            
+
             println!("Applied command {:?}, new state: {:?}", command, self.state);
         }
     }
@@ -349,7 +349,7 @@ impl StateMachine<i32, i32> for CounterMachine {
     fn apply(&self, state: &i32, command: &i32) -> i32 {
         state + command
     }
-    
+
     fn initial_state(&self) -> i32 {
         0
     }
@@ -360,21 +360,21 @@ fn main() {
     let counter_machine = CounterMachine;
     let mut replica1 = Replica::new(counter_machine);
     let mut replica2 = Replica::new(counter_machine);
-    
+
     // 向两个副本添加相同的命令序列
     let commands = vec![1, 2, 3, -1];
     for cmd in &commands {
         replica1.append_command(*cmd);
         replica2.append_command(*cmd);
     }
-    
+
     // 应用命令
     println!("Replica 1:");
     replica1.apply_pending_commands();
-    
+
     println!("\nReplica 2:");
     replica2.apply_pending_commands();
-    
+
     // 验证状态相同
     assert_eq!(replica1.state, replica2.state);
     println!("\n两个副本的最终状态相同: {}", replica1.state);
@@ -434,7 +434,7 @@ impl DistributedKVStore {
             replication_delay: Duration::from_millis(delay_ms),
         }
     }
-    
+
     fn execute(&mut self, op: Operation) -> Option<String> {
         match op {
             Operation::Read(key) => {
@@ -462,21 +462,21 @@ impl KVStoreCluster {
                 DistributedKVStore::new(consistency.clone(), delay_ms)
             )));
         }
-        
+
         KVStoreCluster {
             nodes,
             consistency,
         }
     }
-    
+
     fn write(&self, key: &str, value: &str) {
         let op = Operation::Write(key.to_string(), value.to_string());
-        
+
         // 主节点执行写入
         let primary_node = &self.nodes[0];
         let mut primary = primary_node.lock().unwrap();
         primary.execute(op.clone());
-        
+
         match self.consistency {
             ConsistencyModel::Strong => {
                 // 线性一致性: 同步复制到所有节点
@@ -506,13 +506,13 @@ impl KVStoreCluster {
             }
         }
     }
-    
+
     fn read(&self, key: &str, node_idx: usize) -> Option<String> {
         let node = &self.nodes[node_idx];
         let mut replica = node.lock().unwrap();
         replica.execute(Operation::Read(key.to_string()))
     }
-    
+
     fn check_consistency(&self, key: &str) {
         println!("Checking consistency for key '{}':", key);
         for (i, node) in self.nodes.iter().enumerate() {
@@ -528,30 +528,30 @@ fn main() {
     println!("=== Testing Strong Consistency ===");
     let strong_cluster = KVStoreCluster::new(3, ConsistencyModel::Strong, 200);
     strong_cluster.write("foo", "bar");
-    
+
     // 立即读取所有节点
     for i in 0..3 {
         println!("Read from node {}: {:?}", i, strong_cluster.read("foo", i));
     }
-    
+
     // 测试最终一致性
     println!("\n=== Testing Eventual Consistency ===");
     let eventual_cluster = KVStoreCluster::new(3, ConsistencyModel::Eventual, 200);
     eventual_cluster.write("foo", "bar");
-    
+
     // 立即读取所有节点 - 可能看到旧值
     println!("Immediate reads (may be inconsistent):");
     for i in 0..3 {
         println!("Read from node {}: {:?}", i, eventual_cluster.read("foo", i));
     }
-    
+
     // 等待复制完成
     thread::sleep(Duration::from_millis(500));
     println!("\nReads after waiting (should be consistent):");
     for i in 0..3 {
         println!("Read from node {}: {:?}", i, eventual_cluster.read("foo", i));
     }
-    
+
     eventual_cluster.check_consistency("foo");
 }
 ```
@@ -603,48 +603,48 @@ mod concerns {
             pub items: Vec<String>,
             pub total: f64,
         }
-        
+
         pub fn process_order(order: &Order) -> bool {
             // 处理订单逻辑
             println!("Processing order {}", order.id);
             true
         }
     }
-    
+
     // 持久化逻辑 - 关注点分离
     pub mod persistence {
         use super::business_logic::Order;
-        
+
         pub trait OrderRepository {
             fn save(&self, order: &Order) -> Result<(), String>;
             fn find_by_id(&self, id: &str) -> Option<Order>;
         }
-        
+
         pub struct DatabaseOrderRepository;
-        
+
         impl OrderRepository for DatabaseOrderRepository {
             fn save(&self, order: &Order) -> Result<(), String> {
                 println!("Saving order {} to database", order.id);
                 Ok(())
             }
-            
+
             fn find_by_id(&self, id: &str) -> Option<Order> {
                 println!("Finding order {} in database", id);
                 None // 简化示例
             }
         }
     }
-    
+
     // 通信逻辑 - 关注点分离
     pub mod communication {
         use super::business_logic::Order;
-        
+
         pub trait NotificationService {
             fn notify_order_processed(&self, order: &Order) -> Result<(), String>;
         }
-        
+
         pub struct EmailNotificationService;
-        
+
         impl NotificationService for EmailNotificationService {
             fn notify_order_processed(&self, order: &Order) -> Result<(), String> {
                 println!("Sending email notification for order {}", order.id);
@@ -659,30 +659,30 @@ mod composition {
     use crate::concerns::business_logic::{Order, process_order};
     use crate::concerns::persistence::{OrderRepository, DatabaseOrderRepository};
     use crate::concerns::communication::{NotificationService, EmailNotificationService};
-    
+
     // 通过组合构建服务，而非继承
     pub struct OrderService<R: OrderRepository, N: NotificationService> {
         repository: R,
         notification: N,
     }
-    
+
     impl<R: OrderRepository, N: NotificationService> OrderService<R, N> {
         pub fn new(repository: R, notification: N) -> Self {
             Self { repository, notification }
         }
-        
+
         pub fn process_and_save(&self, order: &Order) -> Result<(), String> {
             // 业务逻辑
             if !process_order(order) {
                 return Err("Failed to process order".to_string());
             }
-            
+
             // 持久化
             self.repository.save(order)?;
-            
+
             // 通知
             self.notification.notify_order_processed(order)?;
-            
+
             Ok(())
         }
     }
@@ -691,14 +691,14 @@ mod composition {
 // 显式优于隐式原则示例
 mod explicitness {
     use std::time::Duration;
-    
+
     // 显式配置，而非隐式默认值或全局状态
     pub struct ServiceConfig {
         pub retry_attempts: u32,
         pub timeout: Duration,
         pub max_connections: u32,
     }
-    
+
     impl Default for ServiceConfig {
         fn default() -> Self {
             // 提供默认值，但使用者必须显式选择使用默认值
@@ -709,17 +709,17 @@ mod explicitness {
             }
         }
     }
-    
+
     pub struct Service {
         config: ServiceConfig,
     }
-    
+
     impl Service {
         // 要求显式提供配置
         pub fn new(config: ServiceConfig) -> Self {
             Self { config }
         }
-        
+
         // 从默认值创建仍然需要显式调用
         pub fn with_defaults() -> Self {
             Self::new(ServiceConfig::default())
@@ -730,14 +730,14 @@ mod explicitness {
 // 故障是一等公民原则示例
 mod failures {
     use std::time::{Duration, Instant};
-    
+
     #[derive(Debug)]
     pub enum NetworkError {
         Timeout,
         ConnectionFailed,
         ServerError(String),
     }
-    
+
     // 断路器模式 - 将故障处理作为核心设计
     pub struct CircuitBreaker {
         failure_threshold:
@@ -750,14 +750,14 @@ mod failures {
 // 故障是一等公民原则示例（续）
 mod failures {
     use std::time::{Duration, Instant};
-    
+
     #[derive(Debug)]
     pub enum NetworkError {
         Timeout,
         ConnectionFailed,
         ServerError(String),
     }
-    
+
     // 断路器模式 - 将故障处理作为核心设计
     pub struct CircuitBreaker {
         failure_threshold: u32,
@@ -766,14 +766,14 @@ mod failures {
         last_failure_time: Option<Instant>,
         state: CircuitState,
     }
-    
+
     #[derive(Debug, PartialEq)]
     enum CircuitState {
         Closed,     // 正常操作
         Open,       // 阻止所有请求
         HalfOpen,   // 允许有限请求以测试恢复
     }
-    
+
     impl CircuitBreaker {
         pub fn new(failure_threshold: u32, reset_timeout: Duration) -> Self {
             Self {
@@ -784,7 +784,7 @@ mod failures {
                 state: CircuitState::Closed,
             }
         }
-        
+
         pub fn execute<F, T, E>(&mut self, operation: F) -> Result<T, E>
         where
             F: FnOnce() -> Result<T, E>,
@@ -804,7 +804,7 @@ mod failures {
                 }
                 _ => {}
             }
-            
+
             // 执行操作
             match operation() {
                 Ok(result) => {
@@ -820,12 +820,12 @@ mod failures {
                     // 处理故障
                     self.failure_count += 1;
                     self.last_failure_time = Some(Instant::now());
-                    
+
                     if self.failure_count >= self.failure_threshold || self.state == CircuitState::HalfOpen {
                         println!("Failure threshold reached, opening circuit");
                         self.state = CircuitState::Open;
                     }
-                    
+
                     Err(err)
                 }
             }
@@ -836,68 +836,68 @@ mod failures {
 // 可逆性原则示例
 mod reversibility {
     use std::collections::HashMap;
-    
+
     // 通过抽象和接口实现存储决策的可逆性
     pub trait DataStore {
         fn get(&self, key: &str) -> Option<String>;
         fn set(&mut self, key: &str, value: &str) -> Result<(), String>;
     }
-    
+
     // 内存实现
     pub struct InMemoryStore {
         data: HashMap<String, String>,
     }
-    
+
     impl InMemoryStore {
         pub fn new() -> Self {
             Self { data: HashMap::new() }
         }
     }
-    
+
     impl DataStore for InMemoryStore {
         fn get(&self, key: &str) -> Option<String> {
             self.data.get(key).cloned()
         }
-        
+
         fn set(&mut self, key: &str, value: &str) -> Result<(), String> {
             self.data.insert(key.to_string(), value.to_string());
             Ok(())
         }
     }
-    
+
     // 文件存储实现
     pub struct FileStore {
         base_path: String,
     }
-    
+
     impl FileStore {
         pub fn new(base_path: &str) -> Self {
             Self { base_path: base_path.to_string() }
         }
     }
-    
+
     impl DataStore for FileStore {
         fn get(&self, key: &str) -> Option<String> {
             println!("Reading from file: {}/{}", self.base_path, key);
             Some("file data".to_string()) // 简化示例
         }
-        
+
         fn set(&mut self, key: &str, value: &str) -> Result<(), String> {
             println!("Writing to file: {}/{}", self.base_path, key);
             Ok(()) // 简化示例
         }
     }
-    
+
     // 应用代码不依赖具体实现，使决策可逆
     pub struct Application {
         store: Box<dyn DataStore>,
     }
-    
+
     impl Application {
         pub fn new(store: Box<dyn DataStore>) -> Self {
             Self { store }
         }
-        
+
         // 业务逻辑使用抽象接口，允许存储实现在不修改代码的情况下替换
         pub fn save_user_preference(&mut self, user_id: &str, pref: &str) {
             let key = format!("user:{}:pref", user_id);
@@ -913,11 +913,11 @@ fn main() {
     use composition::{OrderService};
     use concerns::persistence::DatabaseOrderRepository;
     use concerns::communication::EmailNotificationService;
-    
+
     let repository = DatabaseOrderRepository;
     let notification = EmailNotificationService;
     let service = OrderService::new(repository, notification);
-    
+
     // 使用服务...
 }
 ```
@@ -951,121 +951,121 @@ mod abstraction_layers {
             fn send(&self, message: &[u8]) -> Result<(), String>;
             fn receive(&self) -> Result<Vec<u8>, String>;
         }
-        
+
         pub struct TCPEndpoint {
             host: String,
             port: u16,
         }
-        
+
         impl TCPEndpoint {
             pub fn new(host: &str, port: u16) -> Self {
                 Self { host: host.to_string(), port }
             }
         }
-        
+
         impl Endpoint for TCPEndpoint {
             fn send(&self, message: &[u8]) -> Result<(), String> {
                 println!("Sending TCP message to {}:{}", self.host, self.port);
                 Ok(())
             }
-            
+
             fn receive(&self) -> Result<Vec<u8>, String> {
                 println!("Receiving TCP message from {}:{}", self.host, self.port);
                 Ok(vec![1, 2, 3]) // 简化示例
             }
         }
-        
+
         pub struct KafkaEndpoint {
             broker: String,
             topic: String,
         }
-        
+
         impl KafkaEndpoint {
             pub fn new(broker: &str, topic: &str) -> Self {
                 Self { broker: broker.to_string(), topic: topic.to_string() }
             }
         }
-        
+
         impl Endpoint for KafkaEndpoint {
             fn send(&self, message: &[u8]) -> Result<(), String> {
                 println!("Publishing Kafka message to {} on {}", self.topic, self.broker);
                 Ok(())
             }
-            
+
             fn receive(&self) -> Result<Vec<u8>, String> {
                 println!("Consuming Kafka message from {} on {}", self.topic, self.broker);
                 Ok(vec![4, 5, 6]) // 简化示例
             }
         }
     }
-    
+
     // 协调层抽象
     pub mod coordination {
         use std::collections::HashMap;
         use std::sync::{Arc, Mutex};
-        
+
         pub trait ServiceRegistry {
             fn register(&mut self, service_id: &str, endpoint: &str) -> Result<(), String>;
             fn lookup(&self, service_id: &str) -> Option<String>;
             fn deregister(&mut self, service_id: &str) -> Result<(), String>;
         }
-        
+
         // 内存中的简单注册表实现
         pub struct InMemoryRegistry {
             services: HashMap<String, String>,
         }
-        
+
         impl InMemoryRegistry {
             pub fn new() -> Self {
                 Self { services: HashMap::new() }
             }
         }
-        
+
         impl ServiceRegistry for InMemoryRegistry {
             fn register(&mut self, service_id: &str, endpoint: &str) -> Result<(), String> {
                 self.services.insert(service_id.to_string(), endpoint.to_string());
                 Ok(())
             }
-            
+
             fn lookup(&self, service_id: &str) -> Option<String> {
                 self.services.get(service_id).cloned()
             }
-            
+
             fn deregister(&mut self, service_id: &str) -> Result<(), String> {
                 self.services.remove(service_id);
                 Ok(())
             }
         }
-        
+
         // 分布式锁抽象
         pub trait DistributedLock {
             fn acquire(&self, resource_id: &str, ttl_ms: u64) -> Result<LockGuard, String>;
         }
-        
+
         pub struct LockGuard {
             resource_id: String,
             locker: Arc<Mutex<dyn DistributedLock + Send + Sync>>,
         }
-        
+
         impl Drop for LockGuard {
             fn drop(&mut self) {
                 println!("Releasing lock for resource: {}", self.resource_id);
             }
         }
     }
-    
+
     // 服务层抽象
     pub mod services {
         use super::communication::Endpoint;
         use super::coordination::ServiceRegistry;
         use std::sync::Arc;
-        
+
         pub struct OrderService {
             endpoint: Box<dyn Endpoint>,
             registry: Arc<dyn ServiceRegistry + Send + Sync>,
             service_id: String,
         }
-        
+
         impl OrderService {
             pub fn new(
                 endpoint: Box<dyn Endpoint>,
@@ -1078,27 +1078,27 @@ mod abstraction_layers {
                     service_id: service_id.to_string(),
                 }
             }
-            
+
             pub fn start(&self) -> Result<(), String> {
                 // 注册服务
                 self.registry.register(&self.service_id, "order-service:8080")?;
                 println!("Order service started");
                 Ok(())
             }
-            
+
             pub fn process_order(&self, order_id: &str) -> Result<(), String> {
                 // 使用通信层发送消息
                 let message = format!("Processing order: {}", order_id).into_bytes();
                 self.endpoint.send(&message)
             }
         }
-        
+
         pub struct PaymentService {
             endpoint: Box<dyn Endpoint>,
             registry: Arc<dyn ServiceRegistry + Send + Sync>,
             service_id: String,
         }
-        
+
         impl PaymentService {
             pub fn new(
                 endpoint: Box<dyn Endpoint>,
@@ -1111,59 +1111,59 @@ mod abstraction_layers {
                     service_id: service_id.to_string(),
                 }
             }
-            
+
             pub fn start(&self) -> Result<(), String> {
                 // 注册服务
                 self.registry.register(&self.service_id, "payment-service:8081")?;
                 println!("Payment service started");
                 Ok(())
             }
-            
+
             pub fn process_payment(&self, payment_id: &str) -> Result<(), String> {
                 // 查找订单服务
                 let order_endpoint = self.registry.lookup("order-service")
                     .ok_or_else(|| "Order service not found".to_string())?;
-                    
+
                 println!("Found order service at: {}", order_endpoint);
-                
+
                 // 使用通信层发送消息
                 let message = format!("Processing payment: {}", payment_id).into_bytes();
                 self.endpoint.send(&message)
             }
         }
     }
-    
+
     // 应用层抽象 - 整合各层
     pub mod application {
         use super::communication::{TCPEndpoint, KafkaEndpoint, Endpoint};
         use super::coordination::{InMemoryRegistry, ServiceRegistry};
         use super::services::{OrderService, PaymentService};
         use std::sync::Arc;
-        
+
         pub struct ECommerceApp {
             order_service: OrderService,
             payment_service: PaymentService,
         }
-        
+
         impl ECommerceApp {
             pub fn new() -> Self {
                 // 创建协调组件
                 let registry = Arc::new(InMemoryRegistry::new()) as Arc<dyn ServiceRegistry + Send + Sync>;
-                
+
                 // 创建通信组件
                 let order_endpoint = Box::new(TCPEndpoint::new("localhost", 8080)) as Box<dyn Endpoint>;
                 let payment_endpoint = Box::new(KafkaEndpoint::new("localhost:9092", "payments")) as Box<dyn Endpoint>;
-                
+
                 // 创建服务
                 let order_service = OrderService::new(order_endpoint, registry.clone(), "order-service");
                 let payment_service = PaymentService::new(payment_endpoint, registry.clone(), "payment-service");
-                
+
                 Self {
                     order_service,
                     payment_service,
                 }
             }
-            
+
             pub fn start(&self) -> Result<(), String> {
                 // 启动服务
                 self.order_service.start()?;
@@ -1171,7 +1171,7 @@ mod abstraction_layers {
                 println!("E-commerce application started");
                 Ok(())
             }
-            
+
             pub fn checkout(&self, order_id: &str, payment_id: &str) -> Result<(), String> {
                 // 执行业务工作流
                 self.order_service.process_order(order_id)?;
@@ -1227,48 +1227,48 @@ mod metamodels {
         pub struct LegacyPaymentSystem {
             endpoint: String,
         }
-        
+
         impl LegacyPaymentSystem {
             pub fn new(endpoint: &str) -> Self {
                 Self { endpoint: endpoint.to_string() }
             }
-            
+
             pub fn process_payment(&self, amount: f64, account: &str, reference: &str) -> bool {
-                println!("Legacy system processing payment: ${} for account {} (ref: {})", 
+                println!("Legacy system processing payment: ${} for account {} (ref: {})",
                          amount, account, reference);
                 true
             }
         }
-        
+
         // 防腐层 - 隔离外部系统的复杂性和变化
         pub struct PaymentAdapter {
             legacy_system: LegacyPaymentSystem,
         }
-        
+
         // 内部系统期望的接口
         pub struct PaymentRequest {
             pub order_id: String,
             pub amount: f64,
             pub customer_id: String,
         }
-        
+
         impl PaymentAdapter {
             pub fn new(legacy_system: LegacyPaymentSystem) -> Self {
                 Self { legacy_system }
             }
-            
+
             // 提供干净的内部接口，隐藏遗留系统细节
             pub fn process_payment(&self, request: PaymentRequest) -> Result<String, String> {
                 // 将内部模型转换为遗留系统需要的格式
                 let reference = format!("ORD-{}", request.order_id);
                 let account = format!("CUST-{}", request.customer_id);
-                
+
                 let result = self.legacy_system.process_payment(
                     request.amount,
                     &account,
                     &reference
                 );
-                
+
                 if result {
                     Ok(format!("Payment processed for order {}", request.order_id))
                 } else {
@@ -1277,13 +1277,13 @@ mod metamodels {
             }
         }
     }
-    
+
     // 通信元模式 - 异步消息
     pub mod communication {
         use std::sync::mpsc;
         use std::thread;
         use std::collections::HashMap;
-        
+
         // 消息定义
         #[derive(Debug, Clone)]
         pub enum OrderEvent {
@@ -1292,29 +1292,29 @@ mod metamodels {
             Shipped { order_id: String, tracking_id: String },
             Cancelled { order_id: String, reason: String },
         }
-        
+
         // 异步消息总线
         pub struct MessageBus {
             senders: HashMap<String, Vec<mpsc::Sender<OrderEvent>>>,
         }
-        
+
         impl MessageBus {
             pub fn new() -> Self {
                 Self { senders: HashMap::new() }
             }
-            
+
             // 订阅指定主题
             pub fn subscribe(&mut self, topic: &str) -> mpsc::Receiver<OrderEvent> {
                 let (sender, receiver) = mpsc::channel();
-                
+
                 self.senders
                     .entry(topic.to_string())
                     .or_insert_with(Vec::new)
                     .push(sender);
-                    
+
                 receiver
             }
-            
+
             // 发布事件到主题
             pub fn publish(&self, topic: &str, event: OrderEvent) -> Result<(), String> {
                 if let Some(topic_senders) = self.senders.get(topic) {
@@ -1330,58 +1330,58 @@ mod metamodels {
                 }
             }
         }
-        
+
         // 服务使用消息总线
         pub struct OrderProcessor {
             bus: MessageBus,
         }
-        
+
         impl OrderProcessor {
             pub fn new(bus: MessageBus) -> Self {
                 Self { bus }
             }
-            
+
             pub fn start(&self) {
                 println!("Order processor started");
             }
-            
+
             pub fn create_order(&self, order_id: &str, customer_id: &str, amount: f64) -> Result<(), String> {
                 let event = OrderEvent::Created {
                     order_id: order_id.to_string(),
                     customer_id: customer_id.to_string(),
                     amount,
                 };
-                
+
                 // 发布创建事件
                 self.bus.publish("orders", event)
             }
         }
-        
+
         pub struct PaymentProcessor {
             receiver: mpsc::Receiver<OrderEvent>,
             bus: MessageBus,
         }
-        
+
         impl PaymentProcessor {
             pub fn new(bus: MessageBus, receiver: mpsc::Receiver<OrderEvent>) -> Self {
                 Self { bus, receiver }
             }
-            
+
             pub fn start(&self) {
                 println!("Payment processor started");
-                
+
                 // 实际实现会在单独线程中监听消息
                 match self.receiver.try_recv() {
                     Ok(OrderEvent::Created { order_id, amount, .. }) => {
                         println!("Processing payment for order {}: ${}", order_id, amount);
-                        
+
                         // 支付成功后发布支付事件
                         let payment_id = format!("PAY-{}", order_id);
                         let paid_event = OrderEvent::Paid {
                             order_id,
                             payment_id,
                         };
-                        
+
                         if let Err(e) = self.bus.publish("payments", paid_event) {
                             println!("Failed to publish payment event: {}", e);
                         }
@@ -1396,12 +1396,12 @@ mod metamodels {
             }
         }
     }
-    
+
     // 协调元模式 - 领导者选举
     pub mod coordination {
         use std::time::{Duration, Instant};
         use std::collections::HashMap;
-        
+
         // 节点状态
         #[derive(Debug, Clone, PartialEq)]
         pub enum NodeState {
@@ -1409,7 +1409,7 @@ mod metamodels {
             Candidate,
             Leader,
         }
-        
+
         // 简化的领导者选举实现
         pub struct LeaderElection {
             node_id: String,
@@ -1420,7 +1420,7 @@ mod metamodels {
             heartbeat_timeout: Duration,
             nodes: HashMap<String, String>, // 节点ID -> 地址
         }
-        
+
         impl LeaderElection {
             pub fn new(node_id: &str, heartbeat_timeout_ms: u64) -> Self {
                 Self {
@@ -1433,60 +1433,60 @@ mod metamodels {
                     nodes: HashMap::new(),
                 }
             }
-            
+
             pub fn register_node(&mut self, node_id: &str, address: &str) {
                 self.nodes.insert(node_id.to_string(), address.to_string());
             }
-            
+
             pub fn on_heartbeat(&mut self, leader_id: &str, term: u64) {
                 if term < self.current_term {
                     // 忽略旧期的心跳
                     return;
                 }
-                
+
                 if term > self.current_term {
                     // 发现更高的任期
                     self.current_term = term;
                     self.state = NodeState::Follower;
                     self.voted_for = None;
                 }
-                
+
                 // 更新最后心跳时间
                 self.last_heartbeat = Instant::now();
-                
-                println!("Node {} received heartbeat from leader {} for term {}", 
+
+                println!("Node {} received heartbeat from leader {} for term {}",
                          self.node_id, leader_id, term);
             }
-            
+
             pub fn check_timeout(&mut self) {
-                if self.state != NodeState::Leader && 
+                if self.state != NodeState::Leader &&
                    self.last_heartbeat.elapsed() > self.heartbeat_timeout {
                     // 超时，开始选举
                     self.start_election();
                 }
             }
-            
+
             fn start_election(&mut self) {
                 self.state = NodeState::Candidate;
                 self.current_term += 1;
                 self.voted_for = Some(self.node_id.clone());
-                
+
                 println!("Node {} starting election for term {}", self.node_id, self.current_term);
-                
+
                 // 简化：假设立即获得多数票
                 self.become_leader();
             }
-            
+
             fn become_leader(&mut self) {
                 if self.state == NodeState::Candidate {
                     self.state = NodeState::Leader;
                     println!("Node {} became leader for term {}", self.node_id, self.current_term);
-                    
+
                     // 开始发送心跳
                     self.send_heartbeats();
                 }
             }
-            
+
             fn send_heartbeats(&self) {
                 for (node_id, address) in &self.nodes {
                     if node_id != &self.node_id {
@@ -1494,17 +1494,17 @@ mod metamodels {
                     }
                 }
             }
-            
+
             pub fn is_leader(&self) -> bool {
                 self.state == NodeState::Leader
             }
         }
     }
-    
+
     // 状态元模式 - 事件溯源
     pub mod state {
         use std::collections::HashMap;
-        
+
         // 领域事件
         #[derive(Debug, Clone)]
         pub enum DomainEvent {
@@ -1514,7 +1514,7 @@ mod metamodels {
             OrderPaid { order_id: String, payment_id: String },
             OrderShipped { order_id: String, shipping_id: String },
         }
-        
+
         // 聚合根
         #[derive(Debug, Clone)]
         pub struct Order {
@@ -1526,12 +1526,12 @@ mod metamodels {
             payment_id: Option<String>,
             shipping_id: Option<String>,
         }
-        
+
         impl Order {
             // 从事件流重建状态
             pub fn from_events(events: &[DomainEvent]) -> Option<Self> {
                 let mut order = None;
-                
+
                 for event in events {
                     match event {
                         DomainEvent::OrderCreated { order_id, items, total } => {
@@ -1539,7 +1539,7 @@ mod metamodels {
                             for item in items {
                                 items_map.insert(item.clone(), 0.0); // 简化，价格稍后会更新
                             }
-                            
+
                             order = Some(Order {
                                 id: order_id.clone(),
                                 items: items_map,
@@ -1585,35 +1585,35 @@ mod metamodels {
                         },
                     }
                 }
-                
+
                 order
             }
         }
-        
+
         // 事件存储
         pub struct EventStore {
             events: HashMap<String, Vec<DomainEvent>>, // 聚合ID -> 事件列表
         }
-        
+
         impl EventStore {
             pub fn new() -> Self {
                 Self { events: HashMap::new() }
             }
-            
+
             pub fn append(&mut self, aggregate_id: &str, event: DomainEvent) {
                 self.events
                     .entry(aggregate_id.to_string())
                     .or_insert_with(Vec::new)
                     .push(event);
             }
-            
+
             pub fn get_events(&self, aggregate_id: &str) -> Vec<DomainEvent> {
                 self.events
                     .get(aggregate_id)
                     .cloned()
                     .unwrap_or_else(Vec::new)
             }
-            
+
             // 获取聚合根当前状态
             pub fn get_order(&self, order_id: &str) -> Option<Order> {
                 let events = self.get_events(order_id);
@@ -1662,37 +1662,37 @@ mod validation {
             println!("Processing payment {} for ${}", payment_id, amount);
             true
         }
-        
+
         // 幂等性测试
         #[test]
         fn test_payment_idempotency() {
             let payment_id = "test-123";
             let amount = 100.0;
-            
+
             // 第一次处理
             let result1 = process_payment(payment_id, amount);
             assert!(result1);
-            
+
             // 重复处理（应该返回相同结果）
             let result2 = process_payment(payment_id, amount);
             assert!(result2);
-            
+
             // 验证幂等性：两次调用结果相同
             assert_eq!(result1, result2);
         }
     }
-    
+
     // 结构验证 - 架构一致性检查
     pub mod architecture_validation {
         use std::collections::{HashMap, HashSet};
-        
+
         // 表示一个模块
         pub struct Module {
             name: String,
             dependencies: HashSet<String>,
             layer: Layer,
         }
-        
+
         // 系统分层
         #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
         pub enum Layer {
@@ -1701,7 +1701,7 @@ mod validation {
             Domain,
             Infrastructure,
         }
-        
+
         impl Module {
             pub fn new(name: &str, layer: Layer) -> Self {
                 Self {
@@ -1710,55 +1710,55 @@ mod validation {
                     layer,
                 }
             }
-            
+
             pub fn add_dependency(&mut self, module: &str) {
                 self.dependencies.insert(module.to_string());
             }
         }
-        
+
         // 架构规则检查器
         pub struct ArchitectureValidator {
             modules: HashMap<String, Module>,
             allowed_dependencies: HashMap<Layer, HashSet<Layer>>,
         }
-        
+
         impl ArchitectureValidator {
             pub fn new() -> Self {
                 let mut allowed = HashMap::new();
-                
+
                 // 定义层次间允许的依赖关系
                 // 表示层只能依赖应用层
                 let mut presentation_deps = HashSet::new();
                 presentation_deps.insert(Layer::Application);
                 allowed.insert(Layer::Presentation, presentation_deps);
-                
+
                 // 应用层可以依赖领域层
                 let mut application_deps = HashSet::new();
                 application_deps.insert(Layer::Domain);
                 allowed.insert(Layer::Application, application_deps);
-                
+
                 // 领域层不应该依赖其他层
                 allowed.insert(Layer::Domain, HashSet::new());
-                
+
                 // 基础设施层可以依赖领域层
                 let mut infra_deps = HashSet::new();
                 infra_deps.insert(Layer::Domain);
                 allowed.insert(Layer::Infrastructure, infra_deps);
-                
+
                 Self {
                     modules: HashMap::new(),
                     allowed_dependencies: allowed,
                 }
             }
-            
+
             pub fn add_module(&mut self, module: Module) {
                 self.modules.insert(module.name.clone(), module);
             }
-            
+
             // 验证架构一致性
             pub fn validate(&self) -> Vec<String> {
                 let mut violations = Vec::new();
-                
+
                 for (name, module) in &self.modules {
                     for dep_name in &module.dependencies {
                         if let Some(dep_module) = self.modules.get(dep_name) {
@@ -1777,16 +1777,16 @@ mod validation {
                         }
                     }
                 }
-                
+
                 violations
             }
-            
+
             fn is_dependency_allowed(&self, from_layer: Layer, to_layer: Layer) -> bool {
                 // 同层依赖总是允许的
                 if from_layer == to_layer {
                     return true;
                 }
-                
+
                 // 检查跨层依赖是否被允许
                 if let Some(allowed_layers) = self.allowed_dependencies.get(&from_layer) {
                     allowed_
@@ -1797,7 +1797,7 @@ mod validation {
                 if from_layer == to_layer {
                     return true;
                 }
-                
+
                 // 检查跨层依赖是否被允许
                 if let Some(allowed_layers) = self.allowed_dependencies.get(&from_layer) {
                     allowed_layers.contains(&to_layer)
@@ -1807,7 +1807,7 @@ mod validation {
             }
         }
     }
-    
+
     // 形式化验证 - TLA+风格的状态检查
     pub mod formal_validation {
         // 定义一个简化的状态机
@@ -1817,7 +1817,7 @@ mod validation {
             locks: Vec<String>,
             active_processes: u32,
         }
-        
+
         impl State {
             pub fn new() -> Self {
                 Self {
@@ -1827,69 +1827,69 @@ mod validation {
                 }
             }
         }
-        
+
         // 操作（类似于TLA+中的操作定义）
         pub trait StateTransition {
             fn name(&self) -> &str;
             fn is_enabled(&self, state: &State) -> bool;
             fn next(&self, state: &State) -> State;
         }
-        
+
         // 具体操作：递增计数器
         pub struct IncrementCounter;
-        
+
         impl StateTransition for IncrementCounter {
             fn name(&self) -> &str {
                 "IncrementCounter"
             }
-            
+
             fn is_enabled(&self, _state: &State) -> bool {
                 // 总是可以递增
                 true
             }
-            
+
             fn next(&self, state: &State) -> State {
                 let mut next_state = state.clone();
                 next_state.counter += 1;
                 next_state
             }
         }
-        
+
         // 具体操作：获取锁
         pub struct AcquireLock {
             lock_name: String,
         }
-        
+
         impl AcquireLock {
             pub fn new(lock_name: &str) -> Self {
                 Self { lock_name: lock_name.to_string() }
             }
         }
-        
+
         impl StateTransition for AcquireLock {
             fn name(&self) -> &str {
                 "AcquireLock"
             }
-            
+
             fn is_enabled(&self, state: &State) -> bool {
                 // 只有当锁未被持有时才能获取
                 !state.locks.contains(&self.lock_name)
             }
-            
+
             fn next(&self, state: &State) -> State {
                 let mut next_state = state.clone();
                 next_state.locks.push(self.lock_name.clone());
                 next_state
             }
         }
-        
+
         // 简化的模型检查器
         pub struct ModelChecker {
             initial_state: State,
             transitions: Vec<Box<dyn StateTransition>>,
             invariants: Vec<Box<dyn Fn(&State) -> bool>>,
         }
-        
+
         impl ModelChecker {
             pub fn new(initial_state: State) -> Self {
                 Self {
@@ -1898,28 +1898,28 @@ mod validation {
                     invariants: Vec::new(),
                 }
             }
-            
+
             pub fn add_transition(&mut self, transition: Box<dyn StateTransition>) {
                 self.transitions.push(transition);
             }
-            
-            pub fn add_invariant<F>(&mut self, invariant: F) 
-            where 
+
+            pub fn add_invariant<F>(&mut self, invariant: F)
+            where
                 F: Fn(&State) -> bool + 'static
             {
                 self.invariants.push(Box::new(invariant));
             }
-            
+
             // 运行有限步数的状态空间搜索
             pub fn check(&self, max_depth: usize) -> Result<(), String> {
                 let mut visited_states = Vec::new();
                 visited_states.push(self.initial_state.clone());
-                
+
                 self.dfs_check(&self.initial_state, 0, max_depth, &mut visited_states)
             }
-            
+
             fn dfs_check(
-                &self, 
+                &self,
                 state: &State,
                 depth: usize,
                 max_depth: usize,
@@ -1931,28 +1931,28 @@ mod validation {
                         return Err(format!("不变量 #{} 在深度 {} 失败", i, depth));
                     }
                 }
-                
+
                 // 达到最大深度
                 if depth >= max_depth {
                     return Ok(());
                 }
-                
+
                 // 尝试所有可能的转换
                 for transition in &self.transitions {
                     if transition.is_enabled(state) {
                         let next_state = transition.next(state);
-                        
+
                         // 如果这是新状态，继续搜索
                         if !visited_states.contains(&next_state) {
                             visited_states.push(next_state.clone());
-                            
+
                             if let Err(e) = self.dfs_check(&next_state, depth + 1, max_depth, visited_states) {
                                 return Err(format!("操作 {} 后: {}", transition.name(), e));
                             }
                         }
                     }
                 }
-                
+
                 Ok(())
             }
         }
@@ -1993,71 +1993,71 @@ mod distributed_coordination {
     use std::collections::HashMap;
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 核心协调接口
     pub trait CoordinationService: Send + Sync {
         // 服务发现
         fn register_service(&self, service_id: &str, endpoint: &str) -> Result<(), String>;
         fn lookup_service(&self, service_id: &str) -> Result<Vec<String>, String>;
         fn unregister_service(&self, service_id: &str, endpoint: &str) -> Result<(), String>;
-        
+
         // 分布式锁
         fn acquire_lock(&self, lock_id: &str, ttl_ms: u64) -> Result<LockHandle, String>;
-        
+
         // 领导者选举
         fn campaign_for_leadership(&self, election_id: &str) -> Result<LeadershipHandle, String>;
-        
+
         // 配置管理
         fn set_config(&self, key: &str, value: &str) -> Result<(), String>;
         fn get_config(&self, key: &str) -> Result<Option<String>, String>;
         fn watch_config(&self, key: &str, callback: Box<dyn Fn(&str, &str) + Send + Sync>) -> Result<WatchHandle, String>;
     }
-    
+
     // 锁句柄，释放时自动解锁
     pub struct LockHandle {
         lock_id: String,
         service: Arc<dyn CoordinationService>,
     }
-    
+
     impl Drop for LockHandle {
         fn drop(&mut self) {
             println!("Releasing lock: {}", self.lock_id);
             // 实际实现会调用服务的释放锁API
         }
     }
-    
+
     // 领导者句柄，释放时自动放弃领导权
     pub struct LeadershipHandle {
         election_id: String,
         service: Arc<dyn CoordinationService>,
     }
-    
+
     impl LeadershipHandle {
         pub fn is_leader(&self) -> bool {
             true // 简化，实际实现会检查状态
         }
     }
-    
+
     impl Drop for LeadershipHandle {
         fn drop(&mut self) {
             println!("Relinquishing leadership for: {}", self.election_id);
             // 实际实现会调用服务的放弃领导权API
         }
     }
-    
+
     // 观察句柄，删除时自动取消观察
     pub struct WatchHandle {
         key: String,
         service: Arc<dyn CoordinationService>,
     }
-    
+
     impl Drop for WatchHandle {
         fn drop(&mut self) {
             println!("Cancelling watch for: {}", self.key);
             // 实际实现会调用服务的取消观察API
         }
     }
-    
+
     // 内存中的协调服务实现 (仅用于测试)
     pub struct InMemoryCoordinationService {
         services: Mutex<HashMap<String, Vec<String>>>,
@@ -2065,7 +2065,7 @@ mod distributed_coordination {
         leaders: Mutex<HashMap<String, String>>,
         configs: Mutex<HashMap<String, String>>,
     }
-    
+
     impl InMemoryCoordinationService {
         pub fn new() -> Self {
             Self {
@@ -2076,7 +2076,7 @@ mod distributed_coordination {
             }
         }
     }
-    
+
     impl CoordinationService for InMemoryCoordinationService {
         fn register_service(&self, service_id: &str, endpoint: &str) -> Result<(), String> {
             let mut services = self.services.lock().unwrap();
@@ -2084,23 +2084,23 @@ mod distributed_coordination {
                 .entry(service_id.to_string())
                 .or_insert_with(Vec::new)
                 .push(endpoint.to_string());
-            
+
             println!("Registered service {} at {}", service_id, endpoint);
             Ok(())
         }
-        
+
         fn lookup_service(&self, service_id: &str) -> Result<Vec<String>, String> {
             let services = self.services.lock().unwrap();
-            
+
             match services.get(service_id) {
                 Some(endpoints) => Ok(endpoints.clone()),
                 None => Err(format!("Service not found: {}", service_id)),
             }
         }
-        
+
         fn unregister_service(&self, service_id: &str, endpoint: &str) -> Result<(), String> {
             let mut services = self.services.lock().unwrap();
-            
+
             if let Some(endpoints) = services.get_mut(service_id) {
                 endpoints.retain(|e| e != endpoint);
                 println!("Unregistered service {} at {}", service_id, endpoint);
@@ -2109,75 +2109,75 @@ mod distributed_coordination {
                 Err(format!("Service not found: {}", service_id))
             }
         }
-        
+
         fn acquire_lock(&self, lock_id: &str, ttl_ms: u64) -> Result<LockHandle, String> {
             let mut locks = self.locks.lock().unwrap();
-            
+
             // 检查锁是否已被持有且未超时
             if let Some((_, acquired_time, ttl)) = locks.get(lock_id) {
                 if acquired_time.elapsed() < *ttl {
                     return Err(format!("Lock already held: {}", lock_id));
                 }
             }
-            
+
             // 获取锁
             let client_id = format!("client-{}", rand::random::<u32>());
             locks.insert(
                 lock_id.to_string(),
                 (client_id.clone(), Instant::now(), Duration::from_millis(ttl_ms))
             );
-            
+
             println!("Lock {} acquired by {}", lock_id, client_id);
-            
+
             // 返回锁句柄
             Ok(LockHandle {
                 lock_id: lock_id.to_string(),
                 service: Arc::new(self.clone()),
             })
         }
-        
+
         fn campaign_for_leadership(&self, election_id: &str) -> Result<LeadershipHandle, String> {
             let mut leaders = self.leaders.lock().unwrap();
-            
+
             // 检查是否已有领导者
             if leaders.contains_key(election_id) {
                 return Err(format!("Election already has a leader: {}", election_id));
             }
-            
+
             // 成为领导者
             let client_id = format!("client-{}", rand::random::<u32>());
             leaders.insert(election_id.to_string(), client_id.clone());
-            
+
             println!("{} became leader for {}", client_id, election_id);
-            
+
             // 返回领导权句柄
             Ok(LeadershipHandle {
                 election_id: election_id.to_string(),
                 service: Arc::new(self.clone()),
             })
         }
-        
+
         fn set_config(&self, key: &str, value: &str) -> Result<(), String> {
             let mut configs = self.configs.lock().unwrap();
             configs.insert(key.to_string(), value.to_string());
-            
+
             println!("Config set: {} = {}", key, value);
             Ok(())
         }
-        
+
         fn get_config(&self, key: &str) -> Result<Option<String>, String> {
             let configs = self.configs.lock().unwrap();
             Ok(configs.get(key).cloned())
         }
-        
+
         fn watch_config(&self, key: &str, callback: Box<dyn Fn(&str, &str) + Send + Sync>) -> Result<WatchHandle, String> {
             // 获取当前值并立即触发回调
             if let Ok(Some(value)) = self.get_config(key) {
                 callback(key, &value);
             }
-            
+
             println!("Watching config key: {}", key);
-            
+
             // 返回观察句柄
             Ok(WatchHandle {
                 key: key.to_string(),
@@ -2185,7 +2185,7 @@ mod distributed_coordination {
             })
         }
     }
-    
+
     impl Clone for InMemoryCoordinationService {
         fn clone(&self) -> Self {
             Self::new() // 简化实现，实际应共享内部状态
@@ -2232,7 +2232,7 @@ mod consistency_frameworks {
     use std::collections::HashMap;
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, SystemTime};
-    
+
     // 一致性级别
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     pub enum ConsistencyLevel {
@@ -2241,28 +2241,28 @@ mod consistency_frameworks {
         Causal,       // 因果一致性
         Eventual,     // 最终一致性
     }
-    
+
     // 版本向量，用于追踪因果依赖
     #[derive(Debug, Clone, PartialEq, Eq)]
     pub struct VersionVector {
         counters: HashMap<String, u64>,
     }
-    
+
     impl VersionVector {
         pub fn new() -> Self {
             Self { counters: HashMap::new() }
         }
-        
+
         pub fn increment(&mut self, node_id: &str) {
             let counter = self.counters.entry(node_id.to_string()).or_insert(0);
             *counter += 1;
         }
-        
+
         // 检查两个版本向量的偏序关系
         pub fn compare(&self, other: &VersionVector) -> VersionRelation {
             let mut self_greater = false;
             let mut other_greater = false;
-            
+
             // 检查self中的所有计数器
             for (node, count) in &self.counters {
                 match other.counters.get(node) {
@@ -2280,14 +2280,14 @@ mod consistency_frameworks {
                     }
                 }
             }
-            
+
             // 检查other中的所有计数器
             for (node, count) in &other.counters {
                 if !self.counters.contains_key(node) && *count > 0 {
                     other_greater = true;
                 }
             }
-            
+
             match (self_greater, other_greater) {
                 (true, false) => VersionRelation::Greater,
                 (false, true) => VersionRelation::Less,
@@ -2295,20 +2295,20 @@ mod consistency_frameworks {
                 (true, true) => VersionRelation::Concurrent,
             }
         }
-        
+
         // 合并两个版本向量，取每个计数器的最大值
         pub fn merge(&self, other: &VersionVector) -> VersionVector {
             let mut result = self.clone();
-            
+
             for (node, count) in &other.counters {
                 let entry = result.counters.entry(node.clone()).or_insert(0);
                 *entry = std::cmp::max(*entry, *count);
             }
-            
+
             result
         }
     }
-    
+
     // 版本向量之间的关系
     #[derive(Debug, PartialEq, Eq)]
     pub enum VersionRelation {
@@ -2317,7 +2317,7 @@ mod consistency_frameworks {
         Greater,    // self > other
         Concurrent, // 并发，不可比较
     }
-    
+
     // 数据项，带版本信息
     #[derive(Debug, Clone)]
     pub struct DataItem<T: Clone> {
@@ -2326,12 +2326,12 @@ mod consistency_frameworks {
         timestamp: SystemTime,
         node_id: String,
     }
-    
+
     impl<T: Clone> DataItem<T> {
         pub fn new(value: T, node_id: &str) -> Self {
             let mut version = VersionVector::new();
             version.increment(node_id);
-            
+
             Self {
                 value,
                 version,
@@ -2339,7 +2339,7 @@ mod consistency_frameworks {
                 node_id: node_id.to_string(),
             }
         }
-        
+
         // 更新值并增加版本号
         pub fn update(&mut self, new_value: T) {
             self.value = new_value;
@@ -2347,7 +2347,7 @@ mod consistency_frameworks {
             self.timestamp = SystemTime::now();
         }
     }
-    
+
     // 一致性存储接口
     pub trait ConsistentStore<K, V>
     where
@@ -2358,7 +2358,7 @@ mod consistency_frameworks {
         fn get(&self, key: K, consistency: ConsistencyLevel) -> Result<Option<V>, String>;
         fn delete(&self, key: K, consistency: ConsistencyLevel) -> Result<(), String>;
     }
-    
+
     // 简单的复制存储实现
     pub struct ReplicatedStore<K, V>
     where
@@ -2370,7 +2370,7 @@ mod consistency_frameworks {
         replicas: Vec<Arc<ReplicatedStore<K, V>>>,
         replication_delay: Duration,
     }
-    
+
     impl<K, V> ReplicatedStore<K, V>
     where
         K: Clone + std::hash::Hash + Eq + std::fmt::Debug + Send + 'static,
@@ -2384,16 +2384,16 @@ mod consistency_frameworks {
                 replication_delay: Duration::from_millis(replication_delay_ms),
             }
         }
-        
+
         // 添加副本节点
         pub fn add_replica(&mut self, replica: Arc<ReplicatedStore<K, V>>) {
             self.replicas.push(replica);
         }
-        
+
         // 内部方法，用于接收复制的数据
         fn receive_replication(&self, key: K, item: DataItem<V>) -> Result<(), String> {
             let mut store = self.local_store.lock().unwrap();
-            
+
             match store.get(&key) {
                 Some(existing_item) => {
                     // 检查版本关系
@@ -2418,10 +2418,10 @@ mod consistency_frameworks {
                     store.insert(key, item);
                 }
             }
-            
+
             Ok(())
         }
-        
+
         // 将复制事件发送到其他副本
         fn replicate(&self, key: K, item: DataItem<V>) {
             for replica in &self.replicas {
@@ -2429,7 +2429,7 @@ mod consistency_frameworks {
                 let key = key.clone();
                 let item = item.clone();
                 let delay = self.replication_delay;
-                
+
                 // 模拟异步复制
                 std::thread::spawn(move || {
                     std::thread::sleep(delay);
@@ -2440,7 +2440,7 @@ mod consistency_frameworks {
             }
         }
     }
-    
+
     impl<K, V> ConsistentStore<K, V> for ReplicatedStore<K, V>
     where
         K: Clone + std::hash::Hash + Eq + std::fmt::Debug + Send + 'static,
@@ -2449,13 +2449,13 @@ mod consistency_frameworks {
         fn put(&self, key: K, value: V, consistency: ConsistencyLevel) -> Result<(), String> {
             // 创建新的数据项
             let item = DataItem::new(value, &self.node_id);
-            
+
             // 先写入本地
             {
                 let mut store = self.local_store.lock().unwrap();
                 store.insert(key.clone(), item.clone());
             }
-            
+
             match consistency {
                 ConsistencyLevel::Strong => {
                     // 强一致性：同步复制（简化实现，实际应该等待确认）
@@ -2470,10 +2470,10 @@ mod consistency_frameworks {
                     println!("Async replication initiated for consistency level: {:?}", consistency);
                 }
             }
-            
+
             Ok(())
         }
-        
+
         fn get(&self, key: K, consistency: ConsistencyLevel) -> Result<Option<V>, String> {
             match consistency {
                 ConsistencyLevel::Strong => {
@@ -2484,22 +2484,22 @@ mod consistency_frameworks {
                     // 其他一致性级别可能读取到旧数据
                 }
             }
-            
+
             // 从本地读取
             let store = self.local_store.lock().unwrap();
             Ok(store.get(&key).map(|item| item.value.clone()))
         }
-        
+
         fn delete(&self, key: K, consistency: ConsistencyLevel) -> Result<(), String> {
             // 从本地删除
             {
                 let mut store = self.local_store.lock().unwrap();
                 store.remove(&key);
             }
-            
+
             // 根据一致性级别处理复制
             // 实际实现需要考虑删除标记和垃圾回收
-            
+
             Ok(())
         }
     }
@@ -2535,7 +2535,7 @@ mod resilience_framework {
     use std::fmt::Debug;
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 故障类型
     #[derive(Debug, Clone, PartialEq)]
     pub enum FailureType {
@@ -2547,32 +2547,32 @@ mod resilience_framework {
         InvalidResponse,
         Unknown(String),
     }
-    
+
     // 执行结果
     pub type Result<T> = std::result::Result<T, FailureType>;
-    
+
     // 超时策略
     pub trait TimeoutStrategy {
         fn get_timeout(&self) -> Duration;
     }
-    
+
     // 固定超时
     pub struct FixedTimeout {
         timeout: Duration,
     }
-    
+
     impl FixedTimeout {
         pub fn new(timeout_ms: u64) -> Self {
             Self { timeout: Duration::from_millis(timeout_ms) }
         }
     }
-    
+
     impl TimeoutStrategy for FixedTimeout {
         fn get_timeout(&self) -> Duration {
             self.timeout
         }
     }
-    
+
     // 指数退避超时
     pub struct ExponentialBackoff {
         initial_timeout: Duration,
@@ -2580,7 +2580,7 @@ mod resilience_framework {
         max_timeout: Duration,
         attempt: Mutex<u32>,
     }
-    
+
     impl ExponentialBackoff {
         pub fn new(initial_timeout_ms: u64, multiplier: f64, max_timeout_ms: u64) -> Self {
             Self {
@@ -2590,41 +2590,41 @@ mod resilience_framework {
                 attempt: Mutex::new(0),
             }
         }
-        
+
         pub fn reset(&self) {
             let mut attempt = self.attempt.lock().unwrap();
             *attempt = 0;
         }
     }
-    
+
     impl TimeoutStrategy for ExponentialBackoff {
         fn get_timeout(&self) -> Duration {
             let mut attempt = self.attempt.lock().unwrap();
-            
-            let timeout = self.initial_timeout.as_millis() as f64 
+
+            let timeout = self.initial_timeout.as_millis() as f64
                 * self.multiplier.powf(*attempt as f64);
-                
+
             *attempt += 1;
-            
+
             Duration::from_millis(std::cmp::min(
                 timeout as u64,
                 self.max_timeout.as_millis() as u64
             ))
         }
     }
-    
+
     // 重试策略
     pub trait RetryStrategy {
         fn should_retry(&self, failure: &FailureType) -> bool;
         fn max_attempts(&self) -> u32;
     }
-    
+
     // 简单重试策略
     pub struct SimpleRetry {
         max_retry_count: u32,
         retriable_failures: Vec<FailureType>,
     }
-    
+
     impl SimpleRetry {
         pub fn new(max_retry_count: u32) -> Self {
             Self {
@@ -2637,7 +2637,7 @@ mod resilience_framework {
             }
         }
     }
-    
+
     impl RetryStrategy for SimpleRetry {
         fn should_retry(&self, failure: &FailureType) -> bool {
             match failure {
@@ -2645,12 +2645,12 @@ mod resilience_framework {
                 _ => self.retriable_failures.contains(failure),
             }
         }
-        
+
         fn max_attempts(&self) -> u32 {
             self.max_retry_count
         }
     }
-    
+
     // 断路器状态
     #[derive(Debug, Clone, Copy, PartialEq)]
     enum CircuitState {
@@ -2658,7 +2658,7 @@ mod resilience_framework {
         Open,       // 阻止所有请求
         HalfOpen,   // 允许有限请求以测试服务是否恢复
     }
-    
+
     // 断路器
     pub struct CircuitBreaker {
         state: Mutex<CircuitState>,
@@ -2669,7 +2669,7 @@ mod resilience_framework {
         success_counter: Mutex<u32>,
         last_failure_time: Mutex<Option<Instant>>,
     }
-    
+
     impl CircuitBreaker {
         pub fn new(failure_threshold: u32, success_threshold: u32, reset_timeout_ms: u64) -> Self {
             Self {
@@ -2682,16 +2682,16 @@ mod resilience_framework {
                 last_failure_time: Mutex::new(None),
             }
         }
-        
+
         pub fn allow_request(&self) -> bool {
             let state = *self.state.lock().unwrap();
-            
+
             match state {
                 CircuitState::Closed => true,
                 CircuitState::Open => {
                     // 检查是否应该尝试恢复
                     let last_failure = self.last_failure_time.lock().unwrap();
-                    
+
                     if let Some(time) = *last_failure {
                         if time.elapsed() >= self.reset_timeout {
                             // 转为半开状态，允许有限请求
@@ -2700,20 +2700,20 @@ mod resilience_framework {
                             return true;
                         }
                     }
-                    
+
                     false
                 },
                 CircuitState::HalfOpen => true,
             }
         }
-        
+
         pub fn on_success(&self) {
             let state = *self.state.lock().unwrap();
-            
+
             if state == CircuitState::HalfOpen {
                 let mut success_count = self.success_counter.lock().unwrap();
                 *success_count += 1;
-                
+
                 if *success_count >= self.success_threshold {
                     // 成功次数达到阈值，关闭断路器
                     *self.state.lock().unwrap() = CircuitState::Closed;
@@ -2722,15 +2722,15 @@ mod resilience_framework {
                 }
             }
         }
-        
+
         pub fn on_failure(&self) {
             let state = *self.state.lock().unwrap();
-            
+
             match state {
                 CircuitState::Closed => {
                     let mut failure_count = self.failure_counter.lock().unwrap();
                     *failure_count += 1;
-                    
+
                     if *failure_count >= self.failure_threshold {
                         // 失败次数达到阈值，打开断路器
                         *self.state.lock().unwrap() = CircuitState::Open;
@@ -2747,12 +2747,12 @@ mod resilience_framework {
                 _ => {}
             }
         }
-        
+
         pub fn get_state(&self) -> CircuitState {
             *self.state.lock().unwrap()
         }
     }
-    
+
     // 限流器
     pub struct RateLimiter {
         capacity: usize,
@@ -2760,7 +2760,7 @@ mod resilience_framework {
         tokens: Mutex<usize>,
         last_refill: Mutex<Instant>,
     }
-    
+
     impl RateLimiter {
         pub fn new(capacity: usize, refill_rate: usize) -> Self {
             Self {
@@ -2770,21 +2770,21 @@ mod resilience_framework {
                 last_refill: Mutex::new(Instant::now()),
             }
         }
-        
+
         pub fn try_acquire(&self) -> bool {
             let mut tokens = self.tokens.lock().unwrap();
             let mut last_refill = self.last_refill.lock().unwrap();
-            
+
             // 添加新令牌
             let now = Instant::now();
             let elapsed = now.duration_since(*last_refill).as_secs_f64();
             let new_tokens = (elapsed * self.refill_rate as f64) as usize;
-            
+
             if new_tokens > 0 {
                 *tokens = std::cmp::min(*tokens + new_tokens, self.capacity);
                 *last_refill = now;
             }
-            
+
             // 尝试获取令牌
             if *tokens > 0 {
                 *tokens -= 1;
@@ -2794,7 +2794,7 @@ mod resilience_framework {
             }
         }
     }
-    
+
     // 舱壁模式（资源隔离）
     pub struct Bulkhead {
         max_concurrent: usize,
@@ -2802,7 +2802,7 @@ mod resilience_framework {
         queue: Mutex<VecDeque<()>>,
         max_queue_size: usize,
     }
-    
+
     impl Bulkhead {
         pub fn new(max_concurrent: usize, max_queue_size: usize) -> Self {
             Self {
@@ -2812,10 +2812,10 @@ mod resilience_framework {
                 max_queue_size,
             }
         }
-        
+
         pub fn try_enter(&self) -> bool {
             let mut active = self.active_count.lock().unwrap();
-            
+
             if *active < self.max_concurrent {
                 // 有可用容量，可以执行
                 *active += 1;
@@ -2833,13 +2833,13 @@ mod resilience_framework {
                 }
             }
         }
-        
+
         pub fn exit(&self) {
             let mut active = self.active_count.lock().unwrap();
-            
+
             if *active > 0 {
                 *active -= 1;
-                
+
                 // 检查队列中是否有等待的请求
                 let mut queue = self.queue.lock().unwrap();
                 if !queue.is_empty() {
@@ -2849,7 +2849,7 @@ mod resilience_framework {
             }
         }
     }
-    
+
     // 组合韧性模式的客户端
     pub struct ResilientClient<F, T, E>
     where
@@ -2863,7 +2863,7 @@ mod resilience_framework {
         rate_limiter: Option<Arc<RateLimiter>>,
         bulkhead: Option<Arc<Bulkhead>>,
     }
-    
+
     impl<F, T, E> ResilientClient<F, T, E>
     where
         F: Fn() -> std::result::Result<T, E>,
@@ -2879,32 +2879,32 @@ mod resilience_framework {
                 bulkhead: None,
             }
         }
-        
+
         pub fn with_timeout_strategy<S: TimeoutStrategy + Send + Sync + 'static>(mut self, strategy: S) -> Self {
             self.timeout_strategy = Box::new(strategy);
             self
         }
-        
+
         pub fn with_retry_strategy<S: RetryStrategy + Send + Sync + 'static>(mut self, strategy: S) -> Self {
             self.retry_strategy = Box::new(strategy);
             self
         }
-        
+
         pub fn with_circuit_breaker(mut self, breaker: Arc<CircuitBreaker>) -> Self {
             self.circuit_breaker = Some(breaker);
             self
         }
-        
+
         pub fn with_rate_limiter(mut self, limiter: Arc<RateLimiter>) -> Self {
             self.rate_limiter = Some(limiter);
             self
         }
-        
+
         pub fn with_bulkhead(mut self, bulkhead: Arc<Bulkhead>) -> Self {
             self.bulkhead = Some(bulkhead);
             self
         }
-        
+
         pub fn execute(&self) -> Result<T> {
             // 检查限流
             if let Some(ref limiter) = self.rate_limiter {
@@ -2912,14 +2912,14 @@ mod resilience_framework {
                     return Err(FailureType::RateLimited);
                 }
             }
-            
+
             // 检查断路器
             if let Some(ref breaker) = self.circuit_breaker {
                 if !breaker.allow_request() {
                     return Err(FailureType::ServerError("Circuit open".to_string()));
                 }
             }
-            
+
             // 检查舱壁
             let using_bulkhead = if let Some(ref bulkhead) = self.bulkhead {
                 if !bulkhead.try_enter() {
@@ -2929,12 +2929,12 @@ mod resilience_framework {
             } else {
                 false
             };
-            
+
             // 确保舱壁资源释放
             struct BulkheadGuard<'a> {
                 bulkhead: Option<&'a Arc<Bulkhead>>,
             }
-            
+
             impl<'a> Drop for BulkheadGuard<'a> {
                 fn drop(&mut self) {
                     if let Some(bulkhead) = self.bulkhead {
@@ -2942,7 +2942,7 @@ mod resilience_framework {
                     }
                 }
             }
-            
+
             let _guard = BulkheadGuard {
                 bulkhead: if using_bulkhead {
                     self.bulkhead.as_ref()
@@ -2950,44 +2950,44 @@ mod resilience_framework {
                     None
                 },
             };
-            
+
             // 执行带重试的操作
             let max_attempts = self.retry_strategy.max_attempts();
             let mut attempt = 0;
-            
+
             loop {
                 attempt += 1;
-                
+
                 // 获取当前超时时间
                 let timeout = self.timeout_strategy.get_timeout();
-                
+
                 // 执行操作（实际生产环境中应该设置真实的超时）
                 let result = (self.operation)();
-                
+
                 match result {
                     Ok(value) => {
                         // 成功处理
                         if let Some(ref breaker) = self.circuit_breaker {
                             breaker.on_success();
                         }
-                        
+
                         return Ok(value);
                     },
                     Err(e) => {
                         let failure = e.into();
-                        
+
                         // 失败处理
                         if let Some(ref breaker) = self.circuit_breaker {
                             breaker.on_failure();
                         }
-                        
+
                         // 检查是否应该重试
                         if attempt < max_attempts && self.retry_strategy.should_retry(&failure) {
                             println!("Attempt {} failed with {:?}, retrying...", attempt, failure);
                             std::thread::sleep(timeout);
                             continue;
                         }
-                        
+
                         return Err(failure);
                     }
                 }
@@ -3044,7 +3044,7 @@ mod resilience_framework {
 // 框架评估工具
 mod framework_evaluation {
     use std::collections::HashMap;
-    
+
     // 评估维度
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EvaluationDimension {
@@ -3057,7 +3057,7 @@ mod framework_evaluation {
         Security,
         Cost,
     }
-    
+
     // 框架评估结果
     pub struct FrameworkEvaluation {
         name: String,
@@ -3065,7 +3065,7 @@ mod framework_evaluation {
         weights: HashMap<EvaluationDimension, f64>,
         notes: HashMap<EvaluationDimension, String>,
     }
-    
+
     impl FrameworkEvaluation {
         pub fn new(name: &str) -> Self {
             Self {
@@ -3075,7 +3075,7 @@ mod framework_evaluation {
                 notes: HashMap::new(),
             }
         }
-        
+
         pub fn set_score(&mut self, dimension: EvaluationDimension, score: f64) -> &mut Self {
             if score < 0.0 || score > 10.0 {
                 panic!("Score must be between 0 and 10");
@@ -3083,7 +3083,7 @@ mod framework_evaluation {
             self.scores.insert(dimension, score);
             self
         }
-        
+
         pub fn set_weight(&mut self, dimension: EvaluationDimension, weight: f64) -> &mut Self {
             if weight < 0.0 || weight > 1.0 {
                 panic!("Weight must be between 0 and 1");
@@ -3091,36 +3091,36 @@ mod framework_evaluation {
             self.weights.insert(dimension, weight);
             self
         }
-        
+
         pub fn add_note(&mut self, dimension: EvaluationDimension, note: &str) -> &mut Self {
             self.notes.insert(dimension, note.to_string());
             self
         }
-        
+
         pub fn weighted_score(&self) -> f64 {
             let mut total_score = 0.0;
             let mut total_weight = 0.0;
-            
+
             for (dimension, score) in &self.scores {
                 let weight = self.weights.get(dimension).copied().unwrap_or(1.0);
                 total_score += score * weight;
                 total_weight += weight;
             }
-            
+
             if total_weight > 0.0 {
                 total_score / total_weight
             } else {
                 0.0
             }
         }
-        
+
         pub fn generate_report(&self) -> String {
             let mut report = format!("# Evaluation Report for {}\n\n", self.name);
-            
+
             report.push_str("## Scores by Dimension\n\n");
             report.push_str("| Dimension | Weight | Score | Weighted Score |\n");
             report.push_str("|-----------|--------|-------|---------------|\n");
-            
+
             let dimensions = [
                 EvaluationDimension::FunctionalFit,
                 EvaluationDimension::Performance,
@@ -3131,39 +3131,39 @@ mod framework_evaluation {
                 EvaluationDimension::Security,
                 EvaluationDimension::Cost,
             ];
-            
+
             for dimension in &dimensions {
                 if let Some(score) = self.scores.get(dimension) {
                     let weight = self.weights.get(dimension).copied().unwrap_or(1.0);
                     let weighted = score * weight;
-                    
+
                     report.push_str(&format!(
                         "| {:?} | {:.2} | {:.1} | {:.1} |\n",
                         dimension, weight, score, weighted
                     ));
                 }
             }
-            
+
             report.push_str("\n## Overall Score\n\n");
             report.push_str(&format!("**Weighted Average: {:.2}**\n\n", self.weighted_score()));
-            
+
             report.push_str("## Notes\n\n");
             for dimension in &dimensions {
                 if let Some(note) = self.notes.get(dimension) {
                     report.push_str(&format!("### {:?}\n\n{}\n\n", dimension, note));
                 }
             }
-            
+
             report
         }
     }
-    
+
     // 比较多个框架
     pub struct FrameworkComparator {
         evaluations: Vec<FrameworkEvaluation>,
         requirements: HashMap<String, f64>, // 需求及其重要性
     }
-    
+
     impl FrameworkComparator {
         pub fn new() -> Self {
             Self {
@@ -3171,41 +3171,41 @@ mod framework_evaluation {
                 requirements: HashMap::new(),
             }
         }
-        
+
         pub fn add_evaluation(&mut self, evaluation: FrameworkEvaluation) {
             self.evaluations.push(evaluation);
         }
-        
+
         pub fn add_requirement(&mut self, name: &str, importance: f64) {
             self.requirements.insert(name.to_string(), importance);
         }
-        
+
         pub fn rank_frameworks(&self) -> Vec<(&str, f64)> {
             let mut rankings = Vec::new();
-            
+
             for evaluation in &self.evaluations {
                 rankings.push((evaluation.name.as_str(), evaluation.weighted_score()));
             }
-            
+
             // 按得分降序排序
             rankings.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
-            
+
             rankings
         }
-        
+
         pub fn generate_comparison_report(&self) -> String {
             let mut report = String::from("# Framework Comparison Report\n\n");
-            
+
             report.push_str("## Rankings\n\n");
             report.push_str("| Rank | Framework | Score |\n");
             report.push_str("|------|-----------|-------|\n");
-            
+
             for (rank, (name, score)) in self.rank_frameworks().iter().enumerate() {
                 report.push_str(&format!("| {} | {} | {:.2} |\n", rank + 1, name, score));
             }
-            
+
             report.push_str("\n## Comparison by Dimension\n\n");
-            
+
             // 创建维度比较表
             let dimensions = [
                 EvaluationDimension::FunctionalFit,
@@ -3217,7 +3217,7 @@ mod framework_evaluation {
                 EvaluationDimension::Security,
                 EvaluationDimension::Cost,
             ];
-            
+
             // 表头
             report.push_str("| Dimension |");
             for eval in &self.evaluations {
@@ -3228,7 +3228,7 @@ mod framework_evaluation {
                 report.push_str("---------|");
             }
             report.push_str("\n");
-            
+
             // 表内容
             for dimension in &dimensions {
                 report.push_str(&format!("| {:?} |", dimension));
@@ -3241,7 +3241,7 @@ mod framework_evaluation {
                 }
                 report.push_str("\n");
             }
-            
+
             report
         }
     }
@@ -3277,13 +3277,13 @@ mod workflow_engine {
     use std::collections::{HashMap, VecDeque};
     use std::sync::{Arc, Mutex};
     use std::fmt::Debug;
-    
+
     // 工作流活动接口
     pub trait Activity<T: Clone + Debug> {
         fn name(&self) -> &str;
         fn execute(&self, context: &mut WorkflowContext<T>) -> ActivityResult;
     }
-    
+
     // 活动执行结果
     #[derive(Debug, Clone, PartialEq)]
     pub enum ActivityResult {
@@ -3293,7 +3293,7 @@ mod workflow_engine {
         Retry(String),
         Pause,
     }
-    
+
     // 工作流执行上下文
     #[derive(Clone, Debug)]
     pub struct WorkflowContext<T: Clone + Debug> {
@@ -3302,7 +3302,7 @@ mod workflow_engine {
         data: T,
         variables: HashMap<String, String>,
     }
-    
+
     impl<T: Clone + Debug> WorkflowContext<T> {
         pub fn new(workflow_id: &str, initial_state: &str, data: T) -> Self {
             Self {
@@ -3312,32 +3312,32 @@ mod workflow_engine {
                 variables: HashMap::new(),
             }
         }
-        
+
         pub fn get_data(&self) -> &T {
             &self.data
         }
-        
+
         pub fn get_data_mut(&mut self) -> &mut T {
             &mut self.data
         }
-        
+
         pub fn set_variable(&mut self, key: &str, value: &str) {
             self.variables.insert(key.to_string(), value.to_string());
         }
-        
+
         pub fn get_variable(&self, key: &str) -> Option<&String> {
             self.variables.get(key)
         }
-        
+
         pub fn get_current_state(&self) -> &str {
             &self.current_state
         }
-        
+
         fn set_current_state(&mut self, state: &str) {
             self.current_state = state.to_string();
         }
     }
-    
+
     // 工作流定义
     pub struct WorkflowDefinition<T: Clone + Debug> {
         name: String,
@@ -3345,7 +3345,7 @@ mod workflow_engine {
         transitions: HashMap<String, HashMap<String, String>>,
         initial_state: String,
     }
-    
+
     impl<T: Clone + Debug> WorkflowDefinition<T> {
         pub fn new(name: &str, initial_state: &str) -> Self {
             Self {
@@ -3355,7 +3355,7 @@ mod workflow_engine {
                 initial_state: initial_state.to_string(),
             }
         }
-        
+
         pub fn add_activity(&mut self, state: &str, activity: Box<dyn Activity<T> + Send + Sync>) -> &mut Self {
             self.states
                 .entry(state.to_string())
@@ -3363,7 +3363,7 @@ mod workflow_engine {
                 .push(activity);
             self
         }
-        
+
         pub fn add_transition(&mut self, from_state: &str, activity_name: &str, to_state: &str) -> &mut Self {
             self.transitions
                 .entry(from_state.to_string())
@@ -3371,22 +3371,22 @@ mod workflow_engine {
                 .insert(activity_name.to_string(), to_state.to_string());
             self
         }
-        
+
         pub fn get_initial_state(&self) -> &str {
             &self.initial_state
         }
-        
+
         pub fn get_activities(&self, state: &str) -> Option<&Vec<Box<dyn Activity<T> + Send + Sync>>> {
             self.states.get(state)
         }
-        
+
         pub fn get_transition(&self, state: &str, activity_name: &str) -> Option<&String> {
             self.transitions
                 .get(state)
                 .and_then(|activities| activities.get(activity_name))
         }
     }
-    
+
     // 工作流实例
     pub struct WorkflowInstance<T: Clone + Debug> {
         id: String,
@@ -3394,7 +3394,7 @@ mod workflow_engine {
         context: WorkflowContext<T>,
         status: WorkflowStatus,
     }
-    
+
     #[derive(Debug, Clone, PartialEq)]
     pub enum WorkflowStatus {
         Created,
@@ -3403,12 +3403,12 @@ mod workflow_engine {
         Completed,
         Failed(String),
     }
-    
+
     impl<T: Clone + Debug> WorkflowInstance<T> {
         pub fn new(id: &str, definition: Arc<WorkflowDefinition<T>>, data: T) -> Self {
             let initial_state = definition.get_initial_state();
             let context = WorkflowContext::new(id, initial_state, data);
-            
+
             Self {
                 id: id.to_string(),
                 definition,
@@ -3416,28 +3416,28 @@ mod workflow_engine {
                 status: WorkflowStatus::Created,
             }
         }
-        
+
         pub fn start(&mut self) -> Result<(), String> {
             if self.status != WorkflowStatus::Created && self.status != WorkflowStatus::Paused {
                 return Err(format!("Cannot start workflow in status: {:?}", self.status));
             }
-            
+
             self.status = WorkflowStatus::Running;
             self.execute_current_state()
         }
-        
+
         fn execute_current_state(&mut self) -> Result<(), String> {
             let current_state = self.context.get_current_state().to_string();
-            
+
             let activities = match self.definition.get_activities(&current_state) {
                 Some(acts) => acts,
                 None => return Err(format!("No activities found for state: {}", current_state)),
             };
-            
+
             for activity in activities {
                 let activity_name = activity.name().to_string();
                 println!("Executing activity: {} in state: {}", activity_name, current_state);
-                
+
                 match activity.execute(&mut self.context) {
                     ActivityResult::Complete => {
                         // 活动完成，继续执行
@@ -3460,34 +3460,34 @@ mod workflow_engine {
                         return Ok(());
                     }
                 }
-                
+
                 // 检查状态转换
                 if let Some(next_state) = self.definition.get_transition(&current_state, &activity_name) {
                     self.context.set_current_state(next_state);
                     return self.execute_current_state();
                 }
             }
-            
+
             // 如果没有更多活动和转换，则完成工作流
             self.status = WorkflowStatus::Completed;
             Ok(())
         }
-        
+
         pub fn get_status(&self) -> &WorkflowStatus {
             &self.status
         }
-        
+
         pub fn get_context(&self) -> &WorkflowContext<T> {
             &self.context
         }
     }
-    
+
     // 工作流引擎
     pub struct WorkflowEngine<T: Clone + Debug + Send + 'static> {
         definitions: HashMap<String, Arc<WorkflowDefinition<T>>>,
         instances: Mutex<HashMap<String, WorkflowInstance<T>>>,
     }
-    
+
     impl<T: Clone + Debug + Send + 'static> WorkflowEngine<T> {
         pub fn new() -> Self {
             Self {
@@ -3495,55 +3495,55 @@ mod workflow_engine {
                 instances: Mutex::new(HashMap::new()),
             }
         }
-        
+
         pub fn register_definition(&mut self, definition: WorkflowDefinition<T>) -> Arc<WorkflowDefinition<T>> {
             let name = definition.name.clone();
             let arc_def = Arc::new(definition);
             self.definitions.insert(name, arc_def.clone());
             arc_def
         }
-        
+
         pub fn create_instance(&self, definition_name: &str, instance_id: &str, data: T) -> Result<String, String> {
             let definition = match self.definitions.get(definition_name) {
                 Some(def) => def.clone(),
                 None => return Err(format!("Workflow definition not found: {}", definition_name)),
             };
-            
+
             let instance = WorkflowInstance::new(instance_id, definition, data);
-            
+
             let mut instances = self.instances.lock().unwrap();
             instances.insert(instance_id.to_string(), instance);
-            
+
             Ok(instance_id.to_string())
         }
-        
+
         pub fn start_instance(&self, instance_id: &str) -> Result<(), String> {
             let mut instances = self.instances.lock().unwrap();
-            
+
             let instance = match instances.get_mut(instance_id) {
                 Some(inst) => inst,
                 None => return Err(format!("Workflow instance not found: {}", instance_id)),
             };
-            
+
             instance.start()
         }
-        
+
         pub fn get_instance_status(&self, instance_id: &str) -> Result<WorkflowStatus, String> {
             let instances = self.instances.lock().unwrap();
-            
+
             match instances.get(instance_id) {
                 Some(instance) => Ok(instance.get_status().clone()),
                 None => Err(format!("Workflow instance not found: {}", instance_id)),
             }
         }
     }
-    
+
     // 示例活动实现
     pub struct LogActivity {
         name: String,
         message: String,
     }
-    
+
     impl LogActivity {
         pub fn new(name: &str, message: &str) -> Self {
             Self {
@@ -3552,18 +3552,18 @@ mod workflow_engine {
             }
         }
     }
-    
+
     impl<T: Clone + Debug> Activity<T> for LogActivity {
         fn name(&self) -> &str {
             &self.name
         }
-        
+
         fn execute(&self, context: &mut WorkflowContext<T>) -> ActivityResult {
             println!("Log: {} - Context: {:?}", self.message, context);
             ActivityResult::Complete
         }
     }
-    
+
     pub struct ConditionalActivity<F>
     where
         F: Fn(&WorkflowContext<String>) -> bool,
@@ -3573,7 +3573,7 @@ mod workflow_engine {
         true_transition: String,
         false_transition: String,
     }
-    
+
     impl<F> ConditionalActivity<F>
     where
         F: Fn(&WorkflowContext<String>) -> bool,
@@ -3587,7 +3587,7 @@ mod workflow_engine {
             }
         }
     }
-    
+
     impl<F> Activity<String> for ConditionalActivity<F>
     where
         F: Fn(&WorkflowContext<String>) -> bool,
@@ -3595,7 +3595,7 @@ mod workflow_engine {
         fn name(&self) -> &str {
             &self.name
         }
-        
+
         fn execute(&self, context: &mut WorkflowContext<String>) -> ActivityResult {
             if (self.condition)(context) {
                 ActivityResult::CompleteWithTransition(self.true_transition.clone())
@@ -3646,15 +3646,15 @@ mod ai_human_collaboration {
     use std::collections::{HashMap, VecDeque};
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 基本类型定义
     pub type TaskId = String;
     pub type UserId = String;
-    
+
     // 决策置信度
     #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
     pub struct Confidence(f64);
-    
+
     impl Confidence {
         pub fn new(value: f64) -> Result<Self, String> {
             if value < 0.0 || value > 1.0 {
@@ -3662,12 +3662,12 @@ mod ai_human_collaboration {
             }
             Ok(Self(value))
         }
-        
+
         pub fn value(&self) -> f64 {
             self.0
         }
     }
-    
+
     // 系统可以处于的模式
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum CollaborationMode {
@@ -3675,7 +3675,7 @@ mod ai_human_collaboration {
         HumanLed,   // 人类主导，AI辅助
         Cooperative, // 合作模式
     }
-    
+
     // 任务状态
     #[derive(Debug, Clone, PartialEq)]
     pub enum TaskStatus {
@@ -3686,7 +3686,7 @@ mod ai_human_collaboration {
         Completed,
         Failed(String),
     }
-    
+
     // AI决策结果
     #[derive(Debug, Clone)]
     pub struct AIDecision<T> {
@@ -3695,7 +3695,7 @@ mod ai_human_collaboration {
         explanation: Option<String>,
         alternatives: Vec<(T, Confidence)>,
     }
-    
+
     impl<T: Clone> AIDecision<T> {
         pub fn new(
             recommendation: T,
@@ -3710,24 +3710,24 @@ mod ai_human_collaboration {
                 alternatives,
             }
         }
-        
+
         pub fn get_recommendation(&self) -> &T {
             &self.recommendation
         }
-        
+
         pub fn get_confidence(&self) -> Confidence {
             self.confidence
         }
-        
+
         pub fn get_explanation(&self) -> Option<&String> {
             self.explanation.as_ref()
         }
-        
+
         pub fn get_alternatives(&self) -> &[(T, Confidence)] {
             &self.alternatives
         }
     }
-    
+
     // 人类决策结果
     #[derive(Debug, Clone)]
     pub struct HumanDecision<T> {
@@ -3744,7 +3744,7 @@ mod ai_human_collaboration {
         feedback: Option<String>,
         timestamp: Instant,
     }
-    
+
     impl<T: Clone> HumanDecision<T> {
         pub fn new(decision: T, user_id: UserId, feedback: Option<String>) -> Self {
             Self {
@@ -3754,20 +3754,20 @@ mod ai_human_collaboration {
                 timestamp: Instant::now(),
             }
         }
-        
+
         pub fn get_decision(&self) -> &T {
             &self.decision
         }
-        
+
         pub fn get_user_id(&self) -> &UserId {
             &self.user_id
         }
-        
+
         pub fn get_feedback(&self) -> Option<&String> {
             self.feedback.as_ref()
         }
     }
-    
+
     // 任务定义
     #[derive(Debug, Clone)]
     pub struct CollaborationTask<T: Clone> {
@@ -3780,7 +3780,7 @@ mod ai_human_collaboration {
         completed_at: Option<Instant>,
         escalation_threshold: Confidence,
     }
-    
+
     impl<T: Clone> CollaborationTask<T> {
         pub fn new(id: TaskId, data: T, escalation_threshold: Confidence) -> Self {
             Self {
@@ -3794,37 +3794,37 @@ mod ai_human_collaboration {
                 escalation_threshold,
             }
         }
-        
+
         pub fn get_id(&self) -> &TaskId {
             &self.id
         }
-        
+
         pub fn get_data(&self) -> &T {
             &self.data
         }
-        
+
         pub fn get_status(&self) -> &TaskStatus {
             &self.status
         }
-        
+
         pub fn set_status(&mut self, status: TaskStatus) {
             self.status = status;
         }
-        
+
         pub fn set_ai_decision(&mut self, decision: AIDecision<T>) {
             self.ai_decision = Some(decision);
         }
-        
+
         pub fn set_human_decision(&mut self, decision: HumanDecision<T>) {
             self.human_decision = Some(decision);
-            
-            if self.status == TaskStatus::HumanProcessing || 
+
+            if self.status == TaskStatus::HumanProcessing ||
                self.status == TaskStatus::WaitingForHuman {
                 self.status = TaskStatus::Completed;
                 self.completed_at = Some(Instant::now());
             }
         }
-        
+
         pub fn needs_human_review(&self) -> bool {
             if let Some(ai_decision) = &self.ai_decision {
                 ai_decision.confidence.value() < self.escalation_threshold.value()
@@ -3832,7 +3832,7 @@ mod ai_human_collaboration {
                 true // 没有AI决策时总是需要人工审核
             }
         }
-        
+
         pub fn get_final_decision(&self) -> Option<T> {
             if self.status == TaskStatus::Completed {
                 if let Some(human_decision) = &self.human_decision {
@@ -3847,12 +3847,12 @@ mod ai_human_collaboration {
             }
         }
     }
-    
+
     // AI组件接口
     pub trait AIComponent<T: Clone> {
         fn process(&self, task: &T) -> AIDecision<T>;
     }
-    
+
     // 人机协同系统
     pub struct AIHumanCollaborationSystem<T: Clone + Send + 'static> {
         mode: CollaborationMode,
@@ -3862,7 +3862,7 @@ mod ai_human_collaboration {
         escalation_threshold: Confidence,
         default_timeout: Duration,
     }
-    
+
     impl<T: Clone + Send + 'static> AIHumanCollaborationSystem<T> {
         pub fn new(
             mode: CollaborationMode,
@@ -3879,11 +3879,11 @@ mod ai_human_collaboration {
                 default_timeout: Duration::from_millis(default_timeout_ms),
             }
         }
-        
+
         pub fn set_mode(&mut self, mode: CollaborationMode) {
             self.mode = mode;
         }
-        
+
         pub fn submit_task(&self, data: T) -> TaskId {
             let task_id = format!("task-{}", uuid::Uuid::new_v4());
             let task = CollaborationTask::new(
@@ -3891,15 +3891,15 @@ mod ai_human_collaboration {
                 data,
                 self.escalation_threshold,
             );
-            
+
             let mut tasks = self.tasks.lock().unwrap();
             tasks.insert(task_id.clone(), task);
-            
+
             // 启动异步处理
             let ai_component = self.ai_component.clone();
             let task_id_clone = task_id.clone();
             let system = Arc::new(self.clone());
-            
+
             std::thread::spawn(move || {
                 // 获取任务数据
                 let task_data = {
@@ -3907,14 +3907,14 @@ mod ai_human_collaboration {
                     let task = tasks.get(&task_id_clone).unwrap();
                     task.data.clone()
                 };
-                
+
                 // 执行AI处理
                 system.process_with_ai(task_id_clone, task_data);
             });
-            
+
             task_id
         }
-        
+
         fn process_with_ai(&self, task_id: TaskId, data: T) {
             // 更新任务状态
             {
@@ -3922,16 +3922,16 @@ mod ai_human_collaboration {
                 let task = tasks.get_mut(&task_id).unwrap();
                 task.set_status(TaskStatus::AIProcessing);
             }
-            
+
             // 调用AI组件处理任务
             let ai_decision = self.ai_component.process(&data);
-            
+
             // 更新任务
             let needs_human_review = {
                 let mut tasks = self.tasks.lock().unwrap();
                 let task = tasks.get_mut(&task_id).unwrap();
                 task.set_ai_decision(ai_decision);
-                
+
                 // 根据模式和阈值确定是否需要人工审核
                 match self.mode {
                     CollaborationMode::AILed => task.needs_human_review(),
@@ -3942,7 +3942,7 @@ mod ai_human_collaboration {
                     }
                 }
             };
-            
+
             if needs_human_review {
                 // 将任务加入人工队列
                 self.queue_for_human_review(task_id);
@@ -3954,7 +3954,7 @@ mod ai_human_collaboration {
                 task.completed_at = Some(Instant::now());
             }
         }
-        
+
         fn queue_for_human_review(&self, task_id: TaskId) {
             // 更新任务状态
             {
@@ -3962,33 +3962,33 @@ mod ai_human_collaboration {
                 let task = tasks.get_mut(&task_id).unwrap();
                 task.set_status(TaskStatus::WaitingForHuman);
             }
-            
+
             // 加入人工队列
             let mut queue = self.human_queue.lock().unwrap();
             queue.push_back(task_id);
         }
-        
+
         pub fn get_next_human_task(&self) -> Option<TaskId> {
             let mut queue = self.human_queue.lock().unwrap();
             queue.pop_front()
         }
-        
+
         pub fn claim_task_for_human(&self, task_id: &TaskId, user_id: &UserId) -> Result<T, String> {
             let mut tasks = self.tasks.lock().unwrap();
             let task = match tasks.get_mut(task_id) {
                 Some(t) => t,
                 None => return Err(format!("Task not found: {}", task_id)),
             };
-            
+
             if task.status != TaskStatus::WaitingForHuman {
                 return Err(format!("Task is not waiting for human: {:?}", task.status));
             }
-            
+
             task.set_status(TaskStatus::HumanProcessing);
-            
+
             Ok(task.data.clone())
         }
-        
+
         pub fn submit_human_decision(
             &self,
             task_id: &TaskId,
@@ -4001,17 +4001,17 @@ mod ai_human_collaboration {
                 Some(t) => t,
                 None => return Err(format!("Task not found: {}", task_id)),
             };
-            
+
             if task.status != TaskStatus::HumanProcessing && task.status != TaskStatus::WaitingForHuman {
                 return Err(format!("Task is not awaiting human decision: {:?}", task.status));
             }
-            
+
             let human_decision = HumanDecision::new(decision, user_id.clone(), feedback);
             task.set_human_decision(human_decision);
-            
+
             Ok(())
         }
-        
+
         pub fn get_task_status(&self, task_id: &TaskId) -> Result<TaskStatus, String> {
             let tasks = self.tasks.lock().unwrap();
             match tasks.get(task_id) {
@@ -4019,7 +4019,7 @@ mod ai_human_collaboration {
                 None => Err(format!("Task not found: {}", task_id)),
             }
         }
-        
+
         pub fn get_final_decision(&self, task_id: &TaskId) -> Result<Option<T>, String> {
             let tasks = self.tasks.lock().unwrap();
             match tasks.get(task_id) {
@@ -4028,7 +4028,7 @@ mod ai_human_collaboration {
             }
         }
     }
-    
+
     impl<T: Clone + Send + 'static> Clone for AIHumanCollaborationSystem<T> {
         fn clone(&self) -> Self {
             Self {
@@ -4041,23 +4041,23 @@ mod ai_human_collaboration {
             }
         }
     }
-    
+
     // 简单的AI组件示例
     pub struct SimpleAIClassifier {
         confidence_model: HashMap<String, f64>,
     }
-    
+
     impl SimpleAIClassifier {
         pub fn new() -> Self {
             let mut confidence_model = HashMap::new();
             confidence_model.insert("high_risk".to_string(), 0.3);
             confidence_model.insert("medium_risk".to_string(), 0.7);
             confidence_model.insert("low_risk".to_string(), 0.9);
-            
+
             Self { confidence_model }
         }
     }
-    
+
     impl AIComponent<String> for SimpleAIClassifier {
         fn process(&self, task: &String) -> AIDecision<String> {
             // 简单的分类逻辑
@@ -4068,15 +4068,15 @@ mod ai_human_collaboration {
             } else {
                 "low_risk".to_string()
             };
-            
+
             // 获取置信度
             let confidence = self.confidence_model
                 .get(&recommendation)
                 .cloned()
                 .unwrap_or(0.5);
-            
+
             let confidence = Confidence::new(confidence).unwrap();
-            
+
             // 创建决策结果
             AIDecision::new(
                 recommendation.clone(),
@@ -4089,7 +4089,7 @@ mod ai_human_collaboration {
             )
         }
     }
-    
+
     impl Clone for SimpleAIClassifier {
         fn clone(&self) -> Self {
             Self {
@@ -4126,7 +4126,7 @@ mod edge_and_distributed_ai {
     use std::collections::{HashMap, VecDeque};
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 计算节点类型
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum NodeType {
@@ -4134,7 +4134,7 @@ mod edge_and_distributed_ai {
         EdgeServer, // 边缘服务器
         EdgeDevice, // 边缘设备
     }
-    
+
     // 计算资源描述
     #[derive(Debug, Clone)]
     pub struct ComputeResource {
@@ -4144,7 +4144,7 @@ mod edge_and_distributed_ai {
         network_bandwidth_mbps: u32,
         battery_powered: bool,
     }
-    
+
     impl ComputeResource {
         pub fn new(
             cpu_cores: u32,
@@ -4161,7 +4161,7 @@ mod edge_and_distributed_ai {
                 battery_powered,
             }
         }
-        
+
         pub fn can_run_task(&self, task: &ComputeTask) -> bool {
             self.cpu_cores >= task.required_cpu_cores &&
             self.memory_mb >= task.required_memory_mb &&
@@ -4169,7 +4169,7 @@ mod edge_and_distributed_ai {
             (!task.battery_sensitive || !self.battery_powered)
         }
     }
-    
+
     // 计算任务
     #[derive(Debug, Clone)]
     pub struct ComputeTask {
@@ -4184,7 +4184,7 @@ mod edge_and_distributed_ai {
         execution_time_ms: u32,
         dependencies: Vec<String>,
     }
-    
+
     impl ComputeTask {
         pub fn new(
             id: &str,
@@ -4210,32 +4210,32 @@ mod edge_and_distributed_ai {
                 dependencies: Vec::new(),
             }
         }
-        
+
         pub fn add_dependency(&mut self, task_id: &str) {
             self.dependencies.push(task_id.to_string());
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_name(&self) -> &str {
             &self.name
         }
-        
+
         pub fn get_dependencies(&self) -> &[String] {
             &self.dependencies
         }
-        
+
         pub fn get_data_size_mb(&self) -> u32 {
             self.data_size_mb
         }
-        
+
         pub fn get_execution_time_ms(&self) -> u32 {
             self.execution_time_ms
         }
     }
-    
+
     // 计算节点
     pub struct ComputeNode {
         id: String,
@@ -4246,7 +4246,7 @@ mod edge_and_distributed_ai {
         current_tasks: Mutex<HashMap<String, ComputeTask>>,
         task_queue: Mutex<VecDeque<ComputeTask>>,
     }
-    
+
     impl ComputeNode {
         pub fn new(
             id: &str,
@@ -4264,46 +4264,46 @@ mod edge_and_distributed_ai {
                 task_queue: Mutex::new(VecDeque::new()),
             }
         }
-        
+
         pub fn add_connection(&mut self, node_id: &str) {
             self.connected_nodes.push(node_id.to_string());
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_node_type(&self) -> NodeType {
             self.node_type
         }
-        
+
         pub fn get_resources(&self) -> &ComputeResource {
             &self.resources
         }
-        
+
         pub fn get_location(&self) -> &str {
             &self.location
         }
-        
+
         pub fn get_connected_nodes(&self) -> &[String] {
             &self.connected_nodes
         }
-        
+
         pub fn submit_task(&self, task: ComputeTask) -> Result<(), String> {
             if !self.resources.can_run_task(&task) {
                 return Err(format!("Node {} cannot run task {}: insufficient resources", self.id, task.id));
             }
-            
+
             let mut queue = self.task_queue.lock().unwrap();
             queue.push_back(task);
-            
+
             Ok(())
         }
-        
+
         pub fn process_next_task(&self) -> Option<String> {
             let mut queue = self.task_queue.lock().unwrap();
             let mut current_tasks = self.current_tasks.lock().unwrap();
-            
+
             if let Some(task) = queue.pop_front() {
                 let task_id = task.id.clone();
                 current_tasks.insert(task_id.clone(), task);
@@ -4312,10 +4312,10 @@ mod edge_and_distributed_ai {
                 None
             }
         }
-        
+
         pub fn complete_task(&self, task_id: &str) -> Result<(), String> {
             let mut current_tasks = self.current_tasks.lock().unwrap();
-            
+
             if current_tasks.remove(task_id).is_some() {
                 Ok(())
             } else {
@@ -4323,15 +4323,15 @@ mod edge_and_distributed_ai {
             }
         }
     }
-    
+
     // 任务调度策略
     pub trait TaskSchedulingStrategy {
         fn select_node_for_task(&self, task: &ComputeTask, nodes: &[Arc<ComputeNode>]) -> Option<Arc<ComputeNode>>;
     }
-    
+
     // 资源优先调度策略
     pub struct ResourceFirstScheduler;
-    
+
     impl TaskSchedulingStrategy for ResourceFirstScheduler {
         fn select_node_for_task(&self, task: &ComputeTask, nodes: &[Arc<ComputeNode>]) -> Option<Arc<ComputeNode>> {
             // 找到第一个有足够资源的节点
@@ -4340,55 +4340,55 @@ mod edge_and_distributed_ai {
                 .cloned()
         }
     }
-    
+
     // 位置敏感调度策略
     pub struct LocationAwareScheduler {
         data_location_map: HashMap<String, String>, // data_id -> node_id
     }
-    
+
     impl LocationAwareScheduler {
         pub fn new() -> Self {
             Self {
                 data_location_map: HashMap::new(),
             }
         }
-        
+
         pub fn register_data_location(&mut self, data_id: &str, node_id: &str) {
             self.data_location_map.insert(data_id.to_string(), node_id.to_string());
         }
     }
-    
+
     impl TaskSchedulingStrategy for LocationAwareScheduler {
         fn select_node_for_task(&self, task: &ComputeTask, nodes: &[Arc<ComputeNode>]) -> Option<Arc<ComputeNode>> {
             // 尝试将任务调度到拥有相关数据的节点
             let data_node_id = self.data_location_map.get(&format!("data-{}", task.id));
-            
+
             if let Some(node_id) = data_node_id {
                 // 找到指定节点
                 let preferred_node = nodes.iter()
                     .find(|node| node.get_id() == node_id)
                     .cloned();
-                
+
                 if let Some(node) = &preferred_node {
                     if node.get_resources().can_run_task(task) {
                         return preferred_node;
                     }
                 }
             }
-            
+
             // 如果无法在首选节点上运行，则退回到资源优先策略
             nodes.iter()
                 .find(|node| node.get_resources().can_run_task(task))
                 .cloned()
         }
     }
-    
+
     // 边缘计算系统
     pub struct EdgeComputingSystem {
         nodes: HashMap<String, Arc<ComputeNode>>,
         scheduler: Box<dyn TaskSchedulingStrategy + Send + Sync>,
     }
-    
+
     impl EdgeComputingSystem {
         pub fn new(scheduler: Box<dyn TaskSchedulingStrategy + Send + Sync>) -> Self {
             Self {
@@ -4396,29 +4396,29 @@ mod edge_and_distributed_ai {
                 scheduler,
             }
         }
-        
+
         pub fn add_node(&mut self, node: ComputeNode) -> Arc<ComputeNode> {
             let node_arc = Arc::new(node);
             self.nodes.insert(node_arc.get_id().to_string(), node_arc.clone());
             node_arc
         }
-        
+
         pub fn get_node(&self, node_id: &str) -> Option<Arc<ComputeNode>> {
             self.nodes.get(node_id).cloned()
         }
-        
+
         pub fn submit_task(&self, task: ComputeTask) -> Result<String, String> {
             let nodes = self.nodes.values().cloned().collect::<Vec<_>>();
-            
+
             let selected_node = self.scheduler.select_node_for_task(&task, &nodes)
                 .ok_or_else(|| "No suitable node found for task".to_string())?;
-            
+
             selected_node.submit_task(task.clone())?;
-            
+
             Ok(format!("Task {} scheduled on node {}", task.id, selected_node.get_id()))
         }
     }
-    
+
     // AI模型
     pub struct AIModel {
         id: String,
@@ -4430,7 +4430,7 @@ mod edge_and_distributed_ai {
         accuracy: f64,
         latency_ms: u32,
     }
-    
+
     impl AIModel {
         pub fn new(
             id: &str,
@@ -4453,32 +4453,32 @@ mod edge_and_distributed_ai {
                 latency_ms,
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_size_mb(&self) -> u32 {
             self.size_mb
         }
-        
+
         pub fn get_memory_requirement(&self) -> u32 {
             self.required_memory_mb
         }
-        
+
         pub fn requires_gpu(&self) -> bool {
             self.requires_gpu
         }
-        
+
         pub fn get_accuracy(&self) -> f64 {
             self.accuracy
         }
-        
+
         pub fn get_latency_ms(&self) -> u32 {
             self.latency_ms
         }
     }
-    
+
     // 模型分割
     pub struct ModelPartition {
         model_id: String,
@@ -4489,7 +4489,7 @@ mod edge_and_distributed_ai {
         required_memory_mb: u32,
         requires_gpu: bool,
     }
-    
+
     impl ModelPartition {
         pub fn new(
             model_id: &str,
@@ -4510,20 +4510,20 @@ mod edge_and_distributed_ai {
                 requires_gpu,
             }
         }
-        
+
         pub fn get_model_id(&self) -> &str {
             &self.model_id
         }
-        
+
         pub fn get_partition_id(&self) -> &str {
             &self.partition_id
         }
-        
+
         pub fn get_layer_range(&self) -> (u32, u32) {
             (self.start_layer, self.end_layer)
         }
     }
-    
+
     // 分布式推理请求
     pub struct InferenceRequest {
         id: String,
@@ -4533,7 +4533,7 @@ mod edge_and_distributed_ai {
         max_latency_ms: Option<u32>,
         source_node_id: String,
     }
-    
+
     impl InferenceRequest {
         pub fn new(
             id: &str,
@@ -4552,28 +4552,28 @@ mod edge_and_distributed_ai {
                 source_node_id: source_node_id.to_string(),
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_model_id(&self) -> &str {
             &self.model_id
         }
-        
+
         pub fn get_input_size(&self) -> u32 {
             self.input_data_size_mb
         }
-        
+
         pub fn get_source_node(&self) -> &str {
             &self.source_node_id
         }
-        
+
         pub fn get_max_latency(&self) -> Option<u32> {
             self.max_latency_ms
         }
     }
-    
+
     // 模型部署策略
     pub trait ModelDeploymentStrategy {
         fn deploy_model(
@@ -4582,18 +4582,18 @@ mod edge_and_distributed_ai {
             available_nodes: &[Arc<ComputeNode>],
         ) -> Vec<(Arc<ComputeNode>, Option<ModelPartition>)>;
     }
-    
+
     // 整体复制策略
     pub struct ReplicatedDeployment {
         min_replicas: u32,
     }
-    
+
     impl ReplicatedDeployment {
         pub fn new(min_replicas: u32) -> Self {
             Self { min_replicas }
         }
     }
-    
+
     impl ModelDeploymentStrategy for ReplicatedDeployment {
         fn deploy_model(
             &self,
@@ -4601,7 +4601,7 @@ mod edge_and_distributed_ai {
             available_nodes: &[Arc<ComputeNode>],
         ) -> Vec<(Arc<ComputeNode>, Option<ModelPartition>)> {
             let mut deployments = Vec::new();
-            
+
             // 找到所有能运行模型的节点
             let capable_nodes: Vec<_> = available_nodes.iter()
                 .filter(|node| {
@@ -4611,7 +4611,7 @@ mod edge_and_distributed_ai {
                 })
                 .cloned()
                 .collect();
-            
+
             // 按节点类型排序，优先考虑边缘服务器
             let mut prioritized_nodes = capable_nodes.clone();
             prioritized_nodes.sort_by_key(|node| {
@@ -4621,19 +4621,19 @@ mod edge_and_distributed_ai {
                     NodeType::EdgeDevice => 2,
                 }
             });
-            
+
             // 部署到足够数量的节点
             for node in prioritized_nodes.iter().take(self.min_replicas as usize) {
                 deployments.push((node.clone(), None)); // 完整模型，无分割
             }
-            
+
             deployments
         }
     }
-    
+
     // 分层部署策略
     pub struct LayeredDeployment;
-    
+
     impl ModelDeploymentStrategy for LayeredDeployment {
         fn deploy_model(
             &self,
@@ -4641,18 +4641,18 @@ mod edge_and_distributed_ai {
             available_nodes: &[Arc<ComputeNode>],
         ) -> Vec<(Arc<ComputeNode>, Option<ModelPartition>)> {
             let mut deployments = Vec::new();
-            
+
             // 简化的分层策略：前端（早期层）部署到边缘，后端（后期层）部署到云
             let edge_nodes: Vec<_> = available_nodes.iter()
                 .filter(|node| node.get_node_type() == NodeType::EdgeDevice || node.get_node_type() == NodeType::EdgeServer)
                 .cloned()
                 .collect();
-                
+
             let cloud_nodes: Vec<_> = available_nodes.iter()
                 .filter(|node| node.get_node_type() == NodeType::Cloud)
                 .cloned()
                 .collect();
-                
+
             if !edge_nodes.is_empty() && !cloud_nodes.is_empty() {
                 // 创建前端分区（假设模型有10层，前3层放在边缘）
                 let front_partition = ModelPartition::new(
@@ -4664,7 +4664,7 @@ mod edge_and_distributed_ai {
                     model.get_memory_requirement() / 3,
                     false, // 假设前端不需要GPU
                 );
-                
+
                 // 创建后端分区
                 let back_partition = ModelPartition::new(
                     model.get_id(),
@@ -4675,12 +4675,12 @@ mod edge_and_distributed_ai {
                     2 * model.get_memory_requirement() / 3,
                     model.requires_gpu(), // 后端可能需要GPU
                 );
-                
+
                 // 选择边缘节点部署前端
                 if let Some(edge_node) = edge_nodes.first() {
                     deployments.push((edge_node.clone(), Some(front_partition)));
                 }
-                
+
                 // 选择云节点部署后端
                 if let Some(cloud_node) = cloud_nodes.first() {
                     deployments.push((cloud_node.clone(), Some(back_partition)));
@@ -4695,11 +4695,11 @@ mod edge_and_distributed_ai {
                     }
                 }
             }
-            
+
             deployments
         }
     }
-    
+
     // 分布式AI系统
     pub struct DistributedAISystem {
         models: HashMap<String, AIModel>,
@@ -4707,7 +4707,7 @@ mod edge_and_distributed_ai {
         deployed_models: HashMap<String, Vec<(Arc<ComputeNode>, Option<ModelPartition>)>>,
         edge_system: Arc<EdgeComputingSystem>,
     }
-    
+
     impl DistributedAISystem {
         pub fn new(
             deployment_strategy: Box<dyn ModelDeploymentStrategy + Send + Sync>,
@@ -4720,40 +4720,40 @@ mod edge_and_distributed_ai {
                 edge_system,
             }
         }
-        
+
         pub fn register_model(&mut self, model: AIModel) {
             self.models.insert(model.id.clone(), model);
         }
-        
+
         pub fn deploy_model(&mut self, model_id: &str) -> Result<(), String> {
             let model = self.models.get(model_id).ok_or_else(|| format!("Model not found: {}", model_id))?;
-            
+
             // 获取所有可用节点
             let nodes: Vec<_> = self.edge_system.nodes.values().cloned().collect();
-            
+
             // 使用部署策略决定部署位置
             let deployments = self.deployment_strategy.deploy_model(model, &nodes);
-            
+
             if deployments.is_empty() {
                 return Err("No suitable nodes found for model deployment".to_string());
             }
-            
+
             self.deployed_models.insert(model_id.to_string(), deployments);
-            
+
             Ok(())
         }
-        
+
         pub fn submit_inference(&self, request: InferenceRequest) -> Result<String, String> {
             let deployments = self.deployed_models.get(request.get_model_id())
                 .ok_or_else(|| format!("Model not deployed: {}", request.get_model_id()))?;
-            
+
             // 简化：选择第一个完整模型部署，或者协调分层推理
             if deployments.iter().any(|(_, partition)| partition.is_none()) {
                 // 有完整模型部署，直接转发到相应节点
                 let (node, _) = deployments.iter()
                     .find(|(_, partition)| partition.is_none())
                     .unwrap();
-                
+
                 let task = ComputeTask::new(
                     &format!("infer-{}", request.get_id()),
                     &format!("Inference for {}", request.get_id()),
@@ -4765,9 +4765,9 @@ mod edge_and_distributed_ai {
                     request.get_input_size(),
                     self.models.get(request.get_model_id()).unwrap().latency_ms,
                 );
-                
+
                 node.submit_task(task)?;
-                
+
                 Ok(format!("Inference request {} submitted to node {}", request.get_id(), node.get_id()))
             } else {
                 // 需要协调分层推理
@@ -4781,13 +4781,13 @@ mod edge_and_distributed_ai {
                         partition.as_ref().map_or(false, |p| p.get_partition_id().contains("-front"))
                     })
                     .ok_or_else(|| "Front partition not found".to_string())?;
-                
+
                 let back_deployment = deployments.iter()
                     .find(|(_, partition)| {
                         partition.as_ref().map_or(false, |p| p.get_partition_id().contains("-back"))
                     })
                     .ok_or_else(|| "Back partition not found".to_string())?;
-                
+
                 // 创建前端推理任务
                 let front_task = ComputeTask::new(
                     &format!("infer-front-{}", request.get_id()),
@@ -4800,7 +4800,7 @@ mod edge_and_distributed_ai {
                     request.get_input_size(),
                     self.models.get(request.get_model_id()).unwrap().latency_ms / 3,
                 );
-                
+
                 // 创建后端推理任务
                 let mut back_task = ComputeTask::new(
                     &format!("infer-back-{}", request.get_id()),
@@ -4813,23 +4813,23 @@ mod edge_and_distributed_ai {
                     request.get_input_size() / 10, // 假设前端处理后数据量减少
                     2 * self.models.get(request.get_model_id()).unwrap().latency_ms / 3,
                 );
-                
+
                 // 建立依赖关系
                 back_task.add_dependency(&front_task.id);
-                
+
                 // 提交任务
                 front_deployment.0.submit_task(front_task)?;
                 back_deployment.0.submit_task(back_task)?;
-                
+
                 Ok(format!(
-                    "Layered inference request {} submitted to nodes {} and {}", 
-                    request.get_id(), 
+                    "Layered inference request {} submitted to nodes {} and {}",
+                    request.get_id(),
                     front_deployment.0.get_id(),
                     back_deployment.0.get_id()
                 ))
             }
         }
-        
+
         pub fn get_model_deployments(&self, model_id: &str) -> Option<&Vec<(Arc<ComputeNode>, Option<ModelPartition>)>> {
             self.deployed_models.get(model_id)
         }
@@ -4871,7 +4871,7 @@ mod edge_and_distributed_ai {
 mod model_validation {
     use std::collections::HashMap;
     use std::time::{Duration, Instant};
-    
+
     // 性能指标
     #[derive(Debug, Clone)]
     pub struct PerformanceMetrics {
@@ -4880,7 +4880,7 @@ mod model_validation {
         p99_latency_ms: f64,   // 99百分位延迟
         error_rate: f64,       // 错误率
     }
-    
+
     impl PerformanceMetrics {
         pub fn new(throughput: f64, mean_latency_ms: f64, p99_latency_ms: f64, error_rate: f64) -> Self {
             Self {
@@ -4891,7 +4891,7 @@ mod model_validation {
             }
         }
     }
-    
+
     // 资源使用情况
     #[derive(Debug, Clone)]
     pub struct ResourceUsage {
@@ -4900,7 +4900,7 @@ mod model_validation {
         network_bandwidth: f64,   // 网络带宽使用 (Mbps)
         storage_used: f64,        // 存储使用 (MB)
     }
-    
+
     impl ResourceUsage {
         pub fn new(cpu_utilization: f64, memory_utilization: f64, network_bandwidth: f64, storage_used: f64) -> Self {
             Self {
@@ -4911,7 +4911,7 @@ mod model_validation {
             }
         }
     }
-    
+
     // 系统配置
     #[derive(Debug, Clone)]
     pub struct SystemConfiguration {
@@ -4922,7 +4922,7 @@ mod model_validation {
         timeout_ms: u32,
         max_concurrent_requests: u32,
     }
-    
+
     impl SystemConfiguration {
         pub fn new(
             node_count: u32,
@@ -4942,7 +4942,7 @@ mod model_validation {
             }
         }
     }
-    
+
     // 模型验证结果
     #[derive(Debug, Clone)]
     pub struct ValidationResult {
@@ -4953,7 +4953,7 @@ mod model_validation {
         passed_fault_tolerance: bool,
         notes: Vec<String>,
     }
-    
+
     impl ValidationResult {
         pub fn new(
             configuration: SystemConfiguration,
@@ -4971,132 +4971,132 @@ mod model_validation {
                 notes: Vec::new(),
             }
         }
-        
+
         pub fn add_note(&mut self, note: &str) {
             self.notes.push(note.to_string());
         }
     }
-    
+
     // 模型验证框架
     pub struct ModelValidator {
         results: Vec<ValidationResult>,
     }
-    
+
     impl ModelValidator {
         pub fn new() -> Self {
             Self {
                 results: Vec::new(),
             }
         }
-        
+
         pub fn add_result(&mut self, result: ValidationResult) {
             self.results.push(result);
         }
-        
+
         pub fn find_optimal_configuration(&self, min_throughput: f64, max_error_rate: f64) -> Option<&ValidationResult> {
             // 过滤满足基本需求的配置
             let candidates: Vec<_> = self.results.iter()
-                .filter(|r| 
-                    r.passed_correctness && 
-                    r.passed_fault_tolerance && 
-                    r.performance.throughput >= min_throughput && 
+                .filter(|r|
+                    r.passed_correctness &&
+                    r.passed_fault_tolerance &&
+                    r.performance.throughput >= min_throughput &&
                     r.performance.error_rate <= max_error_rate
                 )
                 .collect();
-            
+
             // 选择延迟最低的配置
             candidates.into_iter()
-                .min_by(|a, b| 
+                .min_by(|a, b|
                     a.performance.mean_latency_ms.partial_cmp(&b.performance.mean_latency_ms).unwrap()
                 )
         }
-        
+
         pub fn generate_tradeoff_analysis(&self) -> String {
             let mut report = String::from("# 系统配置权衡分析\n\n");
-            
+
             // 一致性级别比较
             report.push_str("## 一致性级别比较\n\n");
             report.push_str("| 一致性级别 | 平均延迟 (ms) | 吞吐量 (ops/s) | 错误率 (%) | CPU使用率 (%) |\n");
             report.push_str("|------------|--------------|---------------|-----------|---------------|\n");
-            
+
             // 按一致性级别分组结果
             let mut consistency_groups: HashMap<String, Vec<&ValidationResult>> = HashMap::new();
-            
+
             for result in &self.results {
                 consistency_groups
                     .entry(result.configuration.consistency_level.clone())
                     .or_insert_with(Vec::new)
                     .push(result);
             }
-            
+
             for (level, results) in &consistency_groups {
                 // 计算该一致性级别的平均值
                 let avg_latency = results.iter().map(|r| r.performance.mean_latency_ms).sum::<f64>() / results.len() as f64;
                 let avg_throughput = results.iter().map(|r| r.performance.throughput).sum::<f64>() / results.len() as f64;
                 let avg_error_rate = results.iter().map(|r| r.performance.error_rate).sum::<f64>() / results.len() as f64;
                 let avg_cpu = results.iter().map(|r| r.resource_usage.cpu_utilization).sum::<f64>() / results.len() as f64;
-                
+
                 report.push_str(&format!(
                     "| {} | {:.2} | {:.2} | {:.4} | {:.2} |\n",
                     level, avg_latency, avg_throughput, avg_error_rate * 100.0, avg_cpu * 100.0
                 ));
             }
-            
+
             // 节点数量扩展性分析
             report.push_str("\n## 节点数量扩展性分析\n\n");
             report.push_str("| 节点数量 | 平均延迟 (ms) | 吞吐量 (ops/s) | 扩展比 |\n");
             report.push_str("|----------|--------------|---------------|--------|\n");
-            
+
             // 按节点数量分组
             let mut node_groups: HashMap<u32, Vec<&ValidationResult>> = HashMap::new();
-            
+
             for result in &self.results {
                 node_groups
                     .entry(result.configuration.node_count)
                     .or_insert_with(Vec::new)
                     .push(result);
             }
-            
+
             // 找出基准节点数（最小节点数）
             if let Some(min_nodes) = node_groups.keys().min() {
                 let baseline_results = &node_groups[min_nodes];
                 let baseline_throughput = baseline_results.iter().map(|r| r.performance.throughput).sum::<f64>() / baseline_results.len() as f64;
-                
+
                 let mut sorted_nodes: Vec<_> = node_groups.keys().collect();
                 sorted_nodes.sort();
-                
+
                 for &node_count in &sorted_nodes {
                     let group_results = &node_groups[&node_count];
                     let avg_latency = group_results.iter().map(|r| r.performance.mean_latency_ms).sum::<f64>() / group_results.len() as f64;
                     let avg_throughput = group_results.iter().map(|r| r.performance.throughput).sum::<f64>() / group_results.len() as f64;
                     let scale_factor = avg_throughput / baseline_throughput;
-                    
+
                     report.push_str(&format!(
                         "| {} | {:.2} | {:.2} | {:.2}x |\n",
                         node_count, avg_latency, avg_throughput, scale_factor
                     ));
                 }
             }
-            
+
             // 故障恢复分析
             report.push_str("\n## 故障恢复分析\n\n");
             report.push_str("| 配置 | 恢复时间 (ms) | 数据丢失率 (%) | 满足SLA? |\n");
             report.push_str("|------|--------------|----------------|----------|\n");
-            
+
             for (i, result) in self.results.iter().enumerate() {
                 if result.passed_fault_tolerance {
                     // 在实际实现中，这些值应该从实际测试中获取
                     let recovery_time = 500.0 + (result.configuration.replicas_per_shard as f64 * 100.0);
                     let data_loss_rate = if result.configuration.replicas_per_shard >= 3 { 0.0 } else { 0.01 };
                     let meets_sla = recovery_time < 1000.0 && data_loss_rate < 0.001;
-                    
+
                     report.push_str(&format!(
                         "| Config {} | {:.2} | {:.4} | {} |\n",
                         i + 1, recovery_time, data_loss_rate * 100.0, if meets_sla { "Yes" } else { "No" }
                     ));
                 }
             }
-            
+
             // 推荐配置
             if let Some(optimal) = self.find_optimal_configuration(1000.0, 0.001) {
                 report.push_str("\n## 推荐配置\n\n");
@@ -5112,18 +5112,18 @@ mod model_validation {
                 report.push_str(&format!("* P99延迟: {:.2} ms\n", optimal.performance.p99_latency_ms));
                 report.push_str(&format!("* 错误率: {:.4}%\n", optimal.performance.error_rate * 100.0));
             }
-            
+
             report
         }
     }
-    
+
     // 权衡分析工具
     pub struct TradeoffAnalyzer<T> {
         dimensions: Vec<String>,
         options: Vec<(String, T)>,
         scores: HashMap<String, HashMap<String, f64>>,
     }
-    
+
     impl<T: Clone> TradeoffAnalyzer<T> {
         pub fn new() -> Self {
             Self {
@@ -5132,111 +5132,111 @@ mod model_validation {
                 scores: HashMap::new(),
             }
         }
-        
+
         pub fn add_dimension(&mut self, name: &str) {
             self.dimensions.push(name.to_string());
         }
-        
+
         pub fn add_option(&mut self, name: &str, option: T) {
             self.options.push((name.to_string(), option));
         }
-        
+
         pub fn set_score(&mut self, option_name: &str, dimension: &str, score: f64) -> Result<(), String> {
             if !self.dimensions.contains(&dimension.to_string()) {
                 return Err(format!("Unknown dimension: {}", dimension));
             }
-            
+
             if !self.options.iter().any(|(name, _)| name == option_name) {
                 return Err(format!("Unknown option: {}", option_name));
             }
-            
+
             self.scores
                 .entry(option_name.to_string())
                 .or_insert_with(HashMap::new)
                 .insert(dimension.to_string(), score);
-                
+
             Ok(())
         }
-        
+
         pub fn calculate_weighted_scores(&self, weights: &HashMap<String, f64>) -> HashMap<String, f64> {
             let mut result = HashMap::new();
-            
+
             for (option_name, _) in &self.options {
                 let option_scores = match self.scores.get(option_name) {
                     Some(scores) => scores,
                     None => continue,
                 };
-                
+
                 let mut weighted_score = 0.0;
                 let mut total_weight = 0.0;
-                
+
                 for dimension in &self.dimensions {
                     let weight = weights.get(dimension).cloned().unwrap_or(1.0);
                     total_weight += weight;
-                    
+
                     if let Some(score) = option_scores.get(dimension) {
                         weighted_score += score * weight;
                     }
                 }
-                
+
                 if total_weight > 0.0 {
                     result.insert(option_name.clone(), weighted_score / total_weight);
                 }
             }
-            
+
             result
         }
-        
+
         pub fn find_best_option(&self, weights: &HashMap<String, f64>) -> Option<String> {
             let scores = self.calculate_weighted_scores(weights);
-            
+
             scores.into_iter()
                 .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
                 .map(|(name, _)| name)
         }
-        
+
         pub fn generate_comparison_table(&self) -> String {
             let mut table = String::from("| Option |");
-            
+
             // 表头
             for dimension in &self.dimensions {
                 table.push_str(&format!(" {} |", dimension));
             }
             table.push_str(" Overall |\n");
-            
+
             // 分隔线
             table.push_str("|--------|");
             for _ in &self.dimensions {
                 table.push_str("-----|");
             }
             table.push_str("--------|\n");
-            
+
             // 等权重的情况
             let mut weights = HashMap::new();
             for dimension in &self.dimensions {
                 weights.insert(dimension.clone(), 1.0);
             }
-            
+
             let overall_scores = self.calculate_weighted_scores(&weights);
-            
+
             // 表内容
             for (option_name, _) in &self.options {
                 table.push_str(&format!("| {} |", option_name));
-                
+
                 for dimension in &self.dimensions {
                     let score = self.scores
                         .get(option_name)
                         .and_then(|scores| scores.get(dimension))
                         .cloned()
                         .unwrap_or(0.0);
-                        
+
                     table.push_str(&format!(" {:.1} |", score));
                 }
-                
+
                 let overall = overall_scores.get(option_name).cloned().unwrap_or(0.0);
                 table.push_str(&format!(" {:.1} |\n", overall));
             }
-            
+
             table
         }
     }
@@ -5267,7 +5267,7 @@ mod aiops_platform {
     use std::collections::{HashMap, VecDeque};
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 系统指标
     #[derive(Debug, Clone)]
     pub struct SystemMetrics {
@@ -5279,7 +5279,7 @@ mod aiops_platform {
         error_rate: f64,
         latency_ms: f64,
     }
-    
+
     impl SystemMetrics {
         pub fn new(
             timestamp: u64,
@@ -5301,7 +5301,7 @@ mod aiops_platform {
             }
         }
     }
-    
+
     // 异常严重程度
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
     pub enum Severity {
@@ -5310,7 +5310,7 @@ mod aiops_platform {
         Error,
         Critical,
     }
-    
+
     // 异常事件
     #[derive(Debug, Clone)]
     pub struct AnomalyEvent {
@@ -5322,7 +5322,7 @@ mod aiops_platform {
         severity: Severity,
         description: String,
     }
-    
+
     impl AnomalyEvent {
         pub fn new(
             id: &str,
@@ -5343,20 +5343,20 @@ mod aiops_platform {
                 description: description.to_string(),
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_service_id(&self) -> &str {
             &self.service_id
         }
-        
+
         pub fn get_severity(&self) -> Severity {
             self.severity
         }
     }
-    
+
     // 根因分析结果
     #[derive(Debug, Clone)]
     pub struct RootCauseAnalysis {
@@ -5366,7 +5366,7 @@ mod aiops_platform {
         confidence: f64,
         explanation: String,
     }
-    
+
     impl RootCauseAnalysis {
         pub fn new(
             anomaly_id: &str,
@@ -5383,20 +5383,20 @@ mod aiops_platform {
                 explanation: explanation.to_string(),
             }
         }
-        
+
         pub fn get_anomaly_id(&self) -> &str {
             &self.anomaly_id
         }
-        
+
         pub fn get_confidence(&self) -> f64 {
             self.confidence
         }
-        
+
         pub fn get_primary_cause(&self) -> Option<&(String, f64)> {
             self.causes.first()
         }
     }
-    
+
     // 修复方案
     #[derive(Debug, Clone)]
     pub struct RemediationPlan {
@@ -5407,7 +5407,7 @@ mod aiops_platform {
         confidence: f64,
         requires_human_approval: bool,
     }
-    
+
     impl RemediationPlan {
         pub fn new(
             id: &str,
@@ -5426,24 +5426,24 @@ mod aiops_platform {
                 requires_human_approval,
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_anomaly_id(&self) -> &str {
             &self.anomaly_id
         }
-        
+
         pub fn get_steps(&self) -> &[RemediationStep] {
             &self.steps
         }
-        
+
         pub fn requires_approval(&self) -> bool {
             self.requires_human_approval
         }
     }
-    
+
     // 修复步骤
     #[derive(Debug, Clone)]
     pub struct RemediationStep {
@@ -5453,7 +5453,7 @@ mod aiops_platform {
         rollback_command: Option<String>,
         manual_intervention_required: bool,
     }
-    
+
     impl RemediationStep {
         pub fn new(
             description: &str,
@@ -5471,12 +5471,12 @@ mod aiops_platform {
             }
         }
     }
-    
+
     // 异常检测模块
     pub trait AnomalyDetector {
         fn detect_anomalies(&self, metrics: &[SystemMetrics]) -> Vec<AnomalyEvent>;
     }
-    
+
     // 简单的阈值检测器
     pub struct ThresholdDetector {
         cpu_threshold: f64,
@@ -5484,7 +5484,7 @@ mod aiops_platform {
         error_rate_threshold: f64,
         latency_threshold: f64,
     }
-    
+
     impl ThresholdDetector {
         pub fn new(
             cpu_threshold: f64,
@@ -5500,11 +5500,11 @@ mod aiops_platform {
             }
         }
     }
-    
+
     impl AnomalyDetector for ThresholdDetector {
         fn detect_anomalies(&self, metrics: &[SystemMetrics]) -> Vec<AnomalyEvent> {
             let mut anomalies = Vec::new();
-            
+
             for (i, metric) in metrics.iter().enumerate() {
                 // 检查CPU使用率
                 if metric.cpu_utilization > self.cpu_threshold {
@@ -5522,7 +5522,7 @@ mod aiops_platform {
                         &format!("CPU utilization above threshold: {:.1}%", metric.cpu_utilization * 100.0),
                     ));
                 }
-                
+
                 // 检查内存使用率
                 if metric.memory_utilization > self.memory_threshold {
                     anomalies.push(AnomalyEvent::new(
@@ -5539,7 +5539,7 @@ mod aiops_platform {
                         &format!("Memory utilization above threshold: {:.1}%", metric.memory_utilization * 100.0),
                     ));
                 }
-                
+
                 // 检查错误率
                 if metric.error_rate > self.error_rate_threshold {
                     anomalies.push(AnomalyEvent::new(
@@ -5556,7 +5556,7 @@ mod aiops_platform {
                         &format!("Error rate above threshold: {:.2}%", metric.error_rate * 100.0),
                     ));
                 }
-                
+
                 // 检查延迟
                 if metric.latency_ms > self.latency_threshold {
                     anomalies.push(AnomalyEvent::new(
@@ -5574,19 +5574,19 @@ mod aiops_platform {
                     ));
                 }
             }
-            
+
             anomalies
         }
     }
-    
+
     // 根因分析模块
     pub trait RootCauseAnalyzer {
         fn analyze(&self, event: &AnomalyEvent, metrics: &[SystemMetrics]) -> RootCauseAnalysis;
     }
-    
+
     // 简单的规则引擎分析器
     pub struct RuleBasedAnalyzer;
-    
+
     impl RootCauseAnalyzer for RuleBasedAnalyzer {
         fn analyze(&self, event: &AnomalyEvent, metrics: &[SystemMetrics]) -> RootCauseAnalysis {
             // 简化示例，根据异常类型返回预定义的分析结果
@@ -5651,27 +5651,27 @@ mod aiops_platform {
             }
         }
     }
-    
+
     // 修复计划生成器
     pub trait RemediationPlanner {
         fn generate_plan(&self, analysis: &RootCauseAnalysis) -> RemediationPlan;
     }
-    
+
     // 基于规则的修复计划生成器
     pub struct RuleBasedPlanner {
         confidence_threshold: f64,
     }
-    
+
     impl RuleBasedPlanner {
         pub fn new(confidence_threshold: f64) -> Self {
             Self { confidence_threshold }
         }
     }
-    
+
     impl RemediationPlanner for RuleBasedPlanner {
         fn generate_plan(&self, analysis: &RootCauseAnalysis) -> RemediationPlan {
             let requires_approval = analysis.confidence < self.confidence_threshold;
-            
+
             // 根据首要原因生成修复步骤
             let steps = if let Some((cause, _)) = analysis.get_primary_cause() {
                 match cause.as_str() {
@@ -5780,7 +5780,7 @@ mod aiops_platform {
             } else {
                 Vec::new()
             };
-            
+
             RemediationPlan::new(
                 &format!("plan-{}", analysis.get_anomaly_id()),
                 analysis.get_anomaly_id(),
@@ -5791,14 +5791,14 @@ mod aiops_platform {
             )
         }
     }
-    
+
     // 人机协作界面
     pub struct HumanCollaborationInterface {
         pending_approvals: Mutex<HashMap<String, RemediationPlan>>,
         pending_interventions: Mutex<HashMap<String, (RemediationPlan, usize)>>, // (plan, step_index)
         operator_feedback: Mutex<HashMap<String, String>>,
     }
-    
+
     impl HumanCollaborationInterface {
         pub fn new() -> Self {
             Self {
@@ -5807,30 +5807,30 @@ mod aiops_platform {
                 operator_feedback: Mutex::new(HashMap::new()),
             }
         }
-        
+
         pub fn request_approval(&self, plan: RemediationPlan) {
             let mut approvals = self.pending_approvals.lock().unwrap();
             approvals.insert(plan.get_id().to_string(), plan);
         }
-        
+
         pub fn request_intervention(&self, plan: RemediationPlan, step_index: usize) {
             let mut interventions = self.pending_interventions.lock().unwrap();
             interventions.insert(plan.get_id().to_string(), (plan, step_index));
         }
-        
+
         pub fn approve_plan(&self, plan_id: &str) -> Result<RemediationPlan, String> {
             let mut approvals = self.pending_approvals.lock().unwrap();
-            
+
             if let Some(plan) = approvals.remove(plan_id) {
                 Ok(plan)
             } else {
                 Err(format!("未找到待批准的计划: {}", plan_id))
             }
         }
-        
+
         pub fn complete_intervention(&self, plan_id: &str, feedback: &str) -> Result<(), String> {
             let mut interventions = self.pending_interventions.lock().unwrap();
-            
+
             if interventions.remove(plan_id).is_some() {
                 let mut feedbacks = self.operator_feedback.lock().unwrap();
                 feedbacks.insert(plan_id.to_string(), feedback.to_string());
@@ -5839,18 +5839,18 @@ mod aiops_platform {
                 Err(format!("未找到待干预的计划: {}", plan_id))
             }
         }
-        
+
         pub fn get_pending_approvals(&self) -> Vec<String> {
             let approvals = self.pending_approvals.lock().unwrap();
             approvals.keys().cloned().collect()
         }
-        
+
         pub fn get_pending_interventions(&self) -> Vec<String> {
             let interventions = self.pending_interventions.lock().unwrap();
             interventions.keys().cloned().collect()
         }
     }
-    
+
     // 运维平台核心
     pub struct AIOpsCore {
         detector: Box<dyn AnomalyDetector + Send + Sync>,
@@ -5863,7 +5863,7 @@ mod aiops_platform {
         metrics_history: Mutex<VecDeque<SystemMetrics>>,
         max_history_size: usize,
     }
-    
+
     impl AIOpsCore {
         pub fn new(
             detector: Box<dyn AnomalyDetector + Send + Sync>,
@@ -5884,67 +5884,67 @@ mod aiops_platform {
                 max_history_size,
             }
         }
-        
+
         pub fn process_metrics(&self, metrics: SystemMetrics) {
             // 保存指标历史
             {
                 let mut history = self.metrics_history.lock().unwrap();
                 history.push_back(metrics.clone());
-                
+
                 // 保持历史大小限制
                 while history.len() > self.max_history_size {
                     history.pop_front();
                 }
             }
-            
+
             // 检测异常
             let history = self.metrics_history.lock().unwrap();
             let history_vec: Vec<_> = history.iter().cloned().collect();
             let anomalies = self.detector.detect_anomalies(&history_vec);
-            
+
             // 处理每个检测到的异常
             for anomaly in anomalies {
                 self.process_anomaly(anomaly);
             }
         }
-        
+
         fn process_anomaly(&self, anomaly: AnomalyEvent) {
             println!("检测到异常: {} ({})", anomaly.description, anomaly.get_id());
-            
+
             // 保存异常事件
             {
                 let mut events = self.events.lock().unwrap();
                 events.insert(anomaly.get_id().to_string(), anomaly.clone());
             }
-            
+
             // 进行根因分析
             let history = self.metrics_history.lock().unwrap();
             let history_vec: Vec<_> = history.iter().cloned().collect();
             let analysis = self.analyzer.analyze(&anomaly, &history_vec);
-            
-            println!("分析结果: {} (置信度: {})", 
+
+            println!("分析结果: {} (置信度: {})",
                      analysis.get_primary_cause().map_or("未知", |(cause, _)| cause),
                      analysis.get_confidence());
-            
+
             // 保存分析结果
             {
                 let mut analyses = self.analyses.lock().unwrap();
                 analyses.insert(analysis.get_anomaly_id().to_string(), analysis.clone());
             }
-            
+
             // 生成修复计划
             let plan = self.planner.generate_plan(&analysis);
-            
+
             // 保存计划
             {
                 let mut plans = self.plans.lock().unwrap();
                 plans.insert(plan.get_id().to_string(), plan.clone());
             }
-            
+
             // 处理计划执行
             self.handle_remediation_plan(plan);
         }
-        
+
         fn handle_remediation_plan(&self, plan: RemediationPlan) {
             if plan.requires_approval() {
                 // 需要人工批准
@@ -5956,54 +5956,54 @@ mod aiops_platform {
                 self.execute_plan(&plan);
             }
         }
-        
+
         fn execute_plan(&self, plan: &RemediationPlan) {
             println!("执行修复计划: {}", plan.get_id());
-            
+
             for (i, step) in plan.get_steps().iter().enumerate() {
                 println!("执行步骤 {}: {}", i + 1, step.description);
-                
+
                 if step.manual_intervention_required {
                     // 需要人工干预
                     println!("步骤需要人工干预");
                     self.human_interface.request_intervention(plan.clone(), i);
                     return; // 暂停执行，等待人工干预
                 }
-                
+
                 // 在实际系统中，这里会执行命令
                 println!("执行命令: {}", step.command);
-                
+
                 // 模拟执行时间
                 std::thread::sleep(Duration::from_millis(100)); // 简化示例
             }
-            
+
             println!("计划执行完成: {}", plan.get_id());
         }
-        
+
         pub fn handle_human_approval(&self, plan_id: &str) -> Result<(), String> {
             let plan = self.human_interface.approve_plan(plan_id)?;
             println!("计划已获批准: {}", plan_id);
             self.execute_plan(&plan);
             Ok(())
         }
-        
+
         pub fn handle_intervention_completion(&self, plan_id: &str, feedback: &str) -> Result<(), String> {
             self.human_interface.complete_intervention(plan_id, feedback)?;
-            
+
             // 在实际系统中，我们会获取计划和当前步骤，然后继续执行后续步骤
             println!("干预已完成，反馈: {}", feedback);
-            
+
             // 继续执行剩余步骤（简化示例）
             let mut plans = self.plans.lock().unwrap();
             if let Some(plan) = plans.get_mut(plan_id) {
                 println!("继续执行计划的剩余步骤");
                 // 实际实现会继续从步骤索引+1开始执行
             }
-            
+
             Ok(())
         }
     }
-    
+
     // 演示使用示例
     pub fn run_demo() {
         // 创建组件
@@ -6011,7 +6011,7 @@ mod aiops_platform {
         let analyzer = Box::new(RuleBasedAnalyzer);
         let planner = Box::new(RuleBasedPlanner::new(0.7));
         let human_interface = Arc::new(HumanCollaborationInterface::new());
-        
+
         // 创建AIOps核心
         let aiops = AIOpsCore::new(
             detector,
@@ -6020,7 +6020,7 @@ mod aiops_platform {
             human_interface.clone(),
             100, // 保留最近100个指标
         );
-        
+
         // 模拟指标上报
         let normal_metrics = SystemMetrics::new(
             1000,
@@ -6031,7 +6031,7 @@ mod aiops_platform {
             0.01,
             50.0,
         );
-        
+
         let anomaly_metrics = SystemMetrics::new(
             1001,
             0.9, // CPU使用率异常高
@@ -6041,24 +6041,24 @@ mod aiops_platform {
             0.01,
             50.0,
         );
-        
+
         // 处理指标
         aiops.process_metrics(normal_metrics);
         aiops.process_metrics(anomaly_metrics);
-        
+
         // 模拟人工交互
         std::thread::sleep(Duration::from_secs(1));
-        
+
         if let Some(plan_id) = human_interface.get_pending_approvals().first() {
             println!("模拟人工批准计划: {}", plan_id);
             if let Err(e) = aiops.handle_human_approval(plan_id) {
                 println!("批准失败: {}", e);
             }
         }
-        
+
         // 模拟人工干预
         std::thread::sleep(Duration::from_secs(1));
-        
+
         if let Some(plan_id) = human_interface.get_pending_interventions().first() {
             println!("模拟人工干预完成: {}", plan_id);
             if let Err(e) = aiops.handle_intervention_completion(plan_id, "已手动优化查询") {
@@ -6089,7 +6089,7 @@ mod edge_ai_system {
     use std::collections::{HashMap, VecDeque};
     use std::sync::{Arc, Mutex};
     use std::time::{Duration, Instant};
-    
+
     // 节点类型
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum NodeType {
@@ -6097,7 +6097,7 @@ mod edge_ai_system {
         EdgeGateway,
         CloudServer,
     }
-    
+
     // 节点状态
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum NodeStatus {
@@ -6105,7 +6105,7 @@ mod edge_ai_system {
         Offline,
         Degraded,
     }
-    
+
     // 节点信息
     #[derive(Debug, Clone)]
     pub struct NodeInfo {
@@ -6115,7 +6115,7 @@ mod edge_ai_system {
         capabilities: NodeCapabilities,
         connected_nodes: Vec<String>,
     }
-    
+
     impl NodeInfo {
         pub fn new(
             id: &str,
@@ -6130,32 +6130,32 @@ mod edge_ai_system {
                 connected_nodes: Vec::new(),
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_type(&self) -> NodeType {
             self.node_type
         }
-        
+
         pub fn get_status(&self) -> NodeStatus {
             self.status
         }
-        
+
         pub fn set_status(&mut self, status: NodeStatus) {
             self.status = status;
         }
-        
+
         pub fn add_connection(&mut self, node_id: &str) {
             self.connected_nodes.push(node_id.to_string());
         }
-        
+
         pub fn get_connections(&self) -> &[String] {
             &self.connected_nodes
         }
     }
-    
+
     // 节点能力
     #[derive(Debug, Clone)]
     pub struct NodeCapabilities {
@@ -6167,7 +6167,7 @@ mod edge_ai_system {
         has_microphone: bool,
         supported_ml_frameworks: Vec<String>,
     }
-    
+
     impl NodeCapabilities {
         pub fn new(
             cpu_cores: u32,
@@ -6189,7 +6189,7 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 输入数据
     #[derive(Debug, Clone)]
     pub enum InputData {
@@ -6198,7 +6198,7 @@ mod edge_ai_system {
         Sensor(SensorData),
         Text(TextData),
     }
-    
+
     #[derive(Debug, Clone)]
     pub struct ImageData {
         width: u32,
@@ -6207,7 +6207,7 @@ mod edge_ai_system {
         data_size: usize,
         privacy_level: PrivacyLevel,
     }
-    
+
     #[derive(Debug, Clone)]
     pub struct AudioData {
         duration_ms: u32,
@@ -6215,7 +6215,7 @@ mod edge_ai_system {
         data_size: usize,
         privacy_level: PrivacyLevel,
     }
-    
+
     #[derive(Debug, Clone)]
     pub struct SensorData {
         sensor_type: String,
@@ -6223,14 +6223,14 @@ mod edge_ai_system {
         timestamp: u64,
         privacy_level: PrivacyLevel,
     }
-    
+
     #[derive(Debug, Clone)]
     pub struct TextData {
         content: String,
         language: String,
         privacy_level: PrivacyLevel,
     }
-    
+
     // 隐私级别
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
     pub enum PrivacyLevel {
@@ -6239,7 +6239,7 @@ mod edge_ai_system {
         MediumSensitivity, // 只能共享摘要或特征
         HighSensitivity, // 不能共享，只能在本地处理
     }
-    
+
     // 决策类型
     #[derive(Debug, Clone, PartialEq)]
     pub enum DecisionType {
@@ -6248,7 +6248,7 @@ mod edge_ai_system {
         Ranking(Vec<(String, f64)>), // (选项, 分数)列表
         Detection(Vec<BoundingBox>), // 检测到的对象列表
     }
-    
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct BoundingBox {
         x: f64,
@@ -6258,7 +6258,7 @@ mod edge_ai_system {
         class: String,
         confidence: f64,
     }
-    
+
     impl BoundingBox {
         pub fn new(x: f64, y: f64, width: f64, height: f64, class: &str, confidence: f64) -> Self {
             Self {
@@ -6271,7 +6271,7 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 决策请求
     #[derive(Debug, Clone)]
     pub struct DecisionRequest {
@@ -6283,7 +6283,7 @@ mod edge_ai_system {
         max_latency_ms: Option<u64>,
         timestamp: u64,
     }
-    
+
     impl DecisionRequest {
         pub fn new(
             id: &str,
@@ -6304,15 +6304,15 @@ mod edge_ai_system {
                 timestamp,
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_source_node(&self) -> &str {
             &self.source_node_id
         }
-        
+
         pub fn get_privacy_level(&self) -> PrivacyLevel {
             match &self.input_data {
                 InputData::Image(data) => data.privacy_level,
@@ -6322,7 +6322,7 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 决策结果
     #[derive(Debug, Clone)]
     pub struct DecisionResult {
@@ -6333,7 +6333,7 @@ mod edge_ai_system {
         confidence: f64,
         explanation: Option<String>,
     }
-    
+
     impl DecisionResult {
         pub fn new(
             request_id: &str,
@@ -6352,20 +6352,20 @@ mod edge_ai_system {
                 explanation,
             }
         }
-        
+
         pub fn get_request_id(&self) -> &str {
             &self.request_id
         }
-        
+
         pub fn get_confidence(&self) -> f64 {
             self.confidence
         }
-        
+
         pub fn get_processing_node(&self) -> &str {
             &self.processed_at_node
         }
     }
-    
+
     // AI模型描述
     #[derive(Debug, Clone)]
     pub struct ModelInfo {
@@ -6380,7 +6380,7 @@ mod edge_ai_system {
         memory_requirement_mb: u32,
         size_mb: u32,
     }
-    
+
     impl ModelInfo {
         pub fn new(
             id: &str,
@@ -6407,28 +6407,28 @@ mod edge_ai_system {
                 size_mb,
             }
         }
-        
+
         pub fn get_id(&self) -> &str {
             &self.id
         }
-        
+
         pub fn get_task_type(&self) -> &str {
             &self.task_type
         }
-        
+
         pub fn get_accuracy(&self) -> f64 {
             self.accuracy
         }
     }
-    
+
     // 特征抽取器
     pub trait FeatureExtractor {
         fn extract_features(&self, input: &InputData) -> Vec<f64>;
     }
-    
+
     // 简单的图像特征提取器
     pub struct SimpleImageExtractor;
-    
+
     impl FeatureExtractor for SimpleImageExtractor {
         fn extract_features(&self, input: &InputData) -> Vec<f64> {
             if let InputData::Image(img) = input {
@@ -6440,21 +6440,21 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 决策引擎接口
     pub trait DecisionEngine {
         fn make_decision(&self, request: &DecisionRequest) -> Result<DecisionResult, String>;
         fn can_handle(&self, request: &DecisionRequest) -> bool;
         fn get_estimated_confidence(&self, request: &DecisionRequest) -> f64;
     }
-    
+
     // 边缘轻量级决策引擎
     pub struct EdgeLightweightEngine {
         node_id: String,
         models: HashMap<String, ModelInfo>,
         feature_extractors: HashMap<String, Box<dyn FeatureExtractor + Send + Sync>>,
     }
-    
+
     impl EdgeLightweightEngine {
         pub fn new(node_id: &str) -> Self {
             let mut engine = Self {
@@ -6462,28 +6462,28 @@ mod edge_ai_system {
                 models: HashMap::new(),
                 feature_extractors: HashMap::new(),
             };
-            
+
             // 添加一个示例图像提取器
             engine.feature_extractors.insert(
-                "image".to_string(), 
+                "image".to_string(),
                 Box::new(SimpleImageExtractor) as Box<dyn FeatureExtractor + Send + Sync>
             );
-            
+
             engine
         }
-        
+
         pub fn register_model(&mut self, model: ModelInfo) {
             self.models.insert(model.id.clone(), model);
         }
     }
-    
+
     impl DecisionEngine for EdgeLightweightEngine {
         fn make_decision(&self, request: &DecisionRequest) -> Result<DecisionResult, String> {
             // 检查是否有适合的模型
             let model = self.models.values()
                 .find(|m| m.task_type == request.required_decision_type)
                 .ok_or_else(|| format!("No suitable model found for {}", request.required_decision_type))?;
-            
+
             // 提取特征
             let features = match &request.input_data {
                 InputData::Image(_) => {
@@ -6496,17 +6496,17 @@ mod edge_ai_system {
                 // 处理其他输入类型...
                 _ => return Err("Unsupported input type".to_string()),
             };
-            
+
             // 在实际系统中，这里会用模型进行实际推理
             // 这里模拟一个简单的分类决策
             let confidence = model.accuracy * 0.9; // 稍微降低一点置信度
-            
+
             // 创建决策结果
             let decision = DecisionType::Classification(
                 "example_class".to_string(),
                 confidence,
             );
-            
+
             Ok(DecisionResult::new(
                 request.get_id(),
                 decision,
@@ -6516,27 +6516,27 @@ mod edge_ai_system {
                 Some("Edge lightweight decision".to_string()),
             ))
         }
-        
+
         fn can_handle(&self, request: &DecisionRequest) -> bool {
             // 检查是否有适合的模型
             if let Some(model) = self.models.values()
                 .find(|m| m.task_type == request.required_decision_type) {
-                
+
                 // 检查隐私级别
                 let privacy_level = request.get_privacy_level();
                 if privacy_level == PrivacyLevel::HighSensitivity {
                     // 高敏感数据只能在本地处理
                     return true;
                 }
-                
+
                 // 检查预期置信度
                 let expected_confidence = model.accuracy * 0.9;
                 return expected_confidence >= request.min_confidence;
             }
-            
+
             false
         }
-        
+
         fn get_estimated_confidence(&self, request: &DecisionRequest) -> f64 {
             if let Some(model) = self.models.values()
                 .find(|m| m.task_type == request.required_decision_type) {
@@ -6546,13 +6546,13 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 云端高精度决策引擎
     pub struct CloudHighPrecisionEngine {
         node_id: String,
         models: HashMap<String, ModelInfo>,
     }
-    
+
     impl CloudHighPrecisionEngine {
         pub fn new(node_id: &str) -> Self {
             Self {
@@ -6560,12 +6560,12 @@ mod edge_ai_system {
                 models: HashMap::new(),
             }
         }
-        
+
         pub fn register_model(&mut self, model: ModelInfo) {
             self.models.insert(model.id.clone(), model);
         }
     }
-    
+
     impl DecisionEngine for CloudHighPrecisionEngine {
         fn make_decision(&self, request: &DecisionRequest) -> Result<DecisionResult, String> {
             // 检查隐私级别
@@ -6573,16 +6573,16 @@ mod edge_ai_system {
             if privacy_level == PrivacyLevel::HighSensitivity {
                 return Err("Cannot process high sensitivity data in cloud".to_string());
             }
-            
+
             // 检查是否有适合的模型
             let model = self.models.values()
                 .find(|m| m.task_type == request.required_decision_type)
                 .ok_or_else(|| format!("No suitable model found for {}", request.required_decision_type))?;
-            
+
             // 在实际系统中，这里会用模型进行实际推理
             // 这里模拟一个更复杂的决策
             let confidence = model.accuracy;
-            
+
             // 创建决策结果
             let decision = match request.required_decision_type.as_str() {
                 "classification" => {
@@ -6596,7 +6596,7 @@ mod edge_ai_system {
                 },
                 _ => return Err("Unsupported decision type".to_string()),
             };
-            
+
             Ok(DecisionResult::new(
                 request.get_id(),
                 decision,
@@ -6606,24 +6606,24 @@ mod edge_ai_system {
                 Some("Cloud high precision decision".to_string()),
             ))
         }
-        
+
         fn can_handle(&self, request: &DecisionRequest) -> bool {
             // 检查隐私级别
             let privacy_level = request.get_privacy_level();
             if privacy_level == PrivacyLevel::HighSensitivity {
                 return false;
             }
-            
+
             // 检查是否有适合的模型
             self.models.values()
                 .any(|m| m.task_type == request.required_decision_type)
         }
-        
+
         fn get_estimated_confidence(&self, request: &DecisionRequest) -> f64 {
             if request.get_privacy_level() == PrivacyLevel::HighSensitivity {
                 return 0.0;
             }
-            
+
             if let Some(model) = self.models.values()
                 .find(|m| m.task_type == request.required_decision_type) {
                 model.accuracy
@@ -6632,7 +6632,7 @@ mod edge_ai_system {
             }
         }
     }
-    
+
     // 分布式决策协调器
     pub struct DecisionCoordinator {
         local_engine: Box<dyn DecisionEngine + Send + Sync>,
@@ -6642,14 +6642,14 @@ mod edge_ai_system {
         result_history: Mutex<HashMap<String, DecisionResult>>,
         network_status: Mutex<NetworkStatus>,
     }
-    
+
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum NetworkStatus {
         Online,
         Offline,
         Degraded,
     }
-    
+
     impl DecisionCoordinator {
         pub fn new(
             local_engine: Box<dyn DecisionEngine + Send + Sync>,
@@ -6665,20 +6665,20 @@ mod edge_ai_system {
                 network_status: Mutex::new(NetworkStatus::Online),
             }
         }
-        
+
         pub fn set_network_status(&self, status: NetworkStatus) {
             let mut network = self.network_status.lock().unwrap();
             *network = status;
             println!("Network status changed to {:?}", status);
         }
-        
+
         pub fn process_request(&self, request: DecisionRequest) -> Result<DecisionResult, String> {
             // 保存请求
             {
                 let mut history = self.request_history.lock().unwrap();
                 history.insert(request.id.clone(), request.clone());
             }
-            
+
             // 确定处理策略
             match self.determine_processing_strategy(&request) {
                 ProcessingStrategy::LocalOnly => {
@@ -6700,23 +6700,23 @@ mod edge_ai_system {
                 },
             }
         }
-        
+
         fn determine_processing_strategy(&self, request: &DecisionRequest) -> ProcessingStrategy {
             // 获取当前网络状态
             let network = *self.network_status.lock().unwrap();
-            
+
             // 检查隐私级别
             let privacy_level = request.get_privacy_level();
             if privacy_level == PrivacyLevel::HighSensitivity {
                 return ProcessingStrategy::LocalOnly;
             }
-            
+
             // 检查网络状态
             match network {
                 NetworkStatus::Offline => return ProcessingStrategy::LocalOnly,
                 NetworkStatus::Degraded => {
                     // 在网络状况不佳时，只有当本地能力不足时才使用云端
-                    if !self.local_engine.can_handle(request) && 
+                    if !self.local_engine.can_handle(request) &&
                        self.cloud_engine.as_ref().map_or(false, |e| e.can_handle(request)) {
                         return ProcessingStrategy::CloudOnly;
                     } else {
@@ -6748,40 +6748,40 @@ mod edge_ai_system {
                 }
             }
         }
-        
+
         fn process_locally(&self, request: &DecisionRequest) -> Result<DecisionResult, String> {
             let result = self.local_engine.make_decision(request)?;
-            
+
             // 保存结果
             {
                 let mut history = self.result_history.lock().unwrap();
                 history.insert(result.request_id.clone(), result.clone());
             }
-            
+
             Ok(result)
         }
-        
+
         fn process_in_cloud(&self, request: &DecisionRequest) -> Result<DecisionResult, String> {
             // 检查网络和云引擎
             let network = *self.network_status.lock().unwrap();
             if network == NetworkStatus::Offline {
                 return Err("Cannot process in cloud: network is offline".to_string());
             }
-            
+
             let cloud_engine = self.cloud_engine.as_ref()
                 .ok_or_else(|| "No cloud engine available".to_string())?;
-                
+
             let result = cloud_engine.make_decision(request)?;
-            
+
             // 保存结果
             {
                 let mut history = self.result_history.lock().unwrap();
                 history.insert(result.request_id.clone(), result.clone());
             }
-            
+
             Ok(result)
         }
-        
+
         fn process_with_fallback(&self, request: &DecisionRequest) -> Result<DecisionResult, String> {
             // 先尝试本地处理
             match self.local_engine.make_decision(request) {
@@ -6792,7 +6792,7 @@ mod edge_ai_system {
                         history.insert(result.request_id.clone(), result.clone());
                         return Ok(result);
                     }
-                    
+
                     // 本地结果不满足，尝试云端
                     if let Some(ref cloud_engine) = self.cloud_engine {
                         let network = *self.network_status.lock().unwrap();
@@ -6812,7 +6812,7 @@ mod edge_ai_system {
                             }
                         }
                     }
-                    
+
                     // 云端不可用，使用本地结果
                     let mut history = self.result_history.lock().unwrap();
                     history.insert(result.request_id.clone(), result.clone());
@@ -6835,23 +6835,23 @@ mod edge_ai_system {
                             };
                         }
                     }
-                    
+
                     // 云端不可用，返回本地错误
                     Err(format!("Local processing failed and cloud is unavailable: {}", e))
                 }
             }
         }
-        
+
         pub fn get_node_info(&self) -> &NodeInfo {
             &self.node_info
         }
-        
+
         pub fn get_result_history(&self) -> HashMap<String, DecisionResult> {
             let history = self.result_history.lock().unwrap();
             history.clone()
         }
     }
-    
+
     // 处理策略
     #[derive(Debug, Clone, Copy, PartialEq)]
     pub enum ProcessingStrategy {
@@ -6860,13 +6860,13 @@ mod edge_ai_system {
         HybridFallback,         // 混合策略，本地处理失败或不满足要求时使用云端
         FedereratedLocalFirst,  // 联邦策略，优先使用本地，需要时协调多个边缘设备
     }
-    
+
     // 协同集群管理器
     pub struct CollaborativeClusterManager {
         nodes: HashMap<String, Arc<DecisionCoordinator>>,
         topology: HashMap<String, Vec<String>>, // node_id -> connected_nodes
     }
-    
+
     impl CollaborativeClusterManager {
         pub fn new() -> Self {
             Self {
@@ -6874,54 +6874,54 @@ mod edge_ai_system {
                 topology: HashMap::new(),
             }
         }
-        
+
         pub fn register_node(&mut self, node: Arc<DecisionCoordinator>) {
             let node_id = node.get_node_info().get_id().to_string();
             self.nodes.insert(node_id.clone(), node);
-            
+
             // 添加到拓扑结构
             let connected_nodes = node.get_node_info().get_connections().to_vec();
             self.topology.insert(node_id, connected_nodes);
         }
-        
+
         pub fn route_request(&self, request: DecisionRequest) -> Result<DecisionResult, String> {
             // 确定最佳处理节点
             let target_node_id = self.find_best_node_for_request(&request)?;
-            
+
             // 获取目标节点
             let node = self.nodes.get(&target_node_id)
                 .ok_or_else(|| format!("Node not found: {}", target_node_id))?;
-                
+
             // 处理请求
             node.process_request(request)
         }
-        
+
         fn find_best_node_for_request(&self, request: &DecisionRequest) -> Result<String, String> {
             // 简化示例：优先使用源节点，如果源节点不可用则使用任何一个可用节点
             let source_node_id = request.get_source_node();
-            
+
             if let Some(node) = self.nodes.get(source_node_id) {
                 // 检查源节点是否可以处理
                 if node.get_node_info().get_status() != NodeStatus::Offline {
                     return Ok(source_node_id.to_string());
                 }
             }
-            
+
             // 源节点不可用，寻找其他合适的节点
             for (id, node) in &self.nodes {
                 if node.get_node_info().get_status() != NodeStatus::Offline {
                     return Ok(id.clone());
                 }
             }
-            
+
             Err("No available nodes found".to_string())
         }
-        
+
         pub fn get_node(&self, node_id: &str) -> Option<Arc<DecisionCoordinator>> {
             self.nodes.get(node_id).cloned()
         }
     }
-    
+
     // 演示使用
     pub fn run_demo() {
         // 创建边缘设备能力
@@ -6934,7 +6934,7 @@ mod edge_ai_system {
             true,   // Has microphone
             vec!["TFLite".to_string(), "ONNX".to_string()],
         );
-        
+
         // 创建云服务器能力
         let cloud_capabilities = NodeCapabilities::new(
             16,     // CPU cores
@@ -6945,23 +6945,23 @@ mod edge_ai_system {
             false,  // No microphone
             vec!["TensorFlow".to_string(), "PyTorch".to_string(), "ONNX".to_string()],
         );
-        
+
         // 创建节点信息
         let edge_node_info = NodeInfo::new(
             "edge-device-1",
             NodeType::EdgeDevice,
             edge_capabilities,
         );
-        
+
         let cloud_node_info = NodeInfo::new(
             "cloud-server-1",
             NodeType::CloudServer,
             cloud_capabilities,
         );
-        
+
         // 创建边缘轻量级引擎
         let mut edge_engine = EdgeLightweightEngine::new("edge-device-1");
-        
+
         // 注册模型
         edge_engine.register_model(ModelInfo::new(
             "model-1",
@@ -6975,10 +6975,10 @@ mod edge_ai_system {
             100,   // 100MB 内存需求
             10,    // 10MB 模型大小
         ));
-        
+
         // 创建云端高精度引擎
         let mut cloud_engine = CloudHighPrecisionEngine::new("cloud-server-1");
-        
+
         // 注册模型
         cloud_engine.register_model(ModelInfo::new(
             "model-2",
@@ -6992,7 +6992,7 @@ mod edge_ai_system {
             2048,  // 2GB 内存需求
             500,   // 500MB 模型大小
         ));
-        
+
         cloud_engine.register_model(ModelInfo::new(
             "model-3",
             "object-detector",
@@ -7005,18 +7005,18 @@ mod edge_ai_system {
             4096,  // 4GB 内存需求
             1024,  // 1GB 模型大小
         ));
-        
+
         // 创建决策协调器
         let edge_coordinator = Arc::new(DecisionCoordinator::new(
             Box::new(edge_engine),
             Some(Box::new(cloud_engine)),
             edge_node_info,
         ));
-        
+
         // 创建集群管理器
         let mut cluster_manager = CollaborativeClusterManager::new();
         cluster_manager.register_node(edge_coordinator.clone());
-        
+
         // 创建图像输入
         let image_data = ImageData {
             width: 640,
@@ -7025,7 +7025,7 @@ mod edge_ai_system {
             data_size: 100000,
             privacy_level: PrivacyLevel::LowSensitivity,
         };
-        
+
         // 创建决策请求 - 分类
         let classification_request = DecisionRequest::new(
             "req-1",
@@ -7036,7 +7036,7 @@ mod edge_ai_system {
             Some(100),  // 最大100ms延迟
             1000,  // 时间戳
         );
-        
+
         // 创建决策请求 - 检测
         let detection_request = DecisionRequest::new(
             "req-2",
@@ -7047,7 +7047,7 @@ mod edge_ai_system {
             Some(500),  // 最大500ms延迟
             1001,  // 时间戳
         );
-        
+
         // 创建隐私敏感请求
         let sensitive_image_data = ImageData {
             width: 640,
@@ -7056,7 +7056,7 @@ mod edge_ai_system {
             data_size: 100000,
             privacy_level: PrivacyLevel::HighSensitivity,
         };
-        
+
         let sensitive_request = DecisionRequest::new(
             "req-3",
             "edge-device-1",
@@ -7066,50 +7066,50 @@ mod edge_ai_system {
             Some(200),  // 最大200ms延迟
             1002,  // 时间戳
         );
-        
+
         // 处理请求 - 网络在线
         println!("\n=== 网络在线状态测试 ===");
         edge_coordinator.set_network_status(NetworkStatus::Online);
-        
+
         match edge_coordinator.process_request(classification_request.clone()) {
-            Ok(result) => println!("分类请求处理成功: 置信度={}, 处理节点={}", 
+            Ok(result) => println!("分类请求处理成功: 置信度={}, 处理节点={}",
                                   result.get_confidence(), result.get_processing_node()),
             Err(e) => println!("分类请求处理失败: {}", e),
         }
-        
+
         match edge_coordinator.process_request(detection_request.clone()) {
-            Ok(result) => println!("检测请求处理成功: 置信度={}, 处理节点={}", 
+            Ok(result) => println!("检测请求处理成功: 置信度={}, 处理节点={}",
                                   result.get_confidence(), result.get_processing_node()),
             Err(e) => println!("检测请求处理失败: {}", e),
         }
-        
+
         match edge_coordinator.process_request(sensitive_request.clone()) {
-            Ok(result) => println!("敏感请求处理成功: 置信度={}, 处理节点={}", 
+            Ok(result) => println!("敏感请求处理成功: 置信度={}, 处理节点={}",
                                   result.get_confidence(), result.get_processing_node()),
             Err(e) => println!("敏感请求处理失败: {}", e),
         }
-        
+
         // 处理请求 - 网络离线
         println!("\n=== 网络离线状态测试 ===");
         edge_coordinator.set_network_status(NetworkStatus::Offline);
-        
+
         match edge_coordinator.process_request(classification_request) {
-            Ok(result) => println!("分类请求处理成功: 置信度={}, 处理节点={}", 
+            Ok(result) => println!("分类请求处理成功: 置信度={}, 处理节点={}",
                                   result.get_confidence(), result.get_processing_node()),
             Err(e) => println!("分类请求处理失败: {}", e),
         }
-        
+
         match edge_coordinator.process_request(detection_request) {
-            Ok(result) => println!("检测请求处理成功: 置信度={}, 处理节点={}", 
+            Ok(result) => println!("检测请求处理成功: 置信度={}, 处理节点={}",
                                   result.get_confidence(), result.get_processing_node()),
             Err(e) => println!("检测请求处理失败: {}", e),
         }
-        
+
         // 显示结果历史
         println!("\n=== 决策结果历史 ===");
         let history = edge_coordinator.get_result_history();
         for (req_id, result) in history {
-            println!("请求 {}: 处理节点={}, 置信度={}", 
+            println!("请求 {}: 处理节点={}, 置信度={}",
                     req_id, result.get_processing_node(), result.get_confidence());
         }
     }
@@ -7455,14 +7455,14 @@ fn share_data() {
     // Arc提供跨线程引用计数，Mutex提供互斥访问
     // 编译器强制正确使用这些抽象
     let shared_data = Arc::new(Mutex::new(Vec::new()));
-    
+
     let data_clone = shared_data.clone();
     std::thread::spawn(move || {
         // 编译器强制获取锁才能访问数据
         let mut data = data_clone.lock().unwrap();
         data.push(42);
     });
-    
+
     // 主线程中
     {
         let mut data = shared_data.lock().unwrap();

@@ -3,8 +3,8 @@
 ## 目录
 
 - [Docker 与 Kubernetes 的形式化视角、Rust 示例及关联分析](#docker-与-kubernetes-的形式化视角rust-示例及关联分析)
-  - [1 . 引言](#1-引言)
-  - [2 . Docker](#2-docker)
+  - [目录](#目录)
+  - [1. 引言](#1-引言)
   - [2. Docker](#2-docker)
     - [2.1 核心概念与形式化潜力](#21-核心概念与形式化潜力)
       - [2.1.1 镜像 (Image)](#211-镜像-image)
@@ -15,7 +15,7 @@
       - [2.1.6 Dockerfile](#216-dockerfile)
     - [2.2 Rust 示例 (概念性)](#22-rust-示例-概念性)
     - [2.3 关系分析](#23-关系分析)
-  - [3 . Kubernetes](#3-kubernetes)
+  - [3. Kubernetes](#3-kubernetes)
     - [3.1 核心概念与形式化潜力](#31-核心概念与形式化潜力)
       - [3.1.1 Pod](#311-pod)
       - [3.1.2 Service](#312-service)
@@ -27,67 +27,67 @@
       - [3.1.8 PersistentVolume (PV) 与 PersistentVolumeClaim (PVC)](#318-persistentvolume-pv-与-persistentvolumeclaim-pvc)
     - [3.2 Rust 示例 (概念性)](#32-rust-示例-概念性)
     - [3.3 关系分析](#33-关系分析)
-  - [4 . 元模型、论证与拓展](#4-元模型论证与拓展)
+  - [4. 元模型、论证与拓展](#4-元模型论证与拓展)
     - [4.1 元模型 (Metamodel)](#41-元模型-metamodel)
     - [4.2 论证与证明 (Proof)](#42-论证与证明-proof)
     - [4.3 拓展 (Extension)](#43-拓展-extension)
-  - [5 . 层次化分析](#5-层次化分析)
+  - [5. 层次化分析](#5-层次化分析)
     - [5.1 Docker 层次结构](#51-docker-层次结构)
     - [5.2 Kubernetes 层次结构](#52-kubernetes-层次结构)
-  - [6 . 关联性分析](#6-关联性分析)
+  - [6. 关联性分析](#6-关联性分析)
     - [6.1 Docker 内部关联](#61-docker-内部关联)
     - [6.2 Kubernetes 内部关联 (同层)](#62-kubernetes-内部关联-同层)
     - [6.3 Docker 与 Kubernetes 之间的关联 (跨层)](#63-docker-与-kubernetes-之间的关联-跨层)
-  - [7 . Rust 的角色](#7-rust-的角色)
-  - [8 . 总结与展望](#8-总结与展望)
-  - [9 . 文本思维导图](#9-文本思维导图)
-  - [1 . 更具体的 Rust 代码示例拓展](#1-更具体的-rust-代码示例拓展)
+  - [7. Rust 的角色](#7-rust-的角色)
+  - [8. 总结与展望](#8-总结与展望)
+  - [9. 文本思维导图](#9-文本思维导图)
+  - [1. 更具体的 Rust 代码示例拓展](#1-更具体的-rust-代码示例拓展)
     - [1.1 Kubernetes 自定义控制器 (Operator) - Rust 概念示例 (`kube-rs`)](#11-kubernetes-自定义控制器-operator---rust-概念示例-kube-rs)
     - [1.2 Docker 高级交互 (`bollard` - 概念性)](#12-docker-高级交互-bollard---概念性)
-  - [2 . 特定组件的形式化建模深化：Kubernetes `Deployment` 的 `RollingUpdate`](#2-特定组件的形式化建模深化kubernetes-deployment-的-rollingupdate)
-  - [3 . 与其他云原生技术的关联与扩展](#3-与其他云原生技术的关联与扩展)
+  - [2. 特定组件的形式化建模深化：Kubernetes `Deployment` 的 `RollingUpdate`](#2-特定组件的形式化建模深化kubernetes-deployment-的-rollingupdate)
+  - [3. 与其他云原生技术的关联与扩展](#3-与其他云原生技术的关联与扩展)
     - [3.1 Service Mesh (例如 Istio, Linkerd)](#31-service-mesh-例如-istio-linkerd)
     - [3.2 Serverless 框架 (例如 Knative)](#32-serverless-框架-例如-knative)
-  - [4 . 安全性方面的形式化考虑](#4-安全性方面的形式化考虑)
+  - [4. 安全性方面的形式化考虑](#4-安全性方面的形式化考虑)
     - [4.1 Kubernetes NetworkPolicies](#41-kubernetes-networkpolicies)
     - [4.2 RBAC (Role-Based Access Control)](#42-rbac-role-based-access-control)
-  - [5 . 元模型在实践中的应用：Kubernetes CRDs](#5-元模型在实践中的应用kubernetes-crds)
-  - [1 . 更具体的 Rust 代码示例深化](#1-更具体的-rust-代码示例深化)
+  - [5. 元模型在实践中的应用：Kubernetes CRDs](#5-元模型在实践中的应用kubernetes-crds)
+  - [1. 更具体的 Rust 代码示例深化](#1-更具体的-rust-代码示例深化)
     - [1.1 Kubernetes Operator (`kube-rs`): `MyWebApp` 状态条件管理与错误处理](#11-kubernetes-operator-kube-rs-mywebapp-状态条件管理与错误处理)
     - [1.2 Docker (`bollard`): 容器 I/O 流处理](#12-docker-bollard-容器-io-流处理)
-  - [2 . 特定组件的形式化建模深化：Docker 镜像分层与构建](#2-特定组件的形式化建模深化docker-镜像分层与构建)
-  - [3 . 与其他云原生技术的关联与扩展深化](#3-与其他云原生技术的关联与扩展深化)
+  - [2. 特定组件的形式化建模深化：Docker 镜像分层与构建](#2-特定组件的形式化建模深化docker-镜像分层与构建)
+  - [3. 与其他云原生技术的关联与扩展深化](#3-与其他云原生技术的关联与扩展深化)
     - [3.1 Istio: Canary Deployment 流量路由](#31-istio-canary-deployment-流量路由)
-  - [4 . 安全性方面的形式化考虑深化](#4-安全性方面的形式化考虑深化)
+  - [4. 安全性方面的形式化考虑深化](#4-安全性方面的形式化考虑深化)
     - [4.1 Kubernetes NetworkPolicy: 简单场景的图模型与可达性分析](#41-kubernetes-networkpolicy-简单场景的图模型与可达性分析)
-  - [5 . 元模型在实践中的应用：Kubernetes CRDs 深化](#5-元模型在实践中的应用kubernetes-crds-深化)
+  - [5. 元模型在实践中的应用：Kubernetes CRDs 深化](#5-元模型在实践中的应用kubernetes-crds-深化)
     - [5.1 CRD `status` 子资源与控制器对 `conditions` 的管理](#51-crd-status-子资源与控制器对-conditions-的管理)
     - [5.2 CRD Validation Webhooks](#52-crd-validation-webhooks)
-  - [1 . 更具体的 Rust 代码示例深化（续）](#1-更具体的-rust-代码示例深化续)
+  - [1. 更具体的 Rust 代码示例深化（续）](#1-更具体的-rust-代码示例深化续)
     - [1.1 Kubernetes Operator (`kube-rs`): `MyWebApp` 终结器 (Finalizer) 管理](#11-kubernetes-operator-kube-rs-mywebapp-终结器-finalizer-管理)
-  - [2 . 特定组件的形式化建模深化（续）](#2-特定组件的形式化建模深化续)
+  - [2. 特定组件的形式化建模深化（续）](#2-特定组件的形式化建模深化续)
     - [2.1 Kubernetes `StatefulSet` 的有序性与唯一性保证](#21-kubernetes-statefulset-的有序性与唯一性保证)
-  - [3 . 与其他云原生技术的关联与扩展深化（续）](#3-与其他云原生技术的关联与扩展深化续)
+  - [3. 与其他云原生技术的关联与扩展深化（续）](#3-与其他云原生技术的关联与扩展深化续)
     - [3.1 Knative Eventing: Broker 与 Trigger 的事件路由和过滤](#31-knative-eventing-broker-与-trigger-的事件路由和过滤)
-  - [4 . 安全性方面的形式化考虑深化（续）](#4-安全性方面的形式化考虑深化续)
+  - [4. 安全性方面的形式化考虑深化（续）](#4-安全性方面的形式化考虑深化续)
     - [4.1 Kubernetes RBAC: 权限升级路径检测](#41-kubernetes-rbac-权限升级路径检测)
-  - [5 . 元模型在实践中的应用：Kubernetes CRDs 深化（续）](#5-元模型在实践中的应用kubernetes-crds-深化续)
+  - [5. 元模型在实践中的应用：Kubernetes CRDs 深化（续）](#5-元模型在实践中的应用kubernetes-crds-深化续)
     - [5.1 CRD Schema 演进与版本转换 (Conversion Webhooks)](#51-crd-schema-演进与版本转换-conversion-webhooks)
-  - [1 . 更具体的 Rust 代码示例深化（再续）](#1-更具体的-rust-代码示例深化再续)
+  - [1. 更具体的 Rust 代码示例深化（再续）](#1-更具体的-rust-代码示例深化再续)
     - [1.1 Kubernetes Operator (`kube-rs`): Leader Election 实现与重要性](#11-kubernetes-operator-kube-rs-leader-election-实现与重要性)
-  - [2 . 特定组件的形式化建模深化（再续）](#2-特定组件的形式化建模深化再续)
+  - [2. 特定组件的形式化建模深化（再续）](#2-特定组件的形式化建模深化再续)
     - [2.1 Docker 构建缓存的形式化规则与失效分析](#21-docker-构建缓存的形式化规则与失效分析)
-  - [4 . 安全性方面的形式化考虑深化（再续）](#4-安全性方面的形式化考虑深化再续)
-    - [4.1 Kubernetes Pod 安全策略 (PodSecurityPolicy - PSP) / Pod 安全准入 (Pod Security Admission - PSA) 的形式化规则表达](#41-kubernetes-pod-安全策略-podsecuritypolicy---psp-pod-安全准入-pod-security-admission---psa-的形式化规则表达)
-  - [5 . 元模型在实践中的应用：Kubernetes CRDs 深化（再续）](#5-元模型在实践中的应用kubernetes-crds-深化再续)
+  - [4. 安全性方面的形式化考虑深化（再续）](#4-安全性方面的形式化考虑深化再续)
+    - [4.1 Kubernetes Pod 安全策略 (PodSecurityPolicy - PSP) / Pod 安全准入 (Pod Security Admission - PSA) 的形式化规则表达](#41-kubernetes-pod-安全策略-podsecuritypolicy---psp--pod-安全准入-pod-security-admission---psa-的形式化规则表达)
+  - [5. 元模型在实践中的应用：Kubernetes CRDs 深化（再续）](#5-元模型在实践中的应用kubernetes-crds-深化再续)
     - [5.1 CRD 打印列 (`additionalPrinterColumns`) 与服务端打印](#51-crd-打印列-additionalprintercolumns-与服务端打印)
-  - [1 . 更具体的 Rust 代码示例深化（再再续）](#1-更具体的-rust-代码示例深化再再续)
+  - [1. 更具体的 Rust 代码示例深化（再再续）](#1-更具体的-rust-代码示例深化再再续)
     - [1.1 Kubernetes Operator (`kube-rs`): 自定义资源的事件记录与 `Recorder`](#11-kubernetes-operator-kube-rs-自定义资源的事件记录与-recorder)
-  - [2 . 特定组件的形式化建模深化（再再续）](#2-特定组件的形式化建模深化再再续)
+  - [2. 特定组件的形式化建模深化（再再续）](#2-特定组件的形式化建模深化再再续)
     - [2.1 多阶段构建 (Multi-Stage Builds) 中的 Docker 缓存行为](#21-多阶段构建-multi-stage-builds-中的-docker-缓存行为)
-  - [3 . 与其他云原生技术的关联与扩展深化（再再续）](#3-与其他云原生技术的关联与扩展深化再再续)
+  - [3. 与其他云原生技术的关联与扩展深化（再再续）](#3-与其他云原生技术的关联与扩展深化再再续)
     - [3.1 Service Mesh (Istio/Linkerd): mTLS (双向TLS) 的实现机制与模型抽象](#31-service-mesh-istiolinkerd-mtls-双向tls-的实现机制与模型抽象)
-  - [4 . 安全性方面的形式化考虑深化（再再续）](#4-安全性方面的形式化考虑深化再再续)
+  - [4. 安全性方面的形式化考虑深化（再再续）](#4-安全性方面的形式化考虑深化再再续)
     - [4.1 Kubernetes Secret 的静态加密 (Encryption at Rest) 与信封加密 (Envelope Encryption)](#41-kubernetes-secret-的静态加密-encryption-at-rest-与信封加密-envelope-encryption)
 
 ---
@@ -516,7 +516,7 @@ Kubernetes API 本身在某种程度上可以看作是一个具体的元模型�
     - 用 Rust 编写的应用程序可以被打包成 Docker 镜像，并在 Kubernetes 上部署和运行，受益于 Rust 的性能和低资源消耗。
 
 **在形式模型的语境下**：
-虽然 Rust 本身不直接用于 *定义* Docker 或 Kubernetes 的形式模型 (这通常是数学或逻辑符号的工作)，但用 Rust 编写的客户端或控制器是这些模型在实际操作中的 *交互者* 或 *实现者*。Rust 程序的正确性和可靠性对于确保系统按照模型预期的行为运行至关重要。例如，一个用 Rust 编写的 Kubernetes Operator 的逻辑，如果能被证明是正确的（相对于其要管理的应用的状态模型），那么就能提高整个应用管理的可靠性。
+虽然 Rust 本身不直接用于 _定义_ Docker 或 Kubernetes 的形式模型 (这通常是数学或逻辑符号的工作)，但用 Rust 编写的客户端或控制器是这些模型在实际操作中的 _交互者_ 或 _实现者_。Rust 程序的正确性和可靠性对于确保系统按照模型预期的行为运行至关重要。例如，一个用 Rust 编写的 Kubernetes Operator 的逻辑，如果能被证明是正确的（相对于其要管理的应用的状态模型），那么就能提高整个应用管理的可靠性。
 
 ---
 
@@ -1627,7 +1627,7 @@ spec:
   - `backend-pod` (N_b)
   - `db-pod` (N_d)
   - (可选) `kube-dns-pod` (N_dns)
-- **边 (E)**: (源, 目标, 端口, 协议) - 代表 *潜在的允许连接*。
+- **边 (E)**: (源, 目标, 端口, 协议) - 代表 _潜在的允许连接_。
   - 边的构建基于解析 `NetworkPolicy` 规则。
   - **Ingress 规则**: 如果策略 P 选择目标 Pod T，并允许来自源 Pod S 的流量到端口 X，则添加一条从 S 到 T 的边 `(S, T, X, TCP/UDP)`。
   - **Egress 规则**: 如果策略 P 选择源 Pod S，并允许其访问目标 T 的端口 X，则添加一条从 S 到 T 的边 `(S, T, X, TCP/UDP)`。
@@ -2116,7 +2116,7 @@ Knative Eventing 提供了一种声明式的方式来创建事件驱动的架构
 5. **获取 Secrets**:
     - 如果能获取包含服务账户令牌、API 密钥或其他凭证的 `Secrets`，尤其是那些属于高权限组件或用户的 Secrets，就可以利用这些凭证进行提权。例如，获取 `kube-system` 下某些服务账户的 token。
 6. **`escalate` 动词**:
-    - `Role` 规则中的 `escalate` 动词允许主体创建或更新一个绑定，该绑定授予的权限 *不超过* 该主体当前已拥有的所有权限，并且该绑定不会将权限授予该主体自身。这旨在防止用户通过创建绑定来授予自己比当前拥有的更多权限。如果这个机制被绕过或配置不当，也可能导致问题。
+    - `Role` 规则中的 `escalate` 动词允许主体创建或更新一个绑定，该绑定授予的权限 _不超过_ 该主体当前已拥有的所有权限，并且该绑定不会将权限授予该主体自身。这旨在防止用户通过创建绑定来授予自己比当前拥有的更多权限。如果这个机制被绕过或配置不当，也可能导致问题。
 7. **CRD 控制器权限**:
     - 如果一个自定义控制器 (Operator) 的服务账户权限过高，而用户有权限创建或修改该控制器管理的自定义资源 (CR)，用户可能通过构造恶意的 CR 来间接利用控制器的权限执行越权操作。
 

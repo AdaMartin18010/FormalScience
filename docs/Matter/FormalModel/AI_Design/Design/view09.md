@@ -367,25 +367,25 @@ AI无法完全取代人类，尤其是在处理未知情况、复杂决策和伦
 
 1. **Level N (高层): 定义业务目标与约束**
     - 明确系统需解决的核心业务问题、SLA要求、成本限制等。
-    - *形式化*: 定义目标函数 \(O(S)\)。
+    - _形式化_: 定义目标函数 \(O(S)\)。
 2. **Level N-1: 识别核心分布式属性**
     - 根据业务目标选择关键属性（如强一致性 vs. 高可用性）。
-    - *形式化*: 确定系统需满足的属性 P (e.g., Linearizability)。
+    - _形式化_: 确定系统需满足的属性 P (e.g., Linearizability)。
 3. **Level N-2: 选择核心算法与协议**
     - 选择满足属性要求的分布式算法（如 Raft 实现强一致性复制）。
-    - *算法*: 选择 Consensus, Replication 算法。
+    - _算法_: 选择 Consensus, Replication 算法。
 4. **Level N-3: 应用设计模式**
     - 应用分布式设计模式解决特定问题（如 Saga 处理分布式事务，Circuit Breaker 提高韧性）。
-    - *设计模式*: 应用 Saga, Circuit Breaker 等。
+    - _设计模式_: 应用 Saga, Circuit Breaker 等。
 5. **Level N-4: 工程实践与实现**
     - 进行具体的工程实现，遵循最佳实践（IaC, CI/CD, Testing）。
-    - *工程实践*: 编写代码, 配置 K8s, 设置 CI/CD。
+    - _工程实践_: 编写代码, 配置 K8s, 设置 CI/CD。
 6. **Level N-5: 集成AI与人工协同**
     - 设计AI模型和HITL流程，嵌入到系统中。
-    - *AI/HITL*: 设计 AIOps 规则, HITL 异常处理流程。
+    - _AI/HITL_: 设计 AIOps 规则, HITL 异常处理流程。
 7. **Level N-6: 部署、监控与反馈**
     - 部署系统，建立监控体系，收集数据。
-    - *运维*: 部署, 监控, 收集 Metrics/Logs/Traces。
+    - _运维_: 部署, 监控, 收集 Metrics/Logs/Traces。
 8. **反馈循环**: 将运行数据反馈到上层，进行评估和调整（返回 Level N 或更高）。
 
 ### 8.2 跨层级权衡 (Trade-offs)

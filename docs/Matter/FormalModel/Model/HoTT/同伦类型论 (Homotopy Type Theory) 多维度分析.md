@@ -218,7 +218,7 @@ struct Vec<T, N> {
 // 实现向量连接，保持长度信息
 impl<T, N, M> Add<Vec<T, M>> for Vec<T, N> {
     type Output = Vec<T, Sum<N, M>>;
-    
+
     fn add(self, other: Vec<T, M>) -> Self::Output {
         // 实现连接逻辑
         // ...
@@ -415,8 +415,8 @@ trait IsConnected<N, M> {
 }
 
 // 定义推出序列
-struct PushoutSequence<A, B, C, F, G> 
-where 
+struct PushoutSequence<A, B, C, F, G>
+where
     F: Fn(C) -> A,
     G: Fn(C) -> B
 {

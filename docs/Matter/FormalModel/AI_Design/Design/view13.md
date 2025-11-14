@@ -156,7 +156,7 @@ Server = □_{i=1}^{N} (request.i → process → response.i → Server)
 分布式锁算法可以形式化为：
 
 ```math
-acquire(lock) = try → (success → CS → release → acquire(lock) 
+acquire(lock) = try → (success → CS → release → acquire(lock)
                       □ fail → wait → acquire(lock))
 ```
 
@@ -250,11 +250,11 @@ interface IDataRepository {
 
 class BusinessService {
   private IDataRepository repository;
-  
+
   BusinessService(IDataRepository repo) {
     this.repository = repo;
   }
-  
+
   Result Process(Request req) {
     // 业务逻辑
   }
@@ -293,7 +293,7 @@ AI组件集成可以通过多种架构模式实现：
 1. **微服务模式**：AI作为独立服务通过API集成
 
    ```math
-   AIService = { 
+   AIService = {
      Endpoints: {predict, train, evaluate},
      Dependencies: {DataService, ModelRegistry}
    }
@@ -360,7 +360,7 @@ Accept(n, v) → Accepted(n, v)
 **Raft算法**则以状态机复制为核心，定义三种状态（Follower、Candidate、Leader）和状态转换规则：
 
 ```math
-State(node) = 
+State(node) =
   if timeout && State(node) = Follower → Candidate
   if majority votes && State(node) = Candidate → Leader
   if higher term discovered → Follower
@@ -887,7 +887,7 @@ else:
 
 ```math
 Market Data → Preprocessing → ML Models → Decision Engine → Execution
-                    ↑                 ↑  
+                    ↑                 ↑
          Historical Data Store         Risk Management
 ```
 
