@@ -1,46 +1,43 @@
-# Rust容器类型详解
-
-Rust提供了丰富的容器类型，每种容器都有其特定的用途和性能特点。
-下面我将按照不同的分类详细解释这些容器类型，并提供使用案例。
+# 1. Rust容器类型详解
 
 ## 目录
 
-- [Rust容器类型详解](#rust容器类型详解)
+- [1. Rust容器类型详解](#1-rust容器类型详解)
   - [目录](#目录)
-  - [一、序列容器](#一序列容器)
-    - [1. `Vec<T>` - 动态数组](#1-vect---动态数组)
-    - [2. `VecDeque<T>` - 双端队列](#2-vecdequet---双端队列)
-    - [3. `LinkedList<T>` - 双向链表](#3-linkedlistt---双向链表)
-  - [二、关联容器](#二关联容器)
-    - [1. HashMap\<K, V\> - 哈希映射](#1-hashmapk-v---哈希映射)
-    - [2. BTreeMap\<K, V\> - 有序映射](#2-btreemapk-v---有序映射)
-    - [3. `HashSet<T>` - 哈希集合](#3-hashsett---哈希集合)
-    - [4. `BTreeSet<T>` - 有序集合](#4-btreesett---有序集合)
-  - [三、特殊容器](#三特殊容器)
-    - [1. `BinaryHeap<T>` - 二叉堆（优先队列）](#1-binaryheapt---二叉堆优先队列)
-    - [2. String - 字符串](#2-string---字符串)
-  - [四、智能指针容器](#四智能指针容器)
-    - [1. `Box<T>` - 堆分配值](#1-boxt---堆分配值)
-    - [2. `Rc<T>` - 引用计数指针](#2-rct---引用计数指针)
-    - [3. `Arc<T>` - 原子引用计数指针](#3-arct---原子引用计数指针)
-    - [4. `Cell<T>` 和 `RefCell<T>` - 内部可变性](#4-cellt-和-refcellt---内部可变性)
-  - [五、并发容器](#五并发容器)
-    - [1. `Mutex<T>` - 互斥锁](#1-mutext---互斥锁)
-    - [2. `RwLock<T>` - 读写锁](#2-rwlockt---读写锁)
-    - [3. `Atomic`类型](#3-atomic类型)
-  - [六、特殊用途容器](#六特殊用途容器)
-    - [1. `Option<T>` - 可选值](#1-optiont---可选值)
-    - [2. `Result<T, E>` - 成功或错误](#2-resultt-e---成功或错误)
-  - [容器类型使用规范与用途总结](#容器类型使用规范与用途总结)
-  - [选择容器的一般原则](#选择容器的一般原则)
-  - [各容器类型的最佳用途](#各容器类型的最佳用途)
-  - [容器性能比较](#容器性能比较)
-  - [内存使用考虑](#内存使用考虑)
-  - [最佳实践](#最佳实践)
+  - [1.1 一、序列容器](#11-一序列容器)
+    - [1.1.1 `Vec<T>` - 动态数组](#111-vect---动态数组)
+    - [1.1.2 `VecDeque<T>` - 双端队列](#112-vecdequet---双端队列)
+    - [1.1.3 `LinkedList<T>` - 双向链表](#113-linkedlistt---双向链表)
+  - [1.2 二、关联容器](#12-二关联容器)
+    - [1.2.1 HashMap\<K, V\> - 哈希映射](#121-hashmapk-v---哈希映射)
+    - [1.2.2 BTreeMap\<K, V\> - 有序映射](#122-btreemapk-v---有序映射)
+    - [1.2.3 `HashSet<T>` - 哈希集合](#123-hashsett---哈希集合)
+    - [1.2.4 `BTreeSet<T>` - 有序集合](#124-btreesett---有序集合)
+  - [1.3 三、特殊容器](#13-三特殊容器)
+    - [1.3.1 `BinaryHeap<T>` - 二叉堆（优先队列）](#131-binaryheapt---二叉堆优先队列)
+    - [1.3.2 String - 字符串](#132-string---字符串)
+  - [1.4 四、智能指针容器](#14-四智能指针容器)
+    - [1.4.1 `Box<T>` - 堆分配值](#141-boxt---堆分配值)
+    - [1.4.2 `Rc<T>` - 引用计数指针](#142-rct---引用计数指针)
+    - [1.4.3 `Arc<T>` - 原子引用计数指针](#143-arct---原子引用计数指针)
+    - [1.4.4 `Cell<T>` 和 `RefCell<T>` - 内部可变性](#144-cellt-和-refcellt---内部可变性)
+  - [1.5 五、并发容器](#15-五并发容器)
+    - [1.5.1 `Mutex<T>` - 互斥锁](#151-mutext---互斥锁)
+    - [1.5.2 `RwLock<T>` - 读写锁](#152-rwlockt---读写锁)
+    - [1.5.3 `Atomic`类型](#153-atomic类型)
+  - [1.6 六、特殊用途容器](#16-六特殊用途容器)
+    - [1.6.1 `Option<T>` - 可选值](#161-optiont---可选值)
+    - [1.6.2 `Result<T, E>` - 成功或错误](#162-resultt-e---成功或错误)
+  - [1.7 容器类型使用规范与用途总结](#17-容器类型使用规范与用途总结)
+  - [1.8 选择容器的一般原则](#18-选择容器的一般原则)
+  - [1.9 各容器类型的最佳用途](#19-各容器类型的最佳用途)
+  - [1.10 容器性能比较](#110-容器性能比较)
+  - [1.11 内存使用考虑](#111-内存使用考虑)
+  - [1.12 最佳实践](#112-最佳实践)
 
-## 一、序列容器
+## 1.1 一、序列容器
 
-### 1. `Vec<T>` - 动态数组
+### 1.1.1 `Vec<T>` - 动态数组
 
 ```rust
 // 创建与初始化
@@ -76,7 +73,7 @@ numbers.shrink_to_fit();  // 收缩到实际大小
 - 需要在末尾频繁添加/删除元素
 - 作为栈使用
 
-### 2. `VecDeque<T>` - 双端队列
+### 1.1.2 `VecDeque<T>` - 双端队列
 
 ```rust
 use std::collections::VecDeque;
@@ -108,7 +105,7 @@ queue.rotate_right(1); // 右旋1个位置
 - 实现缓冲区
 - 滑动窗口算法
 
-### 3. `LinkedList<T>` - 双向链表
+### 1.1.3 `LinkedList<T>` - 双向链表
 
 ```rust
 use std::collections::LinkedList;
@@ -139,9 +136,9 @@ for item in &list {
 - 实现需要频繁拆分/合并的数据结构
 - 不需要随机访问的场景
 
-## 二、关联容器
+## 1.2 二、关联容器
 
-### 1. HashMap<K, V> - 哈希映射
+### 1.2.1 HashMap<K, V> - 哈希映射
 
 ```rust
 use std::collections::HashMap;
@@ -184,7 +181,7 @@ scores.shrink_to_fit();
 - 缓存实现
 - 计数器和频率统计
 
-### 2. BTreeMap<K, V> - 有序映射
+### 1.2.2 BTreeMap<K, V> - 有序映射
 
 ```rust
 use std::collections::BTreeMap;
@@ -225,7 +222,7 @@ let mut upper = map.split_off(&3);  // 键>=3的部分
 - 需要找到最大/最小键
 - 内存受限环境（比HashMap更节省空间）
 
-### 3. `HashSet<T>` - 哈希集合
+### 1.2.3 `HashSet<T>` - 哈希集合
 
 ```rust
 use std::collections::HashSet;
@@ -263,7 +260,7 @@ if set.is_subset(&union) {
 - 集合运算（交集、并集等）
 - 成员资格测试
 
-### 4. `BTreeSet<T>` - 有序集合
+### 1.2.4 `BTreeSet<T>` - 有序集合
 
 ```rust
 use std::collections::BTreeSet;
@@ -300,9 +297,9 @@ let mut upper = set.split_off(&4);  // 值>=4的部分
 - 需要找到最大/最小值
 - 有序数据去重
 
-## 三、特殊容器
+## 1.3 三、特殊容器
 
-### 1. `BinaryHeap<T>` - 二叉堆（优先队列）
+### 1.3.1 `BinaryHeap<T>` - 二叉堆（优先队列）
 
 ```rust
 use std::collections::BinaryHeap;
@@ -338,7 +335,7 @@ if let Some(Reverse(min)) = min_heap.pop() {
 - 图算法（如Dijkstra算法）
 - 事件处理系统
 
-### 2. String - 字符串
+### 1.3.2 String - 字符串
 
 ```rust
 // 创建
@@ -377,9 +374,9 @@ for b in s.bytes() {
 - 动态构建字符串
 - 国际化文本（UTF-8编码）
 
-## 四、智能指针容器
+## 1.4 四、智能指针容器
 
-### 1. `Box<T>` - 堆分配值
+### 1.4.1 `Box<T>` - 堆分配值
 
 ```rust
 // 创建
@@ -405,7 +402,7 @@ let value = *b;  // 如果T实现了Copy trait
 - 堆分配大对象
 - 转移所有权而不是复制数据
 
-### 2. `Rc<T>` - 引用计数指针
+### 1.4.2 `Rc<T>` - 引用计数指针
 
 ```rust
 use std::rc::Rc;
@@ -431,7 +428,7 @@ println!("第一个元素: {}", data[0]);
 - 实现图形结构
 - 避免大数据复制
 
-### 3. `Arc<T>` - 原子引用计数指针
+### 1.4.3 `Arc<T>` - 原子引用计数指针
 
 ```rust
 use std::sync::Arc;
@@ -461,7 +458,7 @@ thread2.join().unwrap();
 - 实现线程安全的缓存
 - 并发数据结构
 
-### 4. `Cell<T>` 和 `RefCell<T>` - 内部可变性
+### 1.4.4 `Cell<T>` 和 `RefCell<T>` - 内部可变性
 
 ```rust
 use std::cell::{Cell, RefCell};
@@ -485,9 +482,9 @@ println!("长度: {}", v.len());
 - 实现自引用数据结构
 - 模拟垃圾回收行为
 
-## 五、并发容器
+## 1.5 五、并发容器
 
-### 1. `Mutex<T>` - 互斥锁
+### 1.5.1 `Mutex<T>` - 互斥锁
 
 ```rust
 use std::sync::{Mutex, Arc};
@@ -521,7 +518,7 @@ println!("结果: {}", *counter.lock().unwrap());
 - 实现线程安全的数据结构
 - 资源互斥访问
 
-### 2. `RwLock<T>` - 读写锁
+### 1.5.2 `RwLock<T>` - 读写锁
 
 ```rust
 use std::sync::{RwLock, Arc};
@@ -555,7 +552,7 @@ writer.join().unwrap();
 - 实现线程安全的缓存
 - 数据库连接池
 
-### 3. `Atomic`类型
+### 1.5.3 `Atomic`类型
 
 ```rust
 use std::sync::atomic::{AtomicI32, Ordering};
@@ -589,9 +586,9 @@ println!("结果: {}", counter.load(Ordering::SeqCst));
 - 计数器和标志位
 - 高性能并发数据结构
 
-## 六、特殊用途容器
+## 1.6 六、特殊用途容器
 
-### 1. `Option<T>` - 可选值
+### 1.6.1 `Option<T>` - 可选值
 
 ```rust
 // 创建
@@ -623,7 +620,7 @@ let result = some_value.ok_or("没有值");  // Option<T> -> Result<T, E>
 - 函数返回值可能为空
 - 避免使用null
 
-### 2. `Result<T, E>` - 成功或错误
+### 1.6.2 `Result<T, E>` - 成功或错误
 
 ```rust
 use std::fs::File;
@@ -662,9 +659,9 @@ fn read_file() -> Result<String, io::Error> {
 - 可能失败的操作
 - 函数返回值
 
-## 容器类型使用规范与用途总结
+## 1.7 容器类型使用规范与用途总结
 
-## 选择容器的一般原则
+## 1.8 选择容器的一般原则
 
 1. **访问模式**：
    - 随机访问 → Vec
@@ -689,7 +686,7 @@ fn read_file() -> Result<String, io::Error> {
    - 多线程共享不可变数据 → Arc<容器>
    - 多线程共享可变数据 → Arc<Mutex<容器>> 或 Arc<RwLock<容器>>
 
-## 各容器类型的最佳用途
+## 1.9 各容器类型的最佳用途
 
 | 容器类型 | 最佳用途 | 避免使用场景 |
 |:----:|:----|:----|
@@ -708,7 +705,7 @@ fn read_file() -> Result<String, io::Error> {
 | `Cell/RefCell` | 内部可变性(单线程) | 多线程场景 |
 | `Mutex/RwLock` | 多线程可变共享 | 单线程场景(有性能开销) |
 
-## 容器性能比较
+## 1.10 容器性能比较
 
 | 操作 | Vec | VecDeque | LinkedList | HashMap | BTreeMap | HashSet | BTreeSet | BinaryHeap |
 |:----:|:----|:----|:----|:----|:----|:----|:----|:----|
@@ -722,7 +719,7 @@ fn read_file() -> Result<String, io::Error> {
 *平均情况，最坏O(n)
 **需要先找到位置，查找是O(n)
 
-## 内存使用考虑
+## 1.11 内存使用考虑
 
 1. **内存开销**：
    - HashMap/HashSet: 有额外的哈希表开销
@@ -735,7 +732,7 @@ fn read_file() -> Result<String, io::Error> {
    - LinkedList: 分散内存，缓存不友好
    - HashMap/BTreeMap: 复杂内存布局
 
-## 最佳实践
+## 1.12 最佳实践
 
 1. **默认选择Vec**：除非有特定需求，Vec通常是最佳选择
 2. **基于需求选择**：根据访问模式和操作频率选择合适的容器

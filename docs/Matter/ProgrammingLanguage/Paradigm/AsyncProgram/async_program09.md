@@ -1,41 +1,41 @@
-# 同步与异步编程的批判性分析 (Rust/Tokio 视角)
+# 1. 同步与异步编程的批判性分析 (Rust/Tokio 视角)
 
 ## 目录
 
-- [同步与异步编程的批判性分析 (Rust/Tokio 视角)](#同步与异步编程的批判性分析-rusttokio-视角)
+- [1. 同步与异步编程的批判性分析 (Rust/Tokio 视角)](#1-同步与异步编程的批判性分析-rusttokio-视角)
   - [目录](#目录)
-  - [思维导图 (Text 格式)](#思维导图-text-格式)
-  - [1. 核心概念与定义](#1-核心概念与定义)
-  - [2. 形式化视角与关系](#2-形式化视角与关系)
-  - [3. 批判性分析：优缺点与权衡](#3-批判性分析优缺点与权衡)
-  - [4. 调度机制](#4-调度机制)
-  - [5. 现实世界拟合性与设计模式](#5-现实世界拟合性与设计模式)
-  - [6. Rust/Tokio 视角：设计、架构与组织](#6-rusttokio-视角设计架构与组织)
-  - [7. 结论与展望](#7-结论与展望)
-  - [8. `Pin` 与内存安全：深入理解](#8-pin-与内存安全深入理解)
-  - [9. 结构化并发 (Structured Concurrency)](#9-结构化并发-structured-concurrency)
-  - [10. Async Traits (异步特征)](#10-async-traits-异步特征)
-  - [11. 异步错误处理策略](#11-异步错误处理策略)
-  - [12. Tokio 运行时内部概念 (高层视角)](#12-tokio-运行时内部概念-高层视角)
-  - [13. 请求-响应模式 (Request-Response)](#13-请求-响应模式-request-response)
-  - [14. 工作队列/任务处理模式 (Worker Queue / Job Processing)](#14-工作队列任务处理模式-worker-queue--job-processing)
-  - [15. 事件驱动架构 (Event-Driven Architecture - EDA)](#15-事件驱动架构-event-driven-architecture---eda)
-  - [16. Actor 模型](#16-actor-模型)
-  - [17. 流处理/数据管道 (Streaming / Data Pipelines)](#17-流处理数据管道-streaming--data-pipelines)
-  - [18. 扇出/扇入模式 (Fan-out / Fan-in)](#18-扇出扇入模式-fan-out--fan-in)
-  - [19. 断路器模式 (Circuit Breaker)](#19-断路器模式-circuit-breaker)
-  - [20. 速率限制/节流模式 (Rate Limiting / Throttling)](#20-速率限制节流模式-rate-limiting--throttling)
-  - [21. 超时模式 (Timeout)](#21-超时模式-timeout)
-  - [21. 可观察性 (Observability) - 跨模式的关键考量](#21-可观察性-observability---跨模式的关键考量)
-  - [22. 优雅停机 (Graceful Shutdown)](#22-优雅停机-graceful-shutdown)
-  - [23. 健康检查 (Health Checks)](#23-健康检查-health-checks)
-  - [24. 配置管理 (Configuration Management)](#24-配置管理-configuration-management)
-  - [25. 异步状态管理 (Asynchronous State Management)](#25-异步状态管理-asynchronous-state-management)
-  - [26. 异步测试策略 (Asynchronous Testing Strategies)](#26-异步测试策略-asynchronous-testing-strategies)
-  - [27. 异步错误处理深度探讨 (Error Handling Deep Dive)](#27-异步错误处理深度探讨-error-handling-deep-dive)
-  - [28. 性能考量与优化 (Performance Considerations \& Optimization)](#28-性能考量与优化-performance-considerations--optimization)
+  - [1.1 思维导图 (Text 格式)](#11-思维导图-text-格式)
+  - [1.2 核心概念与定义](#12-核心概念与定义)
+  - [1.3 形式化视角与关系](#13-形式化视角与关系)
+  - [1.4 批判性分析：优缺点与权衡](#14-批判性分析优缺点与权衡)
+  - [1.5 调度机制](#15-调度机制)
+  - [1.6 现实世界拟合性与设计模式](#16-现实世界拟合性与设计模式)
+  - [1.7 Rust/Tokio 视角：设计、架构与组织](#17-rusttokio-视角设计架构与组织)
+  - [1.8 结论与展望](#18-结论与展望)
+  - [1.9 `Pin` 与内存安全：深入理解](#19-pin-与内存安全深入理解)
+  - [1.10 结构化并发 (Structured Concurrency)](#110-结构化并发-structured-concurrency)
+  - [1.11 Async Traits (异步特征)](#111-async-traits-异步特征)
+  - [1.12 异步错误处理策略](#112-异步错误处理策略)
+  - [1.13 Tokio 运行时内部概念 (高层视角)](#113-tokio-运行时内部概念-高层视角)
+  - [1.14 请求-响应模式 (Request-Response)](#114-请求-响应模式-request-response)
+  - [1.15 工作队列/任务处理模式 (Worker Queue / Job Processing)](#115-工作队列任务处理模式-worker-queue--job-processing)
+  - [1.16 事件驱动架构 (Event-Driven Architecture - EDA)](#116-事件驱动架构-event-driven-architecture---eda)
+  - [1.17 Actor 模型](#117-actor-模型)
+  - [1.18 流处理/数据管道 (Streaming / Data Pipelines)](#118-流处理数据管道-streaming--data-pipelines)
+  - [1.19 扇出/扇入模式 (Fan-out / Fan-in)](#119-扇出扇入模式-fan-out--fan-in)
+  - [1.20 断路器模式 (Circuit Breaker)](#120-断路器模式-circuit-breaker)
+  - [1.21 速率限制/节流模式 (Rate Limiting / Throttling)](#121-速率限制节流模式-rate-limiting--throttling)
+  - [1.22 超时模式 (Timeout)](#122-超时模式-timeout)
+  - [1.23 可观察性 (Observability) - 跨模式的关键考量](#123-可观察性-observability---跨模式的关键考量)
+  - [1.24 优雅停机 (Graceful Shutdown)](#124-优雅停机-graceful-shutdown)
+  - [1.25 健康检查 (Health Checks)](#125-健康检查-health-checks)
+  - [1.26 配置管理 (Configuration Management)](#126-配置管理-configuration-management)
+  - [1.27 异步状态管理 (Asynchronous State Management)](#127-异步状态管理-asynchronous-state-management)
+  - [1.28 异步测试策略 (Asynchronous Testing Strategies)](#128-异步测试策略-asynchronous-testing-strategies)
+  - [1.29 异步错误处理深度探讨 (Error Handling Deep Dive)](#129-异步错误处理深度探讨-error-handling-deep-dive)
+  - [1.30 性能考量与优化 (Performance Considerations \& Optimization)](#130-性能考量与优化-performance-considerations--optimization)
 
-## 思维导图 (Text 格式)
+## 1.1 思维导图 (Text 格式)
 
 ```text
 同步 vs. 异步编程 (Rust/Tokio 视角)
@@ -96,7 +96,7 @@
     |-- 展望: `io_uring`, 编译器优化, 更好的调试工具
 ```
 
-## 1. 核心概念与定义
+## 1.2 核心概念与定义
 
 - **1.1. 同步编程 (Synchronous Programming)**
   - **1.1.1. 定义与执行模型:** 指代码按顺序一行接一行执行。当遇到一个需要等待的操作（如文件读取、网络请求、数据库查询）时，执行线程会**阻塞**，直到该操作完成才能继续执行下一行代码。在多线程同步模型中，虽然可以有多个线程并发执行，但每个线程内部的执行流仍然是阻塞式的。
@@ -133,7 +133,7 @@
     }
     ```
 
-    *注意：* 上述代码需要你有 `file1.txt` 和 `file2.txt` 文件，否则会报错。`main` 函数会依次等待 `read_file_sync("file1.txt")` 和 `read_file_sync("file2.txt")` 完成。
+    _注意：_ 上述代码需要你有 `file1.txt` 和 `file2.txt` 文件，否则会报错。`main` 函数会依次等待 `read_file_sync("file1.txt")` 和 `read_file_sync("file2.txt")` 完成。
 
 - **1.2. 异步编程 (Asynchronous Programming)**
   - **1.2.1. 定义与执行模型:** 指代码启动一个可能耗时的操作后，**不阻塞**当前执行流，而是立即返回（通常返回一个代表未来结果的凭证，如 `Future`）。程序可以继续执行其他任务。当该操作完成时，程序会收到通知（通过事件循环或回调机制），然后可以处理该操作的结果。核心思想是“现在开始，稍后完成”（"start now, finish later"）。执行通常由一个**运行时(Runtime)**（如 Tokio）管理，它包含一个**事件循环(Event Loop)**和**调度器(Scheduler)**来管理和驱动众多异步任务。
@@ -181,13 +181,13 @@
     }
     ```
 
-    *注意：* 需要添加 `tokio = { version = "1", features = ["full"] }` 到 `Cargo.toml` 的 `[dependencies]` 下。你会观察到两个文件的读取和处理可能是**交错(interleaved)**执行的，因为它们是并发运行的，主线程在 `spawn` 后也并没有阻塞。
+    _注意：_ 需要添加 `tokio = { version = "1", features = ["full"] }` 到 `Cargo.toml` 的 `[dependencies]` 下。你会观察到两个文件的读取和处理可能是**交错(interleaved)**执行的，因为它们是并发运行的，主线程在 `spawn` 后也并没有阻塞。
   - **1.2.3. `Future` Trait 与状态机:** Rust 的异步核心是 `Future` trait。一个 `async fn` 在编译时会被转换成一个实现了 `Future` trait 的匿名类型（可以理解为一个状态机）。`Future` trait 有一个核心方法 `poll`。当运行时调用 `future.poll()` 时：
     - 如果 `Future` 可以立即完成，返回 `Poll::Ready(result)`。
     - 如果 `Future` 无法立即完成（例如，等待 I/O），它需要确保在未来某个时刻绪后能够通知运行时再次 `poll` 它（通过 `Waker` API），并返回 `Poll::Pending`。
         `.await` 关键字的作用就是在 `poll` 返回 `Pending` 时，暂停当前 `async fn` 的执行（保存其状态），并将控制权交还给运行时调度器，以便运行其他任务。
 
-## 2. 形式化视角与关系
+## 1.3 形式化视角与关系
 
 - **2.1. 逻辑流与控制流:**
   - 同步：逻辑流和控制流通常是一致的，代码的物理顺序直接反映了执行顺序。易于进行局部推理。
@@ -206,7 +206,7 @@
     - **死锁:** 多个任务相互等待对方持有的资源或完成信号，导致所有任务都无法继续。例如，任务 A `await` 任务 B 的结果，而任务 B `await` 任务 A 的结果。
     - **竞态条件:** 当多个任务并发访问共享的可变数据时，其最终结果取决于任务执行的确切时序。Rust 的 `Send` 和 `Sync` trait 以及所有权规则极大地减少了数据竞争的风险，但逻辑上的竞态（例如，检查后操作(check-then-act)跨 `await`）仍需注意。
 
-## 3. 批判性分析：优缺点与权衡
+## 1.4 批判性分析：优缺点与权衡
 
 - **3.1. 同步编程:**
   - **优点:**
@@ -231,7 +231,7 @@
     - **`async` 传染性:** 调用 `async` 函数通常需要你在 `async` 上下文中 `.await` 它，这会导致 `async` 关键字向上层传播。
     - **潜在的细微错误:** 例如，持有锁跨越 `.await` 可能导致死锁或长时间锁定；Future 被移动可能导致内部指针失效（`Pin` 试图解决此问题）。
 
-## 4. 调度机制
+## 1.5 调度机制
 
 - **4.1. 同步 (线程):** 通常依赖操作系统的**抢占式调度器**。OS 决定哪个线程何时运行，并可以在任何时候中断一个线程（时间片耗尽、更高优先级任务到达、I/O 阻塞）并切换到另一个线程。上下文切换由 OS 内核完成，开销相对较大。
 
@@ -241,7 +241,7 @@
   - **`Waker`:** 当一个 `Future` 等待的资源就绪时，资源的提供者（如 Tokio 的 I/O 驱动）会调用与该 `Future` 关联的 `Waker`，通知调度器该任务可以再次被 `poll`。
   - **工作窃取:** Tokio 使用 M:N 调度，即 M 个 OS 线程运行 N 个异步任务 (N >> M)。其调度器通常采用工作窃取策略：空闲的工作线程会尝试从其他忙碌线程的任务队列中“窃取”任务来执行，以提高负载均衡和 CPU 利用率。
 
-## 5. 现实世界拟合性与设计模式
+## 1.6 现实世界拟合性与设计模式
 
 - **5.1. 物理世界类比:**
   - **同步:** 像一个厨师严格按照菜谱一步步做菜，必须等水烧开才能进行下一步，期间不能做其他事。或者像打一个必须实时通话的电话。
@@ -255,7 +255,7 @@
     - **事件驱动架构:** 系统围绕异步事件的产生、检测和消费来构建。
     - **响应式编程 (Reactive Programming):** 处理异步数据流。
 
-## 6. Rust/Tokio 视角：设计、架构与组织
+## 1.7 Rust/Tokio 视角：设计、架构与组织
 
 - **6.1. 语言设计 (Rust):**
   - **`async/await`:** 作为语法糖，极大地简化了异步代码的书写，使其看起来更像同步代码，降低了心智负担（相比回调或手动组合 Future）。
@@ -273,7 +273,7 @@
   - **`Send` / `Sync`:** Rust 的所有权和借用系统，以及 `Send`（类型可以在线程间移动）和 `Sync`（类型可以被多线程安全共享引用）标记，确保了异步代码的并发安全性，极大地减少了数据竞争。异步任务和它们捕获的状态通常需要是 `Send` 的，如果要在任务间共享状态，则需要考虑 `Sync` 和适当的同步原语（如 `Mutex`, `RwLock`，通常使用 `tokio::sync` 下的异步版本）。
   - **非阻塞库:** 存在大量高质量的异步库，用于网络（`hyper`, `reqwest`, `tonic`）、数据库访问（`sqlx`, `redis-rs` async）、Web 框架（`axum`, `actix-web`, `warp`）等，它们都提供了基于 `Future` 的非阻塞 API。
 
-## 7. 结论与展望
+## 1.8 结论与展望
 
 - **7.1. 总结对比:** 同步编程简单直观，适合 CPU 密集型任务或简单脚本；异步编程复杂但高效，尤其适合 I/O 密集型和高并发场景。Rust 通过 `async/await` 努力弥合两者在表达力上的差距，同时通过其类型系统保证了强大的内存安全和并发安全。
 - **7.2. 适用场景选择:**
@@ -289,7 +289,7 @@
 
 好的，我们继续深入探讨几个与 Rust 异步编程相关的关键主题，进一步扩展之前的分析。
 
-## 8. `Pin` 与内存安全：深入理解
+## 1.9 `Pin` 与内存安全：深入理解
 
 我们在之前提到了 `Pin`，但它的重要性值得更深入的探讨，因为它直接关系到 Rust 异步编程的内存安全保证。
 
@@ -312,7 +312,7 @@
 - 它允许我们在栈上创建和轮询 Future（如果它们不移动），也允许我们在堆上（如 `Box::pin`）或通过其他方式固定 Future。
 - **批判:** `Pin/Unpin` 系统无疑增加了 Rust 异步编程的学习曲线和复杂性。理解其背后的原因和正确使用 `unsafe` 代码（如果需要手动实现 Future 或与 `Pin` 交互）是具有挑战性的。但这是为了在没有垃圾回收的情况下提供强大的内存安全保证所付出的代价。
 
-## 9. 结构化并发 (Structured Concurrency)
+## 1.10 结构化并发 (Structured Concurrency)
 
 - **9.1. 概念:**
 - 结构化并发是一种编程范式，旨在让并发操作的生命周期与代码的词法作用域（lexical scope）绑定。当程序的控制流退出一个作用域时，在该作用域内启动的所有并发任务都必须保证已经完成或被显式取消。
@@ -331,7 +331,7 @@
 - 社区中也有一些库（如 `async-scoped`）尝试提供更通用的结构化并发 API。
 - **挑战:** 在 Rust 中实现完全通用的结构化并发，特别是在与 `async` trait 结合时，存在一些生命周期和借用检查方面的挑战。
 
-## 10. Async Traits (异步特征)
+## 1.11 Async Traits (异步特征)
 
 - **10.1. 问题:**
 - 目前（截至 Rust 稳定版），你不能直接在 trait 定义中使用 `async fn` 语法。例如，以下代码无法编译：
@@ -379,7 +379,7 @@ trait AsyncProcessor {
 - **10.3. 未来展望:**
 - Rust 语言团队正在积极开发原生支持 trait 中的 `async fn`。目标是让 `async fn` 在 trait 中能够像在普通函数中一样自然使用，并尽可能地支持静态分发和零成本抽象。这是 Rust 异步生态成熟的关键一步。
 
-## 11. 异步错误处理策略
+## 1.12 异步错误处理策略
 
 - **11.1. `Result` 和 `?` 操作符:** 这是 Rust 中标准的错误处理方式，在异步代码中同样适用。`async fn` 可以返回 `Result<T, E>`，并且可以在内部使用 `?` 操作符来传播错误。
 
@@ -402,7 +402,7 @@ trait AsyncProcessor {
 
 - **11.5. 自定义错误类型:** 使用像 `thiserror` 或 `anyhow` 这样的库可以简化错误类型的定义和转换，这在异步代码中同样有用，有助于创建清晰、一致的错误处理策略。
 
-## 12. Tokio 运行时内部概念 (高层视角)
+## 1.13 Tokio 运行时内部概念 (高层视角)
 
 从软件设计和架构的角度来看，理解 Tokio 运行时的核心组件有助于把握其工作原理：
 
@@ -427,7 +427,7 @@ trait AsyncProcessor {
 
 好的，我们来探讨一些在 Rust 中利用异步编程（特别是 Tokio）构建应用程序时常见的具体架构模式。这些模式充分利用了异步非阻塞的特性来提高效率、并发性和响应性。
 
-## 13. 请求-响应模式 (Request-Response)
+## 1.14 请求-响应模式 (Request-Response)
 
 这是最经典也是最常见的异步应用场景。
 
@@ -447,7 +447,7 @@ trait AsyncProcessor {
         6. 生成响应，写入流 (`stream.write_all().await`)。
 - **考虑因素:** 错误处理（将内部错误映射到 HTTP 响应码）、超时处理、中间件逻辑（日志、认证、限流等）、连接管理。
 
-## 14. 工作队列/任务处理模式 (Worker Queue / Job Processing)
+## 1.15 工作队列/任务处理模式 (Worker Queue / Job Processing)
 
 用于将耗时或可延迟的任务从主应用流程中解耦出来，异步处理。
 
@@ -465,7 +465,7 @@ trait AsyncProcessor {
   - **消费者 (Worker):** 独立的 Tokio 任务或进程，在一个循环中从队列接收作业 (`queue_receiver.recv().await`)，然后 `await` 执行作业对应的异步逻辑。通常会 `tokio::spawn` 多个 Worker 任务来并行处理。
 - **考虑因素:** 作业持久化（进程内队列数据会丢失）、重试机制、失败处理（死信队列）、背压（backpressure，当队列满或消费者处理不过来时如何处理）、作业优先级、分布式环境下的事务性。
 
-## 15. 事件驱动架构 (Event-Driven Architecture - EDA)
+## 1.16 事件驱动架构 (Event-Driven Architecture - EDA)
 
 组件之间通过异步发送和接收事件进行通信，而不是直接调用。
 
@@ -482,7 +482,7 @@ trait AsyncProcessor {
   - **事件消费者/监听器:** 独立的 Tokio 任务，订阅感兴趣的事件类型，在循环中接收事件 (`event_subscriber.recv().await`) 并执行相应的处理逻辑 (`async fn handle_event(...)`)。
 - **考虑因素:** 事件模式定义与演化、事件最终一致性、处理顺序保证（通常较难）、分布式事务、监控和追踪跨多个组件的事件流。
 
-## 16. Actor 模型
+## 1.17 Actor 模型
 
 将状态和行为封装在独立的、并发的“Actor”中，它们之间通过异步消息传递进行通信。
 
@@ -497,7 +497,7 @@ trait AsyncProcessor {
   - **地址/句柄:** 需要一种方式来获取 Actor 的邮箱发送端 (`Sender`)，以便其他 Actor 可以向它发送消息。
 - **考虑因素:** 消息协议设计、潜在的死锁（Actor A 等待 Actor B，Actor B 等待 Actor A）、邮箱大小和背压、监督策略的实现、Actor 的粒度（过细或过粗）。
 
-## 17. 流处理/数据管道 (Streaming / Data Pipelines)
+## 1.18 流处理/数据管道 (Streaming / Data Pipelines)
 
 处理连续的、可能是无限的数据流。
 
@@ -513,7 +513,7 @@ trait AsyncProcessor {
   - **示例:** 从 TCP 连接读取数据流 -> 解析消息 -> 根据类型分发处理 -> 将结果写入数据库或另一个流。
 - **考虑因素:** 背压的实现和调整、错误处理（单个元素处理失败如何影响整个流）、状态管理（如果处理阶段需要状态）、窗口操作（按时间或数量聚合）。
 
-## 18. 扇出/扇入模式 (Fan-out / Fan-in)
+## 1.19 扇出/扇入模式 (Fan-out / Fan-in)
 
 并行执行多个相似的任务，然后收集它们的结果。
 
@@ -535,7 +535,7 @@ trait AsyncProcessor {
 
 好的，我们继续探讨更多与异步架构相关的模式和考量，这些对于构建健壮、可伸缩的 Rust 异步应用至关重要。
 
-## 19. 断路器模式 (Circuit Breaker)
+## 1.20 断路器模式 (Circuit Breaker)
 
 当应用程序依赖于外部服务（如 API 调用、数据库访问）时，这些外部服务可能会暂时或持续失败。断路器模式旨在防止应用程序反复尝试调用一个已知失败的服务，从而避免资源浪费（如线程、连接、CPU 时间）并给失败的服务恢复的机会。
 
@@ -564,7 +564,7 @@ trait AsyncProcessor {
         ```
 - **考虑因素:** 失败阈值、开启状态的超时时间、半开状态允许的探测次数、哪些错误应计为失败、回退逻辑（Fallback，当断路器打开时返回什么）。
 
-## 20. 速率限制/节流模式 (Rate Limiting / Throttling)
+## 1.21 速率限制/节流模式 (Rate Limiting / Throttling)
 
 控制操作执行的频率，以防止滥用资源、遵守外部 API 的速率限制或平滑负载。
 
@@ -610,7 +610,7 @@ trait AsyncProcessor {
 
 - **考虑因素:** 选择哪种限流算法、限制的粒度（全局、按用户、按 IP）、超出限制时的行为（立即拒绝、排队等待、增加延迟）、分布式环境下的速率限制（需要中心化存储，如 Redis）。
 
-## 21. 超时模式 (Timeout)
+## 1.22 超时模式 (Timeout)
 
 为可能长时间运行或挂起的异步操作设置时间限制。
 
@@ -651,7 +651,7 @@ trait AsyncProcessor {
 
 - **考虑因素:** 超时时间的设定（太短可能误杀正常操作，太长则失去意义）、超时后的行为（仅仅是返回错误，还是需要执行补偿逻辑？）、`timeout` 本身不保证底层操作立即停止（它只是停止等待 Future 的结果），底层操作可能仍在后台运行直到自然完成或遇到下一个 `.await` 点。如果需要强制中断，可能需要更复杂的取消机制。
 
-## 21. 可观察性 (Observability) - 跨模式的关键考量
+## 1.23 可观察性 (Observability) - 跨模式的关键考量
 
 虽然不是一个独立的模式，但在复杂的异步系统中，可观察性至关重要。
 
@@ -678,7 +678,7 @@ trait AsyncProcessor {
 我们还可以继续探讨诸如配置管理、健康检查、优雅停机（graceful shutdown）等在异步服务中的实现，
 或者深入比较 Tokio 与其他异步运行时的设计哲学（如 `async-std`, `smol`），如果你感兴趣的话。
 
-## 22. 优雅停机 (Graceful Shutdown)
+## 1.24 优雅停机 (Graceful Shutdown)
 
 当应用程序需要停止时（例如，接收到 SIGINT/SIGTERM 信号，或者部署新版本时），理想情况下它应该完成正在处理的请求，释放资源，然后干净地退出，而不是被强制终止。这就是优雅停机。
 
@@ -791,7 +791,7 @@ async fn main() {
 
 - **考虑因素:** 最终超时时间的设定、如何处理在超时后仍未完成的任务、清理步骤的幂等性、确保所有衍生的子任务也能正确响应停止信号。
 
-## 23. 健康检查 (Health Checks)
+## 1.25 健康检查 (Health Checks)
 
 提供一个端点或机制，让外部监控系统（如 Kubernetes、负载均衡器）了解应用程序实例的健康状况。
 
@@ -879,7 +879,7 @@ impl DbPool { async fn ping(&self) -> Result<(),()> { Ok(()) } } // 假设实现
 
 - **考虑因素:** 检查的频率与开销、避免健康检查本身给系统带来过大负载、检查逻辑的可靠性、区分瞬时失败和持续失败。
 
-## 24. 配置管理 (Configuration Management)
+## 1.26 配置管理 (Configuration Management)
 
 如何在异步应用程序中加载、访问和可能地动态更新配置。
 
@@ -968,7 +968,7 @@ impl DbPool { async fn ping(&self) -> Result<(),()> { Ok(()) } } // 假设实现
 
 好的，我们继续深入探讨构建生产级异步 Rust 应用的另外几个关键方面：异步状态管理和测试策略。
 
-## 25. 异步状态管理 (Asynchronous State Management)
+## 1.27 异步状态管理 (Asynchronous State Management)
 
 在并发应用中，如何安全、高效地管理和访问共享的可变状态是一个核心挑战。异步环境由于任务切换的存在，使得这个问题更加复杂。
 
@@ -1030,7 +1030,7 @@ async fn main() {
 
 - **选择策略的考虑因素:** 状态的类型和复杂度、读写频率、争用程度、是否需要在持有状态时执行异步操作、对性能的要求。通常倾向于优先使用无锁或消息传递的方式，仅在必要时使用异步锁。
 
-## 26. 异步测试策略 (Asynchronous Testing Strategies)
+## 1.28 异步测试策略 (Asynchronous Testing Strategies)
 
 测试异步代码比测试同步代码更具挑战性，因为需要处理运行时、并发和时间。
 
@@ -1180,7 +1180,7 @@ async fn test_processing_with_mock() {
 
 好的，我们继续探讨构建生产级异步 Rust 应用的更多方面。这次我们聚焦于**错误处理的最佳实践**和**性能考量与优化**。
 
-## 27. 异步错误处理深度探讨 (Error Handling Deep Dive)
+## 1.29 异步错误处理深度探讨 (Error Handling Deep Dive)
 
 虽然之前提到了 `Result` 和 `?`，但在复杂的异步系统中，错误处理需要更细致的策略。
 
@@ -1315,7 +1315,7 @@ async fn test_processing_with_mock() {
 
 - **错误恢复:** 有时你可能不想因为一个可恢复的错误就完全停止操作。可以使用 `Result::ok()`, `Result::err()`, `match` 或组合子（如 `futures::TryFutureExt::unwrap_or_else`）来处理错误并提供默认值或执行备用逻辑。
 
-## 28. 性能考量与优化 (Performance Considerations & Optimization)
+## 1.30 性能考量与优化 (Performance Considerations & Optimization)
 
 虽然 Rust 和 Tokio 的目标是零成本抽象和高性能，但仍然存在一些常见的性能陷阱和优化点。
 

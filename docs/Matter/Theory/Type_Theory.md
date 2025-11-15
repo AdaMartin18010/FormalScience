@@ -1,34 +1,35 @@
-# 类型理论 (Type Theory)
+# 1. 类型理论 (Type Theory)
 
-## 📋 目录
+## 目录
 
-- [1 基础定义与公理](#1-基础定义与公理)
-  - [1.1 类型系统基础](#11-类型系统基础)
-  - [1.2 类型安全性](#12-类型安全性)
-- [2 高级类型系统](#2-高级类型系统)
-  - [2.1 参数多态性](#21-参数多态性)
-  - [2.2 存在类型](#22-存在类型)
-- [3 类型推断算法](#3-类型推断算法)
-  - [3.1 Hindley-Milner 类型系统](#31-hindley-milner-类型系统)
-- [4 类型系统的语义](#4-类型系统的语义)
-  - [4.1 指称语义](#41-指称语义)
-  - [4.2 操作语义](#42-操作语义)
-- [5 类型系统的扩展](#5-类型系统的扩展)
-  - [5.1 依赖类型](#51-依赖类型)
-  - [5.2 高阶类型](#52-高阶类型)
-- [6 类型系统的元理论](#6-类型系统的元理论)
-  - [6.1 强正规化](#61-强正规化)
-  - [6.2 一致性](#62-一致性)
-- [7 实际应用](#7-实际应用)
-  - [7.1 编译器中的类型检查](#71-编译器中的类型检查)
-  - [7.2 类型安全的编程实践](#72-类型安全的编程实践)
-- [8 结论](#8-结论)
+- [1. 类型理论 (Type Theory)](#1-类型理论-type-theory)
+  - [目录](#目录)
+  - [1.1 基础定义与公理](#11-基础定义与公理)
+    - [1.1.1 类型系统基础](#111-类型系统基础)
+    - [1.1.2 类型安全性](#112-类型安全性)
+  - [1.2 高级类型系统](#12-高级类型系统)
+    - [1.2.1 参数多态性](#121-参数多态性)
+    - [1.2.2 存在类型](#122-存在类型)
+  - [1.3 类型推断算法](#13-类型推断算法)
+    - [1.3.1 Hindley-Milner 类型系统](#131-hindley-milner-类型系统)
+  - [1.4 类型系统的语义](#14-类型系统的语义)
+    - [1.4.1 指称语义](#141-指称语义)
+    - [1.4.2 操作语义](#142-操作语义)
+  - [1.5 类型系统的扩展](#15-类型系统的扩展)
+    - [1.5.1 依赖类型](#151-依赖类型)
+    - [1.5.2 高阶类型](#152-高阶类型)
+  - [1.6 类型系统的元理论](#16-类型系统的元理论)
+    - [1.6.1 强正规化](#161-强正规化)
+    - [1.6.2 一致性](#162-一致性)
+  - [1.7 实际应用](#17-实际应用)
+    - [1.7.1 编译器中的类型检查](#171-编译器中的类型检查)
+    - [1.7.2 类型安全的编程实践](#172-类型安全的编程实践)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
+## 1.1 基础定义与公理
 
-## 1 基础定义与公理
-
-### 1.1 类型系统基础
+### 1.1.1 类型系统基础
 
 **定义 1.1 (类型上下文)**
 设 $\Gamma$ 为类型上下文，定义为变量到类型的映射：
@@ -46,7 +47,7 @@ $$\frac{\Gamma, x : \tau_1 \vdash e : \tau_2}{\Gamma \vdash \lambda x.e : \tau_1
 **公理 1.3 (函数应用)**
 $$\frac{\Gamma \vdash e_1 : \tau_1 \rightarrow \tau_2 \quad \Gamma \vdash e_2 : \tau_1}{\Gamma \vdash e_1 e_2 : \tau_2}$$
 
-### 1.2 类型安全性
+### 1.1.2 类型安全性
 
 **定理 1.1 (类型保持性 - Type Preservation)**
 如果 $\Gamma \vdash e : \tau$ 且 $e \rightarrow e'$，则 $\Gamma \vdash e' : \tau$。
@@ -58,9 +59,9 @@ $$\frac{\Gamma \vdash e_1 : \tau_1 \rightarrow \tau_2 \quad \Gamma \vdash e_2 : 
 
 **证明：** 通过结构归纳法证明。对于每个语法构造，证明要么是值，要么可以继续归约。
 
-## 2 高级类型系统
+## 1.2 高级类型系统
 
-### 2.1 参数多态性
+### 1.2.1 参数多态性
 
 **定义 2.1 (全称类型)**
 $$\frac{\Gamma, \alpha \vdash e : \tau}{\Gamma \vdash \Lambda \alpha.e : \forall \alpha.\tau}$$
@@ -68,7 +69,7 @@ $$\frac{\Gamma, \alpha \vdash e : \tau}{\Gamma \vdash \Lambda \alpha.e : \forall
 **定义 2.2 (类型实例化)**
 $$\frac{\Gamma \vdash e : \forall \alpha.\tau}{\Gamma \vdash e[\tau'] : \tau[\alpha \mapsto \tau']}$$
 
-### 2.2 存在类型
+### 1.2.2 存在类型
 
 **定义 2.3 (存在类型引入)**
 $$\frac{\Gamma \vdash e : \tau[\alpha \mapsto \tau']}{\Gamma \vdash \text{pack } \tau', e \text{ as } \exists \alpha.\tau : \exists \alpha.\tau}$$
@@ -76,9 +77,9 @@ $$\frac{\Gamma \vdash e : \tau[\alpha \mapsto \tau']}{\Gamma \vdash \text{pack }
 **定义 2.4 (存在类型消除)**
 $$\frac{\Gamma \vdash e_1 : \exists \alpha.\tau \quad \Gamma, \alpha, x : \tau \vdash e_2 : \tau'}{\Gamma \vdash \text{unpack } \alpha, x = e_1 \text{ in } e_2 : \tau'}$$
 
-## 3 类型推断算法
+## 1.3 类型推断算法
 
-### 3.1 Hindley-Milner 类型系统
+### 1.3.1 Hindley-Milner 类型系统
 
 -**算法 W (Robinson's Unification)**
 
@@ -86,7 +87,7 @@ $$\frac{\Gamma \vdash e_1 : \exists \alpha.\tau \quad \Gamma, \alpha, x : \tau \
 unify :: Type -> Type -> Substitution
 unify (TVar a) t = if a `elem` ftv t then fail else [(a, t)]
 unify t (TVar a) = unify (TVar a) t
-unify (TArrow t1 t2) (TArrow t1' t2') = 
+unify (TArrow t1 t2) (TArrow t1' t2') =
   let s1 = unify t1 t1'
       s2 = unify (apply s1 t2) (apply s1 t2')
   in compose s2 s1
@@ -96,9 +97,9 @@ unify (TCon a) (TCon b) = if a == b then [] else fail
 **定理 3.1 (算法 W 的正确性)**
 如果算法 W 成功，则返回的替换是最一般的一致替换。
 
-## 4 类型系统的语义
+## 1.4 类型系统的语义
 
-### 4.1 指称语义
+### 1.4.1 指称语义
 
 **定义 4.1 (类型解释)**
 $$\llbracket \tau \rrbracket_\rho = \text{语义域}$$
@@ -106,7 +107,7 @@ $$\llbracket \tau \rrbracket_\rho = \text{语义域}$$
 **定义 4.2 (表达式解释)**
 $$\llbracket e \rrbracket_{\rho,\sigma} : \llbracket \tau \rrbracket_\rho$$
 
-### 4.2 操作语义
+### 1.4.2 操作语义
 
 **定义 4.3 (小步语义)**
 $$e \rightarrow e'$$
@@ -114,9 +115,9 @@ $$e \rightarrow e'$$
 **定义 4.4 (大步语义)**
 $$e \Downarrow v$$
 
-## 5 类型系统的扩展
+## 1.5 类型系统的扩展
 
-### 5.1 依赖类型
+### 1.5.1 依赖类型
 
 **定义 5.1 (Π类型)**
 $$\frac{\Gamma, x : A \vdash B : \text{Type}}{\Gamma \vdash \Pi x : A.B : \text{Type}}$$
@@ -124,26 +125,26 @@ $$\frac{\Gamma, x : A \vdash B : \text{Type}}{\Gamma \vdash \Pi x : A.B : \text{
 **定义 5.2 (Σ类型)**
 $$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma, x : A \vdash B : \text{Type}}{\Gamma \vdash \Sigma x : A.B : \text{Type}}$$
 
-### 5.2 高阶类型
+### 1.5.2 高阶类型
 
 **定义 5.3 (类型构造子)**
 $$\frac{\Gamma \vdash F : \text{Type} \rightarrow \text{Type} \quad \Gamma \vdash A : \text{Type}}{\Gamma \vdash F A : \text{Type}}$$
 
-## 6 类型系统的元理论
+## 1.6 类型系统的元理论
 
-### 6.1 强正规化
+### 1.6.1 强正规化
 
 **定理 6.1 (强正规化)**
 在强类型系统中，所有良类型的项都是强正规化的。
 
-### 6.2 一致性
+### 1.6.2 一致性
 
 **定理 6.2 (类型系统一致性)**
 如果 $\Gamma \vdash e : \tau$，则 $e$ 不会产生类型错误。
 
-## 7 实际应用
+## 1.7 实际应用
 
-### 7.1 编译器中的类型检查
+### 1.7.1 编译器中的类型检查
 
 类型检查器实现：
 
@@ -160,13 +161,13 @@ typeCheck ctx (App e1 e2) = do
     _ -> Left TypeMismatch
 ```
 
-### 7.2 类型安全的编程实践
+### 1.7.2 类型安全的编程实践
 
 - 利用类型系统捕获运行时错误
 - 通过类型抽象实现模块化
 - 使用类型类实现多态性
 
-## 8 结论
+## 1.8 结论
 
 类型理论为编程语言提供了坚实的数学基础，通过形式化的类型系统，我们可以：
 
@@ -177,7 +178,7 @@ typeCheck ctx (App e1 e2) = do
 
 类型理论的发展推动了现代编程语言的设计，从简单的类型检查到复杂的依赖类型系统，为软件工程提供了强大的理论工具。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Girard, J. Y. (1987). Linear logic. Theoretical computer science, 50(1), 1-101.
 2. Reynolds, J. C. (1983). Types, abstraction and parametric polymorphism. Information processing, 83, 513-523.

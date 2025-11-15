@@ -58,7 +58,7 @@
 // Rust 2024 的类型系统特点
 trait Animal {
     fn make_sound(&self) -> String;
-    
+
     // 默认实现（类似于Java接口的默认方法）
     fn describe(&self) -> String {
         format!("一种会发出声音的动物: {}", self.make_sound())
@@ -81,7 +81,7 @@ impl Animal for Dog {
 // Java等效代码
 interface Animal {
     String makeSound();
-    
+
     // 默认方法
     default String describe() {
         return "一种会发出声音的动物: " + makeSound();
@@ -90,11 +90,11 @@ interface Animal {
 
 class Dog implements Animal {
     private String name;
-    
+
     public Dog(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String makeSound() {
         return name + " 说: 汪汪!";
@@ -117,11 +117,11 @@ impl Animal {
     fn new(name: String) -> Self {
         Animal { name }
     }
-    
+
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{} 发出一般的声音", self.name)
     }
@@ -141,12 +141,12 @@ impl Dog {
             breed,
         }
     }
-    
+
     // 委托方法 - 转发到内部的Animal实例
     fn name(&self) -> &str {
         self.animal.name()
     }
-    
+
     // 覆盖行为
     fn make_sound(&self) -> String {
         format!("{}这只{}说: 汪汪!", self.name(), self.breed)
@@ -167,12 +167,12 @@ fn composition_example() {
 // 使用特征和默认实现模拟继承
 trait Animal {
     fn name(&self) -> &str;
-    
+
     // 带默认实现的方法（类似父类方法）
     fn make_sound(&self) -> String {
         format!("{} 发出一般的声音", self.name())
     }
-    
+
     fn eat(&self) {
         println!("{} 正在吃东西", self.name());
     }
@@ -188,7 +188,7 @@ impl Dog {
     fn new(name: String, breed: String) -> Self {
         Dog { name, breed }
     }
-    
+
     fn breed(&self) -> &str {
         &self.breed
     }
@@ -199,12 +199,12 @@ impl Animal for Dog {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     // 覆盖默认实现
     fn make_sound(&self) -> String {
         format!("{}这只{}说: 汪汪!", self.name(), self.breed)
     }
-    
+
     // 使用默认的eat方法
 }
 
@@ -231,7 +231,7 @@ trait Mammal: Animal {
     fn body_temperature(&self) -> f32 {
         37.5 // 默认体温（摄氏度）
     }
-    
+
     fn give_birth(&self) {
         println!("{} 生下活体幼崽", self.name());
     }
@@ -247,7 +247,7 @@ impl Animal for Dog {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{} 说: 汪汪!", self.name)
     }
@@ -264,11 +264,11 @@ impl Mammal for Dog {
 // 使用示例
 fn trait_inheritance_example() {
     let dog = Dog { name: "巴迪".to_string(), breed: "拉布拉多".to_string() };
-    
+
     // 调用Animal特征方法
     println!("名字: {}", dog.name());
     println!("声音: {}", dog.make_sound());
-    
+
     // 调用Mammal特征方法
     println!("体温: {}°C", dog.body_temperature());
     dog.give_birth();
@@ -295,11 +295,11 @@ impl Animal {
     fn new(name: String) -> Self {
         Animal { name }
     }
-    
+
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{} 发出一般的声音", self.name)
     }
@@ -317,10 +317,10 @@ impl Dog {
             breed,
         }
     }
-    
+
     // 使用宏自动生成委托方法
     delegate!(animal, name,);
-    
+
     // 覆盖方法
     fn make_sound(&self) -> String {
         format!("{}这只{}说: 汪汪!", self.animal.name(), self.breed)
@@ -374,7 +374,7 @@ fn print_animal_sound<T: Animal>(animal: &T) {
 fn static_dispatch_example() {
     let dog = Dog { name: "巴迪".to_string() };
     let cat = Cat { name: "咪咪".to_string() };
-    
+
     // 编译时确定具体类型
     print_animal_sound(&dog); // T = Dog
     print_animal_sound(&cat); // T = Cat
@@ -416,7 +416,7 @@ fn dynamic_dispatch_example() {
         Box::new(Dog { name: "巴迪".to_string() }),
         Box::new(Cat { name: "咪咪".to_string() }),
     ];
-    
+
     // 运行时确定具体类型
     for animal in &animals {
         println!("声音: {}", animal.make_sound());
@@ -445,7 +445,7 @@ impl Animal {
             }
         }
     }
-    
+
     fn name(&self) -> &str {
         match self {
             Animal::Dog { name } => name,
@@ -462,7 +462,7 @@ fn enum_polymorphism_example() {
         Animal::Cat { name: "咪咪".to_string() },
         Animal::Bird { name: "波利".to_string(), can_fly: true },
     ];
-    
+
     for animal in &animals {
         println!("{} - {}", animal.name(), animal.make_sound());
     }
@@ -487,7 +487,7 @@ impl AnimalBehavior<Dog> for Dog {
     fn make_sound(dog: &Dog) -> String {
         format!("{} 说: 汪汪!", dog.name)
     }
-    
+
     fn eat(dog: &Dog) {
         println!("{} 吃狗粮", dog.name);
     }
@@ -498,15 +498,15 @@ impl AnimalBehavior<Cat> for Cat {
     fn make_sound(cat: &Cat) -> String {
         format!("{} 说: 喵喵!", cat.name)
     }
-    
+
     fn eat(cat: &Cat) {
         println!("{} 吃猫粮", cat.name);
     }
 }
 
 // 使用类型类的多态函数
-fn animal_sounds<T, A>(animal: &T) 
-where 
+fn animal_sounds<T, A>(animal: &T)
+where
     A: AnimalBehavior<T>
 {
     println!("声音: {}", A::make_sound(animal));
@@ -517,7 +517,7 @@ where
 fn type_class_example() {
     let dog = Dog { name: "巴迪".to_string() };
     let cat = Cat { name: "咪咪".to_string() };
-    
+
     animal_sounds::<_, Dog>(&dog);
     animal_sounds::<_, Cat>(&cat);
 }
@@ -548,11 +548,11 @@ impl Animal for Dog {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{} 说: 汪汪!", self.name)
     }
-    
+
     fn as_mammal(&self) -> Option<&dyn Mammal> {
         Some(self)
     }
@@ -573,7 +573,7 @@ impl Animal for Parrot {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         if self.vocabulary.is_empty() {
             format!("{} 说: 啾啾!", self.name)
@@ -582,7 +582,7 @@ impl Animal for Parrot {
             format!("{} 说: \"{}\"", self.name, phrase)
         }
     }
-    
+
     // 使用默认实现，返回None
 }
 
@@ -590,21 +590,21 @@ impl Animal for Parrot {
 fn heterogeneous_collection_example() {
     let animals: Vec<Box<dyn Animal>> = vec![
         Box::new(Dog { name: "巴迪".to_string(), breed: "拉布拉多".to_string() }),
-        Box::new(Parrot { 
-            name: "波利".to_string(), 
+        Box::new(Parrot {
+            name: "波利".to_string(),
             vocabulary: vec!["你好!".to_string(), "谁是好鸟?".to_string()]
         }),
     ];
-    
+
     for animal in &animals {
         println!("名字: {}", animal.name());
         println!("声音: {}", animal.make_sound());
-        
+
         // 动态类型检查和转换
         if let Some(mammal) = animal.as_mammal() {
             println!("体温: {}°C", mammal.body_temperature());
         }
-        
+
         println!("---");
     }
 }
@@ -622,7 +622,7 @@ impl Animal {
     fn new(name: String) -> Self {
         Animal { name }
     }
-    
+
     fn name(&self) -> &str {
         &self.name
     }
@@ -640,11 +640,11 @@ impl Mammal {
             fur_color,
         }
     }
-    
+
     fn name(&self) -> &str {
         self.animal.name()
     }
-    
+
     fn fur_color(&self) -> &str {
         &self.fur_color
     }
@@ -664,24 +664,24 @@ impl Dog {
             trained,
         }
     }
-    
+
     // 委托方法
     fn name(&self) -> &str {
         self.mammal.name()
     }
-    
+
     fn fur_color(&self) -> &str {
         self.mammal.fur_color()
     }
-    
+
     fn breed(&self) -> &str {
         &self.breed
     }
-    
+
     fn is_trained(&self) -> bool {
         self.trained
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{}这只{}说: 汪汪!", self.name(), self.breed)
     }
@@ -695,7 +695,7 @@ fn complex_composition_example() {
         "金毛".to_string(),
         true
     );
-    
+
     println!("名字: {}", dog.name());
     println!("毛色: {}", dog.fur_color());
     println!("品种: {}", dog.breed());
@@ -728,7 +728,7 @@ impl Animal for Dog {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn make_sound(&self) -> String {
         format!("{} 说: 汪汪!", self.name)
     }
@@ -738,7 +738,7 @@ impl Trainable for Dog {
     fn is_trained(&self) -> bool {
         self.trained
     }
-    
+
     fn train(&mut self) {
         self.trained = true;
         println!("{} 已经被训练了!", self.name);
@@ -754,7 +754,7 @@ fn describe_animal<T: Animal>(animal: &T) {
 // 使用静态分派的训练函数
 fn train_animal<T: Animal + Trainable>(animal: &mut T) {
     println!("正在训练{}...", animal.name());
-    
+
     if animal.is_trained() {
         println!("{} 已经训练过了!", animal.name());
     } else {
@@ -765,15 +765,15 @@ fn train_animal<T: Animal + Trainable>(animal: &mut T) {
 // 使用示例
 fn mixed_polymorphism_example() {
     let mut dog = Dog { name: "巴迪".to_string(), trained: false };
-    
+
     describe_animal(&dog);
     train_animal(&mut dog);
-    
+
     // 使用动态分派
     let animals: Vec<Box<dyn Animal>> = vec![
         Box::new(Dog { name: "雷克斯".to_string(), trained: true }),
     ];
-    
+
     for animal in &animals {
         println!("名字: {}", animal.name());
         println!("声音: {}", animal.make_sound());
@@ -829,7 +829,7 @@ impl Car {
             engine: Engine { power: engine_power },
         }
     }
-    
+
     fn start(&self) -> String {
         format!("{} - {}", self.model, self.engine.start())
     }
@@ -869,7 +869,7 @@ impl Drawable for Button {
     fn draw(&self) -> String {
         format!("绘制按钮 '{}' ({}x{})", self.label, self.width, self.height)
     }
-    
+
     fn bounds(&self) -> (u32, u32, u32, u32) {
         (0, 0, self.width, self.height)
     }
@@ -880,7 +880,7 @@ impl Clickable for Button {
         self.clicked = true;
         println!("按钮 {} 被点击了!", self.label);
     }
-    
+
     fn is_clicked(&self) -> bool {
         self.clicked
     }
@@ -895,17 +895,17 @@ fn draw_elements<T: Drawable>(elements: &[T]) -> Vec<String> {
 fn expression_power_example() {
     let car = Car::new("特斯拉 Model 3".to_string(), 300);
     println!("{}", car.start());
-    
+
     let mut button = Button {
         label: "提交".to_string(),
         width: 100,
         height: 30,
         clicked: false,
     };
-    
+
     println!("{}", button.draw());
     button.on_click();
-    
+
     let elements: Vec<Box<dyn Drawable>> = vec![
         Box::new(Button {
             label: "确定".to_string(),
@@ -914,7 +914,7 @@ fn expression_power_example() {
             clicked: false,
         }),
     ];
-    
+
     for element in &elements {
         println!("{}", element.draw());
     }
@@ -940,10 +940,10 @@ fn expression_power_example() {
 fn inheritance_to_composition_example() {
     // Java: Dog dog = new Dog("Buddy", "Labrador");
     let dog = Dog::new("巴迪".to_string(), "拉布拉多".to_string());
-    
+
     // Java: System.out.println(dog.getName());
     println!("名字: {}", dog.name());
-    
+
     // Java: System.out.println(dog.makeSound());
     println!("声音: {}", dog.make_sound());
 }
@@ -970,11 +970,11 @@ private:
     double radius;
 public:
     Circle(double r) : radius(r) {}
-    
+
     double area() const override {
         return 3.14159 * radius * radius;
     }
-    
+
     double perimeter() const override {
         return 2 * 3.14159 * radius;
     }
@@ -985,7 +985,7 @@ public:
 trait Shape {
     fn area(&self) -> f64;
     fn perimeter(&self) -> f64;
-    
+
     // 默认实现（类似于虚函数的默认实现）
     fn draw(&self) {
         println!("绘制一个面积为 {} 的形状", self.area());
@@ -1006,11 +1006,11 @@ impl Shape for Circle {
     fn area(&self) -> f64 {
         std::f64::consts::PI * self.radius * self.radius
     }
-    
+
     fn perimeter(&self) -> f64 {
         2.0 * std::f64::consts::PI * self.radius
     }
-    
+
     // 使用默认的draw实现
 }
 
@@ -1018,10 +1018,10 @@ impl Shape for Circle {
 fn virtual_to_trait_example() {
     // C++: Shape* shape = new Circle(5.0);
     let circle: Box<dyn Shape> = Box::new(Circle::new(5.0));
-    
+
     // C++: std::cout << shape->area() << std::endl;
     println!("面积: {}", circle.area());
-    
+
     // C++: shape->draw();
     circle.draw();
 }
@@ -1049,23 +1049,23 @@ interface UIComponent extends Drawable, Clickable {
 class Button implements UIComponent {
     private String label;
     private int width, height;
-    
+
     public Button(String label, int width, int height) {
         this.label = label;
         this.width = width;
         this.height = height;
     }
-    
+
     @Override
     public void draw() {
         System.out.println("绘制按钮: " + label);
     }
-    
+
     @Override
     public void onClick() {
         System.out.println("按钮被点击: " + label);
     }
-    
+
     @Override
     public void resize(int width, int height) {
         this.width = width;
@@ -1125,17 +1125,17 @@ impl UIComponent for Button {
 fn interface_to_trait_example() {
     // Java: UIComponent button = new Button("确定", 100, 30);
     let mut button = Button::new("确定".to_string(), 100, 30);
-    
+
     // 使用各个特征的方法
     button.draw();
     button.on_click();
     button.resize(120, 40);
-    
+
     // 使用特征对象
     let components: Vec<Box<dyn UIComponent>> = vec![
         Box::new(Button::new("提交".to_string(), 100, 30)),
     ];
-    
+
     for component in &mut components {
         component.draw();
     }
@@ -1164,11 +1164,11 @@ impl Draft {
     fn new(content: String) -> Self {
         Draft { content }
     }
-    
+
     fn add_text(&mut self, text: &str) {
         self.content.push_str(text);
     }
-    
+
     fn submit_for_review(self) -> PendingReview {
         PendingReview { content: self.content }
     }
@@ -1178,7 +1178,7 @@ impl PendingReview {
     fn approve(self) -> Published {
         Published { content: self.content }
     }
-    
+
     fn reject(self) -> Draft {
         Draft { content: self.content }
     }
@@ -1194,19 +1194,19 @@ impl Published {
 fn type_state_example() {
     // 创建草稿
     let mut post = Draft::new("这是一篇博客文章".to_string());
-    
+
     // 可以在草稿状态添加文本
     post.add_text("。这里有更多内容。");
-    
+
     // 提交审核 - 状态转换为PendingReview
     let post = post.submit_for_review();
-    
+
     // 不能再添加文本，因为类型已经变成PendingReview
     // post.add_text("尝试添加更多"); // 编译错误!
-    
+
     // 批准 - 状态转换为Published
     let post = post.approve();
-    
+
     // 只有Published状态可以访问内容
     println!("发布的内容: {}", post.content());
 }
@@ -1265,11 +1265,11 @@ impl Visitor<f64> for AreaCalculator {
     fn visit_circle(&mut self, circle: &Circle) -> f64 {
         std::f64::consts::PI * circle.radius * circle.radius
     }
-    
+
     fn visit_rectangle(&mut self, rectangle: &Rectangle) -> f64 {
         rectangle.width * rectangle.height
     }
-    
+
     fn visit_triangle(&mut self, triangle: &Triangle) -> f64 {
         0.5 * triangle.base * triangle.height
     }
@@ -1282,9 +1282,9 @@ fn visitor_pattern_example() {
         Box::new(Rectangle { width: 4.0, height: 6.0 }),
         Box::new(Triangle { base: 3.0, height: 4.0 }),
     ];
-    
+
     let mut area_calculator = AreaCalculator;
-    
+
     for shape in &shapes {
         let area = shape.accept(&mut area_calculator);
         println!("形状面积: {}", area);
@@ -1324,7 +1324,7 @@ where
     fn execute(&self) {
         (self.execute_fn)();
     }
-    
+
     fn undo(&self) {
         (self.undo_fn)();
     }
@@ -1338,13 +1338,13 @@ impl TextEditor {
     fn new() -> Self {
         TextEditor { content: String::new() }
     }
-    
+
     fn add_text(&mut self, text: &str) {
         self.content.push_str(text);
         println!("添加文本: {}", text);
         println!("当前内容: {}", self.content);
     }
-    
+
     fn delete_text(&mut self, count: usize) {
         if count <= self.content.len() {
             let new_len = self.content.len() - count;
@@ -1353,11 +1353,11 @@ impl TextEditor {
             println!("当前内容: {}", self.content);
         }
     }
-    
+
     fn add_text_command(&self, text: String) -> impl Command {
         let content = self.content.clone();
         let text_clone = text.clone();
-        
+
         SimpleCommand::new(
             move || {
                 let mut editor = TextEditor { content: content.clone() };
@@ -1374,23 +1374,23 @@ impl TextEditor {
 // 使用示例
 fn command_pattern_example() {
     let editor = TextEditor::new();
-    
+
     let add_hello_cmd = editor.add_text_command("你好，".to_string());
     let add_world_cmd = editor.add_text_command("世界！".to_string());
-    
+
     // 执行命令
     add_hello_cmd.execute();
     add_world_cmd.execute();
-    
+
     // 撤销命令
     add_world_cmd.undo();
-    
+
     // 可以将命令存储在历史记录中
     let command_history: Vec<Box<dyn Command>> = vec![
         Box::new(editor.add_text_command("命令1".to_string())),
         Box::new(editor.add_text_command("命令2".to_string())),
     ];
-    
+
     for cmd in &command_history {
         cmd.execute();
     }

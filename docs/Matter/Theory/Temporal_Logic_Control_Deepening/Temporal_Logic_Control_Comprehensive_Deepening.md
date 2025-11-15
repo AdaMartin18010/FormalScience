@@ -1,40 +1,41 @@
-# 时态逻辑控制综合深化 (Temporal Logic Control Comprehensive Deepening)
+# 1. 时态逻辑控制综合深化 (Temporal Logic Control Comprehensive Deepening)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 时态逻辑理论深化 (Temporal Logic Theory Deepening)](#2-时态逻辑理论深化-temporal-logic-theory-deepening)
-  - [2.1 线性时态逻辑 (LTL)](#21-线性时态逻辑-ltl)
-  - [2.2 计算树逻辑 (CTL)](#22-计算树逻辑-ctl)
-  - [2.3 时间时态逻辑](#23-时间时态逻辑)
-- [3 模型检查理论深化 (Model Checking Theory Deepening)](#3-模型检查理论深化-model-checking-theory-deepening)
-  - [3.1 状态空间表示](#31-状态空间表示)
-  - [3.2 自动机理论](#32-自动机理论)
-  - [3.3 模型检查算法](#33-模型检查算法)
-- [4 控制系统理论深化 (Control Theory Deepening)](#4-控制系统理论深化-control-theory-deepening)
-  - [4.1 混合系统](#41-混合系统)
-  - [4.2 安全性质验证](#42-安全性质验证)
-- [5 时态逻辑控制理论深化 (Temporal Logic Control Theory Deepening)](#5-时态逻辑控制理论深化-temporal-logic-control-theory-deepening)
-  - [5.1 控制综合](#51-控制综合)
-  - [5.2 反应性控制](#52-反应性控制)
-- [6 实时时态逻辑控制](#6-实时时态逻辑控制)
-  - [6.1 时间约束](#61-时间约束)
-  - [6.2 概率时态逻辑控制](#62-概率时态逻辑控制)
-- [7 批判性分析与综合论证](#7-批判性分析与综合论证)
-  - [7.1 理论完备性分析](#71-理论完备性分析)
-  - [7.2 应用场景分析](#72-应用场景分析)
-  - [7.3 未来发展方向](#73-未来发展方向)
-- [8 结论](#8-结论)
+- [1. 时态逻辑控制综合深化 (Temporal Logic Control Comprehensive Deepening)](#1-时态逻辑控制综合深化-temporal-logic-control-comprehensive-deepening)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 时态逻辑理论深化 (Temporal Logic Theory Deepening)](#12-时态逻辑理论深化-temporal-logic-theory-deepening)
+    - [1.2.1 线性时态逻辑 (LTL)](#121-线性时态逻辑-ltl)
+    - [1.2.2 计算树逻辑 (CTL)](#122-计算树逻辑-ctl)
+    - [1.2.3 时间时态逻辑](#123-时间时态逻辑)
+  - [1.3 模型检查理论深化 (Model Checking Theory Deepening)](#13-模型检查理论深化-model-checking-theory-deepening)
+    - [1.3.1 状态空间表示](#131-状态空间表示)
+    - [1.3.2 自动机理论](#132-自动机理论)
+    - [1.3.3 模型检查算法](#133-模型检查算法)
+  - [1.4 控制系统理论深化 (Control Theory Deepening)](#14-控制系统理论深化-control-theory-deepening)
+    - [1.4.1 混合系统](#141-混合系统)
+    - [1.4.2 安全性质验证](#142-安全性质验证)
+  - [1.5 时态逻辑控制理论深化 (Temporal Logic Control Theory Deepening)](#15-时态逻辑控制理论深化-temporal-logic-control-theory-deepening)
+    - [1.5.1 控制综合](#151-控制综合)
+    - [1.5.2 反应性控制](#152-反应性控制)
+  - [1.6 实时时态逻辑控制](#16-实时时态逻辑控制)
+    - [1.6.1 时间约束](#161-时间约束)
+    - [1.6.2 概率时态逻辑控制](#162-概率时态逻辑控制)
+  - [1.7 批判性分析与综合论证](#17-批判性分析与综合论证)
+    - [1.7.1 理论完备性分析](#171-理论完备性分析)
+    - [1.7.2 应用场景分析](#172-应用场景分析)
+    - [1.7.3 未来发展方向](#173-未来发展方向)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个完整的时态逻辑控制综合理论体系，将时态逻辑、模型检查、控制系统、实时系统等核心概念进行深度整合，提供严格的形式化定义、定理证明和批判性分析。我们采用严格的数学证明和逻辑推理，构建一个自洽、完备、可扩展的时态逻辑控制理论体系。
 
-## 2 时态逻辑理论深化 (Temporal Logic Theory Deepening)
+## 1.2 时态逻辑理论深化 (Temporal Logic Theory Deepening)
 
-### 2.1 线性时态逻辑 (LTL)
+### 1.2.1 线性时态逻辑 (LTL)
 
 **定义 1.1.1 (LTL语法)**
 线性时态逻辑公式的语法：
@@ -70,7 +71,7 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 2. **总是操作符**：$\square \phi$ 表示所有将来时刻都满足 $\phi$，等价于 $\neg \diamond \neg \phi$
 3. **弱直到**：$\mathcal{W}$ 是 $\mathcal{U}$ 的弱化版本，允许 $\phi_1$ 永远成立
 
-### 2.2 计算树逻辑 (CTL)
+### 1.2.2 计算树逻辑 (CTL)
 
 **定义 1.2.1 (CTL语法)**
 计算树逻辑公式的语法：
@@ -101,7 +102,7 @@ CTL可以表达所有分支时间性质。
 2. **时态操作符**：F、G、U操作符可以表达时态性质
 3. **组合能力**：路径量词和时态操作符的组合可以表达复杂性质
 
-### 2.3 时间时态逻辑
+### 1.2.3 时间时态逻辑
 
 **定义 1.3.1 (时间LTL)**
 时间LTL扩展LTL以包含时间约束：
@@ -126,33 +127,33 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \mathcal{U}_{[a
 ```haskell
 -- 时间LTL解释器
 interpretTimedLTL :: TimedSequence -> LTLFormula -> Bool
-interpretTimedLTL sequence formula = 
+interpretTimedLTL sequence formula =
   case formula of
-    TimedUntil phi1 phi2 interval -> 
+    TimedUntil phi1 phi2 interval ->
       let (sigma, tau) = sequence
-          checkUntil i = 
-            any (\j -> 
+          checkUntil i =
+            any (\j ->
               let timeDiff = tau !! j - tau !! i
-              in timeDiff `inInterval` interval && 
+              in timeDiff `inInterval` interval &&
                  interpretTimedLTL sequence phi2 j &&
                  all (\k -> interpretTimedLTL sequence phi1 k) [i..j-1]
             ) [i..length sigma - 1]
       in checkUntil 0
-    
-    TimedEventually phi interval -> 
+
+    TimedEventually phi interval ->
       let (sigma, tau) = sequence
-          checkEventually i = 
-            any (\j -> 
+          checkEventually i =
+            any (\j ->
               let timeDiff = tau !! j - tau !! i
-              in timeDiff `inInterval` interval && 
+              in timeDiff `inInterval` interval &&
                  interpretTimedLTL sequence phi j
             ) [i..length sigma - 1]
       in checkEventually 0
 ```
 
-## 3 模型检查理论深化 (Model Checking Theory Deepening)
+## 1.3 模型检查理论深化 (Model Checking Theory Deepening)
 
-### 3.1 状态空间表示
+### 1.3.1 状态空间表示
 
 **定义 2.1.1 (Kripke结构)**
 Kripke结构是三元组 $M = (S, R, L)$，其中：
@@ -173,7 +174,7 @@ Kripke结构是三元组 $M = (S, R, L)$，其中：
 2. **无限序列**：路径是无限序列
 3. **重复状态**：必然存在重复状态，可以构造循环路径
 
-### 3.2 自动机理论
+### 1.3.2 自动机理论
 
 **定义 2.2.1 (Büchi自动机)**
 Büchi自动机是五元组 $A = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -203,7 +204,7 @@ Büchi自动机是五元组 $A = (Q, \Sigma, \delta, q_0, F)$，其中：
 ```haskell
 -- LTL到Büchi自动机转换
 ltlToBuchi :: LTLFormula -> BuchiAutomaton
-ltlToBuchi formula = 
+ltlToBuchi formula =
   let subformulas = extractSubformulas formula
       states = generateStates subformulas
       transitions = generateTransitions states formula
@@ -212,7 +213,7 @@ ltlToBuchi formula =
 
 -- 子公式提取
 extractSubformulas :: LTLFormula -> [LTLFormula]
-extractSubformulas formula = 
+extractSubformulas formula =
   case formula of
     And phi1 phi2 -> formula : extractSubformulas phi1 ++ extractSubformulas phi2
     Or phi1 phi2 -> formula : extractSubformulas phi1 ++ extractSubformulas phi2
@@ -221,7 +222,7 @@ extractSubformulas formula =
     _ -> [formula]
 ```
 
-### 3.3 模型检查算法
+### 1.3.3 模型检查算法
 
 **算法 2.3.1 (LTL模型检查)**
 LTL模型检查算法：
@@ -242,7 +243,7 @@ LTL模型检查算法是正确的。
 ```haskell
 -- LTL模型检查
 ltlModelCheck :: KripkeStructure -> LTLFormula -> Bool
-ltlModelCheck model formula = 
+ltlModelCheck model formula =
   let buchi = ltlToBuchi formula
       product = synchronousProduct model buchi
       emptiness = checkEmptiness product
@@ -250,9 +251,9 @@ ltlModelCheck model formula =
 
 -- 同步积构造
 synchronousProduct :: KripkeStructure -> BuchiAutomaton -> ProductAutomaton
-synchronousProduct model buchi = 
+synchronousProduct model buchi =
   let states = [(s, q) | s <- states model, q <- states buchi]
-      transitions = [(s1, q1) -> (s2, q2) | 
+      transitions = [(s1, q1) -> (s2, q2) |
                      (s1, s2) <- transitions model,
                      (q1, q2) <- transitions buchi,
                      labels model s1 `satisfies` guard buchi q1]
@@ -260,9 +261,9 @@ synchronousProduct model buchi =
   in ProductAutomaton states transitions acceptingStates
 ```
 
-## 4 控制系统理论深化 (Control Theory Deepening)
+## 1.4 控制系统理论深化 (Control Theory Deepening)
 
-### 4.1 混合系统
+### 1.4.1 混合系统
 
 **定义 3.1.1 (混合自动机)**
 混合自动机是六元组 $H = (Q, X, \text{Init}, \text{Inv}, \text{Flow}, \text{Jump})$，其中：
@@ -293,7 +294,7 @@ synchronousProduct model buchi =
 ```haskell
 -- 混合自动机
 data HybridAutomaton where
-  HybridAutomaton :: 
+  HybridAutomaton ::
     [DiscreteState] ->           -- 离散状态
     ContinuousSpace ->           -- 连续状态空间
     InitCondition ->             -- 初始条件
@@ -304,7 +305,7 @@ data HybridAutomaton where
 
 -- 混合系统轨迹
 data HybridTrajectory where
-  HybridTrajectory :: 
+  HybridTrajectory ::
     [Time] ->                    -- 时间序列
     [DiscreteState] ->           -- 离散状态序列
     [ContinuousState] ->         -- 连续状态轨迹
@@ -312,14 +313,14 @@ data HybridTrajectory where
 
 -- 可达性分析
 reachabilityAnalysis :: HybridAutomaton -> Bool
-reachabilityAnalysis automaton = 
+reachabilityAnalysis automaton =
   let initialStates = initialStates automaton
       reachableStates = computeReachableStates automaton initialStates
       targetStates = targetStates automaton
   in any (\state -> state `elem` targetStates) reachableStates
 ```
 
-### 4.2 安全性质验证
+### 1.4.2 安全性质验证
 
 **定义 3.2.1 (安全性质)**
 安全性质是形如 $\square \neg \text{bad}$ 的LTL公式，表示坏状态永远不会到达。
@@ -343,7 +344,7 @@ reachabilityAnalysis automaton =
 ```haskell
 -- 安全性质检查
 safetyCheck :: HybridSystem -> SafetyProperty -> Bool
-safetyCheck system property = 
+safetyCheck system property =
   let reachable = computeReachableStates system
       badStates = extractBadStates property
       intersection = reachable `intersect` badStates
@@ -351,16 +352,16 @@ safetyCheck system property =
 
 -- 安全性质保持
 safetyPreservation :: System -> SafetyProperty -> Controller -> Bool
-safetyPreservation system property controller = 
+safetyPreservation system property controller =
   let openLoopSafe = safetyCheck system property
       closedLoopSystem = applyController system controller
       closedLoopSafe = safetyCheck closedLoopSystem property
   in openLoopSafe && closedLoopSafe
 ```
 
-## 5 时态逻辑控制理论深化 (Temporal Logic Control Theory Deepening)
+## 1.5 时态逻辑控制理论深化 (Temporal Logic Control Theory Deepening)
 
-### 5.1 控制综合
+### 1.5.1 控制综合
 
 **定义 4.1.1 (控制综合问题)**
 给定系统 $S$ 和时态逻辑规范 $\phi$，找到控制律 $C$ 使得闭环系统 $S \parallel C$ 满足 $\phi$。
@@ -392,7 +393,7 @@ safetyPreservation system property controller =
 ```haskell
 -- 时态逻辑控制综合
 temporalControlSynthesis :: System -> LTLFormula -> Controller
-temporalControlSynthesis system spec = 
+temporalControlSynthesis system spec =
   let buchi = ltlToBuchi spec
       game = constructGame system buchi
       strategy = solveGame game
@@ -401,7 +402,7 @@ temporalControlSynthesis system spec =
 
 -- 游戏构造
 constructGame :: System -> BuchiAutomaton -> Game
-constructGame system buchi = 
+constructGame system buchi =
   let states = [(s, q) | s <- states system, q <- states buchi]
       controllerMoves = [(s, u) | s <- states system, u <- controlInputs system s]
       environmentMoves = [(s, d) | s <- states system, d <- disturbanceInputs system s]
@@ -410,13 +411,13 @@ constructGame system buchi =
 
 -- 策略求解
 solveGame :: Game -> Strategy
-solveGame game = 
+solveGame game =
   let winningStates = computeWinningStates game
       strategy = extractStrategy game winningStates
   in strategy
 ```
 
-### 5.2 反应性控制
+### 1.5.2 反应性控制
 
 **定义 4.2.1 (反应性规范)**
 反应性规范形如 $\square \diamond \text{request} \rightarrow \square \diamond \text{response}$，表示"总是最终响应请求"。
@@ -433,7 +434,7 @@ solveGame game =
 ```haskell
 -- 反应性控制
 reactiveControl :: System -> ReactiveSpecification -> ReactiveController
-reactiveControl system spec = 
+reactiveControl system spec =
   let game = constructReactiveGame system spec
       strategy = solveReactiveGame game
       controller = extractReactiveController strategy
@@ -441,7 +442,7 @@ reactiveControl system spec =
 
 -- 反应性游戏
 constructReactiveGame :: System -> ReactiveSpecification -> ReactiveGame
-constructReactiveGame system spec = 
+constructReactiveGame system spec =
   let states = states system
       controllerActions = controlActions system
       environmentActions = environmentActions system
@@ -449,9 +450,9 @@ constructReactiveGame system spec =
   in ReactiveGame states controllerActions environmentActions transitions
 ```
 
-## 6 实时时态逻辑控制
+## 1.6 实时时态逻辑控制
 
-### 6.1 时间约束
+### 1.6.1 时间约束
 
 **定义 5.1.1 (实时控制器)**
 实时控制器必须在指定时间内响应：
@@ -469,7 +470,7 @@ $$\text{ResponseTime}(u) \leq \text{Deadline}$$
 ```haskell
 -- 实时控制器
 data RealTimeController where
-  RealTimeController :: 
+  RealTimeController ::
     Controller ->               -- 基础控制器
     Time ->                     -- 响应时间
     Time ->                     -- 截止时间
@@ -477,14 +478,14 @@ data RealTimeController where
 
 -- 实时控制验证
 verifyRealTimeControl :: RealTimeController -> Bool
-verifyRealTimeControl controller = 
+verifyRealTimeControl controller =
   let responseTime = responseTime controller
       deadline = deadline controller
   in responseTime <= deadline
 
 -- 时间自动机建模
 modelTimeAutomaton :: System -> TimeConstraint -> TimeAutomaton
-modelTimeAutomaton system constraint = 
+modelTimeAutomaton system constraint =
   let states = states system
       clocks = generateClocks constraint
       invariants = generateInvariants constraint
@@ -492,7 +493,7 @@ modelTimeAutomaton system constraint =
   in TimeAutomaton states clocks invariants transitions
 ```
 
-### 6.2 概率时态逻辑控制
+### 1.6.2 概率时态逻辑控制
 
 **定义 5.2.1 (概率CTL)**
 概率CTL公式：
@@ -515,7 +516,7 @@ $M, s \models \text{P}_{\bowtie p}[\psi]$ 当且仅当从 $s$ 开始的路径中
 ```haskell
 -- 概率控制综合
 probabilisticControlSynthesis :: ProbSystem -> PCTLFormula -> ProbController
-probabilisticControlSynthesis system spec = 
+probabilisticControlSynthesis system spec =
   let game = constructProbabilisticGame system spec
       strategy = solveProbabilisticGame game
       controller = extractProbabilisticController strategy
@@ -523,7 +524,7 @@ probabilisticControlSynthesis system spec =
 
 -- 概率游戏
 constructProbabilisticGame :: ProbSystem -> PCTLFormula -> ProbGame
-constructProbabilisticGame system spec = 
+constructProbabilisticGame system spec =
   let states = states system
       actions = actions system
       transitions = probabilisticTransitions system
@@ -531,9 +532,9 @@ constructProbabilisticGame system spec =
   in ProbGame states actions transitions rewards
 ```
 
-## 7 批判性分析与综合论证
+## 1.7 批判性分析与综合论证
 
-### 7.1 理论完备性分析
+### 1.7.1 理论完备性分析
 
 **批判性观点 6.1.1 (理论局限性)**
 时态逻辑控制理论存在以下局限性：
@@ -549,7 +550,7 @@ constructProbabilisticGame system spec =
 2. **自动控制综合**：自动生成满足规范的控制律
 3. **实时保证**：保证实时系统的时序约束
 
-### 7.2 应用场景分析
+### 1.7.2 应用场景分析
 
 **场景 6.2.1 (自动驾驶)**
 时态逻辑控制在自动驾驶中的应用：
@@ -565,7 +566,7 @@ constructProbabilisticGame system spec =
 2. **安全约束**：机器人安全约束的验证
 3. **实时控制**：机器人实时控制
 
-### 7.3 未来发展方向
+### 1.7.3 未来发展方向
 
 **方向 6.3.1 (量子控制)**
 量子计算对时态逻辑控制的新挑战：
@@ -581,7 +582,7 @@ constructProbabilisticGame system spec =
 2. **AI控制综合**：AI系统的控制综合
 3. **AI实时控制**：AI系统的实时控制
 
-## 8 结论
+## 1.8 结论
 
 本文档构建了一个完整的时态逻辑控制综合理论体系，将时态逻辑、模型检查、控制系统、实时系统等核心概念进行深度整合。通过严格的形式化定义、定理证明和批判性分析，我们建立了：
 
@@ -592,7 +593,7 @@ constructProbabilisticGame system spec =
 
 这个时态逻辑控制理论体系为现代自动驾驶、机器人控制、实时系统等领域提供了强大的理论工具，推动着时态逻辑控制在计算机科学和工程中的持续发展。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Pnueli, A. (1977). The temporal logic of programs. In 18th Annual Symposium on Foundations of Computer Science, 46-57.
 2. Clarke, E. M., Grumberg, O., & Peled, D. A. (1999). Model checking. MIT press.

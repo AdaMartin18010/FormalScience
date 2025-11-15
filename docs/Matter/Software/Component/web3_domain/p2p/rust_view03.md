@@ -1,73 +1,73 @@
 
-# Rust实现的P2P系统技术堆栈分析
+# 1. Rust实现的P2P系统技术堆栈分析
 
 ## 目录
 
-- [Rust实现的P2P系统技术堆栈分析](#rust实现的p2p系统技术堆栈分析)
+- [1. Rust实现的P2P系统技术堆栈分析](#1-rust实现的p2p系统技术堆栈分析)
   - [目录](#目录)
-  - [1. 引言](#1-引言)
-  - [2. P2P系统的核心原则](#2-p2p系统的核心原则)
-    - [2.1 去中心化与自治性](#21-去中心化与自治性)
-    - [2.2 可扩展性与效率](#22-可扩展性与效率)
-    - [2.3 弹性与容错性](#23-弹性与容错性)
-    - [2.4 安全与隐私](#24-安全与隐私)
-    - [2.5 激励与治理](#25-激励与治理)
-  - [3. Rust语言在P2P开发中的优势](#3-rust语言在p2p开发中的优势)
-    - [3.1 安全性保证](#31-安全性保证)
-    - [3.2 并发性能](#32-并发性能)
-    - [3.3 资源效率](#33-资源效率)
-    - [3.4 跨平台支持](#34-跨平台支持)
-    - [3.5 生态系统成熟度](#35-生态系统成熟度)
-  - [4. P2P系统的基础组件](#4-p2p系统的基础组件)
-    - [4.1 传输层协议](#41-传输层协议)
-    - [4.2 对等节点发现](#42-对等节点发现)
-    - [4.3 分布式路由](#43-分布式路由)
-    - [4.4 消息传播策略](#44-消息传播策略)
-    - [4.5 连接管理](#45-连接管理)
-  - [5. Rust实现的P2P核心库](#5-rust实现的p2p核心库)
-    - [5.1 libp2p-rust](#51-libp2p-rust)
-    - [5.2 tokio与异步编程模型](#52-tokio与异步编程模型)
-    - [5.3 rust-libp2p的多协议支持](#53-rust-libp2p的多协议支持)
-    - [5.4 parity-scale-codec与数据序列化](#54-parity-scale-codec与数据序列化)
-    - [5.5 性能分析与对比](#55-性能分析与对比)
-  - [6. P2P网络拓扑与协议](#6-p2p网络拓扑与协议)
-    - [6.1 结构化P2P网络](#61-结构化p2p网络)
-    - [6.2 非结构化P2P网络](#62-非结构化p2p网络)
-    - [6.3 混合架构](#63-混合架构)
-    - [6.4 Kademlia与DHT实现](#64-kademlia与dht实现)
-    - [6.5 Gossipsub协议实现](#65-gossipsub协议实现)
-  - [7. 分布式存储技术](#7-分布式存储技术)
-    - [7.1 内容寻址存储](#71-内容寻址存储)
-    - [7.2 IPFS与Rust实现](#72-ipfs与rust实现)
-    - [7.3 分布式数据复制策略](#73-分布式数据复制策略)
-    - [7.4 数据持久性与可用性权衡](#74-数据持久性与可用性权衡)
-    - [7.5 实际性能与限制](#75-实际性能与限制)
-      - [1. 带宽消耗与网络瓶颈](#1-带宽消耗与网络瓶颈)
-      - [2. 延迟与查找效率](#2-延迟与查找效率)
-      - [3. 存储效率与数据冗余](#3-存储效率与数据冗余)
-      - [4. 负载不均衡与热点问题](#4-负载不均衡与热点问题)
-      - [5. 系统规模与维护开销](#5-系统规模与维护开销)
-  - [8. P2P共识机制](#8-p2p共识机制)
-    - [8.1 共识算法分类](#81-共识算法分类)
-    - [8.2 Rust实现的实用拜占庭容错(PBFT)](#82-rust实现的实用拜占庭容错pbft)
-    - [8.3 使用Hotstuff共识算法进行链式共识](#83-使用hotstuff共识算法进行链式共识)
-    - [8.4 典型共识算法性能对比分析](#84-典型共识算法性能对比分析)
-  - [9. P2P安全与隐私保护](#9-p2p安全与隐私保护)
-    - [9.1 P2P网络面临的安全威胁](#91-p2p网络面临的安全威胁)
-    - [9.2 P2P隐私保护技术](#92-p2p隐私保护技术)
-    - [9.3 分布式身份认证系统](#93-分布式身份认证系统)
-    - [9.4 P2P网络的匿名通信](#94-p2p网络的匿名通信)
-    - [9.5 P2P网络恶意行为检测](#95-p2p网络恶意行为检测)
+  - [1.1 引言](#11-引言)
+  - [1.2 P2P系统的核心原则](#12-p2p系统的核心原则)
+    - [1.2.1 去中心化与自治性](#121-去中心化与自治性)
+    - [1.2.2 可扩展性与效率](#122-可扩展性与效率)
+    - [1.2.3 弹性与容错性](#123-弹性与容错性)
+    - [1.2.4 安全与隐私](#124-安全与隐私)
+    - [1.2.5 激励与治理](#125-激励与治理)
+  - [1.3 Rust语言在P2P开发中的优势](#13-rust语言在p2p开发中的优势)
+    - [1.3.1 安全性保证](#131-安全性保证)
+    - [1.3.2 并发性能](#132-并发性能)
+    - [1.3.3 资源效率](#133-资源效率)
+    - [1.3.4 跨平台支持](#134-跨平台支持)
+    - [1.3.5 生态系统成熟度](#135-生态系统成熟度)
+  - [1.4 P2P系统的基础组件](#14-p2p系统的基础组件)
+    - [1.4.1 传输层协议](#141-传输层协议)
+    - [1.4.2 对等节点发现](#142-对等节点发现)
+    - [1.4.3 分布式路由](#143-分布式路由)
+    - [1.4.4 消息传播策略](#144-消息传播策略)
+    - [1.4.5 连接管理](#145-连接管理)
+  - [1.5 Rust实现的P2P核心库](#15-rust实现的p2p核心库)
+    - [1.5.1 libp2p-rust](#151-libp2p-rust)
+    - [1.5.2 tokio与异步编程模型](#152-tokio与异步编程模型)
+    - [1.5.3 rust-libp2p的多协议支持](#153-rust-libp2p的多协议支持)
+    - [1.5.4 parity-scale-codec与数据序列化](#154-parity-scale-codec与数据序列化)
+    - [1.5.5 性能分析与对比](#155-性能分析与对比)
+  - [1.6 P2P网络拓扑与协议](#16-p2p网络拓扑与协议)
+    - [1.6.1 结构化P2P网络](#161-结构化p2p网络)
+    - [1.6.2 非结构化P2P网络](#162-非结构化p2p网络)
+    - [1.6.3 混合架构](#163-混合架构)
+    - [1.6.4 Kademlia与DHT实现](#164-kademlia与dht实现)
+    - [1.6.5 Gossipsub协议实现](#165-gossipsub协议实现)
+  - [1.7 分布式存储技术](#17-分布式存储技术)
+    - [1.7.1 内容寻址存储](#171-内容寻址存储)
+    - [1.7.2 IPFS与Rust实现](#172-ipfs与rust实现)
+    - [1.7.3 分布式数据复制策略](#173-分布式数据复制策略)
+    - [1.7.4 数据持久性与可用性权衡](#174-数据持久性与可用性权衡)
+    - [1.7.5 实际性能与限制](#175-实际性能与限制)
+      - [1.7.5.1 带宽消耗与网络瓶颈](#1751-带宽消耗与网络瓶颈)
+      - [1.7.5.2 延迟与查找效率](#1752-延迟与查找效率)
+      - [1.7.5.3 存储效率与数据冗余](#1753-存储效率与数据冗余)
+      - [1.7.5.4 负载不均衡与热点问题](#1754-负载不均衡与热点问题)
+      - [1.7.5.5 系统规模与维护开销](#1755-系统规模与维护开销)
+  - [1.8 P2P共识机制](#18-p2p共识机制)
+    - [1.8.1 共识算法分类](#181-共识算法分类)
+    - [1.8.2 Rust实现的实用拜占庭容错(PBFT)](#182-rust实现的实用拜占庭容错pbft)
+    - [1.8.3 使用Hotstuff共识算法进行链式共识](#183-使用hotstuff共识算法进行链式共识)
+    - [1.8.4 典型共识算法性能对比分析](#184-典型共识算法性能对比分析)
+  - [1.9 P2P安全与隐私保护](#19-p2p安全与隐私保护)
+    - [1.9.1 P2P网络面临的安全威胁](#191-p2p网络面临的安全威胁)
+    - [1.9.2 P2P隐私保护技术](#192-p2p隐私保护技术)
+    - [1.9.3 分布式身份认证系统](#193-分布式身份认证系统)
+    - [1.9.4 P2P网络的匿名通信](#194-p2p网络的匿名通信)
+    - [1.9.5 P2P网络恶意行为检测](#195-p2p网络恶意行为检测)
 
-## 1. 引言
+## 1.1 引言
 
 P2P（点对点）系统是互联网架构中的一种基础范式，它允许网络参与者（节点）直接相互连接并交换信息，无需依赖中央服务器。这种架构模式已经成功应用于文件共享、分布式存储、区块链和去中心化应用等多个领域。
 
 Rust作为一种注重安全性、并发性和性能的系统级编程语言，为P2P系统的实现提供了独特优势。本文将深入分析Rust在P2P技术堆栈中的应用，评估现有开源项目，探讨实际工程挑战，并提供实用的设计与实现指南。
 
-## 2. P2P系统的核心原则
+## 1.2 P2P系统的核心原则
 
-### 2.1 去中心化与自治性
+### 1.2.1 去中心化与自治性
 
 P2P系统的根本特性是去中心化，这意味着网络功能不依赖于任何单一控制点。每个节点既是服务消费者也是服务提供者，这种双重角色使网络具有内在的弹性。
 
@@ -77,7 +77,7 @@ P2P系统的根本特性是去中心化，这意味着网络功能不依赖于�
 
 **权衡**：完全去中心化通常会带来额外的延迟、带宽消耗和复杂性。实际系统常需要在去中心化程度和性能之间找到平衡。
 
-### 2.2 可扩展性与效率
+### 1.2.2 可扩展性与效率
 
 P2P系统需要能够随着参与节点数量的增加而优雅地扩展，同时保持资源利用的效率。
 
@@ -95,7 +95,7 @@ P2P系统需要能够随着参与节点数量的增加而优雅地扩展，同�
 - 查找操作：O(log n)跳数
 - 加入/离开操作：O(log^2 n)消息数
 
-### 2.3 弹性与容错性
+### 1.2.3 弹性与容错性
 
 P2P系统需要在节点频繁加入、离开、失败的环境中保持稳定运行。
 
@@ -110,7 +110,7 @@ P2P系统需要在节点频繁加入、离开、失败的环境中保持稳定�
 
 **实际案例**：Filecoin网络通过复制因子和修复任务确保即使在存储提供者离线的情况下，数据仍然可访问。
 
-### 2.4 安全与隐私
+### 1.2.4 安全与隐私
 
 P2P环境下的安全挑战比传统客户端-服务器模型更为复杂，因为每个参与者都需要假设其他节点可能是恶意的。
 
@@ -126,7 +126,7 @@ P2P环境下的安全挑战比传统客户端-服务器模型更为复杂，因�
 
 **现实限制**：完全隐私和完全去中心化可能存在本质冲突，系统设计需要根据具体需求确定优先级。
 
-### 2.5 激励与治理
+### 1.2.5 激励与治理
 
 纯技术解决方案不足以维持P2P系统的长期健康运行，需要考虑社会和经济因素。
 
@@ -141,9 +141,9 @@ P2P环境下的安全挑战比传统客户端-服务器模型更为复杂，因�
 
 **真实案例**：Filecoin要求存储提供者抵押FIL代币作为担保，确保其按合约提供存储服务。
 
-## 3. Rust语言在P2P开发中的优势
+## 1.3 Rust语言在P2P开发中的优势
 
-### 3.1 安全性保证
+### 1.3.1 安全性保证
 
 Rust的所有权系统和借用检查器在编译时防止了大类内存安全问题，这对P2P系统特别重要，因为它们处理不可信来源的数据。
 
@@ -183,7 +183,7 @@ fn handle_peer_message(message: &Message) -> Result<Response, MessageError> {
 }
 ```
 
-### 3.2 并发性能
+### 1.3.2 并发性能
 
 P2P系统本质上是高度并发的，需要同时处理多个节点连接和消息流。Rust的所有权模型和线程安全保证提供了高效且安全的并发编程模型。
 
@@ -196,7 +196,7 @@ P2P系统本质上是高度并发的，需要同时处理多个节点连接和�
 
 **性能数据**：在网络吞吐量测试中，Rust实现的libp2p相比Go版本在高并发连接下CPU使用率降低约30%，内存占用减少约40%。
 
-### 3.3 资源效率
+### 1.3.3 资源效率
 
 P2P节点可能在资源受限的环境中运行（如移动设备），Rust的资源效率成为重要优势。
 
@@ -213,7 +213,7 @@ P2P节点可能在资源受限的环境中运行（如移动设备），Rust的�
 - 编译时多态而非运行时反射
 - LLVM优化后端
 
-### 3.4 跨平台支持
+### 1.3.4 跨平台支持
 
 P2P应用需要在多种平台上无缝运行，Rust提供了强大的跨平台能力。
 
@@ -226,7 +226,7 @@ P2P应用需要在多种平台上无缝运行，Rust提供了强大的跨平台�
 
 **实际应用**：Substrate框架能在几乎所有主流平台上构建区块链节点，包括通过WebAssembly在浏览器中运行轻客户端。
 
-### 3.5 生态系统成熟度
+### 1.3.5 生态系统成熟度
 
 Rust生态系统已发展出一套完整的P2P开发工具链。
 
@@ -247,9 +247,9 @@ Rust生态系统已发展出一套完整的P2P开发工具链。
 
 **社区活跃度**：截至2023年，rust-libp2p月下载量超过10万次，GitHub上有超过200个活跃贡献者。
 
-## 4. P2P系统的基础组件
+## 1.4 P2P系统的基础组件
 
-### 4.1 传输层协议
+### 1.4.1 传输层协议
 
 P2P系统需要灵活的传输层以适应不同网络环境和连接类型。
 
@@ -273,7 +273,7 @@ P2P系统需要灵活的传输层以适应不同网络环境和连接类型。
 
 **实际应用示例**：Substrate框架支持在同一节点上同时使用多种传输协议，根据网络条件动态选择最佳传输方式。
 
-### 4.2 对等节点发现
+### 1.4.2 对等节点发现
 
 新节点加入网络时需要发现现有节点，这是P2P系统的基础功能。
 
@@ -309,7 +309,7 @@ let mut swarm = SwarmBuilder::new(transport, behaviour, local_peer_id)
 - 活跃检测：能在30-60秒内检测到节点下线
 - 网络覆盖：应发现至少90%的活跃节点
 
-### 4.3 分布式路由
+### 1.4.3 分布式路由
 
 路由决定了消息如何在P2P网络中从源节点传递到目标节点。
 
@@ -333,7 +333,7 @@ let mut swarm = SwarmBuilder::new(transport, behaviour, local_peer_id)
 
 **实际应用**：Polkadot网络使用基于Kademlia的路由进行节点发现，但在验证者集合间使用定制的Gossip协议传播交易和区块。
 
-### 4.4 消息传播策略
+### 1.4.4 消息传播策略
 
 消息在P2P网络中的高效传播是系统性能的关键。
 
@@ -378,7 +378,7 @@ let mut gossipsub = Gossipsub::new(MessageAuthenticity::Signed(keypair), gossips
 
 **实测性能**：在包含1000个节点的模拟网络中，优化后的Gossipsub相比基本Floodsub减少了78%的网络流量，同时保持了99.8%的消息传递率。
 
-### 4.5 连接管理
+### 1.4.5 连接管理
 
 P2P系统需要高效管理多个并发连接，处理节点加入、离开和故障。
 
@@ -421,14 +421,14 @@ impl ConnectionManager {
                 return Err(ConnectError::TooManyConnections);
             }
         }
-        
+
         // 记录连接状态
         self.pending.insert(peer_id, ConnectingState {
             attempts: 1,
             first_attempt: Instant::now(),
             last_attempt: Instant::now(),
         });
-        
+
         // 尝试建立连接
         match self.dial(peer_id, addr).await {
             Ok(conn) => {
@@ -446,21 +446,21 @@ impl ConnectionManager {
             }
         }
     }
-    
+
     // 处理连接断开
     async fn handle_disconnect(&mut self, peer_id: &PeerId, reason: DisconnectReason) {
         self.connections.remove(peer_id);
-        
+
         // 根据断开原因决定是否重连
         if self.should_reconnect(peer_id, &reason) {
             let state = self.pending.entry(*peer_id).or_insert(ConnectingState::new());
             let backoff = self.reconnect_policy.calculate_backoff(state.attempts);
-            
+
             // 安排重连任务
             let peer = *peer_id;
             let addr = self.last_known_address(&peer);
             let manager = self.clone();
-            
+
             tokio::spawn(async move {
                 tokio::time::sleep(backoff).await;
                 let _ = manager.connect(peer, addr).await;
@@ -472,9 +472,9 @@ impl ConnectionManager {
 
 **性能指标**：在网络波动测试中，使用指数退避重连策略的Rust实现可以减少50%的重连尝试次数，同时将成功连接率提高约15%。
 
-## 5. Rust实现的P2P核心库
+## 1.5 Rust实现的P2P核心库
 
-### 5.1 libp2p-rust
+### 1.5.1 libp2p-rust
 
 libp2p是一个模块化的P2P网络框架，Rust实现（rust-libp2p）提供了全面的P2P网络功能。
 
@@ -574,7 +574,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 ```
 
-### 5.2 tokio与异步编程模型
+### 1.5.2 tokio与异步编程模型
 
 Tokio是Rust生态系统中的异步运行时，为P2P系统提供了高效的I/O和任务调度能力。
 
@@ -609,12 +609,12 @@ impl MessageProcessor {
     // 启动消息处理任务
     fn start(mut self) -> mpsc::Sender<(PeerId, NetworkMessage)> {
         let (tx, mut rx) = mpsc::channel::<(PeerId, NetworkMessage)>(100);
-        
+
         // 创建处理任务
         tokio::spawn(async move {
             // 创建定时清理任务
             let mut interval = tokio::time::interval(Duration::from_secs(30));
-            
+
             loop {
                 tokio::select! {
                     // 处理新消息
@@ -630,10 +630,10 @@ impl MessageProcessor {
                 }
             }
         });
-        
+
         tx
     }
-    
+
     // 处理接收的消息
     async fn handle_message(&mut self, peer: PeerId, message: NetworkMessage) {
         // 检查是否有专用通道处理此peer消息
@@ -647,10 +647,10 @@ impl MessageProcessor {
             // 为这个peer创建专用处理通道
             let (tx, rx) = mpsc::channel(32);
             self.peer_channels.insert(peer, tx.clone());
-            
+
             // 发送当前消息
             let _ = tx.try_send(message);
-            
+
             // 发送已排队的消息
             if let Some(queued) = self.message_queues.get_mut(&peer) {
                 while let Some(msg) = queued.pop_front() {
@@ -659,12 +659,12 @@ impl MessageProcessor {
                     }
                 }
             }
-            
+
             // 在单独任务中处理这个peer的所有消息
             tokio::spawn(Self::process_peer_messages(peer, rx));
         }
     }
-    
+
     // 为单个peer处理消息的任务
     async fn process_peer_messages(peer: PeerId, mut rx: mpsc::Receiver<NetworkMessage>) {
         while let Some(message) = rx.recv().await {
@@ -673,10 +673,10 @@ impl MessageProcessor {
                 NetworkMessage::Request(req) => {
                     // 处理请求...
                     let response_future = handle_request(req);
-                    
+
                     // 设置处理超时
                     match tokio::time::timeout(
-                        Duration::from_secs(5), 
+                        Duration::from_secs(5),
                         response_future
                     ).await {
                         Ok(result) => {
@@ -693,14 +693,14 @@ impl MessageProcessor {
                 // 其他消息类型...
             }
         }
-        
+
         // 通道关闭，peer可能断开连接
         println!("Channel for peer {peer} closed");
     }
 }
 ```
 
-### 5.3 rust-libp2p的多协议支持
+### 1.5.3 rust-libp2p的多协议支持
 
 rust-libp2p支持多种P2P协议，使开发者能灵活构建网络应用。
 
@@ -739,12 +739,12 @@ impl ProtocolsHandler for MyProtocolHandler {
     type InboundProtocol = MyInboundProtocol;
     type OutboundProtocol = MyOutboundProtocol;
     type OutboundOpenInfo = MyProtocolRequest;
-    
+
     // 协议处理逻辑
     fn connection_keep_alive(&self) -> KeepAlive {
         KeepAlive::Yes
     }
-    
+
     fn poll(&mut self, cx: &mut Context<'_>) -> Poll<
         ProtocolsHandlerEvent<Self::OutboundProtocol, Self::OutboundOpenInfo, Self::OutEvent, Self::Error>
     >
@@ -768,7 +768,7 @@ impl ProtocolsHandler for MyProtocolHandler {
                 }
             }
         }
-        
+
         // 处理出站请求
         if !self.pending_requests.is_empty() && self.outbound_substreams.len() < self.config.max_concurrent_outbound {
             if let Some(request) = self.pending_requests.pop_front() {
@@ -778,7 +778,7 @@ impl ProtocolsHandler for MyProtocolHandler {
                 });
             }
         }
-        
+
         Poll::Pending
     }
 }
@@ -853,7 +853,7 @@ fn handle_event(event: ComposedEvent) {
 
 **扩展性和互操作性**：rust-libp2p的协议实现与其他语言版本（Go、JavaScript、Nim等）保持互操作性，确保异构网络中的节点可以通信。这对于构建跨多种客户端的去中心化应用至关重要。
 
-### 5.4 parity-scale-codec与数据序列化
+### 1.5.4 parity-scale-codec与数据序列化
 
 P2P系统需要高效的数据序列化机制。Parity Scale Codec (SCALE)是Substrate生态系统中广泛使用的轻量级序列化格式。
 
@@ -904,23 +904,23 @@ fn serialize_example() {
         payload: b"Hello, P2P World!".to_vec(),
         flags: 0x0001,
     };
-    
+
     // 序列化为字节数组
     let encoded: Vec<u8> = message.encode();
     println!("Encoded size: {} bytes", encoded.len());
-    
+
     // 反序列化
     let decoded = NetworkMessage::decode(&mut &encoded[..])
         .expect("Failed to decode message");
-    
+
     assert_eq!(message, decoded);
-    
+
     // 事件序列化
     let event = PeerEvent::Message {
         peer_id: [0; 32],
         message,
     };
-    
+
     let encoded_event = event.encode();
     println!("Encoded event size: {} bytes", encoded_event.len());
 }
@@ -929,7 +929,7 @@ fn serialize_example() {
 fn partial_decode_example(data: &[u8]) -> Result<u8, parity_scale_codec::Error> {
     // 只解码消息类型字段
     let message_type = u8::decode(&mut &data[..])?;
-    
+
     // 根据消息类型决定如何处理剩余数据
     match message_type {
         0 => {
@@ -945,7 +945,7 @@ fn partial_decode_example(data: &[u8]) -> Result<u8, parity_scale_codec::Error> 
             println!("Unknown message type: {}", message_type);
         }
     }
-    
+
     Ok(message_type)
 }
 ```
@@ -958,7 +958,7 @@ fn partial_decode_example(data: &[u8]) -> Result<u8, parity_scale_codec::Error> 
 - 协议升级需要额外注意向后兼容性
 - 对于需要与多语言客户端交互的场景，可能需要考虑Protobuf等更广泛支持的格式
 
-### 5.5 性能分析与对比
+### 1.5.5 性能分析与对比
 
 Rust实现的P2P组件在性能上通常优于其他语言实现，尤其是在资源效率方面。
 
@@ -996,24 +996,24 @@ Go-Ethereum节点资源使用:
    // 高效的网络I/O处理示例
    use tokio::io::{AsyncReadExt, AsyncWriteExt};
    use tokio::net::TcpStream;
-   
+
    async fn handle_connection(mut socket: TcpStream) -> Result<(), std::io::Error> {
        // 预分配固定大小的缓冲区避免动态分配
        let mut buffer = [0u8; 8 * 1024]; // 8KB缓冲区
-       
+
        loop {
            // 高效读取数据
            let n = socket.read(&mut buffer).await?;
            if n == 0 {
                return Ok(());  // 连接关闭
            }
-           
+
            // 处理数据...
            process_data(&buffer[..n]);
-           
+
            // 响应处理可以直接使用缓冲区的一部分
            let response = prepare_response(&buffer[..n]);
-           
+
            // 高效写入响应
            socket.write_all(&response).await?;
        }
@@ -1026,7 +1026,7 @@ Go-Ethereum节点资源使用:
    // 使用rayon进行并行密码学操作
    use rayon::prelude::*;
    use sha2::{Sha256, Digest};
-   
+
    fn hash_multiple_blocks(blocks: &[Vec<u8>]) -> Vec<[u8; 32]> {
        blocks.par_iter().map(|block| {
            let mut hasher = Sha256::new();
@@ -1045,16 +1045,16 @@ Go-Ethereum节点资源使用:
    // 使用Arc和RwLock高效共享网络状态
    use std::sync::{Arc, RwLock};
    use std::collections::HashMap;
-   
+
    struct NetworkState {
        connections: HashMap<PeerId, ConnectionInfo>,
        routing_table: HashMap<Key, Vec<PeerId>>,
        message_cache: LruCache<MessageId, ()>,
    }
-   
+
    // 创建可共享状态
    let state = Arc::new(RwLock::new(NetworkState::new()));
-   
+
    // 读取访问（无阻塞）
    fn lookup_route(state: &Arc<RwLock<NetworkState>>, key: &Key) -> Option<Vec<PeerId>> {
        // 获取读锁
@@ -1062,7 +1062,7 @@ Go-Ethereum节点资源使用:
        // 克隆数据以避免长时间持有锁
        network.routing_table.get(key).cloned()
    }
-   
+
    // 写入访问（最小化锁定时间）
    fn update_route(state: &Arc<RwLock<NetworkState>>, key: Key, peers: Vec<PeerId>) {
        // 准备数据
@@ -1080,9 +1080,9 @@ Go-Ethereum节点资源使用:
 4. **并行处理**：使用rayon在CPU密集型任务中利用多核优势
 5. **异步I/O**：充分利用tokio的异步特性，避免阻塞操作
 
-## 6. P2P网络拓扑与协议
+## 1.6 P2P网络拓扑与协议
 
-### 6.1 结构化P2P网络
+### 1.6.1 结构化P2P网络
 
 结构化P2P网络通过特定算法组织节点连接，形成具有确定性查找特性的拓扑结构。
 
@@ -1104,7 +1104,7 @@ Go-Ethereum节点资源使用:
 
 ```rust
 use libp2p::kad::{
-    Kademlia, KademliaConfig, KademliaEvent, QueryResult, 
+    Kademlia, KademliaConfig, KademliaEvent, QueryResult,
     record::Key, store::MemoryStore,
 };
 use libp2p::{Multiaddr, PeerId, Swarm};
@@ -1121,19 +1121,19 @@ fn create_kademlia_dht(local_peer_id: PeerId) -> Kademlia<MemoryStore> {
     cfg.set_record_expiry(Duration::from_secs(60 * 60 * 24));
     // 设置查询超时
     cfg.set_query_timeout(Duration::from_secs(30));
-    
+
     // 创建内存存储
     let store = MemoryStore::new(local_peer_id);
-    
+
     // 创建Kademlia实例
     let mut kad = Kademlia::with_config(local_peer_id, store, cfg);
-    
+
     // 添加引导节点
     for addr in bootstrap_addresses() {
         let peer_id = get_peer_id_from_multiaddr(&addr);
         kad.add_address(&peer_id, addr);
     }
-    
+
     kad
 }
 
@@ -1142,19 +1142,19 @@ async fn store_and_retrieve(mut swarm: Swarm<Kademlia<MemoryStore>>) {
     // 创建并存储记录
     let key = Key::new(&[1, 2, 3, 4]);
     let value = vec![9, 8, 7, 6];
-    
+
     // 发布记录到网络
     swarm.behaviour_mut().put_record(
         libp2p::kad::Record::new(key.clone(), value.clone()),
         libp2p::kad::Quorum::Majority
     );
-    
+
     // 处理事件以确认发布
     loop {
         match swarm.next().await {
-            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted { 
-                result: QueryResult::PutRecord { .. }, 
-                .. 
+            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted {
+                result: QueryResult::PutRecord { .. },
+                ..
             }) => {
                 println!("Record stored successfully");
                 break;
@@ -1162,16 +1162,16 @@ async fn store_and_retrieve(mut swarm: Swarm<Kademlia<MemoryStore>>) {
             _ => {}
         }
     }
-    
+
     // 请求记录
     swarm.behaviour_mut().get_record(&key, libp2p::kad::Quorum::One);
-    
+
     // 处理查询结果
     loop {
         match swarm.next().await {
-            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted { 
-                result: QueryResult::GetRecord(Ok(result)), 
-                .. 
+            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted {
+                result: QueryResult::GetRecord(Ok(result)),
+                ..
             }) => {
                 for record in result.records {
                     println!("Retrieved record: {:?}", record.value);
@@ -1206,7 +1206,7 @@ async fn store_and_retrieve(mut swarm: Swarm<Kademlia<MemoryStore>>) {
 4. **路由效率与稳定性权衡**：
    - 优化：自适应路由表大小、分区感知路由、节点稳定性评估
 
-### 6.2 非结构化P2P网络
+### 1.6.2 非结构化P2P网络
 
 非结构化P2P网络没有严格的拓扑规则，通常通过随机连接和洪泛搜索实现。
 
@@ -1228,7 +1228,7 @@ async fn store_and_retrieve(mut swarm: Swarm<Kademlia<MemoryStore>>) {
 
 ```rust
 use libp2p::gossipsub::{
-    Gossipsub, GossipsubConfig, GossipsubConfigBuilder, 
+    Gossipsub, GossipsubConfig, GossipsubConfigBuilder,
     MessageAuthenticity, MessageId, Topic, ValidationMode,
 };
 use libp2p::{identity, PeerId};
@@ -1255,7 +1255,7 @@ fn create_gossipsub(keypair: identity::Keypair) -> Gossipsub {
         // 构建配置
         .build()
         .expect("Valid config");
-    
+
     // 创建Gossipsub实例，使用签名消息
     Gossipsub::new(MessageAuthenticity::Signed(keypair), config)
         .expect("Failed to create Gossipsub")
@@ -1265,27 +1265,27 @@ fn create_gossipsub(keypair: identity::Keypair) -> Gossipsub {
 async fn publish_and_subscribe(mut swarm: Swarm<Gossipsub>) {
     // 创建主题
     let topic = Topic::new("my-topic");
-    
+
     // 订阅主题
     swarm.behaviour_mut().subscribe(&topic)
         .expect("Failed to subscribe to topic");
-    
+
     // 监听事件并处理
     tokio::spawn(async move {
         loop {
             match swarm.next().await {
                 // 收到新消息
-                SwarmEvent::Behaviour(GossipsubEvent::Message { 
-                    message, 
+                SwarmEvent::Behaviour(GossipsubEvent::Message {
+                    message,
                     propagation_source,
-                    .. 
+                    ..
                 }) => {
                     println!(
                         "Received message from {:?}: {:?}",
                         propagation_source,
                         String::from_utf8_lossy(&message.data)
                     );
-                    
+
                     // 处理消息...
                     process_message(&message.data);
                 }
@@ -1298,7 +1298,7 @@ async fn publish_and_subscribe(mut swarm: Swarm<Gossipsub>) {
             }
         }
     });
-    
+
     // 发布消息
     let message = "Hello, P2P world!".as_bytes();
     swarm.behaviour_mut().publish(topic, message)
@@ -1327,7 +1327,7 @@ async fn publish_and_subscribe(mut swarm: Swarm<Gossipsub>) {
 4. **负载不均**：热点节点过载
    - 解决方案：负载感知路由、动态扇出调整、资源均衡复制
 
-### 6.3 混合架构
+### 1.6.3 混合架构
 
 混合架构结合了结构化和非结构化网络的优点，通常在不同层次或功能上采用不同策略。
 
@@ -1382,47 +1382,47 @@ impl HybridNetworkOperations {
     pub async fn store_resource(&mut self, key: &[u8], value: Vec<u8>) -> Result<(), NetworkError> {
         let key = Key::new(key);
         let record = libp2p::kad::Record::new(key, value);
-        
+
         self.swarm.behaviour_mut().kademlia.put_record(
             record,
             libp2p::kad::Quorum::Majority
         );
-        
+
         // 等待存储操作完成
         self.wait_for_kad_store_completion().await
     }
-    
+
     // 查找资源（使用结构化网络）
     pub async fn find_resource(&mut self, key: &[u8]) -> Result<Vec<u8>, NetworkError> {
         let key = Key::new(key);
-        
+
         self.swarm.behaviour_mut().kademlia.get_record(&key, libp2p::kad::Quorum::One);
-        
+
         // 等待查找操作完成
         self.wait_for_kad_query_result(key).await
     }
-    
+
     // 广播消息（使用非结构化网络）
     pub async fn broadcast_message(&mut self, topic_name: &str, data: Vec<u8>) -> Result<MessageId, NetworkError> {
         let topic = Topic::new(topic_name);
-        
+
         // 确保已订阅此主题
         if !self.swarm.behaviour().gossipsub.is_subscribed(&topic) {
             self.swarm.behaviour_mut().gossipsub.subscribe(&topic)?;
         }
-        
+
         // 发布消息
         let message_id = self.swarm.behaviour_mut().gossipsub.publish(topic, data)?;
-        
+
         Ok(message_id)
     }
-    
+
     // 订阅主题（非结构化网络功能）
     pub fn subscribe(&mut self, topic_name: &str) -> Result<bool, NetworkError> {
         let topic = Topic::new(topic_name);
         Ok(self.swarm.behaviour_mut().gossipsub.subscribe(&topic)?)
     }
-    
+
     // 等待事件处理循环
     pub async fn run(mut self) {
         loop {
@@ -1468,7 +1468,7 @@ impl HybridNetworkOperations {
 3. 调试和性能分析更加困难
 4. 需要更复杂的安全策略
 
-### 6.4 Kademlia与DHT实现
+### 1.6.4 Kademlia与DHT实现
 
 Kademlia是P2P系统中最广泛使用的分布式哈希表(DHT)算法，Rust中有多种实现。
 
@@ -1505,12 +1505,12 @@ impl RecordStore for CustomRecordStore {
                 return Err(RecordStoreError::Expired);
             }
         }
-        
+
         // 存储记录
         self.records.insert(record.key.clone(), record);
         Ok(())
     }
-    
+
     // 获取记录
     fn get(&self, key: &Key) -> Option<&Record> {
         self.records.get(key).and_then(|record| {
@@ -1523,12 +1523,12 @@ impl RecordStore for CustomRecordStore {
             Some(record)
         })
     }
-    
+
     // 移除记录
     fn remove(&mut self, key: &Key) -> Option<Record> {
         self.records.remove(key)
     }
-    
+
     // 过期记录清理（周期性调用）
     fn clean_expired_records(&mut self) {
         let now = Instant::now();
@@ -1536,12 +1536,12 @@ impl RecordStore for CustomRecordStore {
             record.expires.map_or(true, |exp| exp > now)
         });
     }
-    
+
     // 迭代所有记录
     fn iter(&self) -> Box<dyn Iterator<Item = &Record> + '_> {
         Box::new(self.records.values())
     }
-    
+
     // 获取记录存储所属节点ID
     fn peer_id(&self) -> &PeerId {
         &self.peer_id
@@ -1555,7 +1555,7 @@ fn configure_kademlia(local_peer_id: PeerId) -> Kademlia<CustomRecordStore> {
         records: HashMap::new(),
         peer_id: local_peer_id,
     };
-    
+
     // 配置Kademlia参数
     let mut kad_config = KademliaConfig::default();
     kad_config
@@ -1565,15 +1565,15 @@ fn configure_kademlia(local_peer_id: PeerId) -> Kademlia<CustomRecordStore> {
         .set_query_timeout(Duration::from_secs(60))
         .set_publication_interval(Some(Duration::from_secs(3600)))
         .set_max_packet_size(16 * 1024);
-    
+
     // 创建Kademlia实例
     let mut kademlia = Kademlia::with_config(local_peer_id, store, kad_config);
-    
+
     // 添加引导节点
     for (peer_id, addr) in bootstrap_nodes() {
         kademlia.add_address(&peer_id, addr);
     }
-    
+
     kademlia
 }
 
@@ -1581,10 +1581,10 @@ fn configure_kademlia(local_peer_id: PeerId) -> Kademlia<CustomRecordStore> {
 async fn perform_dht_operations(mut swarm: Swarm<Kademlia<CustomRecordStore>>) {
     // 启动引导过程
     swarm.behaviour_mut().bootstrap();
-    
+
     // 等待引导完成
     wait_for_bootstrap(&mut swarm).await;
-    
+
     // 存储值
     let key = Key::new(&rand::random::<[u8; 32]>());
     let value = b"Hello, Kademlia DHT!".to_vec();
@@ -1594,22 +1594,22 @@ async fn perform_dht_operations(mut swarm: Swarm<Kademlia<CustomRecordStore>>) {
         publisher: None,
         expires: Some(Instant::now() + Duration::from_secs(24 * 60 * 60)),
     };
-    
+
     swarm.behaviour_mut().put_record(record, Quorum::Majority);
-    
+
     // 等待存储完成
     wait_for_put_completion(&mut swarm).await;
-    
+
     // 获取值
     swarm.behaviour_mut().get_record(&key, Quorum::One);
-    
+
     // 查找最近的节点
     let target_key = Key::new(&rand::random::<[u8; 32]>());
     swarm.behaviour_mut().get_closest_peers(target_key);
-    
+
     // 提供内容（声明可以提供某个内容）
     swarm.behaviour_mut().start_providing(key.clone());
-    
+
     // 查找提供者
     swarm.behaviour_mut().get_providers(key);
 }
@@ -1618,14 +1618,14 @@ async fn perform_dht_operations(mut swarm: Swarm<Kademlia<CustomRecordStore>>) {
 async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
     loop {
         match swarm.next().await {
-            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted { 
-                result: QueryResult::Bootstrap(result), 
+            SwarmEvent::Behaviour(KademliaEvent::OutboundQueryCompleted {
+                result: QueryResult::Bootstrap(result),
                 ..
             }) => {
                 match result {
                     Ok(ok) => {
                         println!(
-                            "Bootstrap completed: {} nodes found", 
+                            "Bootstrap completed: {} nodes found",
                             ok.num_remaining
                         );
                         break;
@@ -1665,31 +1665,31 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
        hot_cache: LruCache<Key, Record>,  // 热点数据缓存
        lookup_cache: TtlCache<Key, Vec<PeerId>>,  // 查询结果缓存
    }
-   
+
    impl<T: RecordStore> RecordStore for CachingDHT<T> {
        fn get(&self, key: &Key) -> Option<&Record> {
            // 先检查热缓存
            if let Some(record) = self.hot_cache.get(key) {
                return Some(record);
            }
-           
+
            // 回落到主存储
            self.store.get(key)
        }
-       
+
        // 其他方法实现...
    }
-   
+
    impl<T: RecordStore> CachingDHT<T> {
        // 缓存节点查询结果
        fn cache_lookup_result(&mut self, key: &Key, peers: Vec<PeerId>) {
            self.lookup_cache.insert(
-               key.clone(), 
-               peers, 
+               key.clone(),
+               peers,
                Duration::from_secs(300)  // 5分钟缓存
            );
        }
-       
+
        // 尝试从缓存获取查询结果
        fn get_cached_lookup(&self, key: &Key) -> Option<&Vec<PeerId>> {
            self.lookup_cache.get(key)
@@ -1706,7 +1706,7 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
        last_updated: Instant,
        network_region: Option<NetworkRegion>,
    }
-   
+
    struct KBucketEntry {
        peer_id: PeerId,
        address: Multiaddr,
@@ -1716,7 +1716,7 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
        connection_failures: u32,
        successful_queries: u32,
    }
-   
+
    impl OptimizedKBucket {
        // 替换策略考虑节点质量而不仅是最近活跃时间
        fn find_replacement_candidate(&self) -> Option<usize> {
@@ -1724,34 +1724,34 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
            let scores = self.entries.iter().enumerate().map(|(idx, entry)| {
                let age_score = entry.uptime.as_secs() as f64 / 3600.0;
                let reliability_score = if entry.connection_failures > 0 {
-                   entry.successful_queries as f64 / 
+                   entry.successful_queries as f64 /
                    (entry.successful_queries + entry.connection_failures) as f64
                } else {
                    1.0
                };
                let latency_score = 1.0 / (1.0 + entry.rtt_ms.get() / 100.0);
-               
+
                // 综合评分（可根据应用需求调整权重）
                let total_score = 0.4 * age_score + 0.4 * reliability_score + 0.2 * latency_score;
                (idx, total_score)
            }).collect::<Vec<_>>();
-           
+
            // 返回得分最低的节点
            scores.iter()
                .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(Ordering::Equal))
                .map(|(idx, _)| *idx)
        }
-       
+
        // 优先选择同一网络区域内的节点
        fn sort_by_network_locality(&mut self) {
            if let Some(local_region) = self.network_region {
                self.entries.sort_by(|a, b| {
                    let a_region = detect_network_region(&a.address);
                    let b_region = detect_network_region(&b.address);
-                   
+
                    let a_same_region = a_region == local_region;
                    let b_same_region = b_region == local_region;
-                   
+
                    match (a_same_region, b_same_region) {
                        (true, false) => Ordering::Less,
                        (false, true) => Ordering::Greater,
@@ -1772,7 +1772,7 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
        access_patterns: HashMap<Key, AccessPattern>,
        related_keys: HashMap<Key, Vec<(Key, f64)>>,  // 键与相关性强度
    }
-   
+
    impl PredictiveDHT {
        // 记录访问模式
        fn record_access(&mut self, key: &Key) {
@@ -1780,7 +1780,7 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
                .or_insert_with(AccessPattern::new);
            entry.record_access();
        }
-       
+
        // 基于访问模式预取相关内容
        fn prefetch_related(&mut self, key: &Key) {
            if let Some(related) = self.related_keys.get(key) {
@@ -1792,19 +1792,19 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
                }
            }
        }
-       
+
        // 更新键之间的相关性
        fn update_relevance(&mut self, accessed_keys: &[Key]) {
            if accessed_keys.len() < 2 {
                return;
            }
-           
+
            // 一个简单的协同过滤方法
            for i in 0..accessed_keys.len() {
                for j in (i+1)..accessed_keys.len() {
                    let key_a = &accessed_keys[i];
                    let key_b = &accessed_keys[j];
-                   
+
                    // 更新两个键之间的相关性
                    self.increase_relevance(key_a, key_b);
                    self.increase_relevance(key_b, key_a);
@@ -1820,7 +1820,7 @@ async fn wait_for_bootstrap(swarm: &mut Swarm<Kademlia<CustomRecordStore>>) {
 - Ethereum的discv5协议使用Kademlia变种进行节点发现
 - Polkadot网络使用定制版Kademlia实现节点发现和保留记录
 
-### 6.5 Gossipsub协议实现
+### 1.6.5 Gossipsub协议实现
 
 Gossipsub是一种高效的发布-订阅（pub-sub）消息传播协议，专为P2P网络设计，解决了简单洪泛（floodsub）的网络效率问题。
 
@@ -1852,43 +1852,43 @@ fn create_gossipsub_config(keypair: &Keypair, local_peer_id: PeerId) -> Gossipsu
         time_in_mesh_weight: 0.01,
         time_in_mesh_quantum: Duration::from_secs(1),
         time_in_mesh_cap: 10.0,
-        
+
         // 每个主题的消息计数权重
         first_message_deliveries_weight: 1.0,
         first_message_deliveries_decay: 0.5,
         first_message_deliveries_cap: 10.0,
-        
+
         // 惩罚无效消息
         mesh_message_deliveries_weight: -1.0,
         mesh_message_deliveries_decay: 0.5,
         mesh_message_deliveries_threshold: 1.0,
         mesh_message_deliveries_cap: 10.0,
-        
+
         // 惩罚无效消息
         invalid_message_deliveries_weight: -10.0,
         invalid_message_deliveries_decay: 0.3,
-        
+
         // 其他参数...
     };
-    
+
     // 配置节点评分参数（影响节点选择）
     let peer_score = PeerScoreParams {
         topics: Default::default(),  // 将为每个主题配置
         topic_score_cap: 100.0,
-        
+
         // 应用权重和阈值
         app_specific_weight: 0.0,
         ip_colocation_factor_weight: -10.0,
         ip_colocation_factor_threshold: 10.0,
         behaviour_penalty_weight: -10.0,
         behaviour_penalty_decay: 0.99,
-        
+
         // 分数阈值
         decay_interval: Duration::from_secs(1),
         decay_to_zero: 0.01,
         retain_score: Duration::from_secs(3600),
     };
-    
+
     // 配置分数阈值（影响节点惩罚）
     let score_thresholds = PeerScoreThresholds {
         gossip_threshold: -10.0,
@@ -1897,7 +1897,7 @@ fn create_gossipsub_config(keypair: &Keypair, local_peer_id: PeerId) -> Gossipsu
         accept_px_threshold: 0.0,
         opportunistic_graft_threshold: 5.0,
     };
-    
+
     // 创建Gossipsub配置
     let mut config = GossipsubConfigBuilder::default()
         // 设置消息ID生成函数
@@ -1931,13 +1931,13 @@ fn create_gossipsub_config(keypair: &Keypair, local_peer_id: PeerId) -> Gossipsu
         // 构建配置
         .build()
         .expect("Valid gossipsub configuration");
-        
+
     // 为demo主题配置评分参数
     config.topics.insert(
         "demo-topic".into(),
         topic_score
     );
-    
+
     // 创建Gossipsub实例
     Gossipsub::new(MessageAuthenticity::Signed(keypair.clone()), config)
         .expect("Failed to create Gossipsub behaviour")
@@ -1956,7 +1956,7 @@ impl MessageValidator {
         let valid_topics = topics.into_iter()
             .map(|t| Topic::new(t).hash())
             .collect();
-            
+
         Self {
             valid_topics,
             max_size,
@@ -1964,7 +1964,7 @@ impl MessageValidator {
             valid_until: HashMap::new(),
         }
     }
-    
+
     // 验证消息
     fn validate_message(&mut self, message: &GossipsubMessage) -> ValidationResult {
         // 检查消息来源是否被拉黑
@@ -1973,48 +1973,48 @@ impl MessageValidator {
                 return ValidationResult::Reject;
             }
         }
-        
+
         // 检查主题是否有效
         if !self.valid_topics.contains(&message.topic) {
             return ValidationResult::Reject;
         }
-        
+
         // 检查消息大小
         if message.data.len() > self.max_size {
             return ValidationResult::Reject;
         }
-        
+
         // 检查消息是否过期（如果有序列号或时间戳）
         // 这需要根据应用协议从消息数据中解析
-        
+
         // 验证消息签名（基础验证由libp2p处理，这里可以添加额外检查）
         if let Some(signature) = &message.signature {
             if !self.verify_extra_signature(message, signature) {
                 return ValidationResult::Reject;
             }
         }
-        
+
         // 设置有效性缓存
         self.valid_until.insert(
             message.message_id.clone(),
             Instant::now() + Duration::from_secs(300) // 5分钟有效
         );
-        
+
         ValidationResult::Accept
     }
-    
+
     // 额外的签名验证（示例）
     fn verify_extra_signature(&self, message: &GossipsubMessage, signature: &MessageSignature) -> bool {
         // 应用程序特定的签名验证逻辑
         true // 简化示例
     }
-    
+
     // 定期清理过期项
     fn cleanup(&mut self) {
         let now = Instant::now();
         self.valid_until.retain(|_, until| *until > now);
     }
-    
+
     // 拉黑恶意对等节点
     fn blacklist_peer(&mut self, peer_id: PeerId) {
         self.blacklisted_peers.insert(peer_id);
@@ -2026,28 +2026,28 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
     // 创建主题和验证器
     let topic = Topic::new("demo-topic");
     let mut validator = MessageValidator::new(
-        vec!["demo-topic".to_string()], 
+        vec!["demo-topic".to_string()],
         1024 * 1024 // 1MB最大消息大小
     );
-    
+
     // 订阅主题
     swarm.behaviour_mut().subscribe(&topic)
         .expect("Failed to subscribe to topic");
-    
+
     // 创建清理任务
     let mut cleanup_interval = tokio::time::interval(Duration::from_secs(60));
-    
+
     loop {
         tokio::select! {
             swarm_event = swarm.next() => match swarm_event {
                 // 收到新消息
-                SwarmEvent::Behaviour(GossipsubEvent::Message { 
+                SwarmEvent::Behaviour(GossipsubEvent::Message {
                     propagation_source,
                     message_id,
                     message,
                 }) => {
                     println!("Received message: {:?}", String::from_utf8_lossy(&message.data));
-                    
+
                     // 验证消息
                     match validator.validate_message(&message) {
                         ValidationResult::Accept => {
@@ -2096,7 +2096,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
        shard_count: u16,
        my_shards: HashSet<u16>,
    }
-   
+
    impl ShardedTopic {
        fn new(base_name: String, shard_count: u16) -> Self {
            Self {
@@ -2105,41 +2105,41 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                my_shards: HashSet::new(),
            }
        }
-       
+
        // 加入特定分片
        fn join_shard(&mut self, shard_id: u16) -> Result<Topic, &'static str> {
            if shard_id >= self.shard_count {
                return Err("Invalid shard ID");
            }
-           
+
            self.my_shards.insert(shard_id);
            Ok(self.get_shard_topic(shard_id))
        }
-       
+
        // 根据内容确定分片
        fn get_content_shard(&self, content_id: &[u8]) -> u16 {
            // 计算哈希并映射到分片
            let mut hasher = Sha256::new();
            hasher.update(content_id);
            let result = hasher.finalize();
-           
+
            // 使用前16位作为分片映射
            let shard_id_bytes = [result[0], result[1]];
            let shard_id = u16::from_be_bytes(shard_id_bytes);
-           
+
            shard_id % self.shard_count
        }
-       
+
        // 获取分片主题
        fn get_shard_topic(&self, shard_id: u16) -> Topic {
            Topic::new(format!("{}-shard-{}", self.base_name, shard_id))
        }
-       
+
        // 发布内容到正确的分片
        fn publish(&self, gossipsub: &mut Gossipsub, content_id: &[u8], data: Vec<u8>) -> Result<MessageId, PublishError> {
            let shard_id = self.get_content_shard(content_id);
            let topic = self.get_shard_topic(shard_id);
-           
+
            gossipsub.publish(topic, data)
        }
    }
@@ -2156,7 +2156,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
        // 全局限制
        global_limiter: RateLimiter,
    }
-   
+
    struct RateLimiter {
        capacity: usize,
        available: usize,
@@ -2164,7 +2164,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
        refill_rate: usize,
        refill_interval: Duration,
    }
-   
+
    impl RateLimiter {
        fn new(capacity: usize, refill_rate: usize, refill_interval: Duration) -> Self {
            Self {
@@ -2175,10 +2175,10 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                refill_interval,
            }
        }
-       
+
        fn try_acquire(&mut self, tokens: usize) -> bool {
            self.refill();
-           
+
            if self.available >= tokens {
                self.available -= tokens;
                true
@@ -2186,15 +2186,15 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                false
            }
        }
-       
+
        fn refill(&mut self) {
            let now = Instant::now();
            let elapsed = now - self.last_refill;
-           
+
            if elapsed >= self.refill_interval {
                let intervals = elapsed.as_nanos() / self.refill_interval.as_nanos();
                let tokens_to_add = (intervals as usize) * self.refill_rate;
-               
+
                if tokens_to_add > 0 {
                    self.available = (self.available + tokens_to_add).min(self.capacity);
                    self.last_refill = now;
@@ -2202,18 +2202,18 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
            }
        }
    }
-   
+
    impl RateLimitedGossipsub {
        // 检查并发布消息（带限流）
        fn publish(&mut self, topic: Topic, data: Vec<u8>) -> Result<MessageId, PublishError> {
            let topic_hash = topic.hash();
            let message_size = data.len();
-           
+
            // 检查全局限制
            if !self.global_limiter.try_acquire(message_size) {
                return Err(PublishError::RateLimited);
            }
-           
+
            // 检查主题限制
            let topic_limiter = self.topic_limiters
                .entry(topic_hash.clone())
@@ -2222,11 +2222,11 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                    64 * 1024,   // 64KB/秒补充
                    Duration::from_secs(1)
                ));
-               
+
            if !topic_limiter.try_acquire(message_size) {
                return Err(PublishError::RateLimited);
            }
-           
+
            // 通过限制，执行发布
            self.inner.publish(topic, data)
        }
@@ -2243,7 +2243,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
        High,
        Critical,
    }
-   
+
    // 优先级感知的消息传播
    struct PriorityGossipsubBehaviour {
        gossipsub: Gossipsub,
@@ -2252,14 +2252,14 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
        max_outbound_per_tick: usize,
        max_inbound_per_tick: usize,
    }
-   
+
    struct PriorityMessage {
        priority: MessagePriority,
        enqueue_time: Instant,
        topic: Topic,
        data: Vec<u8>,
    }
-   
+
    impl PriorityGossipsubBehaviour {
        // 根据优先级发布消息
        fn publish_with_priority(&mut self, topic: Topic, data: Vec<u8>, priority: MessagePriority) {
@@ -2270,7 +2270,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                data,
            });
        }
-       
+
        // 处理优先级队列
        fn process_queues(&mut self) {
            // 处理出站消息（优先级高的先发送）
@@ -2281,7 +2281,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
                    break;
                }
            }
-           
+
            // 处理入站消息
            for _ in 0..self.max_inbound_per_tick {
                if let Some((peer, message)) = self.inbound_queue.pop_front() {
@@ -2293,7 +2293,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
            }
        }
    }
-   
+
    // 为优先级消息实现排序特征
    impl Ord for PriorityMessage {
        fn cmp(&self, other: &Self) -> Ordering {
@@ -2302,7 +2302,7 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
            if prio_cmp != Ordering::Equal {
                return prio_cmp;
            }
-           
+
            // 同优先级按入队时间比较（先进先出）
            self.enqueue_time.cmp(&other.enqueue_time)
        }
@@ -2334,9 +2334,9 @@ async fn run_gossipsub_node(mut swarm: Swarm<Gossipsub>) {
 4. 在网络分区后快速恢复
 5. 优化网状结构以减少热点
 
-## 7. 分布式存储技术
+## 1.7 分布式存储技术
 
-### 7.1 内容寻址存储
+### 1.7.1 内容寻址存储
 
 内容寻址存储（CAS）是P2P存储系统的基础，通过内容的密码学哈希而非位置来引用数据。
 
@@ -2373,7 +2373,7 @@ impl ContentAddressableStorage {
     fn new<P: AsRef<Path>>(root_dir: P, max_cache_size: usize) -> std::io::Result<Self> {
         let root = root_dir.as_ref().to_path_buf();
         fs::create_dir_all(&root)?;
-        
+
         Ok(Self {
             root_dir: root,
             cache: HashMap::new(),
@@ -2381,51 +2381,51 @@ impl ContentAddressableStorage {
             current_cache_size: 0,
         })
     }
-    
+
     // 存储数据并返回CID
     fn put(&mut self, data: &[u8]) -> std::io::Result<String> {
         // 计算数据哈希
         let cid = self.calculate_cid(data);
-        
+
         // 检查是否已经存在
         if self.has(&cid)? {
             return Ok(cid);
         }
-        
+
         // 创建存储路径
         let file_path = self.get_path_for_cid(&cid);
         fs::create_dir_all(file_path.parent().unwrap())?;
-        
+
         // 写入文件
         let mut file = File::create(&file_path)?;
         file.write_all(data)?;
-        
+
         // 更新缓存
         if data.len() <= 1024 * 1024 { // 只缓存1MB以下的数据
             self.add_to_cache(cid.clone(), data.to_vec());
         }
-        
+
         Ok(cid)
     }
-    
+
     // 检索数据
     fn get(&mut self, cid: &str) -> std::io::Result<Option<Vec<u8>>> {
         // 先查缓存
         if let Some(data) = self.cache.get(cid) {
             return Ok(Some(data.clone()));
         }
-        
+
         // 检查文件是否存在
         let file_path = self.get_path_for_cid(cid);
         if !file_path.exists() {
             return Ok(None);
         }
-        
+
         // 读取文件
         let mut file = File::open(file_path)?;
         let mut data = Vec::new();
         file.read_to_end(&mut data)?;
-        
+
         // 验证数据完整性
         let actual_cid = self.calculate_cid(&data);
         if actual_cid != cid {
@@ -2434,99 +2434,99 @@ impl ContentAddressableStorage {
                 "Data corruption detected: CID mismatch"
             ));
         }
-        
+
         // 更新缓存
         if data.len() <= 1024 * 1024 {
             self.add_to_cache(cid.to_string(), data.clone());
         }
-        
+
         Ok(Some(data))
     }
-    
+
     // 检查CID是否存在
     fn has(&self, cid: &str) -> std::io::Result<bool> {
         // 先查缓存
         if self.cache.contains_key(cid) {
             return Ok(true);
         }
-        
+
         // 检查文件是否存在
         let file_path = self.get_path_for_cid(cid);
         Ok(file_path.exists())
     }
-    
+
     // 删除内容
     fn delete(&mut self, cid: &str) -> std::io::Result<bool> {
         // 从缓存删除
         if let Some(data) = self.cache.remove(cid) {
             self.current_cache_size -= data.len();
         }
-        
+
         // 从存储删除
         let file_path = self.get_path_for_cid(cid);
         if file_path.exists() {
             fs::remove_file(file_path)?;
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     // 计算数据的CID
     fn calculate_cid(&self, data: &[u8]) -> String {
         let mut hasher = Sha256::new();
         hasher.update(data);
         let hash = hasher.finalize();
-        
+
         // 格式化为16进制字符串
         let mut cid = String::with_capacity(hash.len() * 2);
         for byte in hash {
             use std::fmt::Write;
             write!(&mut cid, "{:02x}", byte).unwrap();
         }
-        
+
         cid
     }
-    
+
     // 获取CID对应的文件路径
     fn get_path_for_cid(&self, cid: &str) -> PathBuf {
         // 使用CID的前4个字符作为目录名，避免单目录文件过多
         let dir_name = &cid[0..4];
         self.root_dir.join(dir_name).join(cid)
     }
-    
+
     // 添加到缓存
     fn add_to_cache(&mut self, cid: String, data: Vec<u8>) {
         let data_size = data.len();
-        
+
         // 如果缓存将超出限制，先清理
         if self.current_cache_size + data_size > self.max_cache_size {
             self.evict_cache(data_size);
         }
-        
+
         // 添加到缓存
         self.cache.insert(cid, data);
         self.current_cache_size += data_size;
     }
-    
+
     // 清理缓存
     fn evict_cache(&mut self, space_needed: usize) {
         // 简单的LRU策略：随机删除直到有足够空间
         // 实际实现应该使用适当的缓存替换算法
         let mut space_freed = 0;
         let target = (self.current_cache_size + space_needed) - self.max_cache_size;
-        
+
         let mut keys_to_remove = Vec::new();
-        
+
         for (key, data) in &self.cache {
             keys_to_remove.push(key.clone());
             space_freed += data.len();
-            
+
             if space_freed >= target {
                 break;
             }
         }
-        
+
         for key in keys_to_remove {
             if let Some(data) = self.cache.remove(&key) {
                 self.current_cache_size -= data.len();
@@ -2591,48 +2591,48 @@ impl Chunker {
             }
         }
     }
-    
+
     // 固定大小分块
     fn fixed_size_chunking(&self, data: &[u8], size: usize) -> Vec<Vec<u8>> {
         let mut chunks = Vec::new();
         let mut i = 0;
-        
+
         while i < data.len() {
             let chunk_size = std::cmp::min(size, data.len() - i);
             chunks.push(data[i..i+chunk_size].to_vec());
             i += chunk_size;
         }
-        
+
         chunks
     }
-    
+
     // Rabin-Karp内容定义分块
     fn rabin_karp_chunking(&self, data: &[u8], window: usize, poly: u32, prime: u32) -> Vec<Vec<u8>> {
         let mut chunks = Vec::new();
         let mut chunk_start = 0;
         let mut hash = 0u32;
-        
+
         // 滑动窗口边界条件处理
         if data.len() < window {
             chunks.push(data.to_vec());
             return chunks;
         }
-        
+
         // 初始化窗口哈希
         for i in 0..window {
             hash = (hash * poly + data[i] as u32) % prime;
         }
-        
+
         // 滑动窗口
         for i in window..data.len() {
             // 更新哈希值
             hash = (hash * poly + data[i] as u32) % prime;
             hash = (hash + prime - (data[i - window] as u32 * modpow(poly, window as u32, prime)) % prime) % prime;
-            
+
             // 检查分块边界条件
-            if (hash & (self.avg_size as u32 - 1)) == 0 
-                || (i - chunk_start) >= self.max_size 
-                || i == data.len() - 1 
+            if (hash & (self.avg_size as u32 - 1)) == 0
+                || (i - chunk_start) >= self.max_size
+                || i == data.len() - 1
             {
                 // 确保块大小满足最小要求
                 if i - chunk_start >= self.min_size {
@@ -2641,35 +2641,35 @@ impl Chunker {
                 }
             }
         }
-        
+
         // 处理剩余数据
         if chunk_start < data.len() {
             chunks.push(data[chunk_start..].to_vec());
         }
-        
+
         chunks
     }
-    
+
     // Fast CDC (Content-Defined Chunking) 分块
     fn fast_cdc_chunking(&self, data: &[u8], mask_s: u32, mask_l: u32) -> Vec<Vec<u8>> {
         let mut chunks = Vec::new();
         let mut chunk_start = 0;
-        
+
         // 常量
         let min_size = self.min_size;
         let max_size = self.max_size;
-        
+
         let mut i = min_size;
         while i < data.len() {
             let mut fp = 0;
-            
+
             // 生成指纹
             if i + 64 < data.len() {
                 fp = gear_fingerprint(&data[i..i+64]);
             } else {
                 fp = gear_fingerprint(&data[i..]);
             }
-            
+
             // 三级分块策略
             let should_cut = if i - chunk_start >= max_size {
                 true
@@ -2680,20 +2680,20 @@ impl Chunker {
             } else {
                 (fp & mask_l) == 0
             };
-            
+
             if should_cut {
                 chunks.push(data[chunk_start..i].to_vec());
                 chunk_start = i;
             }
-            
+
             i += 1;
         }
-        
+
         // 处理剩余数据
         if chunk_start < data.len() {
             chunks.push(data[chunk_start..].to_vec());
         }
-        
+
         chunks
     }
 }
@@ -2703,7 +2703,7 @@ fn modpow(base: u32, exp: u32, modulus: u32) -> u32 {
     let mut result = 1;
     let mut base = base % modulus;
     let mut exp = exp;
-    
+
     while exp > 0 {
         if exp & 1 == 1 {
             result = (result * base) % modulus;
@@ -2711,19 +2711,19 @@ fn modpow(base: u32, exp: u32, modulus: u32) -> u32 {
         exp >>= 1;
         base = (base * base) % modulus;
     }
-    
+
     result
 }
 
 // Gear哈希函数，用于Fast CDC算法
 fn gear_fingerprint(data: &[u8]) -> u32 {
     let mut fp = 0u32;
-    
+
     for &b in data {
         fp = (fp << 1) + (fp >> 31);
         fp ^= GEAR_TABLE[b as usize];
     }
-    
+
     fp
 }
 
@@ -2779,95 +2779,95 @@ impl MerkleDAG {
             nodes: HashMap::new(),
         }
     }
-    
+
     // 添加叶节点
     fn put_leaf(&mut self, data: Vec<u8>) -> std::io::Result<String> {
         let node = MerkleNode::Leaf {
             data: data.clone(),
             size: data.len(),
         };
-        
+
         self.put_node(node)
     }
-    
+
     // 创建分支节点
     fn put_branch(&mut self, links: Vec<Link>) -> std::io::Result<String> {
         let total_size = links.iter().map(|l| l.size).sum();
-        
+
         let node = MerkleNode::Branch {
             links,
             size: total_size,
         };
-        
+
         self.put_node(node)
     }
-    
+
     // 存储节点并返回CID
     fn put_node(&mut self, node: MerkleNode) -> std::io::Result<String> {
         // 序列化节点
         let encoded = self.encode_node(&node)?;
-        
+
         // 存储到CAS
         let cid = self.storage.put(&encoded)?;
-        
+
         // 缓存节点
         self.nodes.insert(cid.clone(), node);
-        
+
         Ok(cid)
     }
-    
+
     // 获取节点
     fn get_node(&mut self, cid: &str) -> std::io::Result<Option<MerkleNode>> {
         // 先查缓存
         if let Some(node) = self.nodes.get(cid) {
             return Ok(Some(node.clone()));
         }
-        
+
         // 从存储获取
         if let Some(data) = self.storage.get(cid)? {
             // 解码节点
             let node = self.decode_node(&data)?;
-            
+
             // 更新缓存
             self.nodes.insert(cid.to_string(), node.clone());
-            
+
             Ok(Some(node))
         } else {
             Ok(None)
         }
     }
-    
+
     // 构建目录树
     fn build_directory(&mut self, entries: HashMap<String, String>) -> std::io::Result<String> {
         let mut links = Vec::new();
-        
+
         for (name, cid) in entries {
             // 获取节点大小
             let node = self.get_node(&cid)?.ok_or_else(|| {
                 std::io::Error::new(std::io::ErrorKind::NotFound, "Referenced node not found")
             })?;
-            
+
             let size = match &node {
                 MerkleNode::Leaf { size, .. } => *size,
                 MerkleNode::Branch { size, .. } => *size,
             };
-            
+
             links.push(Link {
                 name: Some(name),
                 cid,
                 size,
             });
         }
-        
+
         // 创建目录节点
         self.put_branch(links)
     }
-    
+
     // 序列化节点
     fn encode_node(&self, node: &MerkleNode) -> std::io::Result<Vec<u8>> {
         // 实际应用中应使用合适的序列化格式
         // 例如CBOR或自定义二进制格式
-        
+
         // 简化实现：仅示意
         match node {
             MerkleNode::Leaf { data, .. } => {
@@ -2881,7 +2881,7 @@ impl MerkleDAG {
                 let mut encoded = Vec::new();
                 encoded.push(1); // 类型标记：1表示分支节点
                 encoded.extend_from_slice(&(links.len() as u32).to_be_bytes());
-                
+
                 for link in links {
                     // 编码链接名称
                     if let Some(name) = &link.name {
@@ -2891,20 +2891,20 @@ impl MerkleDAG {
                     } else {
                         encoded.push(0); // 无名称
                     }
-                    
+
                     // 编码CID
                     encoded.extend_from_slice(&(link.cid.len() as u16).to_be_bytes());
                     encoded.extend_from_slice(link.cid.as_bytes());
-                    
+
                     // 编码大小
                     encoded.extend_from_slice(&(link.size as u64).to_be_bytes());
                 }
-                
+
                 Ok(encoded)
             }
         }
     }
-    
+
     // 反序列化节点
     fn decode_node(&self, data: &[u8]) -> std::io::Result<MerkleNode> {
         // 简化实现：仅示意
@@ -2914,7 +2914,7 @@ impl MerkleDAG {
                 "Empty node data"
             ));
         }
-        
+
         match data[0] {
             0 => { // 叶节点
                 if data.len() < 5 {
@@ -2923,17 +2923,17 @@ impl MerkleDAG {
                         "Invalid leaf node data"
                     ));
                 }
-                
+
                 let size_bytes = [data[1], data[2], data[3], data[4]];
                 let size = u32::from_be_bytes(size_bytes) as usize;
-                
+
                 if data.len() < 5 + size {
                     return Err(std::io::Error::new(
                         std::io::ErrorKind::InvalidData,
                         "Incomplete leaf node data"
                     ));
                 }
-                
+
                 Ok(MerkleNode::Leaf {
                     data: data[5..5+size].to_vec(),
                     size,
@@ -2946,13 +2946,13 @@ impl MerkleDAG {
                         "Invalid branch node data"
                     ));
                 }
-                
+
                 let links_count_bytes = [data[1], data[2], data[3], data[4]];
                 let links_count = u32::from_be_bytes(links_count_bytes) as usize;
-                
+
                 let mut links = Vec::with_capacity(links_count);
                 let mut offset = 5;
-                
+
                 for _ in 0..links_count {
                     if offset >= data.len() {
                         return Err(std::io::Error::new(
@@ -2960,11 +2960,11 @@ impl MerkleDAG {
                             "Incomplete branch node data"
                         ));
                     }
-                    
+
                     // 解码链接名称
                     let has_name = data[offset] == 1;
                     offset += 1;
-                    
+
                     let name = if has_name {
                         if offset + 2 > data.len() {
                             return Err(std::io::Error::new(
@@ -2972,26 +2972,26 @@ impl MerkleDAG {
                                 "Invalid link name size"
                             ));
                         }
-                        
+
                         let name_len_bytes = [data[offset], data[offset+1]];
                         let name_len = u16::from_be_bytes(name_len_bytes) as usize;
                         offset += 2;
-                        
+
                         if offset + name_len > data.len() {
                             return Err(std::io::Error::new(
                                 std::io::ErrorKind::InvalidData,
                                 "Invalid link name"
                             ));
                         }
-                        
+
                         let name = String::from_utf8_lossy(&data[offset..offset+name_len]).to_string();
                         offset += name_len;
-                        
+
                         Some(name)
                     } else {
                         None
                     };
-                    
+
                     // 解码CID
                     if offset + 2 > data.len() {
                         return Err(std::io::Error::new(
@@ -2999,21 +2999,21 @@ impl MerkleDAG {
                             "Invalid CID size"
                         ));
                     }
-                    
+
                     let cid_len_bytes = [data[offset], data[offset+1]];
                     let cid_len = u16::from_be_bytes(cid_len_bytes) as usize;
                     offset += 2;
-                    
+
                     if offset + cid_len > data.len() {
                         return Err(std::io::Error::new(
                             std::io::ErrorKind::InvalidData,
                             "Invalid CID data"
                         ));
                     }
-                    
+
                     let cid = String::from_utf8_lossy(&data[offset..offset+cid_len]).to_string();
                     offset += cid_len;
-                    
+
                     // 解码大小
                     if offset + 8 > data.len() {
                         return Err(std::io::Error::new(
@@ -3021,19 +3021,19 @@ impl MerkleDAG {
                             "Invalid size data"
                         ));
                     }
-                    
+
                     let size_bytes = [
                         data[offset], data[offset+1], data[offset+2], data[offset+3],
                         data[offset+4], data[offset+5], data[offset+6], data[offset+7],
                     ];
                     let size = u64::from_be_bytes(size_bytes) as usize;
                     offset += 8;
-                    
+
                     links.push(Link { name, cid, size });
                 }
-                
+
                 let total_size = links.iter().map(|l| l.size).sum();
-                
+
                 Ok(MerkleNode::Branch {
                     links,
                     size: total_size,
@@ -3070,13 +3070,13 @@ impl BlockIndex {
             features: HashMap::new(),
         }
     }
-    
+
     // 添加块引用
     fn add_reference(&mut self, cid: &str) {
         let count = self.references.entry(cid.to_string()).or_insert(0);
         *count += 1;
     }
-    
+
     // 移除块引用
     fn remove_reference(&mut self, cid: &str) -> bool {
         if let Some(count) = self.references.get_mut(cid) {
@@ -3088,18 +3088,18 @@ impl BlockIndex {
         }
         false
     }
-    
+
     // 记录块特征
     fn add_feature(&mut self, feature: FeatureHash, cid: &str) {
         self.features.entry(feature)
             .or_insert_with(Vec::new)
             .push(cid.to_string());
     }
-    
+
     // 查找可能相似的块
     fn find_similar_blocks(&self, features: &[FeatureHash]) -> HashMap<String, usize> {
         let mut scores = HashMap::new();
-        
+
         for feature in features {
             if let Some(cids) = self.features.get(feature) {
                 for cid in cids {
@@ -3108,14 +3108,14 @@ impl BlockIndex {
                 }
             }
         }
-        
+
         scores
     }
-    
+
     // 提取块特征
     fn extract_features(data: &[u8], count: usize) -> Vec<FeatureHash> {
         let mut features = Vec::with_capacity(count);
-        
+
         if data.len() < 64 {
             // 数据太小，使用整个块作为特征
             let mut feature = [0u8; 32];
@@ -3125,21 +3125,21 @@ impl BlockIndex {
             features.push(feature);
             return features;
         }
-        
+
         // 将数据分成若干个窗口，并提取特征
         let window_size = data.len() / count;
         for i in 0..count {
             let start = i * window_size;
             let end = std::cmp::min(start + window_size, data.len());
-            
+
             let mut feature = [0u8; 32];
             let mut hasher = Sha256::new();
             hasher.update(&data[start..end]);
             feature.copy_from_slice(&hasher.finalize());
-            
+
             features.push(feature);
         }
-        
+
         features
     }
 }
@@ -3157,15 +3157,15 @@ impl DedupContentStore {
         // 对文件进行分块
         let chunks = self.chunker.chunk_data(data);
         let mut chunk_cids = Vec::with_capacity(chunks.len());
-        
+
         // 存储每个块
         for chunk in chunks {
             // 提取块特征
             let features = BlockIndex::extract_features(&chunk, 3);
-            
+
             // 查找相似块
             let similar = self.index.find_similar_blocks(&features);
-            
+
             // 检查是否存在完全匹配
             let mut found_exact = false;
             for (cid, score) in similar {
@@ -3182,32 +3182,32 @@ impl DedupContentStore {
                     }
                 }
             }
-            
+
             // 如果没有找到匹配，存储新块
             if !found_exact {
                 let cid = self.cas.put(&chunk)?;
-                
+
                 // 记录新块的特征
                 for feature in &features {
                     self.index.add_feature(*feature, &cid);
                 }
-                
+
                 self.index.add_reference(&cid);
                 chunk_cids.push(cid);
             }
         }
-        
+
         // 如果只有一个块，直接返回其CID
         if chunk_cids.len() == 1 {
             return Ok(chunk_cids[0].clone());
         }
-        
+
         // 创建文件元数据
         let mut file_meta = HashMap::new();
         for (i, cid) in chunk_cids.iter().enumerate() {
             file_meta.insert(format!("chunk_{}", i), cid.clone());
         }
-        
+
         // 创建文件目录节点
         let mut dag = MerkleDAG::new(self.cas.clone());
         dag.build_directory(file_meta)
@@ -3215,7 +3215,7 @@ impl DedupContentStore {
 }
 ```
 
-### 7.2 IPFS与Rust实现
+### 1.7.2 IPFS与Rust实现
 
 IPFS（星际文件系统）是一个分布式文件系统，结合了内容寻址、DHT、BitSwap等技术。Rust实现提供了与Go版本兼容的功能。
 
@@ -3238,18 +3238,18 @@ use anyhow::Result;
 async fn init_ipfs_node() -> Result<Ipfs> {
     // 创建配置
     let options = IpfsOptions::default();
-    
+
     // 创建未初始化的IPFS实例
     let uninit = UninitializedIpfs::new(options).await?;
-    
+
     // 初始化并启动IPFS节点
     let ipfs = uninit.start().await?;
-    
+
     // 连接到引导节点
     for addr in get_bootstrap_nodes() {
         ipfs.connect(addr.parse()?).await?;
     }
-    
+
     Ok(ipfs)
 }
 
@@ -3266,14 +3266,14 @@ fn get_bootstrap_nodes() -> Vec<String> {
 async fn add_file(ipfs: &Ipfs, file_path: &str) -> Result<String> {
     // 打开文件
     let mut file = tokio::fs::File::open(file_path).await?;
-    
+
     // 读取文件内容
     let mut buffer = Vec::new();
     file.read_to_end(&mut buffer).await?;
-    
+
     // 添加到IPFS
     let path = ipfs.add(buffer).await?;
-    
+
     // 返回CID
     Ok(path.to_string())
 }
@@ -3282,13 +3282,13 @@ async fn add_file(ipfs: &Ipfs, file_path: &str) -> Result<String> {
 async fn get_file(ipfs: &Ipfs, cid: &str) -> Result<Vec<u8>> {
     // 解析CID路径
     let path = IpfsPath::from_str(cid)?;
-    
+
     // 尝试获取内容
     let stream = ipfs.cat(path, None).await?;
-    
+
     // 收集内容
     let data = stream.try_concat().await?;
-    
+
     Ok(data)
 }
 
@@ -3296,10 +3296,10 @@ async fn get_file(ipfs: &Ipfs, cid: &str) -> Result<Vec<u8>> {
 async fn list_directory(ipfs: &Ipfs, cid: &str) -> Result<Vec<(String, String)>> {
     // 解析CID路径
     let path = IpfsPath::from_str(cid)?;
-    
+
     // 获取目录内容
     let mut entries = Vec::new();
-    
+
     if let Ok(mut stream) = ipfs.ls(path).await {
         while let Some(entry) = stream.try_next().await? {
             entries.push((
@@ -3308,7 +3308,7 @@ async fn list_directory(ipfs: &Ipfs, cid: &str) -> Result<Vec<(String, String)>>
             ));
         }
     }
-    
+
     Ok(entries)
 }
 
@@ -3316,14 +3316,14 @@ async fn list_directory(ipfs: &Ipfs, cid: &str) -> Result<Vec<(String, String)>>
 async fn publish_to_ipns(ipfs: &Ipfs, cid: &str) -> Result<String> {
     // 解析CID
     let path = IpfsPath::from_str(cid)?;
-    
+
     // 发布到IPNS（使用默认密钥）
     let result = ipfs.name_publish(
         path,
         None, // 使用默认密钥
         None, // 默认生存时间
     ).await?;
-    
+
     // 返回IPNS名称
     Ok(result.name.to_string())
 }
@@ -3332,7 +3332,7 @@ async fn publish_to_ipns(ipfs: &Ipfs, cid: &str) -> Result<String> {
 async fn resolve_ipns(ipfs: &Ipfs, ipns_name: &str) -> Result<String> {
     // 解析IPNS名称
     let path = ipfs.name_resolve(ipns_name, false, None).await?;
-    
+
     // 返回解析的CID路径
     Ok(path.to_string())
 }
@@ -3366,7 +3366,7 @@ fn configure_bitswap() -> BitswapConfig {
 async fn get_block_with_bitswap(ipfs: &Ipfs, cid: &Cid) -> Result<Block> {
     // 使用BitSwap获取块
     let block = ipfs.get_block(cid).await?;
-    
+
     Ok(block)
 }
 
@@ -3374,13 +3374,13 @@ async fn get_block_with_bitswap(ipfs: &Ipfs, cid: &Cid) -> Result<Block> {
 async fn monitor_bitswap_stats(ipfs: &Ipfs) -> Result<()> {
     // 定期输出BitSwap统计信息
     let mut interval = tokio::time::interval(Duration::from_secs(5));
-    
+
     loop {
         interval.tick().await;
-        
+
         // 获取BitSwap统计信息
         let stats = ipfs.bitswap_stats().await?;
-        
+
         println!("BitSwap Stats:");
         println!("  Blocks received: {}", stats.blocks_received);
         println!("  Blocks sent: {}", stats.blocks_sent);
@@ -3409,16 +3409,16 @@ impl CustomBitswapStrategy {
             bandwidth_cap,
         }
     }
-    
+
     // 添加优先级块
     fn add_priority_cid(&mut self, cid: Cid) {
         self.priority_cids.insert(cid);
     }
-    
+
     // 更新节点评分
     fn update_peer_score(&mut self, peer_id: PeerId, success: bool, response_time: Duration) {
         let score = self.peer_scores.entry(peer_id).or_insert(0.5);
-        
+
         if success {
             // 成功提供块，提高评分
             *score = (*score * 0.9) + 0.1;
@@ -3426,17 +3426,17 @@ impl CustomBitswapStrategy {
             // 未能提供块，降低评分
             *score = (*score * 0.9);
         }
-        
+
         // 考虑响应时间
         let time_factor = 1.0 / (1.0 + response_time.as_secs_f64() / 5.0);
         *score = (*score * 0.8) + (0.2 * time_factor);
     }
-    
+
     // 决定是否响应请求
     fn should_serve_block(&self, cid: &Cid, peer_id: &PeerId) -> bool {
         // 获取节点评分
         let peer_score = self.peer_scores.get(peer_id).cloned().unwrap_or(0.5);
-        
+
         // 如果是优先级块，使用更严格的评分要求
         if self.priority_cids.contains(cid) {
             peer_score > 0.7
@@ -3445,36 +3445,36 @@ impl CustomBitswapStrategy {
             peer_score > 0.3
         }
     }
-    
+
     // 为请求分配带宽
     fn allocate_bandwidth(&self, requests: &[(Cid, PeerId)]) -> HashMap<(Cid, PeerId), usize> {
         let mut allocations = HashMap::new();
         let mut remaining = self.bandwidth_cap;
-        
+
         // 首先处理优先级块请求
         for (cid, peer_id) in requests {
             if self.priority_cids.contains(cid) {
                 let peer_score = self.peer_scores.get(peer_id).cloned().unwrap_or(0.5);
                 let allocation = (self.bandwidth_cap as f64 * 0.2 * peer_score) as usize;
-                
+
                 if allocation <= remaining {
                     allocations.insert((cid.clone(), *peer_id), allocation);
                     remaining -= allocation;
                 }
             }
         }
-        
+
         // 然后处理剩余请求
         for (cid, peer_id) in requests {
             if !self.priority_cids.contains(cid) && !allocations.contains_key(&(*cid, *peer_id)) {
                 let peer_score = self.peer_scores.get(peer_id).cloned().unwrap_or(0.5);
                 let base_allocation = remaining / (requests.len() - allocations.len());
                 let allocation = (base_allocation as f64 * peer_score) as usize;
-                
+
                 allocations.insert((cid.clone(), *peer_id), allocation);
             }
         }
-        
+
         allocations
     }
 }
@@ -3491,41 +3491,41 @@ use std::path::Path;
 async fn mfs_operations(ipfs: &Ipfs) -> Result<()> {
     // 确保目录存在
     ipfs.files_mkdir("/mydir", true).await?;
-    
+
     // 写入文件
     let data = "Hello, IPFS MFS!".as_bytes();
     ipfs.files_write("/mydir/hello.txt", data, true, None).await?;
-    
+
     // 读取文件
     let content = ipfs.files_read("/mydir/hello.txt").await?;
     println!("File content: {}", String::from_utf8_lossy(&content));
-    
+
     // 获取文件状态
     let stat = ipfs.files_stat("/mydir/hello.txt").await?;
     println!("File size: {}", stat.size);
     println!("File type: {:?}", stat.file_type);
     println!("File hash: {}", stat.hash);
-    
+
     // 复制文件
     ipfs.files_cp(&["/mydir/hello.txt"], "/mydir/hello_copy.txt").await?;
-    
+
     // 列出目录内容
     let entries = ipfs.files_ls("/mydir", false).await?;
     println!("Directory contents:");
     for entry in entries {
         println!("  {} ({:?})", entry.name, entry.file_type);
     }
-    
+
     // 移动文件
     ipfs.files_mv(&["/mydir/hello_copy.txt"], "/mydir/moved.txt").await?;
-    
+
     // 删除文件
     ipfs.files_rm(&["/mydir/moved.txt"], false).await?;
-    
+
     // 提交更改，获取根CID
     let root_cid = ipfs.files_flush("/").await?;
     println!("MFS root CID: {}", root_cid);
-    
+
     Ok(())
 }
 
@@ -3533,10 +3533,10 @@ async fn mfs_operations(ipfs: &Ipfs) -> Result<()> {
 async fn build_mfs_directory(ipfs: &Ipfs, local_dir: &Path) -> Result<String> {
     // 递归创建目录结构
     create_mfs_directory(ipfs, local_dir, "/").await?;
-    
+
     // 刷新并获取根CID
     let root_cid = ipfs.files_flush("/").await?;
-    
+
     Ok(root_cid.to_string())
 }
 
@@ -3544,40 +3544,40 @@ async fn build_mfs_directory(ipfs: &Ipfs, local_dir: &Path) -> Result<String> {
 async fn create_mfs_directory(ipfs: &Ipfs, local_path: &Path, mfs_path: &str) -> Result<()> {
     // 确保MFS目录存在
     ipfs.files_mkdir(mfs_path, true).await?;
-    
+
     // 遍历本地目录
     let mut entries = tokio::fs::read_dir(local_path).await?;
-    
+
     while let Some(entry) = entries.next_entry().await? {
         let file_name = entry.file_name();
         let file_name_str = file_name.to_string_lossy();
-        
+
         // 跳过隐藏文件
         if file_name_str.starts_with('.') {
             continue;
         }
-        
+
         let entry_path = entry.path();
         let file_type = entry.file_type().await?;
-        
+
         let mfs_entry_path = format!("{}/{}", mfs_path.trim_end_matches('/'),
 
 ```rust
-        let mfs_entry_path = format!("{}/{}", mfs_path.trim_end_matches('/'), 
+        let mfs_entry_path = format!("{}/{}", mfs_path.trim_end_matches('/'),
                                      file_name_str);
-        
+
         if file_type.is_dir() {
             // 递归处理子目录
             create_mfs_directory(ipfs, &entry_path, &mfs_entry_path).await?;
         } else if file_type.is_file() {
             // 读取文件内容
             let content = tokio::fs::read(&entry_path).await?;
-            
+
             // 写入到MFS
             ipfs.files_write(&mfs_entry_path, &content, true, None).await?;
         }
     }
-    
+
     Ok(())
 }
 
@@ -3585,14 +3585,14 @@ async fn create_mfs_directory(ipfs: &Ipfs, local_path: &Path, mfs_path: &str) ->
 async fn incremental_update(ipfs: &Ipfs, local_dir: &Path, mfs_path: &str) -> Result<String> {
     // 获取当前MFS状态
     let mfs_entries = get_mfs_entries(ipfs, mfs_path).await?;
-    
+
     // 获取本地文件状态
     let local_entries = get_local_entries(local_dir).await?;
-    
+
     // 比较并更新
     for (path, local_meta) in &local_entries {
         let mfs_full_path = format!("{}/{}", mfs_path.trim_end_matches('/'), path);
-        
+
         if let Some(mfs_meta) = mfs_entries.get(path) {
             // 文件存在于两边，检查是否需要更新
             if local_meta.modified > mfs_meta.modified || local_meta.size != mfs_meta.size {
@@ -3616,7 +3616,7 @@ async fn incremental_update(ipfs: &Ipfs, local_dir: &Path, mfs_path: &str) -> Re
             }
         }
     }
-    
+
     // 删除MFS中不再存在于本地的文件
     for (path, _) in mfs_entries {
         if !local_entries.contains_key(&path) {
@@ -3624,10 +3624,10 @@ async fn incremental_update(ipfs: &Ipfs, local_dir: &Path, mfs_path: &str) -> Re
             ipfs.files_rm(&[&mfs_full_path], true).await?;
         }
     }
-    
+
     // 提交更改，获取新的根CID
     let root_cid = ipfs.files_flush(mfs_path).await?;
-    
+
     Ok(root_cid.to_string())
 }
 
@@ -3647,9 +3647,9 @@ async fn get_mfs_entries(ipfs: &Ipfs, path: &str) -> Result<HashMap<String, File
 
 // 递归收集MFS条目
 async fn collect_mfs_entries(
-    ipfs: &Ipfs, 
-    base_path: &str, 
-    relative_path: &str, 
+    ipfs: &Ipfs,
+    base_path: &str,
+    relative_path: &str,
     result: &mut HashMap<String, FileMeta>
 ) -> Result<()> {
     let full_path = if relative_path.is_empty() {
@@ -3657,32 +3657,32 @@ async fn collect_mfs_entries(
     } else {
         format!("{}/{}", base_path.trim_end_matches('/'), relative_path)
     };
-    
+
     // 获取目录内容
     let entries = ipfs.files_ls(&full_path, false).await?;
-    
+
     for entry in entries {
         let entry_relative = if relative_path.is_empty() {
             entry.name.clone()
         } else {
             format!("{}/{}", relative_path, entry.name)
         };
-        
+
         let entry_path = format!("{}/{}", full_path.trim_end_matches('/'), entry.name);
         let stat = ipfs.files_stat(&entry_path).await?;
-        
+
         result.insert(entry_relative.clone(), FileMeta {
             size: stat.size as u64,
             modified: SystemTime::now(), // IPFS不直接提供修改时间，使用近似值
             is_dir: stat.file_type == FileType::Directory,
         });
-        
+
         // 递归处理子目录
         if stat.file_type == FileType::Directory {
             collect_mfs_entries(ipfs, base_path, &entry_relative, result).await?;
         }
     }
-    
+
     Ok(())
 }
 
@@ -3695,44 +3695,44 @@ async fn get_local_entries(path: &Path) -> Result<HashMap<String, FileMeta>> {
 
 // 递归收集本地文件条目
 async fn collect_local_entries(
-    base_path: &Path, 
-    current_path: &Path, 
+    base_path: &Path,
+    current_path: &Path,
     result: &mut HashMap<String, FileMeta>
 ) -> Result<()> {
     let mut entries = tokio::fs::read_dir(current_path).await?;
-    
+
     while let Some(entry) = entries.next_entry().await? {
         let file_name = entry.file_name();
         let file_name_str = file_name.to_string_lossy();
-        
+
         // 跳过隐藏文件
         if file_name_str.starts_with('.') {
             continue;
         }
-        
+
         let entry_path = entry.path();
         let metadata = entry.metadata().await?;
-        
+
         // 计算相对路径
         let relative_path = entry_path.strip_prefix(base_path)?.to_string_lossy().to_string();
-        
+
         result.insert(relative_path.clone(), FileMeta {
             size: metadata.len(),
             modified: metadata.modified()?,
             is_dir: metadata.is_dir(),
         });
-        
+
         // 递归处理子目录
         if metadata.is_dir() {
             collect_local_entries(base_path, &entry_path, result).await?;
         }
     }
-    
+
     Ok(())
 }
 ```
 
-### 7.3 分布式数据复制策略
+### 1.7.3 分布式数据复制策略
 
 分布式数据复制是P2P存储系统确保数据持久性和可用性的关键。
 
@@ -3742,19 +3742,19 @@ async fn collect_local_entries(
 trait ReplicationStrategy {
     // 确定文件应有多少个副本
     fn desired_replicas(&self, file_info: &FileInfo) -> usize;
-    
+
     // 选择最佳的复制目标节点
     fn select_replica_targets(
-        &self, 
-        file_info: &FileInfo, 
+        &self,
+        file_info: &FileInfo,
         existing_replicas: &[NodeId],
         available_nodes: &[NodeStats],
         count: usize
     ) -> Vec<NodeId>;
-    
+
     // 检查文件是否需要更多复制
     fn needs_replication(&self, file_info: &FileInfo, replica_count: usize) -> bool;
-    
+
     // 分析复制均衡性并生成调整建议
     fn analyze_and_balance(
         &self,
@@ -3876,13 +3876,13 @@ impl DynamicReplicationStrategy {
         importance_factor.insert(ImportanceLevel::High, 1);
         importance_factor.insert(ImportanceLevel::Normal, 0);
         importance_factor.insert(ImportanceLevel::Low, -1);
-        
+
         let mut access_factor = HashMap::new();
         access_factor.insert(AccessPattern::Hot, 2);
         access_factor.insert(AccessPattern::Warm, 1);
         access_factor.insert(AccessPattern::Cold, 0);
         access_factor.insert(AccessPattern::Archival, -1);
-        
+
         Self {
             base_replicas: 3,
             importance_factor,
@@ -3893,10 +3893,10 @@ impl DynamicReplicationStrategy {
             balance_tolerance: 0.2,
         }
     }
-    
+
     // 计算节点评分
     fn calculate_node_score(
-        &self, 
+        &self,
         node: &NodeStats,
         file_info: &FileInfo,
         existing_replicas: &[NodeId],
@@ -3906,19 +3906,19 @@ impl DynamicReplicationStrategy {
         if existing_replicas.contains(&node.id) {
             return 0.0;
         }
-        
+
         // 如果节点区域被排除，返回零分
         if let Some(region) = &node.region {
             if exclude_regions.contains(region) {
                 return 0.0;
             }
         }
-        
+
         // 如果存储空间不足，返回零分
         if node.available_space < file_info.size as u64 {
             return 0.0;
         }
-        
+
         // 检查节点是否满足放置策略要求
         if let Some(policy) = &file_info.placement_policy {
             for req in &policy.node_requirements {
@@ -3927,31 +3927,31 @@ impl DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 计算基础评分
         let mut score = 1.0;
-        
+
         // 考虑可靠性
         score *= 0.3 + (0.7 * node.reliability.powf(self.reliability_weight));
-        
+
         // 考虑可用空间比例
         let space_ratio = node.available_space as f64 / node.total_space as f64;
         score *= 0.1 + (0.9 * space_ratio);
-        
+
         // 考虑延迟
         let latency_factor = 1.0 / (1.0 + node.latency.as_secs_f64() / 0.5);
         score *= 0.2 + (0.8 * latency_factor);
-        
+
         // 计算与现有副本的网络距离
         let avg_distance = self.calculate_average_distance(node, existing_replicas);
         if avg_distance > 0.0 {
             let distance_factor = 1.0 - (1.0 / avg_distance).min(1.0);
             score *= 0.3 + (0.7 * distance_factor.powf(self.distance_weight));
         }
-        
+
         score
     }
-    
+
     // 检查节点是否满足要求
     fn node_meets_requirement(&self, node: &NodeStats, req: &NodeRequirement) -> bool {
         // 检查标签匹配
@@ -3962,47 +3962,47 @@ impl DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 检查可用空间
         if let Some(min_space) = req.min_available_space {
             if node.available_space < min_space {
                 return false;
             }
         }
-        
+
         // 检查可靠性
         if let Some(min_reliability) = req.min_reliability {
             if node.reliability < min_reliability {
                 return false;
             }
         }
-        
+
         // 检查延迟
         if let Some(max_latency) = req.max_latency {
             if node.latency > max_latency {
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     // 计算与现有副本的平均距离
     fn calculate_average_distance(&self, node: &NodeStats, existing_replicas: &[NodeId]) -> f64 {
         if existing_replicas.is_empty() {
             return 0.0;
         }
-        
+
         // 实际实现应该使用路由表距离或网络拓扑信息
         // 这里仅为示例，假设有一个获取距离的函数
         let distances: Vec<f64> = existing_replicas.iter()
             .filter_map(|replica_id| get_network_distance(&node.id, replica_id))
             .collect();
-        
+
         if distances.is_empty() {
             return 0.0;
         }
-        
+
         distances.iter().sum::<f64>() / distances.len() as f64
     }
 }
@@ -4010,12 +4010,12 @@ impl DynamicReplicationStrategy {
 impl ReplicationStrategy for DynamicReplicationStrategy {
     fn desired_replicas(&self, file_info: &FileInfo) -> usize {
         let mut replicas = self.base_replicas;
-        
+
         // 根据重要性调整
         if let Some(factor) = self.importance_factor.get(&file_info.importance) {
             replicas = (replicas as i32 + factor).max(1) as usize;
         }
-        
+
         // 根据访问模式调整
         match &file_info.access_pattern {
             AccessPattern::Custom(factor) => {
@@ -4028,7 +4028,7 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 应用自定义放置策略
         if let Some(policy) = &file_info.placement_policy {
             for req in &policy.regions {
@@ -4040,13 +4040,13 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         replicas
     }
-    
+
     fn select_replica_targets(
-        &self, 
-        file_info: &FileInfo, 
+        &self,
+        file_info: &FileInfo,
         existing_replicas: &[NodeId],
         available_nodes: &[NodeStats],
         count: usize
@@ -4055,7 +4055,7 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
         if count == 0 || available_nodes.is_empty() {
             return targets;
         }
-        
+
         // 确定需要排除的区域
         let mut exclude_regions = HashSet::new();
         if self.region_distribution && !existing_replicas.is_empty() {
@@ -4066,7 +4066,7 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 应用自定义放置策略
         if let Some(policy) = &file_info.placement_policy {
             for req in &policy.regions {
@@ -4080,59 +4080,59 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 为每个可用节点计算得分
         let mut node_scores: Vec<(NodeId, f64)> = available_nodes.iter()
             .map(|node| {
                 let score = self.calculate_node_score(
-                    node, 
-                    file_info, 
-                    existing_replicas, 
+                    node,
+                    file_info,
+                    existing_replicas,
                     &exclude_regions
                 );
                 (node.id.clone(), score)
             })
             .filter(|(_, score)| *score > 0.0)
             .collect();
-        
+
         // 按评分排序
         node_scores.sort_by(|(_, a), (_, b)| b.partial_cmp(a).unwrap_or(Ordering::Equal));
-        
+
         // 选择前count个节点
         for (node_id, _) in node_scores.into_iter().take(count) {
             targets.push(node_id);
         }
-        
+
         targets
     }
-    
+
     fn needs_replication(&self, file_info: &FileInfo, replica_count: usize) -> bool {
         let desired = self.desired_replicas(file_info);
         replica_count < desired
     }
-    
+
     fn analyze_and_balance(&self, storage_state: &StorageState) -> Vec<RebalanceAction> {
         let mut actions = Vec::new();
-        
+
         // 检查副本不足的文件
         for (cid, file_info) in &storage_state.files {
             let replicas = storage_state.file_locations.get(cid)
                 .map_or(Vec::new(), |locs| locs.clone());
-            
+
             let desired = self.desired_replicas(file_info);
-            
+
             if replicas.len() < desired {
                 // 计算需要添加的副本数量
                 let to_add = desired - replicas.len();
-                
+
                 // 选择目标节点
                 let targets = self.select_replica_targets(
-                    file_info, 
+                    file_info,
                     &replicas,
                     &storage_state.available_nodes,
                     to_add
                 );
-                
+
                 // 添加复制操作
                 for target in targets {
                     actions.push(RebalanceAction::AddReplica {
@@ -4143,14 +4143,14 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
             } else if replicas.len() > desired {
                 // 计算需要移除的副本数量
                 let to_remove = replicas.len() - desired;
-                
+
                 // 选择要移除的副本（可以更智能）
                 let remove_candidates = select_replicas_to_remove(
-                    &replicas, 
-                    to_remove, 
+                    &replicas,
+                    to_remove,
                     &storage_state.node_stats
                 );
-                
+
                 // 添加移除操作
                 for candidate in remove_candidates {
                     actions.push(RebalanceAction::RemoveReplica {
@@ -4160,12 +4160,12 @@ impl ReplicationStrategy for DynamicReplicationStrategy {
                 }
             }
         }
-        
+
         // 检查节点负载均衡
         if let Some(balancing_actions) = self.balance_node_load(storage_state) {
             actions.extend(balancing_actions);
         }
-        
+
         actions
     }
 }
@@ -4182,25 +4182,25 @@ fn select_replicas_to_remove(
             node_stats.get(id).map(|stats| {
                 // 计算移除优先级分数（越高越优先移除）
                 let mut score = 0.0;
-                
+
                 // 考虑可靠性（可靠性低的优先移除）
                 score += 1.0 - stats.reliability;
-                
+
                 // 考虑空间使用率（空间紧张的优先移除）
                 let space_usage = 1.0 - (stats.available_space as f64 / stats.total_space as f64);
                 score += space_usage * 0.5;
-                
+
                 // 考虑错误率（错误率高的优先移除）
                 score += stats.error_rate * 2.0;
-                
+
                 (id.clone(), score)
             })
         })
         .collect();
-    
+
     // 按移除优先级排序
     replica_info.sort_by(|(_, a), (_, b)| b.partial_cmp(a).unwrap_or(Ordering::Equal));
-    
+
     // 选择前count个节点
     replica_info.into_iter()
         .take(count)
@@ -4233,63 +4233,63 @@ impl AdaptiveReplicationManager {
             balance_interval: Duration::from_secs(3600), // 1小时
         }
     }
-    
+
     // 处理新文件添加
     async fn handle_new_file(&mut self, file_info: FileInfo) -> Result<()> {
         // 更新存储状态
         self.storage_state.files.insert(file_info.cid.clone(), file_info.clone());
-        
+
         // 计算所需副本
         let desired = self.strategy.desired_replicas(&file_info);
-        
+
         // 选择目标节点
         let existing = self.replica_tracker.get_replicas(&file_info.cid);
         let targets = self.strategy.select_replica_targets(
-            &file_info, 
+            &file_info,
             &existing,
             &self.storage_state.available_nodes,
             desired.saturating_sub(existing.len())
         );
-        
+
         // 创建副本
         for target in targets {
             self.create_replica(&file_info.cid, &target).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 处理文件访问
     async fn handle_file_access(&mut self, cid: &str) -> Result<()> {
         // 更新访问时间
         if let Some(file_info) = self.storage_state.files.get_mut(cid) {
             file_info.last_access = SystemTime::now();
-            
+
             // 检查是否需要更新访问模式
             self.update_access_pattern(file_info);
-            
+
             // 检查是否需要调整副本数量
             let current_replicas = self.replica_tracker.get_replicas(cid);
             let desired = self.strategy.desired_replicas(file_info);
-            
+
             if current_replicas.len() < desired {
                 // 需要更多副本
                 let targets = self.strategy.select_replica_targets(
-                    file_info, 
+                    file_info,
                     &current_replicas,
                     &self.storage_state.available_nodes,
                     desired - current_replicas.len()
                 );
-                
+
                 for target in targets {
                     self.create_replica(cid, &target).await?;
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 更新文件访问模式
     fn update_access_pattern(&mut self, file_info: &mut FileInfo) {
         if let Some(access_stats) = self.replica_tracker.get_access_stats(&file_info.cid) {
@@ -4298,7 +4298,7 @@ impl AdaptiveReplicationManager {
             let recent_accesses = access_stats.iter()
                 .filter(|&time| *time > day_ago)
                 .count();
-            
+
             // 基于访问频率更新访问模式
             file_info.access_pattern = match recent_accesses {
                 0..=2 => AccessPattern::Cold,
@@ -4307,51 +4307,51 @@ impl AdaptiveReplicationManager {
             };
         }
     }
-    
+
     // 创建副本
     async fn create_replica(&mut self, cid: &str, target: &NodeId) -> Result<()> {
         println!("Creating replica of {} on node {}", cid, target);
-        
+
         // 在实际系统中，这应该启动实际的数据传输
         // 这里仅模拟
-        
+
         // 更新副本跟踪
         self.replica_tracker.add_replica(cid.to_string(), target.clone());
-        
+
         // 更新存储状态
         let locations = self.storage_state.file_locations
             .entry(cid.to_string())
             .or_insert_with(Vec::new);
-            
+
         if !locations.contains(target) {
             locations.push(target.clone());
         }
-        
+
         Ok(())
     }
-    
+
     // 移除副本
     async fn remove_replica(&mut self, cid: &str, source: &NodeId) -> Result<()> {
         println!("Removing replica of {} from node {}", cid, source);
-        
+
         // 在实际系统中，这应该通知节点删除数据
         // 这里仅模拟
-        
+
         // 更新副本跟踪
         self.replica_tracker.remove_replica(cid, source);
-        
+
         // 更新存储状态
         if let Some(locations) = self.storage_state.file_locations.get_mut(cid) {
             locations.retain(|id| id != source);
         }
-        
+
         Ok(())
     }
-    
+
     // 定期检查和平衡存储
     async fn run_periodic_balance(&mut self) -> Result<()> {
         let now = Instant::now();
-        
+
         // 检查是否需要进行完整平衡
         if now - self.last_full_balance >= self.balance_interval {
             self.perform_full_balance().await?;
@@ -4360,17 +4360,17 @@ impl AdaptiveReplicationManager {
             // 执行增量平衡
             self.perform_incremental_balance().await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 执行完整的存储平衡
     async fn perform_full_balance(&mut self) -> Result<()> {
         println!("Performing full storage balance...");
-        
+
         // 获取平衡动作
         let actions = self.strategy.analyze_and_balance(&self.storage_state);
-        
+
         // 执行平衡动作
         for action in actions {
             match action {
@@ -4387,24 +4387,24 @@ impl AdaptiveReplicationManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 执行增量平衡
     async fn perform_incremental_balance(&mut self) -> Result<()> {
         // 检查副本不足的文件
         let mut under_replicated = Vec::new();
-        
+
         for (cid, file_info) in &self.storage_state.files {
             let replicas = self.replica_tracker.get_replicas(cid);
             let desired = self.strategy.desired_replicas(file_info);
-            
+
             if replicas.len() < desired {
                 under_replicated.push((cid.clone(), file_info.clone(), desired - replicas.len()));
             }
         }
-        
+
         // 按优先级排序（可以基于访问频率、重要性等）
         under_replicated.sort_by(|(_, a, _), (_, b, _)| {
             // 首先比较重要性
@@ -4412,7 +4412,7 @@ impl AdaptiveReplicationManager {
             if importance_order != Ordering::Equal {
                 return importance_order;
             }
-            
+
             // 然后比较访问模式
             match (&a.access_pattern, &b.access_pattern) {
                 (AccessPattern::Hot, AccessPattern::Hot) => Ordering::Equal,
@@ -4424,22 +4424,22 @@ impl AdaptiveReplicationManager {
                 _ => Ordering::Equal,
             }
         });
-        
+
         // 处理一部分副本不足的文件（避免一次处理太多）
         for (cid, file_info, needed) in under_replicated.into_iter().take(10) {
             let replicas = self.replica_tracker.get_replicas(&cid);
             let targets = self.strategy.select_replica_targets(
-                &file_info, 
+                &file_info,
                 &replicas,
                 &self.storage_state.available_nodes,
                 needed
             );
-            
+
             for target in targets {
                 self.create_replica(&cid, &target).await?;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -4462,40 +4462,40 @@ impl ReplicaTracker {
             max_history_entries: 100,
         }
     }
-    
+
     // 添加副本
     fn add_replica(&mut self, cid: String, node_id: NodeId) {
         self.file_replicas.entry(cid)
             .or_insert_with(HashSet::new)
             .insert(node_id);
     }
-    
+
     // 移除副本
     fn remove_replica(&mut self, cid: &str, node_id: &NodeId) {
         if let Some(replicas) = self.file_replicas.get_mut(cid) {
             replicas.remove(node_id);
         }
     }
-    
+
     // 获取文件的所有副本
     fn get_replicas(&self, cid: &str) -> Vec<NodeId> {
         self.file_replicas.get(cid)
             .map_or(Vec::new(), |replicas| replicas.iter().cloned().collect())
     }
-    
+
     // 记录文件访问
     fn record_access(&mut self, cid: String) {
         let history = self.access_history.entry(cid)
             .or_insert_with(Vec::new);
-            
+
         history.push(SystemTime::now());
-        
+
         // 限制历史记录大小
         if history.len() > self.max_history_entries {
             history.drain(0..history.len() - self.max_history_entries);
         }
     }
-    
+
     // 获取访问统计
     fn get_access_stats(&self, cid: &str) -> Option<&Vec<SystemTime>> {
         self.access_history.get(cid)
@@ -4503,7 +4503,7 @@ impl ReplicaTracker {
 }
 ```
 
-### 7.4 数据持久性与可用性权衡
+### 1.7.4 数据持久性与可用性权衡
 
 P2P存储系统中，数据持久性和可用性是通过副本策略和故障恢复机制来平衡的。
 
@@ -4529,7 +4529,7 @@ enum NodeFailureModel {
     // 独立故障（固定概率）
     Independent { failure_rate: f64 },
     // 相关故障（考虑区域相关性）
-    Correlated { 
+    Correlated {
         base_rate: f64,
         region_correlation: HashMap<(Region, Region), f64>,
     },
@@ -4634,7 +4634,7 @@ impl PersistenceModel {
             availability_target,
         }
     }
-    
+
     // 计算给定复制因子下的持久性
     fn calculate_durability(&self, file_info: &FileInfo, replicas: usize) -> f64 {
         match &self.node_failure_model {
@@ -4658,7 +4658,7 @@ impl PersistenceModel {
             }
         }
     }
-    
+
     // 计算考虑相关性的持久性
     fn calculate_correlated_durability(
         &self,
@@ -4669,21 +4669,21 @@ impl PersistenceModel {
     ) -> f64 {
         // 实际实现应该使用更复杂的数学模型
         // 这里使用简化的蒙特卡洛方法估算
-        
+
         const ITERATIONS: usize = 10000;
         let mut data_loss_count = 0;
-        
+
         // 假设我们知道每个区域的副本数
         let regions = extract_regions_from_policy(placement);
         let replicas_per_region = distribute_replicas(replicas, &regions);
-        
+
         for _ in 0..ITERATIONS {
             // 模拟区域故障
             let failed_regions = simulate_region_failures(&regions, base_rate, region_correlation);
-            
+
             // 检查是否所有副本都失效
             let mut all_replicas_lost = true;
-            
+
             for (region, count) in &replicas_per_region {
                 if !failed_regions.contains(region) {
                     // 该区域没有故障，副本安全
@@ -4693,7 +4693,7 @@ impl PersistenceModel {
                     // 该区域有故障，但可能部分节点仍然可用
                     let node_failure_probability = base_rate * 0.5; // 简化：假设区域故障时节点故障概率减半
                     let survival_probability = 1.0 - node_failure_probability.powf(*count as f64);
-                    
+
                     if rand::random::<f64>() < survival_probability {
                         // 至少一个副本存活
                         all_replicas_lost = false;
@@ -4701,16 +4701,16 @@ impl PersistenceModel {
                     }
                 }
             }
-            
+
             if all_replicas_lost {
                 data_loss_count += 1;
             }
         }
-        
+
         // 返回持久性估计
         1.0 - (data_loss_count as f64 / ITERATIONS as f64)
     }
-    
+
     // 计算给定复制因子下的可用性
     fn calculate_availability(&self, file_info: &FileInfo, replicas: usize) -> f64 {
         // 节点可用性（1-临时不可用概率）
@@ -4721,15 +4721,15 @@ impl PersistenceModel {
                 prediction_model.predict_availability(file_info, node_history)
             }
         };
-        
+
         // 可用性为至少有一个副本可用的概率
         1.0 - (1.0 - node_availability).powf(replicas as f64)
     }
-    
+
     // 根据持久性目标计算所需的复制因子
     fn calculate_required_replicas_for_durability(&self, file_info: &FileInfo) -> usize {
         let mut replicas = 1;
-        
+
         while replicas <= 20 { // 设置上限，避免无限循环
             let durability = self.calculate_durability(file_info, replicas);
             if durability >= self.durability_target {
@@ -4737,15 +4737,15 @@ impl PersistenceModel {
             }
             replicas += 1;
         }
-        
+
         // 如果达到上限仍无法满足，返回最大值
         20
     }
-    
+
     // 根据可用性目标计算所需的复制因子
     fn calculate_required_replicas_for_availability(&self, file_info: &FileInfo) -> usize {
         let mut replicas = 1;
-        
+
         while replicas <= 20 {
             let availability = self.calculate_availability(file_info, replicas);
             if availability >= self.availability_target {
@@ -4753,20 +4753,20 @@ impl PersistenceModel {
             }
             replicas += 1;
         }
-        
+
         // 如果达到上限仍无法满足，返回最大值
         20
     }
-    
+
     // 优化复制因子以同时满足持久性和可用性
     fn optimize_replica_count(&self, file_info: &FileInfo) -> usize {
         let durability_replicas = self.calculate_required_replicas_for_durability(file_info);
         let availability_replicas = self.calculate_required_replicas_for_availability(file_info);
-        
+
         // 取较大者，确保两个目标都能满足
         durability_replicas.max(availability_replicas)
     }
-    
+
     // 分析数据放置策略
     fn analyze_placement_policy(&self, file_info: &FileInfo, replicas: usize) -> PlacementAnalysis {
         let regions = if let Some(policy) = &file_info.placement_policy {
@@ -4775,23 +4775,23 @@ impl PersistenceModel {
             // 默认假设单个区域
             vec![Region::default()]
         };
-        
+
         // 计算最优的区域分布
         let optimal_distribution = self.calculate_optimal_region_distribution(&regions, replicas);
-        
+
         // 计算在最优分布下的持久性和可用性
         let optimized_durability = self.calculate_durability_with_distribution(
             file_info, &optimal_distribution);
         let optimized_availability = self.calculate_availability_with_distribution(
             file_info, &optimal_distribution);
-        
+
         PlacementAnalysis {
             optimal_distribution,
             durability: optimized_durability,
             availability: optimized_availability,
         }
     }
-    
+
     // 计算最优的区域分布
     fn calculate_optimal_region_distribution(
         &self,
@@ -4800,11 +4800,11 @@ impl PersistenceModel {
     ) -> HashMap<Region, usize> {
         // 简化版：平均分配，优先分配给较多的区域
         let mut distribution = HashMap::new();
-        
+
         if regions.is_empty() {
             return distribution;
         }
-        
+
         // 先确保每个区域至少有一个副本
         let mut allocated = 0;
         for region in regions {
@@ -4815,13 +4815,13 @@ impl PersistenceModel {
                 distribution.insert(region.clone(), 0);
             }
         }
-        
+
         // 分配剩余的副本
         let remaining = total_replicas - allocated;
         if remaining > 0 && !regions.is_empty() {
             let base_extra = remaining / regions.len();
             let mut extra_regions = remaining % regions.len();
-            
+
             for region in regions {
                 let extra = if extra_regions > 0 {
                     extra_regions -= 1;
@@ -4829,14 +4829,14 @@ impl PersistenceModel {
                 } else {
                     0
                 };
-                
+
                 *distribution.entry(region.clone()).or_insert(0) += base_extra + extra;
             }
         }
-        
+
         distribution
     }
-    
+
     // 使用给定分布计算持久性
     fn calculate_durability_with_distribution(
         &self,
@@ -4847,40 +4847,40 @@ impl PersistenceModel {
             NodeFailureModel::Independent { failure_rate } => {
                 // 独立失效模型：每个区域独立计算，然后合并
                 let mut durability = 1.0;
-                
+
                 for (_, replicas) in distribution {
                     if *replicas > 0 {
                         let region_durability = 1.0 - failure_rate.powf(*replicas as f64);
                         durability *= 1.0 - (1.0 - region_durability);
                     }
                 }
-                
+
                 durability
             }
             NodeFailureModel::Correlated { base_rate, region_correlation } => {
                 // 这里应该使用更复杂的相关性模型
                 // 简化实现：使用蒙特卡洛方法
-                
+
                 const ITERATIONS: usize = 10000;
                 let mut data_loss_count = 0;
-                
+
                 for _ in 0..ITERATIONS {
                     let mut all_replicas_lost = true;
-                    
+
                     // 模拟每个区域是否全部失效
                     for (region, replicas) in distribution {
                         if *replicas == 0 {
                             continue;
                         }
-                        
+
                         // 模拟区域故障
                         let region_fails = rand::random::<f64>() < *base_rate;
-                        
+
                         if !region_fails {
                             // 区域没有整体故障，检查是否有副本存活
                             let node_survival_prob = 1.0 - (*base_rate * 0.3); // 简化：假设节点失效率低于区域
                             let survival_probability = 1.0 - (1.0 - node_survival_prob).powf(*replicas as f64);
-                            
+
                             if rand::random::<f64>() < survival_probability {
                                 // 至少一个副本存活
                                 all_replicas_lost = false;
@@ -4888,12 +4888,12 @@ impl PersistenceModel {
                             }
                         }
                     }
-                    
+
                     if all_replicas_lost {
                         data_loss_count += 1;
                     }
                 }
-                
+
                 1.0 - (data_loss_count as f64 / ITERATIONS as f64)
             }
             NodeFailureModel::Historical { .. } => {
@@ -4903,7 +4903,7 @@ impl PersistenceModel {
             }
         }
     }
-    
+
     // 使用给定分布计算可用性
     fn calculate_availability_with_distribution(
         &self,
@@ -4912,24 +4912,24 @@ impl PersistenceModel {
     ) -> f64 {
         // 简化实现：基于每个区域的可用性
         let mut unavailability = 1.0;
-        
+
         for (region, replicas) in distribution {
             if *replicas == 0 {
                 continue;
             }
-            
+
             // 计算该区域的可用性
             let node_availability = 0.99; // 假设节点可用性固定
             let region_availability = 1.0 - (1.0 - node_availability).powf(*replicas as f64);
-            
+
             // 更新总体不可用性
             unavailability *= 1.0 - region_availability;
         }
-        
+
         // 返回总体可用性
         1.0 - unavailability
     }
-    
+
     // 模拟故障和恢复过程
     fn simulate_failure_recovery(
         &self,
@@ -4939,64 +4939,64 @@ impl PersistenceModel {
     ) -> SimulationResult {
         // 实际实现应该使用更复杂的离散事件模拟
         // 这里提供一个简化的模拟框架
-        
+
         let time_step = Duration::from_secs(60 * 60); // 1小时步长
         let steps = simulation_time.as_secs() / time_step.as_secs();
-        
+
         let mut current_replicas = initial_replicas;
         let mut data_loss_events = 0;
         let mut unavailability_events = 0;
         let mut unavailable_time = Duration::from_secs(0);
         let mut min_replicas = initial_replicas;
-        
+
         // 节点失效率和恢复率
         let failure_rate = match &self.node_failure_model {
             NodeFailureModel::Independent { failure_rate } => *failure_rate,
             NodeFailureModel::Correlated { base_rate, .. } => *base_rate,
             NodeFailureModel::Historical { .. } => 0.01, // 默认值
         };
-        
+
         // 故障检测和恢复延迟
         let detection_time = self.recovery_strategy.detection_interval;
         let recovery_time = self.recovery_strategy.recovery_time_target;
-        
+
         for _ in 0..steps {
             // 模拟故障
             let failed_replicas = simulate_replica_failures(current_replicas, failure_rate);
             current_replicas -= failed_replicas;
             min_replicas = min_replicas.min(current_replicas);
-            
+
             // 检查是否发生数据丢失
             if current_replicas == 0 {
                 data_loss_events += 1;
-                
+
                 // 模拟从备份恢复
                 current_replicas = 1;
             }
-            
+
             // 检查可用性
             if current_replicas < 3 { // 假设至少需要3个副本保证良好可用性
                 unavailability_events += 1;
                 unavailable_time += time_step;
             }
-            
+
             // 模拟恢复过程
             if current_replicas < initial_replicas {
                 // 计算本步骤中会恢复的副本数
-                let recovery_probability = time_step.as_secs_f64() / 
+                let recovery_probability = time_step.as_secs_f64() /
                     (detection_time + recovery_time).as_secs_f64();
-                
+
                 let to_recover = ((initial_replicas - current_replicas) as f64 * recovery_probability)
                     .round() as usize;
-                
+
                 current_replicas += to_recover;
             }
         }
-        
+
         // 计算结果指标
         let durability = 1.0 - (data_loss_events as f64 / steps as f64);
         let availability = 1.0 - (unavailable_time.as_secs_f64() / simulation_time.as_secs_f64());
-        
+
         SimulationResult {
             durability,
             availability,
@@ -5040,7 +5040,7 @@ struct SimulationResult {
 // 从放置策略提取区域信息
 fn extract_regions_from_policy(policy: &PlacementPolicy) -> Vec<Region> {
     let mut regions = Vec::new();
-    
+
     for req in &policy.regions {
         match req {
             RegionRequirement::Include(included_regions) => {
@@ -5054,27 +5054,27 @@ fn extract_regions_from_policy(policy: &PlacementPolicy) -> Vec<Region> {
             }
         }
     }
-    
+
     // 如果没有指定区域，使用默认区域
     if regions.is_empty() {
         regions.push(Region::default());
     }
-    
+
     regions
 }
 
 // 分配副本到区域
 fn distribute_replicas(replicas: usize, regions: &[Region]) -> HashMap<Region, usize> {
     let mut distribution = HashMap::new();
-    
+
     if regions.is_empty() || replicas == 0 {
         return distribution;
     }
-    
+
     // 平均分配基础值
     let base = replicas / regions.len();
     let mut remainder = replicas % regions.len();
-    
+
     for region in regions {
         let count = if remainder > 0 {
             remainder -= 1;
@@ -5082,23 +5082,23 @@ fn distribute_replicas(replicas: usize, regions: &[Region]) -> HashMap<Region, u
         } else {
             base
         };
-        
+
         distribution.insert(region.clone(), count);
     }
-    
+
     distribution
 }
 
 // 模拟副本故障
 fn simulate_replica_failures(replicas: usize, failure_rate: f64) -> usize {
     let mut failures = 0;
-    
+
     for _ in 0..replicas {
         if rand::random::<f64>() < failure_rate {
             failures += 1;
         }
     }
-    
+
     failures
 }
 
@@ -5109,20 +5109,20 @@ fn simulate_region_failures(
     correlations: &HashMap<(Region, Region), f64>,
 ) -> HashSet<Region> {
     let mut failed_regions = HashSet::new();
-    
+
     // 第一轮：基础故障率
     for region in regions {
         if rand::random::<f64>() < base_rate {
             failed_regions.insert(region.clone());
         }
     }
-    
+
     // 第二轮：相关故障
     for region in regions {
         if failed_regions.contains(region) {
             continue; // 已经失效，跳过
         }
-        
+
         // 检查是否受其他失效区域影响
         for failed in &failed_regions {
             let key = if region < failed {
@@ -5130,7 +5130,7 @@ fn simulate_region_failures(
             } else {
                 (failed.clone(), region.clone())
             };
-            
+
             if let Some(correlation) = correlations.get(&key) {
                 if rand::random::<f64>() < *correlation {
                     failed_regions.insert(region.clone());
@@ -5139,7 +5139,7 @@ fn simulate_region_failures(
             }
         }
     }
-    
+
     failed_regions
 }
 
@@ -5147,10 +5147,10 @@ fn simulate_region_failures(
 fn persistence_example() {
     // 创建节点失效模型
     let failure_model = NodeFailureModel::Independent { failure_rate: 0.01 };
-    
+
     // 创建复制策略
     let replication_strategy = Box::new(DynamicReplicationStrategy::new());
-    
+
     // 创建恢复策略
     let recovery_strategy = RecoveryStrategy {
         detection_interval: Duration::from_secs(300),
@@ -5160,7 +5160,7 @@ fn persistence_example() {
         bandwidth_allocation: BandwidthAllocationStrategy::WeightedByPriority,
         node_selection: RecoveryNodeSelectionPolicy::ReliabilityBased,
     };
-    
+
     // 创建持久性模型
     let persistence_model = PersistenceModel::new(
         failure_model,
@@ -5169,7 +5169,7 @@ fn persistence_example() {
         0.99999, // 99.999% 持久性目标
         0.999,   // 99.9% 可用性目标
     );
-    
+
     // 创建文件信息
     let file_info = FileInfo {
         cid: "QmExample".to_string(),
@@ -5180,23 +5180,23 @@ fn persistence_example() {
         creation_time: SystemTime::now(),
         last_access: SystemTime::now(),
     };
-    
+
     // 计算所需复制因子
     let replicas = persistence_model.optimize_replica_count(&file_info);
     println!("Optimized replica count: {}", replicas);
-    
+
     // 分析放置策略
     let placement_analysis = persistence_model.analyze_placement_policy(&file_info, replicas);
     println!("Durability with optimized placement: {:.6}%", placement_analysis.durability * 100.0);
     println!("Availability with optimized placement: {:.6}%", placement_analysis.availability * 100.0);
-    
+
     // 模拟故障和恢复
     let simulation = persistence_model.simulate_failure_recovery(
         &file_info,
         replicas,
         Duration::from_secs(86400 * 30), // 30天模拟
     );
-    
+
     println!("Simulation results:");
     println!("  Durability: {:.6}%", simulation.durability * 100.0);
     println!("  Availability: {:.6}%", simulation.availability * 100.0);
@@ -5208,7 +5208,7 @@ fn persistence_example() {
 }
 ```
 
-### 7.5 实际性能与限制
+### 1.7.5 实际性能与限制
 
 P2P存储系统在实际部署中面临多种性能限制，了解这些限制对系统设计至关重要。
 
@@ -5359,21 +5359,21 @@ impl StoragePerformanceBenchmark {
         // 准备测试环境
         let topology = self.topology_builder.build_topology(self.config.node_count);
         let test_data = self.data_generator.generate_test_data(&self.config.data_sizes);
-        
+
         // 初始化指标收集
         self.metrics_collector.initialize();
-        
+
         // 创建工作负载
         let workload = self.create_workload(&self.config, &test_data);
-        
+
         // 执行测试
         let start_time = Instant::now();
         let results = self.execute_workload(workload, &topology).await;
         let duration = start_time.elapsed();
-        
+
         // 收集最终指标
         self.metrics_collector.finalize();
-        
+
         // 分析结果
         let analysis = self.analyzer.analyze(
             &results,
@@ -5381,7 +5381,7 @@ impl StoragePerformanceBenchmark {
             &self.config,
             duration,
         );
-        
+
         BenchmarkResult {
             config: self.config.clone(),
             duration,
@@ -5390,7 +5390,7 @@ impl StoragePerformanceBenchmark {
             raw_results: results,
         }
     }
-    
+
     // 创建工作负载
     fn create_workload(
         &self,
@@ -5399,19 +5399,19 @@ impl StoragePerformanceBenchmark {
     ) -> Vec<WorkloadOperation> {
         let mut operations = Vec::new();
         let mut rng = rand::thread_rng();
-        
+
         // 估算操作总数
         let ops_per_second = config.concurrency * 10; // 假设每个并发任务每秒执行10个操作
         let total_ops = (ops_per_second as f64 * config.duration.as_secs_f64()) as usize;
-        
+
         for _ in 0..total_ops {
             // 根据操作混合比例选择操作类型
             let op_type = select_operation_type(&config.operation_mix);
-            
+
             // 为操作选择数据
             let data_index = rng.gen_range(0..test_data.len());
             let data = test_data[data_index].clone();
-            
+
             // 生成操作
             let operation = match op_type {
                 OperationType::Write => {
@@ -5436,13 +5436,13 @@ impl StoragePerformanceBenchmark {
                     }
                 }
             };
-            
+
             operations.push(operation);
         }
-        
+
         operations
     }
-    
+
     // 执行工作负载
     async fn execute_workload(
         &self,
@@ -5452,44 +5452,44 @@ impl StoragePerformanceBenchmark {
         let mut results = Vec::with_capacity(workload.len());
         let semaphore = Arc::new(Semaphore::new(self.config.concurrency));
         let workload = Arc::new(workload);
-        
+
         let mut tasks = Vec::new();
-        
+
         for (i, _) in workload.iter().enumerate() {
             let semaphore_clone = semaphore.clone();
             let workload_clone = workload.clone();
             let topology_clone = topology.clone();
             let metrics_collector = self.metrics_collector.clone();
-            
+
             let task = tokio::spawn(async move {
                 // 获取信号量许可
                 let _permit = semaphore_clone.acquire().await.unwrap();
-                
+
                 // 获取操作
                 let operation = &workload_clone[i];
-                
+
                 // 选择节点执行操作
                 let node = select_execution_node(operation, &topology_clone);
-                
+
                 // 记录开始时间
                 let start_time = Instant::now();
-                
+
                 // 执行操作
                 let result = execute_operation(operation, node).await;
-                
+
                 // 记录结束时间
                 let duration = start_time.elapsed();
-                
+
                 // 更新指标
                 update_metrics(&metrics_collector, operation, &result, duration);
-                
+
                 // 返回结果
                 (i, result)
             });
-            
+
             tasks.push(task);
         }
-        
+
         // 等待所有任务完成
         for task in futures::future::join_all(tasks).await {
             if let Ok((i, result)) = task {
@@ -5499,7 +5499,7 @@ impl StoragePerformanceBenchmark {
                 results[i] = result;
             }
         }
-        
+
         results
     }
 }
@@ -5508,24 +5508,24 @@ impl StoragePerformanceBenchmark {
 fn select_operation_type(mix: &OperationMix) -> OperationType {
     let mut rng = rand::thread_rng();
     let value = rng.gen::<f64>();
-    
+
     let mut cumulative = 0.0;
-    
+
     cumulative += mix.write_ratio;
     if value < cumulative {
         return OperationType::Write;
     }
-    
+
     cumulative += mix.read_ratio;
     if value < cumulative {
         return OperationType::Read;
     }
-    
+
     cumulative += mix.metadata_ratio;
     if value < cumulative {
         return OperationType::Metadata;
     }
-    
+
     OperationType::Delete
 }
 
@@ -5806,10 +5806,10 @@ async fn run_performance_benchmark() -> BenchmarkResult {
             write_latency: Duration::from_millis(10),
         },
     };
-    
+
     // 创建基准测试
     let mut benchmark = StoragePerformanceBenchmark::new(config);
-    
+
     // 运行基准测试
     benchmark.run().await
 }
@@ -5819,7 +5819,7 @@ async fn run_performance_benchmark() -> BenchmarkResult {
 
 P2P存储系统在实际部署中面临多种限制，下面是对主要限制的详细分析：
 
-#### 1. 带宽消耗与网络瓶颈
+#### 1.7.5.1 带宽消耗与网络瓶颈
 
 P2P存储系统中，数据复制和访问导致的带宽消耗是最显著的性能瓶颈之一。
 
@@ -5922,7 +5922,7 @@ fn bandwidth_optimization_strategies() -> Vec<OptimizationResult> {
 
 **优化方向**: 内容路由缓存和批量传输是最具成本效益的优化策略，能分别减少35%和30%的带宽消耗。
 
-#### 2. 延迟与查找效率
+#### 1.7.5.2 延迟与查找效率
 
 内容查找延迟是影响用户体验的关键因素。
 
@@ -5996,20 +5996,20 @@ fn real_world_latency_measurements() -> Vec<LatencyMeasurement> {
 fn analyze_dht_lookup_latency(model: &LookupLatencyModel) -> Duration {
     // 理论平均跳数 O(log n)
     let theoretical_hops = (model.network_size as f64).log2();
-    
+
     // 实际跳数（考虑超时和重试）
     let effective_hops = theoretical_hops * (1.0 + model.timeout_probability);
-    
+
     // 缓存影响
     let cache_adjusted_hops = effective_hops * (1.0 - model.cache_hit_ratio);
-    
+
     // 计算总延迟
     let base_latency = model.latency_per_hop * cache_adjusted_hops as u32;
-    let timeout_latency = model.timeout_penalty * 
+    let timeout_latency = model.timeout_penalty *
         (model.timeout_probability * theoretical_hops) as u32;
-    let cache_latency = model.cache_access_latency * 
+    let cache_latency = model.cache_access_latency *
         (model.cache_hit_ratio * theoretical_hops) as u32;
-    
+
     base_latency + timeout_latency + cache_latency
 }
 ```
@@ -6018,7 +6018,7 @@ fn analyze_dht_lookup_latency(model: &LookupLatencyModel) -> Duration {
 
 **瓶颈根源**: 查找延迟主要来自三个方面：路由表陈旧导致的额外跳数、节点响应超时、网络异质性导致的路径质量差异。
 
-#### 3. 存储效率与数据冗余
+#### 1.7.5.3 存储效率与数据冗余
 
 P2P存储系统通常需要更高的冗余来确保数据持久性，这降低了存储效率。
 
@@ -6104,29 +6104,29 @@ fn storage_reliability_tradeoff_analysis() {
         (3.0, 0.999),  // 复制因子3.0，可靠性0.999
         (4.0, 0.9999), // 复制因子4.0，可靠性0.9999
     ];
-    
+
     let erasure_coding_data = [
         // (k, m) = (数据块, 校验块)
         ((10, 2), 0.99),    // 12块总数，可靠性0.99
         ((10, 4), 0.9999),  // 14块总数，可靠性0.9999
         ((10, 6), 0.999999),// 16块总数，可靠性0.999999
     ];
-    
+
     // 存储效率 = 原始数据大小 / 实际存储大小
     // 对于复制: 效率 = 1 / 复制因子
     // 对于纠删码: 效率 = k / (k + m)
-    
+
     println!("复制策略效率:");
     for (factor, reliability) in &replication_data {
         let efficiency = 1.0 / factor;
-        println!("  复制因子 {}: 效率 {:.2}, 可靠性 {:.6}", 
+        println!("  复制因子 {}: 效率 {:.2}, 可靠性 {:.6}",
                  factor, efficiency, reliability);
     }
-    
+
     println!("纠删码策略效率:");
     for ((k, m), reliability) in &erasure_coding_data {
         let efficiency = *k as f64 / (*k + *m) as f64;
-        println!("  配置 ({},{}): 效率 {:.2}, 可靠性 {:.6}", 
+        println!("  配置 ({},{}): 效率 {:.2}, 可靠性 {:.6}",
                  k, m, efficiency, reliability);
     }
 }
@@ -6136,7 +6136,7 @@ fn storage_reliability_tradeoff_analysis() {
 
 **优化方向**: 纠删码(Reed-Solomon编码)比简单复制提供更好的存储效率，同时保持相同的可靠性目标。例如，(10,4)纠删码配置可以提供与3倍复制相似的可靠性，但存储效率提高40%。
 
-#### 4. 负载不均衡与热点问题
+#### 1.7.5.4 负载不均衡与热点问题
 
 P2P存储网络中的负载分布通常高度不均衡，导致热点问题。
 
@@ -6235,14 +6235,14 @@ fn analyze_hotspot_mitigation_effectiveness() {
         ("激励缓存 + 自适应复制", 0.48, 320.0),
         ("综合优化", 0.38, 240.0),
     ];
-    
+
     println!("热点缓解策略效果对比:");
     println!("策略\t\t\t负载均衡度\t延迟改善");
     for (strategy, gini, latency) in &strategies {
         let imbalance_improvement = (0.76 - gini) / 0.76 * 100.0;
         let latency_improvement = (1000.0 - latency) / 1000.0 * 100.0;
-        
-        println!("{}\t\t{:.1}%\t\t{:.1}%", 
+
+        println!("{}\t\t{:.1}%\t\t{:.1}%",
                  strategy, imbalance_improvement, latency_improvement);
     }
 }
@@ -6252,7 +6252,7 @@ fn analyze_hotspot_mitigation_effectiveness() {
 
 **缓解策略效果**: 综合优化策略（结合自适应复制、内容缓存和激励机制）可以将负载不均衡度降低近50%，同时将延迟降低76%。其中内容缓存网络是单项效果最好的策略。
 
-#### 5. 系统规模与维护开销
+#### 1.7.5.5 系统规模与维护开销
 
 随着网络规模增长，维护开销会迅速增加，限制系统可扩展性。
 
@@ -6317,20 +6317,20 @@ fn network_size_vs_maintenance_overhead() -> Vec<(usize, NetworkOverhead)> {
 // 分析维护开销与网络规模的关系
 fn analyze_maintenance_scaling() {
     let overhead_data = network_size_vs_maintenance_overhead();
-    
+
     // 计算开销增长倍数
     let base_nodes = overhead_data[0].0;
     let base_overhead = overhead_data[0].1.total_bps;
-    
+
     println!("维护开销随网络规模变化:");
     println!("网络规模\t\t开销倍数\t理论增长\t实际增长");
-    
+
     for (nodes, overhead) in &overhead_data {
         let size_ratio = *nodes as f64 / base_nodes as f64;
         let overhead_ratio = overhead.total_bps as f64 / base_overhead as f64;
         let theoretical = size_ratio.log2(); // 理论上O(log n)
-        
-        println!("{} 节点\t\t{:.1}x\t\t{:.1}x\t\t{:.1}x", 
+
+        println!("{} 节点\t\t{:.1}x\t\t{:.1}x\t\t{:.1}x",
                  nodes, overhead_ratio, theoretical, overhead_ratio / theoretical);
     }
 }
@@ -6340,9 +6340,9 @@ fn analyze_maintenance_scaling() {
 
 **扩展性瓶颈**: 超出理论预期的增长主要来自三个方面：网络分区后的恢复流量、节点信息更新的级联效应、路由表优化的额外通信。
 
-## 8. P2P共识机制
+## 1.8 P2P共识机制
 
-### 8.1 共识算法分类
+### 1.8.1 共识算法分类
 
 P2P系统中的共识机制确保分布式节点对系统状态达成一致，是区块链等系统的核心。
 
@@ -6367,7 +6367,7 @@ enum ConsensusCategory {
     ByzantineFaultTolerant {
         variant: String,
         view_change: bool,
-        leader_selection: String, 
+        leader_selection: String,
         finality: FinalizationType,
         examples: Vec<String>,
     },
@@ -6550,7 +6550,7 @@ impl BftConsensus {
     // 创建新实例
     fn new(node_id: NodeId, private_key: PrivateKey, validators: Vec<NodeId>) -> Self {
         let is_leader = Self::is_primary(&node_id, 0, &validators);
-        
+
         BftConsensus {
             node_id,
             private_key,
@@ -6564,7 +6564,7 @@ impl BftConsensus {
             committed_blocks: Vec::new(),
         }
     }
-    
+
     // 处理收到的消息
     fn process_message(&mut self, message: ConsensusMessage) -> Result<(), ConsensusError> {
         match message.message_type {
@@ -6575,41 +6575,41 @@ impl BftConsensus {
             MessageType::NewView => self.handle_new_view(message),
         }
     }
-    
+
     // 检查是否达成准备阶段共识
     fn prepared(&self, block_hash: &Hash) -> bool {
         if let Some(prepares) = self.messages.get(&MessageType::Prepare) {
             let valid_prepares = prepares.iter()
                 .filter(|m| m.block_hash == *block_hash)
                 .count();
-            
+
             // 2f+1 prepares needed (including implicit primary prepare)
             valid_prepares >= 2 * self.fault_tolerance_threshold()
         } else {
             false
         }
     }
-    
+
     // 检查是否达成提交阶段共识
     fn committed(&self, block_hash: &Hash) -> bool {
         if let Some(commits) = self.messages.get(&MessageType::Commit) {
             let valid_commits = commits.iter()
                 .filter(|m| m.block_hash == *block_hash)
                 .count();
-            
+
             // 2f+1 commits needed
             valid_commits >= 2 * self.fault_tolerance_threshold()
         } else {
             false
         }
     }
-    
+
     // 计算容错阈值
     fn fault_tolerance_threshold(&self) -> usize {
         // f = (n-1)/3, n = validators.len()
         (self.validators.len() - 1) / 3
     }
-    
+
     // 确定主节点
     fn is_primary(node_id: &NodeId, view: u64, validators: &[NodeId]) -> bool {
         if validators.is_empty() {
@@ -6618,7 +6618,7 @@ impl BftConsensus {
         let primary_idx = view as usize % validators.len();
         &validators[primary_idx] == node_id
     }
-    
+
     // 执行共识步骤
     fn run_consensus(&mut self) -> Result<Option<Block>, ConsensusError> {
         match self.state {
@@ -6628,7 +6628,7 @@ impl BftConsensus {
             BftState::ViewChange => self.do_view_change(),
         }
     }
-    
+
     // 处理准备阶段
     fn do_prepare(&mut self) -> Result<Option<Block>, ConsensusError> {
         // 实现准备阶段逻辑
@@ -6650,19 +6650,19 @@ impl BftConsensus {
                         sender: self.node_id.clone(),
                         signature: self.sign_message(&pre_prepare.block_hash),
                     };
-                    
+
                     // 广播消息（简化）
                     println!("节点 {:?} 广播Prepare消息", self.node_id);
-                    
+
                     // 改变状态
                     self.state = BftState::Commit;
                 }
             }
-            
+
             Ok(None)
         }
     }
-    
+
     // 生成签名
     fn sign_message(&self, message: &Hash) -> Signature {
         // 实现签名逻辑
@@ -6730,7 +6730,7 @@ impl TendermintConsensus {
             precommits: HashMap::new(),
         }
     }
-    
+
     // 运行共识步骤
     fn run_step(&mut self) {
         match self.step {
@@ -6740,7 +6740,7 @@ impl TendermintConsensus {
             TendermintStep::Commit => self.commit_step(),
         }
     }
-    
+
     // 提议步骤
     fn propose_step(&mut self) {
         if self.is_proposer(self.height, self.round) {
@@ -6750,7 +6750,7 @@ impl TendermintConsensus {
             } else {
                 self.create_block()
             };
-            
+
             let proposal = Proposal {
                 height: self.height,
                 round: self.round,
@@ -6759,19 +6759,19 @@ impl TendermintConsensus {
                 proposer: self.node_id.clone(),
                 signature: self.sign_block(&proposed_block),
             };
-            
+
             // 广播提案
             self.broadcast_proposal(&proposal);
-            
+
             // 更新自己的状态
             self.proposal = Some(proposal);
         }
-        
+
         // 设置超时转到下一步
         self.schedule_timeout(TendermintStep::Prevote);
         self.step = TendermintStep::Prevote;
     }
-    
+
     // prevote步骤
     fn prevote_step(&mut self) {
         let vote = if let Some(locked_block) = &self.locked_value {
@@ -6817,36 +6817,36 @@ impl TendermintConsensus {
                 signature: self.sign_vote(Hash::nil()),
             }
         };
-        
+
         // 广播prevote
         self.broadcast_vote(&vote);
-        
+
         // 添加自己的投票
         self.add_vote(vote);
-        
+
         // 设置超时转到下一步
         self.schedule_timeout(TendermintStep::Precommit);
         self.step = TendermintStep::Precommit;
     }
-    
+
     // 检查是否有足够的prevotes
     fn has_polka(&self, round: u32, block_hash: Option<&Hash>) -> bool {
         if let Some(votes) = self.prevotes.get(&round) {
             let matching_votes = votes.values()
                 .filter(|v| v.block_hash.as_ref() == block_hash)
                 .count();
-            
+
             matching_votes * 3 > self.validators.len() * 2
         } else {
             false
         }
     }
-    
+
     // 创建区块
     fn create_block(&self) -> Block {
         // 从交易池中选取交易
         let transactions = self.tx_pool.clone();
-        
+
         Block {
             height: self.height,
             transactions,
@@ -6855,7 +6855,7 @@ impl TendermintConsensus {
             proposer: self.node_id.clone(),
         }
     }
-    
+
     // 判断是否为当前提议者
     fn is_proposer(&self, height: u64, round: u32) -> bool {
         let proposer_index = (height as usize + round as usize) % self.validators.len();
@@ -6881,7 +6881,7 @@ struct AvalancheConsensus {
     alpha: usize,
     // 参数beta_1：判定阈值
     beta_1: usize,
-    // 参数beta_2：确定阈值 
+    // 参数beta_2：确定阈值
     beta_2: usize,
 }
 
@@ -6913,7 +6913,7 @@ struct QueryState {
 
 impl AvalancheConsensus {
     // 创建新实例
-    fn new(node_id: NodeId, peers: Vec<NodeId>, k: usize, alpha: usize, 
+    fn new(node_id: NodeId, peers: Vec<NodeId>, k: usize, alpha: usize,
            beta_1: usize, beta_2: usize) -> Self {
         AvalancheConsensus {
             node_id,
@@ -6927,12 +6927,12 @@ impl AvalancheConsensus {
             beta_2,
         }
     }
-    
+
     // 添加新顶点
     fn add_vertex(&mut self, transactions: Vec<Transaction>) -> Hash {
         // 选择父顶点
         let parents = self.select_parents();
-        
+
         // 创建新顶点
         let vertex = Vertex {
             hash: Hash::random(), // 简化，实际应计算
@@ -6942,52 +6942,52 @@ impl AvalancheConsensus {
             query_count: 0,
             preferred: true,
         };
-        
+
         let hash = vertex.hash.clone();
         self.pending_vertices.insert(hash.clone(), vertex);
-        
+
         // 开始查询流程
         self.start_query(hash.clone());
-        
+
         hash
     }
-    
+
     // 开始查询流程
     fn start_query(&mut self, vertex_hash: Hash) {
         // 随机选择k个节点进行查询
         let queried_nodes = self.random_sample_peers(self.k);
-        
+
         // 创建查询状态
         let query_state = QueryState {
             round: 0,
             responses: Vec::new(),
             queried_nodes: queried_nodes.clone(),
         };
-        
+
         self.query_state.insert(vertex_hash.clone(), query_state);
-        
+
         // 发送查询给选中的节点
         for peer in queried_nodes {
             self.send_query(&peer, &vertex_hash);
         }
     }
-    
+
     // 处理收到的查询响应
     fn process_response(&mut self, vertex_hash: &Hash, response: Response) {
         if let Some(query_state) = self.query_state.get_mut(vertex_hash) {
             query_state.responses.push(response.clone());
-            
+
             // 检查是否收到足够的响应
             if query_state.responses.len() >= self.alpha {
                 // 统计响应中的偏好
                 let preferred_count = query_state.responses.iter()
                     .filter(|r| r.preferred)
                     .count();
-                
+
                 // 更新顶点的信心度和偏好
                 if let Some(vertex) = self.pending_vertices.get_mut(vertex_hash) {
                     vertex.query_count += 1;
-                    
+
                     // 如果大多数响应偏好，增加信心度
                     if preferred_count * 2 > query_state.responses.len() {
                         vertex.confidence += 1;
@@ -6995,7 +6995,7 @@ impl AvalancheConsensus {
                     } else {
                         vertex.preferred = false;
                     }
-                    
+
                     // 检查是否达到确定阈值
                     if vertex.confidence >= self.beta_2 {
                         // 确定顶点
@@ -7008,21 +7008,21 @@ impl AvalancheConsensus {
             }
         }
     }
-    
+
     // 确定顶点
     fn finalize_vertex(&mut self, vertex_hash: Hash) {
         if let Some(vertex) = self.pending_vertices.remove(&vertex_hash) {
             // 移动到已确定列表
             self.finalized_vertices.insert(vertex_hash.clone(), vertex);
-            
+
             // 清理查询状态
             self.query_state.remove(&vertex_hash);
-            
+
             // 可能触发后续顶点的处理
             self.process_descendants(&vertex_hash);
         }
     }
-    
+
     // 选择父顶点
     fn select_parents(&self) -> Vec<Hash> {
         // 从已确定顶点或待定顶点中选择合适的父顶点
@@ -7033,7 +7033,7 @@ impl AvalancheConsensus {
             .cloned()
             .collect()
     }
-    
+
     // 从对等点中随机抽样
     fn random_sample_peers(&self, count: usize) -> Vec<NodeId> {
         // 随机选择count个对等点
@@ -7044,7 +7044,7 @@ impl AvalancheConsensus {
             .cloned()
             .collect()
     }
-    
+
     // 处理顶点的后代
     fn process_descendants(&mut self, parent_hash: &Hash) {
         // 检查所有依赖此父顶点的待定顶点
@@ -7053,18 +7053,18 @@ impl AvalancheConsensus {
             .filter(|(_, v)| v.parents.contains(parent_hash))
             .map(|(h, _)| h.clone())
             .collect();
-        
+
         for hash in descendants {
             // 检查是否所有父顶点都已确定
             if let Some(vertex) = self.pending_vertices.get(&hash) {
                 let all_parents_finalized = vertex.parents.iter()
                     .all(|p| self.finalized_vertices.contains_key(p));
-                
+
                 if all_parents_finalized {
                     // 可能提高此顶点的确定性
                     if let Some(vertex) = self.pending_vertices.get_mut(&hash) {
                         vertex.confidence += 1;
-                        
+
                         // 检查是否达到确定阈值
                         if vertex.confidence >= self.beta_2 {
                             self.finalize_vertex(hash.clone());
@@ -7098,7 +7098,7 @@ fn consensus_comparison_table() {
 }
 ```
 
-### 8.2 Rust实现的实用拜占庭容错(PBFT)
+### 1.8.2 Rust实现的实用拜占庭容错(PBFT)
 
 下面展示一个简化的PBFT共识算法Rust实现：
 
@@ -7208,7 +7208,7 @@ impl PbftConsensus {
         message_log.insert(MessageType::PrePrepare, HashMap::new());
         message_log.insert(MessageType::Prepare, HashMap::new());
         message_log.insert(MessageType::Commit, HashMap::new());
-        
+
         PbftConsensus {
             node_id,
             view: 0,
@@ -7223,7 +7223,7 @@ impl PbftConsensus {
             view_change_messages: HashMap::new(),
         }
     }
-    
+
     // 处理收到的消息
     fn handle_message(&mut self, message: PbftMessage) {
         // 验证消息签名和视图号
@@ -7231,7 +7231,7 @@ impl PbftConsensus {
             println!("消息验证失败或过期: {:?}", message.msg_type);
             return;
         }
-        
+
         // 基于消息类型处理
         match message.msg_type {
             MessageType::PrePrepare => self.handle_pre_prepare(message),
@@ -7240,25 +7240,25 @@ impl PbftConsensus {
             _ => println!("未处理的消息类型: {:?}", message.msg_type),
         }
     }
-    
+
     // 处理Pre-Prepare消息
     fn handle_pre_prepare(&mut self, message: PbftMessage) {
         if self.state != PbftState::PrePrepare {
             return;
         }
-        
+
         // 添加到消息日志
         self.add_message_to_log(message.clone());
-        
+
         // 重置视图变更计时器
         self.reset_view_change_timer();
-        
+
         // 检查是否是主节点发送的
         if !self.is_from_primary(&message) {
             println!("收到非主节点的Pre-Prepare消息");
             return;
         }
-        
+
         // 更新当前区块(简化)
         self.current_block = Some(Block {
             sequence: message.sequence,
@@ -7266,57 +7266,57 @@ impl PbftConsensus {
             previous_hash: vec![],
             hash: message.digest.clone(),
         });
-        
+
         // 发送Prepare消息
         self.send_prepare();
-        
+
         // 更新状态
         self.state = PbftState::Prepare;
     }
-    
+
     // 处理Prepare消息
     fn handle_prepare(&mut self, message: PbftMessage) {
         if self.state != PbftState::Prepare {
             return;
         }
-        
+
         // 添加到消息日志
         self.add_message_to_log(message);
-        
+
         // 检查是否收到足够的Prepare消息
         if let Some(block) = &self.current_block {
             if self.has_prepared(block.hash.clone()) {
                 // 发送Commit消息
                 self.send_commit();
-                
+
                 // 更新状态
                 self.state = PbftState::Commit;
             }
         }
     }
-    
+
     // 处理Commit消息
     fn handle_commit(&mut self, message: PbftMessage) {
         if self.state != PbftState::Commit {
             return;
         }
-        
+
         // 添加到消息日志
         self.add_message_to_log(message);
-        
+
         // 检查是否收到足够的Commit消息
         if let Some(block) = &self.current_block {
             if self.has_committed(block.hash.clone()) {
                 // 提交区块
                 self.commit_block();
-                
+
                 // 重置状态，准备处理下一个请求
                 self.state = PbftState::PrePrepare;
                 self.sequence += 1;
             }
         }
     }
-    
+
     // 向消息日志添加消息
     fn add_message_to_log(&mut self, message: PbftMessage) {
         if let Some(msg_type_map) = self.message_log.get_mut(&message.msg_type) {
@@ -7332,7 +7332,7 @@ impl PbftConsensus {
             }
         }
     }
-    
+
     // 检查是否收到足够的Prepare消息
     fn has_prepared(&self, digest: BlockHash) -> bool {
         if let Some(prepare_map) = self.message_log.get(&MessageType::Prepare) {
@@ -7343,7 +7343,7 @@ impl PbftConsensus {
         }
         false
     }
-    
+
     // 检查是否收到足够的Commit消息
     fn has_committed(&self, digest: BlockHash) -> bool {
         if let Some(commit_map) = self.message_log.get(&MessageType::Commit) {
@@ -7354,7 +7354,7 @@ impl PbftConsensus {
         }
         false
     }
-    
+
     // 计算Prepare消息阈值
     fn prepare_threshold(&self) -> usize {
         // 2f, where f = (n-1)/3
@@ -7362,7 +7362,7 @@ impl PbftConsensus {
         let f = (n - 1) / 3;
         2 * f
     }
-    
+
     // 计算Commit消息阈值
     fn commit_threshold(&self) -> usize {
         // 2f+1, where f = (n-1)/3
@@ -7370,7 +7370,7 @@ impl PbftConsensus {
         let f = (n - 1) / 3;
         2 * f + 1
     }
-    
+
     // 发送Prepare消息
     fn send_prepare(&self) {
         if let Some(block) = &self.current_block {
@@ -7382,12 +7382,12 @@ impl PbftConsensus {
                 sender: self.node_id.clone(),
                 signature: vec![], // 实际应生成签名
             };
-            
+
             // 广播消息(简化)
             println!("发送Prepare消息: sequence={}, view={}", self.sequence, self.view);
         }
     }
-    
+
     // 发送Commit消息
     fn send_commit(&self) {
         if let Some(block) = &self.current_block {
@@ -7399,12 +7399,12 @@ impl PbftConsensus {
                 sender: self.node_id.clone(),
                 signature: vec![], // 实际应生成签名
             };
-            
+
             // 广播消息(简化)
             println!("发送Commit消息: sequence={}, view={}", self.sequence, self.view);
         }
     }
-    
+
     // 提交区块
     fn commit_block(&mut self) {
         if let Some(block) = self.current_block.take() {
@@ -7412,25 +7412,25 @@ impl PbftConsensus {
             self.committed_blocks.push(block);
         }
     }
-    
+
     // 判断消息是否来自主节点
     fn is_from_primary(&self, message: &PbftMessage) -> bool {
         let primary = self.get_primary();
         message.sender == primary
     }
-    
+
     // 获取当前视图的主节点
     fn get_primary(&self) -> NodeId {
         // 主节点 = view % nodes.len()
         let primary_idx = self.view as usize % self.nodes.len();
         self.nodes[primary_idx].clone()
     }
-    
+
     // 启动视图变更计时器
     fn reset_view_change_timer(&mut self) {
         self.view_change_timer = Some(Instant::now());
     }
-    
+
     // 检查视图变更超时
     fn check_view_change_timeout(&mut self) {
         if let Some(start_time) = self.view_change_timer {
@@ -7440,11 +7440,11 @@ impl PbftConsensus {
             }
         }
     }
-    
+
     // 开始视图变更
     fn start_view_change(&mut self) {
         println!("开始视图变更: current_view={}, new_view={}", self.view, self.view + 1);
-        
+
         // 更新状态
         self.state = PbftState::ViewChange;
 
@@ -7452,10 +7452,10 @@ impl PbftConsensus {
     // 完成视图变更流程
     fn start_view_change(&mut self) {
         println!("开始视图变更: 当前视图={}, 新视图={}", self.view, self.view + 1);
-        
+
         // 更新状态
         self.state = PbftState::ViewChange;
-        
+
         // 创建视图变更消息
         let view_change_msg = ViewChangeMessage {
             new_view: self.view + 1,
@@ -7464,18 +7464,18 @@ impl PbftConsensus {
             sender: self.node_id.clone(),
             signature: vec![], // 实际应生成签名
         };
-        
+
         // 广播视图变更消息 (简化)
         println!("广播视图变更消息: 新视图={}", self.view + 1);
-        
+
         // 将自己的视图变更消息添加到日志
         self.add_view_change_message(view_change_msg);
     }
-    
+
     // 收集已准备的消息
     fn collect_prepared_messages(&self) -> Vec<PbftMessage> {
         let mut prepared = Vec::new();
-        
+
         if let Some(prepare_map) = self.message_log.get(&MessageType::Prepare) {
             for (digest, messages) in prepare_map {
                 if messages.len() >= self.prepare_threshold() {
@@ -7492,22 +7492,22 @@ impl PbftConsensus {
                 }
             }
         }
-        
+
         prepared
     }
-    
+
     // 添加视图变更消息
     fn add_view_change_message(&mut self, message: ViewChangeMessage) {
         let new_view = message.new_view;
         if !self.view_change_messages.contains_key(&new_view) {
             self.view_change_messages.insert(new_view, Vec::new());
         }
-        
+
         if let Some(messages) = self.view_change_messages.get_mut(&new_view) {
             // 检查是否已存在相同发送者的消息
             if !messages.iter().any(|m| m.sender == message.sender) {
                 messages.push(message);
-                
+
                 // 检查是否收到足够的视图变更消息
                 if messages.len() >= self.view_change_threshold() {
                     // 如果自己是新视图的主节点，发送新视图消息
@@ -7519,7 +7519,7 @@ impl PbftConsensus {
             }
         }
     }
-    
+
     // 发送新视图消息
     fn send_new_view(&mut self, new_view: u64) {
         if let Some(view_change_msgs) = self.view_change_messages.get(&new_view) {
@@ -7529,10 +7529,10 @@ impl PbftConsensus {
                     .take(self.view_change_threshold())
                     .cloned()
                     .collect();
-                
+
                 // 创建新的pre-prepare消息
                 let new_pre_prepares = self.create_new_pre_prepares(&selected_msgs, new_view);
-                
+
                 // 创建新视图消息
                 let new_view_msg = NewViewMessage {
                     new_view,
@@ -7541,20 +7541,20 @@ impl PbftConsensus {
                     sender: self.node_id.clone(),
                     signature: vec![], // 实际应生成签名
                 };
-                
+
                 // 广播新视图消息 (简化)
                 println!("广播新视图消息: 新视图={}", new_view);
-                
+
                 // 处理自己的新视图消息
                 self.handle_new_view(new_view_msg);
             }
         }
     }
-    
+
     // 创建新的Pre-Prepare消息
     fn create_new_pre_prepares(&self, view_change_msgs: &[ViewChangeMessage], new_view: u64) -> Vec<PbftMessage> {
         let mut pre_prepares = Vec::new();
-        
+
         // 收集所有已准备的请求
         let mut prepared_requests = HashMap::new();
         for vc_msg in view_change_msgs {
@@ -7564,7 +7564,7 @@ impl PbftConsensus {
                 }
             }
         }
-        
+
         // 为每个已准备的请求创建新的Pre-Prepare消息
         for ((sequence, digest), _) in prepared_requests {
             let pre_prepare = PbftMessage {
@@ -7575,13 +7575,13 @@ impl PbftConsensus {
                 sender: self.node_id.clone(),
                 signature: vec![], // 实际应生成签名
             };
-            
+
             pre_prepares.push(pre_prepare);
         }
-        
+
         pre_prepares
     }
-    
+
     // 处理新视图消息
     fn handle_new_view(&mut self, message: NewViewMessage) {
         // 验证新视图消息
@@ -7589,20 +7589,20 @@ impl PbftConsensus {
             println!("新视图消息验证失败");
             return;
         }
-        
+
         // 更新视图
         self.view = message.new_view;
         println!("切换到新视图: {}", self.view);
-        
+
         // 重置状态
         self.state = PbftState::PrePrepare;
-        
+
         // 处理新的Pre-Prepare消息
         for pre_prepare in &message.new_pre_prepares {
             self.handle_message(pre_prepare.clone());
         }
     }
-    
+
     // 验证新视图消息
     fn verify_new_view(&self, message: &NewViewMessage) -> bool {
         // 检查发送者是否为新视图的主节点
@@ -7610,25 +7610,25 @@ impl PbftConsensus {
         if message.sender != new_primary {
             return false;
         }
-        
+
         // 检查是否包含足够的视图变更消息
         if message.view_change_messages.len() < self.view_change_threshold() {
             return false;
         }
-        
+
         // 验证视图变更消息签名 (简化)
         for vc_msg in &message.view_change_messages {
             if !self.verify_view_change_signature(vc_msg) {
                 return false;
             }
         }
-        
+
         // 验证新的Pre-Prepare消息是否符合视图变更消息中的已准备请求
         // (简化实现)
-        
+
         true
     }
-    
+
     // 获取视图变更阈值
     fn view_change_threshold(&self) -> usize {
         // 需要2f+1个视图变更消息
@@ -7636,18 +7636,18 @@ impl PbftConsensus {
         let f = (n - 1) / 3;
         2 * f + 1
     }
-    
+
     // 获取指定视图的主节点
     fn get_primary_for_view(&self, view: u64) -> NodeId {
         let primary_idx = view as usize % self.nodes.len();
         self.nodes[primary_idx].clone()
     }
-    
+
     // 验证签名 (简化)
     fn verify_signature(&self, _message: &PbftMessage) -> bool {
         true // 实际应验证签名
     }
-    
+
     // 验证视图变更消息签名 (简化)
     fn verify_view_change_signature(&self, _message: &ViewChangeMessage) -> bool {
         true // 实际应验证签名
@@ -7655,7 +7655,7 @@ impl PbftConsensus {
 }
 ```
 
-### 8.3 使用Hotstuff共识算法进行链式共识
+### 1.8.3 使用Hotstuff共识算法进行链式共识
 
 ```rust
 // Hotstuff共识算法实现
@@ -7746,7 +7746,7 @@ enum HotstuffMsgType {
 
 impl HotstuffConsensus {
     // 创建新实例
-    fn new(node_id: NodeId, private_key: PrivateKey, nodes: Vec<NodeId>, 
+    fn new(node_id: NodeId, private_key: PrivateKey, nodes: Vec<NodeId>,
            public_keys: HashMap<NodeId, PublicKey>) -> Self {
         // 创建初始QC
         let genesis_qc = QuorumCertificate {
@@ -7755,7 +7755,7 @@ impl HotstuffConsensus {
             signatures: HashMap::new(),
             type_qc: QcType::Prepare,
         };
-        
+
         HotstuffConsensus {
             node_id,
             private_key,
@@ -7776,21 +7776,21 @@ impl HotstuffConsensus {
             message_cache: HashMap::new(),
         }
     }
-    
+
     // 处理消息
     fn process_message(&mut self, message: HotstuffMessage) -> Result<(), ConsensusError> {
         // 验证消息
         if !self.verify_message(&message) {
             return Err(ConsensusError::InvalidMessage);
         }
-        
+
         match message.msg_type {
             HotstuffMsgType::Prepare => self.handle_prepare(message),
             HotstuffMsgType::Vote => self.handle_vote(message),
             HotstuffMsgType::NewView => self.handle_new_view(message),
         }
     }
-    
+
     // 处理Prepare消息
     fn handle_prepare(&mut self, message: HotstuffMessage) -> Result<(), ConsensusError> {
         // 检查视图号
@@ -7798,82 +7798,82 @@ impl HotstuffConsensus {
             self.cache_message(message);
             return Ok(());
         }
-        
+
         // 验证消息是否来自当前领导者
         if !self.is_leader(&message.sender, message.view) {
             return Err(ConsensusError::NotFromLeader);
         }
-        
+
         // 提取区块和QC
         let block = message.block.ok_or(ConsensusError::MissingBlock)?;
         let qc = message.qc.ok_or(ConsensusError::MissingQC)?;
-        
+
         // 验证QC
         if !self.verify_qc(&qc) {
             return Err(ConsensusError::InvalidQC);
         }
-        
+
         // 验证区块扩展性
         if !self.verify_block_extension(&block, &qc) {
             return Err(ConsensusError::InvalidBlockExtension);
         }
-        
+
         // 更新状态
         self.block = Some(block.clone());
-        
+
         // 进入PreCommit阶段：为prepare阶段投票
         self.vote(block.hash.clone(), QcType::Prepare)
     }
-    
+
     // 处理投票消息
     fn handle_vote(&mut self, message: HotstuffMessage) -> Result<(), ConsensusError> {
         // 提取QC
         let qc = message.qc.ok_or(ConsensusError::MissingQC)?;
-        
+
         // 添加到对应的消息缓存
         self.add_vote_to_cache(message);
-        
+
         // 如果是领导者，检查是否可以形成新的QC
         if self.is_leader(&self.node_id, self.view + 1) {
             self.try_form_qc(qc.block_hash.clone(), qc.type_qc);
         }
-        
+
         Ok(())
     }
-    
+
     // 处理NewView消息
     fn handle_new_view(&mut self, message: HotstuffMessage) -> Result<(), ConsensusError> {
         // 提取QC
         let qc = message.qc.ok_or(ConsensusError::MissingQC)?;
-        
+
         // 验证QC
         if !self.verify_qc(&qc) {
             return Err(ConsensusError::InvalidQC);
         }
-        
+
         // 更新high_qc
         if qc.view > self.high_qc.view {
             self.high_qc = qc.clone();
         }
-        
+
         // 添加到NewView消息缓存
         self.add_new_view_to_cache(message);
-        
+
         // 如果自己是下一个视图的领导者，检查是否可以开始新视图
         if self.is_leader(&self.node_id, self.view + 1) {
             self.try_start_new_view();
         }
-        
+
         Ok(())
     }
-    
+
     // 投票
     fn vote(&mut self, block_hash: Hash, qc_type: QcType) -> Result<(), ConsensusError> {
         // 根据安全规则决定是否可以投票
         if !self.safe_vote(&block_hash, &qc_type) {
             return Ok(());
         }
-        
+
         // 创建投票消息
         let vote_message = HotstuffMessage {
             msg_type: HotstuffMsgType::Vote,
@@ -7892,16 +7892,16 @@ impl HotstuffConsensus {
             sender: self.node_id.clone(),
             signature: self.sign_message(&block_hash),
         };
-        
+
         // 发送给下一个视图的领导者
         let next_leader = self.get_leader(self.view + 1);
         self.send_message_to(&next_leader, vote_message.clone());
-        
+
         // 如果自己是下一个视图的领导者，处理这条投票
         if next_leader == self.node_id {
             self.handle_vote(vote_message)?;
         }
-        
+
         // 更新状态
         match qc_type {
             QcType::Prepare => self.state = HotstuffState::PreCommit,
@@ -7922,10 +7922,10 @@ impl HotstuffConsensus {
             },
             _ => {},
         }
-        
+
         Ok(())
     }
-    
+
     // 安全投票规则
     fn safe_vote(&self, block_hash: &Hash, qc_type: &QcType) -> bool {
         match qc_type {
@@ -7951,12 +7951,12 @@ impl HotstuffConsensus {
             _ => false,
         }
     }
-    
+
     // 尝试形成QC
     fn try_form_qc(&mut self, block_hash: Hash, qc_type: QcType) -> Option<QuorumCertificate> {
         // 获取对该区块的所有投票
         let votes = self.get_votes_for_block(&block_hash, &qc_type);
-        
+
         // 检查是否达到法定人数
         if votes.len() >= self.quorum_size() {
             // 收集签名
@@ -7968,7 +7968,7 @@ impl HotstuffConsensus {
                     }
                 }
             }
-            
+
             // 形成新的QC
             let qc = QuorumCertificate {
                 view: self.view,
@@ -7976,46 +7976,46 @@ impl HotstuffConsensus {
                 signatures,
                 type_qc: qc_type,
             };
-            
+
             // 如果是PreCommit QC，可能开始新轮
             if matches!(qc_type, QcType::PreCommit) {
                 if self.is_leader(&self.node_id, self.view + 1) {
                     self.prepare_new_round(Some(qc.clone()));
                 }
             }
-            
+
             Some(qc)
         } else {
             None
         }
     }
-    
+
     // 提交区块
     fn commit_block(&mut self, block_hash: Hash) {
         if let Some(block) = &self.block {
             if block.hash == block_hash {
                 // 更新高度
                 self.height += 1;
-                
+
                 // 保存为待提交区块
                 self.pending_block = Some(block.clone());
-                
+
                 println!("提交区块: height={}, hash={:?}", self.height - 1, block_hash);
-                
+
                 // 通知上层应用
                 self.notify_commit(block);
-                
+
                 // 准备下一轮
                 self.prepare_next_round();
             }
         }
     }
-    
+
     // 准备下一轮
     fn prepare_next_round(&mut self) {
         // 重置状态
         self.state = HotstuffState::Prepare;
-        
+
         // 如果自己是下一个视图的领导者，开始新一轮
         if self.is_leader(&self.node_id, self.view + 1) {
             self.start_new_view();
@@ -8029,24 +8029,24 @@ impl HotstuffConsensus {
                 sender: self.node_id.clone(),
                 signature: self.sign_message(&self.high_qc.block_hash),
             };
-            
+
             // 发送给下一个视图的领导者
             let next_leader = self.get_leader(self.view + 1);
             self.send_message_to(&next_leader, new_view_message);
         }
-        
+
         // 更新视图号
         self.view += 1;
-        
+
         // 启动视图计时器
         self.start_view_timer();
     }
-    
+
     // 开始新视图
     fn start_new_view(&mut self) {
         // 获取所有NewView消息
         let new_view_messages = self.get_new_view_messages(self.view);
-        
+
         // 找出最高的QC
         let mut highest_qc = self.high_qc.clone();
         for message in &new_view_messages {
@@ -8056,13 +8056,13 @@ impl HotstuffConsensus {
                 }
             }
         }
-        
+
         // 更新high_qc
         self.high_qc = highest_qc.clone();
-        
+
         // 创建新区块
         let new_block = self.create_new_block(highest_qc.block_hash.clone());
-        
+
         // 广播Prepare消息
         let prepare_message = HotstuffMessage {
             msg_type: HotstuffMsgType::Prepare,
@@ -8072,19 +8072,19 @@ impl HotstuffConsensus {
             sender: self.node_id.clone(),
             signature: self.sign_message(&new_block.hash),
         };
-        
+
         self.broadcast_message(prepare_message);
-        
+
         // 更新状态
         self.block = Some(new_block);
         self.state = HotstuffState::Prepare;
     }
-    
+
     // 创建新区块
     fn create_new_block(&self, parent_hash: Hash) -> Block {
         // 收集交易
         let transactions = self.collect_transactions();
-        
+
         Block {
             hash: Hash::random(), // 实际应计算
             parent_hash,
@@ -8094,38 +8094,38 @@ impl HotstuffConsensus {
             proposer: self.node_id.clone(),
         }
     }
-    
+
     // 检查法定人数大小
     fn quorum_size(&self) -> usize {
         let n = self.nodes.len();
         let f = (n - 1) / 3;
         2 * f + 1
     }
-    
+
     // 判断是否为领导者
     fn is_leader(&self, node_id: &NodeId, view: u64) -> bool {
         let leader = self.get_leader(view);
         &leader == node_id
     }
-    
+
     // 获取指定视图的领导者
     fn get_leader(&self, view: u64) -> NodeId {
         let leader_idx = view as usize % self.nodes.len();
         self.nodes[leader_idx].clone()
     }
-    
+
     // 验证区块扩展性
     fn verify_block_extension(&self, block: &Block, qc: &QuorumCertificate) -> bool {
         block.parent_hash == qc.block_hash
     }
-    
+
     // 验证QC
     fn verify_qc(&self, qc: &QuorumCertificate) -> bool {
         // 验证签名数量
         if qc.signatures.len() < self.quorum_size() {
             return false;
         }
-        
+
         // 验证每个签名
         for (node_id, signature) in &qc.signatures {
             if let Some(public_key) = self.public_keys.get(node_id) {
@@ -8136,28 +8136,28 @@ impl HotstuffConsensus {
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     // 签名哈希
     fn sign_hash(&self, hash: &Hash) -> Signature {
         // 实际实现中使用私钥签名
         Signature::new() // 简化
     }
-    
+
     // 签名消息
     fn sign_message(&self, data: &impl Serialize) -> Signature {
         // 实际实现中序列化数据并使用私钥签名
         Signature::new() // 简化
     }
-    
+
     // 验证签名
     fn verify_signature(&self, public_key: &PublicKey, data: &Hash, signature: &Signature) -> bool {
         // 实际实现中验证签名
         true // 简化
     }
-    
+
     // 验证消息
     fn verify_message(&self, message: &HotstuffMessage) -> bool {
         // 验证签名
@@ -8167,7 +8167,7 @@ impl HotstuffConsensus {
             false
         }
     }
-    
+
     // 序列化消息 (简化)
     fn serialize_message(&self, _message: &HotstuffMessage) -> Hash {
         Hash::random() // 简化
@@ -8175,7 +8175,7 @@ impl HotstuffConsensus {
 }
 ```
 
-### 8.4 典型共识算法性能对比分析
+### 1.8.4 典型共识算法性能对比分析
 
 以下是主流区块链共识算法的性能对比：
 
@@ -8247,9 +8247,9 @@ fn consensus_performance_comparison() -> Vec<ConsensusPerformance> {
 }
 ```
 
-## 9. P2P安全与隐私保护
+## 1.9 P2P安全与隐私保护
 
-### 9.1 P2P网络面临的安全威胁
+### 1.9.1 P2P网络面临的安全威胁
 
 P2P网络面临许多独特的安全威胁，下面是主要威胁类型及防御机制：
 
@@ -8392,7 +8392,7 @@ fn implement_security_mechanisms() {
         // 资源贡献
         resource_contribution: ResourceContribution,
     }
-    
+
     // 实现Eclipse攻击防御 - 多样化连接策略
     struct ConnectionDiversifier {
         // 最小活跃连接数
@@ -8408,7 +8408,7 @@ fn implement_security_mechanisms() {
         // 连接刷新策略
         refresh_strategy: RefreshStrategy,
     }
-    
+
     // 实现DDoS防御 - 资源定价
     struct ResourcePricing {
         // 基础请求费用
@@ -8418,7 +8418,7 @@ fn implement_security_mechanisms() {
         // 请求复杂度定价
         complexity_price: f64,
         // 客户端信誉调整
-        
+
 
 ```rust
         // 实现DDoS防御 - 资源定价（续）
@@ -8428,7 +8428,7 @@ fn implement_security_mechanisms() {
         // 支付验证
         payment_verifier: PaymentVerifier,
     }
-    
+
     // 实现内容验证 - 防止内容欺骗
     struct ContentValidator {
         // 哈希验证器
@@ -8464,48 +8464,48 @@ impl PeerValidator {
             anomaly_detector: AnomalyDetector::new(),
         }
     }
-    
+
     // 验证新对等节点
     async fn validate_peer(&mut self, peer_id: &NodeId, connection: &mut Connection) -> ValidationResult {
         // 生成挑战
         let challenge = self.challenge_generator.generate();
-        
+
         // 发送挑战
         connection.send(Message::Challenge(challenge.clone())).await?;
-        
+
         // 等待响应
         let response = match connection.receive_timeout(Duration::from_secs(5)).await {
             Ok(Message::ChallengeResponse(resp)) => resp,
             _ => return ValidationResult::Timeout,
         };
-        
+
         // 验证响应
         let validation = self.response_validator.validate(
             &challenge, &response, peer_id);
-        
+
         // 更新历史记录
         self.update_peer_history(peer_id, &validation);
-        
+
         // 运行异常检测
         let anomaly = self.anomaly_detector.check(peer_id, &self.peer_history);
         if anomaly.is_anomalous {
             return ValidationResult::Anomalous(anomaly.reason);
         }
-        
+
         validation
     }
-    
+
     // 更新节点历史记录
     fn update_peer_history(&mut self, peer_id: &NodeId, validation: &ValidationResult) {
         let record = self.peer_history
             .entry(peer_id.clone())
             .or_insert_with(PeerRecord::new);
-        
+
         record.validations.push(ValidationEntry {
             timestamp: current_time(),
             result: validation.clone(),
         });
-        
+
         // 更新统计数据
         match validation {
             ValidationResult::Valid => record.successful_validations += 1,
@@ -8571,17 +8571,17 @@ impl SocialGraphValidator {
         if self.source_nodes.contains(node_id) {
             return TrustResult::Trusted(1.0);
         }
-        
+
         // 寻找最短信任路径
         let mut max_trust = 0.0;
         let mut shortest_path = None;
-        
+
         for source in &self.source_nodes {
             if let Some(path) = self.find_trust_path(source, node_id) {
                 let path_length = path.len();
-                
+
                 // 检查路径长度是否在允许范围内
-                if path_length >= self.min_path_length && 
+                if path_length >= self.min_path_length &&
                    path_length <= self.max_path_length {
                     // 计算路径信任值
                     let path_trust = self.calculate_path_trust(&path);
@@ -8592,7 +8592,7 @@ impl SocialGraphValidator {
                 }
             }
         }
-        
+
         // 检查是否达到信任阈值
         if max_trust >= self.trust_threshold {
             TrustResult::Trusted(max_trust)
@@ -8602,14 +8602,14 @@ impl SocialGraphValidator {
             TrustResult::Untrusted
         }
     }
-    
+
     // 寻找信任路径
     fn find_trust_path(&self, source: &NodeId, target: &NodeId) -> Option<Vec<(NodeId, NodeId, TrustLevel)>> {
         // 使用修改版的Dijkstra算法寻找最大信任路径
         // 简化实现
         None
     }
-    
+
     // 计算路径信任值
     fn calculate_path_trust(&self, path: &[(NodeId, NodeId, TrustLevel)]) -> f64 {
         // 信任值是路径上所有边信任级别的乘积
@@ -8644,7 +8644,7 @@ enum TrustResult {
 }
 ```
 
-### 9.2 P2P隐私保护技术
+### 1.9.2 P2P隐私保护技术
 
 P2P网络中的隐私保护技术是确保用户数据安全和身份隐私的关键。以下是主要隐私保护技术的实现：
 
@@ -8764,49 +8764,49 @@ impl OnionRouter {
             active_circuits: HashMap::new(),
         }
     }
-    
+
     // 创建新电路
     async fn create_circuit(&mut self, num_hops: usize) -> Result<CircuitId, OnionError> {
         // 选择中继节点
         let selected_relays = self.select_relays(num_hops)?;
-        
+
         // 创建电路ID
         let circuit_id = CircuitId::random();
-        
+
         // 构建电路
         let circuit = self.circuit_builder.build(circuit_id.clone(), selected_relays).await?;
-        
+
         // 保存电路
         self.active_circuits.insert(circuit_id.clone(), circuit);
-        
+
         Ok(circuit_id)
     }
-    
+
     // 通过电路发送数据
     async fn send_through_circuit(
-        &self, 
-        circuit_id: &CircuitId, 
+        &self,
+        circuit_id: &CircuitId,
         data: &[u8],
         destination: &SocketAddr
     ) -> Result<(), OnionError> {
         // 获取电路
         let circuit = self.active_circuits.get(circuit_id)
             .ok_or(OnionError::CircuitNotFound)?;
-        
+
         if !circuit.established {
             return Err(OnionError::CircuitNotEstablished);
         }
-        
+
         // 构建洋葱封装的消息
         let onion_message = self.build_onion_message(circuit, data, destination)?;
-        
+
         // 发送到第一跳
         let first_hop = &circuit.hops[0];
         self.send_to_relay(&first_hop.node, &onion_message).await?;
-        
+
         Ok(())
     }
-    
+
     // 构建洋葱消息
     fn build_onion_message(
         &self,
@@ -8818,7 +8818,7 @@ impl OnionRouter {
         let mut message = Vec::new();
         message.extend_from_slice(&destination.to_string().as_bytes());
         message.extend_from_slice(data);
-        
+
         // 从最后一跳开始，逐层加密
         for hop in circuit.hops.iter().rev() {
             // 每层添加一些随机填充以防止长度分析
@@ -8826,40 +8826,40 @@ impl OnionRouter {
             let padding: Vec<u8> = (0..padding_length)
                 .map(|_| rand::random::<u8>())
                 .collect();
-            
+
             message.extend_from_slice(&padding);
-            
+
             // 使用与每个中继共享的密钥加密
             message = encrypt_with_shared_secret(&hop.shared_secret, &message)?;
         }
-        
+
         Ok(message)
     }
-    
+
     // 选择中继节点
     fn select_relays(&self, num_hops: usize) -> Result<Vec<RelayNode>, OnionError> {
         if num_hops < 1 {
             return Err(OnionError::InvalidHopCount);
         }
-        
+
         if num_hops > self.relay_nodes.len() {
             return Err(OnionError::InsufficientRelays);
         }
-        
+
         let mut selected = Vec::with_capacity(num_hops);
         let mut rng = rand::thread_rng();
-        
+
         // 过滤可用中继
         let mut available_relays: Vec<&RelayNode> = self.relay_nodes.iter()
             .filter(|r| r.uptime > 0.9) // 只选择高可用性中继
             .collect();
-        
+
         // 至少一个Guard节点作为第一跳
         let guard_relays: Vec<&RelayNode> = available_relays.iter()
             .filter(|r| r.flags.contains(&RelayFlag::Guard))
             .cloned()
             .collect();
-        
+
         if !guard_relays.is_empty() {
             let guard = guard_relays[rng.gen_range(0..guard_relays.len())].clone();
             selected.push(guard.clone());
@@ -8870,24 +8870,24 @@ impl OnionRouter {
             selected.push(relay.clone());
             available_relays.retain(|r| r.node_id != relay.node_id);
         }
-        
+
         // 中间节点
         for _ in 1..(num_hops - 1) {
             if available_relays.is_empty() {
                 return Err(OnionError::InsufficientRelays);
             }
-            
+
             let relay = available_relays[rng.gen_range(0..available_relays.len())].clone();
             selected.push(relay.clone());
             available_relays.retain(|r| r.node_id != relay.node_id);
         }
-        
+
         // 最后一跳需要Exit节点
         let exit_relays: Vec<&RelayNode> = available_relays.iter()
             .filter(|r| r.flags.contains(&RelayFlag::Exit))
             .cloned()
             .collect();
-        
+
         if !exit_relays.is_empty() {
             let exit = exit_relays[rng.gen_range(0..exit_relays.len())].clone();
             selected.push(exit.clone());
@@ -8896,11 +8896,11 @@ impl OnionRouter {
             if available_relays.is_empty() {
                 return Err(OnionError::NoExitRelaysAvailable);
             }
-            
+
             let relay = available_relays[rng.gen_range(0..available_relays.len())].clone();
             selected.push(relay.clone());
         }
-        
+
         Ok(selected)
     }
 }
@@ -8924,28 +8924,28 @@ impl ZkSnarkProver {
             constraint_system: ConstraintSystem::new(),
         }
     }
-    
+
     // 生成证明
     fn generate_proof<T: ZkCircuit>(&self, circuit: &T, public_inputs: &[Fr], private_inputs: &[Fr]) -> Result<Proof, ZkError> {
         // 构建约束
         let constraints = circuit.synthesize(&mut self.constraint_system.clone())?;
-        
+
         // 检查约束是否满足
         if !self.constraint_system.is_satisfied(public_inputs, private_inputs) {
             return Err(ZkError::ConstraintsNotSatisfied);
         }
-        
+
         // 生成证明
         let proof = create_proof(&self.proving_key, constraints, public_inputs, private_inputs)?;
-        
+
         Ok(proof)
     }
-    
+
     // 验证证明
     fn verify_proof(&self, proof: &Proof, public_inputs: &[Fr]) -> Result<bool, ZkError> {
         // 验证证明
         let is_valid = verify_proof(&self.verification_key, proof, public_inputs)?;
-        
+
         Ok(is_valid)
     }
 }
@@ -8971,18 +8971,18 @@ struct BalanceProofCircuit {
 impl ZkCircuit for BalanceProofCircuit {
     fn synthesize(&self, cs: &mut ConstraintSystem) -> Result<Vec<Constraint>, ZkError> {
         let mut constraints = Vec::new();
-        
+
         // 1. 验证账户哈希是否正确
         let computed_hash = cs.hash(self.account_key);
         constraints.push(Constraint::new(computed_hash, self.account_hash, "账户哈希验证"));
-        
+
         // 2. 验证余额是否超过阈值
         let gt_constraint = cs.greater_than(self.balance, self.threshold);
         constraints.push(gt_constraint);
-        
+
         // 3. 范围约束：确保余额为正
         constraints.push(cs.positive(self.balance));
-        
+
         Ok(constraints)
     }
 }
@@ -9002,7 +9002,7 @@ impl PaillierCrypto {
         let ciphertext = self.public_key.encrypt(&plaintext)?;
         Ok(ciphertext)
     }
-    
+
     // 解密
     fn decrypt(&self, ciphertext: &PaillierCiphertext) -> Result<i64, CryptoError> {
         if let Some(private_key) = &self.private_key {
@@ -9012,7 +9012,7 @@ impl PaillierCrypto {
             Err(CryptoError::NoPrivateKey)
         }
     }
-    
+
     // 同态加法
     fn add(
         &self,
@@ -9022,7 +9022,7 @@ impl PaillierCrypto {
         let result = self.public_key.add(ciphertext1, ciphertext2)?;
         Ok(result)
     }
-    
+
     // 同态标量乘法
     fn multiply(
         &self,
@@ -9053,46 +9053,46 @@ impl PrivateAggregator {
             participant_count: 0,
         }
     }
-    
+
     // 添加加密贡献
     fn add_contribution(&mut self, encrypted_value: PaillierCiphertext) {
         self.contributions.push(encrypted_value);
         self.participant_count += 1;
     }
-    
+
     // 计算加密总和
     fn compute_encrypted_sum(&self) -> Result<PaillierCiphertext, CryptoError> {
         if self.contributions.is_empty() {
             return Err(CryptoError::NoContributions);
         }
-        
+
         let mut sum = self.contributions[0].clone();
         for i in 1..self.contributions.len() {
             sum = self.paillier.add(&sum, &self.contributions[i])?;
         }
-        
+
         Ok(sum)
     }
-    
+
     // 解密并返回总和
     fn reveal_sum(&self) -> Result<i64, CryptoError> {
         let encrypted_sum = self.compute_encrypted_sum()?;
         self.paillier.decrypt(&encrypted_sum)
     }
-    
+
     // 计算平均值
     fn compute_average(&self) -> Result<f64, CryptoError> {
         if self.participant_count == 0 {
             return Err(CryptoError::NoContributions);
         }
-        
+
         let sum = self.reveal_sum()?;
         Ok(sum as f64 / self.participant_count as f64)
     }
 }
 ```
 
-### 9.3 分布式身份认证系统
+### 1.9.3 分布式身份认证系统
 
 分布式身份系统是P2P网络中确保身份可验证性和隐私的关键组件。
 
@@ -9195,24 +9195,24 @@ impl DIDResolver {
             resolvers: HashMap::new(),
         }
     }
-    
+
     // 注册方法解析器
     fn register_method(&mut self, resolver: Box<dyn MethodResolver>) {
         let method = resolver.method_name();
         self.supported_methods.insert(method.clone());
         self.resolvers.insert(method, resolver);
     }
-    
+
     // 解析DID
     fn resolve(&self, did: &str) -> Result<DIDDocument, DIDError> {
         // 解析DID方法
         let method = self.extract_method(did)?;
-        
+
         // 检查方法是否支持
         if !self.supported_methods.contains(&method) {
             return Err(DIDError::UnsupportedMethod(method));
         }
-        
+
         // 获取对应的解析器
         if let Some(resolver) = self.resolvers.get(&method) {
             resolver.resolve(did)
@@ -9220,7 +9220,7 @@ impl DIDResolver {
             Err(DIDError::ResolverNotFound)
         }
     }
-    
+
     // 提取DID方法
     fn extract_method(&self, did: &str) -> Result<String, DIDError> {
         // DID格式: did:<method>:<method-specific-id>
@@ -9228,7 +9228,7 @@ impl DIDResolver {
         if parts.len() < 3 || parts[0] != "did" {
             return Err(DIDError::InvalidDIDFormat);
         }
-        
+
         Ok(parts[1].to_string())
     }
 }
@@ -9249,53 +9249,53 @@ impl MethodResolver for BlockchainDIDResolver {
         if let Some(document) = self.cache.get(did) {
             return Ok(document);
         }
-        
+
         // 从区块链解析
         let method_specific_id = self.extract_id(did)?;
-        
+
         // 调用智能合约
         let document_data = self.client.call_contract(
             &self.contract_address,
             "resolveDID",
             &[method_specific_id.into()]
         )?;
-        
+
         // 解析响应
         let document = self.parse_document(document_data)?;
-        
+
         // 更新缓存
         self.cache.put(did.to_string(), document.clone());
-        
+
         Ok(document)
     }
-    
+
     fn resolve_service(&self, did: &str, service_id: &str) -> Result<Service, DIDError> {
         // 解析完整DID文档
         let document = self.resolve(did)?;
-        
+
         // 查找指定服务
         for service in document.service {
             if service.id == service_id || service.id.ends_with(&format!("#{}", service_id)) {
                 return Ok(service);
             }
         }
-        
+
         Err(DIDError::ServiceNotFound)
     }
-    
+
     fn exists(&self, did: &str) -> Result<bool, DIDError> {
         let method_specific_id = self.extract_id(did)?;
-        
+
         // 调用智能合约检查存在性
         let exists = self.client.call_contract(
             &self.contract_address,
             "didExists",
             &[method_specific_id.into()]
         )?;
-        
+
         Ok(exists.as_bool().unwrap_or(false))
     }
-    
+
     fn method_name(&self) -> String {
         "ethr".to_string() // 例如，以太坊DID方法
     }
@@ -9309,10 +9309,10 @@ impl BlockchainDIDResolver {
         if parts.len() < 3 || parts[0] != "did" || parts[1] != "ethr" {
             return Err(DIDError::InvalidDIDFormat);
         }
-        
+
         Ok(parts[2].to_string())
     }
-    
+
     // 解析文档数据
     fn parse_document(&self, data: Value) -> Result<DIDDocument, DIDError> {
         // 解析JSON数据为DIDDocument
@@ -9384,23 +9384,23 @@ impl CredentialVerifier {
                 return Err(VerificationError::CredentialExpired);
             }
         }
-        
+
         // 2. 解析颁发者DID
         let issuer_doc = self.did_resolver.resolve(&credential.issuer)?;
-        
+
         // 3. 获取验证方法
         let verification_method = self.get_verification_method(
-            &issuer_doc, 
+            &issuer_doc,
             &credential.proof.verification_method
         )?;
-        
+
         // 4. 验证证明
         self.verify_proof(credential, &verification_method)
     }
-    
+
     // 验证证明
     fn verify_proof(
-        &self, 
+        &self,
         credential: &VerifiableCredential,
         verification_method: &VerificationMethod
     ) -> Result<bool, VerificationError> {
@@ -9408,7 +9408,7 @@ impl CredentialVerifier {
         if !self.supported_proof_types.contains(&credential.proof.type_) {
             return Err(VerificationError::UnsupportedProofType);
         }
-        
+
         // 根据证明类型进行验证
         match credential.proof.type_.as_str() {
             "Ed25519Signature2018" => {
@@ -9420,7 +9420,7 @@ impl CredentialVerifier {
             _ => Err(VerificationError::UnsupportedProofType),
         }
     }
-    
+
     // 验证Ed25519签名
     fn verify_ed25519_signature(
         &self,
@@ -9429,26 +9429,26 @@ impl CredentialVerifier {
     ) -> Result<bool, VerificationError> {
         // 1. 从凭证中移除证明生成规范化文档
         let document_without_proof = self.normalize_credential_for_signing(credential)?;
-        
+
         // 2. 哈希文档
         let document_hash = self.crypto.hash(&document_without_proof);
-        
+
         // 3. 从验证方法获取公钥
         let public_key = self.crypto.decode_public_key_multibase(&verification_method.public_key_multibase)?;
-        
+
         // 4. 从证明获取签名
         let signature = self.crypto.decode_signature(&credential.proof.proof_value)?;
-        
+
         // 5. 验证签名
         let is_valid = self.crypto.verify_ed25519(
             &public_key,
             &document_hash,
             &signature
         )?;
-        
+
         Ok(is_valid)
     }
-    
+
     // 检查是否过期
     fn is_expired(&self, expiration_date: &str) -> bool {
         // 解析日期并与当前时间比较
@@ -9458,7 +9458,7 @@ impl CredentialVerifier {
         }
         false
     }
-    
+
     // 获取验证方法
     fn get_verification_method(
         &self,
@@ -9467,24 +9467,24 @@ impl CredentialVerifier {
     ) -> Result<VerificationMethod, VerificationError> {
         // 查找匹配ID的验证方法
         for method in &did_document.verification_method {
-            if method.id == verification_method_id || 
+            if method.id == verification_method_id ||
                method.id.ends_with(&format!("#{}", verification_method_id)) {
                 return Ok(method.clone());
             }
         }
-        
+
         // 如果没有找到完全匹配，尝试解析完整URI
         let parts: Vec<&str> = verification_method_id.split('#').collect();
         if parts.len() == 2 {
             let did = parts[0];
             let fragment = parts[1];
-            
+
             // 解析引用的DID文档
             if did != did_document.id {
                 let referenced_doc = self.did_resolver.resolve(did)?;
                 return self.get_verification_method(&referenced_doc, &format!("#{}", fragment));
             }
-            
+
             // 查找片段标识符
             for method in &did_document.verification_method {
                 if method.id.ends_with(&format!("#{}", fragment)) {
@@ -9492,10 +9492,10 @@ impl CredentialVerifier {
                 }
             }
         }
-        
+
         Err(VerificationError::VerificationMethodNotFound)
     }
-    
+
     // 规范化凭证用于签名
     fn normalize_credential_for_signing(&self, credential: &VerifiableCredential) -> Result<Vec<u8>, VerificationError> {
         // 创建凭证副本并移除证明
@@ -9508,10 +9508,10 @@ impl CredentialVerifier {
             domain: None,
             proof_value: "".to_string(),
         };
-        
+
         // 序列化为规范化JSON
         let canonical_json = self.crypto.canonicalize_json(&credential_copy)?;
-        
+
         Ok(canonical_json)
     }
 }
@@ -9566,7 +9566,7 @@ impl P2PIdentityProtocol {
             ]),
             crypto: crypto.clone(),
         };
-        
+
         P2PIdentityProtocol {
             local_did,
             key_store,
@@ -9577,12 +9577,12 @@ impl P2PIdentityProtocol {
             trust_registry: TrustRegistry::new(),
         }
     }
-    
+
     // 生成身份认证挑战
     fn generate_auth_challenge(&self, audience: &str) -> Challenge {
         let nonce = self.generate_secure_nonce();
         let timestamp = Utc::now().timestamp();
-        
+
         Challenge {
             nonce,
             timestamp,
@@ -9591,7 +9591,7 @@ impl P2PIdentityProtocol {
             domain: self.local_did.did.clone(),
         }
     }
-    
+
     // 生成身份认证响应
     fn create_auth_response(
         &self,
@@ -9602,15 +9602,15 @@ impl P2PIdentityProtocol {
         if !self.verify_challenge(challenge) {
             return Err(IdentityError::InvalidChallenge);
         }
-        
+
         // 获取验证密钥
         let key_id = self.resolve_authentication_key_id(authentication_method)?;
         let private_key = self.key_store.get_private_key(&key_id)?;
-        
+
         // 签名挑战
         let challenge_bytes = self.serialize_challenge(challenge);
         let signature = self.sign_data(&private_key, &challenge_bytes)?;
-        
+
         Ok(AuthResponse {
             challenge: challenge.clone(),
             verification_method: key_id,
@@ -9618,47 +9618,47 @@ impl P2PIdentityProtocol {
             proof: signature,
         })
     }
-    
+
     // 验证身份认证响应
     fn verify_auth_response(&self, response: &AuthResponse) -> Result<bool, IdentityError> {
         // 验证挑战有效性
         if !self.verify_challenge(&response.challenge) {
             return Err(IdentityError::InvalidChallenge);
         }
-        
+
         // 从验证方法解析DID
         let did_from_method = self.extract_did_from_verification_method(&response.verification_method)?;
-        
+
         // 解析DID文档
         let did_document = self.did_resolver.resolve(&did_from_method)?;
-        
+
         // 获取验证方法
         let verification_method = self.get_verification_method(
             &did_document,
             &response.verification_method
         )?;
-        
+
         // 序列化挑战
         let challenge_bytes = self.serialize_challenge(&response.challenge);
-        
+
         // 验证签名
         match response.proof_type.as_str() {
             "Ed25519Signature2018" => {
                 let public_key = self.decode_public_key(&verification_method.public_key_multibase)?;
                 let signature = self.decode_signature(&response.proof)?;
-                
+
                 self.verify_ed25519_signature(&public_key, &challenge_bytes, &signature)
             },
             "EcdsaSecp256k1Signature2019" => {
                 let public_key = self.decode_public_key(&verification_method.public_key_multibase)?;
                 let signature = self.decode_signature(&response.proof)?;
-                
+
                 self.verify_ecdsa_signature(&public_key, &challenge_bytes, &signature)
             },
             _ => Err(IdentityError::UnsupportedProofType),
         }
     }
-    
+
     // 创建可验证凭证
     fn create_credential(
         &self,
@@ -9672,7 +9672,7 @@ impl P2PIdentityProtocol {
         let expiration_date = expiration_days.map(|days| {
             issuance_date + chrono::Duration::days(days as i64)
         });
-        
+
         // 创建凭证
         let credential = VerifiableCredential {
             context: vec![
@@ -9697,11 +9697,11 @@ impl P2PIdentityProtocol {
                 proof_value: "".to_string(), // 临时
             },
         };
-        
+
         // 添加证明
         self.add_proof_to_credential(credential, proof_type)
     }
-    
+
     // 添加证明到凭证
     fn add_proof_to_credential(
         &self,
@@ -9710,20 +9710,20 @@ impl P2PIdentityProtocol {
     ) -> Result<VerifiableCredential, IdentityError> {
         // 选择适当的验证方法
         let verification_method = self.select_verification_method_for_proof(proof_type)?;
-        
+
         // 规范化凭证
         let canonical_credential = self.canonicalize_credential(&credential)?;
-        
+
         // 获取私钥
         let private_key = self.key_store.get_private_key_for_method(&verification_method)?;
-        
+
         // 创建签名
         let signature = match proof_type {
             "Ed25519Signature2018" => self.create_ed25519_signature(&private_key, &canonical_credential)?,
             "EcdsaSecp256k1Signature2019" => self.create_ecdsa_signature(&private_key, &canonical_credential)?,
             _ => return Err(IdentityError::UnsupportedProofType),
         };
-        
+
         // 更新证明
         credential.proof = Proof {
             type_: proof_type.to_string(),
@@ -9733,10 +9733,10 @@ impl P2PIdentityProtocol {
             domain: None,
             proof_value: signature,
         };
-        
+
         Ok(credential)
     }
-    
+
     // 创建选择性披露凭证
     fn create_selective_disclosure_credential(
         &self,
@@ -9745,14 +9745,14 @@ impl P2PIdentityProtocol {
     ) -> Result<VerifiableCredential, IdentityError> {
         self.selective_disclosure.create_disclosure(credential, disclosed_claims)
     }
-    
+
     // 验证选择性披露凭证
     fn verify_selective_disclosure(
         &self,
         credential: &VerifiableCredential,
     ) -> Result<bool, IdentityError> {
         let result = self.selective_disclosure.verify_disclosure(credential)?;
-        
+
         if result {
             // 如果选择性披露验证通过，还要验证基础凭证
             self.credential_verifier.verify_credential(credential)
@@ -9772,7 +9772,7 @@ impl SelectiveDisclosure {
     fn new(crypto: CryptoSuite) -> Self {
         SelectiveDisclosure { crypto }
     }
-    
+
     // 创建带有选择性披露的凭证
     fn create_disclosure(
         &self,
@@ -9781,23 +9781,23 @@ impl SelectiveDisclosure {
     ) -> Result<VerifiableCredential, IdentityError> {
         // 创建克隆凭证
         let mut new_credential = credential.clone();
-        
+
         // 获取所有声明键
         let all_claims: HashSet<String> = credential.credential_subject.claims.keys()
             .map(|k| k.clone())
             .collect();
-        
+
         // 确定要隐藏的声明
         let hidden_claims: HashSet<String> = all_claims.difference(
             &disclosed_claims.iter().cloned().collect()
         ).cloned().collect();
-        
+
         // 为隐藏的声明创建承诺
         for hidden_claim in &hidden_claims {
             if let Some(value) = credential.credential_subject.claims.get(hidden_claim) {
                 // 生成承诺
                 let commitment = self.create_commitment(value)?;
-                
+
                 // 替换值为承诺
                 new_credential.credential_subject.claims.insert(
                     hidden_claim.clone(),
@@ -9805,15 +9805,15 @@ impl SelectiveDisclosure {
                 );
             }
         }
-        
+
         // 更新类型以标识这是选择性披露凭证
         if !new_credential.type_.contains(&"SelectiveDisclosureCredential".to_string()) {
             new_credential.type_.push("SelectiveDisclosureCredential".to_string());
         }
-        
+
         Ok(new_credential)
     }
-    
+
     // 验证选择性披露凭证
     fn verify_disclosure(
         &self,
@@ -9824,7 +9824,7 @@ impl SelectiveDisclosure {
             // 如果不是选择性披露凭证，返回true（这不影响基本验证）
             return Ok(true);
         }
-        
+
         // 检查所有承诺格式是否正确
         for (_, value) in &credential.credential_subject.claims {
             if let Some(obj) = value.as_object() {
@@ -9839,28 +9839,28 @@ impl SelectiveDisclosure {
                 }
             }
         }
-        
+
         Ok(true)
     }
-    
+
     // 创建承诺
     fn create_commitment(&self, value: &Value) -> Result<String, IdentityError> {
         // 序列化值
         let value_bytes = serde_json::to_vec(value)
             .map_err(|_| IdentityError::SerializationError)?;
-        
+
         // 生成随机盐
         let salt = self.crypto.generate_random_bytes(32)?;
-        
+
         // 创建承诺: Hash(value || salt)
         let mut data = value_bytes;
         data.extend_from_slice(&salt);
-        
+
         let commitment = self.crypto.hash(&data);
-        
+
         // Base64编码
         let encoded = base64::encode(&commitment);
-        
+
         Ok(encoded)
     }
 }
@@ -9890,16 +9890,16 @@ impl ZkSelectiveDisclosure {
                 disclosed_values.insert(claim.clone(), value.clone());
             }
         }
-        
+
         // 创建输入向量
         let (public_inputs, private_inputs) = self.prepare_zk_inputs(
             &disclosed_values,
             secret_values,
         )?;
-        
+
         // 生成零知识证明
         let proof = self.generate_proof(&public_inputs, &private_inputs)?;
-        
+
         // 创建可验证表示
         let presentation = VerifiablePresentation {
             context: vec![
@@ -9920,10 +9920,10 @@ impl ZkSelectiveDisclosure {
                     .map_err(|_| IdentityError::SerializationError)?,
             }),
         };
-        
+
         Ok(presentation)
     }
-    
+
     // 验证零知识选择性披露
     fn verify_zk_disclosure(
         &self,
@@ -9934,23 +9934,23 @@ impl ZkSelectiveDisclosure {
             if proof.type_ != "ZKSnarkProof2021" {
                 return Err(IdentityError::UnsupportedProofType);
             }
-            
+
             // 解析证明
             let zk_proof: ZkProof = serde_json::from_str(&proof.proof_value)
                 .map_err(|_| IdentityError::InvalidProofFormat)?;
-            
+
             // 提取公开输入
             let public_inputs = self.extract_public_inputs(presentation)?;
-            
+
             // 验证证明
             let result = self.verify_proof(&zk_proof, &public_inputs)?;
-            
+
             Ok(result)
         } else {
             Err(IdentityError::MissingProof)
         }
     }
-    
+
     // 准备零知识证明输入
     fn prepare_zk_inputs(
         &self,
@@ -9961,24 +9961,24 @@ impl ZkSelectiveDisclosure {
         // 这里是简化示例
         let mut public_inputs = Vec::new();
         let mut private_inputs = Vec::new();
-        
+
         // 处理公开输入
         for (claim, value) in disclosed_values {
             // 将值转换为电路友好格式
             let fr_value = self.value_to_fr(value)?;
             public_inputs.push(fr_value);
         }
-        
+
         // 处理私有输入
         for (claim, value) in secret_values {
             // 将值转换为电路友好格式
             let fr_value = self.value_to_fr(value)?;
             private_inputs.push(fr_value);
         }
-        
+
         Ok((public_inputs, private_inputs))
     }
-    
+
     // 将JSON值转换为电路友好的Fr类型
     fn value_to_fr(&self, value: &Value) -> Result<Fr, IdentityError> {
         match value {
@@ -10003,14 +10003,14 @@ impl ZkSelectiveDisclosure {
             _ => Err(IdentityError::UnsupportedValueType),
         }
     }
-    
+
     // 哈希字符串
     fn hash_string(&self, s: &str) -> Result<[u8; 32], IdentityError> {
         use sha2::{Sha256, Digest};
         let mut hasher = Sha256::new();
         hasher.update(s.as_bytes());
         let result = hasher.finalize();
-        
+
         let mut hash = [0u8; 32];
         hash.copy_from_slice(&result);
         Ok(hash)
@@ -10018,7 +10018,7 @@ impl ZkSelectiveDisclosure {
 }
 ```
 
-### 9.4 P2P网络的匿名通信
+### 1.9.4 P2P网络的匿名通信
 
 匿名通信是保护P2P网络用户隐私的关键技术，以下是Rust实现的匿名通信模块：
 
@@ -10187,23 +10187,23 @@ impl AnonymousNode {
     // 创建新的匿名节点
     fn new(node_type: AnonymousNodeType, key_pair: KeyPair) -> Self {
         let node_id = NodeId::from_public_key(&key_pair.public);
-        
+
         let connection_manager = AnonymousConnectionManager {
             active_connections: HashMap::new(),
             connection_limits: ConnectionLimits::default(),
             bandwidth_manager: BandwidthManager::new(),
             congestion_control: CongestionControl::new(),
         };
-        
+
         let circuit_manager = CircuitManager {
             active_circuits: HashMap::new(),
             circuit_building_strategy: CircuitBuildingStrategy::default(),
             circuit_rotation_policy: CircuitRotationPolicy::default(),
             path_selection: PathSelectionStrategy::default(),
         };
-        
+
         let message_processor = AnonymousMessageProcessor::new();
-        
+
         // 仅目录节点和客户端需要目录缓存
         let directory_cache = match node_type {
             AnonymousNodeType::Directory | AnonymousNodeType::Client => {
@@ -10211,7 +10211,7 @@ impl AnonymousNode {
             },
             _ => None,
         };
-        
+
         // 仅中继节点和出口节点需要消息混合器
         let message_mixer = match node_type {
             AnonymousNodeType::Relay | AnonymousNodeType::Exit => {
@@ -10219,7 +10219,7 @@ impl AnonymousNode {
             },
             _ => None,
         };
-        
+
         AnonymousNode {
             node_type,
             node_id,
@@ -10232,29 +10232,29 @@ impl AnonymousNode {
             message_mixer,
         }
     }
-    
+
     // 创建新的匿名电路
     async fn create_circuit(&mut self, hops: usize) -> Result<CircuitId, AnonymousError> {
         // 客户端类型检查
         if !matches!(self.node_type, AnonymousNodeType::Client) {
             return Err(AnonymousError::NotClientNode);
         }
-        
+
         // 获取目录信息
         let directory = self.get_directory_info().await?;
-        
+
         // 选择路径
         let path = self.circuit_manager.path_selection.select_path(
             &directory,
             hops,
         )?;
-        
+
         // 构建电路
         let circuit_id = self.circuit_manager.build_circuit(path).await?;
-        
+
         Ok(circuit_id)
     }
-    
+
     // 通过匿名电路发送数据
     async fn send_through_circuit(
         &mut self,
@@ -10266,44 +10266,44 @@ impl AnonymousNode {
         if !matches!(self.node_type, AnonymousNodeType::Client) {
             return Err(AnonymousError::NotClientNode);
         }
-        
+
         // 获取电路
         let circuit = self.circuit_manager.active_circuits.get(circuit_id)
             .ok_or(AnonymousError::CircuitNotFound)?;
-        
+
         if !circuit.is_ready {
             return Err(AnonymousError::CircuitNotReady);
         }
-        
+
         // 构建电路数据包
         let packet = self.build_circuit_packet(circuit, data, destination)?;
-        
+
         // 发送到第一跳
         let first_hop = circuit.hops.first()
             .ok_or(AnonymousError::InvalidCircuit)?;
-        
+
         let connection = self.connection_manager.active_connections.get_mut(&first_hop.node_id)
             .ok_or(AnonymousError::ConnectionNotFound)?;
-        
+
         // 发送数据
         connection.transport.send(&packet).await?;
-        
+
         // 更新电路状态
         if let Some(circuit) = self.circuit_manager.active_circuits.get_mut(circuit_id) {
             circuit.last_used = Instant::now();
             circuit.bytes_transferred += data.len() as u64;
         }
-        
+
         Ok(())
     }
-    
+
     // 处理接收到的匿名消息
     async fn process_incoming_message(&mut self, connection_id: &ConnectionId, data: &[u8]) -> Result<(), AnonymousError> {
         // 获取连接
         let connection = self.connection_manager.active_connections.values()
             .find(|c| &c.id == connection_id)
             .ok_or(AnonymousError::ConnectionNotFound)?;
-        
+
         // 解密消息
         let decrypted = match self.node_type {
             // 作为中继节点处理
@@ -10327,16 +10327,16 @@ impl AnonymousNode {
                 self.message_processor.process_generic_message(connection, data).await?
             },
         };
-        
+
         // 如果有额外处理（如混合消息）
         if let Some(mixer) = &mut self.message_mixer {
             // 混合消息并发送
             mixer.add_message(decrypted).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 创建隐藏服务
     async fn create_hidden_service(
         &mut self,
@@ -10344,20 +10344,20 @@ impl AnonymousNode {
     ) -> Result<HiddenServiceDescriptor, AnonymousError> {
         // 生成隐藏服务密钥
         let service_key_pair = KeyPair::generate()?;
-        
+
         // 计算服务ID（通常是公钥的哈希）
         let service_id = derive_service_id(&service_key_pair.public)?;
-        
+
         // 选择介绍点
         let introduction_points = self.select_introduction_points(&service_config).await?;
-        
+
         // 为每个介绍点创建电路
         let mut intro_circuits = HashMap::new();
         for intro_point in &introduction_points {
             let circuit_id = self.create_circuit_to_introduction_point(intro_point).await?;
             intro_circuits.insert(intro_point.node_id.clone(), circuit_id);
         }
-        
+
         // 创建服务描述符
         let descriptor = HiddenServiceDescriptor {
             service_id,
@@ -10369,16 +10369,16 @@ impl AnonymousNode {
             protocols: service_config.protocols.clone(),
             signature: vec![], // 稍后签名
         };
-        
+
         // 签名描述符
         let signed_descriptor = self.sign_service_descriptor(descriptor, &service_key_pair.private)?;
-        
+
         // 发布到隐藏服务目录
         self.publish_hidden_service(&signed_descriptor).await?;
-        
+
         Ok(signed_descriptor)
     }
-    
+
     // 连接到隐藏服务
     async fn connect_to_hidden_service(
         &mut self,
@@ -10387,42 +10387,42 @@ impl AnonymousNode {
     ) -> Result<CircuitId, AnonymousError> {
         // 获取服务描述符
         let descriptor = self.fetch_hidden_service_descriptor(service_id).await?;
-        
+
         // 验证描述符
         if !self.verify_service_descriptor(&descriptor)? {
             return Err(AnonymousError::InvalidServiceDescriptor);
         }
-        
+
         // 检查协议支持
         if !descriptor.protocols.contains(&protocol.to_string()) {
             return Err(AnonymousError::ProtocolNotSupported);
         }
-        
+
         // 选择介绍点
         let intro_point = self.select_introduction_point(&descriptor)?;
-        
+
         // 创建会合点
         let rendezvous_point = self.create_rendezvous_point().await?;
-        
+
         // 创建到介绍点的电路
         let intro_circuit_id = self.create_circuit_to_introduction_point(&intro_point).await?;
-        
+
         // 创建到会合点的电路
         let rendezvous_circuit_id = self.create_circuit_to_rendezvous(&rendezvous_point).await?;
-        
+
         // 发送介绍请求
         let rendezvous_cookie = self.send_introduction_request(
             &intro_circuit_id,
             service_id,
             &rendezvous_point,
         ).await?;
-        
+
         // 在会合点建立连接
         let final_circuit_id = self.establish_rendezvous(
             &rendezvous_circuit_id,
             &rendezvous_cookie,
         ).await?;
-        
+
         Ok(final_circuit_id)
     }
 }
@@ -10495,59 +10495,59 @@ impl MessageMixer {
             last_flush: Instant::now(),
         }
     }
-    
+
     // 添加消息到混合池
     async fn add_message(&mut self, message: MixMessage) -> Result<(), AnonymousError> {
         // 添加到队列
         self.message_queue.push_back(message);
-        
+
         // 如果池已满或满足其他条件，刷新消息
         if self.should_flush() {
             self.flush_messages().await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 判断是否应该刷新消息
     fn should_flush(&self) -> bool {
         // 如果队列大小达到池大小
         if self.message_queue.len() >= self.pool_size {
             return true;
         }
-        
+
         // 如果距离上次刷新已经超过最大延迟时间
         let max_delay = match &self.delay_strategy {
             DelayStrategy::FixedDelay(delay) => *delay,
             DelayStrategy::ExponentialDelay { max, .. } => *max,
             DelayStrategy::MixedDelay { max, .. } => *max,
         };
-        
+
         if self.last_flush.elapsed() > max_delay {
             return true;
         }
-        
+
         false
     }
-    
+
     // 刷新并发送消息
     async fn flush_messages(&mut self) -> Result<(), AnonymousError> {
         // 如果队列为空则不执行任何操作
         if self.message_queue.is_empty() {
             return Ok(());
         }
-        
+
         // 添加伪造流量（如果启用）
         self.add_dummy_traffic();
-        
+
         // 随机打乱消息顺序
         self.shuffle_messages();
-        
+
         // 按顺序发送消息，应用延迟
         while let Some(message) = self.message_queue.pop_front() {
             // 计算此消息应延迟的时间
             let delay = self.calculate_delay(&message);
-            
+
             // 如果消息已经在队列中超过最大延迟，直接发送
             let time_in_queue = message.added_at.elapsed();
             let actual_delay = if time_in_queue >= delay {
@@ -10555,61 +10555,61 @@ impl MessageMixer {
             } else {
                 delay - time_in_queue
             };
-            
+
             if !actual_delay.is_zero() {
                 tokio::time::sleep(actual_delay).await;
             }
-            
+
             // 发送消息（简化接口）
             send_message(message.target_connection, &message.data).await?;
         }
-        
+
         // 更新最后刷新时间
         self.last_flush = Instant::now();
-        
+
         Ok(())
     }
-    
+
     // 打乱消息顺序
     fn shuffle_messages(&mut self) {
         let mut messages: Vec<_> = self.message_queue.drain(..).collect();
         messages.shuffle(&mut thread_rng());
-        
+
         self.message_queue = messages.into();
     }
-    
+
     // 添加伪造流量
     fn add_dummy_traffic(&mut self) {
         // 根据当前流量情况生成适量伪造消息
         let dummy_messages = self.dummy_traffic_generator.generate_dummy_messages(
             self.message_queue.len()
         );
-        
+
         // 添加到队列
         for message in dummy_messages {
             self.message_queue.push_back(message);
         }
     }
-    
+
     // 计算消息延迟
     fn calculate_delay(&self, message: &MixMessage) -> Duration {
         match &self.delay_strategy {
             DelayStrategy::FixedDelay(delay) => *delay,
-            
+
             DelayStrategy::ExponentialDelay { mean, max } => {
                 // 指数分布延迟
                 let mut rng = thread_rng();
                 let exp = Exp::new(1.0 / mean.as_secs_f64()).unwrap();
                 let delay_secs = exp.sample(&mut rng);
                 let delay = Duration::from_secs_f64(delay_secs);
-                
+
                 // 限制最大延迟
                 std::cmp::min(delay, *max)
             },
-            
+
             DelayStrategy::MixedDelay { min, max, distribution } => {
                 let mut rng = thread_rng();
-                
+
                 match distribution {
                     DelayDistribution::Uniform => {
                         let range = Uniform::new(
@@ -10618,44 +10618,44 @@ impl MessageMixer {
                         );
                         Duration::from_millis(range.sample(&mut rng))
                     },
-                    
+
                     DelayDistribution::Exponential => {
                         let mean_millis = (max.as_millis() - min.as_millis()) as f64 / 2.0;
                         let exp = Exp::new(1.0 / mean_millis).unwrap();
                         let delay_millis = exp.sample(&mut rng);
                         let delay = min.as_millis() as f64 + delay_millis;
-                        
+
                         Duration::from_millis(std::cmp::min(
                             delay as u64,
                             max.as_millis() as u64
                         ))
                     },
-                    
+
                     DelayDistribution::Pareto => {
                         // 帕累托分布为长尾特性提供更真实的模拟
                         let alpha = 1.5; // 形状参数
                         let scale = min.as_millis() as f64;
                         let pareto = Pareto::new(scale, alpha).unwrap();
                         let delay_millis = pareto.sample(&mut rng);
-                        
+
                         Duration::from_millis(std::cmp::min(
                             delay_millis as u64,
                             max.as_millis() as u64
                         ))
                     },
-                    
+
                     DelayDistribution::Normal => {
                         let mean = (min.as_millis() + max.as_millis()) as f64 / 2.0;
                         let std_dev = (max.as_millis() - min.as_millis()) as f64 / 6.0; // 3倍标准差覆盖99.7%
                         let normal = Normal::new(mean, std_dev).unwrap();
                         let delay_millis = normal.sample(&mut rng);
-                        
+
                         // 确保在范围内
                         let clamped = delay_millis.clamp(
                             min.as_millis() as f64,
                             max.as_millis() as f64
                         );
-                        
+
                         Duration::from_millis(clamped as u64)
                     },
                 }
@@ -10810,26 +10810,26 @@ impl HiddenServiceManager {
         } else {
             KeyPair::generate()?
         };
-        
+
         // 计算服务ID
         let service_id = derive_service_id(&key_pair.public)?;
-        
+
         // 选择介绍点
         let directory = self.directory_cache.read().await;
         let intro_points = self.select_introduction_points(&directory, config.max_intro_points).await?;
         drop(directory);
-        
+
         // 创建介绍点电路
         let mut intro_circuits = HashMap::new();
         let mut circuit_manager = self.circuit_manager.lock().await;
-        
+
         for intro_point in &intro_points {
             let path = vec![intro_point.clone()]; // 简化，实际应该是2-3跳路径
             let circuit_id = circuit_manager.build_circuit(path).await?;
             intro_circuits.insert(intro_point.node_id.clone(), circuit_id);
         }
         drop(circuit_manager);
-        
+
         // 创建描述符
         let descriptor = HiddenServiceDescriptor {
             service_id: service_id.clone(),
@@ -10841,10 +10841,10 @@ impl HiddenServiceManager {
             protocols: config.protocols.clone(),
             signature: vec![],
         };
-        
+
         // 签名描述符
         let signed_descriptor = self.sign_descriptor(descriptor, &key_pair.private)?;
-        
+
         // 创建本地服务记录
         let local_service = LocalHiddenService {
             service_id: service_id.clone(),
@@ -10856,16 +10856,16 @@ impl HiddenServiceManager {
             active_rendezvous: HashMap::new(),
             client_connections: HashMap::new(),
         };
-        
+
         // 保存本地服务
         self.local_services.insert(service_id.clone(), local_service);
-        
+
         // 发布描述符
         self.publish_descriptor(&signed_descriptor).await?;
-        
+
         Ok(service_id)
     }
-    
+
     // 处理介绍请求
     async fn handle_introduction_request(
         &mut self,
@@ -10875,24 +10875,24 @@ impl HiddenServiceManager {
         // 查找对应服务
         let service = self.local_services.get_mut(&request.service_id)
             .ok_or(AnonymousError::ServiceNotFound)?;
-        
+
         // 验证请求
         if !self.verify_introduction_request(&request, &service.public_key)? {
             return Err(AnonymousError::InvalidIntroductionRequest);
         }
-        
+
         // 检查认证（如果启用）
         if let Some(auth_type) = &service.config.authentication {
             if !self.authenticate_client(&request, auth_type)? {
                 return Err(AnonymousError::AuthenticationFailed);
             }
         }
-        
+
         // 创建到会合点的电路
         let mut circuit_manager = self.circuit_manager.lock().await;
         let rendezvous_circuit_id = circuit_manager.build_circuit(vec![request.rendezvous_point.clone()]).await?;
         drop(circuit_manager);
-        
+
         // 保存会合数据
         let rendezvous_data = RendezvousData {
             rendezvous_point: request.rendezvous_point.node_id.clone(),
@@ -10902,9 +10902,9 @@ impl HiddenServiceManager {
             established_at: Instant::now(),
             state: RendezvousState::Waiting,
         };
-        
+
         service.active_rendezvous.insert(request.rendezvous_cookie.clone(), rendezvous_data);
-        
+
         // 发送会合消息
         self.send_rendezvous_message(
             &rendezvous_circuit_id,
@@ -10912,10 +10912,10 @@ impl HiddenServiceManager {
             &service.public_key,
             &request.client_key,
         ).await?;
-        
+
         Ok(())
     }
-    
+
     // 签名描述符
     fn sign_descriptor(
         &self,
@@ -10924,16 +10924,16 @@ impl HiddenServiceManager {
     ) -> Result<HiddenServiceDescriptor, AnonymousError> {
         // 序列化描述符（不包括签名）
         let descriptor_bytes = self.serialize_descriptor_for_signing(&descriptor)?;
-        
+
         // 签名
         let signature = self.key_store.sign(private_key, &descriptor_bytes)?;
-        
+
         // 更新描述符签名
         descriptor.signature = signature;
-        
+
         Ok(descriptor)
     }
-    
+
     // 验证描述符签名
     fn verify_descriptor_signature(
         &self,
@@ -10941,7 +10941,7 @@ impl HiddenServiceManager {
     ) -> Result<bool, AnonymousError> {
         // 序列化描述符（不包括签名）
         let descriptor_bytes = self.serialize_descriptor_for_signing(descriptor)?;
-        
+
         // 验证签名
         self.key_store.verify(
             &descriptor.public_key,
@@ -10949,7 +10949,7 @@ impl HiddenServiceManager {
             &descriptor.signature,
         )
     }
-    
+
     // 发布描述符
     async fn publish_descriptor(
         &self,
@@ -10957,18 +10957,18 @@ impl HiddenServiceManager {
     ) -> Result<(), AnonymousError> {
         // 计算目标HSDir索引
         let hsdirs = self.calculate_hsdir_indices(descriptor)?;
-        
+
         // 为每个HSDir创建电路
         let mut circuit_manager = self.circuit_manager.lock().await;
-        
+
         for hsdir in &hsdirs {
             // 创建到HSDir的电路
             let path = self.select_path_to_hsdir(hsdir)?;
             let circuit_id = circuit_manager.build_circuit(path).await?;
-            
+
             // 序列化描述符
             let descriptor_bytes = self.serialize_descriptor(descriptor)?;
-            
+
             // 发送存储请求
             self.send_store_request(
                 &circuit_id,
@@ -10976,11 +10976,11 @@ impl HiddenServiceManager {
                 &descriptor.service_id,
                 &descriptor_bytes,
             ).await?;
-            
+
             // 销毁电路
             circuit_manager.destroy_circuit(&circuit_id).await?;
         }
-        
+
         Ok(())
     }
 }
@@ -11063,7 +11063,7 @@ fn anonymity_security_comparison() {
     println!("| I2P            | 中-高      | 中             | 中         | 中       | 高         |");
     println!("| 自定义实现     | 中-高      | 中-高          | 中-高      | 中       | 中-高      |");
     println!("+----------------+------------+----------------+------------+----------+------------+");
-    
+
     println!("\n匿名系统性能对比:");
     println!("+----------------+------------+----------------+------------+----------+------------+");
     println!("| 系统           | 延迟       | 吞吐量         | 开销       | 可用性   | 可扩展性   |");
@@ -11149,7 +11149,7 @@ fn privacy_security_recommendations() -> Vec<String> {
 }
 ```
 
-### 9.5 P2P网络恶意行为检测
+### 1.9.5 P2P网络恶意行为检测
 
 P2P网络中，恶意行为检测是确保系统安全运行的关键组件。以下是一个恶意行为检测系统的实现：
 
@@ -11256,10 +11256,10 @@ impl NodeScorer {
                 first_seen: Instant::now(),
             }
         });
-        
+
         // 应用时间衰减
         self.apply_decay(score);
-        
+
         // 更新评分
         match event.event_type {
             CreditEventType::RequestTimeout => {
@@ -11292,50 +11292,50 @@ impl NodeScorer {
                 self.update_dimension(score, ScoreDimension::InteractionConsistency, -0.25);
             },
         }
-        
+
         // 更新总评分
         score.score = self.calculate_overall_score(&score.dimensions);
-        
+
         // 更新时间戳
         score.last_updated = Instant::now();
-        
+
         // 记录事件
         self.credit_history.entry(node_id.clone())
             .or_insert_with(Vec::new)
             .push(event);
-        
+
         // 返回更新后的评分
         score.clone()
     }
-    
+
     // 应用时间衰减
     fn apply_decay(&self, score: &mut NodeScore) {
         let elapsed = score.last_updated.elapsed();
         let decay_factor = 1.0 - (elapsed.as_secs_f64() * self.decay_rate).min(1.0);
-        
+
         // 对每个维度应用衰减
         for value in score.dimensions.values_mut() {
             // 使评分向中性值0.5衰减
             *value = 0.5 + (*value - 0.5) * decay_factor;
         }
     }
-    
+
     // 更新维度评分
     fn update_dimension(&self, score: &mut NodeScore, dimension: ScoreDimension, delta: f64) {
         let current = score.dimensions.entry(dimension).or_insert(0.5);
         *current = (*current + delta).clamp(0.0, 1.0);
     }
-    
+
     // 计算总评分
     fn calculate_overall_score(&self, dimensions: &HashMap<ScoreDimension, f64>) -> f64 {
         if dimensions.is_empty() {
             return 0.5; // 默认中性评分
         }
-        
+
         // 按维度权重计算
         let mut weighted_sum = 0.0;
         let mut weight_sum = 0.0;
-        
+
         for (dimension, value) in dimensions {
             let weight = match dimension {
                 ScoreDimension::ProtocolCompliance => 0.3,
@@ -11345,23 +11345,23 @@ impl NodeScorer {
                 ScoreDimension::ConnectionStability => 0.1,
                 ScoreDimension::DataQuality => 0.1,
             };
-            
+
             weighted_sum += value * weight;
             weight_sum += weight;
         }
-        
+
         if weight_sum > 0.0 {
             weighted_sum / weight_sum
         } else {
             0.5 // 默认中性评分
         }
     }
-    
+
     // 获取节点评分
     fn get_node_score(&self, node_id: &NodeId) -> Option<&NodeScore> {
         self.scores.get(node_id)
     }
-    
+
     // 判断节点是否可能恶意
     fn is_potentially_malicious(&self, node_id: &NodeId) -> bool {
         if let Some(score) = self.get_node_score(node_id) {
@@ -11369,21 +11369,21 @@ impl NodeScorer {
             if score.score < self.thresholds.malicious_threshold {
                 return true;
             }
-            
+
             // 检查关键维度
             if let Some(&protocol_compliance) = score.dimensions.get(&ScoreDimension::ProtocolCompliance) {
                 if protocol_compliance < self.thresholds.compliance_threshold {
                     return true;
                 }
             }
-            
+
             if let Some(&interaction_consistency) = score.dimensions.get(&ScoreDimension::InteractionConsistency) {
                 if interaction_consistency < self.thresholds.consistency_threshold {
                     return true;
                 }
             }
         }
-        
+
         false
     }
 }
@@ -11434,38 +11434,38 @@ impl TrafficAnalyzer {
         // 更新发送方节点统计
         let sender_stats = self.node_traffic.entry(from.clone())
             .or_insert_with(NodeTrafficStats::new);
-        
+
         sender_stats.outbound_messages += 1;
         sender_stats.outbound_bytes += message.size() as u64;
         sender_stats.message_type_distribution
             .entry(message.msg_type.clone())
             .and_modify(|count| *count += 1)
             .or_insert(1);
-        
+
         // 更新当前发送速率
         sender_stats.update_outbound_rate(message.size() as u64);
-        
+
         // 更新接收方节点统计
         let receiver_stats = self.node_traffic.entry(to.clone())
             .or_insert_with(NodeTrafficStats::new);
-        
+
         receiver_stats.inbound_messages += 1;
         receiver_stats.inbound_bytes += message.size() as u64;
-        
+
         // 更新当前接收速率
         receiver_stats.update_inbound_rate(message.size() as u64);
-        
+
         // 更新消息大小分布
         receiver_stats.message_size_distribution.add(message.size() as u64);
-        
+
         // 更新全局流量模式
         self.global_patterns.update(message);
     }
-    
+
     // 检测流量异常
     fn detect_anomalies(&self, node_id: &NodeId) -> Vec<TrafficAnomaly> {
         let mut anomalies = Vec::new();
-        
+
         if let Some(stats) = self.node_traffic.get(node_id) {
             // 检查消息速率异常
             if stats.current_inbound_rate > self.anomaly_config.max_inbound_rate_threshold {
@@ -11475,7 +11475,7 @@ impl TrafficAnalyzer {
                     threshold: self.anomaly_config.max_inbound_rate_threshold,
                 });
             }
-            
+
             if stats.current_outbound_rate > self.anomaly_config.max_outbound_rate_threshold {
                 anomalies.push(TrafficAnomaly::RateExceeded {
                     direction: Direction::Outbound,
@@ -11483,18 +11483,18 @@ impl TrafficAnalyzer {
                     threshold: self.anomaly_config.max_outbound_rate_threshold,
                 });
             }
-            
+
             // 检查消息类型分布异常
             let distribution_anomaly = self.check_message_distribution(stats);
             if let Some(anomaly) = distribution_anomaly {
                 anomalies.push(anomaly);
             }
-            
+
             // 检查消息大小异常
             if let Some(size_anomaly) = self.check_message_size_distribution(stats) {
                 anomalies.push(size_anomaly);
             }
-            
+
             // 检查请求间隔异常（如请求风暴）
             if stats.request_intervals.value() < self.anomaly_config.min_request_interval_threshold {
                 anomalies.push(TrafficAnomaly::RequestStorm {
@@ -11503,10 +11503,10 @@ impl TrafficAnalyzer {
                 });
             }
         }
-        
+
         anomalies
     }
-    
+
     // 检查消息类型分布
     fn check_message_distribution(&self, stats: &NodeTrafficStats) -> Option<TrafficAnomaly> {
         // 计算每种消息类型占比
@@ -11515,11 +11515,11 @@ impl TrafficAnalyzer {
             // 样本太少，不做判断
             return None;
         }
-        
+
         // 检查是否某一类型消息占比过高
         for (msg_type, count) in &stats.message_type_distribution {
             let percentage = (*count as f64) / (total_messages as f64);
-            
+
             // 检查此类型消息是否超过阈值
             let threshold = match msg_type {
                 MessageType::Request => self.anomaly_config.max_request_percentage,
@@ -11527,7 +11527,7 @@ impl TrafficAnalyzer {
                 MessageType::Control => self.anomaly_config.max_control_percentage,
                 _ => 0.5, // 默认阈值
             };
-            
+
             if percentage > threshold {
                 return Some(TrafficAnomaly::MessageTypeImbalance {
                     message_type: msg_type.clone(),
@@ -11536,16 +11536,16 @@ impl TrafficAnalyzer {
                 });
             }
         }
-        
+
         None
     }
-    
+
     // 检查消息大小分布
     fn check_message_size_distribution(&self, stats: &NodeTrafficStats) -> Option<TrafficAnomaly> {
         // 获取分布统计
         let p95 = stats.message_size_distribution.percentile(95.0);
         let p50 = stats.message_size_distribution.percentile(50.0);
-        
+
         // 检查极端值
         if p95 > self.anomaly_config.max_message_size_threshold {
             return Some(TrafficAnomaly::OversizedMessages {
@@ -11553,7 +11553,7 @@ impl TrafficAnalyzer {
                 threshold: self.anomaly_config.max_message_size_threshold,
             });
         }
-        
+
         // 检查长尾比例
         let tail_ratio = p95 as f64 / p50 as f64;
         if tail_ratio > self.anomaly_config.max_size_tail_ratio {
@@ -11562,7 +11562,7 @@ impl TrafficAnalyzer {
                 threshold: self.anomaly_config.max_size_tail_ratio,
             });
         }
-        
+
         None
     }
 }
@@ -11633,7 +11633,7 @@ impl AnomalyDetector {
     // 检测节点异常
     fn detect_anomalies(&mut self, node_id: &NodeId, context: &DetectionContext) -> Vec<AnomalyRecord> {
         let mut anomalies = Vec::new();
-        
+
         // 检测流量异常
         let traffic_anomalies = self.traffic_detector.detect(node_id, context);
         for anomaly in traffic_anomalies {
@@ -11644,10 +11644,10 @@ impl AnomalyDetector {
                 evidence: Some(self.collect_traffic_evidence(node_id, &anomaly)),
                 confidence: self.calculate_traffic_confidence(&anomaly),
             };
-            
+
             anomalies.push(record);
         }
-        
+
         // 检测行为异常
         let behavior_anomalies = self.behavior_detector.detect(node_id, context);
         for anomaly in behavior_anomalies {
@@ -11658,10 +11658,10 @@ impl AnomalyDetector {
                 evidence: Some(self.collect_behavior_evidence(node_id, &anomaly)),
                 confidence: self.calculate_behavior_confidence(&anomaly),
             };
-            
+
             anomalies.push(record);
         }
-        
+
         // 检测内容异常
         let content_anomalies = self.content_detector.detect(node_id, context);
         for anomaly in content_anomalies {
@@ -11672,31 +11672,31 @@ impl AnomalyDetector {
                 evidence: Some(self.collect_content_evidence(node_id, &anomaly)),
                 confidence: self.calculate_content_confidence(&anomaly),
             };
-            
+
             anomalies.push(record);
         }
-        
+
         // 执行复合异常分析
         let composite_anomalies = self.detect_composite_anomalies(&anomalies);
         anomalies.extend(composite_anomalies);
-        
+
         // 更新历史异常
         self.update_anomaly_history(node_id, &anomalies);
-        
+
         // 发送高严重度的警报
         for record in &anomalies {
             if matches!(record.severity, AnomalySeverity::High | AnomalySeverity::Critical) {
                 self.alert_system.send_alert(node_id, record);
             }
         }
-        
+
         anomalies
     }
-    
+
     // 检测复合异常
     fn detect_composite_anomalies(&self, anomalies: &[AnomalyRecord]) -> Vec<AnomalyRecord> {
         let mut composite_anomalies = Vec::new();
-        
+
         // 检查Sybil攻击模式
         if self.has_sybil_attack_pattern(anomalies) {
             let sybil_record = AnomalyRecord {
@@ -11710,10 +11710,10 @@ impl AnomalyDetector {
                 evidence: None, // 复合异常引用单独异常的证据
                 confidence: 0.85, // 复合模式通常具有较高的确信度
             };
-            
+
             composite_anomalies.push(sybil_record);
         }
-        
+
         // 检查Eclipse攻击模式
         if self.has_eclipse_attack_pattern(anomalies) {
             let eclipse_record = AnomalyRecord {
@@ -11727,10 +11727,10 @@ impl AnomalyDetector {
                 evidence: None,
                 confidence: 0.8,
             };
-            
+
             composite_anomalies.push(eclipse_record);
         }
-        
+
         // 检查DDoS攻击模式
         if self.has_ddos_attack_pattern(anomalies) {
             let ddos_record = AnomalyRecord {
@@ -11744,21 +11744,21 @@ impl AnomalyDetector {
                 evidence: None,
                 confidence: 0.9,
             };
-            
+
             composite_anomalies.push(ddos_record);
         }
-        
+
         composite_anomalies
     }
-    
+
     // 更新异常历史
     fn update_anomaly_history(&mut self, node_id: &NodeId, anomalies: &[AnomalyRecord]) {
         let history = self.anomaly_history.entry(node_id.clone())
             .or_insert_with(Vec::new);
-        
+
         // 添加新异常
         history.extend(anomalies.to_vec());
-        
+
         // 限制历史大小
         const MAX_HISTORY_PER_NODE: usize = 100;
         if history.len() > MAX_HISTORY_PER_NODE {
@@ -11766,29 +11766,29 @@ impl AnomalyDetector {
             history.truncate(MAX_HISTORY_PER_NODE);
         }
     }
-    
+
     // 检查是否存在Sybil攻击模式
     fn has_sybil_attack_pattern(&self, anomalies: &[AnomalyRecord]) -> bool {
         // 检查是否存在多个行为相似的节点同时出现异常
         // 此处为简化实现
-        
+
         let behavior_anomalies = anomalies.iter()
             .filter(|a| matches!(a.anomaly_type, AnomalyType::Behavior(_)))
             .count();
-        
+
         let traffic_anomalies = anomalies.iter()
             .filter(|a| matches!(a.anomaly_type, AnomalyType::Traffic(_)))
             .count();
-        
+
         // 简单启发式判断：多个行为和流量异常同时出现
         behavior_anomalies >= 2 && traffic_anomalies >= 2
     }
-    
+
     // 检查是否存在Eclipse攻击模式
     fn has_eclipse_attack_pattern(&self, anomalies: &[AnomalyRecord]) -> bool {
         // 检查是否存在针对路由表的操纵
         // 此处为简化实现
-        
+
         anomalies.iter().any(|a| {
             if let AnomalyType::Behavior(BehaviorAnomaly::RoutingTableManipulation { .. }) = &a.anomaly_type {
                 return true;
@@ -11796,7 +11796,7 @@ impl AnomalyDetector {
             false
         })
     }
-    
+
     // 检查是否存在DDoS攻击模式
     fn has_ddos_attack_pattern(&self, anomalies: &[AnomalyRecord]) -> bool {
         // 检查是否存在高流量请求异常
@@ -11808,7 +11808,7 @@ impl AnomalyDetector {
                 false
             })
             .count();
-        
+
         request_storm_anomalies >= 3
     }
 }
@@ -11923,7 +11923,7 @@ impl RuleEngine {
     // 评估节点是否违反规则
     fn evaluate_node(&mut self, node_id: &NodeId, context: &RuleContext) -> Vec<RuleMatch> {
         let mut matches = Vec::new();
-        
+
         for rule in self.rules.iter().filter(|r| r.enabled) {
             if self.evaluator.evaluate_condition(&rule.condition, node_id, context) {
                 // 规则匹配
@@ -11933,34 +11933,34 @@ impl RuleEngine {
                     matched_at: Instant::now(),
                     context: context.clone(),
                 };
-                
+
                 matches.push(rule_match.clone());
-                
+
                 // 更新命中计数
                 *self.rule_hits.entry(rule.id.clone()).or_insert(0) += 1;
-                
+
                 // 执行规则动作
                 for action in &rule.actions {
                     self.action_processor.process_action(action, node_id, &rule_match);
                 }
             }
         }
-        
+
         matches
     }
-    
+
     // 添加规则
     fn add_rule(&mut self, rule: DetectionRule) {
         self.rules.push(rule);
     }
-    
+
     // 移除规则
     fn remove_rule(&mut self, rule_id: &RuleId) -> bool {
         let initial_len = self.rules.len();
         self.rules.retain(|r| r.id != *rule_id);
         self.rules.len() < initial_len
     }
-    
+
     // 启用规则
     fn enable_rule(&mut self, rule_id: &RuleId) -> bool {
         if let Some(rule) = self.rules.iter_mut().find(|r| r.id == *rule_id) {
@@ -11970,7 +11970,7 @@ impl RuleEngine {
             false
         }
     }
-    
+
     // 禁用规则
     fn disable_rule(&mut self, rule_id: &RuleId) -> bool {
         if let Some(rule) = self.rules.iter_mut().find(|r| r.id == *rule_id) {
@@ -11980,14 +11980,14 @@ impl RuleEngine {
             false
         }
     }
-    
+
     // 获取统计数据
     fn get_statistics(&self) -> RuleStatistics {
         let total_rules = self.rules.len();
         let enabled_rules = self.rules.iter().filter(|r| r.enabled).count();
-        
+
         let total_hits: usize = self.rule_hits.values().sum();
-        
+
         let top_rules = self.rule_hits.iter()
             .sorted_by(|a, b| b.1.cmp(a.1))
             .take(5)
@@ -11996,11 +11996,11 @@ impl RuleEngine {
                     .find(|r| r.id == *id)
                     .map(|r| r.name.clone())
                     .unwrap_or_else(|| "Unknown".to_string());
-                
+
                 (rule_name, *hits)
             })
             .collect();
-        
+
         RuleStatistics {
             total_rules,
             enabled_rules,
@@ -12094,74 +12094,74 @@ impl ThreatResponseSystem {
                 errors: vec!["No policy found for threat type".to_string()],
             },
         };
-        
+
         // 检查是否应自动响应
         if !self.should_auto_respond(threat, &policy.auto_response_level) {
             // 仅通知，不采取行动
             self.send_notifications(threat, policy);
-            
+
             return ResponseResult {
                 success: true,
                 actions_taken: Vec::new(),
                 errors: Vec::new(),
             };
         }
-        
+
         // 执行响应动作
         let mut actions_taken = Vec::new();
         let mut errors = Vec::new();
-        
+
         for action in &policy.actions {
             match self.execute_action(action, threat) {
                 Ok(action_name) => actions_taken.push(action_name),
                 Err(error) => errors.push(error),
             }
         }
-        
+
         // 记录响应
         self.record_response(threat, &actions_taken, &errors);
-        
+
         // 检查是否需要升级
         if let Some(escalation) = &policy.escalation_condition {
             if self.should_escalate(threat, escalation) {
                 self.escalate_threat(threat);
             }
         }
-        
+
         // 发送通知
         self.send_notifications(threat, policy);
-        
+
         ResponseResult {
             success: errors.is_empty(),
             actions_taken,
             errors,
         }
     }
-    
+
     // 判断是否应自动响应
     fn should_auto_respond(&self, threat: &ThreatInfo, level: &AutoResponseLevel) -> bool {
         match level {
             AutoResponseLevel::MonitorOnly => false,
-            
+
             AutoResponseLevel::Restrictive => {
                 // 只有中高可信度的威胁才自动响应
-                threat.confidence >= 0.7 && 
+                threat.confidence >= 0.7 &&
                 matches!(threat.severity, ThreatSeverity::Medium | ThreatSeverity::High)
             },
-            
+
             AutoResponseLevel::Blocking => {
                 // 中等以上可信度的高严重性威胁自动响应
-                threat.confidence >= 0.6 && 
+                threat.confidence >= 0.6 &&
                 matches!(threat.severity, ThreatSeverity::High | ThreatSeverity::Critical)
             },
-            
+
             AutoResponseLevel::ActiveDefense => {
                 // 几乎所有威胁都自动响应
                 threat.confidence >= 0.5
             },
         }
     }
-    
+
     // 执行响应动作
     fn execute_action(&self, action: &ResponseAction, threat: &ThreatInfo) -> Result<String, String> {
         match action {
@@ -12172,30 +12172,30 @@ impl ThreatResponseSystem {
                     scope.clone(),
                     &format!("Threat: {}", threat.description),
                 )?;
-                
+
                 Ok("Blacklisted node".to_string())
             },
-            
+
             ResponseAction::RateLimit { limit, duration } => {
                 self.rate_limiter.apply_limit(
                     &threat.node_id,
                     *limit,
                     *duration,
                 )?;
-                
+
                 Ok("Applied rate limiting".to_string())
             },
-            
+
             ResponseAction::Quarantine { duration, allow_list } => {
                 self.quarantine.quarantine_node(
                     &threat.node_id,
                     *duration,
                     allow_list.clone(),
                 )?;
-                
+
                 Ok("Quarantined node".to_string())
             },
-            
+
             ResponseAction::RequestValidation { validation_type, timeout } => {
                 // 请求额外验证
                 request_node_validation(
@@ -12203,29 +12203,29 @@ impl ThreatResponseSystem {
                     validation_type.clone(),
                     *timeout,
                 )?;
-                
+
                 Ok("Requested validation".to_string())
             },
-            
+
             ResponseAction::ResetConnection => {
                 // 重置与节点的连接
                 reset_connection(&threat.node_id)?;
-                
+
                 Ok("Reset connection".to_string())
             },
-            
+
             ResponseAction::ActiveProbe { probe_type } => {
                 // 主动探测节点
                 launch_active_probe(
                     &threat.node_id,
                     probe_type.clone(),
                 )?;
-                
+
                 Ok("Launched active probe".to_string())
             },
         }
     }
-    
+
     // 记录响应
     fn record_response(&mut self, threat: &ThreatInfo, actions: &[String], errors: &[String]) {
         let record = ResponseRecord {
@@ -12237,9 +12237,9 @@ impl ThreatResponseSystem {
             errors: errors.to_vec(),
             success: errors.is_empty(),
         };
-        
+
         self.response_history.push(record);
-        
+
         // 限制历史大小
         const MAX_HISTORY: usize = 1000;
         if self.response_history.len() > MAX_HISTORY {
@@ -12276,26 +12276,26 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
         group_id: &GroupId,
     ) -> Result<(), PermissionError> {
         let _lock = self.lock.write().await;
-        
+
         // 检查组是否存在
         if !self.group_permissions.contains_key(group_id) {
             return Err(PermissionError::GroupNotFound);
         }
-        
+
         // 检查用户是否存在
         if !self.user_permissions.contains_key(user_id) {
             return Err(PermissionError::UserNotFound);
         }
-        
+
         // 添加用户到组
         self.group_memberships
             .entry(group_id.clone())
             .or_insert_with(HashSet::new)
             .insert(user_id.clone());
-        
+
         Ok(())
     }
-    
+
     // 从组中移除用户
     async fn remove_user_from_group(
         &self,
@@ -12303,7 +12303,7 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
         group_id: &GroupId,
     ) -> Result<(), PermissionError> {
         let _lock = self.lock.write().await;
-        
+
         // 检查组是否存在
         if let Some(members) = self.group_memberships.get_mut(group_id) {
             members.remove(user_id);
@@ -12312,7 +12312,7 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
             Err(PermissionError::GroupNotFound)
         }
     }
-    
+
     // 创建新组
     async fn create_group(
         &self,
@@ -12322,12 +12322,12 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
         admins: HashSet<UserId>,
     ) -> Result<(), PermissionError> {
         let _lock = self.lock.write().await;
-        
+
         // 检查组是否已存在
         if self.group_permissions.contains_key(group_id) {
             return Err(PermissionError::GroupAlreadyExists);
         }
-        
+
         // 创建组权限
         let permissions = GroupPermissions {
             group_id: group_id.clone(),
@@ -12343,38 +12343,38 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
                 max_members: None,
             },
         };
-        
+
         // 添加组权限
         self.group_permissions.insert(group_id.clone(), permissions);
-        
+
         // 创建组成员关系（初始为空）
         self.group_memberships.insert(group_id.clone(), HashSet::new());
-        
+
         // 添加创建者和管理员到组
         let members = self.group_memberships.get_mut(group_id).unwrap();
         members.insert(creator.clone());
         for admin in &admins {
             members.insert(admin.clone());
         }
-        
+
         Ok(())
     }
-    
+
     // 删除组
     async fn delete_group(&self, group_id: &GroupId) -> Result<(), PermissionError> {
         let _lock = self.lock.write().await;
-        
+
         // 检查组是否存在
         if !self.group_permissions.contains_key(group_id) {
             return Err(PermissionError::GroupNotFound);
         }
-        
+
         // 删除组权限
         self.group_permissions.remove(group_id);
-        
+
         // 删除组成员关系
         self.group_memberships.remove(group_id);
-        
+
         // 更新内容权限，移除对此组的引用
         for permissions in self.content_permissions.values_mut() {
             permissions.read_access.retain(|target| {
@@ -12384,7 +12384,7 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
                     true
                 }
             });
-            
+
             permissions.write_access.retain(|target| {
                 if let PermissionTarget::Group(id) = target {
                     id != group_id
@@ -12392,7 +12392,7 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
                     true
                 }
             });
-            
+
             permissions.delete_access.retain(|target| {
                 if let PermissionTarget::Group(id) = target {
                     id != group_id
@@ -12400,7 +12400,7 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
                     true
                 }
             });
-            
+
             permissions.share_access.retain(|target| {
                 if let PermissionTarget::Group(id) = target {
                     id != group_id
@@ -12409,21 +12409,21 @@ P2P网络中的恶意行为检测系统是保障网络安全和可靠性的关�
                 }
             });
         }
-        
+
         Ok(())
     }
-    
+
     // 获取用户所属的所有组
     async fn get_user_groups(&self, user_id: &UserId) -> Result<Vec<GroupId>, PermissionError> {
         let _lock = self.lock.read().await;
-        
+
         let mut groups = Vec::new();
         for (group_id, members) in &self.group_memberships {
             if members.contains(user_id) {
                 groups.push(group_id.clone());
             }
         }
-        
+
         Ok(groups)
     }
 }
@@ -12454,7 +12454,7 @@ impl AccessControlSystem {
             },
         }
     }
-    
+
     // 验证用户访问
     async fn authenticate_access(
         &self,
@@ -12465,25 +12465,25 @@ impl AccessControlSystem {
         // 验证令牌
         let user_id = self.authenticator.validate_token(token)
             .map_err(|e| AccessControlError::AuthenticationFailed(e.to_string()))?;
-        
+
         // 检查权限
         let has_permission = self.permission_manager
             .check_permission(&user_id, content_id, permission_type.clone())
             .await
             .map_err(|e| AccessControlError::PermissionCheckFailed(e.to_string()))?;
-        
+
         if !has_permission {
             // 记录审计日志
             self.record_access_denied(&user_id, content_id, &permission_type).await;
             return Err(AccessControlError::PermissionDenied);
         }
-        
+
         // 记录审计日志
         self.record_access_granted(&user_id, content_id, &permission_type).await;
-        
+
         Ok(user_id)
     }
-    
+
     // 加密内容
     async fn encrypt_content(
         &self,
@@ -12495,25 +12495,25 @@ impl AccessControlSystem {
         let mut settings = self.encryption_provider
             .generate_settings(owner)
             .map_err(|e| AccessControlError::EncryptionFailed(e.to_string()))?;
-        
+
         // 添加其他访问者
         for user_id in accessors {
             self.encryption_provider
                 .add_accessor(&mut settings, user_id)
                 .map_err(|e| AccessControlError::EncryptionFailed(e.to_string()))?;
         }
-        
+
         // 加密内容
         let encrypted = self.encryption_provider
             .encrypt_content(content, &settings)
             .map_err(|e| AccessControlError::EncryptionFailed(e.to_string()))?;
-        
+
         // 计算内容ID
         let content_id = ContentId::from_encrypted_content(&encrypted);
-        
+
         Ok((encrypted, content_id))
     }
-    
+
     // 解密内容
     async fn decrypt_content(
         &self,
@@ -12525,21 +12525,21 @@ impl AccessControlSystem {
         let settings = self.get_encryption_settings(settings_id)
             .await
             .ok_or(AccessControlError::EncryptionSettingsNotFound)?;
-        
+
         // 解密内容
         let content = self.encryption_provider
             .decrypt_content(encrypted, &settings)
             .map_err(|e| AccessControlError::DecryptionFailed(e.to_string()))?;
-        
+
         Ok(content)
     }
-    
+
     // 获取加密设置（示例方法）
     async fn get_encryption_settings(&self, settings_id: &str) -> Option<EncryptionSettings> {
         // 在实际实现中，这里应该从某种存储中获取加密设置
         None
     }
-    
+
     // 记录访问被拒绝
     async fn record_access_denied(
         &self,
@@ -12553,7 +12553,7 @@ impl AccessControlSystem {
             PermissionType::Delete => AuditOperation::DeleteContent,
             PermissionType::Share => AuditOperation::ShareContent,
         };
-        
+
         let entry = AuditEntry {
             event_id: generate_event_id(),
             timestamp: Utc::now(),
@@ -12571,14 +12571,14 @@ impl AccessControlSystem {
             },
             details: HashMap::new(),
         };
-        
+
         // 记录审计条目
         if let Err(e) = self.audit_log.storage.store_entry(&entry) {
             // 处理审计日志错误
             log::error!("Failed to store audit entry: {:?}", e);
         }
     }
-    
+
     // 记录访问被授权
     async fn record_access_granted(
         &self,
@@ -12592,7 +12592,7 @@ impl AccessControlSystem {
             PermissionType::Delete => AuditOperation::DeleteContent,
             PermissionType::Share => AuditOperation::ShareContent,
         };
-        
+
         let entry = AuditEntry {
             event_id: generate_event_id(),
             timestamp: Utc::now(),
@@ -12610,14 +12610,14 @@ impl AccessControlSystem {
             },
             details: HashMap::new(),
         };
-        
+
         // 记录审计条目
         if let Err(e) = self.audit_log.storage.store_entry(&entry) {
             // 处理审计日志错误
             log::error!("Failed to store audit entry: {:?}", e);
         }
     }
-    
+
     // 执行审计查询
     async fn query_audit_log(&self, query: &AuditQuery) -> Result<Vec<AuditEntry>, AuditError> {
         self.audit_log.storage.query_entries(query)
@@ -12812,11 +12812,11 @@ impl FaultDetector {
             health_checker,
         }
     }
-    
+
     // 处理节点心跳
     async fn handle_heartbeat(&mut self, node_id: &NodeId) {
         let now = Utc::now();
-        
+
         // 更新或创建节点状态
         let state = self.node_states
             .entry(node_id.clone())
@@ -12838,29 +12838,29 @@ impl FaultDetector {
                     },
                 }
             });
-        
+
         // 更新心跳时间
         state.last_heartbeat = now;
-        
+
         // 如果节点之前有可疑状态，重置它
         if matches!(state.status, NodeStatus::Suspect) {
             state.status = NodeStatus::Online;
             state.consecutive_failures = 0;
         }
     }
-    
+
     // 检查节点健康状态
     async fn check_node_health(&mut self, node_id: &NodeId) -> Result<(), FaultDetectionError> {
         // 获取节点状态
         let state = self.node_states
             .get_mut(node_id)
             .ok_or(FaultDetectionError::NodeNotFound)?;
-        
+
         // 检查节点健康状态
         let health_status = self.health_checker
             .check_node_health(node_id)
             .map_err(|e| FaultDetectionError::HealthCheckFailed(e.to_string()))?;
-        
+
         // 更新节点状态
         if health_status.is_online {
             // 节点在线，检查是否有故障
@@ -12868,12 +12868,12 @@ impl FaultDetector {
                 // 有故障，标记为可疑
                 state.status = NodeStatus::Suspect;
                 state.consecutive_failures += 1;
-                
+
                 // 更新已知故障
                 for fault in &health_status.detected_faults {
                     state.known_faults.insert(fault.clone());
                 }
-                
+
                 // 检查是否超过阈值
                 if state.consecutive_failures >= self.config.fault_confirmation_threshold {
                     // 确认故障
@@ -12885,7 +12885,7 @@ impl FaultDetector {
                 state.consecutive_failures = 0;
                 state.known_faults.clear();
             }
-            
+
             // 更新性能指标
             if let Some(metrics) = health_status.performance {
                 state.performance_metrics = metrics;
@@ -12894,7 +12894,7 @@ impl FaultDetector {
             // 节点离线
             state.status = NodeStatus::Offline;
             state.consecutive_failures += 1;
-            
+
             // 检查是否超过阈值
             if state.consecutive_failures >= self.config.fault_confirmation_threshold {
                 // 确认断开连接故障
@@ -12902,10 +12902,10 @@ impl FaultDetector {
                 self.confirm_fault(node_id, &faults).await?;
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 确认故障
     async fn confirm_fault(
         &mut self,
@@ -12916,7 +12916,7 @@ impl FaultDetector {
         if let Some(state) = self.node_states.get_mut(node_id) {
             state.status = NodeStatus::Faulty;
         }
-        
+
         // 创建故障事件
         let event = FaultEvent {
             event_id: generate_event_id(),
@@ -12932,21 +12932,21 @@ impl FaultDetector {
             affected_contents: Vec::new(), // 需要稍后填充
             status: FaultEventStatus::Confirmed,
         };
-        
+
         // 添加故障事件
         self.fault_events.push(event);
-        
+
         // 触发故障处理
         // 实际实现应该与恢复系统集成
-        
+
         Ok(())
     }
-    
+
     // 检查心跳超时
     async fn check_heartbeat_timeouts(&mut self) -> Result<Vec<NodeId>, FaultDetectionError> {
         let now = Utc::now();
         let mut timed_out_nodes = Vec::new();
-        
+
         for (node_id, state) in &mut self.node_states {
             // 检查心跳是否超时
             if now - state.last_heartbeat > self.config.heartbeat_timeout {
@@ -12954,14 +12954,14 @@ impl FaultDetector {
                 if matches!(state.status, NodeStatus::Faulty | NodeStatus::Offline) {
                     continue;
                 }
-                
+
                 // 标记为可疑或增加失败计数
                 if matches!(state.status, NodeStatus::Online) {
                     state.status = NodeStatus::Suspect;
                 }
-                
+
                 state.consecutive_failures += 1;
-                
+
                 // 检查是否超过阈值
                 if state.consecutive_failures >= self.config.fault_confirmation_threshold {
                     // 添加到超时节点列表
@@ -12969,17 +12969,17 @@ impl FaultDetector {
                 }
             }
         }
-        
+
         // 处理超时节点
         for node_id in &timed_out_nodes {
             // 确认断开连接故障
             let faults = vec![FaultType::Disconnect];
             self.confirm_fault(node_id, &faults).await?;
         }
-        
+
         Ok(timed_out_nodes)
     }
-    
+
     // 获取所有故障节点
     fn get_faulty_nodes(&self) -> Vec<NodeId> {
         self.node_states.iter()
@@ -12987,7 +12987,7 @@ impl FaultDetector {
             .map(|(node_id, _)| node_id.clone())
             .collect()
     }
-    
+
     // 获取可疑节点
     fn get_suspect_nodes(&self) -> Vec<NodeId> {
         self.node_states.iter()
@@ -12995,7 +12995,7 @@ impl FaultDetector {
             .map(|(node_id, _)| node_id.clone())
             .collect()
     }
-    
+
     // 获取活跃节点
     fn get_active_nodes(&self) -> Vec<NodeId> {
         self.node_states.iter()
@@ -13003,12 +13003,12 @@ impl FaultDetector {
             .map(|(node_id, _)| node_id.clone())
             .collect()
     }
-    
+
     // 获取节点状态
     fn get_node_status(&self, node_id: &NodeId) -> Option<&NodeState> {
         self.node_states.get(node_id)
     }
-    
+
     // 获取故障事件
     fn get_fault_events(&self, node_id: &NodeId) -> Vec<&FaultEvent> {
         self.fault_events.iter()
@@ -13112,14 +13112,14 @@ trait RecoveryStrategy: Send + Sync {
         existing_locations: &[NodeId],
         count: usize,
     ) -> Result<Vec<NodeId>, RecoveryError>;
-    
+
     // 确定恢复优先级
     fn determine_priority(
         &self,
         content_id: &ContentId,
         metadata: &ContentMetadata,
     ) -> RecoveryPriority;
-    
+
     // 估计恢复耗时
     fn estimate_recovery_time(
         &self,
@@ -13160,7 +13160,7 @@ impl RecoveryManager {
             location_map,
         }
     }
-    
+
     // 创建恢复任务
     async fn create_recovery_task(
         &mut self,
@@ -13172,34 +13172,34 @@ impl RecoveryManager {
             .get_locations(&content_id.into())
             .await
             .map_err(|e| RecoveryError::LocationError(e.to_string()))?;
-        
+
         // 检查是否需要恢复
         if !locations.contains(failed_node) {
             return Err(RecoveryError::NodeNotResponsibleForContent);
         }
-        
+
         // 获取可用节点
         let available_nodes = self.get_available_nodes().await?;
         if available_nodes.is_empty() {
             return Err(RecoveryError::NoAvailableNodes);
         }
-        
+
         // 选择目标节点
         let existing_locations: Vec<NodeId> = locations.iter()
             .filter(|&node| node != failed_node)
             .cloned()
             .collect();
-        
+
         // 计算需要的额外副本数
         let metadata = self.get_content_metadata(content_id).await?;
         let target_replicas = self.determine_target_replicas(&metadata);
         let needed_replicas = target_replicas.saturating_sub(existing_locations.len());
-        
+
         if needed_replicas == 0 {
             // 已经有足够的副本
             return Err(RecoveryError::SufficientReplicasExist);
         }
-        
+
         // 选择恢复目标
         let target_nodes = self.strategy.select_recovery_targets(
             content_id,
@@ -13208,14 +13208,14 @@ impl RecoveryManager {
             &existing_locations,
             needed_replicas,
         )?;
-        
+
         if target_nodes.is_empty() {
             return Err(RecoveryError::NoSuitableTargets);
         }
-        
+
         // 创建任务ID
         let task_id = TaskId::new();
-        
+
         // 创建恢复任务
         let task = RecoveryTask {
             task_id: task_id.clone(),
@@ -13229,13 +13229,13 @@ impl RecoveryManager {
             progress: 0,
             error: None,
         };
-        
+
         // 存储任务
         self.tasks.insert(task_id.clone(), task);
-        
+
         Ok(task_id)
     }
-    
+
     // 确定目标副本数
     fn determine_target_replicas(&self, metadata: &ContentMetadata) -> usize {
         // 基于内容优先级确定目标副本数
@@ -13247,13 +13247,13 @@ impl RecoveryManager {
             ContentPriority::Archival => 2,
         }
     }
-    
+
     // 获取可用节点
     async fn get_available_nodes(&self) -> Result<Vec<NodeId>, RecoveryError> {
         // 在实际实现中，这里应该从节点管理器获取可用节点
         Ok(Vec::new())
     }
-    
+
     // 获取内容元数据
     async fn get_content_metadata(&self, content_id: &ContentId) -> Result<ContentMetadata, RecoveryError> {
         // 在实际实现中，这里应该从元数据存储获取内容元数据
@@ -13268,29 +13268,29 @@ impl RecoveryManager {
             custom: HashMap::new(),
         })
     }
-    
+
     // 开始恢复任务
     async fn start_recovery_task(&mut self, task_id: &TaskId) -> Result<(), RecoveryError> {
         // 获取任务
         let task = self.tasks.get_mut(task_id)
             .ok_or(RecoveryError::TaskNotFound)?;
-        
+
         // 检查任务状态
         if !matches!(task.status, RecoveryTaskStatus::Pending) {
             return Err(RecoveryError::InvalidTaskState);
         }
-        
+
         // 更新任务状态
         task.status = RecoveryTaskStatus::Running;
         task.started_at = Some(Utc::now());
         task.progress = 0;
-        
+
         // 获取内容数据
         let content_data = self.get_content_data(&task.content_id).await?;
-        
+
         // 恢复到所有目标节点
         let mut successful_targets = Vec::new();
-        
+
         for target_node in &task.target_nodes {
             // 尝试恢复到目标节点
             match self.recover_to_node(&task.content_id, target_node, &content_data).await {
@@ -13305,7 +13305,7 @@ impl RecoveryManager {
                             task.content_id, target_node, e
                         );
                     }
-                    
+
                     successful_targets.push(target_node.clone());
                 }
                 Err(e) => {
@@ -13315,14 +13315,14 @@ impl RecoveryManager {
                     );
                 }
             }
-            
+
             // 更新进度
             task.progress = ((successful_targets.len() as f64 / task.target_nodes.len() as f64) * 100.0) as u8;
         }
-        
+
         // 更新任务状态
         task.completed_at = Some(Utc::now());
-        
+
         if successful_targets.len() == task.target_nodes.len() {
             // 所有目标都成功
             task.status = RecoveryTaskStatus::Completed;
@@ -13340,7 +13340,7 @@ impl RecoveryManager {
                 task.target_nodes.len()
             ));
         }
-        
+
         // 创建恢复记录
         let record = RecoveryRecord {
             record_id: generate_event_id(),
@@ -13363,13 +13363,13 @@ impl RecoveryManager {
                 task.target_nodes.len()
             ),
         };
-        
+
         // 添加到历史记录
         self.history.push(record);
-        
+
         Ok(())
     }
-    
+
     // 获取内容数据
     async fn get_content_data(&self, content_id: &ContentId) -> Result<Vec<u8>, RecoveryError> {
         self.data_store
@@ -13377,7 +13377,7 @@ impl RecoveryManager {
             .await
             .map_err(|e| RecoveryError::DataStoreError(e.to_string()))
     }
-    
+
     // 恢复到节点
     async fn recover_to_node(
         &self,
@@ -13389,49 +13389,49 @@ impl RecoveryManager {
         // 为示例目的，我们假设成功
         Ok(())
     }
-    
+
     // 取消恢复任务
     async fn cancel_recovery_task(&mut self, task_id: &TaskId) -> Result<(), RecoveryError> {
         // 获取任务
         let task = self.tasks.get_mut(task_id)
             .ok_or(RecoveryError::TaskNotFound)?;
-        
+
         // 检查任务状态
         if !matches!(task.status, RecoveryTaskStatus::Pending | RecoveryTaskStatus::Running) {
             return Err(RecoveryError::InvalidTaskState);
         }
-        
+
         // 更新任务状态
         task.status = RecoveryTaskStatus::Canceled;
         task.completed_at = Some(Utc::now());
-        
+
         // 如果任务已经在运行，可能需要发送取消信号
-        
+
         Ok(())
     }
-    
+
     // 获取任务状态
     fn get_task_status(&self, task_id: &TaskId) -> Result<&RecoveryTask, RecoveryError> {
         self.tasks
             .get(task_id)
             .ok_or(RecoveryError::TaskNotFound)
     }
-    
+
     // 获取所有任务
     fn get_all_tasks(&self) -> Vec<&RecoveryTask> {
         self.tasks.values().collect()
     }
-    
+
     // 获取恢复历史
     fn get_recovery_history(&self) -> &[RecoveryRecord] {
         &self.history
     }
-    
+
     // 清理已完成任务
     fn cleanup_completed_tasks(&mut self, older_than: Duration) {
         let now = Utc::now();
         let mut completed_task_ids = Vec::new();
-        
+
         // 查找已完成且足够老的任务
         for (task_id, task) in &self.tasks {
             if matches!(
@@ -13445,7 +13445,7 @@ impl RecoveryManager {
                 }
             }
         }
-        
+
         // 移除任务
         for task_id in completed_task_ids {
             self.tasks.remove(&task_id);
@@ -13581,7 +13581,7 @@ impl ConsistencyChecker {
             block_index,
         }
     }
-    
+
     // 执行内容一致性检查
     async fn check_content_consistency(
         &mut self,
@@ -13593,30 +13593,30 @@ impl ConsistencyChecker {
             .get_locations(&content_id.into())
             .await
             .map_err(|e| ConsistencyError::LocationError(e.to_string()))?;
-        
+
         if locations.is_empty() {
             return Err(ConsistencyError::ContentNotFound);
         }
-        
+
         // 获取内容元数据
         let metadata = match self.block_index.get_metadata(&content_id.into()).await {
             Ok(Some(meta)) => meta,
             Ok(None) => return Err(ConsistencyError::MetadataNotFound),
             Err(e) => return Err(ConsistencyError::IndexError(e.to_string())),
         };
-        
+
         // 检查每个副本
         let mut replica_states = HashMap::new();
         let mut inconsistencies = Vec::new();
-        
+
         // 获取参考校验和（从第一个可用节点）
         let mut reference_checksum = None;
         let mut reference_size = metadata.size;
-        
+
         for node_id in &locations {
             // 检查副本可用性
             let is_available = self.check_replica_availability(node_id, content_id).await;
-            
+
             let mut state = ReplicaState {
                 node_id: node_id.clone(),
                 is_available,
@@ -13624,19 +13624,19 @@ impl ConsistencyChecker {
                 size: None,
                 access_latency: None,
             };
-            
+
             if is_available {
                 // 获取副本校验和
                 let start_time = Instant::now();
                 let checksum_result = self.get_replica_checksum(node_id, content_id).await;
                 let access_latency = start_time.elapsed();
-                
+
                 state.access_latency = Some(access_latency);
-                
+
                 match checksum_result {
                     Ok(checksum) => {
                         state.checksum = Some(checksum.clone());
-                        
+
                         // 如果这是第一个有效的校验和，将其设为参考
                         if reference_checksum.is_none() {
                             reference_checksum = Some(checksum);
@@ -13663,12 +13663,12 @@ impl ConsistencyChecker {
                         });
                     }
                 }
-                
+
                 // 获取副本大小
                 match self.get_replica_size(node_id, content_id).await {
                     Ok(size) => {
                         state.size = Some(size);
-                        
+
                         if size != reference_size {
                             // 大小不匹配
                             inconsistencies.push(Inconsistency {
@@ -13692,7 +13692,7 @@ impl ConsistencyChecker {
                         });
                     }
                 }
-                
+
                 // 对于深度检查，验证整个内容
                 if matches!(check_type, ConsistencyCheckType::Deep) {
                     match self.verify_replica_content(node_id, content_id).await {
@@ -13728,10 +13728,10 @@ impl ConsistencyChecker {
                     severity: InconsistencySeverity::High,
                 });
             }
-            
+
             replica_states.insert(node_id.clone(), state);
         }
-        
+
         // 创建检查结果
         let result = ConsistencyCheckResult {
             content_id: content_id.clone(),
@@ -13742,30 +13742,30 @@ impl ConsistencyChecker {
             check_type,
             is_repaired: false,
         };
-        
+
         // 保存结果
         self.results.insert(content_id.clone(), result.clone());
-        
+
         // 如果启用了自动修复且存在不一致，尝试修复
         if self.config.auto_repair && !result.is_consistent {
             self.repair_inconsistencies(content_id, &result.inconsistencies).await?;
-            
+
             // 更新修复状态
             if let Some(r) = self.results.get_mut(content_id) {
                 r.is_repaired = true;
             }
         }
-        
+
         Ok(result)
     }
-    
+
     // 检查副本可用性
     async fn check_replica_availability(&self, node_id: &NodeId, content_id: &ContentId) -> bool {
         // 在实际实现中，这里应该检查节点上的副本是否可用
         // 为示例目的，我们假设可用
         true
     }
-    
+
     // 获取副本校验和
     async fn get_replica_checksum(
         &self,
@@ -13776,7 +13776,7 @@ impl ConsistencyChecker {
         // 为示例目的，我们返回一个空校验和
         Ok(Vec::new())
     }
-    
+
     // 获取副本大小
     async fn get_replica_size(
         &self,
@@ -13787,7 +13787,7 @@ impl ConsistencyChecker {
         // 为示例目的，我们返回0
         Ok(0)
     }
-    
+
     // 验证副本内容
     async fn verify_replica_content(
         &self,
@@ -13798,7 +13798,7 @@ impl ConsistencyChecker {
         // 为示例目的，我们假设验证成功
         Ok(true)
     }
-    
+
     // 修复不一致
     async fn repair_inconsistencies(
         &self,
@@ -13840,10 +13840,10 @@ impl ConsistencyChecker {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 修复缺失副本
     async fn repair_missing_replica(
         &self,
@@ -13855,19 +13855,19 @@ impl ConsistencyChecker {
             .get_block(&content_id.into())
             .await
             .map_err(|e| ConsistencyError::DataStoreError(e.to_string()))?;
-        
+
         // 将数据复制到目标节点
         // 在实际实现中，这里应该实现复制逻辑
-        
+
         // 更新位置映射
         self.location_map
             .add_location(&content_id.into(), node_id)
             .await
             .map_err(|e| ConsistencyError::LocationError(e.to_string()))?;
-        
+
         Ok(())
     }
-    
+
     // 修复数据不一致
     async fn repair_data_mismatch(
         &self,
@@ -13879,16 +13879,16 @@ impl ConsistencyChecker {
             .get_block(&content_id.into())
             .await
             .map_err(|e| ConsistencyError::DataStoreError(e.to_string()))?;
-        
+
         // 删除错误的副本
         // 在实际实现中，这里应该实现删除逻辑
-        
+
         // 将正确的数据复制到目标节点
         // 在实际实现中，这里应该实现复制逻辑
-        
+
         Ok(())
     }
-    
+
     // 修复元数据不一致
     async fn repair_metadata_mismatch(
         &self,
@@ -13901,13 +13901,13 @@ impl ConsistencyChecker {
             .await
             .map_err(|e| ConsistencyError::IndexError(e.to_string()))?
             .ok_or(ConsistencyError::MetadataNotFound)?;
-        
+
         // 更新节点上的元数据
         // 在实际实现中，这里应该实现更新逻辑
-        
+
         Ok(())
     }
-    
+
     // 执行批量一致性检查
     async fn batch_check_consistency(
         &mut self,
@@ -13915,58 +13915,58 @@ impl ConsistencyChecker {
         check_type: ConsistencyCheckType,
     ) -> HashMap<ContentId, Result<ConsistencyCheckResult, ConsistencyError>> {
         let mut results = HashMap::new();
-        
+
         // 限制并行检查数量
         let semaphore = Semaphore::new(self.config.max_parallel_checks);
-        
+
         // 创建任务
         let mut tasks = Vec::new();
-        
+
         for content_id in content_ids {
             let content_id = content_id.clone();
             let checker = self.clone();
             let permit = semaphore.acquire().await.unwrap();
-            
+
             let task = tokio::spawn(async move {
                 let result = checker.check_content_consistency(&content_id, check_type.clone()).await;
                 drop(permit);
                 (content_id, result)
             });
-            
+
             tasks.push(task);
         }
-        
+
         // 等待所有任务完成
         for task in tasks {
             if let Ok((content_id, result)) = task.await {
                 results.insert(content_id, result);
             }
         }
-        
+
         results
     }
-    
+
     // 获取检查结果
     fn get_check_result(&self, content_id: &ContentId) -> Option<&ConsistencyCheckResult> {
         self.results.get(content_id)
     }
-    
+
     // 获取所有检查结果
     fn get_all_check_results(&self) -> &HashMap<ContentId, ConsistencyCheckResult> {
         &self.results
     }
-    
+
     // 清理旧检查结果
     fn cleanup_old_results(&mut self, older_than: Duration) {
         let now = Utc::now();
         let mut old_content_ids = Vec::new();
-        
+
         for (content_id, result) in &self.results {
             if now - result.checked_at > older_than {
                 old_content_ids.push(content_id.clone());
             }
         }
-        
+
         for content_id in old_content_ids {
             self.results.remove(&content_id);
         }
@@ -13994,7 +13994,7 @@ trait RepairStrategy: Send + Sync {
         content_id: &ContentId,
         metadata: &Option<ContentMetadata>,
     ) -> RepairPriority;
-    
+
     // 选择修复源
     fn select_repair_source(
         &self,
@@ -14002,7 +14002,7 @@ trait RepairStrategy: Send + Sync {
         available_sources: &[NodeId],
         repair_target: &NodeId,
     ) -> Result<NodeId, RepairError>;
-    
+
     // 估计修复成本
     fn estimate_repair_cost(
         &self,
@@ -14156,7 +14156,7 @@ impl DataRepairer {
             },
         }
     }
-    
+
     // 创建修复任务
     async fn create_repair_task(
         &mut self,
@@ -14165,10 +14165,10 @@ impl DataRepairer {
     ) -> Result<TaskId, RepairError> {
         // 获取内容元数据
         let metadata = self.get_content_metadata(content_id).await.ok();
-        
+
         // 确定修复优先级
         let priority = self.strategy.determine_priority(inconsistency, content_id, &metadata);
-        
+
         // 创建任务描述符
         let descriptor = RepairTaskDescriptor {
             content_id: content_id.clone(),
@@ -14178,22 +14178,22 @@ impl DataRepairer {
             inconsistency: inconsistency.clone(),
             priority,
         };
-        
+
         // 添加到任务队列
         self.task_manager.task_queue.push(descriptor);
-        
+
         // 排序任务队列（按优先级）
         self.sort_task_queue();
-        
+
         // 检查是否可以立即启动任务
         if self.task_manager.active_tasks.len() < self.task_manager.max_concurrent_tasks {
             return self.start_next_repair_task().await;
         }
-        
+
         // 返回一个等待中的任务ID
         Ok(TaskId::new())
     }
-    
+
     // 对任务队列进行排序
     fn sort_task_queue(&mut self) {
         self.task_manager.task_queue.sort_by(|a, b| {
@@ -14206,56 +14206,56 @@ impl DataRepairer {
                     RepairPriority::Deferrable => 4,
                 }
             };
-            
+
             let a_order = priority_order(&a.priority);
             let b_order = priority_order(&b.priority);
             a_order.cmp(&b_order)
         });
     }
-    
+
     // 启动下一个修复任务
     async fn start_next_repair_task(&mut self) -> Result<TaskId, RepairError> {
         // 检查队列是否为空
         if self.task_manager.task_queue.is_empty() {
             return Err(RepairError::NoTasksInQueue);
         }
-        
+
         // 获取下一个任务
         let descriptor = self.task_manager.task_queue.remove(0);
-        
+
         // 获取内容位置
         let locations = self.location_map
             .get_locations(&descriptor.content_id.into())
             .await
             .map_err(|e| RepairError::LocationError(e.to_string()))?;
-        
+
         // 确定修复目标
         let repair_targets = &descriptor.inconsistency.affected_nodes;
         if repair_targets.is_empty() {
             return Err(RepairError::NoRepairTargets);
         }
-        
+
         let repair_target = &repair_targets[0];
-        
+
         // 确定修复源
         let available_sources: Vec<NodeId> = locations.iter()
             .filter(|&node| !repair_targets.contains(node))
             .cloned()
             .collect();
-        
+
         if available_sources.is_empty() {
             return Err(RepairError::NoRepairSources);
         }
-        
+
         let repair_source = self.strategy.select_repair_source(
             &descriptor.content_id,
             &available_sources,
             repair_target,
         )?;
-        
+
         // 创建任务ID
         let task_id = TaskId::new();
-        
+
         // 创建修复任务
         let task = RepairTask {
             task_id: task_id.clone(),
@@ -14271,26 +14271,26 @@ impl DataRepairer {
             error: None,
             priority: descriptor.priority,
         };
-        
+
         // 添加到活跃任务
         self.task_manager.active_tasks.insert(task_id.clone(), task);
-        
+
         // 异步执行修复
         self.execute_repair_task(&task_id).await?;
-        
+
         Ok(task_id)
     }
-    
+
     // 执行修复任务
     async fn execute_repair_task(&mut self, task_id: &TaskId) -> Result<(), RepairError> {
         // 获取任务
         let task = self.task_manager.active_tasks.get_mut(task_id)
             .ok_or(RepairError::TaskNotFound)?;
-        
+
         // 更新任务状态
         task.status = RepairTaskStatus::Running;
         task.started_at = Some(Utc::now());
-        
+
         // 根据不一致类型执行适当的修复
         let result = match task.inconsistency.inconsistency_type {
             InconsistencyType::MissingReplica => {
@@ -14327,11 +14327,11 @@ impl DataRepairer {
                 Ok(())
             }
         };
-        
+
         // 更新任务状态
         let task = self.task_manager.active_tasks.get_mut(task_id).unwrap();
         task.completed_at = Some(Utc::now());
-        
+
         match result {
             Ok(()) => {
                 task.status = RepairTaskStatus::Completed;
@@ -14342,7 +14342,7 @@ impl DataRepairer {
                 task.error = Some(e.to_string());
             }
         }
-        
+
         // 创建完成记录
         let completed_task = CompletedRepairTask {
             task_id: task_id.clone(),
@@ -14360,21 +14360,21 @@ impl DataRepairer {
             },
             details: format!("修复任务 {} 已完成", task_id),
         };
-        
+
         // 添加到完成任务
         self.task_manager.completed_tasks.push(completed_task);
-        
+
         // 移除活跃任务
         self.task_manager.active_tasks.remove(task_id);
-        
+
         // 启动下一个任务
         if !self.task_manager.task_queue.is_empty() {
             let _ = self.start_next_repair_task().await;
         }
-        
+
         Ok(())
     }
-    
+
     // 修复缺失副本
     async fn repair_missing_replica(
         &self,
@@ -14384,19 +14384,19 @@ impl DataRepairer {
     ) -> Result<(), RepairError> {
         // 从源节点获取数据
         let content_data = self.get_data_from_node(content_id, source_node).await?;
-        
+
         // 将数据复制到目标节点
         self.copy_data_to_node(content_id, target_node, &content_data).await?;
-        
+
         // 更新位置映射
         self.location_map
             .add_location(&content_id.into(), target_node)
             .await
             .map_err(|e| RepairError::LocationError(e.to_string()))?;
-        
+
         Ok(())
     }
-    
+
     // 修复数据不一致
     async fn repair_data_mismatch(
         &self,
@@ -14406,16 +14406,16 @@ impl DataRepairer {
     ) -> Result<(), RepairError> {
         // 从源节点获取数据
         let content_data = self.get_data_from_node(content_id, source_node).await?;
-        
+
         // 删除目标节点上的错误数据
         self.delete_data_from_node(content_id, target_node).await?;
-        
+
         // 将正确的数据复制到目标节点
         self.copy_data_to_node(content_id, target_node, &content_data).await?;
-        
+
         Ok(())
     }
-    
+
     // 修复元数据不一致
     async fn repair_metadata_mismatch(
         &self,
@@ -14425,13 +14425,13 @@ impl DataRepairer {
     ) -> Result<(), RepairError> {
         // 从源节点获取元数据
         let metadata = self.get_metadata_from_node(content_id, source_node).await?;
-        
+
         // 更新目标节点上的元数据
         self.update_metadata_on_node(content_id, target_node, &metadata).await?;
-        
+
         Ok(())
     }
-    
+
     // 从节点获取数据
     async fn get_data_from_node(
         &self,
@@ -14444,7 +14444,7 @@ impl DataRepairer {
             .await
             .map_err(|e| RepairError::DataStoreError(e.to_string()))
     }
-    
+
     // 将数据复制到节点
     async fn copy_data_to_node(
         &self,
@@ -14455,7 +14455,7 @@ impl DataRepairer {
         // 在实际实现中，这里应该将数据复制到指定节点
         Ok(())
     }
-    
+
     // 从节点删除数据
     async fn delete_data_from_node(
         &self,
@@ -14465,7 +14465,7 @@ impl DataRepairer {
         // 在实际实现中，这里应该从指定节点删除数据
         Ok(())
     }
-    
+
     // 从节点获取元数据
     async fn get_metadata_from_node(
         &self,
@@ -14475,7 +14475,7 @@ impl DataRepairer {
         // 在实际实现中，这里应该从指定节点获取元数据
         Err(RepairError::NotImplemented)
     }
-    
+
     // 更新节点上的元数据
     async fn update_metadata_on_node(
         &self,
@@ -14486,7 +14486,7 @@ impl DataRepairer {
         // 在实际实现中，这里应该更新指定节点上的元数据
         Ok(())
     }
-    
+
     // 获取内容元数据
     async fn get_content_metadata(&self, content_id: &ContentId) -> Result<ContentMetadata, RepairError> {
         // 在实际实现中，这里应该从元数据存储获取内容元数据
@@ -14501,22 +14501,22 @@ impl DataRepairer {
             custom: HashMap::new(),
         })
     }
-    
+
     // 取消修复任务
     async fn cancel_repair_task(&mut self, task_id: &TaskId) -> Result<(), RepairError> {
         // 获取任务
         let task = self.task_manager.active_tasks.get_mut(task_id)
             .ok_or(RepairError::TaskNotFound)?;
-        
+
         // 检查任务状态
         if !matches!(task.status, RepairTaskStatus::Pending | RepairTaskStatus::Running) {
             return Err(RepairError::InvalidTaskState);
         }
-        
+
         // 更新任务状态
         task.status = RepairTaskStatus::Canceled;
         task.completed_at = Some(Utc::now());
-        
+
         // 创建完成记录
         let completed_task = CompletedRepairTask {
             task_id: task_id.clone(),
@@ -14529,38 +14529,38 @@ impl DataRepairer {
             result: RepairResult::Skipped("任务已取消".to_string()),
             details: format!("修复任务 {} 已取消", task_id),
         };
-        
+
         // 添加到完成任务
         self.task_manager.completed_tasks.push(completed_task);
-        
+
         // 移除活跃任务
         self.task_manager.active_tasks.remove(task_id);
-        
+
         // 启动下一个任务
         if !self.task_manager.task_queue.is_empty() {
             let _ = self.start_next_repair_task().await;
         }
-        
+
         Ok(())
     }
-    
+
     // 获取任务状态
     fn get_task_status(&self, task_id: &TaskId) -> Result<&RepairTask, RepairError> {
         self.task_manager.active_tasks
             .get(task_id)
             .ok_or(RepairError::TaskNotFound)
     }
-    
+
     // 获取所有活跃任务
     fn get_all_active_tasks(&self) -> Vec<&RepairTask> {
         self.task_manager.active_tasks.values().collect()
     }
-    
+
     // 获取所有完成的任务
     fn get_completed_tasks(&self) -> &[CompletedRepairTask] {
         &self.task_manager.completed_tasks
     }
-    
+
     // 清理旧的完成任务
     fn cleanup_old_tasks(&mut self, older_than: Duration) {
         let now = Utc::now();
@@ -14606,20 +14606,20 @@ impl RecoverySystem {
             ),
         }
     }
-    
+
     // 处理节点故障
     async fn handle_node_failure(&mut self, node_id: &NodeId) -> Result<(), RecoveryError> {
         // 更新节点状态
         if let Err(e) = self.fault_detector.check_node_health(node_id).await {
             log::warn!("Failed to check node health: {:?}", e);
         }
-        
+
         // 获取节点上的内容
         let contents = self.get_node_contents(node_id).await?;
-        
+
         // 创建恢复任务
         let mut recovery_tasks = Vec::new();
-        
+
         for content_id in &contents {
             match self.recovery_manager.create_recovery_task(content_id, node_id).await {
                 Ok(task_id) => recovery_tasks.push(task_id),
@@ -14631,7 +14631,7 @@ impl RecoverySystem {
                 }
             }
         }
-        
+
         // 开始恢复任务
         for task_id in &recovery_tasks {
             match self.recovery_manager.start_recovery_task(task_id).await {
@@ -14641,10 +14641,10 @@ impl RecoverySystem {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 获取节点上的内容
     async fn get_node_contents(&self, node_id: &NodeId) -> Result<Vec<ContentId>, RecoveryError> {
         self.location_map
@@ -14656,7 +14656,7 @@ impl RecoverySystem {
             )
             .map_err(|e| RecoveryError::LocationError(e.to_string()))
     }
-    
+
     // 执行一致性检查
     async fn perform_consistency_check(
         &mut self,
@@ -14668,7 +14668,7 @@ impl RecoverySystem {
             .check_content_consistency(content_id, check_type)
             .await
             .map_err(|e| RecoveryError::ConsistencyError(e.to_string()))?;
-        
+
         // 如果有不一致且没有自动修复，创建修复任务
         if !result.is_consistent && !result.is_repaired {
             for inconsistency in &result.inconsistencies {
@@ -14683,10 +14683,10 @@ impl RecoverySystem {
                 }
             }
         }
-        
+
         Ok(result)
     }
-    
+
     // 执行批量一致性检查
     async fn batch_consistency_check(
         &mut self,
@@ -14694,12 +14694,12 @@ impl RecoverySystem {
         check_type: ConsistencyCheckType,
     ) -> HashMap<ContentId, Result<ConsistencyCheckResult, RecoveryError>> {
         let mut results = HashMap::new();
-        
+
         // 执行批量检查
         let checker_results = self.consistency_checker
             .batch_check_consistency(content_ids, check_type)
             .await;
-        
+
         // 处理检查结果
         for (content_id, result) in checker_results {
             match result {
@@ -14718,7 +14718,7 @@ impl RecoverySystem {
                             }
                         }
                     }
-                    
+
                     results.insert(content_id, Ok(check_result));
                 }
                 Err(e) => {
@@ -14726,10 +14726,10 @@ impl RecoverySystem {
                 }
             }
         }
-        
+
         results
     }
-    
+
     // 检查心跳超时
     async fn check_heartbeat_timeouts(&mut self) -> Result<Vec<NodeId>, RecoveryError> {
         self.fault_detector
@@ -14737,37 +14737,37 @@ impl RecoverySystem {
             .await
             .map_err(|e| RecoveryError::FaultDetectionError(e.to_string()))
     }
-    
+
     // 处理心跳
     async fn handle_heartbeat(&mut self, node_id: &NodeId) {
         self.fault_detector.handle_heartbeat(node_id).await;
     }
-    
+
     // 获取故障节点
     fn get_faulty_nodes(&self) -> Vec<NodeId> {
         self.fault_detector.get_faulty_nodes()
     }
-    
+
     // 获取可疑节点
     fn get_suspect_nodes(&self) -> Vec<NodeId> {
         self.fault_detector.get_suspect_nodes()
     }
-    
+
     // 获取活跃节点
     fn get_active_nodes(&self) -> Vec<NodeId> {
         self.fault_detector.get_active_nodes()
     }
-    
+
     // 获取活跃恢复任务
     fn get_active_recovery_tasks(&self) -> Vec<&RecoveryTask> {
         self.recovery_manager.get_all_tasks()
     }
-    
+
     // 获取活跃修复任务
     fn get_active_repair_tasks(&self) -> Vec<&RepairTask> {
         self.data_repairer.get_all_active_tasks()
     }
-    
+
     // 清理完成的任务和旧的结果
     fn cleanup_old_data(&mut self, older_than: Duration) {
         self.recovery_manager.cleanup_completed_tasks(older_than);
@@ -14911,25 +14911,25 @@ impl DistributedStorageSystem {
     fn new(config: SystemConfig) -> Result<Self, SystemError> {
         // 创建数据存储
         let data_store = create_data_store(&config.storage_config)?;
-        
+
         // 创建内容寻址系统
         let content_addressing = create_content_addressing_system()?;
-        
+
         // 创建分片系统
         let sharding_system = create_sharding_system(&config.sharding_config, data_store.clone())?;
-        
+
         // 创建副本管理系统
         let replication_system = create_replication_system(&config.replication_config)?;
-        
+
         // 创建错误恢复系统
         let recovery_system = create_recovery_system(&config.recovery_config)?;
-        
+
         // 创建访问控制系统
         let access_control = create_access_control_system(&config.security_config)?;
-        
+
         // 创建节点管理器
         let node_manager = create_node_manager()?;
-        
+
         Ok(DistributedStorageSystem {
             data_store,
             content_addressing,
@@ -14941,7 +14941,7 @@ impl DistributedStorageSystem {
             config,
         })
     }
-    
+
     // 存储数据
     async fn store_data(
         &self,
@@ -14950,14 +14950,14 @@ impl DistributedStorageSystem {
     ) -> Result<ContentId, SystemError> {
         // 计算内容ID
         let content_id = self.content_addressing.hasher.hash(data);
-        
+
         // 检查是否已存在
         if self.data_exists(&content_id).await? {
             // 更新元数据
             self.update_metadata(&content_id, options).await?;
             return Ok(content_id);
         }
-        
+
         // 分片数据
         let manifest = if self.config.sharding_config.enable_sharding {
             Some(self.sharding_system.store_sharded(&content_id, data).await?)
@@ -14966,19 +14966,19 @@ impl DistributedStorageSystem {
             self.data_store.store_block(&content_id.into(), data).await?;
             None
         };
-        
+
         // 创建元数据
         let metadata = create_metadata(&content_id, data, &options);
-        
+
         // 添加到块索引
         self.add_to_block_index(&content_id, metadata).await?;
-        
+
         // 确保副本
         self.ensure_replication(&content_id).await?;
-        
+
         Ok(content_id)
     }
-    
+
     // 检查数据是否存在
     async fn data_exists(&self, content_id: &ContentId) -> Result<bool, SystemError> {
         if self.config.sharding_config.enable_sharding {
@@ -14992,7 +14992,7 @@ impl DistributedStorageSystem {
                 .map_err(|e| SystemError::DataStoreError(e.to_string()))
         }
     }
-    
+
     // 添加到块索引
     async fn add_to_block_index(
         &self,
@@ -15002,7 +15002,7 @@ impl DistributedStorageSystem {
         // 在实际实现中，这里需要添加到块索引
         Ok(())
     }
-    
+
     // 更新元数据
     async fn update_metadata(
         &self,
@@ -15012,19 +15012,19 @@ impl DistributedStorageSystem {
         // 在实际实现中，这里需要更新元数据
         Ok(())
     }
-    
+
     // 确保副本
     async fn ensure_replication(&self, content_id: &ContentId) -> Result<(), SystemError> {
         // 获取元数据
         let metadata = self.get_content_metadata(content_id).await?;
-        
+
         // 确保副本
         self.replication_system
             .ensure_replication(content_id, &metadata)
             .await
             .map_err(|e| SystemError::ReplicationError(e.to_string()))
     }
-    
+
     // 获取内容元数据
     async fn get_content_metadata(&self, content_id: &ContentId) -> Result<ContentMetadata, SystemError> {
         // 在实际实现中，这里需要从元数据存储获取内容元数据
@@ -15039,7 +15039,7 @@ impl DistributedStorageSystem {
             custom: HashMap::new(),
         })
     }
-    
+
     // 存储数据选项
     struct StoreOptions {
         // 内容类型
@@ -15234,20 +15234,20 @@ trait TopologyStrategy: Send + Sync {
         current_connections: &HashMap<NodeId, ConnectionInfo>,
         count: usize,
     ) -> Result<Vec<NodeId>, TopologyError>;
-    
+
     // 评估当前拓扑
     fn evaluate_topology(
         &self,
         current_connections: &HashMap<NodeId, ConnectionInfo>,
     ) -> TopologyQuality;
-    
+
     // 选择要断开的连接
     fn select_connections_to_drop(
         &self,
         current_connections: &HashMap<NodeId, ConnectionInfo>,
         count: usize,
     ) -> Vec<NodeId>;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -15725,7 +15725,7 @@ impl NodeDiscoverySystem {
             config,
         }
     }
-    
+
     // 启动节点发现
     async fn start(&mut self) -> Result<(), DiscoveryError> {
         // 启动所有发现提供者
@@ -15734,27 +15734,27 @@ impl NodeDiscoverySystem {
                 log::warn!("Failed to start discovery provider {}: {:?}", provider.name(), e);
             }
         }
-        
+
         // 初始化路由表
         self.initialize_routing_table().await?;
-        
+
         // 启动定期发现任务
         self.start_discovery_task();
-        
+
         // 启动拓扑管理任务
         self.start_topology_task();
-        
+
         // 启动节点监控任务
         self.start_monitoring_task();
-        
+
         Ok(())
     }
-    
+
     // 初始化路由表
     async fn initialize_routing_table(&mut self) -> Result<(), DiscoveryError> {
         // 确定桶数量
         let bucket_count = 256 - self.local_node_id.to_bytes()[0].leading_zeros() as usize;
-        
+
         // 创建桶
         self.routing_table.buckets = (0..bucket_count)
             .map(|_| RoutingBucket {
@@ -15762,22 +15762,22 @@ impl NodeDiscoverySystem {
                 max_size: self.config.bucket_size,
             })
             .collect();
-        
+
         // 初始化最后刷新时间
         self.routing_table.last_refresh = (0..bucket_count)
             .map(|_| Utc::now() - Duration::hours(24)) // 设置为过去的时间，确保首次刷新
             .collect();
-        
+
         // 发现初始节点
         self.discover_initial_nodes().await?;
-        
+
         Ok(())
     }
-    
+
     // 发现初始节点
     async fn discover_initial_nodes(&mut self) -> Result<(), DiscoveryError> {
         let mut discovered_nodes = Vec::new();
-        
+
         // 从所有提供者获取节点
         for provider in &self.discovery_providers {
             match provider.discover_nodes(self.config.initial_discovery_count) {
@@ -15789,34 +15789,34 @@ impl NodeDiscoverySystem {
                 }
             }
         }
-        
+
         // 添加到已知节点
         for node in discovered_nodes {
             self.add_node(node).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 添加节点
     async fn add_node(&mut self, node: NodeInfo) -> Result<(), DiscoveryError> {
         // 验证节点ID
         if node.node_id == self.local_node_id {
             return Ok(()); // 忽略自身
         }
-        
+
         // 计算距离（XOR距离）
         let distance = calculate_xor_distance(&self.local_node_id, &node.node_id);
         let bucket_idx = bucket_index_for_distance(&distance);
-        
+
         // 检查桶索引是否有效
         if bucket_idx >= self.routing_table.buckets.len() {
             return Err(DiscoveryError::InvalidBucketIndex);
         }
-        
+
         // 获取对应的桶
         let bucket = &mut self.routing_table.buckets[bucket_idx];
-        
+
         // 检查节点是否已在桶中
         if bucket.nodes.iter().any(|n| n.node_id == node.node_id) {
             // 更新节点信息
@@ -15839,20 +15839,20 @@ impl NodeDiscoverySystem {
                 .entry(bucket_idx)
                 .or_insert_with(Vec::new)
                 .push(node.clone());
-                
+
             // 可以选择性地驱逐一个已有节点
             // 例如，可以根据最后见到时间、延迟等选择节点进行替换
             if self.should_evict_node(bucket_idx) {
                 self.evict_node(bucket_idx).await?;
             }
         }
-        
+
         // 添加到已知节点
         self.known_nodes.insert(node.node_id.clone(), node);
-        
+
         Ok(())
     }
-    
+
     // 是否应该驱逐节点
     fn should_evict_node(&self, bucket_idx: usize) -> bool {
         // 策略：如果有节点超过24小时未更新，则驱逐
@@ -15862,12 +15862,12 @@ impl NodeDiscoverySystem {
         }
         false
     }
-    
+
     // 驱逐节点
     async fn evict_node(&mut self, bucket_idx: usize) -> Result<(), DiscoveryError> {
         // 找到最应该驱逐的节点
         let bucket = &mut self.routing_table.buckets[bucket_idx];
-        
+
         // 策略：根据最后见到时间和延迟选择节点
         let evict_idx = bucket.nodes
             .iter()
@@ -15879,16 +15879,16 @@ impl NodeDiscoverySystem {
                 (time_factor, latency_factor)
             })
             .map(|(idx, _)| idx);
-        
+
         if let Some(idx) = evict_idx {
             // 从桶中移除
             let evicted = bucket.nodes.remove(idx);
-            
+
             // 从已知节点中移除（如果没有其他引用）
             if !self.node_referenced_elsewhere(&evicted.node_id, bucket_idx) {
                 self.known_nodes.remove(&evicted.node_id);
             }
-            
+
             // 从替换缓存中取一个节点添加到桶中
             if let Some(replacements) = self.routing_table.replacements.get_mut(&bucket_idx) {
                 if !replacements.is_empty() {
@@ -15897,10 +15897,10 @@ impl NodeDiscoverySystem {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 检查节点是否在其他地方被引用
     fn node_referenced_elsewhere(&self, node_id: &NodeId, except_bucket: usize) -> bool {
         // 检查其他桶
@@ -15909,48 +15909,48 @@ impl NodeDiscoverySystem {
                 return true;
             }
         }
-        
+
         // 检查替换缓存
         for (idx, replacements) in &self.routing_table.replacements {
             if *idx != except_bucket && replacements.iter().any(|n| n.node_id == *node_id) {
                 return true;
             }
         }
-        
+
         false
     }
-    
+
     // 刷新桶
     async fn refresh_bucket(&mut self, bucket_idx: usize) -> Result<(), DiscoveryError> {
         // 记录刷新时间
         self.routing_table.last_refresh[bucket_idx] = Utc::now();
-        
+
         // 生成该桶范围内的随机ID
         let random_id = self.generate_random_id_in_bucket(bucket_idx);
-        
+
         // 查找靠近该ID的节点
         let closest_nodes = self.find_closest_nodes(&random_id, self.config.bucket_size);
-        
+
         // 添加到已知节点
         for node in closest_nodes {
             self.add_node(node).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // 在桶范围内生成随机ID
     fn generate_random_id_in_bucket(&self, bucket_idx: usize) -> NodeId {
         // 计算前缀
         let prefix_len = bucket_idx;
         let mut id_bytes = self.local_node_id.to_bytes();
-        
+
         // 保持前prefix_len位相同，其余位随机
         let rng = &mut rand::thread_rng();
         for i in (prefix_len / 8)..id_bytes.len() {
             id_bytes[i] = rng.gen();
         }
-        
+
         // 如果prefix_len不是8的倍数，处理边界字节
         if prefix_len % 8 != 0 {
             let boundary_byte = prefix_len / 8;
@@ -15958,63 +15958,63 @@ impl NodeDiscoverySystem {
             let random_part = rng.gen::<u8>() & !mask;
             id_bytes[boundary_byte] = (id_bytes[boundary_byte] & mask) | random_part;
         }
-        
+
         NodeId::from_bytes(&id_bytes)
     }
-    
+
     // 查找距离目标ID最近的节点
     fn find_closest_nodes(&self, target_id: &NodeId, count: usize) -> Vec<NodeInfo> {
         // 将所有已知节点按照到目标的距离排序
         let mut nodes: Vec<_> = self.known_nodes.values().collect();
         nodes.sort_by_key(|n| calculate_xor_distance(&n.node_id, target_id));
-        
+
         // 取前count个
         nodes.into_iter()
             .take(count)
             .cloned()
             .collect()
     }
-    
+
     // 查找特定节点
     fn find_node(&self, node_id: &NodeId) -> Option<&NodeInfo> {
         self.known_nodes.get(node_id)
     }
-    
+
     // 查找最近的节点
     fn find_closest(&self, target_id: &NodeId, count: usize) -> Vec<NodeInfo> {
         self.find_closest_nodes(target_id, count)
     }
-    
+
     // 启动发现任务
     fn start_discovery_task(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期执行发现
     }
-    
+
     // 启动拓扑管理任务
     fn start_topology_task(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期优化拓扑
     }
-    
+
     // 启动监控任务
     fn start_monitoring_task(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期监控节点
     }
-    
+
     // 发布本地节点信息
     async fn publish_local_info(&self) -> Result<(), DiscoveryError> {
         // 获取本地节点信息
         let local_info = self.get_local_info()?;
-        
+
         // 通过所有提供者发布
         for provider in &self.discovery_providers {
             if let Err(e) = provider.publish_local_node(&local_info) {
                 log::warn!("Failed to publish local node info via provider {}: {:?}", provider.name(), e);
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 获取本地节点信息
     fn get_local_info(&self) -> Result<NodeInfo, DiscoveryError> {
         // 在实际实现中，这里应该从系统获取本地节点的当前信息
@@ -16151,27 +16151,27 @@ struct MigrationSystem {
 trait LoadBalancingStrategy: Send + Sync {
     // 计算节点负载
     fn calculate_node_load(&self, node_id: &NodeId, metrics: &NodeMetrics) -> f64;
-    
+
     // 确定是否需要迁移
     fn needs_migration(
         &self,
         node_loads: &HashMap<NodeId, f64>,
         thresholds: &LoadThresholds,
     ) -> bool;
-    
+
     // 选择迁移源节点
     fn select_migration_source(
         &self,
         node_loads: &HashMap<NodeId, f64>,
     ) -> Option<NodeId>;
-    
+
     // 选择迁移目标节点
     fn select_migration_target(
         &self,
         node_loads: &HashMap<NodeId, f64>,
         source_node: &NodeId,
     ) -> Option<NodeId>;
-    
+
     // 选择要迁移的
 
 ```rust
@@ -16182,7 +16182,7 @@ trait LoadBalancingStrategy: Send + Sync {
         target_node: &NodeId,
         available_contents: &[ContentInfo],
     ) -> Vec<ContentId>;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -16461,10 +16461,10 @@ trait LoadPredictionModel: Send + Sync {
         history: &[NodeMetrics],
         prediction_window: Duration,
     ) -> Result<NodeMetrics, PredictionError>;
-    
+
     // 模型名称
     fn name(&self) -> String;
-    
+
     // 训练模型
     fn train(&mut self, training_data: &HashMap<NodeId, Vec<NodeMetrics>>) -> Result<(), PredictionError>;
 }
@@ -16554,7 +16554,7 @@ impl MigrationManager {
             config,
         }
     }
-    
+
     // 创建迁移任务
     async fn create_migration_task(
         &mut self,
@@ -16567,31 +16567,31 @@ impl MigrationManager {
         if self.active_migrations.len() >= self.config.max_concurrent_migrations {
             return Err(MigrationError::TooManyActiveMigrations);
         }
-        
+
         // 检查节点出站迁移限制
         let outbound_count = self.count_node_outbound_migrations(&source_node);
         if outbound_count >= self.config.max_outbound_migrations_per_node {
             return Err(MigrationError::TooManyOutboundMigrations);
         }
-        
+
         // 检查节点入站迁移限制
         let inbound_count = self.count_node_inbound_migrations(&target_node);
         if inbound_count >= self.config.max_inbound_migrations_per_node {
             return Err(MigrationError::TooManyInboundMigrations);
         }
-        
+
         // 验证内容存在于源节点
         for content_id in &contents {
             let locations = self.location_map
                 .get_locations(&content_id.into())
                 .await
                 .map_err(|e| MigrationError::LocationMapError(e.to_string()))?;
-            
+
             if !locations.contains(&source_node) {
                 return Err(MigrationError::ContentNotOnSourceNode);
             }
         }
-        
+
         // 计算总大小
         let mut total_bytes = 0u64;
         for content_id in &contents {
@@ -16600,10 +16600,10 @@ impl MigrationManager {
             let size = 0u64; // 示例值
             total_bytes += size;
         }
-        
+
         // 创建迁移ID
         let migration_id = MigrationId::new();
-        
+
         // 创建迁移任务
         let task = MigrationTask {
             migration_id: migration_id.clone(),
@@ -16628,13 +16628,13 @@ impl MigrationManager {
             cancelled: false,
             priority,
         };
-        
+
         // 添加到活跃迁移
         self.active_migrations.insert(migration_id.clone(), task);
-        
+
         Ok(migration_id)
     }
-    
+
     // 计算节点出站迁移数
     fn count_node_outbound_migrations(&self, node_id: &NodeId) -> usize {
         self.active_migrations
@@ -16642,7 +16642,7 @@ impl MigrationManager {
             .filter(|task| task.source_node == *node_id)
             .count()
     }
-    
+
     // 计算节点入站迁移数
     fn count_node_inbound_migrations(&self, node_id: &NodeId) -> usize {
         self.active_migrations
@@ -16650,28 +16650,28 @@ impl MigrationManager {
             .filter(|task| task.target_node == *node_id)
             .count()
     }
-    
+
     // 启动迁移任务
     async fn start_migration(&mut self, migration_id: &MigrationId) -> Result<(), MigrationError> {
         // 获取任务
         let task = self.active_migrations
             .get_mut(migration_id)
             .ok_or(MigrationError::MigrationNotFound)?;
-        
+
         // 检查任务状态
         if !matches!(task.status, MigrationStatus::Pending) {
             return Err(MigrationError::InvalidTaskState);
         }
-        
+
         // 更新任务状态
         task.status = MigrationStatus::Preparing;
         task.started_at = Some(Utc::now());
-        
+
         // 异步执行迁移过程
         let migration_id = migration_id.clone();
         let task_clone = task.clone();
         let this = self.clone();
-        
+
         tokio::spawn(async move {
             match this.execute_migration(&migration_id, &task_clone).await {
                 Ok(()) => {}
@@ -16681,10 +16681,10 @@ impl MigrationManager {
                 }
             }
         });
-        
+
         Ok(())
     }
-    
+
     // 执行迁移过程
     async fn execute_migration(
         &self,
@@ -16693,9 +16693,9 @@ impl MigrationManager {
     ) -> Result<(), MigrationError> {
         // 更新状态为迁移中
         self.update_migration_status(migration_id, MigrationStatus::Migrating).await?;
-        
+
         let start_time = Instant::now();
-        
+
         // 迁移每个内容
         for (idx, content_id) in task.contents.iter().enumerate() {
             // 检查是否取消
@@ -16704,7 +16704,7 @@ impl MigrationManager {
             if current_task.cancelled {
                 return Err(MigrationError::MigrationCancelled);
             }
-            
+
             // 迁移单个内容
             match self.migrate_content(content_id, &task.source_node, &task.target_node).await {
                 Ok(size) => {
@@ -16722,13 +16722,13 @@ impl MigrationManager {
                 }
             }
         }
-        
+
         // 更新状态为验证中
         self.update_migration_status(migration_id, MigrationStatus::Verifying).await?;
-        
+
         // 验证迁移
         let verification_result = self.verify_migration(migration_id).await;
-        
+
         // 更新最终状态
         match verification_result {
             Ok(true) => {
@@ -16747,10 +16747,10 @@ impl MigrationManager {
                 return Err(e);
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 迁移单个内容
     async fn migrate_content(
         &self,
@@ -16760,19 +16760,19 @@ impl MigrationManager {
     ) -> Result<u64, MigrationError> {
         // 从源节点获取内容
         let content_data = self.get_content_from_node(content_id, source_node).await?;
-        
+
         // 将内容传输到目标节点
         self.transfer_content_to_node(content_id, target_node, &content_data).await?;
-        
+
         // 更新位置映射
         self.location_map
             .add_location(&content_id.into(), target_node)
             .await
             .map_err(|e| MigrationError::LocationMapError(e.to_string()))?;
-        
+
         Ok(content_data.len() as u64)
     }
-    
+
     // 从节点获取内容
     async fn get_content_from_node(
         &self,
@@ -16785,7 +16785,7 @@ impl MigrationManager {
             .await
             .map_err(|e| MigrationError::DataStoreError(e.to_string()))
     }
-    
+
     // 将内容传输到节点
     async fn transfer_content_to_node(
         &self,
@@ -16797,7 +16797,7 @@ impl MigrationManager {
         if let Some(rate_limiter) = &self.rate_limiter {
             rate_limiter.acquire(data.len()).await;
         }
-        
+
         // 在实际实现中，这里应该将内容传输到指定节点
         // 为示例目的，我们直接存储
         self.data_store
@@ -16805,7 +16805,7 @@ impl MigrationManager {
             .await
             .map_err(|e| MigrationError::DataStoreError(e.to_string()))
     }
-    
+
     // 更新迁移状态
     async fn update_migration_status(
         &self,
@@ -16813,7 +16813,7 @@ impl MigrationManager {
         status: MigrationStatus,
     ) -> Result<(), MigrationError> {
         let mut migrations = self.active_migrations.clone();
-        
+
         if let Some(task) = migrations.get_mut(migration_id) {
             task.status = status;
             Ok(())
@@ -16821,7 +16821,7 @@ impl MigrationManager {
             Err(MigrationError::MigrationNotFound)
         }
     }
-    
+
     // 更新迁移进度
     async fn update_migration_progress(
         &self,
@@ -16831,14 +16831,14 @@ impl MigrationManager {
         elapsed: Duration,
     ) -> Result<(), MigrationError> {
         let mut migrations = self.active_migrations.clone();
-        
+
         if let Some(task) = migrations.get_mut(migration_id) {
             // 更新已迁移内容数
             task.progress.migrated_contents = migrated_contents;
-            
+
             // 更新已传输字节数
             task.progress.bytes_transferred += bytes_transferred;
-            
+
             // 计算百分比
             let percentage = if task.progress.total_contents > 0 {
                 (migrated_contents as f64 / task.progress.total_contents as f64 * 100.0) as u8
@@ -16846,26 +16846,26 @@ impl MigrationManager {
                 0
             };
             task.progress.percentage = percentage;
-            
+
             // 计算当前速率
             let elapsed_secs = elapsed.as_secs_f64();
             if elapsed_secs > 0.0 {
                 task.progress.current_rate = (task.progress.bytes_transferred as f64 / elapsed_secs) as u64;
             }
-            
+
             // 估计剩余时间
             if task.progress.current_rate > 0 {
                 let remaining_bytes = task.progress.total_bytes - task.progress.bytes_transferred;
                 let remaining_seconds = remaining_bytes as f64 / task.progress.current_rate as f64;
                 task.progress.estimated_time_remaining = Some(Duration::from_secs_f64(remaining_seconds));
             }
-            
+
             Ok(())
         } else {
             Err(MigrationError::MigrationNotFound)
         }
     }
-    
+
     // 记录内容迁移失败
     async fn record_content_migration_failure(
         &self,
@@ -16874,28 +16874,28 @@ impl MigrationManager {
         error: &MigrationError,
     ) -> Result<(), MigrationError> {
         let mut migrations = self.active_migrations.clone();
-        
+
         if let Some(task) = migrations.get_mut(migration_id) {
             task.progress.failed_contents.push(content_id.clone());
-            
+
             // 记录错误日志
             log::error!(
                 "Failed to migrate content {} in migration {}: {:?}",
                 content_id, migration_id, error
             );
-            
+
             Ok(())
         } else {
             Err(MigrationError::MigrationNotFound)
         }
     }
-    
+
     // 验证迁移
     async fn verify_migration(&self, migration_id: &MigrationId) -> Result<bool, MigrationError> {
         let task = self.active_migrations
             .get(migration_id)
             .ok_or(MigrationError::MigrationNotFound)?;
-        
+
         // 根据验证模式执行验证
         match self.config.verification_mode {
             VerificationMode::None => {
@@ -16908,7 +16908,7 @@ impl MigrationManager {
                     if task.progress.failed_contents.contains(content_id) {
                         continue; // 跳过已知失败的内容
                     }
-                    
+
                     if !self.verify_content_checksum(content_id, &task.source_node, &task.target_node).await? {
                         self.record_content_migration_failure(
                             migration_id,
@@ -16924,7 +16924,7 @@ impl MigrationManager {
                     if task.progress.failed_contents.contains(content_id) {
                         continue; // 跳过已知失败的内容
                     }
-                    
+
                     if !self.verify_content_full(content_id, &task.source_node, &task.target_node).await? {
                         self.record_content_migration_failure(
                             migration_id,
@@ -16942,7 +16942,7 @@ impl MigrationManager {
                     let samples: Vec<&ContentId> = task.contents.iter()
                         .filter(|c| !task.progress.failed_contents.contains(c))
                         .choose_multiple(&mut rng, sample_count);
-                    
+
                     for content_id in samples {
                         if !self.verify_content_full(content_id, &task.source_node, &task.target_node).await? {
                             self.record_content_migration_failure(
@@ -16955,23 +16955,23 @@ impl MigrationManager {
                 }
             }
         }
-        
+
         // 更新验证进度
         let task = self.active_migrations
             .get(migration_id)
             .ok_or(MigrationError::MigrationNotFound)?;
-        
+
         let verified_count = task.contents.len() - task.progress.failed_contents.len();
-        
+
         let mut migrations = self.active_migrations.clone();
         if let Some(task) = migrations.get_mut(migration_id) {
             task.progress.verified_contents = verified_count;
         }
-        
+
         // 如果有失败的内容，返回false
         Ok(task.progress.failed_contents.is_empty())
     }
-    
+
     // 验证内容校验和
     async fn verify_content_checksum(
         &self,
@@ -16981,14 +16981,14 @@ impl MigrationManager {
     ) -> Result<bool, MigrationError> {
         // 获取源节点上的校验和
         let source_checksum = self.get_content_checksum(content_id, source_node).await?;
-        
+
         // 获取目标节点上的校验和
         let target_checksum = self.get_content_checksum(content_id, target_node).await?;
-        
+
         // 比较校验和
         Ok(source_checksum == target_checksum)
     }
-    
+
     // 验证完整内容
     async fn verify_content_full(
         &self,
@@ -16998,14 +16998,14 @@ impl MigrationManager {
     ) -> Result<bool, MigrationError> {
         // 获取源节点上的内容
         let source_content = self.get_content_from_node(content_id, source_node).await?;
-        
+
         // 获取目标节点上的内容
         let target_content = self.get_content_from_node(content_id, target_node).await?;
-        
+
         // 比较内容
         Ok(source_content == target_content)
     }
-    
+
     // 获取内容校验和
     async fn get_content_checksum(
         &self,
@@ -17016,7 +17016,7 @@ impl MigrationManager {
         // 为示例目的，我们返回一个空校验和
         Ok(Vec::new())
     }
-    
+
     // 完成迁移
     async fn complete_migration(
         &self,
@@ -17024,18 +17024,18 @@ impl MigrationManager {
         failure_reason: Option<String>,
     ) -> Result<(), MigrationError> {
         let mut migrations = self.active_migrations.clone();
-        
+
         if let Some(task) = migrations.get_mut(migration_id) {
             // 设置完成时间
             task.completed_at = Some(Utc::now());
-            
+
             // 设置状态
             task.status = if let Some(reason) = failure_reason {
                 MigrationStatus::Failed(reason)
             } else {
                 MigrationStatus::Completed
             };
-            
+
             // 创建完成记录
             let completed_migration = CompletedMigration {
                 migration_id: migration_id.clone(),
@@ -17072,20 +17072,20 @@ impl MigrationManager {
                     load_change: HashMap::new(), // 示例值
                 },
             };
-            
+
             // 添加到历史记录
             let mut history = self.migration_history.clone();
             history.push(completed_migration);
-            
+
             // 移除活跃任务
             migrations.remove(migration_id);
-            
+
             Ok(())
         } else {
             Err(MigrationError::MigrationNotFound)
         }
     }
-    
+
     // 处理迁移失败
     async fn handle_migration_failure(
         &self,
@@ -17094,7 +17094,7 @@ impl MigrationManager {
     ) {
         // 记录错误
         log::error!("Migration {} failed: {:?}", migration_id, error);
-        
+
         // 尝试完成迁移（标记为失败）
         match self.complete_migration(migration_id, Some(format!("{:?}", error))).await {
             Ok(()) => {}
@@ -17103,16 +17103,16 @@ impl MigrationManager {
             }
         }
     }
-    
+
     // 取消迁移
     async fn cancel_migration(&mut self, migration_id: &MigrationId) -> Result<(), MigrationError> {
         let task = self.active_migrations
             .get_mut(migration_id)
             .ok_or(MigrationError::MigrationNotFound)?;
-        
+
         // 设置取消标志
         task.cancelled = true;
-        
+
         // 如果任务已完成，直接返回
         if matches!(
             task.status,
@@ -17120,11 +17120,11 @@ impl MigrationManager {
         ) {
             return Ok(());
         }
-        
+
         // 设置状态为取消
         task.status = MigrationStatus::Cancelled;
         task.completed_at = Some(Utc::now());
-        
+
         // 创建完成记录
         let completed_migration = CompletedMigration {
             migration_id: migration_id.clone(),
@@ -17150,33 +17150,33 @@ impl MigrationManager {
                 load_change: HashMap::new(), // 示例值
             },
         };
-        
+
         // 添加到历史记录
         self.migration_history.push(completed_migration);
-        
+
         // 移除活跃任务
         self.active_migrations.remove(migration_id);
-        
+
         Ok(())
     }
-    
+
     // 获取迁移状态
     fn get_migration_status(&self, migration_id: &MigrationId) -> Result<&MigrationTask, MigrationError> {
         self.active_migrations
             .get(migration_id)
             .ok_or(MigrationError::MigrationNotFound)
     }
-    
+
     // 获取所有活跃迁移
     fn get_all_active_migrations(&self) -> Vec<&MigrationTask> {
         self.active_migrations.values().collect()
     }
-    
+
     // 获取迁移历史
     fn get_migration_history(&self) -> &[CompletedMigration] {
         &self.migration_history
     }
-    
+
     // 清理旧的迁移历史
     fn cleanup_old_migrations(&mut self, older_than: Duration) {
         let now = Utc::now();
@@ -17265,7 +17265,7 @@ impl MigrationSystem {
             sampling_history: HashMap::new(),
             prediction_model: None,
         };
-        
+
         // 创建内容路由
         let content_router = ContentRouter {
             content_locations: HashMap::new(),
@@ -17284,21 +17284,21 @@ impl MigrationSystem {
                 cache_hit_rate: 0.0,
             },
         };
-        
+
         // 创建迁移管理器
         let rate_limiter = if let Some(limit) = config.bandwidth_limit {
             Some(RateLimiter::new(limit))
         } else {
             None
         };
-        
+
         let migration_manager = MigrationManager::new(
             data_store,
             location_map,
             config.clone(),
             rate_limiter,
         );
-        
+
         MigrationSystem {
             balancer,
             migration_manager,
@@ -17307,64 +17307,64 @@ impl MigrationSystem {
             config,
         }
     }
-    
+
     // 启动迁移系统
     async fn start(&self) -> Result<(), MigrationError> {
         // 启动负载监控
         self.start_load_monitoring();
-        
+
         // 启动负载均衡任务
         self.start_load_balancing_task();
-        
+
         Ok(())
     }
-    
+
     // 启动负载监控
     fn start_load_monitoring(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期收集负载指标
     }
-    
+
     // 启动负载均衡任务
     fn start_load_balancing_task(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期执行负载均衡
     }
-    
+
     // 执行负载均衡
     async fn perform_load_balancing(&mut self) -> Result<Vec<MigrationId>, MigrationError> {
         // 获取节点负载
         let node_loads = self.collect_node_loads().await?;
-        
+
         // 检查是否需要迁移
         if !self.balancer.needs_migration(&node_loads, &self.load_monitor.thresholds) {
             return Ok(Vec::new());
         }
-        
+
         // 选择迁移源节点
         let source_node = match self.balancer.select_migration_source(&node_loads) {
             Some(node) => node,
             None => return Ok(Vec::new()),
         };
-        
+
         // 选择迁移目标节点
         let target_node = match self.balancer.select_migration_target(&node_loads, &source_node) {
             Some(node) => node,
             None => return Ok(Vec::new()),
         };
-        
+
         // 获取源节点上的内容
         let available_contents = self.get_node_contents(&source_node).await?;
-        
+
         // 选择要迁移的内容
         let contents_to_migrate = self.balancer.select_content_to_migrate(
             &source_node,
             &target_node,
             &available_contents,
         );
-        
+
         if contents_to_migrate.is_empty() {
             return Ok(Vec::new());
         }
-        
+
         // 创建迁移任务
         let migration_id = self.migration_manager
             .create_migration_task(
@@ -17374,25 +17374,25 @@ impl MigrationSystem {
                 MigrationPriority::Normal,
             )
             .await?;
-        
+
         // 启动迁移任务
         self.migration_manager.start_migration(&migration_id).await?;
-        
+
         Ok(vec![migration_id])
     }
-    
+
     // 收集节点负载
     async fn collect_node_loads(&self) -> Result<HashMap<NodeId, f64>, MigrationError> {
         let mut node_loads = HashMap::new();
-        
+
         for (node_id, metrics) in &self.load_monitor.node_metrics {
             let load = self.balancer.calculate_node_load(node_id, metrics);
             node_loads.insert(node_id.clone(), load);
         }
-        
+
         Ok(node_loads)
     }
-    
+
     // 获取节点上的内容
     async fn get_node_contents(&self, node_id: &NodeId) -> Result<Vec<ContentInfo>, MigrationError> {
         // 获取节点上的内容ID
@@ -17401,9 +17401,9 @@ impl MigrationSystem {
             .get(node_id)
             .cloned()
             .unwrap_or_default();
-        
+
         let mut contents = Vec::new();
-        
+
         for content_id in content_ids {
             if let Some(metadata) = self.content_router.content_metadata.get(&content_id) {
                 // 创建内容信息
@@ -17423,10 +17423,10 @@ impl MigrationSystem {
                 });
             }
         }
-        
+
         Ok(contents)
     }
-    
+
     // 手动迁移内容
     async fn migrate_content(
         &mut self,
@@ -17440,14 +17440,14 @@ impl MigrationSystem {
             .get(content_id)
             .cloned()
             .unwrap_or_default();
-        
+
         if locations.is_empty() {
             return Err(MigrationError::ContentNotOnSourceNode);
         }
-        
+
         // 选择源节点（选择负载最高的节点）
         let source_node = self.select_source_node(&locations).await?;
-        
+
         // 创建并启动迁移任务
         let migration_id = self.migration_manager
             .create_migration_task(
@@ -17457,24 +17457,24 @@ impl MigrationSystem {
                 priority,
             )
             .await?;
-        
+
         self.migration_manager.start_migration(&migration_id).await?;
-        
+
         Ok(migration_id)
     }
-    
+
     // 选择源节点
     async fn select_source_node(&self, locations: &HashSet<NodeId>) -> Result<NodeId, MigrationError> {
         // 获取所有位置的负载
         let mut node_loads = Vec::new();
-        
+
         for node_id in locations {
             if let Some(metrics) = self.load_monitor.node_metrics.get(node_id) {
                 let load = self.balancer.calculate_node_load(node_id, metrics);
                 node_loads.push((node_id.clone(), load));
             }
         }
-        
+
         // 选择负载最高的节点
         if let Some((node_id, _)) = node_loads.into_iter().max_by(|a, b| {
             a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal)
@@ -17487,69 +17487,69 @@ impl MigrationSystem {
                 .ok_or(MigrationError::ContentNotOnSourceNode)
         }
     }
-    
+
     // 获取迁移状态
     fn get_migration_status(&self, migration_id: &MigrationId) -> Result<&MigrationTask, MigrationError> {
         self.migration_manager.get_migration_status(migration_id)
     }
-    
+
     // 取消迁移
     async fn cancel_migration(&mut self, migration_id: &MigrationId) -> Result<(), MigrationError> {
         self.migration_manager.cancel_migration(migration_id).await
     }
-    
+
     // 获取节点负载
     fn get_node_load(&self, node_id: &NodeId) -> Option<f64> {
         self.load_monitor.node_metrics.get(node_id).map(|metrics| {
             self.balancer.calculate_node_load(node_id, metrics)
         })
     }
-    
+
     // 更新节点指标
     fn update_node_metrics(&mut self, node_id: &NodeId, metrics: NodeMetrics) {
         // 添加到当前指标
         self.load_monitor.node_metrics.insert(node_id.clone(), metrics.clone());
-        
+
         // 更新最后更新时间
         self.load_monitor.last_updated.insert(node_id.clone(), Utc::now());
-        
+
         // 添加到采样历史
         self.load_monitor.sampling_history
             .entry(node_id.clone())
             .or_insert_with(|| RingBuffer::new(100))
             .push(metrics);
-        
+
         // 更新全局指标
         self.update_global_metrics();
     }
-    
+
     // 更新全局指标
     fn update_global_metrics(&mut self) {
         // 计算平均值和标准差
         if self.load_monitor.node_metrics.is_empty() {
             return;
         }
-        
+
         let node_count = self.load_monitor.node_metrics.len() as f64;
-        
+
         // 存储使用率
         let total_storage = self.load_monitor.node_metrics.values()
             .map(|m| m.storage_usage)
             .sum::<f64>();
         self.load_monitor.global_metrics.average_storage_usage = total_storage / node_count;
-        
+
         // CPU使用率
         let total_cpu = self.load_monitor.node_metrics.values()
             .map(|m| m.cpu_usage)
             .sum::<f64>();
         self.load_monitor.global_metrics.average_cpu_usage = total_cpu / node_count;
-        
+
         // 内存使用率
         let total_memory = self.load_monitor.node_metrics.values()
             .map(|m| m.memory_usage)
             .sum::<f64>();
         self.load_monitor.global_metrics.average_memory_usage = total_memory / node_count;
-        
+
         // 网络统计
         let total_inbound = self.load_monitor.node_metrics.values()
             .map(|m| m.network_usage.inbound_bandwidth)
@@ -17557,35 +17557,35 @@ impl MigrationSystem {
         let total_outbound = self.load_monitor.node_metrics.values()
             .map(|m| m.network_usage.outbound_bandwidth)
             .sum::<u64>();
-        
+
         self.load_monitor.global_metrics.network_statistics = NetworkStatistics {
             total_inbound_bandwidth: total_inbound,
             total_outbound_bandwidth: total_outbound,
             average_node_bandwidth: (total_inbound + total_outbound) / (2 * node_count as u64),
             bandwidth_standard_deviation: 0, // 需要额外计算
         };
-        
+
         // 内容计数
         let total_content = self.load_monitor.node_metrics.values()
             .map(|m| m.content_count)
             .sum::<usize>();
         self.load_monitor.global_metrics.total_content_count = total_content;
         self.load_monitor.global_metrics.average_content_per_node = total_content as f64 / node_count;
-        
+
         // 负载计算
         let node_loads: Vec<f64> = self.load_monitor.node_metrics.iter()
             .map(|(node_id, metrics)| self.balancer.calculate_node_load(node_id, metrics))
             .collect();
-        
+
         let avg_load = node_loads.iter().sum::<f64>() / node_count;
-        
+
         // 计算标准差
         let variance = node_loads.iter()
             .map(|load| (load - avg_load).powi(2))
             .sum::<f64>() / node_count;
-        
+
         self.load_monitor.global_metrics.load_standard_deviation = variance.sqrt();
-        
+
         // 健康状态分布
         let mut health_distribution = HashMap::new();
         for metrics in self.load_monitor.node_metrics.values() {
@@ -17600,10 +17600,10 @@ impl MigrationSystem {
             } else {
                 HealthStatus::Healthy
             };
-            
+
             *health_distribution.entry(health).or_insert(0) += 1;
         }
-        
+
         self.load_monitor.global_metrics.node_health_distribution = health_distribution;
     }
 }
@@ -17641,40 +17641,40 @@ impl RateLimiter {
             }),
         }
     }
-    
+
     // 获取令牌（异步）
     async fn acquire(&self, tokens: usize) {
         let tokens = tokens as u64;
         let mut remaining = tokens;
-        
+
         while remaining > 0 {
             let available = {
                 let mut bucket = self.bucket.lock().unwrap();
-                
+
                 // 添加令牌
                 let now = Instant::now();
                 let elapsed = now.duration_since(bucket.last_refill).as_secs_f64();
                 let new_tokens = (elapsed * bucket.refill_rate as f64) as u64;
-                
+
                 if new_tokens > 0 {
                     bucket.tokens = (bucket.tokens + new_tokens).min(bucket.capacity);
                     bucket.last_refill = now;
                 }
-                
+
                 // 获取可用令牌
                 let available = bucket.tokens.min(remaining);
                 bucket.tokens -= available;
                 available
             };
-            
+
             // 如果没有足够的令牌，等待
             if available < remaining {
                 remaining -= available;
-                
+
                 // 计算等待时间
                 let wait_seconds = remaining as f64 / self.rate as f64;
                 let wait_millis = (wait_seconds * 1000.0) as u64;
-                
+
                 // 等待
                 tokio::time::sleep(Duration::from_millis(wait_millis)).await;
             } else {
@@ -17720,7 +17720,7 @@ impl<T> RingBuffer<T> {
             is_full: false,
         }
     }
-    
+
     // 添加元素
     fn push(&mut self, item: T) {
         if self.data.len() < self.capacity {
@@ -17728,19 +17728,19 @@ impl<T> RingBuffer<T> {
         } else {
             self.data[self.write_pos] = item;
         }
-        
+
         self.write_pos = (self.write_pos + 1) % self.capacity;
-        
+
         if self.write_pos == 0 {
             self.is_full = true;
         }
     }
-    
+
     // 获取所有元素
     fn as_slice(&self) -> &[T] {
         &self.data
     }
-    
+
     // 获取元素数量
     fn len(&self) -> usize {
         if self.is_full {
@@ -17749,12 +17749,12 @@ impl<T> RingBuffer<T> {
             self.write_pos
         }
     }
-    
+
     // 是否为空
     fn is_empty(&self) -> bool {
         self.len() == 0
     }
-    
+
     // 清空
     fn clear(&mut self) {
         self.data.clear();
@@ -17789,24 +17789,24 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
         let storage_score = metrics.storage_usage * self.storage_weight;
         let cpu_score = metrics.cpu_usage * self.cpu_weight;
         let memory_score = metrics.memory_usage * self.memory_weight;
-        
+
         let network_score = ((metrics.network_usage.inbound_bandwidth + metrics.network_usage.outbound_bandwidth) as f64 / 1_000_000.0) * self.network_weight;
-        
+
         let content_score = (metrics.content_count as f64 / 10_000.0) * self.content_count_weight;
-        
+
         // 基础负载分数
         let base_load = storage_score + cpu_score + memory_score + network_score + content_score;
-        
+
         // 应用区域偏好
         if let Some(region) = self.region_info.get(node_id) {
             if let Some(preference) = self.region_preference.get(region) {
                 return base_load * preference;
             }
         }
-        
+
         base_load
     }
-    
+
     fn needs_migration(
         &self,
         node_loads: &HashMap<NodeId, f64>,
@@ -17815,17 +17815,17 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
         if node_loads.is_empty() {
             return false;
         }
-        
+
         // 计算平均负载
         let avg_load = node_loads.values().sum::<f64>() / node_loads.len() as f64;
-        
+
         // 检查是否有节点负载超过阈值
         for &load in node_loads.values() {
             if load > avg_load * (1.0 + thresholds.load_imbalance_threshold) {
                 return true;
             }
         }
-        
+
         // 检查最大负载和最小负载之间的差异
         if let (Some(max_load), Some(min_load)) = (
             node_loads.values().max_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal)),
@@ -17835,10 +17835,10 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
                 return true;
             }
         }
-        
+
         false
     }
-    
+
     fn select_migration_source(
         &self,
         node_loads: &HashMap<NodeId, f64>,
@@ -17848,7 +17848,7 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
             .max_by(|a, b| a.1.partial_cmp(b.1).unwrap_or(std::cmp::Ordering::Equal))
             .map(|(node_id, _)| node_id.clone())
     }
-    
+
     fn select_migration_target(
         &self,
         node_loads: &HashMap<NodeId, f64>,
@@ -17856,7 +17856,7 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
     ) -> Option<NodeId> {
         // 获取源节点的区域
         let source_region = self.region_info.get(source_node);
-        
+
         // 选择负载最低的节点，优先考虑同区域
         node_loads.iter()
             .filter(|(node_id, _)| *node_id != source_node)
@@ -17864,7 +17864,7 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
                 // 获取节点区域
                 let a_region = self.region_info.get(a.0);
                 let b_region = self.region_info.get(b.0);
-                
+
                 // 如果源节点有区域信息，优先考虑同区域节点
                 if let Some(src_region) = source_region {
                     match (a_region, b_region) {
@@ -17879,13 +17879,13 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
                         _ => {}
                     }
                 }
-                
+
                 // 否则按负载排序
                 a.1.partial_cmp(b.1).unwrap_or(std::cmp::Ordering::Equal)
             })
             .map(|(node_id, _)| node_id.clone())
     }
-    
+
     fn select_content_to_migrate(
         &self,
         source_node: &NodeId,
@@ -17895,11 +17895,11 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
         if available_contents.is_empty() {
             return Vec::new();
         }
-        
+
         // 获取源节点和目标节点的区域
         let source_region = self.region_info.get(source_node);
         let target_region = self.region_info.get(target_node);
-        
+
         // 计算迁移成本因子
         let migration_cost_factor = match (source_region, target_region) {
             (Some(src), Some(tgt)) if src == tgt => 1.0, // 同区域，成本低
@@ -17912,7 +17912,7 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
             }
             _ => 1.5, // 区域未知，使用中等成本
         };
-        
+
         // 根据内容重要性和大小进行排序
         let mut scored_contents: Vec<_> = available_contents.iter()
             .map(|content| {
@@ -17920,34 +17920,34 @@ impl LoadBalancingStrategy for RegionAwareLoadBalancer {
                 // 低重要性、大尺寸的内容得分高（更适合迁移）
                 let importance_factor = 1.0 - content.importance;
                 let size_factor = (content.size as f64).log10() / 6.0; // 限制在合理范围内
-                
+
                 // 热度因子 - 冷数据更适合迁移
                 let hotness_factor = if content.is_hot { 0.2 } else { 1.0 };
-                
+
                 // 访问频率因子 - 低访问频率的内容更适合迁移
                 let frequency_factor = 1.0 - (content.access_frequency.min(1.0));
-                
+
                 // 综合评分
                 let score = importance_factor * size_factor * hotness_factor * frequency_factor / migration_cost_factor;
-                
+
                 (content.content_id.clone(), score)
             })
             .collect();
-        
+
         // 按分数降序排序
         scored_contents.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         // 选择适当数量的内容迁移
         // 策略：迁移约20%的内容，或者至少10个，最多100个
         let count = (available_contents.len() as f64 * 0.2) as usize;
         let count = count.clamp(10.min(available_contents.len()), 100.min(available_contents.len()));
-        
+
         scored_contents.into_iter()
             .take(count)
             .map(|(id, _)| id)
             .collect()
     }
-    
+
     fn name(&self) -> String {
         "RegionAwareLoadBalancer".to_string()
     }
@@ -18083,7 +18083,7 @@ trait RegionRoutingStrategy: Send + Sync {
         regions: &HashMap<String, RegionInfo>,
         topology: &RegionTopology,
     ) -> Vec<String>;
-    
+
     // 选择用于检索内容的区域
     fn select_region_for_retrieval(
         &self,
@@ -18092,7 +18092,7 @@ trait RegionRoutingStrategy: Send + Sync {
         client_region: Option<&str>,
         topology: &RegionTopology,
     ) -> String;
-    
+
     // 计算区域分数
     fn calculate_region_score(
         &self,
@@ -18101,7 +18101,7 @@ trait RegionRoutingStrategy: Send + Sync {
         regions: &HashMap<String, RegionInfo>,
         topology: &RegionTopology,
     ) -> f64;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -18117,7 +18117,7 @@ trait CrossRegionStrategy: Send + Sync {
         all_regions: &HashMap<String, RegionInfo>,
         topology: &RegionTopology,
     ) -> Vec<String>;
-    
+
     // 选择跨区域复制源
     fn select_replication_source(
         &self,
@@ -18126,7 +18126,7 @@ trait CrossRegionStrategy: Send + Sync {
         available_source_regions: &[String],
         topology: &RegionTopology,
     ) -> Option<String>;
-    
+
     // 计算跨区域复制优先级
     fn calculate_replication_priority(
         &self,
@@ -18135,7 +18135,7 @@ trait CrossRegionStrategy: Send + Sync {
         source_region: &str,
         target_region: &str,
     ) -> ReplicationPriority;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -19011,41 +19011,41 @@ impl DisasterRecoverySystem {
             recovery_test_scheduler,
         }
     }
-    
+
     // 启动灾难恢复系统
     async fn start(&self) -> Result<(), DRError> {
         // 启动区域监控
         self.start_region_monitoring();
-        
+
         // 启动恢复测试调度
         self.start_recovery_test_scheduling();
-        
+
         // 初始化区域间复制
         self.initialize_cross_region_replication().await?;
-        
+
         Ok(())
     }
-    
+
     // 启动区域监控
     fn start_region_monitoring(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期监控区域健康状态
     }
-    
+
     // 启动恢复测试调度
     fn start_recovery_test_scheduling(&self) {
         // 在实际实现中，这里应该启动一个异步任务定期调度恢复测试
     }
-    
+
     // 初始化区域间复制
     async fn initialize_cross_region_replication(&self) -> Result<(), DRError> {
         // 获取所有内容和当前所在区域
         let content_regions = self.get_content_regions().await?;
-        
+
         // 确保每个内容满足跨区域要求
         for (content_id, current_regions) in &content_regions {
             // 获取内容元数据
             let metadata = self.get_content_metadata(content_id).await?;
-            
+
             // 确定所需的目标区域
             let target_regions = self.cross_region_strategy.determine_cross_region_needs(
                 content_id,
@@ -19054,12 +19054,12 @@ impl DisasterRecoverySystem {
                 &self.region_manager.regions,
                 &self.region_manager.topology,
             );
-            
+
             // 查找尚未复制到的区域
             let missing_regions: Vec<_> = target_regions.iter()
                 .filter(|region| !current_regions.contains(*region))
                 .collect();
-            
+
             // 为每个缺失的区域创建复制任务
             for target_region in missing_regions {
                 // 选择复制源区域
@@ -19076,7 +19076,7 @@ impl DisasterRecoverySystem {
                         &source_region,
                         target_region,
                     );
-                    
+
                     // 创建跨区域复制任务
                     self.create_cross_region_replication_task(
                         content_id,
@@ -19087,16 +19087,16 @@ impl DisasterRecoverySystem {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 获取内容的当前区域
     async fn get_content_regions(&self) -> Result<HashMap<ContentId, Vec<String>>, DRError> {
         // 在实际实现中，这里应该从内容路由获取每个内容的当前区域
         Ok(HashMap::new())
     }
-    
+
     // 获取内容元数据
     async fn get_content_metadata(&self, content_id: &ContentId) -> Result<ContentMetadata, DRError> {
         // 在实际实现中，这里应该从元数据存储获取内容元数据
@@ -19111,7 +19111,7 @@ impl DisasterRecoverySystem {
             custom: HashMap::new(),
         })
     }
-    
+
     // 创建跨区域复制任务
     async fn create_cross_region_replication_task(
         &self,
@@ -19124,7 +19124,7 @@ impl DisasterRecoverySystem {
         // 可能涉及到选择源节点和目标节点，创建迁移任务等
         Ok(())
     }
-    
+
     // 执行故障转移
     async fn perform_failover(
         &self,
@@ -19137,17 +19137,17 @@ impl DisasterRecoverySystem {
             .region_states
             .get(to_region)
             .ok_or(DRError::RegionNotFound)?;
-        
+
         if !matches!(target_health.health_status, HealthStatus::Healthy) {
             return Err(DRError::TargetRegionUnhealthy);
         }
-        
+
         // 记录故障转移开始
         log::info!(
             "Starting failover from region {} to {} due to: {}",
             from_region, to_region, reason
         );
-        
+
         // 创建故障转移操作
         let failover = FailoverOperation {
             id: FailoverId::new(),
@@ -19168,13 +19168,13 @@ impl DisasterRecoverySystem {
             },
             steps: Vec::new(),
         };
-        
+
         // 执行故障转移步骤
         let result = self.execute_failover_steps(&failover).await;
-        
+
         // 更新故障转移状态
         // 在实际实现中，这里应该更新故障转移记录
-        
+
         // 返回结果
         match result {
             Ok(metrics) => {
@@ -19182,7 +19182,7 @@ impl DisasterRecoverySystem {
                     "Failover from {} to {} completed successfully in {:?}. RTO: {:?}, RPO: {:?}",
                     from_region, to_region, metrics.duration, metrics.rto_actual, metrics.rpo_actual
                 );
-                
+
                 Ok(FailoverResult {
                     success: true,
                     completed_at: Utc::now(),
@@ -19195,7 +19195,7 @@ impl DisasterRecoverySystem {
                     "Failover from {} to {} failed: {:?}",
                     from_region, to_region, e
                 );
-                
+
                 Ok(FailoverResult {
                     success: false,
                     completed_at: Utc::now(),
@@ -19217,7 +19217,7 @@ impl DisasterRecoverySystem {
             }
         }
     }
-    
+
     // 执行故障转移步骤
     async fn execute_failover_steps(&self, failover: &FailoverOperation) -> Result<FailoverMetrics, DRError> {
         // 在实际实现中，这里应该执行一系列故障转移步骤
@@ -19227,7 +19227,7 @@ impl DisasterRecoverySystem {
         // 3. 同步最近的更改
         // 4. 验证数据一致性
         // 5. 更新元数据和索引
-        
+
         // 示例实现：
         Ok(FailoverMetrics {
             duration: Duration::from_secs(60),
@@ -19238,7 +19238,7 @@ impl DisasterRecoverySystem {
             failed_operations: 2,
         })
     }
-    
+
     // 执行故障恢复
     async fn perform_failback(
         &self,
@@ -19247,7 +19247,7 @@ impl DisasterRecoverySystem {
     ) -> Result<FailbackResult, DRError> {
         // 故障恢复是故障转移的逆过程
         // 在实际实现中，这里应该执行一系列故障恢复步骤
-        
+
         Ok(FailbackResult {
             success: true,
             completed_at: Utc::now(),
@@ -19261,7 +19261,7 @@ impl DisasterRecoverySystem {
             issues: Vec::new(),
         })
     }
-    
+
     // 计划恢复测试
     async fn schedule_recovery_test(
         &self,
@@ -19269,16 +19269,16 @@ impl DisasterRecoverySystem {
     ) -> Result<(), DRError> {
         // 验证测试计划
         self.validate_test_plan(&plan)?;
-        
+
         // 保存测试计划
         // 在实际实现中，这里应该保存测试计划
-        
+
         // 设置测试调度
         // 在实际实现中，这里应该设置测试调度
-        
+
         Ok(())
     }
-    
+
     // 验证测试计划
     fn validate_test_plan(&self, plan: &RecoveryTestPlan) -> Result<(), DRError> {
         // 验证源区域和目标区域
@@ -19288,16 +19288,16 @@ impl DisasterRecoverySystem {
         if !self.region_manager.regions.contains_key(&plan.target_region) {
             return Err(DRError::RegionNotFound);
         }
-        
+
         // 验证测试窗口
         // 在实际实现中，这里应该验证测试窗口是否合理
-        
+
         // 验证验证步骤和回滚步骤
         // 在实际实现中，这里应该验证步骤的合法性和依赖关系
-        
+
         Ok(())
     }
-    
+
     // 获取区域状态
     fn get_region_status(&self, region_id: &str) -> Result<&RegionHealthState, DRError> {
         self.region_monitor
@@ -19305,7 +19305,7 @@ impl DisasterRecoverySystem {
             .get(region_id)
             .ok_or(DRError::RegionNotFound)
     }
-    
+
     // 获取区域间连接状态
     fn get_region_connectivity(&self, source: &str, target: &str) -> Result<&ConnectionStatus, DRError> {
         self.region_manager
@@ -19313,12 +19313,12 @@ impl DisasterRecoverySystem {
             .get(&(source.to_string(), target.to_string()))
             .ok_or(DRError::ConnectivityInfoNotFound)
     }
-    
+
     // 获取所有区域
     fn get_all_regions(&self) -> Vec<&RegionInfo> {
         self.region_manager.regions.values().collect()
     }
-    
+
     // 获取最近的恢复测试结果
     fn get_recent_test_results(&self, limit: usize) -> Vec<&CompletedRecoveryTest> {
         self.recovery_test_scheduler
@@ -19545,7 +19545,7 @@ trait CachingStrategy: Send + Sync {
         metadata: &ContentMetadata,
         request_context: &RequestContext,
     ) -> bool;
-    
+
     // 确定缓存过期时间
     fn determine_ttl(
         &self,
@@ -19553,7 +19553,7 @@ trait CachingStrategy: Send + Sync {
         metadata: &ContentMetadata,
         request_context: &RequestContext,
     ) -> Duration;
-    
+
     // 确定缓存优先级
     fn determine_priority(
         &self,
@@ -19561,14 +19561,14 @@ trait CachingStrategy: Send + Sync {
         metadata: &ContentMetadata,
         request_context: &RequestContext,
     ) -> CachePriority;
-    
+
     // 选择要驱逐的内容
     fn select_for_eviction(
         &self,
         cache_entries: &[CacheEntry],
         required_space: usize,
     ) -> Vec<ContentId>;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -19595,7 +19595,7 @@ trait NodeSelectionStrategy: Send + Sync {
         request_context: &RequestContext,
         count: usize,
     ) -> Vec<NodeId>;
-    
+
     // 计算节点得分
     fn calculate_node_score(
         &self,
@@ -19603,7 +19603,7 @@ trait NodeSelectionStrategy: Send + Sync {
         content_id: &ContentId,
         request_context: &RequestContext,
     ) -> f64;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -19702,7 +19702,7 @@ trait PrefetchStrategy: Send + Sync {
         user_id: Option<&UserId>,
         request_context: &RequestContext,
     ) -> Vec<ContentWithPriority>;
-    
+
     // 确定预取优先级
     fn determine_priority(
         &self,
@@ -19710,7 +19710,7 @@ trait PrefetchStrategy: Send + Sync {
         metadata: &ContentMetadata,
         request_context: &RequestContext,
     ) -> PrefetchPriority;
-    
+
     // 策略名称
     fn name(&self) -> String;
 }
@@ -19844,7 +19844,7 @@ impl ContentDeliverySystem {
         } else {
             None
         };
-        
+
         // 创建预取器
         let prefetcher = if config.enable_prefetching {
             Some(ContentPrefetcher {
@@ -19873,7 +19873,7 @@ impl ContentDeliverySystem {
         } else {
             None
         };
-        
+
         ContentDeliverySystem {
             content_store,
             content_router,
@@ -19884,7 +19884,7 @@ impl ContentDeliverySystem {
             config,
         }
     }
-    
+
     // 获取内容
     async fn get_content(
         &self,
@@ -19897,62 +19897,62 @@ impl ContentDeliverySystem {
             self.update_cache_stats(content_id, true);
             return Ok(content);
         }
-        
+
         // 获取内容元数据
         let metadata = self.get_content_metadata(content_id).await?;
-        
+
         // 检查内容大小
         if metadata.size > self.config.max_content_size {
             return Err(CDNError::ContentTooLarge);
         }
-        
+
         // 检查内容类型
         if self.should_skip_cache(&metadata) {
             // 直接从存储获取
             return self.get_from_storage(content_id).await;
         }
-        
+
         // 选择最佳节点
         let nodes = self.select_content_nodes(content_id, request_context).await?;
-        
+
         if nodes.is_empty() {
             return Err(CDNError::NoSuitableNodes);
         }
-        
+
         // 从节点获取内容
         let content = self.fetch_from_nodes(content_id, &nodes).await?;
-        
+
         // 检查是否应该缓存
         if self.caching_strategy.should_cache(content_id, &metadata, request_context) {
             // 确定缓存TTL
             let ttl = self.caching_strategy.determine_ttl(content_id, &metadata, request_context);
-            
+
             // 确定缓存优先级
             let priority = self.caching_strategy.determine_priority(content_id, &metadata, request_context);
-            
+
             // 缓存内容
             self.cache_content(content_id, &content, &metadata, ttl, priority).await?;
         }
-        
+
         // 触发预取
         if let Some(prefetcher) = &self.prefetcher {
             if prefetcher.config.enabled {
                 self.trigger_prefetch(content_id, request_context).await;
             }
         }
-        
+
         // 更新缓存统计
         self.update_cache_stats(content_id, false);
-        
+
         Ok(content)
     }
-    
+
     // 检查缓存
     async fn check_cache(&self, content_id: &ContentId) -> Option<Vec<u8>> {
         // 在实际实现中，这里应该检查内存缓存或磁盘缓存
         None
     }
-    
+
     // 获取内容元数据
     async fn get_content_metadata(&self, content_id: &ContentId) -> Result<ContentMetadata, CDNError> {
         // 在实际实现中，这里应该从元数据存储获取内容元数据
@@ -19967,7 +19967,7 @@ impl ContentDeliverySystem {
             custom: HashMap::new(),
         })
     }
-    
+
     // 检查是否应该跳过缓存
     fn should_skip_cache(&self, metadata: &ContentMetadata) -> bool {
         // 检查内容类型
@@ -19976,17 +19976,17 @@ impl ContentDeliverySystem {
             if self.config.no_cache_content_types.contains(&content_type.to_string()) {
                 return true;
             }
-            
+
             // 检查是否在强制缓存列表中
             if self.config.force_cache_content_types.contains(&content_type.to_string()) {
                 return false;
             }
         }
-        
+
         // 其他条件，如内容大小、优先级等
         metadata.size > self.config.cache_capacity / 10
     }
-    
+
     // 从存储获取内容
     async fn get_from_storage(&self, content_id: &ContentId) -> Result<Vec<u8>, CDNError> {
         self.content_store
@@ -19994,7 +19994,7 @@ impl ContentDeliverySystem {
             .await
             .map_err(|e| CDNError::StorageError(e.to_string()))
     }
-    
+
     // 选择内容节点
     async fn select_content_nodes(
         &self,
@@ -20005,14 +20005,14 @@ impl ContentDeliverySystem {
             // 如果未启用节点选择，使用默认节点
             return Ok(vec![NodeId::default()]);
         }
-        
+
         // 获取可用节点
         let available_nodes = self.get_content_nodes(content_id).await?;
-        
+
         if available_nodes.is_empty() {
             return Err(CDNError::ContentNotFound);
         }
-        
+
         // 使用节点选择策略选择最佳节点
         let selected_nodes = self.node_selection_strategy.select_nodes(
             content_id,
@@ -20020,20 +20020,20 @@ impl ContentDeliverySystem {
             request_context,
             3, // 选择3个节点
         );
-        
+
         if selected_nodes.is_empty() {
             return Err(CDNError::NoSuitableNodes);
         }
-        
+
         Ok(selected_nodes)
     }
-    
+
     // 获取内容所在的节点
     async fn get_content_nodes(&self, content_id: &ContentId) -> Result<Vec<NodeInfo>, CDNError> {
         // 在实际实现中，这里应该从内容路由获取内容所在的节点
         Ok(Vec::new())
     }
-    
+
     // 从节点获取内容
     async fn fetch_from_nodes(
         &self,
@@ -20050,11 +20050,11 @@ impl ContentDeliverySystem {
                 }
             }
         }
-        
+
         // 如果所有节点都失败，从存储获取
         self.get_from_storage(content_id).await
     }
-    
+
     // 从单个节点获取内容
     async fn fetch_from_node(
         &self,
@@ -20064,7 +20064,7 @@ impl ContentDeliverySystem {
         // 在实际实现中，这里应该从指定节点获取内容
         Err(CDNError::NodeFetchFailed)
     }
-    
+
     // 缓存内容
     async fn cache_content(
         &self,
@@ -20077,12 +20077,12 @@ impl ContentDeliverySystem {
         // 在实际实现中，这里应该实现内容缓存逻辑
         Ok(())
     }
-    
+
     // 更新缓存统计
     fn update_cache_stats(&self, content_id: &ContentId, hit: bool) {
         // 在实际实现中，这里应该更新缓存命中率等统计信息
     }
-    
+
     // 触发内容预取
     async fn trigger_prefetch(
         &self,
@@ -20092,7 +20092,7 @@ impl ContentDeliverySystem {
         if let Some(prefetcher) = &self.prefetcher {
             // 获取最近访问的内容
             let recent_contents = self.get_recent_accessed_contents(request_context.user_id.as_ref()).await;
-            
+
             // 确定预取候选
             let candidates = prefetcher.strategy.determine_prefetch_candidates(
                 content_id,
@@ -20100,14 +20100,14 @@ impl ContentDeliverySystem {
                 request_context.user_id.as_ref(),
                 request_context,
             );
-            
+
             // 添加预取任务
             for candidate in candidates {
                 // 检查是否已预取
                 if prefetcher.prefetched.contains(&candidate.content_id) {
                     continue;
                 }
-                
+
                 // 创建预取任务
                 let task = PrefetchTask {
                     task_id: format!("prefetch-{}-{}", content_id, Utc::now().timestamp()),
@@ -20118,24 +20118,24 @@ impl ContentDeliverySystem {
                     source_node: None,
                     request_context: request_context.clone(),
                 };
-                
+
                 // 添加到预取队列
                 // 在实际实现中，这里应该添加任务到队列
             }
         }
     }
-    
+
     // 获取最近访问的内容
     async fn get_recent_accessed_contents(&self, user_id: Option<&UserId>) -> Vec<ContentId> {
         // 在实际实现中，这里应该从用户历史或会话中获取最近访问的内容
         Vec::new()
     }
-    
+
     // 执行预取任务
     async fn execute_prefetch_task(&self, task: &PrefetchTask) -> Result<(), CDNError> {
         // 更新任务状态
         // 在实际实现中，这里应该更新任务状态为进行中
-        
+
         // 获取内容元数据
         let metadata = match self.get_content_metadata(&task.content_id).await {
             Ok(meta) => meta,
@@ -20145,7 +20145,7 @@ impl ContentDeliverySystem {
                 return Err(e);
             }
         };
-        
+
         // 检查内容大小
         if metadata.size > self.prefetcher.as_ref().unwrap().config.max_prefetch_size {
             // 内容太大，跳过预取
@@ -20153,7 +20153,7 @@ impl ContentDeliverySystem {
             // 在实际实现中，这里应该更新任务状态
             return Err(CDNError::ContentTooLarge);
         }
-        
+
         // 选择内容节点
         let nodes = match self.select_content_nodes(&task.content_id, &task.request_context).await {
             Ok(nodes) => nodes,
@@ -20163,14 +20163,14 @@ impl ContentDeliverySystem {
                 return Err(e);
             }
         };
-        
+
         if nodes.is_empty() {
             // 没有合适的节点
             // 更新任务状态为失败
             // 在实际实现中，这里应该更新任务状态
             return Err(CDNError::NoSuitableNodes);
         }
-        
+
         // 获取内容
         let content = match self.fetch_from_nodes(&task.content_id, &nodes).await {
             Ok(content) => content,
@@ -20180,35 +20180,35 @@ impl ContentDeliverySystem {
                 return Err(e);
             }
         };
-        
+
         // 缓存内容
         let priority = self.caching_strategy.determine_priority(
             &task.content_id,
             &metadata,
             &task.request_context,
         );
-        
+
         let ttl = self.caching_strategy.determine_ttl(
             &task.content_id,
             &metadata,
             &task.request_context,
         );
-        
+
         if let Err(e) = self.cache_content(&task.content_id, &content, &metadata, ttl, priority).await {
             // 缓存失败
             // 更新任务状态为失败
             // 在实际实现中，这里应该更新任务状态
             return Err(e);
         }
-        
+
         // 更新预取统计
         if let Some(prefetcher) = &self.prefetcher {
             // 在实际实现中，这里应该更新预取统计
         }
-        
+
         // 更新任务状态为完成
         // 在实际实现中，这里应该更新任务状态
-        
+
         Ok(())
     }
 }
@@ -20257,7 +20257,7 @@ impl PopularityBasedPrefetchStrategy {
             user_history: HashMap::new(),
         }
     }
-    
+
     // 更新相关性分数
     fn update_correlation(&mut self, content_a: &ContentId, content_b: &ContentId, weight: f64) {
         // 更新A到B的关系
@@ -20265,14 +20265,14 @@ impl PopularityBasedPrefetchStrategy {
             .entry(content_a.clone())
             .or_insert_with(Vec::new)
             .push((content_b.clone(), weight));
-        
+
         // 更新B到A的关系
         self.popularity_graph
             .entry(content_b.clone())
             .or_insert_with(Vec::new)
             .push((content_a.clone(), weight));
     }
-    
+
     // 更新用户历史
     fn update_user_history(&mut self, user_id: &UserId, content_id: &ContentId) {
         self.user_history
@@ -20292,7 +20292,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
     ) -> Vec<ContentWithPriority> {
         // 获取相关内容
         let mut candidates = Vec::new();
-        
+
         // 1. 从流行度图获取相关内容
         if let Some(related) = self.popularity_graph.get(content_id) {
             for (related_id, score) in related {
@@ -20305,7 +20305,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
                     } else {
                         PrefetchPriority::Low
                     };
-                    
+
                     candidates.push(ContentWithPriority {
                         content_id: related_id.clone(),
                         priority,
@@ -20313,7 +20313,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
                 }
             }
         }
-        
+
         // 2. 基于用户历史添加候选
         if let Some(user) = user_id {
             if let Some(history) = self.user_history.get(user) {
@@ -20323,7 +20323,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
                     .take(3)
                     .map(|(id, _)| id.clone())
                     .collect();
-                
+
                 for id in recent {
                     // 添加到候选（如果尚未添加）
                     if !candidates.iter().any(|c| c.content_id == id) {
@@ -20335,7 +20335,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
                 }
             }
         }
-        
+
         // 限制候选数量
         candidates.sort_by(|a, b| {
             let priority_order = |p: &PrefetchPriority| -> u8 {
@@ -20347,17 +20347,17 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
                     PrefetchPriority::Speculative => 4,
                 }
             };
-            
+
             let a_order = priority_order(&a.priority);
             let b_order = priority_order(&b.priority);
             a_order.cmp(&b_order)
         });
-        
+
         candidates.truncate(self.max_candidates);
-        
+
         candidates
     }
-    
+
     fn determine_priority(
         &self,
         content_id: &ContentId,
@@ -20373,7 +20373,7 @@ impl PrefetchStrategy for PopularityBasedPrefetchStrategy {
             ContentPriority::Archival => PrefetchPriority::Speculative,
         }
     }
-    
+
     fn name(&self) -> String {
         "PopularityBasedPrefetchStrategy".to_string()
     }
@@ -22103,30 +22103,30 @@ impl SearchSystem {
     fn new(config: SearchConfig) -> Result<Self, SearchError> {
         // 创建索引管理器
         let index_manager = IndexManager::new(config.clone())?;
-        
+
         // 创建查询处理器
         let query_processor = QueryProcessor::new(config.clone())?;
-        
+
         // 创建搜索策略
         let search_strategy: Box<dyn SearchStrategy> = match config.search_mode {
             SearchMode::Accurate => Box::new(AccurateSearchStrategy::new()),
             SearchMode::Fast => Box::new(FastSearchStrategy::new()),
             SearchMode::Balanced => Box::new(BalancedSearchStrategy::new()),
         };
-        
+
         // 创建结果排序器
         let result_ranker: Box<dyn ResultRanker> = Box::new(DefaultResultRanker::new());
-        
+
         // 创建查询缓存
         let query_cache = if config.enable_cache {
             QueryCache::new(config.cache_size_bytes)
         } else {
             QueryCache::disabled()
         };
-        
+
         // 创建搜索统计
         let search_stats = SearchStats::new();
-        
+
         Ok(SearchSystem {
             index_manager,
             query_processor,
@@ -22137,7 +22137,7 @@ impl SearchSystem {
             config,
         })
     }
-    
+
     // 执行搜索
     fn search(&self, query_string: &str, context: SearchContext) -> Result<SearchResponse, SearchError> {
         // 验证查询长度
@@ -22148,19 +22148,19 @@ impl SearchSystem {
                 value: Some(query_string.to_string()),
             });
         }
-        
+
         // 记录开始时间
         let start_time = Instant::now();
-        
+
         // 解析查询
         let parsed_query = self.query_processor.parser.parse(query_string)?;
-        
+
         // 分析查询
         let analyzed_query = self.query_processor.analyzer.analyze(&parsed_query)?;
-        
+
         // 优化查询
         let optimized_query = self.query_processor.query_optimizer.optimize(&analyzed_query)?;
-        
+
         // 检查缓存
         let cache_key = self.create_cache_key(&optimized_query, &context);
         if let Some(cached_response) = self.query_cache.get(&cache_key) {
@@ -22168,63 +22168,63 @@ impl SearchSystem {
             self.search_stats.record_cache_hit(query_string, start_time.elapsed());
             return Ok(cached_response.to_response());
         }
-        
+
         // 执行搜索
         let mut response = self.search_strategy.search(&optimized_query, &context)?;
-        
+
         // 排序结果
         if !response.hits.is_empty() {
             self.result_ranker.rank(&mut response.hits, &context);
         }
-        
+
         // 应用高亮
         if let Some(highlight_settings) = &context.highlight {
             self.apply_highlighting(&mut response, highlight_settings);
         }
-        
+
         // 更新执行时间
         response.took = start_time.elapsed();
-        
+
         // 缓存结果
         if self.is_cacheable(&optimized_query, &context) {
             self.query_cache.put(cache_key, QueryCacheValue::from_response(&response));
         }
-        
+
         // 更新统计信息
         self.search_stats.record_search(query_string, &response);
-        
+
         Ok(response)
     }
-    
+
     // 创建缓存键
     fn create_cache_key(&self, query: &Query, context: &SearchContext) -> QueryCacheKey {
         // 计算查询哈希
         let query_hash = calculate_hash(query);
-        
+
         // 获取索引版本
         let index_version = self.index_manager.current_version();
-        
+
         // 计算过滤器哈希（如果有）
         let filter_hash = if context.filters.is_empty() {
             None
         } else {
             Some(calculate_hash(&context.filters))
         };
-        
+
         QueryCacheKey {
             query_hash,
             index_version,
             filter_hash,
         }
     }
-    
+
     // 判断是否可缓存
     fn is_cacheable(&self, query: &Query, context: &SearchContext) -> bool {
         // 未启用缓存
         if !self.config.enable_cache {
             return false;
         }
-        
+
         // 一些查询类型不适合缓存
         match query {
             Query::FunctionScore { functions, .. } => {
@@ -22240,12 +22240,12 @@ impl SearchSystem {
             _ => true,
         }
     }
-    
+
     // 应用高亮处理
     fn apply_highlighting(&self, response: &mut SearchResponse, settings: &HighlightSettings) {
         for hit in &mut response.hits {
             let mut field_highlights = HashMap::new();
-            
+
             for field_name in &settings.fields {
                 if let Some(field_value) = hit.source.get(field_name) {
                     if let Value::String(text) = field_value {
@@ -22256,21 +22256,21 @@ impl SearchSystem {
                             settings.fragment_size,
                             settings.number_of_fragments,
                         );
-                        
+
                         if !fragments.is_empty() {
                             field_highlights.insert(field_name.clone(), fragments);
                         }
                     }
                 }
             }
-            
+
             if !field_highlights.is_empty() {
                 hit.highlight = Some(field_highlights);
                 response.highlights.insert(hit.doc_id.clone(), hit.highlight.clone().unwrap());
             }
         }
     }
-    
+
     // 创建高亮片段
     fn create_highlight_fragments(
         &self,
@@ -22282,26 +22282,26 @@ impl SearchSystem {
     ) -> Vec<String> {
         // 简单实现 - 在实际系统中会更复杂
         let mut fragments = Vec::new();
-        
+
         // 分词处理文本
         let tokenizer = self.index_manager.inverted_index.tokenizer.as_ref();
         let tokens = tokenizer.tokenize(text);
-        
+
         // 构建片段（这里简化处理）
         if !tokens.is_empty() {
             let sample_fragment = format!("{}样例高亮文本{}", pre_tag, post_tag);
             fragments.push(sample_fragment);
         }
-        
+
         fragments
     }
-    
+
     // 获取建议
     fn get_suggestions(&self, text: &str, max_suggestions: usize) -> Result<Vec<Suggestion>, SearchError> {
         // 获取拼写检查器
         if let Some(spell_checker) = &self.query_processor.analyzer.spell_checker {
             let suggestions = spell_checker.get_suggestions(text, max_suggestions);
-            
+
             // 转换为Suggestion对象
             let result = suggestions
                 .into_iter()
@@ -22311,7 +22311,7 @@ impl SearchSystem {
                         score,
                         frequency: 1, // 简化处理
                     }];
-                    
+
                     Suggestion {
                         text: suggested_text,
                         offset: 0,
@@ -22320,19 +22320,19 @@ impl SearchSystem {
                     }
                 })
                 .collect();
-            
+
             Ok(result)
         } else {
             // 没有拼写检查器
             Ok(Vec::new())
         }
     }
-    
+
     // 获取自动补全
     fn get_autocomplete(&self, prefix: &str, max_suggestions: usize) -> Result<Vec<String>, SearchError> {
         self.index_manager.prefix_index.get_completions(prefix, max_suggestions)
     }
-    
+
     // 获取热门搜索
     fn get_popular_searches(&self, limit: usize) -> Vec<(String, u64)> {
         self.search_stats
@@ -22343,30 +22343,30 @@ impl SearchSystem {
             .map(|(k, v)| (k.clone(), *v))
             .collect()
     }
-    
+
     // 获取搜索统计
     fn get_stats(&self) -> &SearchStats {
         &self.search_stats
     }
-    
+
     // 清除缓存
     fn clear_cache(&self) {
         self.query_cache.clear();
     }
-    
+
     // 刷新索引
     fn refresh_index(&self) -> Result<(), IndexError> {
         self.index_manager.refresh()
     }
-    
+
     // 关闭搜索系统
     fn shutdown(&self) -> Result<(), SearchError> {
         // 关闭索引管理器
         self.index_manager.close()?;
-        
+
         // 保存统计信息
         self.search_stats.save()?;
-        
+
         Ok(())
     }
 }
@@ -22378,14 +22378,14 @@ impl PrefixIndex {
         if prefix.is_empty() {
             return Ok(Vec::new());
         }
-        
+
         // 标准化前缀
         let normalized_prefix: Vec<char> = prefix.chars().take(self.max_prefix_length).collect();
-        
+
         // 查找前缀
         let mut completions = Vec::new();
         let mut prefix_stack = Vec::new();
-        
+
         // 尝试在前缀树中查找
         let mut current_node = &self.trie;
         for c in &normalized_prefix {
@@ -22400,21 +22400,21 @@ impl PrefixIndex {
                 }
             }
         }
-        
+
         // 找到前缀后，收集所有可能的补全
         self.collect_completions(current_node, &prefix_stack, &mut completions, limit);
-        
+
         // 按热度排序
         completions.sort_by(|a, b| {
             let a_heat = self.prefix_heat.get(a).unwrap_or(&0.0);
             let b_heat = self.prefix_heat.get(b).unwrap_or(&0.0);
             b_heat.partial_cmp(a_heat).unwrap_or(std::cmp::Ordering::Equal)
         });
-        
+
         // 返回前limit个结果
         Ok(completions.into_iter().take(limit).collect())
     }
-    
+
     // 递归收集补全
     fn collect_completions(
         &self,
@@ -22427,7 +22427,7 @@ impl PrefixIndex {
         if completions.len() >= limit {
             return;
         }
-        
+
         // 当前节点有关联的文档ID，则添加到补全结果
         if let Some(docs) = node.value() {
             if !docs.is_empty() {
@@ -22435,13 +22435,13 @@ impl PrefixIndex {
                 completions.push(completion);
             }
         }
-        
+
         // 递归遍历子节点
         for (c, child_node) in node.children() {
             let mut new_prefix = prefix_stack.to_vec();
             new_prefix.push(*c);
             self.collect_completions(child_node, &new_prefix, completions, limit);
-            
+
             // 如果已达到限制，提前返回
             if completions.len() >= limit {
                 return;
@@ -22457,7 +22457,7 @@ impl IndexManager {
         // 创建倒排索引
         let tokenizer: Box<dyn Tokenizer> = Box::new(StandardTokenizer::new());
         let dictionary = TermDictionary::new();
-        
+
         let inverted_index = InvertedIndex {
             term_docs: HashMap::new(),
             doc_frequency: HashMap::new(),
@@ -22466,19 +22466,19 @@ impl IndexManager {
             dictionary,
             tokenizer,
         };
-        
+
         // 创建前缀索引
         let prefix_index = PrefixIndex {
             trie: Trie::new(),
             prefix_heat: HashMap::new(),
             max_prefix_length: 20,
         };
-        
+
         // 可选向量索引
         let vector_index = if config.enable_vector_search {
             let vector_extractor: Box<dyn VectorExtractor> = Box::new(DefaultVectorExtractor::new(300));
             let ann_index: Box<dyn ANNIndex> = Box::new(HnswIndex::new(300, 16, 200));
-            
+
             Some(VectorIndex {
                 vectors: HashMap::new(),
                 ann_index,
@@ -22488,7 +22488,7 @@ impl IndexManager {
         } else {
             None
         };
-        
+
         // 可选地理索引
         let geo_index = if config.enable_geo_search {
             Some(GeoIndex {
@@ -22498,14 +22498,14 @@ impl IndexManager {
         } else {
             None
         };
-        
+
         // 创建标签索引
         let tag_index = TagIndex {
             tag_docs: HashMap::new(),
             doc_tags: HashMap::new(),
             related_tags: HashMap::new(),
         };
-        
+
         // 创建索引更新队列
         let update_queue = IndexUpdateQueue {
             to_add: Vec::new(),
@@ -22513,7 +22513,7 @@ impl IndexManager {
             to_delete: Vec::new(),
             lock: RwLock::new(()),
         };
-        
+
         // 创建索引状态
         let status = IndexStatus {
             doc_count: 0,
@@ -22523,7 +22523,7 @@ impl IndexManager {
             state: IndexState::Initializing,
             health: IndexHealth::Healthy,
         };
-        
+
         // 创建索引配置
         let index_config = IndexConfig {
             max_docs: 1_000_000,
@@ -22536,7 +22536,7 @@ impl IndexManager {
             enable_geo_search: config.enable_geo_search,
             enable_spell_correction: config.min_relevance_score > 0.0,
         };
-        
+
         Ok(IndexManager {
             inverted_index,
             prefix_index,
@@ -22548,7 +22548,7 @@ impl IndexManager {
             config: index_config,
         })
     }
-    
+
     // 添加文档到索引
     fn add_document(&mut self, document: IndexDocument) -> Result<(), IndexError> {
         // 检查索引状态
@@ -22558,25 +22558,25 @@ impl IndexManager {
                 details: None,
             });
         }
-        
+
         // 检查文档数量限制
         if self.status.doc_count >= self.config.max_docs {
             return Err(IndexError::ConfigError {
                 message: format!("Maximum document limit ({}) reached", self.config.max_docs),
             });
         }
-        
+
         // 获取写锁
         let _lock = self.update_queue.lock.write().map_err(|e| IndexError::LockError {
             message: format!("Failed to acquire write lock: {}", e),
         })?;
-        
+
         // 将文档添加到更新队列
         self.update_queue.to_add.push(document);
-        
+
         Ok(())
     }
-    
+
     // 更新文档
     fn update_document(&mut self, doc_id: DocId, document: IndexDocument) -> Result<(), IndexError> {
         // 检查索引状态
@@ -22586,18 +22586,18 @@ impl IndexManager {
                 details: None,
             });
         }
-        
+
         // 获取写锁
         let _lock = self.update_queue.lock.write().map_err(|e| IndexError::LockError {
             message: format!("Failed to acquire write lock: {}", e),
         })?;
-        
+
         // 将文档添加到更新队列
         self.update_queue.to_update.push((doc_id, document));
-        
+
         Ok(())
     }
-    
+
     // 删除文档
     fn delete_document(&mut self, doc_id: DocId) -> Result<(), IndexError> {
         // 检查索引状态
@@ -22607,18 +22607,18 @@ impl IndexManager {
                 details: None,
             });
         }
-        
+
         // 获取写锁
         let _lock = self.update_queue.lock.write().map_err(|e| IndexError::LockError {
             message: format!("Failed to acquire write lock: {}", e),
         })?;
-        
+
         // 将文档ID添加到删除队列
         self.update_queue.to_delete.push(doc_id);
-        
+
         Ok(())
     }
-    
+
     // 刷新索引（应用所有挂起的更改）
     fn refresh(&mut self) -> Result<(), IndexError> {
         // 检查索引状态
@@ -22628,101 +22628,101 @@ impl IndexManager {
                 details: None,
             });
         }
-        
+
         // 更新索引状态
         self.status.state = IndexState::Updating;
-        
+
         // 获取写锁
         let _lock = self.update_queue.lock.write().map_err(|e| IndexError::LockError {
             message: format!("Failed to acquire write lock: {}", e),
         })?;
-        
+
         // 处理删除
         for doc_id in &self.update_queue.to_delete {
             self.remove_document_from_indices(doc_id)?;
         }
-        
+
         // 处理更新（实现为删除后添加）
         for (doc_id, document) in &self.update_queue.to_update {
             self.remove_document_from_indices(doc_id)?;
             self.add_document_to_indices(document.clone())?;
         }
-        
+
         // 处理添加
         for document in &self.update_queue.to_add {
             self.add_document_to_indices(document.clone())?;
         }
-        
+
         // 清空更新队列
         self.update_queue.to_delete.clear();
         self.update_queue.to_update.clear();
         self.update_queue.to_add.clear();
-        
+
         // 更新索引状态
         self.status.state = IndexState::Available;
         self.status.last_updated = Utc::now();
-        
+
         Ok(())
     }
-    
+
     // 将文档添加到所有索引
     fn add_document_to_indices(&mut self, document: IndexDocument) -> Result<(), IndexError> {
         // 添加到倒排索引
         self.add_to_inverted_index(&document)?;
-        
+
         // 添加到前缀索引
         self.add_to_prefix_index(&document)?;
-        
+
         // 添加到向量索引（如果启用）
         if let Some(vector_index) = &mut self.vector_index {
             self.add_to_vector_index(vector_index, &document)?;
         }
-        
+
         // 添加到地理索引（如果启用）
         if let Some(geo_index) = &mut self.geo_index {
             self.add_to_geo_index(geo_index, &document)?;
         }
-        
+
         // 添加到标签索引
         self.add_to_tag_index(&document)?;
-        
+
         // 更新文档计数
         self.status.doc_count += 1;
-        
+
         Ok(())
     }
-    
+
     // 从所有索引中移除文档
     fn remove_document_from_indices(&mut self, doc_id: &DocId) -> Result<(), IndexError> {
         // 从倒排索引移除
         self.remove_from_inverted_index(doc_id)?;
-        
+
         // 从前缀索引移除
         self.remove_from_prefix_index(doc_id)?;
-        
+
         // 从向量索引移除（如果启用）
         if let Some(vector_index) = &mut self.vector_index {
             vector_index.ann_index.remove(doc_id)?;
             vector_index.vectors.remove(doc_id);
         }
-        
+
         // 从地理索引移除（如果启用）
         if let Some(geo_index) = &mut self.geo_index {
             geo_index.doc_points.remove(doc_id);
             // 需要重建R树索引，这里简化处理
         }
-        
+
         // 从标签索引移除
         self.remove_from_tag_index(doc_id)?;
-        
+
         // 更新文档计数
         if self.status.doc_count > 0 {
             self.status.doc_count -= 1;
         }
-        
+
         Ok(())
     }
-    
+
     // 添加到倒排索引
     fn add_to_inverted_index(&mut self, document: &IndexDocument) -> Result<(), IndexError> {
         for (field_name, field_value) in &document.fields {
@@ -22730,7 +22730,7 @@ impl IndexManager {
                 FieldValue::Text(text) => {
                     // 分词处理文本
                     let tokens = self.inverted_index.tokenizer.tokenize(text);
-                    
+
                     // 统计词频
                     let mut term_positions = HashMap::new();
                     for (position, token) in tokens.iter().enumerate() {
@@ -22738,12 +22738,12 @@ impl IndexManager {
                         let entry = term_positions.entry(term).or_insert_with(Vec::new);
                         entry.push(position);
                     }
-                    
+
                     // 更新索引
                     for (term, positions) in term_positions {
                         // 更新词典
                         let term_id = self.inverted_index.dictionary.get_or_create_id(&term);
-                        
+
                         // 更新倒排列表
                         let doc_entry = DocIdWithInfo {
                             doc_id: document.doc_id.clone(),
@@ -22751,14 +22751,14 @@ impl IndexManager {
                             positions,
                             frequency_weight: positions.len() as f32 / tokens.len() as f32,
                         };
-                        
+
                         let docs = self.inverted_index.term_docs.entry(term.clone()).or_insert_with(Vec::new);
                         docs.push(doc_entry);
-                        
+
                         // 更新文档频率
                         let count = self.inverted_index.doc_frequency.entry(term.clone()).or_insert(0);
                         *count += 1;
-                        
+
                         // 更新词项频率
                         let key = (term, document.doc_id.clone());
                         let freq = self.inverted_index.term_frequency.entry(key).or_insert(0);
@@ -22769,7 +22769,7 @@ impl IndexManager {
                     for text in texts {
                         // 对数组中的每个文本执行相同的处理
                         let tokens = self.inverted_index.tokenizer.tokenize(text);
-                        
+
                         // 统计词频
                         let mut term_positions = HashMap::new();
                         for (position, token) in tokens.iter().enumerate() {
@@ -22777,12 +22777,12 @@ impl IndexManager {
                             let entry = term_positions.entry(term).or_insert_with(Vec::new);
                             entry.push(position);
                         }
-                        
+
                         // 更新索引（类似于单个文本字段）
                         for (term, positions) in term_positions {
                             // 更新词典
                             let term_id = self.inverted_index.dictionary.get_or_create_id(&term);
-                            
+
                             // 更新倒排列表
                             let doc_entry = DocIdWithInfo {
                                 doc_id: document.doc_id.clone(),
@@ -22790,14 +22790,14 @@ impl IndexManager {
                                 positions,
                                 frequency_weight: positions.len() as f32 / tokens.len() as f32,
                             };
-                            
+
                             let docs = self.inverted_index.term_docs.entry(term.clone()).or_insert_with(Vec::new);
                             docs.push(doc_entry);
-                            
+
                             // 更新文档频率
                             let count = self.inverted_index.doc_frequency.entry(term.clone()).or_insert(0);
                             *count += 1;
-                            
+
                             // 更新词项频率
                             let key = (term, document.doc_id.clone());
                             let freq = self.inverted_index.term_frequency.entry(key).or_insert(0);
@@ -22805,14 +22805,14 @@ impl IndexManager {
                         }
                     }
                 },
-                // 
+                //
 
 ```rust
                 // 其他字段类型处理
                 FieldValue::Number(num) => {
                     // 为数值类型创建特殊索引项
                     let term = format!("{}:{}", field_name, num);
-                    
+
                     // 添加到倒排索引（简化处理）
                     let doc_entry = DocIdWithInfo {
                         doc_id: document.doc_id.clone(),
@@ -22820,10 +22820,10 @@ impl IndexManager {
                         positions: vec![0],
                         frequency_weight: 1.0,
                     };
-                    
+
                     let docs = self.inverted_index.term_docs.entry(term.clone()).or_insert_with(Vec::new);
                     docs.push(doc_entry);
-                    
+
                     // 更新文档频率
                     let count = self.inverted_index.doc_frequency.entry(term.clone()).or_insert(0);
                     *count += 1;
@@ -22831,7 +22831,7 @@ impl IndexManager {
                 FieldValue::Boolean(bool_val) => {
                     // 为布尔类型创建特殊索引项
                     let term = format!("{}:{}", field_name, bool_val);
-                    
+
                     // 添加到倒排索引
                     let doc_entry = DocIdWithInfo {
                         doc_id: document.doc_id.clone(),
@@ -22839,10 +22839,10 @@ impl IndexManager {
                         positions: vec![0],
                         frequency_weight: 1.0,
                     };
-                    
+
                     let docs = self.inverted_index.term_docs.entry(term.clone()).or_insert_with(Vec::new);
                     docs.push(doc_entry);
-                    
+
                     // 更新文档频率
                     let count = self.inverted_index.doc_frequency.entry(term.clone()).or_insert(0);
                     *count += 1;
@@ -22850,7 +22850,7 @@ impl IndexManager {
                 FieldValue::DateTime(date_time) => {
                     // 为日期时间创建特殊索引项
                     let term = format!("{}:{}", field_name, date_time.timestamp());
-                    
+
                     // 添加到倒排索引
                     let doc_entry = DocIdWithInfo {
                         doc_id: document.doc_id.clone(),
@@ -22858,10 +22858,10 @@ impl IndexManager {
                         positions: vec![0],
                         frequency_weight: 1.0,
                     };
-                    
+
                     let docs = self.inverted_index.term_docs.entry(term.clone()).or_insert_with(Vec::new);
                     docs.push(doc_entry);
-                    
+
                     // 更新文档频率
                     let count = self.inverted_index.doc_frequency.entry(term.clone()).or_insert(0);
                     *count += 1;
@@ -22872,20 +22872,20 @@ impl IndexManager {
                 }
             }
         }
-        
+
         // 更新术语计数
         self.status.term_count = self.inverted_index.dictionary.term_count();
-        
+
         Ok(())
     }
-    
+
     // 从倒排索引中移除文档
     fn remove_from_inverted_index(&mut self, doc_id: &DocId) -> Result<(), IndexError> {
         // 遍历所有词项
         for (term, docs) in self.inverted_index.term_docs.iter_mut() {
             // 移除包含该文档ID的条目
             docs.retain(|doc_info| &doc_info.doc_id != doc_id);
-            
+
             // 如果词项不再有任何文档，更新文档频率
             if docs.is_empty() {
                 self.inverted_index.doc_frequency.remove(term);
@@ -22898,16 +22898,16 @@ impl IndexManager {
                 }
             }
         }
-        
+
         // 移除词项频率
         self.inverted_index.term_frequency.retain(|(_, id), _| id != doc_id);
-        
+
         // 重新计算词项总数
         self.status.term_count = self.inverted_index.dictionary.term_count();
-        
+
         Ok(())
     }
-    
+
     // 添加到前缀索引
     fn add_to_prefix_index(&mut self, document: &IndexDocument) -> Result<(), IndexError> {
         for (field_name, field_value) in &document.fields {
@@ -22915,27 +22915,27 @@ impl IndexManager {
                 FieldValue::Text(text) => {
                     // 分词处理文本
                     let tokens = self.inverted_index.tokenizer.tokenize(text);
-                    
+
                     for token in tokens {
                         // 标准化词项
                         let normalized = self.inverted_index.tokenizer.normalize(&token);
-                        
+
                         // 跳过太短的词
                         if normalized.len() < 2 {
                             continue;
                         }
-                        
+
                         // 为每个前缀创建索引
                         let chars: Vec<char> = normalized.chars().collect();
                         for len in 2..=std::cmp::min(chars.len(), self.prefix_index.max_prefix_length) {
                             let prefix: String = chars[0..len].iter().collect();
-                            
+
                             // 在前缀树中插入
                             let mut current = &mut self.prefix_index.trie;
                             for c in prefix.chars() {
                                 current = current.entry(c).or_insert(Trie::new());
                             }
-                            
+
                             // 添加文档ID到前缀的值
                             if let Some(docs) = current.value_mut() {
                                 if !docs.contains(&document.doc_id) {
@@ -22944,7 +22944,7 @@ impl IndexManager {
                             } else {
                                 current.set_value(vec![document.doc_id.clone()]);
                             }
-                            
+
                             // 更新前缀热度
                             let heat = self.prefix_index.prefix_heat.entry(prefix.clone()).or_insert(0.0);
                             *heat += 1.0;
@@ -22956,34 +22956,34 @@ impl IndexManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 从前缀索引中移除文档
     fn remove_from_prefix_index(&mut self, doc_id: &DocId) -> Result<(), IndexError> {
         // 需要重建前缀树或遍历所有前缀，这里简化处理
         // 实际实现可能需要更高效的数据结构
-        
+
         // 遍历前缀树的每个节点
         fn remove_doc_from_node(node: &mut Trie<char, Vec<DocId>>, doc_id: &DocId) {
             // 移除当前节点值中的文档ID
             if let Some(docs) = node.value_mut() {
                 docs.retain(|id| id != doc_id);
             }
-            
+
             // 递归处理子节点
             for (_, child) in node.children_mut() {
                 remove_doc_from_node(child, doc_id);
             }
         }
-        
+
         // 从根节点开始递归移除
         remove_doc_from_node(&mut self.prefix_index.trie, doc_id);
-        
+
         Ok(())
     }
-    
+
     // 添加到向量索引
     fn add_to_vector_index(&mut self, vector_index: &mut VectorIndex, document: &IndexDocument) -> Result<(), IndexError> {
         // 处理自带向量
@@ -22997,14 +22997,14 @@ impl IndexManager {
                     ),
                 });
             }
-            
+
             // 添加到向量存储
             vector_index.vectors.insert(document.doc_id.clone(), vector.clone());
-            
+
             // 添加到ANN索引
             vector_index.ann_index.add(document.doc_id.clone(), vector)?;
         }
-        
+
         // 从文本字段中提取向量（如果没有预定义向量）
         if document.vectors.is_empty() {
             for (field_name, field_value) in &document.fields {
@@ -23015,10 +23015,10 @@ impl IndexManager {
                             Ok(vector) => {
                                 // 添加到向量存储
                                 vector_index.vectors.insert(document.doc_id.clone(), vector.clone());
-                                
+
                                 // 添加到ANN索引
                                 vector_index.ann_index.add(document.doc_id.clone(), &vector)?;
-                                
+
                                 // 只处理第一个成功的文本字段
                                 break;
                             }
@@ -23034,37 +23034,37 @@ impl IndexManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 添加到地理索引
     fn add_to_geo_index(&mut self, geo_index: &mut GeoIndex, document: &IndexDocument) -> Result<(), IndexError> {
         // 添加文档中的地理点
         if !document.geo_points.is_empty() {
             // 存储文档的地理点
             geo_index.doc_points.insert(document.doc_id.clone(), document.geo_points.clone());
-            
+
             // 添加到R树索引
             for point in &document.geo_points {
                 geo_index.rtree.insert(point.clone());
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 添加到标签索引
     fn add_to_tag_index(&mut self, document: &IndexDocument) -> Result<(), IndexError> {
         if !document.tags.is_empty() {
             // 将文档ID与标签关联
             self.tag_index.doc_tags.insert(document.doc_id.clone(), document.tags.clone());
-            
+
             // 为每个标签添加文档
             for tag in &document.tags {
                 let docs = self.tag_index.tag_docs.entry(tag.clone()).or_insert_with(HashSet::new);
                 docs.insert(document.doc_id.clone());
-                
+
                 // 更新相关标签（简化实现）
                 // 当前文档的标签之间互相关联
                 for other_tag in &document.tags {
@@ -23078,7 +23078,7 @@ impl IndexManager {
                                 break;
                             }
                         }
-                        
+
                         if !exists {
                             related.push((other_tag.clone(), 1.0));
                         }
@@ -23086,10 +23086,10 @@ impl IndexManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 从标签索引中移除文档
     fn remove_from_tag_index(&mut self, doc_id: &DocId) -> Result<(), IndexError> {
         // 移除文档标签关联
@@ -23098,7 +23098,7 @@ impl IndexManager {
             for tag in tags {
                 if let Some(docs) = self.tag_index.tag_docs.get_mut(&tag) {
                     docs.remove(doc_id);
-                    
+
                     // 如果标签不再有关联文档，可以选择清理
                     if docs.is_empty() {
                         self.tag_index.tag_docs.remove(&tag);
@@ -23107,20 +23107,20 @@ impl IndexManager {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 获取当前索引版本
     fn current_version(&self) -> u64 {
         // 简化实现，使用上次更新时间的时间戳
         self.status.last_updated.timestamp() as u64
     }
-    
+
     // 关闭索引
     fn close(&self) -> Result<(), IndexError> {
         // 关闭索引的逻辑，例如持久化、释放资源等
-        
+
         Ok(())
     }
 }
@@ -23147,32 +23147,32 @@ impl Tokenizer for StandardTokenizer {
     fn tokenize(&self, text: &str) -> Vec<String> {
         // 简单分词实现 - 按空格分割
         let mut tokens = Vec::new();
-        
+
         for word in text.split_whitespace() {
             let mut token = if self.lowercase {
                 word.to_lowercase()
             } else {
                 word.to_string()
             };
-            
+
             if self.remove_punctuation {
                 token = token.chars()
                     .filter(|c| !c.is_ascii_punctuation())
                     .collect();
             }
-            
+
             if self.ignore_numbers && token.chars().all(|c| c.is_ascii_digit()) {
                 continue;
             }
-            
+
             if !token.is_empty() {
                 tokens.push(token);
             }
         }
-        
+
         tokens
     }
-    
+
     fn normalize(&self, term: &str) -> String {
         // 简单标准化 - 转为小写并移除标点
         let mut normalized = if self.lowercase {
@@ -23180,27 +23180,27 @@ impl Tokenizer for StandardTokenizer {
         } else {
             term.to_string()
         };
-        
+
         if self.remove_punctuation {
             normalized = normalized.chars()
                 .filter(|c| !c.is_ascii_punctuation())
                 .collect();
         }
-        
+
         normalized
     }
-    
+
     fn extract_features(&self, text: &str) -> HashMap<String, f32> {
         // 简单特征提取 - 词频统计
         let tokens = self.tokenize(text);
         let mut features = HashMap::new();
-        
+
         for token in tokens {
             let normalized = self.normalize(&token);
             let count = features.entry(normalized).or_insert(0.0);
             *count += 1.0;
         }
-        
+
         // 标准化特征值
         let total: f32 = features.values().sum();
         if total > 0.0 {
@@ -23208,10 +23208,10 @@ impl Tokenizer for StandardTokenizer {
                 *value /= total;
             }
         }
-        
+
         features
     }
-    
+
     fn name(&self) -> String {
         "StandardTokenizer".to_string()
     }
@@ -23227,45 +23227,45 @@ impl TermDictionary {
             synonyms: HashMap::new(),
         }
     }
-    
+
     fn get_or_create_id(&mut self, term: &str) -> TermId {
         // 如果词项已存在，返回其ID
         if let Some(id) = self.term_to_id.get(term) {
             return id.clone();
         }
-        
+
         // 否则创建新ID
         let id = self.term_to_id.len() as TermId;
         self.term_to_id.insert(term.to_string(), id);
         self.id_to_term.insert(id, term.to_string());
-        
+
         id
     }
-    
+
     fn get_term(&self, id: TermId) -> Option<&String> {
         self.id_to_term.get(&id)
     }
-    
+
     fn get_id(&self, term: &str) -> Option<TermId> {
         self.term_to_id.get(term).cloned()
     }
-    
+
     fn is_stop_word(&self, term: &str) -> bool {
         self.stop_words.contains(term)
     }
-    
+
     fn add_stop_word(&mut self, term: &str) {
         self.stop_words.insert(term.to_string());
     }
-    
+
     fn add_synonym(&mut self, term: &str, synonyms: &[String]) {
         self.synonyms.insert(term.to_string(), synonyms.to_vec());
     }
-    
+
     fn get_synonyms(&self, term: &str) -> Vec<String> {
         self.synonyms.get(term).cloned().unwrap_or_default()
     }
-    
+
     fn term_count(&self) -> usize {
         self.term_to_id.len()
     }
@@ -23299,7 +23299,7 @@ impl HnswIndex {
             max_level: 0,
         }
     }
-    
+
     fn compute_distance(&self, a: &[f32], b: &[f32]) -> f32 {
         // 计算欧几里得距离
         let mut sum = 0.0;
@@ -23321,7 +23321,7 @@ impl ANNIndex for HnswIndex {
                 ),
             });
         }
-        
+
         // 创建新节点
         let level = 0; // 简化实现，实际应随机确定层级
         let node = Node {
@@ -23330,23 +23330,23 @@ impl ANNIndex for HnswIndex {
             links: vec![Vec::new(); level + 1],
             level,
         };
-        
+
         // 添加节点
         self.nodes.insert(id.clone(), node);
-        
+
         // 更新入口点
         if self.entry_point.is_none() {
             self.entry_point = Some(id.clone());
         }
-        
+
         // 更新最大层级
         if level > self.max_level {
             self.max_level = level;
         }
-        
+
         Ok(())
     }
-    
+
     fn search(&self, query: &[f32], k: usize) -> Result<Vec<(DocId, f32)>, IndexError> {
         if query.len() != self.dimensions {
             return Err(IndexError::ValidationError {
@@ -23356,12 +23356,12 @@ impl ANNIndex for HnswIndex {
                 ),
             });
         }
-        
+
         // 如果索引为空
         if self.entry_point.is_none() {
             return Ok(Vec::new());
         }
-        
+
         // 简化的搜索实现 - 线性扫描所有节点
         let mut results = self.nodes
             .iter()
@@ -23370,14 +23370,14 @@ impl ANNIndex for HnswIndex {
                 (id.clone(), distance)
             })
             .collect::<Vec<_>>();
-        
+
         // 按距离排序
         results.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         // 返回前k个结果
         Ok(results.into_iter().take(k).collect())
     }
-    
+
     fn remove(&mut self, id: &DocId) -> Result<(), IndexError> {
         // 简单移除节点
         if self.nodes.remove(id).is_none() {
@@ -23385,23 +23385,23 @@ impl ANNIndex for HnswIndex {
                 message: format!("Document ID not found in vector index: {:?}", id),
             });
         }
-        
+
         // 如果是入口点，需要重新选择
         if self.entry_point.as_ref() == Some(id) {
             self.entry_point = self.nodes.keys().next().cloned();
         }
-        
+
         Ok(())
     }
-    
+
     fn size(&self) -> usize {
         self.nodes.len()
     }
-    
+
     fn build(&mut self) -> Result<(), IndexError> {
         // 构建索引（重建链接等）
         // 这里简化实现
-        
+
         Ok(())
     }
 }
@@ -23425,36 +23425,36 @@ impl VectorExtractor for DefaultVectorExtractor {
         let vector: Vec<f32> = (0..self.dimensions)
             .map(|_| rng.gen_range(-1.0..1.0))
             .collect();
-        
+
         // 标准化向量
         let magnitude: f32 = vector.iter().map(|v| v * v).sum::<f32>().sqrt();
         let normalized: Vec<f32> = vector.iter().map(|v| v / magnitude).collect();
-        
+
         Ok(normalized)
     }
-    
+
     fn extract_from_image(&self, _image: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Image vector extraction not implemented".to_string(),
         })
     }
-    
+
     fn extract_from_audio(&self, _audio: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Audio vector extraction not implemented".to_string(),
         })
     }
-    
+
     fn extract_from_video(&self, _video: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Video vector extraction not implemented".to_string(),
         })
     }
-    
+
     fn dimensions(&self) -> usize {
         self.dimensions
     }
-    
+
     fn name(&self) -> String {
         "DefaultVectorExtractor".to_string()
     }
@@ -23488,7 +23488,7 @@ impl QueryCache {
             policy: CachePolicy::LRU,
         }
     }
-    
+
     fn disabled() -> Self {
         QueryCache {
             entries: LruCache::new(0), // 容量为0的缓存
@@ -23499,14 +23499,14 @@ impl QueryCache {
             policy: CachePolicy::LRU,
         }
     }
-    
+
     fn get(&mut self, key: &QueryCacheKey) -> Option<&QueryCacheValue> {
         if self.max_size_bytes == 0 {
             // 缓存已禁用
             self.miss_count += 1;
             return None;
         }
-        
+
         match self.entries.get(key) {
             Some(value) => {
                 self.hit_count += 1;
@@ -23518,34 +23518,34 @@ impl QueryCache {
             }
         }
     }
-    
+
     fn put(&mut self, key: QueryCacheKey, value: QueryCacheValue) {
         if self.max_size_bytes == 0 {
             // 缓存已禁用
             return;
         }
-        
+
         // 检查缓存空间
         if self.size_bytes + value.size_bytes > self.max_size_bytes {
             // 需要清理空间
             self.evict((value.size_bytes / 2) as usize);
         }
-        
+
         // 更新缓存大小
         self.size_bytes += value.size_bytes;
-        
+
         // 添加到缓存
         self.entries.put(key, value);
     }
-    
+
     fn clear(&mut self) {
         self.entries.clear();
         self.size_bytes = 0;
     }
-    
+
     fn evict(&mut self, bytes_to_free: usize) {
         // 简单实现 - 持续移除最老的条目直到释放足够空间
-        
+
         let mut freed = 0;
         while freed < bytes_to_free && !self.entries.is_empty() {
             if let Some((_, value)) = self.entries.pop_lru() {
@@ -23554,7 +23554,7 @@ impl QueryCache {
             }
         }
     }
-    
+
     fn hit_rate(&self) -> f64 {
         let total = self.hit_count + self.miss_count;
         if total > 0 {
@@ -23581,15 +23581,15 @@ impl SearchStats {
             popular_queries: HashMap::new(),
         }
     }
-    
+
     fn record_search(&mut self, query_text: &str, response: &SearchResponse) {
         // 更新总查询计数
         self.total_queries += 1;
         self.successful_queries += 1;
-        
+
         // 更新查询时间统计
         let query_time = response.took;
-        
+
         // 使用指数移动平均更新平均查询时间
         if self.total_queries == 1 {
             self.avg_query_time = query_time;
@@ -23599,7 +23599,7 @@ impl SearchStats {
             let new_millis = (1.0 - alpha) * avg_millis + alpha * query_time.as_millis() as f64;
             self.avg_query_time = Duration::from_millis(new_millis as u64);
         }
-        
+
         // 更新平均结果数
         let result_count = response.hits.len();
         if self.total_queries == 1 {
@@ -23608,7 +23608,7 @@ impl SearchStats {
             let alpha = 0.05; // 平滑因子
             self.avg_result_count = (1.0 - alpha) * self.avg_result_count + alpha * result_count as f64;
         }
-        
+
         // 添加到最近查询
         let query_stat = QueryStat {
             query_text: query_text.to_string(),
@@ -23617,21 +23617,21 @@ impl SearchStats {
             timestamp: Utc::now(),
             cache_hit: false, // 默认值，实际应从缓存状态判断
         };
-        
+
         self.recent_queries.push_back(query_stat);
         if self.recent_queries.len() > 100 {
             self.recent_queries.pop_front();
         }
-        
+
         // 更新热门查询
         *self.popular_queries.entry(query_text.to_string()).or_insert(0) += 1;
     }
-    
+
     fn record_failed_search(&mut self, query_text: &str, error: &SearchError) {
         // 更新总查询计数
         self.total_queries += 1;
         self.failed_queries += 1;
-        
+
         // 添加到最近查询
         let query_stat = QueryStat {
             query_text: query_text.to_string(),
@@ -23640,18 +23640,18 @@ impl SearchStats {
             timestamp: Utc::now(),
             cache_hit: false,
         };
-        
+
         self.recent_queries.push_back(query_stat);
         if self.recent_queries.len() > 100 {
             self.recent_queries.pop_front();
         }
     }
-    
+
     fn record_cache_hit(&mut self, query_text: &str, retrieval_time: Duration) {
         // 更新总查询计数
         self.total_queries += 1;
         self.successful_queries += 1;
-        
+
         // 添加到最近查询
         let query_stat = QueryStat {
             query_text: query_text.to_string(),
@@ -23660,24 +23660,24 @@ impl SearchStats {
             timestamp: Utc::now(),
             cache_hit: true,
         };
-        
+
         self.recent_queries.push_back(query_stat);
         if self.recent_queries.len() > 100 {
             self.recent_queries.pop_front();
         }
-        
+
         // 更新热门查询
         *self.popular_queries.entry(query_text.to_string()).or_insert(0) += 1;
     }
-    
+
     fn update_cache_hit_rate(&mut self, hit_rate: f64) {
         self.cache_hit_rate = hit_rate;
     }
-    
+
     fn save(&self) -> Result<(), SearchError> {
         // 保存统计信息到持久存储
         // 这里简化实现
-        
+
         Ok(())
     }
 }
@@ -23687,7 +23687,7 @@ impl QueryCacheValue {
     fn from_response(response: &SearchResponse) -> Self {
         // 估算大小 - 简化实现
         let size_bytes = estimate_response_size(response);
-        
+
         QueryCacheValue {
             results: response.hits.clone(),
             total_hits: response.total_hits,
@@ -23696,7 +23696,7 @@ impl QueryCacheValue {
             size_bytes,
         }
     }
-    
+
     fn to_response(&self) -> SearchResponse {
         SearchResponse {
             hits: self.results.clone(),
@@ -23728,15 +23728,15 @@ impl QueryCacheValue {
 fn estimate_response_size(response: &SearchResponse) -> u64 {
     // 简化的大小估算
     let mut size = 0;
-    
+
     // 估算结果大小
     for hit in &response.hits {
         // 基本结构大小
         size += 64; // 估算结构体开销
-        
+
         // 文档ID和内容ID
         size += 16; // 假设每个ID约8字节
-        
+
         // 源文档
         size += hit.source.iter().map(|(k, v)| {
             k.len() as u64 + match v {
@@ -23744,20 +23744,20 @@ fn estimate_response_size(response: &SearchResponse) -> u64 {
                 _ => 8, // 其他类型估计为8字节
             }
         }).sum::<u64>();
-        
+
         // 高亮
         if let Some(highlight) = &hit.highlight {
             size += highlight.iter().map(|(k, v)| {
                 k.len() as u64 + v.iter().map(|s| s.len() as u64).sum::<u64>()
             }).sum::<u64>();
         }
-        
+
         // 其他字段...
     }
-    
+
     // 其他元数据大小
     size += 32; // 总命中数、最大分数等
-    
+
     size
 }
 
@@ -23774,41 +23774,41 @@ impl<K: Eq + Hash, V> Trie<K, V> {
             children: HashMap::new(),
         }
     }
-    
+
     fn insert(&mut self, keys: Vec<K>, value: V) {
         let mut current = self;
-        
+
         for key in keys {
             current = current.children.entry(key).or_insert(Trie::new());
         }
-        
+
         current.value = Some(value);
     }
-    
+
     fn get(&self, key: &K) -> Option<&Trie<K, V>> {
         self.children.get(key)
     }
-    
+
     fn entry(&mut self, key: K) -> Entry<K, Trie<K, V>> {
         self.children.entry(key)
     }
-    
+
     fn value(&self) -> Option<&V> {
         self.value.as_ref()
     }
-    
+
     fn value_mut(&mut self) -> Option<&mut V> {
         self.value.as_mut()
     }
-    
+
     fn set_value(&mut self, value: V) {
         self.value = Some(value);
     }
-    
+
     fn children(&self) -> impl Iterator<Item = (&K, &Trie<K, V>)> {
         self.children.iter()
     }
-    
+
     fn children_mut(&mut self) -> impl Iterator<Item = (&K, &mut Trie<K, V>)> {
         self.children.iter_mut()
     }
@@ -23839,7 +23839,7 @@ impl QueryParser {
         supported_operators.insert("NOT".to_string());
         supported_operators.insert("+".to_string());
         supported_operators.insert("-".to_string());
-        
+
         QueryParser {
             strategy,
             default_field,
@@ -23847,7 +23847,7 @@ impl QueryParser {
             field_mapping: HashMap::new(),
         }
     }
-    
+
     fn parse(&self, query_string: &str) -> Result<Query, SearchError> {
         match self.strategy {
             ParseStrategy::Simple => self.parse_simple(query_string),
@@ -23856,7 +23856,7 @@ impl QueryParser {
             ParseStrategy::Hybrid => self.parse_hybrid(query_string),
         }
     }
-    
+
     fn parse_simple(&self, query_string: &str) -> Result<Query, SearchError> {
         if query_string.is_empty() {
             return Err(SearchError::ParseError {
@@ -23865,13 +23865,13 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         // 简单解析：按空格分词，创建多词项查询
         let terms: Vec<String> = query_string
             .split_whitespace()
             .map(|t| t.to_string())
             .collect();
-        
+
         if terms.is_empty() {
             return Err(SearchError::ParseError {
                 message: "No valid terms in query".to_string(),
@@ -23879,7 +23879,7 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         // 如果只有一个词项，创建简单词项查询
         if terms.len() == 1 {
             return Ok(Query::Match {
@@ -23890,7 +23890,7 @@ impl QueryParser {
                 boost: 1.0,
             });
         }
-        
+
         // 如果有多个词项，创建多字段匹配查询
         Ok(Query::MultiMatch {
             text: query_string.to_string(),
@@ -23900,10 +23900,10 @@ impl QueryParser {
             boost: 1.0,
         })
     }
-    
+
     fn parse_structured(&self, query_string: &str) -> Result<Query, SearchError> {
         // 结构化查询解析（类似Lucene查询语法）
-        
+
         // 检查是否为空查询
         if query_string.trim().is_empty() {
             return Err(SearchError::ParseError {
@@ -23912,24 +23912,24 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         // 解析布尔操作符
         if query_string.contains(" AND ") || query_string.contains(" OR ") || query_string.contains(" NOT ") {
             return self.parse_boolean_query(query_string);
         }
-        
+
         // 解析字段查询（例如 field:value）
         if query_string.contains(':') {
             let parts: Vec<&str> = query_string.splitn(2, ':').collect();
             if parts.len() == 2 {
                 let field = parts[0].trim();
                 let value = parts[1].trim();
-                
+
                 // 检查是否为范围查询
                 if value.starts_with('[') && value.ends_with(']') {
                     return self.parse_range_query(field, value);
                 }
-                
+
                 // 检查是否为通配符查询
                 if value.contains('*') || value.contains('?') {
                     return Ok(Query::Wildcard {
@@ -23938,7 +23938,7 @@ impl QueryParser {
                         boost: 1.0,
                     });
                 }
-                
+
                 // 默认为词项查询
                 return Ok(Query::Term {
                     term: value.to_string(),
@@ -23947,7 +23947,7 @@ impl QueryParser {
                 });
             }
         }
-        
+
         // 检查是否为短语查询
         if query_string.starts_with('"') && query_string.ends_with('"') {
             let phrase = &query_string[1..query_string.len()-1];
@@ -23958,14 +23958,14 @@ impl QueryParser {
                 boost: 1.0,
             });
         }
-        
+
         // 默认回退到简单解析
         self.parse_simple(query_string)
     }
-    
+
     fn parse_boolean_query(&self, query_string: &str) -> Result<Query, SearchError> {
         // 简化的布尔查询解析
-        
+
         // 查找第一个布尔操作符
         let parts: Vec<&str> = if query_string.contains(" AND ") {
             let parts = query_string.splitn(2, " AND ").collect::<Vec<&str>>();
@@ -23976,10 +23976,10 @@ impl QueryParser {
                     position: None,
                 });
             }
-            
+
             let left = self.parse(parts[0])?;
             let right = self.parse(parts[1])?;
-            
+
             return Ok(Query::Boolean {
                 must: vec![left, right],
                 should: vec![],
@@ -23997,10 +23997,10 @@ impl QueryParser {
                     position: None,
                 });
             }
-            
+
             let left = self.parse(parts[0])?;
             let right = self.parse(parts[1])?;
-            
+
             return Ok(Query::Boolean {
                 must: vec![],
                 should: vec![left, right],
@@ -24018,10 +24018,10 @@ impl QueryParser {
                     position: None,
                 });
             }
-            
+
             let left = self.parse(parts[0])?;
             let right = self.parse(parts[1])?;
-            
+
             return Ok(Query::Boolean {
                 must: vec![left],
                 should: vec![],
@@ -24031,15 +24031,15 @@ impl QueryParser {
                 boost: 1.0,
             });
         }
-        
+
         // 默认回退到简单解析
         self.parse_simple(query_string)
     }
-    
+
     fn parse_range_query(&self, field: &str, value: &str) -> Result<Query, SearchError> {
         // 解析范围查询，格式如 [min TO max]
         let content = &value[1..value.len()-1].trim();
-        
+
         if !content.contains(" TO ") {
             return Err(SearchError::ParseError {
                 message: "Invalid range query format".to_string(),
@@ -24047,7 +24047,7 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         let parts: Vec<&str> = content.splitn(2, " TO ").collect();
         if parts.len() != 2 {
             return Err(SearchError::ParseError {
@@ -24056,19 +24056,19 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         let lower = if parts[0].trim() == "*" {
             None
         } else {
             Some(Value::String(parts[0].trim().to_string()))
         };
-        
+
         let upper = if parts[1].trim() == "*" {
             None
         } else {
             Some(Value::String(parts[1].trim().to_string()))
         };
-        
+
         Ok(Query::Range {
             field: field.to_string(),
             lower_bound: lower,
@@ -24078,11 +24078,11 @@ impl QueryParser {
             boost: 1.0,
         })
     }
-    
+
     fn parse_natural_language(&self, query_string: &str) -> Result<Query, SearchError> {
         // 自然语言查询解析
         // 实际实现可能使用NLP工具，这里简化处理
-        
+
         // 检查是否为空查询
         if query_string.trim().is_empty() {
             return Err(SearchError::ParseError {
@@ -24091,7 +24091,7 @@ impl QueryParser {
                 position: None,
             });
         }
-        
+
         // 创建多字段匹配查询，并启用模糊匹配
         Ok(Query::MultiMatch {
             text: query_string.to_string(),
@@ -24101,7 +24101,7 @@ impl QueryParser {
             boost: 1.0,
         })
     }
-    
+
     fn parse_hybrid(&self, query_string: &str) -> Result<Query, SearchError> {
         // 混合解析策略：先尝试结构化解析，如果失败则使用自然语言解析
         match self.parse_structured(query_string) {
@@ -24109,11 +24109,11 @@ impl QueryParser {
             Err(_) => self.parse_natural_language(query_string),
         }
     }
-    
+
     fn add_field_mapping(&mut self, user_field: &str, index_field: &str) {
         self.field_mapping.insert(user_field.to_string(), index_field.to_string());
     }
-    
+
     fn get_mapped_field(&self, field: &str) -> String {
         self.field_mapping.get(field).cloned().unwrap_or_else(|| field.to_string())
     }
@@ -24136,13 +24136,13 @@ impl QueryAnalyzer {
             semantic_analyzer: None,
         }
     }
-    
+
     fn analyze(&self, query: &Query) -> Result<Query, SearchError> {
         match query {
             Query::Term { term, field, boost } => {
                 // 标准化词项
                 let normalized = self.tokenizer.normalize(term);
-                
+
                 // 拼写检查
                 let corrected = if let Some(checker) = &self.spell_checker {
                     let suggestions = checker.check_and_correct(&normalized);
@@ -24154,7 +24154,7 @@ impl QueryAnalyzer {
                 } else {
                     normalized
                 };
-                
+
                 Ok(Query::Term {
                     term: corrected,
                     field: field.clone(),
@@ -24164,11 +24164,11 @@ impl QueryAnalyzer {
             Query::Terms { terms, field, boost } => {
                 // 处理每个词项
                 let mut analyzed_terms = Vec::new();
-                
+
                 for term in terms {
                     // 标准化词项
                     let normalized = self.tokenizer.normalize(term);
-                    
+
                     // 拼写检查
                     if let Some(checker) = &self.spell_checker {
                         let suggestions = checker.check_and_correct(&normalized);
@@ -24181,14 +24181,14 @@ impl QueryAnalyzer {
                         analyzed_terms.push(normalized);
                     }
                 }
-                
+
                 // 同义词扩展
                 if let Some(expander) = &self.synonym_expander {
                     let mut expanded_terms = Vec::new();
-                    
+
                     for term in &analyzed_terms {
                         expanded_terms.push(term.clone());
-                        
+
                         let synonyms = expander.expand(term);
                         for synonym in synonyms {
                             if !expanded_terms.contains(&synonym) {
@@ -24196,10 +24196,10 @@ impl QueryAnalyzer {
                             }
                         }
                     }
-                    
+
                     analyzed_terms = expanded_terms;
                 }
-                
+
                 Ok(Query::Terms {
                     terms: analyzed_terms,
                     field: field.clone(),
@@ -24209,18 +24209,18 @@ impl QueryAnalyzer {
             Query::Match { text, field, operator, fuzziness, boost } => {
                 // 分词处理文本
                 let tokens = self.tokenizer.tokenize(text);
-                
+
                 // 如果只有一个词项，转为词项查询
                 if tokens.len() == 1 {
                     let normalized = self.tokenizer.normalize(&tokens[0]);
-                    
+
                     return Ok(Query::Term {
                         term: normalized,
                         field: field.clone(),
                         boost: *boost,
                     });
                 }
-                
+
                 // 否则保持为匹配查询
                 Ok(Query::Match {
                     text: text.clone(),
@@ -24233,11 +24233,11 @@ impl QueryAnalyzer {
             Query::MultiMatch { text, fields, operator, fuzziness, boost } => {
                 // 分词处理文本
                 let tokens = self.tokenizer.tokenize(text);
-                
+
                 // 如果只有一个词项，转为多字段词项查询
                 if tokens.len() == 1 {
                     let normalized = self.tokenizer.normalize(&tokens[0]);
-                    
+
                     let mut should_queries = Vec::new();
                     for field in fields {
                         should_queries.push(Query::Term {
@@ -24246,7 +24246,7 @@ impl QueryAnalyzer {
                             boost: *boost,
                         });
                     }
-                    
+
                     return Ok(Query::Boolean {
                         must: Vec::new(),
                         should: should_queries,
@@ -24256,7 +24256,7 @@ impl QueryAnalyzer {
                         boost: *boost,
                     });
                 }
-                
+
                 // 否则保持为多字段匹配查询
                 Ok(Query::MultiMatch {
                     text: text.clone(),
@@ -24269,18 +24269,18 @@ impl QueryAnalyzer {
             Query::MatchPhrase { text, field, slop, boost } => {
                 // 分词处理文本
                 let tokens = self.tokenizer.tokenize(text);
-                
+
                 // 如果只有一个词项，转为词项查询
                 if tokens.len() == 1 {
                     let normalized = self.tokenizer.normalize(&tokens[0]);
-                    
+
                     return Ok(Query::Term {
                         term: normalized,
                         field: field.clone(),
                         boost: *boost,
                     });
                 }
-                
+
                 // 否则保持为短语查询
                 Ok(Query::MatchPhrase {
                     text: text.clone(),
@@ -24295,7 +24295,7 @@ impl QueryAnalyzer {
                 let analyzed_should = should.iter().map(|q| self.analyze(q)).collect::<Result<Vec<_>, _>>()?;
                 let analyzed_must_not = must_not.iter().map(|q| self.analyze(q)).collect::<Result<Vec<_>, _>>()?;
                 let analyzed_filter = filter.iter().map(|q| self.analyze(q)).collect::<Result<Vec<_>, _>>()?;
-                
+
                 Ok(Query::Boolean {
                     must: analyzed_must,
                     should: analyzed_should,
@@ -24324,12 +24324,12 @@ impl SearchStrategy for AccurateSearchStrategy {
     fn search(&self, query: &Query, context: &SearchContext) -> Result<SearchResponse, SearchError> {
         // 执行精确搜索策略
         // 实际实现中，这里会进行深度搜索，确保结果的完整性和准确性
-        
+
         // 模拟搜索结果
         let hits = Vec::new();
         let total_hits = 0;
         let max_score = 0.0;
-        
+
         Ok(SearchResponse {
             hits,
             total_hits,
@@ -24350,13 +24350,13 @@ impl SearchStrategy for AccurateSearchStrategy {
             execution_details: None,
         })
     }
-    
+
     fn estimate_results(&self, query: &Query) -> usize {
         // 估计结果数量
         // 实际实现会基于索引统计信息进行估计
         100
     }
-    
+
     fn name(&self) -> String {
         "AccurateSearchStrategy".to_string()
     }
@@ -24374,12 +24374,12 @@ impl SearchStrategy for FastSearchStrategy {
     fn search(&self, query: &Query, context: &SearchContext) -> Result<SearchResponse, SearchError> {
         // 执行快速搜索策略
         // 实际实现中，这里会进行高效的搜索，可能牺牲一些精度
-        
+
         // 模拟搜索结果
         let hits = Vec::new();
         let total_hits = 0;
         let max_score = 0.0;
-        
+
         Ok(SearchResponse {
             hits,
             total_hits,
@@ -24400,13 +24400,13 @@ impl SearchStrategy for FastSearchStrategy {
             execution_details: None,
         })
     }
-    
+
     fn estimate_results(&self, query: &Query) -> usize {
         // 估计结果数量
         // 快速策略可能会进行更快的估计
         50
     }
-    
+
     fn name(&self) -> String {
         "FastSearchStrategy".to_string()
     }
@@ -24424,12 +24424,12 @@ impl SearchStrategy for BalancedSearchStrategy {
     fn search(&self, query: &Query, context: &SearchContext) -> Result<SearchResponse, SearchError> {
         // 执行平衡搜索策略
         // 实际实现中，这里会在速度和精度之间取得平衡
-        
+
         // 模拟搜索结果
         let hits = Vec::new();
         let total_hits = 0;
         let max_score = 0.0;
-        
+
         Ok(SearchResponse {
             hits,
             total_hits,
@@ -24450,13 +24450,13 @@ impl SearchStrategy for BalancedSearchStrategy {
             execution_details: None,
         })
     }
-    
+
     fn estimate_results(&self, query: &Query) -> usize {
         // 估计结果数量
         // 平衡策略在速度和精度之间取平衡
         75
     }
-    
+
     fn name(&self) -> String {
         "BalancedSearchStrategy".to_string()
     }
@@ -24484,7 +24484,7 @@ impl ResultRanker for DefaultResultRanker {
                     // 从source中获取排序值
                     let a_value = a.source.get(&sort_field.field);
                     let b_value = b.source.get(&sort_field.field);
-                    
+
                     match (a_value, b_value) {
                         (Some(a_val), Some(b_val)) => {
                             // 根据排序顺序进行比较
@@ -24518,11 +24518,11 @@ impl ResultRanker for DefaultResultRanker {
             }
         }
     }
-    
+
     fn rescore(&self, results: &mut [SearchResult], context: &SearchContext) {
         // 在特殊情况下重新计算分数
         // 例如对于特定查询类型或特定用户偏好
-        
+
         // 如果用户有搜索偏好
         if let Some(user_id) = &context.user_id {
             // 模拟基于用户偏好的分数调整
@@ -24531,12 +24531,12 @@ impl ResultRanker for DefaultResultRanker {
                 let preference_factor = (user_id.as_bytes().iter().map(|&b| b as u32).sum::<u32>() % 20) as f32 / 100.0 + 0.9;
                 result.score *= preference_factor;
             }
-            
+
             // 重新排序
             results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
         }
     }
-    
+
     fn name(&self) -> String {
         "DefaultResultRanker".to_string()
     }
@@ -24552,11 +24552,11 @@ impl BagOfWordsVectorExtractor {
     fn new(vocabulary: Vec<String>) -> Self {
         let dimensions = vocabulary.len();
         let mut vocab_map = HashMap::new();
-        
+
         for (i, word) in vocabulary.into_iter().enumerate() {
             vocab_map.insert(word, i);
         }
-        
+
         BagOfWordsVectorExtractor {
             dimensions,
             vocabulary: vocab_map,
@@ -24568,20 +24568,20 @@ impl VectorExtractor for BagOfWordsVectorExtractor {
     fn extract_from_text(&self, text: &str) -> Result<Vec<f32>, ExtractionError> {
         // 创建词袋向量
         let mut vector = vec![0.0; self.dimensions];
-        
+
         // 简单分词
         let words: Vec<String> = text
             .split_whitespace()
             .map(|w| w.trim().to_lowercase())
             .collect();
-        
+
         // 计算词频
         for word in words {
             if let Some(index) = self.vocabulary.get(&word) {
                 vector[*index] += 1.0;
             }
         }
-        
+
         // 归一化
         let sum: f32 = vector.iter().sum();
         if sum > 0.0 {
@@ -24589,32 +24589,32 @@ impl VectorExtractor for BagOfWordsVectorExtractor {
                 *value /= sum;
             }
         }
-        
+
         Ok(vector)
     }
-    
+
     fn extract_from_image(&self, _image: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Image feature extraction not implemented".to_string(),
         })
     }
-    
+
     fn extract_from_audio(&self, _audio: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Audio feature extraction not implemented".to_string(),
         })
     }
-    
+
     fn extract_from_video(&self, _video: &[u8]) -> Result<Vec<f32>, ExtractionError> {
         Err(ExtractionError::NotImplemented {
             message: "Video feature extraction not implemented".to_string(),
         })
     }
-    
+
     fn dimensions(&self) -> usize {
         self.dimensions
     }
-    
+
     fn name(&self) -> String {
         "BagOfWordsVectorExtractor".to_string()
     }
@@ -24633,15 +24633,15 @@ impl SimpleSpellChecker {
             bigram_index: HashMap::new(),
         }
     }
-    
+
     fn load_dictionary(&mut self, words: &[String]) -> Result<(), SpellCheckError> {
         for word in words {
             self.add_word(word)?;
         }
-        
+
         Ok(())
     }
-    
+
     fn add_word(&mut self, word: &str) -> Result<(), SpellCheckError> {
         let normalized = word.trim().to_lowercase();
         if normalized.is_empty() {
@@ -24649,10 +24649,10 @@ impl SimpleSpellChecker {
                 message: "Empty word".to_string(),
             });
         }
-        
+
         // 添加到词典
         self.dictionary.insert(normalized.clone());
-        
+
         // 构建双字母组索引
         for i in 0..normalized.len() - 1 {
             let bigram = normalized[i..i+2].to_string();
@@ -24661,28 +24661,28 @@ impl SimpleSpellChecker {
                 entry.push(normalized.clone());
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn calculate_edit_distance(&self, s1: &str, s2: &str) -> usize {
         // 计算Levenshtein距离
         let s1_chars: Vec<char> = s1.chars().collect();
         let s2_chars: Vec<char> = s2.chars().collect();
-        
+
         let m = s1_chars.len();
         let n = s2_chars.len();
-        
+
         let mut dp = vec![vec![0; n + 1]; m + 1];
-        
+
         for i in 0..=m {
             dp[i][0] = i;
         }
-        
+
         for j in 0..=n {
             dp[0][j] = j;
         }
-        
+
         for i in 1..=m {
             for j in 1..=n {
                 if s1_chars[i - 1] == s2_chars[j - 1] {
@@ -24695,7 +24695,7 @@ impl SimpleSpellChecker {
                 }
             }
         }
-        
+
         dp[m][n]
     }
 }
@@ -24703,15 +24703,15 @@ impl SimpleSpellChecker {
 impl SpellChecker for SimpleSpellChecker {
     fn check_and_correct(&self, term: &str) -> Vec<(String, f32)> {
         let normalized = term.trim().to_lowercase();
-        
+
         // 如果词已经在词典中，直接返回
         if self.dictionary.contains(&normalized) {
             return vec![(normalized, 1.0)];
         }
-        
+
         // 收集候选词
         let mut candidates = HashSet::new();
-        
+
         // 使用双字母组索引查找候选词
         for i in 0..normalized.len() - 1 {
             if i + 2 <= normalized.len() {
@@ -24723,45 +24723,45 @@ impl SpellChecker for SimpleSpellChecker {
                 }
             }
         }
-        
+
         // 计算编辑距离和相似度分数
         let mut suggestions = Vec::new();
         for candidate in candidates {
             let distance = self.calculate_edit_distance(&normalized, &candidate);
             let max_len = std::cmp::max(normalized.len(), candidate.len());
-            
+
             // 计算相似度得分（0到1之间）
             let score = if max_len > 0 {
                 1.0 - (distance as f32 / max_len as f32)
             } else {
                 0.0
             };
-            
+
             // 只保留得分大于一定阈值的建议
             if score > 0.6 {
                 suggestions.push((candidate, score));
             }
         }
-        
+
         // 按相似度排序
         suggestions.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         // 返回最好的建议
         suggestions.truncate(5);
         suggestions
     }
-    
+
     fn get_suggestions(&self, term: &str, max_suggestions: usize) -> Vec<(String, f32)> {
         let mut suggestions = self.check_and_correct(term);
         suggestions.truncate(max_suggestions);
         suggestions
     }
-    
+
     fn add_vocabulary(&mut self, terms: &[String]) -> Result<(), SpellCheckError> {
         for term in terms {
             self.add_word(term)?;
         }
-        
+
         Ok(())
     }
 }
@@ -24788,13 +24788,13 @@ impl QueryProcessor {
             ParseStrategy::Hybrid,
             "content".to_string(), // 默认搜索字段
         );
-        
+
         // 创建分词器
         let tokenizer: Box<dyn Tokenizer> = Box::new(StandardTokenizer::new());
-        
+
         // 创建分析器
         let analyzer = QueryAnalyzer::new(tokenizer);
-        
+
         // 创建执行器
         let executor = QueryExecutor {
             plan_generator: QueryPlanGenerator {
@@ -24828,7 +24828,7 @@ impl QueryProcessor {
             max_execution_time: config.max_query_time,
             max_results: config.max_results,
         };
-        
+
         // 创建结果组合器
         let result_combiner = ResultCombiner {
             strategy: CombinationStrategy::ScoreBased,
@@ -24846,14 +24846,14 @@ impl QueryProcessor {
                 rules: Vec::new(),
             },
         };
-        
+
         // 创建查询扩展器
         let query_expander = QueryExpander {
             expanders: Vec::new(),
             enabled: false,
             max_expanded_queries: 5,
         };
-        
+
         // 创建查询优化器
         let query_optimizer = QueryOptimizer {
             rewrite_rules: Vec::new(),
@@ -24865,7 +24865,7 @@ impl QueryProcessor {
                 avg_doc_length: 0.0,
             },
         };
-        
+
         Ok(QueryProcessor {
             parser,
             analyzer,
@@ -24878,17 +24878,17 @@ impl QueryProcessor {
 ```rust
         })
     }
-    
+
     fn process(&self, query_string: &str, context: &SearchContext) -> Result<SearchResponse, SearchError> {
         // 解析查询
         let parsed_query = self.parser.parse(query_string)?;
-        
+
         // 分析查询
         let analyzed_query = self.analyzer.analyze(&parsed_query)?;
-        
+
         // 优化查询
         let optimized_query = self.query_optimizer.optimize(&analyzed_query)?;
-        
+
         // 扩展查询（如果启用）
         let queries_to_execute = if self.query_expander.enabled {
             let expanded = self.query_expander.expand(&optimized_query);
@@ -24896,18 +24896,18 @@ impl QueryProcessor {
         } else {
             vec![optimized_query]
         };
-        
+
         // 生成执行计划
         let plans = queries_to_execute.iter().map(|q| {
             self.executor.plan_generator.generate(q)
         }).collect::<Result<Vec<_>, _>>()?;
-        
+
         // 执行查询
         let results = self.executor.execute(&plans, context)?;
-        
+
         // 合并结果
         let combined_results = self.result_combiner.combine(results);
-        
+
         // 构建响应
         let response = SearchResponse {
             hits: combined_results,
@@ -24928,7 +24928,7 @@ impl QueryProcessor {
             suggestions: None,
             execution_details: None,
         };
-        
+
         Ok(response)
     }
 }
@@ -24938,17 +24938,17 @@ impl QueryPlanGenerator {
         // 创建初始步骤
         let mut steps = Vec::new();
         let mut step_index = 0;
-        
+
         // 递归构建查询计划步骤
         self.build_steps(query, &mut steps, &mut step_index)?;
-        
+
         // 确定执行顺序
         let execution_order = self.determine_execution_order(&steps);
-        
+
         // 估算成本和结果数
         let estimated_cost = self.estimate_cost(&steps, &execution_order);
         let estimated_results = self.estimate_results(&steps, &execution_order);
-        
+
         // 创建查询计划
         let plan = QueryPlan {
             steps,
@@ -24956,17 +24956,17 @@ impl QueryPlanGenerator {
             estimated_results,
             execution_order,
         };
-        
+
         // 评估计划
         let plan_score = self.evaluator.evaluate(&plan);
-        
+
         Ok(plan)
     }
-    
+
     fn build_steps(&self, query: &Query, steps: &mut Vec<PlanStep>, index: &mut usize) -> Result<usize, SearchError> {
         let current_index = *index;
         *index += 1;
-        
+
         match query {
             Query::Term { term, field, boost } => {
                 steps.push(PlanStep::TermQuery {
@@ -24978,18 +24978,18 @@ impl QueryPlanGenerator {
             Query::Terms { terms, field, boost } => {
                 // 对于多词项查询，创建多个词项步骤和一个布尔步骤
                 let mut term_indices = Vec::new();
-                
+
                 for term in terms {
                     steps.push(PlanStep::TermQuery {
                         term: term.clone(),
                         field: field.clone(),
                         boost: *boost,
                     });
-                    
+
                     term_indices.push(*index);
                     *index += 1;
                 }
-                
+
                 // 创建布尔步骤来合并所有词项
                 steps.push(PlanStep::BooleanQuery {
                     must: Vec::new(),
@@ -25003,15 +25003,15 @@ impl QueryPlanGenerator {
                 // 分词文本
                 let tokenizer = StandardTokenizer::new();
                 let tokens = tokenizer.tokenize(text);
-                
+
                 match operator {
                     MatchOperator::And => {
                         // 所有词项必须匹配
                         let mut term_indices = Vec::new();
-                        
+
                         for token in tokens {
                             let normalized = tokenizer.normalize(&token);
-                            
+
                             // 如果开启了模糊匹配
                             if let Some(edits) = fuzziness {
                                 steps.push(PlanStep::FuzzyQuery {
@@ -25028,11 +25028,11 @@ impl QueryPlanGenerator {
                                     boost: *boost,
                                 });
                             }
-                            
+
                             term_indices.push(*index);
                             *index += 1;
                         }
-                        
+
                         // 创建布尔步骤，要求所有词项匹配
                         steps.push(PlanStep::BooleanQuery {
                             must: term_indices,
@@ -25045,10 +25045,10 @@ impl QueryPlanGenerator {
                     MatchOperator::Or => {
                         // 任何词项匹配即可
                         let mut term_indices = Vec::new();
-                        
+
                         for token in tokens {
                             let normalized = tokenizer.normalize(&token);
-                            
+
                             // 如果开启了模糊匹配
                             if let Some(edits) = fuzziness {
                                 steps.push(PlanStep::FuzzyQuery {
@@ -25065,11 +25065,11 @@ impl QueryPlanGenerator {
                                     boost: *boost,
                                 });
                             }
-                            
+
                             term_indices.push(*index);
                             *index += 1;
                         }
-                        
+
                         // 创建布尔步骤，任一词项匹配即可
                         steps.push(PlanStep::BooleanQuery {
                             must: Vec::new(),
@@ -25085,9 +25085,9 @@ impl QueryPlanGenerator {
                 // 对于短语查询，创建一个短语步骤
                 let tokenizer = StandardTokenizer::new();
                 let tokens = tokenizer.tokenize(text);
-                
+
                 let terms: Vec<String> = tokens.iter().map(|t| tokenizer.normalize(t)).collect();
-                
+
                 steps.push(PlanStep::PhraseQuery {
                     terms,
                     field: field.clone(),
@@ -25102,21 +25102,21 @@ impl QueryPlanGenerator {
                     let sub_index = self.build_steps(sub_query, steps, index)?;
                     must_indices.push(sub_index);
                 }
-                
+
                 // 处理应该匹配的查询
                 let mut should_indices = Vec::new();
                 for sub_query in should {
                     let sub_index = self.build_steps(sub_query, steps, index)?;
                     should_indices.push(sub_index);
                 }
-                
+
                 // 处理不应匹配的查询
                 let mut must_not_indices = Vec::new();
                 for sub_query in must_not {
                     let sub_index = self.build_steps(sub_query, steps, index)?;
                     must_not_indices.push(sub_index);
                 }
-                
+
                 // 创建布尔步骤
                 steps.push(PlanStep::BooleanQuery {
                     must: must_indices,
@@ -25192,22 +25192,22 @@ impl QueryPlanGenerator {
                 });
             }
         }
-        
+
         Ok(current_index)
     }
-    
+
     fn determine_execution_order(&self, steps: &[PlanStep]) -> Vec<usize> {
         // 简单实现：按步骤顺序执行
         (0..steps.len()).collect()
     }
-    
+
     fn estimate_cost(&self, steps: &[PlanStep], execution_order: &[usize]) -> f64 {
         // 简单的成本估计实现
         let mut total_cost = 0.0;
-        
+
         for &step_idx in execution_order {
             let step = &steps[step_idx];
-            
+
             let step_cost = match step {
                 PlanStep::TermQuery { .. } => 1.0,
                 PlanStep::PrefixQuery { .. } => 2.0,
@@ -25222,21 +25222,21 @@ impl QueryPlanGenerator {
                 PlanStep::GeoQuery { .. } => 5.0,
                 PlanStep::VectorQuery { .. } => 8.0,
             };
-            
+
             total_cost += step_cost;
         }
-        
+
         total_cost
     }
-    
+
     fn estimate_results(&self, steps: &[PlanStep], _execution_order: &[usize]) -> usize {
         // 简化的结果数量估计
         // 实际实现中，这会基于索引统计信息进行更准确的估计
-        
+
         if steps.is_empty() {
             return 0;
         }
-        
+
         // 对于复杂查询，估计会更复杂
         // 这里只是一个非常简化的示例
         100
@@ -25247,16 +25247,16 @@ impl QueryExecutor {
     fn execute(&self, plans: &[QueryPlan], context: &SearchContext) -> Result<Vec<Vec<SearchResult>>, SearchError> {
         // 记录开始时间，用于超时检查
         let start_time = Instant::now();
-        
+
         // 设置超时上限
         let timeout = self.max_execution_time;
-        
+
         // 根据执行策略选择执行方式
         match self.execution_strategy {
             ExecutionStrategy::Sequential => {
                 // 顺序执行每个计划
                 let mut all_results = Vec::new();
-                
+
                 for plan in plans {
                     // 检查是否超时
                     if start_time.elapsed() > timeout {
@@ -25265,21 +25265,21 @@ impl QueryExecutor {
                             partial_results: None,
                         });
                     }
-                    
+
                     // 执行单个计划
                     let results = self.execute_plan(plan, context, start_time, timeout)?;
                     all_results.push(results);
                 }
-                
+
                 Ok(all_results)
             },
             ExecutionStrategy::Parallel(threads) => {
                 // 并行执行，使用线程池
                 // 实际实现会使用适当的并发库
-                
+
                 // 模拟并行执行结果
                 let mut all_results = Vec::new();
-                
+
                 for plan in plans {
                     // 检查是否超时
                     if start_time.elapsed() > timeout {
@@ -25288,21 +25288,21 @@ impl QueryExecutor {
                             partial_results: None,
                         });
                     }
-                    
+
                     // 执行单个计划
                     let results = self.execute_plan(plan, context, start_time, timeout)?;
                     all_results.push(results);
                 }
-                
+
                 Ok(all_results)
             },
             ExecutionStrategy::Distributed => {
                 // 分布式执行，需要与分布式协调器交互
                 // 实际实现会更复杂
-                
+
                 // 模拟分布式执行结果
                 let mut all_results = Vec::new();
-                
+
                 for plan in plans {
                     // 检查是否超时
                     if start_time.elapsed() > timeout {
@@ -25311,21 +25311,21 @@ impl QueryExecutor {
                             partial_results: None,
                         });
                     }
-                    
+
                     // 执行单个计划
                     let results = self.execute_plan(plan, context, start_time, timeout)?;
                     all_results.push(results);
                 }
-                
+
                 Ok(all_results)
             },
             ExecutionStrategy::Adaptive => {
                 // 自适应执行，根据系统负载和查询复杂度选择策略
                 // 实际实现会更复杂
-                
+
                 // 模拟自适应执行结果
                 let mut all_results = Vec::new();
-                
+
                 for plan in plans {
                     // 检查是否超时
                     if start_time.elapsed() > timeout {
@@ -25334,21 +25334,21 @@ impl QueryExecutor {
                             partial_results: None,
                         });
                     }
-                    
+
                     // 执行单个计划
                     let results = self.execute_plan(plan, context, start_time, timeout)?;
                     all_results.push(results);
                 }
-                
+
                 Ok(all_results)
             },
         }
     }
-    
+
     fn execute_plan(&self, plan: &QueryPlan, context: &SearchContext, start_time: Instant, timeout: Duration) -> Result<Vec<SearchResult>, SearchError> {
         // 根据计划执行顺序执行步骤
         let mut intermediate_results: HashMap<usize, Vec<SearchResult>> = HashMap::new();
-        
+
         for &step_idx in &plan.execution_order {
             // 检查是否超时
             if start_time.elapsed() > timeout {
@@ -25357,37 +25357,37 @@ impl QueryExecutor {
                     partial_results: Some(intermediate_results.values().flatten().cloned().collect()),
                 });
             }
-            
+
             let step = &plan.steps[step_idx];
             let step_results = self.execute_step(step, &intermediate_results, context)?;
-            
+
             intermediate_results.insert(step_idx, step_results);
         }
-        
+
         // 获取最后一步的结果
         let final_step_idx = plan.execution_order.last().unwrap_or(&0);
         let final_results = intermediate_results.get(final_step_idx).cloned().unwrap_or_default();
-        
+
         // 限制结果数量
         let limited_results = if final_results.len() > self.max_results {
             final_results[0..self.max_results].to_vec()
         } else {
             final_results
         };
-        
+
         Ok(limited_results)
     }
-    
+
     fn execute_step(&self, step: &PlanStep, intermediate_results: &HashMap<usize, Vec<SearchResult>>, context: &SearchContext) -> Result<Vec<SearchResult>, SearchError> {
         // 根据步骤类型执行相应的操作
         match step {
             PlanStep::TermQuery { term, field, boost } => {
                 // 执行词项查询
                 // 实际实现会查询倒排索引
-                
+
                 // 模拟查询结果
                 let mut results = Vec::new();
-                
+
                 // 创建示例结果
                 let result = SearchResult {
                     doc_id: "doc1".to_string(),
@@ -25400,47 +25400,47 @@ impl QueryExecutor {
                     fields: None,
                     matching_vector: None,
                 };
-                
+
                 results.push(result);
-                
+
                 Ok(results)
             },
             PlanStep::BooleanQuery { must, should, must_not, min_should_match, boost } => {
                 // 执行布尔查询
                 // 需要合并之前步骤的结果
-                
+
                 // 收集必须匹配的结果
                 let must_results: Vec<&Vec<SearchResult>> = must
                     .iter()
                     .filter_map(|idx| intermediate_results.get(idx))
                     .collect();
-                
+
                 // 收集应该匹配的结果
                 let should_results: Vec<&Vec<SearchResult>> = should
                     .iter()
                     .filter_map(|idx| intermediate_results.get(idx))
                     .collect();
-                
+
                 // 收集不应匹配的结果
                 let must_not_results: Vec<&Vec<SearchResult>> = must_not
                     .iter()
                     .filter_map(|idx| intermediate_results.get(idx))
                     .collect();
-                
+
                 // 构建文档ID到结果的映射
                 let mut doc_results: HashMap<String, SearchResult> = HashMap::new();
-                
+
                 // 处理必须匹配的结果
                 if !must_results.is_empty() {
                     // 取第一个must集合作为基础
                     for result in must_results[0] {
                         doc_results.insert(result.doc_id.clone(), result.clone());
                     }
-                    
+
                     // 针对其余must集合进行交集操作
                     for results in must_results.iter().skip(1) {
                         let mut new_doc_results = HashMap::new();
-                        
+
                         for result in *results {
                             if doc_results.contains_key(&result.doc_id) {
                                 // 合并分数
@@ -25449,7 +25449,7 @@ impl QueryExecutor {
                                 new_doc_results.insert(result.doc_id.clone(), merged);
                             }
                         }
-                        
+
                         doc_results = new_doc_results;
                     }
                 } else if !should_results.is_empty() {
@@ -25463,44 +25463,44 @@ impl QueryExecutor {
                             }
                         }
                     }
-                    
+
                     // 检查minimum should match要求
                     if *min_should_match > 0 {
                         // 计算每个文档匹配的should查询数量
                         let mut doc_match_counts: HashMap<String, usize> = HashMap::new();
-                        
+
                         for results in &should_results {
                             for result in *results {
                                 let count = doc_match_counts.entry(result.doc_id.clone()).or_insert(0);
                                 *count += 1;
                             }
                         }
-                        
+
                         // 仅保留满足minimum should match要求的文档
                         doc_results.retain(|doc_id, _| {
                             doc_match_counts.get(doc_id).copied().unwrap_or(0) >= *min_should_match
                         });
                     }
                 }
-                
+
                 // 移除不应匹配的结果
                 for results in &must_not_results {
                     for result in *results {
                         doc_results.remove(&result.doc_id);
                     }
                 }
-                
+
                 // 将结果转换为有序列表
                 let mut final_results: Vec<SearchResult> = doc_results.into_values().collect();
-                
+
                 // 应用boost
                 for result in &mut final_results {
                     result.score *= *boost;
                 }
-                
+
                 // 按分数排序
                 final_results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-                
+
                 Ok(final_results)
             },
             // 其他步骤类型的处理...
@@ -25518,11 +25518,11 @@ impl ResultCombiner {
             CombinationStrategy::Simple => {
                 // 简单合并：连接所有结果，然后排序去重
                 let mut all_results = Vec::new();
-                
+
                 for results in results_sets {
                     all_results.extend(results);
                 }
-                
+
                 // 去重（按文档ID）
                 let mut unique_results = HashMap::new();
                 for result in all_results {
@@ -25531,38 +25531,38 @@ impl ResultCombiner {
                         *entry = result;
                     }
                 }
-                
+
                 // 转换回向量并排序
                 let mut final_results: Vec<SearchResult> = unique_results.into_values().collect();
-                
+
                 // 使用排序器排序
                 self.sorter.sort(&mut final_results);
-                
+
                 // 应用过滤器
                 let filtered_results = self.filter.apply(final_results);
-                
+
                 filtered_results
             },
             CombinationStrategy::ScoreBased => {
                 // 基于分数合并：根据查询相关度分数合并结果
                 let mut scored_results = HashMap::new();
-                
+
                 // 为每组结果分配权重
                 let sets_count = results_sets.len() as f32;
                 let weight_per_set = 1.0 / sets_count;
-                
+
                 for results in results_sets {
                     for result in results {
                         let entry = scored_results.entry(result.doc_id.clone()).or_insert(result.clone());
-                        
+
                         // 更新分数（加权合并）
                         entry.score = (entry.score + result.score * weight_per_set) / (1.0 + weight_per_set);
-                        
+
                         // 合并高亮（如果有）
                         if let (Some(entry_highlight), Some(result_highlight)) = (&mut entry.highlight, &result.highlight) {
                             for (field, highlights) in result_highlight {
                                 let entry_field_highlights = entry_highlight.entry(field.clone()).or_insert_with(Vec::new);
-                                
+
                                 // 添加不重复的高亮
                                 for highlight in highlights {
                                     if !entry_field_highlights.contains(highlight) {
@@ -25575,22 +25575,22 @@ impl ResultCombiner {
                         }
                     }
                 }
-                
+
                 // 转换回向量并排序
                 let mut final_results: Vec<SearchResult> = scored_results.into_values().collect();
-                
+
                 // 使用排序器排序
                 self.sorter.sort(&mut final_results);
-                
+
                 // 应用过滤器
                 let filtered_results = self.filter.apply(final_results);
-                
+
                 filtered_results
             },
             CombinationStrategy::Tiered => {
                 // 分层合并：首先返回高质量结果，然后是次要结果
                 let mut tiered_results = Vec::new();
-                
+
                 // 假设结果集已按质量排序（第一个集合质量最高）
                 for results in results_sets {
                     for result in results {
@@ -25600,26 +25600,26 @@ impl ResultCombiner {
                         }
                     }
                 }
-                
+
                 // 使用排序器排序
                 self.sorter.sort(&mut tiered_results);
-                
+
                 // 应用过滤器
                 let filtered_results = self.filter.apply(tiered_results);
-                
+
                 filtered_results
             },
             CombinationStrategy::Custom(ref combiner) => {
                 // 使用自定义组合器
                 let combined = combiner.combine(&results_sets);
-                
+
                 // 使用排序器排序
                 let mut sorted_results = combined;
                 self.sorter.sort(&mut sorted_results);
-                
+
                 // 应用过滤器
                 let filtered_results = self.filter.apply(sorted_results);
-                
+
                 filtered_results
             },
         }
@@ -25640,34 +25640,34 @@ impl ResultSorter {
             results.sort_by(|a, b| {
                 for sort_field in &self.sort_fields {
                     let field_name = &sort_field.field;
-                    
+
                     // 特殊处理 _score 字段
                     if field_name == "_score" {
                         let ordering = match sort_field.order {
                             SortOrder::Ascending => a.score.partial_cmp(&b.score),
                             SortOrder::Descending => b.score.partial_cmp(&a.score),
                         };
-                        
+
                         if let Some(ord) = ordering {
                             if ord != std::cmp::Ordering::Equal {
                                 return ord;
                             }
                         }
-                        
+
                         continue;
                     }
-                    
+
                     // 从 source 中获取字段值
                     let a_value = a.source.get(field_name);
                     let b_value = b.source.get(field_name);
-                    
+
                     match (a_value, b_value) {
                         (Some(a_val), Some(b_val)) => {
                             let ordering = match sort_field.order {
                                 SortOrder::Ascending => a_val.partial_cmp(b_val),
                                 SortOrder::Descending => b_val.partial_cmp(a_val),
                             };
-                            
+
                             if let Some(ord) = ordering {
                                 if ord != std::cmp::Ordering::Equal {
                                     return ord;
@@ -25721,7 +25721,7 @@ impl ResultSorter {
                         }
                     }
                 }
-                
+
                 // 所有排序字段都相等，回退到文档ID排序
                 a.doc_id.cmp(&b.doc_id)
             });
@@ -25737,7 +25737,7 @@ impl ResultFilter {
         if self.rules.is_empty() {
             return results;
         }
-        
+
         results.into_iter().filter(|result| {
             self.rules.iter().all(|rule| rule.apply(result))
         }).collect()
@@ -25748,20 +25748,20 @@ impl QueryOptimizer {
     fn optimize(&self, query: &Query) -> Result<Query, SearchError> {
         // 应用查询重写规则
         let mut optimized = query.clone();
-        
+
         for rule in &self.rewrite_rules {
             if let Some(rewritten) = rule.apply(&optimized) {
                 optimized = rewritten;
             }
         }
-        
+
         // 应用优化策略
         for strategy in &self.optimization_strategies {
             if let Some(improved) = strategy.optimize(&optimized, &self.statistics) {
                 optimized = improved;
             }
         }
-        
+
         Ok(optimized)
     }
 }
@@ -26288,7 +26288,7 @@ impl SearchCoordinator {
                 QueryRoutingStrategy::ShardSelective(selector)
             }
         };
-        
+
         let result_merging = match config.result_merging_strategy {
             DistributedResultMergingType::Simple => ResultMergingStrategy::Simple,
             DistributedResultMergingType::Tiered => ResultMergingStrategy::Tiered,
@@ -26297,14 +26297,14 @@ impl SearchCoordinator {
                 ResultMergingStrategy::Custom(merger)
             }
         };
-        
+
         let distributed_cache = DistributedQueryCache {
             local_cache: QueryCache::new(config.local_cache_size_bytes),
             distributed_cache: config.distributed_cache,
             consistency: config.cache_consistency,
             usage_policy: config.cache_usage_policy,
         };
-        
+
         let plan_generator = DistributedQueryPlanGenerator {
             local_generator: QueryPlanGenerator {
                 optimizer: QueryOptimizer {
@@ -26343,7 +26343,7 @@ impl SearchCoordinator {
                 },
             },
         };
-        
+
         let timeouts = DistributedTimeoutConfig {
             query_timeout: config.query_timeout,
             shard_query_timeout: config.shard_query_timeout,
@@ -26351,7 +26351,7 @@ impl SearchCoordinator {
             coordination_timeout: config.coordination_timeout,
             timeout_policy: config.timeout_policy,
         };
-        
+
         SearchCoordinator {
             cluster_manager,
             query_routing,
@@ -26361,54 +26361,54 @@ impl SearchCoordinator {
             timeouts,
         }
     }
-    
+
     fn search(&self, query_string: &str, context: SearchContext) -> Result<SearchResponse, DistributedError> {
         // 记录开始时间
         let start_time = Instant::now();
-        
+
         // 创建查询ID
         let query_id = generate_query_id();
-        
+
         // 解析查询
         let query = self.parse_query(query_string)?;
-        
+
         // 从缓存中获取结果
         if let Some(cached_response) = self.check_cache(&query, &context) {
             return Ok(cached_response);
         }
-        
+
         // 生成分布式查询计划
         let plan = self.generate_query_plan(query_id, query, &context)?;
-        
+
         // 执行分布式查询
         let results = self.execute_query_plan(&plan, &context)?;
-        
+
         // 合并结果
         let merged_results = self.merge_results(&plan, results)?;
-        
+
         // 构建响应
         let response = self.build_response(merged_results, start_time.elapsed());
-        
+
         // 更新缓存
         self.update_cache(&query, &context, &response);
-        
+
         Ok(response)
     }
-    
+
     fn parse_query(&self, query_string: &str) -> Result<Query, DistributedError> {
         // 创建查询解析器
         let parser = QueryParser::new(
             ParseStrategy::Hybrid,
             "content".to_string(), // 默认搜索字段
         );
-        
+
         // 解析查询
         parser.parse(query_string).map_err(|e| DistributedError::CoordinationError {
             message: format!("Failed to parse query: {}", e),
             cause: Box::new(e),
         })
     }
-    
+
     fn check_cache(&self, query: &Query, context: &SearchContext) -> Option<SearchResponse> {
         // 检查缓存使用策略
         match self.distributed_cache.usage_policy {
@@ -26423,15 +26423,15 @@ impl SearchCoordinator {
                 // 简化处理，总是使用缓存
             }
         }
-        
+
         // 创建缓存键
         let key = self.create_cache_key(query, context);
-        
+
         // 首先检查本地缓存
         if let Some(cached_value) = self.distributed_cache.local_cache.get(&key) {
             return Some(cached_value.to_response());
         }
-        
+
         // 如果存在分布式缓存，检查它
         if let Some(dist_cache) = &self.distributed_cache.distributed_cache {
             if let Some(cached_value) = dist_cache.get(&key) {
@@ -26440,47 +26440,47 @@ impl SearchCoordinator {
                 return Some(cached_value.to_response());
             }
         }
-        
+
         None
     }
-    
+
     fn create_cache_key(&self, query: &Query, context: &SearchContext) -> QueryCacheKey {
         // 计算查询哈希
         let query_hash = calculate_hash(query);
-        
+
         // 获取集群版本
         let index_version = self.cluster_manager.cluster_state.version;
-        
+
         // 计算过滤器哈希（如果有）
         let filter_hash = if context.filters.is_empty() {
             None
         } else {
             Some(calculate_hash(&context.filters))
         };
-        
+
         QueryCacheKey {
             query_hash,
             index_version,
             filter_hash,
         }
     }
-    
+
     fn generate_query_plan(&self, query_id: String, query: Query, context: &SearchContext) -> Result<DistributedQueryPlan, DistributedError> {
         // 确定目标分片
         let target_shards = self.select_target_shards(&query, context)?;
-        
+
         // 创建分片到节点的映射
         let shard_to_node = self.map_shards_to_nodes(&target_shards)?;
-        
+
         // 创建执行步骤
         let execution_steps = self.create_execution_steps(query_id.clone(), &query, &shard_to_node)?;
-        
+
         // 创建结果合并计划
         let result_merging = self.create_merging_plan(&shard_to_node)?;
-        
+
         // 估计计划成本和执行时间
         let (estimated_cost, estimated_execution_time) = self.estimate_plan_cost(&execution_steps, &result_merging);
-        
+
         // 创建分布式查询计划
         let plan = DistributedQueryPlan {
             query_id,
@@ -26492,13 +26492,13 @@ impl SearchCoordinator {
             estimated_cost,
             estimated_execution_time,
         };
-        
+
         // 优化计划
         let optimized_plan = self.optimize_plan(plan)?;
-        
+
         Ok(optimized_plan)
     }
-    
+
     fn select_target_shards(&self, query: &Query, context: &SearchContext) -> Result<Vec<ShardId>, DistributedError> {
         match &self.query_routing {
             QueryRoutingStrategy::BroadcastAll => {
@@ -26525,14 +26525,14 @@ impl SearchCoordinator {
             },
         }
     }
-    
+
     fn get_all_active_shards(&self) -> Vec<ShardId> {
         self.cluster_manager.shards.iter()
             .filter(|(_, info)| matches!(info.status, ShardStatus::Started))
             .map(|(id, _)| id.clone())
             .collect()
     }
-    
+
     fn extract_content_id_from_query(&self, query: &Query) -> Option<&str> {
         // 从查询中提取内容ID的逻辑
         // 实际实现会更复杂，这里简化处理
@@ -26550,32 +26550,32 @@ impl SearchCoordinator {
             _ => None,
         }
     }
-    
+
     fn get_shards_for_content(&self, content_id: &str) -> Result<Vec<ShardId>, DistributedError> {
         // 根据路由策略确定内容应位于哪些分片
         // 实际实现会使用路由函数计算
-        
+
         // 模拟路由结果
         let shard_id = format!("shard_{}", content_id.as_bytes().iter().sum::<u8>() % 5);
-        
+
         // 检查分片是否存在且活跃
         if let Some(shard_info) = self.cluster_manager.shards.get(&shard_id) {
             if matches!(shard_info.status, ShardStatus::Started) {
                 return Ok(vec![shard_id]);
             }
         }
-        
+
         // 如果目标分片不可用，回退到所有活跃分片
         Ok(self.get_all_active_shards())
     }
-    
+
     fn adaptively_select_shards(&self, query: &Query, context: &SearchContext) -> Result<Vec<ShardId>, DistributedError> {
         // 根据查询类型、复杂度和集群状态自适应选择分片
         // 实际实现会更复杂
-        
+
         // 简单实现：根据查询复杂度决定使用多少分片
         let complexity = self.estimate_query_complexity(query);
-        
+
         if complexity > 0.8 {
             // 复杂查询，使用少量分片
             let top_shards = self.select_top_performing_shards(3);
@@ -26589,11 +26589,11 @@ impl SearchCoordinator {
                 return Ok(relevant_shards);
             }
         }
-        
+
         // 默认使用所有分片
         Ok(self.get_all_active_shards())
     }
-    
+
     fn estimate_query_complexity(&self, query: &Query) -> f64 {
         // 估计查询复杂度的逻辑
         match query {
@@ -26612,11 +26612,11 @@ impl SearchCoordinator {
             _ => 0.5,
         }
     }
-    
+
     fn select_top_performing_shards(&self, count: usize) -> Vec<ShardId> {
         // 选择性能最好的分片
         // 实际实现会基于分片性能指标
-        
+
         self.cluster_manager.shards.iter()
             .filter(|(_, info)| matches!(info.status, ShardStatus::Started))
             .sorted_by(|(_, a), (_, b)| {
@@ -26627,18 +26627,18 @@ impl SearchCoordinator {
             .map(|(id, _)| id.clone())
             .collect()
     }
-    
+
     fn select_relevant_shards(&self, query: &Query, context: &SearchContext) -> Vec<ShardId> {
         // 基于查询和上下文选择相关分片
         // 实际实现会更复杂
-        
+
         // 简单实现：从上下文中提取索引信息，选择对应的分片
         let indices = self.get_indices_from_context(context);
-        
+
         if indices.is_empty() {
             return Vec::new();
         }
-        
+
         self.cluster_manager.shards.iter()
             .filter(|(_, info)| {
                 indices.contains(&info.index) && matches!(info.status, ShardStatus::Started)
@@ -26646,11 +26646,11 @@ impl SearchCoordinator {
             .map(|(id, _)| id.clone())
             .collect()
     }
-    
+
     fn get_indices_from_context(&self, context: &SearchContext) -> Vec<String> {
         // 从搜索上下文中提取索引信息
         // 实际实现会从上下文中提取
-        
+
         // 示例实现
         vec!["default_index".to_string()]
     }
@@ -26666,10 +26666,10 @@ fn calculate_hash<T: Hash>(item: &T) -> u64 {
 fn generate_query_id() -> String {
     use rand::Rng;
     let mut rng = rand::thread_rng();
-    
+
     let timestamp = Utc::now().timestamp_millis();
     let random: u32 = rng.gen();
-    
+
     format!("q-{}-{:08x}", timestamp, random)
 }
 ```
@@ -26677,10 +26677,10 @@ fn generate_query_id() -> String {
 ```rust
 impl SearchCoordinator {
     // 续前一部分方法...
-    
+
     fn map_shards_to_nodes(&self, shards: &[ShardId]) -> Result<HashMap<ShardId, NodeId>, DistributedError> {
         let mut shard_to_node = HashMap::new();
-        
+
         for shard_id in shards {
             if let Some(shard_info) = self.cluster_manager.shards.get(shard_id) {
                 if let Some(node_id) = &shard_info.assigned_node {
@@ -26692,7 +26692,7 @@ impl SearchCoordinator {
                         }
                     }
                 }
-                
+
                 // 如果主节点不可用，尝试使用副本
                 let mut replica_found = false;
                 for replica_node in &shard_info.replica_nodes {
@@ -26704,7 +26704,7 @@ impl SearchCoordinator {
                         }
                     }
                 }
-                
+
                 if !replica_found {
                     return Err(DistributedError::ShardError {
                         shard_id: shard_id.clone(),
@@ -26720,13 +26720,13 @@ impl SearchCoordinator {
                 });
             }
         }
-        
+
         Ok(shard_to_node)
     }
-    
+
     fn create_execution_steps(&self, query_id: String, query: &Query, shard_to_node: &HashMap<ShardId, NodeId>) -> Result<Vec<DistributedExecutionStep>, DistributedError> {
         let mut steps = Vec::new();
-        
+
         // 为每个分片创建查询步骤
         for (shard_id, node_id) in shard_to_node {
             steps.push(DistributedExecutionStep::QueryShard {
@@ -26736,44 +26736,44 @@ impl SearchCoordinator {
                 timeout: self.timeouts.shard_query_timeout,
             });
         }
-        
+
         // 选择合并节点
         let merge_node = self.select_merge_node(shard_to_node)?;
-        
+
         // 创建结果合并步骤
         if steps.len() > 1 {
             let source_nodes: Vec<NodeId> = shard_to_node.values().cloned().collect();
-            
+
             steps.push(DistributedExecutionStep::MergeResults {
                 node_id: merge_node,
                 source_nodes,
                 merge_strategy: self.result_merging.clone(),
             });
         }
-        
+
         Ok(steps)
     }
-    
+
     fn select_merge_node(&self, shard_to_node: &HashMap<ShardId, NodeId>) -> Result<NodeId, DistributedError> {
         // 获取涉及的节点
         let mut nodes: Vec<&NodeId> = shard_to_node.values().collect();
-        
+
         if nodes.is_empty() {
             return Err(DistributedError::CoordinationError {
                 message: "No nodes available for merge operation".to_string(),
                 cause: Box::new(std::io::Error::new(std::io::ErrorKind::NotFound, "No nodes")),
             });
         }
-        
+
         // 为简单起见，选择第一个节点
         // 实际实现会基于节点负载、网络位置等因素选择最佳节点
         Ok(nodes[0].clone())
     }
-    
+
     fn create_merging_plan(&self, shard_to_node: &HashMap<ShardId, NodeId>) -> Result<ResultMergingPlan, DistributedError> {
         // 选择合并节点
         let merge_node = self.select_merge_node(shard_to_node)?;
-        
+
         // 确定部分结果策略
         let partial_results_policy = match self.timeouts.timeout_policy {
             TimeoutPolicy::CancelAll => PartialResultsPolicy::RequireAll,
@@ -26784,18 +26784,18 @@ impl SearchCoordinator {
                 PartialResultsPolicy::MaintainMinimumResults(min_results)
             }
         };
-        
+
         Ok(ResultMergingPlan {
             merge_node,
             strategy: self.result_merging.clone(),
             partial_results_policy,
         })
     }
-    
+
     fn estimate_plan_cost(&self, steps: &[DistributedExecutionStep], merging_plan: &ResultMergingPlan) -> (f64, Duration) {
         // 估计总成本
         let mut total_cost = 0.0;
-        
+
         // 估计各步骤成本
         for step in steps {
             match step {
@@ -26817,34 +26817,34 @@ impl SearchCoordinator {
                 },
             }
         }
-        
+
         // 估计执行时间
         // 简化：每单位成本假设为10毫秒
         let estimated_execution_time = Duration::from_millis((total_cost * 10.0) as u64);
-        
+
         (total_cost, estimated_execution_time)
     }
-    
+
     fn optimize_plan(&self, plan: DistributedQueryPlan) -> Result<DistributedQueryPlan, DistributedError> {
         let mut optimized_plan = plan;
-        
+
         // 应用分布式优化规则
         for rule in &self.plan_generator.distributed_optimizer.optimization_rules {
             if let Some(improved_plan) = rule.apply(&optimized_plan) {
                 optimized_plan = improved_plan;
             }
         }
-        
+
         Ok(optimized_plan)
     }
-    
+
     fn execute_query_plan(&self, plan: &DistributedQueryPlan, context: &SearchContext) -> Result<HashMap<ShardId, Vec<SearchResult>>, DistributedError> {
         // 记录开始时间
         let start_time = Instant::now();
-        
+
         // 结果映射
         let mut results: HashMap<ShardId, Vec<SearchResult>> = HashMap::new();
-        
+
         // 执行查询步骤
         for step in &plan.execution_order {
             match step {
@@ -26853,7 +26853,7 @@ impl SearchCoordinator {
                     if start_time.elapsed() > self.timeouts.query_timeout {
                         return self.handle_timeout_error("query execution", &results, &plan.result_merging);
                     }
-                    
+
                     // 在节点上执行查询
                     match self.execute_shard_query(node_id, shard_id, query, *timeout, context) {
                         Ok(shard_results) => {
@@ -26869,14 +26869,14 @@ impl SearchCoordinator {
                 _ => {}
             }
         }
-        
+
         Ok(results)
     }
-    
+
     fn execute_shard_query(&self, node_id: &NodeId, shard_id: &ShardId, query: &Query, timeout: Duration, context: &SearchContext) -> Result<Vec<SearchResult>, DistributedError> {
         // 在实际系统中，这里会通过网络向目标节点发送查询请求
         // 这里模拟查询执行
-        
+
         // 模拟节点故障
         if rand::random::<f32>() < 0.05 {  // 5%的概率模拟节点故障
             return Err(DistributedError::NodeError {
@@ -26885,7 +26885,7 @@ impl SearchCoordinator {
                 cause: Box::new(std::io::Error::new(std::io::ErrorKind::ConnectionRefused, "Connection refused")),
             });
         }
-        
+
         // 模拟超时
         if rand::random::<f32>() < 0.02 {  // 2%的概率模拟查询超时
             return Err(DistributedError::TimeoutError {
@@ -26893,20 +26893,20 @@ impl SearchCoordinator {
                 timeout,
             });
         }
-        
+
         // 创建模拟结果
         let result_count = rand::thread_rng().gen_range(0..10);
         let mut results = Vec::with_capacity(result_count);
-        
+
         for i in 0..result_count {
             let doc_id = format!("doc_{}_{}", shard_id, i);
             let content_id = format!("content_{}", i);
             let score = rand::random::<f32>() * 10.0;
-            
+
             let mut source = HashMap::new();
             source.insert("title".to_string(), Value::String(format!("Document {} from shard {}", i, shard_id)));
             source.insert("content".to_string(), Value::String("Sample document content...".to_string()));
-            
+
             results.push(SearchResult {
                 doc_id,
                 content_id,
@@ -26919,13 +26919,13 @@ impl SearchCoordinator {
                 matching_vector: None,
             });
         }
-        
+
         // 按分数排序
         results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         Ok(results)
     }
-    
+
     fn handle_shard_error(&self, shard_id: &ShardId, error: &DistributedError, results: &mut HashMap<ShardId, Vec<SearchResult>>, merging_plan: &ResultMergingPlan) -> Result<(), DistributedError> {
         match merging_plan.partial_results_policy {
             PartialResultsPolicy::RequireAll => {
@@ -26950,13 +26950,13 @@ impl SearchCoordinator {
             }
         }
     }
-    
+
     fn handle_timeout_error(&self, operation: &str, partial_results: &HashMap<ShardId, Vec<SearchResult>>, merging_plan: &ResultMergingPlan) -> Result<HashMap<ShardId, Vec<SearchResult>>, DistributedError> {
         let timeout_error = DistributedError::TimeoutError {
             operation: operation.to_string(),
             timeout: self.timeouts.query_timeout,
         };
-        
+
         match &self.timeouts.timeout_policy {
             TimeoutPolicy::CancelAll => {
                 // 取消所有，返回错误
@@ -26985,42 +26985,42 @@ impl SearchCoordinator {
             }
         }
     }
-    
+
     fn merge_results(&self, plan: &DistributedQueryPlan, shard_results: HashMap<ShardId, Vec<SearchResult>>) -> Result<Vec<SearchResult>, DistributedError> {
         // 按合并计划中的策略合并结果
         match &plan.result_merging.strategy {
             ResultMergingStrategy::Simple => {
                 // 简单合并：连接所有结果并排序
                 let mut all_results = Vec::new();
-                
+
                 for results in shard_results.values() {
                     all_results.extend(results.clone());
                 }
-                
+
                 // 按分数排序
                 all_results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-                
+
                 Ok(all_results)
             },
             ResultMergingStrategy::Tiered => {
                 // 分层合并：优先合并高质量结果
                 let mut tiered_results = Vec::new();
-                
+
                 // 按分片文档数排序分片（示例排序标准）
                 let mut sorted_shards: Vec<&ShardId> = shard_results.keys().collect();
                 sorted_shards.sort_by(|&a, &b| {
                     let a_info = self.cluster_manager.shards.get(a);
                     let b_info = self.cluster_manager.shards.get(b);
-                    
+
                     match (a_info, b_info) {
                         (Some(a_info), Some(b_info)) => a_info.doc_count.cmp(&b_info.doc_count),
                         _ => std::cmp::Ordering::Equal,
                     }
                 });
-                
+
                 // 按分片优先级合并结果
                 let mut seen_doc_ids = HashSet::new();
-                
+
                 for shard_id in sorted_shards {
                     if let Some(results) = shard_results.get(shard_id) {
                         for result in results {
@@ -27031,20 +27031,20 @@ impl SearchCoordinator {
                         }
                     }
                 }
-                
+
                 // 按分数排序
                 tiered_results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-                
+
                 Ok(tiered_results)
             },
             ResultMergingStrategy::Weighted => {
                 // 加权合并：考虑分片权重
                 let mut weighted_results = HashMap::new();
-                
+
                 // 计算分片权重
                 let mut shard_weights = HashMap::new();
                 let total_shards = shard_results.len() as f32;
-                
+
                 for shard_id in shard_results.keys() {
                     if let Some(shard_info) = self.cluster_manager.shards.get(shard_id) {
                         // 简单权重计算：基于文档数的倒数
@@ -27054,20 +27054,20 @@ impl SearchCoordinator {
                         } else {
                             1.0
                         };
-                        
+
                         shard_weights.insert(shard_id, weight);
                     } else {
                         shard_weights.insert(shard_id, 1.0);
                     }
                 }
-                
+
                 // 合并结果，应用权重到分数
                 for (shard_id, results) in &shard_results {
                     let weight = shard_weights.get(shard_id).unwrap_or(&1.0);
-                    
+
                     for result in results {
                         let entry = weighted_results.entry(result.doc_id.clone()).or_insert_with(|| result.clone());
-                        
+
                         // 如果新的加权分数更高，替换
                         let weighted_score = result.score * weight;
                         if weighted_score > entry.score {
@@ -27077,11 +27077,11 @@ impl SearchCoordinator {
                         }
                     }
                 }
-                
+
                 // 转换为向量并排序
                 let mut final_results: Vec<SearchResult> = weighted_results.into_values().collect();
                 final_results.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
-                
+
                 Ok(final_results)
             },
             ResultMergingStrategy::Custom(merger) => {
@@ -27090,7 +27090,7 @@ impl SearchCoordinator {
             },
         }
     }
-    
+
     fn build_response(&self, results: Vec<SearchResult>, took: Duration) -> SearchResponse {
         SearchResponse {
             hits: results.clone(),
@@ -27116,11 +27116,11 @@ impl SearchCoordinator {
             execution_details: None,
         }
     }
-    
+
     fn update_cache(&self, query: &Query, context: &SearchContext, response: &SearchResponse) {
         // 创建缓存键
         let key = self.create_cache_key(query, context);
-        
+
         // 创建缓存值
         let value = QueryCacheValue {
             results: response.hits.clone(),
@@ -27129,10 +27129,10 @@ impl SearchCoordinator {
             cached_at: Utc::now(),
             size_bytes: estimate_response_size(response),
         };
-        
+
         // 更新本地缓存
         self.distributed_cache.local_cache.put(key.clone(), value.clone());
-        
+
         // 如果存在分布式缓存，更新它
         if let Some(dist_cache) = &self.distributed_cache.distributed_cache {
             match dist_cache.put(key, value) {
@@ -28374,7 +28374,7 @@ impl SystemCoordinator {
                 },
             },
         };
-        
+
         SystemCoordinator {
             integration_points: Vec::new(),
             cross_system_metrics: HashMap::new(),
@@ -28382,7 +28382,7 @@ impl SystemCoordinator {
             config,
         }
     }
-    
+
     fn register_integration_point(&mut self, integration_point: IntegrationPoint) -> Result<(), CoordinationError> {
         if self.integration_points.len() >= self.config.max_integration_points {
             return Err(CoordinationError::LimitExceeded {
@@ -28390,11 +28390,11 @@ impl SystemCoordinator {
                 limit_type: "integration_points".to_string(),
             });
         }
-        
+
         self.integration_points.push(integration_point);
         Ok(())
     }
-    
+
     fn register_cross_system_metric(&mut self, metric: CrossSystemMetric) -> Result<(), CoordinationError> {
         if self.cross_system_metrics.contains_key(&metric.name) {
             return Err(CoordinationError::AlreadyExists {
@@ -28402,73 +28402,73 @@ impl SystemCoordinator {
                 resource_type: "cross_system_metric".to_string(),
             });
         }
-        
+
         self.cross_system_metrics.insert(metric.name.clone(), metric);
         Ok(())
     }
-    
+
     fn process_event(&self, event: SystemEvent) -> Result<(), EventError> {
         let mut event_queue = self.event_bus.event_queue.lock().map_err(|e| EventError::InternalError {
             message: format!("Failed to acquire event queue lock: {}", e),
             details: None,
         })?;
-        
+
         if event_queue.len() >= self.event_bus.config.max_queue_size {
             return Err(EventError::ProcessingError {
                 message: "Event queue is full".to_string(),
                 cause: None,
             });
         }
-        
+
         event_queue.push_back(event);
         Ok(())
     }
-    
+
     fn subscribe(&self, subscriber: Box<dyn EventSubscriber>) -> Result<(), EventError> {
         let mut subscribers = self.event_bus.subscribers.write().map_err(|e| EventError::InternalError {
             message: format!("Failed to acquire subscribers lock: {}", e),
             details: None,
         })?;
-        
+
         let subscriber_id = subscriber.get_id();
         let topics = subscriber.get_subscribed_topics();
-        
+
         for topic in topics {
             let topic_subscribers = subscribers.entry(topic).or_insert_with(Vec::new);
-            
+
             // 检查是否已订阅
             if topic_subscribers.iter().any(|s| s.get_id() == subscriber_id) {
                 continue;
             }
-            
+
             topic_subscribers.push(subscriber.clone());
         }
-        
+
         Ok(())
     }
-    
+
     fn calculate_cross_system_metrics(&self) -> Result<HashMap<String, f64>, CorrelationError> {
         let mut results = HashMap::new();
-        
+
         for (name, metric) in &self.cross_system_metrics {
             // 获取搜索指标数据（简化模拟）
             let search_values = vec![1.0, 2.0, 3.0, 4.0, 5.0];
-            
+
             // 获取分析指标数据（简化模拟）
             let analytics_values = vec![2.0, 3.0, 5.0, 7.0, 8.0];
-            
+
             // 计算相关性
             let correlation = metric.correlation_function.correlate(&search_values, &analytics_values)?;
-            
+
             // 获取最终结果（简化为平均值）
             let avg_correlation = correlation.iter().sum::<f64>() / correlation.len() as f64;
-            
+
             results.insert(name.clone(), avg_correlation);
         }
-        
+
         Ok(results)
     }
-    
+
     fn get_system_health(&self) -> SystemHealthStatus {
         // 收集各子系统健康状态（简化模拟）
         let search_health = HealthStatus::Healthy;
@@ -28478,7 +28478,7 @@ impl SystemCoordinator {
         } else {
             HealthStatus::Healthy
         };
-        
+
         // 计算整体健康状态
         let overall_health = match (search_health, analytics_health, integration_health) {
             (HealthStatus::Healthy, HealthStatus::Healthy, HealthStatus::Healthy) => HealthStatus::Healthy,
@@ -28486,7 +28486,7 @@ impl SystemCoordinator {
             (HealthStatus::Unhealthy, _, _) | (_, HealthStatus::Unhealthy, _) | (_, _, HealthStatus::Unhealthy) => HealthStatus::Unhealthy,
             _ => HealthStatus::Warning,
         };
-        
+
         SystemHealthStatus {
             overall: overall_health,
             search: search_health,
@@ -29933,7 +29933,7 @@ impl AuthorizationDecisionMaker {
             },
             config: cache_config,
         };
-        
+
         AuthorizationDecisionMaker {
             decision_strategy,
             combining_algorithm,
@@ -29943,7 +29943,7 @@ impl AuthorizationDecisionMaker {
             decision_cache,
         }
     }
-    
+
     // 做出决策
     fn make_decision(&self, request: &AuthorizationRequest) -> Result<AuthorizationResponse, AuthorizationError> {
         // 检查缓存
@@ -29955,25 +29955,25 @@ impl AuthorizationDecisionMaker {
             }
             self.decision_cache.stats.misses += 1;
         }
-        
+
         // 创建评估上下文
         let mut context = self.create_evaluation_context(request)?;
-        
+
         // 丰富上下文
         for enricher in &self.context_processor.context_enrichers {
             enricher.enrich(&mut context)?;
         }
-        
+
         // 开始计时
         let start_time = Instant::now();
-        
+
         // 根据决策策略选择评估方式
         let decision = match self.decision_strategy {
             DecisionStrategy::Unanimous => {
                 // 同时评估策略和访问控制，要求一致同意
                 let policy_decision = self.policy_evaluator.evaluate(&context, "")?;
                 let access_control_decision = self.access_control_evaluator.evaluate(&context)?;
-                
+
                 self.combine_decisions(&[policy_decision, access_control_decision])
             },
             DecisionStrategy::VetoAny => {
@@ -29994,11 +29994,11 @@ impl AuthorizationDecisionMaker {
                 // 多数决定
                 let policy_decision = self.policy_evaluator.evaluate(&context, "")?;
                 let access_control_decision = self.access_control_evaluator.evaluate(&context)?;
-                
+
                 let decisions = [policy_decision, access_control_decision];
                 let permit_count = decisions.iter().filter(|&&d| d == AuthorizationDecision::Permit).count();
                 let deny_count = decisions.iter().filter(|&&d| d == AuthorizationDecision::Deny).count();
-                
+
                 if permit_count > deny_count {
                     AuthorizationDecision::Permit
                 } else if deny_count > permit_count {
@@ -30012,7 +30012,7 @@ impl AuthorizationDecisionMaker {
                 // 加权投票（简化实现）
                 let policy_decision = self.policy_evaluator.evaluate(&context, "")?;
                 let access_control_decision = self.access_control_evaluator.evaluate(&context)?;
-                
+
                 // 为策略决策分配更高权重
                 match (policy_decision, access_control_decision) {
                     (AuthorizationDecision::Permit, AuthorizationDecision::Permit) => AuthorizationDecision::Permit,
@@ -30024,14 +30024,14 @@ impl AuthorizationDecisionMaker {
                 }
             },
         };
-        
+
         // 计算评估时间
         let evaluation_time = start_time.elapsed();
-        
+
         // 收集义务和建议
         let obligations = Vec::new();  // 实际实现中从策略结果中收集
         let advice = Vec::new();       // 实际实现中从策略结果中收集
-        
+
         // 创建响应
         let response = AuthorizationResponse {
             request_id: request.request_id.clone(),
@@ -30043,33 +30043,33 @@ impl AuthorizationDecisionMaker {
             decision_time: Utc::now(),
             evaluation_time,
         };
-        
+
         // 缓存响应
         if self.decision_cache.config.enabled {
             let cache_key = self.generate_cache_key(request);
             self.decision_cache.cache.put(cache_key, response.clone());
         }
-        
+
         Ok(response)
     }
-    
+
     // 创建评估上下文
     fn create_evaluation_context(&self, request: &AuthorizationRequest) -> Result<EvaluationContext, AuthorizationError> {
         // 获取主体信息
         let subject = self.resolve_subject(request.subject_id.clone())?;
-        
+
         // 获取资源信息
         let resource = self.resolve_resource(request.resource_id.clone())?;
-        
+
         // 获取操作信息
         let operation = self.resolve_operation(resource.type_id.clone(), request.operation_id.clone())?;
-        
+
         // 构建环境
         let environment = self.build_environment(request)?;
-        
+
         // 获取会话（如果有）
         let session = self.resolve_session(request)?;
-        
+
         Ok(EvaluationContext {
             subject,
             resource,
@@ -30081,7 +30081,7 @@ impl AuthorizationDecisionMaker {
             request_id: request.request_id.clone(),
         })
     }
-    
+
     // 解析主体
     fn resolve_subject(&self, subject_id: String) -> Result<Subject, AuthorizationError> {
         // 在实际实现中，会从用户存储或身份提供者获取用户信息
@@ -30093,7 +30093,7 @@ impl AuthorizationDecisionMaker {
             identity: None,
         })
     }
-    
+
     // 解析资源
     fn resolve_resource(&self, resource_id: String) -> Result<Resource, AuthorizationError> {
         // 在实际实现中，会从资源管理器获取资源信息
@@ -30111,7 +30111,7 @@ impl AuthorizationDecisionMaker {
             metadata: HashMap::new(),
         })
     }
-    
+
     // 解析操作
     fn resolve_operation(&self, resource_type_id: String, operation_id: String) -> Result<Operation, AuthorizationError> {
         // 在实际实现中，会从资源类型定义中获取操作信息
@@ -30125,12 +30125,12 @@ impl AuthorizationDecisionMaker {
             metadata: HashMap::new(),
         })
     }
-    
+
     // 构建环境
     fn build_environment(&self, request: &AuthorizationRequest) -> Result<Environment, AuthorizationError> {
         // 收集环境提供器的信息
         let mut variables = HashMap::new();
-        
+
         for provider in &self.context_processor.environment_providers {
             match provider.provide(request) {
                 Ok(env_vars) => {
@@ -30144,12 +30144,12 @@ impl AuthorizationDecisionMaker {
                 }
             }
         }
-        
+
         // 合并请求中的环境属性
         for (key, value) in &request.environment_attributes {
             variables.insert(key.clone(), value.clone());
         }
-        
+
         // 构建客户端信息
         let client_info = ClientInfo {
             ip_address: variables.get("ip_address").and_then(|v| v.as_str()).unwrap_or("").to_string(),
@@ -30158,7 +30158,7 @@ impl AuthorizationDecisionMaker {
             geo_location: None,  // 实际实现中可能基于IP解析
             network_info: None,  // 实际实现中可能基于IP解析
         };
-        
+
         // 构建服务器信息
         let server_info = ServerInfo {
             hostname: "server1".to_string(),  // 实际实现中从系统获取
@@ -30167,7 +30167,7 @@ impl AuthorizationDecisionMaker {
             region: Some("us-west".to_string()),  // 实际实现中从配置获取
             version: "1.0.0".to_string(),  // 实际实现中从配置获取
         };
-        
+
         // 构建时间信息
         let now = Utc::now();
         let time_info = TimeInfo {
@@ -30177,7 +30177,7 @@ impl AuthorizationDecisionMaker {
             is_workday: self.is_workday(&now),  // 需要实现
             is_business_hours: self.is_business_hours(&now),  // 需要实现
         };
-        
+
         Ok(Environment {
             variables,
             client_info,
@@ -30185,28 +30185,28 @@ impl AuthorizationDecisionMaker {
             time_info,
         })
     }
-    
+
     // 判断是否工作日
     fn is_workday(&self, dt: &DateTime<Utc>) -> bool {
         // 简化实现：周一至周五为工作日
         let weekday = dt.weekday();
         weekday != Weekday::Sat && weekday != Weekday::Sun
     }
-    
+
     // 判断是否工作时间
     fn is_business_hours(&self, dt: &DateTime<Utc>) -> bool {
         // 简化实现：9点至17点为工作时间
         let hour = dt.hour();
         hour >= 9 && hour < 17
     }
-    
+
     // 解析会话
     fn resolve_session(&self, request: &AuthorizationRequest) -> Result<Option<UserSession>, AuthorizationError> {
         // 在实际实现中，会从请求中的会话ID或令牌解析会话
         // 这里简化实现，返回None表示没有会话
         Ok(None)
     }
-    
+
     // 决策结果到状态码的映射
     fn decision_to_status_code(&self, decision: &AuthorizationDecision) -> u16 {
         match decision {
@@ -30216,7 +30216,7 @@ impl AuthorizationDecisionMaker {
             AuthorizationDecision::Indeterminate => 500,
         }
     }
-    
+
     // 决策结果到原因的映射
     fn decision_to_reason(&self, decision: &AuthorizationDecision) -> Option<String> {
         match decision {
@@ -30226,7 +30226,7 @@ impl AuthorizationDecisionMaker {
             AuthorizationDecision::Indeterminate => Some("Could not determine authorization decision".to_string()),
         }
     }
-    
+
     // 组合多个决策结果
     fn combine_decisions(&self, decisions: &[AuthorizationDecision]) -> AuthorizationDecision {
         match self.combining_algorithm {
@@ -30265,7 +30265,7 @@ impl AuthorizationDecisionMaker {
                 let applicable_decisions: Vec<&AuthorizationDecision> = decisions.iter()
                     .filter(|&&d| d == AuthorizationDecision::Permit || d == AuthorizationDecision::Deny)
                     .collect();
-                
+
                 if applicable_decisions.len() == 1 {
                     *applicable_decisions[0]
                 } else if applicable_decisions.is_empty() {
@@ -30290,7 +30290,7 @@ impl AuthorizationDecisionMaker {
             },
         }
     }
-    
+
     // 生成缓存键
     fn generate_cache_key(&self, request: &AuthorizationRequest) -> String {
         format!("{}:{}:{}:{}",
@@ -30381,7 +30381,7 @@ impl PermissionManager {
             permission_cache: LruCache::new(1000),  // 缓存大小
         }
     }
-    
+
     // 添加权限定义
     fn add_permission_definition(&mut self, definition: PermissionDefinition) -> Result<(), PermissionError> {
         if self.permission_definitions.contains_key(&definition.permission_id) {
@@ -30390,11 +30390,11 @@ impl PermissionManager {
                 permission_id: definition.permission_id,
             });
         }
-        
+
         self.permission_definitions.insert(definition.permission_id.clone(), definition);
         Ok(())
     }
-    
+
     // 添加权限组
     fn add_permission_group(&mut self, group: PermissionGroup) -> Result<(), PermissionError> {
         if self.permission_groups.contains_key(&group.group_id) {
@@ -30403,11 +30403,11 @@ impl PermissionManager {
                 permission_id: group.group_id,
             });
         }
-        
+
         self.permission_groups.insert(group.group_id.clone(), group);
         Ok(())
     }
-    
+
     // 分配权限
     fn assign_permission(&mut self, user_id: &str, permission_id: &str) -> Result<(), PermissionError> {
         // 验证权限是否存在
@@ -30417,19 +30417,19 @@ impl PermissionManager {
                 permission_id: permission_id.to_string(),
             });
         }
-        
+
         // 获取用户的权限集
         let permissions = self.permission_assignments.entry(user_id.to_string()).or_insert_with(HashSet::new);
-        
+
         // 添加权限
         permissions.insert(permission_id.to_string());
-        
+
         // 无效相关缓存
         self.invalidate_user_cache(user_id);
-        
+
         Ok(())
     }
-    
+
     // 分配权限组
     fn assign_permission_group(&mut self, user_id: &str, group_id: &str) -> Result<(), PermissionError> {
         // 验证权限组是否存在
@@ -30437,33 +30437,33 @@ impl PermissionManager {
             message: format!("Permission group '{}' not found", group_id),
             permission_id: group_id.to_string(),
         })?;
-        
+
         // 获取用户的权限集
         let permissions = self.permission_assignments.entry(user_id.to_string()).or_insert_with(HashSet::new);
-        
+
         // 添加组中所有权限
         for permission_id in &group.permissions {
             permissions.insert(permission_id.clone());
         }
-        
+
         // 无效相关缓存
         self.invalidate_user_cache(user_id);
-        
+
         Ok(())
     }
-    
+
     // 撤销权限
     fn revoke_permission(&mut self, user_id: &str, permission_id: &str) -> Result<(), PermissionError> {
         if let Some(permissions) = self.permission_assignments.get_mut(user_id) {
             permissions.remove(permission_id);
-            
+
             // 无效相关缓存
             self.invalidate_user_cache(user_id);
         }
-        
+
         Ok(())
     }
-    
+
     // 获取用户的有效权限
     fn get_effective_permissions(&self, user_id: &str, context: &Option<EvaluationContext>) -> Result<HashSet<String>, PermissionError> {
         // 检查缓存
@@ -30471,14 +30471,14 @@ impl PermissionManager {
         if let Some(result) = self.permission_cache.get(&cache_key) {
             return Ok(result.effective_permissions.clone());
         }
-        
+
         // 收集显式分配的权限
         let mut effective_permissions = HashSet::new();
-        
+
         if let Some(assigned_permissions) = self.permission_assignments.get(user_id) {
             effective_permissions.extend(assigned_permissions.iter().cloned());
         }
-        
+
         // 如果提供了上下文，应用动态权限解析器
         if let Some(ctx) = context {
             for resolver in &self.dynamic_resolvers {
@@ -30493,18 +30493,18 @@ impl PermissionManager {
                 }
             }
         }
-        
+
         // 处理权限依赖和不兼容（简化实现）
         let mut to_add = HashSet::new();
         let mut to_remove = HashSet::new();
-        
+
         for permission_id in &effective_permissions {
             if let Some(definition) = self.permission_definitions.get(permission_id) {
                 // 添加依赖权限
                 for dep_id in &definition.dependencies {
                     to_add.insert(dep_id.clone());
                 }
-                
+
                 // 处理不兼容权限
                 for incomp_id in &definition.incompatible_with {
                     if effective_permissions.contains(incomp_id) {
@@ -30512,7 +30512,7 @@ impl PermissionManager {
                         if let Some(incomp_def) = self.permission_definitions.get(incomp_id) {
                             let perm_risk = definition.risk_level.to_numeric();
                             let incomp_risk = incomp_def.risk_level.to_numeric();
-                            
+
                             if perm_risk >= incomp_risk {
                                 to_remove.insert(incomp_id.clone());
                             } else {
@@ -30523,13 +30523,13 @@ impl PermissionManager {
                 }
             }
         }
-        
+
         // 应用变更
         effective_permissions.extend(to_add);
         for perm_id in to_remove {
             effective_permissions.remove(&perm_id);
         }
-        
+
         // 缓存结果
         let result = PermissionResolutionResult {
             user_id: user_id.to_string(),
@@ -30537,41 +30537,41 @@ impl PermissionManager {
             permission_mappings: HashMap::new(),  // 简化实现
             resolution_time: Utc::now(),
         };
-        
+
         self.permission_cache.put(cache_key, result);
-        
+
         Ok(effective_permissions)
     }
-    
+
     // 检查权限
     fn has_permission(&self, user_id: &str, permission_id: &str, context: &Option<EvaluationContext>) -> Result<bool, PermissionError> {
         let effective_permissions = self.get_effective_permissions(user_id, context)?;
         Ok(effective_permissions.contains(permission_id))
     }
-    
+
     // 检查多个权限（全部）
     fn has_all_permissions(&self, user_id: &str, permission_ids: &[String], context: &Option<EvaluationContext>) -> Result<bool, PermissionError> {
         let effective_permissions = self.get_effective_permissions(user_id, context)?;
         Ok(permission_ids.iter().all(|id| effective_permissions.contains(id)))
     }
-    
+
     // 检查多个权限（任一）
     fn has_any_permission(&self, user_id: &str, permission_ids: &[String], context: &Option<EvaluationContext>) -> Result<bool, PermissionError> {
         let effective_permissions = self.get_effective_permissions(user_id, context)?;
         Ok(permission_ids.iter().any(|id| effective_permissions.contains(id)))
     }
-    
+
     // 无效用户缓存
     fn invalidate_user_cache(&mut self, user_id: &str) {
         let cache_key = format!("perms:{}", user_id);
         self.permission_cache.pop(&cache_key);
     }
-    
+
     // 获取用户分配的权限
     fn get_assigned_permissions(&self, user_id: &str) -> HashSet<String> {
         self.permission_assignments.get(user_id).cloned().unwrap_or_default()
     }
-    
+
     // 获取权限定义
     fn get_permission_definition(&self, permission_id: &str) -> Option<&PermissionDefinition> {
         self.permission_definitions.get(permission_id)
@@ -30621,51 +30621,51 @@ impl<T: Hash + Eq + Clone> DirectedGraph<T> {
             adjacency_list: HashMap::new(),
         }
     }
-    
+
     // 添加顶点
     fn add_vertex(&mut self, vertex: T) {
         self.adjacency_list.entry(vertex).or_insert_with(HashSet::new);
     }
-    
+
     // 添加边
     fn add_edge(&mut self, from: T, to: T) {
         self.add_vertex(from.clone());
         self.add_vertex(to.clone());
-        
+
         self.adjacency_list.get_mut(&from).unwrap().insert(to);
     }
-    
+
     // 删除顶点
     fn remove_vertex(&mut self, vertex: &T) {
         self.adjacency_list.remove(vertex);
-        
+
         // 从所有邻接表中移除该顶点
         for (_, edges) in self.adjacency_list.iter_mut() {
             edges.remove(vertex);
         }
     }
-    
+
     // 删除边
     fn remove_edge(&mut self, from: &T, to: &T) {
         if let Some(edges) = self.adjacency_list.get_mut(from) {
             edges.remove(to);
         }
     }
-    
+
     // 获取所有可到达顶点
     fn get_reachable(&self, start: &T) -> HashSet<T> {
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         // 检查起始顶点是否存在
         if !self.adjacency_list.contains_key(start) {
             return visited;
         }
-        
+
         // BFS遍历
         queue.push_back(start);
         visited.insert(start.clone());
-        
+
         while let Some(vertex) = queue.pop_front() {
             if let Some(neighbors) = self.adjacency_list.get(vertex) {
                 for neighbor in neighbors {
@@ -30676,18 +30676,18 @@ impl<T: Hash + Eq + Clone> DirectedGraph<T> {
                 }
             }
         }
-        
+
         // 移除起始顶点
         visited.remove(start);
-        
+
         visited
     }
-    
+
     // 检测环
     fn has_cycle(&self) -> bool {
         let mut visited = HashSet::new();
         let mut rec_stack = HashSet::new();
-        
+
         for vertex in self.adjacency_list.keys() {
             if !visited.contains(vertex) {
                 if self.is_cyclic_util(vertex, &mut visited, &mut rec_stack) {
@@ -30695,15 +30695,15 @@ impl<T: Hash + Eq + Clone> DirectedGraph<T> {
                 }
             }
         }
-        
+
         false
     }
-    
+
     // 辅助函数：环检测
     fn is_cyclic_util(&self, vertex: &T, visited: &mut HashSet<T>, rec_stack: &mut HashSet<T>) -> bool {
         visited.insert(vertex.clone());
         rec_stack.insert(vertex.clone());
-        
+
         if let Some(neighbors) = self.adjacency_list.get(vertex) {
             for neighbor in neighbors {
                 if !visited.contains(neighbor) {
@@ -30715,7 +30715,7 @@ impl<T: Hash + Eq + Clone> DirectedGraph<T> {
                 }
             }
         }
-        
+
         rec_stack.remove(vertex);
         false
     }
@@ -30813,7 +30813,7 @@ impl RoleManager {
             separation_of_duty_policies: Vec::new(),
         }
     }
-    
+
     // 添加角色定义
     fn add_role(&mut self, role: Role) -> Result<(), RoleError> {
         if self.role_definitions.contains_key(&role.role_id) {
@@ -30822,13 +30822,13 @@ impl RoleManager {
                 role_id: role.role_id,
             });
         }
-        
+
         // 添加到角色定义
         self.role_definitions.insert(role.role_id.clone(), role.clone());
-        
+
         // 更新继承图
         self.inheritance_graph.add_vertex(role.role_id.clone());
-        
+
         // 添加继承边
         for parent_id in &role.parent_roles {
             if !self.role_definitions.contains_key(parent_id) {
@@ -30837,10 +30837,10 @@ impl RoleManager {
                     role_id: parent_id.clone(),
                 });
             }
-            
+
             self.inheritance_graph.add_edge(parent_id.clone(), role.role_id.clone());
         }
-        
+
         // 检查继承图中是否有环
         if self.inheritance_graph.has_cycle() {
             // 移除刚添加的角色和边
@@ -30849,16 +30849,16 @@ impl RoleManager {
             }
             self.inheritance_graph.remove_vertex(&role.role_id);
             self.role_definitions.remove(&role.role_id);
-            
+
             return Err(RoleError::CyclicInheritance {
                 message: format!("Adding role '{}' would create a cyclic inheritance", role.role_id),
                 role_id: role.role_id,
             });
         }
-        
+
         Ok(())
     }
-    
+
     // 分配角色
     fn assign_role(&mut self, user_id: &str, role_id: &str) -> Result<(), RoleError> {
         // 验证角色是否存在
@@ -30868,12 +30868,12 @@ impl RoleManager {
                 role_id: role_id.to_string(),
             });
         }
-        
+
         // 检查分离职责策略
         let user_roles = self.get_assigned_roles(user_id);
         let mut new_role_set = user_roles.clone();
         new_role_set.insert(role_id.to_string());
-        
+
         for policy in &self.separation_of_duty_policies {
             if policy.policy_type == SodPolicyType::Static {
                 let intersection: HashSet<_> = new_role_set.intersection(&policy.role_set).collect();
@@ -30885,7 +30885,7 @@ impl RoleManager {
                 }
             }
         }
-        
+
         // 检查角色约束
         for constraint in &self.role_constraints {
             if constraint.role_id == role_id {
@@ -30893,79 +30893,79 @@ impl RoleManager {
                 // ...
             }
         }
-        
+
         // 获取用户的角色集
         let roles = self.role_assignments.entry(user_id.to_string()).or_insert_with(HashSet::new);
-        
+
         // 添加角色
         roles.insert(role_id.to_string());
-        
+
         Ok(())
     }
-    
+
     // 撤销角色
     fn revoke_role(&mut self, user_id: &str, role_id: &str) -> Result<(), RoleError> {
         if let Some(roles) = self.role_assignments.get_mut(user_id) {
             roles.remove(role_id);
         }
-        
+
         Ok(())
     }
-    
+
     // 获取用户分配的角色
     fn get_assigned_roles(&self, user_id: &str) -> HashSet<String> {
         self.role_assignments.get(user_id).cloned().unwrap_or_default()
     }
-    
+
     // 获取用户的有效角色（包括继承的）
     fn get_effective_roles(&self, user_id: &str) -> HashSet<String> {
         let mut effective_roles = HashSet::new();
-        
+
         // 添加直接分配的角色
         if let Some(assigned_roles) = self.role_assignments.get(user_id) {
             effective_roles.extend(assigned_roles.iter().cloned());
-            
+
             // 添加继承的角色
             for role_id in assigned_roles {
                 let inherited = self.get_inherited_roles(role_id);
                 effective_roles.extend(inherited);
             }
         }
-        
+
         // 添加默认角色
         effective_roles.extend(self.default_roles.iter().cloned());
-        
+
         effective_roles
     }
-    
+
     // 获取角色继承的所有角色
     fn get_inherited_roles(&self, role_id: &str) -> HashSet<String> {
         self.inheritance_graph.get_reachable(role_id)
     }
-    
+
     // 检查用户是否拥有角色
     fn has_role(&self, user_id: &str, role_id: &str) -> bool {
         let effective_roles = self.get_effective_roles(user_id);
         effective_roles.contains(role_id)
     }
-    
+
     // 检查用户是否拥有多个角色（全部）
     fn has_all_roles(&self, user_id: &str, role_ids: &[String]) -> bool {
         let effective_roles = self.get_effective_roles(user_id);
         role_ids.iter().all(|id| effective_roles.contains(id))
     }
-    
+
     // 检查用户是否拥有多个角色（任一）
     fn has_any_role(&self, user_id: &str, role_ids: &[String]) -> bool {
         let effective_roles = self.get_effective_roles(user_id);
         role_ids.iter().any(|id| effective_roles.contains(id))
     }
-    
+
     // 获取角色定义
     fn get_role_definition(&self, role_id: &str) -> Option<&Role> {
         self.role_definitions.get(role_id)
     }
-    
+
     // 添加默认角色
     fn add_default_role(&mut self, role_id: &str) -> Result<(), RoleError> {
         if !self.role_definitions.contains_key(role_id) {
@@ -30974,11 +30974,11 @@ impl RoleManager {
                 role_id: role_id.to_string(),
             });
         }
-        
+
         self.default_roles.insert(role_id.to_string());
         Ok(())
     }
-    
+
     // 添加分离职责策略
     fn add_sod_policy(&mut self, policy: SeparationOfDutyPolicy) -> Result<(), RoleError> {
         // 验证所有角色是否存在
@@ -30990,10 +30990,10 @@ impl RoleManager {
                 });
             }
         }
-        
+
         // 添加策略
         self.separation_of_duty_policies.push(policy);
-        
+
         // 检查当前分配是否违反新策略
         if matches!(self.separation_of_duty_policies.last().unwrap().policy_type, SodPolicyType::Static) {
             for (user_id, roles) in &self.role_assignments {
@@ -31006,7 +31006,7 @@ impl RoleManager {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -36819,7 +36819,7 @@ struct StateStoreStats {
     // 数据大小
     data_size_bytes: u64,
     // 内存使用
-    
+
 
 ```rust
 struct StateStoreStats {

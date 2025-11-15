@@ -7,16 +7,18 @@
 
 ## 📋 目录
 
-- [1 基于 OpenAPISwagger 的 REST API 自动生成](#1-基于-openapiswagger-的-rest-api-自动生成)
-  - [1.1 Paperclip](#11-paperclip)
-  - [1.2 utoipa](#12-utoipa)
-- [2 gRPC API 自动生成](#2-grpc-api-自动生成)
-  - [2.1 Tonic](#21-tonic)
-  - [2.2 grpcio](#22-grpcio)
-- [3 GraphQL API 自动生成](#3-graphql-api-自动生成)
-  - [3.1 async-graphql](#31-async-graphql)
-- [4 思维导图](#4-思维导图)
-- [5 小结](#5-小结)
+- [HTTP/RPC API 自动生成](#httprpc-api-自动生成)
+  - [📋 目录](#-目录)
+  - [1 基于 OpenAPISwagger 的 REST API 自动生成](#1-基于-openapiswagger-的-rest-api-自动生成)
+    - [1.1 Paperclip](#11-paperclip)
+    - [1.2 utoipa](#12-utoipa)
+  - [2 gRPC API 自动生成](#2-grpc-api-自动生成)
+    - [2.1 Tonic](#21-tonic)
+    - [2.2 grpcio](#22-grpcio)
+  - [3 GraphQL API 自动生成](#3-graphql-api-自动生成)
+    - [3.1 async-graphql](#31-async-graphql)
+  - [4 思维导图](#4-思维导图)
+  - [5 小结](#5-小结)
 
 ---
 
@@ -24,15 +26,15 @@
 
 ### 1.1 Paperclip
 
-- **定义与解释**：  
+- **定义与解释**：
   [Paperclip](https://github.com/wafflespeanut/paperclip) 是一个与
   [Actix-web](https://actix.rs/) 集成的库，能够根据 Rust 代码自动生成 OpenAPI（Swagger）文档，
   同时也支持部分代码生成。通过在路由和类型上使用特定的注解，可以获得 API 文档的生成，
   这对于前后端分离开发和接口测试非常方便。
 
-- **用例**：  
+- **用例**：
   在 Actix-web 中使用 Paperclip，只需对 Handler 函数加入注解，例如：
-  
+
   ```rust:src/paperclip_example.rs
   use actix_web::{web, App, HttpResponse, HttpServer};
   use paperclip::actix::{api_v2_operation, OpenApiExt};
@@ -55,16 +57,16 @@
       .run()
       .await
   }
-  ```  
-  
+  ```
+
   运行后，就可以在 `http://127.0.0.1:8080/api/spec` 地址访问自动生成的 OpenAPI JSON 文档。
 
 ### 1.2 utoipa
 
-- **定义与解释**：  
+- **定义与解释**：
   [utoipa](https://github.com/johnthagen/utoipa) 是一个较新的轻量级库，通过 Rust 类型（结构体、枚举等）的派生宏（derive macros）自动生成 OpenAPI 文档。它的优点是使用方式简单、无需大量手写注解，适合希望快速生成 API 文档的项目。
 
-- **用例**：  
+- **用例**：
   对数据结构使用 `#[derive(utoipa::ToSchema)]`，并在 Handler 中调用自动生成的文档生成接口。例如：
 
   ```rust:src/utoipa_example.rs
@@ -86,10 +88,10 @@
 
 ### 2.1 Tonic
 
-- **定义与解释**：  
+- **定义与解释**：
   [Tonic](https://github.com/hyperium/tonic) 是目前 Rust 生态中非常受欢迎的 gRPC 实现。它基于 [Prost](https://github.com/danburkert/prost) 来编译 Protocol Buffers 文件（.proto），并通过 [tonic-build](https://docs.rs/tonic-build) 自动生成客户端和服务端代码。
 
-- **用例**：  
+- **用例**：
   只需在项目的 `build.rs` 中配置 `tonic_build` 工具即可：
 
   ```rust:src/build.rs
@@ -97,13 +99,13 @@
       tonic_build::compile_protos("proto/helloworld.proto")?;
       Ok(())
   }
-  ```  
+  ```
 
   在定义好 `.proto` 文件后，编译时会自动生成 Rust 模块，然后在服务端和客户端代码中直接使用这些生成的代码实现业务逻辑和调用服务。
 
 ### 2.2 grpcio
 
-- **定义与解释**：  
+- **定义与解释**：
   [grpcio](https://github.com/pingcap/grpc-rs) 是另一种 gRPC 实现，提供了 C++ gRPC 的 Rust 封装，同样支持通过 `protoc` 插件自动生成代码。不过，由于 gRPC 生态的更新迭代，目前 Tonic 越来越受欢迎，因为其纯 Rust 实现更易于使用和维护。
 
 ---
@@ -112,10 +114,10 @@
 
 ### 3.1 async-graphql
 
-- **定义与解释**：  
+- **定义与解释**：
   [async-graphql](https://github.com/async-graphql/async-graphql) 是目前 Rust 中功能较全面的 GraphQL 框架，它利用大量的 Rust 宏来生成 GraphQL Schema，减少了手写 Schema 描述的工作量，从而将 Rust 数据结构自动映射为 GraphQL 类型。
 
-- **用例**：  
+- **用例**：
   使用时只需对数据结构和 Resolver 加入宏标注：
 
   ```rust:src/async_graphql_example.rs
@@ -183,15 +185,15 @@ graph TD
 
 ## 5 小结
 
-- **REST API 自动生成**：  
-  - 通过 [Paperclip](https://github.com/wafflespeanut/paperclip) 可实现与 Actix-web 集成的自动 OpenAPI 生成；  
+- **REST API 自动生成**：
+  - 通过 [Paperclip](https://github.com/wafflespeanut/paperclip) 可实现与 Actix-web 集成的自动 OpenAPI 生成；
   - [utoipa](https://github.com/johnthagen/utoipa) 提供基于 derive 宏的更轻量方式生成 API 文档。
 
-- **gRPC API 自动生成**：  
-  - [Tonic](https://github.com/hyperium/tonic) 是当前广泛使用的纯 Rust gRPC 实现，结合 tonic-build 自动生成代码；  
+- **gRPC API 自动生成**：
+  - [Tonic](https://github.com/hyperium/tonic) 是当前广泛使用的纯 Rust gRPC 实现，结合 tonic-build 自动生成代码；
   - [grpcio](https://github.com/pingcap/grpc-rs) 则是对 C++ gRPC 的封装。
 
-- **GraphQL API 自动生成**：  
+- **GraphQL API 自动生成**：
   - [async-graphql](https://github.com/async-graphql/async-graphql) 利用 Rust 宏实现了从数据结构自动生成 Schema，并简化了 Resolver 的书写。
 
 通过这些工具，Rust 开发者可以从 API 规范文件自动生成代码，大大减少手动编码的工作量，提高开发效率并保持文档与代码的一致性。

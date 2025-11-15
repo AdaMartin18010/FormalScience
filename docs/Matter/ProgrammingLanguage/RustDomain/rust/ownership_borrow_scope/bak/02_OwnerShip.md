@@ -1,20 +1,16 @@
-# Rust 中与所有权相关的主要 trait
+# 1. Rust 中与所有权相关的主要 trait
 
-Rust 中与所有权相关的主要 trait 包括 `Deref` 和 `Drop`。
-此外，`Clone` 和 `Copy` trait 也在一定程度上与所有权相关，因为它们决定了值的复制行为。
-以下是这些 trait 的定义、解释以及它们在 Rust 中的应用。
+## 目录
 
-## 📋 目录
+- [1. Rust 中与所有权相关的主要 trait](#1-rust-中与所有权相关的主要-trait)
+  - [目录](#目录)
+  - [1.1 Deref Trait](#11-deref-trait)
+  - [1.2 Drop Trait](#12-drop-trait)
+  - [1.3 Clone Trait](#13-clone-trait)
+  - [1.4 Copy Trait](#14-copy-trait)
+  - [1.5 解释和联系](#15-解释和联系)
 
-- [1 Deref Trait](#1-deref-trait)
-- [2 Drop Trait](#2-drop-trait)
-- [3 Clone Trait](#3-clone-trait)
-- [4 Copy Trait](#4-copy-trait)
-- [5 解释和联系](#5-解释和联系)
-
----
-
-## 1 Deref Trait
+## 1.1 Deref Trait
 
 **定义**：
 
@@ -32,7 +28,7 @@ pub trait Deref {
 - 智能指针（如 `Box<T>`, `Rc<T>`, `Arc<T>`）实现 `Deref` 来提供对其内部数据的透明访问。
 - 允许使用 `*` 操作符自动解引用，简化代码。
 
-## 2 Drop Trait
+## 1.2 Drop Trait
 
 **定义**：
 
@@ -49,7 +45,7 @@ pub trait Drop {
 - 自定义类型可以通过实现 `Drop` trait 来清理资源，如文件句柄、网络连接或内存。
 - Rust 编译器在值离开作用域时自动调用 `drop` 方法。
 
-## 3 Clone Trait
+## 1.3 Clone Trait
 
 **定义**：
 
@@ -66,7 +62,7 @@ pub trait Clone: Sized {
 - 当你需要复制一个值时使用，如复制一个结构体或智能指针。
 - `Clone` trait 是 `Copy` trait 的超集，意味着实现了 `Copy` 的类型也自动实现了 `Clone`。
 
-## 4 Copy Trait
+## 1.4 Copy Trait
 
 **定义**：
 
@@ -81,7 +77,7 @@ pub trait Copy: Clone {}
 - 基本数据类型（如整数、浮点数）和小型枚举类型通常实现 `Copy`。
 - 实现 `Copy` 的类型在赋值和函数参数传递时不需要显式克隆。
 
-## 5 解释和联系
+## 1.5 解释和联系
 
 - **所有权**：Rust 的所有权模型确保了每个值在任何时刻都有一个变量作为其所有者，或者没有所有者。
     当所有者超出作用域时，值会被自动丢弃。

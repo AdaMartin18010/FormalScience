@@ -1,11 +1,38 @@
-# Rust 所有权系统的资源管理视角（续二）
+# 1. Rust 所有权系统的资源管理视角（续二）
 
-## 前言
+## 目录
+
+- [1. Rust 所有权系统的资源管理视角（续二）](#1-rust-所有权系统的资源管理视角续二)
+  - [目录](#目录)
+  - [1.1 前言](#11-前言)
+  - [1.2 所有权系统的理论基础](#12-所有权系统的理论基础)
+    - [1.2.1 线性类型理论](#121-线性类型理论)
+    - [1.2.2 能力理论](#122-能力理论)
+    - [1.2.3 借用与区域多态性](#123-借用与区域多态性)
+    - [1.2.4 子结构类型理论](#124-子结构类型理论)
+  - [1.3 所有权系统的演化与设计决策](#13-所有权系统的演化与设计决策)
+    - [1.3.1 早期设计与变迁](#131-早期设计与变迁)
+    - [1.3.2 关键设计决策分析](#132-关键设计决策分析)
+    - [1.3.3 非公开接受的替代方案](#133-非公开接受的替代方案)
+  - [1.4 教学与学习所有权系统](#14-教学与学习所有权系统)
+    - [1.4.1 所有权思维模型](#141-所有权思维模型)
+    - [1.4.2 常见认知障碍](#142-常见认知障碍)
+    - [1.4.3 有效学习策略](#143-有效学习策略)
+  - [1.5 所有权系统的未来发展](#15-所有权系统的未来发展)
+    - [1.5.1 当前挑战与研究方向](#151-当前挑战与研究方向)
+    - [1.5.2 潜在扩展与改进](#152-潜在扩展与改进)
+    - [1.5.3 对其他语言的影响](#153-对其他语言的影响)
+  - [1.6 综合实践模式](#16-综合实践模式)
+    - [1.6.1 大型项目中的所有权模式](#161-大型项目中的所有权模式)
+    - [1.6.2 权衡与设计决策](#162-权衡与设计决策)
+    - [1.6.3 所有权驱动设计](#163-所有权驱动设计)
+
+## 1.1 前言
 
 ```text
 <think>
-I'll continue the comprehensive exploration of Rust's ownership system, 
-focusing on deeper aspects and theoretical foundations. 
+I'll continue the comprehensive exploration of Rust's ownership system,
+focusing on deeper aspects and theoretical foundations.
 Let me plan the remaining sections:
 
 1. Theoretical foundations of the ownership system
@@ -18,36 +45,9 @@ This will provide a complete picture of Rust's ownership system from a resource 
 </think>
 ```
 
-## 目录
+## 1.2 所有权系统的理论基础
 
-- [Rust 所有权系统的资源管理视角（续二）](#rust-所有权系统的资源管理视角续二)
-  - [前言](#前言)
-  - [目录](#目录)
-  - [所有权系统的理论基础](#所有权系统的理论基础)
-    - [线性类型理论](#线性类型理论)
-    - [能力理论](#能力理论)
-    - [借用与区域多态性](#借用与区域多态性)
-    - [子结构类型理论](#子结构类型理论)
-  - [所有权系统的演化与设计决策](#所有权系统的演化与设计决策)
-    - [早期设计与变迁](#早期设计与变迁)
-    - [关键设计决策分析](#关键设计决策分析)
-    - [非公开接受的替代方案](#非公开接受的替代方案)
-  - [教学与学习所有权系统](#教学与学习所有权系统)
-    - [所有权思维模型](#所有权思维模型)
-    - [常见认知障碍](#常见认知障碍)
-    - [有效学习策略](#有效学习策略)
-  - [所有权系统的未来发展](#所有权系统的未来发展)
-    - [当前挑战与研究方向](#当前挑战与研究方向)
-    - [潜在扩展与改进](#潜在扩展与改进)
-    - [对其他语言的影响](#对其他语言的影响)
-  - [综合实践模式](#综合实践模式)
-    - [大型项目中的所有权模式](#大型项目中的所有权模式)
-    - [权衡与设计决策](#权衡与设计决策)
-    - [所有权驱动设计](#所有权驱动设计)
-
-## 所有权系统的理论基础
-
-### 线性类型理论
+### 1.2.1 线性类型理论
 
 Rust 所有权系统的核心基础之一是线性类型理论：
 
@@ -79,7 +79,7 @@ fn non_linear_example<T: Copy>(x: T) -> (T, T) {
 }
 ```
 
-### 能力理论
+### 1.2.2 能力理论
 
 能力理论（Capability Theory）提供了理解 Rust 所有权的另一个视角：
 
@@ -104,27 +104,27 @@ $$
 ```rust
 fn demonstrate_capabilities() {
     let mut data = vec![1, 2, 3]; // 完全能力
-    
+
     {
         let borrowed = &mut data; // 临时的读写能力
         borrowed.push(4);
         // data.push(5); // 错误：能力已转移
     } // 读写能力归还
-    
+
     data.push(5); // 完全能力恢复
-    
+
     {
         let read_only = &data; // 只读能力
         println!("长度: {}", read_only.len());
         // read_only.push(6); // 错误：无写入能力
     }
-    
+
     // 销毁能力
     drop(data); // 显式行使销毁能力
 }
 ```
 
-### 借用与区域多态性
+### 1.2.3 借用与区域多态性
 
 Rust 的借用系统可以从区域多态性（Region Polymorphism）理论理解：
 
@@ -162,7 +162,7 @@ fn region_demo() {
 }
 ```
 
-### 子结构类型理论
+### 1.2.4 子结构类型理论
 
 Rust 所有权系统还利用了子结构类型理论（Substructural Type Systems）的概念：
 
@@ -183,7 +183,7 @@ Rust 所有权系统还利用了子结构类型理论（Substructural Type Syste
 
 $$
    \[ \frac{\Gamma \vdash e : T \quad T : \text{Copy}}{\Gamma \vdash e : T \otimes T} \quad \text{(复制)} \]
-  
+
    \[ \frac{\Gamma \vdash e : T}{\Gamma \vdash \text{drop}(e) : ()} \quad \text{(丢弃)} \]
 $$
 
@@ -193,11 +193,11 @@ fn substructural_demo() {
     let s = String::from("线性值");
     let s2 = s;
     // println!("{}", s); // 错误：s 已被移动
-    
+
     // 仿射行为（显式丢弃）
     let s3 = String::from("仿射值");
     drop(s3); // 显式丢弃，不使用
-    
+
     // 有向行为（通过 Copy）
     let n = 42; // i32 实现了 Copy
     let n2 = n; // 复制而非移动
@@ -205,9 +205,9 @@ fn substructural_demo() {
 }
 ```
 
-## 所有权系统的演化与设计决策
+## 1.3 所有权系统的演化与设计决策
 
-### 早期设计与变迁
+### 1.3.1 早期设计与变迁
 
 Rust 所有权系统的演化历程：
 
@@ -238,7 +238,7 @@ fn modern_ownership_demo(x: Rc<i32>) {
 }
 ```
 
-### 关键设计决策分析
+### 1.3.2 关键设计决策分析
 
 Rust 所有权系统涉及的关键设计决策：
 
@@ -271,7 +271,7 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 }
 ```
 
-### 非公开接受的替代方案
+### 1.3.3 非公开接受的替代方案
 
 Rust 团队考虑过但未采用的所有权系统替代方案：
 
@@ -305,9 +305,9 @@ fn rust_actual(data: &Vec<i32>) -> i32 {
 }
 ```
 
-## 教学与学习所有权系统
+## 1.4 教学与学习所有权系统
 
-### 所有权思维模型
+### 1.4.1 所有权思维模型
 
 有效理解 Rust 所有权系统的思维模型：
 
@@ -329,19 +329,19 @@ fn mental_model_example() {
     let guardian = String::from("我是一个资源"); // guardian 成为字符串的守护者
     let new_guardian = guardian; // 守护职责转移
     // println!("{}", guardian); // 错误：guardian 不再是守护者
-    
+
     // 能力传递模型
     let mut resource = vec![1, 2, 3]; // 具有完整能力
     {
         let borrowed = &resource; // 分享只读能力
         println!("长度: {}", borrowed.len());
     } // 只读能力归还
-    
+
     resource.push(4); // 使用完整能力
 }
 ```
 
-### 常见认知障碍
+### 1.4.2 常见认知障碍
 
 学习 Rust 所有权系统时的常见认知障碍：
 
@@ -361,16 +361,16 @@ fn mental_model_example() {
 // 常见误解示例
 fn common_misconceptions() {
     let data = vec![1, 2, 3];
-    
+
     // 误解1: 认为这是引用传递（类似 C++）
     process(&data);
-    
+
     // 误解2: 认为可变性是对象属性而非引用属性
     let x = 5;
     // let mut ref_x = &x; // 错误思维：引用的可变性与被引用对象无关
     let ref_x = &x;
     // *ref_x = 6; // 错误：ref_x 是不可变引用，无法修改目标
-    
+
     // 误解3: 认为生命周期是运行时概念
     // 生命周期是纯编译时构造，用于静态验证
 }
@@ -380,7 +380,7 @@ fn process(data: &Vec<i32>) {
 }
 ```
 
-### 有效学习策略
+### 1.4.3 有效学习策略
 
 高效掌握 Rust 所有权系统的学习策略：
 
@@ -412,7 +412,7 @@ fn borrowing_basics() {
     let r1 = &s; // 不可变借用
     let r2 = &s; // 可以多个不可变借用
     println!("{} and {}", r1, r2);
-    
+
     let r3 = &mut s; // 可变借用
     r3.push_str(" world");
     println!("{}", r3);
@@ -424,9 +424,9 @@ fn lifetime_basics<'a>(x: &'a str, y: &'a str) -> &'a str {
 }
 ```
 
-## 所有权系统的未来发展
+## 1.5 所有权系统的未来发展
 
-### 当前挑战与研究方向
+### 1.5.1 当前挑战与研究方向
 
 Rust 所有权系统面临的挑战和研究方向：
 
@@ -462,7 +462,7 @@ struct PinnedSelfRef {
 // 仍然很复杂，未来可能简化
 ```
 
-### 潜在扩展与改进
+### 1.5.2 潜在扩展与改进
 
 Rust 所有权系统可能的未来改进：
 
@@ -495,7 +495,7 @@ fn theoretical_partial_borrow(data: &mut ComplexStruct) {
 // }
 ```
 
-### 对其他语言的影响
+### 1.5.3 对其他语言的影响
 
 Rust 所有权系统对编程语言领域的影响：
 
@@ -529,9 +529,9 @@ func modifyInPlace(_ a: inout Int, _ b: inout Int) {
 */
 ```
 
-## 综合实践模式
+## 1.6 综合实践模式
 
-### 大型项目中的所有权模式
+### 1.6.1 大型项目中的所有权模式
 
 大型 Rust 项目中的常见所有权模式：
 
@@ -581,7 +581,7 @@ impl<'a> View<'a> {
 }
 ```
 
-### 权衡与设计决策
+### 1.6.2 权衡与设计决策
 
 实际项目中的所有权系统相关权衡：
 
@@ -609,7 +609,7 @@ fn single_threaded_design() {
     let shared_data = Rc::new(RefCell::new(vec![1, 2, 3]));
     let reference1 = Rc::clone(&shared_data);
     let reference2 = Rc::clone(&shared_data);
-    
+
     reference1.borrow_mut().push(4);
     println!("数据: {:?}", reference2.borrow());
 }
@@ -618,18 +618,18 @@ fn single_threaded_design() {
 fn multi_threaded_design() {
     // 选择 Arc<Mutex<T>> 实现线程安全共享可变性
     let shared_data = Arc::new(Mutex::new(vec![1, 2, 3]));
-    
+
     let data_clone = Arc::clone(&shared_data);
     std::thread::spawn(move || {
         let mut data = data_clone.lock().unwrap();
         data.push(4);
     }).join().unwrap();
-    
+
     println!("数据: {:?}", shared_data.lock().unwrap());
 }
 ```
 
-### 所有权驱动设计
+### 1.6.3 所有权驱动设计
 
 以所有权为中心的软件设计方法：
 
@@ -662,7 +662,7 @@ impl Pipeline {
         let transformed = self.apply_transformations(data)?;
         self.sink.store(transformed)
     }
-    
+
     fn apply_transformations(&self, mut data: Data) -> Result<Data, Error> {
         for transformer in &self.transformers {
             // 数据所有权在转换过程中转移和修改

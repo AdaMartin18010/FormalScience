@@ -96,7 +96,7 @@ impl SchemaGenerator {
     /// 生成类型定义
     fn generate_type(&self, entity: &Entity) -> Result<String> {
         let mut type_def = format!("type {} {{\n", entity.name);
-        
+
         // 生成字段定义
         for field in &entity.fields {
             let field_def = format!(
@@ -475,7 +475,7 @@ impl EntityRelationManager {
 async fn main() -> Result<()> {
     // 初始化数据库连接池
     let mut pool_manager = DatabasePoolManager::new().await?;
-    
+
     pool_manager.init_mysql("mysql://user:pass@localhost/db").await?;
     pool_manager.init_postgres("postgres://user:pass@localhost/db").await?;
     pool_manager.init_sqlite("sqlite://local.db").await?;
@@ -551,7 +551,7 @@ async fn main() -> Result<()> {
     // 创建查询解析器
     let resolver_gen = QueryResolverGenerator::new(&schema, pool_manager);
     let mut resolver_stream = resolver_gen.generate_resolvers();
-    
+
     while let Some(resolver) = resolver_stream.next().await {
         println!("Generated resolver: {:?}", resolver?);
     }
@@ -770,7 +770,7 @@ impl DatabaseManager {
             if let Some(client) = &self.mongo_client {
                 let db = client.database("app");
                 let collection = db.collection::<mongodb::bson::Document>("json_data");
-                
+
                 let mut cursor = collection.find(None, None).await?;
                 while let Some(doc) = cursor.next().await {
                     let data: T = mongodb::bson::from_document(doc?)?;
@@ -794,7 +794,7 @@ impl QueryRoot {
     /// 用户查询解析器
     async fn user(&self, ctx: &Context<'_>, id: ID) -> Result<Option<User>> {
         let db = ctx.data::<Arc<DatabaseManager>>()?;
-        
+
         // 使用生成器查询用户数据
         let mut user_gen = try_stream! {
             // 关系型数据库查询
@@ -846,7 +846,7 @@ impl QueryRoot {
         offset: Option<i32>,
     ) -> Result<Vec<Post>> {
         let db = ctx.data::<Arc<DatabaseManager>>()?;
-        
+
         // 使用生成器查询文章列表
         let mut posts_gen = try_stream! {
             let limit = limit.unwrap_or(10) as i64;
@@ -856,7 +856,7 @@ impl QueryRoot {
             if let Some(pool) = &db.pg_pool {
                 let rows = sqlx::query!(
                     r#"
-                    SELECT p.*, 
+                    SELECT p.*,
                            p.metadata::jsonb as "metadata!",
                            u.name as author_name
                     FROM posts p
@@ -918,7 +918,7 @@ impl MutationRoot {
     /// 创建用户变更解析器
     async fn create_user(&self, ctx: &Context<'_>, input: CreateUserInput) -> Result<User> {
         let db = ctx.data::<Arc<DatabaseManager>>()?;
-        
+
         // 使用生成器处理用户创建
         let mut create_gen = try_stream! {
             let user = User::new(input);
@@ -968,7 +968,7 @@ impl MutationRoot {
     /// 更新文章变更解析器
     async fn update_post(&self, ctx: &Context<'_>, id: ID, input: UpdatePostInput) -> Result<Post> {
         let db = ctx.data::<Arc<DatabaseManager>>()?;
-        
+
         // 使用生成器处理文章更新
         let mut update_gen = try_stream! {
             // 更新 PostgreSQL
@@ -1006,7 +1006,7 @@ impl MutationRoot {
                         "updated_at": chrono::Utc::now()
                     }
                 };
-                
+
                 posts.update_one(
                     doc! { "_id": id.as_str() },
                     update,
@@ -1086,7 +1086,7 @@ impl DatabaseMigrationGenerator {
             // MongoDB 索引
             if let Some(client) = &self.db_manager.mongo_client {
                 let db = client.database("app");
-                
+
                 // 用户集合索引
                 db.collection("users")
                     .create_index(
@@ -1104,7 +1104,7 @@ impl DatabaseMigrationGenerator {
                 db.collection("posts")
                     .create_index(
                         mongodb::IndexModel::builder()
-                            .keys(doc! { 
+                            .keys(doc! {
                                 "author_id": 1,
                                 "created_at": -1
                             })
@@ -1135,7 +1135,7 @@ async fn main() -> Result<()> {
     // 运行数据库迁移
     let migration_gen = DatabaseMigrationGenerator::new(db_manager.clone());
     let mut migrations = migration_gen.generate_migrations();
-    
+
     while let Some(result) = migrations.next().await {
         println!("Migration result: {:?}", result);
     }

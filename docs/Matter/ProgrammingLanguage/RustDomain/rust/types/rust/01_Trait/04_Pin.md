@@ -1,18 +1,15 @@
-# Pin
+# 1. Pin
 
-在 Rust 中，`Pin` trait 属于 `std::marker` 模块，它用于指示某个值的内存位置不应该被移动。
-这通常用于确保某些操作的稳定性，比如异步任务的执行或与原始内存地址相关的操作。
+## 目录
 
-## 📋 目录
+- [1. Pin](#1-pin)
+  - [目录](#目录)
+  - [1.1 Pin trait 的定义](#11-pin-trait-的定义)
+  - [1.2 Unpin trait](#12-unpin-trait)
+  - [1.3 Pin 的应用](#13-pin-的应用)
+    - [1.3.1 使用 Pin](#131-使用-pin)
 
-- [1 Pin trait 的定义](#1-pin-trait-的定义)
-- [2 Unpin trait](#2-unpin-trait)
-- [3 Pin 的应用](#3-pin-的应用)
-  - [3.1 使用 Pin](#31-使用-pin)
-
----
-
-## 1 Pin trait 的定义
+## 1.1 Pin trait 的定义
 
 `Pin` trait 定义如下：
 
@@ -21,7 +18,7 @@ pub trait Pin {
     // 将 Pin 与内部的值关联起来，允许访问内部的值。
     fn get_ref(&self) -> *const Self::Target;
     fn get_mut(&mut self) -> *mut Self::Target;
-    
+
     // 尝试将内部的值移动到新的内存位置。
     // 如果值是 !Unpin，则这个操作可能会失败。
     fn into_ref(self: Pin<&mut Self>) -> Self::Target where Self: Unpin;
@@ -32,12 +29,12 @@ pub trait Pin {
 `Pin` trait 有一个关联类型 `Target`，它代表了 `Pin` 内部持有的值的类型。
 `Pin` trait 需要实现两个方法 `get_ref` 和 `get_mut`，它们返回内部值的裸指针，允许对内部值进行解引用操作。
 
-## 2 Unpin trait
+## 1.2 Unpin trait
 
 与 `Pin` 相关的还有一个 `Unpin` trait，它标记一个类型可以被安全地移动，即使它被固定（pinned）了。
 如果一个类型没有实现 `Unpin`，那么一旦它被固定，就不能被移动。
 
-## 3 Pin 的应用
+## 1.3 Pin 的应用
 
 1. **内存安全**：`Pin` 确保值的内存地址在它的生命周期内保持不变，这对于某些需要稳定内存地址的操作是必要的，比如在异步代码中。
 
@@ -50,7 +47,7 @@ pub trait Pin {
 
 5. **内存分配**：在某些情况下，固定值可以用于优化内存分配，因为编译器知道值的地址不会改变，可以进行更有效的内存布局。
 
-### 3.1 使用 Pin
+### 1.3.1 使用 Pin
 
 使用 `Pin` 通常涉及到将值固定到内存中，然后通过 `Pin` 类型来访问它。例如：
 

@@ -1,16 +1,13 @@
-# 异步编程
+# 1. 异步编程
 
-Rust 语言在异步编程和并发编程方面提供了强大的原生支持，这些机制使得 Rust 能够有效地处理高并发和高性能的系统编程任务。
-以下是 Rust 中异步编程和并发编程的关键概念和机制：
+## 目录
 
-## 📋 目录
+- [1. 异步编程](#1-异步编程)
+  - [目录](#目录)
+  - [1.1 异步编程 (Async Programming)](#11-异步编程-async-programming)
+  - [1.2 并发编程 (Concurrency Programming)](#12-并发编程-concurrency-programming)
 
-- [1 异步编程 (Async Programming)](#1-异步编程-async-programming)
-- [2 并发编程 (Concurrency Programming)](#2-并发编程-concurrency-programming)
-
----
-
-## 1 异步编程 (Async Programming)
+## 1.1 异步编程 (Async Programming)
 
 1. **Future**：在 Rust 中，`Future` 是一种异步操作的抽象，代表了一个可能还没有完成的计算，将来某个时刻会返回一个值或一个错误。
 
@@ -26,7 +23,7 @@ Rust 语言在异步编程和并发编程方面提供了强大的原生支持，
 
 6. **异步通道**：例如 `tokio::sync::mpsc`，允许在异步任务之间传递消息。
 
-## 2 并发编程 (Concurrency Programming)
+## 1.2 并发编程 (Concurrency Programming)
 
 1. **多线程**：Rust 允许创建线程来同时运行多段代码，利用 `std::thread` 模块可以轻松地在 Rust 中使用多线程。
 

@@ -1,43 +1,43 @@
-# Petri网理论 (Petri Net Theory)
+# 1. Petri网理论 (Petri Net Theory)
 
 ## 目录
 
-- [Petri网理论 (Petri Net Theory)](#petri网理论-petri-net-theory)
+- [1. Petri网理论 (Petri Net Theory)](#1-petri网理论-petri-net-theory)
   - [目录](#目录)
-  - [概述](#概述)
-  - [1. 基本Petri网 (Basic Petri Nets)](#1-基本petri网-basic-petri-nets)
-    - [1.1 基本定义](#11-基本定义)
-    - [1.2 可达性分析](#12-可达性分析)
-    - [1.3 不变性分析](#13-不变性分析)
-  - [2. 高级Petri网 (Advanced Petri Nets)](#2-高级petri网-advanced-petri-nets)
-    - [2.1 时间Petri网 (Timed Petri Nets)](#21-时间petri网-timed-petri-nets)
-    - [2.2 着色Petri网 (Colored Petri Nets)](#22-着色petri网-colored-petri-nets)
-    - [2.3 层次Petri网 (Hierarchical Petri Nets)](#23-层次petri网-hierarchical-petri-nets)
-  - [3. 并发语义 (Concurrency Semantics)](#3-并发语义-concurrency-semantics)
-    - [3.1 步语义 (Step Semantics)](#31-步语义-step-semantics)
-    - [3.2 部分序语义 (Partial Order Semantics)](#32-部分序语义-partial-order-semantics)
-  - [4. 分析技术 (Analysis Techniques)](#4-分析技术-analysis-techniques)
-    - [4.1 状态空间分析](#41-状态空间分析)
-    - [4.2 结构分析](#42-结构分析)
-    - [4.3 性能分析](#43-性能分析)
-  - [5. 应用领域 (Application Domains)](#5-应用领域-application-domains)
-    - [5.1 并发系统建模](#51-并发系统建模)
-    - [5.2 工作流建模](#52-工作流建模)
-    - [5.3 制造系统建模](#53-制造系统建模)
-  - [6. 扩展理论 (Extension Theories)](#6-扩展理论-extension-theories)
-    - [6.1 概率Petri网](#61-概率petri网)
-    - [6.2 模糊Petri网](#62-模糊petri网)
-    - [6.3 对象Petri网](#63-对象petri网)
-  - [7. 结论](#7-结论)
-  - [参考文献](#参考文献)
+  - [1.1 概述](#11-概述)
+  - [1.2 基本Petri网 (Basic Petri Nets)](#12-基本petri网-basic-petri-nets)
+    - [1.2.1 基本定义](#121-基本定义)
+    - [1.2.2 可达性分析](#122-可达性分析)
+    - [1.2.3 不变性分析](#123-不变性分析)
+  - [1.3 高级Petri网 (Advanced Petri Nets)](#13-高级petri网-advanced-petri-nets)
+    - [1.3.1 时间Petri网 (Timed Petri Nets)](#131-时间petri网-timed-petri-nets)
+    - [1.3.2 着色Petri网 (Colored Petri Nets)](#132-着色petri网-colored-petri-nets)
+    - [1.3.3 层次Petri网 (Hierarchical Petri Nets)](#133-层次petri网-hierarchical-petri-nets)
+  - [1.4 并发语义 (Concurrency Semantics)](#14-并发语义-concurrency-semantics)
+    - [1.4.1 步语义 (Step Semantics)](#141-步语义-step-semantics)
+    - [1.4.2 部分序语义 (Partial Order Semantics)](#142-部分序语义-partial-order-semantics)
+  - [1.5 分析技术 (Analysis Techniques)](#15-分析技术-analysis-techniques)
+    - [1.5.1 状态空间分析](#151-状态空间分析)
+    - [1.5.2 结构分析](#152-结构分析)
+    - [1.5.3 性能分析](#153-性能分析)
+  - [1.6 应用领域 (Application Domains)](#16-应用领域-application-domains)
+    - [1.6.1 并发系统建模](#161-并发系统建模)
+    - [1.6.2 工作流建模](#162-工作流建模)
+    - [1.6.3 制造系统建模](#163-制造系统建模)
+  - [1.7 扩展理论 (Extension Theories)](#17-扩展理论-extension-theories)
+    - [1.7.1 概率Petri网](#171-概率petri网)
+    - [1.7.2 模糊Petri网](#172-模糊petri网)
+    - [1.7.3 对象Petri网](#173-对象petri网)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
-## 概述
+## 1.1 概述
 
 Petri网是并发系统建模和分析的重要形式化工具，由Carl Adam Petri在1962年提出。本文档系统性地梳理了Petri网理论的主要分支，从基本Petri网到高级变种，包括时间Petri网、着色Petri网等。
 
-## 1. 基本Petri网 (Basic Petri Nets)
+## 1.2 基本Petri网 (Basic Petri Nets)
 
-### 1.1 基本定义
+### 1.2.1 基本定义
 
 **定义 1.1.1** 基本Petri网是一个四元组 N = (P, T, F, M₀)，其中：
 
@@ -84,7 +84,7 @@ M'(p) = M(p),     其他情况
 3. 其他库所保持不变
 4. 因此总托肯数守恒
 
-### 1.2 可达性分析
+### 1.2.2 可达性分析
 
 **定义 1.2.1** 可达性关系：标识 M' 从标识 M 可达，记作 M →* M'，如果存在变迁序列 σ = t₁t₂...tₙ 使得：
 
@@ -110,7 +110,7 @@ M →^{t₁} M₁ →^{t₂} M₂ → ... →^{tₙ} M'
 2. 所有库所的托肯数组合有上界
 3. 因此可达集大小有限
 
-### 1.3 不变性分析
+### 1.2.3 不变性分析
 
 **定义 1.3.1** 不变性：向量 I: P → ℤ 是Petri网的不变性，如果对于任意标识 M 和变迁 t：
 
@@ -137,9 +137,9 @@ I · M = I · M₀
 2. 求解方程 C^T · I = 0
 3. 非零解即为不变性
 
-## 2. 高级Petri网 (Advanced Petri Nets)
+## 1.3 高级Petri网 (Advanced Petri Nets)
 
-### 2.1 时间Petri网 (Timed Petri Nets)
+### 1.3.1 时间Petri网 (Timed Petri Nets)
 
 **定义 2.1.1** 时间Petri网是一个六元组 N = (P, T, F, M₀, I, D)，其中：
 
@@ -165,7 +165,7 @@ I · M = I · M₀
 2. 时间约束可能导致无限状态空间
 3. 时间约束使得分析算法更复杂
 
-### 2.2 着色Petri网 (Colored Petri Nets)
+### 1.3.2 着色Petri网 (Colored Petri Nets)
 
 **定义 2.2.1** 着色Petri网是一个六元组 N = (P, T, F, M₀, C, G)，其中：
 
@@ -188,7 +188,7 @@ I · M = I · M₀
 2. 展开后的网可能指数级增长
 3. 着色网可以更紧凑地表示复杂系统
 
-### 2.3 层次Petri网 (Hierarchical Petri Nets)
+### 1.3.3 层次Petri网 (Hierarchical Petri Nets)
 
 **定义 2.3.1** 层次Petri网是一个递归结构，其中：
 
@@ -204,9 +204,9 @@ I · M = I · M₀
 2. 接口行为可以抽象
 3. 整体行为通过组合得到
 
-## 3. 并发语义 (Concurrency Semantics)
+## 1.4 并发语义 (Concurrency Semantics)
 
-### 3.1 步语义 (Step Semantics)
+### 1.4.1 步语义 (Step Semantics)
 
 **定义 3.1.1** 步：步是一个多重集 S: T → ℕ，表示同时发生的变迁。
 
@@ -230,7 +230,7 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 每个交错序列都可以组合为步
 3. 两种语义产生相同的可达集
 
-### 3.2 部分序语义 (Partial Order Semantics)
+### 1.4.2 部分序语义 (Partial Order Semantics)
 
 **定义 3.2.1** 过程：过程是一个偏序集 (E, ≤)，其中：
 
@@ -250,9 +250,9 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 逐步添加使能的变迁
 3. 建立因果依赖关系
 
-## 4. 分析技术 (Analysis Techniques)
+## 1.5 分析技术 (Analysis Techniques)
 
-### 4.1 状态空间分析
+### 1.5.1 状态空间分析
 
 **定义 4.1.1** 状态图：状态图是一个有向图，其中：
 
@@ -267,7 +267,7 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 每个变迁发生都是状态图的边
 3. 状态图包含所有执行路径
 
-### 4.2 结构分析
+### 1.5.2 结构分析
 
 **定义 4.2.1** 结构性质：结构性质是不依赖于初始标识的性质。
 
@@ -279,7 +279,7 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 线性约束系统的解对应不变性
 3. 正不变性保证有界性
 
-### 4.3 性能分析
+### 1.5.3 性能分析
 
 **定义 4.3.1** 性能指标：包括吞吐量、响应时间、利用率等。
 
@@ -291,9 +291,9 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 不变性提供性能上界
 3. 结构分析确定瓶颈位置
 
-## 5. 应用领域 (Application Domains)
+## 1.6 应用领域 (Application Domains)
 
-### 5.1 并发系统建模
+### 1.6.1 并发系统建模
 
 **定理 5.1.1** (并发建模) Petri网可以精确建模并发系统的行为。
 
@@ -303,7 +303,7 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 变迁对应系统事件
 3. 托肯对应资源或条件
 
-### 5.2 工作流建模
+### 1.6.2 工作流建模
 
 **定理 5.2.1** (工作流建模) Petri网适合建模工作流过程。
 
@@ -313,7 +313,7 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 变迁对应活动执行
 3. 托肯对应案例或任务
 
-### 5.3 制造系统建模
+### 1.6.3 制造系统建模
 
 **定理 5.3.1** (制造建模) Petri网可以建模制造系统的动态行为。
 
@@ -323,31 +323,31 @@ M'(p) = M(p) + ∑_{t∈T} S(t) · (F(t,p) - F(p,t))
 2. 变迁对应操作执行
 3. 托肯对应工件或资源
 
-## 6. 扩展理论 (Extension Theories)
+## 1.7 扩展理论 (Extension Theories)
 
-### 6.1 概率Petri网
+### 1.7.1 概率Petri网
 
 **定义 6.1.1** 概率Petri网在基本Petri网基础上添加概率分布。
 
 **定理 6.1.1** (概率分析) 概率Petri网可以分析系统的概率性质。
 
-### 6.2 模糊Petri网
+### 1.7.2 模糊Petri网
 
 **定义 6.2.1** 模糊Petri网在基本Petri网基础上添加模糊逻辑。
 
 **定理 6.2.1** (模糊推理) 模糊Petri网可以处理不确定性。
 
-### 6.3 对象Petri网
+### 1.7.3 对象Petri网
 
 **定义 6.3.1** 对象Petri网将面向对象概念引入Petri网。
 
 **定理 6.3.1** (对象建模) 对象Petri网适合建模复杂对象系统。
 
-## 7. 结论
+## 1.8 结论
 
 Petri网理论为并发系统提供了强大的建模和分析工具。从基本Petri网到各种高级变种，Petri网理论形成了完整的理论体系，广泛应用于软件工程、系统设计、工作流管理等领域。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Petri, C. A. (1962). Kommunikation mit Automaten. PhD thesis, Universität Hamburg.
 2. Reisig, W. (2013). Understanding Petri nets: Modeling techniques, analysis methods, case studies.

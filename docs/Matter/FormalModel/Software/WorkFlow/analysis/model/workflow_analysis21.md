@@ -1,34 +1,27 @@
-# 核心模型和演化
+# 1. 核心模型和演化
 
-太棒了！看到之前的抽象讨论能够具体化，
-并与您思考的路径产生共鸣，
-这本身就证明了这种抽象视角是有价值的。
+## 目录
 
-现在，让我们深入探讨如何使用更形式化的方法来定义核心范畴的概念、证明其属性、维持不变性，
-并思考哪些实现规则可以或应该被吸纳为核心规则，以及这如何影响演化。
+- [1. 核心模型和演化](#1-核心模型和演化)
+  - [目录](#目录)
+  - [1.1 I 形式化核心范畴 C\_Meta (元模型范畴)](#11-i-形式化核心范畴-c_meta-元模型范畴)
+    - [1.1.1 基础类型系统 (假设)](#111-基础类型系统-假设)
+  - [1.2 II 核心不变性 (Invariants) 及其维持](#12-ii-核心不变性-invariants-及其维持)
+    - [1.2.1 核心不变性 1 类型安全连接 (Type-Safe Connections)](#121-核心不变性-1-类型安全连接-type-safe-connections)
+    - [1.2.2 核心不变性 2 效应声明与处理 (Effect Declaration Handling)](#122-核心不变性-2-效应声明与处理-effect-declaration-handling)
+    - [1.2.3 核心不变性 3 协调日志完整性与一致性 (Coordination Log Integrity Consistency)](#123-核心不变性-3-协调日志完整性与一致性-coordination-log-integrity-consistency)
+  - [1.3 III 实现规则的内化 (Internalizing Rules into the Core)](#13-iii-实现规则的内化-internalizing-rules-into-the-core)
+    - [1.3.1 可以内化 (成为核心规则)](#131-可以内化-成为核心规则)
+    - [1.3.2 难以完全内化 (部分内化或依赖外部)](#132-难以完全内化-部分内化或依赖外部)
+    - [1.3.3 IV 核心演化特性 (Evolutionary Characteristics)](#133-iv-核心演化特性-evolutionary-characteristics)
+  - [1.4 总结](#14-总结)
 
-## 📋 目录
-
-- [1 I 形式化核心范畴 C_Meta (元模型范畴)](#1-i-形式化核心范畴-c_meta-元模型范畴)
-  - [1.1 基础类型系统 (假设)](#11-基础类型系统-假设)
-- [2 II 核心不变性 (Invariants) 及其维持](#2-ii-核心不变性-invariants-及其维持)
-  - [2.1 核心不变性 1 类型安全连接 (Type-Safe Connections)](#21-核心不变性-1-类型安全连接-type-safe-connections)
-  - [2.2 核心不变性 2 效应声明与处理 (Effect Declaration Handling)](#22-核心不变性-2-效应声明与处理-effect-declaration-handling)
-  - [2.3 核心不变性 3 协调日志完整性与一致性 (Coordination Log Integrity Consistency)](#23-核心不变性-3-协调日志完整性与一致性-coordination-log-integrity-consistency)
-- [3 III 实现规则的内化 (Internalizing Rules into the Core)](#3-iii-实现规则的内化-internalizing-rules-into-the-core)
-  - [3.1 可以内化 (成为核心规则)](#31-可以内化-成为核心规则)
-  - [3.2 难以完全内化 (部分内化或依赖外部)](#32-难以完全内化-部分内化或依赖外部)
-  - [3.3 IV 核心演化特性 (Evolutionary Characteristics)](#33-iv-核心演化特性-evolutionary-characteristics)
-- [4 总结](#4-总结)
-
----
-
-## 1 I 形式化核心范畴 C_Meta (元模型范畴)
+## 1.1 I 形式化核心范畴 C_Meta (元模型范畴)
 
 `C_Meta` 是定义架构静态结构和规则的核心。
 我们可以尝试更形式化地定义其对象和态射。
 
-### 1.1 基础类型系统 (假设)
+### 1.1.1 基础类型系统 (假设)
 
 我们假设存在一个基础类型系统 `TypeSystem`
 (例如，可以是 Rust 的类型系统，或者更抽象的类型论构造)，
@@ -79,12 +72,12 @@
             依赖于接口/类型匹配的规则。
             在 Rust 中，如果 `H` 实现了 `HandlerSig(E)` 定义的 Trait，则编译器证明了这一点。
 
-## 2 II 核心不变性 (Invariants) 及其维持
+## 1.2 II 核心不变性 (Invariants) 及其维持
 
 不变性是在系统任何有效状态（或配置）下都必须保持的属性。
 维持它们是架构演化的关键。
 
-### 2.1 核心不变性 1 类型安全连接 (Type-Safe Connections)
+### 1.2.1 核心不变性 1 类型安全连接 (Type-Safe Connections)
 
 **陈述:**
     `∀ C_A, C_B`:
@@ -101,7 +94,7 @@
         当修改 `CellDefinition` 的 `InputType` 或 `OutputType` 时，
         必须重新验证所有涉及该 Cell 的连接，确保不变性继续保持。版本化契约有助于管理这种变化。
 
-### 2.2 核心不变性 2 效应声明与处理 (Effect Declaration Handling)
+### 1.2.2 核心不变性 2 效应声明与处理 (Effect Declaration Handling)
 
 **陈述:**
     1.  (完整性) 如果 `Cell C` 的 `LogicSpec` 在运行时可能产生 `Effect E` 的实例，
@@ -127,7 +120,7 @@
     添加新的 Cell 类型或 Effect 类型时，必须满足不变性 2.2。
     移除 Handler 时，必须确保没有活动的 Cell 依赖它声明能处理的 Effect。
 
-### 2.3 核心不变性 3 协调日志完整性与一致性 (Coordination Log Integrity Consistency)
+### 1.2.3 核心不变性 3 协调日志完整性与一致性 (Coordination Log Integrity Consistency)
 
 **陈述:**
     协调日志必须准确反映所有已发生的关键协调事件（激活、Effect 请求/结果等），
@@ -145,12 +138,12 @@
         都必须重新验证其与日志交互的正确性（重跑 TLA+/模型检查）。
         如果改变日志条目格式，需要考虑向后兼容或迁移。
 
-## 3 III 实现规则的内化 (Internalizing Rules into the Core)
+## 1.3 III 实现规则的内化 (Internalizing Rules into the Core)
 
 哪些“实现规则”可以从开发者最佳实践或约定，
 提升为架构 `C_Meta` 或 Fabric `F_Execute` 的强制规则？
 
-### 3.1 可以内化 (成为核心规则)
+### 1.3.1 可以内化 (成为核心规则)
 
 1. **类型检查:**
     通过选择强类型语言 (Rust) 并严格定义 `C_Meta` 对象和
@@ -169,12 +162,12 @@
 5. **状态持久化 API:**
    `FabricInterface` 提供了 `save_state`/`load_state`，将“如何请求”持久化内化了。
 
-### 3.2 难以完全内化 (部分内化或依赖外部)
+### 1.3.2 难以完全内化 (部分内化或依赖外部)
 
 1. **Effect 声明完整性:**
    无法 100% 静态保证开发者声明了所有可能的 Effect。
    需要**约定、审查或更高级的静态/动态分析工具**。
-   架构提供了*机制*去声明，但不能强制*思考*的完备性。
+   架构提供了_机制_去声明，但不能强制_思考_的完备性。
 2. **Effect Handler 幂等性/正确性:**
    Fabric 可以提供**调用** Handler 的保证和重试机制，
    但 Handler 自身的业务逻辑正确性和幂等性是其**外部实现**的责任。
@@ -190,7 +183,7 @@
    需要**部署时检查**。
    Fabric 运行时可以检查，但最好在部署前发现。
 
-### 3.3 IV 核心演化特性 (Evolutionary Characteristics)
+### 1.3.3 IV 核心演化特性 (Evolutionary Characteristics)
 
 基于以上分析，该架构的核心演化特性是：
 
@@ -214,7 +207,7 @@
     架构内化的规则（类型安全、Effect 中介、协调日志）为演化提供了一个**稳定的基础**，
     使得演化可以在这个框架内进行，而不是每次演化都可能破坏系统的基本结构和保证。
 
-## 4 总结
+## 1.4 总结
 
 通过更形式化的视角，我们可以看到：
 

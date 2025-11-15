@@ -132,7 +132,7 @@
 
 ### Tokio 通道思维导图
 
-    ```text 
+    ```text
     mermaid
     graph TD
         A[Tokio Channels] --> B[MPSC]

@@ -4,38 +4,38 @@
 ## 目录
 
 - [异步与同步编程：计算模型的形式化分析与实践应用](#异步与同步编程计算模型的形式化分析与实践应用)
-  - [1 引言：计算模型的二元性](#1-引言计算模型的二元性)
-  - [2 I. 基本概念与形式化定义](#2-i-基本概念与形式化定义)
+  - [目录](#目录)
+  - [引言：计算模型的二元性](#引言计算模型的二元性)
   - [I. 基本概念与形式化定义](#i-基本概念与形式化定义)
-    - [1 A. 同步计算模型的形式化定义](#1-a-同步计算模型的形式化定义)
-    - [2.2 B. 异步计算模型的形式化定义](#22-b-异步计算模型的形式化定义)
-    - [2.3 C. 形式语言学视角下的比较](#23-c-形式语言学视角下的比较)
-  - [3 II. 计算等价性与变换关系](#3-ii-计算等价性与变换关系)
-    - [1 A. Church-Turing 论题与计算能力](#1-a-church-turing-论题与计算能力)
-    - [3.2 B. 同步到异步的去语法糖变换](#32-b-同步到异步的去语法糖变换)
-    - [3.3 C. CPS 变换与延续传递](#33-c-cps-变换与延续传递)
-    - [3.4 D. 单子（Monad）抽象与效应系统](#34-d-单子monad抽象与效应系统)
-  - [4 III. 形式逻辑系统与编程模型](#4-iii-形式逻辑系统与编程模型)
-    - [1 A. 时序逻辑与并发推理](#1-a-时序逻辑与并发推理)
-    - [4.2 B. 进程代数与通信模型](#42-b-进程代数与通信模型)
-    - [4.3 C. 类型系统与并发安全性](#43-c-类型系统与并发安全性)
-    - [4.4 D. 形式验证技术](#44-d-形式验证技术)
-  - [5 IV. 多语言实现模式分析](#5-iv-多语言实现模式分析)
-    - [1 A. JavaScript/TypeScript: 回调、Promise、async/await](#1-a-javascripttypescript-回调promiseasyncawait)
-    - [5.2 B. Python: asyncio 与协程](#52-b-python-asyncio-与协程)
-    - [5.3 C. Rust: Future、async/await 与所有权系统](#53-c-rust-futureasyncawait-与所有权系统)
-    - [5.4 D. 跨语言模式比较](#54-d-跨语言模式比较)
-  - [6 V. 实际系统中的深层挑战](#6-v-实际系统中的深层挑战)
-    - [1 A. 并发控制与竞态条件](#1-a-并发控制与竞态条件)
-    - [6.2 B. 资源管理与内存模型](#62-b-资源管理与内存模型)
-    - [6.3 C. 异常处理与错误传播](#63-c-异常处理与错误传播)
-    - [6.4 D. 可测试性与可调试性](#64-d-可测试性与可调试性)
-  - [7 VI. 范式取舍与应用场景决策](#7-vi-范式取舍与应用场景决策)
-    - [1 A. 性能与可扩展性分析](#1-a-性能与可扩展性分析)
-    - [7.2 B. 认知复杂性与可维护性](#72-b-认知复杂性与可维护性)
-    - [7.3 C. 最佳实践与设计模式](#73-c-最佳实践与设计模式)
-  - [8 结论：计算模型的统一视角](#8-结论计算模型的统一视角)
-  - [9 思维导图 (Text)](#9-思维导图-text)
+    - [A. 同步计算模型的形式化定义](#a-同步计算模型的形式化定义)
+    - [B. 异步计算模型的形式化定义](#b-异步计算模型的形式化定义)
+    - [C. 形式语言学视角下的比较](#c-形式语言学视角下的比较)
+  - [II. 计算等价性与变换关系](#ii-计算等价性与变换关系)
+    - [A. Church-Turing 论题与计算能力](#a-church-turing-论题与计算能力)
+    - [B. 同步到异步的去语法糖变换](#b-同步到异步的去语法糖变换)
+    - [C. CPS 变换与延续传递](#c-cps-变换与延续传递)
+    - [D. 单子（Monad）抽象与效应系统](#d-单子monad抽象与效应系统)
+  - [III. 形式逻辑系统与编程模型](#iii-形式逻辑系统与编程模型)
+    - [A. 时序逻辑与并发推理](#a-时序逻辑与并发推理)
+    - [B. 进程代数与通信模型](#b-进程代数与通信模型)
+    - [C. 类型系统与并发安全性](#c-类型系统与并发安全性)
+    - [D. 形式验证技术](#d-形式验证技术)
+  - [IV. 多语言实现模式分析](#iv-多语言实现模式分析)
+    - [A. JavaScript/TypeScript: 回调、Promise、async/await](#a-javascripttypescript-回调promiseasyncawait)
+    - [B. Python: asyncio 与协程](#b-python-asyncio-与协程)
+    - [C. Rust: Future、async/await 与所有权系统](#c-rust-futureasyncawait-与所有权系统)
+    - [D. 跨语言模式比较](#d-跨语言模式比较)
+  - [V. 实际系统中的深层挑战](#v-实际系统中的深层挑战)
+    - [A. 并发控制与竞态条件](#a-并发控制与竞态条件)
+    - [B. 资源管理与内存模型](#b-资源管理与内存模型)
+    - [C. 异常处理与错误传播](#c-异常处理与错误传播)
+    - [D. 可测试性与可调试性](#d-可测试性与可调试性)
+  - [VI. 范式取舍与应用场景决策](#vi-范式取舍与应用场景决策)
+    - [A. 性能与可扩展性分析](#a-性能与可扩展性分析)
+    - [B. 认知复杂性与可维护性](#b-认知复杂性与可维护性)
+    - [C. 最佳实践与设计模式](#c-最佳实践与设计模式)
+  - [结论：计算模型的统一视角](#结论计算模型的统一视角)
+  - [思维导图 (Text)](#思维导图-text)
 
 ---
 
@@ -83,7 +83,7 @@ def synchronous_process():
 async function asynchronousProcess(): Promise<Result> {
     const result1Promise = timeConsumingOperation1();  // 启动但不阻塞
     const result2Promise = timeConsumingOperation2();  // 同时启动
-    
+
     // 等待两个操作完成
     const [result1, result2] = await Promise.all([result1Promise, result2Promise]);
     return combine(result1, result2);
@@ -116,7 +116,7 @@ async fn async_workflow() -> Result<Data, Error> {
 fn sync_workflow() -> Result<Data, Error> {
     let handle1 = std::thread::spawn(|| fetch_data_1());
     let handle2 = std::thread::spawn(|| fetch_data_2());
-    
+
     let part1 = handle1.join().unwrap()?;
     let part2 = handle2.join().unwrap()?;
     process_data(part1, part2)
@@ -141,7 +141,7 @@ function syncOperation() {
 function asyncOperation() {
     return new Promise((resolve, reject) => {
         let x, y;
-        
+
         step1Async()
             .then(result => {
                 x = result;
@@ -201,7 +201,7 @@ function returnPromise<T>(value: T): Promise<T> {
 
 // bind: Promise<A> × (A → Promise<B>) → Promise<B>
 function bindPromise<T, U>(
-    promise: Promise<T>, 
+    promise: Promise<T>,
     fn: (value: T) => Promise<U>
 ): Promise<U> {
     return promise.then(fn);
@@ -226,11 +226,11 @@ async def causal_example():
     # 这两个操作没有因果依赖，可以并发执行
     task1 = asyncio.create_task(independent_operation1())
     task2 = asyncio.create_task(independent_operation2())
-    
+
     # 等待两个操作完成（顺序不确定）
     result1 = await task1
     result2 = await task2
-    
+
     # 这里有因果依赖，必须按顺序执行
     return process_results(result1, result2)
 ```
@@ -347,7 +347,7 @@ async def process_data():
     urls = ["url1", "url2", "url3"]
     tasks = [fetch_data(url) for url in urls]
     results = await asyncio.gather(*tasks)
-    
+
     # 处理结果
     for result in results:
         print(result)
@@ -373,17 +373,17 @@ where
 {
     let mut buffer = [0u8; 1024];
     let mut total_bytes = 0u64;
-    
+
     loop {
         let bytes_read = reader.read(&mut buffer).await?;
         if bytes_read == 0 {
             break;
         }
-        
+
         writer.write_all(&buffer[..bytes_read]).await?;
         total_bytes += bytes_read as u64;
     }
-    
+
     Ok(total_bytes)
 }
 ```
@@ -434,25 +434,25 @@ async def race_condition_demo():
 // TypeScript中的异步资源管理
 class DatabaseConnection {
     private connection: any = null;
-    
+
     async connect() {
         this.connection = await openDatabaseConnection();
     }
-    
+
     async query(sql: string): Promise<any> {
         if (!this.connection) {
             throw new Error("Connection not established");
         }
         return await this.connection.query(sql);
     }
-    
+
     async close() {
         if (this.connection) {
             await this.connection.close();
             this.connection = null;
         }
     }
-    
+
     // 资源的自动管理
     static async withConnection<T>(
         action: (conn: DatabaseConnection) => Promise<T>
@@ -476,7 +476,7 @@ class DatabaseConnection {
 // JavaScript中的异步错误处理
 async function fetchWithRetry(url, maxRetries = 3) {
     let lastError;
-    
+
     for (let attempt = 0; attempt < maxRetries; attempt++) {
         try {
             return await fetch(url);
@@ -486,7 +486,7 @@ async function fetchWithRetry(url, maxRetries = 3) {
             await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
         }
     }
-    
+
     throw new Error(`All ${maxRetries} attempts failed. Last error: ${lastError.message}`);
 }
 
@@ -510,9 +510,9 @@ describe('UserService', () => {
         // 设置模拟对象
         const mockApi = mock(ApiClient);
         when(mockApi.fetchUserData()).thenResolve({id: 1, name: 'Test'});
-        
+
         const userService = new UserService(instance(mockApi));
-        
+
         // 测试异步操作
         const result = await userService.processUserData();
         expect(result.processed).toBe(true);
@@ -609,7 +609,7 @@ async function processDataAsync(id) {
 class AsyncQueue<T> {
     private queue: T[] = [];
     private waiters: ((value: T) => void)[] = [];
-    
+
     // 生产者接口
     async push(item: T): Promise<void> {
         const waiter = this.waiters.shift();
@@ -621,7 +621,7 @@ class AsyncQueue<T> {
             this.queue.push(item);
         }
     }
-    
+
     // 消费者接口
     async pop(): Promise<T> {
         const item = this.queue.shift();
@@ -629,7 +629,7 @@ class AsyncQueue<T> {
             // 队列中有项目，直接返回
             return item;
         }
-        
+
         // 队列为空，创建等待Promise
         return new Promise<T>(resolve => {
             this.waiters.push(resolve);

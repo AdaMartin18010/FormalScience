@@ -1,52 +1,52 @@
 
-# Rust 函数式编程与异步机制：修订与扩展分析
+# 1. Rust 函数式编程与异步机制：修订与扩展分析
 
 ## 目录
 
-- [Rust 函数式编程与异步机制：修订与扩展分析](#rust-函数式编程与异步机制修订与扩展分析)
+- [1. Rust 函数式编程与异步机制：修订与扩展分析](#1-rust-函数式编程与异步机制修订与扩展分析)
   - [目录](#目录)
-  - [引言](#引言)
-  - [Rust 函数式特性的深度解析](#rust-函数式特性的深度解析)
-    - [基础特性与实现机制](#基础特性与实现机制)
-    - [范畴论概念的支持与局限](#范畴论概念的支持与局限)
-    - [高阶类型的缺失与替代方案](#高阶类型的缺失与替代方案)
-    - [函数式库生态系统评估](#函数式库生态系统评估)
-  - [异步编程机制的内部工作原理](#异步编程机制的内部工作原理)
-    - [Future 的状态机模型](#future-的状态机模型)
-    - [Pin 与自引用结构的复杂性](#pin-与自引用结构的复杂性)
-    - [运行时比较与选择策略](#运行时比较与选择策略)
-    - [异步代码常见陷阱与调试挑战](#异步代码常见陷阱与调试挑战)
-  - [函数式与异步范式的融合](#函数式与异步范式的融合)
-    - [异步单子模式的完整实现](#异步单子模式的完整实现)
-    - [流处理模式与组合策略](#流处理模式与组合策略)
-    - [错误处理的统一方法](#错误处理的统一方法)
-    - [实际项目中的应用模式](#实际项目中的应用模式)
-  - [性能考量与优化策略](#性能考量与优化策略)
-    - [函数式抽象的成本分析](#函数式抽象的成本分析)
-    - [异步状态机的开销与优化](#异步状态机的开销与优化)
-    - [零成本抽象的权衡](#零成本抽象的权衡)
-    - [实际性能分析案例](#实际性能分析案例)
-  - [系统编程与纯函数式的平衡](#系统编程与纯函数式的平衡)
-    - [副作用的必要性与隔离策略](#副作用的必要性与隔离策略)
-    - [外部交互的函数式封装模式](#外部交互的函数式封装模式)
-    - [unsafe 与纯函数的共存](#unsafe-与纯函数的共存)
-    - [实用主义设计原则](#实用主义设计原则)
-  - [展望未来发展](#展望未来发展)
-    - [Rust 的类型系统演进](#rust-的类型系统演进)
-    - [异步生态的趋势](#异步生态的趋势)
-    - [与其他语言的交互前景](#与其他语言的交互前景)
-  - [思维导图](#思维导图)
-  - [结论](#结论)
+  - [1.1 引言](#11-引言)
+  - [1.2 Rust 函数式特性的深度解析](#12-rust-函数式特性的深度解析)
+    - [1.2.1 基础特性与实现机制](#121-基础特性与实现机制)
+    - [1.2.2 范畴论概念的支持与局限](#122-范畴论概念的支持与局限)
+    - [1.2.3 高阶类型的缺失与替代方案](#123-高阶类型的缺失与替代方案)
+    - [1.2.4 函数式库生态系统评估](#124-函数式库生态系统评估)
+  - [1.3 异步编程机制的内部工作原理](#13-异步编程机制的内部工作原理)
+    - [1.3.1 Future 的状态机模型](#131-future-的状态机模型)
+    - [1.3.2 Pin 与自引用结构的复杂性](#132-pin-与自引用结构的复杂性)
+    - [1.3.3 运行时比较与选择策略](#133-运行时比较与选择策略)
+    - [1.3.4 异步代码常见陷阱与调试挑战](#134-异步代码常见陷阱与调试挑战)
+  - [1.4 函数式与异步范式的融合](#14-函数式与异步范式的融合)
+    - [1.4.1 异步单子模式的完整实现](#141-异步单子模式的完整实现)
+    - [1.4.2 流处理模式与组合策略](#142-流处理模式与组合策略)
+    - [1.4.3 错误处理的统一方法](#143-错误处理的统一方法)
+    - [1.4.4 实际项目中的应用模式](#144-实际项目中的应用模式)
+  - [1.5 性能考量与优化策略](#15-性能考量与优化策略)
+    - [1.5.1 函数式抽象的成本分析](#151-函数式抽象的成本分析)
+    - [1.5.2 异步状态机的开销与优化](#152-异步状态机的开销与优化)
+    - [1.5.3 零成本抽象的权衡](#153-零成本抽象的权衡)
+    - [1.5.4 实际性能分析案例](#154-实际性能分析案例)
+  - [1.6 系统编程与纯函数式的平衡](#16-系统编程与纯函数式的平衡)
+    - [1.6.1 副作用的必要性与隔离策略](#161-副作用的必要性与隔离策略)
+    - [1.6.2 外部交互的函数式封装模式](#162-外部交互的函数式封装模式)
+    - [1.6.3 unsafe 与纯函数的共存](#163-unsafe-与纯函数的共存)
+    - [1.6.4 实用主义设计原则](#164-实用主义设计原则)
+  - [1.7 展望未来发展](#17-展望未来发展)
+    - [1.7.1 Rust 的类型系统演进](#171-rust-的类型系统演进)
+    - [1.7.2 异步生态的趋势](#172-异步生态的趋势)
+    - [1.7.3 与其他语言的交互前景](#173-与其他语言的交互前景)
+  - [1.8 思维导图](#18-思维导图)
+  - [1.9 结论](#19-结论)
 
-## 引言
+## 1.1 引言
 
 原始文档提供了对 Rust 函数式编程特性和异步机制的概述，但在多个关键领域存在深度不足、连贯性问题以及对某些复杂性的轻描淡写。本修订文档旨在填补这些缺陷，提供更全面、更深入的分析，帮助开发者不仅理解基础概念，还能洞察实际应用中的复杂性和权衡。
 
 我们将深入探讨范畴论在 Rust 中的实际应用局限、异步编程的底层工作原理、函数式与系统编程的平衡策略，以及性能考量等方面，为读者提供更加全面且实用的视角。
 
-## Rust 函数式特性的深度解析
+## 1.2 Rust 函数式特性的深度解析
 
-### 基础特性与实现机制
+### 1.2.1 基础特性与实现机制
 
 -**闭包的内部结构与性能特征**
 
@@ -100,7 +100,7 @@ Rust 迭代器实现了"零成本抽象"，其核心是通过内联和单态化�
 2. **内联**：编译器通常会内联迭代器适配器的方法调用
 3. **循环融合**：多个迭代器适配器会被合并成单个循环
 
-### 范畴论概念的支持与局限
+### 1.2.2 范畴论概念的支持与局限
 
 -**函子的部分实现**
 
@@ -165,7 +165,7 @@ fn sequence_result<T, E>(v: Vec<Result<T, E>>) -> Result<Vec<T>, E> { /* ... */ 
 
 这导致类库中存在冗余的、特定类型的实现。
 
-### 高阶类型的缺失与替代方案
+### 1.2.3 高阶类型的缺失与替代方案
 
 -**HKT 缺失的本质**
 
@@ -218,7 +218,7 @@ fn apply_to_any<T, R>(container: &mut dyn AnyContainer<T>, f: impl Fn(T) -> R) -
 
 Rust 团队已讨论过添加 HKT 支持，但这需要解决与其他语言特性（如生命周期、所有权）交互的复杂问题。
 
-### 函数式库生态系统评估
+### 1.2.4 函数式库生态系统评估
 
 -**主要函数式库评估**
 
@@ -245,16 +245,16 @@ let data = hlist![1, "hello", true];
 
 // 函数式转换
 let transformed = data.map(hlist![
-    |n| n + 1, 
-    |s: &str| s.len(), 
+    |n| n + 1,
+    |s: &str| s.len(),
     |b| !b
 ]);
 // 结果: hlist![2, 5, false]
 ```
 
-## 异步编程机制的内部工作原理
+## 1.3 异步编程机制的内部工作原理
 
-### Future 的状态机模型
+### 1.3.1 Future 的状态机模型
 
 -**编译器转换过程**
 
@@ -281,7 +281,7 @@ enum ExampleFuture {
 
 impl Future for ExampleFuture {
     type Output = u32;
-    
+
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<u32> {
         // 状态转换逻辑...
     }
@@ -308,7 +308,7 @@ impl Future for ExampleFuture {
 - 额外的堆栈帧管理
 - 可能的堆分配（对于难以栈分配的大型 Future）
 
-### Pin 与自引用结构的复杂性
+### 1.3.2 Pin 与自引用结构的复杂性
 
 -**自引用结构的本质问题**
 
@@ -357,10 +357,10 @@ let pinned = Box::into_pin(boxed); // 安全的堆固定
 fn example<T>(mut x: T) where T: Future<Output = ()> {
     // 错误：x 在这里未固定，不能安全地调用 poll
     // let _ = x.poll(...);
-    
+
     // 正确：将 x 固定后再调用 poll
-    let pinned = unsafe { 
-        Pin::new_unchecked(&mut x) 
+    let pinned = unsafe {
+        Pin::new_unchecked(&mut x)
     }; // 但这里有未满足的安全条件！
 }
 ```
@@ -372,7 +372,7 @@ fn example<T>(mut x: T) where T: Future<Output = ()> {
 3. **忽略 `Unpin` trait 的重要性**
 4. **未正确实现自定义 Future 的 `poll` 方法**
 
-### 运行时比较与选择策略
+### 1.3.3 运行时比较与选择策略
 
 主要异步运行时的特性比较：
 
@@ -419,7 +419,7 @@ fn example<T>(mut x: T) where T: Future<Output = ()> {
 - 使用抽象层如 `futures` crate
 - 运行时隔离（不同运行时在不同线程中）
 
-### 异步代码常见陷阱与调试挑战
+### 1.3.4 异步代码常见陷阱与调试挑战
 
 -**阻塞运行时线程**
 
@@ -504,21 +504,21 @@ async fn correct_concurrency(urls: Vec<Url>) -> Vec<Result<Response>> {
 async fn process_user(user_id: UserId, database: &Database) -> Result<User> {
     // 进入函数时记录
     trace!("Processing user");
-    
+
     // 记录关键操作
     let user = database.find_user(user_id).await
         .context("Failed to find user")
         .tap_err(|e| error!(?e, "Database error"))?;
-    
+
     // 记录输出
     info!(?user, "User processed successfully");
     Ok(user)
 }
 ```
 
-## 函数式与异步范式的融合
+## 1.4 函数式与异步范式的融合
 
-### 异步单子模式的完整实现
+### 1.4.1 异步单子模式的完整实现
 
 -**完整的异步 Option 单子**
 
@@ -531,7 +531,7 @@ trait OptionAsyncExt<T> {
     where
         F: FnOnce(T) -> Fut,
         Fut: Future<Output = Option<U>>;
-        
+
     /// 异步版本的 map
     fn map_async<F, Fut, U>(self, f: F) -> impl Future<Output = Option<U>>
     where
@@ -552,7 +552,7 @@ impl<T> OptionAsyncExt<T> for Option<T> {
             }
         }
     }
-    
+
     fn map_async<F, Fut, U>(self, f: F) -> impl Future<Output = Option<U>>
     where
         F: FnOnce(T) -> Fut,
@@ -624,7 +624,7 @@ where
 }
 ```
 
-### 流处理模式与组合策略
+### 1.4.2 流处理模式与组合策略
 
 -**流水线模式（Pipeline Pattern）**
 
@@ -678,7 +678,7 @@ where
 {
     // 创建有界通道，提供背压
     let (tx, rx) = mpsc::channel(concurrency_limit);
-    
+
     // 启动生产者任务
     tokio::spawn(async move {
         for item in items {
@@ -688,7 +688,7 @@ where
             }
         }
     });
-    
+
     // 返回接收流
     tokio_stream::wrappers::ReceiverStream::new(rx)
         .buffer_unordered(concurrency_limit)
@@ -721,12 +721,12 @@ where
             }
         }
     };
-    
+
     backoff::future::retry(retry_strategy, retry_future).await
 }
 ```
 
-### 错误处理的统一方法
+### 1.4.3 错误处理的统一方法
 
 -**异步上下文的错误传播**
 
@@ -740,19 +740,19 @@ async fn unified_error_handling() -> Result<()> {
     let user = db::find_user(user_id)
         .await
         .context("Failed to find user")?;
-        
+
     // 从异步函数返回的 Result 传播错误
     let profile = user.load_profile()
         .await
         .context("Failed to load user profile")?;
-        
+
     // 甚至可以组合多个错误源
     let data = tokio::try_join!(
         fetch_user_data(user.id),
         fetch_user_preferences(user.id),
         fetch_user_history(user.id)
     ).context("Failed to fetch user information")?;
-    
+
     Ok(())
 }
 ```
@@ -765,13 +765,13 @@ async fn unified_error_handling() -> Result<()> {
 enum UserServiceError {
     #[error("User not found: {0}")]
     NotFound(UserId),
-    
+
     #[error("Database error: {0}")]
     Database(#[from] DatabaseError),
-    
+
     #[error("Network error when contacting auth service: {0}")]
     Network(#[from] NetworkError),
-    
+
     #[error("Rate limit exceeded for IP: {ip}, limit: {limit}")]
     RateLimited { ip: IpAddr, limit: u32 },
 }
@@ -785,7 +785,7 @@ async fn get_user(id: UserId, client_ip: IpAddr) -> Result<User, UserServiceErro
             limit: rate_limiter.get_limit(),
         });
     }
-    
+
     // 查询数据库
     match db::find_user(id).await {
         Ok(user) => Ok(user),
@@ -804,17 +804,17 @@ use futures::future::{self, TryFutureExt};
 async fn collect_user_data(user_id: UserId) -> Result<UserData, UserServiceError> {
     let profile_future = fetch_profile(user_id)
         .map_err(|e| UserServiceError::from_profile_error(e, user_id));
-        
+
     let history_future = fetch_history(user_id)
         .map_err(|e| UserServiceError::from_history_error(e, user_id));
-        
+
     let (profile, history) = future::try_join(profile_future, history_future).await?;
-    
+
     Ok(UserData::new(profile, history))
 }
 ```
 
-### 实际项目中的应用模式
+### 1.4.4 实际项目中的应用模式
 
 -**Actor 模式**
 
@@ -850,13 +850,13 @@ impl UserManager {
             UserManagerHandle { sender },
         )
     }
-    
+
     async fn run(mut self) {
         while let Some(msg) = self.receiver.recv().await {
             self.handle_message(msg).await;
         }
     }
-    
+
     async fn handle_message(&mut self, msg: UserManagerMessage) {
         match msg {
             UserManagerMessage::GetUser { id, respond_to } => {
@@ -881,24 +881,24 @@ struct UserManagerHandle {
 impl UserManagerHandle {
     async fn get_user(&self, id: UserId) -> Result<User, Error> {
         let (send, recv) = oneshot::channel();
-        
+
         self.sender.send(UserManagerMessage::GetUser {
             id,
             respond_to: send,
         }).await.map_err(|_| Error::ActorUnavailable)?;
 
-        
+
         recv.await.map_err(|_| Error::ResponseDropped)?
     }
-    
+
     async fn create_user(&self, data: UserData) -> Result<UserId, Error> {
         let (send, recv) = oneshot::channel();
-        
+
         self.sender.send(UserManagerMessage::CreateUser {
             data,
             respond_to: send,
         }).await.map_err(|_| Error::ActorUnavailable)?;
-        
+
         recv.await.map_err(|_| Error::ResponseDropped)?
     }
 }
@@ -933,13 +933,13 @@ impl UserRepository for PostgresUserRepository {
                 sqlx::Error::RowNotFound => RepositoryError::NotFound(id),
                 _ => RepositoryError::Database(e.into()),
             })?;
-            
+
         Ok(User::from(row))
     }
-    
+
     async fn save(&self, user: &User) -> Result<(), RepositoryError> {
         sqlx::query(
-            "INSERT INTO users (id, name, email) VALUES ($1, $2, $3) 
+            "INSERT INTO users (id, name, email) VALUES ($1, $2, $3)
              ON CONFLICT (id) DO UPDATE SET name = $2, email = $3"
         )
         .bind(user.id.0)
@@ -948,21 +948,21 @@ impl UserRepository for PostgresUserRepository {
         .execute(&self.pool)
         .await
         .map_err(|e| RepositoryError::Database(e.into()))?;
-        
+
         Ok(())
     }
-    
+
     async fn delete(&self, id: UserId) -> Result<(), RepositoryError> {
         let result = sqlx::query("DELETE FROM users WHERE id = $1")
             .bind(id.0)
             .execute(&self.pool)
             .await
             .map_err(|e| RepositoryError::Database(e.into()))?;
-            
+
         if result.rows_affected() == 0 {
             return Err(RepositoryError::NotFound(id));
         }
-        
+
         Ok(())
     }
 }
@@ -979,16 +979,16 @@ impl<R: UserRepository> UserService<R> {
             .find_by_id(id)
             .await
             .map_err(ServiceError::from)?;
-        
+
         // 更新用户信息（领域逻辑）
         user.update_email(new_email)?;
-        
+
         // 保存更新
         self.repository
             .save(&user)
             .await
             .map_err(ServiceError::from)?;
-        
+
         Ok(user)
     }
 }
@@ -1010,7 +1010,7 @@ impl<C: 'static + Send> Middleware<C> {
     fn new() -> Self {
         Self { handlers: Vec::new() }
     }
-    
+
     // 添加中间件处理器
     fn add<F, Fut>(&mut self, handler: F) -> &mut Self
     where
@@ -1020,15 +1020,15 @@ impl<C: 'static + Send> Middleware<C> {
         self.handlers.push(Box::new(move |ctx| Box::pin(handler(ctx))));
         self
     }
-    
+
     // 执行中间件链
     async fn run(&self, initial: C) -> C {
         let mut ctx = initial;
-        
+
         for handler in &self.handlers {
             ctx = handler(ctx).await;
         }
-        
+
         ctx
     }
 }
@@ -1044,14 +1044,14 @@ struct RequestContext {
 
 async fn build_middleware() -> Middleware<RequestContext> {
     let mut middleware = Middleware::new();
-    
+
     // 记录请求开始
     middleware.add(|mut ctx| async move {
         let path = ctx.request.path().to_owned();
         info!("Request started: {}", path);
         ctx
     });
-    
+
     // 用户认证
     middleware.add(|mut ctx| async move {
         if let Some(token) = ctx.request.headers().get("Authorization") {
@@ -1066,7 +1066,7 @@ async fn build_middleware() -> Middleware<RequestContext> {
         }
         ctx
     });
-    
+
     // 请求处理
     middleware.add(|mut ctx| async move {
         let response = match router.route(&ctx.request, ctx.user.as_ref()).await {
@@ -1076,7 +1076,7 @@ async fn build_middleware() -> Middleware<RequestContext> {
         ctx.response = Some(response);
         ctx
     });
-    
+
     // 记录请求完成
     middleware.add(|mut ctx| async move {
         let duration = ctx.start_time.elapsed();
@@ -1089,14 +1089,14 @@ async fn build_middleware() -> Middleware<RequestContext> {
         );
         ctx
     });
-    
+
     middleware
 }
 ```
 
-## 性能考量与优化策略
+## 1.5 性能考量与优化策略
 
-### 函数式抽象的成本分析
+### 1.5.1 函数式抽象的成本分析
 
 -**不同抽象的性能对比**
 
@@ -1183,7 +1183,7 @@ where
 // 2. 静态分派：生成专用代码，调用直接，但可能增加二进制大小
 ```
 
-### 异步状态机的开销与优化
+### 1.5.2 异步状态机的开销与优化
 
 -**状态机的内存布局**
 
@@ -1303,7 +1303,7 @@ async fn optimized() -> impl Future<Output = Result<()>> {
 }
 ```
 
-### 零成本抽象的权衡
+### 1.5.3 零成本抽象的权衡
 
 -**Rust 零成本抽象原则**
 
@@ -1357,7 +1357,7 @@ process(vec![1.0, 2.0, 3.0]);
 
 过度内联可能扩大代码体积，导致 CPU 指令缓存效率下降，实际降低性能。
 
-### 实际性能分析案例
+### 1.5.4 实际性能分析案例
 
 -**案例研究：函数式 vs 命令式循环**
 
@@ -1430,9 +1430,9 @@ async fn complex_capture(data: Vec<String>) -> usize {
 - `with_await()`：每个 await 点增加状态转换成本
 - `complex_capture()`：捕获大数据结构时开销明显增加
 
-## 系统编程与纯函数式的平衡
+## 1.6 系统编程与纯函数式的平衡
 
-### 副作用的必要性与隔离策略
+### 1.6.1 副作用的必要性与隔离策略
 
 -**副作用的类型与必要性**
 
@@ -1452,10 +1452,10 @@ async fn complex_capture(data: Vec<String>) -> usize {
 fn process_data(filename: &str) -> Result<Summary, Error> {
     let content = fs::read_to_string(filename)?;  // I/O 副作用
     let lines = content.lines();
-    
+
     let mut sum = 0;
     let mut count = 0;
-    
+
     for line in lines {
         match line.parse::<i32>() {
             Ok(num) => {
@@ -1469,11 +1469,11 @@ fn process_data(filename: &str) -> Result<Summary, Error> {
             }
         }
     }
-    
+
     if count == 0 {
         return Err(Error::EmptyInput);
     }
-    
+
     Ok(Summary { sum, count, average: sum as f64 / count as f64 })
 }
 
@@ -1483,10 +1483,10 @@ fn calculate_summary(numbers: &[i32]) -> Option<Summary> {
     if numbers.is_empty() {
         return None;
     }
-    
+
     let sum: i32 = numbers.iter().sum();
     let count = numbers.len();
-    
+
     Some(Summary {
         sum,
         count,
@@ -1498,7 +1498,7 @@ fn calculate_summary(numbers: &[i32]) -> Option<Summary> {
 fn process_data_file(filename: &str) -> Result<Summary, Error> {
     // 副作用：I/O
     let content = fs::read_to_string(filename)?;
-    
+
     // 解析（可能有日志副作用，但计算仍是纯的）
     let numbers: Vec<i32> = content.lines()
         .filter_map(|line| {
@@ -1516,7 +1516,7 @@ fn process_data_file(filename: &str) -> Result<Summary, Error> {
             }
         })
         .collect();
-    
+
     // 纯计算
     calculate_summary(&numbers).ok_or(Error::EmptyInput)
 }
@@ -1543,7 +1543,7 @@ fn process_data<R: FileReader, L: Logger>(
 ) -> Result<Summary, Error> {
     // 副作用通过参数提供的特定实现
     let content = reader.read_to_string(filename)?;
-    
+
     let numbers: Vec<i32> = content.lines()
         .filter_map(|line| {
             match line.parse::<i32>() {
@@ -1558,7 +1558,7 @@ fn process_data<R: FileReader, L: Logger>(
             }
         })
         .collect();
-    
+
     // 纯计算
     calculate_summary(&numbers).ok_or(Error::EmptyInput)
 }
@@ -1639,7 +1639,7 @@ where
 {
     // 这部分是纯的
     let result = calculate_summary(&input);
-    
+
     and_then(
         get_config(),
         move |config| {
@@ -1657,7 +1657,7 @@ where
 }
 ```
 
-### 外部交互的函数式封装模式
+### 1.6.2 外部交互的函数式封装模式
 
 -**外部资源的函数式抽象**
 
@@ -1671,9 +1671,9 @@ fn imperative_file_processing() -> Result<(), Error> {
     let mut file = File::open("data.txt")?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
-    
+
     // 处理内容...
-    
+
     file.close()?; // 显式关闭
     Ok(())
 }
@@ -1686,9 +1686,9 @@ fn functional_file_processing() -> Result<(), Error> {
         file.read_to_string(&mut content)?;
         content
     }; // file 自动关闭
-    
+
     // 处理内容...
-    
+
     Ok(())
 }
 ```
@@ -1756,21 +1756,21 @@ where
     E: From<ConnectionError>,
 {
     let mut conn = pool.acquire().await?;
-    
+
     // 使用 scopeguard 确保连接返回池
     let conn_guard = scopeguard::guard(conn, |conn| {
         // 此处可能需要阻塞操作，实际应用中可能使用专用线程
         let _ = futures::executor::block_on(pool.release(conn));
     });
-    
+
     let result = operation(&mut conn_guard).await;
-    
+
     // 取消 guard 的 drop 行为，我们将手动管理
     let conn = scopeguard::ScopeGuard::into_inner(conn_guard);
-    
+
     // 正常归还连接
     pool.release(conn).await?;
-    
+
     result
 }
 
@@ -1779,18 +1779,18 @@ async fn execute_transaction() -> Result<Data, Error> {
     with_connection(&pool, |conn| {
         Box::pin(async move {
             conn.execute("BEGIN").await?;
-            
+
             let result = conn.query_one("SELECT * FROM data").await?;
-            
+
             conn.execute("COMMIT").await?;
-            
+
             Ok(Data::from(result))
         })
     }).await
 }
 ```
 
-### unsafe 与纯函数的共存
+### 1.6.3 unsafe 与纯函数的共存
 
 -**安全边界原则**
 
@@ -1809,7 +1809,7 @@ pub fn safe_memory_copy(dst: &mut [u8], src: &[u8]) -> Result<(), CopyError> {
     if dst.len() < src.len() {
         return Err(CopyError::InsufficientSpace);
     }
-    
+
     // 将 unsafe 限制在小范围内
     unsafe {
         std::ptr::copy_nonoverlapping(
@@ -1818,7 +1818,7 @@ pub fn safe_memory_copy(dst: &mut [u8], src: &[u8]) -> Result<(), CopyError> {
             src.len()
         );
     }
-    
+
     Ok(())
 }
 ```
@@ -1856,27 +1856,27 @@ impl BumpAllocator {
     pub fn new(capacity: usize) -> Self {
         let layout = Layout::from_size_align(capacity, 8).unwrap();
         let memory = unsafe { alloc::alloc(layout) };
-        
+
         Self {
             memory,
             capacity,
             allocated: 0,
         }
     }
-    
+
     // 安全接口
     pub fn allocate(&mut self, size: usize, align: usize) -> Option<&mut [u8]> {
         // 计算对齐
         let aligned_allocated = align_up(self.allocated, align);
-        
+
         if aligned_allocated + size > self.capacity {
             return None;
         }
-        
+
         // 安全地执行不安全操作
         let ptr = unsafe { self.memory.add(aligned_allocated) };
         self.allocated = aligned_allocated + size;
-        
+
         // 返回安全的切片引用
         Some(unsafe { std::slice::from_raw_parts_mut(ptr, size) })
     }
@@ -1905,26 +1905,26 @@ where
 {
     let layout = Layout::from_size_align(size, 8)
         .map_err(|_| AllocError::InvalidLayout)?;
-    
+
     // 分配内存
     let ptr = unsafe { alloc::alloc(layout) };
     if ptr.is_null() {
         return Err(AllocError::OutOfMemory);
     }
-    
+
     // 使用 scopeguard 确保内存释放
     let guard = scopeguard::guard(ptr, |ptr| {
         unsafe { alloc::dealloc(ptr, layout); }
     });
-    
+
     // 执行操作
     let result = f(*guard);
-    
+
     // 手动释放内存
     unsafe { alloc::dealloc(*guard, layout); }
     // 取消 guard 的作用
     let _ = scopeguard::ScopeGuard::into_inner(guard);
-    
+
     Ok(result)
 }
 ```
@@ -1973,7 +1973,7 @@ fn process_purely(data: Pure<Vec<i32>>) -> Pure<i32> {
 }
 ```
 
-### 实用主义设计原则
+### 1.6.4 实用主义设计原则
 
 -**Rust 中的函数式与系统编程平衡策略**
 
@@ -2007,7 +2007,7 @@ mod logic {
                 diff * diff
             })
             .sum::<f64>() / data.len() as f64;
-            
+
         Statistics {
             sum,
             mean,
@@ -2021,17 +2021,17 @@ mod logic {
 mod io {
     use super::logic;
     use std::fs;
-    
+
     pub fn process_file(path: &str) -> Result<Statistics, Error> {
         let content = fs::read_to_string(path)?;
         let numbers: Vec<i32> = content.lines()
             .filter_map(|line| line.parse().ok())
             .collect();
-            
+
         if numbers.is_empty() {
             return Err(Error::EmptyData);
         }
-        
+
         Ok(logic::calculate(&numbers))
     }
 }
@@ -2043,16 +2043,16 @@ mod io {
 // 第1阶段：标准命令式代码
 fn process_data_v1(data: &mut Vec<Record>) -> Result<Summary, Error> {
     let mut total = 0;
-    
+
     for record in data.iter_mut() {
         if record.status != Status::Valid {
             continue;
         }
-        
+
         record.processed = true;
         total += record.value;
     }
-    
+
     Ok(Summary { total })
 }
 
@@ -2065,7 +2065,7 @@ fn process_data_v2(data: &mut Vec<Record>) -> Result<Summary, Error> {
             record.value
         })
         .sum();
-        
+
     Ok(Summary { total })
 }
 
@@ -2077,17 +2077,17 @@ fn process_data_v3(data: &mut Vec<Record>) -> Result<Summary, Error> {
         .filter(|(_, record)| record.status == Status::Valid)
         .map(|(i, _)| i)
         .collect();
-    
+
     // 2. 纯计算部分
     let total: i32 = valid_indices.iter()
         .map(|&i| data[i].value)
         .sum();
-    
+
     // 3. 副作用部分
     for &i in &valid_indices {
         data[i].processed = true;
     }
-    
+
     Ok(Summary { total })
 }
 ```
@@ -2099,7 +2099,7 @@ fn process_data_v3(data: &mut Vec<Record>) -> Result<Summary, Error> {
 trait DataProcessor<T, R> {
     // 纯函数部分
     fn analyze(&self, data: &[T]) -> R;
-    
+
     // 副作用部分
     fn process(&self, data: &mut [T]) -> Result<(), Error>;
 }
@@ -2113,10 +2113,10 @@ impl DataProcessor<Record, Summary> for StandardProcessor {
             .filter(|r| r.status == Status::Valid)
             .map(|r| r.value)
             .sum();
-            
+
         Summary { total }
     }
-    
+
     fn process(&self, data: &mut [Record]) -> Result<(), Error> {
         for record in data.iter_mut() {
             if record.status == Status::Valid {
@@ -2137,17 +2137,17 @@ where
 {
     // 先执行纯计算
     let result = processor.analyze(data);
-    
+
     // 再执行副作用
     processor.process(data)?;
-    
+
     Ok(result)
 }
 ```
 
-## 展望未来发展
+## 1.7 展望未来发展
 
-### Rust 的类型系统演进
+### 1.7.1 Rust 的类型系统演进
 
 -**等待中的类型系统特性**
 
@@ -2168,7 +2168,7 @@ trait Functor<A> {
 // 对 Option 的实现
 impl<A> Functor<A> for Option<A> {
     type Mapped<B> = Option<B>;
-    
+
     fn map<B, F: FnOnce(A) -> B>(self, f: F) -> Option<B> {
         match self {
             Some(a) => Some(f(a)),
@@ -2188,14 +2188,14 @@ impl<A> Functor<A> for Option<A> {
 ```rust
 trait StreamingIterator {
     type Item<'a> where Self: 'a;
-    
+
     fn next(&mut self) -> Option<Self::Item<'_>>;
 }
 
 // 实现返回引用的迭代器
 impl<T> StreamingIterator for VecStream<T> {
     type Item<'a> where Self: 'a = &'a T;
-    
+
     fn next(&mut self) -> Option<Self::Item<'_>> {
         // 实现
     }
@@ -2212,7 +2212,7 @@ impl<T> StreamingIterator for VecStream<T> {
 ```rust
 trait AsyncIterator {
     type Item;
-    
+
     // 返回 Future 而不必指定确切类型
     fn next(&mut self) -> impl Future<Output = Option<Self::Item>>;
 }
@@ -2245,7 +2245,7 @@ Rust 编译器正在改进的函数式代码优化：
 4. **代码生成策略**：针对迭代器链的专门优化
 5. **异步状态机优化**：减小状态结构大小，优化状态转换
 
-### 异步生态的趋势
+### 1.7.2 异步生态的趋势
 
 -**异步生态系统的融合与标准化**
 
@@ -2294,7 +2294,7 @@ trait AsyncRuntime: Send + Sync + 'static {
     where
         F: Future + Send + 'static,
         F::Output: Send + 'static;
-        
+
     fn run<F>(&self, future: F) -> F::Output
     where
         F: Future + Send + 'static,
@@ -2326,7 +2326,7 @@ async fn process_data(input: impl Stream<Item = Data>) -> Result<Summary> {
 }
 ```
 
-### 与其他语言的交互前景
+### 1.7.3 与其他语言的交互前景
 
 -**函数式跨语言交互**
 
@@ -2344,13 +2344,13 @@ Rust 与其他函数式语言的交互将更加无缝：
 pub async fn process_data(data: JsValue) -> Result<JsValue, JsValue> {
     // 解析输入
     let input: Vec<InputItem> = serde_wasm_bindgen::from_value(data)?;
-    
+
     // 函数式处理
     let result = input.iter()
         .filter_map(|item| validate_item(item).ok())
         .map(transform_item)
         .collect::<Vec<_>>();
-        
+
     // 返回结果
     Ok(serde_wasm_bindgen::to_value(&result)?)
 }
@@ -2414,7 +2414,7 @@ impl RustProcessor {
 - 专为函数式数据结构优化的序列化格式
 - 不可变数据的高效传输
 
-## 思维导图
+## 1.8 思维导图
 
 ```text
 Rust函数式与异步编程
@@ -2550,7 +2550,7 @@ Rust函数式与异步编程
         └── 函数式数据结构序列化优化
 ```
 
-## 结论
+## 1.9 结论
 
 本文对 Rust 函数式编程特性与异步机制进行了深入分析和扩展。
 我们不仅探讨了表面的语法和概念，还深入研究了底层实现机制、性能权衡和实际应用策略。

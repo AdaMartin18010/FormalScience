@@ -1,37 +1,38 @@
-# 形式语言理论综合深化 (Formal Language Theory Comprehensive Deepening)
+# 1. 形式语言理论综合深化 (Formal Language Theory Comprehensive Deepening)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 自动机理论深化 (Automata Theory Deepening)](#2-自动机理论深化-automata-theory-deepening)
-  - [2.1 有限自动机](#21-有限自动机)
-  - [2.2 下推自动机](#22-下推自动机)
-  - [2.3 图灵机](#23-图灵机)
-- [3 语法分析理论深化 (Parsing Theory Deepening)](#3-语法分析理论深化-parsing-theory-deepening)
-  - [3.1 上下文无关文法](#31-上下文无关文法)
-  - [3.2 LR分析](#32-lr分析)
-  - [3.3 LL分析](#33-ll分析)
-- [4 语言层次理论深化 (Language Hierarchy Theory Deepening)](#4-语言层次理论深化-language-hierarchy-theory-deepening)
-  - [4.1 乔姆斯基层次](#41-乔姆斯基层次)
-  - [4.2 复杂性理论](#42-复杂性理论)
-- [5 形式语言应用理论](#5-形式语言应用理论)
-  - [5.1 编译器理论](#51-编译器理论)
-  - [5.2 自然语言处理](#52-自然语言处理)
-- [6 批判性分析与综合论证](#6-批判性分析与综合论证)
-  - [6.1 理论完备性分析](#61-理论完备性分析)
-  - [6.2 应用场景分析](#62-应用场景分析)
-  - [6.3 未来发展方向](#63-未来发展方向)
-- [7 结论](#7-结论)
+- [1. 形式语言理论综合深化 (Formal Language Theory Comprehensive Deepening)](#1-形式语言理论综合深化-formal-language-theory-comprehensive-deepening)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 自动机理论深化 (Automata Theory Deepening)](#12-自动机理论深化-automata-theory-deepening)
+    - [1.2.1 有限自动机](#121-有限自动机)
+    - [1.2.2 下推自动机](#122-下推自动机)
+    - [1.2.3 图灵机](#123-图灵机)
+  - [1.3 语法分析理论深化 (Parsing Theory Deepening)](#13-语法分析理论深化-parsing-theory-deepening)
+    - [1.3.1 上下文无关文法](#131-上下文无关文法)
+    - [1.3.2 LR分析](#132-lr分析)
+    - [1.3.3 LL分析](#133-ll分析)
+  - [1.4 语言层次理论深化 (Language Hierarchy Theory Deepening)](#14-语言层次理论深化-language-hierarchy-theory-deepening)
+    - [1.4.1 乔姆斯基层次](#141-乔姆斯基层次)
+    - [1.4.2 复杂性理论](#142-复杂性理论)
+  - [1.5 形式语言应用理论](#15-形式语言应用理论)
+    - [1.5.1 编译器理论](#151-编译器理论)
+    - [1.5.2 自然语言处理](#152-自然语言处理)
+  - [1.6 批判性分析与综合论证](#16-批判性分析与综合论证)
+    - [1.6.1 理论完备性分析](#161-理论完备性分析)
+    - [1.6.2 应用场景分析](#162-应用场景分析)
+    - [1.6.3 未来发展方向](#163-未来发展方向)
+  - [1.7 结论](#17-结论)
+  - [1.8 参考文献](#18-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个完整的形式语言理论综合体系，将自动机理论、语法分析、语言层次、复杂性理论等核心概念进行深度整合，提供严格的形式化定义、定理证明和批判性分析。我们采用严格的数学证明和逻辑推理，构建一个自洽、完备、可扩展的形式语言理论体系。
 
-## 2 自动机理论深化 (Automata Theory Deepening)
+## 1.2 自动机理论深化 (Automata Theory Deepening)
 
-### 2.1 有限自动机
+### 1.2.1 有限自动机
 
 **定义 1.1.1 (确定性有限自动机)**
 确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -63,25 +64,25 @@
 ```haskell
 -- 子集构造法
 subsetConstruction :: NFA -> DFA
-subsetConstruction nfa = 
+subsetConstruction nfa =
   let initialState = epsilonClosure nfa [initialState nfa]
       states = generateStates nfa initialState
       transitions = generateTransitions nfa states
-      acceptingStates = filter (\state -> 
+      acceptingStates = filter (\state ->
         not (null (intersect state (acceptingStates nfa)))) states
   in DFA states alphabet transitions initialState acceptingStates
 
 -- ε闭包计算
 epsilonClosure :: NFA -> [State] -> [State]
-epsilonClosure nfa states = 
+epsilonClosure nfa states =
   let directEpsilon = concat [epsilonTransitions nfa s | s <- states]
       newStates = directEpsilon \\ states
-  in if null newStates 
-     then states 
+  in if null newStates
+     then states
      else epsilonClosure nfa (states ++ newStates)
 ```
 
-### 2.2 下推自动机
+### 1.2.2 下推自动机
 
 **定义 1.2.1 (下推自动机)**
 下推自动机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
@@ -113,7 +114,7 @@ epsilonClosure nfa states =
 ```haskell
 -- CFG到PDA转换
 cfgToPDA :: CFG -> PDA
-cfgToPDA cfg = 
+cfgToPDA cfg =
   let states = [q0, q1, q2]
       alphabet = terminals cfg
       stackAlphabet = terminals cfg ++ nonterminals cfg ++ [startSymbol cfg]
@@ -123,14 +124,14 @@ cfgToPDA cfg =
 
 -- PDA到CFG转换
 pdaToCFG :: PDA -> CFG
-pdaToCFG pda = 
+pdaToCFG pda =
   let variables = generateVariables pda
       startVariable = generateStartVariable pda
       productions = generateProductions pda
   in CFG variables terminals startVariable productions
 ```
 
-### 2.3 图灵机
+### 1.2.3 图灵机
 
 **定义 1.3.1 (图灵机)**
 图灵机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
@@ -162,7 +163,7 @@ pdaToCFG pda =
 ```haskell
 -- 通用图灵机
 data UniversalTuringMachine where
-  UniversalTuringMachine :: 
+  UniversalTuringMachine ::
     State ->                    -- 当前状态
     Tape ->                     -- 带内容
     HeadPosition ->             -- 读写头位置
@@ -170,22 +171,22 @@ data UniversalTuringMachine where
 
 -- 图灵机模拟
 simulateTuringMachine :: TuringMachine -> String -> String
-simulateTuringMachine tm input = 
+simulateTuringMachine tm input =
   let initialConfig = (initialState tm, input, 0)
       finalConfig = runUntilHalt tm initialConfig
   in extractOutput finalConfig
 
 -- 运行直到停机
 runUntilHalt :: TuringMachine -> Config -> Config
-runUntilHalt tm config = 
-  if isHalted tm config 
-  then config 
+runUntilHalt tm config =
+  if isHalted tm config
+  then config
   else runUntilHalt tm (step tm config)
 ```
 
-## 3 语法分析理论深化 (Parsing Theory Deepening)
+## 1.3 语法分析理论深化 (Parsing Theory Deepening)
 
-### 3.1 上下文无关文法
+### 1.3.1 上下文无关文法
 
 **定义 2.1.1 (上下文无关文法)**
 上下文无关文法是四元组 $G = (V, T, P, S)$，其中：
@@ -213,7 +214,7 @@ CFG可以生成所有上下文无关语言。
 ```haskell
 -- 上下文无关文法
 data CFG where
-  CFG :: 
+  CFG ::
     [NonTerminal] ->            -- 非终结符
     [Terminal] ->               -- 终结符
     [Production] ->             -- 产生式
@@ -222,22 +223,22 @@ data CFG where
 
 -- 产生式
 data Production where
-  Production :: 
+  Production ::
     NonTerminal ->              -- 左部
     [Symbol] ->                 -- 右部
     Production
 
 -- 推导
 derive :: CFG -> [Symbol] -> [Symbol] -> Bool
-derive cfg alpha beta = 
+derive cfg alpha beta =
   case findProduction cfg alpha of
-    Just production -> 
+    Just production ->
       let newAlpha = applyProduction alpha production
       in derive cfg newAlpha beta
     Nothing -> alpha == beta
 ```
 
-### 3.2 LR分析
+### 1.3.2 LR分析
 
 **定义 2.2.1 (LR(0)项)**
 LR(0)项是形如 $A \rightarrow \alpha \cdot \beta$ 的产生式，其中 $\cdot$ 表示分析位置。
@@ -257,7 +258,7 @@ LR分析器正确识别所有LR文法定义的语言。
 ```haskell
 -- LR分析器
 data LRParser where
-  LRParser :: 
+  LRParser ::
     LR0Automaton ->             -- LR(0)自动机
     ActionTable ->              -- 动作表
     GotoTable ->                -- 转移表
@@ -265,7 +266,7 @@ data LRParser where
 
 -- LR分析
 lrParse :: LRParser -> String -> ParseTree
-lrParse parser input = 
+lrParse parser input =
   let initialState = initialState parser
       parseStack = [(initialState, [])]
       inputTokens = tokenize input
@@ -273,26 +274,26 @@ lrParse parser input =
 
 -- LR分析步骤
 lrParseStep :: LRParser -> [(State, [Symbol])] -> [Token] -> ParseTree
-lrParseStep parser stack tokens = 
+lrParseStep parser stack tokens =
   case tokens of
-    [] -> 
+    [] ->
       if isAccepting parser (head stack)
       then buildParseTree stack
       else error "Parse error"
-    
-    (token:rest) -> 
+
+    (token:rest) ->
       let currentState = fst (head stack)
           action = lookupAction parser currentState token
       in case action of
-           Shift nextState -> 
+           Shift nextState ->
              lrParseStep parser ((nextState, token):stack) rest
-           Reduce production -> 
+           Reduce production ->
              let newStack = reduceStack stack production
              in lrParseStep parser newStack tokens
            Accept -> buildParseTree stack
 ```
 
-### 3.3 LL分析
+### 1.3.3 LL分析
 
 **定义 2.3.1 (LL(k)文法)**
 文法 $G$ 是LL(k)文法，如果对于任意两个不同的产生式 $A \rightarrow \alpha$ 和 $A \rightarrow \beta$，都有 $\text{FIRST}_k(\alpha) \cap \text{FIRST}_k(\beta) = \emptyset$。
@@ -312,7 +313,7 @@ LL分析器正确识别所有LL(k)文法定义的语言。
 ```haskell
 -- LL分析器
 data LLParser where
-  LLParser :: 
+  LLParser ::
     CFG ->                      -- 上下文无关文法
     FirstTable ->               -- FIRST表
     FollowTable ->              -- FOLLOW表
@@ -320,29 +321,29 @@ data LLParser where
 
 -- LL分析
 llParse :: LLParser -> String -> ParseTree
-llParse parser input = 
+llParse parser input =
   let tokens = tokenize input
       startSymbol = startSymbol (grammar parser)
   in llParseSymbol parser startSymbol tokens
 
 -- LL分析符号
 llParseSymbol :: LLParser -> Symbol -> [Token] -> (ParseTree, [Token])
-llParseSymbol parser symbol tokens = 
+llParseSymbol parser symbol tokens =
   case symbol of
-    Terminal t -> 
+    Terminal t ->
       case tokens of
         (token:rest) | token == t -> (Leaf t, rest)
         _ -> error "Parse error"
-    
-    NonTerminal nt -> 
+
+    NonTerminal nt ->
       let production = predictProduction parser nt tokens
           children = parseProduction parser production tokens
       in (Node nt children, tokens)
 ```
 
-## 4 语言层次理论深化 (Language Hierarchy Theory Deepening)
+## 1.4 语言层次理论深化 (Language Hierarchy Theory Deepening)
 
-### 4.1 乔姆斯基层次
+### 1.4.1 乔姆斯基层次
 
 **定义 3.1.1 (乔姆斯基层次)**
 语言类层次结构：
@@ -367,7 +368,7 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 ```haskell
 -- 语言层次检查
 checkLanguageHierarchy :: Language -> LanguageClass -> Bool
-checkLanguageHierarchy language class_ = 
+checkLanguageHierarchy language class_ =
   case class_ of
     Regular -> isRegular language
     CFL -> isContextFree language
@@ -376,18 +377,18 @@ checkLanguageHierarchy language class_ =
 
 -- 正则语言检查
 isRegular :: Language -> Bool
-isRegular language = 
+isRegular language =
   let dfa = constructDFA language
   in isValidDFA dfa
 
 -- 上下文无关语言检查
 isContextFree :: Language -> Bool
-isContextFree language = 
+isContextFree language =
   let cfg = constructCFG language
   in isValidCFG cfg
 ```
 
-### 4.2 复杂性理论
+### 1.4.2 复杂性理论
 
 **定义 3.2.1 (时间复杂度)**
 语言 $L$ 的时间复杂度是 $T(n)$，如果存在图灵机 $M$ 使得：
@@ -420,7 +421,7 @@ data ComplexityClass where
 
 -- 复杂度检查
 checkComplexity :: Language -> ComplexityClass -> Bool
-checkComplexity language class_ = 
+checkComplexity language class_ =
   case class_ of
     DTIME f -> isInDTIME language f
     DSPACE f -> isInDSPACE language f
@@ -429,15 +430,15 @@ checkComplexity language class_ =
 
 -- 时间层次检查
 isInDTIME :: Language -> TimeFunction -> Bool
-isInDTIME language timeFunc = 
+isInDTIME language timeFunc =
   let tm = constructTuringMachine language
       timeBound = analyzeTimeComplexity tm
   in timeBound <= timeFunc
 ```
 
-## 5 形式语言应用理论
+## 1.5 形式语言应用理论
 
-### 5.1 编译器理论
+### 1.5.1 编译器理论
 
 **定义 4.1.1 (编译器结构)**
 编译器是五阶段系统：
@@ -462,7 +463,7 @@ isInDTIME language timeFunc =
 ```haskell
 -- 编译器
 data Compiler where
-  Compiler :: 
+  Compiler ::
     LexicalAnalyzer ->          -- 词法分析器
     Parser ->                   -- 语法分析器
     SemanticAnalyzer ->         -- 语义分析器
@@ -471,7 +472,7 @@ data Compiler where
 
 -- 编译过程
 compile :: Compiler -> SourceCode -> TargetCode
-compile compiler source = 
+compile compiler source =
   let tokens = lexicalAnalysis (lexicalAnalyzer compiler) source
       ast = parsing (parser compiler) tokens
       semanticAst = semanticAnalysis (semanticAnalyzer compiler) ast
@@ -480,13 +481,13 @@ compile compiler source =
 
 -- 词法分析
 lexicalAnalysis :: LexicalAnalyzer -> String -> [Token]
-lexicalAnalysis analyzer source = 
+lexicalAnalysis analyzer source =
   let tokens = scan analyzer source
       validTokens = filter isValidToken tokens
   in validTokens
 ```
 
-### 5.2 自然语言处理
+### 1.5.2 自然语言处理
 
 **定义 4.2.1 (自然语言文法)**
 自然语言文法包含：
@@ -507,7 +508,7 @@ lexicalAnalysis analyzer source =
 ```haskell
 -- 自然语言处理器
 data NLPProcessor where
-  NLPProcessor :: 
+  NLPProcessor ::
     Tokenizer ->                -- 分词器
     POS_Tagger ->               -- 词性标注器
     Parser ->                   -- 句法分析器
@@ -516,7 +517,7 @@ data NLPProcessor where
 
 -- 自然语言处理
 processNaturalLanguage :: NLPProcessor -> String -> SemanticRepresentation
-processNaturalLanguage processor text = 
+processNaturalLanguage processor text =
   let tokens = tokenize (tokenizer processor) text
       posTags = posTagging (posTagger processor) tokens
       parseTree = parsing (parser processor) posTags
@@ -524,9 +525,9 @@ processNaturalLanguage processor text =
   in semantics
 ```
 
-## 6 批判性分析与综合论证
+## 1.6 批判性分析与综合论证
 
-### 6.1 理论完备性分析
+### 1.6.1 理论完备性分析
 
 **批判性观点 5.1.1 (理论局限性)**
 形式语言理论存在以下局限性：
@@ -542,7 +543,7 @@ processNaturalLanguage processor text =
 2. **算法设计**：指导高效算法设计
 3. **系统构建**：支持复杂系统构建
 
-### 6.2 应用场景分析
+### 1.6.2 应用场景分析
 
 **场景 5.2.1 (编程语言设计)**
 形式语言理论在编程语言设计中的应用：
@@ -558,7 +559,7 @@ processNaturalLanguage processor text =
 2. **机器翻译**：实现自动翻译
 3. **信息提取**：从文本中提取信息
 
-### 6.3 未来发展方向
+### 1.6.3 未来发展方向
 
 **方向 5.3.1 (量子语言)**
 量子计算对形式语言理论的新挑战：
@@ -574,7 +575,7 @@ processNaturalLanguage processor text =
 2. **AI语义**：AI系统的语义理解
 3. **AI语言生成**：AI系统的语言生成
 
-## 7 结论
+## 1.7 结论
 
 本文档构建了一个完整的形式语言理论综合体系，将自动机理论、语法分析、语言层次、复杂性理论等核心概念进行深度整合。通过严格的形式化定义、定理证明和批判性分析，我们建立了：
 
@@ -585,7 +586,7 @@ processNaturalLanguage processor text =
 
 这个形式语言理论体系为现代编译器设计、自然语言处理、人工智能等领域提供了强大的理论工具，推动着形式语言理论在计算机科学中的持续发展。
 
-## 参考文献
+## 1.8 参考文献
 
 1. Hopcroft, J. E., & Ullman, J. D. (1979). Introduction to automata theory, languages, and computation. Addison-Wesley.
 2. Sipser, M. (2012). Introduction to the theory of computation. Cengage Learning.

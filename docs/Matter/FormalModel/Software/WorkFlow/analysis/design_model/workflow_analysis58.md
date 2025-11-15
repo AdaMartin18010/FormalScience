@@ -1,27 +1,21 @@
-# Rust 生态中用于构建分布式系统的开源框架和关键库
-
-好的，我们来梳理一下 Rust 生态中用于构建分布式系统的开源框架和关键库，并进行评价。
-
-需要明确一点：相比于 Java (Spring Cloud, Akka, Vert.x) 或 Go (go-micro, go-kit,原生库支持良好)，Rust 在**“开箱即用”、“大而全”**的分布式系统*框架*方面，生态系统**相对年轻**，成熟度不一。Rust 社区更倾向于提供**高质量、模块化的基础库**，开发者通常需要组合这些库来构建自己的分布式系统，而不是依赖一个单一的、包罗万象的框架。
-
-以下是一些关键的库和可以视为“框架”或“准框架”的项目，按类别划分：
+# 1. Rust 生态中用于构建分布式系统的开源框架和关键库
 
 ## 目录
 
-- [Rust 生态中用于构建分布式系统的开源框架和关键库](#rust-生态中用于构建分布式系统的开源框架和关键库)
+- [1. Rust 生态中用于构建分布式系统的开源框架和关键库](#1-rust-生态中用于构建分布式系统的开源框架和关键库)
   - [目录](#目录)
-    - [10 . 思维导图 (Text Format)](#10-思维导图-text-format)
-    - [2. RPC 与网络通信 (RPC \& Network Communication)](#2-rpc-与网络通信-rpc--network-communication)
-    - [3. 分布式一致性 (Distributed Consensus)](#3-分布式一致性-distributed-consensus)
-    - [4. 分布式工作流/编排 (Distributed Workflow/Orchestration)](#4-分布式工作流编排-distributed-workfloworchestration)
-    - [5. Actor 框架 (Actor Frameworks)](#5-actor-框架-actor-frameworks)
-    - [6. 消息队列客户端 (Message Queue Clients)](#6-消息队列客户端-message-queue-clients)
-    - [7. 数据库交互 (Database Interaction)](#7-数据库交互-database-interaction)
-    - [8. 云原生集成 (Cloud Native Integration)](#8-云原生集成-cloud-native-integration)
-    - [9. 总结评价](#9-总结评价)
-    - [10. 思维导图 (Text Format)](#10-思维导图-text-format)
+    - [1.0.1 核心异步运行时 (Foundational Async Runtime)](#101-核心异步运行时-foundational-async-runtime)
+    - [1.0.2 RPC 与网络通信 (RPC \& Network Communication)](#102-rpc-与网络通信-rpc--network-communication)
+    - [1.0.3 分布式一致性 (Distributed Consensus)](#103-分布式一致性-distributed-consensus)
+    - [1.0.4 分布式工作流/编排 (Distributed Workflow/Orchestration)](#104-分布式工作流编排-distributed-workfloworchestration)
+    - [1.0.5 Actor 框架 (Actor Frameworks)](#105-actor-框架-actor-frameworks)
+    - [1.0.6 消息队列客户端 (Message Queue Clients)](#106-消息队列客户端-message-queue-clients)
+    - [1.0.7 数据库交互 (Database Interaction)](#107-数据库交互-database-interaction)
+    - [1.0.8 云原生集成 (Cloud Native Integration)](#108-云原生集成-cloud-native-integration)
+    - [1.0.9 总结评价](#109-总结评价)
+    - [1.0.10 思维导图 (Text Format)](#1010-思维导图-text-format)
 
-### 1. 核心异步运行时 (Foundational Async Runtime)
+### 1.0.1 核心异步运行时 (Foundational Async Runtime)
 
 虽然不是分布式框架本身，但它们是构建一切异步分布式应用的基础。
 
@@ -32,7 +26,7 @@
     - **缺点:** 对新手有一定学习曲线。
     - **定位:** **必选项**。绝大多数 Rust 分布式系统都构建在 Tokio 之上。
 
-### 2. RPC 与网络通信 (RPC & Network Communication)
+### 1.0.2 RPC 与网络通信 (RPC & Network Communication)
 
 - **`tonic`**
   - **描述:** 一个基于 `hyper` (HTTP/2) 和 `prost` (Protobuf) 的高性能 **gRPC 框架**。
@@ -48,7 +42,7 @@
     - **定位:** 构建 HTTP API 的标准选择。在简单场景下可用于服务间通信，但对于复杂的分布式交互，gRPC (Tonic) 通常更优。
 - **其他 RPC (较少见/特定场景):** Rust 生态中通用的、非 gRPC 的成熟 RPC 框架相对缺乏，不像 Go 的 `net/rpc` 或 Java 的 Dubbo/Thrift 实现那样普遍。开发者通常基于 Tokio TCP/UDP 或消息队列构建自定义协议。
 
-### 3. 分布式一致性 (Distributed Consensus)
+### 1.0.3 分布式一致性 (Distributed Consensus)
 
 - **`raft-rs`**
   - **描述:** `tikv/raft-rs` 是 TiKV 项目提取出的 Raft 共识算法库。提供了 Raft 协议的核心实现。
@@ -57,7 +51,7 @@
     - **缺点:** 是一个**库而非框架**。需要开发者自行实现网络层、存储层、状态机应用等大量集成工作。对于不熟悉 Raft 细节的开发者来说，使用门槛很高。社区维护活跃度可能需要关注（核心团队精力可能更侧重 TiKV 本身）。
     - **定位:** 如果你**确实需要自己实现**基于 Raft 的分布式系统（如分布式数据库、配置中心），这是一个基础选项。但通常更推荐使用**现有的、提供了 Raft 功能的系统**（如 etcd, Consul）或**托管服务**。
 
-### 4. 分布式工作流/编排 (Distributed Workflow/Orchestration)
+### 1.0.4 分布式工作流/编排 (Distributed Workflow/Orchestration)
 
 - **`temporal-sdk-rust`**
   - **描述:** 用于与 [Temporal.io](http://Temporal.io) 工作流编排平台交互的官方 Rust SDK。Temporal 本身是一个强大的、用于构建可靠分布式应用的平台。
@@ -66,7 +60,7 @@
     - **缺点:** **强依赖 Temporal 平台**（需要部署 Temporal Server 或使用其云服务）。Rust SDK 相对于 Go/Java SDK 可能更新稍慢或特性略有滞后（需关注官方支持力度）。
     - **定位:** 一个非常**有前景且实用的选择**，特别是对于需要处理复杂、长时间运行、需要高可靠性的业务流程的应用。它将复杂度转移到了平台层。
 
-### 5. Actor 框架 (Actor Frameworks)
+### 1.0.5 Actor 框架 (Actor Frameworks)
 
 - **`actix`**
   - **描述:** 一个基于 Actor 模型的**并发框架**（注意：主要是并发，非内建分布式）。`actix-web` 构建于其上。
@@ -81,7 +75,7 @@
     - **缺点:** **非常新，实验性强**，生态系统小，生产环境案例少，API 和稳定性可能仍在快速变化。
     - **定位:** **前沿探索性项目**，暂不适合需要稳定性的生产环境。
 
-### 6. 消息队列客户端 (Message Queue Clients)
+### 1.0.6 消息队列客户端 (Message Queue Clients)
 
 这些是库，不是框架，但对于构建分布式系统至关重要。
 
@@ -90,19 +84,19 @@
 - **`async-nats`:** 用于 NATS 和 NATS JetStream 的客户端。
 - **评价:** 这些客户端库通常质量不错，紧随各自的消息系统特性更新。是实现服务间异步通信和解耦的关键组件。
 
-### 7. 数据库交互 (Database Interaction)
+### 1.0.7 数据库交互 (Database Interaction)
 
 - **`sqlx`:** 纯 Rust、异步 SQL 工具包，支持 PostgreSQL, MySQL, SQLite，编译时检查 SQL。**推荐**。
 - **`diesel`:** 流行的同步 ORM，异步支持仍在发展中。
 - **Redis:** `redis-rs` 异步客户端。
 - **评价:** Rust 与主流数据库的交互库比较成熟，特别是 `sqlx` 在异步场景下表现出色。
 
-### 8. 云原生集成 (Cloud Native Integration)
+### 1.0.8 云原生集成 (Cloud Native Integration)
 
 - **`kube-rs`:** 用于与 Kubernetes API 交互的库，是构建 Kubernetes Operator 或 Controller 的基础。
 - **评价:** 对于需要在 Kubernetes 环境下运行和交互的分布式系统，`kube-rs` 是一个强大的工具。
 
-### 9. 总结评价
+### 1.0.9 总结评价
 
 - **优势:**
   - **性能:** 基于 Rust 构建的分布式系统通常能获得极高的性能和资源利用率。
@@ -134,7 +128,7 @@ Go 或 Java + Spring Cloud 目前可能仍是更低门槛的选择。
 
 ---
 
-### 10. 思维导图 (Text Format)
+### 1.0.10 思维导图 (Text Format)
 
 ```text
 Rust Distributed Systems Frameworks & Libraries Evaluation

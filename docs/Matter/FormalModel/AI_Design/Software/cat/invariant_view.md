@@ -1,44 +1,42 @@
 
-# 跨领域的核心不变性集合：范畴论视角
+# 1. 跨领域的核心不变性集合：范畴论视角
 
-## 📋 目录
+## 目录
 
-- [跨领域的核心不变性集合：范畴论视角](#跨领域的核心不变性集合范畴论视角)
-  - [📋 目录](#-目录)
-  - [1 通用不变性保持原理](#1-通用不变性保持原理)
-    - [1.1 范畴论中的核心保持函子](#11-范畴论中的核心保持函子)
-    - [1.2 跨领域的同态核心](#12-跨领域的同态核心)
-  - [2 核心不变性集合](#2-核心不变性集合)
-    - [2.1 结构不变性](#21-结构不变性)
-    - [2.2 行为不变性](#22-行为不变性)
-    - [2.3 信息不变性](#23-信息不变性)
-  - [3 通用变换不变量](#3-通用变换不变量)
-    - [3.1 函子变换不变量](#31-函子变换不变量)
-    - [3.2 自然变换不变量](#32-自然变换不变量)
-    - [3.3 极限结构不变量](#33-极限结构不变量)
-  - [4 变换一致性保持](#4-变换一致性保持)
-    - [4.1 核心变换一致性](#41-核心变换一致性)
-    - [4.2 层次间一致性保持](#42-层次间一致性保持)
-    - [4.3 演化一致性保持](#43-演化一致性保持)
-  - [5 跨领域不变性伴随关系](#5-跨领域不变性伴随关系)
-    - [5.1 业务-技术伴随](#51-业务-技术伴随)
-    - [5.2 形式-物理伴随](#52-形式-物理伴随)
-    - [5.3 算法-执行伴随](#53-算法-执行伴随)
-  - [6 核心元结构与变换律](#6-核心元结构与变换律)
-    - [6.1 普适元结构](#61-普适元结构)
-    - [6.2 核心变换律](#62-核心变换律)
-    - [6.3 通用守恒律](#63-通用守恒律)
-  - [7 总结：通用核心保持机制](#7-总结通用核心保持机制)
-    - [7.1 核心不变性集合](#71-核心不变性集合)
-    - [7.2 核心变换一致性机制](#72-核心变换一致性机制)
-    - [7.3 普遍适用的不变性度量](#73-普遍适用的不变性度量)
-    - [7.4 核心不变性的本质](#74-核心不变性的本质)
+- [1. 跨领域的核心不变性集合：范畴论视角](#1-跨领域的核心不变性集合范畴论视角)
+  - [目录](#目录)
+  - [1.1 通用不变性保持原理](#11-通用不变性保持原理)
+    - [1.1.1 范畴论中的核心保持函子](#111-范畴论中的核心保持函子)
+    - [1.1.2 跨领域的同态核心](#112-跨领域的同态核心)
+  - [1.2 核心不变性集合](#12-核心不变性集合)
+    - [1.2.1 结构不变性](#121-结构不变性)
+    - [1.2.2 行为不变性](#122-行为不变性)
+    - [1.2.3 信息不变性](#123-信息不变性)
+  - [1.3 通用变换不变量](#13-通用变换不变量)
+    - [1.3.1 函子变换不变量](#131-函子变换不变量)
+    - [1.3.2 自然变换不变量](#132-自然变换不变量)
+    - [1.3.3 极限结构不变量](#133-极限结构不变量)
+  - [1.4 变换一致性保持](#14-变换一致性保持)
+    - [1.4.1 核心变换一致性](#141-核心变换一致性)
+    - [1.4.2 层次间一致性保持](#142-层次间一致性保持)
+    - [1.4.3 演化一致性保持](#143-演化一致性保持)
+  - [1.5 跨领域不变性伴随关系](#15-跨领域不变性伴随关系)
+    - [1.5.1 业务-技术伴随](#151-业务-技术伴随)
+    - [1.5.2 形式-物理伴随](#152-形式-物理伴随)
+    - [1.5.3 算法-执行伴随](#153-算法-执行伴随)
+  - [1.6 核心元结构与变换律](#16-核心元结构与变换律)
+    - [1.6.1 普适元结构](#161-普适元结构)
+    - [1.6.2 核心变换律](#162-核心变换律)
+    - [1.6.3 通用守恒律](#163-通用守恒律)
+  - [1.7 总结：通用核心保持机制](#17-总结通用核心保持机制)
+    - [1.7.1 核心不变性集合](#171-核心不变性集合)
+    - [1.7.2 核心变换一致性机制](#172-核心变换一致性机制)
+    - [1.7.3 普遍适用的不变性度量](#173-普遍适用的不变性度量)
+    - [1.7.4 核心不变性的本质](#174-核心不变性的本质)
 
----
+## 1.1 通用不变性保持原理
 
-## 1 通用不变性保持原理
-
-### 1.1 范畴论中的核心保持函子
+### 1.1.1 范畴论中的核心保持函子
 
 ```haskell
 class CorePreservationFunctor p where
@@ -55,7 +53,7 @@ class CorePreservationFunctor p where
   compositionPreservation :: fmap (f ∘ g) = fmap f ∘ fmap g
 ```
 
-### 1.2 跨领域的同态核心
+### 1.1.2 跨领域的同态核心
 
 ```haskell
 class CrossDomainHomomorphism h where
@@ -72,9 +70,9 @@ class CrossDomainHomomorphism h where
   relationalHomomorphism :: relation(x, y) ⟹ relation'(map x, map y)
 ```
 
-## 2 核心不变性集合
+## 1.2 核心不变性集合
 
-### 2.1 结构不变性
+### 1.2.1 结构不变性
 
 ```haskell
 class StructuralInvariance s where
@@ -94,7 +92,7 @@ class StructuralInvariance s where
   relationInvariance :: "关联关系不变性"
 ```
 
-### 2.2 行为不变性
+### 1.2.2 行为不变性
 
 ```haskell
 class BehavioralInvariance b where
@@ -114,7 +112,7 @@ class BehavioralInvariance b where
   stateTransitionInvariance :: "状态转换不变性"
 ```
 
-### 2.3 信息不变性
+### 1.2.3 信息不变性
 
 ```haskell
 class InformationInvariance i where
@@ -134,9 +132,9 @@ class InformationInvariance i where
   capacityBound :: "容量界限"
 ```
 
-## 3 通用变换不变量
+## 1.3 通用变换不变量
 
-### 3.1 函子变换不变量
+### 1.3.1 函子变换不变量
 
 ```haskell
 class FunctorialInvariant f where
@@ -156,7 +154,7 @@ class FunctorialInvariant f where
   propertyPreservation :: "属性保持"
 ```
 
-### 3.2 自然变换不变量
+### 1.3.2 自然变换不变量
 
 ```haskell
 class NaturalTransformationInvariant n where
@@ -176,7 +174,7 @@ class NaturalTransformationInvariant n where
   coherenceInvariance :: "一致性不变性"
 ```
 
-### 3.3 极限结构不变量
+### 1.3.3 极限结构不变量
 
 ```haskell
 class LimitInvariant l where
@@ -196,9 +194,9 @@ class LimitInvariant l where
   colimitPreservation :: "余极限保持性"
 ```
 
-## 4 变换一致性保持
+## 1.4 变换一致性保持
 
-### 4.1 核心变换一致性
+### 1.4.1 核心变换一致性
 
 ```haskell
 class CoreTransformationConsistency c where
@@ -218,7 +216,7 @@ class CoreTransformationConsistency c where
   semanticCoherence :: "语义一致性规则"
 ```
 
-### 4.2 层次间一致性保持
+### 1.4.2 层次间一致性保持
 
 ```haskell
 class CrossLevelConsistency l where
@@ -238,7 +236,7 @@ class CrossLevelConsistency l where
   interfaceCompatibility :: "接口兼容规则"
 ```
 
-### 4.3 演化一致性保持
+### 1.4.3 演化一致性保持
 
 ```haskell
 class EvolutionConsistency e where
@@ -258,9 +256,9 @@ class EvolutionConsistency e where
   invariantPreservation :: "不变量保持规则"
 ```
 
-## 5 跨领域不变性伴随关系
+## 1.5 跨领域不变性伴随关系
 
-### 5.1 业务-技术伴随
+### 1.5.1 业务-技术伴随
 
 ```haskell
 class BusinessTechnicalAdjunction where
@@ -280,7 +278,7 @@ class BusinessTechnicalAdjunction where
   implementationValidity :: "实现有效性"
 ```
 
-### 5.2 形式-物理伴随
+### 1.5.2 形式-物理伴随
 
 ```haskell
 class FormalPhysicalAdjunction where
@@ -300,7 +298,7 @@ class FormalPhysicalAdjunction where
   physicalConstraintSatisfaction :: "物理约束满足性"
 ```
 
-### 5.3 算法-执行伴随
+### 1.5.3 算法-执行伴随
 
 ```haskell
 class AlgorithmExecutionAdjunction where
@@ -320,9 +318,9 @@ class AlgorithmExecutionAdjunction where
   performancePreservation :: "性能保持性"
 ```
 
-## 6 核心元结构与变换律
+## 1.6 核心元结构与变换律
 
-### 6.1 普适元结构
+### 1.6.1 普适元结构
 
 ```haskell
 class UniversalMetastructure m where
@@ -342,7 +340,7 @@ class UniversalMetastructure m where
   naturality :: "自然性"
 ```
 
-### 6.2 核心变换律
+### 1.6.2 核心变换律
 
 ```haskell
 class CoreTransformationLaws t where
@@ -362,7 +360,7 @@ class CoreTransformationLaws t where
   coherenceLaw :: "一致性律"
 ```
 
-### 6.3 通用守恒律
+### 1.6.3 通用守恒律
 
 ```haskell
 class UniversalConservationLaws c where
@@ -382,11 +380,11 @@ class UniversalConservationLaws c where
   causalityLaw :: "因果律"
 ```
 
-## 7 总结：通用核心保持机制
+## 1.7 总结：通用核心保持机制
 
 从范畴论视角分析，确实存在一套跨越业务分析、形式模型与技术实现的核心不变性集合，这些不变性在本质上构成了一个普遍适用的不变性保持框架。
 
-### 7.1 核心不变性集合
+### 1.7.1 核心不变性集合
 
 1. **结构保持不变性**
    - **组合关系保持**：无论在业务建模、软件设计还是系统实现中，组合关系的基本性质必须保持一致
@@ -403,7 +401,7 @@ class UniversalConservationLaws c where
    - **信息意义保持**：信息的语义含义在不同表达形式间应当保持
    - **信息关联保持**：信息间的相互关联在转换过程中应当保持
 
-### 7.2 核心变换一致性机制
+### 1.7.2 核心变换一致性机制
 
 1. **同态映射**
    - 从数学角度，所有有效的转换都可视为结构保持映射(同态)
@@ -420,7 +418,7 @@ class UniversalConservationLaws c where
    - 单位与余单位：确保双向转换的一致性
    - 转换平衡：确保抽象与具体之间的平衡关系
 
-### 7.3 普遍适用的不变性度量
+### 1.7.3 普遍适用的不变性度量
 
 1. **一致性度量**
    - 结构一致性：结构相似度、同构程度
@@ -437,7 +435,7 @@ class UniversalConservationLaws c where
    - 关系追溯：关系在转换前后的映射
    - 约束追溯：约束条件在转换前后的对应
 
-### 7.4 核心不变性的本质
+### 1.7.4 核心不变性的本质
 
 从根本上看，这些跨领域的不变性本质上都是**信息结构的保持**。
 无论是业务分析、形式模型、软件设计、还是物理实现，

@@ -1,26 +1,20 @@
-# 递归论 (Recursion Theory) OR 可计算性理论 (Computability Theory)
+# 1. 递归论 (Recursion Theory) OR 可计算性理论 (Computability Theory)
 
 ## 目录
 
-- [递归论 (Recursion Theory) OR 可计算性理论 (Computability Theory)](#递归论-recursion-theory-or-可计算性理论-computability-theory)
+- [1. 递归论 (Recursion Theory) OR 可计算性理论 (Computability Theory)](#1-递归论-recursion-theory-or-可计算性理论-computability-theory)
   - [目录](#目录)
-  - [A. 核心概念与定义 (What are its core concepts and definitions?)](#a-核心概念与定义-what-are-its-core-concepts-and-definitions)
-  - [B. 历史渊源与发展 (What are its historical origins and development?)](#b-历史渊源与发展-what-are-its-historical-origins-and-development)
-  - [C. 核心内容与主要理论 (What are its core contents and main theories?)](#c-核心内容与主要理论-what-are-its-core-contents-and-main-theories)
-  - [D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)](#d-内部结构与逻辑组织-what-is-its-internal-structure-and-logical-organization)
-  - [E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)](#e-与其他数学分支的联系-what-are-its-connections-to-other-branches-of-mathematics)
-  - [F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)](#f-在现实世界中的应用与影响-what-are-its-applications-and-impacts-in-the-real-world)
-  - [G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)](#g-哲学反思与批判性审视-what-are-its-philosophical-reflections-and-critical-examinations)
-  - [H. 未来展望与开放问题 (What are its future prospects and open questions?)](#h-未来展望与开放问题-what-are-its-future-prospects-and-open-questions)
-  - [I. 总结与反思 (Summary and Reflection)](#i-总结与反思-summary-and-reflection)
+  - [1.1 A. 核心概念与定义 (What are its core concepts and definitions?)](#11-a-核心概念与定义-what-are-its-core-concepts-and-definitions)
+  - [1.2 B. 历史渊源与发展 (What are its historical origins and development?)](#12-b-历史渊源与发展-what-are-its-historical-origins-and-development)
+  - [1.3 C. 核心内容与主要理论 (What are its core contents and main theories?)](#13-c-核心内容与主要理论-what-are-its-core-contents-and-main-theories)
+  - [1.4 D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)](#14-d-内部结构与逻辑组织-what-is-its-internal-structure-and-logical-organization)
+  - [1.5 E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)](#15-e-与其他数学分支的联系-what-are-its-connections-to-other-branches-of-mathematics)
+  - [1.6 F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)](#16-f-在现实世界中的应用与影响-what-are-its-applications-and-impacts-in-the-real-world)
+  - [1.7 G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)](#17-g-哲学反思与批判性审视-what-are-its-philosophical-reflections-and-critical-examinations)
+  - [1.8 H. 未来展望与开放问题 (What are its future prospects and open questions?)](#18-h-未来展望与开放问题-what-are-its-future-prospects-and-open-questions)
+  - [1.9 I. 总结与反思 (Summary and Reflection)](#19-i-总结与反思-summary-and-reflection)
 
-对 “递归论 (Recursion Theory)”，
-现在通常也称为 “可计算性理论 (Computability Theory)”，
-进行结构化分析。
-
----
-
-## A. 核心概念与定义 (What are its core concepts and definitions?)
+## 1.1 A. 核心概念与定义 (What are its core concepts and definitions?)
 
 可计算性理论是数理逻辑的一个主要分支，也是理论计算机科学的基石之一。
 它精确地研究哪些问题是“可计算的”或“可判定的”，即哪些问题可以通过一个算法（或有效的机械过程）来解决。
@@ -111,7 +105,7 @@
 
 ---
 
-## B. 历史渊源与发展 (What are its historical origins and development?)
+## 1.2 B. 历史渊源与发展 (What are its historical origins and development?)
 
 可计算性理论的诞生和发展与20世纪初数学基础的深刻变革，以及对“计算”这一概念进行精确定义的探索紧密相连。
 
@@ -192,7 +186,7 @@
 
 ---
 
-## C. 核心内容与主要理论 (What are its core contents and main theories?)
+## 1.3 C. 核心内容与主要理论 (What are its core contents and main theories?)
 
 可计算性理论的核心内容围绕着“什么是可计算的？”以及“不可计算性的结构是怎样的？”这两个基本问题展开。
 其主要理论和结果为这些问题提供了深刻的答案。
@@ -284,7 +278,7 @@
 
 ---
 
-## D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)
+## 1.4 D. 内部结构与逻辑组织 (What is its internal structure and logical organization?)
 
 可计算性理论本身是一个结构良好、逻辑严谨的数学分支。
 其内部结构可以从几个不同但相互关联的维度来理解：从基础概念的构建，到特定子领域的划分，再到不同理论之间的依赖关系。
@@ -365,7 +359,7 @@
 
 ---
 
-## E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)
+## 1.5 E. 与其他数学分支的联系 (What are its connections to other branches of mathematics?)
 
 可计算性理论虽然是数理逻辑的一个核心分支，但它的概念、工具和结果深刻地影响并连接着数学的多个其他领域，同时也从这些领域汲取灵感和问题。
 
@@ -439,7 +433,7 @@
 
 ---
 
-## F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)
+## 1.6 F. 在现实世界中的应用与影响 (What are its applications and impacts in the real world?)
 
 虽然可计算性理论主要是一门纯粹的数学和理论计算机科学学科，其核心成果（如不可判定性）似乎是“消极”的，
 但它对现实世界，尤其是通过计算机科学和技术，产生了深远且往往是间接的影响。
@@ -504,7 +498,7 @@
 
 ---
 
-## G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)
+## 1.7 G. 哲学反思与批判性审视 (What are its philosophical reflections and critical examinations?)
 
 可计算性理论不仅是一套深刻的数学结果，它还引发了广泛的哲学讨论，并受到了一些批判性的审视。
 这些讨论主要围绕其核心概念的含义、其结论的适用范围以及对人类知识和智能的启示。
@@ -565,7 +559,7 @@
 
 ---
 
-## H. 未来展望与开放问题 (What are its future prospects and open questions?)
+## 1.8 H. 未来展望与开放问题 (What are its future prospects and open questions?)
 
 尽管可计算性理论已经是一个成熟的领域，拥有许多深刻和确定的结果，
 但它仍然是一个活跃的研究领域，不断有新的问题被提出，新的方向被探索。
@@ -640,7 +634,7 @@
 
 ---
 
-## I. 总结与反思 (Summary and Reflection)
+## 1.9 I. 总结与反思 (Summary and Reflection)
 
 经过前面A到H部分的详细探讨，我们对可计算性理论的核心概念、历史发展、主要内容、内部结构、外部联系、现实影响、哲学意涵以及未来展望有了全面的了解。现在，我们来对其进行一个整体的梳理和反思。
 

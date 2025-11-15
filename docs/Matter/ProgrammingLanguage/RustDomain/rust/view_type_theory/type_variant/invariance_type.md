@@ -250,7 +250,7 @@ fn example<'short, 'long>(short: &'short str, long: &'long str) where 'long: 'sh
 fn example<'a, 'b>(x: &'a mut i32, y: &'b mut i32) where 'b: 'a {
     // 下面这行会编译错误，因为 &mut T 对 T 是不变的
     // let z: &'a mut i32 = y;
-    
+
     // 即使 'b 比 'a 活得更长，&'b mut T 也不能被视为 &'a mut T 的子类型
 }
 ```
@@ -264,31 +264,31 @@ fn main() {
     // 可变性示例
     let mut value = 10;
     value = 20; // 可以修改
-    
+
     // 协变示例
     let long_lived_string = String::from("长生命周期");
     {
         let short_lived_string = String::from("短生命周期");
-        
+
         // 创建两个引用
         let long_ref: &String = &long_lived_string;
         let short_ref: &String = &short_lived_string;
-        
+
         // 协变：长生命周期引用可以赋值给需要短生命周期引用的地方
         takes_any_ref(long_ref);
         takes_any_ref(short_ref);
     }
-    
+
     // 不变性示例
     let mut x = 5;
     let mut y = 10;
-    
+
     // 创建可变引用
     let ref_x = &mut x;
     // 下面这行会导致编译错误，因为可变引用是不变的
     // let same_ref: &mut i32 = &mut y;
     // *same_ref = 15;
-    
+
     *ref_x = 15; // 修改 x 的值
     println!("x = {}", x); // 输出：x = 15
 }
@@ -366,14 +366,14 @@ fn main() {
     let long_lived = String::from("长生命周期");
     {
         let short_lived = String::from("短生命周期");
-        
+
         // 协变示例：长生命周期引用可以用在需要短生命周期引用的地方
         let long_ref: &'static str = "静态生命周期";
         let short_ref: &str = &short_lived;
-        
+
         process_string(long_ref); // 'static 生命周期可以用在任何需要较短生命周期的地方
         process_string(short_ref);
-        
+
         // 另一个协变示例
         let s1: &'static str = "hello";
         let s2: &'_ str = s1; // 协变允许从长生命周期转换到短生命周期
@@ -403,11 +403,11 @@ fn use_short_lived<'a>(s: &'a str) {
 fn main() {
     // 逆变示例
     let func_for_any: fn(&str) = use_short_lived;
-    
+
     // 在函数类型中，参数是逆变的
     // 可以将接受任何生命周期引用的函数赋值给需要接受'static引用的函数变量
     let func_for_static: fn(&'static str) = use_short_lived;
-    
+
     // 调用函数
     func_for_static("静态字符串");
 }
@@ -447,26 +447,26 @@ fn main() {
     // 可变引用的不变性
     let mut longer = String::from("长生命周期");
     let mut shorter = String::from("短生命周期");
-    
+
     {
         // 即使 'long 比 'short 活得更长，&'long mut T 也不能转换为 &'short mut T
         let long_ref = &mut longer;
         let short_ref = &mut shorter;
-        
+
         // 下面的代码会编译错误，因为可变引用是不变的
         // let r: &mut String = long_ref;
         // let same_type_ref: &mut String = short_ref; // 这行可以，因为类型完全相同
     }
-    
+
     // Cell 的不变性
     let cell_i32 = Cell::new(5);
     // 下面的代码会编译错误，因为 Cell<T> 是不变的
     // let _: Cell<i64> = cell_i32;
-    
+
     // 使用 PhantomData 创建不变类型
     use std::marker::PhantomData;
     struct Invariant<T>(PhantomData<fn(T) -> T>);
-    
+
     let inv_i32 = Invariant::<i32>(PhantomData);
     // 下面的代码会编译错误，因为 Invariant<T> 是不变的
     // let _: Invariant<i64> = inv_i32;
@@ -492,36 +492,36 @@ fn main() {
     // 可变性示例
     let mut x = 10;
     x = 20; // 可以修改可变变量
-    
+
     // 协变示例
     let long_lived = String::from("长生命周期");
     {
         let short_lived = String::from("短生命周期");
         let cov_long = Covariant(&long_lived);
-        
+
         // 协变允许从长生命周期转换到短生命周期
         takes_covariant(cov_long);
-        
+
         // 不可变引用是协变的
         let long_ref: &'static str = "静态字符串";
         let _: &str = long_ref; // 可以将长生命周期引用赋值给短生命周期引用
     }
-    
+
     // 逆变示例
     let contra_i32 = Contravariant::<i32>(PhantomData);
     // 如果 i32 是 dyn Any 的子类型，那么 Contravariant<dyn Any> 是 Contravariant<i32> 的子类型
     // 但 Rust 不直接支持这种转换，这里只是概念说明
-    
+
     // 不变示例
     let inv_i32 = Invariant::<i32>(PhantomData);
     // 下面的代码会编译错误，因为 Invariant<T> 是不变的
     // let _: Invariant<dyn Any> = inv_i32;
-    
+
     // Cell 是不变的
     let cell = Cell::new(5);
     let _: Cell<i32> = cell; // 相同类型可以赋值
     // let _: Cell<i64> = cell; // 错误：不同类型不能转换
-    
+
     // 可变引用是不变的
     let mut value = 42;
     let ref_mut = &mut value;

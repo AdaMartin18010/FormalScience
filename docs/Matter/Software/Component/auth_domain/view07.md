@@ -97,12 +97,12 @@ fn encrypt_data(data: &[u8], key: &[u8]) -> Result<Vec<u8>, CryptoError> {
 async fn authenticate_user(username: &str, password: &str) -> Result<AuthToken, AuthError> {
     // 验证凭据
     let user = get_user_by_username(username).await?;
-    
+
     // 验证密码（使用安全哈希比较）
     if !verify_password(&user.password_hash, password)? {
         return Err(AuthError::InvalidCredentials);
     }
-    
+
     // 生成令牌
     let token = generate_token(username, &user.roles)?;
     Ok(token)
@@ -124,10 +124,10 @@ fn verify_token(token: &str) -> Result<UserClaims, AuthError> {
     if token.is_empty() {
         return Err(AuthError::InvalidToken);
     }
-    
+
     // 验证令牌...
     // ...
-    
+
     Ok(decoded_claims)
 }
 ```
@@ -184,15 +184,15 @@ enum AuthenticationLevel {
 fn authorize(&self, token: &AuthToken, resource: &str, action: &str) -> Result<(), AuthzError> {
     // 验证令牌
     let auth_info = self.authentication_layer.token_manager.validate_token(token)?;
-    
+
     // 根据资源类型选择验证器
     let resource_type = extract_resource_type(resource);
     let validator = self.authorization_layer.resource_validators.get(resource_type)
         .ok_or(AuthzError::UnsupportedResource)?;
-        
+
     // 执行验证
     let result = validator.validate_access(&auth_info, resource, action);
-    
+
     // 记录审计日志
     for logger in &self.audit_layer.loggers {
         logger.log_security_event(&SecurityEvent::Authorization {
@@ -202,7 +202,7 @@ fn authorize(&self, token: &AuthToken, resource: &str, action: &str) -> Result<(
             decision: result.is_ok(),
         });
     }
-    
+
     result
 }
 ```
@@ -220,10 +220,10 @@ fn authorize(&self, token: &AuthToken, resource: &str, action: &str) -> Result<(
 fn handle_auth_request(request: &Request) -> Result<Response, Error> {
     // 1. 提取凭证，控制输入数据流
     let credentials = extract_credentials(request)?;
-    
+
     // 2. 验证凭证，建立安全边界
     let user_info = authenticate_user(&credentials)?;
-    
+
     // 3. 根据验证结果控制后续数据流
     match user_info {
         Some(user) => {
@@ -291,16 +291,16 @@ impl FormalVerifier {
     fn verify_deadlock_freedom(&self, workflow: &WorkflowDefinition) -> Result<ProofResult, VerificationError> {
         // 构建工作流的依赖图
         let graph = self.build_dependency_graph(workflow);
-        
+
         // 检查循环依赖
         if let Some(cycle) = self.detect_cycle(&graph) {
             return Ok(ProofResult::False {
-                counterexample: Some(format!("发现循环依赖: {}", 
+                counterexample: Some(format!("发现循环依赖: {}",
                     cycle.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(" -> "))),
                 property: "DeadlockFreedom".to_string(),
             });
         }
-        
+
         // 验证其他可能导致死锁的条件
         if let Some(issue) = self.check_resource_deadlocks(workflow) {
             return Ok(ProofResult::False {
@@ -308,7 +308,7 @@ impl FormalVerifier {
                 property: "DeadlockFreedom".to_string(),
             });
         }
-        
+
         Ok(ProofResult::True {
             property: "DeadlockFreedom".to_string(),
         })
@@ -345,7 +345,7 @@ fn verify_auth_system(&self, system: &AuthSystem) -> VerificationResult {
             TemporalLogicExpr::Atom("account_locked".to_string())
         )))
     );
-    
+
     // 使用模型检查器验证属性
     self.model_checker.check(system, &property)
 }
@@ -374,13 +374,13 @@ impl SecurityManager {
     fn authorize(&self, token: &AuthToken, resource: &str, action: &str) -> Result<(), AuthzError> {
         // 1. 认证层：验证令牌
         let auth_info = self.authentication_layer.validate_token(token)?;
-        
+
         // 2. 授权层：检查权限
         let result = self.authorization_layer.check_permission(&auth_info, resource, action);
-        
+
         // 3. 审计层：记录活动
         self.audit_layer.log_authorization_attempt(&auth_info, resource, action, result.is_ok());
-        
+
         result
     }
 }
@@ -413,23 +413,23 @@ impl ZeroTrustAuthenticator {
         for verifier in &self.identity_verifiers {
             verifier.verify(request)?;
         }
-        
+
         // 2. 验证设备
         for verifier in &self.device_verifiers {
             verifier.verify(request)?;
         }
-        
+
         // 3. 验证上下文
         for verifier in &self.context_verifiers {
             verifier.verify(request)?;
         }
-        
+
         // 4. 风险评估
         let risk_score = self.risk_engine.assess_risk(request);
         if risk_score > self.risk_threshold {
             return Err(AuthError::RiskTooHigh);
         }
-        
+
         // 全部验证通过
         Ok(AuthenticationResult::new(request))
     }
@@ -447,7 +447,7 @@ JWT(JSON Web Token)是常用的认证机制：
 fn generate_jwt(username: &str, roles: &[String]) -> Result<String, JwtError> {
     // 设置过期时间
     let expiration_time = chrono::Utc::now() + chrono::Duration::minutes(15);
-    
+
     // 创建声明
     let claims = Claims {
         sub: username.to_string(),
@@ -456,14 +456,14 @@ fn generate_jwt(username: &str, roles: &[String]) -> Result<String, JwtError> {
         iat: chrono::Utc::now().timestamp(),
         iss: "my-auth-server".to_string(),
     };
-    
+
     // 签名并获取完整令牌
     let token = jsonwebtoken::encode(
         &jsonwebtoken::Header::new(jsonwebtoken::Algorithm::HS256),
         &claims,
         &jsonwebtoken::EncodingKey::from_secret(SECRET_KEY.as_bytes())
     )?;
-    
+
     Ok(token)
 }
 
@@ -474,13 +474,13 @@ fn verify_jwt(token: &str) -> Result<Claims, JwtError> {
         &jsonwebtoken::DecodingKey::from_secret(SECRET_KEY.as_bytes()),
         &jsonwebtoken::Validation::new(jsonwebtoken::Algorithm::HS256)
     )?;
-    
+
     // 额外验证
     let now = chrono::Utc::now().timestamp();
     if token_data.claims.exp < now {
         return Err(JwtError::Expired);
     }
-    
+
     Ok(token_data.claims)
 }
 ```
@@ -500,7 +500,7 @@ fn state_driven_security_flow() {
         session_timeout: Duration::from_secs(300),
         last_activity: Instant::now(),
     };
-    
+
     // 状态转换循环
     while let Some(event) = next_event() {
         // 状态转换基于当前状态和事件
@@ -510,14 +510,14 @@ fn state_driven_security_flow() {
                     notify("系统已锁定，请稍后再试");
                     continue;
                 }
-                
+
                 if authenticate(username, password) {
                     system_state.user = Some(username.to_string());
                     system_state.auth_attempts = 0;
                     notify("登录成功");
                 } else {
                     system_state.auth_attempts += 1;
-                    
+
                     if system_state.auth_attempts >= 5 {
                         system_state.is_locked = true;
                         notify("登录失败次数过多，账户已锁定");
@@ -556,7 +556,7 @@ fn state_driven_security_flow() {
 │   ├── 验证与鉴权概念
 │   │   ├── 验证(Verification)
 │   │   ├── 认证(Authentication)
-│   │   ├── 授权(Authorization) 
+│   │   ├── 授权(Authorization)
 │   │   └── 凭证(Credential)
 │   └── 形式化证明基础
 │       ├── 类型理论
@@ -681,7 +681,7 @@ impl<const N: usize> FixedSizeKey<N> {
     fn new(data: [u8; N]) -> Self {
         FixedSizeKey(data)
     }
-    
+
     fn validate<const M: usize>() -> bool {
         // 编译时验证密钥长度是否符合要求
         // 例如AES-256需要32字节密钥
@@ -720,7 +720,7 @@ impl SqlSafeString {
             Ok(SqlSafeString(input.to_string()))
         }
     }
-    
+
     // 只能通过安全方法构建查询
     fn into_query(self, query_template: &str) -> SqlQuery {
         let query = query_template.replace("?", &self.0);
@@ -742,7 +742,7 @@ impl HtmlSafeString {
             .replace("'", "&#39;");
         HtmlSafeString(escaped)
     }
-    
+
     // 标记为安全的HTML
     fn raw_html(trusted_html: &str) -> Self {
         // 注意：只用于信任的内容
@@ -782,19 +782,19 @@ impl ControlFlowVerifier {
                 to: target.clone(),
                 timestamp: Utc::now(),
             };
-            
+
             // 记录违规
             self.audit_log.push(ControlTransition::Violation(violation.clone()));
             return Err(violation);
         }
-        
+
         // 记录合法转移
         self.audit_log.push(ControlTransition::Valid {
             from: self.current_point.clone(),
             to: target.clone(),
             timestamp: Utc::now(),
         });
-        
+
         // 更新当前位置
         self.current_point = target;
         Ok(())
@@ -815,22 +815,22 @@ impl ControlFlowVerifier {
 async fn secure_async_operation() -> Result<Data, SecurityError> {
     // 1. 获取权限令牌，限定作用域
     let auth_token = acquire_token().await?;
-    
+
     // 2. 使用作用域来限制令牌生命周期
     let result = {
         // 令牌只在此作用域内有效
         let data = fetch_sensitive_data(&auth_token).await?;
-        
+
         // 处理数据，确保不会泄露
         let processed = process_data(data).await?;
-        
+
         // 所有操作都在令牌有效期内完成
         processed
     };
-    
+
     // 3. 作用域结束，显式废除令牌
     revoke_token(auth_token).await?;
-    
+
     // 4. 返回处理结果
     Ok(result)
 }
@@ -861,10 +861,10 @@ impl<S: State + Clone + Send + Sync + 'static> ConcurrentStateMachine<S> {
         // 获取锁，防止并发转换
         let mut state_guard = self.state.lock().await;
         let current = state_guard.clone();
-        
+
         // 查找允许的转换
         let next_state = self.transitions.get_next_state(&current, &event)?;
-        
+
         // 记录转换到审计日志
         {
             let mut log = self.audit_log.write().await;
@@ -875,10 +875,10 @@ impl<S: State + Clone + Send + Sync + 'static> ConcurrentStateMachine<S> {
                 timestamp: Utc::now(),
             });
         }
-        
+
         // 执行状态转换
         *state_guard = next_state.clone();
-        
+
         Ok(next_state)
     }
 }
@@ -912,16 +912,16 @@ fn sanitize<T>(input: Tainted<T>, sanitizer: impl Fn(&T) -> bool) -> Result<Unta
 fn process_user_input(input: &str) -> Result<(), Error> {
     // 标记输入为污点数据
     let tainted_input = Tainted(input.to_string());
-    
+
     // 进行清洗
     let sanitized = sanitize(tainted_input, |s| {
         // 验证输入不包含危险内容
         !s.contains('<') && !s.contains('>') && !s.contains(';')
     })?;
-    
+
     // 现在可以安全使用
     use_in_database(&sanitized.0)?;
-    
+
     Ok(())
 }
 ```
@@ -955,7 +955,7 @@ impl<T: Clone> SecureData<T> {
     fn new(data: T, level: SecurityLevel) -> Self {
         SecureData { data, level }
     }
-    
+
     // 安全级别提升（允许）
     fn upgrade(&self, new_level: SecurityLevel) -> Self {
         // 提升安全级别（如从Secret到TopSecret）是安全的
@@ -964,14 +964,14 @@ impl<T: Clone> SecureData<T> {
             level: new_level,
         }
     }
-    
+
     // 安全级别降低（受限）
     fn downgrade(&self, new_level: SecurityLevel, auth: &Authorization) -> Result<Self, SecurityError> {
         // 检查降级授权
         if !auth.can_downgrade(self.level, new_level) {
             return Err(SecurityError::InsufficientPrivileges);
         }
-        
+
         // 执行受控降级
         Ok(SecureData {
             data: self.data.clone(),
@@ -1003,13 +1003,13 @@ impl BoundaryValidator {
         for validator in &self.validators {
             validator.validate(&input)?;
         }
-        
+
         // 2. 应用所有转换器
         let mut processed = input;
         for transformer in &self.transformers {
             processed = transformer.transform(processed)?;
         }
-        
+
         // 3. 包装为已验证类型
         Ok(Validated::new(processed))
     }
@@ -1023,10 +1023,10 @@ fn handle_api_request(request: Request) -> Result<Response, ApiError> {
         .add_validator(ContentTypeValidator::new(["application/json"])) // 验证内容类型
         .add_transformer(JsonNormalizer::new()) // 规范化JSON
         .add_transformer(XssFilter::new()); // 防XSS过滤
-    
+
     // 验证请求体
     let validated_body = validator.process(request.body)?;
-    
+
     // 现在可以安全处理已验证的数据
     process_validated_request(validated_body)
 }
@@ -1080,7 +1080,7 @@ fn prove_transition_preserves_invariant<I: ProtocolInvariant>(
     if !invariant.verify(pre_state) {
         return ProofResult::Invalid("初始状态不满足不变量");
     }
-    
+
     // 根据转换类型验证状态转换合法性
     match transition {
         Transition::Authenticate => {
@@ -1097,12 +1097,12 @@ fn prove_transition_preserves_invariant<I: ProtocolInvariant>(
         },
         // 其他转换类型...
     }
-    
+
     // 验证后置状态满足不变量
     if !invariant.verify(post_state) {
         return ProofResult::Invalid("转换后状态不满足不变量");
     }
-    
+
     ProofResult::Valid
 }
 ```
@@ -1134,7 +1134,7 @@ impl<S: Clone + Eq + Hash, A> ModelChecker<S, A> {
     fn verify(&self, actions: &[A]) -> VerificationResult {
         // 构建状态空间
         let state_space = self.build_state_space(actions);
-        
+
         // 验证每个属性
         let mut results = Vec::new();
         for property in &self.properties {
@@ -1155,10 +1155,10 @@ impl<S: Clone + Eq + Hash, A> ModelChecker<S, A> {
                 }
             }
         }
-        
+
         VerificationResult { results }
     }
-    
+
     // 构建可达状态空间
     fn build_state_space(&self, actions: &[A]) -> StateSpace<S> {
         // 从初始状态开始，应用所有可能的动作序列
@@ -1166,7 +1166,7 @@ impl<S: Clone + Eq + Hash, A> ModelChecker<S, A> {
         // ...实现省略
         StateSpace::new()
     }
-    
+
     // 验证单个属性
     fn verify_property(&self, state_space: &StateSpace<S>, property: &dyn Property<S>) -> Result<(), Counterexample<S>> {
         // 对状态空间应用属性检查
@@ -1191,13 +1191,13 @@ impl<S: Clone + Eq + Hash, A> ModelChecker<S, A> {
 #[ensures(forall(i in 0..input.len(), result[i] == f(input[i])))]
 fn map<T, U>(input: &[T], f: impl Fn(&T) -> U) -> Vec<U> {
     let mut result = Vec::with_capacity(input.len());
-    
+
     #[invariant(result.len() <= input.len())]
     #[invariant(forall(i in 0..result.len(), result[i] == f(input[i])))]
     for item in input {
         result.push(f(item));
     }
-    
+
     result
 }
 
@@ -1208,7 +1208,7 @@ fn map<T, U>(input: &[T], f: impl Fn(&T) -> U) -> Vec<U> {
 #[ensures(result.is_err() ==> !is_authenticated(username))]
 fn authenticate(username: &str, password: &str) -> Result<AuthToken, AuthError> {
     // 实现验证逻辑...
-    
+
     if password_matches(username, password) {
         Ok(generate_token(username))
     } else {
@@ -1249,19 +1249,19 @@ struct ZkpSystem {
 fn prove_identity(system: &ZkpSystem, username: &str, password: &str) -> Result<ZkProof, ZkpError> {
     // 获取系统参数
     let (params, pk, _) = (system.setup)();
-    
+
     // 从密码生成密钥，这是要保护的秘密
     let secret = derive_secret_key(password);
-    
+
     // 创建声明："我知道密码对应的密钥"
     let statement = Statement::UserAuthentication {
         username: username.to_string(),
         public_key_hash: hash_public_key(&derive_public_key(&secret)),
     };
-    
+
     // 生成零知识证明
     let proof = (system.prove)(pk, &secret, &statement);
-    
+
     Ok(proof)
 }
 
@@ -1269,13 +1269,13 @@ fn prove_identity(system: &ZkpSystem, username: &str, password: &str) -> Result<
 fn verify_identity(system: &ZkpSystem, username: &str, proof: &ZkProof) -> bool {
     // 获取验证密钥
     let (_, _, vk) = (system.setup)();
-    
+
     // 重建要验证的声明
     let statement = Statement::UserAuthentication {
         username: username.to_string(),
         public_key_hash: get_user_public_key_hash(username),
     };
-    
+
     // 验证证明，不需要知道用户的密码
     (system.verify)(vk, &statement, proof)
 }
@@ -1306,21 +1306,21 @@ struct HomomorphicCrypto {
 fn privacy_preserving_analytics(system: &HomomorphicCrypto, data: &[u64]) -> Result<u64, CryptoError> {
     // 生成密钥对
     let (pk, sk) = (system.keygen)();
-    
+
     // 加密所有数据点
     let encrypted_data: Vec<_> = data.iter()
         .map(|&d| (system.encrypt)(&pk, &PlainData::from(d)))
         .collect();
-    
+
     // 在加密数据上计算总和
     let mut encrypted_sum = encrypted_data[0].clone();
     for e in &encrypted_data[1..] {
         encrypted_sum = (system.add)(&encrypted_sum, e);
     }
-    
+
     // 解密结果
     let sum_plain = (system.decrypt)(&sk, &encrypted_sum);
-    
+
     Ok(sum_plain.to_u64())
 }
 ```
@@ -1363,17 +1363,17 @@ fn quantum_resistant_key_exchange(system: &PostQuantumCrypto) -> Result<SharedSe
     // 生成密钥对
     let alice_keys = (system.keygen)(SecurityLevel::Highest);
     let bob_keys = (system.keygen)(SecurityLevel::Highest);
-    
+
     // Alice发送加密消息给Bob
     let alice_message = Message::random(32);
     let ciphertext = (system.encrypt)(&bob_keys.public, &alice_message);
-    
+
     // Bob解密并使用Alice的公钥验证
     let decrypted = (system.decrypt)(&bob_keys.private, &ciphertext);
-    
+
     // 双方导出共享密钥
     let shared_secret = derive_shared_secret(&alice_message, &bob_keys.public);
-    
+
     Ok(shared_secret)
 }
 ```
@@ -1482,20 +1482,20 @@ impl<T, const N: usize> Vec<T, N> {
         T: Copy,
     {
         let mut result = Vec { data: [self.data[0]; N + M] };
-        
+
         // 复制第一个向量的元素
         for i in 0..N {
             result.data[i] = self.data[i];
         }
-        
+
         // 复制第二个向量的元素
         for i in 0..M {
             result.data[N + i] = other.data[i];
         }
-        
+
         result
     }
-    
+
     // 类型级安全索引：编译时防止越界访问
     fn get<const I: usize>(&self) -> Option<&T>
     where
@@ -1517,7 +1517,7 @@ impl<T, const N: usize> Vec<T, N> {
 // 函子模式：一种映射保持结构的高阶抽象
 trait Functor<F<_>> {
     fn map<A, B>(fa: F<A>, f: impl FnMut(A) -> B) -> F<B>;
-    
+
     // 函子定律（代码注释形式）:
     // 1. 恒等律：map(fa, |x| x) == fa
     // 2. 组合律：map(map(fa, f), g) == map(fa, |x| g(f(x)))
@@ -1537,11 +1537,11 @@ impl<F> Functor<Option<F>> for OptionFunctor {
 trait Monad<M<_>>: Functor<M<_>> {
     fn pure<A>(a: A) -> M<A>;
     fn flat_map<A, B>(ma: M<A>, f: impl FnMut(A) -> M<B>) -> M<B>;
-    
+
     // 单子定律:
     // 1. 左恒等: flat_map(pure(a), f) == f(a)
     // 2. 右恒等: flat_map(ma, pure) == ma
-    // 3. 结合律: flat_map(flat_map(ma, f), g) == 
+    // 3. 结合律: flat_map(flat_map(ma, f), g) ==
     //           flat_map(ma, |a| flat_map(f(a), g))
 }
 
@@ -1555,7 +1555,7 @@ impl<T, E> Validated<T, E> {
     fn pure(value: T) -> Self {
         Validated { result: Ok(value) }
     }
-    
+
     // 将验证错误累积，而非提前返回
     fn flat_map<U>(self, f: impl FnOnce(T) -> Validated<U, E>) -> Validated<U, E> {
         match self.result {
@@ -1563,7 +1563,7 @@ impl<T, E> Validated<T, E> {
             Err(errors) => Validated { result: Err(errors) },
         }
     }
-    
+
     // 组合多个验证
     fn zip<U>(self, other: Validated<U, E>) -> Validated<(T, U), E> {
         match (self.result, other.result) {
@@ -1591,7 +1591,7 @@ impl<T, E> Validated<T, E> {
 // 用注释表示的霍尔逻辑验证示例
 // 二分查找的形式化规约
 
-/// 前置条件: 
+/// 前置条件:
 /// * `arr`是一个排序的数组 (∀i,j. 0 ≤ i < j < arr.len() ⟹ arr[i] ≤ arr[j])
 /// * `target`是要查找的值
 ///
@@ -1601,13 +1601,13 @@ impl<T, E> Validated<T, E> {
 fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
     let mut low = 0;
     let mut high = arr.len();
-    
+
     // 循环不变量:
     // * 0 ≤ low ≤ high ≤ arr.len()
     // * 如果target在arr中，则它的索引i满足low ≤ i < high
     while low < high {
         let mid = low + (high - low) / 2;
-        
+
         match arr[mid].cmp(target) {
             std::cmp::Ordering::Equal => {
                 // 后置条件: arr[mid] == target
@@ -1623,7 +1623,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
             }
         }
     }
-    
+
     // 后置条件: 不存在索引i使得arr[i] == target
     None
 }
@@ -1657,21 +1657,21 @@ impl ControlFlowGraph {
     fn verify_no_use_before_def(&self) -> Vec<SecurityIssue> {
         let mut issues = Vec::new();
         let mut defined_vars = HashSet::new();
-        
+
         // 从入口节点开始遍历
         self.traverse_dfs(self.entry, &mut defined_vars, &mut issues);
-        
+
         issues
     }
-    
+
     fn traverse_dfs(
-        &self, 
-        node_id: usize, 
+        &self,
+        node_id: usize,
         defined_vars: &mut HashSet<String>,
         issues: &mut Vec<SecurityIssue>
     ) {
         let node = &self.nodes[&node_id];
-        
+
         // 分析节点中的每条指令
         for instr in &node.instructions {
             match instr {
@@ -1689,7 +1689,7 @@ impl ControlFlowGraph {
                 // 处理其他指令类型...
             }
         }
-        
+
         // 递归遍历后继节点
         for &succ in &node.successors {
             // 在实际实现中需要处理循环和已访问节点
@@ -1729,7 +1729,7 @@ impl SymbolicEngine {
                     // 添加路径约束
                     let constraint = self.evaluate_symbolic(cond);
                     self.path_constraints.push(constraint);
-                    
+
                     // 检查路径是否可行
                     if !self.solver.is_satisfiable(&self.path_constraints) {
                         return PathResult::Infeasible;
@@ -1739,10 +1739,10 @@ impl SymbolicEngine {
                     // 检查断言是否可能失败
                     let constraint = self.evaluate_symbolic(cond);
                     let negated = constraint.negate();
-                    
+
                     let mut test_constraints = self.path_constraints.clone();
                     test_constraints.push(negated);
-                    
+
                     if self.solver.is_satisfiable(&test_constraints) {
                         return PathResult::AssertionFailure {
                             model: self.solver.get_model(&test_constraints),
@@ -1752,17 +1752,17 @@ impl SymbolicEngine {
                 // 处理其他指令类型...
             }
         }
-        
+
         PathResult::Completed {
             model: self.solver.get_model(&self.path_constraints),
         }
     }
-    
+
     // 生成测试用例
     fn generate_test_cases(&self, program: &Program) -> Vec<TestCase> {
         // 找出所有可能的路径
         let paths = self.enumerate_paths(program);
-        
+
         // 为每条可行路径生成测试用例
         let mut test_cases = Vec::new();
         for path in paths {
@@ -1774,7 +1774,7 @@ impl SymbolicEngine {
                 _ => {}
             }
         }
-        
+
         test_cases
     }
 }
@@ -1819,29 +1819,29 @@ impl AuthStateMachine {
             (AuthState::LoggedOut, AuthEvent::AttemptLogin { username, password }) => {
                 // 检查用户是否被锁定
                 if let Some((attempts, time)) = self.failed_attempts.get(&username) {
-                    if *attempts >= self.max_failed_attempts && 
+                    if *attempts >= self.max_failed_attempts &&
                        time.elapsed() < self.lockout_duration {
                         return Err(AuthError::AccountLocked);
                     }
                 }
-                
+
                 // 验证凭据
                 if self.verify_credentials(&username, &password) {
                     // 重置失败尝试计数
                     self.failed_attempts.remove(&username);
-                    
+
                     // 检查是否需要二因素认证
                     if self.requires_two_factor(&username) {
-                        self.state = AuthState::AwaitingSecondFactor { 
-                            user_id: username, 
-                            first_factor_time: Instant::now() 
+                        self.state = AuthState::AwaitingSecondFactor {
+                            user_id: username,
+                            first_factor_time: Instant::now()
                         };
                     } else {
                         let permissions = self.get_user_permissions(&username);
-                        self.state = AuthState::LoggedIn { 
-                            user_id: username, 
-                            permissions, 
-                            session_start: Instant::now() 
+                        self.state = AuthState::LoggedIn {
+                            user_id: username,
+                            permissions,
+                            session_start: Instant::now()
                         };
                     }
                 } else {
@@ -1849,7 +1849,7 @@ impl AuthStateMachine {
                     let entry = self.failed_attempts.entry(username).or_insert((0, Instant::now()));
                     entry.0 += 1;
                     entry.1 = Instant::now();
-                    
+
                     // 检查是否达到锁定阈值
                     if entry.0 >= self.max_failed_attempts {
                         return Err(AuthError::TooManyAttempts);
@@ -1858,55 +1858,55 @@ impl AuthStateMachine {
                     }
                 }
             },
-            
-            (AuthState::AwaitingSecondFactor { user_id, first_factor_time }, 
+
+            (AuthState::AwaitingSecondFactor { user_id, first_factor_time },
              AuthEvent::ProvideSecondFactor { user_id: provided_id, code }) => {
                 // 验证用户ID匹配
                 if user_id != &provided_id {
                     return Err(AuthError::SessionMismatch);
                 }
-                
+
                 // 检查第一因素认证是否超时
                 if first_factor_time.elapsed() > Duration::from_mins(5) {
                     self.state = AuthState::LoggedOut;
                     return Err(AuthError::FirstFactorTimeout);
                 }
-                
+
                 // 验证二因素代码
                 if self.verify_second_factor(user_id, &code) {
                     let permissions = self.get_user_permissions(user_id);
-                    self.state = AuthState::LoggedIn { 
-                        user_id: user_id.clone(), 
-                        permissions, 
-                        session_start: Instant::now() 
+                    self.state = AuthState::LoggedIn {
+                        user_id: user_id.clone(),
+                        permissions,
+                        session_start: Instant::now()
                     };
                 } else {
                     return Err(AuthError::InvalidSecondFactor);
                 }
             },
-            
+
             // 处理其他状态转换...
-            
+
             _ => return Err(AuthError::InvalidTransition),
         }
-        
+
         Ok(self.state.clone())
     }
-    
+
     // 验证状态机性质
     fn verify_properties(&self) -> Vec<PropertyResult> {
         let mut results = Vec::new();
-        
+
         // 验证属性1：用户不能在未经过验证的情况下访问资源
         let p1 = self.verify_no_access_without_auth();
         results.push(p1);
-        
+
         // 验证属性2：锁定账户在解锁前不能登录
         let p2 = self.verify_locked_accounts_cannot_login();
         results.push(p2);
-        
+
         // 验证其他安全属性...
-        
+
         results
     }
 }
@@ -1970,46 +1970,46 @@ impl ProtocolExecution {
             // 发送方准备消息
             let sender = self.entities.get_mut(&expected_msg.from).unwrap();
             let message = self.prepare_message(sender, expected_msg)?;
-            
+
             // 网络传输（可能被攻击者截获/修改）
             let transmitted_msg = self.adversary.intercept(message)?;
-            
+
             // 接收方处理消息
             let receiver = self.entities.get_mut(&transmitted_msg.to).unwrap();
             self.process_message(receiver, &transmitted_msg)?;
-            
+
             // 记录协议轨迹
             self.trace.push(transmitted_msg);
         }
-        
+
         // 验证是否达成安全目标
         for goal in &self.protocol.security_goals {
             if !self.verify_goal(goal) {
                 return Err(ProtocolError::SecurityGoalViolation(goal.clone()));
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 验证安全属性
     fn verify_security_properties(&self) -> Vec<PropertyVerificationResult> {
         let mut results = Vec::new();
-        
+
         // 验证机密性
         let confidentiality = self.verify_confidentiality();
         results.push(confidentiality);
-        
+
         // 验证认证性
         let authentication = self.verify_authentication();
         results.push(authentication);
-        
+
         // 验证完整性
         let integrity = self.verify_integrity();
         results.push(integrity);
-        
+
         // 其他安全性质...
-        
+
         results
     }
 }
@@ -2046,65 +2046,65 @@ impl TlsHandshake {
         // 生成客户端随机数
         let client_random = generate_random();
         self.client.random = Some(client_random.clone());
-        
+
         // 构建ClientHello消息
         let message = Message::ClientHello {
             client_random,
             cipher_suites: self.client.supported_ciphers.clone(),
         };
-        
+
         self.state = HandshakeState::ClientHelloSent;
         Ok(message)
     }
-    
+
     // 服务器响应
     fn server_hello(&mut self, msg: &Message) -> Result<Message, HandshakeError> {
         match msg {
             Message::ClientHello { client_random, cipher_suites } => {
                 // 存储客户端随机数
                 self.client.random = Some(client_random.clone());
-                
+
                 // 生成服务器随机数
                 let server_random = generate_random();
                 self.server.random = Some(server_random.clone());
-                
+
                 // 选择密码套件
                 let chosen_cipher = choose_cipher(cipher_suites, &self.server.supported_ciphers)?;
-                
+
                 // 构建ServerHello消息
                 let message = Message::ServerHello {
                     server_random,
                     chosen_cipher: chosen_cipher.clone(),
                     certificate: self.server.certificate.clone(),
                 };
-                
+
                 self.state = HandshakeState::ServerHelloSent;
                 Ok(message)
             },
             _ => Err(HandshakeError::UnexpectedMessage),
         }
     }
-    
+
     // 后续步骤：证书验证、密钥交换、完成握手...
-    
+
     // 验证协议安全性质
     fn verify_properties(&self) -> Vec<PropertyResult> {
         let mut results = Vec::new();
-        
+
         // 1. 验证会话密钥的前向安全性
         let forward_secrecy = self.verify_forward_secrecy();
         results.push(forward_secrecy);
-        
+
         // 2. 验证服务器认证
         let server_auth = self.verify_server_authentication();
         results.push(server_auth);
-        
+
         // 3. 验证抗重放攻击
         let replay_resistance = self.verify_replay_resistance();
         results.push(replay_resistance);
-        
+
         // 其他安全性质...
-        
+
         results
     }
 }
@@ -2132,10 +2132,10 @@ impl DolevYaoAdversary {
     fn intercept(&mut self, message: Message) -> Message {
         // 记录消息
         self.intercepted.push(message.clone());
-        
+
         // 从消息中提取知识
         self.extract_knowledge(&message);
-        
+
         // 决定是否修改消息
         if self.can_modify(&message) {
             self.modify_message(message)
@@ -2143,7 +2143,7 @@ impl DolevYaoAdversary {
             message
         }
     }
-    
+
     // 尝试破解加密内容
     fn decrypt(&self, encrypted: &Term) -> Option<Term> {
         match encrypted {
@@ -2158,17 +2158,17 @@ impl DolevYaoAdversary {
             _ => None,
         }
     }
-    
+
     // 尝试伪造消息
     fn forge_message(&self, from: &str, to: &str) -> Option<Message> {
         // 检查是否能伪造发送方身份
         if !self.forged_identities.contains(from) {
             return None;
         }
-        
+
         // 使用已知信息构造可信的消息内容
         let content = self.construct_believable_content(from, to)?;
-        
+
         Some(Message {
             from: from.to_string(),
             to: to.to_string(),
@@ -2176,28 +2176,28 @@ impl DolevYaoAdversary {
             nonce: self.generate_nonce(),
         })
     }
-    
+
     // 攻击者能力分析
     fn analyze_capabilities(&self, protocol: &Protocol) -> AttackReport {
         let mut report = AttackReport::new();
-        
+
         // 检查是否可能破解会话密钥
         if self.can_derive_session_key(protocol) {
             report.add_vulnerability(Vulnerability::SessionKeyCompromise);
         }
-        
+
         // 检查是否可能实施中间人攻击
         if self.can_perform_mitm(protocol) {
             report.add_vulnerability(Vulnerability::ManInTheMiddle);
         }
-        
+
         // 检查重放攻击可能性
         if self.can_replay_messages(protocol) {
             report.add_vulnerability(Vulnerability::MessageReplay);
         }
-        
+
         // 其他攻击分析...
-        
+
         report
     }
 }
@@ -2235,50 +2235,50 @@ impl LayeredSecurityArchitecture {
     fn process_request(&self, request: Request) -> Result<Response, SecurityError> {
         // 网络层检查
         self.network_layer.validate_request(&request)?;
-        
+
         // 传输层安全检查
         let decrypted_request = self.transport_layer.decrypt_and_validate(&request)?;
-        
+
         // 身份验证
         let auth_result = self.authentication_layer.authenticate(&decrypted_request)?;
-        
+
         // 授权检查
         self.authorization_layer.authorize(&auth_result, &decrypted_request.resource)?;
-        
+
         // 数据层安全检查
         self.data_layer.validate_data_access(&auth_result, &decrypted_request)?;
-        
+
         // 应用层安全检查
         let validated_request = self.application_layer.validate(&decrypted_request, &auth_result)?;
-        
+
         // 处理请求业务逻辑
         let result = process_business_logic(validated_request)?;
-        
+
         // 审计记录
         self.audit_layer.log_access(&auth_result, &decrypted_request, &result);
-        
+
         // 加密响应
         let encrypted_response = self.transport_layer.encrypt_response(result, &auth_result)?;
-        
+
         Ok(encrypted_response)
     }
-    
+
     // 分析层间依赖和漏洞传播
     fn analyze_layer_dependencies(&self) -> SecurityAnalysisReport {
         let mut report = SecurityAnalysisReport::new();
-        
+
         // 识别层间依赖
         let dependencies = self.identify_layer_dependencies();
         report.set_dependencies(dependencies);
-        
+
         // 分析漏洞传播路径
         let propagation_paths = self.analyze_vulnerability_propagation();
         report.set_propagation_paths(propagation_paths);
-        
+
         // 确定关键安全控制点
         let critical_controls = self.identify_critical_controls();
         report.set_critical_controls(critical_controls);
-        
+
         report
     }
 }
@@ -2312,91 +2312,91 @@ impl DistributedAuthSystem {
     fn federated_authentication(&self, request: AuthRequest) -> Result<AuthToken, AuthError> {
         // 1. 确定身份提供者
         let idp = self.select_identity_provider(&request)?;
-        
+
         // 2. 重定向到身份提供者进行认证
         let auth_response = idp.authenticate(&request)?;
-        
+
         // 3. 验证身份提供者响应
         self.token_service.validate_assertion(&auth_response, &idp)?;
-        
+
         // 4. 生成本地会话令牌
         let session = self.session_manager.create_session(&auth_response)?;
-        
+
         // 5. 应用授权策略
         let context = self.collect_policy_information(&session);
         let decision = self.policy_decision_point.evaluate(&session, &context)?;
-        
+
         if decision != Decision::Permit {
             return Err(AuthError::AuthorizationFailed);
         }
-        
+
         // 6. 生成访问令牌
         let token = self.token_service.issue_token(&session, &decision)?;
-        
+
         Ok(token)
     }
-    
+
     // 策略信息收集
     fn collect_policy_information(&self, session: &Session) -> PolicyContext {
         let mut context = PolicyContext::new();
-        
+
         // 从各个策略信息点收集上下文数据
         for pip in &self.policy_information_points {
             let attributes = pip.get_attributes(session);
             context.add_attributes(attributes);
         }
-        
+
         context
     }
-    
+
     // 令牌验证
     fn validate_token(&self, token: &AuthToken, resource: &Resource) -> Result<AuthDecision, AuthError> {
         // 1. 验证令牌有效性
         let session = self.token_service.validate_token(token)?;
-        
+
         // 2. 检查会话状态
         if !self.session_manager.is_session_valid(&session) {
             return Err(AuthError::SessionExpired);
         }
-        
+
         // 3. 收集策略决策所需信息
         let context = self.collect_policy_information(&session);
-        
+
         // 4. 评估访问请求
         let decision = self.policy_decision_point.evaluate_access(
             &session, &resource, &context
         )?;
-        
+
         // 5. 记录决策结果
         self.log_access_decision(&session, &resource, &decision);
-        
+
         Ok(decision)
     }
-    
+
     // 系统健康状态监控
     fn check_system_health(&self) -> SystemHealthReport {
         let mut report = SystemHealthReport::new();
-        
+
         // 检查身份提供者状态
         for (name, idp) in &self.identity_providers {
             let status = idp.check_health();
             report.add_component_status(
-                ComponentType::IdentityProvider(name.clone()), 
+                ComponentType::IdentityProvider(name.clone()),
                 status
             );
         }
-        
+
         // 检查令牌服务
         let token_status = self.token_service.check_health();
         report.add_component_status(ComponentType::TokenService, token_status);
-        
+
         // 检查策略组件
         let pdp_status = self.policy_decision_point.check_health();
         report.add_component_status(ComponentType::PolicyDecisionPoint, pdp_status);
-        
+
         // 分析系统整体状态
         report.analyze_overall_status();
-        
+
         report
     }
 }
@@ -2432,91 +2432,91 @@ impl AdaptiveSecuritySystem {
     fn process_auth_request(&mut self, request: AuthRequest) -> Result<AuthResponse, SecurityError> {
         // 1. 评估当前威胁环境
         let threat_level = self.threat_detection.assess_current_threats();
-        
+
         // 2. 收集安全上下文
         let context = self.context_manager.collect_context(&request);
-        
+
         // 3. 评估请求风险
         let risk_score = self.risk_engine.calculate_risk(&request, &context, threat_level);
-        
+
         // 4. 根据风险选择适当的认证策略
         let auth_policy = self.policy_manager.select_auth_policy(risk_score);
-        
+
         // 5. 执行认证流程
         let auth_result = self.authenticate_with_policy(&request, &auth_policy)?;
-        
+
         // 6. 根据认证结果和风险评分决定访问级别
         let access_level = self.determine_access_level(&auth_result, risk_score);
-        
+
         // 7. 分析用户行为是否异常
         let behavior_score = self.behavior_analyzer.analyze_behavior(&request, &auth_result);
-        
+
         // 8. 如果行为异常，可能需要额外验证
         if behavior_score > self.policy_manager.behavior_threshold(risk_score) {
             // 请求额外验证
             return self.request_additional_verification(&auth_result);
         }
-        
+
         // 9. 记录学习反馈
         self.feedback_learner.record_transaction(&request, &auth_result, risk_score, behavior_score);
-        
+
         // 10. 生成认证响应
         let response = AuthResponse {
             token: self.generate_token(&auth_result, access_level),
             access_level,
             session_constraints: self.generate_session_constraints(risk_score),
         };
-        
+
         Ok(response)
     }
-    
+
     // 持续监控会话
     fn monitor_session(&mut self, session_id: &str) -> SessionStatus {
         // 获取会话信息
         let session = self.context_manager.get_session(session_id)?;
-        
+
         // 实时评估威胁环境变化
         let current_threat_level = self.threat_detection.assess_current_threats();
-        
+
         // 如果威胁级别升高，重新评估会话风险
         if current_threat_level > session.initial_threat_level {
             let new_risk = self.risk_engine.recalculate_session_risk(&session, current_threat_level);
-            
+
             // 威胁升高可能需要采取措施
             if new_risk > session.initial_risk * 1.5 {
                 // 根据新风险调整会话安全策略
                 self.adapt_session_policy(&session, new_risk);
             }
         }
-        
+
         // 监控用户行为变化
         let behavior_anomaly = self.behavior_analyzer.detect_anomalies(session_id);
         if behavior_anomaly > self.policy_manager.anomaly_threshold() {
             // 行为异常，可能需要重新认证
             return SessionStatus::RequiresReauthentication;
         }
-        
+
         // 会话正常
         SessionStatus::Active
     }
-    
+
     // 适应系统策略
     fn adapt_system_policy(&mut self, feedback: Vec<SecurityFeedback>) {
         // 分析安全事件和反馈
         let trends = self.feedback_learner.analyze_trends(feedback);
-        
+
         // 更新威胁模型
         self.threat_detection.update_models(trends.threat_patterns);
-        
+
         // 调整风险评估参数
         self.risk_engine.adjust_weights(trends.risk_correlations);
-        
+
         // 优化安全策略
         self.policy_manager.optimize_policies(trends.policy_effectiveness);
-        
+
         // 更新行为分析模型
         self.behavior_analyzer.update_behavior_models(trends.user_behavior_patterns);
-        
+
         // 记录适应性变更
         log_adaptive_changes(&trends);
     }
@@ -2552,25 +2552,25 @@ where
     fn setup(&mut self, function: F) -> (ProverKey, VerifierKey) {
         // 为计算预处理函数
         let public_params = self.preprocess_function(&function);
-        
+
         // 生成证明者和验证者密钥
         let prover_key = ProverKey::from_params(&public_params);
         let verifier_key = VerifierKey::from_params(&public_params);
-        
+
         (prover_key, verifier_key)
     }
-    
+
     // 执行计算并生成证明
     fn compute_with_proof(&self, input: &Input, prover_key: &ProverKey) -> (Output, Proof) {
         // 执行计算
         let output = (self.function)(input.clone());
-        
+
         // 生成计算正确性证明
         let proof = self.prover.generate_proof(input, &output, prover_key);
-        
+
         (output, proof)
     }
-    
+
     // 验证计算结果
     fn verify(&self, input: &Input, output: &Output, proof: &Proof, verifier_key: &VerifierKey) -> bool {
         // 验证计算正确性
@@ -2589,26 +2589,26 @@ where
 {
     // 初始化可验证计算框架
     let mut vc = VerifiableComputation::new(function);
-    
+
     // 设置验证密钥
     let (prover_key, verifier_key) = vc.setup(function);
-    
+
     // 各方执行计算并生成证明
     let mut outputs_with_proofs = Vec::new();
     for (i, participant) in participants.iter().enumerate() {
         let (output, proof) = participant.compute_with_proof(&inputs[i], &prover_key);
         outputs_with_proofs.push((output, proof));
     }
-    
+
     // 聚合结果
     let final_output = aggregate_results(&outputs_with_proofs);
-    
+
     // 验证最终结果
     let final_proof = aggregate_proofs(&outputs_with_proofs);
     if !vc.verify(&inputs, &final_output, &final_proof, &verifier_key) {
         return Err(MpcError::VerificationFailed);
     }
-    
+
     Ok(final_output)
 }
 ```
@@ -2641,14 +2641,14 @@ impl DifferentialPrivacyMechanism {
     {
         // 计算原始查询结果
         let result = query(data);
-        
+
         // 生成拉普拉斯噪声
         let noise = self.noise_generator.laplace_noise(sensitivity / self.epsilon);
-        
+
         // 添加噪声到结果
         result.add_noise(noise)
     }
-    
+
     // 指数机制
     fn exponential_mechanism<F, R>(&self, data: &Dataset, utility: F, sensitivity: f64, range: &[R]) -> R
     where
@@ -2662,11 +2662,11 @@ impl DifferentialPrivacyMechanism {
             let weight = (self.epsilon * score / (2.0 * sensitivity)).exp();
             weighted_results.push((r.clone(), weight));
         }
-        
+
         // 按权重随机选择结果
         self.noise_generator.sample_from_weights(&weighted_results)
     }
-    
+
     // 高斯机制
     fn gaussian_mechanism<F, R>(&self, data: &Dataset, query: F, sensitivity: f64) -> R
     where
@@ -2675,17 +2675,17 @@ impl DifferentialPrivacyMechanism {
     {
         // 计算原始查询结果
         let result = query(data);
-        
+
         // 计算所需标准差
         let sigma = (2.0 * (1.0 / self.delta).ln()).sqrt() * sensitivity / self.epsilon;
-        
+
         // 生成高斯噪声
         let noise = self.noise_generator.gaussian_noise(sigma);
-        
+
         // 添加噪声到结果
         result.add_noise(noise)
     }
-    
+
     // 验证差分隐私属性
     fn verify_privacy_guarantee<F>(&self, query: F, sensitivity: f64) -> bool
     where
@@ -2693,22 +2693,22 @@ impl DifferentialPrivacyMechanism {
     {
         // 构造相邻数据集
         let (dataset1, dataset2) = generate_adjacent_datasets();
-        
+
         // 使用机制执行多次查询
         let mut ratios = Vec::new();
         for _ in 0..1000 {
             let result1 = self.laplace_mechanism(&dataset1, &query, sensitivity);
             let result2 = self.laplace_mechanism(&dataset2, &query, sensitivity);
-            
+
             // 计算概率比
             let ratio = probability_density_ratio(result1, result2);
             ratios.push(ratio);
         }
-        
+
         // 验证差分隐私定义: P(M(D1) = r) ≤ e^ε * P(M(D2) = r) + δ
         ratios.iter().all(|&r| r <= (self.epsilon).exp() + self.delta)
     }
-    
+
     // 组合多个差分隐私查询
     fn compose<F>(&self, queries: Vec<F>, individual_budgets: Vec<f64>) -> Result<Vec<f64>, PrivacyError>
     where
@@ -2719,16 +2719,16 @@ impl DifferentialPrivacyMechanism {
         if total_budget > self.epsilon {
             return Err(PrivacyError::BudgetExceeded);
         }
-        
+
         // 获取数据集
         let dataset = self.get_dataset()?;
-        
+
         // 执行每个查询，分配对应的隐私预算
         let mut results = Vec::new();
         for (i, query) in queries.iter().enumerate() {
             let sensitivity = self.sensitivity_calculator.calculate_sensitivity(query);
             let budget = individual_budgets[i];
-            
+
             // 创建单次查询的机制
             let mechanism = DifferentialPrivacyMechanism {
                 epsilon: budget,
@@ -2736,12 +2736,12 @@ impl DifferentialPrivacyMechanism {
                 sensitivity_calculator: self.sensitivity_calculator.clone(),
                 noise_generator: self.noise_generator.clone(),
             };
-            
+
             // 执行差分隐私查询
             let result = mechanism.laplace_mechanism(&dataset, query, sensitivity);
             results.push(result);
         }
-        
+
         Ok(results)
     }
 }
@@ -2770,67 +2770,67 @@ impl QuantumSecurityVerifier {
     // 分析协议对量子攻击的抵抗力
     fn analyze_quantum_resistance(&self, protocol: &Protocol) -> QuantumSecurityReport {
         let mut report = QuantumSecurityReport::new();
-        
+
         // 形式化协议描述
         let formal_protocol = self.protocol_formalizer.formalize(protocol);
-        
+
         // 模拟量子算法攻击
         let quantum_attacks = self.simulate_quantum_attacks(&formal_protocol);
         report.set_quantum_attack_results(quantum_attacks);
-        
+
         // 分析密码学原语的后量子安全性
         let primitives_analysis = self.pqc_analyzer.analyze_primitives(protocol);
         report.set_primitive_analysis(primitives_analysis);
-        
+
         // 安全性约简分析
         let reduction_analysis = self.security_reduction.analyze(&formal_protocol);
         report.set_reduction_analysis(reduction_analysis);
-        
+
         // 评估整体安全性
         report.assess_overall_security();
-        
+
         report
     }
-    
+
     // 模拟量子算法攻击
     fn simulate_quantum_attacks(&self, protocol: &FormalProtocol) -> Vec<QuantumAttackResult> {
         let mut results = Vec::new();
-        
+
         // 模拟Shor算法攻击RSA/ECC
         if protocol.uses_rsa() || protocol.uses_ecc() {
             let shor_attack = self.quantum_simulator.simulate_shor_attack(protocol);
             results.push(shor_attack);
         }
-        
+
         // 模拟Grover算法攻击对称密码
         if protocol.uses_symmetric_crypto() {
             let grover_attack = self.quantum_simulator.simulate_grover_attack(protocol);
             results.push(grover_attack);
         }
-        
+
         // 模拟量子密钥分发攻击
         if protocol.uses_quantum_key_distribution() {
             let qkd_attack = self.quantum_simulator.simulate_qkd_attack(protocol);
             results.push(qkd_attack);
         }
-        
+
         results
     }
-    
+
     // 验证协议的量子安全性证明
     fn verify_quantum_security_proof(&self, protocol: &Protocol, proof: &SecurityProof) -> ProofVerificationResult {
         // 形式化安全证明
         let formal_proof = self.protocol_formalizer.formalize_proof(proof);
-        
+
         // 验证证明的数学正确性
         let math_correctness = self.verify_mathematical_correctness(&formal_proof);
-        
+
         // 验证量子计算模型假设
         let quantum_model_validity = self.verify_quantum_model(&formal_proof);
-        
+
         // 验证约简的正确性
         let reduction_correctness = self.verify_security_reduction(&formal_proof);
-        
+
         // 综合评估
         if math_correctness && quantum_model_validity && reduction_correctness {
             ProofVerificationResult::Valid
@@ -2842,14 +2842,14 @@ impl QuantumSecurityVerifier {
             }
         }
     }
-    
+
     // 推荐量子安全配置
     fn recommend_quantum_safe_configuration(&self, protocol: &Protocol) -> ProtocolConfiguration {
         let mut config = ProtocolConfiguration::new();
-        
+
         // 分析当前协议弱点
         let vulnerabilities = self.identify_quantum_vulnerabilities(protocol);
-        
+
         // 为每个弱点推荐替代方案
         for vuln in vulnerabilities {
             match vuln {
@@ -2876,7 +2876,7 @@ impl QuantumSecurityVerifier {
                 // 其他弱点处理...
             }
         }
-        
+
         config
     }
 }

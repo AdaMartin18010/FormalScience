@@ -1,95 +1,93 @@
-# 分布式共识、一致性与 Raft 协议：从理论到 Rust 实现
+# 1. 分布式共识、一致性与 Raft 协议：从理论到 Rust 实现
 
 ## 目录
 
-- [分布式共识、一致性与 Raft 协议：从理论到 Rust 实现](#分布式共识一致性与-raft-协议从理论到-rust-实现)
+- [1. 分布式共识、一致性与 Raft 协议：从理论到 Rust 实现](#1-分布式共识一致性与-raft-协议从理论到-rust-实现)
   - [目录](#目录)
-  - [1. 引言：分布式系统的核心挑战](#1-引言分布式系统的核心挑战)
-  - [2. 核心概念与定义](#2-核心概念与定义)
-    - [2.1 分布式共识 (Distributed Consensus)](#21-分布式共识-distributed-consensus)
-      - [2.1.1 关键属性](#211-关键属性)
-    - [2.2 一致性模型 (Consistency Models)](#22-一致性模型-consistency-models)
-      - [2.2.1 强一致性 (Strong Consistency)](#221-强一致性-strong-consistency)
-      - [2.2.2 弱一致性 (Weak Consistency)](#222-弱一致性-weak-consistency)
-    - [2.3 关键理论与问题](#23-关键理论与问题)
-      - [2.3.1 FLP 不可能性原理](#231-flp-不可能性原理)
-      - [2.3.2 CAP 定理](#232-cap-定理)
-  - [3. 实现共识的机制与模型](#3-实现共识的机制与模型)
-    - [3.1 状态机复制 (State Machine Replication - SMR)](#31-状态机复制-state-machine-replication---smr)
-    - [3.2 Paxos 协议简介](#32-paxos-协议简介)
-  - [4. Raft 共识协议详解](#4-raft-共识协议详解)
-    - [4.1 设计目标：可理解性](#41-设计目标可理解性)
-    - [4.2 核心机制](#42-核心机制)
-      - [4.2.1 领导者选举 (Leader Election)](#421-领导者选举-leader-election)
-      - [4.2.2 日志复制 (Log Replication)](#422-日志复制-log-replication)
-      - [4.2.3 安全性 (Safety)](#423-安全性-safety)
-    - [4.3 集群成员变更 (Membership Changes)](#43-集群成员变更-membership-changes)
-    - [4.4 日志压缩与快照 (Log Compaction \& Snapshots)](#44-日志压缩与快照-log-compaction--snapshots)
-    - [4.5 Raft 模型总结](#45-raft-模型总结)
-  - [5. 使用 `raft-rs` 实现 Raft (Rust 示例)](#5-使用-raft-rs-实现-raft-rust-示例)
-    - [5.1 `raft-rs` 简介](#51-raft-rs-简介)
-    - [5.2 核心抽象](#52-核心抽象)
-      - [5.2.1 `Storage` Trait](#521-storage-trait)
-      - [5.2.2 `StateMachine` (应用逻辑)](#522-statemachine-应用逻辑)
-      - [5.2.3 `RawNode`](#523-rawnode)
-    - [5.3 概念代码示例：构建一个简单的复制状态机](#53-概念代码示例构建一个简单的复制状态机)
-      - [5.3.1 定义状态与命令](#531-定义状态与命令)
-      - [5.3.2 实现 `StateMachine` (应用逻辑)](#532-实现-statemachine-应用逻辑)
-      - [5.3.3 实现 `Storage`](#533-实现-storage)
-      - [5.3.4 驱动 `RawNode`](#534-驱动-rawnode)
-    - [5.4 实现过程总结](#54-实现过程总结)
-  - [6. Raft 的形式化论证与证明](#6-raft-的形式化论证与证明)
-    - [6.1 为何需要形式化证明](#61-为何需要形式化证明)
-    - [6.2 Raft 安全性证明的核心论点](#62-raft-安全性证明的核心论点)
-      - [6.2.1 领导者完整性 (Leader Completeness)](#621-领导者完整性-leader-completeness)
-      - [6.2.2 状态机安全 (State Machine Safety)](#622-状态机安全-state-machine-safety)
-      - [6.2.3 日志匹配特性 (Log Matching Property)](#623-日志匹配特性-log-matching-property)
-    - [6.3 证明工具 (TLA+, Coq)](#63-证明工具-tla-coq)
-  - [7. Raft 的使用场景](#7-raft-的使用场景)
-  - [8. 结论](#8-结论)
-  - [9. 思维导图 (Text 版)](#9-思维导图-text-版)
-  - [深入探讨 (续): `raft-rs` 驱动循环与外部交互的细节](#深入探讨-续-raft-rs-驱动循环与外部交互的细节)
-    - [5. 使用 `raft-rs` 实现 Raft (Rust 示例) - 续](#5-使用-raft-rs-实现-raft-rust-示例---续)
-      - [5.3.5 `RawNode` 驱动循环的详细交互 (概念性)](#535-rawnode-驱动循环的详细交互-概念性)
-      - [5.3.6 关键交互点总结](#536-关键交互点总结)
-  - [深入探讨 (续): Raft 集群成员变更 (`ConfChangeV2`) 的处理细节](#深入探讨-续-raft-集群成员变更-confchangev2-的处理细节)
-    - [1. `ConfChangeV2` 与联合共识回顾](#1-confchangev2-与联合共识回顾)
-    - [2. `Storage` 层面的处理细节](#2-storage-层面的处理细节)
-      - [2.1. 持久化 `ConfState`](#21-持久化-confstate)
-      - [2.2. 快照中的 `ConfState`](#22-快照中的-confstate)
-      - [2.3. 日志截断与 `ConfState`](#23-日志截断与-confstate)
-    - [3. 应用层面的处理细节](#3-应用层面的处理细节)
-      - [3.1. 提议 `ConfChangeV2`](#31-提议-confchangev2)
-      - [3.2. 监控配置变更状态](#32-监控配置变更状态)
-      - [3.3. 新节点的加入流程](#33-新节点的加入流程)
-      - [3.4. 节点的移除流程](#34-节点的移除流程)
-      - [3.5. 应用层对网络连接的管理](#35-应用层对网络连接的管理)
-    - [4. 总结 (`ConfChangeV2` 处理)](#4-总结-confchangev2-处理)
-      - [步骤 3: Leader 处理 `Ready` 中的 `ReadState`](#步骤-3-leader-处理-ready-中的-readstate)
-      - [步骤 4: 等待状态机应用 (State Machine Apply Wait)](#步骤-4-等待状态机应用-state-machine-apply-wait)
-      - [步骤 5: 响应客户端](#步骤-5-响应客户端)
-    - [3. `Storage` 在 ReadIndex 中的配合作用](#3-storage-在-readindex-中的配合作用)
-    - [4. ReadIndex 的优点和注意事项](#4-readindex-的优点和注意事项)
-    - [5. 与 Leader Lease Read 的比较](#5-与-leader-lease-read-的比较)
-    - [6. 总结 (ReadIndex)](#6-总结-readindex)
-  - [深入探讨 (续): `raft-rs` 中 `ProgressTracker` 的作用与交互](#深入探讨-续-raft-rs-中-progresstracker-的作用与交互)
-    - [1. `ProgressTracker` 的核心数据](#1-progresstracker-的核心数据)
-    - [2. `ProgressTracker` 在日志复制中的作用](#2-progresstracker-在日志复制中的作用)
-    - [3. `ProgressTracker` 与集群成员变更 (`ConfChangeV2`) 的交互](#3-progresstracker-与集群成员变更-confchangev2-的交互)
-    - [4. `ProgressTracker` 在 `raft-rs` 源码中的位置 (概念性)](#4-progresstracker-在-raft-rs-源码中的位置-概念性)
-    - [5. 总结 (`ProgressTracker`)](#5-总结-progresstracker)
-  - [分布式系统核心原理与 Rust 实现：总结与展望](#分布式系统核心原理与-rust-实现总结与展望)
-    - [一、核心概念与理论基石回顾](#一核心概念与理论基石回顾)
-    - [二、Raft 协议：可理解的共识](#二raft-协议可理解的共识)
-    - [三、Rust 与 `raft-rs`：构建可靠的分布式组件](#三rust-与-raft-rs构建可靠的分布式组件)
-    - [四、更高级别的抽象与 DSL](#四更高级别的抽象与-dsl)
-    - [五、运维、监控、调试与安全](#五运维监控调试与安全)
-    - [六、未来展望与研究方向](#六未来展望与研究方向)
-    - [七、Rust 在分布式系统领域的持续深耕](#七rust-在分布式系统领域的持续深耕)
+  - [1.1 引言：分布式系统的核心挑战](#11-引言分布式系统的核心挑战)
+  - [1.2 核心概念与定义](#12-核心概念与定义)
+    - [1.2.1 分布式共识 (Distributed Consensus)](#121-分布式共识-distributed-consensus)
+      - [1.2.1.1 关键属性](#1211-关键属性)
+    - [1.2.2 一致性模型 (Consistency Models)](#122-一致性模型-consistency-models)
+      - [1.2.2.1 强一致性 (Strong Consistency)](#1221-强一致性-strong-consistency)
+      - [1.2.2.2 弱一致性 (Weak Consistency)](#1222-弱一致性-weak-consistency)
+    - [1.2.3 关键理论与问题](#123-关键理论与问题)
+      - [1.2.3.1 FLP 不可能性原理](#1231-flp-不可能性原理)
+      - [1.2.3.2 CAP 定理](#1232-cap-定理)
+  - [1.3 实现共识的机制与模型](#13-实现共识的机制与模型)
+    - [1.3.1 状态机复制 (State Machine Replication - SMR)](#131-状态机复制-state-machine-replication---smr)
+    - [1.3.2 Paxos 协议简介](#132-paxos-协议简介)
+  - [1.4 Raft 共识协议详解](#14-raft-共识协议详解)
+    - [1.4.1 设计目标：可理解性](#141-设计目标可理解性)
+    - [1.4.2 核心机制](#142-核心机制)
+      - [1.4.2.1 领导者选举 (Leader Election)](#1421-领导者选举-leader-election)
+      - [1.4.2.2 日志复制 (Log Replication)](#1422-日志复制-log-replication)
+      - [1.4.2.3 安全性 (Safety)](#1423-安全性-safety)
+    - [1.4.3 集群成员变更 (Membership Changes)](#143-集群成员变更-membership-changes)
+    - [1.4.4 日志压缩与快照 (Log Compaction \& Snapshots)](#144-日志压缩与快照-log-compaction--snapshots)
+    - [1.4.5 Raft 模型总结](#145-raft-模型总结)
+  - [1.5 使用 `raft-rs` 实现 Raft (Rust 示例)](#15-使用-raft-rs-实现-raft-rust-示例)
+    - [1.5.1 `raft-rs` 简介](#151-raft-rs-简介)
+    - [1.5.2 核心抽象](#152-核心抽象)
+      - [1.5.2.1 `Storage` Trait](#1521-storage-trait)
+      - [1.5.2.2 `StateMachine` (应用逻辑)](#1522-statemachine-应用逻辑)
+      - [1.5.2.3 `RawNode`](#1523-rawnode)
+    - [1.5.3 概念代码示例：构建一个简单的复制状态机](#153-概念代码示例构建一个简单的复制状态机)
+      - [1.5.3.1 定义状态与命令](#1531-定义状态与命令)
+      - [1.5.3.2 实现 `StateMachine` (应用逻辑)](#1532-实现-statemachine-应用逻辑)
+      - [1.5.3.3 实现 `Storage`](#1533-实现-storage)
+      - [1.5.3.4 驱动 `RawNode`](#1534-驱动-rawnode)
+    - [1.5.4 实现过程总结](#154-实现过程总结)
+  - [1.6 Raft 的形式化论证与证明](#16-raft-的形式化论证与证明)
+    - [1.6.1 为何需要形式化证明](#161-为何需要形式化证明)
+    - [1.6.2 Raft 安全性证明的核心论点](#162-raft-安全性证明的核心论点)
+      - [1.6.2.1 领导者完整性 (Leader Completeness)](#1621-领导者完整性-leader-completeness)
+      - [1.6.2.2 状态机安全 (State Machine Safety)](#1622-状态机安全-state-machine-safety)
+      - [1.6.2.3 日志匹配特性 (Log Matching Property)](#1623-日志匹配特性-log-matching-property)
+    - [1.6.3 证明工具 (TLA+, Coq)](#163-证明工具-tla-coq)
+  - [1.7 Raft 的使用场景](#17-raft-的使用场景)
+  - [1.8 结论](#18-结论)
+  - [1.9 思维导图 (Text 版)](#19-思维导图-text-版)
+  - [1.10 深入探讨 (续): `raft-rs` 驱动循环与外部交互的细节](#110-深入探讨-续-raft-rs-驱动循环与外部交互的细节)
+    - [1.10.1 使用 `raft-rs` 实现 Raft (Rust 示例) - 续](#1101-使用-raft-rs-实现-raft-rust-示例---续)
+      - [1.10.1.1 `RawNode` 驱动循环的详细交互 (概念性)](#11011-rawnode-驱动循环的详细交互-概念性)
+      - [1.10.1.2 关键交互点总结](#11012-关键交互点总结)
+  - [1.12 深入探讨 (续): Raft 集群成员变更 (`ConfChangeV2`) 的处理细节](#112-深入探讨-续-raft-集群成员变更-confchangev2-的处理细节)
+    - [1.12.1 `ConfChangeV2` 与联合共识回顾](#1121-confchangev2-与联合共识回顾)
+    - [1.12.2 `Storage` 层面的处理细节](#1122-storage-层面的处理细节)
+      - [1.12.2.1 持久化 `ConfState`](#11221-持久化-confstate)
+      - [1.12.2.2 快照中的 `ConfState`](#11222-快照中的-confstate)
+      - [1.12.2.3 日志截断与 `ConfState`](#11223-日志截断与-confstate)
+    - [1.12.3 应用层面的处理细节](#1123-应用层面的处理细节)
+      - [1.12.3.1 提议 `ConfChangeV2`](#11231-提议-confchangev2)
+      - [1.12.3.2 监控配置变更状态](#11232-监控配置变更状态)
+      - [1.12.3.3 新节点的加入流程](#11233-新节点的加入流程)
+      - [1.12.3.4 节点的移除流程](#11234-节点的移除流程)
+      - [1.12.3.5 应用层对网络连接的管理](#11235-应用层对网络连接的管理)
+    - [1.12.4 总结 (`ConfChangeV2` 处理)](#1124-总结-confchangev2-处理)
+      - [1.13.2.3 步骤 3: Leader 处理 `Ready` 中的 `ReadState`](#11323-步骤-3-leader-处理-ready-中的-readstate)
+      - [1.13.2.4 步骤 4: 等待状态机应用 (State Machine Apply Wait)](#11324-步骤-4-等待状态机应用-state-machine-apply-wait)
+      - [1.13.2.5 步骤 5: 响应客户端](#11325-步骤-5-响应客户端)
+    - [1.13.3 `Storage` 在 ReadIndex 中的配合作用](#1133-storage-在-readindex-中的配合作用)
+    - [1.13.4 ReadIndex 的优点和注意事项](#1134-readindex-的优点和注意事项)
+    - [1.13.5 与 Leader Lease Read 的比较](#1135-与-leader-lease-read-的比较)
+    - [1.13.6 总结 (ReadIndex)](#1136-总结-readindex)
+  - [1.14 深入探讨 (续): `raft-rs` 中 `ProgressTracker` 的作用与交互](#114-深入探讨-续-raft-rs-中-progresstracker-的作用与交互)
+    - [1.14.1 `ProgressTracker` 的核心数据](#1141-progresstracker-的核心数据)
+    - [1.14.2 `ProgressTracker` 在日志复制中的作用](#1142-progresstracker-在日志复制中的作用)
+    - [1.14.3 `ProgressTracker` 与集群成员变更 (`ConfChangeV2`) 的交互](#1143-progresstracker-与集群成员变更-confchangev2-的交互)
+    - [1.14.4 `ProgressTracker` 在 `raft-rs` 源码中的位置 (概念性)](#1144-progresstracker-在-raft-rs-源码中的位置-概念性)
+    - [1.14.5 总结 (`ProgressTracker`)](#1145-总结-progresstracker)
+  - [1.15 分布式系统核心原理与 Rust 实现：总结与展望](#115-分布式系统核心原理与-rust-实现总结与展望)
+    - [1.15.1 一、核心概念与理论基石回顾](#1151-一核心概念与理论基石回顾)
+    - [1.15.2 二、Raft 协议：可理解的共识](#1152-二raft-协议可理解的共识)
+    - [1.15.3 三、Rust 与 `raft-rs`：构建可靠的分布式组件](#1153-三rust-与-raft-rs构建可靠的分布式组件)
+    - [1.15.4 四、更高级别的抽象与 DSL](#1154-四更高级别的抽象与-dsl)
+    - [1.15.5 五、运维、监控、调试与安全](#1155-五运维监控调试与安全)
+    - [1.15.6 六、未来展望与研究方向](#1156-六未来展望与研究方向)
+    - [1.15.7 七、Rust 在分布式系统领域的持续深耕](#1157-七rust-在分布式系统领域的持续深耕)
 
----
-
-## 1. 引言：分布式系统的核心挑战
+## 1.1 引言：分布式系统的核心挑战
 
 在现代计算中，分布式系统无处不在。
 它们通过将计算和数据分布在多台独立的计算机上，来提供可伸缩性、高可用性和容错性。
@@ -101,14 +99,14 @@
 本文将深入探讨这些概念，重点剖析广泛应用的 Raft 共识协议，
 并结合 Rust 开源库 `raft-rs` 展示其在实践中的实现思路、形式化论证方法及其典型的使用场景。
 
-## 2. 核心概念与定义
+## 1.2 核心概念与定义
 
-### 2.1 分布式共识 (Distributed Consensus)
+### 1.2.1 分布式共识 (Distributed Consensus)
 
 分布式共识是指在由多个独立节点组成的分布式系统中，
 所有（或大部分）正确运行的节点就某个提议的值或一系列值达成共同协议的过程。
 
-#### 2.1.1 关键属性
+#### 1.2.1.1 关键属性
 
 一个有效的共识协议通常必须满足以下四个基本属性：
 
@@ -117,12 +115,12 @@
 3. **可终止性/活性 (Termination/Liveness):** 所有正确的节点最终都能做出决定，并且不会无限期地等待。
 4. **容错性 (Fault Tolerance):** 协议必须能够在一定数量的节点发生故障（例如崩溃、网络分区）的情况下继续正确运行。常见的模型是容忍 `f` 个故障节点，例如在 `2f+1` 个节点的系统中容忍 `f` 个崩溃故障。
 
-### 2.2 一致性模型 (Consistency Models)
+### 1.2.2 一致性模型 (Consistency Models)
 
 一致性模型定义了分布式存储系统中，并发操作（读和写）作用于共享数据时，其结果应该如何对客户端可见的规则。
 它是一个契约，规定了系统如何保证数据的“新鲜度”和“顺序性”。
 
-#### 2.2.1 强一致性 (Strong Consistency)
+#### 1.2.2.1 强一致性 (Strong Consistency)
 
 强一致性模型提供了最严格的保证，使得分布式系统的行为尽可能接近单机系统。
 
@@ -134,7 +132,7 @@
   - **定义:** 所有操作看起来像是按照某个**单一的串行顺序**执行的，并且每个处理器（或客户端）发出的操作在该串行顺序中保持其程序顺序。不同处理器间的操作顺序可以是任意交错的。
   - **与线性一致性的区别:** 不要求全局顺序与实时一致，允许一定程度的重排，只要每个客户端自身的操作顺序和所有客户端看到的全局顺序一致即可。
 
-#### 2.2.2 弱一致性 (Weak Consistency)
+#### 1.2.2.2 弱一致性 (Weak Consistency)
 
 弱一致性模型放宽了对数据可见性的保证，以换取更好的性能（低延迟）和更高的可用性。
 
@@ -143,9 +141,9 @@
 - **最终一致性 (Eventual Consistency):**
   - **定义:** 如果对一个数据项没有新的更新，最终所有副本都会收敛到该数据项的相同值。系统不保证读取操作能立即返回最新的写入值，但保证最终会达到一致。这是最弱的一致性模型之一，但提供了最高的可用性和分区容错性。
 
-### 2.3 关键理论与问题
+### 1.2.3 关键理论与问题
 
-#### 2.3.1 FLP 不可能性原理
+#### 1.2.3.1 FLP 不可能性原理
 
 由 Fischer, Lynch, and Paterson 证明：
 在一个**完全异步**的分布式系统中（即消息延迟没有上限，节点处理速度没有下限），即使只有一个进程可能崩溃，
@@ -154,7 +152,7 @@
 - **影响:** 意味着在纯异步模型下，完美的共识是无法保证的。
 - **实际应对:** 现实系统通常通过引入超时 (Timeouts) 来近似同步、使用随机化算法，或假设部分同步模型来绕过 FLP 的严格限制。
 
-#### 2.3.2 CAP 定理
+#### 1.2.3.2 CAP 定理
 
 由 Eric Brewer 提出，指出在一个分布式系统中，以下三个理想属性最多只能同时满足两个：
 
@@ -164,9 +162,9 @@
 
 由于网络分区 (P) 在分布式系统中是不可避免的，因此设计者必须在一致性 (C) 和可用性 (A) 之间做出权衡。
 
-## 3. 实现共识的机制与模型
+## 1.3 实现共识的机制与模型
 
-### 3.1 状态机复制 (State Machine Replication - SMR)
+### 1.3.1 状态机复制 (State Machine Replication - SMR)
 
 SMR 是一种构建容错服务的通用方法。其核心思想是：
 
@@ -178,7 +176,7 @@ SMR 是一种构建容错服务的通用方法。其核心思想是：
 由于所有副本从相同的初始状态开始，并以相同的顺序应用相同的确定性操作，
 它们的状态将保持一致，从而实现了容错和（通常是强）一致性。
 
-### 3.2 Paxos 协议简介
+### 1.3.2 Paxos 协议简介
 
 Paxos 是由 Leslie Lamport 提出的一个经典的、高度容错的共识协议族。
 它非常强大且理论优雅，但因其难以完全理解和正确实现而闻名。
@@ -186,13 +184,13 @@ Paxos 的核心思想是通过一系列的提议 (Proposals) 和接受 (Accepts)
 涉及 Proposer, Acceptor, Learner 等角色，来就单个值达成共识。
 Multi-Paxos 是其优化版本，通过选举一个稳定的领导者来提高效率，使其更接近 SMR 的实际需求。
 
-## 4. Raft 共识协议详解
+## 1.4 Raft 共识协议详解
 
 Raft 是由 Diego Ongaro 和 John Ousterhout 设计的一个共识算法，
 其首要目标是**可理解性 (Understandability)**，
 旨在比 Paxos 更易于学习、实现和教学，同时提供与 Paxos 相当的容错能力和性能。
 
-### 4.1 设计目标：可理解性
+### 1.4.1 设计目标：可理解性
 
 Raft 通过将共识问题分解为三个相对独立的子问题来实现其可理解性目标：
 
@@ -200,9 +198,9 @@ Raft 通过将共识问题分解为三个相对独立的子问题来实现其可
 2. **日志复制 (Log Replication)**
 3. **安全性 (Safety)**
 
-### 4.2 核心机制
+### 1.4.2 核心机制
 
-#### 4.2.1 领导者选举 (Leader Election)
+#### 1.4.2.1 领导者选举 (Leader Election)
 
 - **单一领导者:** Raft 集群在任何给定时刻最多只有一个领导者 (Leader)。所有客户端请求都首先发送给领导者。
 - **任期 (Terms):** Raft 将时间划分为连续的“任期 (Term)”。每个任期以一次选举开始，一个或多个候选者 (Candidate) 尝试成为领导者。如果一个候选者赢得选举，它就在该任期的剩余时间担任领导者。任期在 Raft 中充当逻辑时钟。
@@ -218,7 +216,7 @@ Raft 通过将共识问题分解为三个相对独立的子问题来实现其可
     5. 成为领导者后，它会定期向所有 Follower 发送心跳消息 (空的 `AppendEntries` RPC) 来维持其领导地位并阻止新的选举。
     6. 如果在选举超时内没有候选者赢得选举（例如发生选票分裂），当前任期结束，节点增加任期号并开始新一轮选举。
 
-#### 4.2.2 日志复制 (Log Replication)
+#### 1.4.2.2 日志复制 (Log Replication)
 
 一旦选出领导者，它就负责服务客户端请求。每个请求包含一个将被复制状态机执行的命令。
 
@@ -230,7 +228,7 @@ Raft 通过将共识问题分解为三个相对独立的子问题来实现其可
 6. **应用到状态机:** 领导者（以及后续通过 `AppendEntries` RPC 获知 `commitIndex` 的 Follower）会将已提交的日志条目按顺序应用到其本地的状态机。
 7. **响应客户端:** 一旦领导者将命令应用到其状态机，它会向客户端返回操作结果。
 
-#### 4.2.3 安全性 (Safety)
+#### 1.4.2.3 安全性 (Safety)
 
 Raft 通过一系列机制来确保即使在发生领导者变更时，系统的整体正确性（特别是已提交的日志条目不会丢失或被覆盖，
 并且所有状态机以相同顺序应用相同命令）：
@@ -245,7 +243,7 @@ Raft 通过一系列机制来确保即使在发生领导者变更时，系统的
 - **状态机安全 (State Machine Safety):** 如果一个服务器已经将某个索引处的日志条目应用到其状态机，那么其他任何服务器都不会在该索引处应用不同的日志条目。这是 Log Matching 和 Leader Completeness 的直接结果。
 - **只提交当前任期的日志:** 领导者只能通过计算其当前任期内日志条目的副本数来提交它们。它不能仅凭旧任期日志条目的副本数就认为它们已提交（尽管它们可能确实已经被之前的领导者提交了）。这避免了一些复杂的边缘情况。
 
-### 4.3 集群成员变更 (Membership Changes)
+### 1.4.3 集群成员变更 (Membership Changes)
 
 Raft 支持在运行时动态地增加或移除集群中的服务器。
 为了避免在配置转换期间可能出现的“脑裂”（即同时存在两个独立的多数派），
@@ -256,7 +254,7 @@ Raft 使用一种称为**联合共识 (Joint Consensus)** 的两阶段方法：
 
 这种方式确保了在任何时刻都只有一个明确的多数派定义，从而维护了安全性。
 
-### 4.4 日志压缩与快照 (Log Compaction & Snapshots)
+### 1.4.4 日志压缩与快照 (Log Compaction & Snapshots)
 
 为了防止 Raft 日志无限增长，从而消耗过多存储空间并减慢节点重启/恢复速度，Raft 采用快照机制进行日志压缩。
 
@@ -265,21 +263,21 @@ Raft 使用一种称为**联合共识 (Joint Consensus)** 的两阶段方法：
 3. **丢弃旧日志:** 一旦快照完成，服务器就可以安全地丢弃快照点之前的所有日志条目（包括 `lastIncludedIndex` 对应的条目）。
 4. **通过快照同步:** 如果一个 Follower 的日志远远落后于 Leader，Leader 可以直接将快照发送给该 Follower，使其快速赶上，而不是逐条发送大量日志。
 
-### 4.5 Raft 模型总结
+### 1.4.5 Raft 模型总结
 
 Raft 通过将问题分解、强化领导者角色，并使用任期作为逻辑时钟，成功地设计了一个易于理解且功能强大的共识算法。它能够容忍少数节点故障，并通过日志复制和安全性机制确保所有节点上的状态机以一致的顺序执行相同的操作，从而实现 SMR。
 
-## 5. 使用 `raft-rs` 实现 Raft (Rust 示例)
+## 1.5 使用 `raft-rs` 实现 Raft (Rust 示例)
 
-### 5.1 `raft-rs` 简介
+### 1.5.1 `raft-rs` 简介
 
 `raft-rs` 是 PingCAP 公司开源的一个 Raft 协议的 Rust 实现库。它提供了 Raft 协议的核心逻辑，但它本身并不是一个可以直接运行的完整分布式服务。开发者需要基于 `raft-rs` 来构建自己的网络层、存储层以及应用状态机。
 
-### 5.2 核心抽象
+### 1.5.2 核心抽象
 
 使用 `raft-rs` 时，主要与以下几个核心抽象打交道：
 
-#### 5.2.1 `Storage` Trait
+#### 1.5.2.1 `Storage` Trait
 
 你需要实现 `raft::Storage` trait，它定义了 Raft 核心逻辑如何访问和持久化 Raft 日志、节点元数据（如当前任期、投票给谁）以及快照。
 
@@ -300,11 +298,11 @@ pub trait MyStorage {
 
 `raft-rs` 的 `Storage` trait 还包括了修改操作，比如追加日志条目、应用快照、保存 `HardState`（任期、投票、提交索引）等。这些通常由 `RawNode` 处理完 `Ready` 状态后调用。
 
-#### 5.2.2 `StateMachine` (应用逻辑)
+#### 1.5.2.2 `StateMachine` (应用逻辑)
 
 这通常是你自己的应用逻辑。`raft-rs` 不直接规定状态机的接口，但你需要自己实现将已提交的 Raft 日志条目（通常是 `EntryType::EntryNormal` 类型日志中的数据）应用到你的业务状态上的逻辑。
 
-#### 5.2.3 `RawNode`
+#### 1.5.2.3 `RawNode`
 
 `RawNode` 是与 Raft 核心算法交互的主要入口点。它不包含网络和磁盘 I/O。
 
@@ -321,11 +319,11 @@ pub trait MyStorage {
   - 需要持久化的快照 (Snapshot to be applied)。
     你必须按顺序处理 `Ready` 中的这些项，然后调用 `RawNode::advance()` 来通知 Raft 核心这些动作已完成。
 
-### 5.3 概念代码示例：构建一个简单的复制状态机
+### 1.5.3 概念代码示例：构建一个简单的复制状态机
 
 以下是一个高度简化的概念性示例，展示如何组织代码。
 
-#### 5.3.1 定义状态与命令
+#### 1.5.3.1 定义状态与命令
 
 ```rust
 use serde::{Serialize, Deserialize};
@@ -347,7 +345,7 @@ pub enum AppCommand {
 }
 ```
 
-#### 5.3.2 实现 `StateMachine` (应用逻辑)
+#### 1.5.3.2 实现 `StateMachine` (应用逻辑)
 
 ```rust
 impl AppState {
@@ -386,7 +384,7 @@ impl AppState {
 }
 ```
 
-#### 5.3.3 实现 `Storage`
+#### 1.5.3.3 实现 `Storage`
 
 这是一个复杂的部分，需要处理日志的持久化（例如写入磁盘文件或嵌入式数据库如 RocksDB/Sled）。`raft-rs` 提供了 `MemStorage` 作为内存存储的示例，可以参考它来实现持久化存储。
 
@@ -410,7 +408,7 @@ use raft::storage::MemStorage; // raft-rs 提供的内存存储
 
 `MemStorage` 本身并不直接支持快照的持久化和压缩，它主要用于演示和测试。一个完整的持久化 `Storage` 实现需要仔细处理日志条目的写入、读取、截断以及快照的创建和加载。
 
-#### 5.3.4 驱动 `RawNode`
+#### 1.5.3.4 驱动 `RawNode`
 
 这是应用的主循环，负责与 `RawNode` 交互。
 
@@ -530,7 +528,7 @@ async fn run_raft_node(node_id: u64, mut sm: AppState, mut storage: MemStorage) 
 }
 ```
 
-### 5.4 实现过程总结
+### 1.5.4 实现过程总结
 
 1. **定义应用状态 (`AppState`) 和操作命令 (`AppCommand`)。**
 2. **实现状态机的应用逻辑：** 如何将 `AppCommand` 应用到 `AppState`，以及如何创建和应用快照。
@@ -550,17 +548,17 @@ async fn run_raft_node(node_id: u64, mut sm: AppState, mut storage: MemStorage) 
 
 `raft-rs` 将 Raft 协议的核心逻辑与应用特定的状态机、存储和网络隔离开，提供了灵活性，但也要求开发者负责实现这些周边组件。
 
-## 6. Raft 的形式化论证与证明
+## 1.6 Raft 的形式化论证与证明
 
-### 6.1 为何需要形式化证明
+### 1.6.1 为何需要形式化证明
 
 分布式共识协议非常复杂，充满了难以察觉的边缘情况。微小的错误可能导致数据丢失或不一致。传统的测试方法很难覆盖所有可能的执行路径和故障场景。形式化方法使用数学和逻辑工具来精确地描述协议的行为，并严格证明其是否满足关键属性（如安全性、活性）。
 
-### 6.2 Raft 安全性证明的核心论点
+### 1.6.2 Raft 安全性证明的核心论点
 
 Raft 论文本身就包含了一个对其安全性的详细论证，这些论点后来被 TLA+ 等工具形式化并机器验证。关键的安全属性包括：
 
-#### 6.2.1 领导者完整性 (Leader Completeness)
+#### 1.6.2.1 领导者完整性 (Leader Completeness)
 
 - **声明:** 如果一个日志条目在某个任期被提交，那么它一定会出现在所有更高任期的领导者的日志中。
 - **论证思路:**
@@ -569,7 +567,7 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
     3. 节点只会投票给那些日志至少和自己一样“新”（包含所有已提交条目）的候选者（通过选举限制）。
     4. 因此，任何新当选的领导者，其日志中必然包含了所有之前任期已提交的条目。
 
-#### 6.2.2 状态机安全 (State Machine Safety)
+#### 1.6.2.2 状态机安全 (State Machine Safety)
 
 - **声明:** 如果一个服务器已经将某个索引处的日志条目应用到其状态机，那么其他任何服务器都不会在该索引处应用不同的日志条目。
 - **论证思路:**
@@ -579,7 +577,7 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
     4. 领导者在确定提交时，只会提交其当前任期的日志条目（或确保旧任期条目通过当前任期被间接提交）。
     这些结合起来确保了一旦一个条目在某个索引被提交并应用，该索引就不会再有其他命令被提交和应用。
 
-#### 6.2.3 日志匹配特性 (Log Matching Property)
+#### 1.6.2.3 日志匹配特性 (Log Matching Property)
 
 - **声明:**
   - 如果两个不同日志中的条目拥有相同的索引和任期号，那么它们存储相同的命令。
@@ -591,14 +589,14 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
     4. 如果检查失败，Follower 会拒绝，领导者会递减 `nextIndex` 并重试，最终会找到一个匹配点（或者将 Follower 的日志完全覆盖）。
     这个机制通过归纳法保证了日志匹配特性。
 
-### 6.3 证明工具 (TLA+, Coq)
+### 1.6.3 证明工具 (TLA+, Coq)
 
 - **TLA+ (Temporal Logic of Actions):** 由 Leslie Lamport 开发，是一种用于规范和验证并发和分布式系统的高级语言。Raft 的完整规范已用 TLA+ 编写，并通过模型检测器（如 TLC）进行了验证，帮助发现和修正了原始设计中的一些细微之处。
 - **Coq (以及 Isabelle/HOL 等辅助证明工具):** 这些是交互式定理证明器，允许进行更细致、完全由机器检查的数学证明。Raft 的核心安全性属性（如上述的 Leader Completeness 和 Log Matching）也已在 Coq 中被形式化并成功证明。
 
 这些形式化证明大大增强了对 Raft 协议正确性的信心。
 
-## 7. Raft 的使用场景
+## 1.7 Raft 的使用场景
 
 由于 Raft 提供了强大的共识保证，并且其设计注重可理解性，它已被广泛应用于各种需要数据一致性和容错性的分布式系统中：
 
@@ -618,11 +616,11 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
 
 选择 Raft 的主要原因是它能在保证强一致性的前提下，提供良好的容错性和相对容易理解的实现模型。
 
-## 8. 结论
+## 1.8 结论
 
 分布式共识和一致性是构建可靠分布式系统的基石。Raft 协议通过其巧妙的设计，在可理解性和功能完备性之间取得了良好的平衡，成为当今工业界广泛采用的共识算法之一。像 `raft-rs` 这样的库使得开发者可以用 Rust 这样的现代、高性能语言来构建基于 Raft 的系统，但仍需要开发者对协议本身有深入理解，并负责实现关键的存储和网络组件。形式化方法的应用进一步增强了对 Raft 正确性的信心，使其成为构建下一代分布式应用的重要工具。
 
-## 9. 思维导图 (Text 版)
+## 1.9 思维导图 (Text 版)
 
 ```text
 分布式系统核心
@@ -673,7 +671,7 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
 └── 8. 结论
 ```
 
-## 深入探讨 (续): `raft-rs` 驱动循环与外部交互的细节
+## 1.10 深入探讨 (续): `raft-rs` 驱动循环与外部交互的细节
 
 在上一节中，我们介绍了 `RawNode` 是与 `raft-rs` 核心交互的主要接口。
 它的设计哲学是将 Raft 协议的计算逻辑与实际的 I/O 操作（网络、磁盘）解耦。
@@ -681,9 +679,9 @@ Raft 论文本身就包含了一个对其安全性的详细论证，这些论点
 
 让我们进一步细化一个 Raft 节点的典型主事件循环，展示它如何处理定时器事件、网络消息和来自应用层的提案。
 
-### 5. 使用 `raft-rs` 实现 Raft (Rust 示例) - 续
+### 1.10.1 使用 `raft-rs` 实现 Raft (Rust 示例) - 续
 
-#### 5.3.5 `RawNode` 驱动循环的详细交互 (概念性)
+#### 1.10.1.1 `RawNode` 驱动循环的详细交互 (概念性)
 
 以下代码将扩展之前的 `run_raft_node` 示例，更清晰地展示各个组件如何协同工作。我们将假设存在一些辅助的抽象：
 
@@ -1057,7 +1055,7 @@ async fn run_raft_node_detailed(
 }
 ```
 
-#### 5.3.6 关键交互点总结
+#### 1.10.1.2 关键交互点总结
 
 1. **定时器 (`tick`)**: 周期性地调用 `RawNode::tick()` 来驱动选举超时和心跳。
 2. **接收消息 (`step`)**: 当从网络层收到其他 Raft 节点的消息时，调用 `RawNode::step(message)` 将消息传递给 Raft 核心。
@@ -1087,9 +1085,9 @@ async fn run_raft_node_detailed(
 好的，这两个都是非常关键的方面。让我们先深入探讨 **`Storage` Trait 的持久化实现要点**，因为它是 Raft 正确性和持久性的基石。然后，我们会讨论客户端如何与这个构建好的 Raft 集群进行交互。
 
 ```markdown
-## 深入探讨 (续): `Storage` 持久化实现要点与客户端交互
+## 1.11 深入探讨 (续): `Storage` 持久化实现要点与客户端交互
 
-### 部分一：`Storage` Trait 的持久化实现要点
+### 1.11.1 部分一：`Storage` Trait 的持久化实现要点
 
 在 `raft-rs` 中，`Storage` trait 是 Raft 核心与稳定存储之间的桥梁。正确且高效地实现这个 trait 对于保证 Raft 协议的安全性（已提交的日志永不丢失）和活性至关重要。我们将讨论使用如 `RocksDB` 或 `Sled` (或直接文件系统操作) 实现持久化 `Storage` 时的一些关键点。
 
@@ -1115,7 +1113,7 @@ async fn run_raft_node_detailed(
 *   **保存 `ConfState`:** 当集群成员配置通过 `ConfChangeV2` 应用后，新的 `ConfState` 需要持久化。
 *   **日志压缩 (Compaction):** 在状态机创建并持久化快照后，`Storage` 需要能够安全地删除快照点之前的日志条目。
 
-#### 持久化实现的要点：
+#### 1.11.1.1 持久化实现的要点：
 
 1.  **原子性 (Atomicity):**
     *   **`HardState` 与 Entries:** 在某些情况下，`HardState`（尤其是 `commit` 索引）的更新可能与追加一批 `Entries` 相关联。理想情况下，这些操作应该原子地完成。如果使用像 RocksDB 这样的支持事务的数据库，可以将这些更新放在一个事务中。如果直接操作文件，可能需要更复杂的 WAL (预写日志) 机制来保证原子性。
@@ -1167,7 +1165,7 @@ async fn run_raft_node_detailed(
 
 这是一个非常关键且复杂的部分。`tikv/raft-engine` 是一个专门为 TiKV Raft 实现的高性能日志存储引擎，可以作为高级参考，但其复杂度也相当高。对于大多数项目，基于成熟的嵌入式 KV 存储（如 RocksDB 或 Sled）并仔细处理原子性和 `fsync` 是一个更可行的起点。
 
-### 部分二：客户端如何与 Raft 集群交互
+### 1.11.2 部分二：客户端如何与 Raft 集群交互
 
 客户端与 Raft 集群的交互通常涉及以下步骤和考量：
 
@@ -1296,11 +1294,11 @@ impl RaftApiClient {
 
 好的，让我们深入探讨 Raft 的集群成员变更，特别是使用 `ConfChangeV2` 时，`Storage` 层和应用层面需要处理的细节。`ConfChangeV2` 是 `raft-rs` 中推荐的进行成员变更的方式，它比旧的 `ConfChange` 提供了更灵活和安全的原子化成员变更。
 
-## 深入探讨 (续): Raft 集群成员变更 (`ConfChangeV2`) 的处理细节
+## 1.12 深入探讨 (续): Raft 集群成员变更 (`ConfChangeV2`) 的处理细节
 
 在 Raft 中，动态地增加或移除集群中的节点（成员变更）是一项关键功能，但也非常复杂，因为必须在不影响服务可用性（理想情况下）和不破坏数据一致性（绝对要求）的前提下进行。`raft-rs` 提供了 `ConfChangeV2` 机制来实现这一点，它支持原子的“联合共识” (Joint Consensus) 阶段。
 
-### 1. `ConfChangeV2` 与联合共识回顾
+### 1.12.1 `ConfChangeV2` 与联合共识回顾
 
 `ConfChangeV2` 允许你提出一个包含多个成员变更步骤的请求，这些步骤会原子地生效。核心思想是引入一个过渡阶段，在这个阶段，决策（如日志提交、领导者选举）需要同时得到旧配置的多数派和新配置的多数派的同意。
 
@@ -1317,11 +1315,11 @@ impl RaftApiClient {
 
 这种两阶段的方法（Propose `C_old,new` -> Propose `C_new` (empty `ConfChangeV2`)）确保了在配置转换的任何时刻都不会出现“脑裂”的情况。
 
-### 2. `Storage` 层面的处理细节
+### 1.12.2 `Storage` 层面的处理细节
 
 `Storage` trait 的实现需要正确地处理和持久化与集群配置相关的状态 (`ConfState`)。
 
-#### 2.1. 持久化 `ConfState`
+#### 1.12.2.1 持久化 `ConfState`
 
 - `raft::prelude::ConfState` 结构体通常包含两个主要部分：
   - `voters: Vec<u64>`: 当前配置中的投票成员列表。
@@ -1352,7 +1350,7 @@ impl RaftApiClient {
         }
         ```
 
-#### 2.2. 快照中的 `ConfState`
+#### 1.12.2.2 快照中的 `ConfState`
 
 - 当创建快照时，快照的元数据 (`SnapshotMetadata`) **必须包含创建快照时的 `ConfState`**。
 - 当从快照恢复时 (`Storage::apply_snapshot()` 或应用层状态机加载快照数据时)，不仅要恢复应用状态，还要恢复快照元数据中的 `ConfState` 并将其持久化。
@@ -1376,15 +1374,15 @@ impl RaftApiClient {
     // }
     ```
 
-#### 2.3. 日志截断与 `ConfState`
+#### 1.12.2.3 日志截断与 `ConfState`
 
 - 日志截断（Compaction）必须小心，不能删除那些尚未被包含在某个已持久化 `ConfState` (无论是在元数据中还是快照中) 中的 `ConfChangeV2` 日志条目。实际上，由于 `ConfState` 总是与最新的快照或最新的 `HardState` 相关联，只要确保快照正确包含了当时的 `ConfState`，正常的日志压缩逻辑（删除快照点之前的日志）就是安全的。
 
-### 3. 应用层面的处理细节
+### 1.12.3 应用层面的处理细节
 
 应用层主要通过向 Leader 提议 `ConfChangeV2` 来发起成员变更，并需要理解其对集群行为的影响。
 
-#### 3.1. 提议 `ConfChangeV2`
+#### 1.12.3.1 提议 `ConfChangeV2`
 
 - **构造 `ConfChangeV2`:**
   - `ConfChangeV2` 包含一个 `Vec<ConfChangeSingle>` 的 `changes` 字段。
@@ -1429,13 +1427,13 @@ impl RaftApiClient {
   - **进入:** 上述提议（如果包含实际的节点变更）会导致集群进入联合共识。`RawNode::apply_conf_change()` 返回的 `ConfState` 会有非空的 `voters_outgoing` 字段。
   - **离开:** 如果 `ConfState` 的 `auto_leave` 标志为 `true` (通常在 `apply_conf_change` 时由 `raft-rs` 根据情况设置)，并且 Leader 发现当前处于联合共识状态，它会在处理完当前的 `Ready` 后（通常是在下一个 `tick` 或处理完当前 `Ready` 后的某个点）自动提议一个空的 `ConfChangeV2` 来转换到 `C_new`。这个空的 `ConfChangeV2` 也是一个 `EntryConfChangeV2` 类型的日志条目，但其 `changes` 列表为空。当这个空条目被应用时，`voters_outgoing` 会被清空，集群正式进入新配置。
 
-#### 3.2. 监控配置变更状态
+#### 1.12.3.2 监控配置变更状态
 
 - 应用层（特别是管理工具）需要能够查询当前的集群配置和成员变更的进度。
 - 这可以通过查询 Leader 的状态机（如果状态机暴露了当前的 `ConfState`）或直接查询 Raft 节点（如果 `raft-rs` 或其包装层提供了这样的接口）来实现。
 - 观察 `ConfState` 中的 `voters`, `learners`, `voters_outgoing` 字段可以了解当前是否处于联合共识状态。
 
-#### 3.3. 新节点的加入流程
+#### 1.12.3.3 新节点的加入流程
 
 1. **启动新节点:** 新节点以 Learner 身份启动，其初始配置只包含它自己（或者它可以从某个发现服务获取其他已知节点的信息，但它最初不参与投票）。
 2. **向集群添加 Learner:** 管理员向当前 Leader 提议一个 `ConfChangeV2 { changes: [AddLearnerNode(new_node_id)] }`。
@@ -1446,20 +1444,20 @@ impl RaftApiClient {
 5. **或者，直接添加为 Voter (如果 Raft 实现支持一步到位且安全的转换):**
     某些 Raft 变种或 `ConfChangeV2` 的使用方式可能允许直接将一个已同步的 Learner 或一个全新的节点（如果它能快速同步）直接加入为 Voter，并一步进入联合共识，然后自动离开。关键在于 `ConfChangeV2` 的原子性保证了转换的安全性。
 
-#### 3.4. 节点的移除流程
+#### 1.12.3.4 节点的移除流程
 
 1. **提议移除 (进入联合共识):** 管理员向 Leader 提议 `ConfChangeV2 { changes: [RemoveNode(node_to_remove_id)] }`。
     - 例如，从 `[A,B,C]` 移除 `C`，会进入 `C_old=[A,B,C], C_new=[A,B]` 的联合共识。
 2. **离开联合共识:** 当上述 `ConfChangeV2` 应用且 `auto_leave` 生效后，Leader 自动提议空 `ConfChangeV2`，集群转换到 `C_new=[A,B]`。
 3. **关闭被移除节点:** 一旦集群稳定在不包含被移除节点的新配置下，该节点就可以安全地关闭了。
 
-#### 3.5. 应用层对网络连接的管理
+#### 1.12.3.5 应用层对网络连接的管理
 
 - 当一个节点被添加时，其他节点（特别是 Leader）需要能够连接到它以发送消息。
 - 当一个节点被移除后，其他节点应该停止向它发送消息。
 - 应用层的网络模块需要能够动态更新其对等节点列表和连接。这通常与 `ConfState` 的变化相协调。当 `ConfState` 更新后，可以通知网络模块刷新其连接池。
 
-### 4. 总结 (`ConfChangeV2` 处理)
+### 1.12.4 总结 (`ConfChangeV2` 处理)
 
 - **`Storage` 的核心职责:** 正确持久化 `ConfState`（与 `HardState` 一起，或作为快照的一部分），并在 Raft 核心请求时提供它。确保快照包含正确的 `ConfState`。
 - **应用层的核心职责:**
@@ -1482,28 +1480,28 @@ impl RaftApiClient {
 线性一致性读是许多分布式系统（尤其是数据库）期望提供的重要特性，它保证了读操作能观察到所有在其开始之前已完成的写操作的结果，并且所有操作看起来是按照某个全局实时顺序执行的。
 
 ```markdown
-## 深入探讨 (续): 线性一致性读 (ReadIndex) 机制与 `Storage` 配合
+## 1.13 深入探讨 (续): 线性一致性读 (ReadIndex) 机制与 `Storage` 配合
 
 线性一致性是强一致性模型中最直观和最严格的一种。对于只读操作，如果每次读取都通过完整的 Raft 日志提交流程，虽然能保证线性一致性，但性能会非常低下。Raft 论文提出了一种优化机制，通常称为 **ReadIndex Read**（或 Leader Lease Read 的一种变体，但 ReadIndex 更侧重于确认提交状态），允许 Leader 在不将读操作写入 Raft 日志的情况下，安全地提供线性一致性的读取。
 
 `raft-rs` 提供了实现 ReadIndex 机制的构件。
 
-### 1. ReadIndex 机制的核心思想
+### 1.13.1 ReadIndex 机制的核心思想
 
 1.  **确保 Leader 地位:** Leader 必须首先确认它仍然是集群中的合法 Leader。如果存在一个更高任期的新 Leader，那么当前 Leader 响应的读取就可能不是线性一致的。
 2.  **记录提交索引:** Leader 记录下它在发起 ReadIndex 请求时的当前 `commit_index` (Raft 日志中已提交的最高索引)。我们称这个为 `read_request_commit_index`。
 3.  **等待状态机应用:** Leader 必须等待其状态机至少应用到 `read_request_commit_index`。这意味着所有在该 `commit_index` 之前的写操作都已经反映在 Leader 的状态机中了。
 4.  **响应读取:** 一旦上述条件满足，Leader 就可以从其本地状态机读取数据并响应客户端。这个读取结果保证是线性一致的，因为它反映了至少到 `read_request_commit_index` 为止的所有已提交状态，并且 Leader 已经确认了其领导地位（至少在发起 ReadIndex 请求时）。
 
-### 2. `raft-rs` 中的 ReadIndex 实现流程
+### 1.13.2 `raft-rs` 中的 ReadIndex 实现流程
 
 `raft-rs` 通过 `RawNode::read_index(ctx: Vec<u8>)` 方法和 `Ready` 结构中的 `ReadState` 来支持 ReadIndex。
 
-#### 步骤 1: 客户端发起只读请求给 Leader
+#### 1.13.2.1 步骤 1: 客户端发起只读请求给 Leader
 
 客户端向 Leader 节点发送一个只读请求。这个请求通常会包含一个唯一的请求 ID (或上下文 `ctx`，以便后续匹配)。
 
-#### 步骤 2: Leader 调用 `RawNode::read_index()`
+#### 1.13.2.2 步骤 2: Leader 调用 `RawNode::read_index()`
 
 Leader 收到只读请求后，它不会像处理写请求那样调用 `propose()`。相反，它会调用 `RawNode::read_index(ctx)`。
 *   `ctx`: 一个字节向量，由应用层提供，用于唯一标识这个只读请求。`raft-rs` 会将这个 `ctx` 与 ReadIndex 请求关联起来。
@@ -1530,7 +1528,7 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
 - 记录当前的 `commit_index`。
 - 向所有 Follower 发送一轮心跳消息 (特殊的 `MsgHeartbeat`)。这一步是为了确认 Leader 仍然拥有多数派的支持，即它仍然是 Leader。
 
-#### 步骤 3: Leader 处理 `Ready` 中的 `ReadState`
+#### 1.13.2.3 步骤 3: Leader 处理 `Ready` 中的 `ReadState`
 
 在后续的 `RawNode::ready()` 调用中，当 Leader 收到足够多 Follower 对心跳的响应（确认其领导地位）后，`Ready` 对象中会包含一个或多个 `ReadState` 条目。
 
@@ -1571,7 +1569,7 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
 // }
 ```
 
-#### 步骤 4: 等待状态机应用 (State Machine Apply Wait)
+#### 1.13.2.4 步骤 4: 等待状态机应用 (State Machine Apply Wait)
 
 仅仅收到 `ReadState` 并不意味着可以立即从状态机读取。`ReadState.index` (`read_request_commit_index`) 只是 Raft 日志中已提交的一个点。我们必须确保状态机 (`AppState` 的 `last_applied_index`) 至少已经达到了这个 `read_request_commit_index`。
 
@@ -1615,11 +1613,11 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
 // }
 ```
 
-#### 步骤 5: 响应客户端
+#### 1.13.2.5 步骤 5: 响应客户端
 
 一旦状态机应用到 `read_request_commit_index`，并且查询已执行，就可以将结果通过之前保存的 `client_responder` 发送回客户端。
 
-### 3. `Storage` 在 ReadIndex 中的配合作用
+### 1.13.3 `Storage` 在 ReadIndex 中的配合作用
 
 虽然 ReadIndex 机制主要依赖于 Leader 的状态、`commit_index` 和与 Follower 的心跳通信，`Storage` 在其中也扮演着间接但重要的角色：
 
@@ -1635,7 +1633,7 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
 
 **简单来说，`Storage` 的主要配合作用是确保 Raft 核心拥有关于已提交日志和 `commit_index` 的准确、持久化的信息。ReadIndex 机制本身更多是 Raft 协议层面的协调，依赖于这些由 `Storage` 维护的基础信息。**
 
-### 4. ReadIndex 的优点和注意事项
+### 1.13.4 ReadIndex 的优点和注意事项
 
 - **优点:**
   - **线性一致性:** 提供了最强的一致性保证。
@@ -1648,7 +1646,7 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
   - **时钟假设 (轻微):** 虽然 ReadIndex 比 Leader Lease 对时钟的依赖小得多，但 Raft 本身的选举和心跳机制仍然依赖于超时的概念，这间接涉及到对时间的感知。不过，它不像 Leader Lease 那样直接依赖时钟同步来保证安全性。
   - **实现复杂度:** 在应用层正确地管理 `read_index` 请求的上下文、等待状态机应用，并响应客户端，比简单的过时读要复杂。
 
-### 5. 与 Leader Lease Read 的比较
+### 1.13.5 与 Leader Lease Read 的比较
 
 - **Leader Lease Read:** Leader 假设它在某个租期 (Lease) 内是唯一的 Leader。在此期间，它可以直接服务只读请求而无需与 Follower 通信。
   - **优点:** 延迟可能更低（无心跳往返）。
@@ -1659,7 +1657,7 @@ Leader 收到只读请求后，它不会像处理写请求那样调用 `propose(
 
 `raft-rs` 提供的 `read_index` 机制是实现 ReadIndex Read 的方式。
 
-### 6. 总结 (ReadIndex)
+### 1.13.6 总结 (ReadIndex)
 
 ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的机制。它通过 Leader 确认其领导地位和当前的 `commit_index`，并确保状态机已应用到该索引，来保证读取的线性一致性。`raft-rs` 提供了必要的底层支持 (`RawNode::read_index` 和 `Ready::read_states`)，但应用层需要负责管理请求上下文、等待状态机应用，以及最终响应客户端。`Storage` 通过提供准确的 `commit_index` (来自 `HardState`) 间接支持了这一过程。
 
@@ -1673,11 +1671,11 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
 
 `ProgressTracker` 是 Raft Leader 用来跟踪每个 Follower 日志复制进度的关键数据结构。理解它有助于我们更深入地理解 Raft 的日志复制机制、流程控制以及成员变更如何影响这些进度。
 
-## 深入探讨 (续): `raft-rs` 中 `ProgressTracker` 的作用与交互
+## 1.14 深入探讨 (续): `raft-rs` 中 `ProgressTracker` 的作用与交互
 
 在 `raft-rs` 实现中，`Raft` 结构体（代表一个 Raft 节点的核心逻辑）内部通常会包含一个名为 `prs` (或者在较新版本中可能是 `tracker::ProgressTracker` 的一个实例) 的字段。这个 `ProgressTracker` 是 Leader 节点专门用来追踪集群中其他每个节点（Followers 和 Learners）日志复制进度的核心数据结构。
 
-### 1. `ProgressTracker` 的核心数据
+### 1.14.1 `ProgressTracker` 的核心数据
 
 `ProgressTracker` 通常为集群中的每个其他节点维护一个 `Progress` 对象（或类似结构）。每个 `Progress` 对象记录了 Leader 对该特定 Follower/Learner 的以下关键信息：
 
@@ -1691,7 +1689,7 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
 - **`is_learner: bool`**: 标记该节点是否为 Learner。Learner 节点接收日志复制，但不参与投票，也不计入计算多数派以提交日志的考虑范围。
 - **`paused: bool`**: 一个标志，指示是否暂时停止向该 Follower 发送日志。例如，当 Follower 反复拒绝 `AppendEntries` 时，或者在 `Snapshot` 状态下，可能会暂停普通日志复制。
 
-### 2. `ProgressTracker` 在日志复制中的作用
+### 1.14.2 `ProgressTracker` 在日志复制中的作用
 
 当一个节点成为 Leader 时，它会为集群中的所有其他已知节点（Voters 和 Learners）初始化 `Progress` 条目。`next_idx` 通常设置为 Leader 当前日志的最后一条索引加一，`match_idx` 初始化为 0。
 
@@ -1722,7 +1720,7 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
     - 在快照发送和应用期间，通常不会向该 Follower 发送普通的日志条目。
     - 当 Follower 成功应用快照后，它会响应 Leader。Leader 收到响应后，会将该 Follower 的 `Progress.state` 恢复为 `Probe` 或 `Replicate`，并将其 `match_idx` 和 `next_idx` 更新到快照的 `last_included_index` 之后。
 
-### 3. `ProgressTracker` 与集群成员变更 (`ConfChangeV2`) 的交互
+### 1.14.3 `ProgressTracker` 与集群成员变更 (`ConfChangeV2`) 的交互
 
 集群成员变更是通过特殊的 `ConfChangeV2` 日志条目进行的。当这些条目被应用时，`ProgressTracker` 也需要相应地更新。
 
@@ -1741,7 +1739,7 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
     - 这个自动的提案也是通过 Raft 日志进行的。`ProgressTracker` 的行为在此期间与其他日志复制类似。
     - 一旦空的 `ConfChangeV2` 被应用，`ConfState.voters_outgoing` 会被清空，`ProgressTracker` 的多数派计算逻辑也会恢复到只依赖 `ConfState.voters`。
 
-### 4. `ProgressTracker` 在 `raft-rs` 源码中的位置 (概念性)
+### 1.14.4 `ProgressTracker` 在 `raft-rs` 源码中的位置 (概念性)
 
 - 通常在 `src/raft.rs` (定义 `Raft` 结构体) 中可以看到 `prs: ProgressTracker` 字段。
 - `ProgressTracker` 自身和 `Progress` 结构体可能定义在 `src/tracker.rs` 或 `src/progress.rs` 中。
@@ -1750,7 +1748,7 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
 - `Raft::bcast_append()` (或类似方法) 会遍历 `ProgressTracker` 来决定向哪些 Follower 发送哪些日志。
 - `Raft::apply_conf_change()` 会修改 `ProgressTracker` 以反映成员变化。
 
-### 5. 总结 (`ProgressTracker`)
+### 1.14.5 总结 (`ProgressTracker`)
 
 `ProgressTracker` 是 Raft Leader 的“仪表盘”和“控制器”，用于：
 
@@ -1769,11 +1767,11 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
 
 好的，我们已经深入探讨了分布式共识、一致性、Raft 协议、`raft-rs` 实现细节、`Storage` 持久化、客户端交互、成员变更、ReadIndex 以及 `ProgressTracker` 等多个关键方面。现在，让我们对整个系列讨论进行一个更高级别的总结，并展望一下未来的研究方向以及 Rust 在分布式系统领域中更进一步的应用。
 
-## 分布式系统核心原理与 Rust 实现：总结与展望
+## 1.15 分布式系统核心原理与 Rust 实现：总结与展望
 
 经过一系列深入的探讨，我们从分布式系统的基础理论（共识、一致性、CAP、FLP）出发，详细剖析了 Raft 共识协议的设计与核心机制，并结合 Rust 语言及其 `raft-rs` 库，探讨了其在实践中的实现细节、挑战与高级特性。现在，是时候进行一次全面的总结，并展望未来。
 
-### 一、核心概念与理论基石回顾
+### 1.15.1 一、核心概念与理论基石回顾
 
 1. **共识 (Consensus):** 是分布式系统协同工作的前提。它确保所有节点能在不确定的环境中（网络延迟、节点故障）就某个值或操作序列达成一致。关键属性包括协定性、有效性、可终止性和容错性。
 2. **一致性模型 (Consistency Models):** 定义了数据在多个副本间的可见性规则。从强一致性（如线性一致性、顺序一致性）到弱一致性（如因果一致性、最终一致性），不同的模型在数据新鲜度、系统性能和可用性之间进行权衡。
@@ -1782,7 +1780,7 @@ ReadIndex 是 Raft 中实现线性一致性读的一种有效且相对安全的�
     - **CAP 定理:** 强调在分区容错性 (P) 必然存在的前提下，一致性 (C) 和可用性 (A) 只能二选一。这指导了系统设计者根据业务需求进行权衡。
 4. **状态机复制 (SMR):** 是构建容错分布式服务的通用范式。通过共识协议（如 Raft）确保所有副本以相同的顺序执行相同的确定性操作，从而保持状态一致。
 
-### 二、Raft 协议：可理解的共识
+### 1.15.2 二、Raft 协议：可理解的共识
 
 Raft 以其“可理解性”为核心设计目标，将共识问题分解为领导者选举、日志复制和安全性三个子问题，使其相比 Paxos 更易于学习和实现。
 
@@ -1794,7 +1792,7 @@ Raft 以其“可理解性”为核心设计目标，将共识问题分解为领
   - **日志压缩与快照:** 防止日志无限增长，加速节点恢复。
   - **线性一致性读 (ReadIndex):** 在 Leader 上高效地提供强一致性读取。
 
-### 三、Rust 与 `raft-rs`：构建可靠的分布式组件
+### 1.15.3 三、Rust 与 `raft-rs`：构建可靠的分布式组件
 
 Rust 语言凭借其内存安全、线程安全、高性能和强大的并发原语，为构建复杂的分布式系统组件提供了坚实的基础。
 
@@ -1807,7 +1805,7 @@ Rust 语言凭借其内存安全、线程安全、高性能和强大的并发原
 
 **核心挑战依然存在:** 即使有 `raft-rs` 这样的库，开发者仍需深刻理解 Raft 协议，并正确实现 `Storage`、网络层和主事件循环，确保 `Ready` 状态的正确处理，这依然是一项复杂的任务。
 
-### 四、更高级别的抽象与 DSL
+### 1.15.4 四、更高级别的抽象与 DSL
 
 为了进一步降低构建分布式应用的复杂性，更高级别的抽象和特定领域语言 (DSLs) 是一个重要的发展方向。
 
@@ -1819,7 +1817,7 @@ Rust 语言凭借其内存安全、线程安全、高性能和强大的并发原
   - **分布式事务抽象 (2PC, Saga):** 简化跨服务原子操作的实现。
 - **Rust 的优势:** 强大的宏系统 (声明宏和过程宏)、Trait 系统和类型系统为构建类型安全、零成本（或低成本）的 DSL 提供了理想的工具。
 
-### 五、运维、监控、调试与安全
+### 1.15.5 五、运维、监控、调试与安全
 
 一个完整的分布式系统不仅需要正确实现，还需要能够被有效地运维。
 
@@ -1828,7 +1826,7 @@ Rust 语言凭借其内存安全、线程安全、高性能和强大的并发原
 - **调试:** 分布式系统的调试极具挑战性，需要详尽的日志、可复现的环境和模拟工具。
 - **安全:** 节点间通信加密 (TLS)、数据持久化加密、访问控制、依赖安全。
 
-### 六、未来展望与研究方向
+### 1.15.6 六、未来展望与研究方向
 
 分布式系统领域依然充满活力，新的挑战和机遇不断涌现。
 
@@ -1859,7 +1857,7 @@ Rust 语言凭借其内存安全、线程安全、高性能和强大的并发原
 8. **特定领域的高级抽象与框架 (Rust 生态的成熟):**
     - 期待 Rust 社区涌现更多针对特定分布式应用场景（如分布式图计算、流处理、联邦学习）的高级框架和 DSL，它们内置了对共识、一致性和容错的处理。
 
-### 七、Rust 在分布式系统领域的持续深耕
+### 1.15.7 七、Rust 在分布式系统领域的持续深耕
 
 Rust 已经证明了其在构建高性能、高可靠性系统软件（包括数据库、操作系统、网络服务）方面的强大能力。
 在分布式系统领域，它的优势将继续显现：

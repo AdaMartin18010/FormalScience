@@ -145,19 +145,19 @@ async fn example() -> i32 {
     // 映射操作，对应 map
     let future_a = future::ready(1);
     let future_b = future_a.map(|x| x + 1);
-    
+
     // 链式操作，对应 and_then
     let future_c = future_b.then(|x| async move {
         // 做一些异步工作
         x * 2
     });
-    
+
     // 并行组合，对应 join
     let (result1, result2) = join(
         async { 1 },
         async { "hello" }
     ).await;
-    
+
     future_c.await
 }
 ```
@@ -211,7 +211,7 @@ enum State {
 
 impl Future for MyFuture {
     type Output = String;
-    
+
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         match self.state {
             State::Waiting => {
@@ -289,20 +289,20 @@ impl SelfReferential {
             data,
             slice: None,
         });
-        
+
         // 安全地获取自引用
         let self_ptr: *const String = &boxed.data;
-        
+
         // 安全地修改，因为数据被Pin固定不会移动
         unsafe {
             let mut_ref = Pin::as_mut(&mut boxed);
-            Pin::get_unchecked_mut(mut_ref).slice = 
+            Pin::get_unchecked_mut(mut_ref).slice =
                 Some(self_ptr as *const u8);
         }
-        
+
         boxed
     }
-    
+
     fn get_slice(self: Pin<&Self>) -> &[u8] {
         unsafe {
             std::slice::from_raw_parts(
@@ -356,7 +356,7 @@ impl SimpleExecutor {
             task_queue: VecDeque::new(),
         }
     }
-    
+
     fn spawn<F>(&mut self, future: F)
     where
         F: Future<Output = ()> + Send + 'static,
@@ -365,19 +365,19 @@ impl SimpleExecutor {
             future: Mutex::new(Box::pin(future)),
             queued: AtomicBool::new(true),
         });
-        
+
         self.task_queue.push_back(task);
     }
-    
+
     fn run(&mut self) {
         while let Some(task) = self.task_queue.pop_front() {
             // 将任务标记为未入队
             task.queued.store(false, Ordering::SeqCst);
-            
+
             // 创建Waker
             let waker = self.create_waker(task.clone());
             let mut context = Context::from_waker(&waker);
-            
+
             // 轮询任务
             let mut future = task.future.lock().unwrap();
             if future.as_mut().poll(&mut context).is_pending() {
@@ -385,7 +385,7 @@ impl SimpleExecutor {
             }
         }
     }
-    
+
     fn create_waker(&self, task: Arc<Task>) -> Waker {
         // 当被唤醒时，如果任务未入队，则将其重新加入队列
         // 实际实现略...
@@ -407,7 +407,7 @@ impl SimpleExecutor {
 **定理 3.2 (调度公平性)**：对于任意调度策略D，如果D满足以下条件，则称D是公平的：
 
 ```math
-∀t∈T. (∃n∈ℕ. ∀h∈H. |{t'∈ready(h) | priority(t') > priority(t)}| < n) 
+∀t∈T. (∃n∈ℕ. ∀h∈H. |{t'∈ready(h) | priority(t') > priority(t)}| < n)
     ⇒ ◇scheduled(t)
 ```
 
@@ -444,7 +444,7 @@ struct MyWakerData {
 unsafe fn wake_raw(data: *const ()) {
     let data = data as *const MyWakerData;
     let data = &*data;
-    
+
     let mut queue = data.task_queue.lock().unwrap();
     if !queue.contains(&data.task_id) {
         queue.push_back(data.task_id);
@@ -456,7 +456,7 @@ unsafe fn clone_raw(data: *const ()) -> RawWaker {
     let data_ref = Arc::from_raw(data as *const MyWakerData);
     let cloned = Arc::clone(&data_ref);
     std::mem::forget(data_ref); // 防止减少原始引用计数
-    
+
     let data_ptr = Arc::into_raw(cloned);
     RawWaker::new(data_ptr as *const (), &VTABLE)
 }
@@ -476,7 +476,7 @@ const VTABLE: RawWakerVTable = RawWakerVTable::new(
 fn create_waker(task_id: usize, task_queue: Arc<Mutex<VecDeque<usize>>>) -> Waker {
     let data = Arc::new(MyWakerData { task_id, task_queue });
     let data_ptr = Arc::into_raw(data);
-    
+
     unsafe {
         Waker::from_raw(RawWaker::new(
             data_ptr as *const (),
@@ -515,15 +515,15 @@ impl LogicalClock {
     fn new(node_id: u32) -> Self {
         Self { counter: 0, node_id }
     }
-    
+
     fn tick(&mut self) {
         self.counter += 1;
     }
-    
+
     fn update(&mut self, other: LogicalClock) {
         self.counter = std::cmp::max(self.counter, other.counter) + 1;
     }
-    
+
     fn timestamp(&self) -> (u64, u32) {
         (self.counter, self.node_id)
     }
@@ -536,12 +536,12 @@ async fn process_message(
 ) -> LogicalClock {
     // 更新本地逻辑时钟
     clock.update(message.timestamp);
-    
+
     // 处理消息...
-    
+
     // 为下一个操作递增时钟
     clock.tick();
-    
+
     clock
 }
 
@@ -553,17 +553,17 @@ async fn send_message(
 ) -> Result<LogicalClock, Error> {
     // 递增时钟
     clock.tick();
-    
+
     // 创建带时间戳的消息
     let message = Message {
         content,
         timestamp: clock,
         // 其他字段...
     };
-    
+
     // 发送消息
     send_to_node(destination, message).await?;
-    
+
     Ok(clock)
 }
 ```
@@ -604,13 +604,13 @@ impl GCounter {
         counts.insert(node_id, 0);
         Self { counts, node_id }
     }
-    
+
     // 增加本地计数
     fn increment(&mut self, amount: u64) {
         let count = self.counts.entry(self.node_id).or_insert(0);
         *count += amount;
     }
-    
+
     // 合并两个计数器，采用每个位置的最大值
     fn merge(&mut self, other: &GCounter) {
         for (node, &count) in &other.counts {
@@ -618,7 +618,7 @@ impl GCounter {
             *entry = std::cmp::max(*entry, count);
         }
     }
-    
+
     // 获取总计数
     fn value(&self) -> u64 {
         self.counts.values().sum()
@@ -637,7 +637,7 @@ async fn sync_counter(
             counter.merge(&peer_counter);
         }
     }
-    
+
     // 将更新后的计数器发送给所有对等节点
     broadcast_counter(counter.clone(), peers).await
 }
@@ -678,30 +678,30 @@ impl FailureDetector {
             suspected: HashSet::new(),
         }
     }
-    
+
     // 接收心跳
     fn heartbeat(&mut self, node_id: NodeId) {
         self.last_heartbeats.insert(node_id, Instant::now());
         // 如果节点之前被怀疑，现在恢复了
         self.suspected.remove(&node_id);
     }
-    
+
     // 检查超时节点
     fn check_timeouts(&mut self) -> Vec<NodeId> {
         let now = Instant::now();
         let mut newly_suspected = Vec::new();
-        
+
         for (&node_id, &last_time) in &self.last_heartbeats {
-            if now.duration_since(last_time) > self.timeout && 
+            if now.duration_since(last_time) > self.timeout &&
                !self.suspected.contains(&node_id) {
                 self.suspected.insert(node_id);
                 newly_suspected.push(node_id);
             }
         }
-        
+
         newly_suspected
     }
-    
+
     // 获取当前怀疑列表
     fn get_suspected(&self) -> &HashSet<NodeId> {
         &self.suspected
@@ -715,14 +715,14 @@ async fn run_failure_detector(
     notify_tx: mpsc::Sender<Vec<NodeId>>,
 ) {
     let mut interval = tokio::time::interval(Duration::from_secs(1));
-    
+
     loop {
         tokio::select! {
             // 接收心跳
             Some(node_id) = heartbeat_rx.recv() => {
                 detector.heartbeat(node_id);
             }
-            
+
             // 定期检查超时
             _ = interval.tick() => {
                 let newly_suspected = detector.check_timeouts();
@@ -796,11 +796,11 @@ impl RaftNode {
         self.state = RaftState::Candidate;
         self.current_term += 1;
         self.voted_for = Some(self.id); // 给自己投票
-        
+
         // 请求投票
         let vote_requests = self.create_vote_requests();
         let votes = self.request_votes(vote_requests).await;
-        
+
         // 计算收到的投票
         if votes > self.cluster.majority() {
             // 赢得选举，成为领导者
@@ -810,7 +810,7 @@ impl RaftNode {
             self.state = RaftState::Follower;
         }
     }
-    
+
     // 处理追随者状态下的附加日志RPC
     async fn handle_append_entries(
         &mut self,
@@ -823,17 +823,17 @@ impl RaftNode {
                 success: false,
             };
         }
-        
+
         // 如果请求任期大于当前任期，更新任期并转为追随者
         if request.term > self.current_term {
             self.current_term = request.term;
             self.state = RaftState::Follower;
             self.voted_for = None;
         }
-        
+
         // 重置选举计时器
         self.reset_election_timer();
-        
+
         // 验证日志匹配
         if !self.verify_log_matching(&request) {
             return AppendEntriesResponse {
@@ -841,10 +841,10 @@ impl RaftNode {
                 success: false,
             };
         }
-        
+
         // 追加新日志
         self.append_new_entries(&request);
-        
+
         // 更新提交索引
         if request.leader_commit > self.commit_index {
             self.commit_index = std::cmp::min(
@@ -852,13 +852,13 @@ impl RaftNode {
                 self.log.len() as u64,
             );
         }
-        
+
         AppendEntriesResponse {
             term: self.current_term,
             success: true,
         }
     }
-    
+
     // 其他方法实现...
 }
 ```
@@ -896,17 +896,17 @@ impl RedisLock {
             ttl_ms,
         }
     }
-    
+
     /// 尝试获取锁
     async fn acquire(&self) -> Result<bool, RedisError> {
         // 使用SET NX EX命令尝试原子性地获取锁
         let result: Option<String> = self.redis
             .set_nx_ex(&self.key, &self.value, self.ttl_ms / 1000)
             .await?;
-        
+
         Ok(result.is_some())
     }
-    
+
     /// 释放锁，确保只有锁的持有者能释放
     async fn release(&self) -> Result<bool, RedisError> {
         // 使用Lua脚本原子性地检查和删除锁
@@ -917,14 +917,14 @@ impl RedisLock {
                 return 0
             end
         "#;
-        
+
         let result: i64 = self.redis
             .eval(script, &[&self.key], &[&self.value])
             .await?;
-        
+
         Ok(result == 1)
     }
-    
+
     /// 刷新锁的租约
     async fn refresh(&self) -> Result<bool, RedisError> {
         // 使用Lua脚本原子性地检查和更新过期时间
@@ -938,18 +938,18 @@ impl RedisLock {
                 return 0
             end
         "#;
-        
+
         let result: i64 = self.redis
             .eval(
-                script, 
-                &[&self.key], 
+                script,
+                &[&self.key],
                 &[&self.value, &(self.ttl_ms / 1000).to_string()]
             )
             .await?;
-        
+
         Ok(result == 1)
     }
-    
+
     /// 在锁保护的代码块上执行操作
     async fn with_lock<F, T>(&self, operation: F) -> Result<Option<T>, RedisError>
     where
@@ -960,7 +960,7 @@ impl RedisLock {
         if !self.acquire().await? {
             return Ok(None); // 未获得锁
         }
-        
+
         // 创建锁刷新任务
         let refresh_lock = {
             let self_clone = self.clone();
@@ -968,7 +968,7 @@ impl RedisLock {
                 let mut interval = tokio::time::interval(
                     Duration::from_millis(self_clone.ttl_ms / 3)
                 );
-                
+
                 loop {
                     interval.tick().await;
                     match self_clone.refresh().await {
@@ -978,16 +978,16 @@ impl RedisLock {
                 }
             })
         };
-        
+
         // 执行保护的操作
         let result = operation.await;
-        
+
         // 停止刷新任务
         refresh_lock.abort();
-        
+
         // 释放锁
         let _ = self.release().await;
-        
+
         Ok(Some(result))
     }
 }
@@ -1034,22 +1034,22 @@ impl<T: Send + 'static> Pipeline<T> {
             buffer_size,
         }
     }
-    
+
     fn add_stage<S: Stage<T> + 'static>(&mut self, stage: S) {
         self.stages.push(Box::new(stage));
     }
-    
+
     async fn process(&self, input: impl Stream<Item = T>) -> impl Stream<Item = Result<T, PipelineError>> {
         let (mut tx, rx) = mpsc::channel(self.buffer_size);
-        
+
         // 将输入流发送到第一个阶段
         let stages = self.stages.clone();
         tokio::spawn(async move {
             tokio::pin!(input);
-            
+
             while let Some(item) = input.next().await {
                 let mut current_item = item;
-                
+
                 // 通过所有阶段处理项目
                 for stage in &stages {
                     match stage.process(current_item).await {
@@ -1062,17 +1062,17 @@ impl<T: Send + 'static> Pipeline<T> {
                         }
                     }
                 }
-                
+
                 // 发送最终处理结果
                 if tx.send(Ok(current_item)).await.is_err() {
                     break;
                 }
             }
         });
-        
+
         tokio_stream::wrappers::ReceiverStream::new(rx)
     }
-    
+
     /// 并行执行流水线，每个阶段有多个工作者
     async fn process_parallel(
         &self,
@@ -1080,13 +1080,13 @@ impl<T: Send + 'static> Pipeline<T> {
         workers_per_stage: usize,
     ) -> impl Stream<Item = Result<T, PipelineError>> {
         let (result_tx, result_rx) = mpsc::channel(self.buffer_size);
-        
+
         // 创建每个阶段的通道
         let mut channels = Vec::new();
         for _ in 0..self.stages.len() {
             channels.push(mpsc::channel(self.buffer_size));
         }
-        
+
         // 启动工作者
         for (i, stage) in self.stages.iter().enumerate() {
             let (in_tx, in_rx) = if i == 0 {
@@ -1096,7 +1096,7 @@ impl<T: Send + 'static> Pipeline<T> {
                 // 从前一阶段接收
                 (None, Some(channels[i-1].1.clone()))
             };
-            
+
             let (out_tx, out_rx) = if i == self.stages.len() - 1 {
                 // 最后阶段输出到结果
                 (Some(result_tx.clone()), None)
@@ -1104,25 +1104,25 @@ impl<T: Send + 'static> Pipeline<T> {
                 // 输出到下一阶段
                 (Some(channels[i].0.clone()), None)
             };
-            
+
             // 为每个阶段创建多个工作者
             for _ in 0..workers_per_stage {
                 let stage = stage.clone();
                 let in_rx = in_rx.clone();
                 let out_tx = out_tx.clone();
-                
+
                 tokio::spawn(async move {
                     // 工作者处理逻辑
                     // ...
                 });
             }
         }
-        
+
         // 输入分配器
         tokio::spawn(async move {
             tokio::pin!(input);
             let mut index = 0;
-            
+
             while let Some(item) = input.next().await {
                 if let Some(tx) = &channels[0].0 {
                     if tx.send(item).await.is_err() {
@@ -1131,7 +1131,7 @@ impl<T: Send + 'static> Pipeline<T> {
                 }
             }
         });
-        
+
         tokio_stream::wrappers::ReceiverStream::new(result_rx)
     }
 }
@@ -1161,16 +1161,16 @@ impl<T: Send + 'static> Pipeline<T> {
 
 ```rust
 /// 范畴论视角下的Future组合
-struct AsyncCat<A, B, F> 
-where 
+struct AsyncCat<A, B, F>
+where
     F: Future<Output = B>
 {
     _phantom_a: PhantomData<A>,
     future: F,
 }
 
-impl<A, B, F> AsyncCat<A, B, F> 
-where 
+impl<A, B, F> AsyncCat<A, B, F>
+where
     F: Future<Output = B>
 {
     /// 创建态射 A -> B
@@ -1180,7 +1180,7 @@ where
             future,
         }
     }
-    
+
     /// 与另一个异步计算组合，形成链式计算
     fn compose<C, G, H>(self, g: AsyncCat<B, C, G>) -> AsyncCat<A, C, H>
     where
@@ -1192,10 +1192,10 @@ where
             let b = self.future.await;
             g.future.await
         };
-        
+
         AsyncCat::new(composed_future)
     }
-    
+
     /// 单位态射，立即完成的异步计算
     fn identity(value: A) -> AsyncCat<A, A, impl Future<Output = A>>
     where
@@ -1203,7 +1203,7 @@ where
     {
         AsyncCat::new(future::ready(value))
     }
-    
+
     /// 映射函数，将异步计算的结果转换为另一类型
     fn map<C, Func>(self, f: Func) -> AsyncCat<A, C, impl Future<Output = C>>
     where
@@ -1215,10 +1215,10 @@ where
             let b = self.future.await;
             f(b)
         };
-        
+
         AsyncCat::new(mapped_future)
     }
-    
+
     /// 绑定函数，单子的绑定操作(>>=)
     fn bind<C, Func, G>(
         self,
@@ -1235,7 +1235,7 @@ where
             let next = f(b);
             next.future.await
         };
-        
+
         AsyncCat::new(bound_future)
     }
 }
@@ -1272,12 +1272,12 @@ impl<T> Effect<T> {
     fn pure(value: T) -> Self {
         Effect::Pure(value)
     }
-    
+
     /// 创建等待效应
     fn await_fut<F: Future<Output = T> + 'static>(future: F) -> Self {
         Effect::Await(Box::pin(future))
     }
-    
+
     /// 顺序组合效应
     fn then<U, F, G>(self, f: F) -> Effect<U>
     where
@@ -1292,7 +1292,7 @@ impl<T> Effect<T> {
                     let value = future.await;
                     value
                 };
-                
+
                 Effect::ThenDo(
                     Box::pin(mapped),
                     Box::new(move || f(/* value */)) // 简化实现
@@ -1306,7 +1306,7 @@ impl<T> Effect<T> {
             }
         }
     }
-    
+
     /// 执行效应，类似于效应处理器
     async fn run(self) -> T {
         match self {
@@ -1325,14 +1325,14 @@ async fn effect_example() -> i32 {
     // 创建一些效应
     let effect1 = Effect::await_fut(async { 1 });
     let effect2 = Effect::await_fut(async { 2 });
-    
+
     // 组合效应
     let combined = effect1.then(|a| {
         effect2.then(move |b| {
             Effect::pure(a + b)
         })
     });
-    
+
     // 运行效应
     combined.run().await
 }
@@ -1379,11 +1379,11 @@ impl Connection<Closed> {
             _state: PhantomData,
         }
     }
-    
+
     /// 连接到服务器，转换为Connected状态
     async fn connect(self, addr: SocketAddr) -> Result<Connection<Connected>, Error> {
         let socket = TcpStream::connect(addr).await?;
-        
+
         Ok(Connection {
             socket,
             _state: PhantomData,
@@ -1403,15 +1403,15 @@ impl Connection<Connected> {
             username: username.to_string(),
             password: password.to_string(),
         };
-        
+
         self.socket.write_all(&serialize(&auth_request)).await?;
-        
+
         // 接收认证响应
         let mut buf = [0u8; 1024];
         let n = self.socket.read(&mut buf).await?;
-        
+
         let response: AuthResponse = deserialize(&buf[..n])?;
-        
+
         if response.success {
             Ok(Connection {
                 socket: self.socket,
@@ -1429,13 +1429,13 @@ impl Connection<Authenticated> {
         // 发送准备请求
         let prepare_request = PrepareRequest { version: 1 };
         self.socket.write_all(&serialize(&prepare_request)).await?;
-        
+
         // 接收准备响应
         let mut buf = [0u8; 1024];
         let n = self.socket.read(&mut buf).await?;
-        
+
         let response: PrepareResponse = deserialize(&buf[..n])?;
-        
+
         if response.ready {
             Ok(Connection {
                 socket: self.socket,
@@ -1452,24 +1452,24 @@ impl Connection<Ready> {
     async fn send_command(&mut self, command: Command) -> Result<Response, Error> {
         // 发送命令
         self.socket.write_all(&serialize(&command)).await?;
-        
+
         // 接收响应
         let mut buf = [0u8; 4096];
         let n = self.socket.read(&mut buf).await?;
-        
+
         let response: Response = deserialize(&buf[..n])?;
         Ok(response)
     }
-    
+
     /// 关闭连接，回到Closed状态
     async fn close(self) -> Result<Connection<Closed>, Error> {
         // 发送关闭请求
         let close_request = CloseRequest {};
         self.socket.write_all(&serialize(&close_request)).await?;
-        
+
         // 不等待响应，直接关闭
         drop(self.socket);
-        
+
         Ok(Connection {
             socket: TcpStream::new().unwrap(),
             _state: PhantomData,
@@ -1483,14 +1483,14 @@ async fn use_connection() -> Result<(), Error> {
     let conn = conn.connect("127.0.0.1:8080".parse()?).await?;
     let conn = conn.authenticate("username", "password").await?;
     let mut conn = conn.prepare().await?;
-    
+
     // 现在连接已准备好，可以发送命令
     let response = conn.send_command(Command::Get { key: "test".to_string() }).await?;
     println!("Got response: {:?}", response);
-    
+
     // 关闭连接
     let _conn = conn.close().await?;
-    
+
     Ok(())
 }
 ```
@@ -1547,16 +1547,16 @@ where
             lambda: Box::new(lambda),
         }
     }
-    
+
     /// 处理事件并产生输出
     fn process(&mut self, event: &E) -> O {
         // 应用状态转移
         self.state = (self.delta)(&self.state, event);
-        
+
         // 计算输出
         (self.lambda)(&self.state)
     }
-    
+
     /// 并行组合两个响应式系统
     fn parallel<E2, S2, O2>(
         self,
@@ -1571,7 +1571,7 @@ where
         let delta2 = other.delta;
         let lambda1 = self.lambda;
         let lambda2 = other.lambda;
-        
+
         ReactiveSystem::new(
             (self.state, other.state),
             move |state: &(S, S2), event: &Either<E, E2>| {
@@ -1591,7 +1591,7 @@ where
             },
         )
     }
-    
+
     /// 序列组合两个响应式系统
     fn sequential<S2, O2>(
         self,
@@ -1606,7 +1606,7 @@ where
         let delta2 = other.delta;
         let lambda1 = self.lambda;
         let lambda2 = other.lambda;
-        
+
         ReactiveSystem::new(
             (self.state, other.state),
             move |state: &(S, S2), event: &E| {
@@ -1636,12 +1636,12 @@ fn reactive_example() {
         },
         |state: &i32| *state,
     );
-    
+
     // 处理事件
     let output1 = counter.process(&"inc");
     let output2 = counter.process(&"inc");
     let output3 = counter.process(&"dec");
-    
+
     assert_eq!(output1, 1);
     assert_eq!(output2, 2);
     assert_eq!(output3, 1);
@@ -1688,7 +1688,7 @@ impl<T> BackpressureChannel<T> {
     /// 创建新的背压通道
     fn new(capacity: usize, high_pct: f64, low_pct: f64) -> Self {
         let (sender, receiver) = mpsc::channel(capacity);
-        
+
         Self {
             sender,
             receiver,
@@ -1697,33 +1697,33 @@ impl<T> BackpressureChannel<T> {
             is_applying_backpressure: AtomicBool::new(false),
         }
     }
-    
+
     /// 发送数据，带背压控制
     async fn send(&self, item: T) -> Result<(), mpsc::error::SendError<T>> {
         // 检查当前队列长度
         let current_len = self.sender.capacity().unwrap_or(0) - self.sender.available_permits();
-        
+
         // 根据水位线应用背压
         if current_len >= self.high_watermark {
             self.is_applying_backpressure.store(true, Ordering::SeqCst);
-            
+
             // 等待队列长度降低到低水位线以下
             while current_len > self.low_watermark {
                 tokio::time::sleep(Duration::from_millis(10)).await;
             }
-            
+
             self.is_applying_backpressure.store(false, Ordering::SeqCst);
         }
-        
+
         // 发送数据
         self.sender.send(item).await
     }
-    
+
     /// 接收数据
     async fn recv(&mut self) -> Option<T> {
         self.receiver.recv().await
     }
-    
+
     /// 检查是否正在应用背压
     fn is_backpressuring(&self) -> bool {
         self.is_applying_backpressure.load(Ordering::SeqCst)
@@ -1751,12 +1751,12 @@ impl TokenBucket {
             last_fill: Mutex::new(Instant::now()),
         }
     }
-    
+
     /// 尝试获取令牌
     async fn acquire(&self, count: usize) -> bool {
         // 先填充令牌
         self.fill().await;
-        
+
         // 尝试原子地减少令牌
         let result = self.tokens.fetch_update(
             Ordering::SeqCst,
@@ -1769,16 +1769,16 @@ impl TokenBucket {
                 }
             },
         );
-        
+
         result.is_ok()
     }
-    
+
     /// 填充令牌
     async fn fill(&self) {
         let mut last_fill = self.last_fill.lock().await;
         let now = Instant::now();
         let elapsed = now.duration_since(*last_fill).as_secs_f64();
-        
+
         // 计算新令牌数
         let new_tokens = (elapsed * self.fill_rate) as usize;
         if new_tokens > 0 {
@@ -1786,7 +1786,7 @@ impl TokenBucket {
             let current = self.tokens.load(Ordering::SeqCst);
             let new_count = std::cmp::min(current + new_tokens, self.capacity);
             self.tokens.store(new_count, Ordering::SeqCst);
-            
+
             // 更新填充时间
             *last_fill = now;
         }
@@ -1854,7 +1854,7 @@ impl CircuitBreaker {
             last_state_change: RwLock::new(Instant::now()),
         }
     }
-    
+
     /// 执行受断路器保护的操作
     async fn execute<F, T, E>(&self, f: F) -> Result<T, E>
     where
@@ -1870,14 +1870,14 @@ impl CircuitBreaker {
                     // 切换到半开状态
                     let mut state = self.state.write().await;
                     *state = CircuitState::HalfOpen;
-                    
+
                     // 重置计数器
                     self.success_count.store(0, Ordering::SeqCst);
-                    
+
                     // 更新状态改变时间
                     let mut last_change = self.last_state_change.write().await;
                     *last_change = Instant::now();
-                    
+
                     drop(state);
                     drop(last_change);
                 } else {
@@ -1889,7 +1889,7 @@ impl CircuitBreaker {
                 // 允许执行
             }
         }
-        
+
         // 执行操作
         match f.await {
             Ok(result) => {
@@ -1898,15 +1898,15 @@ impl CircuitBreaker {
                     CircuitState::HalfOpen => {
                         // 在半开状态下，增加成功计数
                         let success_count = self.success_count.fetch_add(1, Ordering::SeqCst) + 1;
-                        
+
                         if success_count >= self.config.success_threshold {
                             // 成功次数达到阈值，切换回闭合状态
                             let mut state = self.state.write().await;
                             *state = CircuitState::Closed;
-                            
+
                             // 重置计数器
                             self.failure_count.store(0, Ordering::SeqCst);
-                            
+
                             // 更新状态改变时间
                             let mut last_change = self.last_state_change.write().await;
                             *last_change = Instant::now();
@@ -1918,7 +1918,7 @@ impl CircuitBreaker {
                     }
                     _ => {}
                 }
-                
+
                 Ok(result)
             }
             Err(err) => {
@@ -1927,12 +1927,12 @@ impl CircuitBreaker {
                     CircuitState::Closed => {
                         // 在闭合状态下，增加失败计数
                         let failure_count = self.failure_count.fetch_add(1, Ordering::SeqCst) + 1;
-                        
+
                         if failure_count >= self.config.failure_threshold {
                             // 失败次数达到阈值，切换到断开状态
                             let mut state = self.state.write().await;
                             *state = CircuitState::Open;
-                            
+
                             // 更新状态
 
 ```rust
@@ -1945,19 +1945,19 @@ impl CircuitBreaker {
                         // 在半开状态下，任何失败都会使断路器回到断开状态
                         let mut state = self.state.write().await;
                         *state = CircuitState::Open;
-                        
+
                         // 更新状态改变时间
                         let mut last_change = self.last_state_change.write().await;
                         *last_change = Instant::now();
                     }
                     _ => {}
                 }
-                
+
                 Err(err)
             }
         }
     }
-    
+
     /// 获取当前状态
     async fn get_state(&self) -> CircuitState {
         *self.state.read().await
@@ -2000,16 +2000,16 @@ impl RetryPolicy {
             should_retry: Box::new(should_retry),
         }
     }
-    
+
     /// 计算第n次重试的延迟
     fn calculate_delay(&self, retry: usize) -> Duration {
-        let delay = self.base_delay.as_millis() as f64 * 
+        let delay = self.base_delay.as_millis() as f64 *
             self.backoff_factor.powi(retry as i32);
-        
+
         let delay = delay.min(self.max_delay.as_millis() as f64);
         Duration::from_millis(delay as u64)
     }
-    
+
     /// 执行带重试的操作
     async fn execute<F, Fut, T, E>(&self, operation: F) -> Result<T, E>
     where
@@ -2018,23 +2018,23 @@ impl RetryPolicy {
         E: std::error::Error + 'static,
     {
         let mut attempt = 0;
-        
+
         loop {
             match operation().await {
                 Ok(result) => return Ok(result),
                 Err(err) => {
                     attempt += 1;
-                    
+
                     // 检查是否已达到最大重试次数
                     if attempt > self.max_retries {
                         return Err(err);
                     }
-                    
+
                     // 检查是否应该重试这种错误
                     if !(self.should_retry)(&err) {
                         return Err(err);
                     }
-                    
+
                     // 计算并等待退避时间
                     let delay = self.calculate_delay(attempt);
                     tokio::time::sleep(delay).await;
@@ -2088,11 +2088,11 @@ where
     // 使用断路器包装操作
     let cb_op = || {
         let op = operation.clone();
-        
+
         async move {
             // 使用超时包装操作
             let timeout_op = with_timeout(op(), timeout);
-            
+
             match timeout_op.await {
                 Ok(result) => Ok(result),
                 Err(TimeoutError::Timeout) => {
@@ -2104,10 +2104,10 @@ where
             }
         }
     };
-    
+
     // 使用断路器执行
     let cb_result = circuit_breaker.execute(cb_op()).await;
-    
+
     match cb_result {
         Ok(result) => Ok(result),
         Err(ResilienceError::CircuitOpen) => {
@@ -2120,7 +2120,7 @@ where
                     // 再次尝试，但不经过断路器（避免重复计数）
                     let op = operation.clone();
                     let timeout_op = with_timeout(op(), timeout);
-                    
+
                     match timeout_op.await {
                         Ok(result) => Ok(result),
                         Err(TimeoutError::Timeout) => {

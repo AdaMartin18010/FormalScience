@@ -1,25 +1,22 @@
-# 使用 Rust 2024 版本中的 `gen` 与 Tokio 结合使用
-
-下面详细介绍 Rust 2024 版本中 `gen` 与 Tokio 的结合使用方法。
-我们将通过多个场景和示例来展示其功能和用法。
+# 1. 使用 Rust 2024 版本中的 `gen` 与 Tokio 结合使用
 
 ## 目录
 
-- [使用 Rust 2024 版本中的 `gen` 与 Tokio 结合使用](#使用-rust-2024-版本中的-gen-与-tokio-结合使用)
+- [1. 使用 Rust 2024 版本中的 `gen` 与 Tokio 结合使用](#1-使用-rust-2024-版本中的-gen-与-tokio-结合使用)
   - [目录](#目录)
-  - [1. 基础配置](#1-基础配置)
-  - [2. 基本的 Generator 实现](#2-基本的-generator-实现)
-  - [3. 结合 Tokio 的异步 Generator](#3-结合-tokio-的异步-generator)
-  - [4. 异步流生成器](#4-异步流生成器)
-  - [5. 带状态的异步生成器](#5-带状态的异步生成器)
-  - [6. 错误处理与生成器](#6-错误处理与生成器)
-  - [7. 并发生成器](#7-并发生成器)
-  - [8. 资源管理生成器](#8-资源管理生成器)
-  - [9. 带超时的生成器](#9-带超时的生成器)
-  - [10. 可取消的生成器](#10-可取消的生成器)
-  - [11. 组合多个生成器](#11-组合多个生成器)
+  - [1.1 基础配置](#11-基础配置)
+  - [1.2 基本的 Generator 实现](#12-基本的-generator-实现)
+  - [1.3 结合 Tokio 的异步 Generator](#13-结合-tokio-的异步-generator)
+  - [1.4 异步流生成器](#14-异步流生成器)
+  - [1.5 带状态的异步生成器](#15-带状态的异步生成器)
+  - [1.6 错误处理与生成器](#16-错误处理与生成器)
+  - [1.7 并发生成器](#17-并发生成器)
+  - [1.8 资源管理生成器](#18-资源管理生成器)
+  - [1.9 带超时的生成器](#19-带超时的生成器)
+  - [1.10 可取消的生成器](#110-可取消的生成器)
+  - [1.11 组合多个生成器](#111-组合多个生成器)
 
-## 1. 基础配置
+## 1.1 基础配置
 
 首先在 `Cargo.toml` 中添加必要的依赖：
 
@@ -31,7 +28,7 @@ async-stream = "0.3"
 pin-project = "1.0"
 ```
 
-## 2. 基本的 Generator 实现
+## 1.2 基本的 Generator 实现
 
 ```rust
 #![feature(gen_blocks)]
@@ -59,7 +56,7 @@ fn main() {
 }
 ```
 
-## 3. 结合 Tokio 的异步 Generator
+## 1.3 结合 Tokio 的异步 Generator
 
 ```rust
 use tokio::time::{sleep, Duration};
@@ -108,7 +105,7 @@ async fn main() {
 }
 ```
 
-## 4. 异步流生成器
+## 1.4 异步流生成器
 
 ```rust
 use async_stream::stream;
@@ -134,7 +131,7 @@ async fn main() {
 }
 ```
 
-## 5. 带状态的异步生成器
+## 1.5 带状态的异步生成器
 
 ```rust
 struct StateGenerator {
@@ -161,14 +158,14 @@ impl StateGenerator {
 async fn main() {
     let mut gen = StateGenerator::new();
     let mut stream = Box::pin(gen.generate());
-    
+
     while let Some(value) = stream.next().await {
         println!("State: {}", value);
     }
 }
 ```
 
-## 6. 错误处理与生成器
+## 1.6 错误处理与生成器
 
 ```rust
 use std::error::Error;
@@ -191,7 +188,7 @@ fn generate_with_error() -> impl Stream<Item = Result<i32>> {
 #[tokio::main]
 async fn main() {
     let mut stream = Box::pin(generate_with_error());
-    
+
     while let Some(result) = stream.next().await {
         match result {
             Ok(value) => println!("Value: {}", value),
@@ -201,7 +198,7 @@ async fn main() {
 }
 ```
 
-## 7. 并发生成器
+## 1.7 并发生成器
 
 ```rust
 use tokio::sync::mpsc;
@@ -209,7 +206,7 @@ use futures::StreamExt;
 
 async fn concurrent_generator() {
     let (tx, mut rx) = mpsc::channel(10);
-    
+
     // 生成器任务
     let generator = tokio::spawn(async move {
         let stream = stream! {
@@ -218,18 +215,18 @@ async fn concurrent_generator() {
                 yield i;
             }
         };
-        
+
         let mut stream = Box::pin(stream);
         while let Some(value) = stream.next().await {
             tx.send(value).await.unwrap();
         }
     });
-    
+
     // 消费者任务
     while let Some(value) = rx.recv().await {
         println!("Received: {}", value);
     }
-    
+
     generator.await.unwrap();
 }
 
@@ -239,7 +236,7 @@ async fn main() {
 }
 ```
 
-## 8. 资源管理生成器
+## 1.8 资源管理生成器
 
 ```rust
 struct Resource {
@@ -251,7 +248,7 @@ impl Resource {
         sleep(Duration::from_millis(100)).await;
         Self { id }
     }
-    
+
     async fn cleanup(&self) {
         sleep(Duration::from_millis(100)).await;
         println!("Cleaning up resource {}", self.id);
@@ -270,7 +267,7 @@ fn resource_generator() -> impl Stream<Item = Resource> {
 #[tokio::main]
 async fn main() {
     let mut resources = Box::pin(resource_generator());
-    
+
     while let Some(resource) = resources.next().await {
         println!("Using resource {}", resource.id);
         resource.cleanup().await;
@@ -278,7 +275,7 @@ async fn main() {
 }
 ```
 
-## 9. 带超时的生成器
+## 1.9 带超时的生成器
 
 ```rust
 use tokio::time::timeout;
@@ -290,7 +287,7 @@ async fn generator_with_timeout() {
             yield i;
         }
     };
-    
+
     let mut stream = Box::pin(stream);
     while let Some(value) = stream.next().await {
         match timeout(Duration::from_millis(500), async move { value }).await {
@@ -306,7 +303,7 @@ async fn main() {
 }
 ```
 
-## 10. 可取消的生成器
+## 1.10 可取消的生成器
 
 ```rust
 use tokio::select;
@@ -314,7 +311,7 @@ use tokio::sync::oneshot;
 
 async fn cancellable_generator() {
     let (tx, rx) = oneshot::channel();
-    
+
     let generator = tokio::spawn(async move {
         let stream = stream! {
             for i in 0..10 {
@@ -322,17 +319,17 @@ async fn cancellable_generator() {
                 yield i;
             }
         };
-        
+
         let mut stream = Box::pin(stream);
         while let Some(value) = stream.next().await {
             println!("Generated: {}", value);
         }
     });
-    
+
     // 3秒后取消生成器
     sleep(Duration::from_secs(3)).await;
     tx.send(()).unwrap();
-    
+
     generator.await.unwrap();
 }
 
@@ -342,7 +339,7 @@ async fn main() {
 }
 ```
 
-## 11. 组合多个生成器
+## 1.11 组合多个生成器
 
 ```rust
 use futures::stream::select;
@@ -354,14 +351,14 @@ fn combined_generators() -> impl Stream<Item = i32> {
             yield i;
         }
     };
-    
+
     let gen2 = stream! {
         for i in 3..6 {
             sleep(Duration::from_millis(150)).await;
             yield i;
         }
     };
-    
+
     select(gen1, gen2)
 }
 

@@ -1,46 +1,46 @@
 
-# Rust异步编程的形式化研究：未来方向深度探索
+# 1. Rust异步编程的形式化研究：未来方向深度探索
 
 ## 目录
 
-- [Rust异步编程的形式化研究：未来方向深度探索](#rust异步编程的形式化研究未来方向深度探索)
+- [1. Rust异步编程的形式化研究：未来方向深度探索](#1-rust异步编程的形式化研究未来方向深度探索)
   - [目录](#目录)
-  - [引言](#引言)
-  - [形式化验证工具](#形式化验证工具)
-    - [模型检查理论](#模型检查理论)
-    - [死锁检测形式化](#死锁检测形式化)
-    - [活锁与饥饿分析](#活锁与饥饿分析)
-    - [并发问题验证工具原型](#并发问题验证工具原型)
-  - [静态类型状态分析](#静态类型状态分析)
-    - [类型状态系统形式化](#类型状态系统形式化)
-    - [异步状态机验证](#异步状态机验证)
-    - [类型驱动异步编程](#类型驱动异步编程)
-    - [会话类型与通信安全](#会话类型与通信安全)
-  - [异步执行器形式化设计](#异步执行器形式化设计)
-    - [调度理论与形式规约](#调度理论与形式规约)
-    - [性能模型与分析](#性能模型与分析)
-    - [形式化验证的执行器](#形式化验证的执行器)
-    - [工作窃取调度证明](#工作窃取调度证明)
-  - [异步分布式算法证明](#异步分布式算法证明)
-    - [交互式定理证明系统](#交互式定理证明系统)
-    - [共识算法形式化验证](#共识算法形式化验证)
-  - [形式化方法与类型理论](#形式化方法与类型理论)
-    - [依赖类型与形式化验证](#依赖类型与形式化验证)
-    - [使用依赖类型进行程序验证](#使用依赖类型进行程序验证)
-  - [分布式系统模型验证](#分布式系统模型验证)
-    - [实时系统形式化验证](#实时系统形式化验证)
-  - [混合系统验证](#混合系统验证)
-  - [总结与展望](#总结与展望)
+  - [1.1 引言](#11-引言)
+  - [1.2 形式化验证工具](#12-形式化验证工具)
+    - [1.2.1 模型检查理论](#121-模型检查理论)
+    - [1.2.2 死锁检测形式化](#122-死锁检测形式化)
+    - [1.2.3 活锁与饥饿分析](#123-活锁与饥饿分析)
+    - [1.2.4 并发问题验证工具原型](#124-并发问题验证工具原型)
+  - [1.3 静态类型状态分析](#13-静态类型状态分析)
+    - [1.3.1 类型状态系统形式化](#131-类型状态系统形式化)
+    - [1.3.2 异步状态机验证](#132-异步状态机验证)
+    - [1.3.3 类型驱动异步编程](#133-类型驱动异步编程)
+    - [1.3.4 会话类型与通信安全](#134-会话类型与通信安全)
+  - [1.4 异步执行器形式化设计](#14-异步执行器形式化设计)
+    - [1.4.1 调度理论与形式规约](#141-调度理论与形式规约)
+    - [1.4.2 性能模型与分析](#142-性能模型与分析)
+    - [1.4.3 形式化验证的执行器](#143-形式化验证的执行器)
+    - [1.4.4 工作窃取调度证明](#144-工作窃取调度证明)
+  - [1.5 异步分布式算法证明](#15-异步分布式算法证明)
+    - [1.5.1 交互式定理证明系统](#151-交互式定理证明系统)
+    - [1.5.2 共识算法形式化验证](#152-共识算法形式化验证)
+  - [1.6 形式化方法与类型理论](#16-形式化方法与类型理论)
+    - [1.6.1 依赖类型与形式化验证](#161-依赖类型与形式化验证)
+    - [1.6.2 使用依赖类型进行程序验证](#162-使用依赖类型进行程序验证)
+  - [1.7 分布式系统模型验证](#17-分布式系统模型验证)
+    - [1.7.1 实时系统形式化验证](#171-实时系统形式化验证)
+  - [1.8 混合系统验证](#18-混合系统验证)
+  - [1.9 总结与展望](#19-总结与展望)
 
-## 引言
+## 1.1 引言
 
 随着Rust异步编程模型的日益成熟，学术界和工业界开始关注更深层次的形式化理论研究，以提高异步程序的可靠性和性能。
 本文深入探讨了五个关键研究方向，提供了形式化分析、理论证明和实践示例，为未来的研究提供了路线图。
 每个方向不仅具有理论意义，还对解决实际工程问题有着直接价值。
 
-## 形式化验证工具
+## 1.2 形式化验证工具
 
-### 模型检查理论
+### 1.2.1 模型检查理论
 
 **定义 1.1 (Kripke结构)**:
 一个Kripke结构M是一个五元组M = (S, S₀, R, AP, L)，其中:
@@ -81,8 +81,8 @@ impl<S: Eq + Hash + Clone, AP: Eq + Hash + Clone> AsyncModelChecker<S, AP> {
     /// 检查CTL公式 AG(p -> AF q)
     /// "总是当p成立时，最终q将成立"
     fn check_ag_implies_af(
-        &self, 
-        p: impl Fn(&S) -> bool, 
+        &self,
+        p: impl Fn(&S) -> bool,
         q: impl Fn(&S) -> bool
     ) -> bool {
         // 首先找到所有满足p的状态
@@ -90,45 +90,45 @@ impl<S: Eq + Hash + Clone, AP: Eq + Hash + Clone> AsyncModelChecker<S, AP> {
             .filter(|s| p(s))
             .cloned()
             .collect();
-        
+
         // 对于每个满足p的状态，检查是否满足AF q
         for state in &p_states {
             if !self.check_af(state, &q) {
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     /// 检查"从状态s开始，在所有路径上最终满足条件q"
     fn check_af(&self, start: &S, q: &impl Fn(&S) -> bool) -> bool {
         // 已访问状态集合
         let mut visited = HashSet::new();
         // 待探索状态队列
         let mut queue = VecDeque::new();
-        
+
         // 初始化
         queue.push_back(start.clone());
         visited.insert(start.clone());
-        
+
         while let Some(state) = queue.pop_front() {
             // 检查当前状态是否满足q
             if q(&state) {
                 continue; // 这个路径满足条件
             }
-            
+
             // 获取后继状态
             if let Some(successors) = self.transitions.get(&state) {
                 // 检查是否有循环路径
                 let all_successors_visited = successors.iter()
                     .all(|s| visited.contains(s));
-                
+
                 if all_successors_visited {
                     // 存在不满足q的循环
                     return false;
                 }
-                
+
                 // 添加未访问的后继状态到队列
                 for succ in successors {
                     if !visited.contains(succ) {
@@ -141,13 +141,13 @@ impl<S: Eq + Hash + Clone, AP: Eq + Hash + Clone> AsyncModelChecker<S, AP> {
                 return false;
             }
         }
-        
+
         true
     }
 }
 ```
 
-### 死锁检测形式化
+### 1.2.2 死锁检测形式化
 
 **定义 1.2 (资源分配图)**: 一个资源分配图G = (V, E)是一个有向图，其中：
 
@@ -181,34 +181,34 @@ impl DeadlockDetector {
     fn detect_deadlock(&self) -> Option<Vec<TaskId>> {
         // 构建资源分配图的邻接表表示
         let mut graph: HashMap<NodeId, HashSet<NodeId>> = HashMap::new();
-        
+
         // 添加进程到资源的请求边
         for (task, resources) in &self.requests {
             let task_node = NodeId::Task(*task);
-            
+
             for resource in resources {
                 let resource_node = NodeId::Resource(*resource);
                 graph.entry(task_node).or_default().insert(resource_node);
             }
         }
-        
+
         // 添加资源到进程的分配边
         for (resource, task) in &self.allocations {
             let resource_node = NodeId::Resource(*resource);
             let task_node = NodeId::Task(*task);
             graph.entry(resource_node).or_default().insert(task_node);
         }
-        
+
         // 使用DFS检测循环
         self.find_cycle(&graph)
     }
-    
+
     /// 使用DFS查找图中的循环
     fn find_cycle(&self, graph: &HashMap<NodeId, HashSet<NodeId>>) -> Option<Vec<TaskId>> {
         let mut visited = HashSet::new();
         let mut path = HashSet::new();
         let mut cycle = Vec::new();
-        
+
         // 从每个进程节点开始搜索
         for task in &self.processes {
             let node = NodeId::Task(*task);
@@ -227,10 +227,10 @@ impl DeadlockDetector {
                 }
             }
         }
-        
+
         None
     }
-    
+
     /// DFS辅助函数，用于查找循环
     fn dfs_cycle(
         &self,
@@ -243,7 +243,7 @@ impl DeadlockDetector {
         // 标记当前节点为已访问
         visited.insert(node);
         path.insert(node);
-        
+
         // 查看所有相邻节点
         if let Some(neighbors) = graph.get(&node) {
             for &next in neighbors {
@@ -260,7 +260,7 @@ impl DeadlockDetector {
                 }
             }
         }
-        
+
         // 回溯，从当前路径中移除节点
         path.remove(&node);
         false
@@ -278,7 +278,7 @@ type TaskId = usize;
 type ResourceId = usize;
 ```
 
-### 活锁与饥饿分析
+### 1.2.3 活锁与饥饿分析
 
 **定义 1.3 (活锁)**:
 活锁是一种系统状态，其中进程P₁, P₂, ..., Pₙ不断改变状态，但不能取得实质性进展。形式化地，存在状态集合S = {s₁, s₂, ..., sₖ}，使得系统无限循环于这些状态之间。
@@ -314,17 +314,17 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
     fn detect_livelock(&self) -> Option<HashSet<S>> {
         // 计算强连通分量(SCC)
         let sccs = self.compute_sccs();
-        
+
         // 检查每个SCC是否是非进度SCC
         for scc in sccs {
             if self.is_non_progress_scc(&scc) {
                 return Some(scc);
             }
         }
-        
+
         None
     }
-    
+
     /// 检查一个SCC是否是非进度SCC
     fn is_non_progress_scc(&self, scc: &HashSet<S>) -> bool {
         // 检查是否有状态转移
@@ -334,7 +334,7 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
             }
             false
         });
-        
+
         // 检查是否有通向终止状态的路径
         let has_path_to_terminal = scc.iter().any(|s| {
             if let Some(succs) = self.transitions.get(s) {
@@ -342,11 +342,11 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
             }
             false
         });
-        
+
         // 满足非进度SCC的条件
         has_transitions && !has_path_to_terminal
     }
-    
+
     /// 计算状态图的强连通分量
     fn compute_sccs(&self) -> Vec<HashSet<S>> {
         // 使用Tarjan算法计算SCC
@@ -356,7 +356,7 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
         let mut on_stack: HashSet<S> = HashSet::new();
         let mut stack: Vec<S> = Vec::new();
         let mut sccs: Vec<HashSet<S>> = Vec::new();
-        
+
         // 对每个未访问的状态进行深度优先搜索
         for state in &self.states {
             if !indices.contains_key(state) {
@@ -371,10 +371,10 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
                 );
             }
         }
-        
+
         sccs
     }
-    
+
     /// Tarjan算法的递归部分
     fn strong_connect(
         &self,
@@ -393,7 +393,7 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
         lowlinks.insert(v.clone(), index);
         stack.push(v.clone());
         on_stack.insert(v.clone());
-        
+
         // 考虑后继状态
         if let Some(successors) = self.transitions.get(&v) {
             for w in successors {
@@ -420,7 +420,7 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
                 }
             }
         }
-        
+
         // 如果v是强连通分量的根
         if *lowlinks.get(&v).unwrap() == *indices.get(&v).unwrap() {
             // 从栈中弹出SCC
@@ -439,7 +439,7 @@ impl<S: Eq + Hash + Clone> LivelockDetector<S> {
 }
 ```
 
-### 并发问题验证工具原型
+### 1.2.4 并发问题验证工具原型
 
 作为上述理论的综合应用，我们可以设计一个异步Rust代码的验证工具原型，结合静态分析和模型检查技术。
 
@@ -460,43 +460,43 @@ impl AsyncRustVerifier {
     /// 对异步程序进行全面验证
     fn verify(&self) -> VerificationResult {
         let mut result = VerificationResult::new();
-        
+
         // 1. 执行死锁检测
         if let Some(deadlock) = self.detect_deadlocks() {
             result.deadlocks.push(deadlock);
         }
-        
+
         // 2. 执行活锁检测
         if let Some(livelock) = self.detect_livelocks() {
             result.livelocks.push(livelock);
         }
-        
+
         // 3. 检测资源泄漏
         if let Some(leaks) = self.detect_resource_leaks() {
             result.resource_leaks.extend(leaks);
         }
-        
+
         // 4. 检测数据竞争
         if let Some(races) = self.detect_data_races() {
             result.data_races.extend(races);
         }
-        
+
         // 5. 检测Futures的正确使用
         if let Some(misuses) = self.detect_future_misuses() {
             result.future_misuses.extend(misuses);
         }
-        
+
         result
     }
-    
+
     /// 死锁检测
     fn detect_deadlocks(&self) -> Option<Deadlock> {
         // 构建资源分配图
         let allocation_graph = self.build_resource_allocation_graph();
-        
+
         // 在图中查找循环
         let cycle = find_cycle_in_graph(&allocation_graph);
-        
+
         // 如果找到循环，构建死锁信息
         cycle.map(|cycle_path| {
             Deadlock {
@@ -516,15 +516,15 @@ impl AsyncRustVerifier {
             }
         })
     }
-    
+
     /// 活锁检测
     fn detect_livelocks(&self) -> Option<Livelock> {
         // 构建状态转移系统
         let state_system = self.build_state_transition_system();
-        
+
         // 查找非进度强连通分量
         let non_progress_sccs = find_non_progress_sccs(&state_system);
-        
+
         // 如果找到非进度SCC，构建活锁信息
         non_progress_sccs.first().map(|scc| {
             Livelock {
@@ -537,19 +537,19 @@ impl AsyncRustVerifier {
             }
         })
     }
-    
+
     /// 资源泄漏检测
     fn detect_resource_leaks(&self) -> Option<Vec<ResourceLeak>> {
         // 追踪每个资源的分配和释放
         let mut leaks = Vec::new();
-        
+
         for (resource_id, info) in &self.resource_model.resources {
             // 构建资源的生命周期图
             let lifecycle_graph = self.build_resource_lifecycle_graph(*resource_id);
-            
+
             // 查找未释放的路径
             let unreleased_paths = find_paths_without_release(&lifecycle_graph);
-            
+
             for path in unreleased_paths {
                 leaks.push(ResourceLeak {
                     resource_id: *resource_id,
@@ -558,22 +558,22 @@ impl AsyncRustVerifier {
                 });
             }
         }
-        
+
         if leaks.is_empty() {
             None
         } else {
             Some(leaks)
         }
     }
-    
+
     /// 数据竞争检测
     fn detect_data_races(&self) -> Option<Vec<DataRace>> {
         // 构建并发访问图
         let access_graph = self.build_concurrent_access_graph();
-        
+
         // 查找并发访问冲突
         let conflicts = find_access_conflicts(&access_graph);
-        
+
         if conflicts.is_empty() {
             None
         } else {
@@ -587,29 +587,29 @@ impl AsyncRustVerifier {
                 .collect())
         }
     }
-    
+
     /// 检测Future的错误使用
     fn detect_future_misuses(&self) -> Option<Vec<FutureMisuse>> {
         let mut misuses = Vec::new();
-        
+
         // 1. 检测未被轮询的Future
         let unpolled_futures = self.find_unpolled_futures();
         for future_id in unpolled_futures {
             misuses.push(FutureMisuse::UnpolledFuture(future_id));
         }
-        
+
         // 2. 检测重复轮询已完成的Future
         let repolled_futures = self.find_repolled_completed_futures();
         for future_id in repolled_futures {
             misuses.push(FutureMisuse::RepolledCompletedFuture(future_id));
         }
-        
+
         // 3. 检测无Waker注册的Pending状态
         let missing_waker_futures = self.find_futures_without_waker_registration();
         for future_id in missing_waker_futures {
             misuses.push(FutureMisuse::MissingWakerRegistration(future_id));
         }
-        
+
         if misuses.is_empty() {
             None
         } else {
@@ -630,9 +630,9 @@ struct VerificationResult {
 /// 各种类型的并发问题定义略...
 ```
 
-## 静态类型状态分析
+## 1.3 静态类型状态分析
 
-### 类型状态系统形式化
+### 1.3.1 类型状态系统形式化
 
 **定义 2.1 (类型状态系统)**:
 类型状态系统是一个七元组(T, Σ, S, δ, s₀, F, τ)，其中:
@@ -677,7 +677,7 @@ impl<T: Clone, S: Clone + Eq + Hash, O> TypeStateSystem<T, S, O> {
     fn validate_sequence(&self, initial_type: &T, operations: &[O]) -> Result<T, TypeStateError> {
         let mut current_type = initial_type.clone();
         let mut current_state = (self.initial_state)(&current_type);
-        
+
         for op in operations {
             // 检查操作是否可以在当前状态下执行
             if let Some(next_state) = (self.transition)(&current_state, op) {
@@ -689,7 +689,7 @@ impl<T: Clone, S: Clone + Eq + Hash, O> TypeStateSystem<T, S, O> {
                 return Err(TypeStateError::InvalidOperation);
             }
         }
-        
+
         // 检查最终状态是否为可接受状态
         let acceptable_states = (self.final_states)(&current_type);
         if acceptable_states.contains(&current_state) {
@@ -698,16 +698,16 @@ impl<T: Clone, S: Clone + Eq + Hash, O> TypeStateSystem<T, S, O> {
             Err(TypeStateError::InvalidFinalState)
         }
     }
-    
+
     /// 检查程序是否类型安全
     fn check_program<P>(&self, program: &P, extract_ops: impl Fn(&P) -> Vec<O>) -> bool {
         let operations = extract_ops(program);
         // 假设我们有一个方法来确定程序的初始类型
         let initial_type = self.infer_initial_type(program);
-        
+
         self.validate_sequence(&initial_type, &operations).is_ok()
     }
-    
+
     // 其他实用方法...
     fn infer_initial_type<P>(&self, _program: &P) -> T {
         // 实现推断初始类型的逻辑
@@ -721,7 +721,7 @@ enum TypeStateError {
 }
 ```
 
-### 异步状态机验证
+### 1.3.2 异步状态机验证
 
 **定义 2.2 (异步状态机)**:
 一个异步状态机是一个六元组(Q, Σ, δ, q₀, F, A)，其中:
@@ -765,14 +765,14 @@ impl<S: Eq + Hash + Clone> AsyncStateMachineVerifier<S> {
     /// 验证状态机实现的正确性
     fn verify(&self) -> Result<(), Vec<StateMachineError>> {
         let mut errors = Vec::new();
-        
+
         // 检查条件1: Ready状态必须是终止状态
         for (state, mark) in &self.state_marks {
             if *mark == PollState::Ready && !self.terminal_states.contains(state) {
                 errors.push(StateMachineError::ReadyNonTerminal(state.clone()));
             }
         }
-        
+
         // 检查条件2: 终止状态必须标记为Ready
         for state in &self.terminal_states {
             match self.state_marks.get(state) {
@@ -780,42 +780,42 @@ impl<S: Eq + Hash + Clone> AsyncStateMachineVerifier<S> {
                 _ => errors.push(StateMachineError::TerminalNotReady(state.clone())),
             }
         }
-        
+
         // 检查条件3: 不能从Ready状态回到Pending
         for ((state, _), next_state) in &self.transitions {
             if let Some(PollState::Ready) = self.state_marks.get(state) {
                 if let Some(PollState::Pending) = self.state_marks.get(next_state) {
                     errors.push(StateMachineError::ReadyToPending(
-                        state.clone(), 
+                        state.clone(),
                         next_state.clone()
                     ));
                 }
             }
         }
-        
+
         // 检查可达性
         let unreachable = self.find_unreachable_states();
         if !unreachable.is_empty() {
             errors.push(StateMachineError::UnreachableStates(unreachable));
         }
-        
+
         if errors.is_empty() {
             Ok(())
         } else {
             Err(errors)
         }
     }
-    
+
     /// 查找不可达状态
     fn find_unreachable_states(&self) -> HashSet<S> {
         // 使用BFS查找从初始状态可达的所有状态
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         // 开始搜索
         queue.push_back(self.initial_state.clone());
         visited.insert(self.initial_state.clone());
-        
+
         while let Some(state) = queue.pop_front() {
             // 找出所有从当前状态可达的下一状态
             for ((current, _), next) in &self.transitions {
@@ -825,11 +825,11 @@ impl<S: Eq + Hash + Clone> AsyncStateMachineVerifier<S> {
                 }
             }
         }
-        
+
         // 计算不可达状态
         self.states.difference(&visited).cloned().collect()
     }
-    
+
     /// 从状态机源代码生成验证器
     fn from_future_impl(source_code: &str) -> Self {
         // 这里应该是实现从Rust源代码分析提取状态机的逻辑
@@ -858,7 +858,7 @@ enum StateMachineError {
 }
 ```
 
-### 类型驱动异步编程
+### 1.3.3 类型驱动异步编程
 
 **定义 2.3 (类型驱动异步接口)**:
 一个类型驱动的异步接口是一个三元组(T, S, O)，其中:
@@ -913,12 +913,12 @@ impl TcpStream<Closed> {
             _state: PhantomData,
         }
     }
-    
+
     /// 连接到远程地址，改变状态为Connecting
     async fn connect(self, addr: SocketAddr) -> Result<TcpStream<Connecting>, io::Error> {
         // 底层连接逻辑
         self.socket.start_connect(addr)?;
-        
+
         // 返回新状态的流
         Ok(TcpStream {
             socket: self.socket,
@@ -932,7 +932,7 @@ impl TcpStream<Connecting> {
     async fn wait_connected(self) -> Result<TcpStream<Connected>, io::Error> {
         // 等待连接完成
         self.socket.wait_connect().await?;
-        
+
         // 返回已连接的流
         Ok(TcpStream {
             socket: self.socket,
@@ -949,7 +949,7 @@ impl TcpStream<Connected> {
             _state: PhantomData,
         }
     }
-    
+
     /// 开始写入，转换到Writing状态
     fn start_write(self) -> TcpStream<Writing> {
         TcpStream {
@@ -957,12 +957,12 @@ impl TcpStream<Connected> {
             _state: PhantomData,
         }
     }
-    
+
     /// 关闭连接，转换回Closed状态
     async fn close(self) -> Result<TcpStream<Closed>, io::Error> {
         // 关闭底层连接
         self.socket.close().await?;
-        
+
         // 返回关闭状态的流
         Ok(TcpStream {
             socket: self.socket,
@@ -976,7 +976,7 @@ impl TcpStream<Reading> {
     async fn read(&mut self, buf: &mut [u8]) -> Result<usize, io::Error> {
         self.socket.read(buf).await
     }
-    
+
     /// 完成读取，转回Connected状态
     fn done_reading(self) -> TcpStream<Connected> {
         TcpStream {
@@ -991,7 +991,7 @@ impl TcpStream<Writing> {
     async fn write(&mut self, buf: &[u8]) -> Result<usize, io::Error> {
         self.socket.write(buf).await
     }
-    
+
     /// 完成写入，转回Connected状态
     fn done_writing(self) -> TcpStream<Connected> {
         TcpStream {
@@ -1005,41 +1005,41 @@ impl TcpStream<Writing> {
 async fn type_driven_client() -> Result<(), io::Error> {
     // 创建新的TCP流（Closed状态）
     let stream = TcpStream::new();
-    
+
     // 连接到远程服务器（Connecting状态）
     let stream = stream.connect("127.0.0.1:8080".parse().unwrap()).await?;
-    
+
     // 等待连接完成（Connected状态）
     let stream = stream.wait_connected().await?;
-    
+
     // 开始写入（Writing状态）
     let mut stream = stream.start_write();
-    
+
     // 发送数据
     stream.write(b"GET / HTTP/1.1\r\n\r\n").await?;
-    
+
     // 完成写入（回到Connected状态）
     let stream = stream.done_writing();
-    
+
     // 开始读取（Reading状态）
     let mut stream = stream.start_read();
-    
+
     // 读取响应
     let mut buf = [0u8; 1024];
     let n = stream.read(&mut buf).await?;
     println!("Read {} bytes", n);
-    
+
     // 完成读取（回到Connected状态）
     let stream = stream.done_reading();
-    
+
     // 关闭连接（回到Closed状态）
     let _stream = stream.close().await?;
-    
+
     Ok(())
 }
 ```
 
-### 会话类型与通信安全
+### 1.3.4 会话类型与通信安全
 
 **定义 2.4 (异步会话类型)**:
 一个异步会话类型S定义为：
@@ -1104,32 +1104,32 @@ impl SessionType {
             SessionType::Var(x) => SessionType::Var(x.clone()),
         }
     }
-    
+
     /// 检查两个会话类型是否对偶
     fn is_dual_of(&self, other: &SessionType) -> bool {
         // 实现会话类型对偶性检查
         match (self, other) {
             (SessionType::Send(t1, s1), SessionType::Recv(t2, s2)) =>
                 t1 == t2 && s1.is_dual_of(s2),
-                
+
             (SessionType::Recv(t1, s1), SessionType::Send(t2, s2)) =>
                 t1 == t2 && s1.is_dual_of(s2),
-                
+
             (SessionType::Choice(opts1), SessionType::Offer(opts2)) =>
                 opts1.len() == opts2.len() &&
                 opts1.iter().zip(opts2.iter()).all(|(s1, s2)| s1.is_dual_of(s2)),
-                
+
             (SessionType::Offer(opts1), SessionType::Choice(opts2)) =>
                 opts1.len() == opts2.len() &&
                 opts1.iter().zip(opts2.iter()).all(|(s1, s2)| s1.is_dual_of(s2)),
-                
+
             (SessionType::End, SessionType::End) => true,
-            
+
             (SessionType::Rec(x1, s1), SessionType::Rec(x2, s2)) =>
                 x1 == x2 && s1.is_dual_of(s2),
-                
+
             (SessionType::Var(x1), SessionType::Var(x2)) => x1 == x2,
-            
+
             _ => false,
         }
     }
@@ -1149,22 +1149,22 @@ impl<S: SessionType + Send + 'static> TypedChannel<S> {
     fn new(session_type: SessionType) -> (TypedChannel<S>, TypedChannel<S>) {
         let (tx1, rx1) = mpsc::channel(10);
         let (tx2, rx2) = mpsc::channel(10);
-        
+
         let channel1 = TypedChannel {
             session_type: session_type.clone(),
             sender: tx1,
             receiver: rx2,
         };
-        
+
         let channel2 = TypedChannel {
             session_type: session_type.dual(),
             sender: tx2,
             receiver: rx1,
         };
-        
+
         (channel1, channel2)
     }
-    
+
     /// 发送消息，会话类型为!T.S
     async fn send<T: 'static + Send>(&mut self, msg: T) -> Result<(), ChannelError> {
         match &self.session_type {
@@ -1173,20 +1173,20 @@ impl<S: SessionType + Send + 'static> TypedChannel<S> {
                 if *type_id != TypeId::of::<T>() {
                     return Err(ChannelError::TypeMismatch);
                 }
-                
+
                 // 发送消息
                 self.sender.send(Box::new(msg)).await
                     .map_err(|_| ChannelError::SendError)?;
-                
+
                 // 更新会话类型
                 self.session_type = (**next_session).clone();
-                
+
                 Ok(())
             },
             _ => Err(ChannelError::InvalidSessionState),
         }
     }
-    
+
     /// 接收消息，会话类型为?T.S
     async fn recv<T: 'static + Send>(&mut self) -> Result<T, ChannelError> {
         match &self.session_type {
@@ -1195,24 +1195,24 @@ impl<S: SessionType + Send + 'static> TypedChannel<S> {
                 if *type_id != TypeId::of::<T>() {
                     return Err(ChannelError::TypeMismatch);
                 }
-                
+
                 // 接收消息
                 let msg = self.receiver.recv().await
                     .ok_or(ChannelError::RecvError)?;
-                
+
                 // 尝试转换类型
                 let typed_msg = msg.downcast::<T>()
                     .map_err(|_| ChannelError::DowncastError)?;
-                
+
                 // 更新会话类型
                 self.session_type = (**next_session).clone();
-                
+
                 Ok(*typed_msg)
             },
             _ => Err(ChannelError::InvalidSessionState),
         }
     }
-    
+
     /// 选择一个分支，会话类型为S₁ ⊕ S₂ ⊕ ...
     async fn select(&mut self, choice: usize) -> Result<(), ChannelError> {
         match &self.session_type {
@@ -1220,20 +1220,20 @@ impl<S: SessionType + Send + 'static> TypedChannel<S> {
                 if choice >= options.len() {
                     return Err(ChannelError::InvalidChoice);
                 }
-                
+
                 // 发送选择标记
                 self.sender.send(Box::new(choice)).await
                     .map_err(|_| ChannelError::SendError)?;
-                
+
                 // 更新会话类型为选择的分支
                 self.session_type = options[choice].clone();
-                
+
                 Ok(())
             },
             _ => Err(ChannelError::InvalidSessionState),
         }
     }
-    
+
     /// 提供分支选择，会话类型为S₁ & S₂ & ...
     async fn offer(&mut self) -> Result<usize, ChannelError> {
         match &self.session_type {
@@ -1241,19 +1241,19 @@ impl<S: SessionType + Send + 'static> TypedChannel<S> {
                 // 接收选择标记
                 let msg = self.receiver.recv().await
                     .ok_or(ChannelError::RecvError)?;
-                
+
                 // 转换为选择索引
                 let choice = msg.downcast::<usize>()
                     .map_err(|_| ChannelError::DowncastError)?;
-                
+
                 // 检查选择有效性
                 if *choice >= options.len() {
                     return Err(ChannelError::InvalidChoice);
                 }
-                
+
                 // 更新会话类型为选择的分支
                 self.session_type = options[*choice].clone();
-                
+
                 Ok(*choice)
             },
             _ => Err(ChannelError::InvalidSessionState),
@@ -1271,9 +1271,9 @@ enum ChannelError {
 }
 ```
 
-## 异步执行器形式化设计
+## 1.4 异步执行器形式化设计
 
-### 调度理论与形式规约
+### 1.4.1 调度理论与形式规约
 
 **定义 3.1 (调度策略)**:
 一个异步调度策略D是一个三元组(T, P, S)，其中:
@@ -1312,22 +1312,22 @@ impl<T: Eq + Hash + Clone, S: Eq + Hash + Clone> FormalExecutor<T, S> {
     fn verify_starvation_free(&self, initial_state: S) -> bool {
         // 追踪每个任务的最大等待时间
         let mut max_wait_times = HashMap::new();
-        
+
         // 使用BFS遍历状态空间
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         // 初始状态
         queue.push_back((initial_state.clone(), 0));
         visited.insert(initial_state);
-        
+
         while let Some((state, steps)) = queue.pop_front() {
             // 获取当前可调度任务集合
             let schedulable = self.get_schedulable_tasks(&state);
-            
+
             // 选择任务进行调度
             let selected = (self.select)(&state, &schedulable);
-            
+
             // 更新其他任务的等待时间
             for task in &schedulable {
                 if *task != selected {
@@ -1335,7 +1335,7 @@ impl<T: Eq + Hash + Clone, S: Eq + Hash + Clone> FormalExecutor<T, S> {
                     *wait_time = std::cmp::max(*wait_time, steps + 1);
                 }
             }
-            
+
             // 状态转移
             if let Some(next_state) = self.transitions.get(&(state, selected.clone())) {
                 if !visited.contains(next_state) {
@@ -1344,50 +1344,50 @@ impl<T: Eq + Hash + Clone, S: Eq + Hash + Clone> FormalExecutor<T, S> {
                 }
             }
         }
-        
+
         // 检查是否所有任务都有有限的等待时间
-        max_wait_times.len() == self.tasks.len() && 
+        max_wait_times.len() == self.tasks.len() &&
         max_wait_times.values().all(|&time| time < usize::MAX)
     }
-    
+
     /// 验证执行器是否满足公平性
     fn verify_fairness(&self, initial_state: S) -> bool {
         // 对于每个任务，计算最长的调度间隔
         let mut max_intervals = HashMap::new();
-        
+
         // 使用BFS遍历状态空间
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         // 跟踪每个任务的上次调度时间
         let mut last_scheduled = HashMap::new();
         for task in &self.tasks {
             last_scheduled.insert(task.clone(), 0);
         }
-        
+
         // 初始状态
         queue.push_back((initial_state.clone(), 0, last_scheduled.clone()));
         visited.insert(initial_state);
-        
+
         while let Some((state, steps, last)) = queue.pop_front() {
             // 获取当前可调度任务集合
             let schedulable = self.get_schedulable_tasks(&state);
-            
+
             // 选择任务进行调度
             let selected = (self.select)(&state, &schedulable);
-            
+
             // 计算调度间隔
             let last_step = *last.get(&selected).unwrap_or(&0);
             let interval = steps - last_step;
-            
+
             // 更新最大间隔
             let max_interval = max_intervals.entry(selected.clone()).or_insert(0);
             *max_interval = std::cmp::max(*max_interval, interval);
-            
+
             // 更新上次调度时间
             let mut new_last = last.clone();
             new_last.insert(selected.clone(), steps);
-            
+
             // 状态转移
             if let Some(next_state) = self.transitions.get(&(state, selected.clone())) {
                 if !visited.contains(next_state) {
@@ -1396,12 +1396,12 @@ impl<T: Eq + Hash + Clone, S: Eq + Hash + Clone> FormalExecutor<T, S> {
                 }
             }
         }
-        
+
         // 检查是否所有任务都有有限的调度间隔
-        max_intervals.len() == self.tasks.len() && 
+        max_intervals.len() == self.tasks.len() &&
         max_intervals.values().all(|&interval| interval < usize::MAX)
     }
-    
+
     /// 获取在给定状态下可调度的任务集合
     fn get_schedulable_tasks(&self, state: &S) -> HashSet<T> {
         // 简化版：这里应该根据状态确定哪些任务可被调度
@@ -1424,20 +1424,20 @@ impl<T: Eq + Hash + Clone> PriorityPollScheduler<T> {
         for priority in min_priority..=max_priority {
             queues.insert(priority, VecDeque::new());
         }
-        
+
         Self {
             queues,
             min_priority,
             max_priority,
         }
     }
-    
+
     /// 添加任务到调度器
     fn add_task(&mut self, task: T, priority: usize) {
         let priority = priority.clamp(self.min_priority, self.max_priority);
         self.queues.get_mut(&priority).unwrap().push_back(task);
     }
-    
+
     /// 选择下一个任务
     fn select_next_task(&mut self) -> Option<T> {
         // 从高优先级到低优先级遍历队列
@@ -1448,13 +1448,13 @@ impl<T: Eq + Hash + Clone> PriorityPollScheduler<T> {
                 }
             }
         }
-        
+
         None
     }
 }
 ```
 
-### 性能模型与分析
+### 1.4.2 性能模型与分析
 
 **定义 3.2 (异步执行器性能模型)**:
 一个异步执行器的性能模型是一个五元组(T, C, S, W, L)，其中:
@@ -1502,22 +1502,22 @@ impl<T: Eq + Hash + Clone> ExecutorPerformanceAnalyzer<T> {
         if task_count == 0 {
             return 0.0;
         }
-        
+
         // 计算总处理时间
         let total_processing_time: f64 = self.tasks.iter().map(|task| {
             let compute = (self.compute_cost)(task);
             let overhead = (self.scheduling_overhead)(task);
             let wait = (self.wait_time)(task);
             let locality = (self.locality)(task);
-            
+
             // 计算有效处理时间
             (compute + overhead + wait) / locality
         }).sum();
-        
+
         // 计算平均吞吐量
         task_count as f64 / total_processing_time
     }
-    
+
     /// 分析调度效率
     fn analyze_scheduling_efficiency(&self) -> SchedulingEfficiency {
         // 计算各项指标总和
@@ -1525,23 +1525,23 @@ impl<T: Eq + Hash + Clone> ExecutorPerformanceAnalyzer<T> {
         let mut total_overhead = 0.0;
         let mut total_wait = 0.0;
         let mut total_locality_loss = 0.0;
-        
+
         for task in &self.tasks {
             total_compute += (self.compute_cost)(task);
             total_overhead += (self.scheduling_overhead)(task);
             total_wait += (self.wait_time)(task);
             total_locality_loss += 1.0 - (self.locality)(task);
         }
-        
+
         // 计算总处理时间
         let total_time = total_compute + total_overhead + total_wait;
-        
+
         // 计算各项开销占比
         let compute_ratio = total_compute / total_time;
         let overhead_ratio = total_overhead / total_time;
         let wait_ratio = total_wait / total_time;
         let locality_loss_ratio = total_locality_loss / self.tasks.len() as f64;
-        
+
         SchedulingEfficiency {
             compute_ratio,
             overhead_ratio,
@@ -1550,38 +1550,38 @@ impl<T: Eq + Hash + Clone> ExecutorPerformanceAnalyzer<T> {
             total_tasks: self.tasks.len(),
         }
     }
-    
+
     /// 识别性能瓶颈
     fn identify_bottlenecks(&self) -> Vec<PerformanceBottleneck> {
         let mut bottlenecks = Vec::new();
-        
+
         // 检查调度开销
         let avg_overhead: f64 = self.tasks.iter()
             .map(|t| (self.scheduling_overhead)(t))
             .sum::<f64>() / self.tasks.len() as f64;
-            
+
         if avg_overhead > 0.1 { // 如果调度开销超过10%
             bottlenecks.push(PerformanceBottleneck::HighSchedulingOverhead(avg_overhead));
         }
-        
+
         // 检查等待时间
         let avg_wait: f64 = self.tasks.iter()
             .map(|t| (self.wait_time)(t))
             .sum::<f64>() / self.tasks.len() as f64;
-            
+
         if avg_wait > 0.2 { // 如果等待时间超过20%
             bottlenecks.push(PerformanceBottleneck::HighWaitTime(avg_wait));
         }
-        
+
         // 检查缓存亲和度
         let avg_locality: f64 = self.tasks.iter()
             .map(|t| (self.locality)(t))
             .sum::<f64>() / self.tasks.len() as f64;
-            
+
         if avg_locality < 0.7 { // 如果缓存亲和度低于70%
             bottlenecks.push(PerformanceBottleneck::PoorCacheLocality(avg_locality));
         }
-        
+
         bottlenecks
     }
 }
@@ -1603,7 +1603,7 @@ enum PerformanceBottleneck {
 }
 ```
 
-### 形式化验证的执行器
+### 1.4.3 形式化验证的执行器
 
 **定义 3.3 (形式化验证执行器)**:
 一个形式化验证的执行器是一个三元组(E, Φ, V)，其中:
@@ -1656,7 +1656,7 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
             invariant_checker: Box::new(invariant_checker),
         }
     }
-    
+
     /// 添加任务到执行器
     fn spawn<F>(&mut self, future: F, priority: usize) -> Result<TaskId, ExecutorError>
     where
@@ -1671,13 +1671,13 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
             created_at: Instant::now(),
             last_polled: None,
         };
-        
+
         // 添加任务到队列
         self.task_queue.push_back(task);
-        
+
         // 添加到运行中任务集合
         self.running_tasks.insert(task_id);
-        
+
         // 检查不变量
         if !(self.invariant_checker)(self) {
             // 回滚更改
@@ -1685,25 +1685,25 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
             self.running_tasks.remove(&task_id);
             return Err(ExecutorError::InvariantViolation);
         }
-        
+
         Ok(task_id)
     }
-    
+
     /// 运行执行器，直到所有任务完成
     async fn run(&mut self) -> Result<(), ExecutorError> {
         while !self.task_queue.is_empty() {
             // 轮询一个任务
             self.poll_once().await?;
-            
+
             // 检查不变量
             if !(self.invariant_checker)(self) {
                 return Err(ExecutorError::InvariantViolation);
             }
         }
-        
+
         Ok(())
     }
-    
+
     /// 轮询一个任务
     async fn poll_once(&mut self) -> Result<(), ExecutorError> {
         // 获取下一个任务
@@ -1711,11 +1711,11 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
             // 创建唤醒器
             let waker = self.create_waker(task.id);
             let mut context = Context::from_waker(&waker);
-            
+
             // 轮询任务
             task.last_polled = Some(Instant::now());
             let poll_result = task.future.as_mut().poll(&mut context);
-            
+
             match poll_result {
                 Poll::Ready(_) => {
                     // 任务完
@@ -1731,53 +1731,53 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
                     self.task_queue.push_back(task);
                 }
             }
-            
+
             Ok(())
         } else {
             Err(ExecutorError::NoTasks)
         }
     }
-    
+
     /// 创建唤醒器
     fn create_waker(&self, task_id: TaskId) -> Waker {
         // 在实际实现中，这里会创建一个能够唤醒任务的Waker
         // 简化版本，直接使用noop_waker
         task_id.into_waker()
     }
-    
+
     /// 验证执行器满足活性属性
     fn verify_liveness(&self) -> bool {
         // 验证所有任务最终都会被调度
         let mut unscheduled_tasks = self.running_tasks.clone();
-        
+
         // 模拟执行器运行
         let mut simulated_executor = self.clone();
         let mut timeout = 1000; // 防止无限循环
-        
+
         while !unscheduled_tasks.is_empty() && timeout > 0 {
             timeout -= 1;
-            
+
             // 轮询下一个任务
             if let Some(task) = simulated_executor.task_queue.pop_front() {
                 // 记录任务被调度
                 unscheduled_tasks.remove(&task.id);
-                
+
                 // 将任务重新加入队列（模拟Pending状态）
                 simulated_executor.task_queue.push_back(task);
             } else {
                 break;
             }
         }
-        
+
         // 如果所有任务都被调度了，则满足活性
         unscheduled_tasks.is_empty()
     }
-    
+
     /// 验证执行器满足公平性属性
     fn verify_fairness(&self) -> bool {
         // 按优先级分组的任务
         let mut tasks_by_priority: HashMap<usize, Vec<&Task<T>>> = HashMap::new();
-        
+
         // 统计各优先级的任务
         for task in &self.task_queue {
             tasks_by_priority
@@ -1785,38 +1785,38 @@ impl<T: Send + 'static> VerifiedExecutor<T> {
                 .or_default()
                 .push(task);
         }
-        
+
         // 检查每个优先级组内的公平性
         for tasks in tasks_by_priority.values() {
             if tasks.len() <= 1 {
                 continue; // 单个任务不需要检查公平性
             }
-            
+
             // 检查上次调度时间的差异
             let min_last_poll = tasks
                 .iter()
                 .filter_map(|t| t.last_polled)
                 .min()
                 .unwrap_or_else(Instant::now);
-                
+
             let max_last_poll = tasks
                 .iter()
                 .filter_map(|t| t.last_polled)
                 .max()
                 .unwrap_or_else(Instant::now);
-                
+
             // 计算调度时间差异
             let time_diff = max_last_poll.duration_since(min_last_poll);
-            
+
             // 如果时间差异太大，则认为不公平
             if time_diff > Duration::from_secs(1) {
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     /// 验证执行器满足进度属性
     fn verify_progress(&self) -> bool {
         // 检查是否能持续调度任务
@@ -1831,24 +1831,24 @@ enum ExecutorError {
 }
 
 /// 创建标准执行器不变量检查函数
-fn create_standard_invariants<T: Send + 'static>() -> 
-    impl Fn(&VerifiedExecutor<T>) -> bool 
+fn create_standard_invariants<T: Send + 'static>() ->
+    impl Fn(&VerifiedExecutor<T>) -> bool
 {
     |executor| {
         // 1. 运行任务和完成任务集合不相交
         let no_overlap = executor.running_tasks
             .intersection(&executor.completed_tasks)
             .count() == 0;
-            
+
         // 2. 队列中的所有任务都在运行任务集合中
         let all_queued_running = executor.task_queue
             .iter()
             .all(|task| executor.running_tasks.contains(&task.id));
-            
+
         // 3. 所有运行中任务要么在队列中，要么被轮询中
-        let all_running_accounted = executor.running_tasks.len() <= 
+        let all_running_accounted = executor.running_tasks.len() <=
             executor.task_queue.len() + 1; // +1 是因为可能有一个任务正在被轮询
-            
+
         no_overlap && all_queued_running && all_running_accounted
     }
 }
@@ -1862,26 +1862,26 @@ impl TaskId {
         // 在实际实现中，这里会生成唯一ID
         Self(rand::random())
     }
-    
+
     fn into_waker(self) -> Waker {
         // 创建一个简单的唤醒器，实际中这里需要实现完整的唤醒逻辑
         use std::task::{RawWaker, RawWakerVTable};
-        
+
         // 定义空操作的唤醒器函数
         unsafe fn no_op(_: *const ()) {}
         unsafe fn clone(data: *const ()) -> RawWaker {
             RawWaker::new(data, &VTABLE)
         }
-        
+
         static VTABLE: RawWakerVTable = RawWakerVTable::new(clone, no_op, no_op, no_op);
-        
+
         let raw = RawWaker::new(self.0 as *const (), &VTABLE);
         unsafe { Waker::from_raw(raw) }
     }
 }
 ```
 
-### 工作窃取调度证明
+### 1.4.4 工作窃取调度证明
 
 **定义 3.4 (工作窃取调度器)**:
 一个工作窃取调度器是一个四元组(W, Q, S, P)，其中:
@@ -1951,12 +1951,12 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
                 lock: Mutex::new(()),
             });
         }
-        
+
         // 创建全局队列
         let global_queue = Arc::new(GlobalQueue {
             queue: Mutex::new(VecDeque::new()),
         });
-        
+
         Self {
             num_workers,
             local_queues,
@@ -1964,7 +1964,7 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
             steal_strategy,
         }
     }
-    
+
     /// 提交任务到调度器
     async fn submit(&self, task: Task<T>, worker_id: Option<usize>) -> Result<(), SchedulerError> {
         if let Some(id) = worker_id {
@@ -1983,7 +1983,7 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
             Ok(())
         }
     }
-    
+
     /// 工作者尝试获取任务
     async fn get_task(&self, worker_id: usize) -> Option<Task<T>> {
         // 首先尝试从本地队列获取
@@ -1993,7 +1993,7 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
                 return Some(task);
             }
         }
-        
+
         // 然后尝试从全局队列获取
         {
             let mut queue = self.global_queue.queue.lock().await;
@@ -2001,11 +2001,11 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
                 return Some(task);
             }
         }
-        
+
         // 最后尝试从其他工作者窃取
         self.steal_task(worker_id).await
     }
-    
+
     /// 工作者尝试窃取任务
     async fn steal_task(&self, worker_id: usize) -> Option<Task<T>> {
         // 根据窃取策略选择目标工作者
@@ -2014,35 +2014,35 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
                 // 随机选择一个不是自己的工作者
                 let mut rng = rand::thread_rng();
                 let mut id;
-                
+
                 loop {
                     id = rng.gen_range(0..self.num_workers);
                     if id != worker_id {
                         break;
                     }
                 }
-                
+
                 id
             },
             StealStrategy::FromBusiest => {
                 // 找出队列最长的工作者
                 let mut max_len = 0;
                 let mut busiest_id = 0;
-                
+
                 for id in 0..self.num_workers {
                     if id == worker_id {
                         continue;
                     }
-                    
+
                     let _lock = self.local_queues[id].lock.lock().await;
                     let len = self.local_queues[id].deque.len();
-                    
+
                     if len > max_len {
                         max_len = len;
                         busiest_id = id;
                     }
                 }
-                
+
                 busiest_id
             },
             StealStrategy::FromNeighbors => {
@@ -2050,12 +2050,12 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
                 (worker_id + 1) % self.num_workers
             },
         };
-        
+
         // 尝试从目标工作者窃取
         let _lock = self.local_queues[victim_id].lock.lock().await;
         self.local_queues[victim_id].deque.pop_back()
     }
-    
+
     /// 运行工作者循环
     async fn run_worker(&self, worker_id: usize) {
         // 工作者主循环
@@ -2071,22 +2071,22 @@ impl<T: Send + 'static> WorkStealingScheduler<T> {
             }
         }
     }
-    
+
     /// 开始调度器
     async fn start(&self) {
         // 创建工作者任务
         let mut worker_handles = Vec::with_capacity(self.num_workers);
-        
+
         for worker_id in 0..self.num_workers {
             let scheduler = self.clone();
-            
+
             let handle = tokio::spawn(async move {
                 scheduler.run_worker(worker_id).await;
             });
-            
+
             worker_handles.push(handle);
         }
-        
+
         // 等待所有工作者完成
         for handle in worker_handles {
             let _ = handle.await;
@@ -2102,14 +2102,14 @@ enum SchedulerError {
 fn verify_work_stealing_theorem(num_processors: usize, total_work: usize, critical_path: usize) -> f64 {
     // 计算理论上限
     let theoretical_bound = (total_work as f64) / (num_processors as f64) + (10.0 * critical_path as f64);
-    
+
     // 模拟工作窃取执行
     let simulated_time = simulate_work_stealing(num_processors, total_work, critical_path);
-    
+
     // 验证模拟结果是否在理论界限内
-    assert!(simulated_time <= theoretical_bound, 
+    assert!(simulated_time <= theoretical_bound,
         "模拟时间 {} 超过理论界限 {}", simulated_time, theoretical_bound);
-        
+
     simulated_time
 }
 
@@ -2117,17 +2117,17 @@ fn verify_work_stealing_theorem(num_processors: usize, total_work: usize, critic
 fn simulate_work_stealing(num_processors: usize, total_work: usize, critical_path: usize) -> f64 {
     // 简化模拟，返回理论值的随机接近值
     let theoretical = (total_work as f64) / (num_processors as f64) + (5.0 * critical_path as f64);
-    
+
     // 增加一些随机波动
     let variation = theoretical * 0.1 * (rand::random::<f64>() - 0.5);
-    
+
     theoretical + variation
 }
 ```
 
-## 异步分布式算法证明
+## 1.5 异步分布式算法证明
 
-### 交互式定理证明系统
+### 1.5.1 交互式定理证明系统
 
 **定义 4.1 (交互式定理证明系统)**:
 一个交互式定理证明系统是一个三元组(P, V, Φ)，其中:
@@ -2225,11 +2225,11 @@ impl<P: Prover, V: Verifier> TheoremProver<P, V> {
             environment,
         }
     }
-    
+
     /// 证明公式
     fn prove(&mut self, formula: &Formula) -> Result<Proof, ProofError> {
         // 如果公式已经是定理或公理，直接返回
-        if self.environment.axioms.contains(formula) || 
+        if self.environment.axioms.contains(formula) ||
            self.environment.theorems.contains(formula) {
             return Ok(Proof {
                 goal: formula.clone(),
@@ -2243,7 +2243,7 @@ impl<P: Prover, V: Verifier> TheoremProver<P, V> {
                 is_complete: true,
             });
         }
-        
+
         // 使用证明者生成证明
         let proof = self.prover.generate_proof(
             formula,
@@ -2251,7 +2251,7 @@ impl<P: Prover, V: Verifier> TheoremProver<P, V> {
             &self.environment.theorems,
             &self.environment.rules,
         )?;
-        
+
         // 使用验证者验证证明
         if self.verifier.verify_proof(&proof, &self.environment) {
             // 添加到已证明定理
@@ -2261,7 +2261,7 @@ impl<P: Prover, V: Verifier> TheoremProver<P, V> {
             Err(ProofError::InvalidProof)
         }
     }
-    
+
     /// 检查公式是否为定理
     fn is_theorem(&self, formula: &Formula) -> bool {
         self.environment.axioms.contains(formula) ||
@@ -2304,7 +2304,7 @@ impl Prover for SimpleProver {
             steps: Vec::new(),
             is_complete: false,
         };
-        
+
         // 检查目标是否为公理或已知定理
         if axioms.contains(goal) || theorems.contains(goal) {
             proof.steps.push(ProofStep {
@@ -2315,14 +2315,14 @@ impl Prover for SimpleProver {
             proof.is_complete = true;
             return Ok(proof);
         }
-        
+
         // 尝试应用规则
         for rule in rules {
             if rule.conclusion == *goal {
                 // 找到可能的规则，递归证明前提
                 let mut premise_proofs = Vec::new();
                 let mut all_premises_proved = true;
-                
+
                 for premise in &rule.premises {
                     match self.generate_proof(premise, axioms, theorems, rules) {
                         Ok(premise_proof) => {
@@ -2334,7 +2334,7 @@ impl Prover for SimpleProver {
                         }
                     }
                 }
-                
+
                 if all_premises_proved {
                     // 所有前提都已证明，构建完整证明
                     for premise_proof in premise_proofs {
@@ -2342,20 +2342,20 @@ impl Prover for SimpleProver {
                             proof.steps.push(step);
                         }
                     }
-                    
+
                     // 添加最终步骤
                     proof.steps.push(ProofStep {
                         assertion: goal.clone(),
                         rule: rule.name.clone(),
                         premises: (0..rule.premises.len()).collect(),
                     });
-                    
+
                     proof.is_complete = true;
                     return Ok(proof);
                 }
             }
         }
-        
+
         // 无法找到证明
         Err(ProofError::NoProofFound)
     }
@@ -2370,19 +2370,19 @@ impl Verifier for SimpleVerifier {
         if !proof.is_complete {
             return false;
         }
-        
+
         // 验证每个证明步骤
         let mut proved_assertions = HashSet::new();
-        
+
         // 添加公理和已知定理
         for axiom in &environment.axioms {
             proved_assertions.insert(axiom.clone());
         }
-        
+
         for theorem in &environment.theorems {
             proved_assertions.insert(theorem.clone());
         }
-        
+
         // 检查每个步骤
         for (i, step) in proof.steps.iter().enumerate() {
             match step.rule.as_str() {
@@ -2399,22 +2399,22 @@ impl Verifier for SimpleVerifier {
                         .find(|r| r.name == step.rule)
                         .ok_or(())
                         .map_err(|_| false)?;
-                    
+
                     // 检查结论是否匹配
                     if rule.conclusion != step.assertion {
                         return false;
                     }
-                    
+
                     // 检查前提是否已证明
                     if step.premises.len() != rule.premises.len() {
                         return false;
                     }
-                    
+
                     for (premise_idx, rule_premise) in step.premises.iter().zip(rule.premises.iter()) {
                         if *premise_idx >= i {
                             return false; // 前提索引无效
                         }
-                        
+
                         let premise_assertion = &proof.steps[*premise_idx].assertion;
                         if premise_assertion != rule_premise {
                             return false; // 前提不匹配
@@ -2422,11 +2422,11 @@ impl Verifier for SimpleVerifier {
                     }
                 }
             }
-            
+
             // 将当前断言添加到已证明集合
             proved_assertions.insert(step.assertion.clone());
         }
-        
+
         // 检查最终步骤是否证明了目标
         proof.steps.last().map_or(false, |step| step.assertion == proof.goal)
     }
@@ -2438,7 +2438,7 @@ enum ProofError {
 }
 ```
 
-### 共识算法形式化验证
+### 1.5.2 共识算法形式化验证
 
 **定义 4.2 (分布式共识问题)**:
 分布式共识问题要求一组节点就一个值达成一致，满足以下属性:
@@ -2517,7 +2517,7 @@ impl PaxosModel {
     /// 创建新的Paxos模型
     fn new(num_nodes: usize) -> Self {
         let max_failures = (num_nodes - 1) / 2;
-        
+
         let mut node_states = Vec::with_capacity(num_nodes);
         for i in 0..num_nodes {
             node_states.push(NodeState {
@@ -2530,7 +2530,7 @@ impl PaxosModel {
                 failed: false,
             });
         }
-        
+
         Self {
             num_nodes,
             max_failures,
@@ -2539,26 +2539,26 @@ impl PaxosModel {
             next_proposal_number: 1,
         }
     }
-    
+
     /// 获取新的提案编号
     fn get_next_proposal_number(&mut self) -> u64 {
         let n = self.next_proposal_number;
         self.next_proposal_number += 1;
         n
     }
-    
+
     /// 开始新一轮提案
     fn start_proposal(&mut self, proposer_id: usize, value: Value) {
         if proposer_id >= self.num_nodes || self.node_states[proposer_id].failed {
             return;
         }
-        
+
         // 获取新提案编号
         let proposal_number = self.get_next_proposal_number();
-        
+
         // 更新提案者状态
         self.node_states[proposer_id].preparing = Some(proposal_number);
-        
+
         // 发送Prepare消息给所有Acceptor
         for i in 0..self.num_nodes {
             if i != proposer_id && !self.node_states[i].failed {
@@ -2566,20 +2566,20 @@ impl PaxosModel {
             }
         }
     }
-    
+
     /// 处理Prepare消息
     fn handle_prepare(&mut self, proposal_number: u64, from: usize, to: usize) {
         if to >= self.num_nodes || self.node_states[to].failed {
             return;
         }
-        
+
         let acceptor = &mut self.node_states[to];
-        
+
         // 检查是否可以承诺此提案
         if acceptor.promised.is_none() || acceptor.promised.unwrap() < proposal_number {
             // 更新承诺
             acceptor.promised = Some(proposal_number);
-            
+
             // 发送Promise消息
             self.messages.push(Message::Promise(
                 proposal_number,
@@ -2589,30 +2589,30 @@ impl PaxosModel {
             ));
         }
     }
-    
+
     /// 处理Promise消息
     fn handle_promise(&mut self, proposal_number: u64, accepted: Option<(u64, Value)>, from: usize, to: usize) {
         if to >= self.num_nodes || self.node_states[to].failed {
             return;
         }
-        
+
         let proposer = &mut self.node_states[to];
-        
+
         // 检查提案者是否仍在准备此提案
         if proposer.preparing != Some(proposal_number) {
             return;
         }
-        
+
         // 收集Promise响应
         // 在实际实现中，这里需要跟踪已收到的Promise数量和最高编号的已接受值
         // 简化实现：当收到Promise时直接发送Accept请求
-        
+
         // 在实际实现中，这里需要确保收到多数派的Promise
         // 简化实现：假设已收到多数派响应
-        
+
         // 确定提案值：如果有已接受的值，使用最高编号的；否则使用原始值
         let proposal_value = accepted.map(|(_, v)| v).unwrap_or(Value(42)); // 简化：使用固定值
-        
+
         // 发送Accept请求给所有Acceptor
         for i in 0..self.num_nodes {
             if i != to && !self.node_states[i].failed {
@@ -2620,23 +2620,23 @@ impl PaxosModel {
             }
         }
     }
-    
+
     /// 处理Accept消息
     fn handle_accept(&mut self, proposal_number: u64, value: Value, from: usize, to: usize) {
         if to >= self.num_nodes || self.node_states[to].failed {
             return;
         }
-        
+
         let acceptor = &mut self.node_states[to];
-        
+
         // 检查是否可以接受此提案
         if acceptor.promised.is_none() || acceptor.promised.unwrap() <= proposal_number {
             // 接受提案
             acceptor.accepted = Some((proposal_number, value));
-            
+
             // 发送Accepted消息
             self.messages.push(Message::Accepted(proposal_number, to, from));
-            
+
             // 通知所有学习者（简化实现）
             for i in 0..self.num_nodes {
                 if i != to && !self.node_states[i].failed {
@@ -2645,16 +2645,16 @@ impl PaxosModel {
             }
         }
     }
-    
+
     /// 处理Accepted消息
     fn handle_accepted(&mut self, proposal_number: u64, from: usize, to: usize) {
         if to >= self.num_nodes || self.node_states[to].failed {
             return;
         }
-        
+
         // 在实际实现中，需要跟踪每个提案被接受的次数
         // 简化实现：假设已收到多数派的Accepted消息
-        
+
         // 更新学习者状态
         if let Some((accepted_number, accepted_value)) = self.node_states[from].accepted {
             if accepted_number == proposal_number {
@@ -2662,16 +2662,16 @@ impl PaxosModel {
             }
         }
     }
-    
+
     /// 模拟一步执行
     fn step(&mut self) -> bool {
         if self.messages.is_empty() {
             return false;
         }
-        
+
         // 获取下一条消息
         let message = self.messages.remove(0);
-        
+
         // 处理消息
         match message {
             Message::Prepare(n, from, to) => self.handle_prepare(n, from, to),
@@ -2679,10 +2679,10 @@ impl PaxosModel {
             Message::Accept(n, v, from, to) => self.handle_accept(n, v, from, to),
             Message::Accepted(n, from, to) => self.handle_accepted(n, from, to),
         }
-        
+
         true
     }
-    
+
     /// 运行直到稳定状态
     fn run_until_stable(&mut self, max_steps: usize) -> bool {
         for _ in 0..max_steps {
@@ -2691,17 +2691,17 @@ impl PaxosModel {
                 return self.check_consensus();
             }
         }
-        
+
         false // 达到最大步数但未达成稳定
     }
-    
+
     /// 检查是否已达成共识
     fn check_consensus(&self) -> bool {
         // 获取已学习值的节点
         let learned_nodes: Vec<_> = self.node_states.iter()
             .filter(|n| !n.failed && n.learned_value.is_some())
             .collect();
-        
+
         // 检查是
 
 ```rust
@@ -2709,7 +2709,7 @@ impl PaxosModel {
         if learned_nodes.len() <= self.num_nodes - self.max_failures {
             return false; // 未达到多数派
         }
-        
+
         // 检查所有节点是否学习到相同的值
         if let Some(first_value) = learned_nodes.first().and_then(|n| n.learned_value.as_ref()) {
             learned_nodes.iter()
@@ -2718,7 +2718,7 @@ impl PaxosModel {
             false
         }
     }
-    
+
     /// 验证安全性属性
     fn verify_safety(&self) -> bool {
         // 检查所有非失败节点是否决定相同的值
@@ -2726,34 +2726,34 @@ impl PaxosModel {
             .filter(|n| !n.failed && n.learned_value.is_some())
             .map(|n| n.learned_value.as_ref().unwrap())
             .collect();
-            
+
         learned_values.len() <= 1
     }
-    
+
     /// 验证一致性属性
     fn verify_consistency(&self) -> bool {
         // 如果所有节点提议相同的值，则决定值应该是该值
         let initial_value = Value(42); // 假设所有节点最初提议相同的值
-        
+
         // 检查是否有节点学习到不同的值
         for node in &self.node_states {
-            if !node.failed && 
-               node.learned_value.is_some() && 
+            if !node.failed &&
+               node.learned_value.is_some() &&
                *node.learned_value.as_ref().unwrap() != initial_value {
                 return false;
             }
         }
-        
+
         true
     }
-    
+
     /// 模拟节点失败
     fn simulate_node_failure(&mut self, node_id: usize) {
         if node_id < self.num_nodes {
             self.node_states[node_id].failed = true;
         }
     }
-    
+
     /// 模拟消息丢失
     fn simulate_message_loss(&mut self, loss_probability: f64) {
         // 按概率丢弃消息
@@ -2768,23 +2768,23 @@ impl PaxosModel {
 fn test_paxos_safety() {
     // 创建5节点系统
     let mut paxos = PaxosModel::new(5);
-    
+
     // 启动提案
     paxos.start_proposal(0, Value(42));
-    
+
     // 模拟节点失败（不超过容错限制）
     paxos.simulate_node_failure(4);
     paxos.simulate_node_failure(3);
-    
+
     // 模拟部分消息丢失
     paxos.simulate_message_loss(0.1);
-    
+
     // 运行直到稳定
     let consensus_reached = paxos.run_until_stable(1000);
-    
+
     // 验证安全性
     assert!(paxos.verify_safety(), "安全性属性被违反！");
-    
+
     // 验证一致性（如果达成共识）
     if consensus_reached {
         assert!(paxos.verify_consistency(), "一致性属性被违反！");
@@ -2792,9 +2792,9 @@ fn test_paxos_safety() {
 }
 ```
 
-## 形式化方法与类型理论
+## 1.6 形式化方法与类型理论
 
-### 依赖类型与形式化验证
+### 1.6.1 依赖类型与形式化验证
 
 **定义 5.1 (依赖类型系统)**:
 依赖类型系统是一类型系统，其中类型可以依赖于值。形式上，依赖类型系统包含：
@@ -2870,14 +2870,14 @@ impl Context {
             variables: HashMap::new(),
         }
     }
-    
+
     /// 添加变量绑定
     fn extend(&self, name: String, ty: Type) -> Self {
         let mut new_ctx = self.clone();
         new_ctx.variables.insert(name, ty);
         new_ctx
     }
-    
+
     /// 查找变量类型
     fn lookup(&self, name: &str) -> Option<&Type> {
         self.variables.get(name)
@@ -2894,7 +2894,7 @@ impl TypeChecker {
             Expr::Var(name) => {
                 // 检查变量是否在上下文中定义
                 let var_type = ctx.lookup(name).ok_or(TypeError::UndefinedVariable(name.clone()))?;
-                
+
                 // 检查类型是否匹配
                 if self.type_eq(var_type, expected_type) {
                     Ok(())
@@ -2916,10 +2916,10 @@ impl TypeChecker {
                                 actual: (**param_type).clone(),
                             });
                         }
-                        
+
                         // 计算输出类型（替换形式参数为实际参数）
                         let output_type = self.subst_var_in_expr(output_type_expr, x, &Expr::Var(name.clone()));
-                        
+
                         // 在扩展上下文中检查函数体
                         let extended_ctx = ctx.extend(name.clone(), (**param_type).clone());
                         self.check(&extended_ctx, body, &self.eval_type(&output_type))
@@ -2930,16 +2930,16 @@ impl TypeChecker {
             Expr::App(f, arg) => {
                 // 推导函数类型
                 let f_type = self.infer(ctx, f)?;
-                
+
                 // 函数类型应该是Pi类型
                 match f_type {
                     Type::Pi(x, input_type, output_type_expr) => {
                         // 检查参数类型
                         self.check(ctx, arg, &input_type)?;
-                        
+
                         // 计算输出类型（替换形式参数为实际参数）
                         let output_type = self.subst_var_in_expr(&output_type_expr, &x, arg);
-                        
+
                         // 检查输出类型与期望类型匹配
                         let eval_output_type = self.eval_type(&output_type);
                         if self.type_eq(&eval_output_type, expected_type) {
@@ -2967,7 +2967,7 @@ impl TypeChecker {
             Expr::Succ(e) => {
                 // 检查表达式类型是否为Nat
                 self.check(ctx, e, &Type::Base(BaseType::Nat))?;
-                
+
                 // 检查期望类型是否为Nat
                 match expected_type {
                     Type::Base(BaseType::Nat) => Ok(()),
@@ -2980,10 +2980,10 @@ impl TypeChecker {
             Expr::Rec(target, base_case, step_case) => {
                 // 检查目标表达式是否为Nat
                 self.check(ctx, target, &Type::Base(BaseType::Nat))?;
-                
+
                 // 检查基础情况类型与期望类型匹配
                 self.check(ctx, base_case, expected_type)?;
-                
+
                 // 构造步进情况的期望类型: (n: Nat) -> (rec: ExpectedType) -> ExpectedType
                 let n_var = Expr::Var("n".to_string());
                 let rec_var = Expr::Var("rec".to_string());
@@ -2996,7 +2996,7 @@ impl TypeChecker {
                         Box::new(Expr::Var("result".to_string())), // 这里应该是期望类型，简化处理
                     )),
                 );
-                
+
                 // 检查步进情况类型
                 self.check(ctx, step_case, &step_expected)
             }
@@ -3012,10 +3012,10 @@ impl TypeChecker {
                                 actual: (**first_type).clone(),
                             });
                         }
-                        
+
                         // 计算第二分量期望类型（替换形式参数为第一分量）
                         let second_expected = self.subst_var_in_expr(second_expected_expr, x, first);
-                        
+
                         // 检查第二分量类型
                         let second_type = self.subst_var_in_expr(second_type_expr, x, first);
                         if !self.type_eq(&self.eval_type(&second_type), &self.eval_type(&second_expected)) {
@@ -3024,7 +3024,7 @@ impl TypeChecker {
                                 actual: self.eval_type(&second_type),
                             });
                         }
-                        
+
                         // 检查第二分量值
                         self.check(ctx, second, &self.eval_type(&second_type))
                     }
@@ -3034,7 +3034,7 @@ impl TypeChecker {
             Expr::Fst(pair) => {
                 // 推导对的类型
                 let pair_type = self.infer(ctx, pair)?;
-                
+
                 // 对的类型应该是Sigma类型
                 match pair_type {
                     Type::Sigma(_, first_type, _) => {
@@ -3054,14 +3054,14 @@ impl TypeChecker {
             Expr::Snd(pair) => {
                 // 推导对的类型
                 let pair_type = self.infer(ctx, pair)?;
-                
+
                 // 对的类型应该是Sigma类型
                 match pair_type {
                     Type::Sigma(x, _, second_type_expr) => {
                         // 计算第二分量类型（替换形式参数为第一分量）
                         let fst_expr = Expr::Fst(pair.clone());
                         let second_type = self.subst_var_in_expr(&second_type_expr, &x, &fst_expr);
-                        
+
                         // 检查第二分量类型与期望类型匹配
                         let eval_second_type = self.eval_type(&second_type);
                         if self.type_eq(&eval_second_type, expected_type) {
@@ -3083,11 +3083,11 @@ impl TypeChecker {
                         // 检查a和b是否规范等价
                         let a_norm = self.normalize(a);
                         let b_norm = self.normalize(b);
-                        
+
                         if !self.expr_eq(&a_norm, &b_norm) {
                             return Err(TypeError::EqualityTypeMismatch);
                         }
-                        
+
                         // 检查expr的类型是否与ty匹配
                         let expr_type = self.infer(ctx, expr)?;
                         if self.type_eq(&expr_type, ty) {
@@ -3104,7 +3104,7 @@ impl TypeChecker {
             }
         }
     }
-    
+
     /// 推导表达式类型
     fn infer(&self, ctx: &Context, expr: &Expr) -> Result<Type, TypeError> {
         match expr {
@@ -3118,7 +3118,7 @@ impl TypeChecker {
                 // 在扩展上下文中推导函数体类型
                 let extended_ctx = ctx.extend(name.clone(), (**param_type).clone());
                 let body_type = self.infer(&extended_ctx, body)?;
-                
+
                 // 构造Pi类型
                 Ok(Type::Pi(
                     name.clone(),
@@ -3129,16 +3129,16 @@ impl TypeChecker {
             Expr::App(f, arg) => {
                 // 推导函数类型
                 let f_type = self.infer(ctx, f)?;
-                
+
                 // 函数类型应该是Pi类型
                 match f_type {
                     Type::Pi(x, input_type, output_type_expr) => {
                         // 检查参数类型
                         self.check(ctx, arg, &input_type)?;
-                        
+
                         // 计算输出类型（替换形式参数为实际参数）
                         let output_type = self.subst_var_in_expr(&output_type_expr, &x, arg);
-                        
+
                         Ok(self.eval_type(&output_type))
                     }
                     _ => Err(TypeError::ExpectedPiType(f_type)),
@@ -3151,17 +3151,17 @@ impl TypeChecker {
             Expr::Succ(e) => {
                 // 检查表达式类型是否为Nat
                 self.check(ctx, e, &Type::Base(BaseType::Nat))?;
-                
+
                 // 后继函数的类型是Nat -> Nat
                 Ok(Type::Base(BaseType::Nat))
             }
             Expr::Rec(target, base_case, step_case) => {
                 // 检查目标表达式是否为Nat
                 self.check(ctx, target, &Type::Base(BaseType::Nat))?;
-                
+
                 // 推导基础情况类型
                 let base_type = self.infer(ctx, base_case)?;
-                
+
                 // 构造步进情况的期望类型: (n: Nat) -> (rec: BaseType) -> BaseType
                 let step_expected = Type::Pi(
                     "n".to_string(),
@@ -3172,23 +3172,23 @@ impl TypeChecker {
                         Box::new(self.type_to_expr(&base_type)),
                     )),
                 );
-                
+
                 // 检查步进情况类型
                 self.check(ctx, step_case, &step_expected)?;
-                
+
                 // 递归表达式的类型与基础情况类型相同
                 Ok(base_type)
             }
             Expr::Pair(first, second, first_type, second_type_expr) => {
                 // 检查第一分量类型
                 self.check(ctx, first, first_type)?;
-                
+
                 // 计算第二分量类型
                 let second_type = self.subst_var_in_expr(second_type_expr, &"x".to_string(), first);
-                
+
                 // 检查第二分量类型
                 self.check(ctx, second, &self.eval_type(&second_type))?;
-                
+
                 // 构造Sigma类型
                 Ok(Type::Sigma(
                     "x".to_string(),
@@ -3199,7 +3199,7 @@ impl TypeChecker {
             Expr::Fst(pair) => {
                 // 推导对的类型
                 let pair_type = self.infer(ctx, pair)?;
-                
+
                 // 对的类型应该是Sigma类型
                 match pair_type {
                     Type::Sigma(_, first_type, _) => Ok((**first_type).clone()),
@@ -3209,14 +3209,14 @@ impl TypeChecker {
             Expr::Snd(pair) => {
                 // 推导对的类型
                 let pair_type = self.infer(ctx, pair)?;
-                
+
                 // 对的类型应该是Sigma类型
                 match pair_type {
                     Type::Sigma(x, _, second_type_expr) => {
                         // 计算第二分量类型（替换形式参数为第一分量）
                         let fst_expr = Expr::Fst(pair.clone());
                         let second_type = self.subst_var_in_expr(&second_type_expr, &x, &fst_expr);
-                        
+
                         Ok(self.eval_type(&second_type))
                     }
                     _ => Err(TypeError::ExpectedSigmaType(pair_type)),
@@ -3225,7 +3225,7 @@ impl TypeChecker {
             Expr::Refl(expr) => {
                 // 推导表达式类型
                 let expr_type = self.infer(ctx, expr)?;
-                
+
                 // 构造相等类型
                 Ok(Type::Eq(
                     expr.clone(),
@@ -3235,7 +3235,7 @@ impl TypeChecker {
             }
         }
     }
-    
+
     /// 检查两个类型是否等价
     fn type_eq(&self, ty1: &Type, ty2: &Type) -> bool {
         match (ty1, ty2) {
@@ -3260,13 +3260,13 @@ impl TypeChecker {
             _ => false,
         }
     }
-    
+
     /// 检查两个表达式是否等价
     fn expr_eq(&self, e1: &Expr, e2: &Expr) -> bool {
         // 简化实现：归一化后比较
         let e1_norm = self.normalize(e1);
         let e2_norm = self.normalize(e2);
-        
+
         match (&e1_norm, &e2_norm) {
             (Expr::Var(x1), Expr::Var(x2)) => x1 == x2,
             (Expr::Lam(x1, t1, e1), Expr::Lam(x2, t2, e2)) => {
@@ -3285,7 +3285,7 @@ impl TypeChecker {
                 self.expr_eq(t1, t2) && self.expr_eq(b1, b2) && self.expr_eq(s1, s2)
             }
             (Expr::Pair(a1, b1, t1, e1), Expr::Pair(a2, b2, t2, e2)) => {
-                self.expr_eq(a1, a2) && self.expr_eq(b1, b2) && 
+                self.expr_eq(a1, a2) && self.expr_eq(b1, b2) &&
                 self.type_eq(t1, t2) && self.expr_eq(e1, e2)
             }
             (Expr::Fst(p1), Expr::Fst(p2)) => self.expr_eq(p1, p2),
@@ -3294,7 +3294,7 @@ impl TypeChecker {
             _ => false,
         }
     }
-    
+
     /// 评估类型表达式
     fn eval_type(&self, expr: &Expr) -> Type {
         // 简化实现：假设表达式已经是类型形式
@@ -3313,7 +3313,7 @@ impl TypeChecker {
             _ => panic!("Cannot evaluate non-type expression as type"),
         }
     }
-    
+
     /// 将类型转换为表达式
     fn type_to_expr(&self, ty: &Type) -> Expr {
         match ty {
@@ -3323,7 +3323,7 @@ impl TypeChecker {
             _ => panic!("Cannot convert complex type to expression"),
         }
     }
-    
+
     /// 表达式规范化
     fn normalize(&self, expr: &Expr) -> Expr {
         // 简化实现：仅处理基本情况
@@ -3331,7 +3331,7 @@ impl TypeChecker {
             Expr::App(f, arg) => {
                 let f_norm = self.normalize(f);
                 let arg_norm = self.normalize(arg);
-                
+
                 match f_norm {
                     Expr::Lam(x, _, body) => {
                         // Beta归约
@@ -3343,7 +3343,7 @@ impl TypeChecker {
             }
             Expr::Fst(pair) => {
                 let pair_norm = self.normalize(pair);
-                
+
                 match pair_norm {
                     Expr::Pair(a, _, _, _) => (**a).clone(),
                     _ => Expr::Fst(Box::new(pair_norm)),
@@ -3351,7 +3351,7 @@ impl TypeChecker {
             }
             Expr::Snd(pair) => {
                 let pair_norm = self.normalize(pair);
-                
+
                 match pair_norm {
                     Expr::Pair(_, b, _, _) => (**b).clone(),
                     _ => Expr::Snd(Box::new(pair_norm)),
@@ -3359,7 +3359,7 @@ impl TypeChecker {
             }
             Expr::Rec(target, base, step) => {
                 let target_norm = self.normalize(target);
-                
+
                 match target_norm {
                     Expr::Nat(0) => {
                         // 基础情况
@@ -3389,7 +3389,7 @@ impl TypeChecker {
             _ => expr.clone(),
         }
     }
-    
+
     /// 在表达式中替换变量
     fn subst_var_in_expr(&self, expr: &Expr, var: &str, replacement: &Expr) -> Expr {
         match expr {
@@ -3420,7 +3420,7 @@ impl TypeChecker {
             _ => expr.clone(),
         }
     }
-    
+
     /// 在类型中替换变量
     fn subst_var_in_type(&self, ty: &Type, var: &str, replacement: &Expr) -> Type {
         match ty {
@@ -3456,7 +3456,7 @@ enum TypeError {
 }
 ```
 
-### 使用依赖类型进行程序验证
+### 1.6.2 使用依赖类型进行程序验证
 
 ```rust
 // 使用依赖类型验证向量访问安全性
@@ -3480,22 +3480,22 @@ impl<T, const N: usize> DVector<T, N> {
 // 使用示例
 fn use_dependent_vector() {
     let vec = DVector { elements: [1, 2, 3, 4, 5] };
-    
+
     // 有效索引
     let idx1 = DIndex::<5, 0> {};
     let idx2 = DIndex::<5, 4> {};
-    
+
     let v1 = vec.get(idx1);
     let v2 = vec.get(idx2);
-    
+
     // 编译错误：索引超出范围
     // let idx_invalid = DIndex::<5, 5> {}; // 编译失败，违反 I < N
 }
 ```
 
-## 分布式系统模型验证
+## 1.7 分布式系统模型验证
 
-### 实时系统形式化验证
+### 1.7.1 实时系统形式化验证
 
 **定义 6.1 (实时系统)**:
 实时系统是一类时间约束关键的系统，其形式化模型包括:
@@ -3573,12 +3573,12 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
             safety_properties: Vec::new(),
         }
     }
-    
+
     /// 添加初始状态
     fn add_initial_state(&mut self, state: S) {
         self.initial_states.insert(state);
     }
-    
+
     /// 添加转换关系
     fn add_transition(
         &mut self,
@@ -3592,12 +3592,12 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
             target_generator: Box::new(target_generator),
         });
     }
-    
+
     /// 添加时间约束
     fn add_constraint(&mut self, constraint: C) {
         self.constraints.push(constraint);
     }
-    
+
     /// 添加安全属性
     fn add_safety_property(
         &mut self,
@@ -3609,11 +3609,11 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
             predicate: Box::new(predicate),
         });
     }
-    
+
     /// 验证系统安全性（有界模型检查）
     fn verify_bounded(&self, time_bound: f64, time_step: f64) -> ExplorationResult<S> {
         let start_time = Instant::now();
-        
+
         // 初始化结果
         let mut result = ExplorationResult {
             reachable_states: HashSet::new(),
@@ -3622,20 +3622,20 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
             exploration_time: Duration::default(),
             states_explored: 0,
         };
-        
+
         // 待探索状态队列
         let mut frontier = VecDeque::new();
-        
+
         // 添加初始状态
         for state in &self.initial_states {
             frontier.push_back((state.clone(), 0.0));
             result.reachable_states.insert(state.clone());
         }
-        
+
         // 主循环：广度优先探索状态空间
         while let Some((state, time)) = frontier.pop_front() {
             result.states_explored += 1;
-            
+
             // 检查安全属性
             for property in &self.safety_properties {
                 if !(property.predicate)(&state) {
@@ -3644,12 +3644,12 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
                     // 对于反例，继续探索以找到所有可能的违例
                 }
             }
-            
+
             // 如果达到时间界限，不再继续探索
             if time >= time_bound {
                 continue;
             }
-            
+
             // 探索所有可能的转换
             for transition in &self.transitions {
                 if (transition.source_predicate)(&state) {
@@ -3657,11 +3657,11 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
                     let mut current_time = time;
                     while current_time < time_bound {
                         current_time += time_step;
-                        
+
                         if (transition.time_predicate)(current_time) {
                             // 生成目标状态
                             let target = (transition.target_generator)(&state, current_time);
-                            
+
                             // 如果是新状态，添加到队列
                             if !result.reachable_states.contains(&target) {
                                 frontier.push_back((target.clone(), current_time));
@@ -3672,13 +3672,13 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
                 }
             }
         }
-        
+
         // 设置探索时间
         result.exploration_time = start_time.elapsed();
-        
+
         result
     }
-    
+
     /// 符号化状态空间探索
     fn symbolic_verification(&self) -> ExplorationResult<S> {
         // 此处应实现符号化模型检查，例如使用区域自动机或时间自动机
@@ -3691,7 +3691,7 @@ impl<S: Eq + Hash + Clone, C> RealTimeSystem<S, C> {
             states_explored: 0,
         }
     }
-    
+
     /// 验证特定时间约束
     fn verify_timing_constraint(&self, constraint_index: usize) -> bool {
         // 实现时间约束验证
@@ -3727,7 +3727,7 @@ struct ThermostatConstraint {
 /// 创建温控系统模型
 fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstraint> {
     let mut system = RealTimeSystem::new();
-    
+
     // 添加初始状态
     system.add_initial_state(ThermostatState {
         temperature: 200, // 20.0°C
@@ -3735,7 +3735,7 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
         mode: ThermostatMode::Idle,
         time_in_state: 0,
     });
-    
+
     // 添加时间约束
     system.add_constraint(ThermostatConstraint {
         min_on_time: 300,  // 至少开启30秒
@@ -3743,14 +3743,14 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
         max_temp: 250,     // 最高25.0°C
         min_temp: 180,     // 最低18.0°C
     });
-    
+
     // 添加转换：温度下降
     system.add_transition(
         |state| true, // 所有状态
         |_| true,    // 任何时间
         |state, time_delta| {
             let mut new_state = state.clone();
-            
+
             // 温度变化
             if state.heater_on {
                 // 加热器开启时，温度上升
@@ -3759,19 +3759,19 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
                 // 加热器关闭时，温度下降
                 new_state.temperature -= (time_delta * 2.0) as i32;
             }
-            
+
             // 更新状态时间
             new_state.time_in_state += time_delta as i32;
-            
+
             new_state
         },
     );
-    
+
     // 添加转换：加热器开启
     system.add_transition(
-        |state| !state.heater_on && 
-                state.temperature <= 190 && 
-                state.mode != ThermostatMode::Heating && 
+        |state| !state.heater_on &&
+                state.temperature <= 190 &&
+                state.mode != ThermostatMode::Heating &&
                 state.time_in_state >= 600, // 最小关闭时间
         |_| true, // 任何时间
         |state, _| {
@@ -3782,11 +3782,11 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
             new_state
         },
     );
-    
+
     // 添加转换：加热器关闭
     system.add_transition(
-        |state| state.heater_on && 
-                (state.temperature >= 230 || 
+        |state| state.heater_on &&
+                (state.temperature >= 230 ||
                  (state.mode == ThermostatMode::Heating && state.time_in_state >= 300)), // 最小开启时间
         |_| true, // 任何时间
         |state, _| {
@@ -3797,11 +3797,11 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
             new_state
         },
     );
-    
+
     // 添加转换：冷却到空闲
     system.add_transition(
-        |state| !state.heater_on && 
-                state.mode == ThermostatMode::Cooling && 
+        |state| !state.heater_on &&
+                state.mode == ThermostatMode::Cooling &&
                 state.time_in_state >= 600, // 最小冷却时间
         |_| true, // 任何时间
         |state, _| {
@@ -3811,48 +3811,48 @@ fn create_thermostat_model() -> RealTimeSystem<ThermostatState, ThermostatConstr
             new_state
         },
     );
-    
+
     // 添加安全属性：温度在安全范围内
     system.add_safety_property(
         "温度安全范围".to_string(),
         |state| state.temperature >= 180 && state.temperature <= 250,
     );
-    
+
     // 添加安全属性：加热器最小开启时间
     system.add_safety_property(
         "加热器最小开启时间".to_string(),
         |state| {
-            !(state.mode == ThermostatMode::Heating && 
-              !state.heater_on && 
+            !(state.mode == ThermostatMode::Heating &&
+              !state.heater_on &&
               state.time_in_state < 300)
         },
     );
-    
+
     // 添加安全属性：加热器最小关闭时间
     system.add_safety_property(
         "加热器最小关闭时间".to_string(),
         |state| {
-            !(state.mode != ThermostatMode::Heating && 
-              state.heater_on && 
+            !(state.mode != ThermostatMode::Heating &&
+              state.heater_on &&
               state.time_in_state < 600)
         },
     );
-    
+
     system
 }
 
 /// 验证温控系统
 fn verify_thermostat() {
     let system = create_thermostat_model();
-    
+
     // 有界验证
     let result = system.verify_bounded(3600.0, 60.0); // 模拟1小时，步长1分钟
-    
+
     println!("温控系统验证结果：");
     println!("  安全性: {}", if result.is_safe { "通过" } else { "失败" });
     println!("  探索状态数: {}", result.states_explored);
     println!("  探索时间: {:?}", result.exploration_time);
-    
+
     if !result.is_safe {
         println!("发现安全违例：");
         for (state, property) in result.counterexamples {
@@ -3866,7 +3866,7 @@ fn verify_thermostat() {
 }
 ```
 
-## 混合系统验证
+## 1.8 混合系统验证
 
 **定义 7.1 (混合系统)**:
 混合系统是离散行为和连续行为交织的系统，形式化模型为：
@@ -3918,17 +3918,17 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
             safety_properties: Vec::new(),
         }
     }
-    
+
     /// 添加离散状态
     fn add_discrete_state(&mut self, state: S) {
         self.discrete_states.insert(state);
     }
-    
+
     /// 添加初始状态
     fn add_initial_state(&mut self, discrete: S, continuous: X) {
         self.initial_states.insert((discrete, continuous));
     }
-    
+
     /// 添加不变量
     fn add_invariant(
         &mut self,
@@ -3937,7 +3937,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
     ) {
         self.invariants.insert(discrete, Box::new(invariant));
     }
-    
+
     /// 添加流函数
     fn add_flow(
         &mut self,
@@ -3946,7 +3946,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
     ) {
         self.flows.insert(discrete, Box::new(flow));
     }
-    
+
     /// 添加跳转关系
     fn add_jump(
         &mut self,
@@ -3957,7 +3957,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
     ) {
         self.jumps.push((source, target, Box::new(guard), Box::new(reset)));
     }
-    
+
     /// 添加安全属性
     fn add_safety_property(
         &mut self,
@@ -3965,7 +3965,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
     ) {
         self.safety_properties.push(Box::new(property));
     }
-    
+
     /// 求解常微分方程（简化实现）
     fn solve_ode(
         &self,
@@ -3976,35 +3976,35 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
     ) -> Vec<X> {
         let flow = self.flows.get(discrete).expect("未找到流函数");
         let invariant = self.invariants.get(discrete).expect("未找到不变量");
-        
+
         let mut result = Vec::with_capacity(num_steps + 1);
         result.push(continuous.clone());
-        
+
         let mut current = continuous.clone();
-        
+
         for _ in 0..num_steps {
             // 欧拉方法求解ODE
             let derivative = flow(&current);
             let next = self.euler_step(&current, &derivative, time_step);
-            
+
             // 检查不变量
             if !invariant(&next) {
                 break;
             }
-            
+
             result.push(next.clone());
             current = next;
         }
-        
+
         result
     }
-    
+
     /// 欧拉方法步进（需要具体的X类型实现）
     fn euler_step(&self, x: &X, dx: &X, dt: f64) -> X {
         // 简化实现
         x.clone()
     }
-    
+
     /// 检查可达性（有界模型检查）
     fn check_reachability(
         &self,
@@ -4015,17 +4015,17 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
         let mut frontier = VecDeque::new();
         let mut visited = HashSet::new();
         let mut reachable_approximation = HashMap::new();
-        
+
         // 添加初始状态
         for (discrete, continuous) in &self.initial_states {
             frontier.push_back((discrete.clone(), continuous.clone(), 0.0));
-            
+
             let entry = reachable_approximation
                 .entry(discrete.clone())
                 .or_insert_with(Vec::new);
             entry.push(continuous.clone());
         }
-        
+
         // 检查初始状态是否已满足目标
         for (discrete, continuous) in &self.initial_states {
             if target_predicate(discrete, continuous) {
@@ -4038,37 +4038,37 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
                 };
             }
         }
-        
+
         // 主循环
         while let Some((discrete, continuous, time)) = frontier.pop_front() {
             let state_key = (discrete.clone(), continuous.clone());
-            
+
             // 跳过已访问状态
             if visited.contains(&state_key) {
                 continue;
             }
             visited.insert(state_key);
-            
+
             // 如果达到时间界限，跳过
             if time >= time_bound {
                 continue;
             }
-            
+
             // 1. 连续演化
             let trajectories = self.solve_ode(&discrete, &continuous, time_step, 10);
-            
+
             // 更新可达近似
             let entry = reachable_approximation
                 .entry(discrete.clone())
                 .or_insert_with(Vec::new);
             entry.extend(trajectories.clone());
-            
+
             // 检查轨迹上的点是否满足目标
             for point in &trajectories {
                 if target_predicate(&discrete, point) {
                     let mut path = vec![(discrete.clone(), continuous.clone())];
                     path.push((discrete.clone(), point.clone()));
-                    
+
                     return ReachabilityResult {
                         is_reachable: true,
                         reachable_states: reachable_approximation
@@ -4078,27 +4078,27 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
                     };
                 }
             }
-            
+
             let last_point = trajectories.last().unwrap_or(&continuous);
-            
+
             // 2. 离散跳转
             for (source, target, guard, reset) in &self.jumps {
                 if discrete == source && guard(last_point) {
                     let next_continuous = reset(last_point);
-                    
+
                     // 检查目标状态的不变量
                     if let Some(invariant) = self.invariants.get(target) {
                         if !invariant(&next_continuous) {
                             continue;
                         }
                     }
-                    
+
                     // 检查目标状态是否满足目标谓词
                     if target_predicate(target, &next_continuous) {
                         let mut path = vec![(discrete.clone(), continuous.clone())];
                         path.push((discrete.clone(), last_point.clone()));
                         path.push((target.clone(), next_continuous.clone()));
-                        
+
                         return ReachabilityResult {
                             is_reachable: true,
                             reachable_states: reachable_approximation
@@ -4107,7 +4107,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
                             counterexample: Some(path),
                         };
                     }
-                    
+
                     // 添加到待探索队列
                     frontier.push_back((
                         target.clone(),
@@ -4117,7 +4117,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
                 }
             }
         }
-        
+
         // 目标不可达
         ReachabilityResult {
             is_reachable: false,
@@ -4127,7 +4127,7 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
             counterexample: None,
         }
     }
-    
+
     /// 验证安全属性
     fn verify_safety(&self, time_bound: f64, time_step: f64) -> bool {
         for property in &self.safety_properties {
@@ -4136,12 +4136,12 @@ impl<S: Eq + Hash + Clone, X: Clone> HybridSystem<S, X> {
                 time_bound,
                 time_step,
             );
-            
+
             if result.is_reachable {
                 return false;
             }
         }
-        
+
         true
     }
 }
@@ -4162,11 +4162,11 @@ struct BallState {
 /// 创建弹跳球混合系统模型
 fn create_bouncing_ball_model() -> HybridSystem<BallMode, BallState> {
     let mut system = HybridSystem::new();
-    
+
     // 添加离散状态
     system.add_discrete_state(BallMode::Falling);
     system.add_discrete_state(BallMode::Rising);
-    
+
     // 添加初始状态
     system.add_initial_state(
         BallMode::Falling,
@@ -4175,33 +4175,33 @@ fn create_bouncing_ball_model() -> HybridSystem<BallMode, BallState> {
             velocity: 0.0,
         },
     );
-    
+
     // 添加不变量
     system.add_invariant(BallMode::Falling, |state: &BallState| {
         state.height >= 0.0 && state.velocity <= 0.0
     });
-    
+
     system.add_invariant(BallMode::Rising, |state: &BallState| {
         state.height >= 0.0 && state.velocity >= 0.0
     });
-    
+
     // 添加流函数
     let gravity = 9.81;
-    
+
     system.add_flow(BallMode::Falling, move |state: &BallState| {
         BallState {
             height: state.velocity,
             velocity: -gravity,
         }
     });
-    
+
     system.add_flow(BallMode::Rising, move |state: &BallState| {
         BallState {
             height: state.velocity,
             velocity: -gravity,
         }
     });
-    
+
     // 添加跳转
     // 下落到上升（弹跳）
     system.add_jump(
@@ -4216,7 +4216,7 @@ fn create_bouncing_ball_model() -> HybridSystem<BallMode, BallState> {
             }
         },
     );
-    
+
     // 上升到下落（顶点）
     system.add_jump(
         BallMode::Rising,
@@ -4224,13 +4224,13 @@ fn create_bouncing_ball_model() -> HybridSystem<BallMode, BallState> {
         |state: &BallState| state.velocity <= 0.0,
         |state: &BallState| state.clone(),
     );
-    
+
     // 添加安全属性
     system.add_safety_property(|_mode, state: &BallState| {
         // 球的高度不超过12米
         state.height <= 12.0
     });
-    
+
     system
 }
 
@@ -4247,12 +4247,12 @@ impl HybridSystem<BallMode, BallState> {
 /// 验证弹跳球系统
 fn verify_bouncing_ball() {
     let system = create_bouncing_ball_model();
-    
+
     // 验证安全性
     let is_safe = system.verify_safety(10.0, 0.01);
-    
+
     println!("弹跳球系统安全性验证结果: {}", if is_safe { "安全" } else { "不安全" });
-    
+
     // 检查特定目标是否可达
     let result = system.check_reachability(
         |mode, state| {
@@ -4261,9 +4261,9 @@ fn verify_bouncing_ball() {
         10.0,
         0.01,
     );
-    
+
     println!("弹跳球是否可达目标状态: {}", result.is_reachable);
-    
+
     if let Some(path) = result.counterexample {
         println!("路径长度: {}", path.len());
         for (i, (mode, state)) in path.iter().enumerate() {
@@ -4276,7 +4276,7 @@ fn verify_bouncing_ball() {
 }
 ```
 
-## 总结与展望
+## 1.9 总结与展望
 
 异步编程是现代软件开发的核心范式，而Rust的异步编程模型通过结合类型安全、零成本抽象和内存安全，提供了一种独特的解决方案。本文探讨了Rust异步编程的形式化基础，从π-演算到会话类型，从线性类型到状态机模型，建立了一个全面的理论框架。
 

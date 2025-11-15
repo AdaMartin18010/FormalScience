@@ -1,21 +1,19 @@
-# rust实现api
-
-我将为您展示一个基于 Rust 2024 的 OpenAPI/AsyncAPI 代码生成器实现。
+# 1. rust实现api
 
 ## 目录
 
-- [rust实现api](#rust实现api)
+- [1. rust实现api](#1-rust实现api)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-    - [2. OpenAPI 解析和代码生成器](#2-openapi-解析和代码生成器)
-    - [3. 数据库集成生成器](#3-数据库集成生成器)
-    - [4. 消息中间件集成生成器](#4-消息中间件集成生成器)
-    - [5. API 路由生成器](#5-api-路由生成器)
-    - [6. 验证生成器](#6-验证生成器)
-    - [7. 集成测试生成器](#7-集成测试生成器)
-    - [8. 主程序实现](#8-主程序实现)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+    - [1.1.1 OpenAPI 解析和代码生成器](#111-openapi-解析和代码生成器)
+    - [1.1.2 数据库集成生成器](#112-数据库集成生成器)
+    - [1.1.3 消息中间件集成生成器](#113-消息中间件集成生成器)
+    - [1.1.4 API 路由生成器](#114-api-路由生成器)
+    - [1.1.5 验证生成器](#115-验证生成器)
+    - [1.1.6 集成测试生成器](#116-集成测试生成器)
+    - [1.1.7 主程序实现](#117-主程序实现)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -32,7 +30,7 @@ async-trait = "0.1"
 inflector = "0.11"
 ```
 
-### 2. OpenAPI 解析和代码生成器
+### 1.1.1 OpenAPI 解析和代码生成器
 
 ```rust
 use openapiv3::OpenAPI;
@@ -85,7 +83,7 @@ impl ApiCodeGenerator {
             for (name, schema) in &self.api_spec.components.schemas {
                 let table_name = name.to_snake_case();
                 let fields = self.extract_db_fields(schema)?;
-                
+
                 // 生成 SQL 查询
                 let queries = self.generate_sql_queries(&table_name, &fields)?;
                 yield queries;
@@ -99,7 +97,7 @@ impl ApiCodeGenerator {
 }
 ```
 
-### 3. 数据库集成生成器
+### 1.1.2 数据库集成生成器
 
 ```rust
 pub struct DatabaseIntegrationGenerator {
@@ -132,7 +130,7 @@ impl DatabaseIntegrationGenerator {
     // 生成 PostgreSQL 仓库代码
     fn generate_postgres_repository(&self, model: &ModelDefinition) -> Result<String> {
         let struct_name = format!("{}Repository", model.name);
-        
+
         try_stream! {
             // 生成基本 CRUD 操作
             yield format!(
@@ -148,7 +146,7 @@ impl DatabaseIntegrationGenerator {
                         .fetch_one(&self.pool)
                         .await
                     }}
-                    
+
                     // ... 其他 CRUD 方法
                 }}
                 "#,
@@ -166,7 +164,7 @@ impl DatabaseIntegrationGenerator {
 }
 ```
 
-### 4. 消息中间件集成生成器
+### 1.1.3 消息中间件集成生成器
 
 ```rust
 pub struct MessageBrokerGenerator {
@@ -192,17 +190,17 @@ impl MessageBrokerGenerator {
     fn generate_kafka_handler(&self, channel: &Channel) -> impl Stream<Item = Result<String>> {
         try_stream! {
             let topic_name = channel.name.to_snake_case();
-            
+
             yield format!(
                 r#"
                 #[async_trait]
                 impl KafkaMessageHandler for {} {{
                     async fn handle_message(&self, message: KafkaMessage) -> Result<()> {{
                         let payload: {} = serde_json::from_slice(&message.payload)?;
-                        
+
                         // 处理消息
                         self.process_message(payload).await?;
-                        
+
                         Ok(())
                     }}
                 }}
@@ -223,7 +221,7 @@ impl MessageBrokerGenerator {
 }
 ```
 
-### 5. API 路由生成器
+### 1.1.4 API 路由生成器
 
 ```rust
 pub struct RouterGenerator {
@@ -269,7 +267,7 @@ impl RouterGenerator {
 }
 ```
 
-### 6. 验证生成器
+### 1.1.5 验证生成器
 
 ```rust
 pub struct ValidationGenerator {
@@ -282,7 +280,7 @@ impl ValidationGenerator {
         try_stream! {
             for model in &self.models {
                 yield self.generate_model_validation(model)?;
-                
+
                 // 生成自定义验证规则
                 for field in &model.fields {
                     if let Some(rules) = &field.validation_rules {
@@ -301,9 +299,9 @@ impl ValidationGenerator {
                 impl Validate for {} {{
                     fn validate(&self) -> Result<(), ValidationError> {{
                         let mut errors = ValidationErrors::new();
-                        
+
                         {}
-                        
+
                         if errors.is_empty() {{
                             Ok(())
                         }} else {{
@@ -320,7 +318,7 @@ impl ValidationGenerator {
 }
 ```
 
-### 7. 集成测试生成器
+### 1.1.6 集成测试生成器
 
 ```rust
 pub struct TestGenerator {
@@ -334,10 +332,10 @@ impl TestGenerator {
             for (path, item) in &self.api_spec.paths {
                 // 生成集成测试
                 yield self.generate_integration_test(path, item)?;
-                
+
                 // 生成单元测试
                 yield self.generate_unit_test(path, item)?;
-                
+
                 // 生成性能测试
                 yield self.generate_benchmark_test(path, item)?;
             }
@@ -353,14 +351,14 @@ impl TestGenerator {
                     #[tokio::test]
                     async fn test_{}_{}() {{
                         let app = create_test_app().await;
-                        
+
                         let response = app
                             .{}_{}("{}")
                             .send_json(&{})
                             .await;
-                            
+
                         assert_eq!(response.status(), 200);
-                        
+
                         let result: {} = response.json().await;
                         assert!(result.is_ok());
                     }}
@@ -378,57 +376,57 @@ impl TestGenerator {
 }
 ```
 
-### 8. 主程序实现
+### 1.1.7 主程序实现
 
 ```rust
 #[tokio::main]
 async fn main() -> Result<()> {
     // 加载 OpenAPI 规范
     let api_spec = load_api_spec("openapi.yaml").await?;
-    
+
     // 创建代码生成器
     let generator = ApiCodeGenerator::new(api_spec);
-    
+
     // 生成模型代码
     let mut models = generator.generate_models();
     while let Some(model_code) = models.next().await {
         write_to_file(&model_code?, "src/models")?;
     }
-    
+
     // 生成服务代码
     let mut services = generator.generate_services();
     while let Some(service_code) = services.next().await {
         write_to_file(&service_code?, "src/services")?;
     }
-    
+
     // 生成数据库集成代码
     let db_generator = DatabaseIntegrationGenerator::new(DatabaseType::Postgres);
     let mut repositories = db_generator.generate_repository();
     while let Some(repo_code) = repositories.next().await {
         write_to_file(&repo_code?, "src/repositories")?;
     }
-    
+
     // 生成消息中间件集成代码
     let msg_generator = MessageBrokerGenerator::new(BrokerType::Kafka);
     let mut handlers = msg_generator.generate_message_handlers();
     while let Some(handler_code) = handlers.next().await {
         write_to_file(&handler_code?, "src/handlers")?;
     }
-    
+
     // 生成路由代码
     let router_generator = RouterGenerator::new(WebFramework::Axum);
     let mut routes = router_generator.generate_routes();
     while let Some(route_code) = routes.next().await {
         write_to_file(&route_code?, "src/routes")?;
     }
-    
+
     // 生成验证代码
     let validation_generator = ValidationGenerator::new();
     let mut validations = validation_generator.generate_validations();
     while let Some(validation_code) = validations.next().await {
         write_to_file(&validation_code?, "src/validations")?;
     }
-    
+
     // 生成测试代码
     let test_generator = TestGenerator::new();
     let mut tests = test_generator.generate_tests();

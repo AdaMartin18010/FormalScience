@@ -68,7 +68,7 @@ impl Metrics {
 
         // 活跃请求数
         let active_requests = IntGauge::new(
-            "active_requests", 
+            "active_requests",
             "Number of requests in progress"
         ).unwrap();
         registry.register(Box::new(active_requests.clone())).unwrap();
@@ -108,9 +108,9 @@ impl AsyncTracer {
     pub fn new(name: &str, metrics: Arc<Metrics>) -> Self {
         let start_time = Instant::now();
         metrics.active_requests.inc();
-        
+
         info!(operation = name, "Starting async operation");
-        
+
         Self {
             name: name.to_string(),
             start_time,
@@ -124,7 +124,7 @@ impl Drop for AsyncTracer {
         let duration = self.start_time.elapsed();
         self.metrics.active_requests.dec();
         self.metrics.request_duration.observe(duration.as_secs_f64());
-        
+
         info!(
             operation = self.name,
             duration_ms = duration.as_millis(),
@@ -153,7 +153,7 @@ impl RequestContext {
             "request",
             trace_id = %trace_id
         );
-        
+
         Self {
             trace_id,
             span,
@@ -188,10 +188,10 @@ impl UserService {
     pub async fn get_user(&self, ctx: &RequestContext, user_id: i32) -> Result<String, String> {
         ctx.trace("get_user", async move {
             self.metrics.request_counter.with_label_values(&["get_user"]).inc();
-            
+
             // 模拟数据库查询
             tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
-            
+
             Ok(format!("User {}", user_id))
         })
         .await
@@ -204,10 +204,10 @@ impl UserService {
     ) -> Result<i32, String> {
         ctx.trace("create_user", async move {
             self.metrics.request_counter.with_label_values(&["create_user"]).inc();
-            
+
             // 模拟数据库操作
             tokio::time::sleep(tokio::time::Duration::from_millis(200)).await;
-            
+
             Ok(42)
         })
         .await
@@ -237,7 +237,7 @@ async fn get_user_handler(
         uuid::Uuid::new_v4().to_string(),
         state.metrics.clone(),
     );
-    
+
     state.user_service.get_user(&ctx, user_id).await
 }
 
@@ -249,7 +249,7 @@ async fn create_user_handler(
         uuid::Uuid::new_v4().to_string(),
         state.metrics.clone(),
     );
-    
+
     let user_id = state.user_service.create_user(&ctx, payload.name).await?;
     Ok(format!("Created user with ID: {}", user_id))
 }
@@ -302,7 +302,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 fn init_tracing() -> Result<(), Box<dyn std::error::Error>> {
     use tracing_subscriber::prelude::*;
-    
+
     let fmt_layer = tracing_subscriber::fmt::layer()
         .with_target(true)
         .with_thread_ids(true)
@@ -330,10 +330,10 @@ async fn example_operation(ctx: &RequestContext) -> Result<(), String> {
         ctx.metrics.request_counter
             .with_label_values(&["example_operation"])
             .inc();
-            
+
         // 执行操作
         tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
-        
+
         if rand::random::<bool>() {
             ctx.metrics.error_counter
                 .with_label_values(&["example_error"])

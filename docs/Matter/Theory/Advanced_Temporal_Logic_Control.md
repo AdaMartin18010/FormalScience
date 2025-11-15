@@ -1,36 +1,36 @@
-# 高级时态逻辑控制理论 (Advanced Temporal Logic Control Theory)
+# 1. 高级时态逻辑控制理论 (Advanced Temporal Logic Control Theory)
 
-## 📋 目录
+## 目录
 
-- [1 时态逻辑基础](#1-时态逻辑基础)
-  - [1.1 线性时态逻辑 (LTL)](#11-线性时态逻辑-ltl)
-  - [1.2 计算树逻辑 (CTL)](#12-计算树逻辑-ctl)
-- [2 时态逻辑模型检查](#2-时态逻辑模型检查)
-  - [2.1 模型检查算法](#21-模型检查算法)
-  - [2.2 CTL模型检查](#22-ctl模型检查)
-- [3 时态逻辑控制综合](#3-时态逻辑控制综合)
-  - [3.1 控制综合问题](#31-控制综合问题)
-  - [3.2 符号控制综合](#32-符号控制综合)
-- [4 实时时态逻辑](#4-实时时态逻辑)
-  - [4.1 时间约束](#41-时间约束)
-  - [4.2 实时控制综合](#42-实时控制综合)
-- [5 概率时态逻辑](#5-概率时态逻辑)
-  - [5.1 概率系统](#51-概率系统)
-  - [5.2 概率控制综合](#52-概率控制综合)
-- [6 混合时态逻辑](#6-混合时态逻辑)
-  - [6.1 混合系统](#61-混合系统)
-  - [6.2 混合控制综合](#62-混合控制综合)
-- [7 时态逻辑的元理论](#7-时态逻辑的元理论)
-  - [7.1 表达能力](#71-表达能力)
-  - [7.2 复杂性](#72-复杂性)
-  - [7.3 完备性](#73-完备性)
-- [8 结论](#8-结论)
+- [1. 高级时态逻辑控制理论 (Advanced Temporal Logic Control Theory)](#1-高级时态逻辑控制理论-advanced-temporal-logic-control-theory)
+  - [目录](#目录)
+  - [1.1 时态逻辑基础](#11-时态逻辑基础)
+    - [1.1.1 线性时态逻辑 (LTL)](#111-线性时态逻辑-ltl)
+    - [1.1.2 计算树逻辑 (CTL)](#112-计算树逻辑-ctl)
+  - [1.2 时态逻辑模型检查](#12-时态逻辑模型检查)
+    - [1.2.1 模型检查算法](#121-模型检查算法)
+    - [1.2.2 CTL模型检查](#122-ctl模型检查)
+  - [1.3 时态逻辑控制综合](#13-时态逻辑控制综合)
+    - [1.3.1 控制综合问题](#131-控制综合问题)
+    - [1.3.2 符号控制综合](#132-符号控制综合)
+  - [1.4 实时时态逻辑](#14-实时时态逻辑)
+    - [1.4.1 时间约束](#141-时间约束)
+    - [1.4.2 实时控制综合](#142-实时控制综合)
+  - [1.5 概率时态逻辑](#15-概率时态逻辑)
+    - [1.5.1 概率系统](#151-概率系统)
+    - [1.5.2 概率控制综合](#152-概率控制综合)
+  - [1.6 混合时态逻辑](#16-混合时态逻辑)
+    - [1.6.1 混合系统](#161-混合系统)
+    - [1.6.2 混合控制综合](#162-混合控制综合)
+  - [1.7 时态逻辑的元理论](#17-时态逻辑的元理论)
+    - [1.7.1 表达能力](#171-表达能力)
+    - [1.7.2 复杂性](#172-复杂性)
+    - [1.7.3 完备性](#173-完备性)
+  - [1.8 结论](#18-结论)
 
----
+## 1.1 时态逻辑基础
 
-## 1 时态逻辑基础
-
-### 1.1 线性时态逻辑 (LTL)
+### 1.1.1 线性时态逻辑 (LTL)
 
 **定义 1.1 (LTL语法)**
 线性时态逻辑公式：
@@ -67,7 +67,7 @@ LTL公式在路径 $\pi = s_0 s_1 s_2 \cdots$ 上的满足关系：
 2. **可能性等价性**：$\diamond \phi$ 表示将来某个时刻 $\phi$ 为真，等价于 $\text{true} \mathcal{U} \phi$
 3. **必然性等价性**：$\square \phi$ 表示所有将来时刻 $\phi$ 为真，等价于 $\phi \mathcal{R} \text{false}$
 
-### 1.2 计算树逻辑 (CTL)
+### 1.1.2 计算树逻辑 (CTL)
 
 **定义 1.3 (CTL语法)**
 计算树逻辑公式：
@@ -99,9 +99,9 @@ CTL和LTL具有不同的表达能力：
 2. 构造满足 $\square \diamond p$ 但不满足 $\text{AG} \text{EF} p$ 的模型
 3. 证明不存在CTL或LTL公式能区分这些模型
 
-## 2 时态逻辑模型检查
+## 1.2 时态逻辑模型检查
 
-### 2.1 模型检查算法
+### 1.2.1 模型检查算法
 
 **定义 2.1 (Kripke结构)**
 Kripke结构 $M = (S, S_0, R, L)$，其中：
@@ -115,7 +115,7 @@ Kripke结构 $M = (S, S_0, R, L)$，其中：
 
 ```haskell
 ltlModelCheck :: KripkeStructure -> LTLFormula -> Bool
-ltlModelCheck model phi = 
+ltlModelCheck model phi =
   let negPhi = negate phi
       buchi = ltlToBuchi negPhi
       product = productAutomaton model buchi
@@ -123,16 +123,16 @@ ltlModelCheck model phi =
   in not empty
 
 ltlToBuchi :: LTLFormula -> BuchiAutomaton
-ltlToBuchi phi = 
+ltlToBuchi phi =
   let closure = computeClosure phi
       states = generateStates closure
       transitions = generateTransitions states closure
   in BuchiAutomaton states transitions
 
 productAutomaton :: KripkeStructure -> BuchiAutomaton -> BuchiAutomaton
-productAutomaton model buchi = 
+productAutomaton model buchi =
   let states = [(s, q) | s <- states model, q <- states buchi]
-      transitions = [(s1, q1) -> (s2, q2) | 
+      transitions = [(s1, q1) -> (s2, q2) |
                      (s1, s2) <- transitions model,
                      (q1, q2) <- transitions buchi,
                      label s1 `satisfies` guard q1 q2]
@@ -148,13 +148,13 @@ LTL模型检查算法正确：$M \models \phi$ 当且仅当算法返回true。
 2. $M \not\models \phi$ 当且仅当 $M \times \mathcal{A}_{\neg \phi}$ 有接受路径
 3. 检查接受路径存在性等价于检查语言非空性
 
-### 2.2 CTL模型检查
+### 1.2.2 CTL模型检查
 
 -**算法 2.2 (CTL模型检查)**
 
 ```haskell
 ctlModelCheck :: KripkeStructure -> CTLFormula -> Set State
-ctlModelCheck model phi = 
+ctlModelCheck model phi =
   case phi of
     Atom p -> statesWhere model p
     Not psi -> states model `difference` ctlModelCheck model psi
@@ -164,10 +164,10 @@ ctlModelCheck model phi =
     E psi -> checkE model psi
 
 checkA :: KripkeStructure -> PathFormula -> Set State
-checkA model psi = 
+checkA model psi =
   case psi of
     Next phi -> preImage (ctlModelCheck model phi)
-    Until phi1 phi2 -> lfp (\X -> ctlModelCheck model phi2 `union` 
+    Until phi1 phi2 -> lfp (\X -> ctlModelCheck model phi2 `union`
                                    (ctlModelCheck model phi1 `intersection` preImage X))
     Always phi -> gfp (\X -> ctlModelCheck model phi `intersection` preImage X)
 ```
@@ -181,9 +181,9 @@ CTL模型检查的时间复杂度为 $O(|M| \cdot |\phi|)$。
 2. 布尔连接词：$O(|M|)$
 3. 路径量词：通过不动点计算，最多 $|M|$ 次迭代
 
-## 3 时态逻辑控制综合
+## 1.3 时态逻辑控制综合
 
-### 3.1 控制综合问题
+### 1.3.1 控制综合问题
 
 **定义 3.1 (控制综合)**
 给定系统模型 $M$ 和时态规范 $\phi$，找到控制器 $C$ 使得 $M \times C \models \phi$。
@@ -211,31 +211,31 @@ CTL模型检查的时间复杂度为 $O(|M| \cdot |\phi|)$。
 2. 如果存在获胜策略，则存在有限状态策略
 3. 有限状态策略对应有限状态控制器
 
-### 3.2 符号控制综合
+### 1.3.2 符号控制综合
 
 -**算法 3.1 (符号控制综合)**
 
 ```haskell
 symbolicControlSynthesis :: KripkeStructure -> LTLFormula -> Maybe Controller
-symbolicControlSynthesis model phi = 
+symbolicControlSynthesis model phi =
   let negPhi = negate phi
       buchi = ltlToBuchi negPhi
       game = constructGame model buchi
       winning = solveGame game
-  in if isEmpty winning 
-     then Nothing 
+  in if isEmpty winning
+     then Nothing
      else Just (extractController winning)
 
 constructGame :: KripkeStructure -> BuchiAutomaton -> Game
-constructGame model buchi = 
+constructGame model buchi =
   let states = [(s, q) | s <- states model, q <- states buchi]
-      transitions = [(s1, q1) -> (s2, q2) | 
+      transitions = [(s1, q1) -> (s2, q2) |
                      (s1, s2) <- transitions model,
                      (q1, q2) <- transitions buchi]
   in Game states transitions
 
 solveGame :: Game -> Set State
-solveGame game = 
+solveGame game =
   let initial = states game
       attractor = computeAttractor game initial
   in attractor
@@ -250,9 +250,9 @@ solveGame game =
 2. 获胜策略确保规范满足
 3. 符号算法计算获胜区域
 
-## 4 实时时态逻辑
+## 1.4 实时时态逻辑
 
-### 4.1 时间约束
+### 1.4.1 时间约束
 
 **定义 4.1 (时间约束)**
 时间约束是形如 $t \in I$ 的约束，其中 $I$ 是时间区间。
@@ -278,7 +278,7 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 2. LTL模型检查是PSPACE完全的
 3. 实时约束增加多项式复杂度
 
-### 4.2 实时控制综合
+### 1.4.2 实时控制综合
 
 **定义 4.4 (实时控制器)**
 实时控制器 $C = (S_C, S_{C0}, R_C, \lambda, \delta)$，其中：
@@ -289,13 +289,13 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 
 ```haskell
 realTimeControlSynthesis :: TimedAutomaton -> RealTimeLTL -> Maybe TimedController
-realTimeControlSynthesis model phi = 
+realTimeControlSynthesis model phi =
   let negPhi = negate phi
       timedBuchi = realTimeLTLToTimedBuchi negPhi
       product = timedProduct model timedBuchi
       winning = solveTimedGame product
-  in if isEmpty winning 
-     then Nothing 
+  in if isEmpty winning
+     then Nothing
      else Just (extractTimedController winning)
 ```
 
@@ -308,9 +308,9 @@ realTimeControlSynthesis model phi =
 2. 区域自动机是有限状态
 3. 有限状态控制器存在
 
-## 5 概率时态逻辑
+## 1.5 概率时态逻辑
 
-### 5.1 概率系统
+### 1.5.1 概率系统
 
 **定义 5.1 (马尔可夫决策过程)**
 马尔可夫决策过程 $M = (S, S_0, A, P, L)$，其中：
@@ -341,7 +341,7 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 2. $\text{Pr}_s(\square \phi) = \text{gfp} F$
 3. 线性方程组有唯一解
 
-### 5.2 概率控制综合
+### 1.5.2 概率控制综合
 
 **定义 5.4 (概率控制器)**
 概率控制器 $C = (S_C, S_{C0}, R_C, \lambda)$，其中：
@@ -352,20 +352,20 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 
 ```haskell
 probabilisticControlSynthesis :: MDP -> ProbCTL -> Maybe ProbabilisticController
-probabilisticControlSynthesis mdp phi = 
+probabilisticControlSynthesis mdp phi =
   let winning = computeWinningStates mdp phi
       controller = extractProbabilisticController winning
-  in if isEmpty winning 
-     then Nothing 
+  in if isEmpty winning
+     then Nothing
      else Just controller
 
 computeWinningStates :: MDP -> ProbCTL -> Set State
-computeWinningStates mdp phi = 
+computeWinningStates mdp phi =
   case phi of
-    P_geq_p psi -> 
+    P_geq_p psi ->
       let prob = computeProbability mdp psi
       in statesWhere prob >= p
-    P_leq_p psi -> 
+    P_leq_p psi ->
       let prob = computeProbability mdp psi
       in statesWhere prob <= p
 ```
@@ -379,9 +379,9 @@ computeWinningStates mdp phi =
 2. 概率约束通过线性规划求解
 3. 最优策略对应最优控制器
 
-## 6 混合时态逻辑
+## 1.6 混合时态逻辑
 
-### 6.1 混合系统
+### 1.6.1 混合系统
 
 **定义 6.1 (混合自动机)**
 混合自动机 $H = (Q, X, \text{Init}, \text{Inv}, \text{Flow}, \text{Jump}, \text{Reset})$，其中：
@@ -409,7 +409,7 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 2. 图灵机停机问题不可判定
 3. 可达性问题不可判定
 
-### 6.2 混合控制综合
+### 1.6.2 混合控制综合
 
 **定义 6.3 (混合控制器)**
 混合控制器 $C = (Q_C, X_C, \text{Init}_C, \text{Inv}_C, \text{Flow}_C, \text{Jump}_C, \text{Reset}_C, \lambda)$，其中：
@@ -420,12 +420,12 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 
 ```haskell
 hybridControlSynthesis :: HybridAutomaton -> HybridTemporalLogic -> Maybe HybridController
-hybridControlSynthesis model phi = 
+hybridControlSynthesis model phi =
   let abstraction = abstractHybrid model
       controller = synthesizeController abstraction phi
       refinement = refineController controller model
-  in if isValid refinement 
-     then Just refinement 
+  in if isValid refinement
+     then Just refinement
      else Nothing
 ```
 
@@ -438,9 +438,9 @@ hybridControlSynthesis model phi =
 2. 精化保持控制器正确性
 3. 近似算法收敛到解
 
-## 7 时态逻辑的元理论
+## 1.7 时态逻辑的元理论
 
-### 7.1 表达能力
+### 1.7.1 表达能力
 
 **定理 7.1 (时态逻辑表达能力)**
 不同时态逻辑的表达能力：
@@ -455,7 +455,7 @@ hybridControlSynthesis model phi =
 2. 构造CTL可表达但LTL不可表达的公式
 3. CTL*统一了LTL和CTL
 
-### 7.2 复杂性
+### 1.7.2 复杂性
 
 **定理 7.2 (时态逻辑复杂性)**
 时态逻辑的模型检查复杂性：
@@ -470,7 +470,7 @@ hybridControlSynthesis model phi =
 2. CTL通过不动点，多项式时间
 3. CTL*结合两者，PSPACE
 
-### 7.3 完备性
+### 1.7.3 完备性
 
 **定理 7.3 (时态逻辑完备性)**
 时态逻辑相对于Kripke结构是完备的。
@@ -481,7 +481,7 @@ hybridControlSynthesis model phi =
 2. 每个模型都可以用时态逻辑描述
 3. 模型和公式之间存在对应关系
 
-## 8 结论
+## 1.8 结论
 
 高级时态逻辑控制理论为系统验证和控制提供了强大的形式化工具：
 

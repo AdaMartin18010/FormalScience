@@ -34,10 +34,10 @@ async fn main() -> anyhow::Result<()> {
 
     // 基本的 KV 操作
     println!("=== 基本 KV 操作 ===");
-    
+
     // 设置键值
     client.put("key1", "value1", None).await?;
-    
+
     // 获取值
     let resp = client.get("key1", None).await?;
     if let Some(kv) = resp.kvs().first() {
@@ -48,7 +48,7 @@ async fn main() -> anyhow::Result<()> {
     println!("\n=== 前缀扫描 ===");
     client.put("prefix/key1", "value1", None).await?;
     client.put("prefix/key2", "value2", None).await?;
-    
+
     let resp = client.get("prefix/", Some(etcd_client::GetOptions::new().with_prefix())).await?;
     for kv in resp.kvs() {
         println!("键: {:?}, 值: {:?}", kv.key_str()?, kv.value_str()?);
@@ -60,7 +60,7 @@ async fn main() -> anyhow::Result<()> {
         .when(&[etcd_client::Compare::value("key1", "value1", etcd_client::CompareOp::Equal)])
         .and_then(&[etcd_client::TxnOp::put("key2", "value2", None)])
         .or_else(&[etcd_client::TxnOp::put("key2", "fallback", None)]);
-    
+
     let resp = txn.commit().await?;
     println!("事务执行成功: {}", resp.succeeded());
 
@@ -68,7 +68,7 @@ async fn main() -> anyhow::Result<()> {
     println!("\n=== 租约操作 ===");
     let lease = client.lease_grant(5, None).await?;
     let lease_id = lease.id();
-    
+
     // 使用租约设置键值
     client.put("lease_key", "lease_value", Some(etcd_client::PutOptions::new().with_lease(lease_id))).await?;
     println!("设置带租约的键值对");
@@ -92,7 +92,7 @@ async fn main() -> anyhow::Result<()> {
     // 生成器示例：遍历所有键值对
     println!("\n=== 使用生成器遍历键值对 ===");
     let mut keys = get_all_keys(&mut client, "prefix/").await?;
-    
+
     while let Some(key) = keys.next().await {
         match key {
             Ok(k) => println!("找到键: {}", k),

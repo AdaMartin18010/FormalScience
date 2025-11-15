@@ -1,93 +1,81 @@
-# 表示论 (Representation Theory)
-
-好的，我们现在开始探讨**表示论 (Representation Theory)**。
-
-表示论是数学的一个重要分支，
-它研究如何将抽象代数结构（主要是群、结合代数、李代数等）的元素“表示”为更具体的数学对象，
-通常是向量空间上的线性变换（即矩阵）。
-通过这种方式，抽象的代数问题可以转化为线性代数的问题来研究，从而利用线性代数的强大工具和直观性。
-表示论在数学的许多分支以及物理学、化学等领域都有着深刻的应用。
-
-我们将按照类似的结构来探讨表示论：
+# 1. 表示论 (Representation Theory)
 
 ## 目录
 
-- [表示论 (Representation Theory)](#表示论-representation-theory)
-  - [1 A. 核心概念与定义](#1-a-核心概念与定义)
-  - [A. 核心概念与定义](#a-核心概念与定义)
-    - [1 A.1. 什么是表示论 (What is Representation Theory)?](#1-a1-什么是表示论-what-is-representation-theory)
-    - [1.2 A.2. 基本构成要素 (Basic Building Blocks)](#12-a2-基本构成要素-basic-building-blocks)
-    - [1.3 A.3. 核心概念 (Core Concepts)](#13-a3-核心概念-core-concepts)
-    - [1.4 A.4. 主要目标 (Main Goals of Representation Theory)](#14-a4-主要目标-main-goals-of-representation-theory)
-  - [2 B. 历史渊源与主要贡献者](#2-b-历史渊源与主要贡献者)
-    - [1 B.1. 19世纪末：群特征标的诞生 (Late 19th Century: Birth of Group Characters)](#1-b1-19世纪末群特征标的诞生-late-19th-century-birth-of-group-characters)
-    - [2.2 B.2. 20世纪初：理论的扩展与系统化 (Early 20th Century: Expansion and Systematization of the Theory)](#22-b2-20世纪初理论的扩展与系统化-early-20th-century-expansion-and-systematization-of-the-theory)
-    - [2.3 B.3. 李群与李代数表示论的发展 (Development of Lie Group and Lie Algebra Representation Theory)](#23-b3-李群与李代数表示论的发展-development-of-lie-group-and-lie-algebra-representation-theory)
-    - [2.4 B.4. 结合代数表示论 (Representation Theory of Associative Algebras)](#24-b4-结合代数表示论-representation-theory-of-associative-algebras)
-    - [2.5 B.5. 近现代发展 (Modern Developments)](#25-b5-近现代发展-modern-developments)
-  - [3 C. 核心内容与主要理论](#3-c-核心内容与主要理论)
-    - [1 C.1. 群表示论 (Group Representation Theory)](#1-c1-群表示论-group-representation-theory)
-      - [1 C.1.1. 有限群表示 (Representations of Finite Groups)](#1-c11-有限群表示-representations-of-finite-groups)
-      - [2 C.1.2. 紧致群表示 (Representations of Compact Groups)](#2-c12-紧致群表示-representations-of-compact-groups)
-      - [3 C.1.3. 李群与李代数表示 (Representations of Lie Groups and Lie Algebras) - 概述](#3-c13-李群与李代数表示-representations-of-lie-groups-and-lie-algebras---概述)
-    - [3.2 C.2. 结合代数表示论 (Representation Theory of Associative Algebras)](#32-c2-结合代数表示论-representation-theory-of-associative-algebras)
-      - [1 C.2.1. 半单代数与Wedderburn-Artin定理 (Semisimple Algebras and Wedderburn-Artin Theorem)](#1-c21-半单代数与wedderburn-artin定理-semisimple-algebras-and-wedderburn-artin-theorem)
-      - [2 C.2.2. 非半单代数的表示 (Representations of Non-Semisimple Algebras)](#2-c22-非半单代数的表示-representations-of-non-semisimple-algebras)
-      - [3 C.2.3. 箭图表示 (Quiver Representations)](#3-c23-箭图表示-quiver-representations)
-    - [3.3 C.3. 李代数表示论 (Lie Algebra Representation Theory)](#33-c3-李代数表示论-lie-algebra-representation-theory)
-      - [1 C.3.1. 半单李代数的结构与表示 (Structure and Representations of Semisimple Lie Algebras)](#1-c31-半单李代数的结构与表示-structure-and-representations-of-semisimple-lie-algebras)
-      - [2 C.3.2. 普遍包络代数 (Universal Enveloping Algebra)](#2-c32-普遍包络代数-universal-enveloping-algebra)
-      - [3 C.3.3. Verma 模与 BGG 分解 (Verma Modules and BGG Resolution)](#3-c33-verma-模与-bgg-分解-verma-modules-and-bgg-resolution)
-  - [4 D. 主要方法与技巧](#4-d-主要方法与技巧)
-    - [1 D.1. 特征标理论 (Character Theory)](#1-d1-特征标理论-character-theory)
-    - [4.2 D.2. 模论方法 (Module-Theoretic Approach)](#42-d2-模论方法-module-theoretic-approach)
-    - [4.3 D.3. 线性代数与矩阵论 (Linear Algebra and Matrix Theory)](#43-d3-线性代数与矩阵论-linear-algebra-and-matrix-theory)
-    - [4.4 D.4. 归纳与限制 (Induction and Restriction)](#44-d4-归纳与限制-induction-and-restriction)
-    - [4.5 D.5. 最高权理论 (Highest Weight Theory)](#45-d5-最高权理论-highest-weight-theory)
-    - [4.6 D.6. 组合方法 (Combinatorial Methods)](#46-d6-组合方法-combinatorial-methods)
-    - [4.7 D.7. 几何方法 (Geometric Methods) / 几何表示论](#47-d7-几何方法-geometric-methods-几何表示论)
-    - [4.8 D.8. 同调代数方法 (Homological Algebra Techniques)](#48-d8-同调代数方法-homological-algebra-techniques)
-    - [4.9 D.9. 分析方法 (Analytical Methods)](#49-d9-分析方法-analytical-methods)
-    - [4.10 D.10. 计算方法 (Computational Methods)](#410-d10-计算方法-computational-methods)
-  - [5 E. 与其他数学分支的联系](#5-e-与其他数学分支的联系)
-    - [1 E.1. 抽象代数 (Abstract Algebra)](#1-e1-抽象代数-abstract-algebra)
-    - [5.2 E.2. 数论 (Number Theory)](#52-e2-数论-number-theory)
-    - [5.3 E.3. 代数几何 (Algebraic Geometry)](#53-e3-代数几何-algebraic-geometry)
-    - [5.4 E.4. 拓扑学 (Topology)](#54-e4-拓扑学-topology)
-    - [5.5 E.5. 调和分析 (Harmonic Analysis)](#55-e5-调和分析-harmonic-analysis)
-    - [5.6 E.6. 组合数学 (Combinatorics)](#56-e6-组合数学-combinatorics)
-    - [5.7 E.7. 数学物理 (Mathematical Physics)](#57-e7-数学物理-mathematical-physics)
-  - [6 F. 在物理、化学与其它领域的应用](#6-f-在物理化学与其它领域的应用)
-    - [1 F.1. 量子力学 (Quantum Mechanics)](#1-f1-量子力学-quantum-mechanics)
-    - [6.2 F.2. 粒子物理与量子场论 (Particle Physics and Quantum Field Theory)](#62-f2-粒子物理与量子场论-particle-physics-and-quantum-field-theory)
-    - [6.3 F.3. 化学 (Chemistry)](#63-f3-化学-chemistry)
-    - [6.4 F.4. 固体物理学 (Solid State Physics)](#64-f4-固体物理学-solid-state-physics)
-    - [6.5 F.5. 材料科学 (Materials Science)](#65-f5-材料科学-materials-science)
-    - [6.6 F.6. 机器人学与计算机视觉 (Robotics and Computer Vision)](#66-f6-机器人学与计算机视觉-robotics-and-computer-vision)
-    - [6.7 F.7. 数据分析与信号处理 (Data Analysis and Signal Processing)](#67-f7-数据分析与信号处理-data-analysis-and-signal-processing)
-  - [7 G. 哲学反思与学习价值](#7-g-哲学反思与学习价值)
-    - [1 G.1. 抽象与具体的桥梁 (A Bridge Between the Abstract and the Concrete)](#1-g1-抽象与具体的桥梁-a-bridge-between-the-abstract-and-the-concrete)
-    - [7.2 G.2. 对称性的普适性与力量 (Universality and Power of Symmetry)](#72-g2-对称性的普适性与力量-universality-and-power-of-symmetry)
-    - [7.3 G.3. 结构与实现的关系 (The Relationship Between Structure and Realization)](#73-g3-结构与实现的关系-the-relationship-between-structure-and-realization)
-    - [7.4 G.4. 学习表示论的认知价值 (Cognitive Value of Learning Representation Theory)](#74-g4-学习表示论的认知价值-cognitive-value-of-learning-representation-theory)
-    - [7.5 G.5. 对数学知识本质的思考 (Reflections on the Nature of Mathematical Knowledge)](#75-g5-对数学知识本质的思考-reflections-on-the-nature-of-mathematical-knowledge)
-  - [8 H. 当前挑战与未来展望](#8-h-当前挑战与未来展望)
-    - [1 H.1. 当前挑战 (Current Challenges)](#1-h1-当前挑战-current-challenges)
-    - [8.2 H.2. 未来展望 (Future Prospects)](#82-h2-未来展望-future-prospects)
-  - [9 I. 总结与反思](#9-i-总结与反思)
-    - [1 I.1. 核心回顾 (Core Recap)](#1-i1-核心回顾-core-recap)
-    - [9.2 I.2. 主要成就与贡献 (Major Achievements and Contributions)](#92-i2-主要成就与贡献-major-achievements-and-contributions)
-    - [9.3 I.3. 学习价值与哲学反思 (Learning Value and Philosophical Reflections)](#93-i3-学习价值与哲学反思-learning-value-and-philosophical-reflections)
-    - [9.4 I.4. 挑战与展望的启示 (Insights from Challenges and Prospects)](#94-i4-挑战与展望的启示-insights-from-challenges-and-prospects)
-    - [9.5 I.5. 结语 (Concluding Remarks)](#95-i5-结语-concluding-remarks)
+- [1. 表示论 (Representation Theory)](#1-表示论-representation-theory)
+  - [目录](#目录)
+  - [1.1 A. 核心概念与定义](#11-a-核心概念与定义)
+    - [1.1.1 A.1. 什么是表示论 (What is Representation Theory)?](#111-a1-什么是表示论-what-is-representation-theory)
+    - [1.1.2 A.2. 基本构成要素 (Basic Building Blocks)](#112-a2-基本构成要素-basic-building-blocks)
+    - [1.1.3 A.3. 核心概念 (Core Concepts)](#113-a3-核心概念-core-concepts)
+    - [1.1.4 A.4. 主要目标 (Main Goals of Representation Theory)](#114-a4-主要目标-main-goals-of-representation-theory)
+  - [1.2 B. 历史渊源与主要贡献者](#12-b-历史渊源与主要贡献者)
+    - [1.2.1 B.1. 19世纪末：群特征标的诞生 (Late 19th Century: Birth of Group Characters)](#121-b1-19世纪末群特征标的诞生-late-19th-century-birth-of-group-characters)
+    - [1.2.2 B.2. 20世纪初：理论的扩展与系统化 (Early 20th Century: Expansion and Systematization of the Theory)](#122-b2-20世纪初理论的扩展与系统化-early-20th-century-expansion-and-systematization-of-the-theory)
+    - [1.2.3 B.3. 李群与李代数表示论的发展 (Development of Lie Group and Lie Algebra Representation Theory)](#123-b3-李群与李代数表示论的发展-development-of-lie-group-and-lie-algebra-representation-theory)
+    - [1.2.4 B.4. 结合代数表示论 (Representation Theory of Associative Algebras)](#124-b4-结合代数表示论-representation-theory-of-associative-algebras)
+    - [1.2.5 B.5. 近现代发展 (Modern Developments)](#125-b5-近现代发展-modern-developments)
+  - [1.3 C. 核心内容与主要理论](#13-c-核心内容与主要理论)
+    - [1.3.1 C.1. 群表示论 (Group Representation Theory)](#131-c1-群表示论-group-representation-theory)
+      - [1.3.1.1 C.1.1. 有限群表示 (Representations of Finite Groups)](#1311-c11-有限群表示-representations-of-finite-groups)
+      - [1.3.1.2 C.1.2. 紧致群表示 (Representations of Compact Groups)](#1312-c12-紧致群表示-representations-of-compact-groups)
+      - [1.3.1.3 C.1.3. 李群与李代数表示 (Representations of Lie Groups and Lie Algebras) - 概述](#1313-c13-李群与李代数表示-representations-of-lie-groups-and-lie-algebras---概述)
+    - [1.3.2 C.2. 结合代数表示论 (Representation Theory of Associative Algebras)](#132-c2-结合代数表示论-representation-theory-of-associative-algebras)
+      - [1.3.2.1 C.2.1. 半单代数与Wedderburn-Artin定理 (Semisimple Algebras and Wedderburn-Artin Theorem)](#1321-c21-半单代数与wedderburn-artin定理-semisimple-algebras-and-wedderburn-artin-theorem)
+      - [1.3.2.2 C.2.2. 非半单代数的表示 (Representations of Non-Semisimple Algebras)](#1322-c22-非半单代数的表示-representations-of-non-semisimple-algebras)
+      - [1.3.2.3 C.2.3. 箭图表示 (Quiver Representations)](#1323-c23-箭图表示-quiver-representations)
+    - [1.3.3 C.3. 李代数表示论 (Lie Algebra Representation Theory)](#133-c3-李代数表示论-lie-algebra-representation-theory)
+      - [1.3.3.1 C.3.1. 半单李代数的结构与表示 (Structure and Representations of Semisimple Lie Algebras)](#1331-c31-半单李代数的结构与表示-structure-and-representations-of-semisimple-lie-algebras)
+      - [1.3.3.2 C.3.2. 普遍包络代数 (Universal Enveloping Algebra)](#1332-c32-普遍包络代数-universal-enveloping-algebra)
+      - [1.3.3.3 C.3.3. Verma 模与 BGG 分解 (Verma Modules and BGG Resolution)](#1333-c33-verma-模与-bgg-分解-verma-modules-and-bgg-resolution)
+  - [1.4 D. 主要方法与技巧](#14-d-主要方法与技巧)
+    - [1.4.1 D.1. 特征标理论 (Character Theory)](#141-d1-特征标理论-character-theory)
+    - [1.4.2 D.2. 模论方法 (Module-Theoretic Approach)](#142-d2-模论方法-module-theoretic-approach)
+    - [1.4.3 D.3. 线性代数与矩阵论 (Linear Algebra and Matrix Theory)](#143-d3-线性代数与矩阵论-linear-algebra-and-matrix-theory)
+    - [1.4.4 D.4. 归纳与限制 (Induction and Restriction)](#144-d4-归纳与限制-induction-and-restriction)
+    - [1.4.5 D.5. 最高权理论 (Highest Weight Theory)](#145-d5-最高权理论-highest-weight-theory)
+    - [1.4.6 D.6. 组合方法 (Combinatorial Methods)](#146-d6-组合方法-combinatorial-methods)
+    - [1.4.7 D.7. 几何方法 (Geometric Methods) / 几何表示论](#147-d7-几何方法-geometric-methods--几何表示论)
+    - [1.4.8 D.8. 同调代数方法 (Homological Algebra Techniques)](#148-d8-同调代数方法-homological-algebra-techniques)
+    - [1.4.9 D.9. 分析方法 (Analytical Methods)](#149-d9-分析方法-analytical-methods)
+    - [1.4.10 D.10. 计算方法 (Computational Methods)](#1410-d10-计算方法-computational-methods)
+  - [1.5 E. 与其他数学分支的联系](#15-e-与其他数学分支的联系)
+    - [1.5.1 E.1. 抽象代数 (Abstract Algebra)](#151-e1-抽象代数-abstract-algebra)
+    - [1.5.2 E.2. 数论 (Number Theory)](#152-e2-数论-number-theory)
+    - [1.5.3 E.3. 代数几何 (Algebraic Geometry)](#153-e3-代数几何-algebraic-geometry)
+    - [1.5.4 E.4. 拓扑学 (Topology)](#154-e4-拓扑学-topology)
+    - [1.5.5 E.5. 调和分析 (Harmonic Analysis)](#155-e5-调和分析-harmonic-analysis)
+    - [1.5.6 E.6. 组合数学 (Combinatorics)](#156-e6-组合数学-combinatorics)
+    - [1.5.7 E.7. 数学物理 (Mathematical Physics)](#157-e7-数学物理-mathematical-physics)
+  - [1.6 F. 在物理、化学与其它领域的应用](#16-f-在物理化学与其它领域的应用)
+    - [1.6.1 F.1. 量子力学 (Quantum Mechanics)](#161-f1-量子力学-quantum-mechanics)
+    - [1.6.2 F.2. 粒子物理与量子场论 (Particle Physics and Quantum Field Theory)](#162-f2-粒子物理与量子场论-particle-physics-and-quantum-field-theory)
+    - [1.6.3 F.3. 化学 (Chemistry)](#163-f3-化学-chemistry)
+    - [1.6.4 F.4. 固体物理学 (Solid State Physics)](#164-f4-固体物理学-solid-state-physics)
+    - [1.6.5 F.5. 材料科学 (Materials Science)](#165-f5-材料科学-materials-science)
+    - [1.6.6 F.6. 机器人学与计算机视觉 (Robotics and Computer Vision)](#166-f6-机器人学与计算机视觉-robotics-and-computer-vision)
+    - [1.6.7 F.7. 数据分析与信号处理 (Data Analysis and Signal Processing)](#167-f7-数据分析与信号处理-data-analysis-and-signal-processing)
+  - [1.7 G. 哲学反思与学习价值](#17-g-哲学反思与学习价值)
+    - [1.7.1 G.1. 抽象与具体的桥梁 (A Bridge Between the Abstract and the Concrete)](#171-g1-抽象与具体的桥梁-a-bridge-between-the-abstract-and-the-concrete)
+    - [1.7.2 G.2. 对称性的普适性与力量 (Universality and Power of Symmetry)](#172-g2-对称性的普适性与力量-universality-and-power-of-symmetry)
+    - [1.7.3 G.3. 结构与实现的关系 (The Relationship Between Structure and Realization)](#173-g3-结构与实现的关系-the-relationship-between-structure-and-realization)
+    - [1.7.4 G.4. 学习表示论的认知价值 (Cognitive Value of Learning Representation Theory)](#174-g4-学习表示论的认知价值-cognitive-value-of-learning-representation-theory)
+    - [1.7.5 G.5. 对数学知识本质的思考 (Reflections on the Nature of Mathematical Knowledge)](#175-g5-对数学知识本质的思考-reflections-on-the-nature-of-mathematical-knowledge)
+  - [1.8 H. 当前挑战与未来展望](#18-h-当前挑战与未来展望)
+    - [1.8.1 H.1. 当前挑战 (Current Challenges)](#181-h1-当前挑战-current-challenges)
+    - [1.8.2 H.2. 未来展望 (Future Prospects)](#182-h2-未来展望-future-prospects)
+  - [1.9 I. 总结与反思](#19-i-总结与反思)
+    - [1.9.1 I.1. 核心回顾 (Core Recap)](#191-i1-核心回顾-core-recap)
+    - [1.9.2 I.2. 主要成就与贡献 (Major Achievements and Contributions)](#192-i2-主要成就与贡献-major-achievements-and-contributions)
+    - [1.9.3 I.3. 学习价值与哲学反思 (Learning Value and Philosophical Reflections)](#193-i3-学习价值与哲学反思-learning-value-and-philosophical-reflections)
+    - [1.9.4 I.4. 挑战与展望的启示 (Insights from Challenges and Prospects)](#194-i4-挑战与展望的启示-insights-from-challenges-and-prospects)
+    - [1.9.5 I.5. 结语 (Concluding Remarks)](#195-i5-结语-concluding-remarks)
 
----
-
-## A. 核心概念与定义
+## 1.1 A. 核心概念与定义
 
 表示论的核心思想是将抽象的代数对象通过同态映射到线性变换的代数中，从而利用线性代数的工具来研究这些抽象对象。
 
-### A.1. 什么是表示论 (What is Representation Theory)?
+### 1.1.1 A.1. 什么是表示论 (What is Representation Theory)?
 
 表示论是研究代数结构如何作用于向量空间（或其他数学结构）的一门学科。
 它旨在通过将抽象代数结构的元素具体化为线性变换（或更一般的态射）来理解这些结构的性质。
@@ -96,7 +84,7 @@
 （例如 `GL(V)`，即 `V` 上所有可逆线性变换构成的群，
 或 `End(V)`，即 `V` 上所有线性变换构成的代数）的一个**同态 (homomorphism)**。
 
-### A.2. 基本构成要素 (Basic Building Blocks)
+### 1.1.2 A.2. 基本构成要素 (Basic Building Blocks)
 
 - **代数结构 (Algebraic Structure)** `A`：这是我们想要表示的对象。最常见的包括：
   - **群 (Group)** `G`
@@ -121,7 +109,7 @@
   - 结合代数 `A` 在域 `F` 上的一个表示 `ρ: A → End(V)` 等价于赋予向量空间 `V` 一个 `A`-左模结构。`a ∈ A` 作用于 `v ∈ V` 定义为 `a.v = ρ(a)(v)`。
     这个模的观点在许多理论发展中非常有用。
 
-### A.3. 核心概念 (Core Concepts)
+### 1.1.3 A.3. 核心概念 (Core Concepts)
 
 - **等价表示 (Equivalent Representations / Isomorphic Representations)**：
     两个表示 `ρ_1: A → GL(V_1)` 和 `ρ_2: A → GL(V_2)`（这里以群表示为例）称为等价的或同构的，如果存在一个向量空间同构 `T: V_1 → V_2` (称为**交缠算子 (intertwining operator)** 或 **A-模同构**) 使得对所有 `a ∈ A`，`T ρ_1(a) = ρ_2(a) T`，或者说 `ρ_2(a) = T ρ_1(a) T⁻¹`。
@@ -151,7 +139,7 @@
 - **表示的张量积 (Tensor Product of Representations)** (主要用于群)：
     如果 `ρ_1: G → GL(V_1)` 和 `ρ_2: G → GL(V_2)` 是两个群表示，它们的张量积 `ρ_1 ⊗ ρ_2: G → GL(V_1 ⊗ V_2)` 定义为 `(ρ_1 ⊗ ρ_2)(g)(v_1 ⊗ v_2) = ρ_1(g)(v_1) ⊗ ρ_2(g)(v_2)` (并线性延拓到整个 `V_1 ⊗ V_2`)。
 
-### A.4. 主要目标 (Main Goals of Representation Theory)
+### 1.1.4 A.4. 主要目标 (Main Goals of Representation Theory)
 
 1. **分类不可约表示**：对于给定的代数结构 `A`，找出其所有（不等价的）不可约表示。
 2. **分解任意表示**：将一个任意给定的表示分解为更简单的表示（理想情况下是不可约表示的直和或某种更复杂的组合，如合成列）。
@@ -164,12 +152,12 @@
 
 表示论的发展与群论、代数、数学物理等领域紧密交织，其历史反映了从具体问题到抽象理论的演进过程。
 
-## B. 历史渊源与主要贡献者
+## 1.2 B. 历史渊源与主要贡献者
 
 表示论的起源可以追溯到19世纪末，主要由群论的研究，特别是有限群和连续群（李群）的对称性分析所驱动。
 其早期发展与数学物理中的问题密切相关。
 
-### B.1. 19世纪末：群特征标的诞生 (Late 19th Century: Birth of Group Characters)
+### 1.2.1 B.1. 19世纪末：群特征标的诞生 (Late 19th Century: Birth of Group Characters)
 
 - **费迪南德·格奥尔格·弗罗贝尼乌斯 (Ferdinand Georg Frobenius)** (1896-1897)：
   - 被普遍认为是**群表示论的创始人**。为了解决戴德金提出的关于群行列式因子分解的问题，弗罗贝尼乌斯发展了**有限群的特征标理论 (character theory)**。
@@ -179,7 +167,7 @@
 - **海因里希·韦伯 (Heinrich Weber)**：
   - 在其有影响力的教科书《代数学教程》(Lehrbuch der Algebra) 中介绍了抽象群的概念，推动了群论的传播。
 
-### B.2. 20世纪初：理论的扩展与系统化 (Early 20th Century: Expansion and Systematization of the Theory)
+### 1.2.2 B.2. 20世纪初：理论的扩展与系统化 (Early 20th Century: Expansion and Systematization of the Theory)
 
 - **威廉·伯恩赛德 (William Burnside)**：
   - 在弗罗贝尼乌斯工作的基础上，对有限群表示论做出了重要贡献。
@@ -200,7 +188,7 @@
   - 他引入了布劳尔特征标、亏群、块等概念，对理解有限群（特别是单群）的结构至关重要。
   - 他的工作与有限单群分类计划紧密相连。
 
-### B.3. 李群与李代数表示论的发展 (Development of Lie Group and Lie Algebra Representation Theory)
+### 1.2.3 B.3. 李群与李代数表示论的发展 (Development of Lie Group and Lie Algebra Representation Theory)
 
 与有限群表示论并行发展的还有连续群（李群）及其关联的李代数的表示论，这在几何学和物理学中有核心应用。
 
@@ -216,7 +204,7 @@
 - **哈里什-钱德拉 (Harish-Chandra)**：
   - 对半单李群的无限维表示论做出了里程碑式的贡献，这是调和分析和自守形式理论的核心。
 
-### B.4. 结合代数表示论 (Representation Theory of Associative Algebras)
+### 1.2.4 B.4. 结合代数表示论 (Representation Theory of Associative Algebras)
 
 在诺特的推动下，环和代数的表示论（即模论）也得到了系统发展。
 
@@ -225,7 +213,7 @@
 - **箭图表示 (Quiver Representations)**：20世纪后半叶发展起来，研究有向图（箭图）的表示，与许多代数（如路代数）的表示论相关，并与代数几何、丛代数等领域有联系。
 - 主要贡献者包括**Peter Gabriel**等。
 
-### B.5. 近现代发展 (Modern Developments)
+### 1.2.5 B.5. 近现代发展 (Modern Developments)
 
 - **朗兰兹纲领 (Langlands Program)**：始于20世纪60年代，由**罗伯特·朗兰兹 (Robert Langlands)** 提出，是一个联系数论（伽罗瓦表示、自守形式）与表示论（约化群的表示）的宏伟猜想网络，对现代数学产生了巨大影响。
 - **几何表示论 (Geometric Representation Theory)**：利用代数几何和拓扑学的工具（如D-模、层、导出范畴、几何Langlands对应）来研究表示论问题，揭示了表示论对象的几何内涵。
@@ -243,15 +231,15 @@
 
 这是表示论中最经典和最完善的部分之一，主要研究有限群在特征不整除群阶的域（特别是复数域 **C**）上的表示。
 
-## C. 核心内容与主要理论
+## 1.3 C. 核心内容与主要理论
 
 表示论的核心内容根据所研究的代数结构类型可以分为几个主要分支。
 
-### C.1. 群表示论 (Group Representation Theory)
+### 1.3.1 C.1. 群表示论 (Group Representation Theory)
 
 群表示论研究群如何通过线性变换作用于向量空间。
 
-#### C.1.1. 有限群表示 (Representations of Finite Groups)
+#### 1.3.1.1 C.1.1. 有限群表示 (Representations of Finite Groups)
 
 主要考虑域 `F` 上的有限维表示，其中 `F` 的特征 `char(F)` 不整除群 `G` 的阶 `|G|` (非模表示论，non-modular case)。
 最常见和最经典的情况是复数域 `F = C`。
@@ -333,7 +321,7 @@
 它们的表示论在许多方面平行于有限群的表示论，特别是在完全可约性和特征标理论方面。
 李群中的紧致李群（如圆周群 `U(1)`、特殊酉群 `SU(n)`、特殊正交群 `SO(n)`）是这类表示论的重要例子。
 
-#### C.1.2. 紧致群表示 (Representations of Compact Groups)
+#### 1.3.1.2 C.1.2. 紧致群表示 (Representations of Compact Groups)
 
 主要考虑在复希尔伯特空间 (Hilbert space) 上的连续酉表示 (continuous unitary representations)。
 一个**拓扑群 (Topological Group)** 是一个群 `G` 同时也是一个拓扑空间，并且群运算（乘法 `G × G → G` 和逆元 `G → G`）是连续映射。
@@ -404,7 +392,7 @@
 李代数可以看作是李群在单位元处的“线性化”或“无穷小”结构。
 这两者的表示论紧密相关，并且在几何、物理学和数论中有极其重要的应用。
 
-#### C.1.3. 李群与李代数表示 (Representations of Lie Groups and Lie Algebras) - 概述
+#### 1.3.1.3 C.1.3. 李群与李代数表示 (Representations of Lie Groups and Lie Algebras) - 概述
 
 - **李群 (Lie Group)** `G`：一个光滑（或解析）流形，同时也是一个群，且群乘法 `G × G → G` 和逆元运算 `G → G` 都是光滑（或解析）映射。
   - **例子**：`GL(n,R)` (实一般线性群)，`SL(n,R)` (实特殊线性群)，`O(n)` (正交群)，`SO(n)` (特殊正交群)，`U(n)` (酉群)，`SU(n)` (特殊酉群)，欧几里得变换群，庞加莱群等。紧致李群（如 `SO(n)`, `SU(n)`）是李群的重要子类。
@@ -452,7 +440,7 @@
 它研究如何将一个结合代数（通常是在某个域上的代数）的元素表示为向量空间上的线性变换。
 群表示论可以看作是结合代数表示论的一个特例，因为群代数 `F[G]` 是一个结合代数。
 
-### C.2. 结合代数表示论 (Representation Theory of Associative Algebras)
+### 1.3.2 C.2. 结合代数表示论 (Representation Theory of Associative Algebras)
 
 设 `A` 是一个域 `F` 上的**结合代数 (Associative Algebra)**。
 这意味着 `A` 是一个 `F`-向量空间，并且配备了一个双线性、满足结合律的乘法运算。
@@ -482,7 +470,7 @@
   - **等价表示 (Equivalent Representations)** 对应于 **A-模同构 (A-module isomorphism)**。
   - **舒尔引理 (Schur's Lemma)** 对 `A`-模也成立：如果 `M, N` 是单 `A`-模，则任何 `A`-模同态 `f: M → N` 要么是零映射，要么是同构。如果 `M=N` 且 `F` 是代数闭域，则 `f` 是标量乘法。
 
-#### C.2.1. 半单代数与Wedderburn-Artin定理 (Semisimple Algebras and Wedderburn-Artin Theorem)
+#### 1.3.2.1 C.2.1. 半单代数与Wedderburn-Artin定理 (Semisimple Algebras and Wedderburn-Artin Theorem)
 
 当一个代数 `A` 是半单的时候，其表示论（模论）有非常清晰的结构，类似于有限群在特征不整除群阶的域上的表示论。
 
@@ -500,7 +488,7 @@
   - 如果 `G` 是有限群，`F` 是域且 `char(F)` 不整除 `|G|`，则马施克定理表明群代数 `F[G]` 是半单的。
   - 如果 `F` 进一步是代数闭域（如 `F=C`），则 `C[G] ≅ M_{n_1}(C) × ... × M_{n_k}(C)`，其中 `k` 是 `G` 的共轭类个数，`n_i` 是第 `i` 个不可约表示的维数。这与有限群表示论中的结论 `Σ (dim V_i)² = |G|` 相符。
 
-#### C.2.2. 非半单代数的表示 (Representations of Non-Semisimple Algebras)
+#### 1.3.2.2 C.2.2. 非半单代数的表示 (Representations of Non-Semisimple Algebras)
 
 当一个代数 `A` 不是半单的时（例如，当 `char(F)` 整除有限群 `G` 的阶时，`F[G]` 就不是半单的，这是模表示论的情况），其表示论会复杂得多：
 
@@ -515,7 +503,7 @@
   - **投射覆盖 (Projective Cover)** 和 **内射包 (Injective Hull)**。
 - **块理论 (Block Theory)** (由布劳尔为群代数发展)：将代数的模分解为更小的、相对独立的单元，称为“块”(blocks)。一个块通常包含若干个不可分解模和单模。
 
-#### C.2.3. 箭图表示 (Quiver Representations)
+#### 1.3.2.3 C.2.3. 箭图表示 (Quiver Representations)
 
 这是研究特定类型的非半单代数（路代数）表示的一个非常活跃和直观的领域。
 
@@ -539,7 +527,7 @@
 李代数表示论研究李代数如何通过线性变换作用于向量空间。
 它与李群表示论紧密相关，并且是理解半单李代数结构、分类其表示以及在物理学（如量子力学、粒子物理）中应用对称性的核心工具。
 
-### C.3. 李代数表示论 (Lie Algebra Representation Theory)
+### 1.3.3 C.3. 李代数表示论 (Lie Algebra Representation Theory)
 
 设 `g` 是一个域 `F` (通常是特征为0的域，如 **R** 或 **C**) 上的**李代数 (Lie Algebra)**。这意味着 `g` 是一个 `F`-向量空间，并配备了一个双线性运算 `[ , ] : g × g → g` (李括号)，满足：
 
@@ -560,7 +548,7 @@
   - **等价表示 (Equivalent Representations)** / **g-模同构 (g-module isomorphism)**。
   - **舒尔引理 (Schur's Lemma)** 对 `g`-模也成立。
 
-#### C.3.1. 半单李代数的结构与表示 (Structure and Representations of Semisimple Lie Algebras)
+#### 1.3.3.1 C.3.1. 半单李代数的结构与表示 (Structure and Representations of Semisimple Lie Algebras)
 
 这是李代数表示论中最发达和最核心的部分，主要针对复半单李代数。
 
@@ -595,14 +583,14 @@
   - `V(n)` 的维数是 `n+1`。它有一个基 `{v_n, v_{n-2}, ..., v_{-n}}`，其中 `h.v_k = k v_k`，`e` 升高权，`f` 降低权。
   - 这与李群 `SU(2)` (其复化李代数是 `sl_2(C)`) 的表示论密切相关，其中 `n = 2j` ( `j` 是自旋)。
 
-#### C.3.2. 普遍包络代数 (Universal Enveloping Algebra)
+#### 1.3.3.2 C.3.2. 普遍包络代数 (Universal Enveloping Algebra)
 
 - 对任何李代数 `g`，可以构造一个结合代数 `U(g)`，称为 `g` 的**普遍包络代数 (universal enveloping algebra)**。
 - `U(g)` 具有泛性质：任何从 `g` 到某个结合代数 `A` (将 `A` 视为李代数，李括号是交换子) 的李代数同态 `φ: g → A`，都可以唯一地延拓为一个结合代数同态 `Ψ: U(g) → A`。
 - **表示的等价性**：`g` 的表示范畴等价于 `U(g)` 的（左）模范畴。这使得可以用结合代数的工具（模论）来研究李代数表示。
 - **庞加莱-伯克霍夫-维特定理 (Poincaré-Birkhoff-Witt Theorem, PBW Theorem)**：描述了 `U(g)` 的基。如果 `{x_1, x_2, ...}` 是 `g` 的一个有序基，则形如 `x_{i_1}^{k_1} ... x_{i_m}^{k_m}` (其中 `i_1 < ... < i_m`，`k_j ≥ 0`) 的元素构成了 `U(g)` 的一个基。这表明 `g` 自然地嵌入到 `U(g)` 中。
 
-#### C.3.3. Verma 模与 BGG 分解 (Verma Modules and BGG Resolution)
+#### 1.3.3.3 C.3.3. Verma 模与 BGG 分解 (Verma Modules and BGG Resolution)
 
 这些是研究半单李代数表示的更高级工具，特别是在无限维表示和特征标理论中。
 
@@ -626,11 +614,11 @@
 表示论的发展依赖于一系列独特且强大的方法和技巧，这些工具使得数学家能够构造、分类和分析各种代数结构的表示。
 这些方法常常结合了代数、线性代数、组合学甚至分析和几何的手段。
 
-## D. 主要方法与技巧
+## 1.4 D. 主要方法与技巧
 
 表示论的理论构建和问题解决依赖于多种关键方法和技巧。
 
-### D.1. 特征标理论 (Character Theory)
+### 1.4.1 D.1. 特征标理论 (Character Theory)
 
 主要用于有限群和紧致群的表示，以及有限维李代数表示。
 
@@ -641,7 +629,7 @@
 - **诱导特征标与弗罗贝尼乌斯互反律**：从子群的特征标构造原群的特征标，并利用互反律在不同群之间传递信息。
 - **阿廷定理和布劳尔定理**：用于将一般特征标表示为来自特定类型子群的诱导特征标的（有理或整）线性组合。
 
-### D.2. 模论方法 (Module-Theoretic Approach)
+### 1.4.2 D.2. 模论方法 (Module-Theoretic Approach)
 
 将表示视为相应代数（如群代数 `F[G]`、结合代数 `A`、普遍包络代数 `U(g)`）上的模。
 
@@ -653,7 +641,7 @@
   - 利用雅各布森根基、半单性理论（如Wedderburn-Artin定理）来分析代数及其表示。
   - 对于PID上的模，使用结构定理进行分解（如有限生成阿贝尔群或线性算子的标准型）。
 
-### D.3. 线性代数与矩阵论 (Linear Algebra and Matrix Theory)
+### 1.4.3 D.3. 线性代数与矩阵论 (Linear Algebra and Matrix Theory)
 
 表示最终都归结为矩阵的性质。
 
@@ -662,7 +650,7 @@
 - **对角化与三角化**：研究表示矩阵是否可以对角化或上三角化（如李代数的Engel定理和Lie定理）。
 - **不变子空间**的寻找与分析。
 
-### D.4. 归纳与限制 (Induction and Restriction)
+### 1.4.4 D.4. 归纳与限制 (Induction and Restriction)
 
 在不同代数结构之间（通常是子结构与原结构）传递表示信息。
 
@@ -672,7 +660,7 @@
   - 对于李代数，也有诱导模（如Verma模是通过从抛物子代数的表示诱导得到的）。
 - **互反律 (Reciprocity Laws)**：如弗罗贝尼乌斯互反律，联系了诱导和限制操作下的同态空间或特征标内积。Mackey理论进一步推广了诱导和限制的关系。
 
-### D.5. 最高权理论 (Highest Weight Theory)
+### 1.4.5 D.5. 最高权理论 (Highest Weight Theory)
 
 用于分类复半单李代数和李群的有限维不可约表示，以及量子群和 Kac-Moody 代数的某些表示。
 
@@ -681,7 +669,7 @@
 - **构造最高权向量和最高权模**（如Verma模及其不可约商模）。
 - 利用**外尔群 (Weyl group)** 的作用来分析权和特征标。
 
-### D.6. 组合方法 (Combinatorial Methods)
+### 1.4.6 D.6. 组合方法 (Combinatorial Methods)
 
 许多表示论问题与组合对象和计数问题紧密相关。
 
@@ -690,7 +678,7 @@
 - **晶体基底 (Crystal Bases)** (由柏原正树Kashiwara引入)：用于量子群和 Kac-Moody代数表示的组合工具。
 - **路径代数与箭图表示 (Path Algebras and Quiver Representations)**：使用有向图的组合结构来研究某些结合代数的表示。
 
-### D.7. 几何方法 (Geometric Methods) / 几何表示论
+### 1.4.7 D.7. 几何方法 (Geometric Methods) / 几何表示论
 
 利用代数几何、微分几何和拓扑学的工具来构造和研究表示。
 
@@ -699,7 +687,7 @@
 - **几何Langlands对应**：一个深刻的猜想，联系了数论中的伽罗瓦表示与代数曲线上的几何对象（如D-模或层）。
 - **轨形方法 (Orbit Method)** (由Kirillov为幂零李群提出，并推广)：试图将李群的酉表示与其余姚轨道（coadjoint orbits）相关联。
 
-### D.8. 同调代数方法 (Homological Algebra Techniques)
+### 1.4.8 D.8. 同调代数方法 (Homological Algebra Techniques)
 
 用于研究表示的扩展、分解性质以及更深层的结构。
 
@@ -708,7 +696,7 @@
 - **导出函子 (Derived Functors)** (如 `Tor` 和 `Ext`)。
 - **导出范畴 (Derived Categories)** 和 **三角范畴 (Triangulated Categories)**：为研究模范畴提供了更精细的框架。
 
-### D.9. 分析方法 (Analytical Methods)
+### 1.4.9 D.9. 分析方法 (Analytical Methods)
 
 主要用于无限维表示和拓扑群（特别是李群）的表示。
 
@@ -716,7 +704,7 @@
 - **傅里叶分析与调和分析**：Peter-Weyl定理表明紧致群的表示论是广义的傅里叶分析。对于非紧致群，调和分析（如Plancherel定理）研究其酉表示如何分解。
 - **算子代数 (Operator Algebras)**：如C*-代数和冯·诺依曼代数，与群的酉表示和量子力学密切相关。
 
-### D.10. 计算方法 (Computational Methods)
+### 1.4.10 D.10. 计算方法 (Computational Methods)
 
 利用计算机代数系统（如GAP, Magma, SageMath, LiE）来计算特征标表、分解表示、研究模的结构等。
 
@@ -735,11 +723,11 @@
 表示论作为一门研究代数结构如何作用于线性空间的学科，天然地与其他众多数学分支建立了深刻而广泛的联系。
 它既从其他分支汲取灵感和工具，也反过来为这些分支提供强大的分析方法和结构性见解。
 
-## E. 与其他数学分支的联系
+## 1.5 E. 与其他数学分支的联系
 
 表示论是现代数学中一个非常核心和活跃的领域，它像一座桥梁连接着代数、几何、分析等多个重要方向。
 
-### E.1. 抽象代数 (Abstract Algebra)
+### 1.5.1 E.1. 抽象代数 (Abstract Algebra)
 
 表示论本身就是抽象代数的一个重要组成部分，并与之紧密互动。
 
@@ -748,7 +736,7 @@
 - **李代数 (Lie Algebras)**：李代数的表示论是其结构理论的核心，帮助分类半单李代数，并与李群表示论紧密相连。
 - **Hopf代数与量子群 (Hopf Algebras and Quantum Groups)**：这些是更广义的代数结构，其表示论是一个活跃的研究领域，与纽结理论、可积系统等相关。
 
-### E.2. 数论 (Number Theory)
+### 1.5.2 E.2. 数论 (Number Theory)
 
 表示论在现代数论中扮演着至关重要的角色，特别是在代数数论和朗兰兹纲领中。
 
@@ -756,7 +744,7 @@
 - **自守形式与自守表示 (Automorphic Forms and Automorphic Representations)**：自守形式（如模形式、马斯形式）是定义在上半平面或更一般的对称空间上的具有特定变换性质的函数。它们的理论可以通过约化代数群（如 `GL_2` 或更一般的群）的无限维酉表示（自守表示）来统一和深化。
 - **朗兰兹纲领 (Langlands Program)**：这是一个宏伟的猜想网络，旨在建立伽罗瓦表示与自守表示之间的深刻对应关系（互反律的推广）。它联系了数论、代数几何和表示论，是过去几十年来数学研究的核心驱动力之一。
 
-### E.3. 代数几何 (Algebraic Geometry)
+### 1.5.3 E.3. 代数几何 (Algebraic Geometry)
 
 表示论与代数几何的联系日益紧密，形成了所谓的几何表示论。
 
@@ -766,7 +754,7 @@
 - **几何Langlands对应**：朗兰兹纲领的几何版本，联系了代数曲线上的平坦联络（伽罗瓦表示的几何对应物）与D-模或特定层范畴（自守表示的几何对应物）。
 - **箭图表示与模空间 (Quiver Representations and Moduli Spaces)**：箭图的表示的模空间本身就是有趣的代数簇，其几何性质反映了表示论的结构。
 
-### E.4. 拓扑学 (Topology)
+### 1.5.4 E.4. 拓扑学 (Topology)
 
 表示论在代数拓扑和微分拓扑中均有应用。
 
@@ -775,7 +763,7 @@
 - **特征类 (Characteristic Classes)**：向量丛的特征类（如陈类、庞特里亚金类）可以通过与结构群相关的表示来定义。
 - **纽结理论 (Knot Theory)**：量子群的表示论与纽结不变量（如Jones多项式及其推广）密切相关。
 
-### E.5. 调和分析 (Harmonic Analysis)
+### 1.5.5 E.5. 调和分析 (Harmonic Analysis)
 
 调和分析在群上的推广本质上就是群的（酉）表示论。
 
@@ -784,7 +772,7 @@
 - **Plancherel 定理**：对于非紧致局部紧致群（特别是半单李群），它描述了正则表示如何分解为不可约酉表示的“连续直和”（直积分）。
 - **球函数 (Spherical Functions)** 和 **Gelfand 对 (Gelfand Pairs)**。
 
-### E.6. 组合数学 (Combinatorics)
+### 1.5.6 E.6. 组合数学 (Combinatorics)
 
 许多表示论问题与组合结构和计数密切相关。
 
@@ -792,7 +780,7 @@
 - **李代数表示与根系**：半单李代数的表示由其根系的组合结构（邓肯图、外尔群）参数化。
 - **组合表示论 (Combinatorial Representation Theory)**：一个新兴领域，专注于表示论中的组合方面和构造。
 
-### E.7. 数学物理 (Mathematical Physics)
+### 1.5.7 E.7. 数学物理 (Mathematical Physics)
 
 表示论是描述物理系统中对称性的基本数学语言。这将在F部分详细展开，但这里也提一下其作为数学分支的联系。
 
@@ -812,11 +800,11 @@
 特别是物理学和化学中，找到了极其深刻和广泛的应用。
 它不仅提供了一种分类和预测物理现象的方法，而且常常是构建物理理论的基础语言。
 
-## F. 在物理、化学与其它领域的应用
+## 1.6 F. 在物理、化学与其它领域的应用
 
 表示论在数学之外的应用主要集中在那些对称性扮演核心角色的领域。
 
-### F.1. 量子力学 (Quantum Mechanics)
+### 1.6.1 F.1. 量子力学 (Quantum Mechanics)
 
 量子力学是表示论应用最广泛和最成功的领域之一。
 物理系统的状态由希尔伯特空间中的向量描述，而物理系统的对称性则由作用在该希尔伯特空间上的酉表示来体现。
@@ -831,7 +819,7 @@
 - **谱线选择定则 (Selection Rules)**：原子和分子光谱中的跃迁是否允许，通常由跃迁算子在初态和末态表示下的矩阵元是否为零决定，这可以通过表示论（如Wigner-Eckart定理）来分析。
 - **简并与对称性破缺 (Degeneracy and Symmetry Breaking)**：量子态的简并度（能量相同但状态不同的个数）通常等于相应对称性群的不可约表示的维数。当对称性降低（破缺）时，表示可能会分解，导致能级分裂。
 
-### F.2. 粒子物理与量子场论 (Particle Physics and Quantum Field Theory)
+### 1.6.2 F.2. 粒子物理与量子场论 (Particle Physics and Quantum Field Theory)
 
 在描述基本粒子及其相互作用的理论中，表示论是构建模型的基础。
 
@@ -845,7 +833,7 @@
   - 其对称性代数通常是无限维李代数（如Virasoro代数、仿射Kac-Moody代数），其表示论是CFT的核心。
 - **超对称 (Supersymmetry, SUSY)**：一种假想的对称性，联系玻色子和费米子。超对称代数的表示论用于构建超对称模型。
 
-### F.3. 化学 (Chemistry)
+### 1.6.3 F.3. 化学 (Chemistry)
 
 群论（主要是点群和置换群的表示论）在化学中有广泛应用，特别是在分子对称性、光谱学和晶体结构方面。
 
@@ -862,7 +850,7 @@
   - 晶体的宏观对称性由32个晶体学点群描述。
   - 晶体的微观平移和旋转对称性由230个空间群描述。空间群的表示论对于理解晶体的能带结构、声子谱等至关重要。
 
-### F.4. 固体物理学 (Solid State Physics)
+### 1.6.4 F.4. 固体物理学 (Solid State Physics)
 
 与晶体学密切相关，表示论用于分析晶体的电子能带结构、声子谱、磁结构等。
 
@@ -870,16 +858,16 @@
 - **声子谱 (Phonon Spectra)**：晶格振动模式（声子）的对称性也由空间群的表示来描述。
 - **磁对称性 (Magnetic Symmetry)**：磁有序结构（如铁磁、反铁磁）的对称性由磁群（或Shubnikov群）描述，其表示论用于分析磁振子（自旋波）等。
 
-### F.5. 材料科学 (Materials Science)
+### 1.6.5 F.5. 材料科学 (Materials Science)
 
 利用对称性原理和表示论可以帮助设计和理解新材料的性质。
 例如，某些铁电、压电或非线性光学材料的出现与其晶体结构的特定对称性（缺乏反演中心等）相关。
 
-### F.6. 机器人学与计算机视觉 (Robotics and Computer Vision)
+### 1.6.6 F.6. 机器人学与计算机视觉 (Robotics and Computer Vision)
 
 虽然应用不如物理化学中基础，但李群论（如 `SE(3)` 欧几里得变换群）用于描述刚体运动和三维空间中的姿态，其表示和不变量理论在物体识别和运动规划中可能发挥作用。
 
-### F.7. 数据分析与信号处理 (Data Analysis and Signal Processing)
+### 1.6.7 F.7. 数据分析与信号处理 (Data Analysis and Signal Processing)
 
 - **对称性在数据中的应用**：如果已知数据具有某种对称性，可以利用表示论来简化模型或提取特征。
 - **广义傅里叶变换**：在具有特定群结构的信号（如球谐函数用于球面数据）上进行调和分析。
@@ -900,29 +888,29 @@
 表示论不仅是解决具体科学问题的强大工具，其核心思想和学习过程也引发了关于数学、科学乃至认知方式的哲学思考，
 并具有重要的教育价值。
 
-## G. 哲学反思与学习价值
+## 1.7 G. 哲学反思与学习价值
 
 学习和研究表示论，不仅仅是掌握一套复杂的数学技术，更是一次深刻的思维训练，它关乎我们如何理解抽象与具体、结构与实现、以及对称性在知识体系中的普适作用。
 
-### G.1. 抽象与具体的桥梁 (A Bridge Between the Abstract and the Concrete)
+### 1.7.1 G.1. 抽象与具体的桥梁 (A Bridge Between the Abstract and the Concrete)
 
 - **核心思想的体现**：表示论的本质就是将抽象的代数结构（如群、代数）通过同态映射到人们更为熟悉和“具体”的线性空间及其变换上。这种“具体化”使得原本难以捉摸的抽象对象可以通过线性代数的工具（如矩阵、特征值、不变子空间）来进行分析和理解。
 - **双向洞察**：这种联系是双向的。一方面，我们可以利用线性代数的直观和计算能力来研究抽象代数结构的性质；另一方面，抽象代数结构也为线性空间中的变换模式提供了统一的组织原则和分类框架。例如，对称群的表示论揭示了多线性代数中张量的对称性。
 - **“表示”的多样性**：同一个抽象结构可以有多种不等价的表示，每种表示都可能揭示该结构的不同侧面。这表明抽象对象的“本质”可以通过其在不同具体情境下的“行为”来多角度地把握。
 
-### G.2. 对称性的普适性与力量 (Universality and Power of Symmetry)
+### 1.7.2 G.2. 对称性的普适性与力量 (Universality and Power of Symmetry)
 
 - **数学的内在要求**：物理学家尤金·维格纳称数学在自然科学中“不可理喻的有效性”。表示论尤其体现了这一点，它作为描述对称性的语言，在物理学和化学等领域取得了巨大成功。这引发思考：对称性是自然界固有的基本属性，还是人类认知和组织经验的一种有效方式？
 - **从观察到预测**：通过识别系统中的对称性并运用表示论，科学家不仅能对现有观察进行分类和解释（如光谱线的分类），还能对未发现的现象进行预测（如基本粒子的存在和性质）。
 - **美学与简洁性**：对称的理论和对象通常被认为是美的。表示论通过揭示隐藏的对称结构，常常能带来理论的简洁和优雅。
 
-### G.3. 结构与实现的关系 (The Relationship Between Structure and Realization)
+### 1.7.3 G.3. 结构与实现的关系 (The Relationship Between Structure and Realization)
 
 - **“是什么”与“如何作用”**：抽象代数定义了代数结构“是什么”（通过公理），而表示论则研究这些结构“如何作用”于其他对象（向量空间）。这涉及到本质与表现、内在属性与外在行为之间的关系。
 - **忠实表示与信息保存**：一个忠实的表示能够完全保留原代数结构的所有信息。思考哪些结构拥有忠实表示，以及最小忠实表示的维数等问题，有助于理解结构的复杂性。
 - **表示的“丰富度”**：一个代数结构拥有的不可约表示的种类和数量，反映了其内在结构的丰富程度。例如，阿贝尔群的复不可约表示都是一维的，这与其简单的交换结构相对应。
 
-### G.4. 学习表示论的认知价值 (Cognitive Value of Learning Representation Theory)
+### 1.7.4 G.4. 学习表示论的认知价值 (Cognitive Value of Learning Representation Theory)
 
 - **深化对抽象代数的理解**：学习表示论是检验和巩固抽象代数知识（群、环、模、李代数等）的绝佳途径。它迫使学习者将抽象定义与具体的线性变换联系起来。
 - **培养多角度看问题的能力**：同一个问题，可以从纯代数的角度思考，也可以从表示（线性代数）的角度思考，培养了思维的灵活性和多面性。
@@ -931,7 +919,7 @@
 - **为跨学科研究打下基础**：由于其在物理、化学等领域的广泛应用，掌握表示论为进行相关的跨学科研究和理解前沿科技文献提供了必要的数学语言。
 - **欣赏数学的统一性与应用性**：表示论完美地展现了数学内部不同分支的统一性（如群论与线性代数的结合），以及纯粹数学理论在解决实际问题中的强大威力。
 
-### G.5. 对数学知识本质的思考 (Reflections on the Nature of Mathematical Knowledge)
+### 1.7.5 G.5. 对数学知识本质的思考 (Reflections on the Nature of Mathematical Knowledge)
 
 - **概念的演化与相互渗透**：表示论的历史表明，数学概念（如群、特征标、模）不是孤立发展的，而是在解决具体问题（如群行列式、对称性分析）和不同理论（如代数与线性代数）的相互作用中不断演化和丰富的。
 - **“好的”定义与“自然的”理论**：像不可约表示、完全可约性、特征标这样的核心概念，之所以重要并被广泛研究，是因为它们抓住了问题的本质，并导致了深刻而普适的理论。这引发我们思考什么是数学中“好的”定义和“自然的”理论。
@@ -947,12 +935,12 @@
 表示论作为一个成熟且仍在高速发展的数学领域，既有其自身理论不断深化所面临的挑战，
 也有在与其他数学分支及科学应用交叉融合中展现出的广阔前景。
 
-## H. 当前挑战与未来展望
+## 1.8 H. 当前挑战与未来展望
 
 表示论已经取得了辉煌的成就，但它远未达到终点。
 许多经典问题仍有待深入，新的研究方向不断涌现，其应用范围也在持续扩展。
 
-### H.1. 当前挑战 (Current Challenges)
+### 1.8.1 H.1. 当前挑战 (Current Challenges)
 
 - **无限维表示的复杂性 (Complexity of Infinite-Dimensional Representations)**：
   - 虽然有限维表示理论（尤其对于半单李代数/群和有限群）已经非常完善，但无限维表示论则要复杂得多。对于许多非紧致李群（如 `SL(n,R)`）或无限离散群，其酉表示的分类（Plancherel定理的推广和具体实现）仍然是极具挑战性的问题。
@@ -977,7 +965,7 @@
 - **与物理学前沿的接口 (Interface with Frontiers of Physics)**：
   - 虽然表示论在量子场论和弦理论中有重要应用，但建立更精确和更具预测性的数学模型，以及理解这些理论中出现的更复杂的对称结构（如量子群的某些表示、顶点算子代数、非交换几何），仍然是持续的挑战。
 
-### H.2. 未来展望 (Future Prospects)
+### 1.8.2 H.2. 未来展望 (Future Prospects)
 
 - **几何表示论的深化 (Deepening of Geometric Representation Theory)**：
   - 利用代数几何、微分几何、辛几何和拓扑学的工具来研究表示论问题将持续เป็น主流。例如，通过研究表示的模空间、D-模、微局部分析、导出范畴等。
@@ -1015,12 +1003,12 @@
 
 好的，我们来进行最后的 **I. 总结与反思**。
 
-## I. 总结与反思
+## 1.9 I. 总结与反思
 
 经过前面详尽的探讨，我们对表示论的核心概念、历史发展、主要理论、研究方法、与其他数学分支的联系、在各领域的应用、哲学价值以及当前的挑战与未来展望有了一个全面的认识。
 现在，让我们对其进行一个简要的总结和反思。
 
-### I.1. 核心回顾 (Core Recap)
+### 1.9.1 I.1. 核心回顾 (Core Recap)
 
 - **本质**：表示论是数学的一个分支，它研究抽象代数结构（如群、环、代数、李代数）如何通过在向量空间上定义线性变换来“作用”(act)。本质上，它是将抽象代数问题转化为线性代数问题的一种方法，从而利用线性代数的强大工具进行分析。
 - **基本构成**：一个表示通常包含三个要素：代数结构 `A`，向量空间 `V`（表示空间），以及一个从 `A` 到 `V` 上的线性变换群或代数的同态映射。
@@ -1031,7 +1019,7 @@
   - **应用**：利用表示来揭示代数结构本身的性质，或解决其他领域（如物理、化学、数论）的问题。
 - **核心概念**：不可约表示、完全可约性、特征标、模、子表示、商表示、直和、张量积、诱导表示、限制表示、Schur引理、Maschke定理、Wedderburn-Artin定理、最高权理论、Peter-Weyl定理等。
 
-### I.2. 主要成就与贡献 (Major Achievements and Contributions)
+### 1.9.2 I.2. 主要成就与贡献 (Major Achievements and Contributions)
 
 - **统一的语言**：表示论为描述和利用“对称性”提供了一种普适而强大的数学语言，深刻影响了现代数学和理论物理。
 - **结构洞察**：它极大地促进了对群、代数等代数结构自身理论的理解。例如，有限单群的分类就大量使用了表示论（特别是特征标理论）。
@@ -1039,7 +1027,7 @@
 - **科学应用的基石**：在量子力学、粒子物理、化学光谱学、晶体学等领域，表示论是不可或缺的理论工具，用于分类粒子态、预测物理现象、解释实验数据。
 - **催生新理论**：研究表示论的过程本身也催生了许多新的数学概念和理论，如模论、同调代数、K理论、量子群、顶点算子代数等。
 
-### I.3. 学习价值与哲学反思 (Learning Value and Philosophical Reflections)
+### 1.9.3 I.3. 学习价值与哲学反思 (Learning Value and Philosophical Reflections)
 
 - **抽象与具体的结合**：表示论完美地体现了数学中抽象与具体的辩证关系。它将高度抽象的代数对象与相对具体的线性空间联系起来，使得我们可以用“看得见、摸得着”的方式来理解抽象。
 - **结构的力量**：它揭示了“结构”本身的力量。不同的代数结构可以通过其表示的多样性和复杂性来体现其内在的丰富程度。
@@ -1047,13 +1035,13 @@
 - **思维方式的训练**：学习表示论有助于培养一种多角度、多层次看待问题的思维方式，训练从不同表示中提炼共同本质的能力，以及将复杂问题分解为更简单组成部分的能力。
 - **数学知识的演化**：表示论的发展史也反映了数学知识是如何通过解决具体问题、推广已有概念、建立不同领域之间的联系而不断演化和丰富的。
 
-### I.4. 挑战与展望的启示 (Insights from Challenges and Prospects)
+### 1.9.4 I.4. 挑战与展望的启示 (Insights from Challenges and Prospects)
 
 - **永无止境的探索**：即使是像表示论这样相对成熟的领域，仍然充满了未解之谜和新的探索方向。无限维表示、非半单情况下的表示、朗兰兹纲领等问题依然是巨大的挑战，预示着未来还有广阔的探索空间。
 - **交叉融合的趋势**：数学各分支以及数学与其它科学之间的交叉融合是推动发展的重要动力。表示论的未来发展将更加依赖于几何、拓扑、分析、计算等工具的综合运用，以及与物理、数据科学等新兴领域的深度互动。
 - **理论与应用的相互促进**：理论的突破往往能带来新的应用，而应用的需求也反过来驱动理论的发展。表示论在量子信息、机器学习等领域的潜在应用，可能会为其带来新的研究视角和问题。
 
-### I.5. 结语 (Concluding Remarks)
+### 1.9.5 I.5. 结语 (Concluding Remarks)
 
 表示论是现代数学的瑰宝之一。
 它不仅自身拥有优美的理论体系和深刻的数学内涵，更作为一种强大的工具和一种思考方式，

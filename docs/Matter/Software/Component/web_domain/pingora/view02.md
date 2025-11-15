@@ -291,7 +291,7 @@ trait Service<Request> {
     type Response;
     type Error;
     type Future: Future<Output = Result<Self::Response, Self::Error>>;
-    
+
     fn call(&self, req: Request) -> Self::Future;
 }
 ```
@@ -743,7 +743,7 @@ impl<T> MemoryPool<T> {
         let obj = pool.pop().unwrap_or_else(|| (self.create_fn)());
         PooledObject { obj, pool: self }
     }
-    
+
     // 归还对象到池中
     fn put_back(&self, obj: T) {
         let mut pool = self.pool.lock();
@@ -800,7 +800,7 @@ HTTP协议优化措施：
 | HAProxy    | ~280,000      | 56%      |
 | Envoy      | ~250,000      | 50%      |
 
--*注：具体数值会根据硬件配置、请求特性和测试方法而变化*
+-_注：具体数值会根据硬件配置、请求特性和测试方法而变化_
 
 #### 延迟特性
 
@@ -965,7 +965,7 @@ Pingora在CDN边缘节点场景的应用详情：
 #### 典型架构
 
 ```math
-客户端 → DNS解析 → 边缘节点入口(Pingora) → 内容处理 
+客户端 → DNS解析 → 边缘节点入口(Pingora) → 内容处理
 → 缓存查询 → 未命中时上游请求 → 内容分发
 ```
 
@@ -1137,7 +1137,7 @@ impl Server {
     // 创建新服务器实例
     pub fn new(config: Option<ServerConf>) -> Result<Self> {
         let config = config.unwrap_or_default();
-        
+
         Ok(Self {
             config,
             services: HashMap::new(),
@@ -1146,28 +1146,28 @@ impl Server {
             workers: None,
         })
     }
-    
+
     // 添加TCP服务
     pub fn add_tcp_service(&mut self, name: &str, service: Box<dyn Service>) {
         self.services.insert(name.to_string(), service);
     }
-    
+
     // 添加监听地址
     pub fn listen_addr(&mut self, addr: &str) -> Result<()> {
         let socket_addr = addr.parse()?;
         self.listeners.push((socket_addr, ListenerType::Tcp));
         Ok(())
     }
-    
+
     // 运行服务器
     pub fn run_forever(&mut self) -> Result<()> {
         // 创建工作线程
         let num_workers = self.config.num_workers;
         let mut workers = Vec::with_capacity(num_workers);
-        
+
         // 创建共享监听器
         let shared_listeners = self.create_shared_listeners()?;
-        
+
         // 启动每个工作线程
         for id in 0..num_workers {
             let worker = Worker::new(
@@ -1176,21 +1176,21 @@ impl Server {
                 self.services.clone(),
                 shared_listeners.clone(),
             )?;
-            
+
             workers.push(worker.spawn()?);
         }
-        
+
         self.workers = Some(workers);
-        
+
         // 等待信号处理
         self.wait_for_signals()?;
-        
+
         // 关闭服务
         self.shutdown()?;
-        
+
         Ok(())
     }
-    
+
     // 其他方法...
 }
 ```
@@ -1226,12 +1226,12 @@ impl Worker {
             listeners,
         })
     }
-    
+
     // 启动工作线程，返回句柄
     pub fn spawn(self) -> Result<WorkerHandle> {
         // 创建线程间通信通道
         let (cmd_tx, cmd_rx) = mpsc::channel(32);
-        
+
         // 启动线程
         let thread = std::thread::spawn(move || {
             // 创建Tokio运行时
@@ -1241,17 +1241,17 @@ impl Worker {
                 .thread_name(format!("pingora-worker-{}", self.id))
                 .build()
                 .expect("Failed to create worker runtime");
-            
+
             // 在运行时中执行工作循环
             runtime.block_on(self.run_loop(cmd_rx));
         });
-        
+
         Ok(WorkerHandle {
             thread,
             cmd_tx,
         })
     }
-    
+
     // 工作线程主循环
     async fn run_loop(&self, mut cmd_rx: mpsc::Receiver<WorkerCommand>) {
         // 创建接受器处理新连接
@@ -1260,14 +1260,14 @@ impl Worker {
             let acceptor = Acceptor::new(listener.clone(), self.id);
             acceptors.push(acceptor);
         }
-        
+
         // 初始化服务
         for service in self.services.values() {
             if let Err(e) = service.init().await {
                 tracing::error!("Failed to initialize service: {}", e);
             }
         }
-        
+
         // 主事件循环
         loop {
             tokio::select! {
@@ -1281,7 +1281,7 @@ impl Worker {
                         None => break,
                     }
                 }
-                
+
                 // 接受新连接
                 accept_result = self.accept_connections(&acceptors) => {
                     if let Err(e) = accept_result {
@@ -1290,17 +1290,17 @@ impl Worker {
                 }
             }
         }
-        
+
         // 优雅关闭
         self.graceful_shutdown().await;
     }
-    
+
     // 接受连接并分派处理
     async fn accept_connections(&self, acceptors: &[Acceptor]) -> Result<()> {
         // 实现接受连接逻辑...
         Ok(())
     }
-    
+
     // 优雅关闭处理
     async fn graceful_shutdown(&self) {
         // 实现优雅关闭逻辑...
@@ -1319,10 +1319,10 @@ pub trait Service: Send + Sync {
     async fn init(&self) -> Result<()> {
         Ok(())
     }
-    
+
     // 处理TCP连接
     async fn handle_tcp_connection(&self, stream: TcpStream) -> Result<()>;
-    
+
     // 关闭服务
     async fn shutdown(&self) -> Result<()> {
         Ok(())
@@ -1342,7 +1342,7 @@ impl<H: HttpHandler> HttpService<H> {
             config: HttpServiceConfig::default(),
         }
     }
-    
+
     pub fn with_config(handler: H, config: HttpServiceConfig) -> Self {
         Self {
             handler,
@@ -1356,7 +1356,7 @@ impl<H: HttpHandler> Service for HttpService<H> {
     async fn handle_tcp_connection(&self, stream: TcpStream) -> Result<()> {
         // 创建HTTP连接
         let conn = HttpConnection::new(stream, self.config.clone());
-        
+
         // 处理HTTP请求
         conn.process_requests(&self.handler).await
     }
@@ -1400,7 +1400,7 @@ impl Buffer {
             // 从池获取中型缓冲区
             let data = MEDIUM_BUFFER_POOL.get()
                 .unwrap_or_else(|| Box::new([0; MEDIUM_BUF_SIZE]));
-            
+
             Self::Medium {
                 data,
                 len: 0,
@@ -1411,7 +1411,7 @@ impl Buffer {
             }
         }
     }
-    
+
     // 写入数据
     pub fn write(&mut self, data: &[u8]) -> Result<usize> {
         match self {
@@ -1426,7 +1426,7 @@ impl Buffer {
             },
         }
     }
-    
+
     // 升级缓冲区大小
     fn upgrade(&mut self) {
         // 实现缓冲区大小升级逻辑
@@ -1472,7 +1472,7 @@ impl ProxyBody {
             inner: BodyType::Direct(upstream_body),
         }
     }
-    
+
     // 从处理后的数据创建
     pub fn processed(body: ProcessedBody) -> Self {
         Self {
@@ -1483,7 +1483,7 @@ impl ProxyBody {
 
 impl Stream for ProxyBody {
     type Item = Result<Bytes, Error>;
-    
+
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         match &mut self.inner {
             BodyType::Direct(upstream) => {
@@ -1512,10 +1512,10 @@ Pingora采用多层次错误处理策略：
 pub enum PingoraError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
-    
+
     #[error("HTTP error: {0}")]
     Http(#[from] hyper::Error),
-    
+
     #[error("
 
 ## 9. 源码深度分析（续）
@@ -1528,22 +1528,22 @@ pub enum PingoraError {
 pub enum PingoraError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
-    
+
     #[error("HTTP error: {0}")]
     Http(#[from] hyper::Error),
-    
+
     #[error("TLS error: {0}")]
     Tls(#[from] rustls::Error),
-    
+
     #[error("Timeout error")]
     Timeout,
-    
+
     #[error("Connection error: {0}")]
     Connection(String),
-    
+
     #[error("Upstream error: {status_code} - {message}")]
     Upstream { status_code: u16, message: String },
-    
+
     #[error("Internal error: {0}")]
     Internal(String),
 }
@@ -1567,7 +1567,7 @@ impl ErrorHandler {
     ) -> Result<(), PingoraError> {
         // 记录错误指标
         self.metrics.record_error(&err);
-        
+
         match err {
             PingoraError::Io(io_err) if io_err.kind() == std::io::ErrorKind::TimedOut => {
                 // 超时错误处理
@@ -1579,7 +1579,7 @@ impl ErrorHandler {
                     Err(PingoraError::Timeout)
                 }
             },
-            
+
             PingoraError::Connection(msg) => {
                 // 连接错误处理
                 if self.retry_policy.should_retry(RetryReason::ConnectionFailure) {
@@ -1590,12 +1590,12 @@ impl ErrorHandler {
                     Err(err)
                 }
             },
-            
+
             // 其他错误类型处理...
             _ => Err(err),
         }
     }
-    
+
     // 处理请求级别错误
     pub async fn handle_request_error(
         &self,
@@ -1605,7 +1605,7 @@ impl ErrorHandler {
     ) -> Result<Response, PingoraError> {
         // 记录错误指标
         self.metrics.record_error(&err);
-        
+
         // 根据错误类型应用不同策略
         match &err {
             PingoraError::Upstream { status_code, .. } => {
@@ -1615,7 +1615,7 @@ impl ErrorHandler {
                     return fallback.apply(req, context).await;
                 }
             },
-            
+
             PingoraError::Timeout => {
                 // 超时处理
                 if context.retry_count < self.retry_policy.max_retries {
@@ -1624,15 +1624,15 @@ impl ErrorHandler {
                     return context.retry_handler.retry(req).await;
                 }
             },
-            
+
             // 其他错误类型处理...
             _ => {}
         }
-        
+
         // 构造错误响应
         self.build_error_response(&err)
     }
-    
+
     // 构建错误响应
     fn build_error_response(&self, err: &PingoraError) -> Result<Response, PingoraError> {
         let status = match err {
@@ -1641,23 +1641,23 @@ impl ErrorHandler {
                 .unwrap_or(StatusCode::BAD_GATEWAY),
             _ => StatusCode::INTERNAL_SERVER_ERROR,
         };
-        
+
         // 创建错误响应
         let mut response = Response::builder()
             .status(status)
             .header("content-type", "application/json");
-            
+
         // 添加额外错误信息（仅在调试模式）
         if cfg!(debug_assertions) {
             response = response.header("x-error", err.to_string());
         }
-        
+
         // 构建错误体
         let body = json!({
             "error": status.as_u16(),
             "message": status.canonical_reason().unwrap_or("Unknown Error")
         }).to_string();
-        
+
         Ok(response.body(Body::from(body))?)
     }
 }
@@ -1697,7 +1697,7 @@ impl CircuitBreaker {
     // 检查是否允许请求通过
     pub async fn allow_request(&self) -> bool {
         let state = self.state.read().await.clone();
-        
+
         match state {
             CircuitState::Closed => true,
             CircuitState::Open => {
@@ -1720,17 +1720,17 @@ impl CircuitBreaker {
             }
         }
     }
-    
+
     // 记录请求结果
     pub async fn record_result(&self, success: bool) {
         let current_state = self.state.read().await.clone();
-        
+
         match current_state {
             CircuitState::Closed => {
                 if !success {
                     // 增加失败计数
                     self.failure_counter.increment();
-                    
+
                     // 检查是否超过失败阈值
                     if self.failure_counter.get_count() >= self.config.failure_threshold {
                         // 转入断开状态
@@ -1744,13 +1744,13 @@ impl CircuitBreaker {
                 // 记录探测结果
                 self.probe_results.write().await.push_back(success);
                 let results = self.probe_results.read().await.clone();
-                
+
                 // 如果收集了足够的样本，评估是否恢复
                 if results.len() >= self.config.half_open_max_requests {
                     // 计算成功率
                     let success_count = results.iter().filter(|&r| *r).count();
                     let success_rate = success_count as f64 / results.len() as f64;
-                    
+
                     if success_rate >= self.config.success_threshold {
                         // 恢复到闭合状态
                         *self.state.write().await = CircuitState::Closed;
@@ -1758,7 +1758,7 @@ impl CircuitBreaker {
                         // 保持断开状态
                         *self.state.write().await = CircuitState::Open;
                     }
-                    
+
                     *self.last_state_change.write().await = Instant::now();
                     self.probe_results.write().await.clear();
                 }
@@ -1788,15 +1788,15 @@ impl AtomicCounter {
             count: AtomicU64::new(0),
         }
     }
-    
+
     pub fn increment(&self) -> u64 {
         self.count.fetch_add(1, Ordering::Relaxed)
     }
-    
+
     pub fn decrement(&self) -> u64 {
         self.count.fetch_sub(1, Ordering::Relaxed)
     }
-    
+
     pub fn get(&self) -> u64 {
         self.count.load(Ordering::Relaxed)
     }
@@ -1817,20 +1817,20 @@ impl ShardedCounter {
         for _ in 0..shard_count {
             shards.push(AtomicCounter::new());
         }
-        
+
         Self {
             shards,
             rng: thread_rng(),
         }
     }
-    
+
     pub fn increment(&self) -> u64 {
         // 随机选择一个分片增加计数
         let shard = self.rng.gen_range(0..self.shards.len());
         self.shards[shard].increment();
         self.get()
     }
-    
+
     pub fn get(&self) -> u64 {
         // 汇总所有分片的计数
         self.shards.iter().map(|shard| shard.get()).sum()
@@ -1873,7 +1873,7 @@ impl ConnectionPool {
                     // 丢弃过期连接
                 }
             }
-            
+
             // 检查是否可以创建新连接
             let current = self.active_count.load(Ordering::Relaxed);
             if current < self.config.max_connections {
@@ -1900,13 +1900,13 @@ impl ConnectionPool {
                 if self.config.wait_timeout.is_zero() {
                     return Err(Error::PoolExhausted);
                 }
-                
+
                 // 设置超时等待
                 let timeout = tokio::time::timeout(
                     self.config.wait_timeout,
                     self.waiters.notified()
                 );
-                
+
                 // 等待通知或超时
                 if timeout.await.is_err() {
                     return Err(Error::ConnectionTimeout);
@@ -1915,12 +1915,12 @@ impl ConnectionPool {
             }
         }
     }
-    
+
     // 释放连接回池
     pub async fn release_connection(&self, conn: PooledConnection) {
         // 定期清理池中过期连接
         self.maybe_cleanup().await;
-        
+
         // 如果连接有效，放回池中
         if conn.is_valid() {
             let mut idle = self.idle_connections.lock().await;
@@ -1932,7 +1932,7 @@ impl ConnectionPool {
             self.active_count.fetch_sub(1, Ordering::Relaxed);
         }
     }
-    
+
     // 定期清理过期连接
     async fn maybe_cleanup(&self) {
         // 使用原子操作检查上次清理时间
@@ -1940,9 +1940,9 @@ impl ConnectionPool {
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_secs();
-            
+
         let last = self.last_cleanup.load(Ordering::Relaxed);
-        
+
         // 如果距离上次清理超过间隔，执行清理
         if now - last > self.config.cleanup_interval.as_secs() {
             // 尝试获得清理锁
@@ -1956,14 +1956,14 @@ impl ConnectionPool {
             }
         }
     }
-    
+
     // 清理过期连接
     async fn cleanup(&self) {
         let mut idle = self.idle_connections.lock().await;
         // 移除过期连接
         let initial_len = idle.len();
         idle.retain(|conn| !conn.is_expired());
-        
+
         // 更新统计
         let removed = initial_len - idle.len();
         if removed > 0 {
@@ -2020,10 +2020,10 @@ impl WorkStealingScheduler {
                 return;
             }
         }
-        
+
         // 负载均衡：寻找负载最轻的队列
         let min_load_worker = self.find_min_load_worker();
-        
+
         // 提交到负载最轻的工作线程
         if self.local_queues[min_load_worker].count.load(Ordering::Relaxed) < MAX_LOCAL_QUEUE_SIZE {
             self.submit_to_local(task, min_load_worker);
@@ -2032,7 +2032,7 @@ impl WorkStealingScheduler {
             self.submit_to_global(task);
         }
     }
-    
+
     // 工作线程主循环
     pub async fn worker_run(&self, worker_id: usize) {
         loop {
@@ -2041,61 +2041,61 @@ impl WorkStealingScheduler {
                 self.execute_task(task).await;
                 continue;
             }
-            
+
             // 2. 尝试从其他工作线程窃取任务(FIFO)
             if let Some(task) = self.steal_task(worker_id).await {
                 self.execute_task(task).await;
                 continue;
             }
-            
+
             // 3. 尝试从全局队列获取任务
             if let Some(task) = self.pop_global().await {
                 self.execute_task(task).await;
                 continue;
             }
-            
+
             // 4. 没有任务可执行，等待通知
             self.global_queue.notify.notified().await;
         }
     }
-    
+
     // 从其他工作线程窃取任务
     async fn steal_task(&self, thief_id: usize) -> Option<Task> {
         // 随机顺序探测其他工作线程
         let mut indices: Vec<usize> = (0..self.num_workers).filter(|&i| i != thief_id).collect();
         indices.shuffle(&mut thread_rng());
-        
+
         for victim_id in indices {
             // 尝试窃取任务(从队尾窃取，FIFO)
             if let Some(task) = self.steal_from_worker(victim_id) {
                 return Some(task);
             }
         }
-        
+
         None
     }
-    
+
     // 从指定工作线程窃取任务
     fn steal_from_worker(&self, victim_id: usize) -> Option<Task> {
         let victim = &self.local_queues[victim_id];
-        
+
         // 获取锁
         let _guard = match victim.lock.try_lock() {
             Ok(guard) => guard,
             // 如果无法立即获取锁，跳过此工作线程
             Err(_) => return None,
         };
-        
+
         // 从队尾窃取(FIFO)
         let mut deque = &mut victim.deque;
         if deque.is_empty() {
             return None;
         }
-        
+
         let task = deque.pop_back()?;
         // 减少计数
         victim.count.fetch_sub(1, Ordering::Relaxed);
-        
+
         Some(task)
     }
 }

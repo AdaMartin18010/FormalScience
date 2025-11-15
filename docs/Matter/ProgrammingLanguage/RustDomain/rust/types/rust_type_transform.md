@@ -1,22 +1,18 @@
-# rust type transform
+# 1. rust type transform
 
 ## 目录
 
-- [rust type transform](#rust-type-transform)
-  - [目录](#目录)
-  - [1. Rust 中类型转换的基本概念](#1-rust-中类型转换的基本概念)
-  - [2. 使用 `as` 关键字进行直接类型转换](#2-使用-as-关键字进行直接类型转换)
-  - [3. 基于 `From` / `Into` Trait 的转换](#3-基于-from--into-trait-的转换)
-    - [示例一：使用 `From` 进行转换](#示例一使用-from-进行转换)
-    - [示例二：使用 `Into` 进行转换](#示例二使用-into-进行转换)
-  - [4. 基于 `TryFrom` / `TryInto` Trait 的转换](#4-基于-tryfrom--tryinto-trait-的转换)
-  - [5. `AsRef` / `AsMut` 的引用转换](#5-asref--asmut-的引用转换)
-  - [6. 自动解引用（Deref Coercion）](#6-自动解引用deref-coercion)
-  - [7. 总结](#7-总结)
-  
-下面详细介绍一下 Rust 中的**类型转换**，包括不同转换方式的原理、用途以及代码示例。
-
-## 1. Rust 中类型转换的基本概念
+- [1. rust type transform](#rust-type-transform)
+  - [1.1 Rust 中类型转换的基本概念](#1-rust-中类型转换的基本概念)
+  - [1.2 使用 `as` 关键字进行直接类型转换](#2-使用-as-关键字进行直接类型转换)
+  - [1.3 基于 `From` / `Into` Trait 的转换](#3-基于-from-into-trait-的转换)
+    - [1.3.1 示例一：使用 `From` 进行转换](#31-示例一使用-from-进行转换)
+    - [1.3.2 示例二：使用 `Into` 进行转换](#32-示例二使用-into-进行转换)
+  - [1.4 基于 `TryFrom` / `TryInto` Trait 的转换](#4-基于-tryfrom-tryinto-trait-的转换)
+  - [1.5 `AsRef` / `AsMut` 的引用转换](#5-asref-asmut-的引用转换)
+  - [1.6 自动解引用（Deref Coercion）](#6-自动解引用deref-coercion)
+  - [1.7 总结](#7-总结)
+## 1.1 Rust 中类型转换的基本概念
 
 Rust 中的类型转换主要有以下几种方式：
 
@@ -37,7 +33,7 @@ Rust 中的类型转换主要有以下几种方式：
   利用 [`Deref`](https://doc.rust-lang.org/std/ops/trait.Deref.html) 特性，
   可以在一定程度上自动将智能指针转换为借用引用，使得用户无需显式调用解引用操作。
 
-## 2. 使用 `as` 关键字进行直接类型转换
+## 1.2 使用 `as` 关键字进行直接类型转换
 
 `as` 是最常见的原语转换方式，适用于数值与枚举、指针等简单类型之间的转换。
 需要注意的是，`as` 转换不会检查溢出或其它错误，所以需要开发者保证转换正确。
@@ -62,12 +58,12 @@ fn main() {
 }
 ```
 
-## 3. 基于 `From` / `Into` Trait 的转换
+## 1.3 基于 `From` / `Into` Trait 的转换
 
 `From` 和 `Into` 是互补的 trait。实现了 `From<T>` 的类型自动拥有相应的 `Into<T>` 实现。
 它们的优势在于安全、清晰，并能在编译时检查转换是否正确。
 
-### 示例一：使用 `From` 进行转换
+### 1.3.1 示例一：使用 `From` 进行转换
 
 ```rust:src/from_into.rs
 fn main() {
@@ -78,7 +74,7 @@ fn main() {
 }
 ```
 
-### 示例二：使用 `Into` 进行转换
+### 1.3.2 示例二：使用 `Into` 进行转换
 
 ```rust:src/from_into_into.rs
 fn main() {
@@ -89,7 +85,7 @@ fn main() {
 }
 ```
 
-## 4. 基于 `TryFrom` / `TryInto` Trait 的转换
+## 1.4 基于 `TryFrom` / `TryInto` Trait 的转换
 
 当转换可能失败时（例如数值超限、格式错误等），
 应使用 `TryFrom` 和 `TryInto`，它们返回 `Result` 类型，方便错误处理。
@@ -108,7 +104,7 @@ fn main() {
 }
 ```
 
-## 5. `AsRef` / `AsMut` 的引用转换
+## 1.5 `AsRef` / `AsMut` 的引用转换
 
 `AsRef` 和 `AsMut` 常用于借用转换场景，如将拥有类型转换为对应的借用类型，且不产生成本。
 例如，常见的 `String` 转 `&str` 的转换就依赖于 `AsRef<str>`。
@@ -129,7 +125,7 @@ fn main() {
 }
 ```
 
-## 6. 自动解引用（Deref Coercion）
+## 1.6 自动解引用（Deref Coercion）
 
 Rust 的 [`Deref`](https://doc.rust-lang.org/std/ops/trait.Deref.html)
 机制允许智能指针（如 `Box<T>`, `Rc<T>` 等）自动转换为引用。
@@ -153,7 +149,7 @@ fn main() {
 }
 ```
 
-## 7. 总结
+## 1.7 总结
 
 - **直接转换 (`as`)**：适用于简单原语类型之间的转换，使用方便但缺乏安全检查。
 - **`From`/`Into`**：用于定义安全、明确的类型间转换；支持编译期检查，适用于大部分情况。

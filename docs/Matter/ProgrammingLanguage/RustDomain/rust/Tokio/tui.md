@@ -371,7 +371,7 @@ pub struct MetricsCollector {
 impl MetricsCollector {
     pub fn new() -> Self {
         let registry = Arc::new(Registry::new());
-        
+
         let request_counter = Counter::new("requests_total");
         let error_counter = Counter::new("errors_total");
         let response_time = Histogram::new("response_time_seconds");
@@ -423,7 +423,7 @@ impl MetricsCollector {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 初始化终端
     let terminal = setup_terminal()?;
-    
+
     // 创建应用状态
     let app = App::new();
     let metrics_collector = Arc::new(MetricsCollector::new());

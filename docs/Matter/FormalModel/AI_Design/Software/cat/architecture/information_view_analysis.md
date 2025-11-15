@@ -1,39 +1,37 @@
 
-# 范畴论视角下的信息、表示与属性框架：精确分析
+# 1. 范畴论视角下的信息、表示与属性框架：精确分析
 
-## 📋 目录
+## 目录
 
-- [范畴论视角下的信息、表示与属性框架：精确分析](#范畴论视角下的信息表示与属性框架精确分析)
-  - [📋 目录](#-目录)
-  - [1 信息-数据-计算范畴重构](#1-信息-数据-计算范畴重构)
-    - [1.1 信息范畴精确定义](#11-信息范畴精确定义)
-    - [1.2 数据表示区别于信息](#12-数据表示区别于信息)
-    - [1.3 计算过程独立特性](#13-计算过程独立特性)
-  - [2 表示-表征-语义的区分分析](#2-表示-表征-语义的区分分析)
-    - [2.1 表示系统](#21-表示系统)
-    - [2.2 表征特性](#22-表征特性)
-    - [2.3 语义层级](#23-语义层级)
-  - [3 属性-集合-操作的精确区分](#3-属性-集合-操作的精确区分)
-    - [3.1 属性系统](#31-属性系统)
-    - [3.2 集合结构](#32-集合结构)
-    - [3.3 操作系统](#33-操作系统)
-  - [4 范畴间映射的精确限制](#4-范畴间映射的精确限制)
-    - [4.1 从信息到表示的有损映射](#41-从信息到表示的有损映射)
-    - [4.2 表示到语义的不完备映射](#42-表示到语义的不完备映射)
-    - [4.3 属性到操作的界限](#43-属性到操作的界限)
-  - [5 范畴论框架的内在限制](#5-范畴论框架的内在限制)
-    - [5.1 形式系统限制](#51-形式系统限制)
-    - [5.2 实际应用约束](#52-实际应用约束)
-  - [6 各范畴独立性和相互关系](#6-各范畴独立性和相互关系)
-    - [6.1 范畴之间的不可还原性](#61-范畴之间的不可还原性)
-    - [6.2 互补而非统一的视角](#62-互补而非统一的视角)
-  - [7 总结：多元视角而非单一统一](#7-总结多元视角而非单一统一)
+- [1. 范畴论视角下的信息、表示与属性框架：精确分析](#1-范畴论视角下的信息表示与属性框架精确分析)
+  - [目录](#目录)
+  - [1.1 信息-数据-计算范畴重构](#11-信息-数据-计算范畴重构)
+    - [1.1.1 信息范畴精确定义](#111-信息范畴精确定义)
+    - [1.1.2 数据表示区别于信息](#112-数据表示区别于信息)
+    - [1.1.3 计算过程独立特性](#113-计算过程独立特性)
+  - [1.2 表示-表征-语义的区分分析](#12-表示-表征-语义的区分分析)
+    - [1.2.1 表示系统](#121-表示系统)
+    - [1.2.2 表征特性](#122-表征特性)
+    - [1.2.3 语义层级](#123-语义层级)
+  - [1.3 属性-集合-操作的精确区分](#13-属性-集合-操作的精确区分)
+    - [1.3.1 属性系统](#131-属性系统)
+    - [1.3.2 集合结构](#132-集合结构)
+    - [1.3.3 操作系统](#133-操作系统)
+  - [1.4 范畴间映射的精确限制](#14-范畴间映射的精确限制)
+    - [1.4.1 从信息到表示的有损映射](#141-从信息到表示的有损映射)
+    - [1.4.2 表示到语义的不完备映射](#142-表示到语义的不完备映射)
+    - [1.4.3 属性到操作的界限](#143-属性到操作的界限)
+  - [1.5 范畴论框架的内在限制](#15-范畴论框架的内在限制)
+    - [1.5.1 形式系统限制](#151-形式系统限制)
+    - [1.5.2 实际应用约束](#152-实际应用约束)
+  - [1.6 各范畴独立性和相互关系](#16-各范畴独立性和相互关系)
+    - [1.6.1 范畴之间的不可还原性](#161-范畴之间的不可还原性)
+    - [1.6.2 互补而非统一的视角](#162-互补而非统一的视角)
+  - [1.7 总结：多元视角而非单一统一](#17-总结多元视角而非单一统一)
 
----
+## 1.1 信息-数据-计算范畴重构
 
-## 1 信息-数据-计算范畴重构
-
-### 1.1 信息范畴精确定义
+### 1.1.1 信息范畴精确定义
 
 ```haskell
 class InformationCategory i where
@@ -50,7 +48,7 @@ class InformationCategory i where
   mutual :: Information a → Information b → Real  -- 互信息
 ```
 
-### 1.2 数据表示区别于信息
+### 1.1.2 数据表示区别于信息
 
 ```haskell
 class DataCategory d where
@@ -67,7 +65,7 @@ class DataCategory d where
   redundancy :: Data a → Ratio  -- 数据冗余度
 ```
 
-### 1.3 计算过程独立特性
+### 1.1.3 计算过程独立特性
 
 ```haskell
 class Computation c where
@@ -84,9 +82,9 @@ class Computation c where
   undecidableFor :: Computation a b → Set a  -- 不可计算的输入集合
 ```
 
-## 2 表示-表征-语义的区分分析
+## 1.2 表示-表征-语义的区分分析
 
-### 2.1 表示系统
+### 1.2.1 表示系统
 
 ```haskell
 class RepresentationSystem r where
@@ -103,7 +101,7 @@ class RepresentationSystem r where
   contextDependence :: Representation a → ContextSensitivity
 ```
 
-### 2.2 表征特性
+### 1.2.2 表征特性
 
 ```haskell
 class Characterization c where
@@ -120,7 +118,7 @@ class Characterization c where
   instability :: Feature a → Conditions → Measure  -- 特征不稳定性
 ```
 
-### 2.3 语义层级
+### 1.2.3 语义层级
 
 ```haskell
 class Semantics s where
@@ -137,9 +135,9 @@ class Semantics s where
   groundingGap :: Meaning a → RealWorld → Measure  -- 符号接地问题的量化
 ```
 
-## 3 属性-集合-操作的精确区分
+## 1.3 属性-集合-操作的精确区分
 
-### 3.1 属性系统
+### 1.3.1 属性系统
 
 ```haskell
 class PropertySystem p where
@@ -156,7 +154,7 @@ class PropertySystem p where
   contextSensitivity :: Property a → ContextInfluence  -- 上下文敏感度
 ```
 
-### 3.2 集合结构
+### 1.3.2 集合结构
 
 ```haskell
 class SetStructure s where
@@ -174,7 +172,7 @@ class SetStructure s where
   incompleteness :: Set a → Domain a → Coverage  -- 对领域覆盖的不完整性
 ```
 
-### 3.3 操作系统
+### 1.3.3 操作系统
 
 ```haskell
 class OperationSystem o where
@@ -192,9 +190,9 @@ class OperationSystem o where
   nonDeterminism :: Operation a b → Measure  -- 非确定性程度
 ```
 
-## 4 范畴间映射的精确限制
+## 1.4 范畴间映射的精确限制
 
-### 4.1 从信息到表示的有损映射
+### 1.4.1 从信息到表示的有损映射
 
 ```haskell
 -- 信息到表示的函子映射
@@ -208,7 +206,7 @@ infoToRepFunctor :: Functor f where
   domainConstraints :: f → Domain → Applicability
 ```
 
-### 4.2 表示到语义的不完备映射
+### 1.4.2 表示到语义的不完备映射
 
 ```haskell
 -- 表示到语义的映射函子
@@ -222,7 +220,7 @@ repToSemanticsFunctor :: Functor f where
   contextualVariance :: f → ContextSet → Variance
 ```
 
-### 4.3 属性到操作的界限
+### 1.4.3 属性到操作的界限
 
 ```haskell
 -- 属性到操作的映射函子
@@ -236,9 +234,9 @@ propertyToOperationFunctor :: Functor f where
   operationalLimitations :: f → Set Constraint
 ```
 
-## 5 范畴论框架的内在限制
+## 1.5 范畴论框架的内在限制
 
-### 5.1 形式系统限制
+### 1.5.1 形式系统限制
 
 ```haskell
 class CategoryLimitations c where
@@ -251,7 +249,7 @@ class CategoryLimitations c where
   meaningfulnessLimits :: c → Domain → Applicability
 ```
 
-### 5.2 实际应用约束
+### 1.5.2 实际应用约束
 
 ```haskell
 class PracticalLimitations p where
@@ -264,9 +262,9 @@ class PracticalLimitations p where
   emergentComplexities :: Theory → Application → Set EmergentProperty
 ```
 
-## 6 各范畴独立性和相互关系
+## 1.6 各范畴独立性和相互关系
 
-### 6.1 范畴之间的不可还原性
+### 1.6.1 范畴之间的不可还原性
 
 ```haskell
 -- 展示范畴间的非完全还原关系
@@ -286,7 +284,7 @@ categoryIrreducibility :: Analysis where
   ]
 ```
 
-### 6.2 互补而非统一的视角
+### 1.6.2 互补而非统一的视角
 
 ```haskell
 complementaryFrameworks :: Analysis where
@@ -305,7 +303,7 @@ complementaryFrameworks :: Analysis where
   ]
 ```
 
-## 7 总结：多元视角而非单一统一
+## 1.7 总结：多元视角而非单一统一
 
 从范畴论视角分析信息-数据-计算、表示-表征-语义、量质属性-集合-操作这三组概念，我们得出以下关键认识：
 

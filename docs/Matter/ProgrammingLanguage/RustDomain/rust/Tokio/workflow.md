@@ -1,21 +1,19 @@
-# Rust实现分布式工作流
-
-我将为您展示一个基于 Rust 2024 + Tokio 的分布式工作流系统，实现各种工作流模式。
+# 1. Rust实现分布式工作流
 
 ## 目录
 
-- [Rust实现分布式工作流](#rust实现分布式工作流)
+- [1. Rust实现分布式工作流](#1-rust实现分布式工作流)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-  - [2. 基础工作流模式定义](#2-基础工作流模式定义)
-  - [3. 高级工作流模式实现](#3-高级工作流模式实现)
-  - [4. 工作流状态和上下文管理](#4-工作流状态和上下文管理)
-  - [5. 工作流模式组合示例](#5-工作流模式组合示例)
-  - [6. 工作流执行引擎](#6-工作流执行引擎)
-  - [7. 工作流监控和指标收集](#7-工作流监控和指标收集)
-  - [8. 主程序实现](#8-主程序实现)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+  - [1.2 基础工作流模式定义](#12-基础工作流模式定义)
+  - [1.3 高级工作流模式实现](#13-高级工作流模式实现)
+  - [1.4 工作流状态和上下文管理](#14-工作流状态和上下文管理)
+  - [1.5 工作流模式组合示例](#15-工作流模式组合示例)
+  - [1.6 工作流执行引擎](#16-工作流执行引擎)
+  - [1.7 工作流监控和指标收集](#17-工作流监控和指标收集)
+  - [1.8 主程序实现](#18-主程序实现)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -33,7 +31,7 @@ sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-native-tls"] }
 redis = { version = "0.23", features = ["tokio-comp"] }
 ```
 
-## 2. 基础工作流模式定义
+## 1.2 基础工作流模式定义
 
 ```rust
 #[async_trait]
@@ -85,15 +83,15 @@ pub struct ParallelPattern {
 impl WorkflowPattern for ParallelPattern {
     async fn execute(&self, context: &mut WorkflowContext) -> Result<(), WorkflowError> {
         let mut handles = Vec::new();
-        
+
         for task in &self.tasks {
             let task = task.clone();
             let mut ctx = context.clone();
-            
+
             let handle = tokio::spawn(async move {
                 task.execute(&mut ctx).await
             });
-            
+
             handles.push(handle);
         }
 
@@ -106,7 +104,7 @@ impl WorkflowPattern for ParallelPattern {
 }
 ```
 
-## 3. 高级工作流模式实现
+## 1.3 高级工作流模式实现
 
 ```rust
 // 选择模式
@@ -146,11 +144,11 @@ impl WorkflowPattern for MultiChoicePattern {
             if condition.evaluate(context).await? {
                 let pattern = pattern.clone();
                 let mut ctx = context.clone();
-                
+
                 let handle = tokio::spawn(async move {
                     pattern.execute(&mut ctx).await
                 });
-                
+
                 handles.push(handle);
             }
         }
@@ -174,11 +172,11 @@ pub struct DiscriminatorPattern {
 impl WorkflowPattern for DiscriminatorPattern {
     async fn execute(&self, context: &mut WorkflowContext) -> Result<(), WorkflowError> {
         let (tx, mut rx) = tokio::sync::mpsc::channel(self.incoming_branches);
-        
+
         for _ in 0..self.incoming_branches {
             let tx = tx.clone();
             let mut ctx = context.clone();
-            
+
             tokio::spawn(async move {
                 if let Ok(()) = self.pattern.execute(&mut ctx).await {
                     let _ = tx.send(()).await;
@@ -195,7 +193,7 @@ impl WorkflowPattern for DiscriminatorPattern {
 }
 ```
 
-## 4. 工作流状态和上下文管理
+## 1.4 工作流状态和上下文管理
 
 ```rust
 #[derive(Clone)]
@@ -245,9 +243,9 @@ impl WorkflowStorage {
 
         // 保存到 PostgreSQL
         sqlx::query!(
-            "INSERT INTO workflow_states (workflow_id, state, variables) 
+            "INSERT INTO workflow_states (workflow_id, state, variables)
              VALUES ($1, $2, $3)
-             ON CONFLICT (workflow_id) DO UPDATE 
+             ON CONFLICT (workflow_id) DO UPDATE
              SET state = $2, variables = $3",
             context.workflow_id,
             state,
@@ -268,7 +266,7 @@ impl WorkflowStorage {
 }
 ```
 
-## 5. 工作流模式组合示例
+## 1.5 工作流模式组合示例
 
 ```rust
 // 复杂订单处理工作流
@@ -364,7 +362,7 @@ pub fn create_document_approval_workflow() -> Box<dyn WorkflowPattern> {
 }
 ```
 
-## 6. 工作流执行引擎
+## 1.6 工作流执行引擎
 
 ```rust
 pub struct WorkflowEngine {
@@ -376,7 +374,7 @@ impl WorkflowEngine {
     pub async fn new(db_pool: PgPool, redis_client: RedisClient) -> Self {
         let storage = Arc::new(WorkflowStorage::new(db_pool, redis_client));
         let executor = Arc::new(WorkflowExecutor::new(storage.clone()));
-        
+
         Self {
             storage,
             executor,
@@ -389,7 +387,7 @@ impl WorkflowEngine {
         initial_context: WorkflowContext,
     ) -> Result<Uuid> {
         let workflow_id = initial_context.workflow_id;
-        
+
         // 保存初始状态
         self.storage.save_workflow_state(&initial_context).await?;
 
@@ -449,7 +447,7 @@ impl WorkflowExecutor {
 }
 ```
 
-## 7. 工作流监控和指标收集
+## 1.7 工作流监控和指标收集
 
 ```rust
 pub struct WorkflowMetrics {
@@ -492,7 +490,7 @@ impl WorkflowMetrics {
 }
 ```
 
-## 8. 主程序实现
+## 1.8 主程序实现
 
 ```rust
 #[tokio::main]

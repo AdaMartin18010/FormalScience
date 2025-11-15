@@ -1,63 +1,63 @@
 
-# 计算、形式与数学：概念统一与深层联系（修订版）
+# 1. 计算、形式与数学：概念统一与深层联系（修订版）
 
 ## 目录
 
-- [计算、形式与数学：概念统一与深层联系（修订版）](#计算形式与数学概念统一与深层联系修订版)
+- [1. 计算、形式与数学：概念统一与深层联系（修订版）](#1-计算形式与数学概念统一与深层联系修订版)
   - [目录](#目录)
-  - [1. 引言：概念统一的必要性](#1-引言概念统一的必要性)
-    - [1.1 历史脉络与发展](#11-历史脉络与发展)
-    - [1.2 领域边界与交叉](#12-领域边界与交叉)
-    - [1.3 本体论基础](#13-本体论基础)
-  - [2. 计算范式与形式基础](#2-计算范式与形式基础)
-    - [2.1 计算模型的历史演化](#21-计算模型的历史演化)
-    - [2.2 计算作为形式变换](#22-计算作为形式变换)
-    - [2.3 类型系统作为逻辑](#23-类型系统作为逻辑)
-    - [2.4 范畴论视角下的程序](#24-范畴论视角下的程序)
-  - [3. 抽象代数与计算结构](#3-抽象代数与计算结构)
-    - [3.1 代数结构的历史与哲学](#31-代数结构的历史与哲学)
-    - [3.2 代数数据类型与群论](#32-代数数据类型与群论)
-    - [3.3 函子、单子与计算效应](#33-函子单子与计算效应)
-    - [3.4 格理论与程序分析](#34-格理论与程序分析)
-  - [4. 拓扑与计算空间](#4-拓扑与计算空间)
-    - [4.1 拓扑学与计算理论的历史交汇](#41-拓扑学与计算理论的历史交汇)
-    - [4.2 连续性与离散计算](#42-连续性与离散计算)
-    - [4.3 同伦类型论的理论深度](#43-同伦类型论的理论深度)
-    - [4.4 空间计算模型](#44-空间计算模型)
-  - [5. 信息流动与微积分思想](#5-信息流动与微积分思想)
-    - [5.1 信息与物理学的本质联系](#51-信息与物理学的本质联系)
-    - [5.2 梯度下降与优化算法](#52-梯度下降与优化算法)
-    - [5.3 信息度量与熵](#53-信息度量与熵)
-    - [5.4 微分隐私与信息控制](#54-微分隐私与信息控制)
-  - [6. 线性代数与计算模型](#6-线性代数与计算模型)
-    - [6.1 线性代数作为计算基础的历史](#61-线性代数作为计算基础的历史)
-    - [6.2 张量计算与神经网络](#62-张量计算与神经网络)
-    - [6.3 线性变换作为计算抽象](#63-线性变换作为计算抽象)
-    - [6.4 特征空间与数据表示](#64-特征空间与数据表示)
-  - [7. 认知科学视角](#7-认知科学视角)
-    - [7.1 计算认知与数学思维](#71-计算认知与数学思维)
-    - [7.2 形式系统的认知基础](#72-形式系统的认知基础)
-    - [7.3 数学抽象与人类认知的演化](#73-数学抽象与人类认知的演化)
-  - [8. 统一视角：计算-形式-数学三位一体](#8-统一视角计算-形式-数学三位一体)
-    - [8.1 哲学基础：本体论与认识论](#81-哲学基础本体论与认识论)
-    - [8.2 同构与等价关系](#82-同构与等价关系)
-    - [8.3 计算即证明：柯里-霍华德同构](#83-计算即证明柯里-霍华德同构)
-    - [8.4 量子计算：物理与信息的统一](#84-量子计算物理与信息的统一)
-  - [9. 实际应用与工程实践](#9-实际应用与工程实践)
-    - [9.1 形式方法在软件验证中的应用](#91-形式方法在软件验证中的应用)
-    - [9.2 机器学习系统的数学基础](#92-机器学习系统的数学基础)
-    - [9.3 分布式系统的形式化模型](#93-分布式系统的形式化模型)
-  - [10. 结论与展望](#10-结论与展望)
-    - [10.1 理论统一的挑战与前景](#101-理论统一的挑战与前景)
-    - [10.2 跨学科研究方法论](#102-跨学科研究方法论)
-    - [10.3 未来研究方向](#103-未来研究方向)
-  - [结语](#结语)
+  - [1.1 引言：概念统一的必要性](#11-引言概念统一的必要性)
+    - [1.1.1 历史脉络与发展](#111-历史脉络与发展)
+    - [1.1.2 领域边界与交叉](#112-领域边界与交叉)
+    - [1.1.3 本体论基础](#113-本体论基础)
+  - [1.2 计算范式与形式基础](#12-计算范式与形式基础)
+    - [1.2.1 计算模型的历史演化](#121-计算模型的历史演化)
+    - [1.2.2 计算作为形式变换](#122-计算作为形式变换)
+    - [1.2.3 类型系统作为逻辑](#123-类型系统作为逻辑)
+    - [1.2.4 范畴论视角下的程序](#124-范畴论视角下的程序)
+  - [1.3 抽象代数与计算结构](#13-抽象代数与计算结构)
+    - [1.3.1 代数结构的历史与哲学](#131-代数结构的历史与哲学)
+    - [1.3.2 代数数据类型与群论](#132-代数数据类型与群论)
+    - [1.3.3 函子、单子与计算效应](#133-函子单子与计算效应)
+    - [1.3.4 格理论与程序分析](#134-格理论与程序分析)
+  - [1.4 拓扑与计算空间](#14-拓扑与计算空间)
+    - [1.4.1 拓扑学与计算理论的历史交汇](#141-拓扑学与计算理论的历史交汇)
+    - [1.4.2 连续性与离散计算](#142-连续性与离散计算)
+    - [1.4.3 同伦类型论的理论深度](#143-同伦类型论的理论深度)
+    - [1.4.4 空间计算模型](#144-空间计算模型)
+  - [1.5 信息流动与微积分思想](#15-信息流动与微积分思想)
+    - [1.5.1 信息与物理学的本质联系](#151-信息与物理学的本质联系)
+    - [1.5.2 梯度下降与优化算法](#152-梯度下降与优化算法)
+    - [1.5.3 信息度量与熵](#153-信息度量与熵)
+    - [1.5.4 微分隐私与信息控制](#154-微分隐私与信息控制)
+  - [1.6 线性代数与计算模型](#16-线性代数与计算模型)
+    - [1.6.1 线性代数作为计算基础的历史](#161-线性代数作为计算基础的历史)
+    - [1.6.2 张量计算与神经网络](#162-张量计算与神经网络)
+    - [1.6.3 线性变换作为计算抽象](#163-线性变换作为计算抽象)
+    - [1.6.4 特征空间与数据表示](#164-特征空间与数据表示)
+  - [1.7 认知科学视角](#17-认知科学视角)
+    - [1.7.1 计算认知与数学思维](#171-计算认知与数学思维)
+    - [1.7.2 形式系统的认知基础](#172-形式系统的认知基础)
+    - [1.7.3 数学抽象与人类认知的演化](#173-数学抽象与人类认知的演化)
+  - [1.8 统一视角：计算-形式-数学三位一体](#18-统一视角计算-形式-数学三位一体)
+    - [1.8.1 哲学基础：本体论与认识论](#181-哲学基础本体论与认识论)
+    - [1.8.2 同构与等价关系](#182-同构与等价关系)
+    - [1.8.3 计算即证明：柯里-霍华德同构](#183-计算即证明柯里-霍华德同构)
+    - [1.8.4 量子计算：物理与信息的统一](#184-量子计算物理与信息的统一)
+  - [1.9 实际应用与工程实践](#19-实际应用与工程实践)
+    - [1.9.1 形式方法在软件验证中的应用](#191-形式方法在软件验证中的应用)
+    - [1.9.2 机器学习系统的数学基础](#192-机器学习系统的数学基础)
+    - [1.9.3 分布式系统的形式化模型](#193-分布式系统的形式化模型)
+  - [1.10 结论与展望](#110-结论与展望)
+    - [1.10.1 理论统一的挑战与前景](#1101-理论统一的挑战与前景)
+    - [1.10.2 跨学科研究方法论](#1102-跨学科研究方法论)
+    - [1.10.3 未来研究方向](#1103-未来研究方向)
+  - [1.11 结语](#111-结语)
 
-## 1. 引言：概念统一的必要性
+## 1.1 引言：概念统一的必要性
 
 在当代科学发展中，计算科学、形式科学和数学正以前所未有的方式融合。这三大领域看似各自独立，实则存在着深刻的内在联系。计算本质上是形式系统的操作，而形式系统则建立在数学基础之上。这种三位一体的关系不仅促进了各自领域的发展，更催生了全新的交叉学科和研究范式。
 
-### 1.1 历史脉络与发展
+### 1.1.1 历史脉络与发展
 
 计算、形式与数学的交织并非现代现象，而是有着深厚的历史根基。从古代的算盘和算法起源，到布尔代数与逻辑电路的联系，再到图灵机与λ演算的发展，这三个领域一直在互相影响与促进。
 
@@ -65,7 +65,7 @@
 
 1960年代，麦卡锡的LISP语言将λ演算付诸实践，范畴论开始被应用于计算机科学；1970年代，柯里-霍华德同构明确了程序与证明的对应关系；1990年代，马丁-勒夫类型论将直觉主义逻辑与计算机程序统一。这一系列历史发展不是偶然的，而是反映了这些领域本质上的统一性。
 
-### 1.2 领域边界与交叉
+### 1.1.2 领域边界与交叉
 
 为精确讨论三个领域的联系，首先需要明确定义它们的边界：
 
@@ -95,7 +95,7 @@
 
 这些边界并非绝对，而是存在大量交叉区域，如理论计算机科学同时属于计算科学和形式科学，数理逻辑则是形式科学和数学的交叉。正是这些交叉区域成为了整合理论的肥沃土壤。
 
-### 1.3 本体论基础
+### 1.1.3 本体论基础
 
 从哲学角度看，这三个领域关注的都是某种形式的"存在"：
 
@@ -105,9 +105,9 @@
 
 这种本体论视角揭示了三者的统一性：它们都是对现实世界的抽象，但抽象的层次和关注点不同。计算关注变化，形式关注规则，数学关注模式，三者共同构成了对复杂现实的不同切面。
 
-## 2. 计算范式与形式基础
+## 1.2 计算范式与形式基础
 
-### 2.1 计算模型的历史演化
+### 1.2.1 计算模型的历史演化
 
 计算模型的发展体现了从具体到抽象、从机械到形式化的历史轨迹：
 
@@ -119,7 +119,7 @@
 
 图灵机和λ演算这两种基本计算模型，看似截然不同（一个基于状态转换，一个基于函数代换），却被证明在计算能力上完全等价。这一等价性是计算概念统一性的早期证据，表明不同的形式系统可以捕获相同的计算本质。
 
-### 2.2 计算作为形式变换
+### 1.2.2 计算作为形式变换
 
 从形式化视角看，计算本质上是在形式系统中的符号变换过程。范畴论提供了描述这种变换的精确语言：对象（objects）表示数据类型，态射（morphisms）表示计算过程，复合（composition）表示程序组合。
 
@@ -154,10 +154,10 @@ fn verify_associativity<A, B, C, D>(
 ) -> bool {
     let h_g = compose(g, h);
     let h_g_f = compose(f, h_g);
-    
+
     let g_f = compose(f, g);
     let h_g_f_alt = compose(g_f, h);
-    
+
     h_g_f(a.clone()) == h_g_f_alt(a)
 }
 ```
@@ -168,7 +168,7 @@ fn verify_associativity<A, B, C, D>(
 
 这一定理建立了程序语言与范畴论的直接联系，使我们能够用范畴论的精确语言来讨论程序结构。
 
-### 2.3 类型系统作为逻辑
+### 1.2.3 类型系统作为逻辑
 
 依据柯里-霍华德同构（Curry-Howard Isomorphism），类型系统与逻辑系统之间存在着深刻的对应关系：类型对应命题，程序对应证明。这一观点最早由Howard于1969年提出，建立在柯里早期工作的基础上。
 
@@ -219,7 +219,7 @@ fn use_modus_ponens() {
 
 随着依赖类型的引入（如Coq、Agda、Idris等语言），这种对应关系被扩展到构造性数学的全部范围，使得程序语言成为定理证明和数学构造的工具。
 
-### 2.4 范畴论视角下的程序
+### 1.2.4 范畴论视角下的程序
 
 范畴论不仅是描述计算结构的语言，更为函数式编程提供了理论基础。特别是，函子（functors）、自然变换（natural transformations）和单子（monads）等概念已成为现代函数式编程的核心。
 
@@ -244,7 +244,7 @@ struct Id<A>(A);
 
 impl<A> Functor<A> for Id<A> {
     type Target<B> = Id<B>;
-    
+
     fn map<B, F: Fn(A) -> B>(self, f: F) -> Id<B> {
         Id(f(self.0))
     }
@@ -253,7 +253,7 @@ impl<A> Functor<A> for Id<A> {
 // Option作为Maybe函子
 impl<A> Functor<A> for Option<A> {
     type Target<B> = Option<B>;
-    
+
     fn map<B, F: Fn(A) -> B>(self, f: F) -> Option<B> {
         match self {
             Some(a) => Some(f(a)),
@@ -275,12 +275,12 @@ where
 {
     // 恒等态射：F(id_A) = id_{F(A)}
     let id_law = functor.clone().map(|a| a) == functor.clone();
-    
+
     // 复合态射：F(g ∘ f) = F(g) ∘ F(f)
     let compose = |a| g(f(a));
     let composition_law = functor.clone().map(compose) ==
                           functor.map(f).map(g);
-    
+
     id_law && composition_law
 }
 ```
@@ -300,9 +300,9 @@ where
 
 单子在计算机科学中特别重要，因为它提供了一种统一处理副作用（如状态、IO、异常等）的方式。
 
-## 3. 抽象代数与计算结构
+## 1.3 抽象代数与计算结构
 
-### 3.1 代数结构的历史与哲学
+### 1.3.1 代数结构的历史与哲学
 
 抽象代数从具体数值演算发展到抽象结构研究的历史，与计算从具体算法到抽象模型的发展轨迹惊人相似。这不是偶然，而是反映了人类思维抽象化的普遍模式。
 
@@ -310,7 +310,7 @@ where
 
 从哲学角度看，抽象代数和计算结构都是对操作及其性质的抽象，前者关注代数运算，后者关注信息变换，两者本质上都是研究"变换下的不变量"。
 
-### 3.2 代数数据类型与群论
+### 1.3.2 代数数据类型与群论
 
 代数数据类型（ADT）是现代程序语言中表达复合数据结构的方式，其与抽象代数有着深刻联系。
 
@@ -362,11 +362,11 @@ impl<T: Clone> Monoid for List<T> {
 fn verify_monoid_laws<M: Monoid + PartialEq + Clone>(a: &M, b: &M, c: &M) -> bool {
     // 结合律：(a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)
     let assoc = a.combine(b).combine(c) == a.combine(&b.combine(c));
-    
+
     // 单位元法则：e ⊕ a = a ⊕ e = a
     let left_unit = M::empty().combine(a) == *a;
     let right_unit = a.combine(&M::empty()) == *a;
-    
+
     assoc && left_unit && right_unit
 }
 ```
@@ -381,7 +381,7 @@ fn verify_monoid_laws<M: Monoid + PartialEq + Clone>(a: &M, b: &M, c: &M) -> boo
 
 这种对应使我们可以从代数角度分析数据类型，预测其操作性质。
 
-### 3.3 函子、单子与计算效应
+### 1.3.3 函子、单子与计算效应
 
 单子（Monads）不仅是一个范畴论概念，更是处理计算效应的强大抽象。它允许我们在纯函数式框架中处理副作用，如状态、异常、IO等。
 
@@ -404,7 +404,7 @@ fn verify_monoid_laws<M: Monoid + PartialEq + Clone>(a: &M, b: &M, c: &M) -> boo
 trait Monad<A>: Functor<A> {
     // return操作：将纯值嵌入计算上下文
     fn pure(value: A) -> Self;
-    
+
     // bind操作：将计算序列化
     fn flat_map<B, F>(self, f: F) -> Self::Target<B>
     where
@@ -416,7 +416,7 @@ impl<A> Monad<A> for Option<A> {
     fn pure(value: A) -> Self {
         Some(value)
     }
-    
+
     fn flat_map<B, F>(self, f: F) -> Option<B>
     where
         F: Fn(A) -> Option<B>,
@@ -433,7 +433,7 @@ impl<A, E> Monad<A> for Result<A, E> {
     fn pure(value: A) -> Self {
         Ok(value)
     }
-    
+
     fn flat_map<B, F>(self, f: F) -> Result<B, E>
     where
         F: Fn(A) -> Result<B, E>,
@@ -460,13 +460,13 @@ where
 {
     // 左单位元：bind(return(a), f) = f(a)
     let left_unit = M::pure(a.clone()).flat_map(&f) == f(a.clone());
-    
+
     // 右单位元：bind(m, return) = m
     let right_unit = m.clone().flat_map(M::pure) == m.clone();
-    
+
     // 结合律：bind(bind(m, f), g) = bind(m, λx.bind(f(x), g))
     // 注意：这里简化了实现，完整验证需要更复杂的代码
-    
+
     left_unit && right_unit
 }
 ```
@@ -477,7 +477,7 @@ where
 
 这一定理揭示了单子的普遍性，解释了为何它在函数式编程中如此核心。
 
-### 3.4 格理论与程序分析
+### 1.3.4 格理论与程序分析
 
 格理论（Lattice Theory）是研究偏序集特殊结构的数学分支，在程序分析中有深入应用，特别是在静态分析和抽象解释领域。
 
@@ -510,7 +510,7 @@ impl Sign {
             (Sign::Positive, Sign::Negative) | (Sign::Negative, Sign::Positive) => Sign::Top,
         }
     }
-    
+
     // 格的meet操作（最大下界）
     fn meet(&self, other: &Sign) -> Sign {
         match (self, other) {
@@ -520,7 +520,7 @@ impl Sign {
             _ => Sign::Bottom,
         }
     }
-    
+
     // 抽象加法操作
     fn abstract_add(&self, other: &Sign) -> Sign {
         match (self, other) {
@@ -532,7 +532,7 @@ impl Sign {
             (Sign::Positive, Sign::Negative) | (Sign::Negative, Sign::Positive) => Sign::Top,
         }
     }
-    
+
     // 抽象乘法操作
     fn abstract_mul(&self, other: &Sign) -> Sign {
         match (self, other) {
@@ -557,12 +557,12 @@ impl AbstractInterpreter {
             variables: HashMap::new(),
         }
     }
-    
+
     fn interpret_assignment(&mut self, var: &str, expr: &Expr) {
         let value = self.evaluate_expr(expr);
         self.variables.insert(var.to_string(), value);
     }
-    
+
     fn evaluate_expr(&self, expr: &Expr) -> Sign {
         match expr {
             Expr::Const(n) => {
@@ -609,9 +609,9 @@ enum Expr {
 
 Galois连接保证了抽象分析的可靠性：抽象域中得出的任何结论在具体域中也成立。
 
-## 4. 拓扑与计算空间
+## 1.4 拓扑与计算空间
 
-### 4.1 拓扑学与计算理论的历史交汇
+### 1.4.1 拓扑学与计算理论的历史交汇
 
 拓扑学与计算理论的交汇始于20世纪70年代Scott和Strachey的指称语义学工作。
 他们发现，为了给递归程序提供数学意义，需要将程序域视为带有特定拓扑结构的空间，这导致了领域理论(Domain Theory)的发展。
@@ -621,7 +621,7 @@ Galois连接保证了抽象分析的可靠性：抽象域中得出的任何结�
 
 近年来，同伦类型论(Homotopy Type Theory)的出现，代表了拓扑学与计算理论的最新交汇点，将类型视为空间，证明视为路径，等式视为同伦。
 
-### 4.2 连续性与离散计算
+### 1.4.2 连续性与离散计算
 
 传统上，计算被视为离散的过程，而数学分析则关注连续现象。
 然而，拓扑学提供了一个统一的框架，可以将离散计算嵌入到连续空间中。
@@ -645,21 +645,21 @@ impl<T: Clone + PartialEq> Approx<T> {
         match (self, other) {
             (Approx::Bottom, _) => true,
             (_, Approx::Bottom) => false,
-            (Approx::Partial(xs), Approx::Partial(ys)) => 
+            (Approx::Partial(xs), Approx::Partial(ys)) =>
                 xs.iter().all(|x| ys.contains(x)),
-            (Approx::Partial(xs), Approx::Complete(ys)) => 
+            (Approx::Partial(xs), Approx::Complete(ys)) =>
                 xs.iter().all(|x| ys.contains(x)),
             (Approx::Complete(_), Approx::Partial(_)) => false,
-            (Approx::Complete(xs), Approx::Complete(ys)) => 
+            (Approx::Complete(xs), Approx::Complete(ys)) =>
                 xs == ys,
         }
     }
-    
+
     // 最小上界（如果存在）
     fn join(&self, other: &Approx<T>) -> Option<Approx<T>> {
         match (self, other) {
             (Approx::Bottom, x) | (x, Approx::Bottom) => Some(x.clone()),
-            (Approx::Complete(xs), Approx::Complete(ys)) if xs == ys => 
+            (Approx::Complete(xs), Approx::Complete(ys)) if xs == ys =>
                 Some(Approx::Complete(xs.clone())),
             (Approx::Partial(xs), Approx::Partial(ys)) => {
                 // 检查是否兼容（无冲突信息）
@@ -671,7 +671,7 @@ impl<T: Clone + PartialEq> Approx<T> {
                 }
                 Some(Approx::Partial(result))
             },
-            (Approx::Partial(xs), Approx::Complete(ys)) | 
+            (Approx::Partial(xs), Approx::Complete(ys)) |
             (Approx::Complete(ys), Approx::Partial(xs)) => {
                 if xs.iter().all(|x| ys.contains(x)) {
                     Some(Approx::Complete(ys.clone()))
@@ -682,10 +682,10 @@ impl<T: Clone + PartialEq> Approx<T> {
             _ => None,  // 不兼容情况
         }
     }
-    
+
     // 模拟连续函数：保持有向集上确界
     fn continuous_map<S: Clone + PartialEq>(
-        &self, 
+        &self,
         f: impl Fn(&T) -> Approx<S>
     ) -> Approx<S> {
         match self {
@@ -719,7 +719,7 @@ impl<T: Clone + PartialEq> Approx<T> {
 
 这一定理为理解递归定义的数学基础提供了关键，说明了递归程序的意义可以通过迭代逼近获得。
 
-### 4.3 同伦类型论的理论深度
+### 1.4.3 同伦类型论的理论深度
 
 同伦类型论（HoTT）是21世纪初发展起来的革命性理论，将类型论与代数拓扑学结合，特别是同伦理论。它的核心思想是将类型视为空间，项视为点，等式视为路径，等式的证明视为同伦。
 
@@ -773,7 +773,7 @@ struct Equivalence<A, B> {
 
 Univalence公理是Voevodsky提出的革命性原则，它使得同伦类型论成为一个适合形式化数学的强大基础。
 
-### 4.4 空间计算模型
+### 1.4.4 空间计算模型
 
 空间算法和计算几何提供了另一种计算与拓扑结合的视角。这些算法直接操作几何和拓扑对象，展示了空间思维在计算中的重要性。
 
@@ -789,19 +789,19 @@ impl Point {
     fn new(x: f64, y: f64) -> Self {
         Point { x, y }
     }
-    
+
     // 计算两点间欧几里得距离
     fn distance(&self, other: &Point) -> f64 {
         let dx = self.x - other.x;
         let dy = self.y - other.y;
         (dx * dx + dy * dy).sqrt()
     }
-    
+
     // 向量加法
     fn add(&self, other: &Point) -> Point {
         Point::new(self.x + other.x, self.y + other.y)
     }
-    
+
     // 向量缩放
     fn scale(&self, factor: f64) -> Point {
         Point::new(self.x * factor, self.y * factor)
@@ -819,21 +819,21 @@ fn convex_hull(points: &[Point]) -> Vec<Point> {
     if points.len() < 3 {
         return points.to_vec();
     }
-    
+
     // 找到最低且最左的点作为起点
     let mut start_idx = 0;
     for i in 1..points.len() {
-        if points[i].y < points[start_idx].y || 
+        if points[i].y < points[start_idx].y ||
           (points[i].y == points[start_idx].y && points[i].x < points[start_idx].x) {
             start_idx = i;
         }
     }
-    
+
     // 将起点放到第一位
     let mut sorted_points = points.to_vec();
     sorted_points.swap(0, start_idx);
     let start = sorted_points[0].clone();
-    
+
     // 按相对于起点的极角排序
     sorted_points[1..].sort_by(|a, b| {
         let o = orientation(&start, a, b);
@@ -850,20 +850,20 @@ fn convex_hull(points: &[Point]) -> Vec<Point> {
             std::cmp::Ordering::Greater
         }
     });
-    
+
     // Graham扫描主算法
     let mut hull = Vec::new();
     hull.push(sorted_points[0].clone());
     hull.push(sorted_points[1].clone());
-    
+
     for i in 2..sorted_points.len() {
-        while hull.len() > 1 && 
+        while hull.len() > 1 &&
               orientation(&hull[hull.len()-2], &hull[hull.len()-1], &sorted_points[i]) >= 0 {
             hull.pop();
         }
         hull.push(sorted_points[i].clone());
     }
-    
+
     hull
 }
 ```
@@ -874,9 +874,9 @@ fn convex_hull(points: &[Point]) -> Vec<Point> {
 
 这一定理揭示了维度对计算复杂性的影响，展示了拓扑问题中计算难度的本质界限。
 
-## 5. 信息流动与微积分思想
+## 1.5 信息流动与微积分思想
 
-### 5.1 信息与物理学的本质联系
+### 1.5.1 信息与物理学的本质联系
 
 信息理论与物理学的深层联系始于玻尔兹曼熵与香农信息熵的数学相似性。这不是偶然，而是反映了信息与物理现实的本质关联。朗道尔(Landauer)原理进一步确立了信息与能量的直接联系：擦除一比特信息至少需要耗散 $k_B T \ln 2$ 的能量。
 
@@ -884,7 +884,7 @@ fn convex_hull(points: &[Point]) -> Vec<Point> {
 
 这种信息-物理的统一视角为理解计算的本质提供了更深层次的洞察，表明计算不仅是抽象数学过程，也是物理现实的基本组成部分。
 
-### 5.2 梯度下降与优化算法
+### 1.5.2 梯度下降与优化算法
 
 优化算法，特别是梯度下降类方法，将微积分思想应用于计算过程。这类算法在机器学习中尤为重要，展现了连续数学与离散计算的完美结合。
 
@@ -899,15 +899,15 @@ impl Vector {
     fn new(components: Vec<f64>) -> Self {
         Vector(components)
     }
-    
+
     fn dimension(&self) -> usize {
         self.0.len()
     }
-    
+
     fn get(&self, i: usize) -> f64 {
         self.0[i]
     }
-    
+
     // 向量加法
     fn add(&self, other: &Vector) -> Vector {
         assert_eq!(self.dimension(), other.dimension());
@@ -917,7 +917,7 @@ impl Vector {
         }
         Vector(result)
     }
-    
+
     // 向量减法
     fn subtract(&self, other: &Vector) -> Vector {
         assert_eq!(self.dimension(), other.dimension());
@@ -927,7 +927,7 @@ impl Vector {
         }
         Vector(result)
     }
-    
+
     // 标量乘法
     fn scale(&self, scalar: f64) -> Vector {
         let mut result = vec![0.0; self.dimension()];
@@ -936,7 +936,7 @@ impl Vector {
         }
         Vector(result)
     }
-    
+
     // 向量范数
     fn norm(&self) -> f64 {
         self.0.iter().map(|x| x*x).sum::<f64>().sqrt()
@@ -947,7 +947,7 @@ impl Vector {
 trait DifferentiableFunction {
     // 计算函数值
     fn evaluate(&self, x: &Vector) -> f64;
-    
+
     // 计算梯度
     fn gradient(&self, x: &Vector) -> Vector;
 }
@@ -962,7 +962,7 @@ impl DifferentiableFunction for QuadraticFunction {
         let x2 = x.get(1);
         (x1 - 2.0).powi(2) + (x2 - 3.0).powi(2)
     }
-    
+
     fn gradient(&self, x: &Vector) -> Vector {
         assert_eq!(x.dimension(), 2);
         let x1 = x.get(0);
@@ -981,18 +981,18 @@ fn gradient_descent<F: DifferentiableFunction>(
 ) -> (Vector, Vec<f64>) {
     let mut x = initial.clone();
     let mut history = vec![f.evaluate(&x)];
-    
+
     for _ in 0..max_iterations {
         let gradient = f.gradient(&x);
         if gradient.norm() < tolerance {
             break;
         }
-        
+
         // 更新规则：x = x - η∇f(x)
         x = x.subtract(&gradient.scale(learning_rate));
         history.push(f.evaluate(&x));
     }
-    
+
     (x, history)
 }
 
@@ -1001,7 +1001,7 @@ fn optimize_example() {
     let f = QuadraticFunction;
     let initial = Vector(vec![0.0, 0.0]);
     let (minimum, history) = gradient_descent(&f, &initial, 0.1, 1e-6, 100);
-    
+
     println!("找到的最小值位置: ({}, {})", minimum.get(0), minimum.get(1));
     println!("函数值历史: {:?}", history);
     println!("迭代次数: {}", history.len() - 1);
@@ -1014,7 +1014,7 @@ fn optimize_example() {
 
 梯度下降的深远意义在于它将连续变化（导数）转化为离散步骤，为机器学习等领域提供了基本工具。
 
-### 5.3 信息度量与熵
+### 1.5.3 信息度量与熵
 
 信息论中的熵概念将信息量化，为我们理解信息处理和传输提供了数学框架。
 
@@ -1045,18 +1045,18 @@ fn mutual_information(joint_prob: &[Vec<f64>]) -> f64 {
     // 获取行列数
     let rows = joint_prob.len();
     let cols = joint_prob[0].len();
-    
+
     // 计算边缘分布
     let mut p_x = vec![0.0; rows];
     let mut p_y = vec![0.0; cols];
-    
+
     for i in 0..rows {
         for j in 0..cols {
             p_x[i] += joint_prob[i][j];
             p_y[j] += joint_prob[i][j];
         }
     }
-    
+
     // 计算互信息 I(X;Y) = Σ p(x,y) log(p(x,y)/(p(x)p(y)))
     let mut mi = 0.0;
     for i in 0..rows {
@@ -1066,7 +1066,7 @@ fn mutual_information(joint_prob: &[Vec<f64>]) -> f64 {
             }
         }
     }
-    
+
     mi
 }
 ```
@@ -1077,7 +1077,7 @@ fn mutual_information(joint_prob: &[Vec<f64>]) -> f64 {
 
 香农的信息理论为现代通信系统奠定了理论基础，证明了噪声环境下可靠通信的可能性与极限。
 
-### 5.4 微分隐私与信息控制
+### 1.5.4 微分隐私与信息控制
 
 微分隐私（Differential Privacy）是一个结合了概率论、统计学和计算理论的现代隐私保护框架。它通过向查询结果添加精心校准的噪声，在提供有用信息的同时保护个体隐私。
 
@@ -1098,10 +1098,10 @@ where
 {
     let true_result = query(data);
     let scale = sensitivity / epsilon;
-    
+
     let laplace = Laplace::new(0.0, scale);
     let noise = laplace.sample(&mut rand::thread_rng());
-    
+
     true_result + noise
 }
 
@@ -1120,7 +1120,7 @@ where
     let mut scores: Vec<f64> = candidates.iter()
         .map(|c| (epsilon * utility(data, c)) / (2.0 * sensitivity))
         .collect();
-    
+
     // 将分数转换为概率（通过softmax）
     let max_score = scores.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
     let exp_scores: Vec<f64> = scores.iter()
@@ -1130,7 +1130,7 @@ where
     let probabilities: Vec<f64> = exp_scores.iter()
         .map(|e| e / sum_exp)
         .collect();
-    
+
     // 按概率选择候选项
     let mut cumulative = 0.0;
     let r: f64 = rand::random();
@@ -1140,7 +1140,7 @@ where
             return &candidates[i];
         }
     }
-    
+
     // 防止浮点误差导致未选择
     &candidates[candidates.len() - 1]
 }
@@ -1152,9 +1152,9 @@ where
 
 微分隐私的意义超越了技术本身，它证明了隐私和数据效用之间存在可量化的权衡，为隐私保护提供了理论基础。
 
-## 6. 线性代数与计算模型
+## 1.6 线性代数与计算模型
 
-### 6.1 线性代数作为计算基础的历史
+### 1.6.1 线性代数作为计算基础的历史
 
 线性代数与计算的交织由来已久。早在19世纪，线性方程组的求解就是计算的核心问题之一。高斯消元法可能是最古老的算法之一，至今仍在使用。
 
@@ -1164,7 +1164,7 @@ where
 
 近年来，随着深度学习的兴起，线性代数重新成为计算机科学的焦点。现代GPU的设计很大程度上是为了加速矩阵运算，深度学习框架如TensorFlow和PyTorch的核心也是张量计算，本质上是广义线性代数。
 
-### 6.2 张量计算与神经网络
+### 1.6.2 张量计算与神经网络
 
 现代深度学习在很大程度上是建立在张量运算基础上的，这使得线性代数成为当代计算的核心组成部分。
 
@@ -1187,27 +1187,27 @@ impl Tensor {
             data: vec![0.0; size],
         }
     }
-    
+
     // 创建指定形状的随机张量
     fn random(shape: Vec<usize>) -> Self {
         let size = shape.iter().product();
         let data = (0..size).map(|_| rand::random()).collect();
         Tensor { shape, data }
     }
-    
+
     // 获取元素（平展索引）
     fn get(&self, indices: &[usize]) -> Option<f64> {
         if indices.len() != self.shape.len() {
             return None;
         }
-        
+
         // 检查索引是否在范围内
         for (i, &idx) in indices.iter().enumerate() {
             if idx >= self.shape[i] {
                 return None;
             }
         }
-        
+
         // 计算平展索引
         let mut flat_idx = 0;
         let mut stride = 1;
@@ -1215,23 +1215,23 @@ impl Tensor {
             flat_idx += indices[i] * stride;
             stride *= self.shape[i];
         }
-        
+
         Some(self.data[flat_idx])
     }
-    
+
     // 设置元素
     fn set(&mut self, indices: &[usize], value: f64) -> bool {
         if indices.len() != self.shape.len() {
             return false;
         }
-        
+
         // 检查索引是否在范围内
         for (i, &idx) in indices.iter().enumerate() {
             if idx >= self.shape[i] {
                 return false;
             }
         }
-        
+
         // 计算平展索引
         let mut flat_idx = 0;
         let mut stride = 1;
@@ -1239,23 +1239,23 @@ impl Tensor {
             flat_idx += indices[i] * stride;
             stride *= self.shape[i];
         }
-        
+
         self.data[flat_idx] = value;
         true
     }
-    
+
     // 矩阵乘法（仅2D张量）
     fn matmul(&self, other: &Tensor) -> Option<Tensor> {
         if self.shape.len() != 2 || other.shape.len() != 2 || self.shape[1] != other.shape[0] {
             return None;
         }
-        
+
         let m = self.shape[0];
         let n = other.shape[1];
         let k = self.shape[1];
-        
+
         let mut result = Tensor::zeros(vec![m, n]);
-        
+
         for i in 0..m {
             for j in 0..n {
                 let mut sum = 0.0;
@@ -1265,31 +1265,31 @@ impl Tensor {
                 result.data[i * n + j] = sum;
             }
         }
-        
+
         Some(result)
     }
-    
+
     // 张量加法
     fn add(&self, other: &Tensor) -> Option<Tensor> {
         if self.shape != other.shape {
             return None;
         }
-        
+
         let mut result = self.clone();
         for i in 0..self.data.len() {
             result.data[i] += other.data[i];
         }
-        
+
         Some(result)
     }
-    
+
     // 标量乘法
     fn scale(&self, scalar: f64) -> Tensor {
         let mut result = self.clone();
         for i in 0..self.data.len() {
             result.data[i] *= scalar;
         }
-        
+
         result
     }
 }
@@ -1308,12 +1308,12 @@ impl LinearLayer {
         for i in 0..weights.data.len() {
             weights.data[i] *= scale;
         }
-        
+
         let bias = Tensor::zeros(vec![1, out_features]);
-        
+
         LinearLayer { weights, bias }
     }
-    
+
     fn forward(&
 
 ```rust
@@ -1322,11 +1322,11 @@ impl LinearLayer {
         if input.shape.len() != 2 || input.shape[1] != self.weights.shape[0] {
             return None;
         }
-        
+
         // z = x·W + b
         let z = input.matmul(&self.weights)?;
         let batch_size = input.shape[0];
-        
+
         // 扩展偏置以匹配批次大小
         let mut expanded_bias = Tensor::zeros(vec![batch_size, self.bias.shape[1]]);
         for i in 0..batch_size {
@@ -1334,7 +1334,7 @@ impl LinearLayer {
                 expanded_bias.data[i * self.bias.shape[1] + j] = self.bias.data[j];
             }
         }
-        
+
         z.add(&expanded_bias)
     }
 }
@@ -1356,22 +1356,22 @@ struct NeuralNetwork {
 impl NeuralNetwork {
     fn new(layer_sizes: &[usize]) -> Self {
         assert!(layer_sizes.len() >= 2);
-        
+
         let mut layers = Vec::new();
         for i in 0..layer_sizes.len() - 1 {
             layers.push(LinearLayer::new(layer_sizes[i], layer_sizes[i + 1]));
         }
-        
+
         NeuralNetwork { layers }
     }
-    
+
     fn forward(&self, input: &Tensor) -> Option<Tensor> {
         let mut current = input.clone();
-        
+
         for i in 0..self.layers.len() {
             let is_last = i == self.layers.len() - 1;
             let layer_output = self.layers[i].forward(&current)?;
-            
+
             // 除了最后一层外都应用ReLU激活
             current = if !is_last {
                 relu(&layer_output)
@@ -1379,7 +1379,7 @@ impl NeuralNetwork {
                 layer_output
             };
         }
-        
+
         Some(current)
     }
 }
@@ -1391,7 +1391,7 @@ impl NeuralNetwork {
 
 这一定理说明了神经网络强大的表达能力，解释了它们在各种任务中的成功。
 
-### 6.3 线性变换作为计算抽象
+### 1.6.3 线性变换作为计算抽象
 
 线性变换是一种基本的数学抽象，也可以被视为计算的一种形式。许多算法，如傅里叶变换、主成分分析等，本质上都是线性变换。
 
@@ -1416,7 +1416,7 @@ impl LinearTransform {
         }
         LinearTransform { matrix }
     }
-    
+
     // 旋转变换（二维空间中的旋转）
     fn rotation_2d(angle: f64) -> Self {
         let cos_theta = angle.cos();
@@ -1427,7 +1427,7 @@ impl LinearTransform {
         ];
         LinearTransform { matrix }
     }
-    
+
     // 缩放变换
     fn scaling(factors: &[f64]) -> Self {
         let dim = factors.len();
@@ -1437,27 +1437,27 @@ impl LinearTransform {
         }
         LinearTransform { matrix }
     }
-    
+
     // 应用线性变换到向量
     fn apply(&self, vector: &[f64]) -> Vec<f64> {
         let n = self.matrix.len();
         assert_eq!(vector.len(), n, "向量维度必须匹配变换维度");
-        
+
         let mut result = vec![0.0; n];
         for i in 0..n {
             for j in 0..n {
                 result[i] += self.matrix[i][j] * vector[j];
             }
         }
-        
+
         result
     }
-    
+
     // 变换的复合（矩阵乘法）
     fn compose(&self, other: &LinearTransform) -> LinearTransform {
         let n = self.matrix.len();
         assert_eq!(other.matrix.len(), n, "变换维度必须匹配");
-        
+
         let mut result = vec![vec![0.0; n]; n];
         for i in 0..n {
             for j in 0..n {
@@ -1466,31 +1466,31 @@ impl LinearTransform {
                 }
             }
         }
-        
+
         LinearTransform { matrix: result }
     }
-    
+
     // 转置变换
     fn transpose(&self) -> LinearTransform {
         let n = self.matrix.len();
         let mut result = vec![vec![0.0; n]; n];
-        
+
         for i in 0..n {
             for j in 0..n {
                 result[j][i] = self.matrix[i][j];
             }
         }
-        
+
         LinearTransform { matrix: result }
     }
-    
+
     // 检查是否是正交变换
     fn is_orthogonal(&self) -> bool {
         let transpose = self.transpose();
         let product = self.compose(&transpose);
-        
+
         let identity = LinearTransform::identity(self.matrix.len());
-        
+
         // 检查乘积是否接近恒等变换
         let epsilon = 1e-10;
         for i in 0..self.matrix.len() {
@@ -1500,7 +1500,7 @@ impl LinearTransform {
                 }
             }
         }
-        
+
         true
     }
 }
@@ -1512,7 +1512,7 @@ impl LinearTransform {
 
 SVD分解揭示了线性变换的几何本质：任何线性变换都可以分解为旋转、缩放和另一个旋转的组合。这一深刻洞察为数据分析和维度降低提供了理论基础。
 
-### 6.4 特征空间与数据表示
+### 1.6.4 特征空间与数据表示
 
 特征空间是一个将数据对象表示为向量的抽象空间。在机器学习中，特征工程和降维技术都是在特征空间中操作的。
 
@@ -1532,23 +1532,23 @@ impl PCA {
             n_components,
         }
     }
-    
+
     fn fit(&mut self, data: &Tensor) -> Result<(), &'static str> {
         if data.shape.len() != 2 {
             return Err("输入数据必须是二维张量（矩阵）");
         }
-        
+
         let n_samples = data.shape[0];
         let n_features = data.shape[1];
-        
+
         if n_samples == 0 || n_features == 0 {
             return Err("输入数据不能为空");
         }
-        
+
         if self.n_components > n_features {
             return Err("组件数不能超过特征数");
         }
-        
+
         // 计算均值
         self.mean = vec![0.0; n_features];
         for i in 0..n_samples {
@@ -1559,7 +1559,7 @@ impl PCA {
         for j in 0..n_features {
             self.mean[j] /= n_samples as f64;
         }
-        
+
         // 构建中心化数据矩阵
         let mut centered_data = data.clone();
         for i in 0..n_samples {
@@ -1567,29 +1567,29 @@ impl PCA {
                 centered_data.data[i * n_features + j] -= self.mean[j];
             }
         }
-        
+
         // 计算协方差矩阵
         let cov_matrix = covariance_matrix(&centered_data);
-        
+
         // 计算特征值和特征向量
         // 注意：在实际实现中，这需要使用数值计算库
         // 这里我们假设有一个函数能计算特征值和特征向量
         let (eigenvalues, eigenvectors) = compute_eigen(&cov_matrix);
-        
+
         // 选择前n_components个特征向量
         self.components = eigenvectors.slice(0, self.n_components);
-        
+
         Ok(())
     }
-    
+
     fn transform(&self, data: &Tensor) -> Result<Tensor, &'static str> {
         if data.shape.len() != 2 || data.shape[1] != self.mean.len() {
             return Err("输入数据维度不匹配");
         }
-        
+
         let n_samples = data.shape[0];
         let n_features = data.shape[1];
-        
+
         // 中心化数据
         let mut centered_data = data.clone();
         for i in 0..n_samples {
@@ -1597,7 +1597,7 @@ impl PCA {
                 centered_data.data[i * n_features + j] -= self.mean[j];
             }
         }
-        
+
         // 将数据投影到主成分空间
         centered_data.matmul(&self.components).ok_or("矩阵乘法失败")
     }
@@ -1610,7 +1610,7 @@ fn covariance_matrix(data: &Tensor) -> Tensor {
     let n_samples = data.shape[0] as f64;
     let transposed = transpose(data);
     let product = transposed.matmul(data).unwrap();
-    
+
     // 除以样本数得到协方差
     product.scale(1.0 / n_samples)
 }
@@ -1620,17 +1620,17 @@ fn transpose(tensor: &Tensor) -> Tensor {
     if tensor.shape.len() != 2 {
         panic!("只能转置二维张量");
     }
-    
+
     let rows = tensor.shape[0];
     let cols = tensor.shape[1];
     let mut result = Tensor::zeros(vec![cols, rows]);
-    
+
     for i in 0..rows {
         for j in 0..cols {
             result.data[j * rows + i] = tensor.data[i * cols + j];
         }
     }
-    
+
     result
 }
 
@@ -1651,17 +1651,17 @@ impl Tensor {
         if self.shape.len() != 2 || end > self.shape[0] {
             panic!("无效的切片参数");
         }
-        
+
         let rows = end - start;
         let cols = self.shape[1];
         let mut result = Tensor::zeros(vec![rows, cols]);
-        
+
         for i in 0..rows {
             for j in 0..cols {
                 result.data[i * cols + j] = self.data[(i + start) * cols + j];
             }
         }
-        
+
         result
     }
 }
@@ -1673,9 +1673,9 @@ impl Tensor {
 
 这一定理为PCA等降维技术提供了理论保证，表明它们确实能最优地保留数据的变异性。
 
-## 7. 认知科学视角
+## 1.7 认知科学视角
 
-### 7.1 计算认知与数学思维
+### 1.7.1 计算认知与数学思维
 
 人类认知系统如何处理计算和数学问题，一直是认知科学的核心研究领域。有证据表明，人类大脑中存在专门处理数字和空间关系的神经网络。认知科学研究揭示，数学思维涉及多个认知系统的协同工作，包括：
 
@@ -1722,37 +1722,37 @@ impl CognitiveProcessor {
         if concept_complexity > self.working_memory.slots as f64 {
             return 0.1;  // 理解很低
         }
-        
+
         // 检查是否超出抽象能力
         if abstraction_level > self.abstraction_system.abstraction_levels {
             return 0.3;  // 理解受限
         }
-        
+
         // 计算基础理解水平
         let base_understanding = 0.7;
-        
+
         // 应用记忆衰减
         let memory_factor = (1.0 - self.working_memory.decay_rate).powf(concept_complexity);
-        
+
         // 应用抽象转移效率
         let abstraction_factor = (self.abstraction_system.transfer_efficiency).powf(abstraction_level as f64);
-        
+
         // 综合理解水平
         base_understanding * memory_factor * abstraction_factor
     }
-    
+
     // 模拟数学概念学习过程
     fn learn_concept(&mut self, exposure_hours: f64, concept_difficulty: f64) -> f64 {
         // 学习曲线模型：y = 1 - e^(-k*t)
         let learning_rate = 0.1 / concept_difficulty;
         let mastery = 1.0 - (-learning_rate * exposure_hours).exp();
-        
+
         // 学习提高抽象能力
         if mastery > 0.7 && self.abstraction_system.abstraction_levels < 10 {
             self.abstraction_system.abstraction_levels += 1;
             self.abstraction_system.transfer_efficiency += 0.01;
         }
-        
+
         mastery
     }
 }
@@ -1764,7 +1764,7 @@ impl CognitiveProcessor {
 
 这一认知科学理论对数学教育和形式系统设计具有重要意义，说明了形式系统需要与人类认知能力相适应。
 
-### 7.2 形式系统的认知基础
+### 1.7.2 形式系统的认知基础
 
 形式系统不仅是抽象的数学结构，也是人类认知能力的表现。从认知科学角度看，人类创造和使用形式系统的能力源于几个基本认知能力：
 
@@ -1794,36 +1794,36 @@ impl FormalSystem {
     fn cognitive_complexity(&self) -> f64 {
         // 符号数量因素
         let symbol_factor = (self.symbols.len() as f64).log2();
-        
+
         // 规则复杂度因素
         let rule_complexity: f64 = self.rules.iter()
             .map(|r| r.cognitive_load)
             .sum();
-        
+
         // 系统规模因素
         let size_factor = (self.symbols.len() as f64 * self.rules.len() as f64).log2();
-        
+
         // 综合复杂度
         symbol_factor + rule_complexity + size_factor
     }
-    
+
     // 判断一个定理是否可在给定认知容量下被人类证明
     fn is_humanly_provable(&self, theorem: &str, cognitive_capacity: f64) -> bool {
         // 证明的最小认知步骤数（简化模型）
         let proof_steps = self.estimate_proof_steps(theorem);
-        
+
         // 每步证明的平均认知负荷
         let avg_step_load = self.rules.iter()
             .map(|r| r.cognitive_load)
             .sum::<f64>() / self.rules.len() as f64;
-        
+
         // 总认知负荷
         let total_cognitive_load = proof_steps as f64 * avg_step_load;
-        
+
         // 检查是否在人类能力范围内
         total_cognitive_load <= cognitive_capacity
     }
-    
+
     // 估计证明所需的最小步骤数（概念性实现）
     fn estimate_proof_steps(&self, _theorem: &str) -> usize {
         // 实际实现需要搜索证明空间
@@ -1839,7 +1839,7 @@ impl FormalSystem {
 
 这一原则解释了为什么某些形式系统（如自然演绎）比其他系统（如希尔伯特公理系统）更常用于教学和实际推理。
 
-### 7.3 数学抽象与人类认知的演化
+### 1.7.3 数学抽象与人类认知的演化
 
 数学抽象能力是人类认知的一个特殊发展。从进化角度看，这种能力可能源于几个适应性特征：
 
@@ -1871,7 +1871,7 @@ struct Individual {
 impl CognitiveEvolution {
     fn new(pop_size: usize, selection_pressure: f64, mutation_rate: f64) -> Self {
         let mut population = Vec::with_capacity(pop_size);
-        
+
         // 初始化随机个体
         for _ in 0..pop_size {
             population.push(Individual {
@@ -1883,7 +1883,7 @@ impl CognitiveEvolution {
                 fitness: 0.0,
             });
         }
-        
+
         CognitiveEvolution {
             generations: 0,
             population,
@@ -1891,7 +1891,7 @@ impl CognitiveEvolution {
             mutation_rate,
         }
     }
-    
+
     // 评估个体适应度
     fn evaluate_fitness(&mut self, environment_complexity: f64) {
         for individual in &mut self.population {
@@ -1900,38 +1900,38 @@ impl CognitiveEvolution {
                               individual.language_capacity * 0.3 +
                               individual.causal_reasoning * 0.2 +
                               individual.tool_use * 0.2;
-            
+
             // 抽象能力的贡献取决于环境复杂度
             let abstraction_benefit = if environment_complexity > 0.5 {
                 individual.abstraction_ability * 2.0
             } else {
                 individual.abstraction_ability * 0.5
             };
-            
+
             individual.fitness = base_fitness + abstraction_benefit;
         }
     }
-    
+
     // 模拟一代演化
     fn evolve(&mut self, environment_complexity: f64) {
         // 评估适应度
         self.evaluate_fitness(environment_complexity);
-        
+
         // 按适应度排序
         self.population.sort_by(|a, b| b.fitness.partial_cmp(&a.fitness).unwrap());
-        
+
         // 选择并繁殖
         let survive_count = (self.population.len() as f64 * self.selection_pressure) as usize;
         let survivors: Vec<Individual> = self.population[0..survive_count].to_vec();
-        
+
         // 创建新一代
         let mut new_population = Vec::with_capacity(self.population.len());
-        
+
         while new_population.len() < self.population.len() {
             // 随机选择两个幸存者
             let parent1 = &survivors[rand::random::<usize>() % survivors.len()];
             let parent2 = &survivors[rand::random::<usize>() % survivors.len()];
-            
+
             // 创建后代（简化的交叉和变异）
             let mut offspring = Individual {
                 abstraction_ability: (parent1.abstraction_ability + parent2.abstraction_ability) / 2.0,
@@ -1941,38 +1941,38 @@ impl CognitiveEvolution {
                 tool_use: (parent1.tool_use + parent2.tool_use) / 2.0,
                 fitness: 0.0,
             };
-            
+
             // 随机变异
             if rand::random::<f64>() < self.mutation_rate {
                 offspring.abstraction_ability += (rand::random::<f64>() - 0.5) * 0.1;
                 offspring.abstraction_ability = offspring.abstraction_ability.clamp(0.0, 1.0);
             }
-            
+
             // 认知能力间的相互影响（共同演化）
             offspring.abstraction_ability += 0.01 * offspring.language_capacity.powf(2.0);
             offspring.abstraction_ability = offspring.abstraction_ability.min(1.0);
-            
+
             new_population.push(offspring);
         }
-        
+
         self.population = new_population;
         self.generations += 1;
     }
-    
+
     // 获取种群统计
     fn get_stats(&self) -> (f64, f64, f64) {
         let avg_abstraction: f64 = self.population.iter()
             .map(|i| i.abstraction_ability)
             .sum::<f64>() / self.population.len() as f64;
-            
+
         let max_abstraction: f64 = self.population.iter()
             .map(|i| i.abstraction_ability)
             .fold(0.0, f64::max);
-            
+
         let avg_fitness: f64 = self.population.iter()
             .map(|i| i.fitness)
             .sum::<f64>() / self.population.len() as f64;
-            
+
         (avg_abstraction, max_abstraction, avg_fitness)
     }
 }
@@ -1984,9 +1984,9 @@ impl CognitiveEvolution {
 
 这一观点强调了数学思维不仅是纯粹的理性产物，还深受人类进化历史和社会文化发展的影响。
 
-## 8. 统一视角：计算-形式-数学三位一体
+## 1.8 统一视角：计算-形式-数学三位一体
 
-### 8.1 哲学基础：本体论与认识论
+### 1.8.1 哲学基础：本体论与认识论
 
 计算、形式和数学的统一需要深入的哲学基础，特别是本体论（关于存在的理论）和认识论（关于知识的理论）层面的探讨。
 
@@ -2042,19 +2042,19 @@ impl PhilosophicalFramework {
             _ => 0.5,
         }
     }
-    
+
     // 评估对计算本质的不同看法
     fn evaluate_computation_nature(&self) -> &str {
         match &self.ontology {
-            OntologicalPosition::Platonism => 
+            OntologicalPosition::Platonism =>
                 "计算是对数学实在的操作",
-            OntologicalPosition::Formalism => 
+            OntologicalPosition::Formalism =>
                 "计算是形式系统中的符号操作",
-            OntologicalPosition::Intuitionism => 
+            OntologicalPosition::Intuitionism =>
                 "计算是心智建构的过程",
-            OntologicalPosition::Empiricism => 
+            OntologicalPosition::Empiricism =>
                 "计算是物理过程的抽象",
-            OntologicalPosition::Structuralism => 
+            OntologicalPosition::Structuralism =>
                 "计算是结构转换过程",
         }
     }
@@ -2067,7 +2067,7 @@ impl PhilosophicalFramework {
 
 这一定理说明，理论统一不仅需要技术层面的整合，还需要哲学基础的协调。
 
-### 8.2 同构与等价关系
+### 1.8.2 同构与等价关系
 
 不同领域中的概念常常展现出惊人的同构关系，这些同构揭示了深层的结构相似性。
 
@@ -2094,11 +2094,11 @@ struct MultiplicativeGroup {
 
 impl AlgebraicStructure for AdditiveGroup {
     type Element = i32;
-    
+
     fn operation(&self, a: &i32, b: &i32) -> i32 {
         a + b
     }
-    
+
     fn identity(&self) -> i32 {
         0
     }
@@ -2106,11 +2106,11 @@ impl AlgebraicStructure for AdditiveGroup {
 
 impl AlgebraicStructure for MultiplicativeGroup {
     type Element = f64;
-    
+
     fn operation(&self, a: &f64, b: &f64) -> f64 {
         a * b
     }
-    
+
     fn identity(&self) -> f64 {
         1.0
     }
@@ -2133,11 +2133,11 @@ impl<A: AlgebraicStructure, B: AlgebraicStructure> Isomorphism<A, B> {
         // 检查恒等元映射
         let domain_identity = self.domain.identity();
         let codomain_identity = self.codomain.identity();
-        
+
         if (self.forward)(&domain_identity) != codomain_identity {
             return false;
         }
-        
+
         // 检查操作保持性
         for a in elements {
             for b in elements {
@@ -2145,36 +2145,36 @@ impl<A: AlgebraicStructure, B: AlgebraicStructure> Isomorphism<A, B> {
                 let fa = (self.forward)(a);
                 let fb = (self.forward)(b);
                 let fa_op_fb = self.codomain.operation(&fa, &fb);
-                
+
                 if (self.forward)(&a_op_b) != fa_op_fb {
                     return false;
                 }
             }
         }
-        
+
         // 检查双射性（简化版）
         let mapped: HashSet<_> = elements.iter()
             .map(|e| (self.forward)(e))
             .collect();
-            
+
         if mapped.len() != elements.len() {
             return false;
         }
-        
+
         true
     }
-    
+
     // 通过同构转移知识
     fn transfer_theorem<T>(&self, theorem: &str, proof: impl Fn(&A) -> T) -> impl Fn(&B) -> T {
         println!("将定理「{}」从原结构转移到目标结构", theorem);
-        
+
         // 返回在目标结构上证明定理的新函数
         move |target_structure| {
             // 将目标结构的问题映射回原结构
             // 在原结构中应用已知证明
             // 将结果映射回目标结构
             // （概念性实现）
-            
+
             proof(&self.domain)
         }
     }
@@ -2184,11 +2184,11 @@ impl<A: AlgebraicStructure, B: AlgebraicStructure> Isomorphism<A, B> {
 fn boolean_set_isomorphism() -> Isomorphism<BooleanAlgebra, SetAlgebra> {
     // 创建布尔代数
     let boolean = BooleanAlgebra {};
-    
+
     // 创建集合代数
     let universe: HashSet<i32> = (1..=10).collect();
     let set_algebra = SetAlgebra { universe };
-    
+
     // 定义同构映射
     let forward = Box::new(move |b: &bool| -> HashSet<i32> {
         if *b {
@@ -2197,11 +2197,11 @@ fn boolean_set_isomorphism() -> Isomorphism<BooleanAlgebra, SetAlgebra> {
             HashSet::new()
         }
     });
-    
+
     let backward = Box::new(move |s: &HashSet<i32>| -> bool {
         !s.is_empty()
     });
-    
+
     Isomorphism {
         forward,
         backward,
@@ -2215,11 +2215,11 @@ struct BooleanAlgebra {}
 
 impl AlgebraicStructure for BooleanAlgebra {
     type Element = bool;
-    
+
     fn operation(&self, a: &bool, b: &bool) -> bool {
         *a && *b  // 合取操作
     }
-    
+
     fn identity(&self) -> bool {
         true  // 合取的单位元
     }
@@ -2232,11 +2232,11 @@ struct SetAlgebra {
 
 impl AlgebraicStructure for SetAlgebra {
     type Element = HashSet<i32>;
-    
+
     fn operation(&self, a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {
         a.intersection(b).cloned().collect()  // 交集操作
     }
-    
+
     fn identity(&self) -> HashSet<i32> {
         self.universe.clone()  // 交集的单位元是全集
     }
@@ -2249,7 +2249,7 @@ impl AlgebraicStructure for SetAlgebra {
 
 这一原理是计算普遍性的基础，也是理解不同计算模型如何表达相同计算概念的关键。
 
-### 8.3 计算即证明：柯里-霍华德同构
+### 1.8.3 计算即证明：柯里-霍华德同构
 
 柯里-霍华德同构是连接计算和形式逻辑的桥梁，它表明程序和数学证明在本质上是相同的：程序类型对应逻辑命题，程序对应命题证明。
 
@@ -2337,7 +2337,7 @@ fn exist_intro<T, P: Fn(T) -> bool>(witness: T, property: P) -> Exists<T, P> {
 
 这一定理是程序合成和形式验证的理论基础，允许我们从证明中自动生成正确的程序。
 
-### 8.4 量子计算：物理与信息的统一
+### 1.8.4 量子计算：物理与信息的统一
 
 量子计算代表了物理、数学和计算的深度统一。它使用量子力学原理进行计算，展示了物理规律如何转化为计算模型。
 
@@ -2363,10 +2363,10 @@ impl Qubit {
         if (norm_squared - 1.0).abs() > 1e-10 {
             return Err("量子态必须是归一化的");
         }
-        
+
         Ok(Qubit { alpha, beta })
     }
-    
+
     // 创建|0⟩态
     fn zero() -> Self {
         Qubit {
@@ -2374,7 +2374,7 @@ impl Qubit {
             beta: Complex::new(0.0, 0.0),
         }
     }
-    
+
     // 创建|1⟩态
     fn one() -> Self {
         Qubit {
@@ -2382,7 +2382,7 @@ impl Qubit {
             beta: Complex::new(1.0, 0.0),
         }
     }
-    
+
     // 创建|+⟩态 (|0⟩ + |1⟩)/√2
     fn plus() -> Self {
         let factor = 1.0 / 2.0_f64.sqrt();
@@ -2391,7 +2391,7 @@ impl Qubit {
             beta: Complex::new(factor, 0.0),
         }
     }
-    
+
     // 创建|-⟩态 (|0⟩ - |1⟩)/√2
     fn minus() -> Self {
         let factor = 1.0 / 2.0_f64.sqrt();
@@ -2400,12 +2400,12 @@ impl Qubit {
             beta: Complex::new(-factor, 0.0),
         }
     }
-    
+
     // 测量：将量子态坍缩为经典比特
     fn measure(&self) -> (bool, f64) {
         let prob_0 = self.alpha.norm_sqr();
         let prob_1 = self.beta.norm_sqr();
-        
+
         // 根据概率分布随机确定测量结果
         let random_value: f64 = rand::random();
         if random_value < prob_0 {
@@ -2425,13 +2425,13 @@ impl QuantumGates {
         let factor = 1.0 / 2.0_f64.sqrt();
         let new_alpha = factor * (q.alpha + q.beta);
         let new_beta = factor * (q.alpha - q.beta);
-        
+
         Qubit {
             alpha: new_alpha,
             beta: new_beta,
         }
     }
-    
+
     // Pauli-X门（量子NOT）
     fn pauli_x(q: &Qubit) -> Qubit {
         Qubit {
@@ -2439,7 +2439,7 @@ impl QuantumGates {
             beta: q.alpha,
         }
     }
-    
+
     // Pauli-Z门
     fn pauli_z(q: &Qubit) -> Qubit {
         Qubit {
@@ -2447,7 +2447,7 @@ impl QuantumGates {
             beta: q.beta * Complex::new(-1.0, 0.0),
         }
     }
-    
+
     // 相位门
     fn phase(q: &Qubit, theta: f64) -> Qubit {
         Qubit {
@@ -2475,15 +2475,15 @@ impl TwoQubitSystem {
         gamma: Complex<f64>,
         delta: Complex<f64>
     ) -> Result<Self, &'static str> {
-        let norm_squared = alpha.norm_sqr() + beta.norm_sqr() + 
+        let norm_squared = alpha.norm_sqr() + beta.norm_sqr() +
                            gamma.norm_sqr() + delta.norm_sqr();
         if (norm_squared - 1.0).abs() > 1e-10 {
             return Err("量子态必须是归一化的");
         }
-        
+
         Ok(TwoQubitSystem { alpha, beta, gamma, delta })
     }
-    
+
     // 创建两个独立量子比特的张量积
     fn tensor_product(q1: &Qubit, q2: &Qubit) -> Self {
         TwoQubitSystem {
@@ -2493,7 +2493,7 @@ impl TwoQubitSystem {
             delta: q1.beta * q2.beta,
         }
     }
-    
+
     // 创建Bell态 (|00⟩ + |11⟩)/√2（最大纠缠态）
     fn bell_state() -> Self {
         let factor = 1.0 / 2.0_f64.sqrt();
@@ -2504,7 +2504,7 @@ impl TwoQubitSystem {
             delta: Complex::new(factor, 0.0),
         }
     }
-    
+
     // 应用CNOT门
     fn cnot(&self) -> Self {
         TwoQubitSystem {
@@ -2514,12 +2514,12 @@ impl TwoQubitSystem {
             delta: self.gamma,
         }
     }
-    
+
     // 测量第一个量子比特
     fn measure_first(&self) -> (bool, TwoQubitSystem, f64) {
         // 计算测量为0的概率
         let prob_0 = self.alpha.norm_sqr() + self.beta.norm_sqr();
-        
+
         if prob_0 < 1e-10 {
             // 几乎肯定测量为1
             let norm_factor = 1.0 / (self.gamma.norm_sqr() + self.delta.norm_sqr()).sqrt();
@@ -2539,10 +2539,10 @@ impl TwoQubitSystem {
                 delta: Complex::new(0.0, 0.0),
             }, prob_0);
         }
-        
+
         // 根据概率随机确定测量结果
         let random_value: f64 = rand::random();
-        
+
         if random_value < prob_0 {
             // 测量结果为0
             let norm_factor = 1.0 / prob_0.sqrt();
@@ -2572,9 +2572,9 @@ impl TwoQubitSystem {
 
 这一特性是Shor算法和Grover算法等量子算法优势的基础，展示了量子物理原理如何转化为计算能力。
 
-## 9. 实际应用与工程实践
+## 1.9 实际应用与工程实践
 
-### 9.1 形式方法在软件验证中的应用
+### 1.9.1 形式方法在软件验证中的应用
 
 形式方法将数学严谨性应用于软件开发，特别是在安全关键系统中。通过形式规约、验证和证明，可以确保软件满足其安全性和正确性要求。
 
@@ -2599,23 +2599,23 @@ impl<S: Clone, A> StateMachine<S, A> {
     // 执行一系列动作
     fn execute(&self, actions: &[A]) -> Result<S, &'static str> {
         let mut current = self.initial_state.clone();
-        
+
         for action in actions {
             if !(self.is_valid_action)(&current, action) {
                 return Err("无效动作");
             }
             current = (self.transition)(&current, action);
         }
-        
+
         Ok(current)
     }
-    
+
     // 验证时序属性（概念性实现）
     fn verify_property<P>(&self, property: Temporal<P>, predicate: Box<dyn Fn(&S) -> bool>) -> bool {
         // 在真实实现中，这将使用模型检查或定理证明技术
         // 对于有限状态机，可以使用显式状态空间探索
         // 对于无限状态机，可能需要抽象解释或归纳证明
-        
+
         // 这里返回占位结果
         true
     }
@@ -2625,16 +2625,16 @@ impl<S: Clone, A> StateMachine<S, A> {
 trait ContractProgramming {
     // 前置条件
     fn precondition(&self) -> bool;
-    
+
     // 后置条件
     fn postcondition(&self, result: &Self::Output) -> bool;
-    
+
     // 不变量
     fn invariant(&self) -> bool;
-    
+
     // 输出类型
     type Output;
-    
+
     // 带契约的执行
     fn execute_with_contract(&self) -> Result<Self::Output, &'static str>;
 }
@@ -2646,53 +2646,53 @@ struct SortingContract<T: Ord + Clone> {
 
 impl<T: Ord + Clone> ContractProgramming for SortingContract<T> {
     type Output = Vec<T>;
-    
+
     fn precondition(&self) -> bool {
         // 前置条件：输入不为空
         !self.input.is_empty()
     }
-    
+
     fn postcondition(&self, result: &Self::Output) -> bool {
         // 后置条件1：输出长度与输入相同
         if self.input.len() != result.len() {
             return false;
         }
-        
+
         // 后置条件2：输出已排序
         for i in 1..result.len() {
             if result[i-1] > result[i] {
                 return false;
             }
         }
-        
+
         // 后置条件3：输出是输入的排列
         // （简化实现，实际需要检查元素出现次数）
         let mut input_sorted = self.input.clone();
         input_sorted.sort();
         let mut result_sorted = result.clone();
         result_sorted.sort();
-        
+
         input_sorted == result_sorted
     }
-    
+
     fn invariant(&self) -> bool {
         // 对于排序，不需要特殊不变量
         true
     }
-    
+
     fn execute_with_contract(&self) -> Result<Self::Output, &'static str> {
         if !self.precondition() {
             return Err("前置条件失败");
         }
-        
+
         // 执行排序算法
         let mut result = self.input.clone();
         result.sort();
-        
+
         if !self.postcondition(&result) {
             return Err("后置条件失败");
         }
-        
+
         Ok(result)
     }
 }
@@ -2704,7 +2704,7 @@ impl<T: Ord + Clone> ContractProgramming for SortingContract<T> {
 
 这一洞见说明了在实际应用中，应根据问题特性选择适当的形式方法，有时需要多种方法结合使用。
 
-### 9.2 机器学习系统的数学基础
+### 1.9.2 机器学习系统的数学基础
 
 机器学习系统建立在深厚的数学基础上，将统计学、优化理论和计算模型结合，创造出能从数据中学习的系统。
 
@@ -2713,10 +2713,10 @@ impl<T: Ord + Clone> ContractProgramming for SortingContract<T> {
 trait Model<X, Y> {
     // 训练模型
     fn train(&mut self, training_data: &[(X, Y)]) -> Result<(), &'static str>;
-    
+
     // 预测新数据
     fn predict(&self, input: &X) -> Y;
-    
+
     // 评估模型性能
     fn evaluate(&self, test_data: &[(X, Y)]) -> f64;
 }
@@ -2738,7 +2738,7 @@ impl LinearRegression {
             iterations,
         }
     }
-    
+
     // 计算预测值
     fn predict_single(&self, x: &[f64]) -> f64 {
         let mut sum = self.bias;
@@ -2747,7 +2747,7 @@ impl LinearRegression {
         }
         sum
     }
-    
+
     // 计算损失函数（均方误差）
     fn mean_squared_error(&self, data: &[(Vec<f64>, f64)]) -> f64 {
         let mut total_error = 0.0;
@@ -2765,49 +2765,49 @@ impl Model<Vec<f64>, f64> for LinearRegression {
         if training_data.is_empty() {
             return Err("训练数据为空");
         }
-        
+
         let n_samples = training_data.len();
         let n_features = self.weights.len();
-        
+
         for _ in 0..self.iterations {
             // 梯度初始化
             let mut weight_gradients = vec![0.0; n_features];
             let mut bias_gradient = 0.0;
-            
+
             // 计算梯度
             for (x, y) in training_data {
                 let prediction = self.predict_single(x);
                 let error = prediction - y;
-                
+
                 // 更新偏置梯度
                 bias_gradient += error;
-                
+
                 // 更新权重梯度
                 for i in 0..n_features {
                     weight_gradients[i] += error * x[i];
                 }
             }
-            
+
             // 正规化梯度
             bias_gradient /= n_samples as f64;
             for i in 0..n_features {
                 weight_gradients[i] /= n_samples as f64;
             }
-            
+
             // 更新参数
             self.bias -= self.learning_rate * bias_gradient;
             for i in 0..n_features {
                 self.weights[i] -= self.learning_rate * weight_gradients[i];
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn predict(&self, input: &Vec<f64>) -> f64 {
         self.predict_single(input)
     }
-    
+
     fn evaluate(&self, test_data: &[(Vec<f64>, f64)]) -> f64 {
         self.mean_squared_error(test_data)
     }
@@ -2830,42 +2830,42 @@ impl BayesianNetwork {
             cpt: HashMap::new(),
         }
     }
-    
+
     // 添加节点
     fn add_node(&mut self, name: &str) -> usize {
         let id = self.nodes.len();
         self.nodes.push(name.to_string());
         id
     }
-    
+
     // 添加边
     fn add_edge(&mut self, from: usize, to: usize) -> Result<(), &'static str> {
         if from >= self.nodes.len() || to >= self.nodes.len() {
             return Err("节点索引无效");
         }
-        
+
         // 检查是否会形成环（实际实现需要图遍历）
         // ...
-        
+
         self.edges.push((from, to));
         Ok(())
     }
-    
+
     // 设置条件概率表
     fn set_cpt(&mut self, node: usize, probabilities: Vec<f64>) -> Result<(), &'static str> {
         if node >= self.nodes.len() {
             return Err("节点索引无效");
         }
-        
+
         // 验证概率有效性
         if probabilities.iter().any(|&p| p < 0.0 || p > 1.0) {
             return Err("概率值必须在[0,1]范围内");
         }
-        
+
         self.cpt.insert(node, probabilities);
         Ok(())
     }
-    
+
     // 贝叶斯推理（概念性实现）
     fn infer(&self, evidence: &HashMap<usize, bool>, query: usize) -> f64 {
         // 实际实现需要变量消除或MCMC等算法
@@ -2881,7 +2881,7 @@ impl BayesianNetwork {
 
 这一定理表明机器学习算法的性能依赖于问题领域的先验假设，强调了为特定问题选择适当模型的重要性。
 
-### 9.3 分布式系统的形式化模型
+### 1.9.3 分布式系统的形式化模型
 
 分布式系统由于其并发性和通信复杂性，特别适合用形式化方法建模和验证。这些方法可以帮助发现和解决同步、一致性和容错等关键问题。
 
@@ -2942,7 +2942,7 @@ impl DistributedSystem {
                 events: Vec::new(),
             });
         }
-        
+
         DistributedSystem {
             processes,
             network: Network {
@@ -2953,19 +2953,19 @@ impl DistributedSystem {
             clock: 0,
         }
     }
-    
+
     // 发送消息
     fn send_message(&mut self, from: usize, to: usize, content: &str) -> Result<(), &'static str> {
         if from >= self.processes.len() || to >= self.processes.len() {
             return Err("进程索引无效");
         }
-        
+
         // 检查发送方状态
         match self.processes[from].state {
             ProcessState::Running => {},
             _ => return Err("发送方不在运行状态"),
         }
-        
+
         // 创建消息
         let message = Message {
             from,
@@ -2973,32 +2973,32 @@ impl DistributedSystem {
             content: content.to_string(),
             logical_time: self.clock,
         };
-        
+
         // 记录发送事件
         self.processes[from].events.push(Event {
             timestamp: self.clock,
             event_type: EventType::Send(message.clone()),
         });
-        
+
         // 将消息加入网络队列
         self.network.message_queue.push(message);
-        
+
         // 更新时钟
         self.clock += 1;
-        
+
         Ok(())
     }
-    
+
     // 模拟网络传递
     fn simulate_network(&mut self) {
         let mut remaining_messages = Vec::new();
-        
+
         for message in self.network.message_queue.drain(..) {
             // 模拟消息丢失
             if rand::random::<f64>() > self.network.delivery_probability {
                 continue;  // 消息丢失
             }
-            
+
             // 模拟消息延迟
             let delay = rand::random::<u64>() % self.network.max_delay;
             if delay == 0 {
@@ -3009,14 +3009,14 @@ impl DistributedSystem {
                 remaining_messages.push(message);
             }
         }
-        
+
         self.network.message_queue = remaining_messages;
     }
-    
+
     // 投递消息
     fn deliver_message(&mut self, message: Message) {
         let to = message.to;
-        
+
         // 检查接收方状态
         match self.processes[to].state {
             ProcessState::Running | ProcessState::Waiting => {
@@ -3025,7 +3025,7 @@ impl DistributedSystem {
                     timestamp: self.clock,
                     event_type: EventType::Receive(message),
                 });
-                
+
                 // 更新Lamport时钟
                 self.clock = self.clock.max(message.logical_time + 1);
             },
@@ -3034,7 +3034,7 @@ impl DistributedSystem {
             }
         }
     }
-    
+
     // 验证系统属性（概念性实现）
     fn verify_property(&self, property: &str) -> bool {
         match property {
@@ -3048,14 +3048,14 @@ impl DistributedSystem {
             _ => false,
         }
     }
-    
+
     // 验证系统是否无死锁
     fn verify_no_deadlock(&self) -> bool {
         // 检查是否存在进程等待循环
         // 在实际实现中，这需要构建资源分配图并检测环
         !self.processes.iter().all(|p| matches!(p.state, ProcessState::Waiting))
     }
-    
+
     // 验证消息顺序
     fn verify_message_ordering(&self) -> bool {
         // 检查消息的因果顺序是否保持
@@ -3076,14 +3076,14 @@ impl DistributedSystem {
         }
         true
     }
-    
+
     // 验证最终一致性
     fn verify_eventual_consistency(&self) -> bool {
         // 在实际实现中，这需要检查系统在无新更新时是否收敛到相同状态
         // 这里提供一个概念性实现
         true
     }
-    
+
     // 验证因果关系
     fn verify_causality(&self) -> bool {
         // 使用向量时钟验证事件的因果关系
@@ -3117,7 +3117,7 @@ impl PaxosNode {
             promised_proposal: None,
         }
     }
-    
+
     // 处理准备请求（第一阶段）
     fn handle_prepare(&mut self, proposal_number: u64) -> Option<(u64, Option<(u64, String)>)> {
         if matches!(self.state, PaxosState::Acceptor) {
@@ -3132,7 +3132,7 @@ impl PaxosNode {
             None
         }
     }
-    
+
     // 处理接受请求（第二阶段）
     fn handle_accept(&mut self, proposal_number: u64, value: &str) -> bool {
         if matches!(self.state, PaxosState::Acceptor) {
@@ -3146,12 +3146,12 @@ impl PaxosNode {
             false
         }
     }
-    
+
     // 提议者提出提案
     fn propose(&self, proposal_number: u64, value: &str) -> (u64, String) {
         (proposal_number, value.to_string())
     }
-    
+
     // 学习者学习已接受的值
     fn learn(&mut self, proposal_number: u64, value: &str) {
         if matches!(self.state, PaxosState::Learner) {
@@ -3168,9 +3168,9 @@ impl PaxosNode {
 
 这一定理揭示了分布式系统的基本限制，解释了为什么实际系统需要额外假设（如部分同步或故障检测器）来实现共识。
 
-## 10. 结论与展望
+## 1.10 结论与展望
 
-### 10.1 理论统一的挑战与前景
+### 1.10.1 理论统一的挑战与前景
 
 计算、形式和数学三大领域的统一既面临挑战，也蕴含着巨大前景。
 
@@ -3215,49 +3215,49 @@ impl UnifiedTheory {
     // 评估理论统一的完整性
     fn evaluate_completeness(&self) -> f64 {
         // 计算域间的映射覆盖率
-        let total_pairs = 
+        let total_pairs =
             self.computational_models.len() * self.formal_systems.len() +
             self.formal_systems.len() * self.mathematical_structures.len() +
             self.mathematical_structures.len() * self.computational_models.len();
-            
+
         let covered_pairs = self.bridges.len();
-        
+
         (covered_pairs as f64) / (total_pairs as f64)
     }
-    
+
     // 评估理论的实用价值
     fn evaluate_utility(&self) -> f64 {
         // 在实际应用中这需要更复杂的评估方法
         // 例如考虑映射的可计算性、表达能力等
-        
+
         // 简化评估：健全桥接的比例
         let sound_bridges = self.bridges.iter()
             .filter(|b| b.is_sound)
             .count();
-            
+
         (sound_bridges as f64) / (self.bridges.len() as f64)
     }
-    
+
     // 识别理论中的缺口
     fn identify_gaps(&self) -> Vec<String> {
         let mut gaps = Vec::new();
-        
+
         // 检查计算到形式的映射
         for comp_model in &self.computational_models {
             for formal_sys in &self.formal_systems {
-                if !self.bridges.iter().any(|b| 
-                    matches!(b.from_domain, Domain::Computation) && 
+                if !self.bridges.iter().any(|b|
+                    matches!(b.from_domain, Domain::Computation) &&
                     matches!(b.to_domain, Domain::Formal) &&
-                    b.mapping.contains(comp_model) && 
+                    b.mapping.contains(comp_model) &&
                     b.mapping.contains(formal_sys)) {
                     gaps.push(format!("缺少从{}到{}的映射", comp_model, formal_sys));
                 }
             }
         }
-        
+
         // 类似地检查其他方向的映射
         // ...
-        
+
         gaps
     }
 }
@@ -3265,7 +3265,7 @@ impl UnifiedTheory {
 
 这段代码模拟了理论统一框架的评估方法，包括完整性、实用性评估和缺口识别，为未来研究方向提供指导。
 
-### 10.2 跨学科研究方法论
+### 1.10.2 跨学科研究方法论
 
 要实现三个领域的深度融合，需要发展适合跨学科研究的方法论。
 
@@ -3306,17 +3306,17 @@ impl CrossDisciplinaryMethodology {
         let comp_methods = self.computational_perspective.methods.len();
         let formal_methods = self.formal_perspective.methods.len();
         let math_methods = self.mathematical_perspective.methods.len();
-        
+
         // 简单的评分：每个视角应至少有2种方法
         let score = (comp_methods.min(2) + formal_methods.min(2) + math_methods.min(2)) as f64 / 6.0;
-        
+
         score
     }
-    
+
     // 设计研究策略
     fn design_research_strategy(&self) -> Vec<String> {
         let mut strategy = Vec::new();
-        
+
         match self.integration_strategy {
             IntegrationStrategy::Sequential => {
                 // 首先应用数学方法
@@ -3352,7 +3352,7 @@ impl CrossDisciplinaryMethodology {
                 strategy.push("发展新的整合理论".to_string());
             },
         }
-        
+
         strategy
     }
 }
@@ -3360,7 +3360,7 @@ impl CrossDisciplinaryMethodology {
 
 这段代码模拟了跨学科研究方法论的框架，包括多视角研究设计和整合策略，为将计算、形式和数学融合的研究提供指导。
 
-### 10.3 未来研究方向
+### 1.10.3 未来研究方向
 
 基于本文的分析，我们可以确定几个有前景的研究方向，这些方向有望加深计算、形式和数学的统一理解。
 
@@ -3396,23 +3396,23 @@ impl ResearchDirection {
         let impact_weight = 0.3;
         let interdisciplinary_weight = 0.25;
         let activity_weight = 0.15;
-        
-        let weighted_sum = 
+
+        let weighted_sum =
             self.theoretical_depth as f64 * theory_weight +
             self.practical_impact as f64 * impact_weight +
             self.interdisciplinary_nature as f64 * interdisciplinary_weight +
             self.current_activity as f64 * activity_weight;
-            
+
         weighted_sum / (theory_weight + impact_weight + interdisciplinary_weight + activity_weight)
     }
-    
+
     // 评估投入产出比
     fn evaluate_roi(&self, available_expertise: &[String], timeframe_years: u8) -> f64 {
         // 计算专业知识重叠率
         let expertise_match = self.required_expertise.iter()
             .filter(|e| available_expertise.contains(e))
             .count() as f64 / self.required_expertise.len() as f64;
-            
+
         // 考虑时间框架（短期项目收益乘数）
         let time_factor = if timeframe_years <= 2 {
             // 短期项目需要更快的回报
@@ -3424,18 +3424,18 @@ impl ResearchDirection {
             // 长期项目
             1.2
         };
-        
+
         // 基本价值
         let base_value = self.calculate_value();
-        
+
         // 调整后的ROI
         base_value * expertise_match * time_factor
     }
-    
+
     // 生成研究路线图
     fn generate_roadmap(&self, years: u8) -> Vec<String> {
         let mut roadmap = Vec::new();
-        
+
         // 简化的路线图生成
         if years <= 2 {
             roadmap.push(format!("短期目标（0-6个月）：建立{}的基础框架", self.name));
@@ -3451,7 +3451,7 @@ impl ResearchDirection {
             roadmap.push(format!("发展阶段（3-5年）：扩展理论并开发实验系统"));
             roadmap.push(format!("成熟阶段（6-{}年）：建立完整的学科体系", years));
         }
-        
+
         roadmap
     }
 }
@@ -3459,7 +3459,7 @@ impl ResearchDirection {
 
 这段代码提供了评估未来研究方向的框架，包括价值计算、投入产出比评估和路线图生成，有助于研究者选择最有前景的方向。
 
-## 结语
+## 1.11 结语
 
 本文探索了计算科学、形式科学和数学之间的深层联系，揭示了这些领域如何在概念层面上相互交织、相互影响。
 从柯里-霍华德同构到量子计算，从范畴论视角到认知科学维度，我们看到了统一视角的力量和美丽。

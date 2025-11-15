@@ -1,5 +1,10 @@
-# rust redis
+# 1. rust redis
 
+## 目录
+
+- [1. rust redis](#rust-redis)
+(#rust-redis)
+(#rust-redis)
 我将展示如何使用 Rust 和 tokio 与 Redis 进行交互的详细示例。我们将使用 `redis` crate 并展示各种功能。
 首先创建项目并添加依赖：
 
@@ -64,13 +69,13 @@ impl RedisOperations {
     // 基本的字符串操作
     async fn string_operations(&mut self) -> RedisResult<()> {
         println!("=== 字符串操作 ===");
-        
+
         // 设置值
         self.conn.set("key1", "value1").await?;
-        
+
         // 设置带过期时间的值
         self.conn.set_ex("key2", "value2", 60).await?;
-        
+
         // 获取值
         let value: String = self.conn.get("key1").await?;
         println!("key1的值: {}", value);
@@ -86,7 +91,7 @@ impl RedisOperations {
     // Hash操作
     async fn hash_operations(&mut self) -> RedisResult<()> {
         println!("\n=== Hash操作 ===");
-        
+
         let user = User {
             id: 1,
             name: "张三".to_string(),
@@ -108,7 +113,7 @@ impl RedisOperations {
     // 列表操作
     async fn list_operations(&mut self) -> RedisResult<()> {
         println!("\n=== 列表操作 ===");
-        
+
         // 推入元素
         self.conn.rpush("list1", "item1").await?;
         self.conn.rpush("list1", "item2").await?;
@@ -124,7 +129,7 @@ impl RedisOperations {
     // 集合操作
     async fn set_operations(&mut self) -> RedisResult<()> {
         println!("\n=== 集合操作 ===");
-        
+
         // 添加元素
         self.conn.sadd("set1", "member1").await?;
         self.conn.sadd("set1", "member2").await?;
@@ -144,7 +149,7 @@ impl RedisOperations {
     // 有序集合操作
     async fn sorted_set_operations(&mut self) -> RedisResult<()> {
         println!("\n=== 有序集合操作 ===");
-        
+
         // 添加成员和分数
         self.conn.zadd("scores", "player1", 100).await?;
         self.conn.zadd("scores", "player2", 200).await?;
@@ -160,7 +165,7 @@ impl RedisOperations {
     // 发布订阅示例
     async fn pub_sub_example(&mut self) -> RedisResult<()> {
         println!("\n=== 发布订阅示例 ===");
-        
+
         // 创建一个新的连接用于订阅
         let mut pubsub = self.client.get_async_connection().await?.into_pubsub();
         pubsub.subscribe("channel1").await?;
@@ -212,7 +217,7 @@ impl RedisOperations {
     // Pipeline 批量操作
     async fn pipeline_operations(&mut self) -> RedisResult<()> {
         println!("\n=== Pipeline操作 ===");
-        
+
         let mut pipe = redis::pipe();
         pipe.set("pipe_key1", "value1")
             .set("pipe_key2", "value2")
@@ -228,7 +233,7 @@ impl RedisOperations {
     // 事务操作
     async fn transaction_operations(&mut self) -> RedisResult<()> {
         println!("\n=== 事务操作 ===");
-        
+
         let mut pipe = redis::pipe();
         pipe.atomic()
             .set("tx_key1", "value1")
@@ -248,7 +253,7 @@ async fn main() -> anyhow::Result<()> {
     // 创建Redis连接管理器
     let manager = RedisManager::new("redis://127.0.0.1/").await?;
     let conn = manager.get_connection().await?;
-    
+
     let mut redis_ops = RedisOperations::new(conn).await;
 
     // 执行各种操作

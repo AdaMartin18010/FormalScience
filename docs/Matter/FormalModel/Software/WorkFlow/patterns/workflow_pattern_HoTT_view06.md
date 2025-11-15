@@ -621,7 +621,7 @@ trait Pattern {
     type Input;
     type Output;
     fn apply(&self, input: Self::Input) -> Self::Output;
-    fn compose<P: Pattern<Input = Self::Output>>(self, other: P) -> 
+    fn compose<P: Pattern<Input = Self::Output>>(self, other: P) ->
         PatternComposition<Self::Input, Self::Output, P::Output>;
 }
 ```
@@ -674,7 +674,7 @@ trait Component {
     type Input;
     type Output;
     type State;
-    
+
     fn process(&self, input: Self::Input, state: &mut Self::State) -> Self::Output;
     fn initialize(&self) -> Self::State;
     fn finalize(&self, state: &mut Self::State);
@@ -1202,24 +1202,24 @@ enum OptimizationCriterion {
 struct CompatibilityAnalysis<WF, DS> {
     workflow_model: WF,
     distributed_system_model: DS,
-    
+
     // 语法相容性
     syntax_mapping: Box<dyn Fn(&WF) -> DS>,
     syntax_compatibility_degree: f64,
-    
+
     // 语义相容性
     semantic_equivalence: Box<dyn Fn(&WF, &DS) -> bool>,
     semantic_refinement: Box<dyn Fn(&WF, &DS) -> bool>,
-    
+
     // 功能相容性
     functional_coverage: HashMap<Requirement, CoverageStatus>,
     functional_correctness: Box<dyn Fn(&WF, &DS, &Requirement) -> bool>,
-    
+
     // 性能相容性
     performance_metrics: Vec<PerformanceMetric>,
     performance_constraints: Vec<PerformanceConstraint>,
     performance_satisfaction: Box<dyn Fn(&DS, &PerformanceConstraint) -> bool>,
-    
+
     // 演化相容性
     evolution_scenarios: Vec<EvolutionScenario>,
     compatibility_preservation: Box<dyn Fn(&EvolutionScenario) -> bool>,
@@ -1402,24 +1402,24 @@ enum FormalProof {
 struct EmbeddingRelation<WF, DS> {
     workflow_model: WF,
     distributed_system_model: DS,
-    
+
     // 结构嵌入
     structural_mapping: Box<dyn Fn(&WF) -> DS>,
     structure_preservation: Box<dyn Fn(&WFStructure, &DSStructure) -> bool>,
     injectivity_proof: Box<dyn Fn(&WF, &WF) -> bool>, // x ≠ y ⟹ f(x) ≠ f(y)
-    
+
     // 行为嵌入
     simulation_relation: Box<dyn Fn(&WFState, &DSState) -> bool>,
     behavior_preservation: Box<dyn Fn(&WFExecution, &DSExecution) -> bool>,
-    
+
     // 语义嵌入
     semantic_mapping: Box<dyn Fn(&WFSemantics) -> DSSemantics>,
     semantic_preservation: Box<dyn Fn(&WF, &DS) -> bool>,
-    
+
     // 可恢复嵌入
     recovery_function: Box<dyn Fn(&DS) -> Option<WF>>,
     recovery_fidelity: Box<dyn Fn(&WF, &DS) -> f64>, // 0.0 to 1.0
-    
+
     // 增强嵌入
     core_preservation: Box<dyn Fn(&WFFeature) -> bool>,
     extensions: Vec<DSFeature>,
@@ -1500,27 +1500,27 @@ struct BidirectionalTransformation<WF, DS> {
     control_flow_forward: Box<dyn Fn(&WFControlFlow) -> DSControlMechanism>,
     control_flow_backward: Box<dyn Fn(&DSControlMechanism) -> WFControlFlow>,
     control_flow_consistency: Box<dyn Fn(&WFControlFlow, &DSControlMechanism) -> bool>,
-    
+
     // 数据流转换
     data_flow_forward: Box<dyn Fn(&WFDataFlow) -> DSDataExchange>,
     data_flow_backward: Box<dyn Fn(&DSDataExchange) -> WFDataFlow>,
     data_flow_consistency: Box<dyn Fn(&WFDataFlow, &DSDataExchange) -> bool>,
-    
+
     // 资源管理转换
     resource_forward: Box<dyn Fn(&WFResource) -> DSResource>,
     resource_backward: Box<dyn Fn(&DSResource) -> WFResource>,
     resource_consistency: Box<dyn Fn(&WFResource, &DSResource) -> bool>,
-    
+
     // 异常处理转换
     exception_forward: Box<dyn Fn(&WFException) -> DSErrorHandling>,
     exception_backward: Box<dyn Fn(&DSErrorHandling) -> WFException>,
     exception_consistency: Box<dyn Fn(&WFException, &DSErrorHandling) -> bool>,
-    
+
     // 跨切面关注点转换
     cross_cutting_forward: Box<dyn Fn(&WFCrossCutting) -> DSSystemService>,
     cross_cutting_backward: Box<dyn Fn(&DSSystemService) -> WFCrossCutting>,
     cross_cutting_consistency: Box<dyn Fn(&WFCrossCutting, &DSSystemService) -> bool>,
-    
+
     // 全局转换属性
     round_trip_property: Box<dyn Fn(&WF) -> bool>, // wf = backward(forward(wf))
     correctness: Box<dyn Fn(&WF, &DS) -> bool>, // 转换保持语义正确性
@@ -1603,19 +1603,19 @@ struct TransformationRule<S, T> {
 struct RewritingSystem<WF, DS> {
     // 模式重写规则
     rewrite_rules: Vec<RewriteRule<WF, DS>>,
-    
+
     // 行为等价保持
     equivalence_checker: Box<dyn Fn(&WF, &DS) -> bool>,
     equivalence_proofs: HashMap<RewriteRuleId, EquivalenceProof>,
-    
+
     // 重写策略
     rule_application_strategy: RewriteStrategy,
     termination_proof: Box<dyn Fn(&RewritingSystem<WF, DS>) -> bool>,
-    
+
     // 模块化重写
     modular_rules: HashMap<ModuleId, Vec<RewriteRule<WF, DS>>>,
     composition_rules: Vec<CompositionRule>,
-    
+
     // 双向重写
     bidirectional_rules: Vec<BidirectionalRule<WF, DS>>,
     consistency_checker: Box<dyn Fn(&WF, &DS) -> ConsistencyStatus>,
@@ -1704,28 +1704,28 @@ enum FormalProof<WF, DS> {
         proof_term: Expression,
         type_checker: Box<dyn Fn(&Expression, &TypeExpression) -> bool>,
     },
-    
+
     // 相等性证明
     EqualityProof {
         left_term: Expression,
         right_term: Expression,
         equality_path: Vec<EqualityStep>,
     },
-    
+
     // 存在性证明
     ExistenceProof {
         property: Box<dyn Fn(&Object) -> bool>,
         witness: Object,
         verification: Box<dyn Fn(&Object) -> bool>,
     },
-    
+
     // 全称性证明
     UniversalProof {
         domain: Domain,
         property: Box<dyn Fn(&Element) -> bool>,
         parametric_proof: Box<dyn Fn(&Element) -> Proof>,
     },
-    
+
     // 归纳证明
     InductiveProof {
         base_cases: Vec<BaseCase>,
@@ -1813,7 +1813,7 @@ enum BehavioralEquivalenceProof<WF, DS> {
         backward_simulation: Box<dyn Fn(&DSState, &DSAction, &DSState, &WFState) -> Option<WFState>>,
         proof_steps: Vec<BisimulationStep>,
     },
-    
+
     // 痕迹等价
     TraceEquivalenceProof {
         workflow_traces: Vec<Trace<WFAction>>,
@@ -1821,7 +1821,7 @@ enum BehavioralEquivalenceProof<WF, DS> {
         trace_mapping: Box<dyn Fn(&Trace<WFAction>) -> Trace<DSAction>>,
         completeness_proof: CompletenessProof,
     },
-    
+
     // 测试等价
     TestingEquivalenceProof {
         test_suite: Vec<TestCase>,
@@ -1830,7 +1830,7 @@ enum BehavioralEquivalenceProof<WF, DS> {
         response_equivalence: Box<dyn Fn(&Response, &Response) -> bool>,
         distinguishing_context_absence: DistinguishingContextProof,
     },
-    
+
     // 时间等价
     TemporalEquivalenceProof {
         temporal_logic: TemporalLogicType,
@@ -1839,7 +1839,7 @@ enum BehavioralEquivalenceProof<WF, DS> {
         distributed_model_checking: HashMap<TemporalPropertyId, bool>,
         preservation_proof: PreservationProof,
     },
-    
+
     // 概率等价
     ProbabilisticEquivalenceProof {
         stochastic_model: StochasticModelType,
@@ -1951,16 +1951,16 @@ struct StatisticalTest {
 struct CompletenessProof<WF, DS> {
     // 模式覆盖完备性
     pattern_coverage: PatternCoverageProof,
-    
+
     // 语义保持完备性
     semantics_preservation: SemanticsPreservationProof,
-    
+
     // 组合封闭性
     compositional_closure: CompositionalClosureProof,
-    
+
     // 反向映射完备性
     inverse_mapping: InverseMappingProof<DS, WF>,
-    
+
     // 边界条件完备性
     boundary_conditions: BoundaryConditionProof,
 }
@@ -2086,16 +2086,16 @@ struct CaseStudy {
     problem_description: String,
     workflow_model: WorkflowModel,
     distributed_architecture: DistributedArchitecture,
-    
+
     // 转换过程
     transformation_approach: TransformationApproach,
     key_challenges: Vec<Challenge>,
     solutions_applied: Vec<Solution>,
-    
+
     // 形式化应用
     formalization_techniques: Vec<FormalizationTechnique>,
     verification_results: VerificationResults,
-    
+
     // 结果评估
     benefits_realized: Vec<Benefit>,
     limitations_identified: Vec<Limitation>,

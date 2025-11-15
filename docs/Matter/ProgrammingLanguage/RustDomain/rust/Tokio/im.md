@@ -1,20 +1,18 @@
-# Rust实现分布式IM
-
-我将为您展示一个基于 Rust 2024 + Tokio + Raft + P2P 的分布式 IM 系统实现。
+# 1. Rust实现分布式IM
 
 ## 目录
 
-- [Rust实现分布式IM](#rust实现分布式im)
+- [1. Rust实现分布式IM](#1-rust实现分布式im)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-    - [2. P2P 网络层实现](#2-p2p-网络层实现)
-    - [3. Raft 状态机实现](#3-raft-状态机实现)
-    - [4. IM 消息处理](#4-im-消息处理)
-    - [5. 消息处理器实现](#5-消息处理器实现)
-    - [6. 存储层实现](#6-存储层实现)
-    - [7. 主程序实现](#7-主程序实现)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+    - [1.1.1 P2P 网络层实现](#111-p2p-网络层实现)
+    - [1.1.2 Raft 状态机实现](#112-raft-状态机实现)
+    - [1.1.3 IM 消息处理](#113-im-消息处理)
+    - [1.1.4 消息处理器实现](#114-消息处理器实现)
+    - [1.1.5 存储层实现](#115-存储层实现)
+    - [1.1.6 主程序实现](#116-主程序实现)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -30,7 +28,7 @@ uuid = { version = "1.0", features = ["v4"] }
 tracing = "0.1"
 ```
 
-### 2. P2P 网络层实现
+### 1.1.1 P2P 网络层实现
 
 ```rust
 use libp2p::{
@@ -112,7 +110,7 @@ impl P2PNetwork {
 }
 ```
 
-### 3. Raft 状态机实现
+### 1.1.2 Raft 状态机实现
 
 ```rust
 use raft::{RaftState, Storage, StorageError};
@@ -195,7 +193,7 @@ impl RaftIMNode {
 }
 ```
 
-### 4. IM 消息处理
+### 1.1.3 IM 消息处理
 
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
@@ -227,7 +225,7 @@ impl IMHandler {
     pub fn handle_messages(&mut self) -> impl Stream<Item = Result<()>> {
         try_stream! {
             let mut incoming = self.network.incoming_messages();
-            
+
             while let Some(message) = incoming.next().await {
                 match message {
                     Message::Chat { from, to, content, timestamp } => {
@@ -265,7 +263,7 @@ impl IMHandler {
 }
 ```
 
-### 5. 消息处理器实现
+### 1.1.4 消息处理器实现
 
 ```rust
 pub struct MessageProcessor {
@@ -327,11 +325,11 @@ impl MessageProcessor {
     pub async fn update_presence(&mut self, user_id: UserId, status: UserStatus) -> Result<()> {
         let updater = try_stream! {
             let mut state = self.state.write().await;
-            
+
             if let Some(user) = state.users.get_mut(&user_id) {
                 user.status = status;
                 user.last_seen = Utc::now();
-                
+
                 yield Ok(());
             } else {
                 yield Err(Error::UserNotFound);
@@ -347,7 +345,7 @@ impl MessageProcessor {
 }
 ```
 
-### 6. 存储层实现
+### 1.1.5 存储层实现
 
 ```rust
 pub struct MessageStorage {
@@ -360,7 +358,7 @@ impl MessageStorage {
         let storage = try_stream! {
             // 准备消息数据
             let message_data = serde_json::to_vec(&message)?;
-            
+
             // 存储消息
             self.db.insert(
                 &format!("msg:{}", Uuid::new_v4()),
@@ -397,7 +395,7 @@ impl MessageStorage {
     ) -> impl Stream<Item = Result<Message>> {
         try_stream! {
             let messages = self.db.query(
-                "SELECT * FROM messages 
+                "SELECT * FROM messages
                  WHERE (from_user = ? OR to_user = ?)
                  AND timestamp BETWEEN ? AND ?
                  ORDER BY timestamp",
@@ -414,7 +412,7 @@ impl MessageStorage {
 }
 ```
 
-### 7. 主程序实现
+### 1.1.6 主程序实现
 
 ```rust
 #[tokio::main]
@@ -441,7 +439,7 @@ async fn main() -> Result<()> {
 
     // 启动消息处理
     let mut message_handler = im_handler.handle_messages();
-    
+
     while let Some(result) = message_handler.next().await {
         match result {
             Ok(_) => {
@@ -595,16 +593,16 @@ impl IMSystem {
         // 创建身份密钥
         let id_keys = identity::Keypair::generate_ed25519();
         let peer_id = PeerId::from(id_keys.public());
-        
+
         // 初始化存储
         let storage = Arc::new(Storage::new().await?);
-        
+
         // 创建网络行为
         let network = Arc::new(RwLock::new(NetworkBehaviour::new(id_keys.clone())?));
-        
+
         // 创建消息通道
         let (message_tx, message_rx) = mpsc::channel(100);
-        
+
         // 创建对等节点信息存储
         let peers = Arc::new(RwLock::new(HashMap::new()));
 
@@ -621,20 +619,20 @@ impl IMSystem {
     pub async fn run(&mut self) -> Result<(), IMError> {
         // 启动网络服务
         self.start_network().await?;
-        
+
         // 启动消息处理循环
         self.start_message_handler().await?;
-        
+
         // 启动心跳检测
         self.start_heartbeat().await?;
-        
+
         Ok(())
     }
 
     async fn start_network(&self) -> Result<(), IMError> {
         let network = self.network.clone();
         let message_tx = self.message_tx.clone();
-        
+
         tokio::spawn(async move {
             loop {
                 match network.write().await.next_event().await {
@@ -720,7 +718,7 @@ impl IMSystem {
     async fn start_message_handler(&self) -> Result<(), IMError> {
         let mut rx = self.message_rx.clone();
         let network = self.network.clone();
-        
+
         tokio::spawn(async move {
             while let Some(message) = rx.recv().await {
                 if let Err(e) = Self::handle_outgoing_message(message, &network).await {
@@ -737,7 +735,7 @@ impl IMSystem {
         network: &Arc<RwLock<NetworkBehaviour>>,
     ) -> Result<(), IMError> {
         let data = serde_json::to_vec(&message)?;
-        
+
         match message.message_type {
             MessageType::Chat | MessageType::Handshake => {
                 // 点对点发送
@@ -754,14 +752,14 @@ impl IMSystem {
                 network.write().await.send_file(message.target.unwrap(), data)?;
             }
         }
-        
+
         Ok(())
     }
 
     async fn start_heartbeat(&self) -> Result<(), IMError> {
         let peers = self.peers.clone();
         let message_tx = self.message_tx.clone();
-        
+
         tokio::spawn(async move {
             loop {
                 // 发送心跳包
@@ -769,7 +767,7 @@ impl IMSystem {
                 if let Err(e) = message_tx.send(heartbeat).await {
                     error!("发送心跳包错误: {}", e);
                 }
-                
+
                 // 检查节点状态
                 let mut peers_write = peers.write().await;
                 for (peer_id, info) in peers_write.iter_mut() {
@@ -778,7 +776,7 @@ impl IMSystem {
                         // 更新状态
                     }
                 }
-                
+
                 tokio::time::sleep(tokio::time::Duration::from_secs(30)).await;
             }
         });
@@ -801,41 +799,41 @@ impl FileTransfer {
         let file = tokio::fs::File::open(path).await?;
         let metadata = file::metadata().await?;
         let total_size = metadata.len();
-        
+
         let mut buffer = Vec::new();
         let mut chunk_index = 0;
-        
+
         loop {
             let n = tokio::io::AsyncReadExt::read(&mut file, &mut buffer).await?;
             if n == 0 {
                 break;
             }
-            
+
             let chunk = FileChunk {
                 file_id: self.file_id.clone(),
                 index: chunk_index,
                 data: buffer[..n].to_vec(),
                 is_last: n < self.chunk_size,
             };
-            
+
             // 发送文件块
             self.send_chunk(chunk, target).await?;
             chunk_index += 1;
         }
-        
+
         Ok(())
     }
 
     async fn receive_chunk(&mut self, chunk: FileChunk) -> Result<bool, IMError> {
         self.chunks.insert(chunk.index, chunk.data.clone());
         self.received_size += chunk.data.len() as u64;
-        
+
         // 检查是否接收完成
         if chunk.is_last && self.received_size == self.total_size {
             self.save_file().await?;
             return Ok(true);
         }
-        
+
         Ok(false)
     }
 
@@ -849,7 +847,7 @@ impl FileTransfer {
                 return Err(IMError::FileTransfer("Missing file chunk".into()));
             }
         }
-        
+
         tokio::fs::write(&self.file_id, file_data).await?;
         Ok(())
     }
@@ -860,19 +858,19 @@ impl FileTransfer {
 pub enum IMError {
     #[error("网络错误: {0}")]
     Network(#[from] libp2p::swarm::DialError),
-    
+
     #[error("存储错误: {0}")]
     Storage(#[from] sqlx::Error),
-    
+
     #[error("序列化错误: {0}")]
     Serialization(#[from] serde_json::Error),
-    
+
     #[error("文件传输错误: {0}")]
     FileTransfer(String),
-    
+
     #[error("消息发送错误: {0}")]
     MessageSend(#[from] mpsc::error::SendError<Message>),
-    
+
     #[error("IO错误: {0}")]
     Io(#[from] std::io::Error),
 }
@@ -882,11 +880,11 @@ pub enum IMError {
 async fn main() -> Result<(), IMError> {
     // 初始化日志
     tracing_subscriber::fmt::init();
-    
+
     // 创建并运行 IM 系统
     let mut system = IMSystem::new().await?;
     system.run().await?;
-    
+
     Ok(())
 }
 ```
@@ -966,7 +964,7 @@ cargo run
 1. 配置节点：
 
 ```bash
-# 设置环境变量
+# 2. 设置环境变量
 export P2P_PORT=8000
 export P2P_BOOTSTRAP_NODES="..."
 ```

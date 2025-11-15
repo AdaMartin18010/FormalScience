@@ -50,7 +50,7 @@ impl SharedMemoryManager {
             .write(true)
             .create(true)
             .open(format!("/dev/shm/{}", name))?;
-            
+
         file.set_len(size as u64)?;
 
         let mmap = unsafe { MmapOptions::new().map_mut(&file)? };
@@ -279,7 +279,7 @@ impl Worker {
 
         // 启动工作线程
         let mut threads = vec![];
-        
+
         for i in 0..num_cpus::get() {
             let memory_pool = self.memory_pool.clone();
             let shared_memory = self.shared_memory.clone();
@@ -309,7 +309,7 @@ impl Worker {
             if let Some(mut block) = memory_pool.acquire() {
                 // 处理任务
                 self.process_task(&mut block, &shared_memory);
-                
+
                 // 释放内存块
                 memory_pool.release(block).unwrap();
             }
@@ -320,10 +320,10 @@ impl Worker {
 
     fn setup_signal_handlers(&self) {
         let shutdown = self.shutdown.clone();
-        
+
         signal_hook::flag::register(signal_hook::consts::SIGTERM, Arc::clone(&shutdown))
             .expect("Failed to register SIGTERM handler");
-            
+
         signal_hook::flag::register(signal_hook::consts::SIGUSR2, Arc::clone(&shutdown))
             .expect("Failed to register SIGUSR2 handler");
     }
@@ -361,7 +361,7 @@ impl IpcChannel {
 
     pub fn connect(server_name: &str) -> std::io::Result<Self> {
         let (tx, rx) = IpcSender::connect(server_name)?;
-        
+
         Ok(Self {
             sender: tx,
             receiver: rx,

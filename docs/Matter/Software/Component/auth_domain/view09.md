@@ -81,12 +81,12 @@ fn encrypt_data(data: &[u8], key: &[u8]) -> Result<Vec<u8>, CryptoError> {
 async fn authenticate_user(username: &str, password: &str) -> Result<AuthToken, AuthError> {
     // 验证凭据
     let user = get_user_by_username(username).await?;
-    
+
     // 验证密码（使用安全哈希比较）
     if !verify_password(&user.password_hash, password)? {
         return Err(AuthError::InvalidCredentials);
     }
-    
+
     // 生成令牌
     let token = generate_token(username, &user.roles)?;
     Ok(token)
@@ -147,9 +147,9 @@ struct SafeVector<T, const N: usize> {
 }
 
 // 这个函数只接受特定长度的向量
-fn process_fixed_length_vector<T, const N: usize>(vector: SafeVector<T, N>) 
-where 
-    [T; N]: Sized 
+fn process_fixed_length_vector<T, const N: usize>(vector: SafeVector<T, N>)
+where
+    [T; N]: Sized
 {
     // 编译时保证向量长度为N
 }
@@ -199,13 +199,13 @@ impl BoundaryValidator {
         for validator in &self.validators {
             validator.validate(&input)?;
         }
-        
+
         // 2. 应用所有转换器
         let mut processed = input;
         for transformer in &self.transformers {
             processed = transformer.transform(processed)?;
         }
-        
+
         // 3. 包装为已验证类型
         Ok(Validated::new(processed))
     }
@@ -263,16 +263,16 @@ struct Protocol {
 fn verify_quantum_security_proof(protocol: &Protocol, proof: &SecurityProof) -> ProofVerificationResult {
     // 形式化安全证明
     let formal_proof = protocol_formalizer.formalize_proof(proof);
-    
+
     // 验证证明的数学正确性
     let math_correctness = verify_mathematical_correctness(&formal_proof);
-    
+
     // 验证量子计算模型假设
     let quantum_model_validity = verify_quantum_model(&formal_proof);
-    
+
     // 验证约简的正确性
     let reduction_correctness = verify_security_reduction(&formal_proof);
-    
+
     // 综合评估
     if math_correctness && quantum_model_validity && reduction_correctness {
         ProofVerificationResult::Valid
@@ -330,15 +330,15 @@ impl CrossLayerVerifier {
         let layer_results = self.layers.iter()
             .map(|layer| layer.verify_properties())
             .collect::<Vec<_>>();
-            
+
         // 验证跨层安全属性
         let cross_layer_results = self.cross_layer_policies.iter()
             .map(|policy| self.verify_cross_layer_policy(policy))
             .collect::<Vec<_>>();
-            
+
         // 综合验证结果
         // ...
-        
+
         VerificationResult::new()
     }
 }
@@ -362,13 +362,13 @@ impl ModelChecker {
     fn check(&self, system_model: &SystemModel, property: &Property) -> PropertyResult {
         // 1. 解析属性
         let formula = self.property_parser.parse(property);
-        
+
         // 2. 构建状态空间
         let state_space = self.state_space_algorithm.build(system_model);
-        
+
         // 3. 验证属性
         // 实现取决于具体算法
-        
+
         // 4. 返回结果
         PropertyResult::new()
     }
@@ -391,13 +391,13 @@ impl TheoremProver {
     fn prove(&self, system_model: &SystemModel, property: &Property) -> ProofResult {
         // 1. 转换系统模型为逻辑表达式
         let system_axioms = self.logic_system.model_to_axioms(system_model);
-        
+
         // 2. 转换属性为目标定理
         let target_theorem = self.logic_system.property_to_theorem(property);
-        
+
         // 3. 应用证明策略
         let proof = self.apply_proof_strategies(system_axioms, target_theorem);
-        
+
         // 4. 返回证明结果
         ProofResult::new(proof)
     }
@@ -423,13 +423,13 @@ impl<T: Clone> VerifiableComputation<T> {
     fn compute_and_prove(&self, input: T) -> (T, Proof) {
         // 执行计算
         let result = (self.computation)(input.clone());
-        
+
         // 生成证明
         let proof = self.prover.generate_proof(&input, &result);
-        
+
         (result, proof)
     }
-    
+
     // 验证计算结果
     fn verify(&self, input: &T, result: &T, proof: &Proof) -> bool {
         self.verifier.verify(input, result, proof)
@@ -457,7 +457,7 @@ impl<T, R> DifferentialPrivacyMechanism<T, R> {
         // 实现取决于具体机制和证明方法
         true
     }
-    
+
     // 执行差分隐私查询
     fn execute(&self, data: &T) -> R {
         (self.mechanism)(data)
@@ -600,13 +600,13 @@ struct Invariant {
 
 // Z规范示例（伪代码）
 /*
-AuthSystem == [users: ℙ USER; sessions: ℙ SESSION; 
+AuthSystem == [users: ℙ USER; sessions: ℙ SESSION;
                authenticated: USER ↔ SESSION |
                dom authenticated ⊆ users ∧
                ran authenticated ⊆ sessions]
 
 Authenticate == [ΔAuthSystem; u?: USER; p?: PASSWORD;
-                s!: SESSION | u? ∈ users ∧ 
+                s!: SESSION | u? ∈ users ∧
                 valid_credential(u?, p?) ⇒
                 s! ∉ sessions ∧
                 sessions' = sessions ∪ {s!} ∧
@@ -636,7 +636,7 @@ struct ProtocolState {
 trait ProtocolProperty {
     // 检查属性是否在给定状态下成立
     fn holds(&self, state: &ProtocolState) -> bool;
-    
+
     // 形式化表示
     fn formalize(&self) -> String;
 }
@@ -649,7 +649,7 @@ impl ProtocolProperty for AuthenticationProperty {
         // 检查认证状态
         state.authenticated
     }
-    
+
     fn formalize(&self) -> String {
         "∀s. (s.counter > 0 ∧ valid_nonce(s.nonce)) → s.authenticated".to_string()
     }
@@ -665,10 +665,10 @@ impl ProtocolProperty for AuthenticationProperty {
 fn prove_merkle_tree_integrity<H: HashFunction>(tree: &MerkleTree<H>) -> ProofResult {
     // 基础情形：叶节点的完整性
     let base_case = prove_leaf_integrity(tree);
-    
+
     // 归纳步骤：如果子树完整，则父节点完整
     let inductive_step = prove_node_integrity_preservation(tree);
-    
+
     // 合并证明
     ProofResult {
         verified: base_case.verified && inductive_step.verified,
@@ -717,10 +717,10 @@ impl MetaTheory {
     fn verify_confidentiality(&self, protocol: &Protocol) -> VerificationResult {
         // 将协议转换为形式化表示
         let protocol_formula = self.formalize_protocol(protocol);
-        
+
         // 应用推理规则证明保密性
         let proof = self.apply_inference_rules(&protocol_formula, "confidentiality");
-        
+
         // 检查证明是否完成
         if proof.is_complete() {
             VerificationResult::Verified
@@ -755,18 +755,18 @@ impl MetaModel {
     // 验证模型一致性
     fn verify_consistency(&self) -> ConsistencyResult {
         let mut failed_rules = Vec::new();
-        
+
         for rule in &self.consistency_rules {
             let is_consistent = (rule.check_function)(
-                &self.model_elements, 
+                &self.model_elements,
                 &self.model_relationships
             );
-            
+
             if !is_consistent {
                 failed_rules.push(rule.id.clone());
             }
         }
-        
+
         if failed_rules.is_empty() {
             ConsistencyResult::Consistent
         } else {
@@ -804,14 +804,14 @@ impl ProtocolComposition {
         let individual_results = self.protocols.iter()
             .map(|p| verify_protocol_security(p))
             .collect::<Vec<_>>();
-            
+
         // 验证组合后的安全性
         let composition_result = match self.composition_type {
             CompositionType::Sequential => self.verify_sequential_composition(),
             CompositionType::Parallel => self.verify_parallel_composition(),
             CompositionType::Nested => self.verify_nested_composition(),
         };
-        
+
         // 结合各部分结果
         CompositionSecurityResult {
             individual_protocols_secure: individual_results.iter().all(|r| r.is_secure),
@@ -838,7 +838,7 @@ struct CompositionalProof {
 trait CompositionTheorem {
     // 验证组合定理是否适用
     fn is_applicable(&self, component_proofs: &HashMap<String, Proof>) -> bool;
-    
+
     // 应用组合定理生成组合证明
     fn apply(&self, component_proofs: &HashMap<String, Proof>) -> Result<Proof, ProofError>;
 }
@@ -852,7 +852,7 @@ impl CompositionTheorem for ParallelCompositionTheorem {
         // ...
         true
     }
-    
+
     fn apply(&self, component_proofs: &HashMap<String, Proof>) -> Result<Proof, ProofError> {
         // 构建并行组合证明
         // ...
@@ -887,18 +887,18 @@ enum QuantumHardnessAssumption {
 impl PostQuantumVerifier {
     // 验证密码学方案的后量子安全性
     fn verify_post_quantum_security(
-        &self, 
+        &self,
         scheme: &CryptographicScheme
     ) -> PostQuantumSecurityResult {
         // 1. 识别依赖的硬度假设
         let assumptions = self.identify_hardness_assumptions(scheme);
-        
+
         // 2. 评估对量子算法的抵抗力
         let quantum_resistance = self.evaluate_quantum_resistance(scheme, &assumptions);
-        
+
         // 3. 分析归约证明
         let reduction_analysis = self.analyze_security_reductions(scheme);
-        
+
         // 4. 结合验证结果
         PostQuantumSecurityResult {
             quantum_resistant: quantum_resistance > 0.8, // 门限值
@@ -953,7 +953,7 @@ impl QuantumProtocolVerifier {
     ) -> QuantumSecurityVerificationResult {
         // 实现量子协议验证逻辑
         // ...
-        
+
         QuantumSecurityVerificationResult::new()
     }
 }
@@ -999,21 +999,21 @@ impl ComplianceFramework {
         let regulation = self.regulations.iter()
             .find(|r| r.id == regulation_id)
             .ok_or(ComplianceError::RegulationNotFound)?;
-            
+
         // 获取遵从要求
         let requirements = self.compliance_requirements.get(&regulation_id)
             .ok_or(ComplianceError::RequirementsNotFound)?;
-            
+
         // 验证每个要求
         let mut verification_results = Vec::new();
         for req in requirements {
             let method = self.verification_methods.get(&req.verification_method_id)
                 .ok_or(ComplianceError::VerificationMethodNotFound)?;
-                
+
             let result = method.verify(system, req);
             verification_results.push(result);
         }
-        
+
         // 汇总结果
         ComplianceVerificationResult {
             regulation_id: regulation_id.to_string(),
@@ -1060,15 +1060,15 @@ impl AuditableSystem {
         let property_results = self.formal_properties.iter()
             .map(|prop| self.verify_auditable_property(prop))
             .collect::<Vec<_>>();
-            
+
         // 验证审计机制的完整性
         let mechanism_integrity = self.audit_mechanisms.iter()
             .map(|mech| self.verify_mechanism_integrity(mech))
             .collect::<Vec<_>>();
-            
+
         // 汇总结果
         AuditabilityVerificationResult {
-            fully_auditable: property_results.iter().all(|r| r.verified) && 
+            fully_auditable: property_results.iter().all(|r| r.verified) &&
                               mechanism_integrity.iter().all(|r| *r),
             property_verification: property_results,
             mechanism_integrity_verification: mechanism_integrity,
@@ -1110,18 +1110,18 @@ impl AutomatedFormalVerifier {
     ) -> AutomatedVerificationResult {
         // 1. 选择最合适的验证策略
         let strategy = self.select_strategy(system, property);
-        
+
         // 2. 根据策略选择验证工具
         let tool = self.select_verification_tool(&strategy);
-        
+
         // 3. 实施验证过程
         let mut result = tool.verify(system, property);
-        
+
         // 4. 如果验证失败，尝试精炼抽象
         if !result.verified && self.should_refine_abstraction(&result) {
             result = self.refine_and_retry(system, property, &result);
         }
-        
+
         // 5. 返回结果
         AutomatedVerificationResult {
             verified: result.verified,
@@ -1163,21 +1163,21 @@ impl AIAssistedVerifier {
     ) -> AIAssistedVerificationResult {
         // 1. 使用AI分析系统和属性
         let analysis = self.analyze_with_learning_models(system, property);
-        
+
         // 2. 根据分析结果生成验证策略
         let strategy = self.generate_verification_strategy(&analysis);
-        
+
         // 3. 选择验证工具和证明助手
         let tool = self.select_verification_tool(&strategy);
         let assistant = self.select_proof_assistant(&strategy);
-        
+
         // 4. 执行AI辅助验证
         let proof_outline = assistant.generate_proof_outline(system, property);
         let verification_result = tool.verify_with_guidance(system, property, &proof_outline);
-        
+
         // 5. 学习并改进
         self.learn_from_verification(&verification_result);
-        
+
         // 6. 返回结果
         AIAssistedVerificationResult {
             verified: verification_result.verified,

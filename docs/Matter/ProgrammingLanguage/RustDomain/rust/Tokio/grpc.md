@@ -49,11 +49,11 @@ service DistributedService {
     // 服务发现
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc Discover (DiscoverRequest) returns (DiscoverResponse);
-    
+
     // 节点通信
     rpc SendMessage (Message) returns (MessageResponse);
     rpc StreamMessages (stream Message) returns (stream Message);
-    
+
     // 任务调度
     rpc SubmitTask (Task) returns (TaskResponse);
     rpc GetTaskStatus (TaskStatusRequest) returns (TaskStatus);
@@ -247,7 +247,7 @@ impl DistributedService for DistributedServiceImpl {
         request: Request<RegisterRequest>,
     ) -> Result<Response<RegisterResponse>, Status> {
         let req = request.into_inner();
-        
+
         self.service_discovery.register_service(ServiceInfo {
             id: req.node_id,
             name: req.service_name,
@@ -266,7 +266,7 @@ impl DistributedService for DistributedServiceImpl {
         request: Request<DiscoverRequest>,
     ) -> Result<Response<DiscoverResponse>, Status> {
         let req = request.into_inner();
-        
+
         let services = self.service_discovery
             .discover_service(&req.service_name)
             .await
@@ -288,7 +288,7 @@ impl DistributedService for DistributedServiceImpl {
         request: Request<Message>,
     ) -> Result<Response<MessageResponse>, Status> {
         let msg = request.into_inner();
-        
+
         self.message_broker
             .publish(&msg.to_node, msg.payload)
             .await
@@ -313,7 +313,7 @@ impl DistributedService for DistributedServiceImpl {
         let output = async_stream::try_stream! {
             while let Some(msg) = stream.next().await {
                 let msg = msg?;
-                
+
                 // 处理接收到的消息
                 message_broker
                     .publish(&msg.to_node, msg.payload.clone())
@@ -338,7 +338,7 @@ impl DistributedService for DistributedServiceImpl {
         request: Request<Task>,
     ) -> Result<Response<TaskResponse>, Status> {
         let task = request.into_inner();
-        
+
         let task_id = self.task_scheduler
             .submit_task(task)
             .await
@@ -355,7 +355,7 @@ impl DistributedService for DistributedServiceImpl {
         request: Request<TaskStatusRequest>,
     ) -> Result<Response<TaskStatus>, Status> {
         let req = request.into_inner();
-        
+
         let status = self.task_scheduler
             .get_task_status(&req.task_id)
             .await
@@ -377,7 +377,7 @@ pub struct EtcdServiceDiscovery {
 impl EtcdServiceDiscovery {
     pub async fn new(endpoints: &[&str], prefix: &str) -> anyhow::Result<Self> {
         let client = etcd_client::Client::connect(endpoints).await?;
-        
+
         Ok(Self {
             client,
             prefix: prefix.to_string(),
@@ -394,22 +394,22 @@ impl ServiceDiscovery for EtcdServiceDiscovery {
     async fn register_service(&self, service: ServiceInfo) -> anyhow::Result<()> {
         let key = self.service_key(&service);
         let value = serde_json::to_string(&service)?;
-        
+
         self.client
             .put(key, value, Some(etcd_client::PutOptions::new().with_lease(60)))
             .await?;
-            
+
         Ok(())
     }
 
     async fn discover_service(&self, name: &str) -> anyhow::Result<Vec<ServiceInfo>> {
         let prefix = format!("{}/{}", self.prefix, name);
         let response = self.client.get(prefix, Some(etcd_client::GetOptions::new().with_prefix())).await?;
-        
+
         let services = response.kvs().iter()
             .filter_map(|kv| serde_json::from_slice::<ServiceInfo>(kv.value()).ok())
             .collect();
-            
+
         Ok(services)
     }
 }
@@ -426,7 +426,7 @@ pub struct RedisBroker {
 impl RedisBroker {
     pub async fn new(redis_url: &str) -> anyhow::Result<Self> {
         let client = redis::Client::open(redis_url)?;
-        
+
         Ok(Self {
             client,
             subscribers: Arc::new(DashMap::new()),
@@ -436,9 +436,9 @@ impl RedisBroker {
     async fn start_subscriber(&self, topic: String) -> anyhow::Result<()> {
         let mut pubsub = self.client.get_async_connection().await?.into_pubsub();
         pubsub.subscribe(topic.clone()).await?;
-        
+
         let subscribers = self.subscribers.clone();
-        
+
         tokio::spawn(async move {
             while let Some(msg) = pubsub.on_message().next().await {
                 if let Ok(payload) = msg.get_payload::<Vec<u8>>() {
@@ -463,13 +463,13 @@ impl MessageBroker for RedisBroker {
 
     async fn subscribe(&self, topic: &str) -> anyhow::Result<broadcast::Receiver<Vec<u8>>> {
         let (tx, rx) = broadcast::channel(100);
-        
+
         self.subscribers.entry(topic.to_string())
             .or_insert_with(|| {
                 let _ = self.start_subscriber(topic.to_string());
                 tx
             });
-            
+
         Ok(rx)
     }
 }
@@ -495,16 +495,16 @@ impl DistributedTaskScheduler {
 
     async fn assign_task(&self, task: Task) -> anyhow::Result<String> {
         let task_id = Uuid::new_v4().to_string();
-        
+
         // 选择合适的worker
         let worker = self.select_worker(&task)?;
-        
+
         // 发送任务到worker
         self.message_broker
-            .publish(&format!("worker/{}", worker.id), 
+            .publish(&format!("worker/{}", worker.id),
                     serde_json::to_vec(&task)?)
             .await?;
-            
+
         // 记录任务信息
         self.tasks.insert(task_id.clone(), TaskInfo {
             id: task_id.clone(),
@@ -512,7 +512,7 @@ impl DistributedTaskScheduler {
             status: TaskStatus::Pending,
             created_at: chrono::Utc::now(),
         });
-        
+
         Ok(task_id)
     }
 
@@ -597,7 +597,7 @@ pub struct DistributedClient {
 impl DistributedClient {
     pub async fn connect(addr: &str) -> anyhow::Result<Self> {
         let client = DistributedServiceClient::connect(addr.to_string()).await?;
-        
+
         Ok(Self { client })
     }
 
@@ -605,7 +605,7 @@ impl DistributedClient {
         let response = self.client
             .submit_task(task)
             .await?;
-            
+
         Ok(response.into_inner().task_id)
     }
 
@@ -616,7 +616,7 @@ impl DistributedClient {
         let response = self.client
             .stream_messages(Request::new(messages))
             .await?;
-            
+
         Ok(response.into_inner())
     }
 }

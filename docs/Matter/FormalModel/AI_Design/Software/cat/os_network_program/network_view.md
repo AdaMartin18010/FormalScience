@@ -1,40 +1,38 @@
-# 范畴论视角下的通信与网络
+# 1. 范畴论视角下的通信与网络
 
-## 📋 目录
+## 目录
 
-- [范畴论视角下的通信与网络](#范畴论视角下的通信与网络)
-  - [📋 目录](#-目录)
-  - [1 通信基础范畴 (CommunicationCat)](#1-通信基础范畴-communicationcat)
-    - [1.1 信道范畴](#11-信道范畴)
-    - [1.2 信号函子](#12-信号函子)
-  - [2 网络拓扑范畴 (TopologyCat)](#2-网络拓扑范畴-topologycat)
-    - [2.1 网络结构](#21-网络结构)
-    - [2.2 路由函子](#22-路由函子)
-  - [3 通信协议范畴 (ProtocolCat)](#3-通信协议范畴-protocolcat)
-    - [3.1 协议层次](#31-协议层次)
-    - [3.2 协议栈函子](#32-协议栈函子)
-  - [4 消息传输范畴 (MessageCat)](#4-消息传输范畴-messagecat)
-    - [4.1 消息类型](#41-消息类型)
-    - [4.2 传输单子](#42-传输单子)
-  - [5 网络安全范畴 (SecurityCat)](#5-网络安全范畴-securitycat)
-    - [5.1 安全机制](#51-安全机制)
-    - [5.2 安全协议函子](#52-安全协议函子)
-  - [6 网络性能范畴 (PerformanceCat)](#6-网络性能范畴-performancecat)
-    - [6.1 性能度量](#61-性能度量)
-    - [6.2 服务质量函子](#62-服务质量函子)
-  - [7 异步通信范畴 (AsyncComm)](#7-异步通信范畴-asynccomm)
-    - [7.1 异步通信模型](#71-异步通信模型)
-    - [7.2 事件流单子](#72-事件流单子)
-  - [8 实际应用示例](#8-实际应用示例)
-    - [8.1 网络协议实现](#81-网络协议实现)
-    - [8.2 安全通信实现](#82-安全通信实现)
-  - [9 总结](#9-总结)
+- [1. 范畴论视角下的通信与网络](#1-范畴论视角下的通信与网络)
+  - [目录](#目录)
+  - [1.1 通信基础范畴 (CommunicationCat)](#11-通信基础范畴-communicationcat)
+    - [1.1.1 信道范畴](#111-信道范畴)
+    - [1.1.2 信号函子](#112-信号函子)
+  - [1.2 网络拓扑范畴 (TopologyCat)](#12-网络拓扑范畴-topologycat)
+    - [1.2.1 网络结构](#121-网络结构)
+    - [1.2.2 路由函子](#122-路由函子)
+  - [1.3 通信协议范畴 (ProtocolCat)](#13-通信协议范畴-protocolcat)
+    - [1.3.1 协议层次](#131-协议层次)
+    - [1.3.2 协议栈函子](#132-协议栈函子)
+  - [1.4 消息传输范畴 (MessageCat)](#14-消息传输范畴-messagecat)
+    - [1.4.1 消息类型](#141-消息类型)
+    - [1.4.2 传输单子](#142-传输单子)
+  - [1.5 网络安全范畴 (SecurityCat)](#15-网络安全范畴-securitycat)
+    - [1.5.1 安全机制](#151-安全机制)
+    - [1.5.2 安全协议函子](#152-安全协议函子)
+  - [1.6 网络性能范畴 (PerformanceCat)](#16-网络性能范畴-performancecat)
+    - [1.6.1 性能度量](#161-性能度量)
+    - [1.6.2 服务质量函子](#162-服务质量函子)
+  - [1.7 异步通信范畴 (AsyncComm)](#17-异步通信范畴-asynccomm)
+    - [1.7.1 异步通信模型](#171-异步通信模型)
+    - [1.7.2 事件流单子](#172-事件流单子)
+  - [1.8 实际应用示例](#18-实际应用示例)
+    - [1.8.1 网络协议实现](#181-网络协议实现)
+    - [1.8.2 安全通信实现](#182-安全通信实现)
+  - [1.9 总结](#19-总结)
 
----
+## 1.1 通信基础范畴 (CommunicationCat)
 
-## 1 通信基础范畴 (CommunicationCat)
-
-### 1.1 信道范畴
+### 1.1.1 信道范畴
 
 ```haskell
 class ChannelCategory c where
@@ -56,7 +54,7 @@ class ChannelCategory c where
   reliability :: Channel → Reliability
 ```
 
-### 1.2 信号函子
+### 1.1.2 信号函子
 
 ```haskell
 class SignalFunctor f where
@@ -74,9 +72,9 @@ class SignalFunctor f where
   spectrum :: Signal → Spectrum
 ```
 
-## 2 网络拓扑范畴 (TopologyCat)
+## 1.2 网络拓扑范畴 (TopologyCat)
 
-### 2.1 网络结构
+### 1.2.1 网络结构
 
 ```haskell
 class NetworkTopologyCategory t where
@@ -99,7 +97,7 @@ class NetworkTopologyCategory t where
   connectivity :: Topology → Measure
 ```
 
-### 2.2 路由函子
+### 1.2.2 路由函子
 
 ```haskell
 class RoutingFunctor f where
@@ -117,9 +115,9 @@ class RoutingFunctor f where
   stability :: Routing → Stability
 ```
 
-## 3 通信协议范畴 (ProtocolCat)
+## 1.3 通信协议范畴 (ProtocolCat)
 
-### 3.1 协议层次
+### 1.3.1 协议层次
 
 ```haskell
 class ProtocolLayerCategory p where
@@ -142,7 +140,7 @@ class ProtocolLayerCategory p where
   interfaces :: Layer → Set Interface
 ```
 
-### 3.2 协议栈函子
+### 1.3.2 协议栈函子
 
 ```haskell
 class ProtocolStackFunctor f where
@@ -160,9 +158,9 @@ class ProtocolStackFunctor f where
   overhead :: Stack → Overhead
 ```
 
-## 4 消息传输范畴 (MessageCat)
+## 1.4 消息传输范畴 (MessageCat)
 
-### 4.1 消息类型
+### 1.4.1 消息类型
 
 ```haskell
 class MessageCategory m where
@@ -185,7 +183,7 @@ class MessageCategory m where
   validity :: Message → Validity
 ```
 
-### 4.2 传输单子
+### 1.4.2 传输单子
 
 ```haskell
 class TransmissionMonad m where
@@ -204,9 +202,9 @@ class TransmissionMonad m where
   timing :: m a → Timing
 ```
 
-## 5 网络安全范畴 (SecurityCat)
+## 1.5 网络安全范畴 (SecurityCat)
 
-### 5.1 安全机制
+### 1.5.1 安全机制
 
 ```haskell
 class SecurityCategory s where
@@ -228,7 +226,7 @@ class SecurityCategory s where
   resistance :: Security → ThreatResistance
 ```
 
-### 5.2 安全协议函子
+### 1.5.2 安全协议函子
 
 ```haskell
 class SecurityProtocolFunctor f where
@@ -246,9 +244,9 @@ class SecurityProtocolFunctor f where
   nonRepudiation :: Protocol → Level
 ```
 
-## 6 网络性能范畴 (PerformanceCat)
+## 1.6 网络性能范畴 (PerformanceCat)
 
-### 6.1 性能度量
+### 1.6.1 性能度量
 
 ```haskell
 class PerformanceCategory p where
@@ -270,7 +268,7 @@ class PerformanceCategory p where
   optimize :: Network → Metric → OptimizedNetwork
 ```
 
-### 6.2 服务质量函子
+### 1.6.2 服务质量函子
 
 ```haskell
 class QoSFunctor f where
@@ -288,9 +286,9 @@ class QoSFunctor f where
   differentiation :: QoS → Differentiation
 ```
 
-## 7 异步通信范畴 (AsyncComm)
+## 1.7 异步通信范畴 (AsyncComm)
 
-### 7.1 异步通信模型
+### 1.7.1 异步通信模型
 
 ```haskell
 class AsynchronousCategory a where
@@ -312,7 +310,7 @@ class AsynchronousCategory a where
   resilience :: AsyncMode → Resilience
 ```
 
-### 7.2 事件流单子
+### 1.7.2 事件流单子
 
 ```haskell
 class EventStreamMonad m where
@@ -331,9 +329,9 @@ class EventStreamMonad m where
   completeness :: m Event → Completeness
 ```
 
-## 8 实际应用示例
+## 1.8 实际应用示例
 
-### 8.1 网络协议实现
+### 1.8.1 网络协议实现
 
 ```haskell
 -- TCP协议的范畴论表示
@@ -348,7 +346,7 @@ tcpProtocol conn = do
   reliableTransfer established
 ```
 
-### 8.2 安全通信实现
+### 1.8.2 安全通信实现
 
 ```haskell
 -- TLS协议的范畴论表示
@@ -363,7 +361,7 @@ tlsHandshake conn = do
   keyExchange conn certificate
 ```
 
-## 9 总结
+## 1.9 总结
 
 范畴论视角下的通信与网络提供了：
 

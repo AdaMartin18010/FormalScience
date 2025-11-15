@@ -1,20 +1,18 @@
-# Rust-Actor模式实现
-
-我将为您展示一个基于 Rust 2024 + Actor 模式的算法和数据结构实现。
+# 1. Rust-Actor模式实现
 
 ## 目录
 
-- [Rust-Actor模式实现](#rust-actor模式实现)
+- [1. Rust-Actor模式实现](#1-rust-actor模式实现)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-  - [2. Actor 基础结构实现](#2-actor-基础结构实现)
-    - [3. 树结构 Actor 实现](#3-树结构-actor-实现)
-    - [4. 图结构 Actor 实现](#4-图结构-actor-实现)
-    - [5. 排序算法 Actor 实现](#5-排序算法-actor-实现)
-    - [6. 搜索算法 Actor 实现](#6-搜索算法-actor-实现)
-    - [7. 主程序实现](#7-主程序实现)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+  - [1.2 Actor 基础结构实现](#12-actor-基础结构实现)
+    - [1.2.1 树结构 Actor 实现](#121-树结构-actor-实现)
+    - [1.2.2 图结构 Actor 实现](#122-图结构-actor-实现)
+    - [1.2.3 排序算法 Actor 实现](#123-排序算法-actor-实现)
+    - [1.2.4 搜索算法 Actor 实现](#124-搜索算法-actor-实现)
+    - [1.2.5 主程序实现](#125-主程序实现)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -27,7 +25,7 @@ parking_lot = "0.12"
 tracing = "0.1"
 ```
 
-## 2. Actor 基础结构实现
+## 1.2 Actor 基础结构实现
 
 ```rust
 use actix::{Actor, Context, Handler, Message};
@@ -91,7 +89,7 @@ pub trait DataStructureActor<T>: Actor {
 }
 ```
 
-### 3. 树结构 Actor 实现
+### 1.2.1 树结构 Actor 实现
 
 ```rust
 /// 二叉树节点
@@ -148,7 +146,7 @@ impl<T: Ord> BinaryTreeActor<T> {
     async fn insert_with_generator(&mut self, value: T) -> Result<(), ActorError> {
         let mut insertion = try_stream! {
             let mut current = &mut self.root;
-            
+
             while let Some(node) = current {
                 if value < node.value {
                     current = &mut node.left;
@@ -163,7 +161,7 @@ impl<T: Ord> BinaryTreeActor<T> {
                 left: None,
                 right: None,
             }));
-            
+
             self.size += 1;
         };
 
@@ -194,7 +192,7 @@ impl<T: Ord> BinaryTreeActor<T> {
 }
 ```
 
-### 4. 图结构 Actor 实现
+### 1.2.2 图结构 Actor 实现
 
 ```rust
 /// 图节点
@@ -246,7 +244,7 @@ impl<T: Eq> GraphActor<T> {
             let mut distances = vec![f64::INFINITY; self.size];
             let mut previous = vec![None; self.size];
             let mut visited = vec![false; self.size];
-            
+
             distances[start] = 0.0;
 
             for _ in 0..self.size {
@@ -301,7 +299,7 @@ impl<T: Eq> GraphActor<T> {
 }
 ```
 
-### 5. 排序算法 Actor 实现
+### 1.2.3 排序算法 Actor 实现
 
 ```rust
 /// 排序 Actor
@@ -362,7 +360,7 @@ impl<T: Ord> SortingActor<T> {
 }
 ```
 
-### 6. 搜索算法 Actor 实现
+### 1.2.4 搜索算法 Actor 实现
 
 ```rust
 /// 搜索 Actor
@@ -383,11 +381,11 @@ impl<T: 'static + Send + Sync + Ord> Handler<AlgorithmMessage<T>> for SearchActo
                 // 使用生成器实现二分查找
                 let mut search = self.binary_search_with_generator(&items, target);
                 let mut result = None;
-                
+
                 while let Some(index) = search.next().await {
                     result = Some(index?);
                 }
-                
+
                 Ok(result)
             }
             // ... 其他搜索算法
@@ -426,7 +424,7 @@ impl<T: Ord> SearchActor<T> {
 }
 ```
 
-### 7. 主程序实现
+### 1.2.5 主程序实现
 
 ```rust
 #[tokio::main]

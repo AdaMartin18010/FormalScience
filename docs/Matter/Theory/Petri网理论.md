@@ -1,33 +1,33 @@
-# Petri网理论 (Petri Net Theory)
+# 1. Petri网理论 (Petri Net Theory)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 基础概念](#2-基础概念)
-  - [2.1 基本Petri网](#21-基本petri网)
-  - [2.2 标记和变迁规则](#22-标记和变迁规则)
-- [3 高级Petri网](#3-高级petri网)
-  - [3.1 有色Petri网 (Colored Petri Nets)](#31-有色petri网-colored-petri-nets)
-  - [3.2 时间Petri网 (Timed Petri Nets)](#32-时间petri网-timed-petri-nets)
-  - [3.3 随机Petri网 (Stochastic Petri Nets)](#33-随机petri网-stochastic-petri-nets)
-- [4 分析技术](#4-分析技术)
-  - [4.1 可达性分析](#41-可达性分析)
-  - [4.2 不变性分析](#42-不变性分析)
-  - [4.3 死锁检测](#43-死锁检测)
-- [5 应用领域](#5-应用领域)
-  - [5.1 并发系统建模](#51-并发系统建模)
-  - [5.2 工作流建模](#52-工作流建模)
-- [6 总结](#6-总结)
+- [1. Petri网理论 (Petri Net Theory)](#1-petri网理论-petri-net-theory)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 基础概念](#12-基础概念)
+    - [1.2.1 基本Petri网](#121-基本petri网)
+    - [1.2.2 标记和变迁规则](#122-标记和变迁规则)
+  - [1.3 高级Petri网](#13-高级petri网)
+    - [1.3.1 有色Petri网 (Colored Petri Nets)](#131-有色petri网-colored-petri-nets)
+    - [1.3.2 时间Petri网 (Timed Petri Nets)](#132-时间petri网-timed-petri-nets)
+    - [1.3.3 随机Petri网 (Stochastic Petri Nets)](#133-随机petri网-stochastic-petri-nets)
+  - [1.4 分析技术](#14-分析技术)
+    - [1.4.1 可达性分析](#141-可达性分析)
+    - [1.4.2 不变性分析](#142-不变性分析)
+    - [1.4.3 死锁检测](#143-死锁检测)
+  - [1.5 应用领域](#15-应用领域)
+    - [1.5.1 并发系统建模](#151-并发系统建模)
+    - [1.5.2 工作流建模](#152-工作流建模)
+  - [1.6 总结](#16-总结)
 
----
-
-## 1 概述
+## 1.1 概述
 
 Petri网是一种用于描述和分析并发系统的数学建模工具，由Carl Adam Petri在1962年提出。Petri网特别适用于描述具有并发、同步、冲突和资源共享特性的系统。
 
-## 2 基础概念
+## 1.2 基础概念
 
-### 2.1 基本Petri网
+### 1.2.1 基本Petri网
 
 **定义**：
 基本Petri网是一个三元组 N = (P, T, F)，其中：
@@ -56,26 +56,26 @@ impl PetriNet {
             initial_marking: HashMap::new()
         }
     }
-    
+
     fn add_place(&mut self, place: String) {
         self.places.insert(place);
     }
-    
+
     fn add_transition(&mut self, transition: String) {
         self.transitions.insert(transition);
     }
-    
+
     fn add_flow(&mut self, from: String, to: String) {
         self.flow_relation.insert((from, to));
     }
-    
+
     fn set_initial_marking(&mut self, place: String, tokens: u32) {
         self.initial_marking.insert(place, tokens);
     }
 }
 ```
 
-### 2.2 标记和变迁规则
+### 1.2.2 标记和变迁规则
 
 **定义**：
 
@@ -97,20 +97,20 @@ impl Marking {
             tokens: HashMap::new()
         }
     }
-    
+
     fn get_tokens(&self, place: &str) -> u32 {
         *self.tokens.get(place).unwrap_or(&0)
     }
-    
+
     fn set_tokens(&mut self, place: String, count: u32) {
         self.tokens.insert(place, count);
     }
-    
+
     fn add_tokens(&mut self, place: &str, count: u32) {
         let current = self.get_tokens(place);
         self.tokens.insert(place.to_string(), current + count);
     }
-    
+
     fn remove_tokens(&mut self, place: &str, count: u32) -> bool {
         let current = self.get_tokens(place);
         if current >= count {
@@ -131,31 +131,31 @@ impl PetriNet {
         }
         true
     }
-    
+
     fn fire(&self, transition: &str, marking: &mut Marking) -> bool {
         if !self.is_enabled(transition, marking) {
             return false;
         }
-        
+
         // 移除输入令牌
         for (place, _) in self.get_input_places(transition) {
             marking.remove_tokens(place, 1);
         }
-        
+
         // 添加输出令牌
         for (place, _) in self.get_output_places(transition) {
             marking.add_tokens(place, 1);
         }
-        
+
         true
     }
-    
+
     fn get_input_places(&self, transition: &str) -> Vec<(&String, &String)> {
         self.flow_relation.iter()
             .filter(|(from, to)| to == transition)
             .collect()
     }
-    
+
     fn get_output_places(&self, transition: &str) -> Vec<(&String, &String)> {
         self.flow_relation.iter()
             .filter(|(from, to)| from == transition)
@@ -164,9 +164,9 @@ impl PetriNet {
 }
 ```
 
-## 3 高级Petri网
+## 1.3 高级Petri网
 
-### 3.1 有色Petri网 (Colored Petri Nets)
+### 1.3.1 有色Petri网 (Colored Petri Nets)
 
 **定义**：
 有色Petri网扩展了基本Petri网，允许令牌携带数据值，使模型更加紧凑和表达能力强。
@@ -208,23 +208,23 @@ impl ColoredPetriNet {
     fn is_enabled(&self, transition: &str, marking: &HashMap<String, Vec<ColoredToken>>) -> Vec<Binding> {
         let mut bindings = Vec::new();
         let input_arcs = self.get_input_arcs(transition);
-        
+
         // 计算所有可能的绑定
         for arc in input_arcs {
             let place = &arc.0;
             let expression = &arc.1;
             let tokens = marking.get(place).unwrap_or(&Vec::new());
-            
+
             for token in tokens {
                 if let Some(binding) = self.evaluate_expression(expression, token) {
                     bindings.push(binding);
                 }
             }
         }
-        
+
         bindings
     }
-    
+
     fn fire(&self, transition: &str, binding: &Binding, marking: &mut HashMap<String, Vec<ColoredToken>>) {
         // 移除输入令牌
         for (place, expression) in self.get_input_arcs(transition) {
@@ -234,7 +234,7 @@ impl ColoredPetriNet {
                 tokens.retain(|t| t != &token);
             }
         }
-        
+
         // 添加输出令牌
         for (place, expression) in self.get_output_arcs(transition) {
             let tokens = marking.entry(place.clone()).or_insert_with(Vec::new);
@@ -247,7 +247,7 @@ impl ColoredPetriNet {
 }
 ```
 
-### 3.2 时间Petri网 (Timed Petri Nets)
+### 1.3.2 时间Petri网 (Timed Petri Nets)
 
 **定义**：
 时间Petri网为变迁添加了时间约束，用于建模实时系统。
@@ -282,31 +282,31 @@ impl TimedPetriNet {
         if !self.basic_enabled(transition, marking) {
             return false;
         }
-        
+
         // 检查时间约束
         if let Some(interval) = self.timing_constraints.get(transition) {
             if let Some(clock) = marking.transition_clocks.get(transition) {
                 return *clock >= interval.min_delay && *clock <= interval.max_delay;
             }
         }
-        
+
         true
     }
-    
+
     fn fire(&self, transition: &str, marking: &mut TimedMarking) -> bool {
         if !self.is_enabled(transition, marking) {
             return false;
         }
-        
+
         // 执行基本激发
         self.basic_fire(transition, marking);
-        
+
         // 重置相关时钟
         self.reset_clocks(transition, marking);
-        
+
         true
     }
-    
+
     fn advance_time(&self, delta: f64, marking: &mut TimedMarking) {
         for (transition, clock) in &mut marking.transition_clocks {
             *clock += delta;
@@ -315,7 +315,7 @@ impl TimedPetriNet {
 }
 ```
 
-### 3.3 随机Petri网 (Stochastic Petri Nets)
+### 1.3.3 随机Petri网 (Stochastic Petri Nets)
 
 **定义**：
 随机Petri网为变迁添加了随机延迟，用于性能分析和可靠性建模。
@@ -342,7 +342,7 @@ impl StochasticPetriNet {
     fn next_event_time(&self, marking: &StochasticMarking) -> (String, f64) {
         let mut min_time = f64::INFINITY;
         let mut next_transition = String::new();
-        
+
         for transition in &self.transitions {
             if self.is_enabled(transition, marking) {
                 if let Some(rate) = self.firing_rates.get(transition) {
@@ -354,39 +354,39 @@ impl StochasticPetriNet {
                 }
             }
         }
-        
+
         (next_transition, min_time)
     }
-    
+
     fn exponential_random(&self, rate: f64) -> f64 {
         // 生成指数分布的随机数
         -(-1.0_f64.ln()) / rate
     }
-    
+
     fn simulate(&self, duration: f64) -> Vec<Marking> {
         let mut marking = self.initial_marking.clone();
         let mut history = Vec::new();
         let mut current_time = 0.0;
-        
+
         while current_time < duration {
             history.push(marking.clone());
-            
+
             let (transition, delay) = self.next_event_time(&marking);
             current_time += delay;
-            
+
             if current_time < duration {
                 self.fire(&transition, &mut marking);
             }
         }
-        
+
         history
     }
 }
 ```
 
-## 4 分析技术
+## 1.4 分析技术
 
-### 4.1 可达性分析
+### 1.4.1 可达性分析
 
 **定义**：
 可达性分析确定从初始标记可以到达的所有标记。
@@ -398,30 +398,30 @@ impl PetriNet {
     fn reachability_analysis(&self) -> HashSet<Marking> {
         let mut reachable = HashSet::new();
         let mut to_explore = Vec::new();
-        
+
         let initial = Marking::from(&self.initial_marking);
         reachable.insert(initial.clone());
         to_explore.push(initial);
-        
+
         while let Some(current_marking) = to_explore.pop() {
             for transition in &self.transitions {
                 if self.is_enabled(transition, &current_marking) {
                     let mut new_marking = current_marking.clone();
                     self.fire(transition, &mut new_marking);
-                    
+
                     if reachable.insert(new_marking.clone()) {
                         to_explore.push(new_marking);
                     }
                 }
             }
         }
-        
+
         reachable
     }
 }
 ```
 
-### 4.2 不变性分析
+### 1.4.2 不变性分析
 
 **定义**：
 不变性分析寻找在系统执行过程中保持不变的属性。
@@ -441,18 +441,18 @@ impl PetriNet {
         // 使用线性代数方法寻找P-不变性
         let incidence_matrix = self.build_incidence_matrix();
         let null_space = self.compute_null_space(&incidence_matrix);
-        
+
         null_space.into_iter()
             .map(|vector| self.vector_to_invariant(vector))
             .collect()
     }
-    
+
     fn find_t_invariants(&self) -> Vec<Invariant> {
         // 使用线性代数方法寻找T-不变性
         let incidence_matrix = self.build_incidence_matrix();
         let transposed = self.transpose_matrix(&incidence_matrix);
         let null_space = self.compute_null_space(&transposed);
-        
+
         null_space.into_iter()
             .map(|vector| self.vector_to_invariant(vector))
             .collect()
@@ -460,7 +460,7 @@ impl PetriNet {
 }
 ```
 
-### 4.3 死锁检测
+### 1.4.3 死锁检测
 
 **定义**：
 死锁检测识别系统中可能导致死锁的状态。
@@ -472,16 +472,16 @@ impl PetriNet {
     fn detect_deadlocks(&self) -> Vec<Marking> {
         let reachable = self.reachability_analysis();
         let mut deadlocks = Vec::new();
-        
+
         for marking in reachable {
             if self.is_deadlock(&marking) {
                 deadlocks.push(marking);
             }
         }
-        
+
         deadlocks
     }
-    
+
     fn is_deadlock(&self, marking: &Marking) -> bool {
         for transition in &self.transitions {
             if self.is_enabled(transition, marking) {
@@ -493,47 +493,47 @@ impl PetriNet {
 }
 ```
 
-## 5 应用领域
+## 1.5 应用领域
 
-### 5.1 并发系统建模
+### 1.5.1 并发系统建模
 
 ```rust
 // 生产者-消费者系统
 fn producer_consumer_system() -> PetriNet {
     let mut net = PetriNet::new();
-    
+
     // 添加库所
     net.add_place("buffer_empty".to_string());
     net.add_place("buffer_full".to_string());
     net.add_place("producer_ready".to_string());
     net.add_place("consumer_ready".to_string());
-    
+
     // 添加变迁
     net.add_transition("produce".to_string());
     net.add_transition("consume".to_string());
-    
+
     // 添加流关系
     net.add_flow("buffer_empty".to_string(), "produce".to_string());
     net.add_flow("produce".to_string(), "buffer_full".to_string());
     net.add_flow("buffer_full".to_string(), "consume".to_string());
     net.add_flow("consume".to_string(), "buffer_empty".to_string());
-    
+
     // 设置初始标记
     net.set_initial_marking("buffer_empty".to_string(), 1);
     net.set_initial_marking("producer_ready".to_string(), 1);
     net.set_initial_marking("consumer_ready".to_string(), 1);
-    
+
     net
 }
 ```
 
-### 5.2 工作流建模
+### 1.5.2 工作流建模
 
 ```rust
 // 简单工作流系统
 fn workflow_system() -> PetriNet {
     let mut net = PetriNet::new();
-    
+
     // 工作流状态
     net.add_place("start".to_string());
     net.add_place("task1_running".to_string());
@@ -541,13 +541,13 @@ fn workflow_system() -> PetriNet {
     net.add_place("task2_running".to_string());
     net.add_place("task2_completed".to_string());
     net.add_place("end".to_string());
-    
+
     // 工作流活动
     net.add_transition("start_task1".to_string());
     net.add_transition("complete_task1".to_string());
     net.add_transition("start_task2".to_string());
     net.add_transition("complete_task2".to_string());
-    
+
     // 流关系
     net.add_flow("start".to_string(), "start_task1".to_string());
     net.add_flow("start_task1".to_string(), "task1_running".to_string());
@@ -558,15 +558,15 @@ fn workflow_system() -> PetriNet {
     net.add_flow("task2_running".to_string(), "complete_task2".to_string());
     net.add_flow("complete_task2".to_string(), "task2_completed".to_string());
     net.add_flow("task2_completed".to_string(), "end".to_string());
-    
+
     // 初始标记
     net.set_initial_marking("start".to_string(), 1);
-    
+
     net
 }
 ```
 
-## 6 总结
+## 1.6 总结
 
 Petri网理论为并发系统建模和分析提供了强大的工具：
 

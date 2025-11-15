@@ -1,48 +1,49 @@
-# 量子类型理论深化扩展 (Quantum Type Theory Extended)
+# 1. 量子类型理论深化扩展 (Quantum Type Theory Extended)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 量子类型系统基础 (Quantum Type System Foundation)](#2-量子类型系统基础-quantum-type-system-foundation)
-  - [2.1 量子类型语法](#21-量子类型语法)
-  - [2.2 量子态语义](#22-量子态语义)
-  - [2.3 量子线性性](#23-量子线性性)
-- [3 量子线性逻辑 (Quantum Linear Logic)](#3-量子线性逻辑-quantum-linear-logic)
-  - [3.1 量子线性逻辑语法](#31-量子线性逻辑语法)
-  - [3.2 量子线性逻辑语义](#32-量子线性逻辑语义)
-  - [3.3 量子资源管理](#33-量子资源管理)
-- [4 量子时态逻辑 (Quantum Temporal Logic)](#4-量子时态逻辑-quantum-temporal-logic)
-  - [4.1 量子时态逻辑语法](#41-量子时态逻辑语法)
-  - [4.2 量子控制理论](#42-量子控制理论)
-- [5 量子分布式系统 (Quantum Distributed Systems)](#5-量子分布式系统-quantum-distributed-systems)
-  - [5.1 量子网络模型](#51-量子网络模型)
-  - [5.2 量子一致性协议](#52-量子一致性协议)
-- [6 量子编程语言理论 (Quantum Programming Language Theory)](#6-量子编程语言理论-quantum-programming-language-theory)
-  - [6.1 量子λ演算](#61-量子λ演算)
-  - [6.2 量子类型推断](#62-量子类型推断)
-- [7 量子安全理论 (Quantum Security Theory)](#7-量子安全理论-quantum-security-theory)
-  - [7.1 量子密码学](#71-量子密码学)
-  - [7.2 量子零知识证明](#72-量子零知识证明)
-- [8 量子机器学习理论 (Quantum Machine Learning Theory)](#8-量子机器学习理论-quantum-machine-learning-theory)
-  - [8.1 量子神经网络](#81-量子神经网络)
-  - [8.2 量子优化算法](#82-量子优化算法)
-- [9 量子形式验证 (Quantum Formal Verification)](#9-量子形式验证-quantum-formal-verification)
-  - [9.1 量子模型检查](#91-量子模型检查)
-  - [9.2 量子程序验证](#92-量子程序验证)
-- [10 批判性分析与展望 (Critical Analysis and Outlook)](#10-批判性分析与展望-critical-analysis-and-outlook)
-  - [10.1 理论局限性](#101-理论局限性)
-  - [10.2 未来发展方向](#102-未来发展方向)
-- [11 结论](#11-结论)
+- [1. 量子类型理论深化扩展 (Quantum Type Theory Extended)](#1-量子类型理论深化扩展-quantum-type-theory-extended)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 量子类型系统基础 (Quantum Type System Foundation)](#12-量子类型系统基础-quantum-type-system-foundation)
+    - [1.2.1 量子类型语法](#121-量子类型语法)
+    - [1.2.2 量子态语义](#122-量子态语义)
+    - [1.2.3 量子线性性](#123-量子线性性)
+  - [1.3 量子线性逻辑 (Quantum Linear Logic)](#13-量子线性逻辑-quantum-linear-logic)
+    - [1.3.1 量子线性逻辑语法](#131-量子线性逻辑语法)
+    - [1.3.2 量子线性逻辑语义](#132-量子线性逻辑语义)
+    - [1.3.3 量子资源管理](#133-量子资源管理)
+  - [1.4 量子时态逻辑 (Quantum Temporal Logic)](#14-量子时态逻辑-quantum-temporal-logic)
+    - [1.4.1 量子时态逻辑语法](#141-量子时态逻辑语法)
+    - [1.4.2 量子控制理论](#142-量子控制理论)
+  - [1.5 量子分布式系统 (Quantum Distributed Systems)](#15-量子分布式系统-quantum-distributed-systems)
+    - [1.5.1 量子网络模型](#151-量子网络模型)
+    - [1.5.2 量子一致性协议](#152-量子一致性协议)
+  - [1.6 量子编程语言理论 (Quantum Programming Language Theory)](#16-量子编程语言理论-quantum-programming-language-theory)
+    - [1.6.1 量子λ演算](#161-量子λ演算)
+    - [1.6.2 量子类型推断](#162-量子类型推断)
+  - [1.7 量子安全理论 (Quantum Security Theory)](#17-量子安全理论-quantum-security-theory)
+    - [1.7.1 量子密码学](#171-量子密码学)
+    - [1.7.2 量子零知识证明](#172-量子零知识证明)
+  - [1.8 量子机器学习理论 (Quantum Machine Learning Theory)](#18-量子机器学习理论-quantum-machine-learning-theory)
+    - [1.8.1 量子神经网络](#181-量子神经网络)
+    - [1.8.2 量子优化算法](#182-量子优化算法)
+  - [1.9 量子形式验证 (Quantum Formal Verification)](#19-量子形式验证-quantum-formal-verification)
+    - [1.9.1 量子模型检查](#191-量子模型检查)
+    - [1.9.2 量子程序验证](#192-量子程序验证)
+  - [1.10 批判性分析与展望 (Critical Analysis and Outlook)](#110-批判性分析与展望-critical-analysis-and-outlook)
+    - [1.10.1 理论局限性](#1101-理论局限性)
+    - [1.10.2 未来发展方向](#1102-未来发展方向)
+  - [1.11 结论](#111-结论)
+  - [1.12 参考文献](#112-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 量子类型理论是形式科学的前沿领域，将量子计算的基本原理与类型理论的形式化框架相结合。本文档在现有理论基础上进行深化扩展，构建一个完整的量子类型理论体系，包括量子类型系统、量子线性逻辑、量子资源管理、量子时态逻辑等核心内容。
 
-## 2 量子类型系统基础 (Quantum Type System Foundation)
+## 1.2 量子类型系统基础 (Quantum Type System Foundation)
 
-### 2.1 量子类型语法
+### 1.2.1 量子类型语法
 
 **定义 1.1.1 (量子类型语法)**
 量子类型系统的语法定义：
@@ -78,7 +79,7 @@ $$\frac{\Gamma_1 \vdash e_1 : \tau_1 \quad \Gamma_2 \vdash e_2 : \tau_2}{\Gamma_
 
 $$\frac{\Gamma \vdash e : \tau_1 \otimes \tau_2}{\Gamma \vdash \text{let } (x, y) = e \text{ in } f : \tau} \quad \text{(量子模式匹配)}$$
 
-### 2.2 量子态语义
+### 1.2.2 量子态语义
 
 **定义 1.2.1 (量子态空间)**
 量子态空间 $\mathcal{H}$ 是希尔伯特空间，量子类型 $\tau$ 的语义是 $\mathcal{H}_\tau$：
@@ -101,7 +102,7 @@ $$\llbracket \tau_1 \otimes \tau_2 \rrbracket = \llbracket \tau_1 \rrbracket \ot
 2. 幺正操作保持内积：$\langle U\psi|U\psi\rangle = \langle\psi|\psi\rangle$
 3. 因此量子态保持归一化
 
-### 2.3 量子线性性
+### 1.2.3 量子线性性
 
 **定义 1.3.1 (量子线性性)**
 量子线性性要求：
@@ -129,9 +130,9 @@ $$\llbracket \tau_1 \otimes \tau_2 \rrbracket = \llbracket \tau_1 \rrbracket \ot
 2. 张量积规则确保量子态不被复制
 3. 模式匹配规则确保量子态被消费
 
-## 3 量子线性逻辑 (Quantum Linear Logic)
+## 1.3 量子线性逻辑 (Quantum Linear Logic)
 
-### 3.1 量子线性逻辑语法
+### 1.3.1 量子线性逻辑语法
 
 **定义 2.1.1 (量子线性逻辑)**
 量子线性逻辑扩展经典线性逻辑：
@@ -149,7 +150,7 @@ $$\frac{\Gamma \vdash \phi}{\Gamma \vdash \text{Superpose} \phi} \quad \text{(�
 
 $$\frac{\Gamma \vdash \phi_1 \otimes \phi_2}{\Gamma \vdash \text{Entangle} (\phi_1, \phi_2)} \quad \text{(量子纠缠)}$$
 
-### 3.2 量子线性逻辑语义
+### 1.3.2 量子线性逻辑语义
 
 **定义 2.2.1 (量子线性逻辑语义)**
 量子线性逻辑的语义解释：
@@ -168,7 +169,7 @@ $$\llbracket \text{Entangle} (\phi_1, \phi_2) \rrbracket = \text{span}(|\psi_1\r
 3. 量子纠缠是物理现象
 4. 因此语义解释与物理原理一致
 
-### 3.3 量子资源管理
+### 1.3.3 量子资源管理
 
 **定义 2.3.1 (量子资源)**
 量子资源包括：
@@ -205,9 +206,9 @@ data QuantumResourceOp a where
 3. 量子操作保持量子态的物理性质
 4. 测量操作将量子比特转换为经典比特
 
-## 4 量子时态逻辑 (Quantum Temporal Logic)
+## 1.4 量子时态逻辑 (Quantum Temporal Logic)
 
-### 4.1 量子时态逻辑语法
+### 1.4.1 量子时态逻辑语法
 
 **定义 3.1.1 (量子时态逻辑)**
 量子时态逻辑扩展经典时态逻辑：
@@ -229,7 +230,7 @@ $$\pi, i \models \text{Entangle} \phi \Leftrightarrow \exists j \geq i. \pi, j \
 3. 量子纠缠是量子力学的独特现象
 4. 因此时态逻辑正确描述量子行为
 
-### 4.2 量子控制理论
+### 1.4.2 量子控制理论
 
 **定义 3.2.1 (量子控制系统)**
 量子控制系统是一个六元组 $\Sigma_q = (X_q, U_q, Y_q, f_q, h_q, \mathcal{H})$，其中：
@@ -254,9 +255,9 @@ $$\dot{\rho}(t) = -i[H, \rho(t)] + \sum_k L_k \rho(t) L_k^\dagger - \frac{1}{2}\
 2. 存在控制律使得系统达到目标态
 3. 量子控制律保持量子态的物理性质
 
-## 5 量子分布式系统 (Quantum Distributed Systems)
+## 1.5 量子分布式系统 (Quantum Distributed Systems)
 
-### 5.1 量子网络模型
+### 1.5.1 量子网络模型
 
 **定义 4.1.1 (量子网络)**
 量子网络是一个五元组 $N_q = (V_q, E_q, \mathcal{H}_q, \mathcal{C}_q, \mathcal{M}_q)$，其中：
@@ -288,7 +289,7 @@ data QuantumProtocol where
 3. 量子测量破坏量子态
 4. 因此量子通信是安全的
 
-### 5.2 量子一致性协议
+### 1.5.2 量子一致性协议
 
 **定义 4.2.1 (量子共识)**
 量子共识问题要求所有量子节点就量子态达成一致。
@@ -306,9 +307,9 @@ data QuantumProtocol where
 3. 量子不可克隆定理防止欺骗
 4. 因此量子共识是可能的
 
-## 6 量子编程语言理论 (Quantum Programming Language Theory)
+## 1.6 量子编程语言理论 (Quantum Programming Language Theory)
 
-### 6.1 量子λ演算
+### 1.6.1 量子λ演算
 
 **定义 5.1.1 (量子λ演算)**
 量子λ演算的语法：
@@ -331,7 +332,7 @@ $$\text{measure}|\psi\rangle \rightarrow |i\rangle \text{ with probability } |\a
 3. 量子态保持归一化
 4. 因此演算与物理原理一致
 
-### 6.2 量子类型推断
+### 1.6.2 量子类型推断
 
 **定义 5.2.1 (量子类型推断算法)**
 量子类型推断算法：
@@ -362,9 +363,9 @@ quantumTypeInference ctx (Tensor e1 e2) = do
 2. 算法正确：类型规则与推断规则一致
 3. 算法完备：所有良类型表达式都能推断出类型
 
-## 7 量子安全理论 (Quantum Security Theory)
+## 1.7 量子安全理论 (Quantum Security Theory)
 
-### 7.1 量子密码学
+### 1.7.1 量子密码学
 
 **定义 6.1.1 (量子密钥分发)**
 量子密钥分发协议BB84：
@@ -385,7 +386,7 @@ BB84协议在理想条件下是无条件安全的。
 3. 窃听者无法获得完整信息
 4. 因此协议是安全的
 
-### 7.2 量子零知识证明
+### 1.7.2 量子零知识证明
 
 **定义 6.2.1 (量子零知识证明)**
 量子零知识证明系统：
@@ -404,9 +405,9 @@ BB84协议在理想条件下是无条件安全的。
 3. 量子不可克隆定理保护隐私
 4. 因此零知识证明是可能的
 
-## 8 量子机器学习理论 (Quantum Machine Learning Theory)
+## 1.8 量子机器学习理论 (Quantum Machine Learning Theory)
 
-### 8.1 量子神经网络
+### 1.8.1 量子神经网络
 
 **定义 7.1.1 (量子神经网络)**
 量子神经网络是一个四元组 $QNN = (V_q, E_q, \mathcal{U}_q, \mathcal{M}_q)$，其中：
@@ -431,7 +432,7 @@ $$|\psi_{l+1}\rangle = U_l|\psi_l\rangle$$
 3. 量子干涉提供并行计算
 4. 因此量子神经网络更强大
 
-### 8.2 量子优化算法
+### 1.8.2 量子优化算法
 
 **定义 7.2.1 (量子优化问题)**
 量子优化问题：
@@ -451,9 +452,9 @@ QAOA算法在适当参数下收敛到最优解。
 2. QAOA近似绝热演化
 3. 因此算法收敛到最优解
 
-## 9 量子形式验证 (Quantum Formal Verification)
+## 1.9 量子形式验证 (Quantum Formal Verification)
 
-### 9.1 量子模型检查
+### 1.9.1 量子模型检查
 
 **定义 8.1.1 (量子Kripke结构)**
 量子Kripke结构是一个四元组 $M_q = (S_q, R_q, L_q, \mathcal{H}_q)$，其中：
@@ -477,7 +478,7 @@ $$\phi ::= p \mid \neg \phi \mid \phi_1 \land \phi_2 \mid \phi_1 \lor \phi_2 \mi
 3. 量子自动机语言包含问题是可判定的
 4. 因此量子模型检查是可判定的
 
-### 9.2 量子程序验证
+### 1.9.2 量子程序验证
 
 **定义 8.2.1 (量子霍尔逻辑)**
 量子霍尔逻辑的公理：
@@ -495,9 +496,9 @@ $$\frac{\{P \land B\} S_1 \{Q\} \quad \{P \land \neg B\} S_2 \{Q\}}{\{P\} \text{
 2. 任何图灵完全系统都是不完备的
 3. 因此量子霍尔逻辑是相对完备的
 
-## 10 批判性分析与展望 (Critical Analysis and Outlook)
+## 1.10 批判性分析与展望 (Critical Analysis and Outlook)
 
-### 10.1 理论局限性
+### 1.10.1 理论局限性
 
 **批判 9.1.1 (量子退相干)**
 量子系统面临退相干问题：
@@ -520,7 +521,7 @@ $$\frac{\{P \land B\} S_1 \{Q\} \quad \{P \land \neg B\} S_2 \{Q\}}{\{P\} \text{
 - 量子算法设计困难
 - 量子系统模拟复杂
 
-### 10.2 未来发展方向
+### 1.10.2 未来发展方向
 
 **展望 9.2.1 (量子优势)**
 量子计算的优势方向：
@@ -546,7 +547,7 @@ $$\frac{\{P \land B\} S_1 \{Q\} \quad \{P \land \neg B\} S_2 \{Q\}}{\{P\} \text{
 - 量子成像
 - 量子计算
 
-## 11 结论
+## 1.11 结论
 
 量子类型理论是形式科学的前沿领域，将量子计算的基本原理与类型理论的形式化框架相结合。通过严格的形式化定义、完整的定理证明和批判性分析，我们建立了一个自洽、完备、前沿的量子类型理论体系。
 
@@ -561,7 +562,7 @@ $$\frac{\{P \land B\} S_1 \{Q\} \quad \{P \land \neg B\} S_2 \{Q\}}{\{P\} \text{
 
 量子类型理论为量子计算提供了坚实的理论基础，为量子编程语言设计、量子系统建模、量子算法验证等领域提供了强大的理论工具。通过持续的理论创新和实践应用，我们相信量子类型理论将在未来的量子科技发展中发挥更加重要的作用。
 
-## 参考文献
+## 1.12 参考文献
 
 1. Nielsen, M. A., & Chuang, I. L. (2010). Quantum computation and quantum information. Cambridge university press.
 2. Selinger, P. (2004). Towards a quantum programming language. Mathematical Structures in Computer Science, 14(4), 527-586.

@@ -1,36 +1,37 @@
-# 高级分布式系统理论扩展 (Advanced Distributed Systems Theory Extended)
+# 1. 高级分布式系统理论扩展 (Advanced Distributed Systems Theory Extended)
 
-## 📋 目录
+## 目录
 
-- [1 分布式系统基础理论深度分析](#1-分布式系统基础理论深度分析)
-  - [1.1 系统模型形式化](#11-系统模型形式化)
-  - [1.2 故障模型](#12-故障模型)
-- [2 一致性协议理论](#2-一致性协议理论)
-  - [2.1 共识问题](#21-共识问题)
-  - [2.2 Paxos算法](#22-paxos算法)
-  - [2.3 Raft算法](#23-raft算法)
-- [3 分布式存储理论](#3-分布式存储理论)
-  - [3.1 复制状态机](#31-复制状态机)
-  - [3.2 一致性哈希](#32-一致性哈希)
-- [4 容错机制理论](#4-容错机制理论)
-  - [4.1 故障检测](#41-故障检测)
-  - [4.2 故障恢复](#42-故障恢复)
-- [5 分布式算法理论](#5-分布式算法理论)
-  - [5.1 分布式快照](#51-分布式快照)
-  - [5.2 分布式死锁检测](#52-分布式死锁检测)
-- [6 分布式事务理论](#6-分布式事务理论)
-  - [6.1 ACID性质](#61-acid性质)
-  - [6.2 两阶段提交](#62-两阶段提交)
-- [7 分布式系统验证](#7-分布式系统验证)
-  - [7.1 模型检查](#71-模型检查)
-  - [7.2 定理证明](#72-定理证明)
-- [8 结论](#8-结论)
+- [1. 高级分布式系统理论扩展 (Advanced Distributed Systems Theory Extended)](#1-高级分布式系统理论扩展-advanced-distributed-systems-theory-extended)
+  - [目录](#目录)
+  - [1.1 分布式系统基础理论深度分析](#11-分布式系统基础理论深度分析)
+    - [1.1.1 系统模型形式化](#111-系统模型形式化)
+    - [1.1.2 故障模型](#112-故障模型)
+  - [1.2 一致性协议理论](#12-一致性协议理论)
+    - [1.2.1 共识问题](#121-共识问题)
+    - [1.2.2 Paxos算法](#122-paxos算法)
+    - [1.2.3 Raft算法](#123-raft算法)
+  - [1.3 分布式存储理论](#13-分布式存储理论)
+    - [1.3.1 复制状态机](#131-复制状态机)
+    - [1.3.2 一致性哈希](#132-一致性哈希)
+  - [1.4 容错机制理论](#14-容错机制理论)
+    - [1.4.1 故障检测](#141-故障检测)
+    - [1.4.2 故障恢复](#142-故障恢复)
+  - [1.5 分布式算法理论](#15-分布式算法理论)
+    - [1.5.1 分布式快照](#151-分布式快照)
+    - [1.5.2 分布式死锁检测](#152-分布式死锁检测)
+  - [1.6 分布式事务理论](#16-分布式事务理论)
+    - [1.6.1 ACID性质](#161-acid性质)
+    - [1.6.2 两阶段提交](#162-两阶段提交)
+  - [1.7 分布式系统验证](#17-分布式系统验证)
+    - [1.7.1 模型检查](#171-模型检查)
+    - [1.7.2 定理证明](#172-定理证明)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
+## 1.1 分布式系统基础理论深度分析
 
-## 1 分布式系统基础理论深度分析
-
-### 1.1 系统模型形式化
+### 1.1.1 系统模型形式化
 
 **定义 1.1 (分布式系统)**
 分布式系统是一个三元组 $DS = (N, C, M)$，其中：
@@ -76,7 +77,7 @@
 2. 无法确定消息到达顺序
 3. 因此顺序不可预测
 
-### 1.2 故障模型
+### 1.1.2 故障模型
 
 **定义 1.6 (故障类型)**
 节点故障类型：
@@ -121,9 +122,9 @@
 2. 完美检测器需要同步假设
 3. 因此异步系统中不可能
 
-## 2 一致性协议理论
+## 1.2 一致性协议理论
 
-### 2.1 共识问题
+### 1.2.1 共识问题
 
 **定义 2.1 (共识问题)**
 共识问题要求所有正确节点就某个值达成一致，满足：
@@ -160,7 +161,7 @@
 2. 概率1确保最终达成
 3. 不违反FLP不可能性
 
-### 2.2 Paxos算法
+### 1.2.2 Paxos算法
 
 **定义 2.4 (Paxos角色)**
 Paxos算法中的角色：
@@ -186,22 +187,22 @@ data PaxosState = PaxosState
   }
 
 paxosPhase1a :: Proposer -> Int -> [Message]
-paxosPhase1a proposer n = 
+paxosPhase1a proposer n =
   [Prepare n | acceptor <- acceptors]
 
 paxosPhase1b :: Acceptor -> Int -> Maybe (Int, Value) -> Message
-paxosPhase1b acceptor n (promisedNum, acceptedVal) = 
-  if n > promisedNum 
+paxosPhase1b acceptor n (promisedNum, acceptedVal) =
+  if n > promisedNum
   then Promise n (acceptedNum, acceptedValue)
   else Nack
 
 paxosPhase2a :: Proposer -> Int -> Value -> [Message]
-paxosPhase2a proposer n v = 
+paxosPhase2a proposer n v =
   [Accept n v | acceptor <- acceptors]
 
 paxosPhase2b :: Acceptor -> Int -> Value -> Message
-paxosPhase2b acceptor n v = 
-  if n >= promisedNumber 
+paxosPhase2b acceptor n v =
+  if n >= promisedNumber
   then Accepted n v
   else Nack
 ```
@@ -224,7 +225,7 @@ Paxos算法保证一旦值被决定，就不会被改变。
 2. 已决定值不会被覆盖
 3. 因此安全性保证
 
-### 2.3 Raft算法
+### 1.2.3 Raft算法
 
 **定义 2.6 (Raft状态)**
 Raft节点状态：
@@ -243,21 +244,21 @@ raftElection :: Node -> IO ()
 raftElection node = do
   currentTerm <- getCurrentTerm node
   votedFor <- getVotedFor node
-  
+
   -- 转换为候选人
   setState node Candidate
   incrementTerm node
   setVotedFor node (Just (nodeId node))
-  
+
   -- 发送投票请求
   votes <- sendRequestVote node currentTerm + 1
-  
+
   if length votes > majority
     then becomeLeader node
     else becomeFollower node
 
 sendRequestVote :: Node -> Int -> IO [Vote]
-sendRequestVote node term = 
+sendRequestVote node term =
   let request = RequestVote term (nodeId node) (lastLogIndex node) (lastLogTerm node)
       responses = mapM (\peer -> sendMessage peer request) (peers node)
   in filter isVoteGranted responses
@@ -281,9 +282,9 @@ Raft算法最终会选出领导者。
 2. 候选人请求投票
 3. 最终获得多数票成为领导者
 
-## 3 分布式存储理论
+## 1.3 分布式存储理论
 
-### 3.1 复制状态机
+### 1.3.1 复制状态机
 
 **定义 3.1 (复制状态机)**
 复制状态机是三元组 $RSM = (S, \delta, \Sigma)$，其中：
@@ -315,21 +316,21 @@ logReplication :: Leader -> Command -> IO ()
 logReplication leader cmd = do
   currentTerm <- getCurrentTerm leader
   nextIndex <- getNextIndex leader
-  
+
   -- 添加日志条目
   let entry = LogEntry currentTerm cmd
   appendLog leader entry
-  
+
   -- 并行发送给所有跟随者
   replicateToFollowers leader entry
 
 replicateToFollowers :: Leader -> LogEntry -> IO ()
-replicateToFollowers leader entry = 
+replicateToFollowers leader entry =
   let followers = getFollowers leader
   in mapM_ (\follower -> sendAppendEntries leader follower entry) followers
 ```
 
-### 3.2 一致性哈希
+### 1.3.2 一致性哈希
 
 **定义 3.4 (一致性哈希)**
 一致性哈希函数 $h : \text{Key} \rightarrow [0, 2^m)$ 满足：
@@ -351,20 +352,20 @@ data ConsistentHash = ConsistentHash
   }
 
 lookup :: ConsistentHash -> Key -> Node
-lookup ch key = 
+lookup ch key =
   let hash = hashFunction ch key
       ring = ring ch
       index = findClosest ring hash
   in ring !! index
 
 addNode :: ConsistentHash -> Node -> ConsistentHash
-addNode ch node = 
+addNode ch node =
   let virtualNodes = [node ++ show i | i <- [1..virtualNodes ch]]
       newRing = insertSorted (ring ch) virtualNodes
   in ch { ring = newRing }
 
 removeNode :: ConsistentHash -> Node -> ConsistentHash
-removeNode ch node = 
+removeNode ch node =
   let virtualNodes = [node ++ show i | i <- [1..virtualNodes ch]]
       newRing = filter (`notElem` virtualNodes) (ring ch)
   in ch { ring = newRing }
@@ -379,16 +380,18 @@ removeNode ch node =
 2. **单调性**：只影响相邻节点
 3. **分散性**：哈希函数随机性
 
-## 4 容错机制理论
+## 1.4 容错机制理论
 
-### 4.1 故障检测
+### 1.4.1 故障检测
 
 **定义 4.1 (心跳机制)**
 心跳机制通过定期消息检测故障：
-$$\text{Heartbeat}_i(t) = \begin{cases}
+$$
+\text{Heartbeat}_i(t) = \begin{cases}
 1 & \text{if } p_i \text{ sends heartbeat at } t \\
 0 & \text{otherwise}
-\end{cases}$$
+\end{cases}
+$$
 
 **定义 4.2 (超时检测)**
 节点 $p_i$ 在时间 $t$ 怀疑节点 $p_j$，如果：
@@ -401,10 +404,10 @@ faultDetection :: Node -> IO ()
 faultDetection node = do
   -- 发送心跳
   sendHeartbeats node
-  
+
   -- 检查超时
   checkTimeouts node
-  
+
   -- 更新故障列表
   updateFailureList node
 
@@ -426,11 +429,12 @@ checkTimeouts node =
 在同步系统中，故障检测器可以达到完美准确性。
 
 **证明：** 通过同步假设：
+
 1. 消息延迟有界
 2. 处理时间有界
 3. 因此可以准确检测故障
 
-### 4.2 故障恢复
+### 1.4.2 故障恢复
 
 **定义 4.3 (故障恢复)**
 故障恢复机制确保系统在节点故障后继续运行。
@@ -446,10 +450,10 @@ faultRecovery :: Node -> IO ()
 faultRecovery node = do
   -- 检测故障
   failedNodes <- detectFailures node
-  
+
   -- 重新分配负载
   redistributeLoad node failedNodes
-  
+
   -- 恢复状态
   recoverState node
 
@@ -470,13 +474,14 @@ recoverState node =
 故障恢复机制确保系统一致性。
 
 **证明：** 通过状态转移：
+
 1. 状态转移保持一致性
 2. 负载重分配保持平衡
 3. 因此系统正确恢复
 
-## 5 分布式算法理论
+## 1.5 分布式算法理论
 
-### 5.1 分布式快照
+### 1.5.1 分布式快照
 
 **定义 5.1 (分布式快照)**
 分布式快照是系统全局状态的一致记录。
@@ -495,13 +500,13 @@ distributedSnapshot :: Node -> IO Snapshot
 distributedSnapshot initiator = do
   -- 记录本地状态
   localState <- recordLocalState initiator
-  
+
   -- 发送标记消息
   sendMarkers initiator
-  
+
   -- 收集快照
   snapshot <- collectSnapshot initiator
-  
+
   return snapshot
 
 sendMarkers :: Node -> IO ()
@@ -521,11 +526,12 @@ collectSnapshot node =
 Chandy-Lamport算法产生一致的全局状态。
 
 **证明：** 通过标记消息：
+
 1. 标记消息分割消息流
 2. 快照包含标记前的状态
 3. 因此状态一致
 
-### 5.2 分布式死锁检测
+### 1.5.2 分布式死锁检测
 
 **定义 5.3 (资源分配图)**
 资源分配图 $G = (V, E)$，其中：
@@ -543,13 +549,13 @@ deadlockDetection :: Node -> IO Bool
 deadlockDetection node = do
   -- 构建本地图
   localGraph <- buildLocalGraph node
-  
+
   -- 发送探测消息
   probes <- sendProbes node
-  
+
   -- 检测环
   hasCycle <- detectCycle localGraph probes
-  
+
   return hasCycle
 
 sendProbes :: Node -> IO [Probe]
@@ -568,13 +574,14 @@ detectCycle graph probes =
 分布式死锁检测算法正确识别死锁。
 
 **证明：** 通过环检测：
+
 1. 探测消息沿等待边传播
 2. 环表示死锁
 3. 因此检测正确
 
-## 6 分布式事务理论
+## 1.6 分布式事务理论
 
-### 6.1 ACID性质
+### 1.6.1 ACID性质
 
 **定义 6.1 (原子性)**
 事务要么完全执行，要么完全不执行。
@@ -592,11 +599,12 @@ detectCycle graph probes =
 在异步分布式系统中，无法同时满足所有ACID性质。
 
 **证明：** 通过CAP定理：
+
 1. 一致性要求同步
 2. 可用性要求异步
 3. 因此无法同时满足
 
-### 6.2 两阶段提交
+### 1.6.2 两阶段提交
 
 **定义 6.5 (两阶段提交)**
 两阶段提交协议：
@@ -611,13 +619,13 @@ twoPhaseCommit :: Coordinator -> [Participant] -> IO Bool
 twoPhaseCommit coordinator participants = do
   -- 准备阶段
   prepareResponses <- preparePhase coordinator participants
-  
+
   -- 决定阶段
   decision <- decidePhase coordinator prepareResponses
-  
+
   -- 执行决定
   executeDecision coordinator participants decision
-  
+
   return decision
 
 preparePhase :: Coordinator -> [Participant] -> IO [Response]
@@ -636,13 +644,14 @@ decidePhase coordinator responses =
 两阶段提交协议保证事务原子性。
 
 **证明：** 通过两阶段设计：
+
 1. 准备阶段确保所有参与者准备就绪
 2. 提交阶段确保所有参与者执行相同决定
 3. 因此保证原子性
 
-## 7 分布式系统验证
+## 1.7 分布式系统验证
 
-### 7.1 模型检查
+### 1.7.1 模型检查
 
 **定义 7.1 (分布式系统模型)**
 分布式系统模型是状态转换系统 $M = (S, S_0, T, L)$，其中：
@@ -682,11 +691,12 @@ formulaToAutomaton formula =
 模型检查算法正确验证时态性质。
 
 **证明：** 通过自动机理论：
+
 1. 公式转换为自动机
 2. 模型与自动机乘积
 3. 检查接受运行
 
-### 7.2 定理证明
+### 1.7.2 定理证明
 
 **定义 7.3 (分布式系统规范)**
 分布式系统规范是逻辑公式描述的系统性质。
@@ -698,11 +708,12 @@ formulaToAutomaton formula =
 通过归纳法验证不变式。
 
 **证明：** 通过归纳法：
+
 1. 基础情况：初始状态满足不变式
 2. 归纳步骤：转移保持不变式
 3. 因此所有状态满足不变式
 
-## 8 结论
+## 1.8 结论
 
 高级分布式系统理论为构建可靠、高效的分布式系统提供了强大的理论基础：
 
@@ -714,7 +725,7 @@ formulaToAutomaton formula =
 
 分布式系统理论在云计算、区块链、物联网等领域发挥着重要作用，为现代分布式应用的开发提供了坚实的理论支撑。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Lynch, N. A. (1996). Distributed algorithms. Morgan Kaufmann.
 2. Coulouris, G., Dollimore, J., Kindberg, T., & Blair, G. (2011). Distributed systems: concepts and design. Pearson Education.

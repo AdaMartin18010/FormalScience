@@ -1,42 +1,42 @@
-# 分布式工作流的内部可变性模型：从Rust启发到架构级实现
+# 1. 分布式工作流的内部可变性模型：从Rust启发到架构级实现
 
 ## 目录
 
-- [分布式工作流的内部可变性模型：从Rust启发到架构级实现](#分布式工作流的内部可变性模型从rust启发到架构级实现)
+- [1. 分布式工作流的内部可变性模型：从Rust启发到架构级实现](#1-分布式工作流的内部可变性模型从rust启发到架构级实现)
   - [目录](#目录)
-  - [理论基础与概念澄清](#理论基础与概念澄清)
-    - [可变性概念重新审视](#可变性概念重新审视)
-    - [内部可变性vs外部可变性](#内部可变性vs外部可变性)
-    - [工作流架构中的可变性层次](#工作流架构中的可变性层次)
-  - [工作流内部可变性理论模型](#工作流内部可变性理论模型)
-    - [组件内部状态管理](#组件内部状态管理)
-    - [安全共享可变状态的模式](#安全共享可变状态的模式)
-    - [形式化内部可变性规则](#形式化内部可变性规则)
-  - [分布式环境下的内部可变性实现](#分布式环境下的内部可变性实现)
-    - [状态隔离与安全共享](#状态隔离与安全共享)
-    - [分布式Cell模式](#分布式cell模式)
-    - [一致性模型与可变性](#一致性模型与可变性)
-  - [工作流级别的内部可变性保证](#工作流级别的内部可变性保证)
-    - [WfUnit内部状态管理](#wfunit内部状态管理)
-    - [跨边界状态变更控制](#跨边界状态变更控制)
-    - [可变性约束与类型系统](#可变性约束与类型系统)
-  - [内部可变性与资源访问控制的协同](#内部可变性与资源访问控制的协同)
-    - [两层模型的设计](#两层模型的设计)
-    - [状态与资源的界限](#状态与资源的界限)
-    - [动态边界场景处理](#动态边界场景处理)
-  - [内部可变性与系统演化](#内部可变性与系统演化)
-    - [状态迁移与版本兼容](#状态迁移与版本兼容)
-    - [增量更新策略](#增量更新策略)
-    - [向后兼容保证](#向后兼容保证)
-  - [结论与实践建议](#结论与实践建议)
-    - [架构设计原则](#架构设计原则)
-    - [实现注意事项](#实现注意事项)
-    - [验证与测试策略](#验证与测试策略)
-  - [思维导图-text](#思维导图-text)
+  - [1.1 理论基础与概念澄清](#11-理论基础与概念澄清)
+    - [1.1.1 可变性概念重新审视](#111-可变性概念重新审视)
+    - [1.1.2 内部可变性vs外部可变性](#112-内部可变性vs外部可变性)
+    - [1.1.3 工作流架构中的可变性层次](#113-工作流架构中的可变性层次)
+  - [1.2 工作流内部可变性理论模型](#12-工作流内部可变性理论模型)
+    - [1.2.1 组件内部状态管理](#121-组件内部状态管理)
+    - [1.2.2 安全共享可变状态的模式](#122-安全共享可变状态的模式)
+    - [1.2.3 形式化内部可变性规则](#123-形式化内部可变性规则)
+  - [1.3 分布式环境下的内部可变性实现](#13-分布式环境下的内部可变性实现)
+    - [1.3.1 状态隔离与安全共享](#131-状态隔离与安全共享)
+    - [1.3.2 分布式Cell模式](#132-分布式cell模式)
+    - [1.3.3 一致性模型与可变性](#133-一致性模型与可变性)
+  - [1.4 工作流级别的内部可变性保证](#14-工作流级别的内部可变性保证)
+    - [1.4.1 WfUnit内部状态管理](#141-wfunit内部状态管理)
+    - [1.4.2 跨边界状态变更控制](#142-跨边界状态变更控制)
+    - [1.4.3 可变性约束与类型系统](#143-可变性约束与类型系统)
+  - [1.5 内部可变性与资源访问控制的协同](#15-内部可变性与资源访问控制的协同)
+    - [1.5.1 两层模型的设计](#151-两层模型的设计)
+    - [1.5.2 状态与资源的界限](#152-状态与资源的界限)
+    - [1.5.3 动态边界场景处理](#153-动态边界场景处理)
+  - [1.6 内部可变性与系统演化](#16-内部可变性与系统演化)
+    - [1.6.1 状态迁移与版本兼容](#161-状态迁移与版本兼容)
+    - [1.6.2 增量更新策略](#162-增量更新策略)
+    - [1.6.3 向后兼容保证](#163-向后兼容保证)
+  - [1.7 结论与实践建议](#17-结论与实践建议)
+    - [1.7.1 架构设计原则](#171-架构设计原则)
+    - [1.7.2 实现注意事项](#172-实现注意事项)
+    - [1.7.3 验证与测试策略](#173-验证与测试策略)
+  - [1.8 思维导图-text](#18-思维导图-text)
 
-## 理论基础与概念澄清
+## 1.1 理论基础与概念澄清
 
-### 可变性概念重新审视
+### 1.1.1 可变性概念重新审视
 
 在深入讨论工作流架构中的内部可变性之前，需要明确区分不同层次的可变性概念：
 
@@ -57,7 +57,7 @@
 
 > **关键观察**：工作流架构关注的是后两种可变性，而非Rust直接管理的内存级可变性。这一区分至关重要，因为分布式环境中的"可变性"涉及的是逻辑状态而非物理内存。
 
-### 内部可变性vs外部可变性
+### 1.1.2 内部可变性vs外部可变性
 
 Rust中，内部可变性（通过`Cell`、`RefCell`等）和外部可变性（通过`&mut`）的区别在于：
 
@@ -72,7 +72,7 @@ Rust中，内部可变性（通过`Cell`、`RefCell`等）和外部可变性（�
 工作流架构中的"内部可变性"指的是组件（WfUnit）能够在不违反外部访问控制的情况下，
 管理和修改其内部状态的能力。这与Rust的内部可变性概念平行但不等同。
 
-### 工作流架构中的可变性层次
+### 1.1.3 工作流架构中的可变性层次
 
 工作流系统中的可变性可以分为多个层次：
 
@@ -91,9 +91,9 @@ Rust中，内部可变性（通过`Cell`、`RefCell`等）和外部可变性（�
    - 需要WfOrchestrator协调的访问
    - 类比Rust中的共享可变状态，但在分布式环境下
 
-## 工作流内部可变性理论模型
+## 1.2 工作流内部可变性理论模型
 
-### 组件内部状态管理
+### 1.2.1 组件内部状态管理
 
 工作流组件（WfUnit）需要管理不同类型的内部状态：
 
@@ -119,7 +119,7 @@ State = PrivateImmutable(S) | PrivateMutable(S) | SharedMutable(S, AccessControl
 AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
 ```
 
-### 安全共享可变状态的模式
+### 1.2.2 安全共享可变状态的模式
 
 从Rust内部可变性机制中，我们可以提炼出几种适用于工作流架构的模式：
 
@@ -141,7 +141,7 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
    - 形式化：`write_lock(rwlock) → WriteGuard<T> (可能阻塞)`
    - 工作流应用：高并发环境下的状态管理
 
-### 形式化内部可变性规则
+### 1.2.3 形式化内部可变性规则
 
 1. **内部状态分类规则**：
 
@@ -155,7 +155,7 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
    ```math
    ∀s ∈ WfUnitState, ∀c ∈ Components:
      access(c, s) ⇒ (
-       c = owner(s) ∨ 
+       c = owner(s) ∨
        (classification(s) = SharedMutable ∧ hasPermission(c, s))
      )
    ```
@@ -174,13 +174,13 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
 
    ```math
    ∀s ∈ SharedMutable, ∀t ∈ Time:
-     (∃c: hasWritePermission(c, s, t)) ⇒ 
+     (∃c: hasWritePermission(c, s, t)) ⇒
        (¬∃c': c'≠c ∧ hasAnyPermission(c', s, t))
    ```
 
-## 分布式环境下的内部可变性实现
+## 1.3 分布式环境下的内部可变性实现
 
-### 状态隔离与安全共享
+### 1.3.1 状态隔离与安全共享
 
 分布式环境给内部可变性带来了新挑战：状态可能分散在多个物理节点上。关键设计决策：
 
@@ -199,7 +199,7 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
    - 实现变更通知机制（如发布-订阅）
    - 处理网络分区下的状态发散与重新收敛
 
-### 分布式Cell模式
+### 1.3.2 分布式Cell模式
 
 受Rust `Cell`启发，设计分布式环境下的内部可变性模式：
 
@@ -211,12 +211,12 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
        change_log: ChangeLog,
        consistency_level: ConsistencyLevel,
    }
-   
+
    impl<T> DistributedCell<T> {
        fn replace(&self, new_value: T) -> Result<T, StateError> {
            // 实现原子替换，可能涉及分布式锁或共识协议
        }
-       
+
        fn get(&self) -> T {
            // 读取当前值，可能涉及一致性检查
        }
@@ -231,19 +231,19 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
        active_borrows: DistributedCounter,
        owner: WfUnitId,
    }
-   
+
    impl<T> DistributedRefCell<T> {
        fn borrow(&self) -> Result<DistributedRef<T>, BorrowError> {
            // 实现分布式读取借用
        }
-       
+
        fn borrow_mut(&self) -> Result<DistributedRefMut<T>, BorrowError> {
            // 实现分布式可变借用，确保独占访问
        }
    }
    ```
 
-### 一致性模型与可变性
+### 1.3.3 一致性模型与可变性
 
 分布式环境下，内部可变性与一致性模型密切相关：
 
@@ -268,9 +268,9 @@ AccessControl = ReadOnly | WriteWithCheck | ExclusiveWrite
 SharedMutableState<T, ConsistencyLevel>
 ```
 
-## 工作流级别的内部可变性保证
+## 1.4 工作流级别的内部可变性保证
 
-### WfUnit内部状态管理
+### 1.4.1 WfUnit内部状态管理
 
 重新设计WfUnit以明确内部可变性管理：
 
@@ -278,13 +278,13 @@ SharedMutableState<T, ConsistencyLevel>
 struct WfUnit {
     // 私有不可变状态
     config: PrivateImmutable<Configuration>,
-    
+
     // 私有可变状态
     internal_state: PrivateMutable<StateMap>,
-    
+
     // 共享可变状态（需要控制）
     shared_state: SharedMutable<SharedStateMap, AccessControl>,
-    
+
     // 状态访问管理器
     state_manager: StateManager,
 }
@@ -294,7 +294,7 @@ impl WfUnit {
     fn update_internal_state(&mut self, updates: StateUpdates) -> Result<(), StateError> {
         self.internal_state.update(updates)
     }
-    
+
     // 共享状态修改方法（需要通过控制机制）
     fn update_shared_state(&self, updates: StateUpdates) -> Result<(), StateError> {
         self.state_manager.acquire_write_permission()?;
@@ -305,7 +305,7 @@ impl WfUnit {
 }
 ```
 
-### 跨边界状态变更控制
+### 1.4.2 跨边界状态变更控制
 
 当状态需要跨越WfUnit边界时，需要特殊的控制机制：
 
@@ -323,7 +323,7 @@ impl WfUnit {
        expiration: Instant,
        _phantom: PhantomData<T>,
    }
-   
+
    // 使用RAII模式自动释放
    impl<T> Drop for StateAccessToken<T> {
        fn drop(&mut self) {
@@ -337,7 +337,7 @@ impl WfUnit {
    - 实现变更验证逻辑
    - 处理变更冲突和回滚
 
-### 可变性约束与类型系统
+### 1.4.3 可变性约束与类型系统
 
 利用类型系统在设计时强制可变性规则：
 
@@ -357,7 +357,7 @@ impl WfUnit {
        ReadWrite,
        Exclusive,
    }
-   
+
    struct AccessGuard<T, Mode: AccessMode> {
        state: &T,
        _mode: PhantomData<Mode>,
@@ -371,18 +371,18 @@ impl WfUnit {
    struct StateRef<'state, T> {
        data: &'state T,
    }
-   
+
    // 确保访问控制在正确的作用域内
-   struct StateMutRef<'state, 'access, T> 
+   struct StateMutRef<'state, 'access, T>
    where 'access: 'state {
        data: &'state mut T,
        _access_marker: PhantomData<&'access ()>,
    }
    ```
 
-## 内部可变性与资源访问控制的协同
+## 1.5 内部可变性与资源访问控制的协同
 
-### 两层模型的设计
+### 1.5.1 两层模型的设计
 
 分布式工作流系统需要同时处理两个层面的控制：
 
@@ -402,7 +402,7 @@ impl WfUnit {
 - 资源访问控制管理组件**外部**交互
 - 两层之间有明确的边界和交互协议
 
-### 状态与资源的界限
+### 1.5.2 状态与资源的界限
 
 在实际系统中，需要明确区分"状态"和"资源"：
 
@@ -423,7 +423,7 @@ impl WfUnit {
 ∀y: y ∈ Resource ⇔ lifecycle(y) ⊇ lifecycle(WfUnit)
 ```
 
-### 动态边界场景处理
+### 1.5.3 动态边界场景处理
 
 某些实体在不同情况下可能表现为状态或资源。处理策略：
 
@@ -442,9 +442,9 @@ impl WfUnit {
    - 根据访问模式动态选择控制机制
    - 确保两种机制不会冲突
 
-## 内部可变性与系统演化
+## 1.6 内部可变性与系统演化
 
-### 状态迁移与版本兼容
+### 1.6.1 状态迁移与版本兼容
 
 系统演化时，内部状态结构可能需要变化：
 
@@ -463,7 +463,7 @@ impl WfUnit {
    - 实现无中断状态迁移
    - 处理迁移过程中的错误和回滚
 
-### 增量更新策略
+### 1.6.2 增量更新策略
 
 对内部可变状态的更新应支持增量模式：
 
@@ -483,7 +483,7 @@ struct StateUpdate<T> {
 }
 ```
 
-### 向后兼容保证
+### 1.6.3 向后兼容保证
 
 确保内部可变性机制支持系统演化：
 
@@ -502,9 +502,9 @@ struct StateUpdate<T> {
    - 验证升级/降级路径
    - 模拟各种演化场景
 
-## 结论与实践建议
+## 1.7 结论与实践建议
 
-### 架构设计原则
+### 1.7.1 架构设计原则
 
 1. **明确区分内部状态与外部资源**：
    - 内部状态：使用内部可变性机制管理
@@ -520,7 +520,7 @@ struct StateUpdate<T> {
    - 通过类型强制正确的访问模式
    - 为错误情况提供清晰的类型级别反馈
 
-### 实现注意事项
+### 1.7.2 实现注意事项
 
 1. **性能与正确性平衡**：
    - 识别关键状态和非关键状态
@@ -537,7 +537,7 @@ struct StateUpdate<T> {
    - 提供状态检查点和回滚能力
    - 实现状态变更的可视化工具
 
-### 验证与测试策略
+### 1.7.3 验证与测试策略
 
 1. **内部可变性测试**：
    - 单元测试：验证单一组件内的状态管理
@@ -554,7 +554,7 @@ struct StateUpdate<T> {
    - 在不同规模和负载下评估性能
    - 识别并优化瓶颈
 
-## 思维导图-text
+## 1.8 思维导图-text
 
 ```text
 分布式工作流的内部可变性模型

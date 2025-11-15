@@ -30,17 +30,19 @@ For a 2025 version, I'll need to extrapolate current Rust ecosystem trends, espe
 
 ## 📋 目录
 
-- [1 系统架构概览](#1-系统架构概览)
-- [2 一、核心HTTP网关服务实现](#2-一核心http网关服务实现)
-  - [2.1 主应用服务器实现](#21-主应用服务器实现)
-- [3 二、配置、监控和日志模块](#3-二配置监控和日志模块)
-- [4 三、认证和授权中间件](#4-三认证和授权中间件)
-- [5 四、中间件实现](#5-四中间件实现)
-- [6 五、gRPC服务集成](#6-五grpc服务集成)
-- [7 六、消息队列集成和用户行为跟踪](#7-六消息队列集成和用户行为跟踪)
-- [8 七、配置文件示例](#8-七配置文件示例)
-- [9 八、部署与Docker配置](#9-八部署与docker配置)
-- [10 九、总结与功能概览](#10-九总结与功能概览)
+- [使用Pingora实现分布式HTTP集群服务 (Rust 2025)](#使用pingora实现分布式http集群服务-rust-2025)
+  - [📋 目录](#-目录)
+  - [1 系统架构概览](#1-系统架构概览)
+  - [2 一、核心HTTP网关服务实现](#2-一核心http网关服务实现)
+    - [2.1 主应用服务器实现](#21-主应用服务器实现)
+  - [3 二、配置、监控和日志模块](#3-二配置监控和日志模块)
+  - [4 三、认证和授权中间件](#4-三认证和授权中间件)
+  - [5 四、中间件实现](#5-四中间件实现)
+  - [6 五、gRPC服务集成](#6-五grpc服务集成)
+  - [7 六、消息队列集成和用户行为跟踪](#7-六消息队列集成和用户行为跟踪)
+  - [8 七、配置文件示例](#8-七配置文件示例)
+  - [9 八、部署与Docker配置](#9-八部署与docker配置)
+  - [10 九、总结与功能概览](#10-九总结与功能概览)
 
 ---
 
@@ -145,20 +147,20 @@ bytes = "2.0"
 use anyhow::Result;
 use clap::Parser;
 use pingora::{
-    apps::health_check::HealthCheck, 
+    apps::health_check::HealthCheck,
     proxy::{
         ProxyHttp, HttpPipelineHandler, ProxyHttpService, ProxyHttpAction,
         http_proxy_service, ProxyHttp2Tls, ProxyHttpConfiguration,
     },
     services::{
-        background::{BackgroundService, BackgroundTask}, 
-        listening::QuicListener, 
+        background::{BackgroundService, BackgroundTask},
+        listening::QuicListener,
         Service, ServiceBuilder,
     },
     server::{configuration::ServerConf, Server},
     tls::ServerTlsConfig,
     upstreams::{
-        peer::HttpPeer, upstream::UpstreamConfig, 
+        peer::HttpPeer, upstream::UpstreamConfig,
         balance::LoadBalancer,
         health_check::TcpHealthCheck,
     },
@@ -183,7 +185,7 @@ use crate::{
     logging::setup_logging,
     metrics::setup_metrics,
     middleware::{
-        RateLimiter, RequestMiddleware, ResponseMiddleware, 
+        RateLimiter, RequestMiddleware, ResponseMiddleware,
         SessionManager, SecurityMiddleware, MiddlewareChain
     },
     mq::EventPublisher,
@@ -220,7 +222,7 @@ impl HttpPipelineHandler for MainProxyHandler {
         if let Some(response) = middleware_result {
             return Ok(ProxyHttpAction::RespondWith(response));
         }
-        
+
         // 2. 认证处理
         let auth_result = self.auth_manager.authenticate(&req).await;
         if let Err(e) = auth_result {
@@ -229,19 +231,19 @@ impl HttpPipelineHandler for MainProxyHandler {
                 auth::AuthError::Forbidden => http::StatusCode::FORBIDDEN,
                 _ => http::StatusCode::INTERNAL_SERVER_ERROR,
             };
-            
+
             // 构建错误响应
             let response = http::Response::builder()
                 .status(status)
                 .body(hyper::Body::from(e.to_string()))?;
-            
+
             return Ok(ProxyHttpAction::RespondWith(response));
         }
-        
+
         // 3. 解析路由以确定目标服务
         let path = req.uri().path();
         let service_name = self.extract_service_name(path);
-        
+
         // 4. 判断是否是gRPC请求
         if req.headers().get("content-type")
             .map(|v| v.to_str().unwrap_or(""))
@@ -251,31 +253,31 @@ impl HttpPipelineHandler for MainProxyHandler {
             // gRPC请求处理
             return self.handle_grpc_request(req, service_name, ctx).await;
         }
-        
+
         // 5. 标准HTTP请求处理
         if let Some(upstream) = self.upstreams.get(&service_name) {
             // 记录跟踪信息
             let trace_id = ctx.get_tracing_id().unwrap_or_default();
             info!(trace_id = %trace_id, service = %service_name, "Proxying HTTP request");
-            
+
             // 获取下一个可用的对等点，执行负载均衡
             let peer = upstream.get_peer().await?;
-            
+
             // 添加自定义HTTP头 - 跟踪信息
             req.headers_mut().insert(
                 "X-Trace-ID",
                 http::header::HeaderValue::from_str(&trace_id.to_string())?
             );
-            
+
             // 发布事件到消息队列
             let user_id = self.auth_manager.extract_user_id(&req).unwrap_or_default();
             self.event_publisher.publish_request_event(
-                &req, 
-                &service_name, 
-                &user_id, 
+                &req,
+                &service_name,
+                &user_id,
                 &trace_id.to_string()
             ).await?;
-            
+
             // 代理到后端服务
             Ok(ProxyHttpAction::Proxy(peer, req))
         } else {
@@ -283,11 +285,11 @@ impl HttpPipelineHandler for MainProxyHandler {
             let resp = http::Response::builder()
                 .status(http::StatusCode::NOT_FOUND)
                 .body(hyper::Body::from(format!("Service '{}' not found", service_name)))?;
-            
+
             Ok(ProxyHttpAction::RespondWith(resp))
         }
     }
-    
+
     // 处理响应的中间件钩子
     async fn handle_response(
         &self,
@@ -307,7 +309,7 @@ impl MainProxyHandler {
         let parts: Vec<&str> = path.split('/').filter(|p| !p.is_empty()).collect();
         parts.first().map(|s| s.to_string()).unwrap_or_else(|| "default".to_string())
     }
-    
+
     // 处理gRPC请求
     async fn handle_grpc_request(
         &self,
@@ -316,12 +318,12 @@ impl MainProxyHandler {
         ctx: &mut HttpContext,
     ) -> Result<ProxyHttpAction, pingora::Error> {
         let trace_id = ctx.get_tracing_id().unwrap_or_default();
-        
+
         // 检查gRPC服务是否已注册
         if self.grpc_services.has_service(&service_name) {
             // 让gRPC服务管理器处理请求
             let grpc_result = self.grpc_services.handle_request(req, &service_name).await;
-            
+
             match grpc_result {
                 Ok(response) => {
                     // 发布gRPC事件到消息队列
@@ -332,26 +334,26 @@ impl MainProxyHandler {
                         &trace_id.to_string(),
                         true,
                     ).await?;
-                    
+
                     Ok(ProxyHttpAction::RespondWith(response))
                 },
                 Err(e) => {
                     error!(error = %e, service = %service_name, "gRPC request handling error");
-                    
+
                     // 构建错误响应
                     let mut response = http::Response::builder()
                         .status(http::StatusCode::INTERNAL_SERVER_ERROR)
                         .header("content-type", "application/grpc")
                         .header("grpc-status", "2") // UNKNOWN
                         .body(hyper::Body::empty())?;
-                    
+
                     self.event_publisher.publish_grpc_event(
                         &service_name,
                         &self.auth_manager.extract_user_id(&req).unwrap_or_default(),
                         &trace_id.to_string(),
                         false,
                     ).await?;
-                    
+
                     Ok(ProxyHttpAction::RespondWith(response))
                 }
             }
@@ -366,7 +368,7 @@ impl MainProxyHandler {
                 .header("content-type", "application/grpc")
                 .header("grpc-status", "5") // NOT_FOUND
                 .body(hyper::Body::empty())?;
-                
+
             Ok(ProxyHttpAction::RespondWith(resp))
         }
     }
@@ -376,25 +378,25 @@ impl MainProxyHandler {
 async fn main() -> Result<()> {
     // 解析命令行参数
     let args = Args::parse();
-    
+
     // 加载配置
     let config = config::load_config(args.config).await?;
     let config = Arc::new(config);
-    
+
     // 设置日志和监控
     setup_logging(&config.logging)?;
     setup_metrics(&config.metrics)?;
-    
+
     info!("Starting Pingora HTTP Gateway v{}", env!("CARGO_PKG_VERSION"));
-    
+
     // 创建Pingora服务器
     let mut server = Server::new(Some(config.server.clone().into()))?;
-    
+
     // 初始化各组件
     let auth_manager = Arc::new(AuthManager::new(&config.auth).await?);
     let event_publisher = Arc::new(EventPublisher::new(&config.messaging).await?);
     let grpc_services = Arc::new(GrpcServiceManager::new(&config.grpc).await?);
-    
+
     // 创建中间件链
     let middleware_chain = Arc::new(MiddlewareChain::new(vec![
         Box::new(SecurityMiddleware::new(&config.security)),
@@ -402,27 +404,27 @@ async fn main() -> Result<()> {
         Box::new(SessionManager::new(&config.session)),
         // 添加更多中间件...
     ]));
-    
+
     // 初始化上游服务配置
     let mut upstreams: HashMap<String, Arc<LoadBalancer<HttpPeer>>> = HashMap::new();
-    
+
     for (service_name, upstream_config) in &config.upstreams {
         let mut lb_config = LoadBalancerConfig::default();
         lb_config.set_health_check(Box::new(TcpHealthCheck {}));
         lb_config.set_health_check_interval(Duration::from_secs(upstream_config.health_check_interval_secs));
-        
+
         let mut balancer = LoadBalancer::new(lb_config);
-        
+
         // 添加上游服务器
         for server in &upstream_config.servers {
             let upstream_addr: SocketAddr = server.parse()?;
             let peer = HttpPeer::new(upstream_addr, UpstreamConfig::default());
             balancer.add_peer(peer).await;
         }
-        
+
         upstreams.insert(service_name.clone(), Arc::new(balancer));
     }
-    
+
     // 创建主HTTP处理器
     let handler = MainProxyHandler {
         upstreams: Arc::new(upstreams),
@@ -432,23 +434,23 @@ async fn main() -> Result<()> {
         middleware_chain,
         config: config.clone(),
     };
-    
+
     // 配置HTTP代理服务
     let mut http_proxy_conf = ProxyHttpConfiguration::default();
     http_proxy_conf.http2_only = false; // 支持HTTP/1.x和HTTP/2
-    
+
     // 创建HTTP代理服务
     let mut service = ServiceBuilder::new(ProxyHttp::new(handler, http_proxy_conf));
-    
+
     // 配置TLS(如果启用)
     if config.tls.enabled {
         let tls_config = ServerTlsConfig::new()
             .cert_path(&config.tls.cert_path)
             .key_path(&config.tls.key_path);
-            
+
         service.add_tcp(config.server.listen_addr)?
               .add_tls(config.server.listen_addr_tls, tls_config)?;
-        
+
         // 添加HTTP/3 (QUIC) 支持
         if config.http3.enabled {
             service.add_quic(
@@ -461,25 +463,25 @@ async fn main() -> Result<()> {
         // 仅普通HTTP
         service.add_tcp(config.server.listen_addr)?;
     }
-    
+
     // 添加健康检查服务
     let health_service = ServiceBuilder::new(HealthCheck::new());
     health_service.add_tcp(config.health.listen_addr)?;
-    
+
     // 注册服务到服务器
     server.add_service(service);
     server.add_service(health_service);
-    
+
     // 添加后台任务
     let background_tasks = BackgroundService::new();
     // 添加您需要的后台任务：
     // background_tasks.add_task(Box::new(YourBackgroundTask::new()));
     server.add_service(background_tasks);
-    
+
     // 启动服务器
     info!("HTTP Gateway started, listening on: {}", config.server.listen_addr);
     server.run_forever();
-    
+
     Ok(())
 }
 ```
@@ -720,24 +722,24 @@ pub fn setup_metrics(config: &MetricsConfig) -> Result<PrometheusHandle> {
     // 定期发布指标
     let interval = Duration::from_secs(config.export_interval_secs);
     let prefix = config.metrics_prefix.clone();
-    
+
     task::spawn(async move {
         let mut interval = tokio::time::interval(interval);
         loop {
             interval.tick().await;
-            
+
             // 收集和发布系统指标
             let mem_info = sys_info::mem_info().unwrap_or_default();
             metrics::gauge!(
                 format!("{}_memory_used_bytes", prefix),
                 mem_info.total as f64 - mem_info.free as f64
             );
-            
+
             let load = sys_info::loadavg().unwrap_or_default();
             metrics::gauge!(format!("{}_load_1m", prefix), load.one);
             metrics::gauge!(format!("{}_load_5m", prefix), load.five);
             metrics::gauge!(format!("{}_load_15m", prefix), load.fifteen);
-            
+
             // 收集进程指标
             if let Ok(proc_info) = sys_info::proc_stat() {
                 metrics::counter!(
@@ -784,16 +786,16 @@ pub enum AuthMode {
 pub enum AuthError {
     #[error("Unauthorized")]
     Unauthorized,
-    
+
     #[error("Forbidden")]
     Forbidden,
-    
+
     #[error("JWT is invalid: {0}")]
     InvalidJwt(String),
-    
+
     #[error("Session is invalid: {0}")]
     InvalidSession(String),
-    
+
     #[error("Backend error: {0}")]
     BackendError(String),
 }
@@ -834,7 +836,7 @@ impl AuthManager {
             "mixed" => AuthMode::Mixed,
             _ => AuthMode::None,
         };
-        
+
         // 初始化JWT密钥（如果需要）
         let (jwt_encoding_key, jwt_decoding_key) = if mode == AuthMode::Jwt || mode == AuthMode::Mixed {
             let encoding_key = EncodingKey::from_secret(config.jwt_secret.as_bytes());
@@ -843,7 +845,7 @@ impl AuthManager {
         } else {
             (None, None)
         };
-        
+
         // 初始化会话存储（如果需要）
         let session_store = if mode == AuthMode::Session || mode == AuthMode::Mixed {
             // 这里会实例化适当的会话存储
@@ -851,7 +853,7 @@ impl AuthManager {
         } else {
             None
         };
-        
+
         Ok(Self {
             config: config.clone(),
             mode,
@@ -860,7 +862,7 @@ impl AuthManager {
             session_store,
         })
     }
-    
+
     // 认证请求
     pub async fn authenticate<T>(&self, req: &Request<T>) -> Result<AuthenticatedUser, AuthError> {
         match self.mode {
@@ -883,7 +885,7 @@ impl AuthManager {
             }
         }
     }
-    
+
     // JWT认证
     async fn authenticate_jwt<T>(&self, req: &Request<T>) -> Result<AuthenticatedUser, AuthError> {
         // 从Authorization头获取令牌
@@ -892,40 +894,40 @@ impl AuthManager {
             .ok_or(AuthError::Unauthorized)?
             .to_str()
             .map_err(|_| AuthError::InvalidJwt("Invalid Authorization header".to_string()))?;
-            
+
         if !auth_header.starts_with("Bearer ") {
             return Err(AuthError::InvalidJwt("Invalid token format".to_string()));
         }
-        
+
         let token = &auth_header[7..]; // 移除"Bearer "前缀
-        
+
         // 验证JWT
         let decoding_key = self.jwt_decoding_key.as_ref()
             .ok_or_else(|| AuthError::BackendError("JWT keys not configured".to_string()))?;
-            
+
         let algorithm = match self.config.jwt_algorithm.as_str() {
             "HS256" => Algorithm::HS256,
             "HS384" => Algorithm::HS384,
             "HS512" => Algorithm::HS512,
             _ => Algorithm::HS256,
         };
-        
+
         let mut validation = Validation::new(algorithm);
         validation.validate_exp = true;
-        
+
         let claims = decode::<Claims>(
-            token, 
-            decoding_key, 
+            token,
+            decoding_key,
             &validation
         ).map_err(|e| AuthError::InvalidJwt(e.to_string()))?;
-        
+
         Ok(AuthenticatedUser {
             user_id: claims.claims.sub,
             roles: claims.claims.roles,
             authenticated_at: SystemTime::now(),
         })
     }
-    
+
     // 会话认证
     async fn authenticate_session<T>(&self, req: &Request<T>) -> Result<AuthenticatedUser, AuthError> {
         // 获取会话cookie
@@ -934,89 +936,89 @@ impl AuthManager {
             .ok_or(AuthError::Unauthorized)?
             .to_str()
             .map_err(|_| AuthError::InvalidSession("Invalid cookie".to_string()))?;
-            
+
         // 解析cookie获取会话ID
         let cookies: Vec<&str> = cookie_header.split(';').collect();
         let session_cookie = cookies.iter()
             .find(|c| c.trim().starts_with(&format!("{}=", self.config.cookie_name)))
             .ok_or(AuthError::Unauthorized)?;
-            
+
         let session_id = session_cookie
             .trim()
             .strip_prefix(&format!("{}=", self.config.cookie_name))
             .ok_or(AuthError::InvalidSession("Invalid session cookie format".to_string()))?;
-            
+
         // 从会话存储获取用户信息
         let session_store = self.session_store.as_ref()
             .ok_or_else(|| AuthError::BackendError("Session store not configured".to_string()))?;
-            
+
         let session_data = session_store.get(session_id).await
             .map_err(|e| AuthError::BackendError(format!("Session store error: {}", e)))?
             .ok_or(AuthError::Unauthorized)?;
-            
+
         // 解析会话数据
         let user_data: AuthenticatedUser = serde_json::from_
 /*
-Looks like the code was cut off in the middle of the session authentication method in the auth.rs file. 
+Looks like the code was cut off in the middle of the session authentication method in the auth.rs file.
 Let me continue from where it left off, starting with completing the session authentication method, then finish the auth module, and move on to the middleware and gRPC modules.
 */
 
         // 解析会话数据
         let user_data: AuthenticatedUser = serde_json::from_str(&session_data)
             .map_err(|e| AuthError::InvalidSession(format!("Invalid session data: {}", e)))?;
-            
+
         Ok(user_data)
     }
-    
+
     // 生成JWT令牌
     pub fn generate_jwt(&self, user_id: &str, roles: Vec<String>) -> Result<String, AuthError> {
         let encoding_key = self.jwt_encoding_key.as_ref()
             .ok_or_else(|| AuthError::BackendError("JWT keys not configured".to_string()))?;
-            
+
         let now = SystemTime::now().duration_since(UNIX_EPOCH)
             .map_err(|e| AuthError::BackendError(format!("System time error: {}", e)))?
             .as_secs();
-            
+
         let expiry = now + self.config.token_expiry_seconds;
-        
+
         let claims = Claims {
             sub: user_id.to_string(),
             exp: expiry,
             iat: now,
             roles,
         };
-        
+
         encode(
             &Header::new(Algorithm::HS256),
             &claims,
             encoding_key,
         ).map_err(|e| AuthError::BackendError(format!("JWT encoding error: {}", e)))
     }
-    
+
     // 创建新会话
     pub async fn create_session(&self, user: &AuthenticatedUser) -> Result<String, AuthError> {
         let session_store = self.session_store.as_ref()
             .ok_or_else(|| AuthError::BackendError("Session store not configured".to_string()))?;
-            
+
         // 生成会话ID
         let session_id = Uuid::new_v4().to_string();
-        
+
         // 序列化用户数据
         let user_data = serde_json::to_string(user)
             .map_err(|e| AuthError::BackendError(format!("User serialization error: {}", e)))?;
-            
+
         // 存储会话
         session_store.set(&session_id, &user_data, self.config.token_expiry_seconds).await
             .map_err(|e| AuthError::BackendError(format!("Session store error: {}", e)))?;
-            
+
         Ok(session_id)
     }
-    
+
     // 撤销会话
     pub async fn revoke_session(&self, session_id: &str) -> Result<(), AuthError> {
         let session_store = self.session_store.as_ref()
             .ok_or_else(|| AuthError::BackendError("Session store not configured".to_string()))?;
-            
+
         session_store.delete(session_id).await
             .map_err(|e| AuthError::BackendError(format!("Session store error: {}", e)))
     }
@@ -1068,7 +1070,7 @@ impl SessionStore for RedisSessionStore {
             .await?;
         Ok(result)
     }
-    
+
     async fn set(&self, key: &str, value: &str, ttl_seconds: u64) -> Result<()> {
         let mut conn = self.pool.get().await?;
         redis::cmd("SETEX")
@@ -1079,7 +1081,7 @@ impl SessionStore for RedisSessionStore {
             .await?;
         Ok(())
     }
-    
+
     async fn delete(&self, key: &str) -> Result<()> {
         let mut conn = self.pool.get().await?;
         redis::cmd("DEL")
@@ -1107,14 +1109,14 @@ impl SessionStore for MemorySessionStore {
         }
         Ok(None)
     }
-    
+
     async fn set(&self, key: &str, value: &str, ttl_seconds: u64) -> Result<()> {
         let mut store = self.store.write().await;
         let expiry = Instant::now() + Duration::from_secs(ttl_seconds);
         store.insert(key.to_string(), (value.to_string(), expiry));
         Ok(())
     }
-    
+
     async fn delete(&self, key: &str) -> Result<()> {
         let mut store = self.store.write().await;
         store.remove(key);
@@ -1139,7 +1141,7 @@ pub fn create_session_store(redis_url: &str) -> Result<Box<dyn SessionStore>> {
             pool: None,
         }
         .create_pool(Some(deadpool_redis::Runtime::Tokio1))?;
-        
+
         Ok(Box::new(RedisSessionStore { client, pool }))
     }
 }
@@ -1177,11 +1179,11 @@ impl MiddlewareChain {
             response_middleware: Vec::new(),
         }
     }
-    
+
     pub fn add_response_middleware(&mut self, middleware: Box<dyn ResponseMiddleware>) {
         self.response_middleware.push(middleware);
     }
-    
+
     pub async fn process_request(
         &self,
         req: &mut Request<Body>,
@@ -1191,29 +1193,29 @@ impl MiddlewareChain {
         let start = Instant::now();
         let method = req.method().to_string();
         let uri = req.uri().to_string();
-        
+
         // 增加请求计数
         counter!("http_requests_total", 1, "method" => method.clone(), "path" => uri.clone());
-        
+
         // 执行所有请求中间件
         for mw in &self.middleware {
             if let Some(response) = mw.process_request(req, ctx).await? {
                 // 中间件提前返回响应
                 let duration = start.elapsed().as_secs_f64();
-                histogram!("http_request_duration_seconds", duration, 
-                           "method" => method, "path" => uri, 
+                histogram!("http_request_duration_seconds", duration,
+                           "method" => method, "path" => uri,
                            "status" => response.status().as_u16().to_string());
-                
+
                 return Ok(Some(response));
             }
         }
-        
+
         // 标记请求已经通过所有中间件处理
         ctx.extensions_mut().insert("request_start_time", start);
-        
+
         Ok(None)
     }
-    
+
     pub async fn process_response(
         &self,
         res: &mut Response<Body>,
@@ -1226,18 +1228,18 @@ impl MiddlewareChain {
                 .map_or("UNKNOWN", |s| s.as_str());
             let uri = ctx.extensions().get::<String>("request_uri")
                 .map_or("UNKNOWN", |s| s.as_str());
-            
+
             // 记录请求处理时间
-            histogram!("http_request_duration_seconds", duration, 
-                       "method" => method, "path" => uri, 
+            histogram!("http_request_duration_seconds", duration,
+                       "method" => method, "path" => uri,
                        "status" => res.status().as_u16().to_string());
         }
-        
+
         // 执行所有响应中间件
         for mw in &self.response_middleware {
             mw.process_response(res, ctx).await?;
         }
-        
+
         Ok(())
     }
 }
@@ -1267,37 +1269,37 @@ impl RequestMiddleware for SecurityMiddleware {
             let origin = req.headers().get("origin")
                 .and_then(|v| v.to_str().ok())
                 .unwrap_or("");
-                
+
             // 检查是否是允许的源
             let allowed = self.config.cors_allowed_origins.iter()
                 .any(|allowed| allowed == "*" || allowed == origin);
-                
+
             if allowed {
                 let mut response = Response::builder()
                     .status(StatusCode::NO_CONTENT)
                     .body(Body::empty())?;
-                    
+
                 // 添加CORS头
                 let headers = response.headers_mut();
-                headers.insert("Access-Control-Allow-Origin", 
+                headers.insert("Access-Control-Allow-Origin",
                     origin.parse().unwrap_or_else(|_| "*".parse().unwrap()));
-                
+
                 headers.insert("Access-Control-Allow-Methods",
                     self.config.cors_allowed_methods.join(", ").parse()?);
-                    
+
                 headers.insert("Access-Control-Allow-Headers",
                     self.config.cors_allowed_headers.join(", ").parse()?);
-                    
+
                 headers.insert("Access-Control-Max-Age",
                     "86400".parse()?);
-                    
+
                 return Ok(Some(response));
             }
         }
-        
+
         // 添加安全头部
         ctx.extensions_mut().insert("security_headers", true);
-        
+
         Ok(None)
     }
 }
@@ -1311,32 +1313,32 @@ impl ResponseMiddleware for SecurityMiddleware {
     ) -> Result<()> {
         if ctx.extensions().get::<bool>("security_headers").is_some() {
             let headers = res.headers_mut();
-            
+
             // 添加安全头部
             if self.config.xss_protection {
                 headers.insert("X-XSS-Protection", "1; mode=block".parse()?);
             }
-            
+
             if !self.config.content_security_policy.is_empty() {
-                headers.insert("Content-Security-Policy", 
+                headers.insert("Content-Security-Policy",
                     self.config.content_security_policy.parse()?);
             }
-            
+
             if !self.config.frame_options.is_empty() {
-                headers.insert("X-Frame-Options", 
+                headers.insert("X-Frame-Options",
                     self.config.frame_options.parse()?);
             }
-            
+
             // 添加CORS头到响应中
             if let Some(origin) = ctx.request_headers().get("origin") {
                 // 检查是否是允许的源
                 let origin_str = origin.to_str().unwrap_or("");
                 let allowed = self.config.cors_allowed_origins.iter()
                     .any(|allowed| allowed == "*" || allowed == origin_str);
-                
+
                 if allowed {
                     headers.insert("Access-Control-Allow-Origin", origin.clone());
-                    
+
                     if !self.config.cors_expose_headers.is_empty() {
                         headers.insert("Access-Control-Expose-Headers",
                             self.config.cors_expose_headers.join(", ").parse()?);
@@ -1344,7 +1346,7 @@ impl ResponseMiddleware for SecurityMiddleware {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -1371,7 +1373,7 @@ impl RateLimiter {
         } else {
             None
         };
-        
+
         Self {
             config: config.clone(),
             limiter,
@@ -1395,16 +1397,16 @@ impl RequestMiddleware for RateLimiter {
                 Err(negative) => {
                     // 拒绝请求 - 超出限流
                     let wait_time = negative.wait_time_from(std::time::Instant::now());
-                    
+
                     // 增加限流计数
                     counter!("rate_limiter_blocked_requests_total", 1);
-                    
+
                     // 生成拒绝响应
                     let response = Response::builder()
                         .status(StatusCode::TOO_MANY_REQUESTS)
                         .header("Retry-After", wait_time.as_secs().to_string())
                         .body(Body::from("Too many requests, please try again later"))?;
-                        
+
                     Ok(Some(response))
                 }
             }
@@ -1434,7 +1436,7 @@ impl SessionManager {
         } else {
             None
         };
-        
+
         Self {
             config: config.clone(),
             store,
@@ -1452,7 +1454,7 @@ impl RequestMiddleware for SessionManager {
         if !self.config.enabled || self.store.is_none() {
             return Ok(None);
         }
-        
+
         // 从cookie中提取会话ID
         if let Some(cookie) = req.headers().get(http::header::COOKIE) {
             if let Ok(cookie_str) = cookie.to_str() {
@@ -1460,7 +1462,7 @@ impl RequestMiddleware for SessionManager {
                     let cookie_kv: Vec<&str> = cookie_part.trim().splitn(2, '=').collect();
                     if cookie_kv.len() == 2 && cookie_kv[0] == "session_id" {
                         let session_id = cookie_kv[1];
-                        
+
                         // 加载会话
                         if let Some(store) = &self.store {
                             if let Ok(Some(session_data)) = store.get(session_id).await {
@@ -1474,7 +1476,7 @@ impl RequestMiddleware for SessionManager {
                 }
             }
         }
-        
+
         Ok(None)
     }
 }
@@ -1509,25 +1511,25 @@ use crate::config::GrpcConfig;
 pub enum GrpcError {
     #[error("Service not found: {0}")]
     ServiceNotFound(String),
-    
+
     #[error("Method not found: {0}")]
     MethodNotFound(String),
-    
+
     #[error("Connection error: {0}")]
     ConnectionError(#[from] tonic::transport::Error),
-    
+
     #[error("Decode error: {0}")]
     DecodeError(#[from] prost::DecodeError),
-    
+
     #[error("Encode error: {0}")]
     EncodeError(#[from] prost::EncodeError),
-    
+
     #[error("gRPC status error: {0}")]
     StatusError(#[from] tonic::Status),
-    
+
     #[error("Hyper error: {0}")]
     HyperError(#[from] hyper::Error),
-    
+
     #[error("Other error: {0}")]
     Other(String),
 }
@@ -1562,13 +1564,13 @@ impl GrpcServiceManager {
     pub async fn new(config: &GrpcConfig) -> Result<Self> {
         let services = Arc::new(RwLock::new(HashMap::new()));
         let channels = Arc::new(RwLock::new(HashMap::new()));
-        
+
         let manager = Self {
             services,
             channels,
             config: config.clone(),
         };
-        
+
         // 从配置加载服务描述
         for (service_name, service_config) in &config.services {
             manager.register_service(
@@ -1579,10 +1581,10 @@ impl GrpcServiceManager {
                 service_config.methods.clone(),
             ).await?;
         }
-        
+
         Ok(manager)
     }
-    
+
     // 注册gRPC服务
     pub async fn register_service(
         &self,
@@ -1594,30 +1596,30 @@ impl GrpcServiceManager {
     ) -> Result<()> {
         // 创建服务描述符
         let mut method_descriptors = HashMap::new();
-        
+
         for (method_name, method_info) in methods {
             let streaming = method_info.get("streaming")
                 .map(|s| s == "true")
                 .unwrap_or(false);
-                
+
             let input_type = method_info.get("input_type")
                 .cloned()
                 .unwrap_or_else(|| "".to_string());
-                
+
             let output_type = method_info.get("output_type")
                 .cloned()
                 .unwrap_or_else(|| "".to_string());
-                
+
             let descriptor = GrpcMethodDescriptor {
                 name: method_name.clone(),
                 streaming,
                 input_type,
                 output_type,
             };
-            
+
             method_descriptors.insert(method_name, descriptor);
         }
-        
+
         let service_descriptor = GrpcServiceDescriptor {
             name: name.to_string(),
             methods: method_descriptors,
@@ -1625,30 +1627,30 @@ impl GrpcServiceManager {
             timeout_ms,
             retries,
         };
-        
+
         // 存储服务描述符
         let mut services = self.services.write().await;
         services.insert(name.to_string(), service_descriptor);
-        
+
         // 创建和存储Channel
         let channel = self.create_channel(endpoint).await?;
-        
+
         let mut channels = self.channels.write().await;
         channels.insert(name.to_string(), channel);
-        
+
         info!("Registered gRPC service: {}", name);
         Ok(())
     }
-    
+
     // 创建gRPC通道
     async fn create_channel(&self, endpoint: &str) -> Result<Channel> {
         let channel = Endpoint::from_shared(endpoint.to_string())?
             .connect()
             .await?;
-            
+
         Ok(channel)
     }
-    
+
     // 处理gRPC请求
     pub async fn handle_grpc_request(
         &self,
@@ -1660,19 +1662,19 @@ impl GrpcServiceManager {
         let services = self.services.read().await;
         let service = services.get(service_name)
             .ok_or_else(|| GrpcError::ServiceNotFound(service_name.to_string()))?;
-            
+
         // 获取方法描述符
         let method = service.methods.get(method_name)
             .ok_or_else(|| GrpcError::MethodNotFound(method_name.to_string()))?;
-            
+
         // 获取通道
         let channels = self.channels.read().await;
         let channel = channels.get(service_name)
             .ok_or_else(|| GrpcError::ConnectionError(tonic::transport::Error::new_other("No channel found")))?;
-            
+
         // 从HTTP请求体读取二进制数据
         let body_bytes = hyper::body::to_bytes(request.into_body()).await?;
-        
+
         if method.streaming {
             // 处理流式请求
             self.handle_streaming_request(
@@ -1691,7 +1693,7 @@ impl GrpcServiceManager {
             ).await
         }
     }
-    
+
     // 处理一元gRPC请求
     async fn handle_unary_request(
         &self,
@@ -1703,13 +1705,13 @@ impl GrpcServiceManager {
         // 构建要转发的请求
         let path = format!("/{}.{}/{}", service.name, service.name, method.name);
         debug!("Forwarding unary gRPC request to path: {}", path);
-        
+
         // 使用tonic创建gRPC请求
         let mut client = tonic::client::Grpc::new(channel);
-        
+
         // 设置超时
         let timeout = std::time::Duration::from_millis(service.timeout_ms);
-        
+
         // 设置重试策略
         for retry in 0..=service.retries {
             match client.unary(
@@ -1725,7 +1727,7 @@ impl GrpcServiceManager {
                         .header("content-type", "application/grpc+proto")
                         .header("grpc-status", "0")
                         .body(Body::from(response.get_ref().clone()))?;
-                        
+
                     return Ok(http_response);
                 },
                 Err(status) if retry < service.retries => {
@@ -1737,7 +1739,7 @@ impl GrpcServiceManager {
                         status.code(),
                         status.message()
                     );
-                    
+
                     // 添加延迟后重试
                     tokio::time::sleep(std::time::Duration::from_millis(
                         100 * (2_u64.pow(retry) as u64) // 指数退避
@@ -1751,7 +1753,7 @@ impl GrpcServiceManager {
                         status.code(),
                         status.message()
                     );
-                    
+
                     // 构建错误响应
                     let http_response = Response::builder()
                         .status(StatusCode::INTERNAL_SERVER_ERROR)
@@ -1759,16 +1761,16 @@ impl GrpcServiceManager {
                         .header("grpc-status", status.code().to_string())
                         .header("grpc-message", status.message())
                         .body(Body::empty())?;
-                        
+
                     return Ok(http_response);
                 }
             }
         }
-        
+
         // 不应该到达这里
         Err(GrpcError::Other("Unexpected error in gRPC request handling".to_string()))
     }
-    
+
     // 处理流式gRPC请求
     async fn handle_streaming_request(
         &self,
@@ -1780,16 +1782,16 @@ impl GrpcServiceManager {
         // 构建要转发的请求
         let path = format!("/{}.{}/{}", service.name, service.name, method.name);
         debug!("Forwarding streaming gRPC request to path: {}", path);
-        
+
         // 使用tonic创建gRPC客户端
         let mut client = tonic::client::Grpc::new(channel);
-        
+
         // 设置超时
         let timeout = std::time::Duration::from_millis(service.timeout_ms);
-        
+
         // 创建管道用于流式响应
         let (tx, rx) = mpsc::channel(128);
-        
+
         // 异步处理流式请求
         tokio::spawn(async move {
             // 尝试流式请求
@@ -1821,7 +1823,7 @@ impl GrpcServiceManager {
                 }
             }
         });
-        
+
         // 创建对应的HTTP流响应
         let stream_body = Body::wrap_stream(tokio_stream::wrappers::ReceiverStream::new(rx)
             .map(|result| {
@@ -1829,21 +1831,21 @@ impl GrpcServiceManager {
                     Ok(data) => Ok(data),
                     Err(status) => {
                         let error_bytes = format!(
-                            "gRPC error: {} - {}", 
-                            status.code(), 
+                            "gRPC error: {} - {}",
+                            status.code(),
                             status.message()
                         ).into_bytes();
                         Ok(Bytes::from(error_bytes))
                     }
                 }
             }));
-        
+
         // 构建HTTP响应
         let http_response = Response::builder()
             .status(StatusCode::OK)
             .header("content-type", "application/grpc+proto")
             .body(stream_body)?;
-            
+
         Ok(http_response)
     }
 }
@@ -1913,30 +1915,30 @@ impl EventPublisher {
                 .set("compression.type", "snappy")
                 .set("request.required.acks", "1")
                 .create()?;
-                
+
             Some(producer)
         } else {
             None
         };
-        
+
         let nats_client = if config.use_nats {
             // 创建NATS客户端
             let options = NatsOptions::new()
                 .with_connection_name("pingora-gateway".to_string());
-                
+
             let client = async_nats::connect(&config.nats_server_url).await?;
             Some(client)
         } else {
             None
         };
-        
+
         Ok(Self {
             config: config.clone(),
             kafka_producer,
             nats_client,
         })
     }
-    
+
     // 发布事件到Kafka
     pub async fn publish_to_kafka(
         &self,
@@ -1949,11 +1951,11 @@ impl EventPublisher {
                     rdkafka::error::RDKafkaErrorCode::UnknownError,
                     format!("JSON serialization error: {}", e)
                 ))?;
-                
+
             let headers = OwnedHeaders::new()
                 .add("event_type", &event.event_type)
                 .add("source", "pingora-gateway");
-                
+
             producer.send(
                 FutureRecord::to(topic)
                     .payload(&payload)
@@ -1961,7 +1963,7 @@ impl EventPublisher {
                     .headers(headers),
                 Duration::from_secs(5),
             ).await.map(|_| ())?;
-            
+
             Ok(())
         } else {
             Err(KafkaError::MessageProduction(
@@ -1970,7 +1972,7 @@ impl EventPublisher {
             ))
         }
     }
-    
+
     // 发布事件到NATS
     pub async fn publish_to_nats(
         &self,
@@ -1980,18 +1982,18 @@ impl EventPublisher {
         if let Some(client) = &self.nats_client {
             let payload = serde_json::to_string(event)
                 .map_err(|e| async_nats::Error::Other(format!("JSON serialization error: {}", e)))?;
-                
+
             client.publish(subject, payload.into()).await?;
             Ok(())
         } else {
             Err(async_nats::Error::Other("NATS client not configured".to_string()))
         }
     }
-    
+
     // 综合发布事件
     pub async fn publish_event(&self, event_type: &str, data: serde_json::Value) -> Result<()> {
         let event = Event::new(event_type, data);
-        
+
         // 确定要发布到的目标
         let topic = match event_type {
             "user.click" | "user.view" | "user.search" => "user_behaviors",
@@ -1999,7 +2001,7 @@ impl EventPublisher {
             "api.request" | "api.response" | "api.error" => "api_events",
             _ => "misc_events",
         };
-        
+
         // 尝试发布到Kafka
         if let Some(_) = &self.kafka_producer {
             match self.publish_to_kafka(topic, &event).await {
@@ -2007,7 +2009,7 @@ impl EventPublisher {
                 Err(e) => error!("Failed to publish event to Kafka: {}", e),
             }
         }
-        
+
         // 尝试发布到NATS
         if let Some(_) = &self.nats_client {
             let subject = format!("events.{}", event_type.replace(".", "."));
@@ -2020,7 +2022,7 @@ impl EventPublisher {
                 Err(e) => error!("Failed to publish event to NATS: {}", e),
             }
         }
-        
+
         Ok(())
     }
 }
@@ -2060,7 +2062,7 @@ impl KafkaEventSubscriber {
             .set("auto.offset.reset", "earliest")
             .set("session.timeout.ms", "6000")
             .create()?;
-            
+
         Ok(Self {
             config: config.clone(),
             topic: topic.to_string(),
@@ -2078,14 +2080,14 @@ impl EventSubscriber for KafkaEventSubscriber {
         let consumer = self.consumer.clone();
         let topic = self.topic.clone();
         let handler = self.handler.clone();
-        
+
         // 订阅主题
         consumer.subscribe(&[&topic])?;
-        
+
         // 启动消费任务
         let task_handle = tokio::spawn(async move {
             info!("Started Kafka consumer for topic: {}", topic);
-            
+
             loop {
                 match consumer.recv().await {
                     Ok(msg) => {
@@ -2100,7 +2102,7 @@ impl EventSubscriber for KafkaEventSubscriber {
                                 continue;
                             }
                         };
-                        
+
                         // 解析事件
                         match serde_json::from_str::<Event>(payload) {
                             Ok(event) => {
@@ -2112,7 +2114,7 @@ impl EventSubscriber for KafkaEventSubscriber {
                                 error!("Failed to parse event: {}", e);
                             }
                         }
-                        
+
                         // 提交消息
                         consumer.commit_message(&msg, CommitMode::Async).unwrap_or_else(|e| {
                             error!("Failed to commit Kafka message: {}", e);
@@ -2125,21 +2127,21 @@ impl EventSubscriber for KafkaEventSubscriber {
                 }
             }
         });
-        
+
         // 存储任务句柄
         let mut handle = self.task_handle.write().await;
         *handle = Some(task_handle);
-        
+
         Ok(())
     }
-    
+
     async fn stop(&self) -> Result<()> {
         let mut handle = self.task_handle.write().await;
         if let Some(task) = handle.take() {
             task.abort();
             info!("Stopped Kafka consumer for topic: {}", self.topic);
         }
-        
+
         Ok(())
     }
 }
@@ -2166,10 +2168,10 @@ impl NatsEventSubscriber {
         // 创建NATS客户端
         let options = NatsOptions::new()
             .with_connection_name("pingora-subscriber".to_string());
-            
+
         let connection = async_nats::connect(&config.nats_server_url).await?;
         let client = connection.clone();
-        
+
         Ok(Self {
             config: config.clone(),
             subject: subject.to_string(),
@@ -2187,17 +2189,17 @@ impl EventSubscriber for NatsEventSubscriber {
         let client = self.client.clone();
         let subject = self.subject.clone();
         let handler = self.handler.clone();
-        
+
         // 订阅主题
         let mut subscriber = client.subscribe(subject.clone()).await?;
-        
+
         // 启动消费任务
         let task_handle = tokio::spawn(async move {
             info!("Started NATS subscriber for subject: {}", subject);
-            
+
             while let Some(msg) = subscriber.next().await {
                 let payload = String::from_utf8_lossy(&msg.payload);
-                
+
                 // 解析事件
                 match serde_json::from_str::<Event>(&payload) {
                     Ok(event) => {
@@ -2210,24 +2212,24 @@ impl EventSubscriber for NatsEventSubscriber {
                     }
                 }
             }
-            
+
             info!("NATS subscriber for subject {} stopped", subject);
         });
-        
+
         // 存储任务句柄
         let mut handle = self.task_handle.write().await;
         *handle = Some(task_handle);
-        
+
         Ok(())
     }
-    
+
     async fn stop(&self) -> Result<()> {
         let mut handle = self.task_handle.write().await;
         if let Some(task) = handle.take() {
             task.abort();
             info!("Stopped NATS subscriber for subject: {}", self.subject);
         }
-        
+
         Ok(())
     }
 }
@@ -2241,7 +2243,7 @@ impl UserBehaviorTracker {
     pub fn new(event_publisher: Arc<EventPublisher>) -> Self {
         Self { event_publisher }
     }
-    
+
     pub async fn track_request(
         &self,
         req: &http::Request<hyper::Body>,
@@ -2252,12 +2254,12 @@ impl UserBehaviorTracker {
             .get::<String>("user_id")
             .map(|id| id.clone())
             .unwrap_or_else(|| "anonymous".to_string());
-            
+
         // 提取请求信息
         let method = req.method().to_string();
         let path = req.uri().path().to_string();
         let query = req.uri().query().unwrap_or("").to_string();
-        
+
         // 创建用户行为数据
         let data = serde_json::json!({
             "user_id": user_id,
@@ -2275,13 +2277,13 @@ impl UserBehaviorTracker {
                 .map(|ip| ip.clone())
                 .unwrap_or_else(|| "unknown".to_string()),
         });
-        
+
         // 发布事件
         self.event_publisher.publish_event("api.request", data).await?;
-        
+
         Ok(())
     }
-    
+
     pub async fn track_response(
         &self,
         req: &http::Request<hyper::Body>,
@@ -2294,12 +2296,12 @@ impl UserBehaviorTracker {
             .get::<String>("user_id")
             .map(|id| id.clone())
             .unwrap_or_else(|| "anonymous".to_string());
-            
+
         // 提取请求和响应信息
         let method = req.method().to_string();
         let path = req.uri().path().to_string();
         let status = res.status().as_u16();
-        
+
         // 创建响应数据
         let data = serde_json::json!({
             "user_id": user_id,
@@ -2314,19 +2316,19 @@ impl UserBehaviorTracker {
                 .and_then(|h| h.to_str().ok())
                 .unwrap_or("0"),
         });
-        
+
         // 发布事件
         let event_type = if status >= 400 {
             "api.error"
         } else {
             "api.response"
         };
-        
+
         self.event_publisher.publish_event(event_type, data).await?;
-        
+
         Ok(())
     }
-    
+
     pub async fn track_user_action(
         &self,
         action: &str,
@@ -2341,10 +2343,10 @@ impl UserBehaviorTracker {
                 chrono::Utc::now().to_rfc3339()
             ));
         }
-        
+
         // 发布事件
         self.event_publisher.publish_event(&format!("user.{}", action), event_data).await?;
-        
+
         Ok(())
     }
 }
@@ -2424,8 +2426,8 @@ metrics_prefix = "pingora_http_gateway"
 export_interval_secs = 15
 
 [grpc]
-services = { 
-  "auth" = { 
+services = {
+  "auth" = {
     endpoint = "http://localhost:50051",
     timeout_ms = 5000,
     retries = 3,

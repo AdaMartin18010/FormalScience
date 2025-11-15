@@ -1,21 +1,19 @@
-# rust无锁结构
+# 1. rust无锁结构
 
-我将为您展示一个完整的 Rust 2024 无锁编程模式和算法实现。
+## 目录
 
-## 📋 目录
+- [1. rust无锁结构](#1-rust无锁结构)
+  - [目录](#目录)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+    - [1.1.1 无锁队列实现](#111-无锁队列实现)
+    - [1.1.2 无锁栈实现](#112-无锁栈实现)
+    - [1.1.3 无锁哈希表实现](#113-无锁哈希表实现)
+    - [1.1.4 无锁跳表实现](#114-无锁跳表实现)
+    - [1.1.5 无锁环形缓冲区实现](#115-无锁环形缓冲区实现)
+    - [1.1.6 无锁计数器和标志位实现](#116-无锁计数器和标志位实现)
+    - [1.1.7 使用示例](#117-使用示例)
 
-- [1 项目依赖配置](#1-项目依赖配置)
-  - [1.1 无锁队列实现](#11-无锁队列实现)
-  - [1.2 无锁栈实现](#12-无锁栈实现)
-  - [1.3 无锁哈希表实现](#13-无锁哈希表实现)
-  - [1.4 无锁跳表实现](#14-无锁跳表实现)
-  - [1.5 无锁环形缓冲区实现](#15-无锁环形缓冲区实现)
-  - [1.6 无锁计数器和标志位实现](#16-无锁计数器和标志位实现)
-  - [1.7 使用示例](#17-使用示例)
-
----
-
-## 1 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -29,7 +27,7 @@ crossbeam-epoch = "0.9"
 crossbeam-queue = "0.3"
 ```
 
-### 1.1 无锁队列实现
+### 1.1.1 无锁队列实现
 
 ```rust
 use crossbeam_epoch::{self as epoch, Atomic, Owned, Shared};
@@ -51,10 +49,10 @@ impl<T> LockFreeQueue<T> {
             data: None,
             next: Atomic::null(),
         });
-        
+
         let head = Atomic::from(sentinel);
         let tail = head.clone();
-        
+
         Self { head, tail }
     }
 
@@ -103,7 +101,7 @@ impl<T> LockFreeQueue<T> {
 
     pub fn dequeue(&self) -> Option<T> {
         let guard = &epoch::pin();
-        
+
         loop {
             let head = unsafe { self.head.load(Ordering::Acquire, guard).deref() };
             let next = head.next.load(Ordering::Acquire, guard);
@@ -113,7 +111,7 @@ impl<T> LockFreeQueue<T> {
             }
 
             let next_ref = unsafe { next.deref() };
-            
+
             if self.head.compare_exchange(
                 head,
                 next,
@@ -128,7 +126,7 @@ impl<T> LockFreeQueue<T> {
 }
 ```
 
-### 1.2 无锁栈实现
+### 1.1.2 无锁栈实现
 
 ```rust
 use std::sync::atomic::{AtomicPtr, Ordering};
@@ -184,7 +182,7 @@ impl<T> LockFreeStack<T> {
             }
 
             let next = unsafe { (*head).next };
-            
+
             if self.head
                 .compare_exchange_weak(
                     head,
@@ -205,7 +203,7 @@ impl<T> LockFreeStack<T> {
 }
 ```
 
-### 1.3 无锁哈希表实现
+### 1.1.3 无锁哈希表实现
 
 ```rust
 use crossbeam_epoch::{self as epoch, Atomic, Owned, Shared};
@@ -273,7 +271,7 @@ impl<K: Eq + Hash, V> LockFreeHashMap<K, V> {
 
             while !current.is_null() {
                 let current_ref = unsafe { current.deref() };
-                
+
                 if current_ref.key == key {
                     let old_value = current_ref.value.clone();
                     current_ref.value = value;
@@ -285,7 +283,7 @@ impl<K: Eq + Hash, V> LockFreeHashMap<K, V> {
             }
 
             new_node.next.store(current, Ordering::Release);
-            
+
             match prev.compare_exchange(
                 current,
                 new_node,
@@ -311,7 +309,7 @@ impl<K: Eq + Hash, V> LockFreeHashMap<K, V> {
 
         while !current.is_null() {
             let node = unsafe { current.deref() };
-            
+
             if node.key == *key {
                 return Some(&node.value);
             }
@@ -324,7 +322,7 @@ impl<K: Eq + Hash, V> LockFreeHashMap<K, V> {
 }
 ```
 
-### 1.4 无锁跳表实现
+### 1.1.4 无锁跳表实现
 
 ```rust
 use crossbeam_epoch::{self as epoch, Atomic, Owned, Shared};
@@ -400,7 +398,7 @@ impl<K: Ord, V> LockFreeSkipList<K, V> {
                         loop {
                             let pred = &preds[i];
                             let succ = succs[i];
-                            
+
                             if pred.compare_exchange(
                                 succ,
                                 new_node.clone(),
@@ -410,7 +408,7 @@ impl<K: Ord, V> LockFreeSkipList<K, V> {
                             ).is_ok() {
                                 break;
                             }
-                            
+
                             self.find(&key, &mut preds, &mut succs, guard);
                         }
                     }
@@ -432,19 +430,19 @@ impl<K: Ord, V> LockFreeSkipList<K, V> {
         succs.clear();
 
         let mut current = self.head.load(Ordering::Acquire, guard);
-        
+
         for level in (0..MAX_LEVEL).rev() {
             while !current.is_null() {
                 let current_ref = unsafe { current.deref() };
                 let next = current_ref.next[level].load(Ordering::Acquire, guard);
-                
+
                 if next.is_null() || &current_ref.key < key {
                     current = next;
                 } else {
                     break;
                 }
             }
-            
+
             preds.push(&current_ref.next[level]);
             succs.push(next);
         }
@@ -455,17 +453,17 @@ impl<K: Ord, V> LockFreeSkipList<K, V> {
     fn random_level(&self) -> usize {
         let mut rng = rand::thread_rng();
         let mut level = 1;
-        
+
         while level < MAX_LEVEL && rng.gen::<f32>() < 0.5 {
             level += 1;
         }
-        
+
         level
     }
 }
 ```
 
-### 1.5 无锁环形缓冲区实现
+### 1.1.5 无锁环形缓冲区实现
 
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -496,7 +494,7 @@ impl<T> LockFreeRingBuffer<T> {
         loop {
             let tail = self.tail.load(Ordering::Relaxed);
             let next_tail = (tail + 1) % self.capacity;
-            
+
             if next_tail == self.head.load(Ordering::Acquire) {
                 return Err(item);
             }
@@ -519,7 +517,7 @@ impl<T> LockFreeRingBuffer<T> {
     pub fn pop(&self) -> Option<T> {
         loop {
             let head = self.head.load(Ordering::Relaxed);
-            
+
             if head == self.tail.load(Ordering::Acquire) {
                 return None;
             }
@@ -542,7 +540,7 @@ impl<T> LockFreeRingBuffer<T> {
 }
 ```
 
-### 1.6 无锁计数器和标志位实现
+### 1.1.6 无锁计数器和标志位实现
 
 ```rust
 use std::sync::atomic::{AtomicUsize, AtomicBool, Ordering};
@@ -596,7 +594,7 @@ impl LockFreeFlag {
 }
 ```
 
-### 1.7 使用示例
+### 1.1.7 使用示例
 
 ```rust
 #[tokio::main]

@@ -1,6 +1,43 @@
-# Rust 所有权系统的资源管理视角（续四）
+# 1. Rust 所有权系统的资源管理视角（续四）
 
-## 前言
+## 目录
+
+- [1. Rust 所有权系统的资源管理视角（续四）](#1-rust-所有权系统的资源管理视角续四)
+  - [目录](#目录)
+  - [1.1 前言](#11-前言)
+  - [1.2 所有权与领域特定语言设计](#12-所有权与领域特定语言设计)
+    - [1.2.1 内部 DSL 与所有权表达](#121-内部-dsl-与所有权表达)
+    - [1.2.2 Fluent API 与所有权转移](#122-fluent-api-与所有权转移)
+    - [1.2.3 类型状态模式](#123-类型状态模式)
+    - [1.2.4 DSL 安全约束实现](#124-dsl-安全约束实现)
+  - [1.3 函数式编程与所有权](#13-函数式编程与所有权)
+    - [1.3.1 不变性与所有权](#131-不变性与所有权)
+    - [1.3.2 Rust 中的函数式模式](#132-rust-中的函数式模式)
+    - [1.3.3 闭包捕获与所有权](#133-闭包捕获与所有权)
+    - [1.3.4 纯函数与副作用管理](#134-纯函数与副作用管理)
+  - [1.4 所有权审计与检查](#14-所有权审计与检查)
+    - [1.4.1 内存安全审计技术](#141-内存安全审计技术)
+    - [1.4.2 资源泄漏分析](#142-资源泄漏分析)
+    - [1.4.3 关键路径优化](#143-关键路径优化)
+    - [1.4.4 静态分析工具](#144-静态分析工具)
+  - [1.5 所有权与系统架构](#15-所有权与系统架构)
+    - [1.5.1 分层所有权架构](#151-分层所有权架构)
+    - [1.5.2 微服务与所有权边界](#152-微服务与所有权边界)
+    - [1.5.3 长生命周期服务设计](#153-长生命周期服务设计)
+    - [1.5.4 容错系统的所有权模式](#154-容错系统的所有权模式)
+  - [1.6 所有权与语言研究前沿](#16-所有权与语言研究前沿)
+    - [1.6.1 依赖型与所有权](#161-依赖型与所有权)
+    - [1.6.2 属性语法的形式化](#162-属性语法的形式化)
+    - [1.6.3 可验证所有权系统](#163-可验证所有权系统)
+    - [1.6.4 量子计算与所有权](#164-量子计算与所有权)
+  - [1.7 总结与未来展望](#17-总结与未来展望)
+    - [1.7.1 所有权系统的核心价值](#171-所有权系统的核心价值)
+    - [1.7.2 语言进化方向](#172-语言进化方向)
+    - [1.7.3 跨领域影响](#173-跨领域影响)
+    - [1.7.4 最终思考](#174-最终思考)
+  - [1.8 结论](#18-结论)
+
+## 1.1 前言
 
 ```text
 <think>
@@ -19,46 +56,9 @@
 </think>
 ```
 
-## 目录
+## 1.2 所有权与领域特定语言设计
 
-- [Rust 所有权系统的资源管理视角（续四）](#rust-所有权系统的资源管理视角续四)
-  - [前言](#前言)
-  - [目录](#目录)
-  - [所有权与领域特定语言设计](#所有权与领域特定语言设计)
-    - [内部 DSL 与所有权表达](#内部-dsl-与所有权表达)
-    - [Fluent API 与所有权转移](#fluent-api-与所有权转移)
-    - [类型状态模式](#类型状态模式)
-    - [DSL 安全约束实现](#dsl-安全约束实现)
-  - [函数式编程与所有权](#函数式编程与所有权)
-    - [不变性与所有权](#不变性与所有权)
-    - [Rust 中的函数式模式](#rust-中的函数式模式)
-    - [闭包捕获与所有权](#闭包捕获与所有权)
-    - [纯函数与副作用管理](#纯函数与副作用管理)
-  - [所有权审计与检查](#所有权审计与检查)
-    - [内存安全审计技术](#内存安全审计技术)
-    - [资源泄漏分析](#资源泄漏分析)
-    - [关键路径优化](#关键路径优化)
-    - [静态分析工具](#静态分析工具)
-  - [所有权与系统架构](#所有权与系统架构)
-    - [分层所有权架构](#分层所有权架构)
-    - [微服务与所有权边界](#微服务与所有权边界)
-    - [长生命周期服务设计](#长生命周期服务设计)
-    - [容错系统的所有权模式](#容错系统的所有权模式)
-  - [所有权与语言研究前沿](#所有权与语言研究前沿)
-    - [依赖型与所有权](#依赖型与所有权)
-    - [属性语法的形式化](#属性语法的形式化)
-    - [可验证所有权系统](#可验证所有权系统)
-    - [量子计算与所有权](#量子计算与所有权)
-  - [总结与未来展望](#总结与未来展望)
-    - [所有权系统的核心价值](#所有权系统的核心价值)
-    - [语言进化方向](#语言进化方向)
-    - [跨领域影响](#跨领域影响)
-    - [最终思考](#最终思考)
-  - [结论](#结论)
-
-## 所有权与领域特定语言设计
-
-### 内部 DSL 与所有权表达
+### 1.2.1 内部 DSL 与所有权表达
 
 Rust 的所有权系统为内部 DSL（Domain-Specific Language）设计提供了强大支持：
 
@@ -84,7 +84,7 @@ impl QueryBuilder {
     fn new() -> Self {
         QueryBuilder { query: String::from("SELECT ") }
     }
-    
+
     // 转移所有权，确保方法调用顺序
     fn column(mut self, name: &str) -> ColumnBuilder {
         self.query.push_str(name);
@@ -103,7 +103,7 @@ impl ColumnBuilder {
         self.query.push_str(name);
         self
     }
-    
+
     // 转移到下一个构建阶段
     fn from(mut self, table: &str) -> FromBuilder {
         self.query.push_str(" FROM ");
@@ -121,7 +121,7 @@ impl FromBuilder {
     fn build(self) -> String {
         self.query
     }
-    
+
     // 添加 WHERE 子句
     fn where_clause(mut self, condition: &str) -> WhereBuilder {
         self.query.push_str(" WHERE ");
@@ -149,16 +149,16 @@ fn use_query_dsl() {
         .from("users")
         .where_clause("age > 18")
         .build();
-        
+
     println!("SQL: {}", query);
-    
+
     // 编译错误：不允许的方法调用顺序
     // let invalid = QueryBuilder::new()
     //     .from("users") // 错误：QueryBuilder 没有 from 方法
 }
 ```
 
-### Fluent API 与所有权转移
+### 1.2.2 Fluent API 与所有权转移
 
 所有权系统如何支持流畅的 API 设计：
 
@@ -192,19 +192,19 @@ impl RequestBuilder {
             body: None,
         }
     }
-    
+
     // 添加头部并返回自身，允许链式调用
     fn header(mut self, name: &str, value: &str) -> Self {
         self.headers.push((name.to_string(), value.to_string()));
         self
     }
-    
+
     // 设置请求体
     fn body(mut self, data: Vec<u8>) -> Self {
         self.body = Some(data);
         self
     }
-    
+
     // 构建并发送请求，消耗构建器
     fn send(self) -> Result<Response, Error> {
         // 在实际应用中会发送 HTTP 请求
@@ -228,12 +228,12 @@ fn use_fluent_api() {
         .header("Authorization", "Bearer token123")
         .send()
         .expect("请求失败");
-        
+
     println!("状态码: {}", response.status);
 }
 ```
 
-### 类型状态模式
+### 1.2.3 类型状态模式
 
 类型状态（Type State）模式在 Rust 中的实现：
 
@@ -270,7 +270,7 @@ impl TcpConnection<Closed> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn listen(self, port: u16) -> TcpConnection<Listening> {
         println!("开始在端口 {} 监听", port);
         TcpConnection {
@@ -285,18 +285,18 @@ impl TcpConnection<Listening> {
     fn accept(self) -> (TcpConnection<Connected>, TcpConnection<Listening>) {
         // 接受连接
         println!("接受新连接");
-        
+
         let connected = TcpConnection {
             socket: self.socket + 1, // 新连接
             _state: std::marker::PhantomData,
         };
-        
+
         (connected, TcpConnection {
             socket: self.socket,
             _state: std::marker::PhantomData,
         })
     }
-    
+
     fn close(self) -> TcpConnection<Closed> {
         println!("关闭监听套接字");
         TcpConnection {
@@ -311,12 +311,12 @@ impl TcpConnection<Connected> {
     fn send(&mut self, data: &[u8]) {
         println!("发送 {} 字节", data.len());
     }
-    
+
     fn receive(&mut self, buffer: &mut [u8]) -> usize {
         println!("接收数据到缓冲区");
         0 // 简化实现
     }
-    
+
     fn close(self) -> TcpConnection<Closed> {
         println!("关闭连接");
         TcpConnection {
@@ -329,24 +329,24 @@ impl TcpConnection<Connected> {
 // 使用类型状态 API
 fn use_type_state() {
     let conn = TcpConnection::new();
-    
+
     let listening_conn = conn.listen(8080);
-    
+
     let (client_conn, listener) = listening_conn.accept();
-    
+
     // client_conn.listen(9000); // 编译错误：Connected 状态没有 listen 方法
-    
+
     let mut client = client_conn;
     client.send(b"Hello");
-    
+
     let closed_client = client.close();
     // client.send(b"World"); // 编译错误：client 已经被移动
-    
+
     let closed_listener = listener.close();
 }
 ```
 
-### DSL 安全约束实现
+### 1.2.4 DSL 安全约束实现
 
 使用所有权系统实现 DSL 安全约束：
 
@@ -383,12 +383,12 @@ impl Canvas<Idle> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     // 开始绘制，转换状态
     fn begin_draw(self) -> Canvas<Drawing> {
         let mut commands = self.commands;
         commands.push("begin_draw".into());
-        
+
         Canvas {
             commands,
             _state: std::marker::PhantomData,
@@ -405,7 +405,7 @@ impl Canvas<Drawing> {
         ));
         self
     }
-    
+
     // 绘制圆形
     fn circle(mut self, x: f32, y: f32, radius: f32) -> Self {
         self.commands.push(format!(
@@ -414,23 +414,23 @@ impl Canvas<Drawing> {
         ));
         self
     }
-    
+
     // 开始绘制路径
     fn begin_path(self) -> Canvas<Path> {
         let mut commands = self.commands;
         commands.push("begin_path".into());
-        
+
         Canvas {
             commands,
             _state: std::marker::PhantomData,
         }
     }
-    
+
     // 结束绘制
     fn end_draw(self) -> Canvas<Idle> {
         let mut commands = self.commands;
         commands.push("end_draw".into());
-        
+
         Canvas {
             commands,
             _state: std::marker::PhantomData,
@@ -444,18 +444,18 @@ impl Canvas<Path> {
         self.commands.push(format!("move_to({}, {})", x, y));
         self
     }
-    
+
     // 画线到坐标
     fn line_to(mut self, x: f32, y: f32) -> Self {
         self.commands.push(format!("line_to({}, {})", x, y));
         self
     }
-    
+
     // 结束路径，返回绘制状态
     fn end_path(self) -> Canvas<Drawing> {
         let mut commands = self.commands;
         commands.push("end_path".into());
-        
+
         Canvas {
             commands,
             _state: std::marker::PhantomData,
@@ -466,7 +466,7 @@ impl Canvas<Path> {
 // 使用绘图 DSL
 fn use_drawing_dsl() {
     let idle_canvas = Canvas::new();
-    
+
     let final_canvas = idle_canvas
         .begin_draw()
         .rect(10.0, 10.0, 100.0, 50.0)
@@ -477,21 +477,21 @@ fn use_drawing_dsl() {
         .line_to(200.0, 10.0)
         .end_path()
         .end_draw();
-        
+
     // 显示所有命令
     for cmd in &final_canvas.commands {
         println!("{}", cmd);
     }
-    
+
     // 编译错误：类型状态防止非法操作序列
     // idle_canvas.rect(0.0, 0.0, 10.0, 10.0); // 错误：Idle 没有 rect 方法
     // idle_canvas.begin_draw().end_path(); // 错误：Drawing 没有 end_path 方法
 }
 ```
 
-## 函数式编程与所有权
+## 1.3 函数式编程与所有权
 
-### 不变性与所有权
+### 1.3.1 不变性与所有权
 
 Rust 所有权系统与函数式编程的不变性原则结合：
 
@@ -521,10 +521,10 @@ use List::{Cons, Nil};
 fn immutable_list_example() {
     // 创建不变列表 1->2->3
     let list1 = Rc::new(Cons(1, Rc::new(Cons(2, Rc::new(Cons(3, Rc::new(Nil)))))));
-    
+
     // 共享列表的一部分
     let list2 = Rc::new(Cons(0, Rc::clone(&list1)));
-    
+
     // 打印列表
     fn print_list<T: std::fmt::Display>(list: &List<T>) {
         match list {
@@ -535,7 +535,7 @@ fn immutable_list_example() {
             Nil => println!("Nil"),
         }
     }
-    
+
     print_list(&list2);
     print_list(&list1); // list1 仍然可用，因为只共享了不可变引用
 }
@@ -556,7 +556,7 @@ impl<K: Ord, V> ImmutableMap<K, V> {
     fn new() -> Self {
         ImmutableMap { root: None }
     }
-    
+
     // 插入返回新映射而非修改原映射
     fn insert(&self, key: K, value: V) -> Self {
         ImmutableMap {
@@ -570,7 +570,7 @@ impl<K: Ord, V> ImmutableMap<K, V> {
             })), key, value),
         }
     }
-    
+
     fn insert_recursive(&self, node: Rc<Node<K, V>>, key: K, value: V) -> Option<Rc<Node<K, V>>> {
         // 简化实现
         Some(node)
@@ -578,7 +578,7 @@ impl<K: Ord, V> ImmutableMap<K, V> {
 }
 ```
 
-### Rust 中的函数式模式
+### 1.3.2 Rust 中的函数式模式
 
 所有权系统如何影响函数式编程模式在 Rust 中的实现：
 
@@ -598,17 +598,17 @@ impl<K: Ord, V> ImmutableMap<K, V> {
 // 函数式迭代器示例
 fn iterator_ownership() {
     let v = vec![1, 2, 3, 4, 5];
-    
+
     // 不可变借用迭代
     let sum: i32 = v.iter().sum();
     println!("Sum: {}", sum);
     println!("Vector still owned: {:?}", v);
-    
+
     // 可变借用迭代
     let mut v2 = vec![1, 2, 3, 4, 5];
     v2.iter_mut().for_each(|x| *x *= 2);
     println!("Modified: {:?}", v2);
-    
+
     // 所有权转移迭代
     let v3 = vec![1, 2, 3, 4, 5];
     let doubled: Vec<_> = v3.into_iter().map(|x| x * 2).collect();
@@ -628,10 +628,10 @@ where
 fn function_composition() {
     let add_one = |x| x + 1;
     let double = |x| x * 2;
-    
+
     let add_one_then_double = compose(add_one, double);
     let double_then_add_one = compose(double, add_one);
-    
+
     println!("add_one_then_double(5) = {}", add_one_then_double(5));
     println!("double_then_add_one(5) = {}", double_then_add_one(5));
 }
@@ -639,7 +639,7 @@ fn function_composition() {
 // 函数式错误处理
 fn functional_error_handling() -> Result<i32, String> {
     let text = "42".to_string();
-    
+
     // 链式函数转换，保持所有权
     let result = text
         .parse::<i32>()
@@ -652,12 +652,12 @@ fn functional_error_handling() -> Result<i32, String> {
                 Err("值太小".to_string())
             }
         });
-    
+
     result
 }
 ```
 
-### 闭包捕获与所有权
+### 1.3.3 闭包捕获与所有权
 
 Rust 闭包中的所有权捕获机制：
 
@@ -682,14 +682,14 @@ fn closure_capture_examples() {
     print_closure();
     print_closure();
     println!("Original still accessible: {:?}", data);
-    
+
     // 可变引用捕获
     let mut data2 = vec![1, 2, 3];
     let mut mutate_closure = || data2.push(4);
     mutate_closure();
     mutate_closure();
     println!("Modified data: {:?}", data2);
-    
+
     // 所有权转移捕获
     let data3 = vec![1, 2, 3];
     let consume_closure = move || {
@@ -700,7 +700,7 @@ fn closure_capture_examples() {
     // 可以再次调用，因为闭包拥有数据
     consume_closure();
     // println!("data3: {:?}", data3); // 错误：data3 所有权已转移
-    
+
     // FnOnce 示例
     let data4 = vec![1, 2, 3];
     let consume_once = || {
@@ -728,7 +728,7 @@ fn execute_fn_once<F: FnOnce()>(f: F) {
 }
 ```
 
-### 纯函数与副作用管理
+### 1.3.4 纯函数与副作用管理
 
 Rust 所有权系统如何支持纯函数式编程：
 
@@ -766,26 +766,26 @@ struct ImpureFn<A, R>(fn(&mut A) -> R);
 
 fn pure_impure_examples() {
     let mut data = vec![1, 2, 3];
-    
+
     // 纯函数不会修改数据
     let sum1 = pure_sum(&data);
     println!("Pure sum: {}", sum1);
     println!("Data unchanged: {:?}", data);
-    
+
     // 有副作用的函数修改数据
     let sum2 = impure_sum(&mut data);
     println!("Impure sum: {}", sum2);
     println!("Data changed: {:?}", data);
-    
+
     // 函数类型
     let pure_adder: PureFn<Vec<i32>, i32> = PureFn(pure_sum);
     let impure_adder: ImpureFn<Vec<i32>, i32> = ImpureFn(impure_sum);
 }
 ```
 
-## 所有权审计与检查
+## 1.4 所有权审计与检查
 
-### 内存安全审计技术
+### 1.4.1 内存安全审计技术
 
 利用 Rust 所有权系统进行内存安全审计：
 
@@ -816,14 +816,14 @@ impl<T> RawArray<T> {
     pub fn new(capacity: usize) -> Self {
         let layout = std::alloc::Layout::array::<T>(capacity).unwrap();
         let ptr = unsafe { std::alloc::alloc(layout) as *mut T };
-        
+
         RawArray {
             ptr,
             len: 0,
             capacity,
         }
     }
-    
+
     // 安全访问方法
     pub fn get(&self, index: usize) -> Option<&T> {
         if index < self.len {
@@ -833,7 +833,7 @@ impl<T> RawArray<T> {
             None
         }
     }
-    
+
     // 安全修改方法
     pub fn set(&mut self, index: usize, value: T) -> bool {
         if index < self.len {
@@ -856,7 +856,7 @@ impl<T> Drop for RawArray<T> {
                 std::ptr::drop_in_place(self.ptr.add(i));
             }
         }
-        
+
         // 释放内存
         let layout = std::alloc::Layout::array::<T>(self.capacity).unwrap();
         unsafe {
@@ -869,24 +869,24 @@ impl<T> Drop for RawArray<T> {
 fn audit_example() {
     // 检查点1: 确保 Drop 实现正确释放资源
     let mut array = RawArray::<String>::new(10);
-    
+
     // 检查点2: 确保边界检查防止越界访问
     println!("Out of bounds: {:?}", array.get(100));
-    
+
     // 检查点3: 确保可变性约束正确实施
     let value = String::from("test");
     array.set(0, value.clone());
-    
+
     // 检查点4: 验证不存在未定义行为
     let _ref1 = array.get(0);
     let _ref2 = array.get(0);
     // 允许多个不可变引用
-    
+
     // array.set(0, String::from("new")); // 编译错误：已存在不可变借用
 }
 ```
 
-### 资源泄漏分析
+### 1.4.2 资源泄漏分析
 
 使用所有权系统识别和防止资源泄漏：
 
@@ -915,7 +915,7 @@ struct Node {
     // 错误模式：循环强引用
     // children: RefCell<Vec<Rc<Node>>>,
     // parent: RefCell<Option<Rc<Node>>>,
-    
+
     // 正确模式：对父节点使用弱引用
     children: RefCell<Vec<Rc<Node>>>,
     parent: RefCell<Option<Weak<Node>>>,
@@ -928,23 +928,23 @@ fn cyclic_reference_example() {
         children: RefCell::new(vec![]),
         parent: RefCell::new(None),
     });
-    
+
     let branch = Rc::new(Node {
         value: 2,
         children: RefCell::new(vec![Rc::clone(&leaf)]),
         parent: RefCell::new(None),
     });
-    
+
     // 设置父引用为弱引用
     *leaf.parent.borrow_mut() = Some(Rc::downgrade(&branch));
-    
+
     // 检查引用计数
     println!("Branch strong count: {}", Rc::strong_count(&branch));
     println!("Leaf strong count: {}", Rc::strong_count(&leaf));
-    
+
     // 删除对分支的强引用
     drop(branch);
-    
+
     // 叶子节点应该只剩下一个强引用
     println!("Leaf strong count after branch drop: {}", Rc::strong_count(&leaf));
 }
@@ -954,31 +954,31 @@ fn resource_leak_patterns() {
     // 错误模式：忘记关闭文件
     let file = std::fs::File::open("data.txt").unwrap();
     // 文件在函数结束时自动关闭，因为 File 实现了 Drop
-    
+
     // 错误模式：手动管理内存
     let data = Box::new([0u8; 1024]);
     // 正确释放：由 Drop 实现
     drop(data);
-    
+
     // 错误模式：忘记释放 Mutex 锁
     let mutex = std::sync::Mutex::new(0);
     {
         let _guard = mutex.lock().unwrap();
         // guard 在作用域结束时自动释放
     }
-    
+
     // 错误模式：在回调中保留引用
     let data = vec![1, 2, 3];
     // 闭包值捕获而非引用捕获
     let callback = move || {
         println!("数据: {:?}", data);
     };
-    
+
     std::thread::spawn(callback);
 }
 ```
 
-### 关键路径优化
+### 1.4.3 关键路径优化
 
 使用所有权信息优化代码关键路径：
 
@@ -1005,7 +1005,7 @@ fn optimize_allocations() {
             .map(|s| s.to_uppercase())
             .collect()
     }
-    
+
     // 优化：预分配容量
     fn optimized(inputs: &[String]) -> Vec<String> {
         let mut result = Vec::with_capacity(inputs.len());
@@ -1014,14 +1014,14 @@ fn optimize_allocations() {
         }
         result
     }
-    
+
     // 示例
     let inputs = vec![
         "hello".to_string(),
         "world".to_string(),
         "rust".to_string(),
     ];
-    
+
     let _ = unoptimized(&inputs);
     let _ = optimized(&inputs);
 }
@@ -1038,7 +1038,7 @@ fn optimize_copies() {
         }
         false
     }
-    
+
     // 优化：直接使用引用
     fn optimized_search(haystack: &[String], needle: &str) -> bool {
         for item in haystack {
@@ -1048,14 +1048,14 @@ fn optimize_copies() {
         }
         false
     }
-    
+
     // 示例
     let haystack = vec![
         "hello world".to_string(),
         "rust programming".to_string(),
         "ownership system".to_string(),
     ];
-    
+
     let _ = unoptimized_search(&haystack, "rust");
     let _ = optimized_search(&haystack, "rust");
 }
@@ -1066,22 +1066,22 @@ fn improve_locality() {
     struct Poor {
         data: Vec<Box<[u8; 64]>>, // 每个元素都是独立的堆分配
     }
-    
+
     // 优化：连续内存提高缓存局部性
     struct Better {
         data: Vec<[u8; 64]>, // 元素在连续内存中
     }
-    
+
     let mut poor = Poor { data: Vec::with_capacity(100) };
     for _ in 0..100 {
         poor.data.push(Box::new([0; 64]));
     }
-    
+
     let mut better = Better { data: Vec::with_capacity(100) };
     for _ in 0..100 {
         better.data.push([0; 64]);
     }
-    
+
     // 处理数据
     fn process_poor(data: &Poor) -> u64 {
         let mut sum = 0;
@@ -1090,7 +1090,7 @@ fn improve_locality() {
         }
         sum
     }
-    
+
     fn process_better(data: &Better) -> u64 {
         let mut sum = 0;
         for item in &data.data {
@@ -1098,13 +1098,13 @@ fn improve_locality() {
         }
         sum
     }
-    
+
     let _ = process_poor(&poor);
     let _ = process_better(&better); // 通常更快，因为更好的缓存局部性
 }
 ```
 
-### 静态分析工具
+### 1.4.4 静态分析工具
 
 基于所有权系统的静态分析工具与技术：
 
@@ -1126,15 +1126,15 @@ fn improve_locality() {
 // 1. 所有权转移链可视化
 fn ownership_chain() {
     let data = String::from("ownership example");
-    
+
     // 所有权转移链
     // data → process_string → result → final_result
     let result = process_string(data);
     let final_result = format!("Final: {}", result);
     println!("{}", final_result);
-    
+
     // 静态分析工具可视化:
-    // data (创建) → 转移到 process_string 参数 → 
+    // data (创建) → 转移到 process_string 参数 →
     // 返回为 result → 部分用于构建 final_result
 }
 
@@ -1145,40 +1145,40 @@ fn process_string(s: String) -> String {
 // 2. 错误模式检测
 fn detect_patterns() {
     let mut data = vec![1, 2, 3];
-    
+
     // 潜在问题：闭包捕获可变引用但保存在长生命周期结构中
     let processor = move |val| {
         data.push(val); // 捕获 data 的可变引用
         data.len()
     };
-    
+
     // 分析器可能发出警告：闭包捕获的可变引用可能超出原始数据生命周期
     processor(4);
-    
+
     // 更安全的方式：明确转移所有权
     let mut owned_data = vec![1, 2, 3];
     let better_processor = move |val| {
         owned_data.push(val); // 拥有 owned_data
         owned_data.len()
     };
-    
+
     better_processor(4);
 }
 
 // 3. 性能优化检测
 fn performance_patterns() {
     let data = "Hello, world!".to_string();
-    
+
     // 不必要的克隆
     let process = |s: String| s.len();
     let len1 = process(data.clone()); // 静态分析工具可能建议改为引用
-    
+
     // 优化版本
     let better_process = |s: &str| s.len();
     let len2 = better_process(&data); // 避免克隆
-    
+
     println!("长度: {}, {}", len1, len2);
-    
+
     // 分析工具可能识别的其他模式:
     // - Vec::push 后跟随 Vec::pop
     // - 不必要的 Box 装箱
@@ -1186,9 +1186,9 @@ fn performance_patterns() {
 }
 ```
 
-## 所有权与系统架构
+## 1.5 所有权与系统架构
 
-### 分层所有权架构
+### 1.5.1 分层所有权架构
 
 使用所有权原则组织大型系统架构：
 
@@ -1221,12 +1221,12 @@ impl Database {
     fn new() -> Self {
         Database { records: Vec::new() }
     }
-    
+
     // 提供只读访问
     fn get_record(&self, id: u64) -> Option<&Record> {
         self.records.iter().find(|r| r.id == id)
     }
-    
+
     // 提供可修改访问
     fn update_record(&mut self, id: u64, new_data: String) -> bool {
         if let Some(record) = self.records.iter_mut().find(|r| r.id == id) {
@@ -1236,7 +1236,7 @@ impl Database {
             false
         }
     }
-    
+
     // 接受所有权转移
     fn add_record(&mut self, id: u64, data: String) {
         self.records.push(Record { id, data });
@@ -1252,7 +1252,7 @@ impl<'a> RecordService<'a> {
     fn new(db: &'a mut Database) -> Self {
         RecordService { db }
     }
-    
+
     // 服务操作通过引用使用数据
     fn process_record(&mut self, id: u64) -> Option<String> {
         self.db.get_record(id).map(|record| {
@@ -1272,26 +1272,26 @@ impl Application {
     fn new() -> Self {
         Application { database: Database::new() }
     }
-    
+
     fn run(&mut self) {
         // 初始化数据
         self.database.add_record(1, "Initial data".to_string());
-        
+
         // 创建服务并借用数据库
         let mut service = RecordService::new(&mut self.database);
-        
+
         // 执行服务操作
         if let Some(result) = service.process_record(1) {
             println!("应用结果: {}", result);
         }
-        
+
         // 服务已被释放，应用重新获得对数据库的完整访问权
         println!("最终记录: {:?}", self.database.get_record(1));
     }
 }
 ```
 
-### 微服务与所有权边界
+### 1.5.2 微服务与所有权边界
 
 将 Rust 所有权概念应用于微服务架构：
 
@@ -1322,10 +1322,10 @@ struct User {
 trait UserService {
     // 所有权语义：服务保留所有权，返回拷贝
     fn get_user(&self, id: &str) -> Option<User>;
-    
+
     // 所有权语义：客户端转移所有权到服务
     fn create_user(&mut self, user: User) -> Result<(), String>;
-    
+
     // 所有权语义：服务放弃所有权
     fn delete_user(&mut self, id: &str) -> Option<User>;
 }
@@ -1339,7 +1339,7 @@ impl UserService for UserMicroservice {
     fn get_user(&self, id: &str) -> Option<User> {
         self.users.get(id).cloned()
     }
-    
+
     fn create_user(&mut self, user: User) -> Result<(), String> {
         if self.users.contains_key(&user.id) {
             return Err("用户已存在".to_string());
@@ -1347,7 +1347,7 @@ impl UserService for UserMicroservice {
         self.users.insert(user.id.clone(), user);
         Ok(())
     }
-    
+
     fn delete_user(&mut self, id: &str) -> Option<User> {
         self.users.remove(id)
     }
@@ -1359,33 +1359,33 @@ async fn service_client_example() {
     let mut service = UserMicroservice {
         users: std::collections::HashMap::new(),
     };
-    
+
     // 客户端创建用户（转移所有权到服务）
     let new_user = User {
         id: "user1".to_string(),
         name: "Alice".to_string(),
         email: "alice@example.com".to_string(),
     };
-    
+
     if let Err(e) = service.create_user(new_user) {
         println!("创建用户错误: {}", e);
         return;
     }
-    
+
     // 客户端获取用户（接收拷贝）
     if let Some(user) = service.get_user("user1") {
         println!("获取用户: {} ({})", user.name, user.email);
-        
+
         // 客户端可以自由修改本地副本
         let mut local_user = user;
         local_user.name = "Alice Modified".to_string();
-        
+
         // 原始服务中的用户不受影响
         if let Some(original) = service.get_user("user1") {
             println!("原始用户名仍然是: {}", original.name);
         }
     }
-    
+
     // 客户端删除用户（服务放弃所有权）
     if let Some(removed_user) = service.delete_user("user1") {
         println!("已删除用户: {}", removed_user.name);
@@ -1394,7 +1394,7 @@ async fn service_client_example() {
 }
 ```
 
-### 长生命周期服务设计
+### 1.5.3 长生命周期服务设计
 
 管理长生命周期服务中的所有权挑战：
 
@@ -1436,7 +1436,7 @@ impl LogService {
             target,
         }
     }
-    
+
     fn log(&self, level: LogLevel, message: &str) {
         let current_level = self.log_level.read().unwrap();
         // 检查是否应该记录
@@ -1448,7 +1448,7 @@ impl LogService {
         };
         println!("[{}] {} - {}", level_str, self.target, message);
     }
-    
+
     fn set_level(&self, level: LogLevel) {
         let mut current = self.log_level.write().unwrap();
         *current = level;
@@ -1475,17 +1475,17 @@ impl Application {
             logger: LOGGER.clone(),
         }
     }
-    
+
     fn run(&self) {
         self.logger.log(LogLevel::Info, &format!("应用 {} 启动", self.name));
         // 执行操作...
         self.logger.log(LogLevel::Debug, "执行某些操作");
-        
+
         // 更改日志级别
         self.logger.set_level(LogLevel::Warning);
         self.logger.log(LogLevel::Info, "此消息不会显示");
         self.logger.log(LogLevel::Warning, "此警告会显示");
-        
+
         self.logger.log(LogLevel::Info, &format!("应用 {} 停止", self.name));
     }
 }
@@ -1514,33 +1514,33 @@ impl Server {
             logger: LOGGER.clone(),
         }
     }
-    
+
     fn connect_db(&mut self, url: String) -> Result<(), String> {
         self.logger.log(LogLevel::Info, &format!("连接到数据库: {}", url));
-        
+
         // 模拟连接
         self.database = Some(DatabaseConnection { url });
         Ok(())
     }
-    
+
     fn start(&self) -> Result<(), String> {
         // 检查是否已初始化
         if self.database.is_none() {
             return Err("服务器未连接到数据库".to_string());
         }
-        
+
         self.logger.log(LogLevel::Info, &format!(
             "服务器在端口 {} 上启动，最大连接数: {}",
             self.config.port,
             self.config.max_connections
         ));
-        
+
         Ok(())
     }
 }
 ```
 
-### 容错系统的所有权模式
+### 1.5.4 容错系统的所有权模式
 
 使用所有权系统设计容错系统：
 
@@ -1575,7 +1575,7 @@ impl<T> IsolatedComponent<T> {
             inner: initializer(),
         }
     }
-    
+
     // 安全执行操作，包含错误边界
     fn execute<R>(&mut self, operation: impl FnOnce(&mut T) -> Result<R, ComponentError>) -> Result<R, ComponentError> {
         match &mut self.inner {
@@ -1585,7 +1585,7 @@ impl<T> IsolatedComponent<T> {
             )),
         }
     }
-    
+
     // 尝试恢复
     fn recover(&mut self, recovery: impl FnOnce() -> Result<T, ComponentError>) {
         if self.inner.is_err() {
@@ -1602,7 +1602,7 @@ struct DatabasePool {
 impl DatabasePool {
     fn new(url: &str, size: usize) -> Result<Self, ComponentError> {
         let mut connections = Vec::with_capacity(size);
-        
+
         for i in 0..size {
             match DatabaseConnection::connect(url) {
                 Ok(conn) => connections.push(conn),
@@ -1617,10 +1617,10 @@ impl DatabasePool {
                 }
             }
         }
-        
+
         Ok(DatabasePool { connections })
     }
-    
+
     fn get_connection(&mut self) -> Option<&mut DatabaseConnection> {
         // 简化实现：返回第一个可用连接
         self.connections.get_mut(0)
@@ -1650,14 +1650,14 @@ impl DatabaseConnection {
             connected: true,
         })
     }
-    
+
     fn disconnect(&mut self) {
         if self.connected {
             println!("断开连接 {}", self.url);
             self.connected = false;
         }
     }
-    
+
     fn execute(&mut self, query: &str) -> Result<(), String> {
         if !self.connected {
             return Err("连接已关闭".to_string());
@@ -1683,19 +1683,19 @@ impl<'a> Transaction<'a> {
             committed: false,
         }
     }
-    
+
     fn execute(&mut self, query: &str) -> Result<(), String> {
         self.connection.execute(query)?;
         self.operations.push(query.to_string());
         Ok(())
     }
-    
+
     fn commit(mut self) -> Result<(), String> {
         println!("提交事务");
         self.committed = true;
         Ok(())
     }
-    
+
     // 显式回滚
     fn rollback(mut self) -> Result<(), String> {
         println!("回滚事务");
@@ -1720,43 +1720,43 @@ fn fault_tolerant_example() -> Result<(), String> {
     let mut db_component = IsolatedComponent::new(|| {
         DatabasePool::new("mysql://localhost:3306/mydb", 5)
             .map_err(|e| match e {
-                ComponentError::InitializationError(msg) => 
+                ComponentError::InitializationError(msg) =>
                     ComponentError::InitializationError(format!("数据库池初始化失败: {}", msg)),
                 _ => e,
             })
     });
-    
+
     // 使用数据库执行操作
     let result = db_component.execute(|pool| {
         let conn = pool.get_connection()
             .ok_or(ComponentError::OperationError("无可用连接".to_string()))?;
-            
+
         // 创建事务进行操作
         let mut transaction = Transaction::new(conn);
-        
+
         if let Err(e) = transaction.execute("INSERT INTO users (name) VALUES ('Alice')") {
             // 错误时自动回滚
             return Err(ComponentError::OperationError(format!("插入失败: {}", e)));
         }
-        
+
         if let Err(e) = transaction.execute("UPDATE counters SET value = value + 1") {
             // 不需要显式回滚，Drop 会处理
             return Err(ComponentError::OperationError(format!("更新失败: {}", e)));
         }
-        
+
         // 提交事务
         transaction.commit()
             .map_err(|e| ComponentError::OperationError(format!("提交失败: {}", e)))?;
-            
+
         Ok(())
     });
-    
+
     // 处理组件级别错误
     match result {
         Ok(_) => println!("操作成功完成"),
         Err(e) => {
             println!("操作失败: {:?}", e);
-            
+
             // 尝试恢复组件
             db_component.recover(|| {
                 println!("尝试恢复数据库组件");
@@ -1767,14 +1767,14 @@ fn fault_tolerant_example() -> Result<(), String> {
             });
         }
     }
-    
+
     Ok(())
 }
 ```
 
-## 所有权与语言研究前沿
+## 1.6 所有权与语言研究前沿
 
-### 依赖型与所有权
+### 1.6.1 依赖型与所有权
 
 依赖类型系统与所有权系统的结合：
 
@@ -1794,7 +1794,7 @@ fn fault_tolerant_example() -> Result<(), String> {
 // 注意：以下代码使用了一些概念性语法，展示依赖类型与所有权的潜在结合方式
 // 这不是当前 Rust 的实际语法
 
-/* 
+/*
 // 1. 依赖类型表达资源状态
 
 // 使用幻想语法展示类型级别状态
@@ -1813,12 +1813,12 @@ impl<s: FileState> File<s> {
     fn open(self: File<Closed>, path: &str) -> Result<File<Open>, File<Error>> {
         // 实现打开文件
     }
-    
+
     // 当且仅当文件处于打开状态时才能读取
     fn read(self: &File<Open>, buffer: &mut [u8]) -> usize {
         // 实现读取
     }
-    
+
     // 当且仅当文件处于打开状态时才能关闭
     fn close(self: File<Open>) -> File<Closed> {
         // 实现关闭
@@ -1871,7 +1871,7 @@ impl File<ClosedState> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn open(self, path: &str) -> Result<File<OpenState>, std::io::Error> {
         println!("打开文件: {}", path);
         Ok(File {
@@ -1886,12 +1886,12 @@ impl File<OpenState> {
         println!("从文件描述符 {} 读取", self.descriptor);
         Ok(buffer.len())
     }
-    
+
     fn write(&self, data: &[u8]) -> std::io::Result<usize> {
         println!("写入 {} 字节到文件描述符 {}", data.len(), self.descriptor);
         Ok(data.len())
     }
-    
+
     fn close(self) -> File<ClosedState> {
         println!("关闭文件描述符 {}", self.descriptor);
         File {
@@ -1902,7 +1902,7 @@ impl File<OpenState> {
 }
 ```
 
-### 属性语法的形式化
+### 1.6.2 属性语法的形式化
 
 使用属性和注解增强所有权系统：
 
@@ -1944,7 +1944,7 @@ impl ManagedResource {
         println!("分配资源");
         ManagedResource { resource_id: 42 }
     }
-    
+
     #[releases_resource]
     fn release(self) {
         println!("释放资源 {}", self.resource_id);
@@ -1965,18 +1965,18 @@ fn attribute_examples() {
     // 移动语义限制
     let key = SecretKey { key_data: [0; 32] };
     // let key_ref = &key; // 假设：检查工具警告不应该创建引用
-    
+
     // 必须释放的资源
     let resource = ManagedResource::new();
     // 忘记调用 release() 将触发警告
     resource.release();
-    
+
     // 线程安全检查
     let data = vec![1, 2, 3];
     spawn_task(move || {
         println!("数据: {:?}", data);
     });
-    
+
     // 假设的警告：
     // let rc_data = std::rc::Rc::new(vec![1, 2, 3]);
     // spawn_task(move || {
@@ -1986,7 +1986,7 @@ fn attribute_examples() {
 }
 ```
 
-### 可验证所有权系统
+### 1.6.3 可验证所有权系统
 
 形式化验证所有权系统的正确性：
 
@@ -2042,7 +2042,7 @@ fn use_resource() {
 #[prove(race_free)]
 fn parallel_process(data: &[u8]) {
     let (left, right) = data.split_at(data.len() / 2);
-    
+
     // 证明工具验证 left 和 right 不重叠
     rayon::join(
         || process_chunk(left),
@@ -2062,7 +2062,7 @@ impl VerifiedResource {
     fn new(id: u32) -> Self {
         VerifiedResource { id, initialized: true }
     }
-    
+
     // 确保只有初始化的资源可以使用
     fn use_resource(&self) -> Result<(), &'static str> {
         if self.initialized {
@@ -2072,7 +2072,7 @@ impl VerifiedResource {
             Err("使用未初始化的资源")
         }
     }
-    
+
     // 确保资源只能释放一次
     fn release(mut self) {
         assert!(self.initialized, "释放未初始化的资源");
@@ -2084,21 +2084,21 @@ impl VerifiedResource {
 // 可以被形式化验证的模式
 fn verified_pattern() -> Result<(), &'static str> {
     let resource = VerifiedResource::new(42);
-    
+
     // 使用资源
     resource.use_resource()?;
-    
+
     // 安全释放
     resource.release();
-    
+
     // 如果取消注释，形式化验证会报错：使用已移动的值
     // resource.use_resource()?;
-    
+
     Ok(())
 }
 ```
 
-### 量子计算与所有权
+### 1.6.4 量子计算与所有权
 
 量子计算中的所有权模型应用：
 
@@ -2135,19 +2135,19 @@ impl QuantumRegister {
         }
         QuantumRegister { qubits }
     }
-    
+
     // 借用单个量子比特进行操作
     fn get_qubit(&mut self, index: usize) -> Option<&mut Qubit> {
         self.qubits.get_mut(index)
     }
-    
+
     // 应用量子门操作到特定量子比特
     fn apply_gate(&mut self, index: usize, gate: QuantumGate) {
         if let Some(qubit) = self.get_qubit(index) {
             println!("在量子比特 {} 上应用 {:?} 门", qubit.id, gate);
         }
     }
-    
+
     // 量子比特间的纠缠操作需要同时借用多个量子比特
     fn entangle(&mut self, control: usize, target: usize) {
         // 在实际量子计算中，我们需要安全地同时访问两个量子比特
@@ -2155,16 +2155,16 @@ impl QuantumRegister {
         if control == target || control >= self.qubits.len() || target >= self.qubits.len() {
             return;
         }
-        
+
         println!("纠缠量子比特 {} 和 {}", control, target);
     }
-    
+
     // 量子测量会消耗量子状态（所有权转移）
     fn measure(&mut self, index: usize) -> Option<bool> {
         if index >= self.qubits.len() {
             return None;
         }
-        
+
         println!("测量量子比特 {}", index);
         // 模拟随机测量结果
         Some(rand::random())
@@ -2194,32 +2194,32 @@ impl HybridQuantumSystem {
             classical_bits: vec![false; classical_size],
         }
     }
-    
+
     // 量子测量结果存储到经典比特
     fn measure_to_classical(&mut self, qubit_index: usize, bit_index: usize) -> bool {
         if bit_index >= self.classical_bits.len() {
             return false;
         }
-        
+
         if let Some(result) = self.quantum_register.measure(qubit_index) {
             self.classical_bits[bit_index] = result;
             return true;
         }
-        
+
         false
     }
-    
+
     // 根据经典比特控制量子操作
     fn conditional_gate(&mut self, bit_index: usize, qubit_index: usize, gate: QuantumGate) -> bool {
         if bit_index >= self.classical_bits.len() {
             return false;
         }
-        
+
         if self.classical_bits[bit_index] {
             self.quantum_register.apply_gate(qubit_index, gate);
             return true;
         }
-        
+
         false
     }
 }
@@ -2235,45 +2235,45 @@ impl QuantumAlgorithm {
             system: HybridQuantumSystem::new(qubits, classical_bits),
         }
     }
-    
+
     // 执行贝尔态制备算法
     fn prepare_bell_state(&mut self) {
         // 在第一个量子比特上应用 Hadamard 门
         self.system.quantum_register.apply_gate(0, QuantumGate::Hadamard);
-        
+
         // 应用 CNOT 门纠缠两个量子比特
         self.system.quantum_register.entangle(0, 1);
-        
+
         println!("贝尔态制备完成");
     }
-    
+
     // 量子传态算法（所有权转移示例）
     fn teleport(mut self, state_to_teleport: bool) -> bool {
         // 准备贝尔态
         self.prepare_bell_state();
-        
+
         // 设置输入状态
         if state_to_teleport {
             self.system.quantum_register.apply_gate(2, QuantumGate::PauliX);
         }
-        
+
         // 执行传态协议
         self.system.quantum_register.entangle(2, 0);
         self.system.quantum_register.apply_gate(2, QuantumGate::Hadamard);
-        
+
         // 测量并存储结果
         self.system.measure_to_classical(2, 0);
         self.system.measure_to_classical(0, 1);
-        
+
         // 根据经典测量结果应用纠正门
         self.system.conditional_gate(0, 1, QuantumGate::PauliX);
         self.system.conditional_gate(1, 1, QuantumGate::PauliZ);
-        
+
         // 测量最终状态
         if let Some(result) = self.system.quantum_register.measure(1) {
             return result;
         }
-        
+
         false
     }
 }
@@ -2282,21 +2282,21 @@ impl QuantumAlgorithm {
 fn quantum_ownership_example() {
     // 创建量子算法实例
     let mut algorithm = QuantumAlgorithm::new(3, 2);
-    
+
     // 传递初始状态（true）进行传态
     // 注意这里算法的所有权被转移，表示量子系统被消耗
     let result = algorithm.teleport(true);
-    
+
     println!("传态结果: {}", result);
-    
+
     // 以下代码会导致编译错误，因为 algorithm 已被消耗
     // algorithm.prepare_bell_state();
 }
 ```
 
-## 总结与未来展望
+## 1.7 总结与未来展望
 
-### 所有权系统的核心价值
+### 1.7.1 所有权系统的核心价值
 
 Rust 所有权系统的核心价值总结：
 
@@ -2319,13 +2319,13 @@ Rust 所有权系统的核心价值总结：
 fn safety_and_performance() {
     // 安全：不可能出现悬垂指针
     let data = vec![1, 2, 3];
-    
+
     // 性能：没有运行时垃圾回收开销
     // 没有引用计数（除非明确使用 Rc/Arc）
     // 没有运行时检查（除非明确使用 RefCell/Mutex）
-    
+
     let data2 = data; // 零成本所有权转移
-    
+
     // println!("{:?}", data); // 编译错误防止悬垂引用
 }
 
@@ -2346,19 +2346,19 @@ impl Drop for Resource {
 // 3. 并发安全
 fn concurrent_safety() {
     let data = vec![1, 2, 3, 4, 5];
-    
+
     // 安全地在线程间移动所有权
     std::thread::spawn(move || {
         println!("线程访问数据: {:?}", data);
     });
-    
+
     // println!("{:?}", data); // 编译错误：data 已移至另一个线程
 }
 
 struct TcpConnection;
 ```
 
-### 语言进化方向
+### 1.7.2 语言进化方向
 
 Rust 所有权系统可能的进化方向：
 
@@ -2407,22 +2407,22 @@ fn verified_function(data: &mut [u8]) {
 fn future_ownership_patterns() {
     // 想象中的"视图"特性
     let mut data = vec![1, 2, 3, 4, 5];
-    
+
     // 概念性：同时创建不同字段的可变视图
     // let (first_half, second_half) = data.split_view_mut();
-    
+
     // 目前的解决方案：使用 split_at_mut
     let (first_half, second_half) = data.split_at_mut(data.len() / 2);
-    
+
     // 并行处理两个部分
     first_half[0] += 10;
     second_half[0] *= 2;
-    
+
     println!("处理后的数据: {:?}", data);
 }
 ```
 
-### 跨领域影响
+### 1.7.3 跨领域影响
 
 Rust 所有权系统对不同技术领域的影响：
 
@@ -2481,7 +2481,7 @@ fn ownership_based_architecture() {
             },
         ],
     };
-    
+
     // 系统拥有其所有组件，组件生命周期绑定到系统
 }
 
@@ -2506,21 +2506,21 @@ impl SafetyControl {
             safety_limit: limit,
         }
     }
-    
+
     // 安全操作必须通过借用控制器完成
     fn perform_operation(&mut self, value: i32) -> Result<(), SafetyError> {
         if !self.enabled {
             return Err(SafetyError::SystemFailure);
         }
-        
+
         if value > self.safety_limit {
             return Err(SafetyError::RangeViolation);
         }
-        
+
         println!("安全执行操作: {}", value);
         Ok(())
     }
-    
+
     // 禁用需要消耗控制器，防止进一步操作
     fn disable(mut self) {
         self.enabled = false;
@@ -2529,7 +2529,7 @@ impl SafetyControl {
 }
 ```
 
-### 最终思考
+### 1.7.4 最终思考
 
 对 Rust 所有权系统的最终思考：
 
@@ -2551,27 +2551,27 @@ impl SafetyControl {
 fn ownership_thinking() {
     // 1. 资源是谁的？
     let resource = Vec::<i32>::new(); // resource 拥有这个向量
-    
+
     // 2. 资源使用多长时间？
     {
         let borrowed = &resource; // 借用持续到作用域结束
         println!("Length: {}", borrowed.len());
     } // 借用结束
-    
+
     // 3. 谁负责清理？
     let owned_box = Box::new(42); // owned_box 负责释放堆内存
     drop(owned_box); // 显式释放
-    
+
     // 4. 资源如何安全共享？
     let shared_data = std::sync::Arc::new(vec![1, 2, 3]);
     let handle = shared_data.clone(); // 增加引用计数
-    
+
     std::thread::spawn(move || {
         println!("共享数据: {:?}", handle);
     });
-    
+
     println!("主线程数据: {:?}", shared_data);
-    
+
     // 5. 设计时思考所有权
     // - API 应该拥有、借用还是共享资源？
     // - 生命周期关系是什么？
@@ -2579,7 +2579,7 @@ fn ownership_thinking() {
 }
 ```
 
-## 结论
+## 1.8 结论
 
 Rust 的所有权系统代表了现代编程语言设计的一个重大突破，它在静态类型系统层面解决了内存安全与性能之间长期存在的冲突。通过将资源管理的责任从运行时前移到编译时，从隐式变为显式，Rust 实现了一种前所未有的编程模型。
 

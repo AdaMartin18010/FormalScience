@@ -1,38 +1,38 @@
-# 高级Petri网理论 (Advanced Petri Net Theory)
+# 1. 高级Petri网理论 (Advanced Petri Net Theory)
 
-## 📋 目录
+## 目录
 
-- [1 Petri网代数](#1-petri网代数)
-  - [1.1 Petri网作为代数结构](#11-petri网作为代数结构)
-  - [1.2 Petri网范畴](#12-petri网范畴)
-- [2 高级Petri网](#2-高级petri网)
-  - [2.1 时间Petri网](#21-时间petri网)
-  - [2.2 着色Petri网](#22-着色petri网)
-  - [2.3 高阶Petri网](#23-高阶petri网)
-- [3 Petri网分析](#3-petri网分析)
-  - [3.1 结构分析](#31-结构分析)
-  - [3.2 可达性分析](#32-可达性分析)
-  - [3.3 活性分析](#33-活性分析)
-- [4 Petri网合成](#4-petri网合成)
-  - [4.1 网合成](#41-网合成)
-  - [4.2 控制器合成](#42-控制器合成)
-- [5 Petri网语义](#5-petri网语义)
-  - [5.1 指称语义](#51-指称语义)
-  - [5.2 操作语义](#52-操作语义)
-- [6 Petri网应用](#6-petri网应用)
-  - [6.1 工作流建模](#61-工作流建模)
-  - [6.2 并发系统建模](#62-并发系统建模)
-- [7 Petri网的元理论](#7-petri网的元理论)
-  - [7.1 表达能力](#71-表达能力)
-  - [7.2 复杂性](#72-复杂性)
-  - [7.3 完备性](#73-完备性)
-- [8 结论](#8-结论)
+- [1. 高级Petri网理论 (Advanced Petri Net Theory)](#1-高级petri网理论-advanced-petri-net-theory)
+  - [目录](#目录)
+  - [1.1 Petri网代数](#11-petri网代数)
+    - [1.1.1 Petri网作为代数结构](#111-petri网作为代数结构)
+    - [1.1.2 Petri网范畴](#112-petri网范畴)
+  - [1.2 高级Petri网](#12-高级petri网)
+    - [1.2.1 时间Petri网](#121-时间petri网)
+    - [1.2.2 着色Petri网](#122-着色petri网)
+    - [1.2.3 高阶Petri网](#123-高阶petri网)
+  - [1.3 Petri网分析](#13-petri网分析)
+    - [1.3.1 结构分析](#131-结构分析)
+    - [1.3.2 可达性分析](#132-可达性分析)
+    - [1.3.3 活性分析](#133-活性分析)
+  - [1.4 Petri网合成](#14-petri网合成)
+    - [1.4.1 网合成](#141-网合成)
+    - [1.4.2 控制器合成](#142-控制器合成)
+  - [1.5 Petri网语义](#15-petri网语义)
+    - [1.5.1 指称语义](#151-指称语义)
+    - [1.5.2 操作语义](#152-操作语义)
+  - [1.6 Petri网应用](#16-petri网应用)
+    - [1.6.1 工作流建模](#161-工作流建模)
+    - [1.6.2 并发系统建模](#162-并发系统建模)
+  - [1.7 Petri网的元理论](#17-petri网的元理论)
+    - [1.7.1 表达能力](#171-表达能力)
+    - [1.7.2 复杂性](#172-复杂性)
+    - [1.7.3 完备性](#173-完备性)
+  - [1.8 结论](#18-结论)
 
----
+## 1.1 Petri网代数
 
-## 1 Petri网代数
-
-### 1.1 Petri网作为代数结构
+### 1.1.1 Petri网作为代数结构
 
 **定义 1.1 (Petri网代数)**
 Petri网代数是一个六元组 $\mathcal{P} = (P, T, F, M_0, \oplus, \otimes)$，其中：
@@ -62,7 +62,7 @@ Petri网代数是一个六元组 $\mathcal{P} = (P, T, F, M_0, \oplus, \otimes)$
 3. **分配律**：$\otimes$ 对 $\oplus$ 满足分配律
 4. **单位元**：$0$ 是 $\oplus$ 的单位元
 
-### 1.2 Petri网范畴
+### 1.1.2 Petri网范畴
 
 **定义 1.3 (Petri网态射)**
 Petri网态射 $f : N_1 \rightarrow N_2$ 是三元组 $(f_P, f_T, f_M)$，其中：
@@ -88,9 +88,9 @@ Petri网范畴是笛卡尔闭范畴。
 2. **终对象**：空Petri网
 3. **指数对象**：通过态射集合构造
 
-## 2 高级Petri网
+## 1.2 高级Petri网
 
-### 2.1 时间Petri网
+### 1.2.1 时间Petri网
 
 **定义 2.1 (时间Petri网)**
 时间Petri网是六元组 $N = (P, T, F, M_0, I, D)$，其中：
@@ -116,17 +116,17 @@ Petri网范畴是笛卡尔闭范畴。
 
 ```haskell
 timeReachabilityAnalysis :: TimePetriNet -> [TimeState]
-timeReachabilityAnalysis net = 
+timeReachabilityAnalysis net =
   let initial = (initialMarking net, emptyClock)
       reachable = bfs initial [initial]
   in reachable
   where
     bfs :: TimeState -> [TimeState] -> [TimeState]
-    bfs current visited = 
+    bfs current visited =
       let enabled = enabledTransitions net current
           timeStates = [fireTimeTransition net current t | t <- enabled]
           unvisited = filter (`notElem` visited) timeStates
-      in if null unvisited 
+      in if null unvisited
          then visited
          else bfs (head unvisited) (visited ++ unvisited)
 ```
@@ -140,7 +140,7 @@ timeReachabilityAnalysis net =
 2. 区域自动机是有限状态
 3. 有限状态自动机的可达性可判定
 
-### 2.2 着色Petri网
+### 1.2.2 着色Petri网
 
 **定义 2.4 (着色Petri网)**
 着色Petri网是五元组 $N = (P, T, F, M_0, C)$，其中：
@@ -161,7 +161,7 @@ timeReachabilityAnalysis net =
 
 ```haskell
 unfoldColoredPetriNet :: ColoredPetriNet -> PetriNet
-unfoldColoredPetriNet net = 
+unfoldColoredPetriNet net =
   let places = [(p, c) | p <- places net, c <- colorDomain net p]
       transitions = [(t, beta) | t <- transitions net, beta <- validBindings net t]
       flow = [(p, t) -> (t, p) | (p, t) <- flow net, validBinding net t beta]
@@ -177,7 +177,7 @@ unfoldColoredPetriNet net =
 2. 双模拟保持可达性和活性
 3. 展开是行为保持的
 
-### 2.3 高阶Petri网
+### 1.2.3 高阶Petri网
 
 **定义 2.7 (高阶Petri网)**
 高阶Petri网是六元组 $N = (P, T, F, M_0, \Sigma, \Lambda)$，其中：
@@ -205,9 +205,9 @@ unfoldColoredPetriNet net =
 2. 变迁发生保持类型约束
 3. 类型系统防止类型错误
 
-## 3 Petri网分析
+## 1.3 Petri网分析
 
-### 3.1 结构分析
+### 1.3.1 结构分析
 
 **定义 3.1 (S-不变式)**
 向量 $x : P \rightarrow \mathbb{Z}$ 是S-不变式，如果对于所有标识 $M \in R(M_0)$：
@@ -222,19 +222,19 @@ $$\sum_{t \in T} y(t) \cdot F(p, t) = \sum_{t \in T} y(t) \cdot F(t, p)$$
 
 ```haskell
 computeInvariants :: PetriNet -> ([Vector], [Vector])
-computeInvariants net = 
+computeInvariants net =
   let incidenceMatrix = buildIncidenceMatrix net
       sInvariants = computeSInvariants incidenceMatrix
       tInvariants = computeTInvariants incidenceMatrix
   in (sInvariants, tInvariants)
 
 computeSInvariants :: Matrix -> [Vector]
-computeSInvariants matrix = 
+computeSInvariants matrix =
   let kernel = computeKernel matrix
   in filter (not . all (== 0)) kernel
 
 computeTInvariants :: Matrix -> [Vector]
-computeTInvariants matrix = 
+computeTInvariants matrix =
   let transpose = transposeMatrix matrix
       kernel = computeKernel transpose
   in filter (not . all (== 0)) kernel
@@ -253,7 +253,7 @@ S-不变式和T-不变式提供Petri网的结构性质：
 2. T-不变式对应变迁序列的线性约束
 3. 不变式通过线性方程组求解
 
-### 3.2 可达性分析
+### 1.3.2 可达性分析
 
 **定义 3.3 (可达性)**
 标识 $M'$ 从标识 $M$ 可达，记作 $M \rightarrow^* M'$，如果存在变迁序列 $\sigma = t_1 t_2 \cdots t_n$ 使得：
@@ -267,13 +267,13 @@ $$R(M) = \{M' \mid M \rightarrow^* M'\}$$
 
 ```haskell
 symbolicReachabilityAnalysis :: PetriNet -> Set Marking
-symbolicReachabilityAnalysis net = 
+symbolicReachabilityAnalysis net =
   let initial = initialMarking net
       reachable = iterate step [initial]
   in foldr union empty reachable
   where
     step :: [Marking] -> [Marking]
-    step markings = 
+    step markings =
       let enabled = concatMap (enabledTransitions net) markings
           newMarkings = [fireTransition net m t | m <- markings, t <- enabled]
       in filter (`notElem` markings) newMarkings
@@ -288,7 +288,7 @@ Petri网的可达性问题是可判定的。
 2. Karp-Miller树是有限高度
 3. 有限树上的可达性可判定
 
-### 3.3 活性分析
+### 1.3.3 活性分析
 
 **定义 3.5 (活性)**
 变迁 $t \in T$ 是活的，如果对于每个可达标识 $M \in R(M_0)$，都存在标识 $M' \in R(M)$ 使得 $M'[t\rangle$。
@@ -300,13 +300,13 @@ Petri网的可达性问题是可判定的。
 
 ```haskell
 livenessAnalysis :: PetriNet -> Map Transition Bool
-livenessAnalysis net = 
+livenessAnalysis net =
   let reachable = reachabilityAnalysis net
       liveness = [(t, isLive net t reachable) | t <- transitions net]
   in fromList liveness
 
 isLive :: PetriNet -> Transition -> Set Marking -> Bool
-isLive net t markings = 
+isLive net t markings =
   all (\m -> any (\m' -> m' `enables` t) (reachableFrom net m)) markings
 ```
 
@@ -319,9 +319,9 @@ isLive net t markings =
 2. 不存在所有变迁都无法使能的标识
 3. 因此不会出现死锁
 
-## 4 Petri网合成
+## 1.4 Petri网合成
 
-### 4.1 网合成
+### 1.4.1 网合成
 
 **定义 4.1 (网合成)**
 Petri网 $N_1$ 和 $N_2$ 的合成 $N_1 \oplus N_2$ 是：
@@ -342,7 +342,7 @@ Petri网 $N_1$ 和 $N_2$ 的合成 $N_1 \oplus N_2$ 是：
 
 ```haskell
 synthesizeNets :: PetriNet -> PetriNet -> Interface -> PetriNet
-synthesizeNets net1 net2 interface = 
+synthesizeNets net1 net2 interface =
   let sharedPlaces = interfacePlaces interface
       sharedTransitions = interfaceTransitions interface
       places = places net1 `union` places net2
@@ -361,7 +361,7 @@ synthesizeNets net1 net2 interface =
 2. 双模拟保持可达性和活性
 3. 合成是行为保持的
 
-### 4.2 控制器合成
+### 1.4.2 控制器合成
 
 **定义 4.3 (控制器合成)**
 给定Petri网 $N$ 和规范 $\phi$，找到控制器 $C$ 使得 $N \times C \models \phi$。
@@ -375,15 +375,15 @@ Petri网控制器 $C = (P_C, T_C, F_C, M_{0C}, \lambda)$，其中：
 
 ```haskell
 synthesizeController :: PetriNet -> Specification -> Maybe PetriNetController
-synthesizeController net spec = 
+synthesizeController net spec =
   let game = constructGame net spec
       winning = solveGame game
-  in if isEmpty winning 
-     then Nothing 
+  in if isEmpty winning
+     then Nothing
      else Just (extractController winning)
 
 constructGame :: PetriNet -> Specification -> Game
-constructGame net spec = 
+constructGame net spec =
   let states = [(m, c) | m <- reachable net, c <- controlStates]
       transitions = [(s1, s2) | s1 <- states, s2 <- states, validTransition s1 s2]
   in Game states transitions
@@ -398,9 +398,9 @@ constructGame net spec =
 2. 如果存在获胜策略，则存在有限状态策略
 3. 有限状态策略对应有限状态控制器
 
-## 5 Petri网语义
+## 1.5 Petri网语义
 
-### 5.1 指称语义
+### 1.5.1 指称语义
 
 **定义 5.1 (Petri网指称语义)**
 Petri网的指称语义是函数 $\llbracket N \rrbracket : \text{Marking} \rightarrow \mathcal{P}(\text{Marking})$，其中：
@@ -423,7 +423,7 @@ $$\llbracket N_1 \rrbracket = \llbracket N_2 \rrbracket$$
 2. 指称语义是函数
 3. 行为等价通过指称语义定义
 
-### 5.2 操作语义
+### 1.5.2 操作语义
 
 **定义 5.3 (Petri网操作语义)**
 Petri网的操作语义是三元组 $(S, \rightarrow, M_0)$，其中：
@@ -444,9 +444,9 @@ Petri网的操作语义形成标记转移系统。
 2. 转移关系是二元关系
 3. 转移关系满足变迁规则
 
-## 6 Petri网应用
+## 1.6 Petri网应用
 
-### 6.1 工作流建模
+### 1.6.1 工作流建模
 
 **定义 6.1 (工作流Petri网)**
 工作流Petri网是四元组 $WF = (N, \text{start}, \text{end}, \text{tasks})$，其中：
@@ -467,7 +467,7 @@ Petri网的操作语义形成标记转移系统。
 
 ```haskell
 verifyWorkflow :: WorkflowPetriNet -> Bool
-verifyWorkflow wf = 
+verifyWorkflow wf =
   let net = petriNet wf
       start = startPlace wf
       end = endPlace wf
@@ -486,7 +486,7 @@ verifyWorkflow wf =
 2. 死锁检测是可判定的
 3. 正确性是可达性和死锁检测的组合
 
-### 6.2 并发系统建模
+### 1.6.2 并发系统建模
 
 **定义 6.3 (并发Petri网)**
 并发Petri网用于建模并发系统：
@@ -506,7 +506,7 @@ verifyWorkflow wf =
 
 ```haskell
 concurrencyAnalysis :: PetriNet -> ConcurrencyReport
-concurrencyAnalysis net = 
+concurrencyAnalysis net =
   let reachable = reachabilityAnalysis net
       concurrency = analyzeConcurrency net reachable
       conflicts = analyzeConflicts net reachable
@@ -523,9 +523,9 @@ concurrencyAnalysis net =
 2. 冲突通过变迁的输入位置重叠确定
 3. 同步通过变迁的输入位置数量确定
 
-## 7 Petri网的元理论
+## 1.7 Petri网的元理论
 
-### 7.1 表达能力
+### 1.7.1 表达能力
 
 **定理 7.1 (Petri网表达能力)**
 Petri网的表达能力：
@@ -540,7 +540,7 @@ Petri网的表达能力：
 2. **向量加法系统**：直接对应
 3. **图灵机**：Petri网无法模拟无限存储
 
-### 7.2 复杂性
+### 1.7.2 复杂性
 
 **定理 7.2 (Petri网复杂性)**
 Petri网问题的复杂性：
@@ -555,7 +555,7 @@ Petri网问题的复杂性：
 2. **有界性**：可以归约到可达性
 3. **活性**：可以归约到停机问题
 
-### 7.3 完备性
+### 1.7.3 完备性
 
 **定理 7.3 (Petri网完备性)**
 Petri网相对于并发系统是完备的。
@@ -566,7 +566,7 @@ Petri网相对于并发系统是完备的。
 2. Petri网可以表达所有并发行为
 3. Petri网和并发系统之间存在对应关系
 
-## 8 结论
+## 1.8 结论
 
 高级Petri网理论为并发系统建模和分析提供了强大的形式化工具：
 

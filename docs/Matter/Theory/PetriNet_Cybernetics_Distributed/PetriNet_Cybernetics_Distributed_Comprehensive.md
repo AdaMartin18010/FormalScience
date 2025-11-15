@@ -1,37 +1,38 @@
-# Petri网控制论分布式系统综合深化 (PetriNet Cybernetics Distributed Comprehensive)
+# 1. Petri网控制论分布式系统综合深化 (PetriNet Cybernetics Distributed Comprehensive)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 Petri网理论深化 (Petri Net Theory Deepening)](#2-petri网理论深化-petri-net-theory-deepening)
-  - [2.1 Petri网公理化](#21-petri网公理化)
-  - [2.2 并发性分析](#22-并发性分析)
-  - [2.3 结构性质分析](#23-结构性质分析)
-- [3 控制论理论深化 (Control Theory Deepening)](#3-控制论理论深化-control-theory-deepening)
-  - [3.1 控制系统公理化](#31-控制系统公理化)
-  - [3.2 稳定性分析](#32-稳定性分析)
-  - [3.3 可控性和可观性](#33-可控性和可观性)
-- [4 分布式系统理论深化 (Distributed Systems Theory Deepening)](#4-分布式系统理论深化-distributed-systems-theory-deepening)
-  - [4.1 分布式系统公理化](#41-分布式系统公理化)
-  - [4.2 一致性协议](#42-一致性协议)
-- [5 综合理论统一框架](#5-综合理论统一框架)
-  - [5.1 统一建模框架](#51-统一建模框架)
-  - [5.2 跨领域应用](#52-跨领域应用)
-- [6 批判性分析与综合论证](#6-批判性分析与综合论证)
-  - [6.1 理论完备性分析](#61-理论完备性分析)
-  - [6.2 应用场景分析](#62-应用场景分析)
-  - [6.3 未来发展方向](#63-未来发展方向)
-- [7 结论](#7-结论)
+- [1. Petri网控制论分布式系统综合深化 (PetriNet Cybernetics Distributed Comprehensive)](#1-petri网控制论分布式系统综合深化-petrinet-cybernetics-distributed-comprehensive)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 Petri网理论深化 (Petri Net Theory Deepening)](#12-petri网理论深化-petri-net-theory-deepening)
+    - [1.2.1 Petri网公理化](#121-petri网公理化)
+    - [1.2.2 并发性分析](#122-并发性分析)
+    - [1.2.3 结构性质分析](#123-结构性质分析)
+  - [1.3 控制论理论深化 (Control Theory Deepening)](#13-控制论理论深化-control-theory-deepening)
+    - [1.3.1 控制系统公理化](#131-控制系统公理化)
+    - [1.3.2 稳定性分析](#132-稳定性分析)
+    - [1.3.3 可控性和可观性](#133-可控性和可观性)
+  - [1.4 分布式系统理论深化 (Distributed Systems Theory Deepening)](#14-分布式系统理论深化-distributed-systems-theory-deepening)
+    - [1.4.1 分布式系统公理化](#141-分布式系统公理化)
+    - [1.4.2 一致性协议](#142-一致性协议)
+  - [1.5 综合理论统一框架](#15-综合理论统一框架)
+    - [1.5.1 统一建模框架](#151-统一建模框架)
+    - [1.5.2 跨领域应用](#152-跨领域应用)
+  - [1.6 批判性分析与综合论证](#16-批判性分析与综合论证)
+    - [1.6.1 理论完备性分析](#161-理论完备性分析)
+    - [1.6.2 应用场景分析](#162-应用场景分析)
+    - [1.6.3 未来发展方向](#163-未来发展方向)
+  - [1.7 结论](#17-结论)
+  - [1.8 参考文献](#18-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个完整的Petri网、控制论、分布式系统综合理论体系，将并发系统建模、控制系统设计、分布式算法等核心概念进行深度整合，提供严格的形式化定义、定理证明和批判性分析。我们采用严格的数学证明和逻辑推理，构建一个自洽、完备、可扩展的综合理论体系。
 
-## 2 Petri网理论深化 (Petri Net Theory Deepening)
+## 1.2 Petri网理论深化 (Petri Net Theory Deepening)
 
-### 2.1 Petri网公理化
+### 1.2.1 Petri网公理化
 
 **定义 1.1.1 (统一Petri网)**
 统一Petri网是一个六元组 $N = (P, T, F, M_0, C, L)$，其中：
@@ -63,7 +64,7 @@ $$\sum_{p \in P} M'(p) = \sum_{p \in P} M(p)$$
 **证明：** 通过流关系的定义：
 $$\sum_{p \in P} M'(p) = \sum_{p \in P} (M(p) - F(p, t) + F(t, p)) = \sum_{p \in P} M(p)$$
 
-### 2.2 并发性分析
+### 1.2.2 并发性分析
 
 **定义 1.2.1 (并发变迁)**
 两个变迁 $t_1, t_2 \in T$ 在标识 $M$ 下并发，记作 $M[t_1, t_2\rangle$，当且仅当：
@@ -83,10 +84,10 @@ $$\sum_{p \in P} M'(p) = \sum_{p \in P} (M(p) - F(p, t) + F(t, p)) = \sum_{p \in
 ```haskell
 -- 并发性分析算法
 analyzeConcurrency :: PetriNet -> Marking -> [Transition] -> Bool
-analyzeConcurrency net marking transitions = 
+analyzeConcurrency net marking transitions =
   let enabledTransitions = enabledTransitions net marking
       concurrentPairs = [(t1, t2) | t1 <- transitions, t2 <- transitions, t1 /= t2]
-      concurrentCheck = all (\(t1, t2) -> 
+      concurrentCheck = all (\(t1, t2) ->
         let input1 = preSet net t1
             input2 = preSet net t2
         in null (intersect input1 input2)) concurrentPairs
@@ -94,17 +95,17 @@ analyzeConcurrency net marking transitions =
 
 -- 冲突分析
 analyzeConflict :: PetriNet -> Marking -> [Transition] -> [Conflict]
-analyzeConflict net marking transitions = 
+analyzeConflict net marking transitions =
   let enabledTransitions = enabledTransitions net marking
       conflictPairs = [(t1, t2) | t1 <- enabledTransitions, t2 <- enabledTransitions, t1 /= t2]
-      conflicts = filter (\(t1, t2) -> 
+      conflicts = filter (\(t1, t2) ->
         let input1 = preSet net t1
             input2 = preSet net t2
         in not (null (intersect input1 input2))) conflictPairs
   in conflicts
 ```
 
-### 2.3 结构性质分析
+### 1.2.3 结构性质分析
 
 **定义 1.3.1 (有界性)**
 位置 $p \in P$ 是 $k$-有界的，如果对于所有可达标识 $M \in R(M_0)$，都有 $M(p) \leq k$。
@@ -127,7 +128,7 @@ Petri网的性质可以通过结构分析判定：
 ```haskell
 -- Petri网分析算法
 analyzePetriNet :: PetriNet -> AnalysisResult
-analyzePetriNet net = 
+analyzePetriNet net =
   let boundedness = checkBoundedness net
       liveness = checkLiveness net
       reversibility = checkReversibility net
@@ -135,27 +136,27 @@ analyzePetriNet net =
 
 -- 有界性检查
 checkBoundedness :: PetriNet -> Bool
-checkBoundedness net = 
+checkBoundedness net =
   let reachableStates = computeReachableStates net
       maxTokens = maximum [sum (markingTokens marking) | marking <- reachableStates]
   in maxTokens < infinity
 
 -- 活性检查
 checkLiveness :: PetriNet -> Bool
-checkLiveness net = 
+checkLiveness net =
   let reachableStates = computeReachableStates net
       transitions = allTransitions net
-      livenessCheck = all (\t -> 
-        all (\m -> 
+      livenessCheck = all (\t ->
+        all (\m ->
           let enabled = enabledTransitions net m
           in t `elem` enabled || any (\m' -> m' `elem` reachableStates) (fireTransition net m t)
         ) reachableStates) transitions
   in livenessCheck
 ```
 
-## 3 控制论理论深化 (Control Theory Deepening)
+## 1.3 控制论理论深化 (Control Theory Deepening)
 
-### 3.1 控制系统公理化
+### 1.3.1 控制系统公理化
 
 **定义 2.1.1 (统一控制系统)**
 统一控制系统是一个七元组 $\mathcal{C} = (X, U, Y, f, h, C, T)$，其中：
@@ -191,7 +192,7 @@ $$x(t) = e^{At}x(0) + \int_0^t e^{A(t-\tau)}Bu(\tau)d\tau$$
 2. **非齐次方程**：通过变分常数法求解
 3. **卷积积分**：利用卷积积分得到完整解
 
-### 3.2 稳定性分析
+### 1.3.2 稳定性分析
 
 **定义 2.2.1 (李雅普诺夫稳定性)**
 平衡点 $x_e$ 是李雅普诺夫稳定的，如果对于任意 $\epsilon > 0$，存在 $\delta > 0$ 使得：
@@ -219,7 +220,7 @@ $$\lim_{t \rightarrow \infty} x(t) = x_e$$
 ```haskell
 -- 李雅普诺夫稳定性分析
 lyapunovStability :: System -> LyapunovFunction -> Bool
-lyapunovStability system lyapunovFunc = 
+lyapunovStability system lyapunovFunc =
   let equilibrium = findEquilibrium system
       positiveDefinite = checkPositiveDefinite lyapunovFunc equilibrium
       negativeSemiDefinite = checkNegativeSemiDefinite lyapunovFunc system
@@ -227,15 +228,15 @@ lyapunovStability system lyapunovFunc =
 
 -- 李雅普诺夫函数检查
 checkPositiveDefinite :: LyapunovFunction -> State -> Bool
-checkPositiveDefinite func equilibrium = 
+checkPositiveDefinite func equilibrium =
   let testStates = generateTestStates equilibrium
-      positiveCheck = all (\state -> 
+      positiveCheck = all (\state ->
         let value = evaluateLyapunov func state
         in value > 0 || state == equilibrium) testStates
   in positiveCheck
 ```
 
-### 3.3 可控性和可观性
+### 1.3.3 可控性和可观性
 
 **定义 2.3.1 (可控性)**
 系统 $\Sigma$ 在时间 $T$ 内可控，如果对于任意初始状态 $x_0$ 和目标状态 $x_f$，存在输入 $u(t)$ 使得 $x(T) = x_f$。
@@ -269,9 +270,9 @@ $$\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatr
 2. **满秩条件**：满秩确保状态唯一确定
 3. **输出序列**：输出序列包含足够信息重构状态
 
-## 4 分布式系统理论深化 (Distributed Systems Theory Deepening)
+## 1.4 分布式系统理论深化 (Distributed Systems Theory Deepening)
 
-### 4.1 分布式系统公理化
+### 1.4.1 分布式系统公理化
 
 **定义 3.1.1 (统一分布式系统)**
 统一分布式系统是一个五元组 $\mathcal{D} = (N, C, M, F, P)$，其中：
@@ -309,7 +310,7 @@ $$\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatr
 2. **构造故障场景**：构造故障场景导致协议失败
 3. **得出矛盾**：得出矛盾，证明边界正确
 
-### 4.2 一致性协议
+### 1.4.2 一致性协议
 
 **定义 3.2.1 (共识问题)**
 共识问题要求所有正确节点就某个值达成一致，满足：
@@ -352,29 +353,29 @@ data PaxosState = PaxosState
   }
 
 paxosPhase1a :: Proposer -> Int -> [Message]
-paxosPhase1a proposer n = 
+paxosPhase1a proposer n =
   [Prepare n | acceptor <- acceptors]
 
 paxosPhase1b :: Acceptor -> Int -> Maybe (Int, Value) -> Message
-paxosPhase1b acceptor n (promisedNum, acceptedVal) = 
-  if n > promisedNum 
+paxosPhase1b acceptor n (promisedNum, acceptedVal) =
+  if n > promisedNum
   then Promise n (acceptedNum, acceptedValue)
   else Nack
 
 paxosPhase2a :: Proposer -> Int -> Value -> [Message]
-paxosPhase2a proposer n v = 
+paxosPhase2a proposer n v =
   [Accept n v | acceptor <- acceptors]
 
 paxosPhase2b :: Acceptor -> Int -> Value -> Message
-paxosPhase2b acceptor n v = 
-  if n >= promisedNumber 
+paxosPhase2b acceptor n v =
+  if n >= promisedNumber
   then Accepted n v
   else Nack
 ```
 
-## 5 综合理论统一框架
+## 1.5 综合理论统一框架
 
-### 5.1 统一建模框架
+### 1.5.1 统一建模框架
 
 **定义 4.1.1 (统一系统模型)**
 统一系统模型 $\mathcal{U} = (S, T, C, D)$，其中：
@@ -405,14 +406,14 @@ data UnifiedSystemModel where
 
 -- 模型一致性检查
 checkModelConsistency :: UnifiedSystemModel -> Bool
-checkModelConsistency model = 
+checkModelConsistency model =
   case model of
     PetriNetModel petriNet -> checkPetriNetConsistency petriNet
     ControlModel controlSystem -> checkControlSystemConsistency controlSystem
     DistributedModel distributedSystem -> checkDistributedSystemConsistency distributedSystem
 ```
 
-### 5.2 跨领域应用
+### 1.5.2 跨领域应用
 
 **应用 4.2.1 (智能制造系统)**
 智能制造系统综合应用Petri网、控制论、分布式系统：
@@ -420,7 +421,7 @@ checkModelConsistency model =
 ```haskell
 -- 智能制造系统
 data SmartManufacturingSystem where
-  SmartManufacturingSystem :: 
+  SmartManufacturingSystem ::
     [ProductionLine] ->      -- 生产线
     ControlSystem ->         -- 控制系统
     DistributedProtocol ->   -- 分布式协议
@@ -428,7 +429,7 @@ data SmartManufacturingSystem where
 
 -- 生产线建模（Petri网）
 data ProductionLine where
-  ProductionLine :: 
+  ProductionLine ::
     PetriNet ->              -- Petri网模型
     [Machine] ->             -- 机器集合
     [Buffer] ->              -- 缓冲区集合
@@ -436,7 +437,7 @@ data ProductionLine where
 
 -- 控制系统（控制论）
 data ControlSystem where
-  ControlSystem :: 
+  ControlSystem ::
     [Controller] ->          -- 控制器集合
     [Sensor] ->              -- 传感器集合
     [Actuator] ->            -- 执行器集合
@@ -444,7 +445,7 @@ data ControlSystem where
 
 -- 分布式协议（分布式系统）
 data DistributedProtocol where
-  DistributedProtocol :: 
+  DistributedProtocol ::
     ConsensusProtocol ->     -- 共识协议
     FaultTolerance ->        -- 容错机制
     LoadBalancing ->         -- 负载均衡
@@ -460,9 +461,9 @@ data DistributedProtocol where
 2. **控制论正确性**：控制系统满足稳定性和可控性
 3. **分布式正确性**：分布式协议满足一致性
 
-## 6 批判性分析与综合论证
+## 1.6 批判性分析与综合论证
 
-### 6.1 理论完备性分析
+### 1.6.1 理论完备性分析
 
 **批判性观点 5.1.1 (理论局限性)**
 当前综合理论存在以下局限性：
@@ -478,7 +479,7 @@ data DistributedProtocol where
 2. **系统验证**：提供系统正确性保证
 3. **跨领域应用**：支持多领域系统设计
 
-### 6.2 应用场景分析
+### 1.6.2 应用场景分析
 
 **场景 5.2.1 (工业自动化)**
 综合理论在工业自动化中的应用：
@@ -494,7 +495,7 @@ data DistributedProtocol where
 2. **交通控制**：控制论设计交通信号
 3. **车辆协调**：分布式协议协调车辆
 
-### 6.3 未来发展方向
+### 1.6.3 未来发展方向
 
 **方向 5.3.1 (量子系统)**
 量子计算对综合理论的新挑战：
@@ -510,7 +511,7 @@ data DistributedProtocol where
 2. **AI系统控制**：AI系统的控制理论
 3. **AI系统协调**：AI系统的分布式协调
 
-## 7 结论
+## 1.7 结论
 
 本文档构建了一个完整的Petri网、控制论、分布式系统综合理论体系，将并发系统建模、控制系统设计、分布式算法等核心概念进行深度整合。通过严格的形式化定义、定理证明和批判性分析，我们建立了：
 
@@ -521,7 +522,7 @@ data DistributedProtocol where
 
 这个综合理论体系为现代工业自动化、智能交通、智能制造等领域提供了强大的理论工具，推动着系统理论在计算机科学和工程中的持续发展。
 
-## 参考文献
+## 1.8 参考文献
 
 1. Petri, C. A. (1962). Kommunikation mit Automaten. PhD thesis, Universität Hamburg.
 2. Lyapunov, A. M. (1892). The general problem of the stability of motion. Kharkov Mathematical Society.

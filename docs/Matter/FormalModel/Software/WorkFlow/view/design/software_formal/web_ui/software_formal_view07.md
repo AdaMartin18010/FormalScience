@@ -1,40 +1,40 @@
-# 跨平台开发架构技术与成熟框架分析
+# 1. 跨平台开发架构技术与成熟框架分析
 
 ## 目录
 
-- [跨平台开发架构技术与成熟框架分析](#跨平台开发架构技术与成熟框架分析)
+- [1. 跨平台开发架构技术与成熟框架分析](#1-跨平台开发架构技术与成熟框架分析)
   - [目录](#目录)
-  - [1. 引言](#1-引言)
-    - [1.1 跨平台开发概述](#11-跨平台开发概述)
-    - [1.2 跨平台架构的演进](#12-跨平台架构的演进)
-  - [2. 跨平台架构理论基础](#2-跨平台架构理论基础)
-    - [2.1 抽象层次与隔离原则](#21-抽象层次与隔离原则)
-    - [2.2 共享代码策略](#22-共享代码策略)
-    - [2.3 平台适配模式](#23-平台适配模式)
-  - [3. 主流跨平台开发框架分析](#3-主流跨平台开发框架分析)
-    - [3.1 React Native](#31-react-native)
-    - [3.2 Flutter](#32-flutter)
-    - [3.3 Xamarin/MAUI](#33-xamarinmaui)
-    - [3.4 Electron](#34-electron)
-    - [3.5 Tauri](#35-tauri)
-    - [3.6 Kotlin Multiplatform](#36-kotlin-multiplatform)
-  - [4. 跨平台架构设计模式](#4-跨平台架构设计模式)
-    - [4.1 桥接模式](#41-桥接模式)
-    - [4.2 适配器模式](#42-适配器模式)
-    - [4.3 策略模式](#43-策略模式)
-    - [4.4 依赖注入与服务定位](#44-依赖注入与服务定位)
-  - [5. 高级跨平台架构实现技术](#5-高级跨平台架构实现技术)
-    - [5.1 代码生成技术](#51-代码生成技术)
-      - [5.1.1 基于Protobuf的跨平台代码生成](#511-基于protobuf的跨平台代码生成)
-      - [5.1.2 GraphQL与代码生成](#512-graphql与代码生成)
-      - [5.1.3 跨平台架构中代码生成的最佳实践](#513-跨平台架构中代码生成的最佳实践)
-    - [5.2 思维导图](#52-思维导图)
-  - [6. 总结与未来趋势](#6-总结与未来趋势)
-    - [未来发展趋势](#未来发展趋势)
+  - [1.1 引言](#11-引言)
+    - [1.1.1 跨平台开发概述](#111-跨平台开发概述)
+    - [1.1.2 跨平台架构的演进](#112-跨平台架构的演进)
+  - [1.2 跨平台架构理论基础](#12-跨平台架构理论基础)
+    - [1.2.1 抽象层次与隔离原则](#121-抽象层次与隔离原则)
+    - [1.2.2 共享代码策略](#122-共享代码策略)
+    - [1.2.3 平台适配模式](#123-平台适配模式)
+  - [1.3 主流跨平台开发框架分析](#13-主流跨平台开发框架分析)
+    - [1.3.1 React Native](#131-react-native)
+    - [1.3.2 Flutter](#132-flutter)
+    - [1.3.3 Xamarin/MAUI](#133-xamarinmaui)
+    - [1.3.4 Electron](#134-electron)
+    - [1.3.5 Tauri](#135-tauri)
+    - [1.3.6 Kotlin Multiplatform](#136-kotlin-multiplatform)
+  - [1.4 跨平台架构设计模式](#14-跨平台架构设计模式)
+    - [1.4.1 桥接模式](#141-桥接模式)
+    - [1.4.2 适配器模式](#142-适配器模式)
+    - [1.4.3 策略模式](#143-策略模式)
+    - [1.4.4 依赖注入与服务定位](#144-依赖注入与服务定位)
+  - [1.5 高级跨平台架构实现技术](#15-高级跨平台架构实现技术)
+    - [1.5.1 代码生成技术](#151-代码生成技术)
+      - [1.5.1.1 基于Protobuf的跨平台代码生成](#1511-基于protobuf的跨平台代码生成)
+      - [4.0.0.1 GraphQL与代码生成](#4001-graphql与代码生成)
+      - [8.0.0.1 跨平台架构中代码生成的最佳实践](#8001-跨平台架构中代码生成的最佳实践)
+    - [8.0.1 思维导图](#801-思维导图)
+  - [8.1 总结与未来趋势](#81-总结与未来趋势)
+    - [8.1.1 未来发展趋势](#811-未来发展趋势)
 
-## 1. 引言
+## 1.1 引言
 
-### 1.1 跨平台开发概述
+### 1.1.1 跨平台开发概述
 
 **定义**：跨平台开发是指通过单一代码库或技术栈创建可在多种操作系统和设备上运行的应用程序的方法。
 
@@ -48,7 +48,7 @@
 3. 用户体验：如何平衡统一体验与符合平台特性的设计
 4. 维护成本：平台特性更新与框架升级可能导致兼容问题
 
-### 1.2 跨平台架构的演进
+### 1.1.2 跨平台架构的演进
 
 跨平台开发架构经历了几个重要发展阶段：
 
@@ -62,9 +62,9 @@
 
 每一代技术都在解决前代的某些问题，同时可能引入新的复杂性。
 
-## 2. 跨平台架构理论基础
+## 1.2 跨平台架构理论基础
 
-### 2.1 抽象层次与隔离原则
+### 1.2.1 抽象层次与隔离原则
 
 成功的跨平台架构基于有效的抽象和关注点分离。
 这可以通过层次化架构实现：
@@ -102,7 +102,7 @@ class UserRepository(private val storageService: StorageService) {
         val userData = user.toJson()
         return storageService.saveData("user_${user.id}", userData)
     }
-    
+
     suspend fun getUser(userId: String): User? {
         val userData = storageService.getData("user_$userId") ?: return null
         return User.fromJson(userData)
@@ -115,7 +115,7 @@ class IOSStorageService : StorageService {
         // 使用NSUserDefaults实现
         return NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)
     }
-    
+
     // 其他方法实现...
 }
 
@@ -126,12 +126,12 @@ class AndroidStorageService(private val context: Context) : StorageService {
         val prefs = context.getSharedPreferences("app_data", Context.MODE_PRIVATE)
         return prefs.edit().putString(key, value).commit()
     }
-    
+
     // 其他方法实现...
 }
 ```
 
-### 2.2 共享代码策略
+### 1.2.2 共享代码策略
 
 共享代码策略决定了代码在多平台之间的重用方式和程度。主要策略包括：
 
@@ -157,7 +157,7 @@ Ctotal = Cshared + Σ(Cplatform_i)
 // 共享业务逻辑 (TypeScript)
 export class AuthenticationService {
   private user: User | null = null;
-  
+
   async login(username: string, password: string): Promise<User> {
     try {
       // 通用登录逻辑
@@ -169,19 +169,19 @@ export class AuthenticationService {
       throw new AuthError('Login failed', error);
     }
   }
-  
+
   async logout(): Promise<void> {
     // 通用注销逻辑
     await this.storageService.removeData('auth_token');
     this.user = null;
   }
-  
+
   async getAuthenticatedUser(): Promise<User | null> {
     if (this.user) return this.user;
-    
+
     const token = await this.storageService.getData('auth_token');
     if (!token) return null;
-    
+
     try {
       const response = await this.apiClient.get('/auth/user');
       this.user = new User(response.data);
@@ -194,7 +194,7 @@ export class AuthenticationService {
 }
 ```
 
-### 2.3 平台适配模式
+### 1.2.3 平台适配模式
 
 平台适配模式定义了如何处理不同平台之间的差异，主要包括：
 
@@ -247,11 +247,11 @@ expect class PlatformFile {
 // iOS实现
 actual class PlatformFile actual constructor(private val path: String) {
     private val file = NSFileManager.defaultManager()
-    
+
     actual fun readBytes(): ByteArray {
         return file.contentsAtPath(path)?.toByteArray() ?: ByteArray(0)
     }
-    
+
     actual fun writeBytes(data: ByteArray) {
         val nsData = data.toNSData()
         file.createFileAtPath(path, nsData, null)
@@ -264,7 +264,7 @@ actual class PlatformFile actual constructor(private val path: String) {
         val file = java.io.File(path)
         return file.readBytes()
     }
-    
+
     actual fun writeBytes(data: ByteArray) {
         val file = java.io.File(path)
         file.writeBytes(data)
@@ -286,7 +286,7 @@ interface IPlatformServices {
 // 应用入口
 class Application {
   constructor(private platformServices: IPlatformServices) {}
-  
+
   async initialize() {
     // 使用已注入的平台服务
     await this.platformServices.storage.initialize();
@@ -322,9 +322,9 @@ function bootstrapAndroidApp(context: Context) {
 则在任何平台上对该接口的调用都能正确执行，
 这保证了应用逻辑的平台无关性。
 
-## 3. 主流跨平台开发框架分析
+## 1.3 主流跨平台开发框架分析
 
-### 3.1 React Native
+### 1.3.1 React Native
 
 **核心架构**：基于JavaScript引擎与原生组件桥接的跨平台框架
 
@@ -389,12 +389,12 @@ const platformStyles = Platform.select({
 
 const TaskList = ({ tasks }) => {
   const [filteredTasks, setFilteredTasks] = useState([]);
-  
+
   useEffect(() => {
     // 通用业务逻辑
     setFilteredTasks(tasks.filter(task => !task.completed));
   }, [tasks]);
-  
+
   return (
     <View style={styles.container}>
       <Text style={[styles.title, platformStyles]}>任务列表</Text>
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
 export default TaskList;
 ```
 
-### 3.2 Flutter
+### 1.3.2 Flutter
 
 **核心架构**：自绘UI引擎的跨平台框架，使用Dart语言
 
@@ -477,23 +477,23 @@ import 'dart:io' show Platform;
 
 class TaskList extends StatefulWidget {
   final List<Task> tasks;
-  
+
   TaskList({required this.tasks});
-  
+
   @override
   _TaskListState createState() => _TaskListState();
 }
 
 class _TaskListState extends State<TaskList> {
   late List<Task> filteredTasks;
-  
+
   @override
   void initState() {
     super.initState();
     // 通用业务逻辑
     filteredTasks = widget.tasks.where((task) => !task.completed).toList();
   }
-  
+
   @override
   void didUpdateWidget(TaskList oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -503,7 +503,7 @@ class _TaskListState extends State<TaskList> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // 根据平台选择不同风格的组件
@@ -511,7 +511,7 @@ class _TaskListState extends State<TaskList> {
         ? _buildCupertinoList()
         : _buildMaterialList();
   }
-  
+
   Widget _buildMaterialList() {
     return Scaffold(
       appBar: AppBar(
@@ -537,7 +537,7 @@ class _TaskListState extends State<TaskList> {
       ),
     );
   }
-  
+
   Widget _buildCupertinoList() {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -566,7 +566,7 @@ class Task {
   final String title;
   final String? description;
   final bool completed;
-  
+
   Task({
     required this.id,
     required this.title,
@@ -576,7 +576,7 @@ class Task {
 }
 ```
 
-### 3.3 Xamarin/MAUI
+### 1.3.3 Xamarin/MAUI
 
 **核心架构**：基于.NET平台的跨平台开发框架
 
@@ -623,7 +623,7 @@ namespace TaskManagerApp
     {
         private ObservableCollection<TaskItem> _tasks;
         private ObservableCollection<TaskItem> _filteredTasks;
-        
+
         public ObservableCollection<TaskItem> Tasks
         {
             get => _tasks;
@@ -634,7 +634,7 @@ namespace TaskManagerApp
                 UpdateFilteredTasks();
             }
         }
-        
+
         public ObservableCollection<TaskItem> FilteredTasks
         {
             get => _filteredTasks;
@@ -644,13 +644,13 @@ namespace TaskManagerApp
                 OnPropertyChanged();
             }
         }
-        
+
         public TasksViewModel()
         {
             _tasks = new ObservableCollection<TaskItem>();
             _filteredTasks = new ObservableCollection<TaskItem>();
         }
-        
+
         private void UpdateFilteredTasks()
         {
             // 通用业务逻辑
@@ -659,18 +659,18 @@ namespace TaskManagerApp
             );
         }
     }
-    
+
     public class TaskListPage : ContentPage
     {
         private TasksViewModel _viewModel;
-        
+
         public TaskListPage(TasksViewModel viewModel)
         {
             _viewModel = viewModel;
             BindingContext = _viewModel;
-            
+
             Title = "任务列表";
-            
+
             // 创建UI
             Content = new StackLayout
             {
@@ -682,7 +682,7 @@ namespace TaskManagerApp
                         ItemTemplate = new DataTemplate(() =>
                         {
                             var cell = new ViewCell();
-                            
+
                             // 根据平台定制UI
                             if (DeviceInfo.Platform == DevicePlatform.iOS)
                             {
@@ -700,15 +700,15 @@ namespace TaskManagerApp
                                         new ColumnDefinition { Width = GridLength.Auto }
                                     }
                                 };
-                                
+
                                 var label = new Label { FontFamily = "Helvetica" };
                                 label.SetBinding(Label.TextProperty, "Title");
-                                
+
                                 var indicator = new Image { Source = "chevron.png", WidthRequest = 12 };
-                                
+
                                 grid.Children.Add(label, 0, 0);
                                 grid.Children.Add(indicator, 1, 0);
-                                
+
                                 cell.View = grid;
                             }
                             else
@@ -727,18 +727,18 @@ namespace TaskManagerApp
                                         new ColumnDefinition { Width = GridLength.Auto }
                                     }
                                 };
-                                
+
                                 var label = new Label { FontFamily = "Roboto" };
                                 label.SetBinding(Label.TextProperty, "Title");
-                                
+
                                 var indicator = new Image { Source = "arrow_forward.png", WidthRequest = 24 };
-                                
+
                                 grid.Children.Add(label, 0, 0);
                                 grid.Children.Add(indicator, 1, 0);
-                                
+
                                 cell.View = grid;
                             }
-                            
+
                             return cell;
                         })
                     }
@@ -746,7 +746,7 @@ namespace TaskManagerApp
             };
         }
     }
-    
+
     public class TaskItem
     {
         public int Id { get; set; }
@@ -757,7 +757,7 @@ namespace TaskManagerApp
 }
 ```
 
-### 3.4 Electron
+### 1.3.4 Electron
 
 **核心架构**：基于Chromium和Node.js的桌面应用框架
 
@@ -830,7 +830,7 @@ let mainWindow;
 
 function createWindow() {
   const platformConfig = getPlatformConfig();
-  
+
   mainWindow = new BrowserWindow({
     width: 900,
     height: 600,
@@ -843,7 +843,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile('index.html');
-  
+
   // macOS特定菜单
   if (process.platform === 'darwin') {
     const { Menu } = require('electron');
@@ -870,7 +870,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-  
+
   app.on('activate', function () {
     // macOS特定行为
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -943,14 +943,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
       async saveTask() {
         if (!this.newTaskTitle.trim()) return;
-        
+
         const newTask = {
           id: Date.now(),
           title: this.newTaskTitle,
           completed: false,
           createdAt: new Date().toISOString()
         };
-        
+
         this.tasks.push(newTask);
         await window.electronAPI.saveTasks(this.tasks);
         this.newTaskTitle = '';
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     },
     mounted() {
       this.loadTasks();
-      
+
       // 平台特定UI调整
       document.body.classList.add(this.platformClass);
     }
@@ -970,7 +970,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 ```
 
-### 3.5 Tauri
+### 1.3.5 Tauri
 
 **核心架构**：基于Rust和WebView的桌面应用框架
 
@@ -1045,26 +1045,26 @@ fn get_tasks(state: tauri::State<AppState>, app_handle: tauri::AppHandle) -> Res
   if !cache.is_empty() {
     return Ok(cache.values().cloned().collect());
   }
-  
+
   // 读取文件系统
   let app_dir = app_handle.path_resolver().app_data_dir().expect("failed to get app data dir");
   let tasks_file = app_dir.join("tasks.json");
-  
+
   // 确保目录存在
   if !app_dir.exists() {
     fs::create_dir_all(&app_dir).map_err(|e| e.to_string())?;
   }
-  
+
   if tasks_file.exists() {
     let content = fs::read_to_string(tasks_file).map_err(|e| e.to_string())?;
     let tasks: Vec<Task> = serde_json::from_str(&content).map_err(|e| e.to_string())?;
-    
+
     // 更新缓存
     let mut cache = state.tasks_cache.lock().unwrap();
     for task in &tasks {
       cache.insert(task.id, task.clone());
     }
-    
+
     Ok(tasks)
   } else {
     Ok(Vec::new())
@@ -1075,25 +1075,25 @@ fn get_tasks(state: tauri::State<AppState>, app_handle: tauri::AppHandle) -> Res
 fn save_tasks(tasks: Vec<Task>, app_handle: tauri::AppHandle, state: tauri::State<AppState>) -> Result<bool, String> {
   let app_dir = app_handle.path_resolver().app_data_dir().expect("failed to get app data dir");
   let tasks_file = app_dir.join("tasks.json");
-  
+
   // 确保目录存在
   if !app_dir.exists() {
     fs::create_dir_all(&app_dir).map_err(|e| e.to_string())?;
   }
-  
+
   // 序列化任务
   let json = serde_json::to_string_pretty(&tasks).map_err(|e| e.to_string())?;
-  
+
   // 写入文件
   fs::write(tasks_file, json).map_err(|e| e.to_string())?;
-  
+
   // 更新缓存
   let mut cache = state.tasks_cache.lock().unwrap();
   cache.clear();
   for task in tasks {
     cache.insert(task.id, task);
   }
-  
+
   Ok(true)
 }
 
@@ -1101,7 +1101,7 @@ fn main() {
   let state = AppState {
     tasks_cache: Mutex::new(HashMap::new()),
   };
-  
+
   tauri::Builder::default()
     .manage(state)
     .invoke_handler(tauri::generate_handler![get_tasks, save_tasks])
@@ -1117,7 +1117,7 @@ fn main() {
   import { invoke } from '@tauri-apps/api/tauri';
   import { appWindow } from '@tauri-apps/api/window';
   import { platform } from '@tauri-apps/api/os';
-  
+
   interface Task {
     id: number;
     title: string;
@@ -1125,13 +1125,13 @@ fn main() {
     completed: boolean;
     created_at: string;
   }
-  
+
   let tasks: Task[] = [];
   let newTaskTitle = '';
   let currentPlatform = '';
-  
+
   $: uncompletedTasks = tasks.filter(task => !task.completed);
-  
+
   async function loadTasks() {
     try {
       tasks = await invoke('get_tasks');
@@ -1139,31 +1139,31 @@ fn main() {
       console.error('Failed to load tasks:', error);
     }
   }
-  
+
   async function saveTask() {
     if (!newTaskTitle.trim()) return;
-    
+
     const newTask: Task = {
       id: Date.now(),
       title: newTaskTitle,
       completed: false,
       created_at: new Date().toISOString()
     };
-    
+
     tasks = [...tasks, newTask];
     await invoke('save_tasks', { tasks });
     newTaskTitle = '';
   }
-  
+
   async function toggleTaskStatus(task: Task) {
     task.completed = !task.completed;
     await invoke('save_tasks', { tasks });
   }
-  
+
   onMount(async () => {
     await loadTasks();
     currentPlatform = await platform();
-    
+
     // 平台特定窗口处理
     if (currentPlatform === 'darwin') {
       // macOS特定处理
@@ -1195,9 +1195,9 @@ fn main() {
       {/if}
     </div>
   {/if}
-  
+
   <h1>任务列表</h1>
-  
+
   <div class="new-task">
     <input
       type="text"
@@ -1207,7 +1207,7 @@ fn main() {
     />
     <button on:click={saveTask}>添加</button>
   </div>
-  
+
   <div class="task-list">
     {#each uncompletedTasks as task (task.id)}
       <div class="task-item">
@@ -1219,7 +1219,7 @@ fn main() {
         <span class="task-title">{task.title}</span>
       </div>
     {/each}
-    
+
     {#if uncompletedTasks.length === 0}
       <div class="empty-state">没有未完成的任务</div>
     {/if}
@@ -1231,20 +1231,20 @@ fn main() {
     padding: 20px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  
+
   /* 平台特定样式 */
   .container.win32 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-  
+
   .container.darwin {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   }
-  
+
   .container.linux {
     font-family: Ubuntu, 'Open Sans', sans-serif;
   }
-  
+
   .titlebar {
     display: flex;
     justify-content: space-between;
@@ -1253,12 +1253,12 @@ fn main() {
     padding: 0 8px;
     -webkit-app-region: drag;
   }
-  
+
   .window-controls {
     display: flex;
     -webkit-app-region: no-drag;
   }
-  
+
   .window-controls button {
     border: none;
     background: transparent;
@@ -1267,12 +1267,12 @@ fn main() {
     height: 30px;
     cursor: pointer;
   }
-  
+
   /* 其他样式... */
 </style>
 ```
 
-### 3.6 Kotlin Multiplatform
+### 1.3.6 Kotlin Multiplatform
 
 **核心架构**：
 Kotlin编译器支持的跨平台框架
@@ -1323,17 +1323,17 @@ class TaskRepository(private val taskStorage: TaskStorage) {
     // 内存中的任务缓存
     private val _tasks = MutableStateFlow<List<Task>>(emptyList())
     val tasks: Flow<List<Task>> = _tasks
-    
+
     // 未完成任务的流
     val uncompletedTasks: Flow<List<Task>> = tasks.map { taskList ->
         taskList.filter { !it.completed }
     }
-    
+
     suspend fun loadTasks() {
         val loadedTasks = taskStorage.loadTasks()
         _tasks.value = loadedTasks
     }
-    
+
     suspend fun addTask(title: String, description: String? = null): Task {
         val newTask = Task(
             id = generateId(),
@@ -1342,14 +1342,14 @@ class TaskRepository(private val taskStorage: TaskStorage) {
             completed = false,
             createdAt = Clock.System.now()
         )
-        
+
         val updatedTasks = _tasks.value + newTask
         _tasks.value = updatedTasks
         taskStorage.saveTasks(updatedTasks)
-        
+
         return newTask
     }
-    
+
     suspend fun toggleTaskCompletion(taskId: String) {
         val taskList = _tasks.value
         val updatedTasks = taskList.map { task ->
@@ -1359,11 +1359,11 @@ class TaskRepository(private val taskStorage: TaskStorage) {
                 task
             }
         }
-        
+
         _tasks.value = updatedTasks
         taskStorage.saveTasks(updatedTasks)
     }
-    
+
     private fun generateId(): String = "${Clock.System.now().toEpochMilliseconds()}-${(0..9999).random()}"
 }
 
@@ -1395,14 +1395,14 @@ import kotlinx.serialization.json.Json
 actual class TaskStorage(private val context: Context) {
     private val json = Json { ignoreUnknownKeys = true }
     private val fileName = "tasks.json"
-    
+
     actual suspend fun loadTasks(): List<Task> = withContext(Dispatchers.IO) {
         try {
             val file = context.getFileStreamPath(fileName)
             if (!file.exists()) {
                 return@withContext emptyList()
             }
-            
+
             val inputStream = context.openFileInput(fileName)
             val jsonString = inputStream.bufferedReader().use { it.readText() }
             json.decodeFromString(jsonString)
@@ -1411,11 +1411,11 @@ actual class TaskStorage(private val context: Context) {
             emptyList()
         }
     }
-    
+
     actual suspend fun saveTasks(tasks: List<Task>): Boolean = withContext(Dispatchers.IO) {
         try {
             val jsonString = json.encodeToString(tasks)
-            context.openFileOutput(fileName, Context.MODE_PRIVATE).use { 
+            context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it.write(jsonString.toByteArray())
             }
             true
@@ -1438,7 +1438,7 @@ import platform.Foundation.*
 
 actual class TaskStorage {
     private val json = Json { ignoreUnknownKeys = true }
-    
+
     actual suspend fun loadTasks(): List<Task> = withContext(Dispatchers.Default) {
         try {
             val fileManager = NSFileManager.defaultManager
@@ -1446,9 +1446,9 @@ actual class TaskStorage {
                 NSDocumentDirectory,
                 NSUserDomainMask
             ).firstOrNull() as? NSURL ?: return@withContext emptyList()
-            
+
             val fileURL = documentsDirectory.URLByAppendingPathComponent("tasks.json")
-            
+
             if (fileManager.fileExistsAtPath(fileURL.path ?: "")) {
                 val jsonData = NSData.dataWithContentsOfURL(fileURL) ?: return@withContext emptyList()
                 val jsonString = NSString.create(data = jsonData, encoding = NSUTF8StringEncoding) as String
@@ -1461,7 +1461,7 @@ actual class TaskStorage {
             emptyList()
         }
     }
-    
+
     actual suspend fun saveTasks(tasks: List<Task>): Boolean = withContext(Dispatchers.Default) {
         try {
             val fileManager = NSFileManager.defaultManager
@@ -1469,13 +1469,13 @@ actual class TaskStorage {
                 NSDocumentDirectory,
                 NSUserDomainMask
             ).firstOrNull() as? NSURL ?: return@withContext false
-            
+
             val fileURL = documentsDirectory.URLByAppendingPathComponent("tasks.json")
-            
+
             val jsonString = json.encodeToString(tasks)
             val data = jsonString.encodeToByteArray()
             val nsData = NSData.dataWithBytes(data.refTo(0), length = data.size.toULong())
-            
+
             nsData.writeToURL(fileURL, atomically = true)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -1489,32 +1489,32 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: TaskViewModel by viewModels {
         TaskViewModelFactory(TaskRepository(TaskStorage(applicationContext)))
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
         val recyclerView = findViewById<RecyclerView>(R.id.taskRecyclerView)
         val adapter = TaskAdapter { taskId ->
             lifecycleScope.launch {
                 viewModel.toggleTaskCompletion(taskId)
             }
         }
-        
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        
+
         // 观察任务列表变化
         lifecycleScope.launch {
             viewModel.uncompletedTasks.collect { tasks ->
                 adapter.submitList(tasks)
             }
         }
-        
+
         // 添加新任务
         val addButton = findViewById<Button>(R.id.addTaskButton)
         val titleInput = findViewById<EditText>(R.id.taskTitleInput)
-        
+
         addButton.setOnClickListener {
             val title = titleInput.text.toString().trim()
             if (title.isNotEmpty()) {
@@ -1532,34 +1532,34 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
     private let tableView = UITableView()
     private let addButton = UIButton()
     private let titleTextField = UITextField()
-    
+
     private var tasks: [Task] = []
     private let repository: TaskRepository
-    
+
     init(repository: TaskRepository) {
         self.repository = repository
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
+
         // 加载任务并观察更新
         repository.loadTasks()
-        
+
         // 使用Combine框架订阅Flow
         observeTasks()
     }
-    
+
     private func observeTasks() {
         // 将Kotlin Flow转换为Publisher
         let publisher = repository.uncompletedTasks.asPublisher()
-        
+
         publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] tasks in
@@ -1568,42 +1568,42 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             .store(in: &cancellables)
     }
-    
+
     @objc private func addTask() {
-        guard let title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), 
+        guard let title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               !title.isEmpty else {
             return
         }
-        
+
         // 添加任务
         DispatchQueue.global().async {
             self.repository.addTask(title: title, description: nil)
         }
-        
+
         titleTextField.text = ""
     }
-    
+
     // TableView数据源方法
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
         let task = tasks[indexPath.row]
-        
+
         cell.textLabel?.text = task.title
         cell.accessoryType = task.completed ? .checkmark : .none
-        
+
         return cell
     }
-    
+
     // TableView委托方法
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         let task = tasks[indexPath.row]
-        
+
         // 切换任务完成状态
         DispatchQueue.global().async {
             self.repository.toggleTaskCompletion(taskId: task.id)
@@ -1612,9 +1612,9 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
 }
 ```
 
-## 4. 跨平台架构设计模式
+## 1.4 跨平台架构设计模式
 
-### 4.1 桥接模式
+### 1.4.1 桥接模式
 
 桥接模式是跨平台架构中最常用的设计模式之一，它将抽象部分与实现部分分离，使它们可以独立变化。
 
@@ -1651,7 +1651,7 @@ class DefaultNotificationService(private val implementation: NotificationImpleme
             id = "${System.currentTimeMillis()}"
         )
     }
-    
+
     override fun scheduleNotification(message: String, recipient: String, delayInSeconds: Int) {
         val triggerTime = System.
 ```kotlin
@@ -1664,7 +1664,7 @@ class DefaultNotificationService(private val implementation: NotificationImpleme
             triggerAtMillis = triggerTime
         )
     }
-    
+
     override fun cancelAllNotifications() {
         implementation.cancelAllNotifications()
     }
@@ -1673,42 +1673,42 @@ class DefaultNotificationService(private val implementation: NotificationImpleme
 // iOS平台实现
 class IOSNotificationImplementation : NotificationImplementation {
     private val notificationCenter = UNUserNotificationCenter.current()
-    
+
     override fun showNotification(title: String, message: String, id: String) {
         val content = UNMutableNotificationContent().apply {
             this.title = title
             this.body = message
             this.sound = UNNotificationSound.default
         }
-        
+
         val request = UNNotificationRequest(
             identifier = id,
             content = content,
             trigger = UNTimeIntervalNotificationTrigger(timeInterval = 0.1, repeats = false)
         )
-        
+
         notificationCenter.add(request, null)
     }
-    
+
     override fun scheduleNotification(title: String, message: String, id: String, triggerAtMillis: Long) {
         val content = UNMutableNotificationContent().apply {
             this.title = title
             this.body = message
             this.sound = UNNotificationSound.default
         }
-        
+
         val triggerSeconds = (triggerAtMillis - System.currentTimeMillis()) / 1000.0
         val trigger = UNTimeIntervalNotificationTrigger(timeInterval = triggerSeconds, repeats = false)
-        
+
         val request = UNNotificationRequest(identifier = id, content = content, trigger = trigger)
         notificationCenter.add(request, null)
     }
-    
+
     override fun cancelNotification(id: String) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers = listOf(id))
         notificationCenter.removeDeliveredNotifications(withIdentifiers = listOf(id))
     }
-    
+
     override fun cancelAllNotifications() {
         notificationCenter.removeAllPendingNotificationRequests()
         notificationCenter.removeAllDeliveredNotifications()
@@ -1719,7 +1719,7 @@ class IOSNotificationImplementation : NotificationImplementation {
 class AndroidNotificationImplementation(private val context: Context) : NotificationImplementation {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val channelId = "app_notifications"
-    
+
     init {
         // 为Android 8.0及以上创建通知渠道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -1735,31 +1735,31 @@ class AndroidNotificationImplementation(private val context: Context) : Notifica
             notificationManager.createNotificationChannel(channel)
         }
     }
-    
+
     override fun showNotification(title: String, message: String, id: String) {
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        
+
         notificationManager.notify(id.hashCode(), builder.build())
     }
-    
+
     override fun scheduleNotification(title: String, message: String, id: String, triggerAtMillis: Long) {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("notification_id", id.hashCode())
             putExtra("title", title)
             putExtra("message", message)
         }
-        
+
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             id.hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -1767,10 +1767,10 @@ class AndroidNotificationImplementation(private val context: Context) : Notifica
             pendingIntent
         )
     }
-    
+
     override fun cancelNotification(id: String) {
         notificationManager.cancel(id.hashCode())
-        
+
         // 取消任何待定的通知
         val intent = Intent(context, NotificationReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
@@ -1779,11 +1779,11 @@ class AndroidNotificationImplementation(private val context: Context) : Notifica
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
-    
+
     override fun cancelAllNotifications() {
         notificationManager.cancelAll()
     }
@@ -1794,7 +1794,7 @@ class AndroidNotificationImplementation(private val context: Context) : Notifica
 在上面的示例中，`NotificationService`提供了应用程序所需的高级API，
 而不同平台的`NotificationImplementation`则提供了平台特定实现。
 
-### 4.2 适配器模式
+### 1.4.2 适配器模式
 
 适配器模式用于将不兼容的接口转换为可兼容的接口，在跨平台开发中常用于适配各平台的原生API。
 
@@ -1816,41 +1816,41 @@ interface FileSystem {
 // Web平台适配器
 class WebFileSystemAdapter implements FileSystem {
   private indexedDB: IDBDatabase | null = null;
-  
+
   constructor() {
     this.initDB();
   }
-  
+
   private async initDB(): Promise<void> {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open('FileSystemDB', 1);
-      
+
       request.onerror = () => reject(new Error('Failed to open database'));
-      
+
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         if (!db.objectStoreNames.contains('files')) {
           db.createObjectStore('files', { keyPath: 'path' });
         }
       };
-      
+
       request.onsuccess = (event) => {
         this.indexedDB = (event.target as IDBOpenDBRequest).result;
         resolve();
       };
     });
   }
-  
+
   async readFile(path: string): Promise<string> {
     await this.ensureDBInitialized();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.indexedDB!.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
       const request = store.get(path);
-      
+
       request.onerror = () => reject(new Error(`Error reading file: ${path}`));
-      
+
       request.onsuccess = () => {
         if (request.result) {
           resolve(request.result.content);
@@ -1860,54 +1860,54 @@ class WebFileSystemAdapter implements FileSystem {
       };
     });
   }
-  
+
   async writeFile(path: string, content: string): Promise<void> {
     await this.ensureDBInitialized();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.indexedDB!.transaction(['files'], 'readwrite');
       const store = transaction.objectStore('files');
       const request = store.put({ path, content, timestamp: Date.now() });
-      
+
       request.onerror = () => reject(new Error(`Error writing file: ${path}`));
       request.onsuccess = () => resolve();
     });
   }
-  
+
   async removeFile(path: string): Promise<boolean> {
     await this.ensureDBInitialized();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.indexedDB!.transaction(['files'], 'readwrite');
       const store = transaction.objectStore('files');
       const request = store.delete(path);
-      
+
       request.onerror = () => reject(new Error(`Error deleting file: ${path}`));
-      
+
       request.onsuccess = () => {
         resolve(true);
       };
     });
   }
-  
+
   async listFiles(directory: string): Promise<string[]> {
     await this.ensureDBInitialized();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.indexedDB!.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
       const request = store.openCursor();
-      
+
       const files: string[] = [];
-      
+
       request.onerror = () => reject(new Error(`Error listing files in: ${directory}`));
-      
+
       request.onsuccess = (event) => {
         const cursor = (event.target as IDBRequest).result;
-        
+
         if (cursor) {
           const path = cursor.value.path;
-          
+
           // Only include files in the specified directory
           if (path.startsWith(directory)) {
             const relativePath = path.substring(directory.length);
@@ -1915,7 +1915,7 @@ class WebFileSystemAdapter implements FileSystem {
               files.push(path);
             }
           }
-          
+
           cursor.continue();
         } else {
           resolve(files);
@@ -1923,25 +1923,25 @@ class WebFileSystemAdapter implements FileSystem {
       };
     });
   }
-  
+
   async fileExists(path: string): Promise<boolean> {
     await this.ensureDBInitialized();
-    
+
     return new Promise((resolve) => {
       const transaction = this.indexedDB!.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
       const request = store.count(path);
-      
+
       request.onsuccess = () => {
         resolve(request.result > 0);
       };
-      
+
       request.onerror = () => {
         resolve(false);
       };
     });
   }
-  
+
   private async ensureDBInitialized(): Promise<void> {
     if (!this.indexedDB) {
       await this.initDB();
@@ -1952,11 +1952,11 @@ class WebFileSystemAdapter implements FileSystem {
 // Node.js平台适配器
 class NodeFileSystemAdapter implements FileSystem {
   private fs: typeof import('fs/promises');
-  
+
   constructor() {
     this.fs = require('fs/promises');
   }
-  
+
   async readFile(path: string): Promise<string> {
     try {
       return await this.fs.readFile(path, 'utf-8');
@@ -1964,7 +1964,7 @@ class NodeFileSystemAdapter implements FileSystem {
       throw new Error(`Error reading file: ${path} - ${error.message}`);
     }
   }
-  
+
   async writeFile(path: string, content: string): Promise<void> {
     try {
       await this.fs.writeFile(path, content, 'utf-8');
@@ -1972,7 +1972,7 @@ class NodeFileSystemAdapter implements FileSystem {
       throw new Error(`Error writing file: ${path} - ${error.message}`);
     }
   }
-  
+
   async removeFile(path: string): Promise<boolean> {
     try {
       await this.fs.unlink(path);
@@ -1984,7 +1984,7 @@ class NodeFileSystemAdapter implements FileSystem {
       throw new Error(`Error removing file: ${path} - ${error.message}`);
     }
   }
-  
+
   async listFiles(directory: string): Promise<string[]> {
     try {
       const entries = await this.fs.readdir(directory, { withFileTypes: true });
@@ -1995,7 +1995,7 @@ class NodeFileSystemAdapter implements FileSystem {
       throw new Error(`Error listing files in: ${directory} - ${error.message}`);
     }
   }
-  
+
   async fileExists(path: string): Promise<boolean> {
     try {
       await this.fs.access(path);
@@ -2009,11 +2009,11 @@ class NodeFileSystemAdapter implements FileSystem {
 // React Native适配器
 class ReactNativeFileSystemAdapter implements FileSystem {
   private RNFS: typeof import('react-native-fs');
-  
+
   constructor() {
     this.RNFS = require('react-native-fs');
   }
-  
+
   async readFile(path: string): Promise<string> {
     try {
       return await this.RNFS.readFile(path, 'utf8');
@@ -2021,7 +2021,7 @@ class ReactNativeFileSystemAdapter implements FileSystem {
       throw new Error(`Error reading file: ${path} - ${error.message}`);
     }
   }
-  
+
   async writeFile(path: string, content: string): Promise<void> {
     try {
       await this.RNFS.writeFile(path, content, 'utf8');
@@ -2029,7 +2029,7 @@ class ReactNativeFileSystemAdapter implements FileSystem {
       throw new Error(`Error writing file: ${path} - ${error.message}`);
     }
   }
-  
+
   async removeFile(path: string): Promise<boolean> {
     try {
       await this.RNFS.unlink(path);
@@ -2041,7 +2041,7 @@ class ReactNativeFileSystemAdapter implements FileSystem {
       throw new Error(`Error removing file: ${path} - ${error.message}`);
     }
   }
-  
+
   async listFiles(directory: string): Promise<string[]> {
     try {
       const result = await this.RNFS.readDir(directory);
@@ -2052,7 +2052,7 @@ class ReactNativeFileSystemAdapter implements FileSystem {
       throw new Error(`Error listing files in: ${directory} - ${error.message}`);
     }
   }
-  
+
   async fileExists(path: string): Promise<boolean> {
     try {
       return await this.RNFS.exists(path);
@@ -2074,7 +2074,7 @@ function createFileSystem(): FileSystem {
     // Node.js环境
     return new NodeFileSystemAdapter();
   }
-  
+
   throw new Error('Unsupported platform');
 }
 
@@ -2094,7 +2094,7 @@ async function saveUserSettings(settings: object): Promise<void> {
 
 适配器模式的关键优势是允许现有接口在不修改的情况下与目标接口协同工作，使跨平台代码能够使用统一API，同时利用各平台特有的实现。
 
-### 4.3 策略模式
+### 1.4.3 策略模式
 
 策略模式定义了一系列算法，将每个算法封装起来，并使它们可以互换。
 在跨平台开发中，它通常用于为不同平台选择适当的实现策略。
@@ -2130,7 +2130,7 @@ class WebNavigationStrategy: NavigationStrategy {
             }
         }
     }
-    
+
     func canHandle(destination: String) -> Bool {
         // Web视图可以处理几乎所有URL类型
         return true
@@ -2144,7 +2144,7 @@ class NativeNavigationStrategy: NavigationStrategy {
             print("Unknown destination type: \(destination)")
             return
         }
-        
+
         switch destType {
         case .screen:
             let screenName = destination.replacingOccurrences(of: "screen://", with: "")
@@ -2160,17 +2160,17 @@ class NativeNavigationStrategy: NavigationStrategy {
             }
         }
     }
-    
+
     func canHandle(destination: String) -> Bool {
         return getDestinationType(destination) != nil
     }
-    
+
     private enum DestinationType {
         case screen
         case external
         case deeplinking
     }
-    
+
     private func getDestinationType(_ destination: String) -> DestinationType? {
         if destination.starts(with: "screen://") {
             return .screen
@@ -2181,24 +2181,24 @@ class NativeNavigationStrategy: NavigationStrategy {
         }
         return nil
     }
-    
+
     private func navigateToScreen(_ screenName: String, parameters: [String: Any]?) {
         // 查找视图控制器
         guard let viewController = instantiateViewController(screenName, parameters: parameters) else {
             print("Failed to instantiate view controller for screen: \(screenName)")
             return
         }
-        
+
         // 获取当前的导航控制器
         guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else {
             print("Root view controller is not a navigation controller")
             return
         }
-        
+
         // 导航到新屏幕
         navController.pushViewController(viewController, animated: true)
     }
-    
+
     private func instantiateViewController(_ screenName: String, parameters: [String: Any]?) -> UIViewController? {
         // 实例化视图控制器的逻辑...
         // 这取决于你的应用程序架构
@@ -2210,12 +2210,12 @@ class NativeNavigationStrategy: NavigationStrategy {
 class NavigationManager {
     private var strategies: [NavigationStrategy] = []
     private var fallbackStrategy: NavigationStrategy?
-    
+
     init() {
         // 注册策略
         registerStrategy()
     }
-    
+
     private func registerStrategy() {
         // 根据平台注册适当的策略
         #if os(iOS)
@@ -2228,7 +2228,7 @@ class NavigationManager {
         strategies.append(WebNavigationStrategy())
         #endif
     }
-    
+
     func navigateTo(destination: String, options: [String: Any]? = nil) {
         // 尝试找到可以处理此目标的策略
         for strategy in strategies {
@@ -2237,7 +2237,7 @@ class NavigationManager {
                 return
             }
         }
-        
+
         // 使用后备策略
         fallbackStrategy?.navigateTo(destination: destination, options: options)
     }
@@ -2254,7 +2254,7 @@ navigationManager.navigateTo(destination: "app://products/1234")
 
 策略模式使得应用程序可以根据当前平台动态选择最合适的行为实现，同时保持统一的接口，非常适合需要针对不同平台优化特定功能的跨平台应用。
 
-### 4.4 依赖注入与服务定位
+### 1.4.4 依赖注入与服务定位
 
 依赖注入和服务定位是实现松耦合跨平台架构的重要模式，它们允许在运行时或编译时注入合适的平台实现。
 
@@ -2278,17 +2278,17 @@ abstract class AnalyticsService {
 // iOS实现
 class IOSAnalyticsService implements AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
-  
+
   @override
   void logEvent(String name, [Map<String, dynamic>? parameters]) {
     _analytics.logEvent(name: name, parameters: parameters);
   }
-  
+
   @override
   void setUserId(String userId) {
     _analytics.setUserId(id: userId);
   }
-  
+
   @override
   void setUserProperty(String name, dynamic value) {
     _analytics.setUserProperty(name: name, value: value.toString());
@@ -2298,24 +2298,24 @@ class IOSAnalyticsService implements AnalyticsService {
 // Android实现
 class AndroidAnalyticsService implements AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
-  
+
   @override
   void logEvent(String name, [Map<String, dynamic>? parameters]) {
     // Android特定的配置或调整
-    final adjustedParams = parameters != null 
+    final adjustedParams = parameters != null
         ? Map<String, dynamic>.from(parameters)
         : <String, dynamic>{};
-        
+
     // 添加Android特定参数
     adjustedParams['platform'] = 'android';
     _analytics.logEvent(name: name, parameters: adjustedParams);
   }
-  
+
   @override
   void setUserId(String userId) {
     _analytics.setUserId(id: userId);
   }
-  
+
   @override
   void setUserProperty(String name, dynamic value) {
     _analytics.setUserProperty(name: name, value: value.toString());
@@ -2325,18 +2325,18 @@ class AndroidAnalyticsService implements AnalyticsService {
 // Web实现
 class WebAnalyticsService implements AnalyticsService {
   // Web分析库实例
-  
+
   @override
   void logEvent(String name, [Map<String, dynamic>? parameters]) {
     // 实现Web GA4或其他分析
     js.context.callMethod('gtag', ['event', name, parameters ?? {}]);
   }
-  
+
   @override
   void setUserId(String userId) {
     js.context.callMethod('gtag', ['config', 'G-XXXXXXXX', {'user_id': userId}]);
   }
-  
+
   @override
   void setUserProperty(String name, dynamic value) {
     js.context.callMethod('gtag', ['set', 'user_properties', {name: value}]);
@@ -2346,19 +2346,19 @@ class WebAnalyticsService implements AnalyticsService {
 // 服务定位器
 class ServiceLocator {
   static final ServiceLocator _instance = ServiceLocator._internal();
-  
+
   factory ServiceLocator() {
     return _instance;
   }
-  
+
   ServiceLocator._internal();
-  
+
   final Map<Type, Object> _services = {};
-  
+
   void registerSingleton<T extends Object>(T instance) {
     _services[T] = instance;
   }
-  
+
   T get<T>() {
     final service = _services[T];
     if (service == null) {
@@ -2366,7 +2366,7 @@ class ServiceLocator {
     }
     return service as T;
   }
-  
+
   bool isRegistered<T>() {
     return _services.containsKey(T);
   }
@@ -2375,7 +2375,7 @@ class ServiceLocator {
 // 应用程序启动时初始化服务
 void initServices() {
   final serviceLocator = ServiceLocator();
-  
+
   // 根据平台注册不同的服务实现
   if (Platform.isIOS) {
     serviceLocator.registerSingleton<AnalyticsService>(IOSAnalyticsService());
@@ -2387,32 +2387,32 @@ void initServices() {
     // 默认实现或空实现
     serviceLocator.registerSingleton<AnalyticsService>(EmptyAnalyticsService());
   }
-  
+
   // 注册其他服务...
 }
 
 // 在应用程序中使用服务
 class AnalyticsManager {
   final AnalyticsService _analyticsService = ServiceLocator().get<AnalyticsService>();
-  
+
   void trackScreenView(String screenName) {
     _analyticsService.logEvent('screen_view', {'screen_name': screenName});
   }
-  
+
   void trackUserAction(String action, Map<String, dynamic> details) {
     _analyticsService.logEvent('user_action', {
       'action': action,
       ...details,
     });
   }
-  
+
   void identifyUser(String userId, {String? email, String? name}) {
     _analyticsService.setUserId(userId);
-    
+
     if (email != null) {
       _analyticsService.setUserProperty('email', email);
     }
-    
+
     if (name != null) {
       _analyticsService.setUserProperty('name', name);
     }
@@ -2422,10 +2422,10 @@ class AnalyticsManager {
 // 使用示例
 void onProfilePageLoaded(BuildContext context, User user) {
   final analytics = AnalyticsManager();
-  
+
   // 跟踪屏幕查看
   analytics.trackScreenView('Profile');
-  
+
   // 标识用户
   analytics.identifyUser(
     user.id,
@@ -2437,9 +2437,9 @@ void onProfilePageLoaded(BuildContext context, User user) {
 
 依赖注入和服务定位器使跨平台应用能够以一种松耦合的方式集成平台特定功能，同时保持代码的可测试性和可维护性。
 
-## 5. 高级跨平台架构实现技术
+## 1.5 高级跨平台架构实现技术
 
-### 5.1 代码生成技术
+### 1.5.1 代码生成技术
 
 代码生成是构建跨平台应用的强大技术，它通过将高级抽象转换为特定平台代码来减少重复工作和错误。
 
@@ -2518,36 +2518,36 @@ const typeMapping = {
 // Kotlin 模型生成器
 function generateKotlinModel(model: ModelDefinition): string {
   let code = `data class ${model.name}(\n`;
-  
+
   // 字段定义
   const fields = model.fields.map(field => {
     const kotlinType = typeMapping.kotlin[field.type];
     const nullableMark = field.required ? '' : '?';
-    const defaultValue = field.defaultValue 
+    const defaultValue = field.defaultValue
       ? ` = ${field.type === 'date' ? 'java.util.Date()' : field.defaultValue}`
       : field.required ? '' : ' = null';
-    
+
     return `    val ${field.name}: ${kotlinType}${nullableMark}${defaultValue}`;
   });
-  
+
   code += fields.join(',\n');
   code += '\n)';
-  
+
   return code;
 }
 
 // Swift 模型生成器
 function generateSwiftModel(model: ModelDefinition): string {
   let code = `struct ${model.name}: Codable {\n`;
-  
+
   // 字段定义
   model.fields.forEach(field => {
     const swiftType = typeMapping.swift[field.type];
     const optionalMark = field.required ? '' : '?';
-    
+
     code += `    let ${field.name}: ${swiftType}${optionalMark}\n`;
   });
-  
+
   // 初始化方法
   code += '\n    init(';
   const initParams = model.fields.map(field => {
@@ -2556,40 +2556,40 @@ function generateSwiftModel(model: ModelDefinition): string {
     const defaultValue = field.defaultValue && !field.required
       ? ` = ${field.type === 'date' ? 'Date()' : field.defaultValue}`
       : '';
-    
+
     return `${field.name}: ${swiftType}${optionalMark}${defaultValue}`;
   });
   code += initParams.join(', ');
   code += ') {\n';
-  
+
   model.fields.forEach(field => {
     code += `        self.${field.name} = ${field.name}\n`;
   });
-  
+
   code += '    }\n';
   code += '}';
-  
+
   return code;
 }
 
 // TypeScript 模型生成器
 function generateTypeScriptModel(model: ModelDefinition): string {
   let code = `export interface ${model.name} {\n`;
-  
+
   // 属性定义
   model.fields.forEach(field => {
     const tsType = typeMapping.typescript[field.type];
     const optionalMark = field.required ? '' : '?';
-    
+
     code += `  ${field.name}${optionalMark}: ${tsType};\n`;
   });
-  
+
   code += '}\n\n';
-  
+
   // 创建实例的工厂函数
   code += `export function create${model.name}(data: Partial<${model.name}>): ${model.name} {\n`;
   code += '  return {\n';
-  
+
   model.fields.forEach(field => {
     if (field.defaultValue) {
       code += `    ${field.name}: data.${field.name} ?? ${field.type === 'date' ? 'new Date()' : field.defaultValue},\n`;
@@ -2599,10 +2599,10 @@ function generateTypeScriptModel(model: ModelDefinition): string {
       code += `    ${field.name}: data.${field.name},\n`;
     }
   });
-  
+
   code += '  };\n';
   code += '}';
-  
+
   return code;
 }
 
@@ -2694,7 +2694,7 @@ export function createUser(data: Partial<User>): User {
 }
 ```
 
-#### 5.1.1 基于Protobuf的跨平台代码生成
+#### 1.5.1.1 基于Protobuf的跨平台代码生成
 
 Protocol Buffers (Protobuf) 是一种语言中立、平台中立的可扩展机制，用于序列化结构化数据。
 使用Protobuf定义消息格式，可以生成多种语言的代码，实现跨平台通信。
@@ -2713,14 +2713,14 @@ message Task {
   int64 created_timestamp = 5;
   optional int64 due_timestamp = 6;
   repeated string tags = 7;
-  
+
   enum Priority {
     NONE = 0;
     LOW = 1;
     MEDIUM = 2;
     HIGH = 3;
   }
-  
+
   Priority priority = 8;
 }
 
@@ -2759,24 +2759,24 @@ message DeleteTaskResponse {
 通过protoc编译器生成各语言代码：
 
 ```bash
-# 生成Java代码
+# 2. 生成Java代码
 protoc --java_out=./android/app/src/main/java task.proto
 
-# 生成Swift代码
+# 3. 生成Swift代码
 protoc --swift_out=./ios/App task.proto
 
-# 生成TypeScript代码
+# 4. 生成TypeScript代码
 protoc --ts_out=./web/src task.proto
 ```
 
 这种方式可以确保不同平台的数据模型保持一致，并自动处理序列化/反序列化。
 
-#### 5.1.2 GraphQL与代码生成
+#### 4.0.0.1 GraphQL与代码生成
 
 GraphQL也是一种流行的跨平台代码生成方案，通过定义统一的类型系统，可以为各平台生成类型安全的代码。
 
 ```graphql
-# schema.graphql
+# 5. schema.graphql
 type User {
   id: ID!
   username: String!
@@ -2823,19 +2823,19 @@ type Mutation {
 使用工具生成各平台客户端代码：
 
 ```bash
-# 使用Apollo codegen生成TypeScript代码
+# 6. 使用Apollo codegen生成TypeScript代码
 apollo client:codegen --target typescript --outputFlat ./src/generated
 
-# 使用SwiftGraphQL生成Swift代码
+# 7. 使用SwiftGraphQL生成Swift代码
 swiftgraphql generate --schema schema.graphql --output ./iOS/App/GraphQL
 
-# 使用Apollo Android生成Java/Kotlin代码
+# 8. 使用Apollo Android生成Java/Kotlin代码
 ./gradlew generateApolloSources
 ```
 
 生成的代码包括类型定义、查询/变更操作的类型安全接口，以及运行时支持。
 
-#### 5.1.3 跨平台架构中代码生成的最佳实践
+#### 8.0.0.1 跨平台架构中代码生成的最佳实践
 
 1. **使用单一真相源**：定义模型和API的单一来源，从中生成所有平台的代码
 2. **版本控制生成的代码**：将生成的代码纳入版本控制，确保构建的可重复性
@@ -2847,7 +2847,7 @@ swiftgraphql generate --schema schema.graphql --output ./iOS/App/GraphQL
 
 通过代码生成技术，跨平台开发可以实现更高的开发效率和代码一致性，减少因手动实现多平台代码可能引入的错误，同时确保各平台间的数据模型和API使用保持同步。
 
-### 5.2 思维导图
+### 8.0.1 思维导图
 
 ```mermaid
 mindmap
@@ -2888,7 +2888,7 @@ mindmap
         IDL/Protobuf/GraphQL
 ```
 
-## 6. 总结与未来趋势
+## 8.1 总结与未来趋势
 
 跨平台开发架构已经从早期简单的"写一次，到处运行"理念，发展为多种各具特色的成熟方案。通过本文的分析可以看出：
 
@@ -2897,7 +2897,7 @@ mindmap
 3. **架构模式重要性**：桥接、适配器等设计模式是构建灵活跨平台架构的关键
 4. **代码生成崛起**：自动化代码生成正成为跨平台开发的重要辅助技术
 
-### 未来发展趋势
+### 8.1.1 未来发展趋势
 
 1. **WebAssembly扩展**：WebAssembly将使更多语言能够在多平台运行，模糊平台边界
 2. **AI辅助开发**：AI将辅助跨平台代码转换、自动适配和兼容性检测

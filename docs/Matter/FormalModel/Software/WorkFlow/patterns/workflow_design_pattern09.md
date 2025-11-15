@@ -1,64 +1,58 @@
-# 复杂分布式系统架构设计与实现方案
+# 1. 复杂分布式系统架构设计与实现方案
 
-## 📋 目录
+## 目录
 
-- [1 一、整体架构设计](#1-一整体架构设计)
-  - [1.1 系统架构概览](#11-系统架构概览)
-  - [1.2 核心层次与组件](#12-核心层次与组件)
-    - [2.2.1 应用层](#221-应用层)
-    - [2.2.2 领域层](#222-领域层)
-    - [2.2.3 基础设施层](#223-基础设施层)
-- [2 二、子系统详细设计](#2-二子系统详细设计)
-  - [2.1 命令处理子系统](#21-命令处理子系统)
-    - [1.1.1 命令处理流程](#111-命令处理流程)
-    - [1.1.2 代表性命令处理器实现](#112-代表性命令处理器实现)
-  - [2.2 事件处理子系统](#22-事件处理子系统)
-    - [2.2.1 事件总线实现](#221-事件总线实现)
-    - [2.2.2 订单创建事件处理](#222-订单创建事件处理)
-  - [2.3 工作流子系统](#23-工作流子系统)
-    - [3.3.1 Temporal工作流集成](#331-temporal工作流集成)
-    - [3.3.2 工作流活动实现](#332-工作流活动实现)
-  - [2.4 外部系统集成子系统](#24-外部系统集成子系统)
-    - [4.4.1 抽象服务客户端](#441-抽象服务客户端)
-  - [2.5 外部系统集成子系统续](#25-外部系统集成子系统续)
-    - [5.5.1 抽象服务客户端续](#551-抽象服务客户端续)
-    - [5.5.2 外部系统适配器工厂](#552-外部系统适配器工厂)
-  - [2.6 查询服务子系统](#26-查询服务子系统)
-    - [6.6.1 CQRS查询层](#661-cqrs查询层)
-    - [6.6.2 API端点](#662-api端点)
-  - [2.7 监控与可观测性子系统](#27-监控与可观测性子系统)
-    - [7.7.1 分布式追踪集成](#771-分布式追踪集成)
-    - [7.7.2 指标监控实现](#772-指标监控实现)
-  - [2.8 监控与可观测性子系统续](#28-监控与可观测性子系统续)
-    - [8.8.1 指标监控实现续](#881-指标监控实现续)
-  - [2.9 配置与服务发现子系统](#29-配置与服务发现子系统)
-    - [9.9.1 动态配置管理](#991-动态配置管理)
-    - [9.9.2 服务注册与发现](#992-服务注册与发现)
-- [3 三、数据模型设计](#3-三数据模型设计)
-  - [3.1 事件存储表结构](#31-事件存储表结构)
-  - [3.2 读模型表结构](#32-读模型表结构)
-- [4 四、部署架构](#4-四部署架构)
-  - [4.1 容器化与服务编排](#41-容器化与服务编排)
-- [5 四、部署架构续](#5-四部署架构续)
-  - [5.1 容器化与服务编排续](#51-容器化与服务编排续)
-  - [5.2 Prometheus配置](#52-prometheus配置)
-  - [5.3 Kubernetes部署配置](#53-kubernetes部署配置)
-- [6 五、系统启动与集成](#6-五系统启动与集成)
-  - [6.1 应用启动序列](#61-应用启动序列)
-  - [6.2 Dockerfile](#62-dockerfile)
-- [7 六、总结与最佳实践](#7-六总结与最佳实践)
-  - [7.1 架构设计关键点](#71-架构设计关键点)
-  - [7.2 Rust实现优势](#72-rust实现优势)
-  - [7.3 集成开源库最佳实践](#73-集成开源库最佳实践)
-  - [7.4 最终架构特点](#74-最终架构特点)
+- [1. 复杂分布式系统架构设计与实现方案](#1-复杂分布式系统架构设计与实现方案)
+  - [目录](#目录)
+  - [1.1 一、整体架构设计](#11-一整体架构设计)
+    - [1.1.1 系统架构概览](#111-系统架构概览)
+    - [1.1.2 核心层次与组件](#112-核心层次与组件)
+      - [1.1.2.1 应用层](#1121-应用层)
+      - [1.1.2.2 领域层](#1122-领域层)
+      - [1.1.2.3 基础设施层](#1123-基础设施层)
+  - [1.2 二、子系统详细设计](#12-二子系统详细设计)
+    - [1.2.1 命令处理子系统](#121-命令处理子系统)
+      - [1.2.1.1 命令处理流程](#1211-命令处理流程)
+      - [1.2.1.2 代表性命令处理器实现](#1212-代表性命令处理器实现)
+    - [1.2.2 事件处理子系统](#122-事件处理子系统)
+      - [1.2.2.1 事件总线实现](#1221-事件总线实现)
+      - [1.2.2.2 订单创建事件处理](#1222-订单创建事件处理)
+    - [1.2.3 工作流子系统](#123-工作流子系统)
+      - [1.2.3.1 Temporal工作流集成](#1231-temporal工作流集成)
+      - [1.2.3.2 工作流活动实现](#1232-工作流活动实现)
+    - [1.2.4 外部系统集成子系统](#124-外部系统集成子系统)
+      - [1.2.4.1 抽象服务客户端](#1241-抽象服务客户端)
+      - [2.0.1.2 外部系统适配器工厂](#2012-外部系统适配器工厂)
+    - [2.0.2 查询服务子系统](#202-查询服务子系统)
+      - [2.0.2.1 CQRS查询层](#2021-cqrs查询层)
+      - [2.0.2.2 API端点](#2022-api端点)
+    - [2.0.3 监控与可观测性子系统](#203-监控与可观测性子系统)
+      - [2.0.3.1 分布式追踪集成](#2031-分布式追踪集成)
+      - [2.0.3.2 指标监控实现](#2032-指标监控实现)
+    - [3.0.2 配置与服务发现子系统](#302-配置与服务发现子系统)
+      - [3.0.2.1 动态配置管理](#3021-动态配置管理)
+      - [3.0.2.2 服务注册与发现](#3022-服务注册与发现)
+  - [3.1 三、数据模型设计](#31-三数据模型设计)
+    - [3.1.1 事件存储表结构](#311-事件存储表结构)
+    - [3.1.2 读模型表结构](#312-读模型表结构)
+  - [3.2 四、部署架构](#32-四部署架构)
+    - [3.2.1 容器化与服务编排](#321-容器化与服务编排)
+    - [4.1.2 Prometheus配置](#412-prometheus配置)
+    - [5.0.1 Kubernetes部署配置](#501-kubernetes部署配置)
+  - [8.1 五、系统启动与集成](#81-五系统启动与集成)
+    - [8.1.1 应用启动序列](#811-应用启动序列)
+    - [8.1.2 Dockerfile](#812-dockerfile)
+  - [21.1 六、总结与最佳实践](#211-六总结与最佳实践)
+    - [21.1.1 架构设计关键点](#2111-架构设计关键点)
+    - [21.1.2 Rust实现优势](#2112-rust实现优势)
+    - [21.1.3 集成开源库最佳实践](#2113-集成开源库最佳实践)
+    - [21.1.4 最终架构特点](#2114-最终架构特点)
 
----
-
-## 1 一、整体架构设计
+## 1.1 一、整体架构设计
 
 基于前面的分析,我们设计一个可满足您需求的分布式系统架构,采用领域驱动设计和微服务架构,结合事件驱动和CQRS模式。
 
-### 1.1 系统架构概览
+### 1.1.1 系统架构概览
 
 ![系统架构图](架构设计)
 
@@ -78,8 +72,8 @@
       ↓    ↑                ↑               ↑   ↓
 +---------------+           |               |   |
 |  事件总线      |-----------|---------------|---|
-| (rdkafka)     |                                   
-+---------------+                               
+| (rdkafka)     |
++---------------+
       ↓                                    ↓   ↑
 +---------------+                     +---------------+
 |  工作流引擎    |                     |  外部系统适配器 |
@@ -92,34 +86,34 @@
 +---------------+ +---------------+ +---------------+
 ```
 
-### 1.2 核心层次与组件
+### 1.1.2 核心层次与组件
 
-#### 2.2.1 应用层
+#### 1.1.2.1 应用层
 
 - **API网关**: 使用actix-web实现,处理认证、授权、路由、限流
 - **命令服务**: 处理写操作,验证、转换命令为领域事件
 - **查询服务**: 处理读操作,从优化的读模型中获取数据
 - **集成服务**: 管理与外部系统的交互
 
-#### 2.2.2 领域层
+#### 1.1.2.2 领域层
 
 - **聚合根**: 业务实体和规则的封装
 - **领域事件**: 系统中发生的重要变化
 - **工作流引擎**: 管理长时间运行的业务流程
 - **领域服务**: 跨聚合根的业务逻辑
 
-#### 2.2.3 基础设施层
+#### 1.1.2.3 基础设施层
 
 - **事件总线**: 使用rdkafka实现的发布/订阅机制
 - **事件存储**: 使用PostgreSQL存储领域事件
 - **读模型存储**: 使用MongoDB存储优化的读模型
 - **集成存储**: 使用Redis缓存集成数据
 
-## 2 二、子系统详细设计
+## 1.2 二、子系统详细设计
 
-### 2.1 命令处理子系统
+### 1.2.1 命令处理子系统
 
-#### 1.1.1 命令处理流程
+#### 1.2.1.1 命令处理流程
 
 ```rust
 use tokio::sync::mpsc;
@@ -132,10 +126,10 @@ use tracing::{info, error, instrument};
 pub trait Command: Send + Sync + 'static {
     /// 命令类型标识
     fn command_type(&self) -> &'static str;
-    
+
     /// 命令唯一标识
     fn command_id(&self) -> Uuid;
-    
+
     /// 用于追踪的相关ID
     fn correlation_id(&self) -> Option<String>;
 }
@@ -165,7 +159,7 @@ impl CommandBus {
             event_producer,
         }
     }
-    
+
     /// 注册命令处理器
     pub fn register<C, H>(&mut self, handler: H)
     where
@@ -176,31 +170,31 @@ impl CommandBus {
         let handler_wrapper = CommandHandlerWrapper { handler };
         self.handlers.insert(type_id, Box::new(handler_wrapper));
     }
-    
+
     /// 分派命令
     #[instrument(skip(self), fields(command_id = %command.command_id(), command_type = %command.command_type()))]
     pub async fn dispatch<C: Command>(&self, command: C) -> Result<Vec<DomainEvent>, CommandError> {
         info!("处理命令");
-        
+
         let type_id = TypeId::of::<C>();
-        
+
         let handler = self.handlers.get(&type_id)
             .ok_or_else(|| CommandError::HandlerNotFound(command.command_type().to_string()))?;
-            
+
         // 处理命令
         let events = handler.handle_any(Box::new(command)).await?;
-        
+
         // 发布事件
         for event in &events {
             self.event_producer.publish_event(event).await?;
         }
-        
+
         Ok(events)
     }
 }
 ```
 
-#### 1.1.2 代表性命令处理器实现
+#### 1.2.1.2 代表性命令处理器实现
 
 ```rust
 use sqlx::{PgPool, postgres::PgQueryResult};
@@ -236,13 +230,13 @@ impl CommandHandler<CreateOrderCommand> for CreateOrderHandler {
         // 1. 验证库存可用性
         let inventory_check = self.inventory_client.check_availability(&command.items).await
             .map_err(|e| CommandError::ValidationError(format!("库存检查失败: {}", e)))?;
-            
+
         if !inventory_check.all_available {
             return Err(CommandError::ValidationError(
                 format!("部分商品库存不足: {:?}", inventory_check.unavailable_items)
             ));
         }
-        
+
         // 2. 创建订单聚合根
         let order = Order::create(
             OrderId::new(),
@@ -250,14 +244,14 @@ impl CommandHandler<CreateOrderCommand> for CreateOrderHandler {
             command.items,
             command.shipping_address,
         )?;
-        
+
         // 3. 将订单保存到事件存储
         let events = order.uncommitted_events();
-        
+
         // 使用事务保存事件
         let mut tx = self.db_pool.begin().await
             .map_err(|e| CommandError::InfrastructureError(e.to_string()))?;
-            
+
         for event in &events {
             sqlx::query(
                 "INSERT INTO event_store (aggregate_id, aggregate_type, event_type, event_data, sequence, occurred_at)
@@ -273,20 +267,20 @@ impl CommandHandler<CreateOrderCommand> for CreateOrderHandler {
             .await
             .map_err(|e| CommandError::InfrastructureError(format!("事件保存失败: {}", e)))?;
         }
-        
+
         tx.commit().await
             .map_err(|e| CommandError::InfrastructureError(format!("事务提交失败: {}", e)))?;
-            
+
         info!(order_id = %order.id(), "订单创建成功");
-        
+
         Ok(events)
     }
 }
 ```
 
-### 2.2 事件处理子系统
+### 1.2.2 事件处理子系统
 
-#### 2.2.1 事件总线实现
+#### 1.2.2.1 事件总线实现
 
 ```rust
 use rdkafka::producer::{FutureProducer, FutureRecord};
@@ -314,24 +308,24 @@ impl EventProducer {
             .set("bootstrap.servers", brokers)
             .set("message.timeout.ms", "5000")
             .create()?;
-            
+
         Ok(Self {
             producer,
             topic: topic.to_string(),
         })
     }
-    
+
     #[instrument(skip(self, event), fields(event_type = %event.event_type(), aggregate_id = %event.aggregate_id()))]
     pub async fn publish_event<E: DomainEvent + Serialize>(&self, event: &E) -> Result<(), EventBusError> {
         let event_data = serde_json::to_string(event)
             .map_err(|e| EventBusError::SerializationError(e.to_string()))?;
-            
+
         let headers = OwnedHeaders::new()
             .add("event_type", event.event_type())
             .add("aggregate_id", event.aggregate_id())
             .add("sequence", &event.sequence().to_string())
             .add("occurred_at", &event.occurred_at().to_rfc3339());
-            
+
         let delivery_status = self.producer
             .send(
                 FutureRecord::to(&self.topic)
@@ -342,13 +336,13 @@ impl EventProducer {
             )
             .await
             .map_err(|(e, _)| EventBusError::PublishError(e.to_string()))?;
-            
+
         info!(
             offset = delivery_status.0,
             partition = delivery_status.1,
             "事件已发布"
         );
-        
+
         Ok(())
     }
 }
@@ -383,9 +377,9 @@ impl EventConsumer {
             .set("auto.offset.reset", "earliest")
             .create()?
             .subscribe(topics)?;
-            
+
         let mut message_stream = consumer.stream();
-        
+
         while let Some(message) = message_stream.next().await {
             match message {
                 Ok(msg) => {
@@ -400,7 +394,7 @@ impl EventConsumer {
                             continue;
                         }
                     };
-                    
+
                     let event_type = match msg.headers() {
                         Some(headers) => {
                             match headers.get(0) {
@@ -424,7 +418,7 @@ impl EventConsumer {
                             continue;
                         }
                     };
-                    
+
                     if let Some(handlers) = self.event_handlers.get(event_type) {
                         for handler in handlers {
                             if let Err(e) = handler.handle_any(event_type, payload).await {
@@ -432,7 +426,7 @@ impl EventConsumer {
                             }
                         }
                     }
-                    
+
                     consumer.commit_message(&msg, CommitMode::Async).unwrap();
                 }
                 Err(e) => {
@@ -440,13 +434,13 @@ impl EventConsumer {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
 ```
 
-#### 2.2.2 订单创建事件处理
+#### 1.2.2.2 订单创建事件处理
 
 ```rust
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -493,7 +487,7 @@ impl EventHandler<OrderCreatedEvent> for OrderReadModelUpdater {
         .execute(&self.db_pool)
         .await
         .map_err(|e| EventHandlerError::DatabaseError(e.to_string()))?;
-        
+
         // 插入订单项
         for item in &event.order_items {
             sqlx::query(
@@ -509,7 +503,7 @@ impl EventHandler<OrderCreatedEvent> for OrderReadModelUpdater {
             .await
             .map_err(|e| EventHandlerError::DatabaseError(e.to_string()))?;
         }
-        
+
         info!("已更新订单查询模型");
         Ok(())
     }
@@ -529,9 +523,9 @@ impl EventHandler<OrderCreatedEvent> for OrderWorkflowStarter {
             order_id: event.aggregate_id.clone(),
             customer_id: event.customer_id.clone(),
         };
-        
+
         let workflow_id = format!("order-processing-{}", event.aggregate_id);
-        
+
         self.temporal_client.start_workflow(
             "OrderProcessingWorkflow",
             workflow_input,
@@ -542,7 +536,7 @@ impl EventHandler<OrderCreatedEvent> for OrderWorkflowStarter {
                 ..Default::default()
             },
         ).await.map_err(|e| EventHandlerError::WorkflowError(e.to_string()))?;
-        
+
         info!(workflow_id = %workflow_id, "已启动订单处理工作流");
         Ok(())
     }
@@ -565,7 +559,7 @@ impl EventHandler<OrderCreatedEvent> for InventoryReserver {
                 quantity: item.quantity,
             }).collect(),
         };
-        
+
         match self.inventory_client.reserve_inventory(reserve_request).await {
             Ok(_) => {
                 info!("库存预留成功");
@@ -580,9 +574,9 @@ impl EventHandler<OrderCreatedEvent> for InventoryReserver {
 }
 ```
 
-### 2.3 工作流子系统
+### 1.2.3 工作流子系统
 
-#### 3.3.1 Temporal工作流集成
+#### 1.2.3.1 Temporal工作流集成
 
 ```rust
 use temporal_sdk::{WfContext, WfExitValue, WorkflowResult, ActivityOptions};
@@ -603,7 +597,7 @@ pub struct OrderProcessingWorkflowInput {
 pub async fn order_processing_workflow(ctx: WfContext, input: OrderProcessingWorkflowInput) -> WorkflowResult<String> {
     // 设置工作流超时
     ctx.set_workflow_timeout(std::time::Duration::from_hours(24));
-    
+
     // 1. 验证订单
     let validate_result = ctx.activity("validate_order")
         .options(ActivityOptions {
@@ -620,11 +614,11 @@ pub async fn order_processing_workflow(ctx: WfContext, input: OrderProcessingWor
         .args(input.order_id.clone())
         .run::<ValidateOrderResult>()
         .await?;
-        
+
     if !validate_result.is_valid {
         return Ok(WfExitValue::Normal(format!("订单 {} 验证失败: {}", input.order_id, validate_result.reason.unwrap_or_default())));
     }
-    
+
     // 2. 处理支付
     let payment_result = ctx.activity("process_payment")
         .options(ActivityOptions {
@@ -645,20 +639,20 @@ pub async fn order_processing_workflow(ctx: WfContext, input: OrderProcessingWor
         })
         .run::<ProcessPaymentResult>()
         .await?;
-        
+
     if payment_result.status != "completed" {
         // 支付失败,释放库存
         ctx.activity("release_inventory")
             .args(input.order_id.clone())
             .run::<()>()
             .await?;
-            
-        return Ok(WfExitValue::Normal(format!("订单 {} 支付失败: {}", 
-            input.order_id, 
+
+        return Ok(WfExitValue::Normal(format!("订单 {} 支付失败: {}",
+            input.order_id,
             payment_result.failure_reason.unwrap_or_default()
         )));
     }
-    
+
     // 3. 创建配送单
     let shipment_result = ctx.activity("create_shipment")
         .args(CreateShipmentInput {
@@ -666,7 +660,7 @@ pub async fn order_processing_workflow(ctx: WfContext, input: OrderProcessingWor
         })
         .run::<CreateShipmentResult>()
         .await?;
-        
+
     // 4. 发送订单确认通知
     ctx.activity("send_order_confirmation")
         .args(SendOrderConfirmationInput {
@@ -677,12 +671,12 @@ pub async fn order_processing_workflow(ctx: WfContext, input: OrderProcessingWor
         })
         .run::<()>()
         .await?;
-        
+
     Ok(WfExitValue::Normal(format!("订单 {} 处理完成", input.order_id)))
 }
 ```
 
-#### 3.3.2 工作流活动实现
+#### 1.2.3.2 工作流活动实现
 
 ```rust
 use temporal_sdk::{ActivityContext, ActivityResult};
@@ -702,10 +696,10 @@ pub struct ValidateOrderResult {
 pub async fn validate_order(ctx: ActivityContext, order_id: String) -> ActivityResult<ValidateOrderResult> {
     let tracer = global::tracer("validate_order");
     let span = tracer.start_with_context("validate_order", &ctx);
-    
+
     let state = ctx.state();
     let db_pool = state.db_pool.clone();
-    
+
     // 验证订单是否存在
     let order = sqlx::query_as::<_, Order>(
         "SELECT id, customer_id, status FROM orders WHERE id = $1"
@@ -714,7 +708,7 @@ pub async fn validate_order(ctx: ActivityContext, order_id: String) -> ActivityR
     .fetch_optional(&db_pool)
     .await
     .map_err(|e| anyhow::anyhow!("数据库错误: {}", e))?;
-    
+
     if let Some(order) = order {
         if order.status == "created" {
             Ok(ValidateOrderResult {
@@ -754,7 +748,7 @@ pub struct ProcessPaymentResult {
 pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -> ActivityResult<ProcessPaymentResult> {
     let state = ctx.state();
     let payment_service = state.payment_service.clone();
-    
+
     // 获取订单金额
     let order_amount = sqlx::query_scalar::<_, f64>(
         "SELECT total_amount FROM order_view WHERE id = $1"
@@ -763,7 +757,7 @@ pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -
     .fetch_one(&state.db_pool)
     .await
     .map_err(|e| anyhow::anyhow!("获取订单金额失败: {}", e))?;
-    
+
     // 处理支付
     let payment_request = PaymentRequest {
         order_id: input.order_id.clone(),
@@ -772,7 +766,7 @@ pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -
         currency: "CNY".to_string(),
         idempotency_key: Uuid::new_v4().to_string(),
     };
-    
+
     match payment_service.process_payment(payment_request).await {
         Ok(response) => {
             // 更新订单支付状态
@@ -788,7 +782,7 @@ pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -
             .execute(&state.db_pool)
             .await
             .map_err(|e| anyhow::anyhow!("保存支付记录失败: {}", e))?;
-            
+
             Ok(ProcessPaymentResult {
                 status: response.status,
                 transaction_id: Some(response.transaction_id),
@@ -809,7 +803,7 @@ pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -
             .execute(&state.db_pool)
             .await
             .map_err(|e| anyhow::anyhow!("保存支付记录失败: {}", e))?;
-            
+
             Ok(ProcessPaymentResult {
                 status: "failed".to_string(),
                 transaction_id: None,
@@ -820,9 +814,9 @@ pub async fn process_payment(ctx: ActivityContext, input: ProcessPaymentInput) -
 }
 ```
 
-### 2.4 外部系统集成子系统
+### 1.2.4 外部系统集成子系统
 
-#### 4.4.1 抽象服务客户端
+#### 1.2.4.1 抽象服务客户端
 
 ```rust
 use async_trait::async_trait;
@@ -837,11 +831,11 @@ use resilient::{CircuitBreaker, CircuitBreakerConfig};
 pub trait InventoryService: Send + Sync + 'static {
     /// 检查库存可用性
     async fn check_availability(&self, items: &
-# 复杂分布式系统架构设计与实现方案（续）
+# 4. 复杂分布式系统架构设计与实现方案（续）
 
-### 2.5 外部系统集成子系统续
+### 2.0.1 外部系统集成子系统续
 
-#### 5.5.1 抽象服务客户端续
+#### 2.0.1.1 抽象服务客户端续
 
 ```rust
 use async_trait::async_trait;
@@ -856,10 +850,10 @@ use resilient::{CircuitBreaker, CircuitBreakerConfig};
 pub trait InventoryService: Send + Sync + 'static {
     /// 检查库存可用性
     async fn check_availability(&self, items: &[OrderItem]) -> Result<InventoryCheckResult, ServiceError>;
-    
+
     /// 预留库存
     async fn reserve_inventory(&self, request: ReserveInventoryRequest) -> Result<ReserveInventoryResponse, ServiceError>;
-    
+
     /// 释放库存
     async fn release_inventory(&self, order_id: &str) -> Result<(), ServiceError>;
 }
@@ -911,18 +905,18 @@ impl GrpcInventoryServiceClient {
             .timeout(Duration::from_secs(5))
             .connect()
             .await?;
-            
+
         let inner_client = inventory_proto::inventory_client::InventoryClient::new(channel);
-        
+
         let breaker_config = CircuitBreakerConfig {
             failure_threshold: 5,
             success_threshold: 2,
             open_duration: Duration::from_secs(30),
             ..Default::default()
         };
-        
+
         let circuit_breaker = CircuitBreaker::new("inventory_service", breaker_config);
-        
+
         Ok(Self {
             inner_client,
             circuit_breaker,
@@ -942,10 +936,10 @@ impl InventoryService for GrpcInventoryServiceClient {
                     quantity: item.quantity,
                 }).collect(),
             };
-            
+
             let response = self.inner_client.clone().check_availability(request).await?;
             let result = response.into_inner();
-            
+
             Ok(InventoryCheckResult {
                 all_available: result.all_available,
                 unavailable_items: result.unavailable_items.into_iter().map(|item| UnavailableItem {
@@ -959,7 +953,7 @@ impl InventoryService for GrpcInventoryServiceClient {
             resilient::Error::OperationError(inner) => inner,
         })
     }
-    
+
     #[instrument(skip(self, request), fields(order_id = %request.order_id, items_count = request.items.len()))]
     async fn reserve_inventory(&self, request: ReserveInventoryRequest) -> Result<ReserveInventoryResponse, ServiceError> {
         self.circuit_breaker.execute(|| async {
@@ -970,13 +964,13 @@ impl InventoryService for GrpcInventoryServiceClient {
                     quantity: item.quantity,
                 }).collect(),
             };
-            
+
             let response = self.inner_client.clone().reserve_inventory(proto_request).await?;
             let result = response.into_inner();
-            
+
             let reserved_at = DateTime::<Utc>::from_str(&result.reserved_at)
                 .map_err(|e| ServiceError::ParsingError(format!("日期解析错误: {}", e)))?;
-                
+
             Ok(ReserveInventoryResponse {
                 reservation_id: result.reservation_id,
                 status: result.status,
@@ -987,14 +981,14 @@ impl InventoryService for GrpcInventoryServiceClient {
             resilient::Error::OperationError(inner) => inner,
         })
     }
-    
+
     #[instrument(skip(self), fields(order_id = %order_id))]
     async fn release_inventory(&self, order_id: &str) -> Result<(), ServiceError> {
         self.circuit_breaker.execute(|| async {
             let request = inventory_proto::ReleaseInventoryRequest {
                 order_id: order_id.to_string(),
             };
-            
+
             let _response = self.inner_client.clone().release_inventory(request).await?;
             Ok(())
         }).await.map_err(|e| match e {
@@ -1005,7 +999,7 @@ impl InventoryService for GrpcInventoryServiceClient {
 }
 ```
 
-#### 5.5.2 外部系统适配器工厂
+#### 2.0.1.2 外部系统适配器工厂
 
 ```rust
 use std::sync::Arc;
@@ -1032,21 +1026,21 @@ impl ExternalServiceFactory {
             notification_client: RwLock::new(None),
         }
     }
-    
+
     /// 获取库存服务客户端
     pub async fn get_inventory_service(&self) -> Arc<dyn InventoryService> {
         let mut client = self.inventory_client.write().await;
-        
+
         if let Some(ref c) = *client {
             return c.clone();
         }
-        
+
         // 从服务注册表获取服务地址
         let service_url = match self.service_registry.get_service_url("inventory-service").await {
             Ok(url) => url,
             Err(_) => self.config.inventory_service_fallback_url.clone(),
         };
-        
+
         // 创建新客户端
         let new_client: Arc<dyn InventoryService> = match self.config.inventory_service_type.as_str() {
             "grpc" => Arc::new(GrpcInventoryServiceClient::new(&service_url).await
@@ -1055,25 +1049,25 @@ impl ExternalServiceFactory {
                 .expect("无法创建库存服务客户端")),
             _ => panic!("不支持的库存服务类型: {}", self.config.inventory_service_type),
         };
-        
+
         *client = Some(new_client.clone());
         new_client
     }
-    
+
     /// 获取支付服务客户端
     pub async fn get_payment_service(&self) -> Arc<dyn PaymentService> {
         let mut client = self.payment_client.write().await;
-        
+
         if let Some(ref c) = *client {
             return c.clone();
         }
-        
+
         // 从服务注册表获取服务地址
         let service_url = match self.service_registry.get_service_url("payment-service").await {
             Ok(url) => url,
             Err(_) => self.config.payment_service_fallback_url.clone(),
         };
-        
+
         // 创建新客户端
         let new_client: Arc<dyn PaymentService> = match self.config.payment_service_type.as_str() {
             "grpc" => Arc::new(GrpcPaymentServiceClient::new(&service_url).await
@@ -1082,18 +1076,18 @@ impl ExternalServiceFactory {
                 .expect("无法创建支付服务客户端")),
             _ => panic!("不支持的支付服务类型: {}", self.config.payment_service_type),
         };
-        
+
         *client = Some(new_client.clone());
         new_client
     }
-    
+
     // 其他服务的获取方法类似...
 }
 ```
 
-### 2.6 查询服务子系统
+### 2.0.2 查询服务子系统
 
-#### 6.6.1 CQRS查询层
+#### 2.0.2.1 CQRS查询层
 
 ```rust
 use actix_web::{web, HttpResponse, Responder};
@@ -1117,41 +1111,41 @@ impl OrderQueryService {
             metrics,
         }
     }
-    
+
     /// 获取订单详情
     #[instrument(skip(self), fields(order_id = %order_id))]
     pub async fn get_order(&self, order_id: &str) -> Result<Option<OrderDetailsDto>, QueryError> {
         let timer = self.metrics.start_timer("order_query_get_order");
-        
+
         // 尝试从缓存获取
         let mut redis_conn = self.redis_client.get_async_connection().await
             .map_err(|e| QueryError::CacheError(e.to_string()))?;
-            
+
         let cache_key = format!("order:{}", order_id);
-        
+
         if let Ok(cached_data) = redis_conn.get::<_, String>(&cache_key).await {
             info!("从缓存获取订单");
             self.metrics.increment_counter("order_query_cache_hit");
-            
+
             return serde_json::from_str(&cached_data)
                 .map(Some)
                 .map_err(|e| QueryError::DeserializationError(e.to_string()));
         }
-        
+
         self.metrics.increment_counter("order_query_cache_miss");
-        
+
         // 从数据库获取订单基本信息
         let order = sqlx::query_as::<_, OrderDetails>(
             r#"
-            SELECT 
+            SELECT
                 o.id, o.customer_id, o.status, o.total_amount, o.created_at,
                 c.first_name, c.last_name, c.email,
                 a.street, a.city, a.state, a.country, a.postal_code
-            FROM 
+            FROM
                 order_view o
                 LEFT JOIN customer c ON o.customer_id = c.id
                 LEFT JOIN address a ON o.shipping_address_id = a.id
-            WHERE 
+            WHERE
                 o.id = $1
             "#
         )
@@ -1159,7 +1153,7 @@ impl OrderQueryService {
         .fetch_optional(&self.db_pool)
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-        
+
         if let Some(order) = order {
             // 获取订单项
             let items = sqlx::query_as::<_, OrderItemDto>(
@@ -1169,7 +1163,7 @@ impl OrderQueryService {
             .fetch_all(&self.db_pool)
             .await
             .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-            
+
             // 获取支付信息
             let payment = sqlx::query_as::<_, PaymentInfoDto>(
                 "SELECT transaction_id, status, amount, processed_at FROM order_payment WHERE order_id = $1"
@@ -1178,7 +1172,7 @@ impl OrderQueryService {
             .fetch_optional(&self.db_pool)
             .await
             .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-            
+
             // 获取配送信息
             let shipment = sqlx::query_as::<_, ShipmentInfoDto>(
                 "SELECT shipment_id, carrier, tracking_number, status, estimated_delivery FROM order_shipment WHERE order_id = $1"
@@ -1187,7 +1181,7 @@ impl OrderQueryService {
             .fetch_optional(&self.db_pool)
             .await
             .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-            
+
             let result = OrderDetailsDto {
                 id: order.id,
                 customer: CustomerDto {
@@ -1210,32 +1204,32 @@ impl OrderQueryService {
                 total_amount: order.total_amount,
                 created_at: order.created_at,
             };
-            
+
             // 缓存结果
             if let Ok(json) = serde_json::to_string(&result) {
                 let _: Result<(), _> = redis_conn.set_ex(&cache_key, json, 300).await; // 5分钟过期
             }
-            
+
             info!("成功获取订单详情");
             timer.observe_duration();
-            
+
             Ok(Some(result))
         } else {
             timer.observe_duration();
             Ok(None)
         }
     }
-    
+
     /// 获取客户订单列表
     #[instrument(skip(self), fields(customer_id = %customer_id))]
     pub async fn get_customer_orders(
-        &self, 
+        &self,
         customer_id: &str,
         page: i64,
         page_size: i64
     ) -> Result<CustomerOrdersResult, QueryError> {
         let offset = (page - 1) * page_size;
-        
+
         // 获取总订单数
         let total_count: i64 = sqlx::query_scalar(
             "SELECT COUNT(*) FROM order_view WHERE customer_id = $1"
@@ -1244,18 +1238,18 @@ impl OrderQueryService {
         .fetch_one(&self.db_pool)
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-        
+
         // 获取分页订单列表
         let orders = sqlx::query_as::<_, CustomerOrderDto>(
             r#"
-            SELECT 
+            SELECT
                 id, status, total_amount, created_at,
                 (SELECT COUNT(*) FROM order_item_view WHERE order_id = order_view.id) as item_count
-            FROM 
-                order_view 
-            WHERE 
+            FROM
+                order_view
+            WHERE
                 customer_id = $1
-            ORDER BY 
+            ORDER BY
                 created_at DESC
             LIMIT $2 OFFSET $3
             "#
@@ -1266,7 +1260,7 @@ impl OrderQueryService {
         .fetch_all(&self.db_pool)
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-        
+
         Ok(CustomerOrdersResult {
             customer_id: customer_id.to_string(),
             orders,
@@ -1276,21 +1270,21 @@ impl OrderQueryService {
             total_pages: (total_count + page_size - 1) / page_size,
         })
     }
-    
+
     /// 搜索订单
     #[instrument(skip(self), fields(query = %query))]
     pub async fn search_orders(&self, query: &str, page: i64, page_size: i64) -> Result<OrderSearchResult, QueryError> {
         let offset = (page - 1) * page_size;
-        
+
         // 使用全文检索搜索订单
         let search_query = format!("%{}%", query);
-        
+
         // 获取匹配订单总数
         let total_count: i64 = sqlx::query_scalar(
             r#"
             SELECT COUNT(*) FROM order_view o
             LEFT JOIN customer c ON o.customer_id = c.id
-            WHERE 
+            WHERE
                 o.id::text ILIKE $1 OR
                 c.email ILIKE $1 OR
                 c.first_name ILIKE $1 OR
@@ -1301,17 +1295,17 @@ impl OrderQueryService {
         .fetch_one(&self.db_pool)
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-        
+
         // 获取分页搜索结果
         let orders = sqlx::query_as::<_, SearchOrderDto>(
             r#"
-            SELECT 
+            SELECT
                 o.id, o.status, o.total_amount, o.created_at,
                 c.id as customer_id, c.first_name, c.last_name, c.email
-            FROM 
+            FROM
                 order_view o
                 LEFT JOIN customer c ON o.customer_id = c.id
-            WHERE 
+            WHERE
                 o.id::text ILIKE $1 OR
                 c.email ILIKE $1 OR
                 c.first_name ILIKE $1 OR
@@ -1327,7 +1321,7 @@ impl OrderQueryService {
         .fetch_all(&self.db_pool)
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?;
-        
+
         Ok(OrderSearchResult {
             query: query.to_string(),
             orders,
@@ -1340,7 +1334,7 @@ impl OrderQueryService {
 }
 ```
 
-#### 6.6.2 API端点
+#### 2.0.2.2 API端点
 
 ```rust
 use actix_web::{web, HttpResponse, Responder, get, post};
@@ -1404,7 +1398,7 @@ async fn create_order(
         },
         correlation_id: None,
     };
-    
+
     match data.command_bus.dispatch(command).await {
         Ok(events) => {
             // 从事件中提取订单ID
@@ -1417,21 +1411,21 @@ async fn create_order(
                     }));
                 }
             }
-            
+
             HttpResponse::InternalServerError().json(json!({
                 "error": "处理订单创建失败"
             }))
         },
         Err(e) => {
             error!(error = %e, "订单创建失败");
-            
+
             let status_code = match e {
                 CommandError::ValidationError(_) => StatusCode::BAD_REQUEST,
                 CommandError::NotFound(_) => StatusCode::NOT_FOUND,
                 CommandError::Unauthorized(_) => StatusCode::UNAUTHORIZED,
                 _ => StatusCode::INTERNAL_SERVER_ERROR,
             };
-            
+
             HttpResponse::build(status_code).json(json!({
                 "error": e.to_string()
             }))
@@ -1461,9 +1455,9 @@ async fn get_order(
 }
 ```
 
-### 2.7 监控与可观测性子系统
+### 2.0.3 监控与可观测性子系统
 
-#### 7.7.1 分布式追踪集成
+#### 2.0.3.1 分布式追踪集成
 
 ```rust
 use opentelemetry::{global, sdk::propagation::TraceContextPropagator};
@@ -1479,7 +1473,7 @@ use tracing_subscriber::layer::Layer;
 pub fn init_tracer(service_name: &str, jaeger_endpoint: &str) -> Result<(), Box<dyn Error>> {
     // 设置全局传播器
     global::set_text_map_propagator(TraceContextPropagator::new());
-    
+
     // 创建Jaeger导出器
     let tracer = new_pipeline()
         .with_service_name(service_name)
@@ -1495,26 +1489,26 @@ pub fn init_tracer(service_name: &str, jaeger_endpoint: &str) -> Result<(), Box<
                 ]))
         )
         .install_batch(opentelemetry::runtime::Tokio)?;
-    
+
     // 创建OpenTelemetry tracing层
     let telemetry = tracing_opentelemetry::layer().with_tracer(tracer);
-    
+
     // 创建格式化日志层
     let fmt_layer = tracing_subscriber::fmt::layer()
         .with_ansi(true)
         .with_target(true);
-    
+
     // 创建EnvFilter层
     let filter_layer = tracing_subscriber::EnvFilter::try_from_default_env()
         .or_else(|_| tracing_subscriber::EnvFilter::try_new("info"))?;
-    
+
     // 注册订阅者
     Registry::default()
         .with(filter_layer)
         .with(fmt_layer)
         .with(telemetry)
         .init();
-    
+
     Ok(())
 }
 
@@ -1523,9 +1517,9 @@ pub fn extract_tracing_context(req: &HttpRequest) -> tracing::Span {
     let parent_cx = global::get_text_map_propagator(|propagator| {
         propagator.extract(&RequestHeaderCarrier(req.headers()))
     });
-    
+
     tracing::span!(
-        tracing::Level::INFO, 
+        tracing::Level::INFO,
         "http_request",
         method = %req.method(),
         uri = %req.uri(),
@@ -1546,14 +1540,14 @@ impl<'a> Extractor for RequestHeaderCarrier<'a> {
     fn get(&self, key: &str) -> Option<&str> {
         self.0.get(key).and_then(|v| v.to_str().ok())
     }
-    
+
     fn keys(&self) -> Vec<&str> {
         self.0.keys().map(|k| k.as_str()).collect()
     }
 }
 ```
 
-#### 7.7.2 指标监控实现
+#### 2.0.3.2 指标监控实现
 
 ```rust
 use metrics::{counter, gauge, histogram};
@@ -1573,42 +1567,42 @@ impl Metrics {
         let handle = builder
             .install()
             .expect("无法安装Prometheus导出器");
-            
+
         Self {
             prometheus_handle: handle,
         }
     }
-    
+
     /// 获取Prometheus指标导出点
     pub fn get_prometheus_handler(&self) -> PrometheusHandle {
         self.prometheus_handle.clone()
     }
-    
+
     /// 递增计数器
     pub fn increment_counter(&self, name: &str) {
         counter!(name, 1);
     }
-    
+
     /// 递增带标签的计数器
     pub fn increment_counter_with_labels(&self, name: &str, labels: &[(&str, &str)]) {
         let labels: Vec<(String, String)> = labels.iter()
             .map(|(k, v)| (k.to_string(), v.to_string()))
             .collect();
-            
+
         counter!(name, 1, &labels);
     }
-    
+
     /// 记录数值
     pub fn set_gauge(&self, name: &str, value: f64) {
         gauge!(name, value);
     }
-    
+
     /// 记录直方图数据
-# 复杂分布式系统架构设计与实现方案（续）
+# 4. 复杂分布式系统架构设计与实现方案（续）
 
-### 2.8 监控与可观测性子系统续
+### 3.0.1 监控与可观测性子系统续
 
-#### 8.8.1 指标监控实现续
+#### 3.0.1.1 指标监控实现续
 
 ```rust
 use metrics::{counter, gauge, histogram};
@@ -1628,41 +1622,41 @@ impl Metrics {
         let handle = builder
             .install()
             .expect("无法安装Prometheus导出器");
-            
+
         Self {
             prometheus_handle: handle,
         }
     }
-    
+
     /// 获取Prometheus指标导出点
     pub fn get_prometheus_handler(&self) -> PrometheusHandle {
         self.prometheus_handle.clone()
     }
-    
+
     /// 递增计数器
     pub fn increment_counter(&self, name: &str) {
         counter!(name, 1);
     }
-    
+
     /// 递增带标签的计数器
     pub fn increment_counter_with_labels(&self, name: &str, labels: &[(&str, &str)]) {
         let labels: Vec<(String, String)> = labels.iter()
             .map(|(k, v)| (k.to_string(), v.to_string()))
             .collect();
-            
+
         counter!(name, 1, &labels);
     }
-    
+
     /// 记录数值
     pub fn set_gauge(&self, name: &str, value: f64) {
         gauge!(name, value);
     }
-    
+
     /// 记录直方图数据
     pub fn record_histogram(&self, name: &str, value: f64) {
         histogram!(name, value);
     }
-    
+
     /// 开始计时器
     pub fn start_timer(&self, name: &str) -> OperationTimer {
         OperationTimer {
@@ -1670,19 +1664,19 @@ impl Metrics {
             start: Instant::now(),
         }
     }
-    
+
     /// 启动系统指标收集
     pub async fn start_system_metrics_collector(&self) -> tokio::task::JoinHandle<()> {
         let metrics_interval = Duration::from_secs(15);
-        
+
         tokio::spawn(async move {
             let mut interval = interval(metrics_interval);
-            
+
             // 这里可以使用系统库如sysinfo收集系统指标
             // 这里以简单模拟为例
             loop {
                 interval.tick().await;
-                
+
                 // 收集系统指标
                 gauge!("system.memory.used_mb", 1024.0);
                 gauge!("system.cpu.usage_percent", 45.0);
@@ -1730,21 +1724,21 @@ impl HealthCheckService {
             kafka_producer,
         }
     }
-    
+
     /// 检查所有依赖健康状态
     pub async fn check_health(&self) -> HealthStatus {
         let db_check = self.check_database().await;
         let redis_check = self.check_redis().await;
         let kafka_check = self.check_kafka().await;
-        
-        let status = if db_check.status == "up" 
-                       && redis_check.status == "up" 
+
+        let status = if db_check.status == "up"
+                       && redis_check.status == "up"
                        && kafka_check.status == "up" {
             "up"
         } else {
             "down"
         };
-        
+
         HealthStatus {
             status: status.to_string(),
             components: vec![
@@ -1755,10 +1749,10 @@ impl HealthCheckService {
             timestamp: Utc::now(),
         }
     }
-    
+
     async fn check_database(&self) -> ComponentHealth {
         let start = Instant::now();
-        
+
         match sqlx::query("SELECT 1").execute(&self.db_pool).await {
             Ok(_) => ComponentHealth {
                 name: "database".to_string(),
@@ -1774,10 +1768,10 @@ impl HealthCheckService {
             },
         }
     }
-    
+
     async fn check_redis(&self) -> ComponentHealth {
         let start = Instant::now();
-        
+
         match self.redis_client.get_async_connection().await {
             Ok(mut conn) => {
                 match conn.ping::<String>().await {
@@ -1803,10 +1797,10 @@ impl HealthCheckService {
             },
         }
     }
-    
+
     async fn check_kafka(&self) -> ComponentHealth {
         let start = Instant::now();
-        
+
         // 简单的kafka健康检查
         match self.kafka_producer.check_connectivity().await {
             Ok(_) => ComponentHealth {
@@ -1843,9 +1837,9 @@ struct ComponentHealth {
 }
 ```
 
-### 2.9 配置与服务发现子系统
+### 3.0.2 配置与服务发现子系统
 
-#### 9.9.1 动态配置管理
+#### 3.0.2.1 动态配置管理
 
 ```rust
 use config::{Config, ConfigError, Environment, File};
@@ -1900,13 +1894,13 @@ impl ConfigManager {
     pub fn from_file(config_path: &str) -> Result<Self, ConfigError> {
         let config = Self::load_config_from_file(config_path)?;
         let (tx, rx) = watch::channel(Arc::new(config.clone()));
-        
+
         let config_source: Box<dyn ConfigSource> = if config_path.ends_with(".json") {
             Box::new(JsonFileConfigSource::new(config_path.to_string()))
         } else {
             Box::new(TomlFileConfigSource::new(config_path.to_string()))
         };
-        
+
         Ok(Self {
             current_config: Arc::new(config),
             config_sender: tx,
@@ -1914,16 +1908,16 @@ impl ConfigManager {
             config_source,
         })
     }
-    
+
     /// 从Consul创建配置
     pub fn from_consul(consul_url: &str, app_name: &str) -> Result<Self, ConfigError> {
         let consul_source = ConsulConfigSource::new(consul_url.to_string(), app_name.to_string());
         let config = consul_source.load_config().map_err(|e| {
             ConfigError::Foreign(Box::new(e))
         })?;
-        
+
         let (tx, rx) = watch::channel(Arc::new(config.clone()));
-        
+
         Ok(Self {
             current_config: Arc::new(config),
             config_sender: tx,
@@ -1931,47 +1925,47 @@ impl ConfigManager {
             config_source: Box::new(consul_source),
         })
     }
-    
+
     /// 加载配置文件
     fn load_config_from_file(config_path: &str) -> Result<AppConfig, ConfigError> {
         let builder = Config::builder()
             .add_source(File::with_name(config_path))
             .add_source(Environment::with_prefix("APP").separator("__"));
-            
+
         let config = builder.build()?;
         config.try_deserialize()
     }
-    
+
     /// 获取当前配置
     pub fn get_config(&self) -> Arc<AppConfig> {
         self.current_config.clone()
     }
-    
+
     /// 获取配置观察器
     pub fn get_config_watcher(&self) -> watch::Receiver<Arc<AppConfig>> {
         self.config_receiver.clone()
     }
-    
+
     /// 启动配置监听
     pub async fn start_config_watch(&self, refresh_interval: Duration) -> tokio::task::JoinHandle<()> {
         let config_source = self.config_source.clone_box();
         let sender = self.config_sender.clone();
         let mut current_config = self.current_config.clone();
-        
+
         tokio::spawn(async move {
             let mut interval = interval(refresh_interval);
-            
+
             loop {
                 interval.tick().await;
-                
+
                 match config_source.load_config() {
                     Ok(new_config) => {
                         if !config_equals(&current_config, &Arc::new(new_config.clone())) {
                             info!("检测到配置变更,更新配置");
-                            
+
                             let new_config_arc = Arc::new(new_config);
                             current_config = new_config_arc.clone();
-                            
+
                             if let Err(e) = sender.send(new_config_arc) {
                                 error!("发送配置更新失败: {:?}", e);
                             }
@@ -2017,7 +2011,7 @@ impl ConfigSource for JsonFileConfigSource {
         let config: AppConfig = serde_json::from_str(&content)?;
         Ok(config)
     }
-    
+
     fn clone_box(&self) -> Box<dyn ConfigSource> {
         Box::new(Self {
             file_path: self.file_path.clone(),
@@ -2041,19 +2035,19 @@ impl ConfigSource for ConsulConfigSource {
     fn load_config(&self) -> Result<AppConfig, Box<dyn std::error::Error>> {
         // 创建Consul客户端
         let client = consul_rs::Client::new(&self.consul_url)?;
-        
+
         // 获取配置
         let (_, data) = client.kv().get(&format!("config/{}", self.app_name)).map_err(|e| {
             format!("从Consul获取配置失败: {}", e)
         })?.ok_or_else(|| {
             "Consul中不存在配置".to_string()
         })?;
-        
+
         // 解析配置
         let config: AppConfig = serde_json::from_slice(&data)?;
         Ok(config)
     }
-    
+
     fn clone_box(&self) -> Box<dyn ConfigSource> {
         Box::new(Self {
             consul_url: self.consul_url.clone(),
@@ -2063,7 +2057,7 @@ impl ConfigSource for ConsulConfigSource {
 }
 ```
 
-#### 9.9.2 服务注册与发现
+#### 3.0.2.2 服务注册与发现
 
 ```rust
 use consul_rs::{Client, Config, RegisterServiceRequest, ServiceEntry};
@@ -2099,9 +2093,9 @@ impl ServiceRegistration {
         health_check_interval: &str,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         let consul_client = Client::new(consul_url)?;
-        
+
         let service_id = format!("{}-{}", service_name, Uuid::new_v4());
-        
+
         Ok(Self {
             consul_client,
             service_id,
@@ -2112,11 +2106,11 @@ impl ServiceRegistration {
             health_check_interval: health_check_interval.to_string(),
         })
     }
-    
+
     /// 注册服务
     pub async fn register(&self) -> Result<(), Box<dyn std::error::Error>> {
         let check_url = format!("http://{}:{}{}", self.host, self.port, self.health_check_path);
-        
+
         let request = RegisterServiceRequest {
             id: Some(self.service_id.clone()),
             name: self.service_name.clone(),
@@ -2131,13 +2125,13 @@ impl ServiceRegistration {
             }),
             ..Default::default()
         };
-        
+
         self.consul_client.agent().register_service_with_request(request).await?;
-        
+
         info!("服务已注册到Consul: id={}, name={}", self.service_id, self.service_name);
         Ok(())
     }
-    
+
     /// 注销服务
     pub async fn deregister(&self) -> Result<(), Box<dyn std::error::Error>> {
         self.consul_client.agent().deregister_service(&self.service_id).await?;
@@ -2171,7 +2165,7 @@ pub struct ServiceInfo {
 impl ServiceDiscovery {
     pub fn new(consul_url: &str) -> Result<Self, Box<dyn std::error::Error>> {
         let consul_client = Client::new(consul_url)?;
-        
+
         let circuit_breaker = Arc::new(CircuitBreaker::new(
             "consul_client",
             resilient::CircuitBreakerConfig {
@@ -2181,14 +2175,14 @@ impl ServiceDiscovery {
                 ..Default::default()
             }
         ));
-        
+
         Ok(Self {
             consul_client,
             service_cache: RwLock::new(HashMap::new()),
             circuit_breaker,
         })
     }
-    
+
     /// 发现服务
     pub async fn discover_service(&self, service_name: &str) -> Result<Vec<ServiceInfo>, ServiceDiscoveryError> {
         // 先检查缓存
@@ -2201,11 +2195,11 @@ impl ServiceDiscovery {
                 }
             }
         }
-        
+
         // 使用断路器调用Consul
         let services = self.circuit_breaker.execute(|| async {
             let services = self.consul_client.health().service(service_name, None, true).await?;
-            
+
             let service_infos = services.into_iter().map(|s| {
                 ServiceInfo {
                     id: s.service.id,
@@ -2216,13 +2210,13 @@ impl ServiceDiscovery {
                     healthy: s.checks.iter().all(|c| c.status == "passing"),
                 }
             }).collect::<Vec<_>>();
-            
+
             Ok::<Vec<ServiceInfo>, Box<dyn std::error::Error>>(service_infos)
         }).await.map_err(|e| match e {
             resilient::Error::CircuitOpen => ServiceDiscoveryError::ServiceUnavailable("服务发现暂时不可用".to_string()),
             resilient::Error::OperationError(inner) => ServiceDiscoveryError::ConsulError(inner.to_string()),
         })?;
-        
+
         // 更新缓存
         {
             let mut cache = self.service_cache.write().await;
@@ -2231,53 +2225,53 @@ impl ServiceDiscovery {
                 last_updated: chrono::Utc::now(),
             });
         }
-        
+
         if services.is_empty() {
             return Err(ServiceDiscoveryError::ServiceNotFound(service_name.to_string()));
         }
-        
+
         Ok(services)
     }
-    
+
     /// 获取服务URL(使用随机负载均衡)
     pub async fn get_service_url(&self, service_name: &str) -> Result<String, ServiceDiscoveryError> {
         let services = self.discover_service(service_name).await?;
-        
+
         // 过滤出健康的服务
         let healthy_services: Vec<_> = services.into_iter()
             .filter(|s| s.healthy)
             .collect();
-            
+
         if healthy_services.is_empty() {
             return Err(ServiceDiscoveryError::NoHealthyService(service_name.to_string()));
         }
-        
+
         // 随机选择一个健康服务
         let mut rng = thread_rng();
         let service = healthy_services.choose(&mut rng)
             .ok_or_else(|| ServiceDiscoveryError::NoHealthyService(service_name.to_string()))?;
-            
+
         let scheme = if service.tags.contains(&"secure".to_string()) { "https" } else { "http" };
         let url = format!("{}://{}:{}", scheme, service.address, service.port);
-        
+
         Ok(url)
     }
-    
+
     /// 启动缓存刷新任务
     pub async fn start_cache_refresh(&self, refresh_interval: Duration) -> tokio::task::JoinHandle<()> {
         let service_discovery = Arc::new(self.clone());
-        
+
         tokio::spawn(async move {
             let mut interval = interval(refresh_interval);
-            
+
             loop {
                 interval.tick().await;
-                
+
                 let services_to_refresh = {
                     let cache = service_discovery.service_cache.read().await;
                     cache.keys().cloned().collect::<Vec<_>>()
                 };
-                
+
                 for service_name in services_to_refresh {
                     if let Err(e) = service_discovery.discover_service(&service_name).await {
                         warn!("刷新服务 {} 缓存失败: {:?}", service_name, e);
@@ -2302,21 +2296,21 @@ impl Clone for ServiceDiscovery {
 pub enum ServiceDiscoveryError {
     #[error("服务 {0} 未找到")]
     ServiceNotFound(String),
-    
+
     #[error("服务 {0} 没有健康实例")]
     NoHealthyService(String),
-    
+
     #[error("Consul错误: {0}")]
     ConsulError(String),
-    
+
     #[error("服务发现暂时不可用: {0}")]
     ServiceUnavailable(String),
 }
 ```
 
-## 3 三、数据模型设计
+## 3.1 三、数据模型设计
 
-### 3.1 事件存储表结构
+### 3.1.1 事件存储表结构
 
 ```sql
 -- 事件存储表
@@ -2350,7 +2344,7 @@ CREATE TABLE aggregate_snapshots (
 );
 ```
 
-### 3.2 读模型表结构
+### 3.1.2 读模型表结构
 
 ```sql
 -- 订单视图表
@@ -2407,9 +2401,9 @@ CREATE INDEX idx_order_payment_status ON order_payment(status);
 CREATE INDEX idx_order_shipment_status ON order_shipment(status);
 ```
 
-## 4 四、部署架构
+## 3.2 四、部署架构
 
-### 4.1 容器化与服务编排
+### 3.2.1 容器化与服务编排
 
 以下是使用Docker Compose定义的服务部署配置:
 
@@ -2451,7 +2445,7 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-        
+
   # 数据库
   postgres:
     image: postgres:14-alpine
@@ -2463,17 +2457,17 @@ services:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5432:5432"
-  
+
   # Redis缓存
   redis:
     image: redis:6-alpine
     ports:
-      
-# 复杂分布式系统架构设计与实现方案（续）
 
-## 5 四、部署架构续
+# 4. 复杂分布式系统架构设计与实现方案（续）
 
-### 5.1 容器化与服务编排续
+## 4.1 四、部署架构续
+
+### 4.1.1 容器化与服务编排续
 
 ```yaml
 version: '3.8'
@@ -2513,7 +2507,7 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-        
+
   # 数据库
   postgres:
     image: postgres:14-alpine
@@ -2525,7 +2519,7 @@ services:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5432:5432"
-  
+
   # Redis缓存
   redis:
     image: redis:6-alpine
@@ -2534,7 +2528,7 @@ services:
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes
-      
+
   # Kafka消息队列
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -2542,7 +2536,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
     volumes:
       - zookeeper-data:/var/lib/zookeeper/data
-      
+
   kafka:
     image: confluentinc/cp-kafka:7.2.1
     depends_on:
@@ -2556,7 +2550,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - kafka-data:/var/lib/kafka/data
-      
+
   # Temporal工作流引擎
   temporal:
     image: temporalio/auto-setup:1.16.2
@@ -2570,7 +2564,7 @@ services:
       - "7233:7233"
     depends_on:
       - postgres
-      
+
   temporal-web:
     image: temporalio/web:1.15.0
     environment:
@@ -2579,7 +2573,7 @@ services:
       - "8088:8088"
     depends_on:
       - temporal
-      
+
   # Consul服务发现
   consul:
     image: hashicorp/consul:1.12.3
@@ -2588,14 +2582,14 @@ services:
     volumes:
       - consul-data:/consul/data
     command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0
-      
+
   # Jaeger分布式追踪
   jaeger:
     image: jaegertracing/all-in-one:1.36
     ports:
       - "16686:16686"  # UI
       - "14268:14268"  # Collector HTTP
-      
+
   # Prometheus监控
   prometheus:
     image: prom/prometheus:v2.36.1
@@ -2609,7 +2603,7 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-      
+
   # Grafana可视化
   grafana:
     image: grafana/grafana:9.0.4
@@ -2635,10 +2629,10 @@ volumes:
   grafana-data:
 ```
 
-### 5.2 Prometheus配置
+### 4.1.2 Prometheus配置
 
 ```yaml
-# prometheus.yml
+# 5. prometheus.yml
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -2649,11 +2643,11 @@ scrape_configs:
       - server: 'consul:8500'
         services: ['order-service']
     metrics_path: /metrics
-    
+
   - job_name: 'temporal'
     static_configs:
       - targets: ['temporal:9090']
-        
+
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['node-exporter:9100']
@@ -2663,10 +2657,10 @@ scrape_configs:
       - targets: ['localhost:9090']
 ```
 
-### 5.3 Kubernetes部署配置
+### 5.0.1 Kubernetes部署配置
 
 ```yaml
-# order-service-deployment.yaml
+# 6. order-service-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -2745,7 +2739,7 @@ spec:
       terminationGracePeriodSeconds: 60
 
 ---
-# order-service-service.yaml
+# 7. order-service-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -2762,7 +2756,7 @@ spec:
   type: ClusterIP
 
 ---
-# order-service-hpa.yaml
+# 8. order-service-hpa.yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -2789,9 +2783,9 @@ spec:
         averageUtilization: 80
 ```
 
-## 6 五、系统启动与集成
+## 8.1 五、系统启动与集成
 
-### 6.1 应用启动序列
+### 8.1.1 应用启动序列
 
 ```rust
 use std::sync::Arc;
@@ -2806,13 +2800,13 @@ async fn main() -> std::io::Result<()> {
     let config_manager = ConfigManager::from_file("config/config.toml")
         .expect("无法加载配置");
     let config = config_manager.get_config();
-    
+
     // 2. 初始化日志和追踪
     init_tracer(&config.tracing.service_name, &config.tracing.jaeger_endpoint)
         .expect("无法初始化分布式追踪");
-    
+
     tracing::info!("应用启动中...");
-    
+
     // 3. 创建数据库连接池
     let db_pool = PgPoolOptions::new()
         .max_connections(config.database.max_connections)
@@ -2822,24 +2816,24 @@ async fn main() -> std::io::Result<()> {
         .connect(&config.database.url)
         .await
         .expect("无法连接到数据库");
-        
+
     // 执行迁移
     sqlx::migrate!("./migrations")
         .run(&db_pool)
         .await
         .expect("无法执行数据库迁移");
-    
+
     // 4. 创建Redis客户端
     let redis_client = redis::Client::open(config.redis.url.as_str())
         .expect("无法创建Redis客户端");
-        
+
     // 5. 创建Kafka生产者
     let kafka_producer = EventProducer::new(
         &config.kafka.brokers,
         &config.kafka.topic,
     ).expect("无法创建Kafka生产者");
     let kafka_producer = Arc::new(kafka_producer);
-    
+
     // 6. 设置服务注册
     let service_registration = ServiceRegistration::new(
         &config.consul.url,
@@ -2849,10 +2843,10 @@ async fn main() -> std::io::Result<()> {
         "/health",
         "15s",
     ).expect("无法创建服务注册");
-    
+
     service_registration.register().await
         .expect("无法注册服务");
-        
+
     // 注册关闭钩子,确保服务优雅退出
     let service_registration_clone = service_registration.clone();
     ctrlc::set_handler(move || {
@@ -2869,60 +2863,60 @@ async fn main() -> std::io::Result<()> {
                 std::process::exit(0);
             });
     }).expect("无法设置Ctrl-C处理器");
-    
+
     // 7. 创建服务发现
     let service_discovery = Arc::new(ServiceDiscovery::new(&config.consul.url)
         .expect("无法创建服务发现"));
-        
+
     // 启动缓存刷新任务
     service_discovery.clone().start_cache_refresh(std::time::Duration::from_secs(60)).await;
-    
+
     // 8. 创建外部服务工厂
     let external_service_factory = Arc::new(ExternalServiceFactory::new(
         config.external_services.clone(),
         service_discovery.clone(),
     ));
-    
+
     // 9. 初始化命令总线
     let command_bus = Arc::new(CommandBus::new(kafka_producer.clone()));
-    
+
     // 注册命令处理器
     let mut command_handlers = CommandHandlerRegistry::new();
-    
+
     let create_order_handler = CreateOrderHandler::new(
         db_pool.clone(),
         external_service_factory.clone(),
     );
     command_handlers.register_handler(Box::new(create_order_handler));
-    
+
     let cancel_order_handler = CancelOrderHandler::new(
         db_pool.clone(),
         external_service_factory.clone(),
     );
     command_handlers.register_handler(Box::new(cancel_order_handler));
-    
+
     // 将处理器注册到命令总线
     command_bus.register_handlers(command_handlers).await;
-    
+
     // 10. 初始化事件消费者
     let event_consumer = EventConsumer::new();
-    
+
     // 注册事件处理器
     let order_read_model_updater = OrderReadModelUpdater::new(db_pool.clone());
     event_consumer.register_handler("order_created", Box::new(order_read_model_updater));
-    
+
     let order_workflow_starter = OrderWorkflowStarter::new(
         TemporalClientFactory::new_client(&config.temporal.url)
             .await
             .expect("无法创建Temporal客户端")
     );
     event_consumer.register_handler("order_created", Box::new(order_workflow_starter));
-    
+
     let inventory_reserver = InventoryReserver::new(
         external_service_factory.clone(),
     );
     event_consumer.register_handler("order_created", Box::new(inventory_reserver));
-    
+
     // 启动事件消费
     let event_consumer_clone = event_consumer.clone();
     tokio::spawn(async move {
@@ -2934,35 +2928,35 @@ async fn main() -> std::io::Result<()> {
             tracing::error!("事件消费者启动失败: {:?}", e);
         }
     });
-    
+
     // 11. 初始化查询服务
     let metrics = Arc::new(Metrics::new());
-    
+
     let order_query_service = Arc::new(OrderQueryService::new(
         db_pool.clone(),
         redis_client.clone(),
         metrics.clone(),
     ));
-    
+
     // 12. 启动指标收集
     metrics.start_system_metrics_collector().await;
-    
+
     // 13. 创建API控制器
     let order_controller = Arc::new(OrderController::new(
         order_query_service.clone(),
         command_bus.clone(),
     ));
-    
+
     // 14. 创建健康检查服务
     let health_check_service = Arc::new(HealthCheckService::new(
         db_pool.clone(),
         redis_client.clone(),
         kafka_producer.clone(),
     ));
-    
+
     // 15. 启动HTTP服务器
     tracing::info!("启动HTTP服务器在 {}:{}", config.server.host, config.server.port);
-    
+
     HttpServer::new(move || {
         App::new()
             // 中间件
@@ -2972,18 +2966,18 @@ async fn main() -> std::io::Result<()> {
             .wrap(TracingMiddleware)
             .wrap(ErrorHandlerMiddleware)
             .wrap(RequestMetricsMiddleware::new(metrics.clone()))
-            
+
             // 应用状态
             .app_data(web::Data::new(order_controller.clone()))
             .app_data(web::Data::new(health_check_service.clone()))
             .app_data(web::Data::new(config.clone()))
-            
+
             // 路由
             .configure(|cfg| register_routes(cfg, order_controller.clone()))
-            
+
             // 健康检查
             .route("/health", web::get().to(health_check))
-            
+
             // 指标端点
             .route("/metrics", web::get().to(metrics_handler))
     })
@@ -3018,62 +3012,62 @@ async fn metrics_handler(
 }
 ```
 
-### 6.2 Dockerfile
+### 8.1.2 Dockerfile
 
 ```dockerfile
 FROM rust:1.62 as builder
 
-# 创建新的空项目
+# 9. 创建新的空项目
 WORKDIR /usr/src/app
 RUN USER=root cargo new --bin order-service
 WORKDIR /usr/src/app/order-service
 
-# 复制项目清单
+# 10. 复制项目清单
 COPY Cargo.toml Cargo.lock ./
 
-# 构建依赖项
+# 11. 构建依赖项
 RUN cargo build --release
 RUN rm src/*.rs
 
-# 复制源代码
+# 12. 复制源代码
 COPY src ./src
 COPY migrations ./migrations
 COPY config ./config
 
-# 构建应用
+# 13. 构建应用
 RUN cargo build --release
 
-# 运行阶段
+# 14. 运行阶段
 FROM debian:bullseye-slim
 
-# 安装依赖
+# 15. 安装依赖
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
-# 设置用户
+# 16. 设置用户
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
-# 创建工作目录
+# 17. 创建工作目录
 WORKDIR /app
 
-# 复制二进制文件和配置
+# 18. 复制二进制文件和配置
 COPY --from=builder /usr/src/app/order-service/target/release/order-service /app/
 COPY --from=builder /usr/src/app/order-service/config /app/config
 COPY --from=builder /usr/src/app/order-service/migrations /app/migrations
 
-# 设置权限
+# 19. 设置权限
 RUN chown -R appuser:appuser /app
 USER appuser
 
-# 暴露端口
+# 20. 暴露端口
 EXPOSE 8080
 
-# 启动命令
+# 21. 启动命令
 CMD ["/app/order-service"]
 ```
 
-## 7 六、总结与最佳实践
+## 21.1 六、总结与最佳实践
 
-### 7.1 架构设计关键点
+### 21.1.1 架构设计关键点
 
 1. **领域驱动设计(DDD)**: 通过明确的限界上下文分离业务关注点,聚合根确保业务规则完整性
 
@@ -3087,7 +3081,7 @@ CMD ["/app/order-service"]
 
 6. **工作流引擎**: 使用Temporal管理长时间运行的业务流程,提供持久性和故障恢复
 
-### 7.2 Rust实现优势
+### 21.1.2 Rust实现优势
 
 1. **类型系统安全**: 利用Rust类型系统在编译时捕获错误,增强系统可靠性
 
@@ -3099,7 +3093,7 @@ CMD ["/app/order-service"]
 
 5. **高效资源利用**: 低内存占用和CPU使用率,支持高吞吐量处理
 
-### 7.3 集成开源库最佳实践
+### 21.1.3 集成开源库最佳实践
 
 1. **分层抽象**: 使用抽象层封装第三方库,降低耦合并简化替换
 
@@ -3111,12 +3105,12 @@ CMD ["/app/order-service"]
        async fn find_by_id(&self, id: &str) -> Result<Option<Order>, RepositoryError>;
        async fn find_by_customer(&self, customer_id: &str, limit: i64, offset: i64) -> Result<Vec<Order>, RepositoryError>;
    }
-   
+
    // 具体实现使用sqlx
    pub struct PgOrderRepository {
        pool: PgPool,
    }
-   
+
    #[async_trait]
    impl OrderRepository for PgOrderRepository {
        // 具体实现...
@@ -3157,12 +3151,12 @@ CMD ["/app/order-service"]
 
        // 3. 从数据库获取
        let data = self.db_repository.get_data(key).await?;
-       
+
        // 4. 更新缓存
        let data_string = serde_json::to_string(&data)?;
        let _: Result<(), _> = redis_conn.set_ex(key, data_string, 300).await;
        self.local_cache.insert(key.to_string(), data.clone()).await;
-       
+
        Ok(data)
    }
    ```
@@ -3175,17 +3169,17 @@ CMD ["/app/order-service"]
        let current_context = global::get_text_map_propagator(|propagator| {
            propagator.extract(&RequestHeaderCarrier(req.headers()))
        });
-       
+
        let mut new_request = create_downstream_request(&req);
        global::get_text_map_propagator(|propagator| {
            propagator.inject_context(&current_context, &mut HeaderInjector(new_request.headers_mut()))
        });
-       
+
        self.client.call(new_request).await
    }
    ```
 
-### 7.4 最终架构特点
+### 21.1.4 最终架构特点
 
 1. **高可靠性**: 通过断路器、重试、降级等弹性模式应对故障
 

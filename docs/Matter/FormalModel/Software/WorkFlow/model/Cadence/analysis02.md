@@ -1,56 +1,56 @@
-# Cadence工作流系统从源代码实现视角的形式化架构分析
+# 1. Cadence工作流系统从源代码实现视角的形式化架构分析
 
 ## 目录
 
-- [Cadence工作流系统从源代码实现视角的形式化架构分析](#cadence工作流系统从源代码实现视角的形式化架构分析)
+- [1. Cadence工作流系统从源代码实现视角的形式化架构分析](#1-cadence工作流系统从源代码实现视角的形式化架构分析)
   - [目录](#目录)
-  - [思维导图](#思维导图)
-  - [1. 引言](#1-引言)
-  - [2. 核心源码结构与实现](#2-核心源码结构与实现)
-    - [2.1 执行流构建的代码实现](#21-执行流构建的代码实现)
-      - [2.1.1 历史事件持久化](#211-历史事件持久化)
-      - [2.1.2 确定性重放引擎](#212-确定性重放引擎)
-      - [2.1.3 工作流执行状态机](#213-工作流执行状态机)
-      - [2.1.4 故障恢复实现机制](#214-故障恢复实现机制)
-    - [2.2 控制流构建的代码实现](#22-控制流构建的代码实现)
-      - [2.2.1 顺序执行实现](#221-顺序执行实现)
-      - [2.2.2 并行执行实现](#222-并行执行实现)
-      - [2.2.3 条件分支实现](#223-条件分支实现)
-      - [2.2.4 循环结构实现](#224-循环结构实现)
-    - [2.3 组合构建的代码实现](#23-组合构建的代码实现)
-      - [2.3.1 子工作流实现](#231-子工作流实现)
-      - [2.3.2 信号机制实现](#232-信号机制实现)
-      - [2.3.3 查询机制实现](#233-查询机制实现)
-      - [2.3.4 动态工作流实现](#234-动态工作流实现)
-  - [3. 完备性分析与实现限制](#3-完备性分析与实现限制)
-    - [3.1 代码层面的形式化模型](#31-代码层面的形式化模型)
-      - [3.1.1 状态机代码表示](#311-状态机代码表示)
-      - [3.1.2 事件处理器实现](#312-事件处理器实现)
-      - [3.1.3 确定性保证机制](#313-确定性保证机制)
-    - [3.2 源码中的完备性保证](#32-源码中的完备性保证)
-      - [3.2.1 工作流模式覆盖实现](#321-工作流模式覆盖实现)
-      - [3.2.2 确定性执行保证代码](#322-确定性执行保证代码)
-      - [3.2.3 分布式一致性实现](#323-分布式一致性实现)
-    - [3.3 实现限制的代码体现](#33-实现限制的代码体现)
-      - [3.3.1 确定性执行代码约束](#331-确定性执行代码约束)
-      - [3.3.2 状态大小限制实现](#332-状态大小限制实现)
-      - [3.3.3 时间相关限制处理](#333-时间相关限制处理)
-    - [3.4 实现场景与方案映射](#34-实现场景与方案映射)
-      - [3.4.1 长时间运行业务流程实现](#341-长时间运行业务流程实现)
-      - [3.4.2 微服务编排代码模式](#342-微服务编排代码模式)
-      - [3.4.3 分布式事务实现方案](#343-分布式事务实现方案)
-  - [4. 模型转换的代码实现](#4-模型转换的代码实现)
-    - [4.1 执行流转换机制](#41-执行流转换机制)
-      - [4.1.1 数据流到执行流转换](#411-数据流到执行流转换)
-      - [4.1.2 执行流到调度转换](#412-执行流到调度转换)
-      - [4.1.3 控制流实现抽象](#413-控制流实现抽象)
-    - [4.2 模型转换的具体实现](#42-模型转换的具体实现)
-      - [4.2.1 代码到状态机转换](#421-代码到状态机转换)
-      - [4.2.2 状态持久化序列化](#422-状态持久化序列化)
-      - [4.2.3 历史事件重建](#423-历史事件重建)
-  - [5. 结论](#5-结论)
+  - [1.1 思维导图](#11-思维导图)
+  - [1.2 引言](#12-引言)
+  - [1.3 核心源码结构与实现](#13-核心源码结构与实现)
+    - [1.3.1 执行流构建的代码实现](#131-执行流构建的代码实现)
+      - [1.3.1.1 历史事件持久化](#1311-历史事件持久化)
+      - [1.3.1.2 确定性重放引擎](#1312-确定性重放引擎)
+      - [1.3.1.3 工作流执行状态机](#1313-工作流执行状态机)
+      - [1.3.1.4 故障恢复实现机制](#1314-故障恢复实现机制)
+    - [1.3.2 控制流构建的代码实现](#132-控制流构建的代码实现)
+      - [1.3.2.1 顺序执行实现](#1321-顺序执行实现)
+      - [1.3.2.2 并行执行实现](#1322-并行执行实现)
+      - [1.3.2.3 条件分支实现](#1323-条件分支实现)
+      - [1.3.2.4 循环结构实现](#1324-循环结构实现)
+    - [1.3.3 组合构建的代码实现](#133-组合构建的代码实现)
+      - [1.3.3.1 子工作流实现](#1331-子工作流实现)
+      - [1.3.3.2 信号机制实现](#1332-信号机制实现)
+      - [1.3.3.3 查询机制实现](#1333-查询机制实现)
+      - [1.3.3.4 动态工作流实现](#1334-动态工作流实现)
+  - [1.4 完备性分析与实现限制](#14-完备性分析与实现限制)
+    - [1.4.1 代码层面的形式化模型](#141-代码层面的形式化模型)
+      - [1.4.1.1 状态机代码表示](#1411-状态机代码表示)
+      - [1.4.1.2 事件处理器实现](#1412-事件处理器实现)
+      - [1.4.1.3 确定性保证机制](#1413-确定性保证机制)
+    - [1.4.2 源码中的完备性保证](#142-源码中的完备性保证)
+      - [1.4.2.1 工作流模式覆盖实现](#1421-工作流模式覆盖实现)
+      - [1.4.2.2 确定性执行保证代码](#1422-确定性执行保证代码)
+      - [1.4.2.3 分布式一致性实现](#1423-分布式一致性实现)
+    - [1.4.3 实现限制的代码体现](#143-实现限制的代码体现)
+      - [1.4.3.1 确定性执行代码约束](#1431-确定性执行代码约束)
+      - [1.4.3.2 状态大小限制实现](#1432-状态大小限制实现)
+      - [1.4.3.3 时间相关限制处理](#1433-时间相关限制处理)
+    - [1.4.4 实现场景与方案映射](#144-实现场景与方案映射)
+      - [1.4.4.1 长时间运行业务流程实现](#1441-长时间运行业务流程实现)
+      - [1.4.4.2 微服务编排代码模式](#1442-微服务编排代码模式)
+      - [1.4.4.3 分布式事务实现方案](#1443-分布式事务实现方案)
+  - [1.5 模型转换的代码实现](#15-模型转换的代码实现)
+    - [1.5.1 执行流转换机制](#151-执行流转换机制)
+      - [1.5.1.1 数据流到执行流转换](#1511-数据流到执行流转换)
+      - [1.5.1.2 执行流到调度转换](#1512-执行流到调度转换)
+      - [1.5.1.3 控制流实现抽象](#1513-控制流实现抽象)
+    - [1.5.2 模型转换的具体实现](#152-模型转换的具体实现)
+      - [1.5.2.1 代码到状态机转换](#1521-代码到状态机转换)
+      - [1.5.2.2 状态持久化序列化](#1522-状态持久化序列化)
+      - [1.5.2.3 历史事件重建](#1523-历史事件重建)
+  - [1.6 结论](#16-结论)
 
-## 思维导图
+## 1.1 思维导图
 
 ```text
 Cadence源码实现分析
@@ -98,7 +98,7 @@ Cadence源码实现分析
         └── 历史事件重建
 ```
 
-## 1. 引言
+## 1.2 引言
 
 本文从源代码实现的角度对Cadence工作流系统进行形式化分析。
 Cadence是一个分布式、可扩展的工作流平台，实现了持久性和确定性的长时间运行工作流。
@@ -106,11 +106,11 @@ Cadence是一个分布式、可扩展的工作流平台，实现了持久性和�
 通过剖析Cadence的核心代码结构、实现机制和算法，
 我们将深入理解Cadence如何构建其工作流能力、保证完备性，以及如何实现各种模型转换。
 
-## 2. 核心源码结构与实现
+## 1.3 核心源码结构与实现
 
-### 2.1 执行流构建的代码实现
+### 1.3.1 执行流构建的代码实现
 
-#### 2.1.1 历史事件持久化
+#### 1.3.1.1 历史事件持久化
 
 Cadence的历史事件持久化核心实现：
 
@@ -123,7 +123,7 @@ func (e *historyEngineImpl) RecordDecisionTaskStarted(
     // ...
     msBuilder, err := e.loadWorkflowExecution(ctx, domainID, *request.WorkflowExecution)
     // ...
-    
+
     // 创建DecisionTaskStartedEvent
     startedEvent, err := msBuilder.AddDecisionTaskStartedEvent(
         scheduleID,
@@ -131,7 +131,7 @@ func (e *historyEngineImpl) RecordDecisionTaskStarted(
         request.PollRequest.GetIdentity(),
     )
     // ...
-    
+
     // 持久化事件更新
     err = e.updateWorkflowExecution(ctx, domainID, msBuilder)
     // ...
@@ -146,18 +146,18 @@ func (d *cassandraHistoryPersistence) AppendHistoryEvents(
     request *AppendHistoryEventsRequest,
 ) error {
     batch := d.session.NewBatch(gocql.LoggedBatch)
-    
+
     domainID := request.DomainID
     workflowID := request.Execution.GetWorkflowId()
     runID := request.Execution.GetRunId()
     eventBatch := request.Events
-    
+
     // 序列化事件
     data, encoding, err := EncodeHistoryEvents(eventBatch)
     if err != nil {
         return err
     }
-    
+
     // 构建批处理请求
     batch.Query(templateAppendHistoryEventsQuery,
         domainID,
@@ -168,17 +168,17 @@ func (d *cassandraHistoryPersistence) AppendHistoryEvents(
         data,
         encoding,
     )
-    
+
     // 执行批处理
     if err := d.session.ExecuteBatch(batch); err != nil {
         return convertCommonErrors("AppendHistoryEvents", err)
     }
-    
+
     return nil
 }
 ```
 
-#### 2.1.2 确定性重放引擎
+#### 1.3.1.2 确定性重放引擎
 
 Cadence Go SDK中的重放引擎核心实现：
 
@@ -196,17 +196,17 @@ func (wc *workflowEnvironmentInterceptor) ExecuteActivity(
             return future
         }
     }
-    
+
     // 创建活动Future
     future := NewFuture(ctx)
-    
+
     // 编码活动参数
     input, err := encodeArgs(args)
     if err != nil {
         future.Set(nil, err)
         return future
     }
-    
+
     // 创建调度活动命令
     attributes := &commandpb.ScheduleActivityTaskCommandAttributes{
         ActivityId:   uuid.New(),
@@ -214,19 +214,19 @@ func (wc *workflowEnvironmentInterceptor) ExecuteActivity(
         Input:        input,
         // ... 其他属性
     }
-    
+
     scheduledEventID := wc.GenerateSequence()
     command := &commandpb.Command{
         CommandType: commandpb.CommandType_ScheduleActivityTask,
         ScheduleActivityTaskCommandAttributes: attributes,
     }
-    
+
     // 添加命令
     wc.commands = append(wc.commands, command)
-    
+
     // 记录Future以便后续回调
     wc.pendingActivityFutures[scheduledEventID] = future
-    
+
     return future
 }
 
@@ -236,7 +236,7 @@ func (wc *workflowEnvironmentInterceptor) isReplay() bool {
 }
 ```
 
-#### 2.1.3 工作流执行状态机
+#### 1.3.1.3 工作流执行状态机
 
 Cadence服务端工作流执行状态机实现：
 
@@ -263,7 +263,7 @@ func (b *mutableStateBuilder) AddWorkflowExecutionStartedEvent(
         request.GetParentExecutionInfo(),
         // ... 其他参数
     )
-    
+
     // 更新工作流信息
     b.executionInfo.WorkflowID = request.StartRequest.GetWorkflowId()
     b.executionInfo.RunID = request.GetRunId()
@@ -271,7 +271,7 @@ func (b *mutableStateBuilder) AddWorkflowExecutionStartedEvent(
     b.executionInfo.WorkflowTypeName = request.StartRequest.GetWorkflowType().GetName()
     b.executionInfo.WorkflowTimeout = request.StartRequest.GetExecutionStartToCloseTimeoutSeconds()
     b.executionInfo.DecisionTimeoutValue = request.StartRequest.GetTaskStartToCloseTimeoutSeconds()
-    
+
     // 更新版本信息
     b.replicationState = &persistence.ReplicationState{
         StartVersion:     request.GetVersion(),
@@ -279,7 +279,7 @@ func (b *mutableStateBuilder) AddWorkflowExecutionStartedEvent(
         LastWriteVersion: request.GetVersion(),
         // ... 其他字段
     }
-    
+
     return event
 }
 
@@ -293,25 +293,25 @@ func (b *mutableStateBuilder) AddDecisionTaskCompletedEvent(
         b.logger.Warn("Decision schedule ID mismatch")
         return nil
     }
-    
+
     // 添加事件
     event := b.hBuilder.AddDecisionTaskCompletedEvent(
         scheduleEventID,
         startedEventID,
         request.GetIdentity(),
     )
-    
+
     // 更新执行信息
     b.executionInfo.DecisionScheduleID = emptyEventID
     b.executionInfo.DecisionStartedID = emptyEventID
-    
+
     // ... 其他逻辑
-    
+
     return event
 }
 ```
 
-#### 2.1.4 故障恢复实现机制
+#### 1.3.1.4 故障恢复实现机制
 
 Cadence的故障恢复主要通过重试策略和超时控制实现：
 
@@ -334,33 +334,33 @@ func prepareRetryWorkflowEvent(
     err error,
 ) (*workflow.HistoryEvent, error) {
     executionInfo := mutableState.GetExecutionInfo()
-    
+
     // 检查是否配置了重试策略
     retryPolicy := executionInfo.RetryPolicy
     if retryPolicy == nil {
         // 无重试策略
         return nil, nil
     }
-    
+
     // 计算重试策略
     backoffInterval, retryState := getBackoffInterval(
         retryPolicy,
         executionInfo.Attempt,
         err,
     )
-    
+
     if retryState != persistence.RetryStateInProgress {
         // 重试终止
         return nil, nil
     }
-    
+
     // 创建工作流重试事件
     retryEvent := mutableState.GetHistoryBuilder().AddRetryWorkflowExecutionEvent(
         executionInfo.RunID,
         backoffInterval,
         retryState,
     )
-    
+
     return retryEvent, nil
 }
 
@@ -370,37 +370,37 @@ func (t *timerActiveTaskExecutor) executeActivityRetryTimer(
     taskInfo *persistencespb.TimerTaskInfo,
 ) error {
     // ...
-    
+
     // 加载工作流执行
     mutableState, err := t.loadWorkflowExecution(ctx, taskInfo.DomainID, taskInfo.WorkflowID, taskInfo.RunID)
     if err != nil {
         return err
     }
-    
+
     // 获取活动信息
     activity, found := mutableState.GetActivityInfo(taskInfo.EventID)
     if !found {
         // 活动可能已完成
         return nil
     }
-    
+
     // 检查重试策略
     if activity.RetryPolicy == nil {
         return nil
     }
-    
+
     // 计算重试间隔
     backoffInterval, retryState := getBackoffInterval(
         activity.RetryPolicy,
         activity.Attempt,
         activity.LastFailureReason,
     )
-    
+
     if retryState != persistence.RetryStateInProgress {
         // 重试终止
         return t.handleActivityRetryExhausted(ctx, mutableState, activity)
     }
-    
+
     // 创建重试活动任务
     retryTask := &persistence.ActivityInfo{
         ActivityID:       activity.ActivityID,
@@ -409,12 +409,12 @@ func (t *timerActiveTaskExecutor) executeActivityRetryTimer(
         RetryPolicy:      activity.RetryPolicy,
         // ... 其他字段
     }
-    
+
     // 更新活动信息
     if err := mutableState.UpdateActivity(retryTask); err != nil {
         return err
     }
-    
+
     // 添加活动任务重试计时器
     if _, err := mutableState.AddTimerTasks(&persistence.ActivityRetryTimerTask{
         VisibilityTimestamp: time.Now().Add(backoffInterval),
@@ -422,15 +422,15 @@ func (t *timerActiveTaskExecutor) executeActivityRetryTimer(
     }); err != nil {
         return err
     }
-    
+
     // 更新工作流执行
     return t.updateWorkflowExecution(ctx, mutableState)
 }
 ```
 
-### 2.2 控制流构建的代码实现
+### 1.3.2 控制流构建的代码实现
 
-#### 2.2.1 顺序执行实现
+#### 1.3.2.1 顺序执行实现
 
 Cadence Go SDK中的顺序执行通过Future模式实现：
 
@@ -440,7 +440,7 @@ type futureImpl struct {
     value interface{}
     err   error
     ready bool
-    
+
     channel   Channel
     callbacks []func(interface{}, error)
 }
@@ -452,16 +452,16 @@ func (f *futureImpl) Get(ctx Context, valuePtr interface{}) error {
             panic("Channel closed")
         }
     }
-    
+
     // 检查错误并赋值
     if f.err != nil {
         return f.err
     }
-    
+
     if valuePtr == nil {
         return nil
     }
-    
+
     // 将结果复制到指针
     reflect.ValueOf(valuePtr).Elem().Set(reflect.ValueOf(f.value).Elem())
     return nil
@@ -474,19 +474,19 @@ func SequentialWorkflow(ctx Context) error {
     if err := ExecuteActivity(ctx, ActivityA).Get(ctx, &resultA); err != nil {
         return err
     }
-    
+
     // 使用活动A的结果执行活动B
     var resultB string
     if err := ExecuteActivity(ctx, ActivityB, resultA).Get(ctx, &resultB); err != nil {
         return err
     }
-    
+
     // 执行活动C
     return ExecuteActivity(ctx, ActivityC, resultB).Get(ctx, nil)
 }
 ```
 
-#### 2.2.2 并行执行实现
+#### 1.3.2.2 并行执行实现
 
 Cadence Go SDK中的并行执行通过Selector和Future实现：
 
@@ -529,13 +529,13 @@ func (s *selectorImpl) Select(ctx Context) {
             return
         }
     }
-    
+
     // 检查是否有默认分支
     if s.defaultFunc != nil {
         s.defaultFunc()
         return
     }
-    
+
     // 创建select语句等待事件
     selectStatements := make([]reflect.SelectCase, len(s.cases))
     for i, c := range s.cases {
@@ -551,10 +551,10 @@ func (s *selectorImpl) Select(ctx Context) {
             }
         }
     }
-    
+
     // 执行select
     chosen, _, _ := reflect.Select(selectStatements)
-    
+
     // 处理选中的case
     if s.cases[chosen].future != nil {
         s.cases[chosen].futureFunc(s.cases[chosen].future)
@@ -568,7 +568,7 @@ func ParallelWorkflow(ctx Context) error {
     // 创建多个活动future
     futureA := ExecuteActivity(ctx, ActivityA)
     futureB := ExecuteActivity(ctx, ActivityB)
-    
+
     // 方法1：单独等待每个future
     var resultA, resultB string
     if err := futureA.Get(ctx, &resultA); err != nil {
@@ -577,34 +577,34 @@ func ParallelWorkflow(ctx Context) error {
     if err := futureB.Get(ctx, &resultB); err != nil {
         return err
     }
-    
+
     // 方法2：使用Selector等待所有future
     selector := NewSelector(ctx)
     var resultA, resultB string
     var errA, errB error
-    
+
     selector.AddFuture(futureA, func(f Future) {
         errA = f.Get(ctx, &resultA)
     })
     selector.AddFuture(futureB, func(f Future) {
         errB = f.Get(ctx, &resultB)
     })
-    
+
     selector.Select(ctx) // 等待第一个完成
     selector.Select(ctx) // 等待第二个完成
-    
+
     if errA != nil {
         return errA
     }
     if errB != nil {
         return errB
     }
-    
+
     return nil
 }
 ```
 
-#### 2.2.3 条件分支实现
+#### 1.3.2.3 条件分支实现
 
 条件分支在SDK中直接使用语言的条件语句实现：
 
@@ -643,7 +643,7 @@ func (handler *decisionHandlerImpl) handleDecision(
 }
 ```
 
-#### 2.2.4 循环结构实现
+#### 1.3.2.4 循环结构实现
 
 循环结构在SDK层直接使用语言的循环语句：
 
@@ -667,13 +667,13 @@ func RetryableLoopWorkflow(ctx Context) error {
             // 成功完成
             return nil
         }
-        
+
         attempt++
         if attempt >= 3 {
             // 达到最大尝试次数
             return err
         }
-        
+
         // 等待一段时间后重试
         Sleep(ctx, time.Second*time.Duration(attempt))
     }
@@ -690,7 +690,7 @@ func (b *historyBuilder) AddExecutionContinuedAsNewEvent(
     request *workflow.ContinueAsNewWorkflowExecutionDecisionAttributes,
 ) *workflow.HistoryEvent {
     event := b.createNewHistoryEvent(workflow.EventType_WorkflowExecutionContinuedAsNew)
-    
+
     attributes := &workflow.WorkflowExecutionContinuedAsNewEventAttributes{
         NewExecutionRunId:            common.StringPtr(newRunID),
         WorkflowType:                 request.WorkflowType,
@@ -701,17 +701,17 @@ func (b *historyBuilder) AddExecutionContinuedAsNewEvent(
         DecisionTaskCompletedEventId: common.Int64Ptr(decisionCompletedEventID),
         // ... 其他属性
     }
-    
+
     event.WorkflowExecutionContinuedAsNewEventAttributes = attributes
     b.appendEvents = append(b.appendEvents, event)
-    
+
     return event
 }
 ```
 
-### 2.3 组合构建的代码实现
+### 1.3.3 组合构建的代码实现
 
-#### 2.3.1 子工作流实现
+#### 1.3.3.1 子工作流实现
 
 Cadence Go SDK中的子工作流实现：
 
@@ -724,7 +724,7 @@ func ExecuteChildWorkflow(
 ) ChildWorkflowFuture {
     // 获取子工作流选项
     options := getChildWorkflowOptions(ctx)
-    
+
     // 编码输入参数
     input, err := encodeArgs(args)
     if err != nil {
@@ -733,7 +733,7 @@ func ExecuteChildWorkflow(
         }
         return childFuture
     }
-    
+
     // 创建子工作流命令
     attributes := &workflow.StartChildWorkflowExecutionDecisionAttributes{
         WorkflowId:                   common.StringPtr(options.WorkflowID),
@@ -744,21 +744,21 @@ func ExecuteChildWorkflow(
         TaskStartToCloseTimeout:      common.Int32Ptr(options.TaskStartToCloseTimeoutSeconds),
         // ... 其他属性
     }
-    
+
     command := &workflow.Decision{
         DecisionType: workflow.DecisionType_StartChildWorkflowExecution.Ptr(),
         StartChildWorkflowExecutionDecisionAttributes: attributes,
     }
-    
+
     // 创建future
     childFuture := &childWorkflowFutureImpl{
         executeFuture: NewFuture(ctx),
         resultFuture:  NewFuture(ctx),
     }
-    
+
     // 执行子工作流
     getWorkflowEnvironment(ctx).ExecuteChildWorkflow(command, childFuture)
-    
+
     return childFuture
 }
 
@@ -777,7 +777,7 @@ func (f *childWorkflowFutureImpl) Get(ctx Context, valuePtr interface{}) error {
     if err := f.executeFuture.Get(ctx, nil); err != nil {
         return err
     }
-    
+
     // 然后等待子工作流完成
     return f.resultFuture.Get(ctx, valuePtr)
 }
@@ -786,13 +786,13 @@ func (f *childWorkflowFutureImpl) Get(ctx Context, valuePtr interface{}) error {
 func ParentWorkflow(ctx Context) (string, error) {
     // 执行子工作流
     childFuture := ExecuteChildWorkflow(ctx, ChildWorkflow, "input")
-    
+
     // 等待子工作流完成
     var childResult string
     if err := childFuture.Get(ctx, &childResult); err != nil {
         return "", err
     }
-    
+
     return fmt.Sprintf("Parent completed with child result: %s", childResult), nil
 }
 ```
@@ -806,19 +806,19 @@ func (handler *decisionHandlerImpl) handleDecisionStartChildWorkflow(
     decision *workflow.Decision,
 ) error {
     attributes := decision.GetStartChildWorkflowExecutionDecisionAttributes()
-    
+
     // 验证决策属性
     if err := handler.validateStartChildExecutionAttributes(attributes, mutableState); err != nil {
         return err
     }
-    
+
     // 创建子工作流启动事件
     _, _, err := mutableState.AddStartChildWorkflowExecutionInitiatedEvent(
         decision.GetScheduleId(),
         attributes,
         nil, // 可能的重试策略
     )
-    
+
     return err
 }
 
@@ -872,7 +872,7 @@ func (c *workflowExecutionContextImpl) startChildWorkflow(
             InitiatedId: common.Int64Ptr(childInfo.InitiatedID),
         },
     }
-    
+
     // 执行子工作流启动
     var resp *workflow.StartWorkflowExecutionResponse
     op := func() error {
@@ -880,12 +880,12 @@ func (c *workflowExecutionContextImpl) startChildWorkflow(
         resp, err = c.historyService.startWorkflowExecution(ctx, request)
         return err
     }
-    
+
     err := backoff.Retry(op, persistenceOperationRetryPolicy, common.IsPersistenceTransientError)
     if err != nil {
         return err
     }
-    
+
     // 处理子工作流启动成功
     c.msBuilder.AddChildWorkflowExecutionStartedEvent(
         childInfo.InitiatedID,
@@ -895,12 +895,12 @@ func (c *workflowExecutionContextImpl) startChildWorkflow(
         },
         request.StartRequest.WorkflowType,
     )
-    
+
     return c.updateWorkflowExecution(ctx)
 }
 ```
 
-#### 2.3.2 信号机制实现
+#### 1.3.3.2 信号机制实现
 
 Cadence Go SDK的信号实现：
 
@@ -918,7 +918,7 @@ func SignalExternalWorkflow(
     if err != nil {
         return NewReadyFuture(ctx, nil, err)
     }
-    
+
     // 创建信号命令
     attributes := &workflow.SignalExternalWorkflowExecutionDecisionAttributes{
         Domain:     common.StringPtr(getDomain(ctx)),
@@ -926,18 +926,18 @@ func SignalExternalWorkflow(
         SignalName: common.StringPtr(signalName),
         Input:      input,
     }
-    
+
     command := &workflow.Decision{
         DecisionType: workflow.DecisionType_SignalExternalWorkflowExecution.Ptr(),
         SignalExternalWorkflowExecutionDecisionAttributes: attributes,
     }
-    
+
     // 创建future
     future := NewFuture(ctx)
-    
+
     // 执行信号命令
     getWorkflowEnvironment(ctx).SignalExternalWorkflow(command, future)
-    
+
     return future
 }
 
@@ -950,24 +950,24 @@ func GetSignalChannel(ctx Context, signalName string) Channel {
 func SignalWorkflow(ctx Context) error {
     // 创建信号通道
     signalChan := GetSignalChannel(ctx, "payment-signal")
-    
+
     // 等待信号
     selector := NewSelector(ctx)
     var paymentInfo PaymentInfo
-    
+
     selector.AddReceive(signalChan, func(c Channel, more bool) {
         c.Receive(ctx, &paymentInfo)
         // 处理信号...
     })
-    
+
     // 也可以添加超时
     timerFuture := NewTimer(ctx, 24*time.Hour)
     selector.AddFuture(timerFuture, func(f Future) {
         // 处理超时...
     })
-    
+
     selector.Select(ctx)
-    
+
     // 后续处理...
     return nil
 }
@@ -982,12 +982,12 @@ func (handler *decisionHandlerImpl) handleDecisionSignalExternalWorkflow(
     decision *workflow.Decision,
 ) error {
     attributes := decision.GetSignalExternalWorkflowExecutionDecisionAttributes()
-    
+
     // 验证决策属性
     if err := handler.validateSignalExternalWorkflowExecutionAttributes(attributes); err != nil {
         return err
     }
-    
+
     // 创建信号外部工作流启动事件
     initiatedEventID, err := mutableState.AddSignalExternalWorkflowExecutionInitiatedEvent(
         decision.GetScheduleId(),
@@ -996,7 +996,7 @@ func (handler *decisionHandlerImpl) handleDecisionSignalExternalWorkflow(
     if err != nil {
         return err
     }
-    
+
     // 添加任务进行异步处理
     _, err = mutableState.AddTransferTasks(&persistence.SignalExecutionTask{
         TargetDomainID:     attributes.GetDomain(),
@@ -1005,7 +1005,7 @@ func (handler *decisionHandlerImpl) handleDecisionSignalExternalWorkflow(
         InitiatedEventID:   initiatedEventID,
         ScheduleID:         decision.GetScheduleId(),
     })
-    
+
     return err
 }
 
@@ -1019,14 +1019,14 @@ func (t *transferQueueActiveProcessorImpl) processSignalExecution(
     if err != nil {
         return err
     }
-    
+
     // 获取信号信息
     initiatedEvent, ok := mutableState.GetSignalInfo(task.ScheduleID)
     if !ok {
         // 信号可能已完成或取消
         return nil
     }
-    
+
     // 构建信号请求
     attributes := initiatedEvent.SignalExternalWorkflowExecutionInitiatedEventAttributes
     signalRequest := &h.SignalWorkflowExecutionRequest{
@@ -1047,22 +1047,22 @@ func (t *transferQueueActiveProcessorImpl) processSignalExecution(
         },
         ChildWorkflowOnly: common.BoolPtr(task.TargetChildWorkflowOnly),
     }
-    
+
     // 发送信号
     err = t.historyClient.SignalWorkflowExecution(ctx, signalRequest)
     if err != nil {
         // 处理错误...
         return err
     }
-    
+
     // 记录信号完成事件
     err = t.updateSignalWorkflowExecutionCompleted(ctx, task.DomainID, task.WorkflowID, task.RunID, task.ScheduleID)
-    
+
     return err
 }
 ```
 
-#### 2.3.3 查询机制实现
+#### 1.3.3.3 查询机制实现
 
 Cadence Go SDK的查询实现：
 
@@ -1082,19 +1082,19 @@ func (wc *workflowEnvironmentInterceptor) HandleQueryWorkflow(
     if !ok {
         return nil, fmt.Errorf("unknown query type: %v", queryType)
     }
-    
+
     // 解码查询参数
     args, err := decodeArgs(wc.dataConverter, queryArgs, handler.argTypes)
     if err != nil {
         return nil, err
     }
-    
+
     // 调用查询处理函数
     result, err := handler.fn.Call(args)
     if err != nil {
         return nil, err
     }
-    
+
     // 编码结果
     return encodeArg(wc.dataConverter, result)
 }
@@ -1103,7 +1103,7 @@ func (wc *workflowEnvironmentInterceptor) HandleQueryWorkflow(
 func OrderWorkflow(ctx Context, orderID string) error {
     // 工作流状态
     var status string = "CREATED"
-    
+
     // 注册查询处理器
     err := SetQueryHandler(ctx, "getStatus", func() (string, error) {
         return status, nil
@@ -1111,12 +1111,12 @@ func OrderWorkflow(ctx Context, orderID string) error {
     if err != nil {
         return err
     }
-    
+
     // 工作流逻辑
     status = "PROCESSING"
-    
+
     // ... 执行活动等
-    
+
     status = "COMPLETED"
     return nil
 }
@@ -1135,12 +1135,12 @@ func (c *workflowExecutionContextImpl) handleWorkflowQueryRequest(
     if err != nil {
         return nil, err
     }
-    
+
     // 检查工作流是否运行中
     if !msBuilder.IsWorkflowExecutionRunning() {
         return nil, workflow.EntityNotExistsError{Message: "Workflow execution not running"}
     }
-    
+
     // 创建查询任务
     queryTask := &workflowTask{
         domain:   c.domain,
@@ -1150,7 +1150,7 @@ func (c *workflowExecutionContextImpl) handleWorkflowQueryRequest(
             QueryArgs: queryRequest.GetQuery().GetQueryArgs(),
         },
     }
-    
+
     // 获取查询结果
     queryResult, err := c.historyService.matchingClient.QueryWorkflow(
         ctx,
@@ -1163,14 +1163,14 @@ func (c *workflowExecutionContextImpl) handleWorkflowQueryRequest(
     if err != nil {
         return nil, err
     }
-    
+
     return &workflow.QueryWorkflowResponse{
         QueryResult: queryResult.GetQueryResult(),
     }, nil
 }
 ```
 
-#### 2.3.4 动态工作流实现
+#### 1.3.3.4 动态工作流实现
 
 Cadence Go SDK的动态工作流支持：
 
@@ -1195,7 +1195,7 @@ func (w *workflowWorker) RegisterDynamicWorkflow(
 func DynamicWorkflow(ctx Context, workflowType string, input []byte) ([]byte, error) {
     // 基于输入参数动态选择活动
     var activityName string
-    
+
     switch workflowType {
     case "payment":
         activityName = "PaymentActivity"
@@ -1204,7 +1204,7 @@ func DynamicWorkflow(ctx Context, workflowType string, input []byte) ([]byte, er
     default:
         activityName = "DefaultActivity"
     }
-    
+
     // 动态执行活动
     var result []byte
     err := ExecuteActivity(
@@ -1214,16 +1214,16 @@ func DynamicWorkflow(ctx Context, workflowType string, input []byte) ([]byte, er
         activityName,
         input,
     ).Get(ctx, &result)
-    
+
     return result, err
 }
 ```
 
-## 3. 完备性分析与实现限制
+## 1.4 完备性分析与实现限制
 
-### 3.1 代码层面的形式化模型
+### 1.4.1 代码层面的形式化模型
 
-#### 3.1.1 状态机代码表示
+#### 1.4.1.1 状态机代码表示
 
 Cadence服务端使用状态机模型管理工作流执行：
 
@@ -1232,27 +1232,27 @@ Cadence服务端使用状态机模型管理工作流执行：
 type mutableStateBuilder struct {
     // 工作流执行信息
     executionInfo *persistence.WorkflowExecutionInfo
-    
+
     // 复制状态
     replicationState *persistence.ReplicationState
-    
+
     // 活动状态
     pendingActivityInfoIDs    map[int64]*persistence.ActivityInfo
     pendingActivityInfoByActivityID map[string]int64
-    
+
     // 定时器状态
     pendingTimerInfoIDs       map[string]*persistence.TimerInfo
-    
+
     // 子工作流状态
     pendingChildExecutionInfoIDs map[int64]*persistence.ChildExecutionInfo
-    
+
     // 其他状态集合
     pendingRequestCancelInfoIDs map[int64]*persistence.RequestCancelInfo
     pendingSignalInfoIDs map[int64]*persistence.SignalInfo
-    
+
     // 历史构建器
     hBuilder *historyBuilder
-    
+
     // 其他管理字段
     logger log.Logger
     domainCache cache.DomainCache
@@ -1268,16 +1268,16 @@ func (b *mutableStateBuilder) CloseTransactionAsMutation(
         // 工作流已完成，无法生成突变
         return nil, nil, ErrWorkflowCompleted
     }
-    
+
     // 创建新的历史事件批次
     batch, err := b.hBuilder.Finish()
     if err != nil {
         return nil, nil, err
     }
-    
+
     // 更新工作流执行版本
     b.executionInfo.SetLastUpdatedTimestamp(now)
-    
+
     // 活动任务检查
     for _, ai := range b.pendingActivityInfoIDs {
         if ai.ScheduledEvent != nil && ai.StartedEvent == nil {
@@ -1291,33 +1291,33 @@ func (b *mutableStateBuilder) CloseTransactionAsMutation(
             }
         }
     }
-    
+
     // 构建工作流突变
     mutation := &persistence.WorkflowMutation{
         ExecutionInfo:       b.executionInfo,
         ReplicationState:    b.replicationState,
-        
+
         UpsertActivityInfos: b.updateActivityInfos,
         DeleteActivityInfos: b.deleteActivityInfos,
-        
+
         UpsertTimerInfos:    b.updateTimerInfos,
         DeleteTimerInfos:    b.deleteTimerInfos,
-        
+
         UpsertChildExecutionInfos: b.updateChildExecutionInfos,
         DeleteChildExecutionInfos: b.deleteChildExecutionInfos,
-        
+
         UpsertRequestCancelInfos: b.updateRequestCancelInfos,
         DeleteRequestCancelInfos: b.deleteRequestCancelInfos,
-        
+
         UpsertSignalInfos:    b.updateSignalInfos,
         DeleteSignalInfos:    b.deleteSignalInfos,
-        
+
         UpsertSignalRequestedIDs: b.updateSignalRequestedIDs,
         DeleteSignalRequestedIDs: b.deleteSignalRequestedIDs,
-        
+
         TransactionID:       b.GetCurrentVersion(),
     }
-    
+
     // 如果有新事件，添加到批处理中
     var newWorkflowEvents []*persistence.WorkflowEvents
     if len(batch.Events) > 0 {
@@ -1328,12 +1328,12 @@ func (b *mutableStateBuilder) CloseTransactionAsMutation(
             Events:     batch.Events,
         })
     }
-    
+
     return mutation, newWorkflowEvents, nil
 }
 ```
 
-#### 3.1.2 事件处理器实现
+#### 1.4.1.2 事件处理器实现
 
 Cadence通过事件处理器处理工作流历史事件：
 
@@ -1349,13 +1349,13 @@ func (c *historyCache) getOrCreateWorkflowExecutionContext(
         runID:      *execution.RunId,
         domainID:   domainID,
     }
-    
+
     // 尝试从缓存获取
     context, cacheHit := c.Cache.Get(key)
     if cacheHit {
         return context.(*workflowExecutionContextImpl), nil
     }
-    
+
     // 创建新的工作流执行上下文
     context = newWorkflowExecutionContext(
         domainID,
@@ -1364,10 +1364,10 @@ func (c *historyCache) getOrCreateWorkflowExecutionContext(
         c.executionManager,
         c.logger,
     )
-    
+
     // 添加到缓存
     c.Cache.Put(key, context)
-    
+
     return context.(*workflowExecutionContextImpl), nil
 }
 
@@ -1384,41 +1384,41 @@ func (c *workflowExecutionContextImpl) updateWorkflowExecutionWithContext(
     if err != nil {
         return err
     }
-    
+
     // 更新持久化状态
     err = c.shard.UpdateWorkflowExecution(ctx, &persistence.UpdateWorkflowExecutionRequest{
         ExecutionInfo:        mutation.ExecutionInfo,
         ReplicationState:     mutation.ReplicationState,
-        
+
         UpsertActivityInfos:  mutation.UpsertActivityInfos,
         DeleteActivityInfos:  mutation.DeleteActivityInfos,
-        
+
         UpsertTimerInfos:     mutation.UpsertTimerInfos,
         DeleteTimerInfos:     mutation.DeleteTimerInfos,
-        
+
         UpsertChildExecutionInfos: mutation.UpsertChildExecutionInfos,
         DeleteChildExecutionInfos: mutation.DeleteChildExecutionInfos,
-        
+
         UpsertRequestCancelInfos: mutation.UpsertRequestCancelInfos,
         DeleteRequestCancelInfos: mutation.DeleteRequestCancelInfos,
-        
+
         UpsertSignalInfos:     mutation.UpsertSignalInfos,
         DeleteSignalInfos:     mutation.DeleteSignalInfos,
-        
+
         UpsertSignalRequestedIDs: mutation.UpsertSignalRequestedIDs,
         DeleteSignalRequestedIDs: mutation.DeleteSignalRequestedIDs,
-        
+
         NewWorkflowEvents:    workflowEvents,
-        
+
         Condition:            updateCondition,
         FinishedExecution:    false,
     })
-    
+
     return err
 }
 ```
 
-#### 3.1.3 确定性保证机制
+#### 1.4.1.3 确定性保证机制
 
 Cadence确保工作流确定性执行的源码实现：
 
@@ -1426,22 +1426,22 @@ Cadence确保工作流确定性执行的源码实现：
 // internal/internal_worker.go
 type workflowExecutionContextImpl struct {
     workflowInfo *WorkflowInfo
-    
+
     // 决策任务信息
     currentDecisionTask *workflowservice.PollForDecisionTaskResponse
-    
+
     // 工作流执行状态
     workflowStartTime time.Time
     runID             string
     workflowType      string
-    
+
     // 重放相关状态
     isReplay bool
-    
+
     // 确定性随机数
     randomSeed int64
     random     *rand.Rand
-    
+
     // 确定性时间源
     currentReplayTime time.Time
 }
@@ -1452,7 +1452,7 @@ func (w *workflowExecutionContextImpl) Now() time.Time {
         // 在重放模式下使用历史事件的时间戳
         return w.currentReplayTime
     }
-    
+
     // 非重放模式使用实际时间
     return time.Now()
 }
@@ -1474,16 +1474,16 @@ func (w *workflowExecutionContextImpl) GenerateUUID() string {
     for i := 0; i < 16; i++ {
         bytes[i] = byte(r.Intn(256))
     }
-    
+
     // 格式化为标准UUID
     u, _ := uuid.FromBytes(bytes)
     return u.String()
 }
 ```
 
-### 3.2 源码中的完备性保证
+### 1.4.2 源码中的完备性保证
 
-#### 3.2.1 工作流模式覆盖实现
+#### 1.4.2.1 工作流模式覆盖实现
 
 Cadence SDK中实现的主要工作流模式：
 
@@ -1497,12 +1497,12 @@ func SequentialPattern(ctx Context) error {
     if err != nil {
         return err
     }
-    
+
     err = ExecuteActivity(ctx, ActivityB).Get(ctx, nil)
     if err != nil {
         return err
     }
-    
+
     return ExecuteActivity(ctx, ActivityC).Get(ctx, nil)
 }
 ```
@@ -1516,7 +1516,7 @@ func ParallelSplitPattern(ctx Context) error {
     futureA := ExecuteActivity(ctx, ActivityA)
     futureB := ExecuteActivity(ctx, ActivityB)
     futureC := ExecuteActivity(ctx, ActivityC)
-    
+
     // 等待所有Future完成
     if err := futureA.Get(ctx, nil); err != nil {
         return err
@@ -1527,7 +1527,7 @@ func ParallelSplitPattern(ctx Context) error {
     if err := futureC.Get(ctx, nil); err != nil {
         return err
     }
-    
+
     return nil
 }
 ```
@@ -1554,7 +1554,7 @@ func ExclusiveChoicePattern(ctx Context, condition string) error {
 // 多选模式实现
 func MultiChoicePattern(ctx Context, conditions map[string]bool) error {
     var futures []Future
-    
+
     // 根据条件执行不同活动
     if conditions["A"] {
         futures = append(futures, ExecuteActivity(ctx, ActivityA))
@@ -1565,14 +1565,14 @@ func MultiChoicePattern(ctx Context, conditions map[string]bool) error {
     if conditions["C"] {
         futures = append(futures, ExecuteActivity(ctx, ActivityC))
     }
-    
+
     // 等待所有选择的活动完成
     for _, future := range futures {
         if err := future.Get(ctx, nil); err != nil {
             return err
         }
     }
-    
+
     return nil
 }
 ```
@@ -1598,7 +1598,7 @@ func ArbitraryLoopPattern(ctx Context, iterations int) error {
 func MilestonePattern(ctx Context) error {
     // 使用工作流状态跟踪里程碑
     var currentMilestone string = "STARTED"
-    
+
     // 注册查询处理器
     err := SetQueryHandler(ctx, "getCurrentMilestone", func() (string, error) {
         return currentMilestone, nil
@@ -1606,36 +1606,36 @@ func MilestonePattern(ctx Context) error {
     if err != nil {
         return err
     }
-    
+
     // 第一阶段
     if err := ExecuteActivity(ctx, Phase1Activity).Get(ctx, nil); err != nil {
         return err
     }
-    
+
     // 更新里程碑
     currentMilestone = "PHASE1_COMPLETED"
-    
+
     // 第二阶段
     if err := ExecuteActivity(ctx, Phase2Activity).Get(ctx, nil); err != nil {
         return err
     }
-    
+
     // 更新里程碑
     currentMilestone = "PHASE2_COMPLETED"
-    
+
     // 最终阶段
     if err := ExecuteActivity(ctx, FinalPhaseActivity).Get(ctx, nil); err != nil {
         return err
     }
-    
+
     // 完成
     currentMilestone = "COMPLETED"
-    
+
     return nil
 }
 ```
 
-#### 3.2.2 确定性执行保证代码
+#### 1.4.2.2 确定性执行保证代码
 
 Cadence SDK中确保工作流确定性的关键代码：
 
@@ -1653,7 +1653,7 @@ func (weh *workflowExecutionEventHandlerImpl) Now() time.Time {
     if weh.isReplay() {
         return weh.currentReplayTimeSource.Now()
     }
-    
+
     // 非重放期间，使用实际时间
     return time.Now()
 }
@@ -1694,7 +1694,7 @@ func (weh *workflowExecutionEventHandlerImpl) GenerateUUID() string {
     for i := 0; i < 16; i++ {
         bytes[i] = byte(r.Intn(256))
     }
-    
+
     // 格式化为标准UUID格式
     uuid, _ := uuid.FromBytes(bytes)
     return uuid.String()
@@ -1713,7 +1713,7 @@ func SideEffect(ctx Context, f func() interface{}) interface{} {
 func (weh *workflowExecutionEventHandlerImpl) SideEffect(f func() interface{}) interface{} {
     if weh.isReplay() {
         // 在重放模式下，从记录的结果中获取值
-        
+
 ```go
 // internal/internal_worker.go (续)
 func (weh *workflowExecutionEventHandlerImpl) SideEffect(f func() interface{}) interface{} {
@@ -1739,7 +1739,7 @@ func (weh *workflowExecutionEventHandlerImpl) isReplay() bool {
 }
 ```
 
-#### 3.2.3 分布式一致性实现
+#### 1.4.2.3 分布式一致性实现
 
 Cadence服务端保证分布式一致性的关键代码：
 
@@ -1751,10 +1751,10 @@ func (d *cassandraStore) UpdateWorkflowExecution(
     request *persistence.UpdateWorkflowExecutionRequest,
 ) error {
     batch := d.session.NewBatch(gocql.LoggedBatch)
-    
+
     // 提取乐观锁的条件
     condition := request.Condition
-    
+
     // 序列化工作流执行信息
     executionInfo := request.ExecutionInfo
     executionInfoMap, err := workflowExecutionInfoToMap(executionInfo)
@@ -1763,7 +1763,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             Message: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
         }
     }
-    
+
     // 构建更新查询
     // 注意条件字段的使用，提供乐观锁保护
     query := d.session.Query(templateUpdateWorkflowExecutionQuery,
@@ -1774,9 +1774,9 @@ func (d *cassandraStore) UpdateWorkflowExecution(
         executionInfo.RunID,
         condition, // 乐观锁条件 - 通常是当前版本号
     )
-    
+
     batch.Query(query)
-    
+
     // 添加新的历史事件
     if len(request.NewEvents) > 0 {
         for _, event := range request.NewEvents {
@@ -1791,7 +1791,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             )
         }
     }
-    
+
     // 执行批处理
     previous := make(map[string]interface{})
     applied, _, err := d.session.MapExecuteBatchCAS(batch, previous)
@@ -1800,15 +1800,15 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             Message: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
         }
     }
-    
+
     if !applied {
         // CAS失败，说明条件不匹配
         return &persistence.ConditionFailedError{
-            Msg: fmt.Sprintf("UpdateWorkflowExecution operation failed due to condition failure. WorkflowID: %v, RunID: %v", 
+            Msg: fmt.Sprintf("UpdateWorkflowExecution operation failed due to condition failure. WorkflowID: %v, RunID: %v",
                 executionInfo.WorkflowID, executionInfo.RunID),
         }
     }
-    
+
     return nil
 }
 ```
@@ -1834,7 +1834,7 @@ func (t *transferQueueProcessorImpl) process(
     default:
         retError = fmt.Errorf("unknown transfer task type: %v", task.TaskType)
     }
-    
+
     return retError
 }
 
@@ -1850,26 +1850,26 @@ func (t *transferQueueProcessorImpl) processActivityTask(
             RunId:      common.StringPtr(task.RunID),
         },
     )
-    
+
     if err != nil {
         return err
     }
-    
+
     defer func() { release(retError) }()
-    
+
     // 加载可变状态
     msBuilder, err := context.loadWorkflowExecution()
     if err != nil {
         return err
     }
-    
+
     // 检查活动是否仍然需要处理
     if activityInfo, ok := msBuilder.GetActivityInfo(task.ScheduleID); ok {
         if activityInfo.StartedID == common.EmptyEventID {
             // 需要调度活动
             taskList := activityInfo.TaskList
             timeout := activityInfo.ScheduleToStartTimeout
-            
+
             // 创建活动任务请求
             request := &matching.AddActivityTaskRequest{
                 DomainUUID:       common.StringPtr(task.DomainID),
@@ -1882,14 +1882,14 @@ func (t *transferQueueProcessorImpl) processActivityTask(
                 ScheduleId:              common.Int64Ptr(task.ScheduleID),
                 ScheduleToStartTimeout:  common.Int32Ptr(timeout),
             }
-            
+
             // 添加活动任务到匹配服务
             _, retError = t.matchingClient.AddActivityTask(context.Background(), request)
-            
+
             return retError
         }
     }
-    
+
     // 活动已经处理过或不再需要处理
     return nil
 }
@@ -1919,7 +1919,7 @@ func (r *replicatorImpl) handleHistoryReplicationTask(
     task *replicator.ReplicationTask,
 ) error {
     historyTask := task.HistoryTaskAttributes
-    
+
     // 构建复制请求
     request := &h.ReplicateEventsRequest{
         SourceCluster: common.StringPtr(r.sourceCluster),
@@ -1936,7 +1936,7 @@ func (r *replicatorImpl) handleHistoryReplicationTask(
         NewRunHistory:     historyTask.NewRunHistory,
         // ... 其他字段
     }
-    
+
     // 调用历史服务复制事件
     err := r.historyClient.ReplicateEvents(context.Background(), request)
     if err != nil {
@@ -1946,7 +1946,7 @@ func (r *replicatorImpl) handleHistoryReplicationTask(
             tag.WorkflowRunID(*historyTask.RunId),
             tag.Error(err),
         )
-        
+
         // 应用重试策略
         switch err.(type) {
         case *workflow.EntityNotExistsError:
@@ -1963,14 +1963,14 @@ func (r *replicatorImpl) handleHistoryReplicationTask(
             }, r.retryPolicy, r.isRetryable)
         }
     }
-    
+
     return nil
 }
 ```
 
-### 3.3 实现限制的代码体现
+### 1.4.3 实现限制的代码体现
 
-#### 3.3.1 确定性执行代码约束
+#### 1.4.3.1 确定性执行代码约束
 
 Cadence SDK中的确定性约束检查：
 
@@ -1981,7 +1981,7 @@ func validateFunctionArgs(workflowFunc interface{}, args []interface{}) error {
     if fnType.Kind() != reflect.Func {
         return fmt.Errorf("expected workflow function but was %s", fnType.Kind())
     }
-    
+
     // 检查参数数量
     fnArgCount := fnType.NumIn()
     if fnArgCount != len(args)+1 {
@@ -1990,12 +1990,12 @@ func validateFunctionArgs(workflowFunc interface{}, args []interface{}) error {
             fnArgCount, len(args)+1,
         )
     }
-    
+
     // 检查第一个参数是否为Context
     if !isWorkflowContext(fnType.In(0)) {
         return fmt.Errorf("first argument must be workflow.Context")
     }
-    
+
     // 检查其他参数是否匹配
     for i, arg := range args {
         fnArgType := fnType.In(i + 1)
@@ -2014,7 +2014,7 @@ func validateFunctionArgs(workflowFunc interface{}, args []interface{}) error {
             )
         }
     }
-    
+
     return nil
 }
 ```
@@ -2040,7 +2040,7 @@ func (weh *workflowExecutionEventHandlerImpl) executeActivity(
                 activityID,
             )
         }
-        
+
         // 检查活动类型是否一致
         if activityInfo.activityType != activityType {
             return nil, fmt.Errorf(
@@ -2048,16 +2048,16 @@ func (weh *workflowExecutionEventHandlerImpl) executeActivity(
                 activityID, activityInfo.activityType, activityType,
             )
         }
-        
+
         // ... 其他确定性检查
     }
-    
+
     // 编码活动参数
     input, err := weh.encodeArgs(args)
     if err != nil {
         return nil, err
     }
-    
+
     // 正常的活动调度...
     return nil, nil
 }
@@ -2071,13 +2071,13 @@ func (weh *workflowExecutionEventHandlerImpl) NewTimer(
         // 在重放期间检查是否与历史记录一致
         // ...
     }
-    
+
     // 创建确定性计时器
     return weh.newTimer(d, true)
 }
 ```
 
-#### 3.3.2 状态大小限制实现
+#### 1.4.3.2 状态大小限制实现
 
 Cadence实现了事件历史大小限制：
 
@@ -2085,19 +2085,19 @@ Cadence实现了事件历史大小限制：
 // service/history/configs/config.go
 type Config struct {
     // ... 其他配置
-    
+
     // 历史事件批处理大小限制
     HistoryMaxBatchSize int
-    
+
     // 工作流执行缓存大小
     WorkflowExecutionCacheSize int
-    
+
     // 历史大小限制
     HistorySizeLimitInBytes int
-    
+
     // 历史记录计数限制
     HistoryCountLimitInBytes int
-    
+
     // ... 其他配置
 }
 
@@ -2106,7 +2106,7 @@ func (e *historyEngineImpl) validateEventBatch(
     eventBatch []*workflow.HistoryEvent,
 ) error {
     totalSize := 0
-    
+
     // 计算总大小
     for _, event := range eventBatch {
         size, err := event.Size()
@@ -2115,7 +2115,7 @@ func (e *historyEngineImpl) validateEventBatch(
         }
         totalSize += size
     }
-    
+
     // 检查是否超过限制
     if totalSize > e.config.HistoryMaxBatchSize {
         return &workflow.ServiceBusyError{
@@ -2123,7 +2123,7 @@ func (e *historyEngineImpl) validateEventBatch(
                 totalSize, e.config.HistoryMaxBatchSize),
         }
     }
-    
+
     return nil
 }
 ```
@@ -2139,25 +2139,25 @@ func (b *mutableStateBuilder) checkOverflow() error {
             Message: fmt.Sprintf("Workflow history count exceeds limit: %v", b.config.HistoryCountLimit),
         }
     }
-    
+
     // 估算工作流状态大小
     stateSize := b.executionInfo.Size()
     stateSize += len(b.pendingActivityInfoIDs) * averageActivityInfoSize
     stateSize += len(b.pendingTimerInfoIDs) * averageTimerInfoSize
     stateSize += len(b.pendingChildExecutionInfoIDs) * averageChildInfoSize
     // ... 其他状态估算
-    
+
     if stateSize > b.config.StateSizeLimitBytes {
         return &workflow.BadRequestError{
             Message: fmt.Sprintf("Workflow state size exceeds limit: %v", b.config.StateSizeLimitBytes),
         }
     }
-    
+
     return nil
 }
 ```
 
-#### 3.3.3 时间相关限制处理
+#### 1.4.3.3 时间相关限制处理
 
 Cadence中的超时处理实现：
 
@@ -2180,7 +2180,7 @@ func (t *timerQueueProcessorImpl) processTimerTask(
     default:
         retError = fmt.Errorf("unknown timer task type: %v", task.TaskType)
     }
-    
+
     return retError
 }
 
@@ -2196,24 +2196,24 @@ func (t *timerQueueProcessorImpl) processActivityTimeout(
             RunId:      common.StringPtr(task.RunID),
         },
     )
-    
+
     if err != nil {
         return err
     }
-    
+
     defer func() { release(retError) }()
-    
+
     // 加载可变状态
     msBuilder, err := context.loadWorkflowExecution()
     if err != nil {
         return err
     }
-    
+
     // 检查活动是否仍然存在
     if activityInfo, ok := msBuilder.GetActivityInfo(task.EventID); ok {
         // 根据超时类型处理
         timeoutType := workflow.TimeoutType(task.TimeoutType)
-        
+
         switch timeoutType {
         case workflow.TimeoutType_SCHEDULE_TO_START:
             // 调度到开始超时
@@ -2227,7 +2227,7 @@ func (t *timerQueueProcessorImpl) processActivityTimeout(
                 ); err != nil {
                     return err
                 }
-                
+
                 // 检查重试策略
                 if activityInfo.RetryPolicy != nil {
                     // 计算下一次重试
@@ -2236,7 +2236,7 @@ func (t *timerQueueProcessorImpl) processActivityTimeout(
                         activityInfo.Attempt,
                         workflow.TimeoutType_SCHEDULE_TO_START,
                     )
-                    
+
                     if backoffInterval != common.RetryBackoffExhausted {
                         // 重试活动
                         if err := t.retryActivity(
@@ -2252,14 +2252,14 @@ func (t *timerQueueProcessorImpl) processActivityTimeout(
             }
         // ... 处理其他超时类型
         }
-        
+
         // 更新工作流执行
         err = context.updateWorkflowExecutionWithContext(context.Background(), false)
         if err != nil {
             return err
         }
     }
-    
+
     return nil
 }
 
@@ -2275,43 +2275,43 @@ func (t *timerQueueProcessorImpl) processWorkflowTimeout(
             RunId:      common.StringPtr(task.RunID),
         },
     )
-    
+
     if err != nil {
         return err
     }
-    
+
     defer func() { release(retError) }()
-    
+
     // 加载可变状态
     msBuilder, err := context.loadWorkflowExecution()
     if err != nil {
         return err
     }
-    
+
     // 检查工作流是否仍在运行
     if !msBuilder.IsWorkflowExecutionRunning() {
         // 工作流已完成，忽略超时
         return nil
     }
-    
+
     // 添加工作流超时事件
     if _, err := msBuilder.AddTimeoutWorkflowEvent(); err != nil {
         return err
     }
-    
+
     // 更新工作流执行
     err = context.updateWorkflowExecutionWithContext(context.Background(), true)
     if err != nil {
         return err
     }
-    
+
     return nil
 }
 ```
 
-### 3.4 实现场景与方案映射
+### 1.4.4 实现场景与方案映射
 
-#### 3.4.1 长时间运行业务流程实现
+#### 1.4.4.1 长时间运行业务流程实现
 
 贷款申请工作流的实现示例：
 
@@ -2320,18 +2320,18 @@ func (t *timerQueueProcessorImpl) processWorkflowTimeout(
 func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecision, error) {
     // 设置工作流超时（长时间运行）
     ctx = WithWorkflowTimeout(ctx, 30*24*time.Hour) // 30天
-    
+
     // 工作流状态用于查询
     var currentState string = "STARTED"
     decision := LoanDecision{Status: "PENDING"}
-    
+
     // 注册查询处理器
     if err := SetQueryHandler(ctx, "getStatus", func() (string, error) {
         return currentState, nil
     }); err != nil {
         return decision, err
     }
-    
+
     // 1. 信用检查
     currentState = "CREDIT_CHECK"
     var creditScore CreditScore
@@ -2354,7 +2354,7 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
         decision.Reason = "Failed to perform credit check: " + err.Error()
         return decision, err
     }
-    
+
     // 2. 风险评估
     currentState = "RISK_ASSESSMENT"
     var riskAssessment RiskAssessment
@@ -2374,28 +2374,28 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
         decision.Reason = "Failed to perform risk assessment: " + err.Error()
         return decision, err
     }
-    
+
     // 3. 初步决策
     isEligible := creditScore.Score >= 700 && riskAssessment.RiskLevel <= "MEDIUM"
-    
+
     if !isEligible {
         currentState = "AUTO_REJECTED"
         decision.Status = "REJECTED"
         decision.Reason = "Did not meet automatic approval criteria"
-        
+
         // 通知申请人
         _ = ExecuteActivity(ctx, "NotifyApplicantActivity", NotificationData{
             ApplicantID: application.ApplicantID,
             Status:      "REJECTED",
             Reason:      decision.Reason,
         }).Get(ctx, nil)
-        
+
         return decision, nil
     }
-    
+
     // 4. 创建人工审核任务
     currentState = "WAITING_FOR_HUMAN_REVIEW"
-    
+
     if err := ExecuteActivity(ctx, "CreateHumanReviewTaskActivity", HumanReviewInput{
         Application:    application,
         CreditScore:    creditScore,
@@ -2406,21 +2406,21 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
         decision.Reason = "System error: " + err.Error()
         return decision, err
     }
-    
+
     // 5. 等待人工审核结果
     reviewSignalChannel := GetSignalChannel(ctx, "human-review-completed")
-    
+
     // 设置选择器
     selector := NewSelector(ctx)
-    
+
     var reviewSignal HumanReviewResult
     var timerFired bool
-    
+
     // 添加信号等待
     selector.AddReceive(reviewSignalChannel, func(c Channel, more bool) {
         c.Receive(ctx, &reviewSignal)
     })
-    
+
     // 添加超时
     timerFuture := NewTimer(ctx, 14*24*time.Hour) // 两周超时
     selector.AddFuture(timerFuture, func(f Future) {
@@ -2428,27 +2428,27 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
         // 超时发送提醒但继续等待
         _ = ExecuteActivity(ctx, "EscalateReviewActivity", application.ID).Get(ctx, nil)
     })
-    
+
     // 等待信号或超时
     selector.Select(ctx)
-    
+
     // 如果是超时触发，继续等待信号
     if timerFired {
         reviewSignalChannel.Receive(ctx, &reviewSignal)
     }
-    
+
     currentState = "HUMAN_REVIEW_COMPLETED"
-    
+
     // 6. 处理人工审核结果
     if reviewSignal.Approved {
         currentState = "APPROVED"
         decision.Status = "APPROVED"
         decision.Reason = reviewSignal.Comments
         decision.LoanTerms = reviewSignal.LoanTerms
-        
+
         // 7. 生成贷款文件
         var documents LoanDocuments
-        if err := ExecuteActivity(ctx, "GenerateLoanDocumentsActivity", 
+        if err := ExecuteActivity(ctx, "GenerateLoanDocumentsActivity",
             GenerateDocumentsInput{
                 Application: application,
                 LoanTerms:   reviewSignal.LoanTerms,
@@ -2456,9 +2456,9 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
             currentState = "DOCUMENT_GENERATION_FAILED"
             return decision, err
         }
-        
+
         // 8. 发送通知
-        if err := ExecuteActivity(ctx, "NotifyApprovalActivity", 
+        if err := ExecuteActivity(ctx, "NotifyApprovalActivity",
             ApprovalNotification{
                 ApplicantID: application.ApplicantID,
                 Documents:   documents,
@@ -2470,9 +2470,9 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
         currentState = "REJECTED"
         decision.Status = "REJECTED"
         decision.Reason = reviewSignal.Comments
-        
+
         // 发送拒绝通知
-        if err := ExecuteActivity(ctx, "NotifyRejectionActivity", 
+        if err := ExecuteActivity(ctx, "NotifyRejectionActivity",
             RejectionNotification{
                 ApplicantID: application.ApplicantID,
                 Reason:      reviewSignal.Comments,
@@ -2481,13 +2481,13 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
             return decision, err
         }
     }
-    
+
     currentState = "COMPLETED"
     return decision, nil
 }
 ```
 
-#### 3.4.2 微服务编排代码模式
+#### 1.4.4.2 微服务编排代码模式
 
 微服务编排的标准实现模式：
 
@@ -2496,7 +2496,7 @@ func LoanApprovalWorkflow(ctx Context, application LoanApplication) (LoanDecisio
 func OrderFulfillmentWorkflow(ctx Context, order Order) error {
     logger := GetLogger(ctx)
     logger.Info("OrderFulfillment workflow started", "orderId", order.ID)
-    
+
     // 活动选项
     activityOptions := ActivityOptions{
         ScheduleToStartTimeout: 10 * time.Second,
@@ -2512,7 +2512,7 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
             },
         },
     }
-    
+
     // 步骤1: 验证订单 - 订单服务
     var validationResult OrderValidationResult
     err := ExecuteActivity(
@@ -2520,26 +2520,26 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
         "OrderValidationActivity",
         order,
     ).Get(ctx, &validationResult)
-    
+
     if err != nil {
         logger.Error("Order validation failed", "error", err)
         return err
     }
-    
+
     if !validationResult.IsValid {
         // 取消订单
         _ = ExecuteActivity(
             WithActivityOptions(ctx, activityOptions),
-            "CancelOrderActivity", 
+            "CancelOrderActivity",
             CancelOrderInput{
                 OrderID: order.ID,
                 Reason:  validationResult.Reason,
             },
         ).Get(ctx, nil)
-        
+
         return fmt.Errorf("invalid order: %s", validationResult.Reason)
     }
-    
+
     // 步骤2: 处理支付 - 支付服务
     var paymentResult PaymentResult
     err = ExecuteActivity(
@@ -2560,36 +2560,36 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
             PaymentInfo: order.PaymentInfo,
         },
     ).Get(ctx, &paymentResult)
-    
+
     if err != nil {
         logger.Error("Payment processing failed", "error", err)
         // 取消订单
         _ = ExecuteActivity(
             WithActivityOptions(ctx, activityOptions),
-            "CancelOrderActivity", 
+            "CancelOrderActivity",
             CancelOrderInput{
                 OrderID: order.ID,
                 Reason:  "Payment processing failed",
             },
         ).Get(ctx, nil)
-        
+
         return err
     }
-    
+
     if !paymentResult.Success {
         // 支付失败，取消订单
         _ = ExecuteActivity(
             WithActivityOptions(ctx, activityOptions),
-            "CancelOrderActivity", 
+            "CancelOrderActivity",
             CancelOrderInput{
                 OrderID: order.ID,
                 Reason:  fmt.Sprintf("Payment declined: %s", paymentResult.DeclineReason),
             },
         ).Get(ctx, nil)
-        
+
         return fmt.Errorf("payment declined: %s", paymentResult.DeclineReason)
     }
-    
+
     // 步骤3: 库存检查和预留 - 库存服务
     // 并行处理所有订单项
     var futures []Future
@@ -2606,16 +2606,16 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
         )
         futures = append(futures, future)
     }
-    
+
     // 等待所有库存操作完成
     reservationResults := make([]InventoryResult, len(futures))
     for i, future := range futures {
         var result InventoryResult
         if err := future.Get(ctx, &result); err != nil {
             logger.Error("Inventory reservation failed", "productID", order.Items[i].ProductID, "error", err)
-            
+
             // 库存问题 - 开始补偿操作
-            
+
             // 1. 退款
             _ = ExecuteActivity(
                 WithActivityOptions(ctx, activityOptions),
@@ -2626,7 +2626,7 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                     Amount:    order.TotalAmount,
                 },
             ).Get(ctx, nil)
-            
+
             // 2. 释放已预留的库存
             for j := 0; j < i; j++ {
                 if reservationResults[j].Success {
@@ -2641,7 +2641,7 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                     ).Get(ctx, nil)
                 }
             }
-            
+
             // 3. 更新订单状态
             _ = ExecuteActivity(
                 WithActivityOptions(ctx, activityOptions),
@@ -2652,26 +2652,26 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                     Reason:  "Inventory reservation failed",
                 },
             ).Get(ctx, nil)
-            
+
             return err
         }
-        
+
         if !result.Success {
             logger.Error("Inventory unavailable", "productID", order.Items[i].ProductID, "reason", result.Reason)
-            
+
             // 执行与上面相同的补偿逻辑...
-            
+
             return fmt.Errorf("inventory unavailable: %s", result.Reason)
         }
-        
+
         reservationResults[i] = result
     }
-    
+
     // 步骤4: 物流处理 - 物流服务
     var shippingResult ShippingResult
     err = ExecuteActivity(
         WithActivityOptions(ctx, activityOptions),
-        "CreateShippingRequestActivity", 
+        "CreateShippingRequestActivity",
         ShippingRequest{
             OrderID:      order.ID,
             CustomerID:   order.CustomerID,
@@ -2680,10 +2680,10 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
             WarehouseID:  order.WarehouseID,
         },
     ).Get(ctx, &shippingResult)
-    
+
     if err != nil {
         logger.Error("Failed to create shipping request", "error", err)
-        
+
         // 执行补偿逻辑
         // 1. 退款
         _ = ExecuteActivity(
@@ -2695,7 +2695,7 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                 Amount:    order.TotalAmount,
             },
         ).Get(ctx, nil)
-        
+
         // 2. 释放库存
         for i, result := range reservationResults {
             _ = ExecuteActivity(
@@ -2708,7 +2708,7 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                 },
             ).Get(ctx, nil)
         }
-        
+
         // 3. 更新订单状态
         _ = ExecuteActivity(
             WithActivityOptions(ctx, activityOptions),
@@ -2719,14 +2719,14 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
                 Reason:  "Shipping request failed",
             },
         ).Get(ctx, nil)
-        
+
         return err
     }
-    
+
     // 步骤5: 更新订单状态 - 订单服务
     err = ExecuteActivity(
         WithActivityOptions(ctx, activityOptions),
-        "UpdateOrderStatusActivity", 
+        "UpdateOrderStatusActivity",
         UpdateOrderStatusRequest{
             OrderID:       order.ID,
             Status:        "PROCESSING",
@@ -2734,16 +2734,16 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
             TrackingInfo:  shippingResult.TrackingInfo,
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         logger.Error("Failed to update order status", "error", err)
         return err
     }
-    
+
     // 步骤6: 发送通知 - 通知服务
     err = ExecuteActivity(
         WithActivityOptions(ctx, activityOptions),
-        "SendNotificationActivity", 
+        "SendNotificationActivity",
         NotificationRequest{
             CustomerID:   order.CustomerID,
             OrderID:      order.ID,
@@ -2751,18 +2751,18 @@ func OrderFulfillmentWorkflow(ctx Context, order Order) error {
             TrackingInfo: shippingResult.TrackingInfo,
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         logger.Error("Failed to send notification", "error", err)
         // 通知失败不阻止工作流完成
     }
-    
+
     logger.Info("Order fulfillment workflow completed successfully", "orderId", order.ID)
     return nil
 }
 ```
 
-#### 3.4.3 分布式事务实现方案
+#### 1.4.4.3 分布式事务实现方案
 
 Saga模式实现分布式事务：
 
@@ -2771,7 +2771,7 @@ Saga模式实现分布式事务：
 func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, error) {
     logger := GetLogger(ctx)
     logger.Info("Starting order processing saga", "orderId", orderRequest.OrderID)
-    
+
     // 活动选项
     activityOptions := ActivityOptions{
         ScheduleToStartTimeout: 5 * time.Second,
@@ -2783,11 +2783,11 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             MaximumAttempts:    3,
         },
     }
-    
+
     // 结果和执行状态跟踪
     var result OrderResult
     executedSteps := make(map[string]bool)
-    
+
     // 执行步骤1: 创建订单
     var orderID string
     err := ExecuteActivity(
@@ -2795,16 +2795,16 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
         "CreateOrderActivity",
         orderRequest,
     ).Get(ctx, &orderID)
-    
+
     if err != nil {
         logger.Error("Failed to create order", "error", err)
         return result, err
     }
-    
+
     result.OrderID = orderID
     executedSteps["CreateOrder"] = true
     logger.Info("Order created", "orderId", orderID)
-    
+
     // 执行步骤2: 预留库存
     var reservationID string
     err = ExecuteActivity(
@@ -2815,17 +2815,17 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             Items:   orderRequest.Items,
         },
     ).Get(ctx, &reservationID)
-    
+
     if err != nil {
         logger.Error("Failed to reserve inventory", "error", err)
-        
+
         // 补偿操作: 取消订单
         if executedSteps["CreateOrder"] {
             compensateOptions := ActivityOptions{
                 ScheduleToStartTimeout: 10 * time.Second,
                 StartToCloseTimeout:    30 * time.Second,
             }
-            
+
             if cerr := ExecuteActivity(
                 WithActivityOptions(ctx, compensateOptions),
                 "CancelOrderActivity",
@@ -2834,14 +2834,14 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 logger.Error("Failed to cancel order during compensation", "error", cerr)
             }
         }
-        
+
         return result, err
     }
-    
+
     result.ReservationID = reservationID
     executedSteps["ReserveInventory"] = true
     logger.Info("Inventory reserved", "reservationId", reservationID)
-    
+
     // 执行步骤3: 处理支付
     var paymentID string
     err = ExecuteActivity(
@@ -2853,17 +2853,17 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             PaymentInfo: orderRequest.PaymentInfo,
         },
     ).Get(ctx, &paymentID)
-    
+
     if err != nil {
         logger.Error("Failed to process payment", "error", err)
-        
+
         // 补偿操作
         var compensationErrors []error
         compensateOptions := ActivityOptions{
             ScheduleToStartTimeout: 10 * time.Second,
             StartToCloseTimeout:    30 * time.Second,
         }
-        
+
         // 1. 释放库存
         if executedSteps["ReserveInventory"] {
             if cerr := ExecuteActivity(
@@ -2875,7 +2875,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 compensationErrors = append(compensationErrors, cerr)
             }
         }
-        
+
         // 2. 取消订单
         if executedSteps["CreateOrder"] {
             if cerr := ExecuteActivity(
@@ -2887,19 +2887,19 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 compensationErrors = append(compensationErrors, cerr)
             }
         }
-        
+
         // 如果补偿操作也失败，记录更严重的错误
         if len(compensationErrors) > 0 {
             logger.Error("Compensation also failed", "compensationErrors", compensationErrors)
         }
-        
+
         return result, err
     }
-    
+
     result.PaymentID = paymentID
     executedSteps["ProcessPayment"] = true
     logger.Info("Payment processed", "paymentId", paymentID)
-    
+
     // 执行步骤4: 准备发货
     var shipmentID string
     err = ExecuteActivity(
@@ -2911,17 +2911,17 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             Address:   orderRequest.ShippingAddress,
         },
     ).Get(ctx, &shipmentID)
-    
+
     if err != nil {
         logger.Error("Failed to prepare shipment", "error", err)
-        
+
         // 补偿操作
         var compensationErrors []error
         compensateOptions := ActivityOptions{
             ScheduleToStartTimeout: 10 * time.Second,
             StartToCloseTimeout:    30 * time.Second,
         }
-        
+
         // 1. 退款
         if executedSteps["ProcessPayment"] {
             if cerr := ExecuteActivity(
@@ -2933,7 +2933,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 compensationErrors = append(compensationErrors, cerr)
             }
         }
-        
+
         // 2. 释放库存
         if executedSteps["ReserveInventory"] {
             if cerr := ExecuteActivity(
@@ -2945,7 +2945,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 compensationErrors = append(compensationErrors, cerr)
             }
         }
-        
+
         // 3. 取消订单
         if executedSteps["CreateOrder"] {
             if cerr := ExecuteActivity(
@@ -2957,19 +2957,19 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
                 compensationErrors = append(compensationErrors, cerr)
             }
         }
-        
+
         // 如果补偿操作也失败，记录更严重的错误
         if len(compensationErrors) > 0 {
             logger.Error("Compensation also failed", "compensationErrors", compensationErrors)
         }
-        
+
         return result, err
     }
-    
+
     result.ShipmentID = shipmentID
     executedSteps["PrepareShipment"] = true
     logger.Info("Shipment prepared", "shipmentId", shipmentID)
-    
+
     // 执行步骤5: 通知客户
     err = ExecuteActivity(
         WithActivityOptions(ctx, activityOptions),
@@ -2980,7 +2980,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             ShipmentID:  shipmentID,
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         logger.Error("Failed to notify customer", "error", err)
         // 通知失败不需要回滚事务，可以稍后重试
@@ -2988,7 +2988,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
         executedSteps["NotifyCustomer"] = true
         logger.Info("Customer notified", "orderId", orderID)
     }
-    
+
     // 完成订单
     err = ExecuteActivity(
         WithActivityOptions(ctx, activityOptions),
@@ -2999,7 +2999,7 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
             ShipmentID: shipmentID,
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         logger.Error("Failed to complete order", "error", err)
         // 订单已经处理到最后阶段，即使完成标记失败，也不需要回滚
@@ -3007,19 +3007,19 @@ func OrderProcessingSaga(ctx Context, orderRequest OrderRequest) (OrderResult, e
         executedSteps["CompleteOrder"] = true
         logger.Info("Order completed", "orderId", orderID)
     }
-    
+
     result.Status = "COMPLETED"
     logger.Info("Order processing saga completed successfully", "orderId", orderID)
-    
+
     return result, nil
 }
 ```
 
-## 4. 模型转换的代码实现
+## 1.5 模型转换的代码实现
 
-### 4.1 执行流转换机制
+### 1.5.1 执行流转换机制
 
-#### 4.1.1 数据流到执行流转换
+#### 1.5.1.1 数据流到执行流转换
 
 Cadence内部的数据流到执行流转换实现：
 
@@ -3034,10 +3034,10 @@ func (handler *decisionTaskHandlerImpl) handleDecisions(
     if len(decisions) == 0 {
         return nil
     }
-    
+
     // 记录当前事件ID作为新决策的调度ID
     scheduleID := msBuilder.GetNextEventID()
-    
+
     // 处理每个决策，将其转换为工作流事件和任务
     for _, decision := range decisions {
         switch decision.GetDecisionType() {
@@ -3045,29 +3045,29 @@ func (handler *decisionTaskHandlerImpl) handleDecisions(
             if err := handler.handleDecisionScheduleActivity(msBuilder, decision); err != nil {
                 return err
             }
-            
+
         case workflow.DecisionTypeStartTimer:
             if err := handler.handleDecisionStartTimer(msBuilder, decision); err != nil {
                 return err
             }
-            
+
         case workflow.DecisionTypeRequestCancelActivityTask:
             if err := handler.handleDecisionRequestCancelActivity(msBuilder, decision); err != nil {
                 return err
             }
-            
+
         case workflow.DecisionTypeCompleteWorkflowExecution:
             if err := handler.handleDecisionCompleteWorkflow(msBuilder, decision); err != nil {
                 return err
             }
-            
+
         // ... 处理其他决策类型
-            
+
         default:
             return &workflow.BadRequestError{Message: fmt.Sprintf("Unknown decision type: %v", decision.GetDecisionType())}
         }
     }
-    
+
     return nil
 }
 
@@ -3077,27 +3077,27 @@ func (handler *decisionTaskHandlerImpl) handleDecisionScheduleActivity(
     decision *workflow.Decision,
 ) error {
     attributes := decision.GetScheduleActivityTaskDecisionAttributes()
-    
+
     // 验证决策属性
     if err := handler.validateActivityScheduleAttributes(attributes); err != nil {
         return err
     }
-    
+
     // 添加活动调度事件
     _, _, err := msBuilder.AddActivityTaskScheduledEvent(
         decision.GetScheduleID(),
         attributes,
     )
-    
+
     if err != nil {
         return err
     }
-    
+
     return nil
 }
 ```
 
-#### 4.1.2 执行流到调度转换
+#### 1.5.1.2 执行流到调度转换
 
 Cadence中执行流到调度转换的实现：
 
@@ -3111,18 +3111,18 @@ func (m *taskQueueManagerImpl) AddTask(
     if m.isStopped() {
         return errShutdown
     }
-    
+
     // 尝试同步匹配任务
     syncMatch, err := m.trySyncMatch(ctx, task)
     if err != nil {
         return err
     }
-    
+
     // 如果任务已被同步匹配，不需要添加到持久化存储
     if syncMatch {
         return nil
     }
-    
+
     // 添加任务到持久化存储
     return m.addTaskToQueue(ctx, task)
 }
@@ -3151,17 +3151,17 @@ func (m *taskQueueManagerImpl) GetTask(
 ) (*persistence.TaskInfo, error) {
     // 创建轮询器
     poller := newPoller(pollMetadata)
-    
+
     // 尝试获取分派的任务
     dispatchTask := m.dispatchTask(ctx, poller)
     if dispatchTask != nil {
         return dispatchTask, nil
     }
-    
+
     // 没有立即可用的任务，进入等待模式
     // 将轮询器添加到等待队列
     m.waitingPollersChannel <- poller
-    
+
     // 等待任务分派或超时
     select {
     case task := <-poller.taskChannel:
@@ -3172,7 +3172,7 @@ func (m *taskQueueManagerImpl) GetTask(
 }
 ```
 
-#### 4.1.3 控制流实现抽象
+#### 1.5.1.3 控制流实现抽象
 
 Cadence如何抽象不同的控制流结构：
 
@@ -3185,13 +3185,13 @@ func ExecuteActivity(
 ) Future {
     // 获取活动选项
     options := getActivityOptions(ctx)
-    
+
     // 编码参数
     input, err := encodeArgs(args)
     if err != nil {
         return NewReadyFuture(ctx, nil, err)
     }
-    
+
     // 创建活动执行任务
     attributes := &workflow.ScheduleActivityTaskDecisionAttributes{
         ActivityId:   common.StringPtr(uuid.New()),
@@ -3204,19 +3204,19 @@ func ExecuteActivity(
         HeartbeatTimeoutSeconds:       common.Int32Ptr(options.HeartbeatTimeoutSeconds),
         // ... 其他活动属性
     }
-    
+
     // 创建决策
     decision := &workflow.Decision{
         DecisionType: common.DecisionTypePtr(workflow.DecisionTypeScheduleActivityTask),
         ScheduleActivityTaskDecisionAttributes: attributes,
     }
-    
+
     // 创建future
     future := NewFuture(ctx)
-    
+
     // 提交决策
     scheduleID := getWorkflowEnvironment(ctx).ScheduleActivityTask(decision, future)
-    
+
     return future
 }
 
@@ -3233,7 +3233,7 @@ func ExecuteChildWorkflow(
 ) ChildWorkflowFuture {
     // 获取子工作流选项
     options := getChildWorkflowOptions(ctx)
-    
+
     // 编码参数
     input, err := encodeArgs(args)
     if err != nil {
@@ -3241,7 +3241,7 @@ func ExecuteChildWorkflow(
             Future: NewReadyFuture(ctx, nil, err),
         }
     }
-    
+
     // 创建子工作流执行决策
     attributes := &workflow.StartChildWorkflowExecutionDecisionAttributes{
         WorkflowId:                   common.StringPtr(options.WorkflowID),
@@ -3252,27 +3252,27 @@ func ExecuteChildWorkflow(
         TaskStartToCloseTimeoutSeconds:      common.Int32Ptr(options.TaskStartToCloseTimeoutSeconds),
         // ... 其他属性
     }
-    
+
     decision := &workflow.Decision{
         DecisionType: common.DecisionTypePtr(workflow.DecisionTypeStartChildWorkflowExecution),
         StartChildWorkflowExecutionDecisionAttributes: attributes,
     }
-    
+
     // 创建future
     childWorkflowFuture := &childWorkflowFutureImpl{
         Future: NewFuture(ctx), // 用于追踪子工作流的执行
     }
-    
+
     // 提交决策
     getWorkflowEnvironment(ctx).ScheduleChildWorkflow(decision, childWorkflowFuture)
-    
+
     return childWorkflowFuture
 }
 ```
 
-### 4.2 模型转换的具体实现
+### 1.5.2 模型转换的具体实现
 
-#### 4.2.1 代码到状态机转换
+#### 1.5.2.1 代码到状态机转换
 
 Cadence工作流代码转状态机的实现：
 
@@ -3310,18 +3310,18 @@ func (b *mutableStateBuilder) applyWorkflowExecutionStartedEvent(
     event *workflow.HistoryEvent,
 ) error {
     attributes := event.GetWorkflowExecutionStartedEventAttributes()
-    
+
     // 设置工作流执行信息
     b.executionInfo.WorkflowID = attributes.GetWorkflowId()
     b.executionInfo.WorkflowTypeName = attributes.GetWorkflowType().GetName()
     b.executionInfo.TaskList = attributes.GetTaskList().GetName()
     b.executionInfo.WorkflowTimeout = attributes.GetExecutionStartToCloseTimeoutSeconds()
     b.executionInfo.DecisionTimeoutValue = attributes.GetTaskStartToCloseTimeoutSeconds()
-    
+
     // 设置工作流执行状态
     b.executionInfo.State = persistence.WorkflowStateCreated
     b.executionInfo.CloseStatus = persistence.WorkflowCloseStatusNone
-    
+
     // 处理父工作流信息
     if attributes.ParentWorkflowDomain != nil {
         b.executionInfo.ParentDomainID = attributes.GetParentDomainUUID()
@@ -3329,7 +3329,7 @@ func (b *mutableStateBuilder) applyWorkflowExecutionStartedEvent(
         b.executionInfo.ParentRunID = attributes.GetParentWorkflowExecution().GetRunId()
         b.executionInfo.InitiatedID = attributes.GetInitiatedId()
     }
-    
+
     // 处理重试策略
     if attributes.RetryPolicy != nil {
         b.executionInfo.HasRetryPolicy = true
@@ -3340,9 +3340,9 @@ func (b *mutableStateBuilder) applyWorkflowExecutionStartedEvent(
         b.executionInfo.RetryMaximumAttempts = attributes.RetryPolicy.GetMaximumAttempts()
         b.executionInfo.RetryNonRetryableErrors = attributes.RetryPolicy.GetNonRetryableErrorReasons()
     }
-    
+
     // ... 其他状态设置
-    
+
     return nil
 }
 
@@ -3351,11 +3351,11 @@ func (b *mutableStateBuilder) applyDecisionTaskCompletedEvent(
     event *workflow.HistoryEvent,
 ) error {
     attributes := event.GetDecisionTaskCompletedEventAttributes()
-    
+
     // 检查决策任务的调度和开始ID
     scheduleID := attributes.GetScheduledEventId()
     startedID := attributes.GetStartedEventId()
-    
+
     // 验证决策任务状态
     if b.executionInfo.DecisionScheduleID != scheduleID ||
        b.executionInfo.DecisionStartedID != startedID {
@@ -3364,7 +3364,7 @@ func (b *mutableStateBuilder) applyDecisionTaskCompletedEvent(
             b.executionInfo.DecisionStartedID, startedID,
         )
     }
-    
+
     // 重置决策任务状态
     b.executionInfo.DecisionScheduleID = common.EmptyEventID
     b.executionInfo.DecisionStartedID = common.EmptyEventID
@@ -3383,16 +3383,16 @@ func (b *mutableStateBuilder) applyDecisionTaskCompletedEvent(
     b.executionInfo.DecisionRequestID = emptyUUID
     b.executionInfo.DecisionAttempt = 0
     b.executionInfo.DecisionTimestamp = 0
-    
+
     // 更新已处理决策计数
     b.executionInfo.DecisionCompletedCount++
-    
+
     // 更新版本信息
     if b.replicationState != nil {
         b.replicationState.LastWriteEventID = event.GetEventId()
         b.replicationState.LastWriteVersion = event.GetVersion()
     }
-    
+
     return nil
 }
 
@@ -3401,10 +3401,10 @@ func (b *mutableStateBuilder) applyActivityTaskScheduledEvent(
     event *workflow.HistoryEvent,
 ) error {
     attributes := event.GetActivityTaskScheduledEventAttributes()
-    
+
     // 生成活动ID
     scheduledEventID := event.GetEventId()
-    
+
     // 创建活动信息
     ai := &persistence.ActivityInfo{
         ScheduleID:               scheduledEventID,
@@ -3432,16 +3432,16 @@ func (b *mutableStateBuilder) applyActivityTaskScheduledEvent(
         RetryLastWorkerIdentity: "",
         RetryCount:              0,
     }
-    
+
     // 添加到活动信息映射
     b.pendingActivityInfoIDs[scheduledEventID] = ai
     b.pendingActivityInfoByActivityID[ai.ActivityID] = scheduledEventID
-    
+
     return nil
 }
 ```
 
-#### 4.2.2 状态持久化序列化
+#### 1.5.2.2 状态持久化序列化
 
 Cadence的状态持久化实现：
 
@@ -3451,18 +3451,18 @@ func (d *cassandraHistoryPersistence) AppendHistoryEvents(
     request *AppendHistoryEventsRequest,
 ) error {
     batch := d.session.NewBatch(gocql.LoggedBatch)
-    
+
     domainID := request.DomainID
     workflowID := request.Execution.GetWorkflowId()
     runID := request.Execution.GetRunId()
     eventBatch := request.Events
-    
+
     // 序列化事件
     data, encoding, err := EncodeHistoryEvents(eventBatch)
     if err != nil {
         return err
     }
-    
+
     // 添加批处理
     batch.Query(templateAppendHistoryEventsQuery,
         domainID,
@@ -3473,12 +3473,12 @@ func (d *cassandraHistoryPersistence) AppendHistoryEvents(
         data,
         encoding,
     )
-    
+
     // 执行批处理
     if err := d.session.ExecuteBatch(batch); err != nil {
         return convertCommonErrors("AppendHistoryEvents", err)
     }
-    
+
     return nil
 }
 
@@ -3489,7 +3489,7 @@ func EncodeHistoryEvents(events []*workflow.HistoryEvent) ([]byte, string, error
     if err != nil {
         return nil, "", err
     }
-    
+
     return data, "thriftrw", nil
 }
 
@@ -3498,18 +3498,18 @@ func (d *cassandraStore) UpdateWorkflowExecution(
     request *UpdateWorkflowExecutionRequest,
 ) error {
     batch := d.session.NewBatch(gocql.LoggedBatch)
-    
+
     // 将工作流执行信息转换为map
     executionInfo := request.ExecutionInfo
     replicationState := request.ReplicationState
-    
+
     infoMap, err := workflowExecutionInfoToMap(executionInfo)
     if err != nil {
         return &workflow.InternalServiceError{
             Message: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
         }
     }
-    
+
     // 添加工作流执行更新
     batch.Query(templateUpdateWorkflowExecutionQuery,
         infoMap,
@@ -3518,7 +3518,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
         executionInfo.RunID,
         request.Condition, // 乐观锁条件
     )
-    
+
     // 更新活动信息
     for _, ai := range request.UpsertActivityInfos {
         activityMap, err := activityInfoToMap(ai)
@@ -3527,7 +3527,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
                 Message: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
             }
         }
-        
+
         batch.Query(templateUpdateActivityInfoQuery,
             activityMap,
             executionInfo.DomainID,
@@ -3536,7 +3536,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             ai.ScheduleID,
         )
     }
-    
+
     // 删除活动信息
     for _, scheduleID := range request.DeleteActivityInfos {
         batch.Query(templateDeleteActivityInfoQuery,
@@ -3546,7 +3546,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             scheduleID,
         )
     }
-    
+
     // 更新定时器信息
     for _, ti := range request.UpsertTimerInfos {
         timerMap, err := timerInfoToMap(ti)
@@ -3555,7 +3555,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
                 Message: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
             }
         }
-        
+
         batch.Query(templateUpdateTimerInfoQuery,
             timerMap,
             executionInfo.DomainID,
@@ -3564,7 +3564,7 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             ti.TimerID,
         )
     }
-    
+
     // 删除定时器信息
     for _, timerID := range request.DeleteTimerInfos {
         batch.Query(templateDeleteTimerInfoQuery,
@@ -3574,9 +3574,9 @@ func (d *cassandraStore) UpdateWorkflowExecution(
             timerID,
         )
     }
-    
+
     // ... 处理其他状态信息（子工作流、信号等）
-    
+
     // 执行批处理
     previous := make(map[string]interface{})
     applied, iter, err := d.session.MapExecuteBatchCAS(batch, previous)
@@ -3586,19 +3586,19 @@ func (d *cassandraStore) UpdateWorkflowExecution(
         }
     }
     defer iter.Close()
-    
+
     if !applied {
         // CAS失败，条件不匹配
         return &persistence.ConditionFailedError{
             Msg: fmt.Sprintf("UpdateWorkflowExecution operation failed. Error: %v", err),
         }
     }
-    
+
     return nil
 }
 ```
 
-#### 4.2.3 历史事件重建
+#### 1.5.2.3 历史事件重建
 
 Cadence通过历史事件重建工作流状态：
 
@@ -3612,7 +3612,7 @@ func (b *mutableStateBuilder) ReplicateEvents(
             return err
         }
     }
-    
+
     return nil
 }
 
@@ -3622,7 +3622,7 @@ func (r *replicatorImpl) handleHistoryReplication(
     task *replicator.ReplicationTask,
 ) error {
     attributes := task.GetHistoryTaskAttributes()
-    
+
     // 构建请求
     request := &h.ReplicateEventsRequest{
         SourceCluster: common.StringPtr(r.sourceCluster),
@@ -3638,7 +3638,7 @@ func (r *replicatorImpl) handleHistoryReplication(
         History:         attributes.History,
         NewRunHistory:   attributes.NewRunHistory,
     }
-    
+
     // 调用历史服务复制事件
     err := r.historyClient.ReplicateEvents(ctx, request)
     if err != nil {
@@ -3648,10 +3648,10 @@ func (r *replicatorImpl) handleHistoryReplication(
             tag.WorkflowRunID(*attributes.RunId),
             tag.Error(err),
         )
-        
+
         // 处理错误...
     }
-    
+
     return err
 }
 
@@ -3665,18 +3665,18 @@ func (r *historyReplicatorImpl) replicateWorkflowExecution(
     // 获取请求中的历史事件
     history := request.GetHistory()
     events := history.GetEvents()
-    
+
     // 构建事件映射
     firstEvent := events[0]
     eventStoreVersion := firstEvent.GetVersion()
-    
+
     // 重放历史事件
     for _, event := range events {
         if err := msBuilder.ReplicateEvent(event); err != nil {
             return err
         }
     }
-    
+
     // 更新版本信息
     if msBuilder.GetReplicationState() != nil {
         msBuilder.UpdateReplicationStateLastEventID(
@@ -3685,7 +3685,7 @@ func (r *historyReplicatorImpl) replicateWorkflowExecution(
             events[len(events)-1].GetEventId(),
         )
     }
-    
+
     // 持久化更新
     return context.updateWorkflowExecutionWithContext(ctx, false)
 }
@@ -3725,18 +3725,18 @@ func (b *mutableStateBuilder) replicateWorkflowExecutionStartedEvent(
     event *workflow.HistoryEvent,
 ) error {
     attributes := event.GetWorkflowExecutionStartedEventAttributes()
-    
+
     // 设置工作流执行信息
     b.executionInfo.WorkflowID = attributes.GetWorkflowId()
     b.executionInfo.WorkflowTypeName = attributes.GetWorkflowType().GetName()
     b.executionInfo.TaskList = attributes.GetTaskList().GetName()
     b.executionInfo.WorkflowTimeout = attributes.GetExecutionStartToCloseTimeoutSeconds()
     b.executionInfo.DecisionTimeoutValue = attributes.GetTaskStartToCloseTimeoutSeconds()
-    
+
     // 设置工作流执行状态
     b.executionInfo.State = persistence.WorkflowStateCreated
     b.executionInfo.CloseStatus = persistence.WorkflowCloseStatusNone
-    
+
     // 设置版本信息
     if b.replicationState != nil {
         b.replicationState.CurrentVersion = event.GetVersion()
@@ -3744,9 +3744,9 @@ func (b *mutableStateBuilder) replicateWorkflowExecutionStartedEvent(
         b.replicationState.LastWriteVersion = event.GetVersion()
         b.replicationState.LastWriteEventID = event.GetEventId()
     }
-    
+
     // ... 其他状态设置
-    
+
     return nil
 }
 
@@ -3755,10 +3755,10 @@ func (b *mutableStateBuilder) replicateActivityTaskScheduledEvent(
     event *workflow.HistoryEvent,
 ) error {
     attributes := event.GetActivityTaskScheduledEventAttributes()
-    
+
     // 获取调度ID
     scheduledEventID := event.GetEventId()
-    
+
     // 创建活动信息
     ai := &persistence.ActivityInfo{
         ScheduleID:               scheduledEventID,
@@ -3773,16 +3773,16 @@ func (b *mutableStateBuilder) replicateActivityTaskScheduledEvent(
         HeartbeatTimeout:         attributes.GetHeartbeatTimeoutSeconds(),
         // ... 其他字段
     }
-    
+
     // 添加到活动信息映射
     b.pendingActivityInfoIDs[scheduledEventID] = ai
     b.pendingActivityInfoByActivityID[ai.ActivityID] = scheduledEventID
-    
+
     return nil
 }
 ```
 
-## 5. 结论
+## 1.6 结论
 
 通过对Cadence工作流系统源码的详细分析，我们得出以下结论：
 

@@ -1,37 +1,38 @@
-# 高级线性类型理论深化 (Advanced Linear Type Theory Deepening)
+# 1. 高级线性类型理论深化 (Advanced Linear Type Theory Deepening)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 线性逻辑基础深化](#2-线性逻辑基础深化)
-  - [2.1 线性逻辑的完整公理化](#21-线性逻辑的完整公理化)
-  - [2.2 线性逻辑的语义](#22-线性逻辑的语义)
-- [3 线性类型系统](#3-线性类型系统)
-  - [3.1 线性λ演算](#31-线性λ演算)
-  - [3.2 线性类型系统的扩展](#32-线性类型系统的扩展)
-- [4 线性类型系统的应用](#4-线性类型系统的应用)
-  - [4.1 资源管理](#41-资源管理)
-  - [4.2 并发控制](#42-并发控制)
-- [5 量子线性类型系统](#5-量子线性类型系统)
-  - [5.1 量子线性逻辑](#51-量子线性逻辑)
-  - [5.2 量子资源管理](#52-量子资源管理)
-- [6 线性类型系统的优化](#6-线性类型系统的优化)
-  - [6.1 线性性推断](#61-线性性推断)
-  - [6.2 线性类型系统的编译](#62-线性类型系统的编译)
-- [7 前沿研究方向](#7-前沿研究方向)
-  - [7.1 高阶线性类型系统](#71-高阶线性类型系统)
-  - [7.2 线性类型系统的形式化验证](#72-线性类型系统的形式化验证)
-- [8 结论](#8-结论)
+- [1. 高级线性类型理论深化 (Advanced Linear Type Theory Deepening)](#1-高级线性类型理论深化-advanced-linear-type-theory-deepening)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 线性逻辑基础深化](#12-线性逻辑基础深化)
+    - [1.2.1 线性逻辑的完整公理化](#121-线性逻辑的完整公理化)
+    - [1.2.2 线性逻辑的语义](#122-线性逻辑的语义)
+  - [1.3 线性类型系统](#13-线性类型系统)
+    - [1.3.1 线性λ演算](#131-线性λ演算)
+    - [1.3.2 线性类型系统的扩展](#132-线性类型系统的扩展)
+  - [1.4 线性类型系统的应用](#14-线性类型系统的应用)
+    - [1.4.1 资源管理](#141-资源管理)
+    - [1.4.2 并发控制](#142-并发控制)
+  - [1.5 量子线性类型系统](#15-量子线性类型系统)
+    - [1.5.1 量子线性逻辑](#151-量子线性逻辑)
+    - [1.5.2 量子资源管理](#152-量子资源管理)
+  - [1.6 线性类型系统的优化](#16-线性类型系统的优化)
+    - [1.6.1 线性性推断](#161-线性性推断)
+    - [1.6.2 线性类型系统的编译](#162-线性类型系统的编译)
+  - [1.7 前沿研究方向](#17-前沿研究方向)
+    - [1.7.1 高阶线性类型系统](#171-高阶线性类型系统)
+    - [1.7.2 线性类型系统的形式化验证](#172-线性类型系统的形式化验证)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个高级线性类型理论体系，从基础的线性逻辑到高级的线性类型系统，为资源管理、并发控制和量子计算提供坚实的理论基础。
 
-## 2 线性逻辑基础深化
+## 1.2 线性逻辑基础深化
 
-### 2.1 线性逻辑的完整公理化
+### 1.2.1 线性逻辑的完整公理化
 
 **定义 1.1 (线性逻辑连接词)**
 线性逻辑的完整连接词集合：
@@ -82,39 +83,39 @@ data Proof = Proof {
 }
 
 searchProof :: LinearLogic -> Formula -> Maybe Proof
-searchProof logic goal = 
+searchProof logic goal =
   let -- 反向证明搜索
-      searchBackward formula = 
+      searchBackward formula =
         case formula of
           -- 原子公式
           Atom _ -> searchAxiom logic formula
           -- 复合公式
-          Compound conn args -> 
+          Compound conn args ->
             let applicableRules = findApplicableRules logic conn
-                candidates = concatMap (\rule -> 
+                candidates = concatMap (\rule ->
                   applyRuleBackward rule formula) applicableRules
             in findValidProof logic candidates
   in searchBackward goal
 
 findApplicableRules :: LinearLogic -> Connective -> [Rule]
-findApplicableRules logic conn = 
+findApplicableRules logic conn =
   let allRules = Map.elems (rules logic)
-      applicable = filter (\rule -> 
+      applicable = filter (\rule ->
         conclusionConnective rule == conn) allRules
   in applicable
 
 applyRuleBackward :: Rule -> Formula -> [Proof]
-applyRuleBackward rule conclusion = 
+applyRuleBackward rule conclusion =
   let -- 应用规则的反向
       premises = computePremises rule conclusion
-      subProofs = map (\premise -> 
+      subProofs = map (\premise ->
         searchProof logic premise) premises
   in if all isJust subProofs
      then [Proof conclusion (map fromJust subProofs) (ruleName rule)]
      else []
 ```
 
-### 2.2 线性逻辑的语义
+### 1.2.2 线性逻辑的语义
 
 **定义 1.3 (线性逻辑语义)**
 线性逻辑的指称语义：
@@ -146,7 +147,7 @@ data Monoid = Monoid {
 }
 
 constructLinearModel :: Category -> LinearModel
-constructLinearModel category = 
+constructLinearModel category =
   let -- 构造幺半群
       monoid = constructMonoid category
       -- 构造内部同态
@@ -160,7 +161,7 @@ constructLinearModel category =
   }
 
 constructMonoid :: Category -> Monoid
-constructMonoid category = 
+constructMonoid category =
   let -- 张量积函子
       tensor = tensorFunctor category
       -- 单位对象
@@ -172,9 +173,9 @@ constructMonoid category =
   }
 ```
 
-## 3 线性类型系统
+## 1.3 线性类型系统
 
-### 3.1 线性λ演算
+### 1.3.1 线性λ演算
 
 **定义 2.1 (线性λ演算)**
 线性λ演算的语法：
@@ -205,56 +206,56 @@ data Context = Context {
 }
 
 checkLinearType :: LinearLambda -> Term -> Type -> Bool
-checkLinearType lambda term expectedType = 
+checkLinearType lambda term expectedType =
   case term of
-    Var x -> 
+    Var x ->
       let varType = lookupVariable lambda x
           multiplicity = getMultiplicity lambda x
       in varType == expectedType && multiplicity == 1
-    
-    Lambda x body -> 
+
+    Lambda x body ->
       case expectedType of
-        LinearArrow domain codomain -> 
+        LinearArrow domain codomain ->
           let newContext = extendContext (context lambda) x domain
               newLambda = lambda { context = newContext }
           in checkLinearType newLambda body codomain
         _ -> False
-    
-    App fun arg -> 
+
+    App fun arg ->
       let funType = inferType lambda fun
       in case funType of
-           LinearArrow domain codomain -> 
-             checkLinearType lambda arg domain && 
+           LinearArrow domain codomain ->
+             checkLinearType lambda arg domain &&
              codomain == expectedType
            _ -> False
-    
-    Tensor left right -> 
+
+    Tensor left right ->
       case expectedType of
-        TensorType leftType rightType -> 
-          checkLinearType lambda left leftType && 
+        TensorType leftType rightType ->
+          checkLinearType lambda left leftType &&
           checkLinearType lambda right rightType
         _ -> False
 
 inferType :: LinearLambda -> Term -> Type
-inferType lambda term = 
+inferType lambda term =
   case term of
     Var x -> lookupVariable lambda x
-    Lambda x body -> 
+    Lambda x body ->
       let domainType = freshTypeVar
           newContext = extendContext (context lambda) x domainType
           newLambda = lambda { context = newContext }
           codomainType = inferType newLambda body
       in LinearArrow domainType codomainType
-    App fun arg -> 
+    App fun arg ->
       let funType = inferType lambda fun
           argType = inferType lambda arg
       in case funType of
-           LinearArrow domain codomain -> 
+           LinearArrow domain codomain ->
              if domain == argType then codomain else error "Type mismatch"
            _ -> error "Expected function type"
 ```
 
-### 3.2 线性类型系统的扩展
+### 1.3.2 线性类型系统的扩展
 
 **定义 2.3 (仿射类型系统)**
 仿射类型系统允许变量最多使用一次，但可以忽略。
@@ -274,7 +275,7 @@ data PolymorphicLinear = PolymorphicLinear {
 data Linearity = Linear | Affine | Relevant | Unrestricted
 
 checkPolymorphicLinear :: PolymorphicLinear -> Term -> Type -> Bool
-checkPolymorphicLinear poly term expectedType = 
+checkPolymorphicLinear poly term expectedType =
   let -- 类型推断
       (inferredType, constraints) = inferPolymorphicType poly term
       -- 约束求解
@@ -284,20 +285,20 @@ checkPolymorphicLinear poly term expectedType =
   in applySubstitution substitution inferredType == expectedType && linearityValid
 
 inferPolymorphicType :: PolymorphicLinear -> Term -> (Type, [Constraint])
-inferPolymorphicType poly term = 
+inferPolymorphicType poly term =
   case term of
-    Var x -> 
+    Var x ->
       let scheme = lookupTypeScheme poly x
           (type', constraints) = instantiateScheme scheme
       in (type', constraints)
-    
-    Lambda x body -> 
+
+    Lambda x body ->
       let domainType = freshTypeVar
           newPoly = extendContext poly x domainType
           (codomainType, constraints) = inferPolymorphicType newPoly body
       in (LinearArrow domainType codomainType, constraints)
-    
-    App fun arg -> 
+
+    App fun arg ->
       let (funType, funConstraints) = inferPolymorphicType poly fun
           (argType, argConstraints) = inferPolymorphicType poly arg
           resultType = freshTypeVar
@@ -305,9 +306,9 @@ inferPolymorphicType poly term =
       in (resultType, funConstraints ++ argConstraints ++ [newConstraint])
 ```
 
-## 4 线性类型系统的应用
+## 1.4 线性类型系统的应用
 
-### 4.1 资源管理
+### 1.4.1 资源管理
 
 **定义 3.1 (资源类型)**
 资源类型表示必须精确管理的资源。
@@ -331,7 +332,7 @@ data Resource = Resource {
 }
 
 allocateResource :: ResourceManager -> ResourceType -> (ResourceManager, ResourceId)
-allocateResource manager resourceType = 
+allocateResource manager resourceType =
   let -- 生成新的资源ID
       resourceId = generateResourceId
       -- 创建资源
@@ -352,13 +353,13 @@ allocateResource manager resourceType =
   in (newManager, resourceId)
 
 releaseResource :: ResourceManager -> ResourceId -> ResourceManager
-releaseResource manager resourceId = 
+releaseResource manager resourceId =
   let -- 检查资源是否存在
       resource = Map.lookup resourceId (resources manager)
       -- 检查所有权
       owner = Map.lookup resourceId (ownership manager)
   in case (resource, owner) of
-       (Just res, Just threadId) | threadId == currentThread -> 
+       (Just res, Just threadId) | threadId == currentThread ->
          let -- 释放资源
              newResources = Map.delete resourceId (resources manager)
              newOwnership = Map.delete resourceId (ownership manager)
@@ -371,7 +372,7 @@ releaseResource manager resourceId =
        _ -> error "Cannot release resource"
 ```
 
-### 4.2 并发控制
+### 1.4.2 并发控制
 
 **定义 3.3 (线性通道)**
 线性通道确保消息传递的安全性。
@@ -397,7 +398,7 @@ data LinearMutex = LinearMutex {
 }
 
 sendMessage :: LinearChannel -> Message -> IO ()
-sendMessage channel message = 
+sendMessage channel message =
   let -- 检查发送权限
       hasPermission = currentThread `elem` senders channel
   in if hasPermission
@@ -409,7 +410,7 @@ sendMessage channel message =
      else error "No send permission"
 
 receiveMessage :: LinearChannel -> IO Message
-receiveMessage channel = 
+receiveMessage channel =
   let -- 检查接收权限
       hasPermission = currentThread `elem` receivers channel
   in if hasPermission
@@ -426,28 +427,28 @@ receiveMessage channel =
      else error "No receive permission"
 
 acquireMutex :: LinearMutex -> IO ()
-acquireMutex mutex = 
+acquireMutex mutex =
   atomically $ do
     owner <- readTVar (owner mutex)
     case owner of
-      Nothing -> 
+      Nothing ->
         -- 获取锁
         writeTVar (owner mutex) (Just currentThread)
-      Just threadId | threadId == currentThread -> 
+      Just threadId | threadId == currentThread ->
         -- 重入锁
         return ()
-      Just _ -> 
+      Just _ ->
         -- 等待锁
         do
           writeTVar (waitQueue mutex) (enqueue currentThread (waitQueue mutex))
           retry
 
 releaseMutex :: LinearMutex -> IO ()
-releaseMutex mutex = 
+releaseMutex mutex =
   atomically $ do
     owner <- readTVar (owner mutex)
     case owner of
-      Just threadId | threadId == currentThread -> 
+      Just threadId | threadId == currentThread ->
         -- 释放锁
         do
           writeTVar (owner mutex) Nothing
@@ -461,9 +462,9 @@ releaseMutex mutex =
       _ -> error "Cannot release mutex"
 ```
 
-## 5 量子线性类型系统
+## 1.5 量子线性类型系统
 
-### 5.1 量子线性逻辑
+### 1.5.1 量子线性逻辑
 
 **定义 4.1 (量子线性逻辑)**
 量子线性逻辑扩展了经典线性逻辑以支持量子计算。
@@ -491,41 +492,41 @@ data QuantumTerm = QuantumTerm {
 }
 
 checkQuantumLinearType :: QuantumLinearLogic -> QuantumTerm -> QuantumType -> Bool
-checkQuantumLinearType qll term expectedType = 
+checkQuantumLinearType qll term expectedType =
   case term of
-    QubitInit -> 
+    QubitInit ->
       expectedType == QubitType
-    
-    QuantumGate gate qubits -> 
+
+    QuantumGate gate qubits ->
       let gateType = getGateType gate
           qubitTypes = map getQubitType qubits
       in checkGateApplication gateType qubitTypes expectedType
-    
-    QuantumMeasurement qubit -> 
+
+    QuantumMeasurement qubit ->
       let qubitType = getQubitType qubit
       in expectedType == ClassicalType && qubitType == QubitType
-    
-    QuantumSuperposition terms -> 
+
+    QuantumSuperposition terms ->
       let termTypes = map (\t -> inferQuantumType qll t) terms
       in all (\t -> t == expectedType) termTypes
 
 inferQuantumType :: QuantumLinearLogic -> QuantumTerm -> QuantumType
-inferQuantumType qll term = 
+inferQuantumType qll term =
   case term of
     QubitInit -> QubitType
-    QuantumGate gate qubits -> 
+    QuantumGate gate qubits ->
       let gateType = getGateType gate
           qubitTypes = map getQubitType qubits
       in applyGateType gateType qubitTypes
     QuantumMeasurement qubit -> ClassicalType
-    QuantumSuperposition terms -> 
+    QuantumSuperposition terms ->
       let types = map (\t -> inferQuantumType qll t) terms
       in if all (\t -> t == head types) types
          then head types
          else error "Type mismatch in superposition"
 ```
 
-### 5.2 量子资源管理
+### 1.5.2 量子资源管理
 
 **定义 4.3 (量子资源)**
 量子资源包括量子比特、量子门和量子测量。
@@ -550,7 +551,7 @@ data Qubit = Qubit {
 }
 
 allocateQubit :: QuantumResourceManager -> (QuantumResourceManager, QubitId)
-allocateQubit manager = 
+allocateQubit manager =
   let -- 生成新的量子比特ID
       qubitId = generateQubitId
       -- 创建量子比特
@@ -565,27 +566,27 @@ allocateQubit manager =
   in (newManager, qubitId)
 
 applyQuantumGate :: QuantumResourceManager -> GateId -> [QubitId] -> QuantumResourceManager
-applyQuantumGate manager gateId qubitIds = 
+applyQuantumGate manager gateId qubitIds =
   let -- 获取门
       gate = Map.lookup gateId (gates manager)
       -- 获取量子比特
       qubits = map (\id -> Map.lookup id (qubits manager)) qubitIds
   in case (gate, all isJust qubits) of
-       (Just g, True) -> 
+       (Just g, True) ->
          let -- 应用门
              updatedQubits = map (\q -> applyGate g q) (map fromJust qubits)
              -- 更新管理器
-             newQubits = foldl (\m (id, q) -> Map.insert id q m) 
+             newQubits = foldl (\m (id, q) -> Map.insert id q m)
                               (qubits manager) (zip qubitIds updatedQubits)
          in manager { qubits = newQubits }
        _ -> error "Invalid gate application"
 
 measureQubit :: QuantumResourceManager -> QubitId -> (QuantumResourceManager, Bit)
-measureQubit manager qubitId = 
+measureQubit manager qubitId =
   let -- 获取量子比特
       qubit = Map.lookup qubitId (qubits manager)
   in case qubit of
-       Just q -> 
+       Just q ->
          let -- 执行测量
              (newState, bit) = performMeasurement q
              -- 更新量子比特
@@ -597,9 +598,9 @@ measureQubit manager qubitId =
        Nothing -> error "Qubit not found"
 ```
 
-## 6 线性类型系统的优化
+## 1.6 线性类型系统的优化
 
-### 6.1 线性性推断
+### 1.6.1 线性性推断
 
 **定义 5.1 (线性性推断)**
 线性性推断自动推断变量的线性性。
@@ -623,7 +624,7 @@ data LinearityConstraint = LinearityConstraint {
 data LinearityRelation = Equal | LessEqual | GreaterEqual
 
 inferLinearity :: Program -> Map Variable Linearity
-inferLinearity program = 
+inferLinearity program =
   let -- 收集线性性约束
       constraints = collectLinearityConstraints program
       -- 求解约束
@@ -631,7 +632,7 @@ inferLinearity program =
   in solution
 
 collectLinearityConstraints :: Program -> [LinearityConstraint]
-collectLinearityConstraints program = 
+collectLinearityConstraints program =
   let -- 分析变量使用
       usageAnalysis = analyzeVariableUsage program
       -- 生成约束
@@ -639,31 +640,31 @@ collectLinearityConstraints program =
   in constraints
 
 analyzeVariableUsage :: Program -> Map Variable Usage
-analyzeVariableUsage program = 
+analyzeVariableUsage program =
   let -- 遍历程序
       usageMap = foldl analyzeExpression Map.empty (expressions program)
   in usageMap
 
 analyzeExpression :: Map Variable Usage -> Expression -> Map Variable Usage
-analyzeExpression usageMap expr = 
+analyzeExpression usageMap expr =
   case expr of
-    Var x -> 
+    Var x ->
       let currentUsage = Map.findWithDefault Unused x usageMap
           newUsage = incrementUsage currentUsage
       in Map.insert x newUsage usageMap
-    
-    Lambda x body -> 
+
+    Lambda x body ->
       let bodyUsage = analyzeExpression usageMap body
           varUsage = Map.findWithDefault Unused x bodyUsage
       in Map.insert x (markLinear varUsage) bodyUsage
-    
-    App fun arg -> 
+
+    App fun arg ->
       let funUsage = analyzeExpression usageMap fun
           argUsage = analyzeExpression funUsage arg
       in argUsage
 
 solveLinearityConstraints :: [LinearityConstraint] -> Map Variable Linearity
-solveLinearityConstraints constraints = 
+solveLinearityConstraints constraints =
   let -- 初始化解
       initialSolution = Map.fromList [(v, Unrestricted) | v <- allVariables constraints]
       -- 迭代求解
@@ -671,7 +672,7 @@ solveLinearityConstraints constraints =
   in finalSolution
 
 iterateConstraints :: [LinearityConstraint] -> Map Variable Linearity -> Map Variable Linearity
-iterateConstraints constraints solution = 
+iterateConstraints constraints solution =
   let -- 应用约束
       newSolution = foldl applyConstraint solution constraints
   in if newSolution == solution
@@ -679,22 +680,22 @@ iterateConstraints constraints solution =
      else iterateConstraints constraints newSolution
 
 applyConstraint :: Map Variable Linearity -> LinearityConstraint -> Map Variable Linearity
-applyConstraint solution constraint = 
+applyConstraint solution constraint =
   let -- 根据约束关系更新解
       updatedSolution = case relation constraint of
-        Equal -> 
+        Equal ->
           let linearity = getLinearity (head (variables constraint))
           in foldl (\m v -> Map.insert v linearity m) solution (variables constraint)
-        LessEqual -> 
+        LessEqual ->
           let maxLinearity = maximum (map (\v -> getLinearity v) (variables constraint))
           in foldl (\m v -> Map.insert v maxLinearity m) solution (variables constraint)
-        GreaterEqual -> 
+        GreaterEqual ->
           let minLinearity = minimum (map (\v -> getLinearity v) (variables constraint))
           in foldl (\m v -> Map.insert v minLinearity m) solution (variables constraint)
   in updatedSolution
 ```
 
-### 6.2 线性类型系统的编译
+### 1.6.2 线性类型系统的编译
 
 **定义 5.3 (线性类型编译)**
 线性类型编译将线性类型系统转换为低级代码。
@@ -718,7 +719,7 @@ data CompiledCode = CompiledCode {
 }
 
 compileLinearProgram :: LinearCompiler -> Program -> CompiledCode
-compileLinearProgram compiler program = 
+compileLinearProgram compiler program =
   let -- 类型检查
       typeChecked = typeCheck (typeChecker compiler) program
       -- 生成代码
@@ -728,7 +729,7 @@ compileLinearProgram compiler program =
   in optimizedCode
 
 typeCheck :: TypeChecker -> Program -> TypeCheckedProgram
-typeCheck checker program = 
+typeCheck checker program =
   let -- 检查类型
       typeErrors = checkTypes checker program
   in if null typeErrors
@@ -736,7 +737,7 @@ typeCheck checker program =
      else error ("Type errors: " ++ show typeErrors)
 
 generateCode :: CodeGenerator -> TypeCheckedProgram -> CompiledCode
-generateCode generator typeChecked = 
+generateCode generator typeChecked =
   let -- 生成指令
       instructions = generateInstructions generator typeChecked
       -- 分配资源
@@ -750,31 +751,31 @@ generateCode generator typeChecked =
   }
 
 generateInstructions :: CodeGenerator -> TypeCheckedProgram -> [Instruction]
-generateInstructions generator program = 
+generateInstructions generator program =
   let -- 遍历程序
       instructions = foldl generateExpression [] (expressions program)
   in instructions
 
 generateExpression :: [Instruction] -> Expression -> [Instruction]
-generateExpression instructions expr = 
+generateExpression instructions expr =
   case expr of
-    Var x -> 
+    Var x ->
       let loadInstr = Load (getResourceId x)
       in instructions ++ [loadInstr]
-    
-    Lambda x body -> 
+
+    Lambda x body ->
       let bodyInstrs = generateExpression [] body
           lambdaInstr = Lambda (getResourceId x) bodyInstrs
       in instructions ++ [lambdaInstr]
-    
-    App fun arg -> 
+
+    App fun arg ->
       let funInstrs = generateExpression [] fun
           argInstrs = generateExpression [] arg
           appInstr = Apply
       in instructions ++ funInstrs ++ argInstrs ++ [appInstr]
 
 insertLinearityChecks :: CodeGenerator -> TypeCheckedProgram -> [LinearityCheck]
-insertLinearityChecks generator program = 
+insertLinearityChecks generator program =
   let -- 分析变量使用
       usageMap = analyzeUsage program
       -- 生成检查
@@ -782,9 +783,9 @@ insertLinearityChecks generator program =
   in checks
 
 generateChecks :: Map Variable Usage -> [LinearityCheck]
-generateChecks usageMap = 
+generateChecks usageMap =
   let -- 为每个变量生成检查
-      checks = Map.foldlWithKey (\acc var usage -> 
+      checks = Map.foldlWithKey (\acc var usage ->
         case usage of
           Unused -> acc ++ [UnusedCheck var]
           UsedOnce -> acc ++ [UsedOnceCheck var]
@@ -793,9 +794,9 @@ generateChecks usageMap =
   in checks
 ```
 
-## 7 前沿研究方向
+## 1.7 前沿研究方向
 
-### 7.1 高阶线性类型系统
+### 1.7.1 高阶线性类型系统
 
 **定义 6.1 (高阶线性类型)**
 高阶线性类型支持类型级别的线性性。
@@ -819,7 +820,7 @@ data TypeFamily = TypeFamily {
 }
 
 checkHigherOrderLinear :: HigherOrderLinear -> Type -> Kind -> Bool
-checkHigherOrderLinear hol type' expectedKind = 
+checkHigherOrderLinear hol type' expectedKind =
   let -- 检查类型
       kind = inferKind hol type'
       -- 检查线性性
@@ -827,17 +828,17 @@ checkHigherOrderLinear hol type' expectedKind =
   in kind == expectedKind && isValidLinearity linearity
 
 inferKind :: HigherOrderLinear -> Type -> Kind
-inferKind hol type' = 
+inferKind hol type' =
   case type' of
-    TypeVar v -> 
+    TypeVar v ->
       lookupKind hol v
-    
-    TypeApp fun arg -> 
+
+    TypeApp fun arg ->
       let funKind = inferKind hol fun
           argKind = inferKind hol arg
       in applyKind funKind argKind
-    
-    TypeFamilyApp family args -> 
+
+    TypeFamilyApp family args ->
       let familyDef = lookupTypeFamily hol family
           paramKinds = parameters familyDef
       in if length args == length paramKinds
@@ -845,7 +846,7 @@ inferKind hol type' =
          else error "Kind mismatch"
 ```
 
-### 7.2 线性类型系统的形式化验证
+### 1.7.2 线性类型系统的形式化验证
 
 **定义 6.3 (线性类型系统的形式化)**
 线性类型系统的形式化在证明助手中实现。
@@ -869,7 +870,7 @@ data ProofStep = ProofStep {
 }
 
 generateLinearityProof :: Program -> LinearityProof
-generateLinearityProof program = 
+generateLinearityProof program =
   let -- 分析程序
       analysis = analyzeProgram program
       -- 生成证明目标
@@ -879,7 +880,7 @@ generateLinearityProof program =
   in proof
 
 analyzeProgram :: Program -> ProgramAnalysis
-analyzeProgram program = 
+analyzeProgram program =
   let -- 变量使用分析
       usageAnalysis = analyzeVariableUsage program
       -- 类型分析
@@ -893,7 +894,7 @@ analyzeProgram program =
   }
 
 generateGoals :: ProgramAnalysis -> [ProofGoal]
-generateGoals analysis = 
+generateGoals analysis =
   let -- 生成线性性目标
       linearityGoals = generateLinearityGoals analysis
       -- 生成类型目标
@@ -903,7 +904,7 @@ generateGoals analysis =
   in linearityGoals ++ typeGoals ++ resourceGoals
 
 constructProof :: [ProofGoal] -> LinearityProof
-constructProof goals = 
+constructProof goals =
   let -- 选择证明策略
       strategy = selectProofStrategy goals
       -- 应用证明规则
@@ -917,11 +918,11 @@ constructProof goals =
   in proof
 ```
 
-## 8 结论
+## 1.8 结论
 
 高级线性类型理论深化为现代编程语言和系统提供了强大的理论基础。从基础的线性逻辑到高级的量子线性类型系统，这些理论和方法在资源管理、并发控制和量子计算等领域发挥着重要作用。随着量子计算和形式化验证的发展，线性类型理论也在不断扩展和深化。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Girard, J. Y. (1987). Linear logic. Theoretical computer science, 50(1), 1-101.
 2. Wadler, P. (1990). Linear types can change the world! In Programming concepts and methods (pp. 561-581).

@@ -1,37 +1,37 @@
-# Temporal 与 Cadence 的多维对比分析
+# 1. Temporal 与 Cadence 的多维对比分析
 
 ## 目录
 
-- [Temporal 与 Cadence 的多维对比分析](#temporal-与-cadence-的多维对比分析)
+- [1. Temporal 与 Cadence 的多维对比分析](#1-temporal-与-cadence-的多维对比分析)
   - [目录](#目录)
-  - [1. 工作流模型与组合](#1-工作流模型与组合)
-    - [1.1 工作流基础模型对比](#11-工作流基础模型对比)
-    - [1.2 工作流组合能力](#12-工作流组合能力)
-    - [1.3 工作流状态管理](#13-工作流状态管理)
-    - [1.4 工作流管理与编排](#14-工作流管理与编排)
-  - [2. 数据流与执行模型](#2-数据流与执行模型)
-    - [2.1 数据流设计](#21-数据流设计)
-    - [2.2 执行流控制](#22-执行流控制)
-    - [2.3 容错机制](#23-容错机制)
-    - [2.4 一致性保证](#24-一致性保证)
-    - [2.5 分布式运行时架构](#25-分布式运行时架构)
-  - [3. 开发模型与语言支持](#3-开发模型与语言支持)
-    - [3.1 Go与Rust SDK对比](#31-go与rust-sdk对比)
-    - [3.2 协议设计与演化](#32-协议设计与演化)
-    - [3.3 开发体验与测试框架](#33-开发体验与测试框架)
-    - [3.4 部署模型与运维考量](#34-部署模型与运维考量)
-  - [4. 生态系统与实际应用](#4-生态系统与实际应用)
-    - [4.1 生态系统成熟度](#41-生态系统成熟度)
-    - [4.2 应用场景契合度](#42-应用场景契合度)
-    - [4.3 社区活跃度与支持](#43-社区活跃度与支持)
-  - [5. 总结与展望](#5-总结与展望)
-    - [5.1 核心优劣势总结](#51-核心优劣势总结)
-    - [5.2 选择决策框架](#52-选择决策框架)
-    - [5.3 未来发展趋势](#53-未来发展趋势)
+  - [1.1 工作流模型与组合](#11-工作流模型与组合)
+    - [1.1.1 工作流基础模型对比](#111-工作流基础模型对比)
+    - [1.1.2 工作流组合能力](#112-工作流组合能力)
+    - [1.1.3 工作流状态管理](#113-工作流状态管理)
+    - [1.1.4 工作流管理与编排](#114-工作流管理与编排)
+  - [1.2 数据流与执行模型](#12-数据流与执行模型)
+    - [1.2.1 数据流设计](#121-数据流设计)
+    - [1.2.2 执行流控制](#122-执行流控制)
+    - [1.2.3 容错机制](#123-容错机制)
+    - [1.2.4 一致性保证](#124-一致性保证)
+    - [1.2.5 分布式运行时架构](#125-分布式运行时架构)
+  - [1.3 开发模型与语言支持](#13-开发模型与语言支持)
+    - [1.3.1 Go与Rust SDK对比](#131-go与rust-sdk对比)
+    - [1.3.2 协议设计与演化](#132-协议设计与演化)
+    - [1.3.3 开发体验与测试框架](#133-开发体验与测试框架)
+    - [7.0.1 部署模型与运维考量](#701-部署模型与运维考量)
+  - [11.1 生态系统与实际应用](#111-生态系统与实际应用)
+    - [11.1.1 生态系统成熟度](#1111-生态系统成熟度)
+    - [12.0.1 应用场景契合度](#1201-应用场景契合度)
+    - [12.0.2 社区活跃度与支持](#1202-社区活跃度与支持)
+  - [12.1 总结与展望](#121-总结与展望)
+    - [12.1.1 核心优劣势总结](#1211-核心优劣势总结)
+    - [12.1.2 选择决策框架](#1212-选择决策框架)
+    - [12.1.3 未来发展趋势](#1213-未来发展趋势)
 
-## 1. 工作流模型与组合
+## 1.1 工作流模型与组合
 
-### 1.1 工作流基础模型对比
+### 1.1.1 工作流基础模型对比
 
 -**基础概念映射**
 
@@ -84,7 +84,7 @@
 
 Temporal和Cadence的基础工作流模型高度相似，这不足为奇，因为Temporal是从Cadence分支而来。两者都采用了事件溯源结合确定性重放的状态管理方式，都实现了相似的工作流和活动分离模型。主要不同体现在术语变化（如Task Queue vs Task List）和一些高级功能的实现上。
 
-### 1.2 工作流组合能力
+### 1.1.2 工作流组合能力
 
 -**子工作流模式**
 
@@ -155,7 +155,7 @@ impl OrderWorkflow {
             order_id: self.order_id.clone(),
             details: self.details.clone(),
         };
-        
+
         // 状态转换逻辑
         loop {
             match order.state {
@@ -178,7 +178,7 @@ impl OrderWorkflow {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -186,7 +186,7 @@ impl OrderWorkflow {
 
 Cadence和Temporal都支持状态机风格的工作流实现，但Temporal的Rust SDK提供了更好的类型安全保证。
 
-### 1.3 工作流状态管理
+### 1.1.3 工作流状态管理
 
 -**持久化机制**
 
@@ -208,7 +208,7 @@ Cadence和Temporal都支持状态机风格的工作流实现，但Temporal的Rus
 // Temporal中的Continue-As-New
 func MyWorkflow(ctx workflow.Context, param string) error {
     // 某些处理逻辑
-    
+
     // 达到某个条件后，继续为新的执行
     return workflow.NewContinueAsNewError(ctx, "MyWorkflow", newParam)
 }
@@ -216,7 +216,7 @@ func MyWorkflow(ctx workflow.Context, param string) error {
 // Cadence中的Continue-As-New
 func MyWorkflow(ctx workflow.Context, param string) error {
     // 某些处理逻辑
-    
+
     // 达到某个条件后，继续为新的执行
     return workflow.NewContinueAsNewError(ctx, newParam)
 }
@@ -224,7 +224,7 @@ func MyWorkflow(ctx workflow.Context, param string) error {
 
 继续执行模式允许工作流保持概念上的连续性，同时避免历史记录无限增长。两个系统的实现几乎相同，只有API细节差异。
 
-### 1.4 工作流管理与编排
+### 1.1.4 工作流管理与编排
 
 -**工作流查询与可见性**
 
@@ -275,9 +275,9 @@ response, err := client.BatchOperation(ctx, request)
 
 而Cadence需要客户端逐个操作工作流。
 
-## 2. 数据流与执行模型
+## 1.2 数据流与执行模型
 
-### 2.1 数据流设计
+### 1.2.1 数据流设计
 
 -**工作流输入/输出模型**
 
@@ -344,7 +344,7 @@ client, err := client.NewClient(client.Options{
 
 Cadence依赖gogo/protobuf，而Temporal默认使用JSON但支持多种数据转换器。
 
-### 2.2 执行流控制
+### 1.2.2 执行流控制
 
 -**执行控制模型**
 
@@ -412,7 +412,7 @@ _, err := client.CreateSchedule(ctx, scheduleID, schedule)
 
 这是Cadence不具备的原生功能。
 
-### 2.3 容错机制
+### 1.2.3 容错机制
 
 -**重试策略设计**
 
@@ -449,9 +449,9 @@ async fn process_payment(payment_details: PaymentDetails) -> Result<PaymentResul
 async fn order_workflow(ctx: workflow::Context, order: Order) -> Result<(), Error> {
     let activity_options = ActivityOptions::default()
         .schedule_to_close_timeout(Duration::from_secs(60));
-    
+
     let ctx = ctx.with_activity_options(activity_options);
-    
+
     // 处理可能的错误
     match process_payment(&ctx, &order.payment).await {
         Ok(result) => {
@@ -465,7 +465,7 @@ async fn order_workflow(ctx: workflow::Context, order: Order) -> Result<(), Erro
             // 重试策略会自动应用
         }
     }
-    
+
     Ok(())
 }
 ```
@@ -478,25 +478,25 @@ func SagaWorkflow(ctx workflow.Context, input SagaInput) error {
     saga := workflow.NewSaga(workflow.SagaOptions{
         Parallelism: 1,
     })
-    
+
     // 注册补偿操作
     saga.AddCompensation(cancelPayment, paymentID)
-    
+
     // 执行操作
     err := workflow.ExecuteActivity(ctx, processPayment, input.Payment).Get(ctx, &paymentID)
     if err != nil {
         return saga.Compensate(ctx, err)
     }
-    
+
     // 继续添加更多操作和补偿
-    
+
     return nil
 }
 ```
 
 Temporal和Cadence都支持Saga模式，但Temporal提供了更成熟的辅助库。
 
-### 2.4 一致性保证
+### 1.2.4 一致性保证
 
 -**事件一致性模型**
 
@@ -516,13 +516,13 @@ func WorkflowWithChildAndSignal(ctx workflow.Context) error {
         WorkflowID: "child",
     })
     childFuture := workflow.ExecuteChildWorkflow(childCtx, ChildWorkflow, nil)
-    
+
     // 等待子工作流启动，确保因果顺序
     var childExecution workflow.Execution
     if err := childFuture.GetChildWorkflowExecution().Get(ctx, &childExecution); err != nil {
         return err
     }
-    
+
     // 向子工作流发送信号，确保子工作流已启动
     return workflow.SignalExternalWorkflow(ctx, childExecution.ID, childExecution.RunID, "signal-name", signalArg).Get(ctx, nil)
 }
@@ -553,7 +553,7 @@ persistenceConfig := &config.Persistence{
 }
 ```
 
-### 2.5 分布式运行时架构
+### 1.2.5 分布式运行时架构
 
 -**服务组件架构**
 
@@ -613,9 +613,9 @@ request := &workflowservice.RegisterNamespaceRequest{
 
 Temporal的命名空间提供了更强的资源隔离能力，而Cadence的域(domain)隔离相对较弱。
 
-## 3. 开发模型与语言支持
+## 1.3 开发模型与语言支持
 
-### 3.1 Go与Rust SDK对比
+### 1.3.1 Go与Rust SDK对比
 
 -**Go SDK比较**
 
@@ -630,14 +630,14 @@ func MyWorkflow(ctx workflow.Context, input string) (string, error) {
             MaximumAttempts: 3,
         },
     }
-    
+
     // 创建特定活动选项的上下文
     activityCtx := workflow.WithActivityOptions(ctx, options)
-    
+
     // 更清晰的活动执行
     var result string
     err := workflow.ExecuteActivity(activityCtx, MyActivity, input).Get(activityCtx, &result)
-    
+
     return result, err
 }
 ```
@@ -649,7 +649,7 @@ Temporal的Rust SDK利用Rust类型系统提供更强的安全保证：
 ```rust
 use std::time::Duration;
 use temporal_sdk::{
-    ActError, ActHandle, ActivityOptions, WfContext, WfExitValue, WfError, 
+    ActError, ActHandle, ActivityOptions, WfContext, WfExitValue, WfError,
     workflow, activity
 };
 
@@ -672,12 +672,12 @@ pub async fn order_processing(ctx: WfContext, order: Order) -> Result<OrderResul
         }),
         ..Default::default()
     };
-    
+
     // 执行活动
     let total = ctx.calculate_total_typed(order.items)
         .options(act_opts)
         .await?;
-    
+
     Ok(OrderResult {
         order_id: order.id,
         total,
@@ -706,7 +706,7 @@ Temporal的Rust SDK提供了额外优势：
 - 借助Rust所有权模型的内存安全性
 - 类型驱动的状态机模式支持
 
-### 3.2 协议设计与演化
+### 1.3.2 协议设计与演化
 
 -**API设计哲学**
 
@@ -724,14 +724,14 @@ service WorkflowService {
       body: "*"
     };
   }
-  
+
   // 获取工作流执行历史
   rpc GetWorkflowExecutionHistory (GetWorkflowExecutionHistoryRequest) returns (GetWorkflowExecutionHistoryResponse) {
     option (google.api.http) = {
       get: "/api/v1/namespaces/{namespace}/workflows/{execution.workflow_id}/runs/{execution.run_id}/history"
     };
   }
-  
+
   // 查询工作流执行
   rpc QueryWorkflow (QueryWorkflowRequest) returns (QueryWorkflowResponse) {
     option (google.api.http) = {
@@ -761,7 +761,7 @@ Temporal提供更完善的接口演化支持：
 func MyWorkflow(ctx workflow.Context, input string) (string, error) {
     // 版本控制点
     v := workflow.GetVersion(ctx, "feature-flag", workflow.DefaultVersion, 1)
-    
+
     if v == workflow.DefaultVersion {
         // 旧逻辑
         return oldImplementation(ctx, input)
@@ -788,7 +788,7 @@ client, err := client.NewClient(client.Options{
 })
 ```
 
-### 3.3 开发体验与测试框架
+### 1.3.3 开发体验与测试框架
 
 -**开发工具链**
 
@@ -797,10 +797,10 @@ client, err := client.NewClient(client.Options{
 Temporal提供了更完善的本地开发体验：
 
 ```bash
-# Temporal本地开发服务器启动
+# 2. Temporal本地开发服务器启动
 temporal server start-dev
 
-# 启动特定服务
+# 3. 启动特定服务
 temporal server start \
   --namespace default \
   --db-filename sqlite.db \
@@ -810,7 +810,7 @@ temporal server start \
 Cadence本地开发相对复杂：
 
 ```bash
-# Cadence本地开发通常需要Docker Compose
+# 4. Cadence本地开发通常需要Docker Compose
 docker-compose -f docker/docker-compose.yml up
 ```
 
@@ -819,16 +819,16 @@ docker-compose -f docker/docker-compose.yml up
 Temporal的CLI工具更强大且用户友好：
 
 ```bash
-# Temporal CLI示例
+# 5. Temporal CLI示例
 temporal workflow start \
   --task-queue "order-processing" \
   --type "OrderWorkflow" \
   --input '{"orderId":"12345","items":[{"id":"item1","quantity":2}]}'
 
-# 获取工作流状态
+# 6. 获取工作流状态
 temporal workflow show --workflow-id "order-12345"
 
-# 查询工作流
+# 7. 查询工作流
 temporal workflow query --workflow-id "order-12345" --query-type "getStatus"
 ```
 
@@ -843,27 +843,27 @@ Temporal的测试框架提供了更完善的单元测试能力：
 func TestOrderWorkflow(t *testing.T) {
     testSuite := &testsuite.WorkflowTestSuite{}
     env := testSuite.NewTestWorkflowEnvironment()
-    
+
     // 模拟活动
     env.OnActivity(ProcessPayment, mock.Anything, mock.Anything).Return(&PaymentResult{
         TransactionID: "tx123",
         Status: "approved",
     }, nil)
-    
+
     // 注册工作流
     env.RegisterWorkflow(OrderWorkflow)
-    
+
     // 执行工作流
     env.ExecuteWorkflow(OrderWorkflow, orderInput)
-    
+
     // 验证结果
     require.True(t, env.IsWorkflowCompleted())
     require.NoError(t, env.GetWorkflowError())
-    
+
     var result OrderResult
     require.NoError(t, env.GetWorkflowResult(&result))
     assert.Equal(t, "COMPLETED", result.Status)
-    
+
     // 验证活动调用
     env.AssertExpectations(t)
 }
@@ -888,15 +888,15 @@ mod tests {
 
         // 设置测试环境
         let mut env = workflow_test!(OrderWorkflow);
-        
+
         // 模拟活动行为
         env.mock_activity("calculate_total")
             .with(vec![OrderItem { id: "item1".to_string(), quantity: 2, price: 10.0 }])
             .returning(|_| Ok(20.0));
-            
+
         // 运行工作流测试
         let result = env.execute(order).await.unwrap();
-        
+
         // 验证结果
         assert_eq!(result.order_id, "12345");
         assert_eq!(result.total, 20.0);
@@ -919,20 +919,20 @@ func TestIntegrationOrderWorkflow(t *testing.T) {
     })
     require.NoError(t, err)
     defer c.Close()
-    
+
     // 启动真实工作流
     options := client.StartWorkflowOptions{
         ID:        "integration-test-order-1",
         TaskQueue: "integration-test",
     }
-    
+
     we, err := c.ExecuteWorkflow(context.Background(), options, OrderWorkflow, orderInput)
     require.NoError(t, err)
-    
+
     // 等待工作流完成
     var result OrderResult
     require.NoError(t, we.Get(context.Background(), &result))
-    
+
     // 验证结果
     assert.Equal(t, "COMPLETED", result.Status)
 }
@@ -948,16 +948,16 @@ Temporal的重放调试器提供了更强的调试能力：
 // Temporal重放调试器
 func DebugWorkflow(historyFile string) error {
     replayer := worker.NewWorkflowReplayer()
-    
+
     // 注册工作流
     replayer.RegisterWorkflow(OrderWorkflow)
-    
+
     // 从文件加载历史
     history, err := ioutil.ReadFile(historyFile)
     if err != nil {
         return err
     }
-    
+
     // 执行重放
     err = replayer.ReplayWorkflowHistory(nil, history)
     return err
@@ -973,7 +973,7 @@ Temporal的Web UI提供了更现代化的可视化界面，包括：
 - 更完善的历史事件分析
 - 更友好的用户界面
 
-### 3.4 部署模型与运维考量
+### 7.0.1 部署模型与运维考量
 
 -**部署架构对比**
 
@@ -982,7 +982,7 @@ Temporal的Web UI提供了更现代化的可视化界面，包括：
 Temporal支持多种服务发现模式：
 
 ```yaml
-# Temporal服务发现配置示例
+# 8. Temporal服务发现配置示例
 services:
   frontend:
     rpc:
@@ -1015,7 +1015,7 @@ services:
 Temporal提供了更成熟的多集群部署支持：
 
 ```yaml
-# Temporal多集群配置示例
+# 9. Temporal多集群配置示例
 clusterMetadata:
   enableGlobalNamespace: true
   replicationConsumer:
@@ -1041,7 +1041,7 @@ clusterMetadata:
 Temporal提供了更好的自动扩展指南：
 
 ```yaml
-# Temporal Kubernetes HPA配置示例
+# 10. Temporal Kubernetes HPA配置示例
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -1087,7 +1087,7 @@ request := &workflowservice.UpdateNamespaceRequest{
 Temporal提供了更全面的监控指标：
 
 ```yaml
-# Temporal Prometheus配置示例
+# 11. Temporal Prometheus配置示例
 metrics:
   prometheus:
     timerType: "histogram"
@@ -1111,9 +1111,9 @@ Temporal提供了更完善的版本管理策略：
 - 提供兼容性测试工具
 - 维护详细的变更日志和升级指南
 
-## 4. 生态系统与实际应用
+## 11.1 生态系统与实际应用
 
-### 4.1 生态系统成熟度
+### 11.1.1 生态系统成熟度
 
 -**工具集与集成**
 
@@ -1149,7 +1149,7 @@ func setupTracing() {
         log.Fatal(err)
     }
     otel.SetTracerProvider(tp)
-    
+
     tc, err := client.NewClient(client.Options{
         HostPort:  "localhost:7233",
         Namespace: "default",
@@ -1174,11 +1174,11 @@ Temporal的文档更全面且现代化：
 Temporal提供了更多现成的模板和示例：
 
 ```bash
-# Temporal示例项目
+# 12. Temporal示例项目
 git clone https://github.com/temporalio/samples-go.git
 ```
 
-### 4.2 应用场景契合度
+### 12.0.1 应用场景契合度
 
 -**场景适配性分析**
 
@@ -1239,7 +1239,7 @@ Temporal实现示例：
 func OrderProcessingWorkflow(ctx workflow.Context, orderID string) error {
     logger := workflow.GetLogger(ctx)
     logger.Info("OrderProcessing workflow started", "orderId", orderID)
-    
+
     // 活动选项
     activityOptions := workflow.ActivityOptions{
         StartToCloseTimeout: time.Minute * 5,
@@ -1251,29 +1251,29 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderID string) error {
         },
     }
     ctx = workflow.WithActivityOptions(ctx, activityOptions)
-    
+
     // 1. 验证订单
     var validationResult ValidationResult
     err := workflow.ExecuteActivity(ctx, ValidateOrderActivity, orderID).Get(ctx, &validationResult)
     if err != nil {
         return err
     }
-    
+
     if !validationResult.IsValid {
         // 处理验证失败
         return workflow.ExecuteActivity(ctx, RejectOrderActivity, orderID, validationResult.Reason).Get(ctx, nil)
     }
-    
+
     // 2. 处理支付 - 使用Saga模式进行补偿
     saga := workflow.NewSaga(ctx, workflow.SagaOptions{})
-    
+
     var paymentResult PaymentResult
     err = workflow.ExecuteActivity(ctx, ProcessPaymentActivity, orderID).Get(ctx, &paymentResult)
     if err != nil {
         return err
     }
     saga.AddCompensation(RefundPaymentActivity, orderID, paymentResult.TransactionID)
-    
+
     // 3. 库存预留
     var inventoryResult InventoryResult
     err = workflow.ExecuteActivity(ctx, ReserveInventoryActivity, orderID).Get(ctx, &inventoryResult)
@@ -1281,26 +1281,26 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderID string) error {
         return saga.Compensate(ctx, err)
     }
     saga.AddCompensation(ReleaseInventoryActivity, orderID, inventoryResult.ReservationID)
-    
+
     // 4. 安排配送
     var fulfillmentResult FulfillmentResult
     err = workflow.ExecuteActivity(ctx, ArrangeFulfillmentActivity, orderID).Get(ctx, &fulfillmentResult)
     if err != nil {
         return saga.Compensate(ctx, err)
     }
-    
+
     // 5. 发送通知
     err = workflow.ExecuteActivity(ctx, SendOrderConfirmationActivity, orderID, fulfillmentResult).Get(ctx, nil)
     if err != nil {
         // 通知失败不回滚
         logger.Error("Failed to send confirmation", "error", err)
     }
-    
+
     // 注册查询处理程序
     workflow.SetQueryHandler(ctx, "get-order-status", func() (string, error) {
         return "FULFILLED", nil
     })
-    
+
     return nil
 }
 ```
@@ -1326,16 +1326,16 @@ pub async fn device_management_workflow(
 ) -> Result<(), WfError> {
     // 设备配置
     let mut device_config = fetch_device_config(&ctx, &device_id).await?;
-    
+
     // 创建子工作流处理遥测数据
     let telemetry_handle = spawn_telemetry_processor(&ctx, &device_id).await?;
-    
+
     // 设置定期维护检查
     let mut maintenance_timer = ctx.timer(Duration::from_hours(24)).await;
-    
+
     // 设置配置更新信号处理
     let mut config_updates = ctx.signal_channel::<DeviceConfig>("config-update");
-    
+
     // 主事件循环
     loop {
         workflow::select! {
@@ -1347,13 +1347,13 @@ pub async fn device_management_workflow(
                     device_config = new_config;
                 }
             }
-            
+
             // 处理定期维护
             _ = maintenance_timer => {
                 perform_maintenance_check(&ctx, &device_id, &device_config).await?;
                 maintenance_timer = ctx.timer(Duration::from_hours(24)).await;
             }
-            
+
             // 检查遥测处理子工作流完成
             _ = telemetry_handle.async_drop_join() => {
                 // 重新启动遥测处理
@@ -1364,7 +1364,7 @@ pub async fn device_management_workflow(
 }
 ```
 
-### 4.3 社区活跃度与支持
+### 12.0.2 社区活跃度与支持
 
 -**社区指标对比**
 
@@ -1394,9 +1394,9 @@ Temporal Cloud提供更完善的SLA承诺：
 - 全球区域部署选项
 - 企业级安全合规认证
 
-## 5. 总结与展望
+## 12.1 总结与展望
 
-### 5.1 核心优劣势总结
+### 12.1.1 核心优劣势总结
 
 **Temporal优势**：
 
@@ -1429,7 +1429,7 @@ Temporal Cloud提供更完善的SLA承诺：
 2. **熟悉度**：
    - 对于早期采用者，迁移成本较低
 
-### 5.2 选择决策框架
+### 12.1.2 选择决策框架
 
 为项目选择工作流引擎的决策框架：
 
@@ -1463,7 +1463,7 @@ Temporal Cloud提供更完善的SLA承诺：
         └── 偏前沿 → Temporal发展更快
 ```
 
-### 5.3 未来发展趋势
+### 12.1.3 未来发展趋势
 
 **预期演化方向**：
 

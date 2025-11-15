@@ -89,8 +89,8 @@ fn print_and_clone<T: std::fmt::Display + Clone>(value: T) -> T {
 }
 
 // 使用where子句增强可读性
-fn complex_function<T, U>(t: T, u: U) -> i32 
-where 
+fn complex_function<T, U>(t: T, u: U) -> i32
+where
     T: std::fmt::Display + Clone,
     U: std::fmt::Debug + PartialEq,
 {
@@ -159,7 +159,7 @@ impl<T> Point<T> {
     fn new(x: T, y: T) -> Self {
         Point { x, y }
     }
-    
+
     // 泛型方法
     fn swap(&mut self) {
         std::mem::swap(&mut self.x, &mut self.y);
@@ -242,8 +242,8 @@ fn process<T: std::fmt::Display + Clone + PartialEq>(value: T) {
 }
 
 // 使用where子句的复杂约束
-fn complex<T, U>(t: T, u: U) -> bool 
-where 
+fn complex<T, U>(t: T, u: U) -> bool
+where
     T: std::fmt::Display + Clone,
     U: std::fmt::Debug + Into<String>,
 {
@@ -286,7 +286,7 @@ impl<T: std::fmt::Debug> AsJson for T {
 trait Iterator {
     // 关联类型
     type Item;
-    
+
     fn next(&mut self) -> Option<Self::Item>;
 }
 
@@ -299,7 +299,7 @@ struct Counter {
 impl Iterator for Counter {
     // 指定关联类型
     type Item = usize;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         if self.count < self.max {
             self.count += 1;
@@ -352,7 +352,7 @@ struct StringCollector;
 
 impl Collector for StringCollector {
     type Item = String;
-    
+
     fn collect(&self) -> Vec<String> {
         vec!["a".to_string(), "b".to_string()]
     }
@@ -411,8 +411,8 @@ draw_all(shapes);
 
 ```rust
 // 对于任何生命周期'a，F都能接受一个&'a i32并返回&'a i32
-fn foo<F>(f: F) 
-where 
+fn foo<F>(f: F)
+where
     F: for<'a> Fn(&'a i32) -> &'a i32,
 {
     // ...
@@ -487,11 +487,11 @@ fn demo() {
         let short_lived = String::from("short");
         // 可以将长生命周期引用赋值给短生命周期引用
         let short_ref: &str = long_ref;
-        
+
         // 逆变示例（通常在函数参数位置）
         fn takes_short_fn<'a>(_: fn(&'a str)) {}
         fn acceptor(_: &'static str) {}
-        
+
         // 函数参数位置上是逆变的
         takes_short_fn(acceptor);
     }
@@ -669,7 +669,7 @@ impl StateMachine<Uninitialized> {
             _state: PhantomData,
         }
     }
-    
+
     // 状态转换
     fn initialize(self) -> StateMachine<Initialized> {
         StateMachine {
@@ -694,7 +694,7 @@ impl StateMachine<Running> {
     fn process(&mut self) {
         // 处理逻辑
     }
-    
+
     fn stop(self) -> StateMachine<Stopped> {
         StateMachine {
             data: self.data,
@@ -719,12 +719,12 @@ let machine = StateMachine::new()
 macro_rules! wrapper {
     ($name:ident, $inner:ty) => {
         struct $name<T>($inner, PhantomData<T>);
-        
+
         impl<T> $name<T> {
             fn new(value: $inner) -> Self {
                 $name(value, PhantomData)
             }
-            
+
             fn get(&self) -> &$inner {
                 &self.0
             }
@@ -839,8 +839,8 @@ trait Container {
 }
 
 // 2. 使用Into trait增强API灵活性
-fn process<T>(value: T) 
-where 
+fn process<T>(value: T)
+where
     T: Into<String>
 {
     let s: String = value.into();
@@ -957,7 +957,7 @@ struct Counter<T> {
 
 impl<T: Clone> Stream for Counter<T> {
     type Item = T;
-    
+
     fn poll_next(self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         let this = self.get_mut();
         if this.count < this.max {
@@ -989,7 +989,7 @@ where
     F: FnMut(T) -> R,
 {
     type Item = R;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         self.iter.next().map(&mut self.f)
     }
@@ -998,9 +998,9 @@ where
 // 实现泛型迭代器方法
 trait MyIterator {
     type Item;
-    
+
     fn next(&mut self) -> Option<Self::Item>;
-    
+
     fn map<F, R>(self, f: F) -> Map<Self, F>
     where
         Self: Sized,
@@ -1027,12 +1027,12 @@ impl<T> List<T> {
     fn new() -> Self {
         List::Nil
     }
-    
+
     // 在头部添加元素
     fn cons(self, item: T) -> Self {
         List::Cons(item, Box::new(self))
     }
-    
+
     // 递归计算长度
     fn len(&self) -> usize {
         match self {
@@ -1074,7 +1074,7 @@ fn my_sort<T: Ord>(slice: &mut [T]) {
     if slice.len() <= 1 {
         return;
     }
-    
+
     // 快速排序实现
     let pivot = partition(slice);
     let (left, right) = slice.split_at_mut(pivot);
@@ -1086,7 +1086,7 @@ fn my_sort<T: Ord>(slice: &mut [T]) {
 fn binary_search<T: Ord>(slice: &[T], item: &T) -> Option<usize> {
     let mut low = 0;
     let mut high = slice.len();
-    
+
     while low < high {
         let mid = low + (high - low) / 2;
         match slice[mid].cmp(item) {
@@ -1095,7 +1095,7 @@ fn binary_search<T: Ord>(slice: &[T], item: &T) -> Option<usize> {
             std::cmp::Ordering::Less => low = mid + 1,
         }
     }
-    
+
     None
 }
 
@@ -1104,11 +1104,11 @@ fn merge_sort<T: Ord + Clone>(slice: &[T]) -> Vec<T> {
     if slice.len() <= 1 {
         return slice.to_vec();
     }
-    
+
     let mid = slice.len() / 2;
     let left = merge_sort(&slice[..mid]);
     let right = merge_sort(&slice[mid..]);
-    
+
     merge(left, right)
 }
 
@@ -1116,10 +1116,10 @@ fn merge<T: Ord + Clone>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
     let mut result = Vec::with_capacity(left.len() + right.len());
     let mut left_iter = left.into_iter();
     let mut right_iter = right.into_iter();
-    
+
     let mut left_peek = left_iter.next();
     let mut right_peek = right_iter.next();
-    
+
     loop {
         match (left_peek, right_peek) {
             (Some(ref left_val), Some(ref right_val)) => {
@@ -1144,7 +1144,7 @@ fn merge<T: Ord + Clone>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
             (None, None) => break,
         }
     }
-    
+
     result
 }
 
@@ -1160,13 +1160,13 @@ impl<T> Graph<T> {
         let mut visited = vec![false; self.nodes.len()];
         let mut queue = std::collections::VecDeque::new();
         let mut result = Vec::new();
-        
+
         visited[start] = true;
         queue.push_back(start);
-        
+
         while let Some(node) = queue.pop_front() {
             result.push(node);
-            
+
             for &neighbor in &self.edges[node] {
                 if !visited[neighbor] {
                     visited[neighbor] = true;
@@ -1174,7 +1174,7 @@ impl<T> Graph<T> {
                 }
             }
         }
-        
+
         result
     }
 }
@@ -1287,7 +1287,7 @@ impl Connection<ConnectionState::Connecting> {
             state: std::marker::PhantomData,
         }
     }
-    
+
     fn fail(self) -> Connection<ConnectionState::Failed> {
         // 连接失败
         Connection {
@@ -1330,14 +1330,14 @@ impl<T: Clone, const N: usize> Vector<T, N> {
 trait Container {
     // 泛型关联类型
     type Item<'a> where Self: 'a;
-    
+
     fn get<'a>(&'a self, index: usize) -> Option<Self::Item<'a>>;
 }
 
 // 具体实现
 impl<T> Container for Vec<T> {
     type Item<'a> where T: 'a = &'a T;
-    
+
     fn get<'a>(&'a self, index: usize) -> Option<Self::Item<'a>> {
         self.as_slice().get(index)
     }
@@ -1459,9 +1459,9 @@ fn restricted<T: PrivateMarker>() {
 
 // 6. 文档中包含泛型使用示例
 /// 泛型计算函数
-/// 
+///
 /// # 示例
-/// 
+///
 /// ```
 /// let result = compute(5, 10);
 /// assert_eq!(result, 15);

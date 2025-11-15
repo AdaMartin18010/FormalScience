@@ -1,46 +1,44 @@
-# 当前Web UI架构、框架与语言的批判性分析
+# 1. 当前Web UI架构、框架与语言的批判性分析
 
 ## 目录
 
-- [当前Web UI架构、框架与语言的批判性分析](#当前web-ui架构框架与语言的批判性分析)
-  - [1 思维导图](#1-思维导图)
-  - [1 . 引言](#1-引言)
-  - [2 . 当前Web UI技术生态概览](#2-当前web-ui技术生态概览)
-  - [2. 当前Web UI技术生态概览](#2-当前web-ui技术生态概览)
-    - [2.1 主流框架对比](#21-主流框架对比)
-    - [2.2 组件库现状](#22-组件库现状)
-    - [2.3 编程范式演变](#23-编程范式演变)
-  - [3 . 前端架构模式分析](#3-前端架构模式分析)
-    - [3.1 组件设计模式](#31-组件设计模式)
-    - [3.2 状态管理策略](#32-状态管理策略)
-    - [3.3 微前端架构](#33-微前端架构)
-    - [3.4 服务端组件与同构渲染](#34-服务端组件与同构渲染)
-  - [4 . 工作流与开发体验批判](#4-工作流与开发体验批判)
-    - [4.1 开发工具链复杂性](#41-开发工具链复杂性)
-    - [4.2 构建系统效率](#42-构建系统效率)
-    - [4.3 类型系统应用](#43-类型系统应用)
-    - [4.4 测试实践与挑战](#44-测试实践与挑战)
-  - [5 . 性能与用户体验权衡](#5-性能与用户体验权衡)
-    - [5.1 首屏性能挑战](#51-首屏性能挑战)
-    - [5.2 运行时性能瓶颈](#52-运行时性能瓶颈)
-    - [5.3 可访问性现状](#53-可访问性现状)
-    - [5.4 国际化与本地化](#54-国际化与本地化)
-  - [6 . 架构可持续性挑战](#6-架构可持续性挑战)
-    - [6.1 依赖地狱问题](#61-依赖地狱问题)
-    - [6.2 代码库老化与迁移](#62-代码库老化与迁移)
-  - [7 . 未来趋势与演化方向](#7-未来趋势与演化方向)
-    - [7.1 编译优化革命](#71-编译优化革命)
-    - [7.2 AI辅助开发](#72-ai辅助开发)
-    - [7.3 系统设计范式转变](#73-系统设计范式转变)
-    - [7.4 边缘计算与流式交付](#74-边缘计算与流式交付)
-  - [8 . 结论与展望](#8-结论与展望)
-    - [8.1 当前架构的根本局限](#81-当前架构的根本局限)
-    - [8.2 趋势与预测](#82-趋势与预测)
-    - [8.3 面向未来的架构原则](#83-面向未来的架构原则)
+- [1. 当前Web UI架构、框架与语言的批判性分析](#1-当前web-ui架构框架与语言的批判性分析)
+  - [目录](#目录)
+  - [1.1 思维导图](#11-思维导图)
+  - [1.2 引言](#12-引言)
+  - [1.3 当前Web UI技术生态概览](#13-当前web-ui技术生态概览)
+    - [1.3.1 主流框架对比](#131-主流框架对比)
+    - [1.3.2 组件库现状](#132-组件库现状)
+    - [1.3.3 编程范式演变](#133-编程范式演变)
+  - [1.4 前端架构模式分析](#14-前端架构模式分析)
+    - [1.4.1 组件设计模式](#141-组件设计模式)
+    - [1.4.2 状态管理策略](#142-状态管理策略)
+    - [1.4.3 微前端架构](#143-微前端架构)
+    - [1.4.4 服务端组件与同构渲染](#144-服务端组件与同构渲染)
+  - [1.5 工作流与开发体验批判](#15-工作流与开发体验批判)
+    - [1.5.1 开发工具链复杂性](#151-开发工具链复杂性)
+    - [1.5.2 构建系统效率](#152-构建系统效率)
+    - [1.5.3 类型系统应用](#153-类型系统应用)
+    - [1.5.4 测试实践与挑战](#154-测试实践与挑战)
+  - [1.6 性能与用户体验权衡](#16-性能与用户体验权衡)
+    - [1.6.1 首屏性能挑战](#161-首屏性能挑战)
+    - [1.6.2 运行时性能瓶颈](#162-运行时性能瓶颈)
+    - [1.6.3 可访问性现状](#163-可访问性现状)
+    - [1.6.4 国际化与本地化](#164-国际化与本地化)
+  - [1.7 架构可持续性挑战](#17-架构可持续性挑战)
+    - [1.7.1 依赖地狱问题](#171-依赖地狱问题)
+    - [1.7.2 代码库老化与迁移](#172-代码库老化与迁移)
+  - [1.8 未来趋势与演化方向](#18-未来趋势与演化方向)
+    - [1.8.1 编译优化革命](#181-编译优化革命)
+    - [1.8.2 AI辅助开发](#182-ai辅助开发)
+    - [1.8.3 系统设计范式转变](#183-系统设计范式转变)
+    - [1.8.4 边缘计算与流式交付](#184-边缘计算与流式交付)
+  - [1.9 结论与展望](#19-结论与展望)
+    - [1.9.1 当前架构的根本局限](#191-当前架构的根本局限)
+    - [1.9.2 趋势与预测](#192-趋势与预测)
+    - [1.9.3 面向未来的架构原则](#193-面向未来的架构原则)
 
----
-
-## 思维导图
+## 1.1 思维导图
 
 ```text
 Web UI架构现状分析
@@ -235,13 +233,13 @@ Web UI架构现状分析
         └── 插件系统
 ```
 
-## 1. 引言
+## 1.2 引言
 
 Web UI开发在过去十年经历了爆炸性增长，从简单的文档标记语言发展为复杂的应用开发平台。今天，Web UI架构、框架和开发工作流已经形成了一个庞大而复杂的生态系统，带来了前所未有的能力，同时也引入了显著的复杂性和挑战。本文将以务实和批判的视角，分析当前Web UI技术栈的现状，探讨其中的优缺点，并评估不同架构模式在实际工作流中的表现。
 
-## 2. 当前Web UI技术生态概览
+## 1.3 当前Web UI技术生态概览
 
-### 2.1 主流框架对比
+### 1.3.1 主流框架对比
 
 -**React生态系统**
 
@@ -252,20 +250,20 @@ React继续占据主导地位，但其架构面临显著的演变和挑战：
 function SearchResults() {
   const [query, setQuery] = useState('');
   const [searchText, setSearchText] = useState('');
-  
+
   // 使用useTransition避免阻塞UI
   const [isPending, startTransition] = useTransition();
-  
+
   const handleChange = (e) => {
     // 立即更新输入框
     setQuery(e.target.value);
-    
+
     // 将搜索结果更新标记为低优先级
     startTransition(() => {
       setSearchText(e.target.value);
     });
   };
-  
+
   return (
     <>
       <input value={query} onChange={handleChange} />
@@ -330,15 +328,15 @@ Svelte通过编译时优化改变了游戏规则：
 <script>
   // 响应式声明
   let count = 0;
-  
+
   // 派生状态（无需useMemo/computed）
   $: doubled = count * 2;
-  
+
   // 响应式语句
   $: if (count > 10) {
     console.log('Count is getting high!');
   }
-  
+
   function increment() {
     count += 1;
   }
@@ -357,7 +355,7 @@ Svelte通过编译时优化改变了游戏规则：
 - 语法简洁但存在"魔法"，导致学习曲线和调试难度
 - 生态系统和企业采用率相对较低，限制了其在大型项目中的实用性
 
-### 2.2 组件库现状
+### 1.3.2 组件库现状
 
 -**组件库碎片化与重复**
 
@@ -415,7 +413,7 @@ class MyCustomElement extends HTMLElement {
   static get observedAttributes() {
     return ['value'];
   }
-  
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -429,11 +427,11 @@ class MyCustomElement extends HTMLElement {
       </div>
     `;
   }
-  
+
   connectedCallback() {
     // 组件挂载逻辑
   }
-  
+
   attributeChangedCallback(name, oldValue, newValue) {
     // 属性变化响应
   }
@@ -448,7 +446,7 @@ customElements.define('my-element', MyCustomElement);
 - 缺乏状态管理和数据绑定解决方案，导致开发体验不足
 - 浏览器支持已经改善，但开发工具和库支持滞后
 
-### 2.3 编程范式演变
+### 1.3.3 编程范式演变
 
 -**声明式UI的局限性**
 
@@ -458,12 +456,12 @@ customElements.define('my-element', MyCustomElement);
 // 声明式UI局限性示例
 function ComplexList({ items, filter, sort }) {
   // 在声明式范式中，复杂的派生逻辑难以组织
-  const filteredItems = useMemo(() => 
+  const filteredItems = useMemo(() =>
     items.filter(filter), [items, filter]);
-  
-  const sortedItems = useMemo(() => 
+
+  const sortedItems = useMemo(() =>
     [...filteredItems].sort(sort), [filteredItems, sort]);
-  
+
   return (
     <div>
       {sortedItems.map(item => (
@@ -492,12 +490,12 @@ function Counter() {
   // 细粒度响应式原语
   const [count, setCount] = createSignal(0);
   const [doubled, setDoubled] = createSignal(0);
-  
+
   // 自动跟踪依赖
   createEffect(() => {
     setDoubled(count() * 2);
   });
-  
+
   return (
     <button onClick={() => setCount(count() + 1)}>
       Count: {count()} Doubled: {doubled()}
@@ -512,9 +510,9 @@ function Counter() {
 - 函数调用语法（`count()`）相比属性访问（`count.value`或`$count`）降低了可读性
 - 响应式系统的心智模型各不相同，增加了框架间迁移的难度
 
-## 3. 前端架构模式分析
+## 1.4 前端架构模式分析
 
-### 3.1 组件设计模式
+### 1.4.1 组件设计模式
 
 -**原子设计的适用性与局限**
 
@@ -561,10 +559,10 @@ function ProductView({ product, actions }) {
 function ProductContainer({ productId }) {
   const { data, isLoading, error } = useProductData(productId);
   const actions = useProductActions(data);
-  
+
   if (isLoading) return <Spinner />;
   if (error) return <ErrorMessage error={error} />;
-  
+
   return <ProductView product={data} actions={actions} />;
 }
 ```
@@ -575,7 +573,7 @@ function ProductContainer({ productId }) {
 - 自定义hooks封装了逻辑，但难以与组件生命周期协调
 - 过度分离可能导致"间接层地狱"，增加理解和调试成本
 
-### 3.2 状态管理策略
+### 1.4.2 状态管理策略
 
 -**状态管理碎片化危机**
 
@@ -602,11 +600,11 @@ function ProductList() {
       retry: 3
     }
   );
-  
+
   // 客户端UI状态（本地、瞬态）
   const [selectedId, setSelectedId] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
-  
+
   // 服务器状态变更（带乐观更新）
   const mutation = useMutation(updateProduct, {
     onMutate: (newProduct) => {
@@ -617,7 +615,7 @@ function ProductList() {
       queryClient.invalidateQueries(['products']);
     }
   });
-  
+
   return (/* 渲染逻辑 */);
 }
 ```
@@ -693,7 +691,7 @@ const formMachine = createMachine({
 - 显式状态管理减少了bug，但增加了初始开发时间
 - 可视化和调试工具强大，但与现有开发工作流集成不足
 
-### 3.3 微前端架构
+### 1.4.3 微前端架构
 
 -**微前端的实际应用挑战**
 
@@ -747,7 +745,7 @@ function App() {
 - 运行时集成引入性能开销，初始加载多个应用导致体验下降
 - 共享依赖管理复杂，容易导致版本冲突和包体积膨胀
 
-### 3.4 服务端组件与同构渲染
+### 1.4.4 服务端组件与同构渲染
 
 -**React Server Components的革新与挑战**
 
@@ -763,7 +761,7 @@ export default async function UserProfile({ userId }) {
   // 直接数据库访问，不经过API
   const user = await db.users.findUnique({ where: { id: userId } });
   const posts = await db.posts.findMany({ where: { authorId: userId } });
-  
+
   return (
     <div>
       <h1>{user.name}</h1>
@@ -784,7 +782,7 @@ import { useState } from 'react';
 
 export default function ClientProfileActions({ userId }) {
   const [isFollowing, setIsFollowing] = useState(false);
-  
+
   return (
     <button onClick={() => setIsFollowing(!isFollowing)}>
       {isFollowing ? 'Unfollow' : 'Follow'}
@@ -815,9 +813,9 @@ export default function ClientProfileActions({ userId }) {
 - 混合渲染策略（部分路由SSG，部分ISR）增加了复杂性和测试难度
 - 不同框架的实现方式不一致，导致知识难以迁移和概念混淆
 
-## 4. 工作流与开发体验批判
+## 1.5 工作流与开发体验批判
 
-### 4.1 开发工具链复杂性
+### 1.5.1 开发工具链复杂性
 
 -**构建系统的困境**
 
@@ -904,7 +902,7 @@ npm生态系统的脆弱性导致了严重的依赖管理问题：
 - 环境变量、API端点和功能标志管理混乱
 - 容器化缓解了部分问题，但增加了本地开发复杂性
 
-### 4.2 构建系统效率
+### 1.5.2 构建系统效率
 
 -**构建性能挑战**
 
@@ -928,7 +926,7 @@ npm生态系统的脆弱性导致了严重的依赖管理问题：
 - 优化需要权衡（代码分割vs首次加载，树摇vs构建时间）
 - 构建工具API不稳定，导致配置无法长期维护
 
-### 4.3 类型系统应用
+### 1.5.3 类型系统应用
 
 -**TypeScript的价值与成本**
 
@@ -949,7 +947,7 @@ type ActionCreatorsFromActions<A> = {
 };
 
 // 复杂的实用工具类型
-type ExtractRouteParams<T extends string> = 
+type ExtractRouteParams<T extends string> =
   T extends `${infer Start}:${infer Param}/${infer Rest}`
     ? { [k in Param]: string } & ExtractRouteParams<Rest>
     : T extends `${infer Start}:${infer Param}`
@@ -983,7 +981,7 @@ function createRouter<
 - 过度依赖类型推断可能导致类型不精确或错误
 - 高级类型特性使代码难以维护和理解
 
-### 4.4 测试实践与挑战
+### 1.5.4 测试实践与挑战
 
 -**组件测试困境**
 
@@ -1023,15 +1021,15 @@ test('displays user data and handles follow button click', async () => {
       return res(ctx.json({ success: true }));
     })
   );
-  
+
   renderWithProviders(<UserProfile userId="123" />);
-  
+
   // 等待数据加载
   await screen.findByText('John Doe');
-  
+
   // 交互测试
   fireEvent.click(screen.getByRole('button', { name: /follow/i }));
-  
+
   await waitFor(() => {
     expect(screen.getByRole('button', { name: /unfollow/i })).toBeInTheDocument();
   });
@@ -1060,9 +1058,9 @@ test('displays user data and handles follow button click', async () => {
 - 测试覆盖率指标可能导致低质量测试的增加
 - 模拟和存根创建工作量大，维护负担重
 
-## 5. 性能与用户体验权衡
+## 1.6 性能与用户体验权衡
 
-### 5.1 首屏性能挑战
+### 1.6.1 首屏性能挑战
 
 -**JavaScript体积问题**
 
@@ -1081,13 +1079,13 @@ JavaScript体积已成为性能瓶颈：
 <head>
   <!-- 阻塞渲染的样式 -->
   <link rel="stylesheet" href="/main.css">
-  
+
   <!-- 大型三方脚本阻塞解析 -->
   <script src="https://cdn.analytics.com/heavy-script.js"></script>
-  
+
   <!-- 应用核心JS - 阻塞渲染直到执行完成 -->
   <script src="/main.bundle.js"></script>
-  
+
   <!-- 字体会阻塞渲染 -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 </head>
@@ -1111,15 +1109,15 @@ JavaScript体积已成为性能瓶颈：
   <link rel="preconnect" href="https://cdn.example.com">
   <link rel="preload" href="/critical.css" as="style">
   <link rel="preload" href="/fonts/brand.woff2" as="font" crossorigin>
-  
+
   <!-- 内联关键CSS -->
   <style>
     /* 关键渲染路径CSS - 手动提取和维护困难 */
   </style>
-  
+
   <!-- 延迟非关键CSS -->
   <link rel="stylesheet" href="/main.css" media="print" onload="this.media='all'">
-  
+
   <!-- 模块/非模块脚本模式 -->
   <script type="module" src="/app.js"></script>
   <script nomodule src="/app-legacy.js"></script>
@@ -1133,7 +1131,7 @@ JavaScript体积已成为性能瓶颈：
 - 构建工具对自动优化支持有限，需要大量手动配置
 - 优化与维护性之间存在权衡，优化代码通常更难维护
 
-### 5.2 运行时性能瓶颈
+### 1.6.2 运行时性能瓶颈
 
 -**过度渲染问题**
 
@@ -1148,9 +1146,9 @@ function ProductList({ products, filter }) {
       {products
         .filter(p => p.category === filter)
         .map(product => (
-          <ProductCard 
-            key={product.id} 
-            product={product} 
+          <ProductCard
+            key={product.id}
+            product={product}
             // 内联函数导致不必要的重新渲染
             onAddToCart={() => addToCart(product.id)}
           />
@@ -1167,22 +1165,22 @@ const ProductCard = React.memo(({ product, onAddToCart }) => {
 
 function ProductList({ products, filter, addToCart }) {
   // 缓存过滤结果
-  const filteredProducts = useMemo(() => 
+  const filteredProducts = useMemo(() =>
     products.filter(p => p.category === filter),
     [products, filter]
   );
-  
+
   // 缓存事件处理函数
   const handleAddToCart = useCallback((id) => {
     addToCart(id);
   }, [addToCart]);
-  
+
   return (
     <div>
       {filteredProducts.map(product => (
-        <ProductCard 
-          key={product.id} 
-          product={product} 
+        <ProductCard
+          key={product.id}
+          product={product}
           onAddToCart={handleAddToCart}
         />
       ))}
@@ -1215,14 +1213,14 @@ function processLargeDataset(items) {
 async function processLargeDatasetChunked(items) {
   const chunkSize = 100;
   const results = [];
-  
+
   for (let i = 0; i < items.length; i += chunkSize) {
     const chunk = items.slice(i, i + chunkSize);
     // 让出主线程
     await new Promise(resolve => setTimeout(resolve, 0));
     results.push(...chunk.map(item => heavyComputation(item)));
   }
-  
+
   return aggregateResults(results);
 }
 ```
@@ -1234,7 +1232,7 @@ async function processLargeDatasetChunked(items) {
 - Web Workers提供了并行处理能力，但序列化开销高且API复杂
 - 算法效率和数据结构选择对性能的影响常被忽视
 
-### 5.3 可访问性现状
+### 1.6.3 可访问性现状
 
 -**可访问性实施差距**
 
@@ -1248,17 +1246,17 @@ function InaccessibleForm() {
       {/* 缺少关联标签 */}
       <div>Email</div>
       <input type="email" />
-      
+
       {/* 颜色对比度不足 */}
       <div style={{ color: '#aaa', background: '#eee' }}>
         Light gray text on light background
       </div>
-      
+
       {/* 缺少键盘可访问性 */}
       <div onClick={handleClick}>
         Click me (not keyboard accessible)
       </div>
-      
+
       {/* 缺少aria标签的图标按钮 */}
       <button>
         <svg>...</svg>
@@ -1274,15 +1272,15 @@ function AccessibleForm() {
       <label htmlFor="email">Email</label>
       <input id="email" type="email" aria-describedby="email-hint" />
       <div id="email-hint">We'll never share your email</div>
-      
+
       <div className="high-contrast-text">
         Properly contrasting text
       </div>
-      
+
       <button onClick={handleClick}>
         Click or press me
       </button>
-      
+
       <button aria-label="Close dialog">
         <svg aria-hidden="true">...</svg>
       </button>
@@ -1316,7 +1314,7 @@ function AccessibleForm() {
 - 辅助功能所需的额外JavaScript影响性能
 - 动画和过渡需要尊重"减少动画"偏好，增加复杂性
 
-### 5.4 国际化与本地化
+### 1.6.4 国际化与本地化
 
 -**国际化架构挑战**
 
@@ -1339,11 +1337,11 @@ function InternationalizedApp({ locale, messages }) {
 function ProductPrice({ price, currency, date }) {
   return (
     <div>
-      <FormattedMessage 
+      <FormattedMessage
         id="product.lastUpdated"
         defaultMessage="Last updated: {date}"
         values={{
-          date: <FormattedDate 
+          date: <FormattedDate
             value={date}
             year="numeric"
             month="long"
@@ -1395,9 +1393,9 @@ function ProductPrice({ price, currency, date }) {
 - 组件库RTL支持不一致，导致混合方向问题
 - 测试资源很少分配给RTL语言测试
 
-## 6. 架构可持续性挑战
+## 1.7 架构可持续性挑战
 
-### 6.1 依赖地狱问题
+### 1.7.1 依赖地狱问题
 
 -**依赖管理与安全**
 
@@ -1447,7 +1445,7 @@ function ProductPrice({ price, currency, date }) {
 - 包分析工具存在但未充分集成到开发流程
 - 常用库的替代方案评估需要专业知识
 
-### 6.2 代码库老化与迁移
+### 1.7.2 代码库老化与迁移
 
 -**渐进式迁移的挑战**
 
@@ -1457,24 +1455,24 @@ function ProductPrice({ price, currency, date }) {
 // 混合架构示例 - React与遗留jQuery代码集成
 function LegacyWrapper({ id, onUpdate }) {
   const containerRef = useRef(null);
-  
+
   useEffect(() => {
     // 初始化遗留jQuery组件
     const $widget = $(containerRef.current).legacyWidget({
       // 配置...
     });
-    
+
     // 事件桥接
     $widget.on('change', (event, data) => {
       onUpdate(data);
     });
-    
+
     return () => {
       // 清理jQuery实例
       $(containerRef.current).legacyWidget('destroy');
     };
   }, [onUpdate]);
-  
+
   return <div id={id} ref={containerRef} />;
 }
 ```
@@ -1494,17 +1492,17 @@ function ProductPage() {
   // Redux全局状态
   const { products, categories } = useSelector(state => state.catalog);
   const dispatch = useDispatch();
-  
+
   // React Context状态
   const { cart, addToCart } = useCartContext();
-  
+
   // React Query服务器状态
   const { data: user } = useQuery(['user'], fetchUser);
-  
+
   // 本地状态
   const [filter, setFilter] = useState('');
   const [sortBy, setSortBy] = useState('price');
-  
+
   // 危险的状态混合
   useEffect(() => {
     // 混合状态源，使状态管理混乱
@@ -1512,7 +1510,7 @@ function ProductPage() {
       dispatch(loadRecommendations(user.id, products, cart.items));
     }
   }, [user, products, cart.items, dispatch]);
-  
+
   return (/* 渲染逻辑 */);
 }
 ```
@@ -1533,7 +1531,7 @@ function ProductPage() {
 .flex-container {
   display: flex;
   gap: 1rem; /* Safari < 14.1不支持 */
-  
+
   /* 回退方案 */
   & > * + * {
     margin-left: 1rem; /* 针对不支持gap的浏览器 */
@@ -1554,9 +1552,9 @@ function ProductPage() {
 - 预设(polyfill)增加了包体积，常被过度包含
 - 测试矩阵复杂性随浏览器和设备组合呈指数增长
 
-## 7. 未来趋势与演化方向
+## 1.8 未来趋势与演化方向
 
-### 7.1 编译优化革命
+### 1.8.1 编译优化革命
 
 -**宏与部分评估**
 
@@ -1568,10 +1566,10 @@ function ProductPage() {
   // 响应式变量在编译时转换为高效更新
   let count = 0;
   let doubled = 0;
-  
+
   // 这个$:语法在编译时转化为高效的依赖跟踪
   $: doubled = count * 2;
-  
+
   function increment() {
     count += 1;
   }
@@ -1612,7 +1610,7 @@ function create_fragment(ctx) {
 // 源代码
 function Counter() {
   const [count, setCount] = useState(0);
-  
+
   return (
     <button onClick={() => setCount(count + 1)}>
       Count: {count}
@@ -1627,12 +1625,12 @@ function Counter_compiled() {
   const button = document.createElement('button');
   const text = document.createTextNode(`Count: ${count}`);
   button.appendChild(text);
-  
+
   button.addEventListener('click', () => {
     count += 1;
     text.nodeValue = `Count: ${count}`;
   });
-  
+
   return button;
 }
 ```
@@ -1644,7 +1642,7 @@ function Counter_compiled() {
 - 编译优化与源代码可读性存在权衡
 - 工具链复杂性转移到了编译器，而非运行时
 
-### 7.2 AI辅助开发
+### 1.8.2 AI辅助开发
 
 -**生成式AI与代码生成**
 
@@ -1666,10 +1664,10 @@ function ProductList() {
     () => fetchProducts(page),
     { keepPreviousData: true }
   );
-  
+
   if (isLoading && !data) return <Spinner />;
   if (error) return <ErrorMessage error={error} />;
-  
+
   return (
     <div>
       <div className="grid grid-cols-3 gap-4">
@@ -1677,7 +1675,7 @@ function ProductList() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      
+
       <Pagination
         currentPage={page}
         totalPages={data?.totalPages || 1}
@@ -1728,22 +1726,22 @@ afterAll(() => server.close());
 
 test('renders products and handles pagination', async () => {
   const queryClient = new QueryClient();
-  
+
   render(
     <QueryClientProvider client={queryClient}>
       <ProductList />
     </QueryClientProvider>
   );
-  
+
   // 等待产品加载
   await screen.findByText(mockProducts[0].name);
-  
+
   // 检查产品列表渲染
   expect(screen.getAllByTestId('product-card')).toHaveLength(10);
-  
+
   // 测试分页
   await userEvent.click(screen.getByLabelText(/next page/i));
-  
+
   // 等待下一页加载
   await waitFor(() => {
     expect(screen.getByText(mockProducts[10].name)).toBeInTheDocument();
@@ -1758,7 +1756,7 @@ test('renders products and handles pagination', async () => {
 - 测试生成提高覆盖率，但不一定保证质量
 - 性能优化建议通常基于通用规则，可能不适合特定场景
 
-### 7.3 系统设计范式转变
+### 1.8.3 系统设计范式转变
 
 -**微前端到微核心**
 
@@ -1770,18 +1768,18 @@ test('renders products and handles pagination', async () => {
 const core = {
   plugins: [],
   state: createStore({}),
-  
+
   use(plugin) {
     this.plugins.push(plugin);
     plugin.init?.(this);
     return this;
   },
-  
+
   start(container) {
     // 启动应用
     const app = document.createElement('div');
     container.appendChild(app);
-    
+
     // 按优先级排序并初始化插件
     this.plugins
       .sort((a, b) => (a.priority || 0) - (b.priority || 0))
@@ -1859,7 +1857,7 @@ export default {
 - 工具支持对声明式配置的校验和提示不足
 - 高度抽象的声明式系统可能隐藏过多实现细节
 
-### 7.4 边缘计算与流式交付
+### 1.8.4 边缘计算与流式交付
 
 -**边缘渲染架构**
 
@@ -1875,17 +1873,17 @@ async function handleRequest(request) {
   // 在边缘解析URL和请求信息
   const url = new URL(request.url);
   const path = url.pathname;
-  
+
   // 边缘路由和缓存策略
   if (path.startsWith('/api/')) {
     return await handleApiRequest(request);
   }
-  
+
   // 边缘渲染HTML
   if (path === '/' || path.match(/^\/(products|categories)/)) {
     // 从KV存储获取组件数据
     const data = await getDataForRoute(path);
-    
+
     // 边缘SSR - 在全球CDN节点渲染HTML
     return new Response(renderPageToString(path, data), {
       headers: {
@@ -1894,7 +1892,7 @@ async function handleRequest(request) {
       }
     });
   }
-  
+
   // 静态资产处理
   return fetch(`https://static-assets.example.com${path}`);
 }
@@ -1918,27 +1916,27 @@ app.get('/product/:id', async (req, res) => {
   // 设置流式传输响应
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Transfer-Encoding', 'chunked');
-  
+
   // 发送HTML前置部分
   res.write('<!DOCTYPE html><html><head>...</head><body><div id="root">');
-  
+
   // 获取产品基本信息并立即流式传输
   const productBasic = await db.getProductBasicInfo(req.params.id);
   const basicHTML = await renderToString(<ProductBasic product={productBasic} />);
   res.write(basicHTML);
-  
+
   // 流式传输骨架屏
   res.write('<div id="reviews"><ReviewsSkeleton /></div>');
-  
+
   // 慢查询：获取评论并流式更新
   const reviews = await db.getProductReviews(req.params.id);
   const reviewsHTML = await renderToString(<Reviews reviews={reviews} />);
-  
+
   // 发送更新脚本，替换骨架屏
   res.write(`<script>
     document.getElementById('reviews').innerHTML = ${JSON.stringify(reviewsHTML)};
   </script>`);
-  
+
   // 完成HTML
   res.write('</div></body></html>');
   res.end();
@@ -1952,9 +1950,9 @@ app.get('/product/:id', async (req, res) => {
 - 服务器组件与边缘渲染结合需要复杂的构建和部署流程
 - 缺少标准化实践导致实施不一致
 
-## 8. 结论与展望
+## 1.9 结论与展望
 
-### 8.1 当前架构的根本局限
+### 1.9.1 当前架构的根本局限
 
 当前Web UI架构面临几个根本性局限：
 
@@ -1964,7 +1962,7 @@ app.get('/product/:id', async (req, res) => {
 4. **工具链负担**：工具链复杂性已经超过了业务逻辑复杂性，成为主要开发障碍
 5. **性能与DX权衡**：追求开发体验经常与性能优化冲突
 
-### 8.2 趋势与预测
+### 1.9.2 趋势与预测
 
 未来几年可能的演进方向：
 
@@ -1974,7 +1972,7 @@ app.get('/product/:id', async (req, res) => {
 4. **边缘优先设计**：应用架构将围绕边缘计算和CDN设计，而非中心服务器
 5. **跨平台统一**：Web、移动和桌面平台之间的界限继续模糊，统一开发模型出现
 
-### 8.3 面向未来的架构原则
+### 1.9.3 面向未来的架构原则
 
 面对快速变化的前端生态，以下架构原则可能有助于构建可持续的系统：
 

@@ -1,45 +1,45 @@
-# Docker与Kubernetes架构模型解构分析和综合
+# 1. Docker与Kubernetes架构模型解构分析和综合
 
 ## 目录
 
-- [Docker与Kubernetes架构模型解构分析和综合](#docker与kubernetes架构模型解构分析和综合)
+- [1. Docker与Kubernetes架构模型解构分析和综合](#1-docker与kubernetes架构模型解构分析和综合)
   - [目录](#目录)
-  - [思维导图](#思维导图)
-  - [1. 基础架构概念](#1-基础架构概念)
-    - [1.1 Docker容器化核心概念](#11-docker容器化核心概念)
-    - [1.2 Kubernetes编排平台架构](#12-kubernetes编排平台架构)
-  - [2. 系统架构层次分析](#2-系统架构层次分析)
-    - [2.1 Docker架构模型](#21-docker架构模型)
-    - [2.2 Kubernetes架构模型](#22-kubernetes架构模型)
-    - [2.3 控制平面与数据平面](#23-控制平面与数据平面)
-  - [3. 组件交互与关系分析](#3-组件交互与关系分析)
-    - [3.1 Docker组件交互模型](#31-docker组件交互模型)
-    - [3.2 Kubernetes组件交互模型](#32-kubernetes组件交互模型)
-    - [3.3 CRI接口与容器运行时](#33-cri接口与容器运行时)
-  - [4. 工作流与编排模型](#4-工作流与编排模型)
-    - [4.1 声明式API与控制循环](#41-声明式api与控制循环)
-    - [4.2 调度与资源管理](#42-调度与资源管理)
-    - [4.3 状态协调机制](#43-状态协调机制)
-  - [5. 工作流模式的形式对应](#5-工作流模式的形式对应)
-    - [5.1 控制流模式对应](#51-控制流模式对应)
-    - [5.2 数据流模式对应](#52-数据流模式对应)
-    - [5.3 资源模式对应](#53-资源模式对应)
-    - [5.4 异常处理模式对应](#54-异常处理模式对应)
-  - [6. 形式化系统分析](#6-形式化系统分析)
-    - [6.1 系统状态定义](#61-系统状态定义)
-    - [6.2 转换规则与不变量](#62-转换规则与不变量)
-    - [6.3 等价性证明](#63-等价性证明)
-  - [7. 代码实现示例](#7-代码实现示例)
-    - [7.1 容器运行时抽象](#71-容器运行时抽象)
-    - [7.2 控制器模式实现](#72-控制器模式实现)
-    - [7.3 资源模型与调度](#73-资源模型与调度)
-  - [8. 系统演化与趋势](#8-系统演化与趋势)
-    - [8.1 从紧密耦合到解耦](#81-从紧密耦合到解耦)
-    - [8.2 边缘计算与混合云挑战](#82-边缘计算与混合云挑战)
-    - [8.3 新兴技术的整合](#83-新兴技术的整合)
-  - [9. 结论与总结](#9-结论与总结)
+  - [1.1 思维导图](#11-思维导图)
+  - [1.2 基础架构概念](#12-基础架构概念)
+    - [1.2.1 Docker容器化核心概念](#121-docker容器化核心概念)
+    - [1.2.2 Kubernetes编排平台架构](#122-kubernetes编排平台架构)
+  - [1.3 系统架构层次分析](#13-系统架构层次分析)
+    - [1.3.1 Docker架构模型](#131-docker架构模型)
+    - [1.3.2 Kubernetes架构模型](#132-kubernetes架构模型)
+    - [1.3.3 控制平面与数据平面](#133-控制平面与数据平面)
+  - [1.4 组件交互与关系分析](#14-组件交互与关系分析)
+    - [1.4.1 Docker组件交互模型](#141-docker组件交互模型)
+    - [1.4.2 Kubernetes组件交互模型](#142-kubernetes组件交互模型)
+    - [1.4.3 CRI接口与容器运行时](#143-cri接口与容器运行时)
+  - [1.5 工作流与编排模型](#15-工作流与编排模型)
+    - [1.5.1 声明式API与控制循环](#151-声明式api与控制循环)
+    - [1.5.2 调度与资源管理](#152-调度与资源管理)
+    - [1.5.3 状态协调机制](#153-状态协调机制)
+  - [1.6 工作流模式的形式对应](#16-工作流模式的形式对应)
+    - [1.6.1 控制流模式对应](#161-控制流模式对应)
+    - [1.6.2 数据流模式对应](#162-数据流模式对应)
+    - [1.6.3 资源模式对应](#163-资源模式对应)
+    - [1.6.4 异常处理模式对应](#164-异常处理模式对应)
+  - [1.7 形式化系统分析](#17-形式化系统分析)
+    - [1.7.1 系统状态定义](#171-系统状态定义)
+    - [1.7.2 转换规则与不变量](#172-转换规则与不变量)
+    - [1.7.3 等价性证明](#173-等价性证明)
+  - [1.9 代码实现示例](#19-代码实现示例)
+    - [1.9.1 容器运行时抽象](#191-容器运行时抽象)
+    - [1.9.2 控制器模式实现](#192-控制器模式实现)
+    - [1.9.3 资源模型与调度](#193-资源模型与调度)
+  - [1.10 系统演化与趋势](#110-系统演化与趋势)
+    - [1.10.1 从紧密耦合到解耦](#1101-从紧密耦合到解耦)
+    - [1.10.2 边缘计算与混合云挑战](#1102-边缘计算与混合云挑战)
+    - [1.10.3 新兴技术的整合](#1103-新兴技术的整合)
+  - [1.11 结论与总结](#111-结论与总结)
 
-## 思维导图
+## 1.1 思维导图
 
 ```text
 Docker与Kubernetes架构模型
@@ -95,9 +95,9 @@ Docker与Kubernetes架构模型
 │       └── 同伦类型关系
 ```
 
-## 1. 基础架构概念
+## 1.2 基础架构概念
 
-### 1.1 Docker容器化核心概念
+### 1.2.1 Docker容器化核心概念
 
 Docker作为容器化技术的先驱，其核心架构基于以下关键概念：
 
@@ -117,7 +117,7 @@ Docker作为容器化技术的先驱，其核心架构基于以下关键概念�
    - **控制组(cgroups)**：限制应用资源使用(CPU、内存、I/O等)
    - **联合文件系统(UnionFS)**：支持镜像分层机制和写时复制
 
-### 1.2 Kubernetes编排平台架构
+### 1.2.2 Kubernetes编排平台架构
 
 Kubernetes作为容器编排平台，其架构设计基于以下核心概念：
 
@@ -136,9 +136,9 @@ Kubernetes作为容器编排平台，其架构设计基于以下核心概念：
    - **控制器**：维护Pod的期望状态(Deployment、StatefulSet等)
    - **服务**：提供Pod访问和负载均衡抽象
 
-## 2. 系统架构层次分析
+## 1.3 系统架构层次分析
 
-### 2.1 Docker架构模型
+### 1.3.1 Docker架构模型
 
 Docker系统架构采用三层架构模型：
 
@@ -186,7 +186,7 @@ struct InfrastructureComponents {
 }
 ```
 
-### 2.2 Kubernetes架构模型
+### 1.3.2 Kubernetes架构模型
 
 Kubernetes架构模型可分为三个主要层次：
 
@@ -239,7 +239,7 @@ struct AddOnComponents {
 }
 ```
 
-### 2.3 控制平面与数据平面
+### 1.3.3 控制平面与数据平面
 
 控制平面和数据平面间的交互构成Kubernetes系统的核心工作流：
 
@@ -260,9 +260,9 @@ struct AddOnComponents {
    - **推送模式**：控制平面向数据平面推送变更
    - **观察模式**：数据平面观察本地状态并报告
 
-## 3. 组件交互与关系分析
+## 1.4 组件交互与关系分析
 
-### 3.1 Docker组件交互模型
+### 1.4.1 Docker组件交互模型
 
 Docker系统中的组件交互遵循以下模式：
 
@@ -289,21 +289,21 @@ Docker系统中的组件交互遵循以下模式：
 fn execute_container(client: &DockerClient, image: &str, cmd: &[&str]) -> Result<ContainerId, Error> {
     // 1. 创建容器规范
     let spec = client.create_container_spec(image, cmd)?;
-    
+
     // 2. Docker守护进程处理请求
     let container_config = daemon.prepare_container(spec)?;
-    
+
     // 3. 委托给containerd
     let container_id = containerd.create(container_config)?;
-    
+
     // 4. 启动容器
     containerd.start(container_id)?;
-    
+
     Ok(container_id)
 }
 ```
 
-### 3.2 Kubernetes组件交互模型
+### 1.4.2 Kubernetes组件交互模型
 
 Kubernetes系统的组件交互基于以下核心流程：
 
@@ -330,27 +330,27 @@ Kubernetes系统的组件交互基于以下核心流程：
 fn create_deployment(client: &KubeClient, spec: DeploymentSpec) -> Result<(), Error> {
     // 1. 提交Deployment资源
     let deployment = client.create_resource(spec)?;
-    
+
     // 2. API服务器验证和存储
     api_server.validate_and_store(deployment)?;
-    
+
     // 3. Deployment控制器观察变更
     // (异步发生)
     // deployment_controller.reconcile(deployment);
-    
+
     // 4. ReplicaSet控制器创建ReplicaSet
     // (异步发生)
     // replicaset_controller.create_replicaset(deployment);
-    
+
     // 5. Pod创建和调度
     // (异步发生)
     // scheduler.schedule_pods(replicaset);
-    
+
     Ok(())
 }
 ```
 
-### 3.3 CRI接口与容器运行时
+### 1.4.3 CRI接口与容器运行时
 
 容器运行时接口(CRI)是Kubernetes与容器运行时之间的关键抽象层：
 
@@ -379,7 +379,7 @@ trait ContainerRuntime {
     fn create_container(&self, pod_id: &str, config: ContainerConfig) -> Result<String, Error>;
     fn start_container(&self, container_id: &str) -> Result<(), Error>;
     fn stop_container(&self, container_id: &str, timeout: i64) -> Result<(), Error>;
-    
+
     // ImageService
     fn pull_image(&self, image: &str) -> Result<(), Error>;
     fn list_images(&self) -> Result<Vec<Image>, Error>;
@@ -387,9 +387,9 @@ trait ContainerRuntime {
 }
 ```
 
-## 4. 工作流与编排模型
+## 1.5 工作流与编排模型
 
-### 4.1 声明式API与控制循环
+### 1.5.1 声明式API与控制循环
 
 Kubernetes的核心工作原理基于声明式API和控制循环模式：
 
@@ -419,23 +419,23 @@ impl<R: Resource> Controller<R> {
     fn reconcile(&self, resource: &R) -> Result<(), Error> {
         // 1. 获取资源当前状态
         let current = self.client.get_resource::<R>(resource.name())?;
-        
+
         // 2. 对比期望状态与当前状态
         let diff = calculate_diff(&resource.spec(), &current.spec());
-        
+
         // 3. 如果存在差异，执行必要操作
         if !diff.is_empty() {
             for action in generate_actions(diff) {
                 self.execute_action(action)?;
             }
-            
+
             // 4. 更新资源状态
             self.client.update_status(&resource)?;
         }
-        
+
         Ok(())
     }
-    
+
     fn run(&self) -> Result<(), Error> {
         loop {
             // 监听资源变化
@@ -454,7 +454,7 @@ impl<R: Resource> Controller<R> {
 }
 ```
 
-### 4.2 调度与资源管理
+### 1.5.2 调度与资源管理
 
 Kubernetes的调度系统是其编排能力的核心组件：
 
@@ -482,27 +482,27 @@ fn schedule_pod(pod: &Pod, nodes: &[Node]) -> Option<String> {
     if eligible_nodes.is_empty() {
         return None; // 无满足条件的节点
     }
-    
+
     // 2. 评分阶段 - 为每个节点打分
     let mut scored_nodes = Vec::new();
     for node in eligible_nodes {
         let resource_score = score_resource_allocation(pod, node);
         let affinity_score = score_affinity(pod, node);
         let spread_score = score_topology_spread(pod, node);
-        
+
         let total_score = resource_score + affinity_score + spread_score;
         scored_nodes.push((node, total_score));
     }
-    
+
     // 3. 选择得分最高的节点
     scored_nodes.sort_by(|(_, score1), (_, score2)| score2.partial_cmp(score1).unwrap());
-    
+
     // 4. 返回最优节点
     scored_nodes.first().map(|(node, _)| node.name.clone())
 }
 ```
 
-### 4.3 状态协调机制
+### 1.5.3 状态协调机制
 
 Kubernetes的状态协调机制确保系统稳定性和自修复能力：
 
@@ -526,34 +526,34 @@ Kubernetes的状态协调机制确保系统稳定性和自修复能力：
 fn reconcile_deployment(deployment: &Deployment) -> Result<(), Error> {
     // 1. 获取关联的ReplicaSet
     let owned_replicasets = list_owned_replicasets(deployment);
-    
+
     // 2. 检查是否需要创建新的ReplicaSet
     if needs_new_replicaset(deployment, &owned_replicasets) {
         create_new_replicaset(deployment)?;
     }
-    
+
     // 3. 计算每个ReplicaSet应该有多少副本
     let replicas_allocation = calculate_replicas_allocation(
         deployment, &owned_replicasets);
-    
+
     // 4. 按计划扩缩ReplicaSet
     for (rs, replicas) in replicas_allocation {
         scale_replicaset(&rs, replicas)?;
     }
-    
+
     // 5. 清理不再需要的旧ReplicaSet
     cleanup_old_replicasets(deployment, &owned_replicasets)?;
-    
+
     // 6. 更新Deployment状态
     update_deployment_status(deployment)?;
-    
+
     Ok(())
 }
 ```
 
-## 5. 工作流模式的形式对应
+## 1.6 工作流模式的形式对应
 
-### 5.1 控制流模式对应
+### 1.6.1 控制流模式对应
 
 Kubernetes实现的控制流模式与标准工作流模式具有形式对应关系：
 
@@ -582,7 +582,7 @@ Kubernetes实现的控制流模式与标准工作流模式具有形式对应关�
 struct PodSpec {
     // 严格按序执行的初始化容器
     init_containers: Vec<Container>,
-    
+
     // 并行执行的主容器
     containers: Vec<Container>,
 }
@@ -591,10 +591,10 @@ struct PodSpec {
 struct DeploymentSpec {
     // 并行运行的副本数
     replicas: i32,
-    
+
     // Pod模板
     template: PodTemplateSpec,
-    
+
     // 部署策略
     strategy: DeploymentStrategy,
 }
@@ -603,16 +603,16 @@ struct DeploymentSpec {
 struct JobSpec {
     // 需要成功完成的Pod数量(同步点)
     completions: i32,
-    
+
     // 并行运行的Pod数量
     parallelism: i32,
-    
+
     // Pod模板
     template: PodTemplateSpec,
 }
 ```
 
-### 5.2 数据流模式对应
+### 1.6.2 数据流模式对应
 
 Kubernetes支持多种数据流工作流模式：
 
@@ -651,16 +651,16 @@ enum EnvVarSource {
 struct ServiceSpec {
     // 选择目标Pod的标签选择器(路由条件)
     selector: HashMap<String, String>,
-    
+
     // 端口映射
     ports: Vec<ServicePort>,
-    
+
     // 服务类型
     type_: ServiceType,
 }
 ```
 
-### 5.3 资源模式对应
+### 1.6.3 资源模式对应
 
 Kubernetes的资源管理机制对应多种工作流资源模式：
 
@@ -684,7 +684,7 @@ Kubernetes的资源管理机制对应多种工作流资源模式：
 struct ResourceRequirements {
     // 资源请求(保证最小资源)
     requests: HashMap<String, Quantity>,
-    
+
     // 资源限制(限制最大资源)
     limits: HashMap<String, Quantity>,
 }
@@ -699,12 +699,12 @@ struct Namespace {
 // Kubernetes中的资源限制模式(ResourceQuota)
 struct ResourceQuota {
     metadata: ObjectMeta,
-    
+
     // 硬性资源限制
     spec: ResourceQuotaSpec {
         hard: HashMap<String, Quantity>,
     },
-    
+
     // 当前已使用量
     status: ResourceQuotaStatus {
         used: HashMap<String, Quantity>,
@@ -712,7 +712,7 @@ struct ResourceQuota {
 }
 ```
 
-### 5.4 异常处理模式对应
+### 1.6.4 异常处理模式对应
 
 Kubernetes支持多种异常处理工作流模式：
 
@@ -736,23 +736,23 @@ Kubernetes支持多种异常处理工作流模式：
 fn terminate_pod(pod: &Pod, grace_period: Duration) -> Result<(), Error> {
     // 1. 标记删除
     api_server.delete_pod(pod.name, grace_period)?;
-    
+
     // 2. 执行PreStop钩子(如果定义)
     if let Some(hook) = pod.spec.containers.iter().find_map(|c| c.lifecycle.pre_stop.clone()) {
         execute_lifecycle_hook(pod, &hook)?;
     }
-    
+
     // 3. 发送SIGTERM信号
     send_signal_to_containers(pod, Signal::SIGTERM)?;
-    
+
     // 4. 等待优雅终止期
     sleep(grace_period);
-    
+
     // 5. 如果仍在运行，强制终止(SIGKILL)
     if pod_still_running(pod) {
         send_signal_to_containers(pod, Signal::SIGKILL)?;
     }
-    
+
     Ok(())
 }
 
@@ -767,27 +767,27 @@ enum RestartPolicy {
 struct Probe {
     // 探测方式
     handler: ProbeHandler,
-    
+
     // 初始延迟秒数
     initial_delay_seconds: i32,
-    
+
     // 超时秒数
     timeout_seconds: i32,
-    
+
     // 探测周期
     period_seconds: i32,
-    
+
     // 成功阈值
     success_threshold: i32,
-    
+
     // 失败阈值
     failure_threshold: i32,
 }
 ```
 
-## 6. 形式化系统分析
+## 1.7 形式化系统分析
 
-### 6.1 系统状态定义
+### 1.7.1 系统状态定义
 
 从形式化角度，Kubernetes系统可以定义为状态转换系统：
 
@@ -803,7 +803,7 @@ struct Probe {
    struct ClusterState {
        resources: HashMap<ResourceKey, Resource>,
    }
-   
+
    // 资源键 (类型+命名空间+名称)
    struct ResourceKey {
        api_version: String,
@@ -811,7 +811,7 @@ struct Probe {
        namespace: Option<String>,
        name: String,
    }
-   
+
    // 资源通用结构
    struct Resource {
        metadata: Metadata,
@@ -825,7 +825,7 @@ struct Probe {
    - 所有控制器不再触发任何状态转换
    - 所有资源引用完整有效
 
-### 6.2 转换规则与不变量
+### 1.7.2 转换规则与不变量
 
 Kubernetes状态转换系统的规则与不变量：
 
@@ -863,18 +863,18 @@ fn apply_transition(state: &mut ClusterState, transition: StateTransition) -> Re
             state.resources.remove(&key);
         },
     }
-    
+
     // 验证所有不变量
     validate_invariants(state)?;
-    
+
     // 执行派生转换(控制器行为)
     apply_controller_rules(state)?;
-    
+
     Ok(())
 }
 ```
 
-### 6.3 等价性证明
+### 1.7.3 等价性证明
 
 Kubernetes架构与工作流引擎的形式等价性分析：
 
@@ -898,9 +898,9 @@ fn prove_equivalence() {
         observe: |state| { /* 观察集群状态 */ },
         diff: |actual, desired| { /* 计算差
 
-## 6. 形式化系统分析（续）
+## 1.8 形式化系统分析（续）
 
-### 6.3 等价性证明（续）
+### 1.8.1 等价性证明（续）
 
 ```rust
 // 证明Kubernetes控制循环与工作流引擎等价
@@ -911,20 +911,20 @@ fn prove_equivalence() {
         diff: |actual, desired| { /* 计算差异 */ },
         act: |diff| { /* 执行变更 */ },
     };
-    
+
     // 工作流引擎模型
     let workflow_model = WorkflowEngine {
         get_state: |workflow| { /* 获取工作流状态 */ },
         determine_next: |state| { /* 确定下一步 */ },
         execute: |activity| { /* 执行活动 */ },
     };
-    
+
     // 两种模型在数学形式上的映射关系证明
     assert_eq!(
         formalize(k8s_model).semantics(),
         formalize(workflow_model).semantics()
     );
-    
+
     // 证明核心等价性质
     // 1. 状态空间可互相映射
     // 2. 转换规则语义等价
@@ -934,9 +934,9 @@ fn prove_equivalence() {
 
 这种等价性表明Kubernetes实际上是一种特殊的分布式工作流引擎，它使用声明式API和控制循环实现了工作流执行语义。
 
-## 7. 代码实现示例
+## 1.9 代码实现示例
 
-### 7.1 容器运行时抽象
+### 1.9.1 容器运行时抽象
 
 容器运行时的抽象层是连接Kubernetes与底层容器技术的关键接口：
 
@@ -948,7 +948,7 @@ trait ContainerRuntime {
     fn stop_pod_sandbox(&self, pod_id: &str) -> Result<(), Error>;
     fn remove_pod_sandbox(&self, pod_id: &str) -> Result<(), Error>;
     fn list_pod_sandboxes(&self) -> Result<Vec<PodSandbox>, Error>;
-    
+
     // 容器管理
     fn create_container(&self, pod_id: &str, config: ContainerConfig) -> Result<String, Error>;
     fn start_container(&self, container_id: &str) -> Result<(), Error>;
@@ -956,7 +956,7 @@ trait ContainerRuntime {
     fn remove_container(&self, container_id: &str) -> Result<(), Error>;
     fn list_containers(&self) -> Result<Vec<Container>, Error>;
     fn exec_sync(&self, container_id: &str, cmd: &[&str]) -> Result<ExecResponse, Error>;
-    
+
     // 镜像管理
     fn pull_image(&self, image: &str) -> Result<ImageInfo, Error>;
     fn list_images(&self) -> Result<Vec<ImageInfo>, Error>;
@@ -972,10 +972,10 @@ impl ContainerRuntime for DockerRuntime {
     fn create_pod_sandbox(&self, config: PodSandboxConfig) -> Result<String, Error> {
         // 创建网络命名空间
         let network_ns = self.client.create_network_namespace()?;
-        
+
         // 创建数据卷
         let volumes = self.client.setup_volumes(&config.volumes)?;
-        
+
         // 创建基础设施容器（pause容器）
         let sandbox_id = self.client.create_container(
             "k8s.gcr.io/pause:3.6",
@@ -987,12 +987,12 @@ impl ContainerRuntime for DockerRuntime {
                 // 其他配置...
             }
         )?;
-        
+
         self.client.start_container(&sandbox_id)?;
-        
+
         Ok(sandbox_id)
     }
-    
+
     // 其他方法实现...
 }
 
@@ -1007,7 +1007,7 @@ impl ContainerRuntime for ContainerdRuntime {
 }
 ```
 
-### 7.2 控制器模式实现
+### 1.9.2 控制器模式实现
 
 Kubernetes控制器模式是其核心工作原理，以下是一个简化的Deployment控制器实现：
 
@@ -1025,24 +1025,24 @@ impl DeploymentController {
         self.informer.on_add(|deployment| self.reconcile(deployment));
         self.informer.on_update(|_, deployment| self.reconcile(deployment));
         self.informer.on_delete(|deployment| self.cleanup(deployment));
-        
+
         // 启动事件处理
         self.informer.run();
-        
+
         Ok(())
     }
-    
+
     // 核心调和方法 - 确保实际状态符合期望状态
     fn reconcile(&self, deployment: &Deployment) -> Result<(), Error> {
         // 获取关联的ReplicaSets
         let owned_replicasets = self.client
             .list_replicasets_by_owner(deployment.metadata.uid)?;
-        
+
         // 检查是否需要创建新的ReplicaSet
         let current_rs_hash = calculate_template_hash(&deployment.spec.template);
         let matching_rs = owned_replicasets.iter()
             .find(|rs| rs.metadata.annotations.get("pod-template-hash") == Some(&current_rs_hash));
-        
+
         let current_rs = match matching_rs {
             Some(rs) => rs.clone(),
             None => {
@@ -1051,13 +1051,13 @@ impl DeploymentController {
                 new_rs
             }
         };
-        
+
         // 根据部署策略计算ReplicaSet的期望副本数
         let replicas_allocation = match deployment.spec.strategy {
             DeploymentStrategy::RollingUpdate { max_surge, max_unavailable } => {
                 calculate_rolling_update_allocation(
-                    deployment, 
-                    &current_rs, 
+                    deployment,
+                    &current_rs,
                     &owned_replicasets,
                     max_surge,
                     max_unavailable
@@ -1065,32 +1065,32 @@ impl DeploymentController {
             },
             DeploymentStrategy::Recreate => {
                 calculate_recreate_allocation(
-                    deployment, 
-                    &current_rs, 
+                    deployment,
+                    &current_rs,
                     &owned_replicasets
                 )
             }
         };
-        
+
         // 扩缩容ReplicaSets
         for (rs, replicas) in replicas_allocation {
             self.client.scale_replicaset(&rs.metadata.name, replicas)?;
         }
-        
+
         // 清理不再需要的旧ReplicaSet
         self.cleanup_old_replicasets(deployment, &owned_replicasets)?;
-        
+
         // 更新Deployment状态
         self.update_deployment_status(deployment, &current_rs, &owned_replicasets)?;
-        
+
         Ok(())
     }
-    
+
     // 其他辅助方法...
 }
 ```
 
-### 7.3 资源模型与调度
+### 1.9.3 资源模型与调度
 
 Kubernetes调度器是将Pod分配到最合适节点的关键组件：
 
@@ -1102,23 +1102,23 @@ func scheduleOne(ctx context.Context, pod *v1.Pod, nodes []*v1.Node) (*v1.Node, 
     if len(feasibleNodes) == 0 {
         return nil, fmt.Errorf("no nodes available to schedule pod %s", pod.Name)
     }
-    
+
     // 第二阶段：打分 - 为每个可行节点评分
     nodeScores := make(map[string]int64)
     for _, node := range feasibleNodes {
         // 资源分配评分
         resourceScore := scoreNodeResources(pod, node)
-        
+
         // 节点亲和性评分
         affinityScore := scoreNodeAffinity(pod, node)
-        
+
         // 拓扑分布评分
         spreadScore := scoreTopologySpread(pod, node)
-        
+
         // 聚合各项评分
         nodeScores[node.Name] = resourceScore + affinityScore + spreadScore
     }
-    
+
     // 找出得分最高的节点
     var selectedNode *v1.Node
     highestScore := int64(-1)
@@ -1129,7 +1129,7 @@ func scheduleOne(ctx context.Context, pod *v1.Pod, nodes []*v1.Node) (*v1.Node, 
             highestScore = score
         }
     }
-    
+
     return selectedNode, nil
 }
 
@@ -1138,32 +1138,32 @@ func scoreNodeResources(pod *v1.Pod, node *v1.Node) int64 {
     // 计算节点当前资源使用率
     cpuUtilization := calculateCPUUtilization(node)
     memUtilization := calculateMemoryUtilization(node)
-    
+
     // 计算添加Pod后的资源使用率
     podCPURequest := getPodResourceRequest(pod, v1.ResourceCPU)
     podMemRequest := getPodResourceRequest(pod, v1.ResourceMemory)
-    
+
     newCPUUtilization := calculateNewUtilization(
         node.Status.Allocatable.Cpu().MilliValue(),
         cpuUtilization,
         podCPURequest)
-    
+
     newMemUtilization := calculateNewUtilization(
         node.Status.Allocatable.Memory().Value(),
         memUtilization,
         podMemRequest)
-    
+
     // 平衡资源使用率的评分逻辑
     // 使用率越平衡，得分越高
     balanceScore := 100 - int64(math.Abs(float64(newCPUUtilization-newMemUtilization)))
-    
+
     return balanceScore
 }
 ```
 
-## 8. 系统演化与趋势
+## 1.10 系统演化与趋势
 
-### 8.1 从紧密耦合到解耦
+### 1.10.1 从紧密耦合到解耦
 
 Kubernetes与Docker的关系经历了明显的演变过程：
 
@@ -1184,7 +1184,7 @@ Kubernetes与Docker的关系经历了明显的演变过程：
 
 这种演变反映了云原生技术生态系统的成熟过程，从单一技术栈到标准化接口和多样化实现。
 
-### 8.2 边缘计算与混合云挑战
+### 1.10.2 边缘计算与混合云挑战
 
 新的计算范式对容器编排架构提出新挑战：
 
@@ -1208,10 +1208,10 @@ Kubernetes与Docker的关系经历了明显的演变过程：
 struct EdgeController {
     // 本地状态存储
     local_state: LocalStateStore,
-    
+
     // 与中心云的同步管理
     sync_manager: CloudSyncManager,
-    
+
     // 本地控制循环
     local_controllers: Vec<Box<dyn Controller>>,
 }
@@ -1222,30 +1222,30 @@ impl EdgeController {
         for controller in &self.local_controllers {
             controller.start()?;
         }
-        
+
         // 当有云连接时进行状态同步
         self.sync_manager.start_sync_when_available()?;
-        
+
         Ok(())
     }
-    
+
     // 处理本地资源创建，即使断开连接
     fn handle_local_resource<R: Resource>(&self, resource: R) -> Result<(), Error> {
         // 保存到本地状态
         self.local_state.store(&resource)?;
-        
+
         // 尝试同步到云端（如果可用）
         self.sync_manager.sync_to_cloud_if_available(&resource);
-        
+
         // 本地协调逻辑
         self.reconcile_locally(&resource)?;
-        
+
         Ok(())
     }
 }
 ```
 
-### 8.3 新兴技术的整合
+### 1.10.3 新兴技术的整合
 
 容器编排架构正在整合多项新兴技术：
 
@@ -1274,10 +1274,10 @@ impl EdgeController {
 type WasmContainer struct {
     // WebAssembly模块
     Module []byte
-    
+
     // 运行时配置
     Config WasmRuntimeConfig
-    
+
     // 沙箱安全策略
     SecurityPolicy SecurityPolicy
 }
@@ -1295,21 +1295,21 @@ func (r *WasmRuntime) RunContainer(container *WasmContainer) error {
     if err != nil {
         return err
     }
-    
+
     // 配置资源限制
     r.applyResourceLimits(instance, container.Config.Resources)
-    
+
     // 配置网络策略
     r.applyNetworkPolicy(instance, container.SecurityPolicy.Network)
-    
+
     // 启动WebAssembly模块
     result, err := instance.Call("_start")
-    
+
     return err
 }
 ```
 
-## 9. 结论与总结
+## 1.11 结论与总结
 
 Docker与Kubernetes作为现代云原生架构的核心组件，代表了容器化和编排技术的两个不同但互补的层面：
 

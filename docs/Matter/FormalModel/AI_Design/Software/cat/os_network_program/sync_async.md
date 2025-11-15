@@ -1,38 +1,36 @@
-# 范畴论视角下的程序流控制与转换
+# 1. 范畴论视角下的程序流控制与转换
 
-## 📋 目录
+## 目录
 
-- [范畴论视角下的程序流控制与转换](#范畴论视角下的程序流控制与转换)
-  - [📋 目录](#-目录)
-  - [1 基础范畴定义](#1-基础范畴定义)
-    - [1.1 流范畴 (FlowCat)](#11-流范畴-flowcat)
-    - [1.2 同步范畴 (SyncCat)](#12-同步范畴-synccat)
-    - [1.3 异步范畴 (AsyncCat)](#13-异步范畴-asynccat)
-  - [2 流转换函子](#2-流转换函子)
-    - [2.1 控制流转换](#21-控制流转换)
-    - [2.2 执行流转换](#22-执行流转换)
-    - [2.3 数据流转换](#23-数据流转换)
-  - [3 自然变换](#3-自然变换)
-    - [3.1 同步到异步变换](#31-同步到异步变换)
-    - [3.2 流范式变换](#32-流范式变换)
-  - [4 流代数结构](#4-流代数结构)
-    - [4.1 流单子](#41-流单子)
-    - [4.2 流余单子](#42-流余单子)
-  - [5 并发模式范畴](#5-并发模式范畴)
-    - [5.1 并发原语](#51-并发原语)
-    - [5.2 通信模式](#52-通信模式)
-  - [6 转换定律与性质](#6-转换定律与性质)
-    - [6.1 基本定律](#61-基本定律)
-    - [6.2 保持性质](#62-保持性质)
-  - [7 实际应用示例](#7-实际应用示例)
-    - [7.1 Promise转换](#71-promise转换)
-    - [7.2 响应式流转换](#72-响应式流转换)
+- [1. 范畴论视角下的程序流控制与转换](#1-范畴论视角下的程序流控制与转换)
+  - [目录](#目录)
+  - [1.1 基础范畴定义](#11-基础范畴定义)
+    - [1.1.1 流范畴 (FlowCat)](#111-流范畴-flowcat)
+    - [1.1.2 同步范畴 (SyncCat)](#112-同步范畴-synccat)
+    - [1.1.3 异步范畴 (AsyncCat)](#113-异步范畴-asynccat)
+  - [1.2 流转换函子](#12-流转换函子)
+    - [1.2.1 控制流转换](#121-控制流转换)
+    - [1.2.2 执行流转换](#122-执行流转换)
+    - [1.2.3 数据流转换](#123-数据流转换)
+  - [1.3 自然变换](#13-自然变换)
+    - [1.3.1 同步到异步变换](#131-同步到异步变换)
+    - [1.3.2 流范式变换](#132-流范式变换)
+  - [1.4 流代数结构](#14-流代数结构)
+    - [1.4.1 流单子](#141-流单子)
+    - [1.4.2 流余单子](#142-流余单子)
+  - [1.5 并发模式范畴](#15-并发模式范畴)
+    - [1.5.1 并发原语](#151-并发原语)
+    - [1.5.2 通信模式](#152-通信模式)
+  - [1.6 转换定律与性质](#16-转换定律与性质)
+    - [1.6.1 基本定律](#161-基本定律)
+    - [1.6.2 保持性质](#162-保持性质)
+  - [1.7 实际应用示例](#17-实际应用示例)
+    - [1.7.1 Promise转换](#171-promise转换)
+    - [1.7.2 响应式流转换](#172-响应式流转换)
 
----
+## 1.1 基础范畴定义
 
-## 1 基础范畴定义
-
-### 1.1 流范畴 (FlowCat)
+### 1.1.1 流范畴 (FlowCat)
 
 ```haskell
 class FlowCategory f where
@@ -53,7 +51,7 @@ class FlowCategory f where
   constraints :: Flow → Set Constraint
 ```
 
-### 1.2 同步范畴 (SyncCat)
+### 1.1.2 同步范畴 (SyncCat)
 
 ```haskell
 class SynchronousCategory s where
@@ -74,7 +72,7 @@ class SynchronousCategory s where
   fairness :: Sync → FairnessProperty
 ```
 
-### 1.3 异步范畴 (AsyncCat)
+### 1.1.3 异步范畴 (AsyncCat)
 
 ```haskell
 class AsynchronousCategory a where
@@ -95,9 +93,9 @@ class AsynchronousCategory a where
   ordered :: Async → OrderingProperty
 ```
 
-## 2 流转换函子
+## 1.2 流转换函子
 
-### 2.1 控制流转换
+### 1.2.1 控制流转换
 
 ```haskell
 class ControlFlowFunctor f where
@@ -113,7 +111,7 @@ class ControlFlowFunctor f where
   preserveCorrectness :: f a → f b → Bool
 ```
 
-### 2.2 执行流转换
+### 1.2.2 执行流转换
 
 ```haskell
 class ExecutionFlowFunctor f where
@@ -129,7 +127,7 @@ class ExecutionFlowFunctor f where
   resourceEfficiency :: f a → Efficiency
 ```
 
-### 2.3 数据流转换
+### 1.2.3 数据流转换
 
 ```haskell
 class DataFlowFunctor f where
@@ -145,9 +143,9 @@ class DataFlowFunctor f where
   ensureIntegrity :: f a → Integrity
 ```
 
-## 3 自然变换
+## 1.3 自然变换
 
-### 3.1 同步到异步变换
+### 1.3.1 同步到异步变换
 
 ```haskell
 type SyncToAsync = NaturalTransformation SyncCat AsyncCat where
@@ -164,7 +162,7 @@ type SyncToAsync = NaturalTransformation SyncCat AsyncCat where
     preserveConsistency :: Sync a → Async a → ConsistencyLevel
 ```
 
-### 3.2 流范式变换
+### 1.3.2 流范式变换
 
 ```haskell
 type FlowTransformation = NaturalTransformation FlowCat FlowCat where
@@ -181,9 +179,9 @@ type FlowTransformation = NaturalTransformation FlowCat FlowCat where
     executionFlowRules :: Set Rule
 ```
 
-## 4 流代数结构
+## 1.4 流代数结构
 
-### 4.1 流单子
+### 1.4.1 流单子
 
 ```haskell
 class FlowMonad m where
@@ -200,7 +198,7 @@ class FlowMonad m where
   filter :: (a → Bool) → m a → m a
 ```
 
-### 4.2 流余单子
+### 1.4.2 流余单子
 
 ```haskell
 class FlowComonad w where
@@ -214,9 +212,9 @@ class FlowComonad w where
   observe :: w a → Observation
 ```
 
-## 5 并发模式范畴
+## 1.5 并发模式范畴
 
-### 5.1 并发原语
+### 1.5.1 并发原语
 
 ```haskell
 class ConcurrencyCategory c where
@@ -236,7 +234,7 @@ class ConcurrencyCategory c where
   deadlockFree :: Concurrent → Bool
 ```
 
-### 5.2 通信模式
+### 1.5.2 通信模式
 
 ```haskell
 class CommunicationCategory c where
@@ -256,9 +254,9 @@ class CommunicationCategory c where
   ordering :: Communication → MessageOrder
 ```
 
-## 6 转换定律与性质
+## 1.6 转换定律与性质
 
-### 6.1 基本定律
+### 1.6.1 基本定律
 
 ```haskell
 -- 组合律
@@ -272,7 +270,7 @@ transform . identity = transform
 map f . transform = transform . map f
 ```
 
-### 6.2 保持性质
+### 1.6.2 保持性质
 
 ```haskell
 -- 类型安全性
@@ -288,9 +286,9 @@ preserveOrder :: Transform → OrderingRelation
 preserveConsistency :: Transform → ConsistencyLevel
 ```
 
-## 7 实际应用示例
+## 1.7 实际应用示例
 
-### 7.1 Promise转换
+### 1.7.1 Promise转换
 
 ```haskell
 -- 同步到Promise转换
@@ -306,7 +304,7 @@ chainPromises p f = Promise $ do
   await (f value)
 ```
 
-### 7.2 响应式流转换
+### 1.7.2 响应式流转换
 
 ```haskell
 -- 数据流到响应式流转换

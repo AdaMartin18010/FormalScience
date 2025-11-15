@@ -434,7 +434,7 @@ impl Subject {
     pub fn attach(&mut self, observer: Box<dyn Observer>) {
         self.observers.push(observer);
     }
-    
+
     pub fn notify(&self, event: &str, data: &str) {
         for observer in &self.observers {
             observer.update(event, data);
@@ -505,11 +505,11 @@ impl Context {
             data: HashMap::new(),
         }
     }
-    
+
     pub fn request(&mut self) {
         self.state.handle(self);
     }
-    
+
     pub fn transition(&mut self, event: &str) {
         if let Some(new_state) = self.state.next(event) {
             self.state = new_state;
@@ -527,10 +527,10 @@ pub struct WorkflowStateMachine {
 impl WorkflowStateMachine {
     pub fn process_event(&mut self, event: &str, context: &mut WorkflowContext) {
         let key = (self.current_state.clone(), event.to_string());
-        
+
         if let Some(next_state) = self.transitions.get(&key) {
             self.current_state = next_state.clone();
-            
+
             if let Some(action) = self.actions.get(&self.current_state) {
                 action(context);
             }
@@ -588,15 +588,15 @@ impl Handler for ConcreteHandler {
     fn handle(&self, request: &Request) -> Result<(), String> {
         // 处理逻辑
         // ...
-        
+
         // 链式调用
         if let Some(next) = self.next() {
             return next.handle(request);
         }
-        
+
         Ok(())
     }
-    
+
     fn next(&self) -> Option<&Box<dyn Handler>> {
         self.next_handler.as_ref()
     }
@@ -615,7 +615,7 @@ impl SequentialWorkflow {
                 Err(e) => return Err(e),
             }
         }
-        
+
         Ok(())
     }
 }
@@ -624,12 +624,12 @@ impl SequentialWorkflow {
 pub fn convert_chain_to_workflow(chain: &dyn Handler) -> SequentialWorkflow {
     let mut activities = Vec::new();
     let mut current = Some(chain);
-    
+
     while let Some(handler) = current {
         activities.push(Box::new(HandlerAdapter::new(handler)));
         current = handler.next().map(|h| h.as_ref());
     }
-    
+
     SequentialWorkflow { activities }
 }
 
@@ -800,10 +800,10 @@ pub struct WorkflowEngine {
 impl WorkflowEngine {
     pub fn handle_event(&mut self, event: &str, context: &mut WorkflowContext) {
         let key = (self.current_activity.clone(), event.to_string());
-        
+
         if let Some(next_activity) = self.transitions.get(&key) {
             self.current_activity = next_activity.clone();
-            
+
             if let Some(activity) = self.activities.get(&self.current_activity) {
                 activity.execute(context);
             }
@@ -824,13 +824,13 @@ impl MediatorBasedWorkflowEngine {
             current_state: "initial".to_string(),
         }
     }
-    
+
     pub fn process_event(&mut self, event: &str) {
         // 工作流引擎使用中介者协调活动执行
         self.mediator.notify(&self.current_state, event);
         // 状态可能会被中介者中的组件更新
     }
-    
+
     pub fn set_state(&mut self, state: &str) {
         self.current_state = state.to_string();
     }
@@ -879,9 +879,9 @@ impl MediatorBasedWorkflowEngine {
 pub trait Category {
     type Object;
     type Morphism<A, B>;
-    
+
     fn id<A: Self::Object>() -> Self::Morphism<A, A>;
-    
+
     fn compose<A, B, C>(
         f: Self::Morphism<A, B>,
         g: Self::Morphism<B, C>
@@ -890,7 +890,7 @@ pub trait Category {
 
 pub trait Functor<C: Category, D: Category> {
     fn map_object<A: C::Object>(a: A) -> D::Object;
-    
+
     fn map_morphism<A: C::Object, B: C::Object>(
         f: C::Morphism<A, B>
     ) -> D::Morphism<Self::map_object(A), Self::map_object(B)>;
@@ -930,11 +930,11 @@ pub struct StrategyCategory;
 impl Category for StrategyCategory {
     type Object = TypeId; // 使用类型ID标识对象
     type Morphism<A, B> = Box<dyn Fn(&A) -> B>;
-    
+
     fn id<A: 'static>() -> Self::Morphism<A, A> {
         Box::new(|a| a.clone())
     }
-    
+
     fn compose<A: 'static, B: 'static, C: 'static>(
         f: Self::Morphism<A, B>,
         g: Self::Morphism<B, C>
@@ -956,7 +956,7 @@ impl<'a> Context<'a> {
     pub fn new(strategy: &'a dyn Strategy) -> Self {
         Self { strategy }
     }
-    
+
     pub fn execute_strategy(&self, data: &[u8]) -> Vec<u8> {
         self.strategy.execute(data)
     }
@@ -995,11 +995,11 @@ pub struct WorkflowCategory;
 impl Category for WorkflowCategory {
     type Object = WorkflowState;
     type Morphism<A, B> = Box<dyn Fn(&A) -> B>;
-    
+
     fn id<A: WorkflowState>() -> Self::Morphism<A, A> {
         Box::new(|a| a.clone())
     }
-    
+
     fn compose<A: WorkflowState, B: WorkflowState, C: WorkflowState>(
         f: Self::Morphism<A, B>,
         g: Self::Morphism<B, C>
@@ -1074,12 +1074,12 @@ pub fn prove_isomorphism<F: StatePatternMorphism, G: WorkflowMorphism>(
     let mapped_workflow = f.map_state(state_pattern);
     let mapped_back = g.map_state_machine(&mapped_workflow);
     let id_preserving = mapped_back.equivalent(state_pattern);
-    
+
     // 验证 F ∘ G ≅ Id_W
     let mapped_pattern = g.map_state_machine(workflow);
     let mapped_back_workflow = f.map_state(&mapped_pattern);
     let id_preserving2 = mapped_back_workflow.equivalent(workflow);
-    
+
     id_preserving && id_preserving2
 }
 ```
@@ -1141,7 +1141,7 @@ impl Functor<StateCategory, WorkflowCategory> for StateToWorkflowFunctor {
             }).collect(),
         }
     }
-    
+
     fn map_morphism(handle: StateMorphism) -> WorkflowMorphism {
         Box::new(move |ws, event| {
             // 将工作流状态转换为状态模式状态
@@ -1151,10 +1151,10 @@ impl Functor<StateCategory, WorkflowCategory> for StateToWorkflowFunctor {
                     (k.clone(), v.as_str().unwrap_or_default().to_string())
                 }).collect(),
             };
-            
+
             // 应用状态模式的处理函数
             let new_state = handle(&state, event);
-            
+
             // 将结果转换回工作流状态
             WorkflowState {
                 name: new_state.name,
@@ -1177,7 +1177,7 @@ impl Functor<WorkflowCategory, StateCategory> for WorkflowToStateFunctor {
             }).collect(),
         }
     }
-    
+
     fn map_morphism(execute: WorkflowMorphism) -> StateMorphism {
         Box::new(move |state, event| {
             // 将状态模式状态转换为工作流状态
@@ -1187,10 +1187,10 @@ impl Functor<WorkflowCategory, StateCategory> for WorkflowToStateFunctor {
                     (k.clone(), Value::String(v.clone()))
                 }).collect(),
             };
-            
+
             // 应用工作流的执行函数
             let new_ws = execute(&ws, event);
-            
+
             // 将结果转换回状态模式状态
             State {
                 name: new_ws.name,
@@ -1207,7 +1207,7 @@ pub fn verify_state_workflow_isomorphism() -> bool {
     // 构建一些测试状态和转换
     let state1 = State { name: "State1".to_string(), data: HashMap::new() };
     let state2 = State { name: "State2".to_string(), data: HashMap::new() };
-    
+
     // 状态模式转换
     let state_transition: StateMorphism = Box::new(|state, event| {
         if state.name == "State1" && event == "next" {
@@ -1216,17 +1216,17 @@ pub fn verify_state_workflow_isomorphism() -> bool {
             state.clone()
         }
     });
-    
+
     // 映射到工作流
     let workflow_transition = StateToWorkflowFunctor::map_morphism(state_transition);
-    
+
     // 再映射回状态模式
     let mapped_back = WorkflowToStateFunctor::map_morphism(workflow_transition);
-    
+
     // 检查行为是否保持不变
     let result1 = state_transition(&state1, "next");
     let result2 = mapped_back(&state1, "next");
-    
+
     result1.name == result2.name && result1.data == result2.data
 }
 ```
@@ -1277,12 +1277,12 @@ impl WorkflowContext {
     pub fn get(&self, key: &str) -> Option<&Value> {
         self.data.get(key)
     }
-    
+
     // 可变借用 - 一次只能有一个活动修改上下文
     pub fn set(&mut self, key: &str, value: Value) {
         self.data.insert(key.to_string(), value);
     }
-    
+
     // 所有权转移 - 消费上下文并返回新上下文
     pub fn transform(mut self, f: impl FnOnce(&mut HashMap<String, Value>)) -> Self {
         f(&mut self.data);
@@ -1294,7 +1294,7 @@ impl WorkflowContext {
 pub trait Activity {
     // 活动可以读取上下文但不修改
     fn can_execute(&self, context: &WorkflowContext) -> bool;
-    
+
     // 活动执行时可修改上下文
     fn execute(&self, context: &mut WorkflowContext) -> Result<(), ActivityError>;
 }
@@ -1341,13 +1341,13 @@ impl AsyncWorkflowEngine {
         for activity_id in workflow {
             let activity = self.activities.get(activity_id)
                 .ok_or_else(|| WorkflowError::ActivityNotFound(activity_id.clone()))?;
-                
+
             activity.execute(context).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn execute_parallel_workflow(&self, workflow: &[Vec<String>], context: &mut WorkflowContext) -> Result<(), WorkflowError> {
         for parallel_activities in workflow {
             let futures: Vec<_> = parallel_activities.iter()
@@ -1359,10 +1359,10 @@ impl AsyncWorkflowEngine {
                     }
                 })
                 .collect();
-                
+
             futures::future::join_all(futures).await;
         }
-        
+
         Ok(())
     }
 }
@@ -1416,7 +1416,7 @@ impl Order {
             }
         }
     }
-    
+
     pub fn process_payment(&mut self, payment_id: String) -> Result<(), String> {
         self.state = match &self.state {
             OrderState::Created { order_id, .. } => {
@@ -1427,10 +1427,10 @@ impl Order {
             }
             _ => return Err("Cannot process payment in current state".to_string()),
         };
-        
+
         Ok(())
     }
-    
+
     pub fn ship(&mut self, tracking_number: String) -> Result<(), String> {
         self.state = match &self.state {
             OrderState::Paid { order_id, .. } => {
@@ -1441,10 +1441,10 @@ impl Order {
             }
             _ => return Err("Cannot ship in current state".to_string()),
         };
-        
+
         Ok(())
     }
-    
+
     pub fn complete(&mut self) -> Result<(), String> {
         self.state = match &self.state {
             OrderState::Shipped { order_id, .. } => {
@@ -1454,13 +1454,13 @@ impl Order {
             }
             _ => return Err("Cannot complete in current state".to_string()),
         };
-        
+
         Ok(())
     }
-    
+
     pub fn cancel(&mut self, reason: String) -> Result<(), String> {
         self.state = match &self.state {
-            OrderState::Created { order_id, .. } | 
+            OrderState::Created { order_id, .. } |
             OrderState::Paid { order_id, .. } => {
                 OrderState::Cancelled {
                     order_id: order_id.clone(),
@@ -1469,7 +1469,7 @@ impl Order {
             }
             _ => return Err("Cannot cancel in current state".to_string()),
         };
-        
+
         Ok(())
     }
 }
@@ -1533,7 +1533,7 @@ impl<S: PaymentStrategy> PaymentProcessor<S> {
     pub fn new(strategy: S) -> Self {
         Self { strategy }
     }
-    
+
     pub fn process(&self, amount: f64) -> Result<PaymentReceipt, PaymentError> {
         self.strategy.process_payment(amount)
     }
@@ -1548,7 +1548,7 @@ impl DynPaymentProcessor {
     pub fn new(strategy: Box<dyn PaymentStrategy>) -> Self {
         Self { strategy }
     }
-    
+
     pub fn process(&self, amount: f64) -> Result<PaymentReceipt, PaymentError> {
         self.strategy.process_payment(amount)
     }
@@ -1579,22 +1579,22 @@ impl<T: Clone> Subject<T> {
             data,
         }
     }
-    
+
     pub fn attach(&mut self, observer: Arc<dyn Observer<T>>) {
         self.observers.push(Arc::downgrade(&observer));
     }
-    
+
     pub fn set_data(&mut self, data: T) {
         self.data = data.clone();
         self.notify();
     }
-    
+
     fn notify(&self) {
         self.observers.iter()
             .filter_map(|weak_obs| weak_obs.upgrade())
             .for_each(|obs| obs.update(&self.data));
     }
-    
+
     // 清理失效的观察者
     pub fn clean_up(&mut self) {
         self.observers.retain(|weak_obs| weak_obs.upgrade().is_some());
@@ -1614,17 +1614,17 @@ impl<T: Clone> EventEmitter<T> {
             data,
         }
     }
-    
+
     pub fn on(&mut self, listener: impl Fn(&T) + 'static) {
         self.listeners.push(Box::new(listener));
     }
-    
+
     pub fn emit(&self, data: &T) {
         for listener in &self.listeners {
             listener(data);
         }
     }
-    
+
     pub fn set_data(&mut self, data: T) {
         self.data = data.clone();
         self.emit(&self.data);
@@ -1654,17 +1654,17 @@ impl TextEditor {
     pub fn new() -> Self {
         Self { content: String::new() }
     }
-    
+
     pub fn get_content(&self) -> &str {
         &self.content
     }
-    
+
     pub fn insert_text(&mut self, position: usize, text: &str) {
         if position <= self.content.len() {
             self.content.insert_str(position, text);
         }
     }
-    
+
     pub fn delete_text(&mut self, start: usize, end: usize) -> Option<String> {
         if start < end && end <= self.content.len() {
             let removed = self.content[start..end].to_string();
@@ -1695,7 +1695,7 @@ impl Command for InsertTextCommand {
         editor.insert_text(self.position, &self.text);
         Ok(())
     }
-    
+
     fn undo(&self) -> Result<(), CommandError> {
         let mut editor = self.editor.lock().map_err(|_| CommandError::LockError)?;
         let end = self.position + self.text.len();
@@ -1714,11 +1714,11 @@ pub struct DeleteTextCommand {
 
 impl DeleteTextCommand {
     pub fn new(editor: Arc<Mutex<TextEditor>>, start: usize, end: usize) -> Self {
-        Self { 
-            editor, 
-            start, 
+        Self {
+            editor,
+            start,
             end,
-            deleted_text: Mutex::new(None), 
+            deleted_text: Mutex::new(None),
         }
     }
 }
@@ -1734,7 +1734,7 @@ impl Command for DeleteTextCommand {
             Err(CommandError::InvalidOperation)
         }
     }
-    
+
     fn undo(&self) -> Result<(), CommandError> {
         let deleted = self.deleted_text.lock().map_err(|_| CommandError::LockError)?;
         if let Some(text) = deleted.as_ref() {
@@ -1760,19 +1760,19 @@ impl CommandInvoker {
             current: 0,
         }
     }
-    
+
     pub fn execute(&mut self, command: Box<dyn Command>) -> Result<(), CommandError> {
         // 执行新命令会清除当前位置之后的历史
         if self.current < self.history.len() {
             self.history.truncate(self.current);
         }
-        
+
         command.execute()?;
         self.history.push(command);
         self.current += 1;
         Ok(())
     }
-    
+
     pub fn undo(&mut self) -> Result<(), CommandError> {
         if self.current > 0 {
             self.current -= 1;
@@ -1781,7 +1781,7 @@ impl CommandInvoker {
             Err(CommandError::NothingToUndo)
         }
     }
-    
+
     pub fn redo(&mut self) -> Result<(), CommandError> {
         if self.current < self.history.len() {
             let result = self.history[self.current].execute();
@@ -1818,11 +1818,11 @@ impl SequentialWorkflow {
     pub fn new() -> Self {
         Self { activities: Vec::new() }
     }
-    
+
     pub fn add_activity(&mut self, activity: Box<dyn Activity>) {
         self.activities.push(activity);
     }
-    
+
     pub fn execute(&self, context: &mut WorkflowContext) -> Result<(), WorkflowError> {
         for activity in &self.activities {
             activity.execute(context).map_err(|e| WorkflowError::ActivityFailed(e))?;
@@ -1837,19 +1837,19 @@ pub struct ValidateOrderActivity;
 impl Activity for ValidateOrderActivity {
     fn execute(&self, context: &mut WorkflowContext) -> Result<(), ActivityError> {
         println!("Validating order...");
-        
+
         // 从上下文获取订单数据
         let order = context.get::<Order>("order")
             .ok_or(ActivityError::MissingData("order".to_string()))?;
-            
+
         // 验证逻辑
         if order.items.is_empty() {
             return Err(ActivityError::ValidationFailed("Order must contain at least one item".to_string()));
         }
-        
+
         // 存储验证结果
         context.set("validation_result", true);
-        
+
         Ok(())
     }
 }
@@ -1876,15 +1876,15 @@ impl ParallelWorkflow {
     pub fn new() -> Self {
         Self { branches: Vec::new() }
     }
-    
+
     pub fn add_branch(&mut self, activity: Box<dyn AsyncActivity>) {
         self.branches.push(activity);
     }
-    
+
     pub async fn execute(&self, context: &WorkflowContext) -> Result<Vec<WorkflowContext>, WorkflowError> {
         // 创建任务集
         let mut tasks = Vec::new();
-        
+
         // 启动并行任务
         for branch in &self.branches {
             let branch_context = context.clone();
@@ -1893,7 +1893,7 @@ impl ParallelWorkflow {
             });
             tasks.push(task);
         }
-        
+
         // 等待所有任务完成
         let mut results = Vec::new();
         for task in tasks {
@@ -1903,7 +1903,7 @@ impl ParallelWorkflow {
                 Err(e) => return Err(WorkflowError::TaskError(e.to_string())),
             }
         }
-        
+
         Ok(results)
     }
 }
@@ -1911,13 +1911,13 @@ impl ParallelWorkflow {
 // 合并上下文
 pub fn merge_contexts(contexts: Vec<WorkflowContext>) -> WorkflowContext {
     let mut result = WorkflowContext::new();
-    
+
     for context in contexts {
         for (key, value) in context.into_inner() {
             result.set(&key, value);
         }
     }
-    
+
     result
 }
 ```
@@ -1947,8 +1947,8 @@ impl ExclusiveChoiceWorkflow {
             default_workflow: None,
         }
     }
-    
-    pub fn add_branch(&mut self, 
+
+    pub fn add_branch(&mut self,
                      condition: impl Fn(&WorkflowContext) -> bool + 'static,
                      workflow: Box<dyn Workflow>) {
         self.branches.push(ConditionBranch {
@@ -1956,7 +1956,7 @@ impl ExclusiveChoiceWorkflow {
             workflow,
         });
     }
-    
+
     pub fn set_default(&mut self, workflow: Box<dyn Workflow>) {
         self.default_workflow = Some(workflow);
     }
@@ -1970,7 +1970,7 @@ impl Workflow for ExclusiveChoiceWorkflow {
                 return branch.workflow.execute(context);
             }
         }
-        
+
         // 如果没有条件匹配，执行默认分支
         if let Some(default) = &self.default_workflow {
             default.execute(context)
@@ -1983,7 +1983,7 @@ impl Workflow for ExclusiveChoiceWorkflow {
 // 示例使用
 fn create_order_workflow() -> Box<dyn Workflow> {
     let mut workflow = ExclusiveChoiceWorkflow::new();
-    
+
     // 高价值订单分支
     workflow.add_branch(
         |ctx| {
@@ -1995,7 +1995,7 @@ fn create_order_workflow() -> Box<dyn Workflow> {
         },
         Box::new(HighValueOrderWorkflow::new())
     );
-    
+
     // 国际订单分支
     workflow.add_branch(
         |ctx| {
@@ -2007,10 +2007,10 @@ fn create_order_workflow() -> Box<dyn Workflow> {
         },
         Box::new(InternationalOrderWorkflow::new())
     );
-    
+
     // 默认分支
     workflow.set_default(Box::new(StandardOrderWorkflow::new()));
-    
+
     Box::new(workflow)
 }
 ```
@@ -2046,35 +2046,35 @@ impl<T: Clone + Eq + Hash + Debug> StateMachineWorkflow<T> {
             actions: HashMap::new(),
         }
     }
-    
+
     pub fn add_transition(&mut self, from: T, event: &str, to: T) {
         self.transitions.insert((from, event.to_string()), to);
     }
-    
-    pub fn add_action(&mut self, 
-                     from: T, 
-                     to: T, 
+
+    pub fn add_action(&mut self,
+                     from: T,
+                     to: T,
                      action: impl Fn(&mut WorkflowContext) -> Result<(), ActivityError> + 'static) {
         self.actions.insert((from.clone(), to), Box::new(action));
     }
-    
-    pub fn process_event(&self, 
-                        context: &mut WorkflowContext, 
-                        current_state: &T, 
+
+    pub fn process_event(&self,
+                        context: &mut WorkflowContext,
+                        current_state: &T,
                         event: &str) -> Result<T, WorkflowError> {
         let transition_key = (current_state.clone(), event.to_string());
-        
+
         // 查找转换
         let next_state = self.transitions.get(&transition_key)
             .ok_or_else(|| WorkflowError::InvalidTransition(format!("{:?} -[{}]-> ?", current_state, event)))?
             .clone();
-            
+
         // 执行转换动作
         let action_key = (current_state.clone(), next_state.clone());
         if let Some(action) = self.actions.get(&action_key) {
             action(context).map_err(|e| WorkflowError::ActionFailed(e))?;
         }
-        
+
         Ok(next_state)
     }
 }
@@ -2082,22 +2082,22 @@ impl<T: Clone + Eq + Hash + Debug> StateMachineWorkflow<T> {
 // 订单处理状态机示例
 fn create_order_state_machine() -> StateMachineWorkflow<OrderState> {
     let mut workflow = StateMachineWorkflow::new();
-    
+
     // 定义状态转换
     workflow.add_transition(OrderState::New, "validate", OrderState::Validated);
     workflow.add_transition(OrderState::Validated, "request_payment", OrderState::PaymentPending);
     workflow.add_transition(OrderState::PaymentPending, "payment_received", OrderState::Paid);
     workflow.add_transition(OrderState::Paid, "ship", OrderState::Shipped);
     workflow.add_transition(OrderState::Shipped, "deliver", OrderState::Completed);
-    
+
     // 可以从多个状态取消
     workflow.add_transition(OrderState::New, "cancel", OrderState::Cancelled);
     workflow.add_transition(OrderState::Validated, "cancel", OrderState::Cancelled);
     workflow.add_transition(OrderState::PaymentPending, "cancel", OrderState::Cancelled);
-    
+
     // 定义转换动作
     workflow.add_action(
-        OrderState::New, 
+        OrderState::New,
         OrderState::Validated,
         |context| {
             println!("Validating order...");
@@ -2106,9 +2106,9 @@ fn create_order_state_machine() -> StateMachineWorkflow<OrderState> {
             Ok(())
         }
     );
-    
+
     workflow.add_action(
-        OrderState::Validated, 
+        OrderState::Validated,
         OrderState::PaymentPending,
         |context| {
             println!("Requesting payment...");
@@ -2117,9 +2117,9 @@ fn create_order_state_machine() -> StateMachineWorkflow<OrderState> {
             Ok(())
         }
     );
-    
+
     // 更多转换动作...
-    
+
     workflow
 }
 ```
@@ -2148,17 +2148,17 @@ impl Context {
             data: HashMap::new(),
         }
     }
-    
+
     pub fn request(&mut self) {
         if let Some(new_state) = self.state.handle(self) {
             self.state = new_state;
         }
     }
-    
+
     pub fn set_data(&mut self, key: &str, value: &str) {
         self.data.insert(key.to_string(), value.to_string());
     }
-    
+
     pub fn get_data(&self, key: &str) -> Option<&String> {
         self.data.get(key)
     }
@@ -2178,16 +2178,16 @@ pub fn map_state_pattern_to_workflow(context: &Context) -> WorkflowStateMachine 
         transitions: HashMap::new(),
         actions: HashMap::new(),
     };
-    
+
     // 通过反射或类型检查确定当前状态类型
     let state_type = std::any::type_name_of_val(&*context.state);
     workflow.current_state = state_type.to_string();
-    
+
     // 映射数据
     let context_data = context.data.clone();
-    
+
     // 这里简化了映射逻辑，实际需要更复杂的反射来完成
-    
+
     workflow
 }
 
@@ -2199,13 +2199,13 @@ pub fn map_workflow_to_state_pattern(workflow: &WorkflowStateMachine) -> Context
         "PaidOrderState" => Box::new(PaidOrderState {}),
         _ => Box::new(NewOrderState {}), // 默认状态
     };
-    
+
     // 创建上下文
     let mut context = Context::new(state);
-    
+
     // 映射数据字段
     // ...
-    
+
     context
 }
 
@@ -2213,7 +2213,7 @@ pub fn map_workflow_to_state_pattern(workflow: &WorkflowStateMachine) -> Context
 pub fn verify_isomorphism(context: &Context) -> bool {
     let workflow = map_state_pattern_to_workflow(context);
     let mapped_context = map_workflow_to_state_pattern(&workflow);
-    
+
     // 验证原始上下文和映射回来的上下文是否等价
     std::any::type_name_of_val(&*context.state) == std::any::type_name_of_val(&*mapped_context.state)
         && context.data == mapped_context.data
@@ -2250,7 +2250,7 @@ impl<T: Command + Send + Sync> Activity for CommandActivityAdapter<T> {
     fn execute(&self, _context: &mut WorkflowContext) -> Result<(), ActivityError> {
         self.command.execute().map_err(|e| ActivityError::ExecutionFailed(e.to_string()))
     }
-    
+
     fn compensate(&self, _context: &mut WorkflowContext) -> Result<(), ActivityError> {
         self.command.undo().map_err(|e| ActivityError::CompensationFailed(e.to_string()))
     }
@@ -2264,7 +2264,7 @@ pub struct ActivityCommandAdapter<T> {
 
 impl<T: Activity> ActivityCommandAdapter<T> {
     pub fn new(activity: T, context: WorkflowContext) -> Self {
-        Self { 
+        Self {
             activity: Arc::new(activity),
             context: Arc::new(Mutex::new(context)),
         }
@@ -2276,7 +2276,7 @@ impl<T: Activity + Send + Sync> Command for ActivityCommandAdapter<T> {
         let mut context = self.context.lock().map_err(|_| CommandError::LockError)?;
         self.activity.execute(&mut context).map_err(|e| CommandError::ExecutionFailed(e.to_string()))
     }
-    
+
     fn undo(&self) -> Result<(), CommandError> {
         let mut context = self.context.lock().map_err(|_| CommandError::LockError)?;
         self.activity.compensate(&mut context).map_err(|e| CommandError::UndoFailed(e.to_string()))
@@ -2288,11 +2288,11 @@ pub fn verify_equivalence<T: Command + Send + Sync>(command: &T) -> bool {
     // 创建适配器链
     let activity_adapter = CommandActivityAdapter::new(command.clone());
     let command_adapter = ActivityCommandAdapter::new(activity_adapter, WorkflowContext::new());
-    
+
     // 验证执行操作是否等价
     let result1 = command.execute();
     let result2 = command_adapter.execute();
-    
+
     // 比较结果（简化版）
     result1.is_ok() == result2.is_ok()
 }
@@ -2315,10 +2315,10 @@ pub struct ConcreteHandler {
 impl Handler for ConcreteHandler {
     fn handle(&self, request: &Request) -> Result<(), String> {
         println!("Handler '{}' processing request", self.name);
-        
+
         // 处理请求
         // ...
-        
+
         // 传递给下一个处理器
         if let Some(next) = &self.next {
             next.handle(request)
@@ -2326,7 +2326,7 @@ impl Handler for ConcreteHandler {
             Ok(())
         }
     }
-    
+
     fn set_next(&mut self, next: Box<dyn Handler>) {
         self.next = Some(next);
     }
@@ -2345,7 +2345,7 @@ impl SequentialWorkflow {
     pub fn add_activity(&mut self, activity: Box<dyn Activity>) {
         self.activities.push(activity);
     }
-    
+
     pub fn execute(&self, context: &mut WorkflowContext) -> Result<(), WorkflowError> {
         for activity in &self.activities {
             activity.execute(context).map_err(|e| WorkflowError::ActivityFailed(e))?;
@@ -2357,13 +2357,13 @@ impl SequentialWorkflow {
 // 责任链转顺序工作流
 pub fn chain_to_workflow(first_handler: &Box<dyn Handler>) -> SequentialWorkflow {
     let mut workflow = SequentialWorkflow { activities: Vec::new() };
-    
+
     // 遍历责任链
     let mut current = Some(first_handler);
     while let Some(handler) = current {
         // 创建活动适配器
         workflow.add_activity(Box::new(HandlerActivityAdapter::new(handler)));
-        
+
         // 获取下一个处理器
         if let Some(next) = handler.next() {
             current = Some(next);
@@ -2371,7 +2371,7 @@ pub fn chain_to_workflow(first_handler: &Box<dyn Handler>) -> SequentialWorkflow
             current = None;
         }
     }
-    
+
     workflow
 }
 
@@ -2390,7 +2390,7 @@ impl<'a> Activity for HandlerActivityAdapter<'a> {
     fn execute(&self, context: &mut WorkflowContext) -> Result<(), ActivityError> {
         // 将上下文转换为请求
         let request = Request::from_context(context);
-        
+
         // 调用处理器
         self.handler.handle(&request)
             .map_err(|e| ActivityError::ExecutionFailed(e))
@@ -2484,13 +2484,13 @@ impl OrderCommand for CreateOrderCommand {
     fn execute(&self) -> Result<(), CommandError> {
         let order_id = Uuid::new_v4().to_string();
         self.order_repository.create_order(&order_id, &self.order_data)?;
-        
+
         let mut id = self.created_order_id.lock().unwrap();
         *id = Some(order_id);
-        
+
         Ok(())
     }
-    
+
     fn undo(&self) -> Result<(), CommandError> {
         if let Some(order_id) = self.created_order_id.lock().unwrap().as_ref() {
             self.order_repository.delete_order(order_id)?;
@@ -2543,7 +2543,7 @@ impl OrderProcessingWorkflow {
             state_listeners: Vec::new(),
             payment_strategies: HashMap::new(),
         };
-        
+
         // 配置状态转换
         workflow.state_machine.add_transition(OrderState::Created, "validate", OrderState::Validated);
         workflow.state_machine.add_transition(OrderState::Validated, "request_payment", OrderState::PaymentPending);
@@ -2551,81 +2551,81 @@ impl OrderProcessingWorkflow {
         workflow.state_machine.add_transition(OrderState::Paid, "fulfill", OrderState::Fulfilled);
         workflow.state_machine.add_transition(OrderState::Fulfilled, "ship", OrderState::Shipped);
         workflow.state_machine.add_transition(OrderState::Shipped, "deliver", OrderState::Delivered);
-        
+
         // 取消和退款路径
         workflow.state_machine.add_transition(OrderState::Created, "cancel", OrderState::Cancelled);
         workflow.state_machine.add_transition(OrderState::Validated, "cancel", OrderState::Cancelled);
         workflow.state_machine.add_transition(OrderState::PaymentPending, "cancel", OrderState::Cancelled);
         workflow.state_machine.add_transition(OrderState::Paid, "refund", OrderState::Refunded);
-        
+
         // 配置转换动作
         workflow.state_machine.add_action(
-            OrderState::Created, 
+            OrderState::Created,
             OrderState::Validated,
             |context| {
                 println!("Validating order...");
                 let order = context.get::<Order>("order")
                     .ok_or(ActivityError::MissingData("order".to_string()))?;
-                    
+
                 if order.items.is_empty() {
                     return Err(ActivityError::ValidationFailed("Order must contain items".to_string()));
                 }
-                
+
                 Ok(())
             }
         );
-        
+
         // 添加支付处理动作
         workflow.state_machine.add_action(
-            OrderState::PaymentPending, 
+            OrderState::PaymentPending,
             OrderState::Paid,
             |context| {
                 println!("Processing payment...");
                 let order = context.get::<Order>("order")
                     .ok_or(ActivityError::MissingData("order".to_string()))?;
-                    
+
                 let payment_method = context.get::<String>("payment_method")
                     .ok_or(ActivityError::MissingData("payment_method".to_string()))?;
-                    
+
                 // 使用策略模式处理支付
                 // 这里简化了实现，实际需要从workflow的payment_strategies中获取
                 let payment_result = process_payment(payment_method, &order.id, order.total_amount)?;
-                
+
                 context.set("payment_result", payment_result);
-                
+
                 Ok(())
             }
         );
-        
+
         // 更多转换动作...
-        
+
         workflow
     }
-    
+
     pub fn add_listener(&mut self, listener: Box<dyn OrderStateListener>) {
         self.state_listeners.push(listener);
     }
-    
+
     pub fn register_payment_strategy(&mut self, method: &str, strategy: Box<dyn PaymentStrategy>) {
         self.payment_strategies.insert(method.to_string(), strategy);
     }
-    
+
     pub fn process_order(&self, order_id: &str, event: &str, context: &mut WorkflowContext) -> Result<OrderState, WorkflowError> {
         let current_state = context.get::<OrderState>("current_state")
             .ok_or(WorkflowError::MissingState)?
             .clone();
-            
+
         // 处理事件，获取新状态
         let new_state = self.state_machine.process_event(context, &current_state, event)?;
-        
+
         // 更新上下文中的状态
         context.set("current_state", new_state.clone());
-        
+
         // 通知监听器
         for listener in &self.state_listeners {
             listener.on_state_changed(order_id, &current_state, &new_state);
         }
-        
+
         Ok(new_state)
     }
 }
@@ -2685,7 +2685,7 @@ pub trait DataProcessor {
         self.post_process(context)?;
         Ok(())
     }
-    
+
     // 由子类实现的步骤
     fn validate(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError>;
     fn transform(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError>;
@@ -2700,42 +2700,42 @@ pub struct CsvProcessor {
 impl DataProcessor for CsvProcessor {
     fn validate(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         let data = context.get_input_data()?;
-        
+
         // 验证CSV格式
         if !data.starts_with(b"id,name,value") {
             return Err(ProcessingError::ValidationFailed("Invalid CSV header".to_string()));
         }
-        
+
         Ok(())
     }
-    
+
     fn transform(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         let data = context.get_input_data()?;
-        
+
         // 解析CSV数据
         let mut reader = csv::Reader::from_reader(data.as_slice());
         let mut transformed_data = Vec::new();
-        
+
         for result in reader.records() {
             let record = result.map_err(|e| ProcessingError::TransformationFailed(e.to_string()))?;
-            
+
             // 应用转换规则
             if let Some(transformed) = self.apply_rules(&record)? {
                 transformed_data.push(transformed);
             }
         }
-        
+
         // 更新上下文
         context.set_output_data(transformed_data);
-        
+
         Ok(())
     }
-    
+
     fn post_process(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         // 汇总统计信息
         let data = context.get_output_data()?;
         context.set_metadata("record_count", data.len());
-        
+
         Ok(())
     }
 }
@@ -2744,7 +2744,7 @@ impl CsvProcessor {
     fn apply_rules(&self, record: &csv::StringRecord) -> Result<Option<ProcessedRecord>, ProcessingError> {
         // 应用转换规则
         // ...
-        
+
         Ok(Some(ProcessedRecord {
             id: record.get(0).unwrap_or_default().to_string(),
             // 其他字段...
@@ -2772,7 +2772,7 @@ impl<T: DataProcessor> RetryDecorator<T> {
 impl<T: DataProcessor> DataProcessor for RetryDecorator<T> {
     fn validate(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         let mut last_error = None;
-        
+
         for attempt in 0..=self.max_retries {
             match self.processor.validate(context) {
                 Ok(()) => return Ok(()),
@@ -2784,14 +2784,14 @@ impl<T: DataProcessor> DataProcessor for RetryDecorator<T> {
                 }
             }
         }
-        
+
         Err(last_error.unwrap())
     }
-    
+
     fn transform(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         self.processor.transform(context)
     }
-    
+
     fn post_process(&self, context: &mut ProcessingContext) -> Result<(), ProcessingError> {
         self.processor.post_process(context)
     }
@@ -2814,7 +2814,7 @@ impl OutputStrategy for DatabaseOutputStrategy {
             let mut stmt = self.db_connection.prepare(
                 "INSERT INTO processed_data (id, name, value) VALUES (?, ?, ?)"
             )?;
-            
+
             for record in chunk {
                 stmt.execute(&[
                     &record.id,
@@ -2822,7 +2822,7 @@ impl OutputStrategy for DatabaseOutputStrategy {
                 ])?;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -2842,25 +2842,25 @@ impl PipelineBuilder {
             parallel_degree: 1,
         }
     }
-    
+
     pub fn add_processor(mut self, processor: Box<dyn DataProcessor>) -> Self {
         self.processors.push(processor);
         self
     }
-    
+
     pub fn with_output_strategy(mut self, strategy: Box<dyn OutputStrategy>) -> Self {
         self.output_strategy = Some(strategy);
         self
     }
-    
+
     pub fn with_parallel_degree(mut self, degree: usize) -> Self {
         self.parallel_degree = degree;
         self
     }
-    
+
     pub fn build(self) -> Result<DataPipeline, PipelineError> {
         let output_strategy = self.output_strategy.ok_or(PipelineError::MissingOutputStrategy)?;
-        
+
         Ok(DataPipeline {
             processors: self.processors,
             output_strategy,
@@ -2886,7 +2886,7 @@ impl DataPipeline {
                 context
             })
             .collect();
-            
+
         // 并行处理
         if self.parallel_degree > 1 {
             self.process_parallel(contexts)
@@ -2894,10 +2894,10 @@ impl DataPipeline {
             self.process_sequential(contexts)
         }
     }
-    
+
     fn process_sequential(&self, mut contexts: Vec<ProcessingContext>) -> Result<BatchResult, PipelineError> {
         let mut results = BatchResult::new();
-        
+
         for context in &mut contexts {
             match self.process_single(context) {
                 Ok(()) => results.successful += 1,
@@ -2907,22 +2907,22 @@ impl DataPipeline {
                 }
             }
         }
-        
+
         Ok(results)
     }
-    
+
     fn process_parallel(&self, contexts: Vec<ProcessingContext>) -> Result<BatchResult, PipelineError> {
         let results = Arc::new(Mutex::new(BatchResult::new()));
         let pool = ThreadPool::new(self.parallel_degree);
-        
+
         for context in contexts {
             let processors = self.processors.clone();
             let output_strategy = self.output_strategy.clone();
             let results = Arc::clone(&results);
-            
+
             pool.execute(move || {
                 let mut context = context;
-                
+
                 // 顺序应用所有处理器
                 for processor in &processors {
                     if let Err(e) = processor.process(&mut context) {
@@ -2932,7 +2932,7 @@ impl DataPipeline {
                         return;
                     }
                 }
-                
+
                 // 输出处理后的数据
                 if let Ok(data) = context.get_output_data() {
                     if let Err(e) = output_strategy.write(&data) {
@@ -2942,33 +2942,33 @@ impl DataPipeline {
                         return;
                     }
                 }
-                
+
                 let mut results = results.lock().unwrap();
                 results.successful += 1;
             });
         }
-        
+
         // 等待所有任务完成
         pool.join();
-        
+
         let results = Arc::try_unwrap(results)
             .map_err(|_| PipelineError::ThreadError("Failed to retrieve results".to_string()))?
             .into_inner()
             .map_err(|_| PipelineError::LockError)?;
-            
+
         Ok(results)
     }
-    
+
     fn process_single(&self, context: &mut ProcessingContext) -> Result<(), PipelineError> {
         // 顺序应用所有处理器
         for processor in &self.processors {
             processor.process(context).map_err(PipelineError::ProcessingError)?;
         }
-        
+
         // 输出处理后的数据
         let data = context.get_output_data()?;
         self.output_strategy.write(&data).map_err(PipelineError::OutputError)?;
-        
+
         Ok(())
     }
 }
@@ -2978,14 +2978,14 @@ fn create_sample_pipeline() -> Result<DataPipeline, PipelineError> {
     let csv_processor = CsvProcessor {
         config: CsvProcessorConfig::default(),
     };
-    
+
     // 使用装饰器添加重试能力
     let retry_processor = RetryDecorator::new(
         csv_processor,
         3,
         Duration::from_millis(100),
     );
-    
+
     // 使用建造者模式构建管道
     PipelineBuilder::new()
         .add_processor(Box::new(retry_processor))

@@ -237,7 +237,7 @@ impl<'a> JsonManager<'a> {
         value: &T,
     ) -> Result<()> {
         let json_value = serde_json::to_value(value)?;
-        
+
         match self.connection {
             DbConnection::Postgres(conn) => {
                 sqlx::query(
@@ -343,7 +343,7 @@ impl<'a> ProcedureManager<'a> {
                 }
 
                 let row = query.fetch_optional(conn).await?;
-                
+
                 if let Some(row) = row {
                     let value: Value = row.get(0);
                     Ok(Some(serde_json::from_value(value)?))
@@ -434,7 +434,7 @@ async fn main() -> Result<()> {
 
     // JSON 操作
     let mut json_manager = JsonManager::new(&mut conn);
-    
+
     // 更新 JSON 数据
     let user_data = serde_json::json!({
         "name": "John",
@@ -456,7 +456,7 @@ async fn main() -> Result<()> {
 
     // 存储过程
     let mut proc_manager = ProcedureManager::new(&mut conn);
-    
+
     // 创建存储过程
     proc_manager.create_procedure(
         "update_user_profile",

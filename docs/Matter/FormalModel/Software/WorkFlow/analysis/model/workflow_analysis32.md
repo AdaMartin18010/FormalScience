@@ -1,4 +1,9 @@
-# MVP架构
+# 1. MVP架构
+
+## 目录
+
+- [1. MVP架构](#1-mvp架构)
+  - [目录](#目录)
 
 非常好！这个类比非常深刻，您希望将 Rust 类型系统处理**内存资源**的严谨性（所有权、借用、生命周期）
 **映射**到工作流架构中对某种**广义“资源”或“能力”**的管理上。
@@ -32,9 +37,9 @@
 
 1. **定义 `CapabilityResource` (概念性):**
 
-* 在 Fabric 内部需要一个机制来**识别**需要受控访问的资源。
-* 这可以基于 `Effect` 的类型和其参数。
-* 例如：`ResourceId` 可以是一个 `enum` 或 `struct`：
+- 在 Fabric 内部需要一个机制来**识别**需要受控访问的资源。
+- 这可以基于 `Effect` 的类型和其参数。
+- 例如：`ResourceId` 可以是一个 `enum` 或 `struct`：
 
 ```rust
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]

@@ -1,37 +1,38 @@
-# 高级形式语言理论扩展 (Advanced Formal Language Theory Extended)
+# 1. 高级形式语言理论扩展 (Advanced Formal Language Theory Extended)
 
-## 📋 目录
+## 目录
 
-- [1 形式语言基础理论深度分析](#1-形式语言基础理论深度分析)
-  - [1.1 语言与自动机基础](#11-语言与自动机基础)
-  - [1.2 乔姆斯基层次结构](#12-乔姆斯基层次结构)
-- [2 有限状态自动机理论](#2-有限状态自动机理论)
-  - [2.1 确定性有限自动机](#21-确定性有限自动机)
-  - [2.2 非确定性有限自动机](#22-非确定性有限自动机)
-  - [2.3 正则表达式](#23-正则表达式)
-- [3 上下文无关文法理论](#3-上下文无关文法理论)
-  - [3.1 文法定义](#31-文法定义)
-  - [3.2 乔姆斯基范式](#32-乔姆斯基范式)
-  - [3.3 CYK算法](#33-cyk算法)
-- [4 下推自动机理论](#4-下推自动机理论)
-  - [4.1 PDA定义](#41-pda定义)
-  - [4.2 确定性PDA](#42-确定性pda)
-- [5 图灵机理论](#5-图灵机理论)
-  - [5.1 图灵机定义](#51-图灵机定义)
-  - [5.2 可计算性理论](#52-可计算性理论)
-- [6 计算复杂性理论](#6-计算复杂性理论)
-  - [6.1 时间复杂性](#61-时间复杂性)
-  - [6.2 空间复杂性](#62-空间复杂性)
-- [7 实际应用](#7-实际应用)
-  - [7.1 编译器设计](#71-编译器设计)
-  - [7.2 语法分析](#72-语法分析)
-- [8 结论](#8-结论)
+- [1. 高级形式语言理论扩展 (Advanced Formal Language Theory Extended)](#1-高级形式语言理论扩展-advanced-formal-language-theory-extended)
+  - [目录](#目录)
+  - [1.1 形式语言基础理论深度分析](#11-形式语言基础理论深度分析)
+    - [1.1.1 语言与自动机基础](#111-语言与自动机基础)
+    - [1.1.2 乔姆斯基层次结构](#112-乔姆斯基层次结构)
+  - [1.2 有限状态自动机理论](#12-有限状态自动机理论)
+    - [1.2.1 确定性有限自动机](#121-确定性有限自动机)
+    - [1.2.2 非确定性有限自动机](#122-非确定性有限自动机)
+    - [1.2.3 正则表达式](#123-正则表达式)
+  - [1.3 上下文无关文法理论](#13-上下文无关文法理论)
+    - [1.3.1 文法定义](#131-文法定义)
+    - [1.3.2 乔姆斯基范式](#132-乔姆斯基范式)
+    - [1.3.3 CYK算法](#133-cyk算法)
+  - [1.4 下推自动机理论](#14-下推自动机理论)
+    - [1.4.1 PDA定义](#141-pda定义)
+    - [1.4.2 确定性PDA](#142-确定性pda)
+  - [1.5 图灵机理论](#15-图灵机理论)
+    - [1.5.1 图灵机定义](#151-图灵机定义)
+    - [1.5.2 可计算性理论](#152-可计算性理论)
+  - [1.6 计算复杂性理论](#16-计算复杂性理论)
+    - [1.6.1 时间复杂性](#161-时间复杂性)
+    - [1.6.2 空间复杂性](#162-空间复杂性)
+  - [1.7 实际应用](#17-实际应用)
+    - [1.7.1 编译器设计](#171-编译器设计)
+    - [1.7.2 语法分析](#172-语法分析)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
+## 1.1 形式语言基础理论深度分析
 
-## 1 形式语言基础理论深度分析
-
-### 1.1 语言与自动机基础
+### 1.1.1 语言与自动机基础
 
 **定义 1.1 (字母表)**
 字母表 $\Sigma$ 是有限符号集合，$|\Sigma| = n$。
@@ -70,7 +71,7 @@ $$w = a_1 a_2 \cdots a_n \text{ where } a_i \in \Sigma$$
 2. 分配律：通过集合的分配律
 3. 幂等律：通过克林闭包的定义
 
-### 1.2 乔姆斯基层次结构
+### 1.1.2 乔姆斯基层次结构
 
 **定义 1.6 (乔姆斯基层次)**
 语言类别的层次结构：
@@ -92,9 +93,9 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 **定义 1.7 (语言复杂性)**
 语言的复杂性通过识别它的最小自动机类型度量。
 
-## 2 有限状态自动机理论
+## 1.2 有限状态自动机理论
 
-### 2.1 确定性有限自动机
+### 1.2.1 确定性有限自动机
 
 **定义 2.1 (DFA)**
 确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -131,7 +132,7 @@ $$L(M) = \{w \in \Sigma^* \mid M \text{ accepts } w\}$$
 
 ```haskell
 minimizeDFA :: DFA -> DFA
-minimizeDFA dfa = 
+minimizeDFA dfa =
   let equivalentStates = findEquivalentStates dfa
       minimizedStates = map representative equivalentStates
       minimizedDelta = buildMinimizedDelta dfa equivalentStates
@@ -143,13 +144,13 @@ minimizeDFA dfa =
          , acceptingStates = minimizedF }
 
 findEquivalentStates :: DFA -> [[State]]
-findEquivalentStates dfa = 
+findEquivalentStates dfa =
   let initialPartition = [acceptingStates dfa, states dfa \\ acceptingStates dfa]
       refinedPartition = refinePartition dfa initialPartition
   in refinedPartition
 ```
 
-### 2.2 非确定性有限自动机
+### 1.2.2 非确定性有限自动机
 
 **定义 2.5 (NFA)**
 非确定性有限自动机是五元组 $M = (Q, \Sigma, \delta, q_0, F)$，其中：
@@ -175,7 +176,7 @@ NFA接受字符串 $w$，如果存在计算路径结束于接受状态。
 
 ```haskell
 subsetConstruction :: NFA -> DFA
-subsetConstruction nfa = 
+subsetConstruction nfa =
   let initialState = epsilonClosure nfa [initialState nfa]
       allStates = generateAllStates nfa initialState
       transitions = buildTransitions nfa allStates
@@ -187,15 +188,15 @@ subsetConstruction nfa =
          , acceptingStates = acceptingStates }
 
 epsilonClosure :: NFA -> [State] -> [State]
-epsilonClosure nfa states = 
+epsilonClosure nfa states =
   let epsilonTransitions = concatMap (\s -> delta nfa s Nothing) states
       newStates = filter (`notElem` states) epsilonTransitions
-  in if null newStates 
+  in if null newStates
      then states
      else epsilonClosure nfa (states ++ newStates)
 ```
 
-### 2.3 正则表达式
+### 1.2.3 正则表达式
 
 **定义 2.8 (正则表达式)**
 正则表达式的语法：
@@ -231,7 +232,7 @@ regexToNFA (Concat r1 r2) = concatNFA (regexToNFA r1) (regexToNFA r2)
 regexToNFA (Star r) = starNFA (regexToNFA r)
 
 unionNFA :: NFA -> NFA -> NFA
-unionNFA nfa1 nfa2 = 
+unionNFA nfa1 nfa2 =
   let newInitial = freshState
       newStates = [newInitial] ++ states nfa1 ++ states nfa2
       newDelta = union (delta nfa1) (delta nfa2) ++ [(newInitial, Nothing, initialState nfa1), (newInitial, Nothing, initialState nfa2)]
@@ -243,9 +244,9 @@ unionNFA nfa1 nfa2 =
          , acceptingStates = newAccepting }
 ```
 
-## 3 上下文无关文法理论
+## 1.3 上下文无关文法理论
 
-### 3.1 文法定义
+### 1.3.1 文法定义
 
 **定义 3.1 (CFG)**
 上下文无关文法是四元组 $G = (V, T, P, S)$，其中：
@@ -277,7 +278,7 @@ CFG歧义性问题是不可判定的。
 2. 歧义性对应停机
 3. 因此歧义性不可判定
 
-### 3.2 乔姆斯基范式
+### 1.3.2 乔姆斯基范式
 
 **定义 3.5 (CNF)**
 乔姆斯基范式文法满足：
@@ -298,52 +299,52 @@ CFG歧义性问题是不可判定的。
 
 ```haskell
 convertToCNF :: CFG -> CFG
-convertToCNF cfg = 
+convertToCNF cfg =
   let cfg1 = eliminateEpsilon cfg
       cfg2 = eliminateUnit cfg1
       cfg3 = eliminateLong cfg2
   in cfg3
 
 eliminateEpsilon :: CFG -> CFG
-eliminateEpsilon cfg = 
+eliminateEpsilon cfg =
   let nullable = findNullable cfg
       newProductions = generateNewProductions cfg nullable
   in cfg { productions = newProductions }
 
 findNullable :: CFG -> Set NonTerminal
-findNullable cfg = 
+findNullable cfg =
   let initial = Set.fromList [A | (A, rhs) <- productions cfg, rhs == []]
       fixedPoint = iterate (stepNullable cfg) initial
   in head [s | s <- fixedPoint, s == stepNullable cfg s]
 ```
 
-### 3.3 CYK算法
+### 1.3.3 CYK算法
 
 -**算法 3.2 (CYK算法)**
 
 ```haskell
 cykParse :: CFG -> String -> Bool
-cykParse cfg input = 
+cykParse cfg input =
   let n = length input
       table = array ((0,0), (n-1,n-1)) []
-      
+
       -- 初始化对角线
-      table' = foldl (\t i -> t // [((i,i), findProductions cfg [input !! i])]) 
+      table' = foldl (\t i -> t // [((i,i), findProductions cfg [input !! i])])
                      table [0..n-1]
-      
+
       -- 填充表格
       finalTable = fillTable cfg table' n
-      
+
       startSymbol = startSymbol cfg
   in startSymbol `elem` (finalTable ! (0, n-1))
 
 fillTable :: CFG -> Array (Int,Int) [Symbol] -> Int -> Array (Int,Int) [Symbol]
-fillTable cfg table n = 
-  foldl (\t len -> 
-    foldl (\t' i -> 
+fillTable cfg table n =
+  foldl (\t len ->
+    foldl (\t' i ->
       let j = i + len - 1
           cells = [(i,k) | k <- [i..j-1]]
-          symbols = concatMap (\k -> 
+          symbols = concatMap (\k ->
             let left = t' ! (i,k)
                 right = t' ! (k+1,j)
             in findProductions cfg (left ++ right)) cells
@@ -359,9 +360,9 @@ CYK算法正确识别CFG语言。
 2. 归纳步骤：通过组合较短子串
 3. 正确性：通过文法产生式
 
-## 4 下推自动机理论
+## 1.4 下推自动机理论
 
-### 4.1 PDA定义
+### 1.4.1 PDA定义
 
 **定义 4.1 (PDA)**
 下推自动机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$，其中：
@@ -395,7 +396,7 @@ PDA和CFG识别相同的语言类。
 1. CFG到PDA：通过自顶向下分析
 2. PDA到CFG：通过配置转换
 
-### 4.2 确定性PDA
+### 1.4.2 确定性PDA
 
 **定义 4.4 (DPDA)**
 确定性PDA满足：
@@ -412,9 +413,9 @@ DPDA不能识别所有CFL。
 2. DPDA无法处理歧义
 3. 因此DPDA能力有限
 
-## 5 图灵机理论
+## 1.5 图灵机理论
 
-### 5.1 图灵机定义
+### 1.5.1 图灵机定义
 
 **定义 5.1 (图灵机)**
 图灵机是七元组 $M = (Q, \Sigma, \Gamma, \delta, q_0, B, F)$，其中：
@@ -452,7 +453,7 @@ $$(q, \alpha, i) \vdash (p, \beta, j)$$
 2. 其他模型不能超越图灵机
 3. 因此图灵机是通用模型
 
-### 5.2 可计算性理论
+### 1.5.2 可计算性理论
 
 **定义 5.4 (可计算函数)**
 函数 $f : \mathbb{N} \rightarrow \mathbb{N}$ 是可计算的，如果存在图灵机计算它。
@@ -481,9 +482,9 @@ $$(q, \alpha, i) \vdash (p, \beta, j)$$
 2. 存在递归可枚举但非递归的语言
 3. 因此包含关系严格
 
-## 6 计算复杂性理论
+## 1.6 计算复杂性理论
 
-### 6.1 时间复杂性
+### 1.6.1 时间复杂性
 
 **定义 6.1 (时间复杂性)**
 图灵机 $M$ 的时间复杂性是函数 $T_M : \mathbb{N} \rightarrow \mathbb{N}$，其中 $T_M(n)$ 是 $M$ 在长度为 $n$ 的输入上的最大步数。
@@ -503,7 +504,7 @@ $P \subseteq NP$，但 $P = NP$ 是否成立是开放问题。
 2. 因此 $P \subseteq NP$
 3. 反向包含是开放问题
 
-### 6.2 空间复杂性
+### 1.6.2 空间复杂性
 
 **定义 6.3 (空间复杂性)**
 图灵机 $M$ 的空间复杂性是函数 $S_M : \mathbb{N} \rightarrow \mathbb{N}$，其中 $S_M(n)$ 是 $M$ 在长度为 $n$ 的输入上使用的最大带格子数。
@@ -523,9 +524,9 @@ $P \subseteq NP$，但 $P = NP$ 是否成立是开放问题。
 2. 证明 $L$ 在 $SPACE(f(n))$ 中
 3. 因此层次定理成立
 
-## 7 实际应用
+## 1.7 实际应用
 
-### 7.1 编译器设计
+### 1.7.1 编译器设计
 
 **定义 7.1 (词法分析器)**
 词法分析器将输入字符串转换为词法单元序列。
@@ -534,19 +535,19 @@ $P \subseteq NP$，但 $P = NP$ 是否成立是开放问题。
 
 ```haskell
 lexicalAnalysis :: String -> [Token]
-lexicalAnalysis input = 
+lexicalAnalysis input =
   let tokens = scanTokens input
       validTokens = filter isValid tokens
   in validTokens
 
 scanTokens :: String -> [Token]
 scanTokens [] = []
-scanTokens input = 
+scanTokens input =
   let (token, rest) = scanNextToken input
   in token : scanTokens rest
 
 scanNextToken :: String -> (Token, String)
-scanNextToken input = 
+scanNextToken input =
   let (lexeme, rest) = extractLexeme input
       tokenType = classifyToken lexeme
   in (Token tokenType lexeme, rest)
@@ -561,7 +562,7 @@ scanNextToken input =
 2. 词法分析器实现这些正则表达式
 3. 因此识别正确
 
-### 7.2 语法分析
+### 1.7.2 语法分析
 
 **定义 7.2 (语法分析器)**
 语法分析器将词法单元序列转换为抽象语法树。
@@ -570,12 +571,12 @@ scanNextToken input =
 
 ```haskell
 recursiveDescent :: CFG -> [Token] -> ParseTree
-recursiveDescent cfg tokens = 
+recursiveDescent cfg tokens =
   let startSymbol = startSymbol cfg
   in parseSymbol cfg startSymbol tokens
 
 parseSymbol :: CFG -> NonTerminal -> [Token] -> ParseTree
-parseSymbol cfg symbol tokens = 
+parseSymbol cfg symbol tokens =
   let productions = findProductions cfg symbol
       (production, remainingTokens) = tryProductions cfg productions tokens
   in Node symbol (map (\s -> parseSymbol cfg s remainingTokens) production)
@@ -590,7 +591,7 @@ parseSymbol cfg symbol tokens =
 2. 每个节点对应文法产生式
 3. 因此树结构正确
 
-## 8 结论
+## 1.8 结论
 
 高级形式语言理论为计算机科学提供了坚实的理论基础：
 
@@ -602,7 +603,7 @@ parseSymbol cfg symbol tokens =
 
 形式语言理论在编程语言设计、编译器构造、自然语言处理等领域发挥着重要作用，为现代计算机科学的发展提供了强大的理论支撑。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). Introduction to automata theory, languages, and computation. Pearson Education.
 2. Sipser, M. (2012). Introduction to the theory of computation. Cengage Learning.

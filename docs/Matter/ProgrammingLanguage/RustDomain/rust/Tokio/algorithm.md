@@ -37,9 +37,9 @@ use std::pin::Pin;
 #[async_trait]
 pub trait AsyncIterator {
     type Item;
-    
+
     async fn next(&mut self) -> Option<Self::Item>;
-    
+
     fn into_stream(self) -> Pin<Box<dyn Stream<Item = Self::Item>>>;
 }
 
@@ -197,7 +197,7 @@ impl<T: Ord + Send + Clone> AsyncBinaryTree<T> {
     // 异步插入
     pub async fn insert(&mut self, value: T) {
         let mut current = &mut self.root;
-        
+
         let mut insert_gen = try_stream! {
             while let Some(node) = current {
                 if value <= node.value {
@@ -220,7 +220,7 @@ impl<T: Ord + Send + Clone> AsyncBinaryTree<T> {
     // 异步中序遍历
     pub fn inorder_traversal(&self) -> Pin<Box<dyn Stream<Item = T>>> {
         let root = self.root.as_ref().cloned();
-        
+
         Box::pin(try_stream! {
             if let Some(node) = root {
                 let mut stack = Vec::new();
@@ -263,11 +263,11 @@ impl AsyncGraph {
     // 异步广度优先搜索
     pub fn bfs(&self, start: usize) -> Pin<Box<dyn Stream<Item = usize>>> {
         let edges = self.edges.clone();
-        
+
         Box::pin(try_stream! {
             let mut visited = HashSet::new();
             let mut queue = VecDeque::new();
-            
+
             queue.push_back(start);
             visited.insert(start);
 
@@ -289,11 +289,11 @@ impl AsyncGraph {
     // 异步深度优先搜索
     pub fn dfs(&self, start: usize) -> Pin<Box<dyn Stream<Item = usize>>> {
         let edges = self.edges.clone();
-        
+
         Box::pin(try_stream! {
             let mut visited = HashSet::new();
             let mut stack = vec![start];
-            
+
             while let Some(node) = stack.pop() {
                 if !visited.contains(&node) {
                     visited.insert(node);

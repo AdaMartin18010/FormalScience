@@ -1,32 +1,29 @@
-# RefCell
+# 1. RefCell
 
-Rust 是一种注重安全性和并发性的编程语言，它通过所有权（ownership）、借用（borrowing）和生命周期（lifetime）的概念来保证内存安全。
-在 Rust 中，`RefCell` 是一种智能指针，它提供了内部可变性（interior mutability）的机制，允许在借用规则之外修改数据。
+## 目录
 
-## 📋 目录
+- [1. RefCell](#1-refcell)
+  - [目录](#目录)
+  - [1.1 什么是内部可变性](#11-什么是内部可变性)
+  - [1.2 RefCell 的作用](#12-refcell-的作用)
+  - [1.3 使用 RefCell 的关键点](#13-使用-refcell-的关键点)
+  - [1.4 示例代码](#14-示例代码)
+  - [1.5 Borrow](#15-borrow)
+  - [1.6 BorrowMut](#16-borrowmut)
+  - [1.7 其他相关 trait](#17-其他相关-trait)
+  - [1.8 运行时借用检查](#18-运行时借用检查)
 
-- [1 什么是内部可变性](#1-什么是内部可变性)
-- [2 RefCell 的作用](#2-refcell-的作用)
-- [3 使用 RefCell 的关键点](#3-使用-refcell-的关键点)
-- [4 示例代码](#4-示例代码)
-- [5 Borrow](#5-borrow)
-- [6 BorrowMut](#6-borrowmut)
-- [7 其他相关 trait](#7-其他相关-trait)
-- [8 运行时借用检查](#8-运行时借用检查)
-
----
-
-## 1 什么是内部可变性
+## 1.1 什么是内部可变性
 
 在 Rust 中，默认情况下，如果一个值被多个可变引用所借用，那么这些引用是互斥的，也就是说，你不能同时拥有多个可变的借用。
 但是，有些情况下，我们希望即使在某些值被借用的情况下，也能够修改这个值，这就是内部可变性。
 
-## 2 RefCell 的作用
+## 1.2 RefCell 的作用
 
 `RefCell` 提供了一种机制，允许在运行时检查借用规则，而不是在编译时。
 这意味着，如果违反了借用规则，程序会在运行时 panic，而不是在编译时报错。
 
-## 3 使用 RefCell 的关键点
+## 1.3 使用 RefCell 的关键点
 
 1. **运行时借用检查**：`RefCell` 会在运行时检查借用规则，如果违反了规则（例如，尝试获取多个可变引用），程序会 panic。
 
@@ -38,7 +35,7 @@ Rust 是一种注重安全性和并发性的编程语言，它通过所有权（
 
 5. **使用场景**：`RefCell` 通常用于那些需要在借用期间修改数据的场景，例如，实现单线程环境下的某些数据结构。
 
-## 4 示例代码
+## 1.4 示例代码
 
 ```rust
 use std::cell::RefCell;
@@ -105,7 +102,7 @@ fn main() {
 在 Rust 中，与 `RefCell` 提供相同功能的 trait 是 `std::cell::Borrow` 和 `std::cell::BorrowMut`。
 这些 trait 允许 `RefCell` 提供对内部数据的借用访问，同时保持运行时借用检查。
 
-## 5 Borrow
+## 1.5 Borrow
 
 `Borrow` trait 定义了获取不可变引用的方法。对于 `RefCell` 来说，这意味着：
 
@@ -119,7 +116,7 @@ impl<'a, T> Borrow<T> for RefCell<T> {
 
 这允许 `RefCell` 的用户通过调用 `borrow` 方法来获取对内部数据的不可变引用。
 
-## 6 BorrowMut
+## 1.6 BorrowMut
 
 `BorrowMut` trait 定义了获取可变引用的方法。对于 `RefCell` 来说，这意味着：
 
@@ -133,7 +130,7 @@ impl<'a, T> BorrowMut<T> for RefCell<T> {
 
 `BorrowMut` 允许 `RefCell` 的用户即使在存在不可变引用的情况下也能获取可变引用，这是 `RefCell` 提供内部可变性的关键特性。
 
-## 7 其他相关 trait
+## 1.7 其他相关 trait
 
 除了 `Borrow` 和 `BorrowMut`，`RefCell` 还实现了一些其他 trait，以提供额外的功能：
 
@@ -141,7 +138,7 @@ impl<'a, T> BorrowMut<T> for RefCell<T> {
 - `Default`: 如果 `T: Default`，`RefCell<T>` 也可以实现 `Default`，允许创建具有默认值的 `RefCell`。
 - `AsRef` 和 `AsMut`: 这些 trait 提供了获取对内部数据的引用的另一种方式，尽管它们不直接由 `RefCell` 实现，但通过 `borrow` 和 `borrow_mut` 方法间接提供。
 
-## 8 运行时借用检查
+## 1.8 运行时借用检查
 
 与 `RefCell` 类似的 trait 还包括 `std::rc::Rc` 和 `std::sync::Arc` 中的 `Weak` 类型，它们允许创建弱引用，但它们不提供运行时借用检查。
 `RefCell` 的独特之处在于它提供了运行时借用检查，这是通过在借用期间使用 `borrow` 和 `borrow_mut` 方法实现的，违反借用规则会导致 panic。

@@ -49,15 +49,15 @@ service RaftNode {
     // Raft 核心 RPC
     rpc RequestVote (RequestVoteRequest) returns (RequestVoteResponse);
     rpc AppendEntries (AppendEntriesRequest) returns (AppendEntriesResponse);
-    
+
     // 客户端请求
     rpc ClientRequest (ClientRequest) returns (ClientResponse);
     rpc GetClusterState (ClusterStateRequest) returns (ClusterStateResponse);
-    
+
     // 成员管理
     rpc AddNode (AddNodeRequest) returns (AddNodeResponse);
     rpc RemoveNode (RemoveNodeRequest) returns (RemoveNodeResponse);
-    
+
     // 状态同步
     rpc Snapshot (stream SnapshotChunk) returns (SnapshotResponse);
     rpc InstallSnapshot (InstallSnapshotRequest) returns (InstallSnapshotResponse);
@@ -253,7 +253,7 @@ impl RaftNode for RaftService {
     ) -> Result<Response<RequestVoteResponse>, Status> {
         let req = request.into_inner();
         let mut server = self.raft_server.lock().await;
-        
+
         let msg = Message {
             msg_type: MessageType::MsgRequestVote,
             to: server.node_id,
@@ -324,7 +324,7 @@ impl RaftNode for RaftService {
                 // 读请求直接从状态机获取
                 let result = server.state_machine.read(&req.data)
                     .map_err(|e| Status::internal(e.to_string()))?;
-                
+
                 Ok(Response::new(ClientResponse {
                     request_id: req.request_id,
                     success: true,
@@ -373,7 +373,7 @@ impl StateMachine {
     pub fn apply(&self, entry: &[u8]) -> anyhow::Result<()> {
         let command: Command = serde_json::from_slice(entry)?;
         let mut data = self.data.write().unwrap();
-        
+
         match command {
             Command::Put { key, value } => {
                 data.insert(key, value);
@@ -382,7 +382,7 @@ impl StateMachine {
                 data.remove(&key);
             }
         }
-        
+
         Ok(())
     }
 

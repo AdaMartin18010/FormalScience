@@ -1,57 +1,57 @@
 
-# 数据流视角下的软件与系统形式化建模：全面分析与应用
+# 1. 数据流视角下的软件与系统形式化建模：全面分析与应用
 
 ## 目录
 
-- [数据流视角下的软件与系统形式化建模：全面分析与应用](#数据流视角下的软件与系统形式化建模全面分析与应用)
+- [1. 数据流视角下的软件与系统形式化建模：全面分析与应用](#1-数据流视角下的软件与系统形式化建模全面分析与应用)
   - [目录](#目录)
-  - [1. 引言](#1-引言)
-  - [2. 数据流的概念体系](#2-数据流的概念体系)
-    - [2.1 基本定义与分类](#21-基本定义与分类)
-    - [2.2 数据流模型的演进](#22-数据流模型的演进)
-    - [2.3 与控制流和执行流的关系](#23-与控制流和执行流的关系)
-  - [3. 数据流的理论模型](#3-数据流的理论模型)
-    - [3.1 Petri网及其扩展](#31-petri网及其扩展)
-    - [3.2 Kahn处理网络(KPN)](#32-kahn处理网络kpn)
-    - [3.3 同步数据流(SDF)](#33-同步数据流sdf)
-    - [3.4 Actor模型](#34-actor模型)
-    - [3.5 Communicating Sequential Processes (CSP)](#35-communicating-sequential-processes-csp)
-    - [3.6 π演算](#36-π演算)
-    - [3.7 排队论模型](#37-排队论模型)
-    - [3.8 网络演算(Network Calculus)](#38-网络演算network-calculus)
-  - [4. 数据流的形式化验证方法](#4-数据流的形式化验证方法)
-    - [4.1 模型检验技术](#41-模型检验技术)
-    - [4.2 数据流的时间性质分析](#42-数据流的时间性质分析)
-    - [4.3 形式化证明示例](#43-形式化证明示例)
-    - [4.4 符号执行与抽象解释](#44-符号执行与抽象解释)
-  - [5. 现代编程模型中的数据流表达](#5-现代编程模型中的数据流表达)
-    - [5.1 函数式响应式编程(FRP)](#51-函数式响应式编程frp)
-    - [5.2 基于反应器的并发模型](#52-基于反应器的并发模型)
-    - [5.3 流处理DSL与框架](#53-流处理dsl与框架)
-    - [5.4 Rust中的数据流抽象](#54-rust中的数据流抽象)
-  - [6. 数据流在系统架构中的应用](#6-数据流在系统架构中的应用)
-    - [6.1 流处理架构](#61-流处理架构)
-    - [6.2 微服务与事件驱动架构](#62-微服务与事件驱动架构)
-    - [6.3 数据密集型应用设计](#63-数据密集型应用设计)
-    - [6.4 边缘计算与IoT系统](#64-边缘计算与iot系统)
-  - [7. 数据流分析的工程实践](#7-数据流分析的工程实践)
-    - [7.1 数据流静态分析工具](#71-数据流静态分析工具)
-    - [7.2 流量控制与背压机制](#72-流量控制与背压机制)
-    - [7.3 数据流监控与可视化](#73-数据流监控与可视化)
-    - [7.4 案例研究：Rust中的异步数据处理](#74-案例研究rust中的异步数据处理)
-  - [8. 学术前沿与研究热点](#8-学术前沿与研究热点)
-    - [8.1 形式化方法与量化性能分析的融合](#81-形式化方法与量化性能分析的融合)
-    - [8.2 数据流中的不确定性与弹性分析](#82-数据流中的不确定性与弹性分析)
-    - [8.3 跨层次数据流优化](#83-跨层次数据流优化)
-    - [8.4 形式化与机器学习的交叉](#84-形式化与机器学习的交叉)
-  - [9. 挑战与未来展望](#9-挑战与未来展望)
-    - [9.1 可扩展性挑战](#91-可扩展性挑战)
-    - [9.2 形式化与实用性的平衡](#92-形式化与实用性的平衡)
-    - [9.3 端到端数据流分析的愿景](#93-端到端数据流分析的愿景)
-  - [10. 思维导图](#10-思维导图)
-  - [11. 参考文献](#11-参考文献)
+  - [1.1 引言](#11-引言)
+  - [1.2 数据流的概念体系](#12-数据流的概念体系)
+    - [1.2.1 基本定义与分类](#121-基本定义与分类)
+    - [1.2.2 数据流模型的演进](#122-数据流模型的演进)
+    - [1.2.3 与控制流和执行流的关系](#123-与控制流和执行流的关系)
+  - [1.3 数据流的理论模型](#13-数据流的理论模型)
+    - [1.3.1 Petri网及其扩展](#131-petri网及其扩展)
+    - [1.3.2 Kahn处理网络(KPN)](#132-kahn处理网络kpn)
+    - [1.3.3 同步数据流(SDF)](#133-同步数据流sdf)
+    - [1.3.4 Actor模型](#134-actor模型)
+    - [1.3.5 Communicating Sequential Processes (CSP)](#135-communicating-sequential-processes-csp)
+    - [1.3.6 π演算](#136-π演算)
+    - [1.3.7 排队论模型](#137-排队论模型)
+    - [1.3.8 网络演算(Network Calculus)](#138-网络演算network-calculus)
+  - [1.4 数据流的形式化验证方法](#14-数据流的形式化验证方法)
+    - [1.4.1 模型检验技术](#141-模型检验技术)
+    - [1.4.2 数据流的时间性质分析](#142-数据流的时间性质分析)
+    - [1.4.3 形式化证明示例](#143-形式化证明示例)
+    - [1.4.4 符号执行与抽象解释](#144-符号执行与抽象解释)
+  - [1.5 现代编程模型中的数据流表达](#15-现代编程模型中的数据流表达)
+    - [1.5.1 函数式响应式编程(FRP)](#151-函数式响应式编程frp)
+    - [1.5.2 基于反应器的并发模型](#152-基于反应器的并发模型)
+    - [1.5.3 流处理DSL与框架](#153-流处理dsl与框架)
+    - [2.0.1 Rust中的数据流抽象](#201-rust中的数据流抽象)
+  - [2.1 数据流在系统架构中的应用](#21-数据流在系统架构中的应用)
+    - [2.1.1 流处理架构](#211-流处理架构)
+    - [2.1.2 微服务与事件驱动架构](#212-微服务与事件驱动架构)
+    - [2.1.3 数据密集型应用设计](#213-数据密集型应用设计)
+    - [2.1.4 边缘计算与IoT系统](#214-边缘计算与iot系统)
+  - [2.2 数据流分析的工程实践](#22-数据流分析的工程实践)
+    - [2.2.1 数据流静态分析工具](#221-数据流静态分析工具)
+    - [2.2.2 流量控制与背压机制](#222-流量控制与背压机制)
+    - [2.2.3 数据流监控与可视化](#223-数据流监控与可视化)
+    - [2.2.4 案例研究：Rust中的异步数据处理](#224-案例研究rust中的异步数据处理)
+  - [2.3 学术前沿与研究热点](#23-学术前沿与研究热点)
+    - [2.3.1 形式化方法与量化性能分析的融合](#231-形式化方法与量化性能分析的融合)
+    - [2.3.2 数据流中的不确定性与弹性分析](#232-数据流中的不确定性与弹性分析)
+    - [2.3.3 跨层次数据流优化](#233-跨层次数据流优化)
+    - [2.3.4 形式化与机器学习的交叉](#234-形式化与机器学习的交叉)
+  - [2.4 挑战与未来展望](#24-挑战与未来展望)
+    - [2.4.1 可扩展性挑战](#241-可扩展性挑战)
+    - [2.4.2 形式化与实用性的平衡](#242-形式化与实用性的平衡)
+    - [2.4.3 端到端数据流分析的愿景](#243-端到端数据流分析的愿景)
+  - [2.5 思维导图](#25-思维导图)
+  - [2.6 参考文献](#26-参考文献)
 
-## 1. 引言
+## 1.1 引言
 
 传统的软件形式化方法长期以来主要关注控制流（程序逻辑）和类型系统（数据结构），
 但在越来越多的现代系统中，特别是分布式系统、流处理系统、实时系统等，
@@ -70,9 +70,9 @@
 这些问题不仅关系到系统的功能正确性，也直接影响其性能、可扩展性和鲁棒性，
 而这些方面在传统形式化方法中往往未能获得足够的重视。
 
-## 2. 数据流的概念体系
+## 1.2 数据流的概念体系
 
-### 2.1 基本定义与分类
+### 1.2.1 基本定义与分类
 
 **数据流（Data Flow）**：数据在系统中的移动、转换和处理路径，包括数据的产生、传输、处理和消费的全过程。
 
@@ -102,7 +102,7 @@
    - **流式处理**：数据到达即处理，无需等待批次形成
    - **混合处理**：结合批处理和流处理的特点（如微批处理）
 
-### 2.2 数据流模型的演进
+### 1.2.2 数据流模型的演进
 
 数据流的理论模型随着计算需求和硬件能力的发展而不断演进：
 
@@ -123,7 +123,7 @@
    - 数据流与反应式编程的融合
    - 边缘计算中的分布式数据流
 
-### 2.3 与控制流和执行流的关系
+### 1.2.3 与控制流和执行流的关系
 
 **三流关系模型**：
 
@@ -147,9 +147,9 @@ EF = Φ(CF, DF)
 - 在命令式编程中，控制流占主导，数据流往往隐含在赋值和传参中
 - 并发模型中，数据流显式程度与并发模型的性质相关
 
-## 3. 数据流的理论模型
+## 1.3 数据流的理论模型
 
-### 3.1 Petri网及其扩展
+### 1.3.1 Petri网及其扩展
 
 **Petri网**是描述并发系统的数学模型，特别适合于建模离散事件系统中的信息流和资源流。
 
@@ -180,7 +180,7 @@ EF = Φ(CF, DF)
 2. **活性（Liveness）**：系统是否能持续运行而不会陷入死锁
 3. **有界性（Boundedness）**：系统中的令牌数量是否有上限
 
-### 3.2 Kahn处理网络(KPN)
+### 1.3.2 Kahn处理网络(KPN)
 
 **Kahn处理网络**是一种确定性并发模型，由Gilles Kahn于1974年提出。它描述了一组并行进程通过无限容量的FIFO通道通信的网络。
 
@@ -203,7 +203,7 @@ EF = Φ(CF, DF)
 - 数据流程序的形式化语义
 - 分布式计算模型
 
-### 3.3 同步数据流(SDF)
+### 1.3.3 同步数据流(SDF)
 
 **同步数据流**是Kahn处理网络的一个特例，它假设处理节点在每次执行时消费和生产固定数量的数据项。
 
@@ -229,7 +229,7 @@ EF = Φ(CF, DF)
 - **准静态数据流**：允许有限状态机控制的速率变化
 - **参数化同步数据流**：速率可通过参数调整
 
-### 3.4 Actor模型
+### 1.3.4 Actor模型
 
 **Actor模型**是一种并发计算模型，视所有并发实体为"actor"，actor通过消息传递进行通信，不共享状态。
 
@@ -252,7 +252,7 @@ EF = Φ(CF, DF)
 2. **公平性**：消息最终会被传递（在不同实现中有不同保证）
 3. **无共享**：状态隔离减少了竞争和同步复杂性
 
-### 3.5 Communicating Sequential Processes (CSP)
+### 1.3.5 Communicating Sequential Processes (CSP)
 
 由Tony Hoare提出的CSP是一种描述并发系统中交互模式的形式化语言。
 
@@ -278,7 +278,7 @@ EF = Φ(CF, DF)
 
 **形式化验证**：CSP支持通过模型检验和精化检查验证系统性质。
 
-### 3.6 π演算
+### 1.3.6 π演算
 
 π演算是一种进程演算，特点是支持动态通信拓扑。
 
@@ -304,7 +304,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 - 支持通道的创建和传递，允许网络拓扑动态变化
 - 隐式表达了数据依赖关系
 
-### 3.7 排队论模型
+### 1.3.7 排队论模型
 
 排队论提供了分析等待系统中各种性能参数的数学框架，特别适合于量化数据流的动态特性。
 
@@ -340,7 +340,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 - 闭合网络：固定数量的数据在系统内循环
 - 混合网络：结合开放和闭合特性
 
-### 3.8 网络演算(Network Calculus)
+### 1.3.8 网络演算(Network Calculus)
 
 网络演算是一种用于确定性网络性能分析的数学框架，特别适用于分析数据流的最坏情况行为。
 
@@ -348,7 +348,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 
 - **到达曲线α(t)**：描述在任意时间间隔t内到达的最大数据量
 - **服务曲线β(t)**：描述在任意时间间隔t内系统保证提供的最小服务量
-- **输出曲线α*(t)**：描述系统输出的数据量，满足α* = α ⊗ β
+- __输出曲线α_(t)**：描述系统输出的数据量，满足α_ = α ⊗ β
 
 其中⊗是闵可夫斯基卷积：(f ⊗ g)(t) = inf{f(t-s) + g(s) | 0 ≤ s ≤ t}
 
@@ -363,9 +363,9 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 - 网络资源分配与流量整形
 - 服务质量(QoS)分析
 
-## 4. 数据流的形式化验证方法
+## 1.4 数据流的形式化验证方法
 
-### 4.1 模型检验技术
+### 1.4.1 模型检验技术
 
 模型检验是一种系统性地检查系统模型是否满足给定时序逻辑属性的自动化技术。
 
@@ -394,7 +394,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 
 **符号模型检验**：使用符号表示（如BDD、SAT/SMT求解器）高效处理大状态空间。
 
-### 4.2 数据流的时间性质分析
+### 1.4.2 数据流的时间性质分析
 
 **实时性质验证**：
 
@@ -418,7 +418,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 - **吞吐量保证**：系统在最坏情况下的最小处理速率
 - **抖动约束**：数据处理时间的最大变异程度
 
-### 4.3 形式化证明示例
+### 1.4.3 形式化证明示例
 
 以下展示一个简单同步数据流系统的形式化证明：
 
@@ -457,7 +457,7 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 
 **结论**：该SDF图可静态调度，且一个最小完整周期包含12个执行步骤。
 
-### 4.4 符号执行与抽象解释
+### 1.4.4 符号执行与抽象解释
 
 **符号执行**：使用符号值而非具体值执行程序，生成约束描述程序可能的执行路径。
 
@@ -477,9 +477,9 @@ P, Q ::= 0 | x<y>.P | x(z).P | P|Q | !P | (νx)P | P+Q
 
 3. **定理4（抽象解释可靠性）**：如果抽象语义是具体语义的一个安全近似，则抽象解释不会漏报错误，但可能产生误报。
 
-## 5. 现代编程模型中的数据流表达
+## 1.5 现代编程模型中的数据流表达
 
-### 5.1 函数式响应式编程(FRP)
+### 1.5.1 函数式响应式编程(FRP)
 
 **FRP**是一种基于时变值（信号）的函数式编程范式，特别适合处理连续变化的数据流。
 
@@ -510,36 +510,36 @@ use futures::executor::block_on;
 fn main() {
     // 创建一个可变信号
     let counter = Mutable::new(0);
-    
+
     // 定义信号变换：将输入值乘以2
     let doubled = counter.signal()
                           .map(|x| x * 2);
-    
+
     // 定义信号变换：将输入值加1，然后平方
     let processed = counter.signal()
                            .map(|x| x + 1)
                            .map(|x| x * x);
-    
+
     // 运行信号处理
     let handle_signals = async {
         // 监听doubled信号
         let mut doubled_stream = doubled.to_stream();
         // 监听processed信号
         let mut processed_stream = processed.to_stream();
-        
+
         // 更新计数器值，会自动传播到所有依赖信号
         counter.set(5);
-        
+
         // 读取转换后的值
         println!("Doubled: {}", doubled_stream.next().await.unwrap());
         println!("Processed: {}", processed_stream.next().await.unwrap());
     };
-    
+
     block_on(handle_signals);
 }
 ```
 
-### 5.2 基于反应器的并发模型
+### 1.5.2 基于反应器的并发模型
 
 **反应器模式(Reactor Pattern)**是一种非阻塞I/O处理模式，特别适合处理大量并发连接的数据流场景。
 
@@ -562,13 +562,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 创建TCP监听器
     let listener = TcpListener::bind("127.0.0.1:8080").await?;
     println!("Server listening on port 8080");
-    
+
     // 接受并处理连接
     loop {
         // 等待连接（非阻塞）
         let (socket, addr) = listener.accept().await?;
         println!("New connection from: {}", addr);
-        
+
         // 为每个连接生成一个任务
         tokio::spawn(async move {
             // 处理连接的异步函数
@@ -581,7 +581,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 async fn process_socket(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
     let mut buffer = [0; 1024];
-    
+
     // 循环读取数据
     loop {
         // 非阻塞读取
@@ -590,7 +590,7 @@ async fn process_socket(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
             // 连接关闭
             return Ok(());
         }
-        
+
         // 回显数据（非阻塞写入）
         socket.write_all(&buffer[0..n]).await?;
     }
@@ -603,7 +603,7 @@ async fn process_socket(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
 - 数据流基于非阻塞I/O操作
 - 状态机模型表达异步序列
 
-### 5.3 流处理DSL与框架
+### 1.5.3 流处理DSL与框架
 
 现代流处理框架提供了特定领域语言(DSL)或API来表达数据流图及其转换。
 
@@ -641,7 +641,7 @@ use tokio::time::sleep;
 async fn main() {
     // 创建一个数字流
     let numbers = stream::iter(1..=10);
-    
+
     // 定义流处理管道
     let processed = numbers
         // 过滤偶数
@@ -658,24 +658,24 @@ async fn main() {
             sleep(Duration::from_millis(100)).await;
             x
         });
-    
+
     // 收集并打印结果
     let results: Vec<_> = processed.collect().await;
     println!("Results: {:?}", results);
-    
+
     // 创建多个并行流并合并
     let stream1 = stream::iter(
 
-# 数据流视角下的软件与系统形式化建模：全面分析与应用（续）
+# 2. 数据流视角下的软件与系统形式化建模：全面分析与应用（续）
 
 ```rust
     // 创建多个并行流并合并
     let stream1 = stream::iter(vec![1, 2, 3]);
     let stream2 = stream::iter(vec![4, 5, 6]);
-    
+
     // 合并流
     let merged = stream::select(stream1, stream2);
-    
+
     // 收集并打印结果
     let merged_results: Vec<_> = merged.collect().await;
     println!("Merged results: {:?}", merged_results);
@@ -688,7 +688,7 @@ async fn main() {
 - 流水线优化可形式化为图转换
 - 分布式执行等价性证明
 
-### 5.4 Rust中的数据流抽象
+### 2.0.1 Rust中的数据流抽象
 
 Rust生态系统提供了多种数据流抽象，从低级别的迭代器到高级别的异步流处理。
 
@@ -729,7 +729,7 @@ use futures::stream::StreamExt;
 async fn main() {
     // 创建有界通道，缓冲区大小为5
     let (tx, mut rx) = mpsc::channel(5);
-    
+
     // 生产者任务
     let producer = tokio::spawn(async move {
         for i in 1..=10 {
@@ -741,7 +741,7 @@ async fn main() {
             println!("Sent: {}", i);
         }
     });
-    
+
     // 消费者任务
     let consumer = tokio::spawn(async move {
         // 将接收端转换为流
@@ -751,7 +751,7 @@ async fn main() {
             tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
         }
     });
-    
+
     // 等待任务完成
     tokio::try_join!(producer, consumer).unwrap();
 }
@@ -768,20 +768,20 @@ use futures::SinkExt;
 async fn main() {
     // 创建流和接收器
     let (mut tx, rx) = mpsc::channel(10);
-    
+
     // 发送数据
     tokio::spawn(async move {
         for i in 1..=5 {
             tx.send(i).await.unwrap();
         }
     });
-    
+
     // 构建处理管道
     let processed = rx
         .map(|x| x * 2)                      // 2, 4, 6, 8, 10
         .filter(|x| futures::future::ready(*x > 5))  // 6, 8, 10
         .map(|x| format!("Item: {}", x));    // "Item: 6", "Item: 8", "Item: 10"
-    
+
     // 消费流
     processed.for_each(|item| async move {
         println!("{}", item);
@@ -795,9 +795,9 @@ async fn main() {
 - 所有权和借用检查器保证数据流处理的内存安全
 - 生命周期标注确保数据流的正确时序
 
-## 6. 数据流在系统架构中的应用
+## 2.1 数据流在系统架构中的应用
 
-### 6.1 流处理架构
+### 2.1.1 流处理架构
 
 **流处理架构**重点关注连续数据的实时或近实时处理，与传统批处理系统形成对比。
 
@@ -838,7 +838,7 @@ async fn main() {
 - 形式化延迟与吞吐量的权衡
 - 验证状态恢复机制的正确性
 
-### 6.2 微服务与事件驱动架构
+### 2.1.2 微服务与事件驱动架构
 
 **微服务架构**将系统分解为松耦合的服务，而**事件驱动架构**通过事件流实现服务间通信。
 
@@ -941,7 +941,7 @@ fn main() {
 }
 ```
 
-### 6.3 数据密集型应用设计
+### 2.1.3 数据密集型应用设计
 
 **数据密集型应用**的主要挑战在于处理大量数据的移动、存储和处理，而非复杂的计算逻辑。
 
@@ -975,7 +975,7 @@ fn main() {
 - CAP/PACELC权衡的数学分析
 - 隔离级别的形式化证明
 
-### 6.4 边缘计算与IoT系统
+### 2.1.4 边缘计算与IoT系统
 
 **边缘计算**将计算和数据处理从云中心移至网络边缘，靠近数据源和执行者。
 
@@ -1031,17 +1031,17 @@ impl EdgeProcessor {
             window_size,
         }
     }
-    
+
     // 处理新的传感器数据
     fn process(&mut self, data: SensorData) -> Option<SensorData> {
         // 策略1: 阈值过滤 - 只关注高于阈值的温度
         if data.temperature <= self.temperature_threshold {
             return None; // 过滤掉低于阈值的数据
         }
-        
+
         // 将新数据添加到缓冲区
         self.buffer.push_back(data);
-        
+
         // 策略2: 清理过期数据
         let now = Instant::now();
         while let Some(front) = self.buffer.front() {
@@ -1051,29 +1051,29 @@ impl EdgeProcessor {
                 break;
             }
         }
-        
+
         // 策略3: 如果缓冲区已满，执行聚合和上传
         if self.buffer.len() >= self.max_buffer_size {
             return self.aggregate_and_send();
         }
-        
+
         None
     }
-    
+
     // 聚合数据并准备发送到云端
     fn aggregate_and_send(&mut self) -> Option<SensorData> {
         if self.buffer.is_empty() {
             return None;
         }
-        
+
         // 简单聚合：计算平均值
         let count = self.buffer.len() as f32;
         let sum_temp: f32 = self.buffer.iter().map(|d| d.temperature).sum();
         let sum_humidity: f32 = self.buffer.iter().map(|d| d.humidity).sum();
-        
+
         // 使用第一个元素的ID和时间戳
         let first = self.buffer.front().unwrap();
-        
+
         // 创建聚合数据
         let aggregated = SensorData {
             sensor_id: first.sensor_id.clone(),
@@ -1081,10 +1081,10 @@ impl EdgeProcessor {
             temperature: sum_temp / count,
             humidity: sum_humidity / count,
         };
-        
+
         // 清空缓冲区
         self.buffer.clear();
-        
+
         Some(aggregated)
     }
 }
@@ -1096,7 +1096,7 @@ fn main() {
         30.0,                         // 温度阈值(°C)
         Duration::from_secs(60),      // 1分钟滑动窗口
     );
-    
+
     // 模拟传感器数据
     let data = SensorData {
         sensor_id: "temp-sensor-01".to_string(),
@@ -1104,7 +1104,7 @@ fn main() {
         temperature: 32.5,
         humidity: 45.0,
     };
-    
+
     // 处理数据
     if let Some(aggregated) = processor.process(data) {
         println!("发送聚合数据到云端: 传感器 {}, 平均温度 {:.1}°C, 平均湿度 {:.1}%",
@@ -1121,9 +1121,9 @@ fn main() {
 - 分层数据流的端到端延迟分析
 - 不可靠网络下数据完整性的形式化保证
 
-## 7. 数据流分析的工程实践
+## 2.2 数据流分析的工程实践
 
-### 7.1 数据流静态分析工具
+### 2.2.1 数据流静态分析工具
 
 **静态数据流分析**在不执行程序的情况下分析程序的数据流特性。
 
@@ -1157,7 +1157,7 @@ fn main() {
 - 针对C/C++的Clang Static Analyzer
 - 跨语言性能分析工具（如Intel VTune）
 
-### 7.2 流量控制与背压机制
+### 2.2.2 流量控制与背压机制
 
 **背压（Backpressure）**是一种流量控制机制，允许下游组件向上游组件传递处理能力不足的信号。
 
@@ -1191,12 +1191,12 @@ use tokio::time::sleep;
 async fn main() {
     // 创建一个容量为5的通道（有界缓冲区）
     let (mut tx, mut rx) = mpsc::channel::<i32>(5);
-    
+
     // 快速生产者
     let producer = tokio::spawn(async move {
         for i in 1..=20 {
             println!("尝试发送: {}", i);
-            
+
             // send()会等待接收方处理，实现背压
             match tx.send(i).await {
                 Ok(_) => println!("成功发送: {}", i),
@@ -1205,22 +1205,22 @@ async fn main() {
                     break;
                 }
             }
-            
+
             // 快速生产数据
             sleep(Duration::from_millis(10)).await;
         }
     });
-    
+
     // 慢速消费者
     let consumer = tokio::spawn(async move {
         while let Some(item) = rx.recv().await {
             println!("接收到: {}", item);
-            
+
             // 模拟慢速处理
             sleep(Duration::from_millis(100)).await;
         }
     });
-    
+
     // 等待任务完成
     tokio::try_join!(producer, consumer).unwrap();
 }
@@ -1235,7 +1235,7 @@ async fn main() {
 - 当B已满时，生产者速率受限为λc
 - 系统稳态条件：λp ≤ λc 或足够大的B
 
-### 7.3 数据流监控与可视化
+### 2.2.3 数据流监控与可视化
 
 **数据流监控**是观察、测量和分析运行时数据流行为的过程，对于性能优化和问题诊断至关重要。
 
@@ -1266,7 +1266,7 @@ async fn main() {
 - 运行时验证（Runtime Verification）检查时态性质
 - 动态不变量检查（Dynamic Invariant Checking）
 
-### 7.4 案例研究：Rust中的异步数据处理
+### 2.2.4 案例研究：Rust中的异步数据处理
 
 下面的例子展示了一个完整的Rust异步数据处理管道，包含背压、错误处理和监控：
 
@@ -1302,10 +1302,10 @@ async fn generate_data(interval: Duration) -> impl stream::Stream<Item = SensorR
             timestamp: Instant::now(),
             value: (state as f64).sin() * 10.0 + 20.0, // 模拟温度值
         };
-        
+
         time::sleep(interval).await;
         info!(sensor_id = %reading.id, value = %reading.value, "生成数据");
-        
+
         Some((reading, state + 1))
     })
 }
@@ -1318,7 +1318,7 @@ async fn validate_reading(reading: SensorReading) -> Result<SensorReading, Proce
         error!(sensor_id = %reading.id, value = %reading.value, "无效读数");
         return Err(ProcessingError::InvalidReading);
     }
-    
+
     Ok(reading)
 }
 
@@ -1327,14 +1327,14 @@ async fn validate_reading(reading: SensorReading) -> Result<SensorReading, Proce
 async fn process_reading(reading: SensorReading) -> Result<SensorReading, ProcessingError> {
     // 模拟处理：添加一些噪声过滤
     let processed_value = reading.value; // 简化示例，实际应用中会有更复杂的处理
-    
+
     info!(sensor_id = %reading.id, original = %reading.value, processed = %processed_value, "处理数据");
-    
+
     // 模拟随机处理错误
     if rand::random::<f64>() < 0.05 {
         return Err(ProcessingError::ProcessingFailed("随机处理错误".into()));
     }
-    
+
     Ok(SensorReading {
         id: reading.id,
         timestamp: reading.timestamp,
@@ -1347,14 +1347,14 @@ async fn process_reading(reading: SensorReading) -> Result<SensorReading, Proces
 async fn save_to_database(reading: SensorReading) -> Result<(), ProcessingError> {
     // 模拟数据库操作
     time::sleep(Duration::from_millis(50)).await;
-    
+
     info!(sensor_id = %reading.id, value = %reading.value, "保存到数据库");
-    
+
     // 模拟随机数据库错误
     if rand::random::<f64>() < 0.01 {
         return Err(ProcessingError::DatabaseError("数据库连接错误".into()));
     }
-    
+
     Ok(())
 }
 
@@ -1362,10 +1362,10 @@ async fn save_to_database(reading: SensorReading) -> Result<(), ProcessingError>
 async fn main() {
     // 初始化跟踪订阅者
     tracing_subscriber::fmt::init();
-    
+
     // 生成数据流，每100毫秒一个读数
     let readings = generate_data(Duration::from_millis(100));
-    
+
     // 构建处理管道
     let processed = readings
         // 并发处理最多10个项目
@@ -1382,23 +1382,23 @@ async fn main() {
                             Ok(r2)
                         }
                     });
-                
+
                 // 计算处理时间
                 let elapsed = start.elapsed();
                 info!(duration_ms = %elapsed.as_millis(), "处理完成");
-                
+
                 result
             }
         })
         .buffer_unordered(10) // 限制并发度，提供背压
         .inspect_err(|e| error!(?e, "处理错误"));
-    
+
     // 收集成功处理的结果
     let results: Vec<_> = processed
         .try_collect()
         .await
         .unwrap_or_else(|_| vec![]);
-    
+
     info!(count = results.len(), "总处理成功数");
 }
 ```
@@ -1411,9 +1411,9 @@ async fn main() {
 - 资源限制通过并发控制实现
 - 处理管道的组成使用异步流组合子
 
-## 8. 学术前沿与研究热点
+## 2.3 学术前沿与研究热点
 
-### 8.1 形式化方法与量化性能分析的融合
+### 2.3.1 形式化方法与量化性能分析的融合
 
 传统形式化方法主要专注于功能正确性和安全性，而量化性能分析则关注系统的时间和资源消耗。
 学术前沿正在探索这两个领域的融合。
@@ -1442,7 +1442,7 @@ async fn main() {
 - 时间数据流一致性模型
 - 限时逻辑的可满足性与模型检验
 
-### 8.2 数据流中的不确定性与弹性分析
+### 2.3.2 数据流中的不确定性与弹性分析
 
 现代分布式数据流系统面临各种不确定性源，如网络延迟、硬件故障、负载波动等。
 研究重点是形式化地分析和保证系统在这些不确定性下的弹性。
@@ -1472,7 +1472,7 @@ async fn main() {
 - 可靠性分析
 - 故障树和事件树分析
 
-### 8.3 跨层次数据流优化
+### 2.3.3 跨层次数据流优化
 
 现代系统优化需要考虑多个抽象层次，从硬件到应用。如何在保持形式化保证的同时实现跨层次优化是一个活跃的研究领域。
 
@@ -1500,7 +1500,7 @@ async fn main() {
 - 异构系统建模
 - 验证保留的优化转换
 
-### 8.4 形式化与机器学习的交叉
+### 2.3.4 形式化与机器学习的交叉
 
 传统形式化方法与机器学习技术的结合是一个快速发展的研究领域，尤其在数据流系统中有广泛应用。
 
@@ -1528,9 +1528,9 @@ async fn main() {
 - 异常检测与自我修复
 - 可解释的AI决策用于系统优化
 
-## 9. 挑战与未来展望
+## 2.4 挑战与未来展望
 
-### 9.1 可扩展性挑战
+### 2.4.1 可扩展性挑战
 
 随着数据规模和系统复杂性增长，形式化方法的可扩展性成为主要挑战。
 
@@ -1555,7 +1555,7 @@ async fn main() {
 - 增量分析和合成验证
 - 分布式和并行形式化分析
 
-### 9.2 形式化与实用性的平衡
+### 2.4.2 形式化与实用性的平衡
 
 形式化方法的理论严谨性与工程实践的实用性需求之间存在张力。
 
@@ -1580,7 +1580,7 @@ async fn main() {
 - 形式化方法教育和培训
 - 成功案例的经验积累和传播
 
-### 9.3 端到端数据流分析的愿景
+### 2.4.3 端到端数据流分析的愿景
 
 未来的数据流形式化分析应当能够端到端地覆盖从物理层到应用语义的各个方面。
 
@@ -1609,12 +1609,12 @@ async fn main() {
 - 集成的形式化-统计混合方法
 - 普适的数据流计算理论
 
-## 10. 思维导图
+## 2.5 思维导图
 
 ```text
 数据流视角下的软件与系统形式化建模
 │
-├── 基本概念与分类 
+├── 基本概念与分类
 │   ├── 定义：系统中数据的移动、转换和处理路径
 │   ├── 时间特性分类: 同步/异步/周期性/突发性
 │   ├── 数据量特性: 恒定/变速率/有界/无界
@@ -1789,7 +1789,7 @@ async fn main() {
         └── 可解释数据流: 不仅验证还解释
 ```
 
-## 11. 参考文献
+## 2.6 参考文献
 
 [1] Lee, E. A., & Messerschmitt, D. G. (1987). Synchronous data flow. Proceedings of the IEEE, 75(9), 1235-1245.
 

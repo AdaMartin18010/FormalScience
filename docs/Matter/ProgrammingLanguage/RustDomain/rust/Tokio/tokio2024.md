@@ -1,20 +1,18 @@
-# Rust生成器与Tokio最新版本特性的完整组合实现
-
-我将为您展示 Rust 2024 生成器与 Tokio 最新版本特性的完整组合实现。
+# 1. Rust生成器与Tokio最新版本特性的完整组合实现
 
 ## 目录
 
-- [Rust生成器与Tokio最新版本特性的完整组合实现](#rust生成器与tokio最新版本特性的完整组合实现)
+- [1. Rust生成器与Tokio最新版本特性的完整组合实现](#1-rust生成器与tokio最新版本特性的完整组合实现)
   - [目录](#目录)
-  - [1. 项目配置](#1-项目配置)
-  - [2. Tokio 运行时与生成器集成](#2-tokio-运行时与生成器集成)
-    - [3. Tokio 时间特性与生成器](#3-tokio-时间特性与生成器)
-    - [4. Tokio 同步原语与生成器](#4-tokio-同步原语与生成器)
-    - [5. Tokio 通道与生成器](#5-tokio-通道与生成器)
-    - [6. Tokio IO 与生成器](#6-tokio-io-与生成器)
-    - [7. 完整使用示例](#7-完整使用示例)
+  - [1.1 项目配置](#11-项目配置)
+  - [1.2 Tokio 运行时与生成器集成](#12-tokio-运行时与生成器集成)
+    - [1.2.1 Tokio 时间特性与生成器](#121-tokio-时间特性与生成器)
+    - [1.2.2 Tokio 同步原语与生成器](#122-tokio-同步原语与生成器)
+    - [1.2.3 Tokio 通道与生成器](#123-tokio-通道与生成器)
+    - [1.2.4 Tokio IO 与生成器](#124-tokio-io-与生成器)
+    - [1.2.5 完整使用示例](#125-完整使用示例)
 
-## 1. 项目配置
+## 1.1 项目配置
 
 ```toml
 [dependencies]
@@ -25,7 +23,7 @@ async-stream = "0.3"
 tracing = "0.1"
 ```
 
-## 2. Tokio 运行时与生成器集成
+## 1.2 Tokio 运行时与生成器集成
 
 ```rust
 use tokio::runtime::Runtime;
@@ -88,7 +86,7 @@ impl<F: Future> TaskGenerator<F> {
 }
 ```
 
-### 3. Tokio 时间特性与生成器
+### 1.2.1 Tokio 时间特性与生成器
 
 ```rust
 use tokio::time::{Duration, Instant, interval};
@@ -133,7 +131,7 @@ impl IntervalGenerator {
 }
 ```
 
-### 4. Tokio 同步原语与生成器
+### 1.2.2 Tokio 同步原语与生成器
 
 ```rust
 use tokio::sync::{mpsc, Mutex, RwLock, Semaphore};
@@ -153,7 +151,7 @@ impl SyncGenerator {
     ) -> impl Stream<Item = T> {
         try_stream! {
             let semaphore = Arc::new(Semaphore::new(max_concurrent));
-            
+
             for resource in resources {
                 let permit = semaphore.acquire().await?;
                 yield resource;
@@ -168,7 +166,7 @@ impl SyncGenerator {
     ) -> impl Stream<Item = T> {
         try_stream! {
             let mutex = Arc::new(Mutex::new(data));
-            
+
             loop {
                 let mut guard = mutex.lock().await;
                 if let Some(item) = guard.pop() {
@@ -190,7 +188,7 @@ impl SyncGenerator {
     {
         try_stream! {
             let rwlock = Arc::new(RwLock::new(map));
-            
+
             // 读取流
             {
                 let read_guard = rwlock.read().await;
@@ -203,7 +201,7 @@ impl SyncGenerator {
 }
 ```
 
-### 5. Tokio 通道与生成器
+### 1.2.3 Tokio 通道与生成器
 
 ```rust
 /// 通道生成器
@@ -246,7 +244,7 @@ impl<T: Send + 'static> ChannelGenerator<T> {
 }
 ```
 
-### 6. Tokio IO 与生成器
+### 1.2.4 Tokio IO 与生成器
 
 ```rust
 use tokio::io::{AsyncRead, AsyncWrite};
@@ -264,7 +262,7 @@ impl IoGenerator {
     ) -> impl Stream<Item = Result<TcpStream, std::io::Error>> {
         try_stream! {
             let listener = TcpListener::bind(addr).await?;
-            
+
             loop {
                 let (stream, _) = listener.accept().await?;
                 yield Ok(stream);
@@ -279,7 +277,7 @@ impl IoGenerator {
     ) -> impl Stream<Item = Result<Vec<u8>, std::io::Error>> {
         try_stream! {
             let mut buffer = vec![0; chunk_size];
-            
+
             loop {
                 let n = reader.read(&mut buffer).await?;
                 if n == 0 {
@@ -305,7 +303,7 @@ impl IoGenerator {
 }
 ```
 
-### 7. 完整使用示例
+### 1.2.5 完整使用示例
 
 ```rust
 #[tokio::main]

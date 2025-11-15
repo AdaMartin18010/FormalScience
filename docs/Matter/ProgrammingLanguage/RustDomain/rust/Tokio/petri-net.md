@@ -195,7 +195,7 @@ impl WorkflowExecutor {
             .span_builder("execute_workflow")
             .with_attributes(vec![KeyValue::new("workflow_id", workflow_id.to_string())])
             .start(&self.tracer);
-        
+
         let cx = Context::current_with_span(span);
 
         // 获取工作流状态
@@ -217,7 +217,7 @@ impl WorkflowExecutor {
                     .start(&self.tracer);
 
                 let result = self.execute_transition(&transition_id, &mut state).await;
-                
+
                 if let Err(e) = result {
                     transition_span.record_error(&e);
                     transition_span.set_status(Status::Error {
@@ -641,7 +641,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 启动工作流
     let workflow_id = Uuid::new_v4().to_string();
     let _lock = lock_manager.acquire(&format!("workflow:{}", workflow_id), Duration::from_secs(60)).await?;
-    
+
     executor.execute_workflow(&workflow_id).await?;
 
     Ok(())

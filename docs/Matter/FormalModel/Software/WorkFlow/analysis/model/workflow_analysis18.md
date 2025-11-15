@@ -1,28 +1,18 @@
-# 模型分析
+# 1. 模型分析
 
-好的，我理解您需要更深入、更具体的阐述，
-使用形式化方法的语言和示例来论证该架构的关键方面，
-特别是 TLA+、模型检查和类型系统（以 Rust 为例）。
-我们将探讨完备性、边界、行为组合以及演进。
+## 目录
 
-**重要前提：**
-形式化方法不是万能药。
-它们提供特定保证，但总是在特定抽象级别和模型边界内工作。
-其价值在于提高对系统特定方面的信心，而不是证明整个系统的绝对“正确性”。
+- [1. 模型分析](#1-模型分析)
+  - [目录](#目录)
+  - [1.1 I TLA (Temporal Logic of Actions)](#11-i-tla-temporal-logic-of-actions)
+  - [1.2 具体细节 (以 Effect 生命周期为例 - 简化模型)](#12-具体细节-以-effect-生命周期为例---简化模型)
+  - [1.3 完备性与边界](#13-完备性与边界)
+  - [1.4 II 模型检查 (Model Checking)](#14-ii-模型检查-model-checking)
+  - [1.5 III 类型系统 (Rust Focus)](#15-iii-类型系统-rust-focus)
+  - [1.6 IV 行为分类、组合性与演进](#16-iv-行为分类组合性与演进)
+  - [1.7 总结](#17-总结)
 
-## 📋 目录
-
-- [1 I TLA (Temporal Logic of Actions)](#1-i-tla-temporal-logic-of-actions)
-- [2 具体细节 (以 Effect 生命周期为例 - 简化模型)](#2-具体细节-以-effect-生命周期为例---简化模型)
-- [3 完备性与边界](#3-完备性与边界)
-- [4 II 模型检查 (Model Checking)](#4-ii-模型检查-model-checking)
-- [5 III 类型系统 (Rust Focus)](#5-iii-类型系统-rust-focus)
-- [6 IV 行为分类、组合性与演进](#6-iv-行为分类组合性与演进)
-- [7 总结](#7-总结)
-
----
-
-## 1 I TLA (Temporal Logic of Actions)
+## 1.1 I TLA (Temporal Logic of Actions)
 
 1. **应用目标:**
     验证**分布式协调协议**的正确性，
@@ -34,7 +24,7 @@
     能精确定义状态、
     原子操作以及系统应满足的安全属性（不变性）和活性属性（最终会发生某事）。
 
-## 2 具体细节 (以 Effect 生命周期为例 - 简化模型)
+## 1.2 具体细节 (以 Effect 生命周期为例 - 简化模型)
 
 1   **状态变量 (Variables):**
     1.1   `effectStates`: 一个从 Effect ID 到其状态
@@ -72,7 +62,7 @@
     4.1   `PendingEventuallyProcessed`: `∀ e: e ∈ pendingEffects ⇒ ◇(e ∈ processingEffects ∨ IsFailed(effectStates[e]))` (等待处理的 Effect 最终会被处理或标记为失败 - 假设有可用 Handler 且系统公平)。
     4.2   `ProcessingEventuallyCompletesOrFails`: `∀ e: e ∈ processingEffects ⇒ ◇(IsCompleted(effectStates[e]) ∨ IsFailed(effectStates[e]))` (正在处理的 Effect 最终会完成或失败 - 假设 Handler 会响应)。
 
-## 3 完备性与边界
+## 1.3 完备性与边界
 
 1. **完备性:**
     在 TLA+ 模型内部，可以穷尽所有可能的操作交错（并发行为），验证所定义的不变量是否始终保持，以及活性属性是否最终满足。
@@ -85,7 +75,7 @@
     2.3   **Handler 行为:** 假设 Handler 的行为符合其接口（会完成或失败），但不验证 Handler 内部逻辑。
     2.4   **Log 实现:** 假设 `coordinationLog` 的底层实现（如 Raft）是正确的（或对其进行单独的 TLA+ 验证）。
 
-## 4 II 模型检查 (Model Checking)
+## 1.4 II 模型检查 (Model Checking)
 
 1. **应用目标:**
     验证**有限状态系统**的属性，
@@ -169,7 +159,7 @@
             而非直接的 Rust 代码
             （除非使用专门针对代码的模型检查工具，但这通常更困难）。
 
-## 5 III 类型系统 (Rust Focus)
+## 1.5 III 类型系统 (Rust Focus)
 
 **应用目标:**
     在**编译时**强制执行**接口契约、数据结构一致性、状态安全（部分）、资源管理（所有权/借用）和并发安全（Send/Sync）**。
@@ -289,7 +279,7 @@ impl EffectfulCell for MyCell {
      **外部系统:**
         不验证外部系统（通过 Effects 交互）的行为。
 
-## 6 IV 行为分类、组合性与演进
+## 1.6 IV 行为分类、组合性与演进
 
 **行为分类:**
   形式化方法有助于对行为进行分类：
@@ -312,7 +302,7 @@ impl EffectfulCell for MyCell {
     可以用来验证 Fabric 管理的**组合模式**的正确性
     （例如，并行执行 Effect 的协调逻辑、Saga 补偿的协调状态机）。
   **边界:**
-    验证的是组合的*机制*和*接口*，而不是组合后产生的*整体业务语义*的正确性。
+    验证的是组合的_机制_和_接口_，而不是组合后产生的_整体业务语义_的正确性。
     例如，即使 A 的输出类型匹配 B 的输入类型，
     也不能形式化地证明“将 A 连接到 B”在业务上是正确的。
 
@@ -331,9 +321,9 @@ impl EffectfulCell for MyCell {
     （假设模型被更新以反映演进）。
     **不能**保证演进后的业务逻辑仍然满足原始的业务需求，
     也不能自动处理所有数据迁移的语义问题。
-    演进的*业务正确性*仍需依赖高层设计、审查和测试。
+    演进的_业务正确性_仍需依赖高层设计、审查和测试。
 
-## 7 总结
+## 1.7 总结
 
 形式化方法为“自适应可组合工作流架构”提供了强大的分析和验证工具，
 但应用是**分层和聚焦**的：

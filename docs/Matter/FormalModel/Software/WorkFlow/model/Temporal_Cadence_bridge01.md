@@ -1,47 +1,47 @@
-# 使用Rust兼容Temporal和Cadence的工作流架构设计
+# 1. 使用Rust兼容Temporal和Cadence的工作流架构设计
 
 ## 目录
 
-- [使用Rust兼容Temporal和Cadence的工作流架构设计](#使用rust兼容temporal和cadence的工作流架构设计)
+- [1. 使用Rust兼容Temporal和Cadence的工作流架构设计](#1-使用rust兼容temporal和cadence的工作流架构设计)
   - [目录](#目录)
-  - [一、架构概览与设计目标](#一架构概览与设计目标)
-    - [1. 设计目标](#1-设计目标)
-    - [2. 整体架构](#2-整体架构)
-  - [二、核心组件设计](#二核心组件设计)
-    - [1. 统一工作流抽象层](#1-统一工作流抽象层)
-    - [2. 工作流引擎适配层](#2-工作流引擎适配层)
-    - [3. Temporal适配器实现](#3-temporal适配器实现)
-    - [4. Cadence适配器实现](#4-cadence适配器实现)
-      - [方案1: 通过gRPC与Cadence服务通信](#方案1-通过grpc与cadence服务通信)
-      - [方案2: 使用外部进程桥接](#方案2-使用外部进程桥接)
-      - [方案3: 直接使用Temporal API与Cadence兼容层](#方案3-直接使用temporal-api与cadence兼容层)
-  - [三、工作流定义与执行](#三工作流定义与执行)
-    - [1. 统一工作流定义](#1-统一工作流定义)
-    - [2. 工作流注册与执行](#2-工作流注册与执行)
-  - [四、工作流迁移与互操作性](#四工作流迁移与互操作性)
-    - [1. 工作流实例迁移工具](#1-工作流实例迁移工具)
-    - [2. 双引擎互操作性方案](#2-双引擎互操作性方案)
-  - [五、运维与监控集成](#五运维与监控集成)
-    - [1. 统一监控指标](#1-统一监控指标)
-    - [2. OpenTelemetry集成](#2-opentelemetry集成)
-  - [六、适配器实现挑战与解决方案](#六适配器实现挑战与解决方案)
-    - [1. 主要挑战](#1-主要挑战)
-    - [2. 生产环境考虑](#2-生产环境考虑)
-  - [七、集成示例与最佳实践](#七集成示例与最佳实践)
-    - [1. 完整应用示例](#1-完整应用示例)
-    - [2. 最佳实践总结](#2-最佳实践总结)
-      - [设计原则](#设计原则)
-      - [迁移策略](#迁移策略)
-      - [性能优化](#性能优化)
-      - [运维考虑](#运维考虑)
-  - [八、总结与未来方向](#八总结与未来方向)
-    - [1. 主要特点](#1-主要特点)
-    - [2. 局限性](#2-局限性)
-    - [3. 未来扩展方向](#3-未来扩展方向)
+  - [1.1 一、架构概览与设计目标](#11-一架构概览与设计目标)
+    - [1.1.1 设计目标](#111-设计目标)
+    - [1.1.2 整体架构](#112-整体架构)
+  - [1.2 二、核心组件设计](#12-二核心组件设计)
+    - [1.2.1 统一工作流抽象层](#121-统一工作流抽象层)
+    - [1.2.2 工作流引擎适配层](#122-工作流引擎适配层)
+    - [1.2.3 Temporal适配器实现](#123-temporal适配器实现)
+    - [1.2.4 Cadence适配器实现](#124-cadence适配器实现)
+      - [1.2.4.1 方案1: 通过gRPC与Cadence服务通信](#1241-方案1-通过grpc与cadence服务通信)
+      - [1.2.4.2 方案2: 使用外部进程桥接](#1242-方案2-使用外部进程桥接)
+      - [1.2.4.3 方案3: 直接使用Temporal API与Cadence兼容层](#1243-方案3-直接使用temporal-api与cadence兼容层)
+  - [1.3 三、工作流定义与执行](#13-三工作流定义与执行)
+    - [1.3.1 统一工作流定义](#131-统一工作流定义)
+    - [2.1.2 工作流注册与执行](#212-工作流注册与执行)
+  - [2.2 四、工作流迁移与互操作性](#22-四工作流迁移与互操作性)
+    - [2.2.1 工作流实例迁移工具](#221-工作流实例迁移工具)
+    - [2.2.2 双引擎互操作性方案](#222-双引擎互操作性方案)
+  - [2.3 五、运维与监控集成](#23-五运维与监控集成)
+    - [2.3.1 统一监控指标](#231-统一监控指标)
+    - [2.3.2 OpenTelemetry集成](#232-opentelemetry集成)
+  - [2.4 六、适配器实现挑战与解决方案](#24-六适配器实现挑战与解决方案)
+    - [2.4.1 主要挑战](#241-主要挑战)
+    - [2.4.2 生产环境考虑](#242-生产环境考虑)
+  - [3.2 七、集成示例与最佳实践](#32-七集成示例与最佳实践)
+    - [3.2.1 完整应用示例](#321-完整应用示例)
+    - [3.2.2 最佳实践总结](#322-最佳实践总结)
+      - [3.2.2.1 设计原则](#3221-设计原则)
+      - [3.2.2.2 迁移策略](#3222-迁移策略)
+      - [3.2.2.3 性能优化](#3223-性能优化)
+      - [3.2.2.4 运维考虑](#3224-运维考虑)
+  - [3.3 八、总结与未来方向](#33-八总结与未来方向)
+    - [3.3.1 主要特点](#331-主要特点)
+    - [3.3.2 局限性](#332-局限性)
+    - [3.3.3 未来扩展方向](#333-未来扩展方向)
 
-## 一、架构概览与设计目标
+## 1.1 一、架构概览与设计目标
 
-### 1. 设计目标
+### 1.1.1 设计目标
 
 设计一个基于Rust的兼容层,使其能够:
 
@@ -52,7 +52,7 @@
 5. **类型安全**: 利用Rust类型系统确保工作流定义的正确性
 6. **无缝迁移**: 支持工作流实例的跨引擎迁移
 
-### 2. 整体架构
+### 1.1.2 整体架构
 
 ![架构图]
 
@@ -79,9 +79,9 @@
 +----------------+  +----------------+
 ```
 
-## 二、核心组件设计
+## 1.2 二、核心组件设计
 
-### 1. 统一工作流抽象层
+### 1.2.1 统一工作流抽象层
 
 这一层定义了工作流和活动的统一接口,对上层业务逻辑隐藏底层引擎差异。
 
@@ -91,10 +91,10 @@
 pub trait Workflow: Send + Sync {
     /// 工作流输入类型
     type Input: DeserializeOwned + Send + 'static;
-    
+
     /// 工作流输出类型
     type Output: Serialize + Send + 'static;
-    
+
     /// 工作流执行方法
     async fn execute(&self, ctx: &mut WorkflowContext, input: Self::Input) -> Result<Self::Output, WorkflowError>;
 }
@@ -104,10 +104,10 @@ pub trait Workflow: Send + Sync {
 pub trait Activity: Send + Sync {
     /// 活动输入类型
     type Input: DeserializeOwned + Send + 'static;
-    
+
     /// 活动输出类型
     type Output: Serialize + Send + 'static;
-    
+
     /// 活动执行方法
     async fn execute(&self, ctx: &ActivityContext, input: Self::Input) -> Result<Self::Output, ActivityError>;
 }
@@ -131,7 +131,7 @@ impl WorkflowContext {
             WorkflowContextInner::Cadence(ctx) => ctx.timer(duration).await,
         }
     }
-    
+
     /// 执行活动
     pub async fn execute_activity<A: Activity>(
         &self,
@@ -148,7 +148,7 @@ impl WorkflowContext {
             },
         }
     }
-    
+
     // 其他统一方法...
 }
 
@@ -173,7 +173,7 @@ pub struct RetryPolicy {
 }
 ```
 
-### 2. 工作流引擎适配层
+### 1.2.2 工作流引擎适配层
 
 这一层负责将统一接口转换为特定工作流引擎的API调用。
 
@@ -205,7 +205,7 @@ impl WorkflowEngineClient {
             inner: WorkflowEngineClientInner::Temporal(client),
         })
     }
-    
+
     /// 创建Cadence客户端
     pub async fn new_cadence(config: CadenceClientConfig) -> Result<Self, EngineError> {
         // 初始化Cadence客户端
@@ -214,7 +214,7 @@ impl WorkflowEngineClient {
             inner: WorkflowEngineClientInner::Cadence(client),
         })
     }
-    
+
     /// 启动工作流
     pub async fn start_workflow<W: Workflow>(
         &self,
@@ -233,7 +233,7 @@ impl WorkflowEngineClient {
             },
         }
     }
-    
+
     /// 创建工作线程
     pub fn create_worker(&self, task_queue: &str) -> Worker {
         match &self.inner {
@@ -273,7 +273,7 @@ impl<T: DeserializeOwned + Send + 'static> WorkflowHandle<T> {
             WorkflowHandle::Cadence(handle) => handle.result().await.map_err(EngineError::from),
         }
     }
-    
+
     /// 取消工作流
     pub async fn cancel(&self) -> Result<(), EngineError> {
         match self {
@@ -281,7 +281,7 @@ impl<T: DeserializeOwned + Send + 'static> WorkflowHandle<T> {
             WorkflowHandle::Cadence(handle) => handle.cancel().await.map_err(EngineError::from),
         }
     }
-    
+
     /// 发送信号
     pub async fn signal<S: Serialize>(&self, name: &str, arg: S) -> Result<(), EngineError> {
         match self {
@@ -305,7 +305,7 @@ impl Worker {
             Worker::Cadence(worker) => worker.register_workflow(workflow, options.into_cadence()),
         }
     }
-    
+
     /// 注册活动
     pub fn register_activity<A: Activity + 'static>(&mut self, activity: A, options: ActivityRegistrationOptions) {
         match self {
@@ -313,7 +313,7 @@ impl Worker {
             Worker::Cadence(worker) => worker.register_activity(activity, options.into_cadence()),
         }
     }
-    
+
     /// 启动工作线程
     pub async fn start(&self) -> Result<(), EngineError> {
         match self {
@@ -324,7 +324,7 @@ impl Worker {
 }
 ```
 
-### 3. Temporal适配器实现
+### 1.2.3 Temporal适配器实现
 
 使用Rust与Temporal SDK集成的适配器实现:
 
@@ -343,7 +343,7 @@ impl TemporalWorkflowContext {
         self.inner.timer(duration).await
             .map_err(|e| WorkflowError::EngineError(e.to_string()))
     }
-    
+
     /// 执行活动
     pub async fn execute_activity<A: Activity>(
         &self,
@@ -354,7 +354,7 @@ impl TemporalWorkflowContext {
         // 序列化输入
         let input_json = serde_json::to_string(&input)
             .map_err(|e| WorkflowError::SerializationError(e.to_string()))?;
-        
+
         // 创建活动命令
         let activity_result = self.inner.activity(activity.name())
             .options(options)
@@ -362,12 +362,12 @@ impl TemporalWorkflowContext {
             .run::<String>()
             .await
             .map_err(|e| WorkflowError::ActivityError(e.to_string()))?;
-            
+
         // 反序列化结果
         serde_json::from_str::<A::Output>(&activity_result)
             .map_err(|e| WorkflowError::DeserializationError(e.to_string()))
     }
-    
+
     // 其他方法实现...
 }
 
@@ -384,10 +384,10 @@ impl TemporalClient {
             config.namespace.clone(),
             config.client_options,
         ).await.map_err(|e| EngineError::ConnectionError(e.to_string()))?;
-        
+
         Ok(Self { client })
     }
-    
+
     /// 启动工作流
     pub async fn start_workflow<W: Workflow>(
         &self,
@@ -398,17 +398,17 @@ impl TemporalClient {
         // 序列化输入
         let input_json = serde_json::to_string(&input)
             .map_err(|e| EngineError::SerializationError(e.to_string()))?;
-        
+
         // 启动工作流
         let handle = self.client.start_workflow(
             workflow.name(),
             input_json,
             &options,
         ).await.map_err(|e| EngineError::StartError(e.to_string()))?;
-        
+
         Ok(TemporalWorkflowHandle::new(handle))
     }
-    
+
     /// 创建工作线程
     pub fn create_worker(&self, task_queue: &str) -> TemporalWorker {
         TemporalWorker::new(self.client.worker(task_queue))
@@ -428,25 +428,25 @@ impl<T: DeserializeOwned + Send + 'static> TemporalWorkflowHandle<T> {
             _marker: PhantomData,
         }
     }
-    
+
     /// 等待工作流结果
     pub async fn result(self) -> Result<T, TemporalError> {
         let result_json = self.inner.result::<String>().await?;
         serde_json::from_str(&result_json)
             .map_err(|e| TemporalError::DeserializationError(e.to_string()))
     }
-    
+
     /// 取消工作流
     pub async fn cancel(&self) -> Result<(), TemporalError> {
         self.inner.cancel().await
             .map_err(|e| TemporalError::CancelError(e.to_string()))
     }
-    
+
     /// 发送信号
     pub async fn signal<S: Serialize>(&self, name: &str, arg: S) -> Result<(), TemporalError> {
         let arg_json = serde_json::to_string(&arg)
             .map_err(|e| TemporalError::SerializationError(e.to_string()))?;
-            
+
         self.inner.signal(name, arg_json).await
             .map_err(|e| TemporalError::SignalError(e.to_string()))
     }
@@ -461,7 +461,7 @@ impl TemporalWorker {
     fn new(worker: temporal_sdk::Worker) -> Self {
         Self { inner: worker }
     }
-    
+
     /// 注册工作流
     pub fn register_workflow<W: Workflow + 'static>(&mut self, workflow: W, options: TemporalWorkflowRegistrationOptions) {
         self.inner.register_workflow(
@@ -472,24 +472,24 @@ impl TemporalWorker {
                     // 反序列化输入
                     let input = serde_json::from_str::<W::Input>(&input_json)
                         .map_err(|e| WorkflowError::DeserializationError(e.to_string()))?;
-                    
+
                     // 创建工作流上下文
                     let mut workflow_ctx = TemporalWorkflowContext { inner: ctx };
-                    
+
                     // 执行工作流
                     let result = workflow.execute(&mut workflow_ctx, input).await?;
-                    
+
                     // 序列化结果
                     let result_json = serde_json::to_string(&result)
                         .map_err(|e| WorkflowError::SerializationError(e.to_string()))?;
-                        
+
                     Ok(result_json)
                 })
             },
             options,
         );
     }
-    
+
     /// 注册活动
     pub fn register_activity<A: Activity + 'static>(&mut self, activity: A, options: TemporalActivityRegistrationOptions) {
         self.inner.register_activity(
@@ -500,24 +500,24 @@ impl TemporalWorker {
                     // 反序列化输入
                     let input = serde_json::from_str::<A::Input>(&input_json)
                         .map_err(|e| ActivityError::DeserializationError(e.to_string()))?;
-                    
+
                     // 创建活动上下文
                     let activity_ctx = TemporalActivityContextAdapter::new(ctx);
-                    
+
                     // 执行活动
                     let result = activity.execute(&activity_ctx, input).await?;
-                    
+
                     // 序列化结果
                     let result_json = serde_json::to_string(&result)
                         .map_err(|e| ActivityError::SerializationError(e.to_string()))?;
-                        
+
                     Ok(result_json)
                 })
             },
             options,
         );
     }
-    
+
     /// 启动工作线程
     pub async fn start(&self) -> Result<(), TemporalError> {
         self.inner.run().await
@@ -526,11 +526,11 @@ impl TemporalWorker {
 }
 ```
 
-### 4. Cadence适配器实现
+### 1.2.4 Cadence适配器实现
 
 因为目前Rust没有官方的Cadence SDK,我们需要考虑使用下面几种方案之一:
 
-#### 方案1: 通过gRPC与Cadence服务通信
+#### 1.2.4.1 方案1: 通过gRPC与Cadence服务通信
 
 ```rust
 /// Cadence gRPC客户端实现
@@ -547,15 +547,15 @@ impl CadenceClient {
             .connect()
             .await
             .map_err(|e| EngineError::ConnectionError(e.to_string()))?;
-            
+
         let client = cadence_grpc::WorkflowServiceClient::new(channel);
-        
+
         Ok(Self {
             client,
             namespace: config.namespace,
         })
     }
-    
+
     /// 启动工作流
     pub async fn start_workflow<W: Workflow>(
         &self,
@@ -566,7 +566,7 @@ impl CadenceClient {
         // 序列化输入
         let input_data = serde_json::to_vec(&input)
             .map_err(|e| EngineError::SerializationError(e.to_string()))?;
-        
+
         // 创建启动请求
         let request = cadence_grpc::StartWorkflowExecutionRequest {
             namespace: self.namespace.clone(),
@@ -584,12 +584,12 @@ impl CadenceClient {
             // 其他选项...
             ..Default::default()
         };
-        
+
         // 发送请求
         let response = self.client.start_workflow_execution(request).await
             .map_err(|e| EngineError::StartError(e.to_string()))?
             .into_inner();
-            
+
         Ok(CadenceWorkflowHandle::new(
             self.client.clone(),
             self.namespace.clone(),
@@ -597,12 +597,12 @@ impl CadenceClient {
             response.run_id,
         ))
     }
-    
+
     // 其他方法...
 }
 ```
 
-#### 方案2: 使用外部进程桥接
+#### 1.2.4.2 方案2: 使用外部进程桥接
 
 当没有合适的Rust SDK时,可以通过进程间通信桥接到官方支持的语言SDK。
 
@@ -620,11 +620,11 @@ impl CadenceProcessClient {
         // 创建命令和结果通道
         let (command_tx, command_rx) = mpsc::channel(100);
         let (result_tx, result_rx) = mpsc::channel(100);
-        
+
         // 序列化配置
         let config_json = serde_json::to_string(&config)
             .map_err(|e| EngineError::SerializationError(e.to_string()))?;
-        
+
         // 启动外部进程(例如使用Go编写的Cadence客户端)
         let process = tokio::process::Command::new("cadence-bridge")
             .arg("--config")
@@ -633,17 +633,17 @@ impl CadenceProcessClient {
             .stdout(std::process::Stdio::piped())
             .spawn()
             .map_err(|e| EngineError::ProcessError(e.to_string()))?;
-            
+
         // 启动通信处理
         Self::handle_process_io(process.stdin.take().unwrap(), process.stdout.take().unwrap(), command_rx, result_tx);
-        
+
         Ok(Self {
             process,
             command_tx,
             result_rx,
         })
     }
-    
+
     /// 处理进程间IO
     fn handle_process_io(
         stdin: tokio::process::ChildStdin,
@@ -656,16 +656,16 @@ impl CadenceProcessClient {
             // ...
         });
     }
-    
+
     /// 发送命令并等待结果
     async fn send_command(&self, command: CadenceCommand) -> Result<CadenceResult, EngineError> {
         self.command_tx.send(command).await
             .map_err(|e| EngineError::ChannelError(e.to_string()))?;
-            
+
         self.result_rx.recv().await
             .ok_or_else(|| EngineError::ProcessError("进程已终止".to_string()))
     }
-    
+
     /// 启动工作流
     pub async fn start_workflow<W: Workflow, I: Serialize>(
         &self,
@@ -676,17 +676,17 @@ impl CadenceProcessClient {
         // 序列化输入
         let input_json = serde_json::to_string(&input)
             .map_err(|e| EngineError::SerializationError(e.to_string()))?;
-            
+
         // 创建启动命令
         let command = CadenceCommand::StartWorkflow {
             name: workflow_name.to_string(),
             input: input_json,
             options: options.clone(),
         };
-        
+
         // 发送命令并获取结果
         let result = self.send_command(command).await?;
-        
+
         match result {
             CadenceResult::WorkflowStarted { run_id } => {
                 Ok(CadenceWorkflowHandle::new(
@@ -704,7 +704,7 @@ impl CadenceProcessClient {
 }
 ```
 
-#### 方案3: 直接使用Temporal API与Cadence兼容层
+#### 1.2.4.3 方案3: 直接使用Temporal API与Cadence兼容层
 
 Temporal提供了与Cadence兼容的API,可以使用Temporal SDK通过兼容层访问Cadence。
 
@@ -722,23 +722,23 @@ impl TemporalCadenceClient {
             .client_name("rust-temporal-cadence-client")
             .client_version("1.0.0")
             .set_metadata("cadence-compatibility", "true");
-            
+
         let client = temporal_sdk::Client::connect(
             &config.server_url,
             config.namespace.clone(),
             client_options,
         ).await.map_err(|e| EngineError::ConnectionError(e.to_string()))?;
-        
+
         Ok(Self { client })
     }
-    
+
     // 其他方法与TemporalClient类似,但按Cadence样式包装
 }
 ```
 
-## 三、工作流定义与执行
+## 1.3 三、工作流定义与执行
 
-### 1. 统一工作流定义
+### 1.3.1 统一工作流定义
 
 ```rust
 /// 订单处理工作流示例
@@ -766,11 +766,11 @@ pub struct OrderResult {
 impl Workflow for OrderProcessingWorkflow {
     type Input = OrderInput;
     type Output = OrderResult;
-    
+
     fn name(&self) -> &str {
         "OrderProcessingWorkflow"
     }
-    
+
     async fn execute(&self, ctx: &mut WorkflowContext, input: Self::Input) -> Result<Self::Output, WorkflowError> {
         // 1. 验证订单
         let validation_result = ctx.execute_activity(
@@ -788,13 +788,13 @@ impl Workflow for OrderProcessingWorkflow {
                 ..Default::default()
             },
         ).await?;
-        
+
         if !validation_result.is_valid {
             return Err(WorkflowError::BusinessError(format!(
                 "订单验证失败: {}", validation_result.reason.unwrap_or_default()
             )));
         }
-        
+
         // 2. 处理支付
         let payment_result = ctx.execute_activity(
             ProcessPaymentActivity,
@@ -807,28 +807,28 @@ impl Workflow for OrderProcessingWorkflow {
                 ..Default::default()
             },
         ).await?;
-        
+
         if payment_result.status != "success" {
             return Err(WorkflowError::BusinessError(format!(
                 "支付处理失败: {}", payment_result.message.unwrap_or_default()
             )));
         }
-        
+
         // 3
-# 使用Rust兼容Temporal和Cadence的工作流架构设计（续）
+# 3. 使用Rust兼容Temporal和Cadence的工作流架构设计（续）
 
-## 三、工作流定义与执行（续）
+## 2.1 三、工作流定义与执行（续）
 
-### 1. 统一工作流定义（续）
+### 2.1.1 统一工作流定义（续）
 
 ```rust
 #[async_trait]
 impl Workflow for OrderProcessingWorkflow {
     // ... 前面的代码 ...
-    
+
     async fn execute(&self, ctx: &mut WorkflowContext, input: Self::Input) -> Result<Self::Output, WorkflowError> {
         // ... 前面的验证订单和处理支付逻辑 ...
-        
+
         // 3. 库存分配
         let inventory_result = ctx.execute_activity(
             AllocateInventoryActivity,
@@ -848,7 +848,7 @@ impl Workflow for OrderProcessingWorkflow {
                 ..Default::default()
             },
         ).await?;
-        
+
         if !inventory_result.success {
             // 补偿操作: 退款
             ctx.execute_activity(
@@ -863,12 +863,12 @@ impl Workflow for OrderProcessingWorkflow {
                     ..Default::default()
                 },
             ).await?;
-            
+
             return Err(WorkflowError::BusinessError(format!(
                 "库存分配失败: {}", inventory_result.message.unwrap_or_default()
             )));
         }
-        
+
         // 4. 触发物流准备
         ctx.execute_activity(
             InitiateShippingActivity,
@@ -883,7 +883,7 @@ impl Workflow for OrderProcessingWorkflow {
                 ..Default::default()
             },
         ).await?;
-        
+
         // 5. 发送订单确认
         ctx.execute_activity(
             SendOrderConfirmationActivity,
@@ -897,7 +897,7 @@ impl Workflow for OrderProcessingWorkflow {
                 ..Default::default()
             },
         ).await?;
-        
+
         // 返回成功结果
         Ok(OrderResult {
             order_id: input.order_id.clone(),
@@ -921,15 +921,15 @@ pub struct ValidationResult {
 impl Activity for ValidateOrderActivity {
     type Input = OrderInput;
     type Output = ValidationResult;
-    
+
     fn name(&self) -> &str {
         "ValidateOrderActivity"
     }
-    
+
     async fn execute(&self, ctx: &ActivityContext, input: Self::Input) -> Result<Self::Output, ActivityError> {
         // 活动实现...
         // 在实际应用中，这里会有真实的验证逻辑
-        
+
         // 模拟验证过程
         if input.items.is_empty() {
             return Ok(ValidationResult {
@@ -937,14 +937,14 @@ impl Activity for ValidateOrderActivity {
                 reason: Some("订单不能没有商品项".to_string()),
             });
         }
-        
+
         if input.total_amount <= 0.0 {
             return Ok(ValidationResult {
                 is_valid: false,
                 reason: Some("订单金额必须大于零".to_string()),
             });
         }
-        
+
         Ok(ValidationResult {
             is_valid: true,
             reason: None,
@@ -953,7 +953,7 @@ impl Activity for ValidateOrderActivity {
 }
 ```
 
-### 2. 工作流注册与执行
+### 2.1.2 工作流注册与执行
 
 ```rust
 /// 配置和注册工作流与活动
@@ -961,7 +961,7 @@ async fn setup_workflow_engine() -> Result<WorkflowEngineClient, EngineError> {
     // 根据配置确定使用的引擎
     let engine_type = std::env::var("WORKFLOW_ENGINE_TYPE")
         .unwrap_or_else(|_| "temporal".to_string());
-    
+
     let client = match engine_type.to_lowercase().as_str() {
         "temporal" => {
             let config = TemporalClientConfig {
@@ -971,7 +971,7 @@ async fn setup_workflow_engine() -> Result<WorkflowEngineClient, EngineError> {
                     .unwrap_or_else(|_| "default".to_string()),
                 client_options: Default::default(),
             };
-            
+
             WorkflowEngineClient::new_temporal(config).await?
         },
         "cadence" => {
@@ -981,16 +981,16 @@ async fn setup_workflow_engine() -> Result<WorkflowEngineClient, EngineError> {
                 namespace: std::env::var("CADENCE_NAMESPACE")
                     .unwrap_or_else(|_| "default".to_string()),
             };
-            
+
             WorkflowEngineClient::new_cadence(config).await?
         },
         _ => return Err(EngineError::ConfigError("不支持的工作流引擎类型".to_string())),
     };
-    
+
     // 创建并配置工作线程
     let task_queue = "order-processing-queue";
     let mut worker = client.create_worker(task_queue);
-    
+
     // 注册工作流
     worker.register_workflow(
         OrderProcessingWorkflow,
@@ -998,7 +998,7 @@ async fn setup_workflow_engine() -> Result<WorkflowEngineClient, EngineError> {
             name: "OrderProcessingWorkflow".to_string(),
         },
     );
-    
+
     // 注册活动
     worker.register_activity(
         ValidateOrderActivity,
@@ -1036,10 +1036,10 @@ async fn setup_workflow_engine() -> Result<WorkflowEngineClient, EngineError> {
             name: "SendOrderConfirmationActivity".to_string(),
         },
     );
-    
+
     // 启动工作线程
     worker.start().await?;
-    
+
     Ok(client)
 }
 
@@ -1063,7 +1063,7 @@ async fn start_order_workflow(client: &WorkflowEngineClient, order_id: &str) -> 
         ],
         total_amount: 109.97,
     };
-    
+
     // 工作流选项
     let options = WorkflowOptions {
         id: format!("order-{}", order_id),
@@ -1079,21 +1079,21 @@ async fn start_order_workflow(client: &WorkflowEngineClient, order_id: &str) -> 
             non_retryable_error_types: vec!["InvalidOrderError".to_string()],
         }),
     };
-    
+
     // 启动工作流
     let handle = client.start_workflow(OrderProcessingWorkflow, input, options).await?;
-    
+
     // 等待工作流完成
     let result = handle.result().await?;
     println!("订单处理完成: {:?}", result);
-    
+
     Ok(())
 }
 ```
 
-## 四、工作流迁移与互操作性
+## 2.2 四、工作流迁移与互操作性
 
-### 1. 工作流实例迁移工具
+### 2.2.1 工作流实例迁移工具
 
 为了支持从一个引擎迁移到另一个引擎,我们需要实现工作流历史记录的导出和导入功能:
 
@@ -1112,35 +1112,35 @@ impl WorkflowMigrationTool {
             target_client,
         }
     }
-    
+
     /// 迁移特定工作流实例
-    pub async fn migrate_workflow(&self, workflow_id: &str, 
+    pub async fn migrate_workflow(&self, workflow_id: &str,
         workflow_type: &str) -> Result<(), MigrationError> {
         // 1. 从源引擎导出工作流历史
         let history = self.source_client.get_workflow_history(workflow_id).await?;
-        
+
         // 2. 验证工作流已完成(或暂停)
         if !history.is_completed && !history.is_paused {
             return Err(MigrationError::WorkflowActive(
                 "只能迁移已完成或已暂停的工作流".to_string()
             ));
         }
-        
+
         // 3. 转换为目标引擎的历史格式
         let target_history = self.convert_history(history, workflow_type)?;
-        
+
         // 4. 在目标引擎中创建工作流
         self.target_client.import_workflow_history(target_history).await?;
-        
+
         Ok(())
     }
-    
+
     /// 迁移特定类型的所有工作流
-    pub async fn migrate_workflow_type(&self, workflow_type: &str, 
+    pub async fn migrate_workflow_type(&self, workflow_type: &str,
         batch_size: usize) -> Result<MigrationStats, MigrationError> {
         // 1. 获取所有指定类型的工作流ID
         let workflow_ids = self.source_client.list_workflows_by_type(workflow_type).await?;
-        
+
         // 2. 批量迁移
         let mut stats = MigrationStats {
             total: workflow_ids.len(),
@@ -1148,12 +1148,12 @@ impl WorkflowMigrationTool {
             failed: 0,
             skipped: 0,
         };
-        
+
         for batch in workflow_ids.chunks(batch_size) {
             let results = futures::future::join_all(
                 batch.iter().map(|id| self.migrate_workflow(id, workflow_type))
             ).await;
-            
+
             for result in results {
                 match result {
                     Ok(_) => stats.successful += 1,
@@ -1162,12 +1162,12 @@ impl WorkflowMigrationTool {
                 }
             }
         }
-        
+
         Ok(stats)
     }
-    
+
     /// 转换工作流历史格式
-    fn convert_history(&self, history: WorkflowHistory, 
+    fn convert_history(&self, history: WorkflowHistory,
         workflow_type: &str) -> Result<WorkflowHistoryImport, MigrationError> {
         // 根据源引擎和目标引擎类型执行不同的转换逻辑
         match (self.source_client.engine_type(), self.target_client.engine_type()) {
@@ -1188,7 +1188,7 @@ impl WorkflowMigrationTool {
             }
         }
     }
-    
+
     // 各种转换方法实现...
     // ...
 }
@@ -1203,7 +1203,7 @@ pub struct MigrationStats {
 }
 ```
 
-### 2. 双引擎互操作性方案
+### 2.2.2 双引擎互操作性方案
 
 在某些情况下,可能需要同时使用两种引擎。以下是设计互操作性的策略:
 
@@ -1219,10 +1219,10 @@ pub struct DualEngineManager {
 pub enum RoutingPolicy {
     /// 基于工作流类型选择引擎
     WorkflowType(HashMap<String, EngineType>),
-    
+
     /// 基于工作流标签选择引擎
     WorkflowTags(HashMap<String, EngineType>),
-    
+
     /// 基于自定义规则选择引擎
     Custom(Box<dyn Fn(&str, &WorkflowOptions) -> EngineType + Send + Sync>),
 }
@@ -1240,7 +1240,7 @@ impl DualEngineManager {
             routing_policy,
         }
     }
-    
+
     /// 启动工作流
     pub async fn start_workflow<W: Workflow>(
         &self,
@@ -1250,7 +1250,7 @@ impl DualEngineManager {
     ) -> Result<WorkflowHandle<W::Output>, EngineError> {
         // 确定使用哪个引擎
         let engine_type = self.determine_engine(&workflow.name(), &options);
-        
+
         // 根据决策使用相应的客户端
         match engine_type {
             EngineType::Temporal => {
@@ -1261,7 +1261,7 @@ impl DualEngineManager {
             },
         }
     }
-    
+
     /// 确定使用哪个引擎
     fn determine_engine(&self, workflow_type: &str, options: &WorkflowOptions) -> EngineType {
         match &self.routing_policy {
@@ -1283,37 +1283,37 @@ impl DualEngineManager {
             },
         }
     }
-    
+
     /// 创建双引擎工作线程
     pub fn create_workers(&self, task_queue: &str) -> (Worker, Worker) {
         let temporal_worker = self.temporal_client.create_worker(task_queue);
         let cadence_worker = self.cadence_client.create_worker(task_queue);
-        
+
         (temporal_worker, cadence_worker)
     }
-    
+
     // 其他方法...
 }
 
 /// 配置示例:基于工作流类型路由
 fn create_type_based_routing() -> RoutingPolicy {
     let mut mapping = HashMap::new();
-    
+
     // 订单相关工作流使用Temporal
     mapping.insert("OrderProcessingWorkflow".to_string(), EngineType::Temporal);
     mapping.insert("OrderCancellationWorkflow".to_string(), EngineType::Temporal);
-    
+
     // 用户相关工作流使用Cadence
     mapping.insert("UserRegistrationWorkflow".to_string(), EngineType::Cadence);
     mapping.insert("UserProfileUpdateWorkflow".to_string(), EngineType::Cadence);
-    
+
     RoutingPolicy::WorkflowType(mapping)
 }
 ```
 
-## 五、运维与监控集成
+## 2.3 五、运维与监控集成
 
-### 1. 统一监控指标
+### 2.3.1 统一监控指标
 
 ```rust
 /// 统一监控集成
@@ -1330,7 +1330,7 @@ impl WorkflowMetrics {
             engine_type,
         }
     }
-    
+
     /// 记录工作流开始
     pub fn record_workflow_started(&self, workflow_type: &str) {
         self.metrics_client.increment_counter(
@@ -1338,21 +1338,21 @@ impl WorkflowMetrics {
             Some(&[("workflow_type", workflow_type)]),
         );
     }
-    
+
     /// 记录工作流完成
     pub fn record_workflow_completed(&self, workflow_type: &str, duration_ms: u64) {
         self.metrics_client.increment_counter(
             &format!("workflow.{}.completed", self.prefix()),
             Some(&[("workflow_type", workflow_type)]),
         );
-        
+
         self.metrics_client.record_histogram(
             &format!("workflow.{}.duration_ms", self.prefix()),
             duration_ms as f64,
             Some(&[("workflow_type", workflow_type)]),
         );
     }
-    
+
     /// 记录工作流失败
     pub fn record_workflow_failed(&self, workflow_type: &str, error_type: &str) {
         self.metrics_client.increment_counter(
@@ -1363,7 +1363,7 @@ impl WorkflowMetrics {
             ]),
         );
     }
-    
+
     /// 记录活动开始
     pub fn record_activity_started(&self, activity_type: &str) {
         self.metrics_client.increment_counter(
@@ -1371,21 +1371,21 @@ impl WorkflowMetrics {
             Some(&[("activity_type", activity_type)]),
         );
     }
-    
+
     /// 记录活动完成
     pub fn record_activity_completed(&self, activity_type: &str, duration_ms: u64) {
         self.metrics_client.increment_counter(
             &format!("activity.{}.completed", self.prefix()),
             Some(&[("activity_type", activity_type)]),
         );
-        
+
         self.metrics_client.record_histogram(
             &format!("activity.{}.duration_ms", self.prefix()),
             duration_ms as f64,
             Some(&[("activity_type", activity_type)]),
         );
     }
-    
+
     /// 记录活动失败
     pub fn record_activity_failed(&self, activity_type: &str, error_type: &str) {
         self.metrics_client.increment_counter(
@@ -1396,7 +1396,7 @@ impl WorkflowMetrics {
             ]),
         );
     }
-    
+
     /// 获取引擎前缀
     fn prefix(&self) -> &'static str {
         match self.engine_type {
@@ -1407,7 +1407,7 @@ impl WorkflowMetrics {
 }
 ```
 
-### 2. OpenTelemetry集成
+### 2.3.2 OpenTelemetry集成
 
 ```rust
 /// OpenTelemetry集成
@@ -1424,16 +1424,16 @@ impl WorkflowTelemetry {
             engine_type,
         }
     }
-    
+
     /// 创建工作流追踪Span
-    pub fn trace_workflow<F, R>(&self, 
-        workflow_type: &str, 
-        workflow_id: &str, 
-        run_id: &str, 
+    pub fn trace_workflow<F, R>(&self,
+        workflow_type: &str,
+        workflow_id: &str,
+        run_id: &str,
         f: F
-    ) -> R 
-    where 
-        F: FnOnce(opentelemetry::trace::Span) -> R 
+    ) -> R
+    where
+        F: FnOnce(opentelemetry::trace::Span) -> R
     {
         let span = self.tracer
             .span_builder(format!("{} workflow execution", workflow_type))
@@ -1444,22 +1444,22 @@ impl WorkflowTelemetry {
                 KeyValue::new("workflow.engine", self.engine_name()),
             ])
             .start(&self.tracer);
-            
+
         f(span)
     }
-    
+
     /// 创建活动追踪Span
-    pub fn trace_activity<F, R>(&self, 
-        activity_type: &str, 
-        workflow_id: &str, 
-        parent_span: &opentelemetry::trace::Span, 
+    pub fn trace_activity<F, R>(&self,
+        activity_type: &str,
+        workflow_id: &str,
+        parent_span: &opentelemetry::trace::Span,
         f: F
-    ) -> R 
-    where 
-        F: FnOnce(opentelemetry::trace::Span) -> R 
+    ) -> R
+    where
+        F: FnOnce(opentelemetry::trace::Span) -> R
     {
         let context = opentelemetry::Context::current_with_span(parent_span.clone());
-        
+
         let span = self.tracer
             .span_builder(format!("{} activity execution", activity_type))
             .with_parent_context(context)
@@ -1469,10 +1469,10 @@ impl WorkflowTelemetry {
                 KeyValue::new("workflow.engine", self.engine_name()),
             ])
             .start(&self.tracer);
-            
+
         f(span)
     }
-    
+
     /// 获取引擎名称
     fn engine_name(&self) -> &'static str {
         match self.engine_type {
@@ -1483,9 +1483,9 @@ impl WorkflowTelemetry {
 }
 ```
 
-## 六、适配器实现挑战与解决方案
+## 2.4 六、适配器实现挑战与解决方案
 
-### 1. 主要挑战
+### 2.4.1 主要挑战
 
 -**1. 异步模型差异**
 
@@ -1499,7 +1499,7 @@ pub struct AsyncModelAdapter {
 
 impl AsyncModelAdapter {
     /// 调整异步操作以适应目标引擎
-    pub async fn adapt_async_operation<F, T>(&self, 
+    pub async fn adapt_async_operation<F, T>(&self,
         operation: F
     ) -> Result<T, WorkflowError>
     where
@@ -1595,7 +1595,7 @@ impl VersioningAdapter {
             },
         }
     }
-    
+
     /// 确定是否执行特定变更
     pub fn should_execute_change(&self, change_id: &str) -> bool {
         match self.engine_type {
@@ -1611,14 +1611,14 @@ impl VersioningAdapter {
 }
 ```
 
-### 2. 生产环境考虑
+### 2.4.2 生产环境考虑
 
 -**1. 错误处理集成**
 
 错误处理策略需要统一以适应两个引擎:
 
 ```rust
-/// 统一错误处理适配器 
+/// 统一错误处理适配器
 pub struct ErrorHandlingAdapter {
     engine_type: EngineType,
 }
@@ -1645,11 +1645,11 @@ impl ErrorHandlingAdapter {
                 }
             },
             EngineType::Cadence
-# 使用Rust兼容Temporal和Cadence的工作流架构设计（续）
+# 3. 使用Rust兼容Temporal和Cadence的工作流架构设计（续）
 
-## 六、适配器实现挑战与解决方案（续）
+## 3.1 六、适配器实现挑战与解决方案（续）
 
-### 2. 生产环境考虑（续）
+### 3.1.1 生产环境考虑（续）
 
 **1. 错误处理集成（续）**
 
@@ -1680,7 +1680,7 @@ impl ErrorHandlingAdapter {
             },
         }
     }
-    
+
     /// 转换统一错误为引擎特定错误
     pub fn to_engine_error(&self, error: &WorkflowError) -> Box<dyn std::error::Error> {
         match self.engine_type {
@@ -1689,7 +1689,7 @@ impl ErrorHandlingAdapter {
                 match error {
                     WorkflowError::BusinessError(msg) => {
                         Box::new(TemporalError::ApplicationError(
-                            msg.clone(), 
+                            msg.clone(),
                             serde_json::Value::Null,
                         ))
                     },
@@ -1707,7 +1707,7 @@ impl ErrorHandlingAdapter {
                 match error {
                     WorkflowError::BusinessError(msg) => {
                         Box::new(CadenceError::ApplicationFailure(
-                            msg.clone(), 
+                            msg.clone(),
                             serde_json::Value::Null,
                         ))
                     },
@@ -1740,18 +1740,18 @@ impl PerformanceMonitor {
     pub fn new(metrics: WorkflowMetrics, engine_type: EngineType) -> Self {
         Self { metrics, engine_type }
     }
-    
+
     /// 监控工作流执行性能
-    pub async fn monitor_workflow<F, R>(&self, 
-        workflow_type: &str, 
+    pub async fn monitor_workflow<F, R>(&self,
+        workflow_type: &str,
         f: F
-    ) -> Result<R, WorkflowError> 
-    where 
-        F: Future<Output = Result<R, WorkflowError>> 
+    ) -> Result<R, WorkflowError>
+    where
+        F: Future<Output = Result<R, WorkflowError>>
     {
         let start = std::time::Instant::now();
         self.metrics.record_workflow_started(workflow_type);
-        
+
         // 引擎特定的性能调整
         let result = match self.engine_type {
             EngineType::Temporal => {
@@ -1765,38 +1765,38 @@ impl PerformanceMonitor {
                 with_cadence_optimizations(f).await
             },
         };
-        
+
         let duration = start.elapsed();
-        
+
         match &result {
             Ok(_) => {
                 self.metrics.record_workflow_completed(
-                    workflow_type, 
+                    workflow_type,
                     duration.as_millis() as u64
                 );
             },
             Err(e) => {
                 self.metrics.record_workflow_failed(
-                    workflow_type, 
+                    workflow_type,
                     &e.error_type()
                 );
             },
         }
-        
+
         result
     }
-    
+
     /// 监控活动执行性能
-    pub async fn monitor_activity<F, R>(&self, 
-        activity_type: &str, 
+    pub async fn monitor_activity<F, R>(&self,
+        activity_type: &str,
         f: F
-    ) -> Result<R, ActivityError> 
-    where 
-        F: Future<Output = Result<R, ActivityError>> 
+    ) -> Result<R, ActivityError>
+    where
+        F: Future<Output = Result<R, ActivityError>>
     {
         let start = std::time::Instant::now();
         self.metrics.record_activity_started(activity_type);
-        
+
         // 引擎特定的活动性能调整
         let result = match self.engine_type {
             EngineType::Temporal => {
@@ -1808,24 +1808,24 @@ impl PerformanceMonitor {
                 with_cadence_activity_optimizations(f).await
             },
         };
-        
+
         let duration = start.elapsed();
-        
+
         match &result {
             Ok(_) => {
                 self.metrics.record_activity_completed(
-                    activity_type, 
+                    activity_type,
                     duration.as_millis() as u64
                 );
             },
             Err(e) => {
                 self.metrics.record_activity_failed(
-                    activity_type, 
+                    activity_type,
                     &e.error_type()
                 );
             },
         }
-        
+
         result
     }
 }
@@ -1869,32 +1869,32 @@ impl HighAvailabilityEngineManager {
         backup_client: Option<WorkflowEngineClient>,
     ) -> Self {
         let health_checker = HealthChecker::new();
-        
+
         Self {
             primary_client,
             backup_client,
             health_checker,
         }
     }
-    
+
     /// 获取当前可用的客户端
     pub async fn get_available_client(&self) -> Result<&WorkflowEngineClient, EngineError> {
         // 检查主客户端是否可用
         if self.health_checker.is_healthy(&self.primary_client).await {
             return Ok(&self.primary_client);
         }
-        
+
         // 如果主客户端不可用,检查备份客户端
         if let Some(backup) = &self.backup_client {
             if self.health_checker.is_healthy(backup).await {
                 return Ok(backup);
             }
         }
-        
+
         // 所有客户端都不可用
         Err(EngineError::NoAvailableEngine("所有工作流引擎都不可用".to_string()))
     }
-    
+
     /// 启动工作流,自动选择可用引擎
     pub async fn start_workflow<W: Workflow>(
         &self,
@@ -1905,7 +1905,7 @@ impl HighAvailabilityEngineManager {
         let client = self.get_available_client().await?;
         client.start_workflow(workflow, input, options).await
     }
-    
+
     /// 执行故障切换
     pub async fn failover(&mut self) -> Result<(), EngineError> {
         if let Some(backup) = self.backup_client.take() {
@@ -1925,7 +1925,7 @@ impl HealthChecker {
     pub fn new() -> Self {
         Self
     }
-    
+
     /// 检查引擎是否健康
     pub async fn is_healthy(&self, client: &WorkflowEngineClient) -> bool {
         match client.ping().await {
@@ -1936,9 +1936,9 @@ impl HealthChecker {
 }
 ```
 
-## 七、集成示例与最佳实践
+## 3.2 七、集成示例与最佳实践
 
-### 1. 完整应用示例
+### 3.2.1 完整应用示例
 
 下面是一个更复杂的订单处理系统示例,展示如何在实际应用中使用我们的兼容层:
 
@@ -1963,7 +1963,7 @@ impl OrderService {
             telemetry,
         }
     }
-    
+
     /// 处理新订单
     pub async fn process_order(&self, order: Order) -> Result<OrderResult, ServiceError> {
         // 创建工作流输入
@@ -1973,7 +1973,7 @@ impl OrderService {
             items: order.items.clone(),
             total_amount: order.total_amount,
         };
-        
+
         // 工作流选项
         let options = WorkflowOptions {
             id: format!("order-{}", order.id),
@@ -1991,7 +1991,7 @@ impl OrderService {
             // 添加跟踪上下文
             tracing_context: Some(opentelemetry::Context::current()),
         };
-        
+
         // 创建跟踪Span
         let span = self.telemetry.tracer.span_builder("process_order")
             .with_attributes(vec![
@@ -1999,41 +1999,41 @@ impl OrderService {
                 KeyValue::new("customer.id", order.customer_id.clone()),
             ])
             .start(&self.telemetry.tracer);
-            
+
         // 使用跟踪上下文执行工作流
         let _guard = span.enter();
-        
+
         // 记录工作流开始指标
         self.metrics.record_workflow_started("OrderProcessingWorkflow");
         let start_time = std::time::Instant::now();
-        
+
         // 启动工作流
         let handle = self.workflow_client
             .start_workflow(OrderProcessingWorkflow, input, options)
             .await
             .map_err(|e| ServiceError::WorkflowError(format!("启动工作流失败: {}", e)))?;
-        
+
         // 等待工作流完成
         let result = handle.result().await
             .map_err(|e| ServiceError::WorkflowError(format!("工作流执行失败: {}", e)))?;
-            
+
         // 记录工作流完成指标
         let duration = start_time.elapsed();
         self.metrics.record_workflow_completed(
             "OrderProcessingWorkflow",
             duration.as_millis() as u64,
         );
-        
+
         // 记录业务结果指标
         self.metrics.increment_counter(
             "order.processed",
             Some(&[("status", &result.status)]),
         );
-        
+
         // 处理结果并返回
         Ok(result)
     }
-    
+
     /// 取消订单
     pub async fn cancel_order(&self, order_id: &str, reason: &str) -> Result<OrderResult, ServiceError> {
         // 查找现有工作流
@@ -2041,22 +2041,22 @@ impl OrderService {
             .get_workflow_handle::<OrderProcessingWorkflow>(order_id)
             .await
             .map_err(|e| ServiceError::WorkflowError(format!("查找工作流失败: {}", e)))?;
-            
+
         // 发送取消信号
         handle.signal("cancelOrder", CancelOrderSignal { reason: reason.to_string() })
             .await
             .map_err(|e| ServiceError::WorkflowError(format!("发送取消信号失败: {}", e)))?;
-            
+
         // 等待工作流完成
         let result = handle.result().await
             .map_err(|e| ServiceError::WorkflowError(format!("工作流执行失败: {}", e)))?;
-            
+
         // 记录取消指标
         self.metrics.increment_counter(
             "order.cancelled",
             Some(&[("reason", reason)]),
         );
-        
+
         Ok(result)
     }
 }
@@ -2071,12 +2071,12 @@ impl WorkflowRegistrationManager {
     pub fn new(workflow_client: WorkflowEngineClient) -> Self {
         Self { workflow_client }
     }
-    
+
     /// 注册所有工作流和活动
     pub async fn register_workflows(&self) -> Result<(), EngineError> {
         // 创建订单处理队列的工作线程
         let mut order_worker = self.workflow_client.create_worker("order-processing-queue");
-        
+
         // 注册订单相关工作流
         order_worker.register_workflow(
             OrderProcessingWorkflow,
@@ -2084,14 +2084,14 @@ impl WorkflowRegistrationManager {
                 name: "OrderProcessingWorkflow".to_string(),
             },
         );
-        
+
         order_worker.register_workflow(
             OrderCancellationWorkflow,
             WorkflowRegistrationOptions {
                 name: "OrderCancellationWorkflow".to_string(),
             },
         );
-        
+
         // 注册订单相关活动
         order_worker.register_activity(
             ValidateOrderActivity,
@@ -2099,27 +2099,27 @@ impl WorkflowRegistrationManager {
                 name: "ValidateOrderActivity".to_string(),
             },
         );
-        
+
         order_worker.register_activity(
             ProcessPaymentActivity,
             ActivityRegistrationOptions {
                 name: "ProcessPaymentActivity".to_string(),
             },
         );
-        
+
         // 注册其他活动...
-        
+
         // 启动工作线程
         order_worker.start().await?;
-        
+
         // 创建用户处理队列的工作线程
         let mut user_worker = self.workflow_client.create_worker("user-processing-queue");
-        
+
         // 注册用户相关工作流和活动...
-        
+
         // 启动工作线程
         user_worker.start().await?;
-        
+
         Ok(())
     }
 }
@@ -2129,11 +2129,11 @@ impl WorkflowRegistrationManager {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 初始化日志
     env_logger::init();
-    
+
     // 从环境变量读取配置
     let engine_type = std::env::var("WORKFLOW_ENGINE_TYPE")
         .unwrap_or_else(|_| "temporal".to_string());
-        
+
     // 创建工作流引擎客户端
     let workflow_client = match engine_type.to_lowercase().as_str() {
         "temporal" => {
@@ -2144,7 +2144,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .unwrap_or_else(|_| "default".to_string()),
                 client_options: Default::default(),
             };
-            
+
             WorkflowEngineClient::new_temporal(config).await?
         },
         "cadence" => {
@@ -2154,34 +2154,34 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 namespace: std::env::var("CADENCE_NAMESPACE")
                     .unwrap_or_else(|_| "default".to_string()),
             };
-            
+
             WorkflowEngineClient::new_cadence(config).await?
         },
         _ => return Err("不支持的工作流引擎类型".into()),
     };
-    
+
     // 确定引擎类型
     let engine_type = workflow_client.engine_type();
-    
+
     // 初始化指标客户端
     let metrics_client = MetricsClient::new("my_app");
     let workflow_metrics = WorkflowMetrics::new(metrics_client.clone(), engine_type);
-    
+
     // 初始化OpenTelemetry
     let tracer = opentelemetry::global::tracer("my_app");
     let workflow_telemetry = WorkflowTelemetry::new(tracer, engine_type);
-    
+
     // 注册工作流和活动
     let registration_manager = WorkflowRegistrationManager::new(workflow_client.clone());
     registration_manager.register_workflows().await?;
-    
+
     // 创建订单服务
     let order_service = OrderService::new(
         workflow_client.clone(),
         workflow_metrics,
         workflow_telemetry,
     );
-    
+
     // 启动HTTP服务器
     let app = create_http_server(order_service);
     let address = "[::1]:3000";
@@ -2189,14 +2189,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     axum::Server::bind(&address.parse()?)
         .serve(app.into_make_service())
         .await?;
-        
+
     Ok(())
 }
 ```
 
-### 2. 最佳实践总结
+### 3.2.2 最佳实践总结
 
-#### 设计原则
+#### 3.2.2.1 设计原则
 
 1. **抽象优先**: 设计清晰的抽象层,隐藏引擎实现细节
 2. **逐层适配**: 从统一API到引擎特定适配器的分层设计
@@ -2204,30 +2204,30 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 4. **错误处理一致**: 统一错误处理模型,简化异常流程管理
 5. **可测试设计**: 支持模拟引擎进行单元测试和集成测试
 
-#### 迁移策略
+#### 3.2.2.2 迁移策略
 
 1. **渐进式迁移**: 从单一工作流类型开始,逐步扩展到整个系统
 2. **双模运行**: 在迁移期间保持双引擎运行,确保平滑过渡
 3. **保持版本兼容**: 确保工作流定义在两个引擎上都能正确运行
 4. **监控覆盖**: 在迁移过程中加强监控,及时发现问题
 
-#### 性能优化
+#### 3.2.2.3 性能优化
 
 1. **引擎特定调优**: 根据不同引擎特性进行特定优化
 2. **批处理策略**: 对大量工作流实例使用批处理方法
 3. **缓存利用**: 合理利用缓存减少网络往返和序列化开销
 4. **并发控制**: 根据引擎特性调整活动执行的并发策略
 
-#### 运维考虑
+#### 3.2.2.4 运维考虑
 
 1. **统一监控**: 建立覆盖两种引擎的统一监控指标
 2. **故障转移机制**: 设计引擎之间的故障转移流程
 3. **配置外部化**: 将引擎选择和配置项外部化,支持动态切换
 4. **容器化部署**: 使用容器技术简化部署和扩展
 
-## 八、总结与未来方向
+## 3.3 八、总结与未来方向
 
-### 1. 主要特点
+### 3.3.1 主要特点
 
 本设计为使用Rust兼容Temporal和Cadence提供了完整的解决方案,具有以下特点:
 
@@ -2237,7 +2237,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 4. **灵活配置**: 支持运行时切换引擎,简化迁移路径
 5. **全面监控**: 集成OpenTelemetry和指标收集,提供全面可观察性
 
-### 2. 局限性
+### 3.3.2 局限性
 
 该设计仍存在一些限制和挑战:
 
@@ -2246,7 +2246,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 3. **迁移复杂性**: 工作流实例迁移需要处理状态转换和历史记录格式差异
 4. **版本兼容**: 需要持续跟踪引擎API变化,保持兼容性
 
-### 3. 未来扩展方向
+### 3.3.3 未来扩展方向
 
 未来可以考虑以下扩展方向:
 

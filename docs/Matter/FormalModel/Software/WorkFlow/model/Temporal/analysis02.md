@@ -1,38 +1,38 @@
-# Temporal工作流系统的形式化架构分析
+# 1. Temporal工作流系统的形式化架构分析
 
 ## 目录
 
-- [Temporal工作流系统的形式化架构分析](#temporal工作流系统的形式化架构分析)
+- [1. Temporal工作流系统的形式化架构分析](#1-temporal工作流系统的形式化架构分析)
   - [目录](#目录)
-  - [1. Temporal的形式化工作流模型](#1-temporal的形式化工作流模型)
-    - [1.1 核心数学模型](#11-核心数学模型)
-    - [1.2 执行语义](#12-执行语义)
-    - [1.3 组合特性](#13-组合特性)
-  - [2. 工作流嵌套与组合能力](#2-工作流嵌套与组合能力)
-    - [2.1 嵌套工作流模型](#21-嵌套工作流模型)
-    - [2.2 组合规则与类型安全](#22-组合规则与类型安全)
-    - [2.3 嵌套边界与限制](#23-嵌套边界与限制)
-  - [3. 图结构工作流支持](#3-图结构工作流支持)
-    - [3.1 形式化图模型支持](#31-形式化图模型支持)
-    - [3.2 复杂拓扑实现模式](#32-复杂拓扑实现模式)
-    - [3.3 环路和反向边处理](#33-环路和反向边处理)
-  - [4. 工作流拓扑的完备性分析](#4-工作流拓扑的完备性分析)
-    - [4.1 图论视角的完备性](#41-图论视角的完备性)
-    - [4.2 状态迁移完备性](#42-状态迁移完备性)
-    - [4.3 实际限制因素](#43-实际限制因素)
-  - [5. 示例与证明](#5-示例与证明)
-    - [5.1 复杂图结构工作流实现](#51-复杂图结构工作流实现)
-    - [5.2 多层嵌套工作流示例](#52-多层嵌套工作流示例)
-    - [5.3 完备性形式证明](#53-完备性形式证明)
-  - [6. 结论](#6-结论)
-    - [6.1 理论完备性](#61-理论完备性)
-    - [6.2 实际限制](#62-实际限制)
-    - [6.3 最佳实践建议](#63-最佳实践建议)
-    - [6.4 总体评估](#64-总体评估)
+  - [1.1 Temporal的形式化工作流模型](#11-temporal的形式化工作流模型)
+    - [1.1.1 核心数学模型](#111-核心数学模型)
+    - [1.1.2 执行语义](#112-执行语义)
+    - [1.1.3 组合特性](#113-组合特性)
+  - [1.2 工作流嵌套与组合能力](#12-工作流嵌套与组合能力)
+    - [1.2.1 嵌套工作流模型](#121-嵌套工作流模型)
+    - [1.2.2 组合规则与类型安全](#122-组合规则与类型安全)
+    - [1.2.3 嵌套边界与限制](#123-嵌套边界与限制)
+  - [1.3 图结构工作流支持](#13-图结构工作流支持)
+    - [1.3.1 形式化图模型支持](#131-形式化图模型支持)
+    - [1.3.2 复杂拓扑实现模式](#132-复杂拓扑实现模式)
+    - [1.3.3 环路和反向边处理](#133-环路和反向边处理)
+  - [1.4 工作流拓扑的完备性分析](#14-工作流拓扑的完备性分析)
+    - [1.4.1 图论视角的完备性](#141-图论视角的完备性)
+    - [1.4.2 状态迁移完备性](#142-状态迁移完备性)
+    - [1.4.3 实际限制因素](#143-实际限制因素)
+  - [1.5 示例与证明](#15-示例与证明)
+    - [1.5.1 复杂图结构工作流实现](#151-复杂图结构工作流实现)
+    - [1.5.2 多层嵌套工作流示例](#152-多层嵌套工作流示例)
+    - [1.6.2 完备性形式证明](#162-完备性形式证明)
+  - [1.7 结论](#17-结论)
+    - [1.7.1 理论完备性](#171-理论完备性)
+    - [1.7.2 实际限制](#172-实际限制)
+    - [1.7.3 最佳实践建议](#173-最佳实践建议)
+    - [1.7.4 总体评估](#174-总体评估)
 
-## 1. Temporal的形式化工作流模型
+## 1.1 Temporal的形式化工作流模型
 
-### 1.1 核心数学模型
+### 1.1.1 核心数学模型
 
 Temporal的工作流系统可以用以下形式化数学模型描述：
 
@@ -61,7 +61,7 @@ O: 操作集合，定义工作流间的交互操作
 
 这个模型将Temporal视为一个通过各种组合操作连接的工作流集合，形成了一个工作流系统的代数。
 
-### 1.2 执行语义
+### 1.1.2 执行语义
 
 Temporal的执行语义可以通过以下规则集形式化表示：
 
@@ -89,7 +89,7 @@ s_current = Replay(s₀, H)
 
 即当前状态可以通过从初始状态重放历史事件序列完全重建。
 
-### 1.3 组合特性
+### 1.1.3 组合特性
 
 Temporal工作流的组合性可以形式化为以下特性：
 
@@ -120,16 +120,16 @@ TypeOf(op(w₁, w₂)) = TypeCompose(T₁, T₂, op)
 
 即工作流组合保持类型安全。
 
-## 2. 工作流嵌套与组合能力
+## 1.2 工作流嵌套与组合能力
 
-### 2.1 嵌套工作流模型
+### 1.2.1 嵌套工作流模型
 
 Temporal完全支持工作流嵌套，可以通过以下形式化模型描述：
 
 **子工作流形式化模型：**
 
 ```rust
-SubWorkflow(parent, child) := 
+SubWorkflow(parent, child) :=
   parent.state ⊆ S_parent,
   child.state ⊆ S_child,
   parent.Execute(): S_parent × I_parent → S_parent × O_parent,
@@ -153,13 +153,13 @@ func ParentWorkflow(ctx workflow.Context, input string) (string, error) {
         },
     }
     ctx = workflow.WithChildOptions(ctx, cwo)
-    
+
     var childResult string
     err := workflow.ExecuteChildWorkflow(ctx, ChildWorkflow, input).Get(ctx, &childResult)
     if err != nil {
         return "", err
     }
-    
+
     // 处理子工作流结果
     return "Parent processed: " + childResult, nil
 }
@@ -176,14 +176,14 @@ Temporal支持任意层级的工作流嵌套，可以形式化表示为：
 
 这表明Temporal支持n层深度的工作流嵌套，没有理论上的深度限制。实际实现中，嵌套深度主要受系统资源和配置限制。
 
-### 2.2 组合规则与类型安全
+### 1.2.2 组合规则与类型安全
 
 Temporal提供了以下工作流组合规则，保证类型安全：
 
 **1. 顺序组合：**
 
 ```rust
-Sequential(w₁, w₂) := 
+Sequential(w₁, w₂) :=
   Execute(): (I₁ → (O₁ → (I₂ → O₂)))
 ```
 
@@ -209,24 +209,24 @@ pub async fn composite_workflow(ctx: workflow::Context, input: InputType) -> Res
     // 顺序组合
     let result1 = first_workflow(&ctx, input.clone()).await?;
     let result2 = second_workflow(&ctx, result1).await?;
-    
+
     // 并行组合
     let fut1 = third_workflow(&ctx, input.part1.clone());
     let fut2 = fourth_workflow(&ctx, input.part2.clone());
     let (result3, result4) = futures::join!(fut1, fut2);
-    
+
     // 条件组合
     let final_result = if input.condition {
         fifth_workflow(&ctx, result2).await?
     } else {
         sixth_workflow(&ctx, result2).await?
     };
-    
+
     Ok(final_result)
 }
 ```
 
-### 2.3 嵌套边界与限制
+### 1.2.3 嵌套边界与限制
 
 虽然Temporal理论上支持无限嵌套，但存在一些边界约束：
 
@@ -261,17 +261,17 @@ func LongRunningWorkflow(ctx workflow.Context, param string, iteration int) erro
     if iteration >= MaxIterations {
         return nil // 完成工作流
     }
-    
+
     // 执行当前迭代的逻辑
-    
+
     // 达到历史大小限制，继续为新的执行
     return workflow.NewContinueAsNewError(ctx, LongRunningWorkflow, param, iteration+1)
 }
 ```
 
-## 3. 图结构工作流支持
+## 1.3 图结构工作流支持
 
-### 3.1 形式化图模型支持
+### 1.3.1 形式化图模型支持
 
 从形式上讲，Temporal工作流可以实现任意有向图结构：
 
@@ -302,7 +302,7 @@ Temporal通过其控制流原语可以表达任何有向图结构：
 
 Temporal支持循环和条件分支，因此可以表达任意有向图，包括有环图。
 
-### 3.2 复杂拓扑实现模式
+### 1.3.2 复杂拓扑实现模式
 
 Temporal支持实现各种复杂工作流拓扑：
 
@@ -315,10 +315,10 @@ pub async fn fan_out_fan_in(ctx: workflow::Context, inputs: Vec<Input>) -> Resul
     let futures: Vec<_> = inputs.into_iter()
         .map(|input| process_item(&ctx, input))
         .collect();
-    
+
     // 扇入：等待所有结果
     let results = futures::future::join_all(futures).await;
-    
+
     // 收集结果，处理错误
     let outputs: Result<Vec<_>, _> = results.into_iter().collect();
     outputs
@@ -331,27 +331,27 @@ pub async fn fan_out_fan_in(ctx: workflow::Context, inputs: Vec<Input>) -> Resul
 func DynamicBranchingWorkflow(ctx workflow.Context, input Input) (Output, error) {
     // 根据输入动态决定执行路径
     branchCount := determineBranchCount(input)
-    
+
     var results []BranchResult
     for i := 0; i < branchCount; i++ {
         // 动态创建分支参数
         branchParams := createBranchParams(input, i)
-        
+
         // 执行分支处理
         var result BranchResult
         err := workflow.ExecuteActivity(ctx, BranchActivity, branchParams).Get(ctx, &result)
         if err != nil {
             return Output{}, err
         }
-        
+
         results = append(results, result)
-        
+
         // 动态决定是否继续分支
         if shouldTerminateBranching(results) {
             break
         }
     }
-    
+
     // 合并所有分支结果
     return aggregateResults(results), nil
 }
@@ -363,15 +363,15 @@ func DynamicBranchingWorkflow(ctx workflow.Context, input Input) (Output, error)
 func DynamicGraphWorkflow(ctx workflow.Context, graphSpec GraphSpecification) (GraphResult, error) {
     // 解析图规范，构建执行计划
     executionPlan := buildExecutionPlan(graphSpec)
-    
+
     // 跟踪节点状态和结果
     nodeResults := make(map[string]interface{})
-    
+
     // 执行直到所有节点完成
     for !executionPlan.IsComplete() {
         // 获取可执行节点
         executableNodes := executionPlan.GetExecutableNodes(nodeResults)
-        
+
         // 创建节点执行集合
         futures := make(map[string]workflow.Future)
         for _, node := range executableNodes {
@@ -384,7 +384,7 @@ func DynamicGraphWorkflow(ctx workflow.Context, graphSpec GraphSpecification) (G
                 futures[node.ID] = future
             }
         }
-        
+
         // 等待任一节点完成
         selector := workflow.NewSelector(ctx)
         for nodeID, future := range futures {
@@ -398,12 +398,12 @@ func DynamicGraphWorkflow(ctx workflow.Context, graphSpec GraphSpecification) (G
         }
         selector.Select(ctx)
     }
-    
+
     return buildGraphResult(nodeResults, graphSpec), nil
 }
 ```
 
-### 3.3 环路和反向边处理
+### 1.3.3 环路和反向边处理
 
 Temporal能够处理工作流中的环路和反向边：
 
@@ -417,14 +417,14 @@ func LoopWorkflow(ctx workflow.Context, iterations int) error {
         if err != nil {
             return err
         }
-        
+
         // 动态决定是否继续循环
         var shouldContinue bool
         err = workflow.ExecuteActivity(ctx, CheckContinueActivity, i).Get(ctx, &shouldContinue)
         if err != nil {
             return err
         }
-        
+
         if !shouldContinue {
             break
         }
@@ -444,17 +444,17 @@ pub async fn recursive_workflow(ctx: workflow::Context, state: State) -> Result<
     if state.is_terminal() {
         return Ok(state.output());
     }
-    
+
     // 处理当前状态
     let next_state = process_state(&ctx, state.clone()).await?;
-    
+
     // 递归调用
     let child_options = ChildWorkflowOptions {
         workflow_id: format!("recursive-{}", next_state.id()),
         workflow_execution_timeout: Some(Duration::from_hours(24)),
         ..Default::default()
     };
-    
+
     let child_ctx = ctx.with_child_options(child_options);
     recursive_workflow(&child_ctx, next_state).await
 }
@@ -467,35 +467,35 @@ pub async fn recursive_workflow(ctx: workflow::Context, state: State) -> Result<
 ```go
 func StateMachineWorkflow(ctx workflow.Context, initialState State) (FinalState, error) {
     currentState := initialState
-    
+
     // 持续执行直到到达终止状态
     for !currentState.IsTerminal() {
         // 确定下一个状态转换
         transitionName := determineTransition(currentState)
-        
+
         // 执行状态转换
         var nextState State
         err := workflow.ExecuteActivity(ctx, fmt.Sprintf("StateTransition_%s", transitionName), currentState).Get(ctx, &nextState)
         if err != nil {
             return FinalState{}, err
         }
-        
+
         // 更新当前状态
         currentState = nextState
-        
+
         // 添加循环保护
         if currentState.IterationCount > MaxIterations {
             return FinalState{}, errors.New("exceeded maximum iterations")
         }
     }
-    
+
     return FinalState{State: currentState}, nil
 }
 ```
 
-## 4. 工作流拓扑的完备性分析
+## 1.4 工作流拓扑的完备性分析
 
-### 4.1 图论视角的完备性
+### 1.4.1 图论视角的完备性
 
 从图论角度分析Temporal的拓扑完备性：
 
@@ -524,7 +524,7 @@ func StateMachineWorkflow(ctx workflow.Context, initialState State) (FinalState,
 
 因此，Temporal支持工作流的任意级联和嵌套。
 
-### 4.2 状态迁移完备性
+### 1.4.2 状态迁移完备性
 
 **定理3：Temporal工作流的状态迁移能力是图灵完备的。**
 
@@ -541,7 +541,7 @@ func StateMachineWorkflow(ctx workflow.Context, initialState State) (FinalState,
 
 3. 因此，Temporal工作流系统是图灵完备的，可以计算任何可计算函数
 
-### 4.3 实际限制因素
+### 1.4.3 实际限制因素
 
 虽然从理论上讲Temporal是拓扑完备的，但实际应用中存在一些限制：
 
@@ -575,9 +575,9 @@ NestingDepth(w) ≤ f(AvailableResources)
 
 **解决方案：** 采用扁平化设计或使用事件驱动模式减少嵌套深度。
 
-## 5. 示例与证明
+## 1.5 示例与证明
 
-### 5.1 复杂图结构工作流实现
+### 1.5.1 复杂图结构工作流实现
 
 以下是一个实现任意有向图的Temporal工作流示例：
 
@@ -605,7 +605,7 @@ type Graph struct {
 // 图执行工作流
 func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[string]interface{}) (map[string]interface{}, error) {
     logger := workflow.GetLogger(ctx)
-    
+
     // 节点执行结果
     results := make(map[string]interface{})
     if initialData != nil {
@@ -613,34 +613,34 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
             results[k] = v
         }
     }
-    
+
     // 跟踪已完成的节点
     completed := make(map[string]bool)
-    
+
     // 找出当前可执行的节点
     var executableNodes func() []GraphNode
     executableNodes = func() []GraphNode {
         var nodes []GraphNode
-        
+
         for _, node := range graph.Nodes {
             if completed[node.ID] {
                 continue // 已完成的节点跳过
             }
-            
+
             // 检查是否满足执行条件
             canExecute := true
             hasIncomingEdges := false
-            
+
             for _, edge := range graph.Edges {
                 if edge.To == node.ID {
                     hasIncomingEdges = true
-                    
+
                     // 前置节点必须已完成
                     if !completed[edge.From] {
                         canExecute = false
                         break
                     }
-                    
+
                     // 检查边条件
                     if edge.Condition != nil && !edge.Condition(results) {
                         canExecute = false
@@ -648,16 +648,16 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
                     }
                 }
             }
-            
+
             // 入口节点或所有前提条件满足的节点可以执行
             if (isEntryNode(node.ID, graph.EntryNodes) && !hasIncomingEdges) || (hasIncomingEdges && canExecute) {
                 nodes = append(nodes, node)
             }
         }
-        
+
         return nodes
     }
-    
+
     // 执行直到所有节点完成或无法继续
     for {
         nodes := executableNodes()
@@ -670,7 +670,7 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
                     break
                 }
             }
-            
+
             if allCompleted {
                 logger.Info("All nodes completed successfully")
             } else {
@@ -678,18 +678,18 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
             }
             break
         }
-        
+
         // 并行执行所有可执行节点
         futures := make(map[string]workflow.Future)
         for _, node := range nodes {
             nodeID := node.ID
             activity := node.Activity
             params := node.Params
-            
+
             future := workflow.ExecuteActivity(ctx, activity, params, results)
             futures[nodeID] = future
         }
-        
+
         // 等待任一节点完成
         selector := workflow.NewSelector(ctx)
         for nodeID, future := range futures {
@@ -709,7 +709,7 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
         }
         selector.Select(ctx)
     }
-    
+
     // 构建最终结果
     finalResults := make(map[string]interface{})
     for _, exitNode := range graph.ExitNodes {
@@ -717,7 +717,7 @@ func GraphExecutionWorkflow(ctx workflow.Context, graph Graph, initialData map[s
             finalResults[exitNode] = result
         }
     }
-    
+
     return finalResults, nil
 }
 
@@ -733,13 +733,13 @@ func isEntryNode(nodeID string, entryNodes []string) bool {
 
 这个实现可以执行任意有向图结构，包括有环图（通过条件边来处理循环）。
 
-### 5.2 多层嵌套工作流示例
+### 1.5.2 多层嵌套工作流示例
 
 以下是一个演示多层嵌套工作流的Rust示例：
 
 ```rust
 use temporal_sdk::{
-    WfContext, ChildWorkflowOptions, ActivityOptions, 
+    WfContext, ChildWorkflowOptions, ActivityOptions,
     workflow, activity,
 };
 use std::time::Duration;
@@ -771,17 +771,17 @@ pub async fn process_layer(input: NestedInput) -> Result<i32, anyhow::Error> {
 pub async fn nested_workflow(ctx: WfContext, input: NestedInput) -> Result<NestedOutput, anyhow::Error> {
     let current_depth = input.depth;
     let max_depth = input.max_depth;
-    
+
     // 处理当前层
     let activity_options = ActivityOptions {
         schedule_to_close_timeout: Some(Duration::from_secs(10)),
         retry_policy: Some(Default::default()),
         ..Default::default()
     };
-    
+
     let ctx_with_options = ctx.with_activity_options(activity_options);
     let processed_value = process_layer(&ctx_with_options, input.clone()).await?;
-    
+
     // 基本情况：达到最大深度
     if current_depth >= max_depth {
         return Ok(NestedOutput {
@@ -789,14 +789,14 @@ pub async fn nested_workflow(ctx: WfContext, input: NestedInput) -> Result<Neste
             max_reached_depth: current_depth,
         });
     }
-    
+
     // 递归情况：创建子工作流进入下一层
     let child_input = NestedInput {
         value: processed_value,
         depth: current_depth + 1,
-## 5. 示例与证明（续）
+## 1.6 示例与证明（续）
 
-### 5.2 多层嵌套工作流示例（续）
+### 1.6.1 多层嵌套工作流示例（续）
 
 ```rust
 // 递归情况：创建子工作流进入下一层
@@ -829,7 +829,7 @@ Ok(NestedOutput {
 
 这个示例演示了如何使用递归方式实现任意深度的嵌套工作流。每一层工作流处理自己的任务，然后创建子工作流继续处理下一层，直到达到最大深度。实际中，通过参数控制，这种模式可以实现任意复杂的嵌套结构。
 
-### 5.3 完备性形式证明
+### 1.6.2 完备性形式证明
 
 以下是Temporal工作流系统支持完整图结构和任意嵌套的形式证明：
 
@@ -905,29 +905,29 @@ Ok(NestedOutput {
 func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec WorkflowSpec) (interface{}, error) {
     // 工作流状态存储
     state := workflow.NewDisconnectedContext(ctx)
-    
+
     // 初始化执行图
     executionGraph := buildExecutionGraph(spec.Graph)
-    
+
     // 初始化当前节点为入口节点
     currentNodes := executionGraph.EntryNodes
     visitedNodes := make(map[string]bool)
     nodeResults := make(map[string]interface{})
-    
+
     // 工作流执行循环 - 可以表达任意图结构
     for len(currentNodes) > 0 {
         nextNodes := make(map[string]bool)
-        
+
         // 处理当前层级所有节点
         for _, nodeID := range currentNodes {
             if visitedNodes[nodeID] && !executionGraph.AllowRevisit(nodeID) {
                 continue // 避免重复访问（除非允许）
             }
-            
+
             node := executionGraph.GetNode(nodeID)
             var result interface{}
             var err error
-            
+
             // 根据节点类型处理 - 支持任意嵌套
             switch node.Type {
             case "activity":
@@ -938,7 +938,7 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
                     node.Input,
                     state.Value(node.StateKey),
                 ).Get(ctx, &result)
-                
+
             case "workflow":
                 // 执行嵌套工作流 - 可以嵌套任意深度
                 err = workflow.ExecuteChildWorkflow(
@@ -946,7 +946,7 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
                     node.WorkflowName,
                     buildChildInput(node, state),
                 ).Get(ctx, &result)
-                
+
             case "subgraph":
                 // 执行子图 - 递归图结构
                 subgraphSpec := WorkflowSpec{
@@ -959,18 +959,18 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
                     subgraphSpec,
                 ).Get(ctx, &result)
             }
-            
+
             if err != nil {
                 return nil, fmt.Errorf("error executing node %s: %w", nodeID, err)
             }
-            
+
             // 保存结果和状态
             nodeResults[nodeID] = result
             if node.StateKey != "" {
                 state.SetValue(node.StateKey, result)
             }
             visitedNodes[nodeID] = true
-            
+
             // 计算下一批节点 - 支持动态条件边
             for _, edge := range executionGraph.GetOutgoingEdges(nodeID) {
                 // 评估边条件
@@ -979,11 +979,11 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
                 }
             }
         }
-        
+
         // 更新当前节点为下一批待处理节点
         currentNodes = mapKeysToSlice(nextNodes)
     }
-    
+
     // 返回最终结果
     return buildFinalResult(executionGraph.ExitNodes, nodeResults, state), nil
 }
@@ -998,11 +998,11 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
 
 因此，从形式上和实践上，Temporal确实支持完整的工作流图结构和任意嵌套。
 
-## 6. 结论
+## 1.7 结论
 
 基于以上分析，我们可以得出关于Temporal工作流系统的以下结论：
 
-### 6.1 理论完备性
+### 1.7.1 理论完备性
 
 1. **拓扑完备性**：
    Temporal提供了一套完备的原语，使其能够表达任意有限有向图结构，包括有环图和复杂分支结构。形式上，它能够模拟任何有限状态机，甚至更强大。
@@ -1013,7 +1013,7 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
 3. **组合完备性**：
    Temporal支持各种工作流组合模式，包括顺序、并行、条件和循环组合。这使得它能够表达复杂的业务流程逻辑。
 
-### 6.2 实际限制
+### 1.7.2 实际限制
 
 1. **资源限制**：
    - 历史大小限制（默认10MB）可能限制单个工作流的复杂性
@@ -1030,7 +1030,7 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
    - 过度嵌套可能增加系统负载和延迟
    - 需要权衡工作流粒度和系统效率
 
-### 6.3 最佳实践建议
+### 1.7.3 最佳实践建议
 
 1. **对于复杂图结构**：
    - 使用状态机模式表达复杂图逻辑
@@ -1047,7 +1047,7 @@ func ComplexGraphWithNestedWorkflowsExecutor(ctx workflow.Context, spec Workflow
    - 设计清晰的接口边界
    - 考虑状态共享和隔离策略
 
-### 6.4 总体评估
+### 1.7.4 总体评估
 
 Temporal工作流系统从形式理论上完全支持任意复杂的工作流图结构和嵌套组合。
 它不仅提供了表达这些复杂性所需的所有原语，

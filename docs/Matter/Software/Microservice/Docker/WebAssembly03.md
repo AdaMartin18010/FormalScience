@@ -1,51 +1,51 @@
 
-# WebAssembly技术全面分析与展望
+# 1. WebAssembly技术全面分析与展望
 
 ## 目录
 
-- [WebAssembly技术全面分析与展望](#webassembly技术全面分析与展望)
+- [1. WebAssembly技术全面分析与展望](#1-webassembly技术全面分析与展望)
   - [目录](#目录)
-  - [1. WebAssembly基础概念](#1-webassembly基础概念)
-    - [1.1 定义与设计目标](#11-定义与设计目标)
-    - [1.2 核心规范与结构](#12-核心规范与结构)
-    - [1.3 执行模型](#13-执行模型)
-  - [2. 形式化基础与理论](#2-形式化基础与理论)
-    - [2.1 类型系统形式化](#21-类型系统形式化)
-    - [2.2 执行语义形式化](#22-执行语义形式化)
-    - [2.3 安全性证明](#23-安全性证明)
-  - [3. 技术原理与架构](#3-技术原理与架构)
-    - [3.1 内存模型](#31-内存模型)
-    - [3.2 指令集设计](#32-指令集设计)
-    - [3.3 编译与优化策略](#33-编译与优化策略)
-  - [4. WebAssembly与浏览器技术](#4-webassembly与浏览器技术)
-    - [4.1 浏览器集成原理](#41-浏览器集成原理)
-    - [4.2 与JavaScript交互机制](#42-与javascript交互机制)
-    - [4.3 Web API访问模型](#43-web-api访问模型)
-  - [5. 虚拟机技术比较](#5-虚拟机技术比较)
-    - [5.1 与JVM的对比](#51-与jvm的对比)
-    - [5.2 与V8/JavaScript引擎对比](#52-与v8javascript引擎对比)
-    - [5.3 技术优势与局限性](#53-技术优势与局限性)
-  - [6. WebAssembly生态系统](#6-webassembly生态系统)
-    - [6.1 工具链现状](#61-工具链现状)
-    - [6.2 语言支持](#62-语言支持)
-    - [6.3 框架与库](#63-框架与库)
-  - [7. WebAssembly扩展标准](#7-webassembly扩展标准)
-    - [7.1 WASI（WebAssembly系统接口）](#71-wasiwebassembly系统接口)
-    - [7.2 组件模型](#72-组件模型)
-    - [7.3 线程与并发模型](#73-线程与并发模型)
-  - [8. 技术融合与应用场景](#8-技术融合与应用场景)
-    - [8.1 Web应用架构模式](#81-web应用架构模式)
-    - [8.2 服务器端WebAssembly](#82-服务器端webassembly)
-    - [8.3 边缘计算与物联网](#83-边缘计算与物联网)
-  - [9. 未来发展趋势](#9-未来发展趋势)
-    - [9.1 技术演进路线图](#91-技术演进路线图)
-    - [9.2 潜在突破点](#92-潜在突破点)
-    - [9.3 挑战与机遇](#93-挑战与机遇)
-  - [10. 思维导图](#10-思维导图)
+  - [1.1 WebAssembly基础概念](#11-webassembly基础概念)
+    - [1.1.1 定义与设计目标](#111-定义与设计目标)
+    - [1.1.2 核心规范与结构](#112-核心规范与结构)
+    - [1.1.3 执行模型](#113-执行模型)
+  - [1.2 形式化基础与理论](#12-形式化基础与理论)
+    - [1.2.1 类型系统形式化](#121-类型系统形式化)
+    - [1.2.2 执行语义形式化](#122-执行语义形式化)
+    - [1.2.3 安全性证明](#123-安全性证明)
+  - [1.3 技术原理与架构](#13-技术原理与架构)
+    - [1.3.1 内存模型](#131-内存模型)
+    - [1.3.2 指令集设计](#132-指令集设计)
+    - [1.3.3 编译与优化策略](#133-编译与优化策略)
+  - [1.4 WebAssembly与浏览器技术](#14-webassembly与浏览器技术)
+    - [1.4.1 浏览器集成原理](#141-浏览器集成原理)
+    - [1.4.2 与JavaScript交互机制](#142-与javascript交互机制)
+    - [1.4.3 Web API访问模型](#143-web-api访问模型)
+  - [1.5 虚拟机技术比较](#15-虚拟机技术比较)
+    - [1.5.1 与JVM的对比](#151-与jvm的对比)
+    - [1.5.2 与V8/JavaScript引擎对比](#152-与v8javascript引擎对比)
+    - [1.5.3 技术优势与局限性](#153-技术优势与局限性)
+  - [1.6 WebAssembly生态系统](#16-webassembly生态系统)
+    - [1.6.1 工具链现状](#161-工具链现状)
+    - [8.0.1 语言支持](#801-语言支持)
+    - [8.0.2 框架与库](#802-框架与库)
+  - [8.1 WebAssembly扩展标准](#81-webassembly扩展标准)
+    - [8.1.1 WASI（WebAssembly系统接口）](#811-wasiwebassembly系统接口)
+    - [8.1.2 组件模型](#812-组件模型)
+    - [8.1.3 线程与并发模型](#813-线程与并发模型)
+  - [8.2 技术融合与应用场景](#82-技术融合与应用场景)
+    - [8.2.1 Web应用架构模式](#821-web应用架构模式)
+    - [8.2.2 服务器端WebAssembly](#822-服务器端webassembly)
+    - [8.2.3 边缘计算与物联网](#823-边缘计算与物联网)
+  - [8.3 未来发展趋势](#83-未来发展趋势)
+    - [8.3.1 技术演进路线图](#831-技术演进路线图)
+    - [8.3.2 潜在突破点](#832-潜在突破点)
+    - [8.3.3 挑战与机遇](#833-挑战与机遇)
+  - [8.4 思维导图](#84-思维导图)
 
-## 1. WebAssembly基础概念
+## 1.1 WebAssembly基础概念
 
-### 1.1 定义与设计目标
+### 1.1.1 定义与设计目标
 
 WebAssembly（简称Wasm）是一种低级二进制指令格式，基于堆栈机器的虚拟机架构，设计为高级语言的编译目标，可在现代Web浏览器中执行。它是一个开放标准，由W3C WebAssembly社区组维护。
 
@@ -68,7 +68,7 @@ WebAssembly可以形式化定义为一个元组 $W = (T, F, G, M, I, E)$，其�
 5. **开放性**：开放标准，支持多种工具链和调试工具
 6. **与Web平台集成**：无缝与JavaScript和Web API互操作
 
-### 1.2 核心规范与结构
+### 1.1.2 核心规范与结构
 
 WebAssembly核心规范定义了模块结构、指令集和执行语义：
 
@@ -93,52 +93,52 @@ WebAssembly模块可以用文本格式（WAT）表示：
 (module
   ;; 导入宿主函数
   (import "console" "log" (func $log (param i32)))
-  
+
   ;; 内存定义：1页(64KB)
   (memory (export "memory") 1)
-  
+
   ;; 全局变量定义
   (global $counter (mut i32) (i32.const 0))
-  
+
   ;; 函数定义：计算斐波那契数
   (func $fibonacci (export "fibonacci") (param $n i32) (result i32)
     (local $i i32)
     (local $a i32)
     (local $b i32)
     (local $temp i32)
-    
+
     ;; 边界条件
     (if (i32.lt_s (local.get $n) (i32.const 2))
       (then
         (return (local.get $n))
       )
     )
-    
+
     ;; 初始化
     (local.set $a (i32.const 0))
     (local.set $b (i32.const 1))
     (local.set $i (i32.const 2))
-    
+
     ;; 循环计算斐波那契数
     (loop $fib_loop
       (local.set $temp (local.get $b))
       (local.set $b (i32.add (local.get $a) (local.get $b)))
       (local.set $a (local.get $temp))
-      
+
       ;; 递增计数器
       (local.set $i (i32.add (local.get $i) (i32.const 1)))
-      
+
       ;; 判断是否完成
       (br_if $fib_loop (i32.le_s (local.get $i) (local.get $n)))
     )
-    
+
     ;; 返回结果
     (local.get $b)
   )
 )
 ```
 
-### 1.3 执行模型
+### 1.1.3 执行模型
 
 WebAssembly采用堆栈机器模型，具有以下特点：
 
@@ -160,9 +160,9 @@ WebAssembly执行状态可表示为：$S = (stack, locals, globals, memory, tabl
 
 指令执行可以看作状态转换：$S \xrightarrow{instr} S'$
 
-## 2. 形式化基础与理论
+## 1.2 形式化基础与理论
 
-### 2.1 类型系统形式化
+### 1.2.1 类型系统形式化
 
 WebAssembly采用静态类型系统，可以形式化表示：
 
@@ -181,7 +181,7 @@ $$\frac{}{\Gamma \vdash \text{i32.const}~n : i32}$$
 加法指令的类型规则：
 $$\frac{\Gamma \vdash e_1 : i32 \quad \Gamma \vdash e_2 : i32}{\Gamma \vdash e_1~e_2~\text{i32.add} : i32}$$
 
-### 2.2 执行语义形式化
+### 1.2.2 执行语义形式化
 
 WebAssembly的执行语义可以通过小步操作语义形式化：
 
@@ -204,7 +204,7 @@ $$\frac{v \neq 0}{S, v; \text{br\_if}~l::instr \Rightarrow S; \text{br}~l::instr
 
 $$\frac{v = 0}{S, v; \text{br\_if}~l::instr \Rightarrow S; instr}$$
 
-### 2.3 安全性证明
+### 1.2.3 安全性证明
 
 WebAssembly的安全性可以通过形式化方法证明，包括类型安全和内存安全：
 
@@ -231,9 +231,9 @@ $$\text{validate}: \text{Module} \rightarrow \{\text{true}, \text{false}\}$$
 
 对于模块 $m$，$\text{validate}(m) = \text{true}$ 当且仅当所有组件（函数、表、内存等）都通过类型检查和边界检查。
 
-## 3. 技术原理与架构
+## 1.3 技术原理与架构
 
-### 3.1 内存模型
+### 1.3.1 内存模型
 
 WebAssembly采用线性内存模型，是一个可调整大小的连续字节数组：
 
@@ -269,7 +269,7 @@ console.log(view[0]); // 42
 2. **堆分配器**：实现自定义内存分配器（如malloc/free）
 3. **栈分配**：使用函数局部变量进行临时分配
 
-### 3.2 指令集设计
+### 1.3.2 指令集设计
 
 WebAssembly指令集设计结合了栈机和寄存器机的特点：
 
@@ -303,7 +303,7 @@ WebAssembly指令通常形式为：`[类型].[操作]`，例如：
 
 编译为二进制格式后，这个函数非常简洁，只需几个字节。
 
-### 3.3 编译与优化策略
+### 1.3.3 编译与优化策略
 
 WebAssembly模块的编译流程：
 
@@ -341,14 +341,14 @@ pub fn fibonacci(n: i32) -> i32 {
     let mut a = 0;
     let mut b = 1;
     let mut i = 2;
-    
+
     while i <= n {
         let temp = b;
         b = a + b;
         a = temp;
         i += 1;
     }
-    
+
     b
 }
 ```
@@ -360,9 +360,9 @@ rustc --target wasm32-unknown-unknown -O fibonacci.rs
 wasm-opt -O3 fibonacci.wasm -o fibonacci.optimized.wasm
 ```
 
-## 4. WebAssembly与浏览器技术
+## 1.4 WebAssembly与浏览器技术
 
-### 4.1 浏览器集成原理
+### 1.4.1 浏览器集成原理
 
 WebAssembly在现代浏览器中的集成架构：
 
@@ -392,19 +392,19 @@ async function loadAndRunWasm() {
   const response = await fetch('module.wasm');
   const buffer = await response.arrayBuffer();
   const { instance } = await WebAssembly.instantiate(buffer);
-  
+
   // 方法2：使用instantiateStreaming（更高效）
   const { instance } = await WebAssembly.instantiateStreaming(
     fetch('module.wasm')
   );
-  
+
   // 使用导出函数
   const result = instance.exports.fibonacci(10);
   console.log(`Result: ${result}`);
 }
 ```
 
-### 4.2 与JavaScript交互机制
+### 1.4.2 与JavaScript交互机制
 
 WebAssembly与JavaScript的互操作机制：
 
@@ -433,7 +433,7 @@ WebAssembly.instantiateStreaming(fetch('module.wasm'), importObject)
     // 调用导出函数
     const result = instance.exports.compute(5, 3);
     console.log(`计算结果: ${result}`);
-    
+
     // 访问导出内存
     const memory = instance.exports.memory;
     const view = new Uint8Array(memory.buffer);
@@ -449,26 +449,26 @@ async function exchangeComplexData() {
   const wasm = await WebAssembly.instantiateStreaming(
     fetch('strings.wasm')
   );
-  
-  const { 
-    malloc, free, process_string, memory 
+
+  const {
+    malloc, free, process_string, memory
   } = wasm.instance.exports;
-  
+
   // 准备JavaScript字符串
   const jsString = "Hello, WebAssembly!";
   const bytes = new TextEncoder().encode(jsString);
-  
+
   // 在WebAssembly内存中分配空间
   const ptr = malloc(bytes.length + 1);
-  
+
   // 写入字符串到WebAssembly内存
   const wasmMemory = new Uint8Array(memory.buffer);
   wasmMemory.set(bytes, ptr);
   wasmMemory[ptr + bytes.length] = 0; // 添加null终止符
-  
+
   // 调用WebAssembly函数处理字符串
   const resultPtr = process_string(ptr);
-  
+
   // 读取结果字符串
   let result = "";
   let i = resultPtr;
@@ -476,16 +476,16 @@ async function exchangeComplexData() {
     result += String.fromCharCode(wasmMemory[i]);
     i++;
   }
-  
+
   // 释放内存
   free(ptr);
   free(resultPtr);
-  
+
   console.log(result); // "!ylbmessAbeW ,olleH"
 }
 ```
 
-### 4.3 Web API访问模型
+### 1.4.3 Web API访问模型
 
 WebAssembly访问Web API的机制：
 
@@ -507,10 +507,10 @@ const importObject = {
       const memory = wasm.instance.exports.memory;
       const bytes = new Uint8Array(memory.buffer, idPtr, idLen);
       const id = new TextDecoder().decode(bytes);
-      
+
       // 查找DOM元素
       const element = document.getElementById(id);
-      
+
       // 返回DOM元素引用索引（存储在全局映射中）
       return storeReference(element);
     },
@@ -519,7 +519,7 @@ const importObject = {
       const memory = wasm.instance.exports.memory;
       const bytes = new Uint8Array(memory.buffer, textPtr, textLen);
       const text = new TextDecoder().decode(bytes);
-      
+
       element.innerText = text;
     }
   }
@@ -545,7 +545,7 @@ use wasm_bindgen::prelude::*;
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
-    
+
     #[wasm_bindgen(js_namespace = document)]
     fn getElementById(id: &str) -> web_sys::Element;
 }
@@ -559,9 +559,9 @@ pub fn update_element(id: &str, text: &str) {
 }
 ```
 
-## 5. 虚拟机技术比较
+## 1.5 虚拟机技术比较
 
-### 5.1 与JVM的对比
+### 1.5.1 与JVM的对比
 
 WebAssembly和Java虚拟机(JVM)技术对比：
 
@@ -591,7 +591,7 @@ WebAssembly执行：$S_0 \xrightarrow{wasm} S_n$，其中状态转换受限于�
 
 JVM执行：$S_0 \xrightarrow{jvm} S_n$，其中状态转换包括自动内存管理和异常处理。
 
-### 5.2 与V8/JavaScript引擎对比
+### 1.5.2 与V8/JavaScript引擎对比
 
 WebAssembly与JavaScript引擎的比较：
 
@@ -645,7 +645,7 @@ WebAssembly与JavaScript引擎的比较：
 └─────────────────────────────────┘
 ```
 
-### 5.3 技术优势与局限性
+### 1.5.3 技术优势与局限性
 
 WebAssembly相对于其他虚拟机技术的优势与局限性：
 
@@ -678,9 +678,9 @@ WebAssembly相对于其他虚拟机技术的优势与局限性：
 | 游戏引擎 | ★★★★ | ★★ | ★★★★★ |
 | 插件系统 | ★★★★★ | ★★★ | ★★ |
 
-## 6. WebAssembly生态系统
+## 1.6 WebAssembly生态系统
 
-### 6.1 工具链现状
+### 1.6.1 工具链现状
 
 WebAssembly编译和开发工具链概览：
 
@@ -710,26 +710,26 @@ WebAssembly编译和开发工具链概览：
 **构建流程示例**（Rust）：
 
 ```bash
-# 安装工具链
+# 2. 安装工具链
 rustup target add wasm32-unknown-unknown
 cargo install wasm-pack
 
-# 创建项目
+# 3. 创建项目
 cargo new --lib wasm-example
 cd wasm-example
 
-# 添加wasm-bindgen依赖到Cargo.toml
-# [dependencies]
-# wasm-bindgen = "0.2"
+# 4. 添加wasm-bindgen依赖到Cargo.toml
+# 5. [dependencies]
+# 6. wasm-bindgen = "0.2"
 
-# 构建WebAssembly模块
+# 7. 构建WebAssembly模块
 wasm-pack build --target web
 
-# 优化（可选）
+# 8. 优化（可选）
 wasm-opt -O3 -o optimized.wasm pkg/wasm_example_bg.wasm
 ```
 
-### 6.2 语言支持
+### 8.0.1 语言支持
 
 不同编程语言对WebAssembly的支持程度：
 
@@ -777,7 +777,7 @@ struct Point {
 // [x的4字节][y的4字节]
 ```
 
-### 6.3 框架与库
+### 8.0.2 框架与库
 
 WebAssembly生态系统中的框架和库：
 
@@ -858,9 +858,9 @@ fn main() {
 }
 ```
 
-## 7. WebAssembly扩展标准
+## 8.1 WebAssembly扩展标准
 
-### 7.1 WASI（WebAssembly系统接口）
+### 8.1.1 WASI（WebAssembly系统接口）
 
 WASI（WebAssembly系统接口）为WebAssembly提供标准化的系统级功能访问：
 
@@ -893,12 +893,12 @@ fn main() -> io::Result<()> {
     // 创建并写入文件（需要"/"目录的预授权）
     let mut file = File::create("hello.txt")?;
     file.write_all(b"Hello, WASI!")?;
-    
+
     // 读取文件
     let mut file = File::open("hello.txt")?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-    
+
     println!("File contents: {}", contents);
     Ok(())
 }
@@ -911,7 +911,7 @@ rustc --target wasm32-wasi hello.rs -o hello.wasm
 wasmtime --dir=. hello.wasm
 ```
 
-### 7.2 组件模型
+### 8.1.2 组件模型
 
 WebAssembly组件模型是一项重要扩展，提供更强大的模块化和互操作性：
 
@@ -965,13 +965,13 @@ interface image {
         format: format,
         data: list<u8>,
     }
-    
+
     // 图像处理错误
     enum error {
         invalid-format,
         processing-failed,
     }
-    
+
     // 接口函数
     resize: func(img: image-data, new-width: u32, new-height: u32) -> result<image-data, error>;
     grayscale: func(img: image-data) -> result<image-data, error>;
@@ -996,33 +996,33 @@ struct ImageProcessor;
 
 impl exports::example::image_processor::image::Guest for ImageProcessor {
     fn resize(
-        img: ImageData, 
-        new_width: u32, 
+        img: ImageData,
+        new_width: u32,
         new_height: u32
     ) -> Result<ImageData, Error> {
         // 调整图像大小的实现
         // ...
-        
+
         Ok(resized_image)
     }
-    
+
     fn grayscale(img: ImageData) -> Result<ImageData, Error> {
         // 转换为灰度图的实现
         // ...
-        
+
         Ok(gray_image)
     }
-    
+
     fn rotate(img: ImageData, degrees: f32) -> Result<ImageData, Error> {
         // 旋转图像的实现
         // ...
-        
+
         Ok(rotated_image)
     }
 }
 ```
 
-### 7.3 线程与并发模型
+### 8.1.3 线程与并发模型
 
 WebAssembly的线程和并发模型解决方案：
 
@@ -1041,10 +1041,10 @@ WebAssembly初始规范不包含线程支持，但线程提案已经处于积极
 
 ```javascript
 // JavaScript中创建共享WebAssembly内存
-const memory = new WebAssembly.Memory({ 
-  initial: 10, 
-  maximum: 100, 
-  shared: true 
+const memory = new WebAssembly.Memory({
+  initial: 10,
+  maximum: 100,
+  shared: true
 });
 
 // 在主线程中
@@ -1053,19 +1053,19 @@ WebAssembly.instantiateStreaming(fetch('threading.wasm'), importObject)
   .then(({ instance }) => {
     // 创建Web Worker
     const worker = new Worker('worker.js');
-    
+
     // 传递共享内存给Worker
-    worker.postMessage({ 
-      memory, 
+    worker.postMessage({
+      memory,
       exports: {
         increment: instance.exports.increment,
         getValue: instance.exports.getValue
       }
     });
-    
+
     // 使用原子操作与Worker线程同步
     Atomics.wait(new Int32Array(memory.buffer), 0, 0);
-    
+
     // 读取操作结果
     console.log(`Final value: ${instance.exports.getValue()}`);
   });
@@ -1077,10 +1077,10 @@ WebAssembly.instantiateStreaming(fetch('threading.wasm'), importObject)
 // worker.js
 self.onmessage = function(e) {
   const { memory, exports } = e.data;
-  
+
   // 使用共享内存
   exports.increment(10);
-  
+
   // 通知主线程完成
   Atomics.notify(new Int32Array(memory.buffer), 0, 1);
 };
@@ -1109,9 +1109,9 @@ pub fn get_value() -> i32 {
 }
 ```
 
-## 8. 技术融合与应用场景
+## 8.2 技术融合与应用场景
 
-### 8.1 Web应用架构模式
+### 8.2.1 Web应用架构模式
 
 WebAssembly在Web应用中的架构模式：
 
@@ -1188,7 +1188,7 @@ WebAssembly和JavaScript协同工作，各自处理最适合的部分。
 - 具有复杂可视化的数据分析平台
 - 高性能Web编辑器
 
-### 8.2 服务器端WebAssembly
+### 8.2.2 服务器端WebAssembly
 
 WebAssembly在服务器端的应用架构：
 
@@ -1290,23 +1290,23 @@ pub fn handle_request(json: &str) -> String {
     // 解析请求
     let request: Request = serde_json::from_str(json)
         .unwrap_or(Request { name: "Unknown".to_string(), age: 0 });
-    
+
     // 处理逻辑
-    let message = format!("Hello, {}! You are {} years old.", 
+    let message = format!("Hello, {}! You are {} years old.",
                          request.name, request.age);
-    
+
     // 创建响应
     let response = Response {
         message,
         processed: true,
     };
-    
+
     // 序列化返回
     serde_json::to_string(&response).unwrap_or_default()
 }
 ```
 
-### 8.3 边缘计算与物联网
+### 8.2.3 边缘计算与物联网
 
 WebAssembly在边缘计算和物联网中的应用：
 
@@ -1409,26 +1409,26 @@ impl AnomalyDetector {
             history_index: 0,
         }
     }
-    
+
     // 检测温度异常
     pub fn detect_anomaly(&mut self, data: &SensorData) -> bool {
         // 保存历史数据
         self.temp_history[self.history_index] = data.temperature;
         self.history_index = (self.history_index + 1) % 10;
-        
+
         // 计算平均值
         let sum: f32 = self.temp_history.iter().sum();
         let avg = sum / 10.0;
-        
+
         // 检查是否超过阈值
         (data.temperature - avg).abs() > self.temp_threshold
     }
 }
 ```
 
-## 9. 未来发展趋势
+## 8.3 未来发展趋势
 
-### 9.1 技术演进路线图
+### 8.3.1 技术演进路线图
 
 WebAssembly技术演进的主要方向：
 
@@ -1462,7 +1462,7 @@ WebAssembly技术演进的主要方向：
 提案 → 草案 → 实现 → 测试 → 标准化 → 广泛采用
 ```
 
-### 9.2 潜在突破点
+### 8.3.2 潜在突破点
 
 WebAssembly潜在的技术突破点：
 
@@ -1476,10 +1476,10 @@ WebAssembly潜在的技术突破点：
 async fn process_chunk(data: &[u8]) -> Result<Vec<u8>, Error> {
     // 处理数据块的逻辑
     // ...
-    
+
     // 可以被调度器暂停和恢复
     yield_if_needed().await;
-    
+
     // 继续处理
     Ok(processed_data)
 }
@@ -1501,8 +1501,8 @@ pub async fn process_data(chunks: Vec<Vec<u8>>) -> Vec<Vec<u8>> {
 const buffer = new SharedArrayBuffer(1024 * 1024);
 const instance = await WebAssembly.instantiate(module, {
   env: {
-    buffer: new WebAssembly.Memory({ 
-      buffer, 
+    buffer: new WebAssembly.Memory({
+      buffer,
       shared: true,
       external: true // 概念性API，表示外部管理
     })
@@ -1522,7 +1522,7 @@ instance.exports.processBuffer(0, 4);
 用于自动验证WebAssembly模块安全性和正确性的工具链。
 
 ```math
-源代码 → WebAssembly → 形式化模型提取 → 属性规范 
+源代码 → WebAssembly → 形式化模型提取 → 属性规范
                                      ↓
              修复 ← 报告问题 ← 自动验证器
 ```
@@ -1542,13 +1542,13 @@ document.getElementById('advanced').addEventListener('click', async () => {
     'advanced-features.wasm',
     { base: baseModule.exports }
   );
-  
+
   // 现在可以使用高级功能
   advancedFeatures.exports.processAdvanced();
 });
 ```
 
-### 9.3 挑战与机遇
+### 8.3.3 挑战与机遇
 
 WebAssembly面临的主要挑战与机遇：
 
@@ -1605,7 +1605,7 @@ WebAssembly的成功在于在以下方面找到平衡：
 3. 简单性与表达能力
 4. Web集成与独立性
 
-## 10. 思维导图
+## 8.4 思维导图
 
 ```mermaid
 mindmap

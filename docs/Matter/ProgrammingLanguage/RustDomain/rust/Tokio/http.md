@@ -253,7 +253,7 @@ impl tower::Service<Request<hyper::body::Incoming>> for Router {
 
     fn call(&mut self, req: Request<hyper::body::Incoming>) -> Self::Future {
         let routes = self.routes.clone();
-        
+
         Box::pin(async move {
             let (parts, body) = req.into_parts();
             let key = (parts.method.clone(), parts.uri.path().to_string());
@@ -468,7 +468,7 @@ impl UserHandler {
         req: Request<Bytes>,
     ) -> Result<Response<Bytes>, Error> {
         let user: CreateUserRequest = serde_json::from_slice(&req.into_body())?;
-        
+
         let task_id = self.task_manager
             .spawn(async move {
                 // 模拟耗时操作
@@ -565,10 +565,10 @@ impl Metrics {
     pub fn new() -> Self {
         let request_counter = Counter::new("http_requests_total")
             .with_label_values(&["method", "path", "status"]);
-        
+
         let request_duration = Histogram::new("http_request_duration_seconds")
             .with_label_values(&["method", "path"]);
-            
+
         let active_tasks = Gauge::new("active_tasks_total")
             .with_label_values(&[]);
 
@@ -621,7 +621,7 @@ async fn main() -> Result<(), Error> {
 
     // 初始化指标收集
     let metrics = Arc::new(Metrics::new());
-    
+
     // 创建任务管理器
     let task_manager = Arc::new(TaskManager::new());
 

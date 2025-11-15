@@ -164,29 +164,29 @@ impl<T> ProbabilisticExecutor<T> {
     fn new() -> Self {
         ProbabilisticExecutor { branches: Vec::new() }
     }
-    
+
     fn add_branch(&mut self, branch: Box<dyn Fn() -> T>, probability: f64) {
         self.branches.push((branch, probability));
     }
-    
+
     fn execute(&self) -> T {
         // 归一化概率
         let total: f64 = self.branches.iter().map(|(_, p)| p).sum();
         let normalized: Vec<f64> = self.branches.iter()
             .map(|(_, p)| p / total)
             .collect();
-        
+
         // 选择分支
         let random_value: f64 = rand::random();
         let mut cumulative = 0.0;
-        
+
         for (i, prob) in normalized.iter().enumerate() {
             cumulative += prob;
             if random_value <= cumulative {
                 return (self.branches[i].0)();
             }
         }
-        
+
         // 默认执行最后一个分支
         (self.branches.last().unwrap().0)()
     }
@@ -222,16 +222,16 @@ impl<T, P> PredictiveBranchExecutor<T, P> {
             history_size,
         }
     }
-    
+
     fn execute(&mut self, parameter: &P) -> T {
         let prediction = (self.predictor)(parameter);
-        
+
         // 更新历史
         if self.prediction_history.len() >= self.history_size {
             self.prediction_history.pop_front();
         }
         self.prediction_history.push_back(prediction);
-        
+
         // 执行对应分支
         if prediction {
             (self.true_branch)()
@@ -239,13 +239,13 @@ impl<T, P> PredictiveBranchExecutor<T, P> {
             (self.false_branch)()
         }
     }
-    
+
     fn get_branch_bias(&self) -> f64 {
         // 计算历史中选择true分支的比例
         let true_count = self.prediction_history.iter()
             .filter(|&&b| b)
             .count();
-        
+
         if self.prediction_history.is_empty() {
             0.5 // 默认无偏好
         } else {
@@ -281,40 +281,40 @@ impl<T, R> WeightedLoadBalancer<T, R> {
             weight_calculator,
         }
     }
-    
+
     fn add_worker(&mut self, worker: Worker<T, R>) {
         self.workers.push(worker);
     }
-    
+
     fn distribute_task(&mut self, task: T) -> Result<R, String> {
         if self.workers.is_empty() {
             return Err("没有可用的工作节点".to_string());
         }
-        
+
         // 计算每个工作节点的权重
         let weights: Vec<f64> = self.workers.iter()
             .map(|w| (self.weight_calculator)(w))
             .collect();
-        
+
         // 找出权重最高的工作节点
         let mut max_weight = f64::MIN;
         let mut selected_index = 0;
-        
+
         for (i, &weight) in weights.iter().enumerate() {
             if weight > max_weight {
                 max_weight = weight;
                 selected_index = i;
             }
         }
-        
+
         // 分配任务
         let selected_worker = &mut self.workers[selected_index];
         selected_worker.current_load += 1;
-        
+
         // 执行任务
         let result = (selected_worker.processor)(task);
         selected_worker.current_load -= 1;
-        
+
         Ok(result)
     }
 }
@@ -345,11 +345,11 @@ impl<T, R> DecisionTreeController<T, R> {
     fn new(root: DecisionNode<T, R>) -> Self {
         DecisionTreeController { root }
     }
-    
+
     fn evaluate(&self, input: &T) -> R {
         self.evaluate_node(&self.root, input)
     }
-    
+
     fn evaluate_node(&self, node: &DecisionNode<T, R>, input: &T) -> R {
         match node {
             DecisionNode::Decision { condition, true_branch, false_branch } => {
@@ -447,54 +447,54 @@ impl<T: Clone + Default> Tensor<T> {
         for &dim in &shape {
             size *= dim;
         }
-        
+
         let mut strides = vec![1; shape.len()];
         for i in (0..shape.len()-1).rev() {
             strides[i] = strides[i+1] * shape[i+1];
         }
-        
+
         Tensor {
             data: vec![T::default(); size],
             shape,
             strides,
         }
     }
-    
+
     fn get(&self, indices: &[usize]) -> Option<&T> {
         if indices.len() != self.shape.len() {
             return None;
         }
-        
+
         for (idx, &dim) in indices.iter().zip(&self.shape) {
             if *idx >= dim {
                 return None;
             }
         }
-        
+
         let flat_index = indices.iter()
             .zip(&self.strides)
             .map(|(&idx, &stride)| idx * stride)
             .sum();
-        
+
         self.data.get(flat_index)
     }
-    
+
     fn set(&mut self, indices: &[usize], value: T) -> Result<(), String> {
         if indices.len() != self.shape.len() {
             return Err("索引维度与张量维度不匹配".to_string());
         }
-        
+
         for (idx, &dim) in indices.iter().zip(&self.shape) {
             if *idx >= dim {
                 return Err(format!("索引{}超出维度范围{}", idx, dim));
             }
         }
-        
+
         let flat_index = indices.iter()
             .zip(&self.strides)
             .map(|(&idx, &stride)| idx * stride)
             .sum();
-        
+
         if let Some(element) = self.data.get_mut(flat_index) {
             *element = value;
             Ok(())
@@ -525,71 +525,71 @@ impl<N, E> Graph<N, E> {
             adjacency: HashMap::new(),
         }
     }
-    
+
     fn add_node(&mut self, id: usize, data: N) -> Result<(), String> {
         if self.nodes.contains_key(&id) {
             return Err(format!("节点ID{}已存在", id));
         }
-        
+
         self.nodes.insert(id, data);
         self.adjacency.insert(id, HashSet::new());
-        
+
         Ok(())
     }
-    
+
     fn add_edge(&mut self, from: usize, to: usize, data: E) -> Result<(), String> {
         if !self.nodes.contains_key(&from) {
             return Err(format!("源节点{}不存在", from));
         }
-        
+
         if !self.nodes.contains_key(&to) {
             return Err(format!("目标节点{}不存在", to));
         }
-        
+
         if self.edges.contains_key(&(from, to)) {
             return Err(format!("边({},{})已存在", from, to));
         }
-        
+
         self.edges.insert((from, to), data);
         self.adjacency.get_mut(&from).unwrap().insert(to);
-        
+
         Ok(())
     }
-    
+
     fn neighbors(&self, node_id: usize) -> Option<&HashSet<usize>> {
         self.adjacency.get(&node_id)
     }
-    
+
     fn shortest_path(&self, start: usize, end: usize) -> Option<Vec<usize>> {
         // BFS算法找最短路径
         if !self.nodes.contains_key(&start) || !self.nodes.contains_key(&end) {
             return None;
         }
-        
+
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
         let mut predecessors = HashMap::new();
-        
+
         visited.insert(start);
         queue.push_back(start);
-        
+
         while let Some(current) = queue.pop_front() {
             if current == end {
                 // 重建路径
                 let mut path = Vec::new();
                 let mut current = end;
-                
+
                 while current != start {
                     path.push(current);
                     current = *predecessors.get(&current).unwrap();
                 }
-                
+
                 path.push(start);
                 path.reverse();
-                
+
                 return Some(path);
             }
-            
+
             if let Some(neighbors) = self.neighbors(current) {
                 for &neighbor in neighbors {
                     if !visited.contains(&neighbor) {
@@ -600,7 +600,7 @@ impl<N, E> Graph<N, E> {
                 }
             }
         }
-        
+
         None
     }
 }
@@ -643,52 +643,52 @@ impl<T: Clone> DataflowGraph<T> {
             output_nodes: HashSet::new(),
         }
     }
-    
+
     fn add_source(&mut self, id: usize, generator: Box<dyn Fn() -> T>) {
         self.nodes.insert(id, DataflowNode::Source { id, generator });
         self.input_nodes.insert(id);
     }
-    
+
     fn add_process(&mut self, id: usize, operation: Box<dyn Fn(Vec<T>) -> T>) {
         self.nodes.insert(id, DataflowNode::Process { id, operation });
     }
-    
+
     fn add_sink(&mut self, id: usize, consumer: Box<dyn Fn(T)>) {
         self.nodes.insert(id, DataflowNode::Sink { id, consumer });
         self.output_nodes.insert(id);
     }
-    
+
     fn connect(&mut self, from: usize, to: usize) -> Result<(), String> {
         if !self.nodes.contains_key(&from) {
             return Err(format!("源节点{}不存在", from));
         }
-        
+
         if !self.nodes.contains_key(&to) {
             return Err(format!("目标节点{}不存在", to));
         }
-        
+
         self.edges.insert((from, to));
         Ok(())
     }
-    
+
     fn execute(&self) -> Result<(), String> {
         // 拓扑排序
         let mut in_degree = HashMap::new();
         let mut queue = VecDeque::new();
-        
+
         // 初始化入度
         for &(_, to) in &self.edges {
             *in_degree.entry(to).or_insert(0) += 1;
         }
-        
+
         // 所有入度为0的节点入队
         for &id in &self.input_nodes {
             queue.push_back(id);
         }
-        
+
         // 存储中间结果
         let mut node_outputs: HashMap<usize, T> = HashMap::new();
-        
+
         // 执行拓扑顺序
         while let Some(current) = queue.pop_front() {
             match &self.nodes[&current] {
@@ -708,7 +708,7 @@ impl<T: Clone> DataflowGraph<T> {
                             }
                         }
                     }
-                    
+
                     // 执行操作
                     let output = (operation)(inputs);
                     node_outputs.insert(current, output);
@@ -726,7 +726,7 @@ impl<T: Clone> DataflowGraph<T> {
                     }
                 },
             }
-            
+
             // 更新邻居的入度
             for &(from, to) in &self.edges {
                 if from == current {
@@ -737,7 +737,7 @@ impl<T: Clone> DataflowGraph<T> {
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -763,46 +763,46 @@ impl<T, E: 'static> FaultDetectionSystem<T, E> {
             recovery_strategies: HashMap::new(),
         }
     }
-    
+
     fn add_detector(&mut self, detector: Box<dyn Fn(&T) -> Option<E>>) {
         self.detectors.push(detector);
     }
-    
+
     fn register_recovery_strategy<ErrorType: 'static>(
-        &mut self, 
+        &mut self,
         strategy: Box<dyn Fn(&T, &E) -> Result<T, String>>
     ) {
         let type_id = TypeId::of::<ErrorType>();
         self.recovery_strategies.insert(type_id, strategy);
     }
-    
+
     fn check_and_recover(&self, state: &T) -> Result<T, String> {
         // 检测故障
         let mut detected_errors = Vec::new();
-        
+
         for detector in &self.detectors {
             if let Some(error) = (detector)(state) {
                 detected_errors.push(error);
             }
         }
-        
+
         if detected_errors.is_empty() {
             return Ok(state.clone()); // 无故障
         }
-        
+
         // 应用恢复策略
         let mut current_state = state.clone();
-        
+
         for error in detected_errors {
             let error_type_id = TypeId::of::<E>();
-            
+
             if let Some(recovery) = self.recovery_strategies.get(&error_type_id) {
                 current_state = (recovery)(&current_state, &error)?;
             } else {
                 return Err(format!("未找到错误类型的恢复策略"));
             }
         }
-        
+
         Ok(current_state)
     }
 }
@@ -836,31 +836,31 @@ impl PIDController {
             dt,
         }
     }
-    
+
     fn compute(&mut self, process_variable: f64) -> f64 {
         // 计算误差
         let error = self.setpoint - process_variable;
-        
+
         // 更新积分项
         self.integral += error * self.dt;
-        
+
         // 计算微分项
         let derivative = (error - self.previous_error) / self.dt;
-        
+
         // 更新上一次误差
         self.previous_error = error;
-        
+
         // 计算PID输出
         let output = self.kp * error + self.ki * self.integral + self.kd * derivative;
-        
+
         output
     }
-    
+
     fn reset(&mut self) {
         self.integral = 0.0;
         self.previous_error = 0.0;
     }
-    
+
     fn update_setpoint(&mut self, setpoint: f64) {
         self.setpoint = setpoint;
         // 可选：当设定值变化时重置积分项
@@ -891,7 +891,7 @@ struct ConsumerProfile<R> {
 
 impl<R: Clone + Add<Output = R> + PartialOrd> AdaptiveResourceAllocator<R> {
     fn new(
-        total_resources: R, 
+        total_resources: R,
         allocation_strategy: Box<dyn Fn(&HashMap<String, ConsumerProfile<R>>, &R) -> HashMap<String, R>>,
         metrics_collector: Box<dyn Fn(&HashMap<String, R>) -> HashMap<String, f64>>
     ) -> Self {
@@ -902,37 +902,37 @@ impl<R: Clone + Add<Output = R> + PartialOrd> AdaptiveResourceAllocator<R> {
             metrics_collector,
         }
     }
-    
+
     fn register_consumer(&mut self, id: &str, profile: ConsumerProfile<R>) {
         self.consumers.insert(id.to_string(), profile);
     }
-    
+
     fn allocate_resources(&self) -> HashMap<String, R> {
         (self.allocation_strategy)(&self.consumers, &self.total_resources)
     }
-    
+
     fn collect_metrics(&self, current_allocation: &HashMap<String, R>) -> HashMap<String, f64> {
         (self.metrics_collector)(current_allocation)
     }
-    
+
     fn adapt(&mut self, iterations: usize) -> HashMap<String, R> {
         let mut current_allocation = self.allocate_resources();
-        
+
         for _ in 0..iterations {
             // 收集性能指标
             let metrics = self.collect_metrics(&current_allocation);
-            
+
             // 更新消费者资料
             for (id, metric_values) in metrics {
                 if let Some(consumer) = self.consumers.get_mut(&id) {
                     consumer.performance_metrics.insert("last_performance".to_string(), metric_values);
                 }
             }
-            
+
             // 重新分配资源
             current_allocation = self.allocate_resources();
         }
-        
+
         current_allocation
     }
 }
@@ -990,11 +990,11 @@ impl<T> LayeredFaultTolerantSystem<T> {
             data_layer,
         }
     }
-    
+
     fn process(&self, input: T) -> Result<T, FaultError> {
         // 自底向上处理
         let mut current = input;
-        
+
         // 硬件层处理
         match self.hardware_layer.process(current) {
             Ok(result) => current = result,
@@ -1005,7 +1005,7 @@ impl<T> LayeredFaultTolerantSystem<T> {
                 }
             }
         }
-        
+
         // 系统层处理
         match self.system_layer.process(current) {
             Ok(result) => current = result,
@@ -1016,7 +1016,7 @@ impl<T> LayeredFaultTolerantSystem<T> {
                 }
             }
         }
-        
+
         // 应用层处理
         match self.application_layer.process(current) {
             Ok(result) => current = result,
@@ -1027,7 +1027,7 @@ impl<T> LayeredFaultTolerantSystem<T> {
                 }
             }
         }
-        
+
         // 数据层处理
         match self.data_layer.process(current) {
             Ok(result) => current = result,
@@ -1038,7 +1038,7 @@ impl<T> LayeredFaultTolerantSystem<T> {
                 }
             }
         }
-        
+
         Ok(current)
     }
 }
@@ -1055,7 +1055,7 @@ impl<T: Clone> FaultTolerantLayer<T> for HardwareFaultTolerantLayer {
         // ...
         Ok(input)
     }
-    
+
     fn handle_fault(&self, error: &FaultError, state: &T) -> Result<T, FaultError> {
         match error.severity {
             ErrorSeverity::Critical => {
@@ -1115,11 +1115,11 @@ impl<T: 'static, U: 'static> AbstractionLayerTrait for AbstractionLayer<T, U> {
     fn get_level(&self) -> usize {
         self.level
     }
-    
+
     fn get_name(&self) -> &str {
         &self.name
     }
-    
+
     fn abstract_upward(&self, input: &dyn Any) -> Box<dyn Any> {
         if let Some(concrete) = input.downcast_ref::<T>() {
             Box::new((self.abstraction_function)(concrete))
@@ -1127,7 +1127,7 @@ impl<T: 'static, U: 'static> AbstractionLayerTrait for AbstractionLayer<T, U> {
             panic!("类型不匹配: 抽象层级期望T类型")
         }
     }
-    
+
     fn concretize_downward(&self, input: &dyn Any) -> Box<dyn Any> {
         if let Some(abstract_val) = input.downcast_ref::<U>() {
             Box::new((self.concretization_function)(abstract_val))
@@ -1144,44 +1144,44 @@ impl<T: 'static> AbstractionHierarchy<T> {
             base_representation: PhantomData,
         }
     }
-    
+
     fn add_layer<U: 'static, V: 'static>(&mut self, layer: AbstractionLayer<U, V>) {
         // 验证层次结构的一致性
         if !self.layers.is_empty() {
             let prev_level = self.layers.last().unwrap().get_level();
             assert_eq!(layer.level, prev_level + 1, "层级必须连续");
         }
-        
+
         self.layers.push(Box::new(layer));
     }
-    
+
     fn abstract_to_level<U: 'static>(&self, input: &T, target_level: usize) -> Option<U> {
         if target_level > self.layers.len() {
             return None;
         }
-        
+
         let mut current: Box<dyn Any> = Box::new(input.clone());
-        
+
         // 逐层抽象
         for i in 0..target_level {
             current = self.layers[i].abstract_upward(&*current);
         }
-        
+
         current.downcast_ref::<U>().cloned()
     }
-    
+
     fn concretize_from_level<U: 'static>(&self, input: &U, source_level: usize) -> Option<T> {
         if source_level > self.layers.len() {
             return None;
         }
-        
+
         let mut current: Box<dyn Any> = Box::new(input.clone());
-        
+
         // 逐层具体化
         for i in (0..source_level).rev() {
             current = self.layers[i].concretize_downward(&*current);
         }
-        
+
         current.downcast_ref::<T>().cloned()
     }
 }
@@ -1211,26 +1211,26 @@ impl<F: Eq + Hash + Clone, R> InferenceEngine<F, R> {
             goal_checker,
         }
     }
-    
+
     fn add_fact(&mut self, fact: F) {
         self.knowledge_base.facts.insert(fact);
     }
-    
+
     fn add_rule(&mut self, rule: Box<dyn Fn(&[F]) -> Option<F>>) {
         self.inference_rules.push(rule);
     }
-    
+
     fn forward_chain(&mut self, max_iterations: usize) -> HashSet<F> {
         let mut derived_facts = HashSet::new();
         let mut iteration = 0;
         let mut new_facts_derived = true;
-        
+
         while new_facts_derived && iteration < max_iterations {
             new_facts_derived = false;
-            
+
             // 收集当前所有事实
             let current_facts: Vec<F> = self.knowledge_base.facts.iter().cloned().collect();
-            
+
             // 应用推理规则
             for rule in &self.inference_rules {
                 if let Some(new_fact) = (rule)(&current_facts) {
@@ -1241,13 +1241,13 @@ impl<F: Eq + Hash + Clone, R> InferenceEngine<F, R> {
                     }
                 }
             }
-            
+
             iteration += 1;
         }
-        
+
         derived_facts
     }
-    
+
     fn backward_chain(&self, goal: &R) -> Option<Vec<F>> {
         // 检查知识库中是否已有满足目标的事实
         for fact in &self.knowledge_base.facts {
@@ -1255,10 +1255,10 @@ impl<F: Eq + Hash + Clone, R> InferenceEngine<F, R> {
                 return Some(vec![fact.clone()]);
             }
         }
-        
+
         // 尝试应用逆向规则（这里简化处理）
         // 实际实现中应有更复杂的搜索策略
-        
+
         None
     }
 }
@@ -1284,23 +1284,23 @@ impl BayesianNetwork {
             structure: HashMap::new(),
         }
     }
-    
+
     fn add_variable(&mut self, name: &str, parents: Vec<String>, cpt: ConditionalProbabilityTable) {
         self.variables.push(name.to_string());
         self.structure.insert(name.to_string(), parents.clone());
         self.cpt.insert(name.to_string(), cpt);
     }
-    
+
     fn query_probability(&self, variable: &str, evidence: &HashMap<String, bool>) -> f64 {
         // 简化的推理实现（实际应使用精确或近似推理算法）
         if let Some(value) = evidence.get(variable) {
             return if *value { 1.0 } else { 0.0 };
         }
-        
+
         if let Some(cpt) = self.cpt.get(variable) {
             // 获取父节点值
             let mut parent_values = Vec::new();
-            
+
             for parent in &cpt.parents {
                 if let Some(&value) = evidence.get(parent) {
                     parent_values.push(value);
@@ -1309,13 +1309,13 @@ impl BayesianNetwork {
                     return 0.5; // 简化处理
                 }
             }
-            
+
             // 查找条件概率
             if let Some(&prob) = cpt.probabilities.get(&parent_values) {
                 return prob;
             }
         }
-        
+
         0.5 // 默认返回
     }
 }
@@ -1341,25 +1341,25 @@ impl<S: Clone, T> ModelCompiler<S, T> {
             target_platform_generators: HashMap::new(),
         }
     }
-    
+
     fn add_transformation(&mut self, transformation: Box<dyn Fn(&S) -> S>) {
         self.transformations.push(transformation);
     }
-    
+
     fn register_target_generator(&mut self, platform: &str, generator: Box<dyn Fn(&S) -> T>) {
         self.target_platform_generators.insert(platform.to_string(), generator);
     }
-    
+
     fn optimize(&self) -> S {
         let mut current_model = self.source_model.clone();
-        
+
         for transformation in &self.transformations {
             current_model = (transformation)(&current_model);
         }
-        
+
         current_model
     }
-    
+
     fn compile_for_platform(&self, platform: &str) -> Option<T> {
         if let Some(generator) = self.target_platform_generators.get(platform) {
             let optimized_model = self.optimize();
@@ -1413,30 +1413,30 @@ impl IntermediateRepresentation {
             metadata: HashMap::new(),
         }
     }
-    
+
     fn add_operation(&mut self, operation: Operation) -> usize {
         let id = self.operations.len();
         self.operations.push(operation);
         id
     }
-    
+
     fn add_data_flow(&mut self, target: usize, source: usize) {
         self.data_flow.entry(target)
             .or_insert_with(Vec::new)
             .push(source);
     }
-    
+
     fn optimize(&self) -> Self {
         // 执行各种优化
         // 1. 常量折叠
         // 2. 死代码消除
         // 3. 公共子表达式消除
         // ...
-        
+
         // 简化示例，返回自身
         self.clone()
     }
-    
+
     fn generate_code(&self, target_language: &str) -> String {
         match target_language {
             "c" => self.generate_c_code(),
@@ -1445,17 +1445,17 @@ impl IntermediateRepresentation {
             _ => format!("不支持的目标语言: {}", target_language),
         }
     }
-    
+
     fn generate_c_code(&self) -> String {
         // 代码生成逻辑
         let mut code = String::from("#include <stdio.h>\n\nint main() {\n");
-        
+
         // 简化示例
         for op in &self.operations {
             match op {
                 Operation::Computation { op_type, parameters, .. } => {
                     code.push_str(&format!("  // {} 操作\n", op_type));
-                    
+
                     if op_type == "print" {
                         if let Some(Value::String(msg)) = parameters.get("message") {
                             code.push_str(&format!("  printf(\"{}\");\n", msg));
@@ -1472,20 +1472,20 @@ impl IntermediateRepresentation {
                 _ => {}
             }
         }
-        
+
         code.push_str("  return 0;\n}\n");
         code
     }
-    
+
     fn generate_rust_code(&self) -> String {
         // Rust代码生成逻辑（简化）
         let mut code = String::from("fn main() {\n");
-        
+
         for op in &self.operations {
             match op {
                 Operation::Computation { op_type, parameters, .. } => {
                     code.push_str(&format!("    // {} 操作\n", op_type));
-                    
+
                     if op_type == "print" {
                         if let Some(Value::String(msg)) = parameters.get("message") {
                             code.push_str(&format!("    println!(\"{}\");\n", msg));
@@ -1502,19 +1502,19 @@ impl IntermediateRepresentation {
                 _ => {}
             }
         }
-        
+
         code.push_str("}\n");
         code
     }
-    
+
     fn generate_llvm_ir(&self) -> String {
         // LLVM IR生成逻辑（简化）
         let mut ir = String::new();
-        
+
         ir.push_str("define i32 @main() {\n");
         ir.push_str("  ret i32 0\n");
         ir.push_str("}\n");
-        
+
         ir
     }
 }
@@ -1534,51 +1534,51 @@ impl GenericAlgorithmLibrary {
         if slice.len() <= 1 {
             return;
         }
-        
+
         let pivot_index = Self::partition(slice);
         let len = slice.len();
-        
+
         Self::sort(&mut slice[0..pivot_index]);
         Self::sort(&mut slice[pivot_index+1..len]);
     }
-    
+
     fn partition<T: PartialOrd>(slice: &mut [T]) -> usize {
         let len = slice.len();
         let pivot_index = len / 2;
-        
+
         slice.swap(pivot_index, len - 1);
-        
+
         let mut store_index = 0;
-        
+
         for i in 0..len-1 {
             if slice[i] <= slice[len-1] {
                 slice.swap(i, store_index);
                 store_index += 1;
             }
         }
-        
+
         slice.swap(store_index, len - 1);
         store_index
     }
-    
+
     // 泛型映射操作
     fn map<T, U, F: Fn(&T) -> U>(input: &[T], f: F) -> Vec<U> {
         input.iter().map(f).collect()
     }
-    
+
     // 泛型折叠/归约
     fn fold<T, U, F: Fn(U, &T) -> U>(input: &[T], init: U, f: F) -> U {
         let mut result = init;
-        
+
         for item in input {
             result = f(result, item);
         }
-        
+
         result
     }
-    
+
     // 泛型过滤
-    fn filter<T, F: Fn(&T) -> bool>(input: &[T], predicate: F) -> Vec<T> 
+    fn filter<T, F: Fn(&T) -> bool>(input: &[T], predicate: F) -> Vec<T>
     where T: Clone {
         input.iter().filter(|item| predicate(item)).cloned().collect()
     }
@@ -1622,32 +1622,32 @@ impl DSLCompiler {
             ast: None,
         }
     }
-    
+
     fn tokenize(&mut self) -> Result<(), String> {
         // 词法分析逻辑
         // ...
-        
+
         Ok(())
     }
-    
+
     fn parse(&mut self) -> Result<(), String> {
         // 语法分析，构建AST
         // ...
-        
+
         Ok(())
     }
-    
+
     fn generate_ir(&self) -> Result<IntermediateRepresentation, String> {
         // 从AST生成中间表示
         // ...
-        
+
         Ok(IntermediateRepresentation::new())
     }
-    
+
     fn compile(&mut self, target_language: &str) -> Result<String, String> {
         self.tokenize()?;
         self.parse()?;
-        
+
         let ir = self.generate_ir()?;
         Ok(ir.generate_code(target_language))
     }
@@ -1681,81 +1681,81 @@ impl PerformanceProfiler {
             current_operations: HashMap::new(),
         }
     }
-    
+
     fn start_operation(&mut self, operation_id: &str, operation_type: &str) {
         self.current_operations.insert(
-            operation_id.to_string(), 
+            operation_id.to_string(),
             (Instant::now(), operation_type.to_string())
         );
     }
-    
+
     fn end_operation(&mut self, operation_id: &str, metadata: HashMap<String, String>) -> Option<Duration> {
         if let Some((start_time, op_type)) = self.current_operations.remove(operation_id) {
             let duration = start_time.elapsed();
-            
+
             let measurement = Measurement {
                 operation_type: op_type,
                 duration,
                 timestamp: start_time,
                 metadata,
             };
-            
+
             self.measurements.entry(operation_id.to_string())
                 .or_insert_with(Vec::new)
                 .push(measurement);
-            
+
             Some(duration)
         } else {
             None
         }
     }
-    
+
     fn analyze_performance(&self) -> HashMap<String, PerformanceMetrics> {
         let mut metrics = HashMap::new();
-        
+
         for (operation_id, measurements) in &self.measurements {
             if measurements.is_empty() {
                 continue;
             }
-            
+
             let total_duration: Duration = measurements.iter()
                 .map(|m| m.duration)
                 .sum();
-            
+
             let avg_duration = total_duration / measurements.len() as u32;
-            
+
             let min_duration = measurements.iter()
                 .map(|m| m.duration)
                 .min()
                 .unwrap_or_else(|| Duration::from_secs(0));
-            
+
             let max_duration = measurements.iter()
                 .map(|m| m.duration)
                 .max()
                 .unwrap_or_else(|| Duration::from_secs(0));
-            
+
             // 分组计算
             let mut grouped_by_type = HashMap::new();
-            
+
             for m in measurements {
                 grouped_by_type.entry(m.operation_type.clone())
                     .or_insert_with(Vec::new)
                     .push(m.duration);
             }
-            
+
             let mut type_stats = HashMap::new();
-            
+
             for (op_type, durations) in grouped_by_type {
                 let total: Duration = durations.iter().sum();
                 let avg = total / durations.len() as u32;
-                
+
                 type_stats.insert(op_type, TypeStatistics {
                     count: durations.len(),
                     total_duration: total,
                     avg_duration: avg,
                 });
             }
-            
+
             metrics.insert(operation_id.clone(), PerformanceMetrics {
                 operation_count: measurements.len(),
                 total_duration,
@@ -1765,13 +1765,13 @@ impl PerformanceProfiler {
                 type_statistics: type_stats,
             });
         }
-        
+
         metrics
     }
-    
+
     fn get_time_scale_analysis(&self) -> HashMap<String, TimeScaleMetrics> {
         let mut time_scales = HashMap::new();
-        
+
         // 定义时间尺度范围
         let scales = [
             ("CPU指令级 (ns)", Duration::from_nanos(1), Duration::from_nanos(100)),
@@ -1781,7 +1781,7 @@ impl PerformanceProfiler {
             ("网络访问 (10ms-100ms)", Duration::from_millis(10), Duration::from_millis(100)),
             ("远程访问 (100ms+)", Duration::from_millis(100), Duration::from_secs(60)),
         ];
-        
+
         for &(scale_name, min_time, max_time) in &scales {
             let operations_in_scale: Vec<_> = self.measurements.iter()
                 .flat_map(|(id, measurements)| {
@@ -1790,31 +1790,31 @@ impl PerformanceProfiler {
                 .filter(|(_, m)| m.duration >= min_time && m.duration < max_time)
                 .map(|(id, m)| (id.clone(), m.operation_type.clone(), m.duration))
                 .collect();
-            
+
             let count = operations_in_scale.len();
-            
+
             if count > 0 {
                 let total_duration: Duration = operations_in_scale.iter()
                     .map(|(_, _, d)| *d)
                     .sum();
-                
+
                 let avg_duration = total_duration / count as u32;
-                
+
                 // 分组操作类型
                 let mut by_type = HashMap::new();
-                
+
                 for (_, op_type, duration) in &operations_in_scale {
                     by_type.entry(op_type.clone())
                         .or_insert_with(Vec::new)
                         .push(*duration);
                 }
-                
+
                 let mut type_counts = HashMap::new();
-                
+
                 for (op_type, durations) in by_type {
                     type_counts.insert(op_type, durations.len());
                 }
-                
+
                 time_scales.insert(scale_name.to_string(), TimeScaleMetrics {
                     operation_count: count,
                     total_duration,
@@ -1823,7 +1823,7 @@ impl PerformanceProfiler {
                 });
             }
         }
-        
+
         time_scales
     }
 }
@@ -1888,22 +1888,22 @@ impl<R: ResourceType> ResourceScheduler<R> {
             waiting_queue: VecDeque::new(),
         }
     }
-    
+
     fn submit_task(&mut self, task: Task<R>) {
         self.waiting_queue.push_back(task);
         self.schedule_tasks();
     }
-    
+
     fn complete_task(&mut self, task_id: &str) {
         if let Some(resources) = self.current_allocations.remove(task_id) {
             // 释放资源
             self.available_resources.add(&resources);
-            
+
             // 尝试调度等待中的任务
             self.schedule_tasks();
         }
     }
-    
+
     fn schedule_tasks(&mut self) {
         match self.allocation_strategy {
             AllocationStrategy::FIFO => self.schedule_fifo(),
@@ -1912,41 +1912,41 @@ impl<R: ResourceType> ResourceScheduler<R> {
             AllocationStrategy::ResourceAware => self.schedule_resource_aware(),
         }
     }
-    
+
     fn schedule_fifo(&mut self) {
         let mut i = 0;
-        
+
         while i < self.waiting_queue.len() {
             let task = &self.waiting_queue[i];
-            
+
             // 检查依赖是否满足
             if !self.are_dependencies_satisfied(&task) {
                 i += 1;
                 continue;
             }
-            
+
             // 检查资源是否可用
             if self.available_resources.can_allocate(&task.resource_requirements) {
                 // 分配资源
                 let task = self.waiting_queue.remove(i).unwrap();
                 self.available_resources.subtract(&task.resource_requirements);
                 self.current_allocations.insert(task.id.clone(), task.resource_requirements);
-                
+
                 // 不增加i，因为已移除了一个元素
             } else {
                 i += 1;
             }
         }
     }
-    
+
     fn schedule_priority(&mut self) {
         // 按优先级排序队列
         let mut sorted_tasks: Vec<_> = self.waiting_queue.drain(..).collect();
         sorted_tasks.sort_by(|a, b| b.priority.cmp(&a.priority));
-        
+
         // 尝试调度任务
         for task in sorted_tasks {
-            if self.are_dependencies_satisfied(&task) && 
+            if self.are_dependencies_satisfied(&task) &&
                self.available_resources.can_allocate(&task.resource_requirements) {
                 // 分配资源
                 self.available_resources.subtract(&task.resource_requirements);
@@ -1957,17 +1957,17 @@ impl<R: ResourceType> ResourceScheduler<R> {
             }
         }
     }
-    
+
     fn schedule_fair_share(&mut self) {
         // 实现公平份额调度算法
         // ...
     }
-    
+
     fn schedule_resource_aware(&mut self) {
         // 实现资源感知调度算法
         // ...
     }
-    
+
     fn are_dependencies_satisfied(&self, task: &Task<R>) -> bool {
         task.dependencies.iter()
             .all(|dep_id| !self.current_allocations.contains_key(dep_id))
@@ -1996,14 +1996,14 @@ impl ResourceType for ComputeResources {
         self.gpu_count >= required.gpu_count &&
         self.network_bandwidth_mbps >= required.network_bandwidth_mbps
     }
-    
+
     fn subtract(&mut self, amount: &Self) {
         self.cpu_cores -= amount.cpu_cores;
         self.memory_gb -= amount.memory_gb;
         self.gpu_count -= amount.gpu_count;
         self.network_bandwidth_mbps -= amount.network_bandwidth_mbps;
     }
-    
+
     fn add(&mut self, amount: &Self) {
         self.cpu_cores += amount.cpu_cores;
         self.memory_gb += amount.memory_gb;
@@ -2074,20 +2074,20 @@ impl PowerManager {
             thermal_threshold_celsius,
         }
     }
-    
+
     fn add_component(&mut self, component: PowerComponent) {
         self.components.insert(component.name.clone(), component);
     }
-    
+
     fn add_thermal_sensor(&mut self, sensor: ThermalSensor) {
         self.thermal_sensors.insert(sensor.location.clone(), sensor);
     }
-    
+
     fn register_policy(&mut self, policy: Box<dyn PowerPolicy>) {
         let name = policy.get_name().to_string();
         self.power_policies.insert(name, policy);
     }
-    
+
     fn set_active_policy(&mut self, policy_name: &str) -> Result<(), String> {
         if self.power_policies.contains_key(policy_name) {
             self.active_policy = policy_name.to_string();
@@ -2096,28 +2096,28 @@ impl PowerManager {
             Err(format!("未知的电源策略: {}", policy_name))
         }
     }
-    
+
     fn update_thermal_readings(&mut self) {
         // 在实际系统中，这将从实际传感器读取
         // 这里使用模拟值
         for sensor in self.thermal_sensors.values_mut() {
             // 模拟温度读数
-            let new_temp = sensor.current_temperature_celsius + 
+            let new_temp = sensor.current_temperature_celsius +
                            (rand::random::<f64>() - 0.5) * 2.0;
-            
+
             let now = Instant::now();
-            
+
             // 添加到历史记录
             sensor.current_temperature_celsius = new_temp;
             sensor.historical_readings.push_back((now, new_temp));
-            
+
             // 限制历史记录大小
             while sensor.historical_readings.len() > sensor.max_history_size {
                 sensor.historical_readings.pop_front();
             }
         }
     }
-    
+
     fn update_power_states(&mut self) {
         // 应用当前活动的电源策略
         if let Some(policy) = self.power_policies.get(&self.active_policy) {
@@ -2125,83 +2125,83 @@ impl PowerManager {
             policy_clone.apply(self);
         }
     }
-    
+
     fn get_current_power_consumption(&self) -> f64 {
         self.components.values()
             .map(|c| c.current_power_draw)
             .sum()
     }
-    
+
     fn set_component_power_state(&mut self, component_name: &str, new_state: PowerState) -> Result<Duration, String> {
         if let Some(component) = self.components.get_mut(component_name) {
             let old_state = component.current_power_state.clone();
-            
+
             // 获取转换延迟
             let transition_latency = component.transition_latency
                 .get(&(old_state.clone(), new_state.clone()))
                 .cloned()
                 .unwrap_or_else(|| Duration::from_millis(0));
-            
+
             // 更新功率状态
             component.current_power_state = new_state.clone();
-            
+
             // 更新功耗
             if let Some(&power) = component.power_consumption.get(&new_state) {
                 component.current_power_draw = power;
             }
-            
+
             Ok(transition_latency)
         } else {
             Err(format!("未找到组件: {}", component_name))
         }
     }
-    
+
     fn check_thermal_emergency(&self) -> bool {
         // 检查是否有传感器超过阈值
         self.thermal_sensors.values()
             .any(|s| s.current_temperature_celsius > self.thermal_threshold_celsius)
     }
-    
+
     fn apply_thermal_emergency_policy(&mut self) {
         // 如果检测到过热，启用紧急策略
         if self.check_thermal_emergency() {
             println!("检测到热紧急情况！应用紧急冷却策略...");
-            
+
             // 将所有组件设置为低功率状态
             for component_name in self.components.keys().cloned().collect::<Vec<_>>() {
                 let _ = self.set_component_power_state(&component_name, PowerState::PowerSave);
             }
         }
     }
-    
+
     fn get_thermal_trend(&self, sensor_location: &str) -> Option<f64> {
         if let Some(sensor) = self.thermal_sensors.get(sensor_location) {
             if sensor.historical_readings.len() < 2 {
                 return Some(0.0); // 不足以计算趋势
             }
-            
+
             // 使用线性回归计算温度趋势
             let n = sensor.historical_readings.len() as f64;
-            
+
             let x_sum: f64 = sensor.historical_readings.iter()
                 .map(|(time, _)| time.elapsed().as_secs_f64())
                 .sum();
-            
+
             let y_sum: f64 = sensor.historical_readings.iter()
                 .map(|(_, temp)| *temp)
                 .sum();
-            
+
             let xy_sum: f64 = sensor.historical_readings.iter()
                 .map(|(time, temp)| time.elapsed().as_secs_f64() * temp)
                 .sum();
-            
+
             let x_squared_sum: f64 = sensor.historical_readings.iter()
                 .map(|(time, _)| time.elapsed().as_secs_f64().powi(2))
                 .sum();
-            
+
             // 计算斜率（趋势）
             let slope = (n * xy_sum - x_sum * y_sum) / (n * x_squared_sum - x_sum * x_sum);
-            
+
             Some(slope)
         } else {
             None
@@ -2219,7 +2219,7 @@ impl PowerPolicy for PerformancePolicy {
             let _ = manager.set_component_power_state(&component_name, PowerState::FullPower);
         }
     }
-    
+
     fn get_name(&self) -> &str {
         "性能优先"
     }
@@ -2234,7 +2234,7 @@ impl PowerPolicy for PowerSavePolicy {
             let _ = manager.set_component_power_state(&component_name, PowerState::PowerSave);
         }
     }
-    
+
     fn get_name(&self) -> &str {
         "节能优先"
     }
@@ -2248,17 +2248,17 @@ impl PowerPolicy for AdaptivePolicy {
     fn apply(&self, manager: &mut PowerManager) {
         // 获取当前CPU利用率（模拟）
         let cpu_utilization = rand::random::<f64>() * 100.0;
-        
+
         for component_name in manager.components.keys().cloned().collect::<Vec<_>>() {
             let new_state = if cpu_utilization > self.performance_threshold {
                 PowerState::FullPower
             } else {
                 PowerState::PowerSave
             };
-            
+
             let _ = manager.set_component_power_state(&component_name, new_state);
         }
-        
+
         // 检查温度趋势，必要时降低功率
         for (location, _) in manager.thermal_sensors.iter() {
             if let Some(trend) = manager.get_thermal_trend(location) {
@@ -2271,7 +2271,7 @@ impl PowerPolicy for AdaptivePolicy {
             }
         }
     }
-    
+
     fn get_name(&self) -> &str {
         "自适应策略"
     }
@@ -2331,7 +2331,7 @@ struct ParallelPerformanceMetrics {
 
 impl ParallelExecutionFramework {
     fn new(
-        num_threads: usize, 
+        num_threads: usize,
         workload_strategy: WorkloadDistributionStrategy,
         sync_strategy: SynchronizationStrategy
     ) -> Self {
@@ -2349,16 +2349,16 @@ impl ParallelExecutionFramework {
             },
         }
     }
-    
+
     fn initialize(&mut self) {
         let (sender, receiver) = mpsc::channel();
         let receiver = Arc::new(Mutex::new(receiver));
-        
+
         let mut workers = Vec::with_capacity(self.num_threads);
-        
+
         for id in 0..self.num_threads {
             let receiver = Arc::clone(&receiver);
-            
+
             let worker = Worker {
                 id,
                 thread: Some(thread::spawn(move || {
@@ -2367,7 +2367,7 @@ impl ParallelExecutionFramework {
                             .expect("获取锁失败")
                             .recv()
                             .expect("通道已断开");
-                        
+
                         match message {
                             Message::NewTask(task) => {
                                 task();
@@ -2379,22 +2379,22 @@ impl ParallelExecutionFramework {
                     }
                 })),
             };
-            
+
             workers.push(worker);
         }
-        
+
         self.thread_pool = Some(ThreadPool { workers, sender });
     }
-    
-    fn execute<F>(&self, task: F) 
-    where 
+
+    fn execute<F>(&self, task: F)
+    where
         F: FnOnce() + Send + 'static
     {
         if let Some(pool) = &self.thread_pool {
             let _ = pool.sender.send(Message::NewTask(Box::new(task)));
         }
     }
-    
+
     fn parallel_for<T, F>(&self, data: &mut [T], f: F)
     where
         F: Fn(&mut T) + Send + Sync + 'static,
@@ -2403,28 +2403,28 @@ impl ParallelExecutionFramework {
         if data.is_empty() {
             return;
         }
-        
+
         if let Some(pool) = &self.thread_pool {
             match self.workload_distribution_strategy {
                 WorkloadDistributionStrategy::EqualChunks => {
                     let chunk_size = (data.len() + self.num_threads - 1) / self.num_threads;
-                    
+
                     let f = Arc::new(f);
                     let barrier = Arc::new(Barrier::new(self.num_threads));
-                    
+
                     for (i, chunk) in data.chunks_mut(chunk_size).enumerate() {
                         if i >= self.num_threads {
                             break;
                         }
-                        
+
                         let f = Arc::clone(&f);
                         let barrier = Arc::clone(&barrier);
-                        
+
                         let _ = pool.sender.send(Message::NewTask(Box::new(move || {
                             for item in chunk {
                                 f(item);
                             }
-                            
+
                             barrier.wait();
                         })));
                     }
@@ -2444,43 +2444,43 @@ impl ParallelExecutionFramework {
             }
         }
     }
-    
+
     fn analyze_amdahls_law(&mut self, serial_fraction: f64) {
         // 使用Amdahl定律计算理论加速比
         let n = self.num_threads as f64;
         let speedup = 1.0 / (serial_fraction + (1.0 - serial_fraction) / n);
-        
+
         self.performance_metrics.parallel_speedup = speedup;
         self.performance_metrics.serial_fraction = serial_fraction;
         self.performance_metrics.efficiency = speedup / n;
     }
-    
+
     fn analyze_gustafsons_law(&mut self, serial_fraction: f64, problem_scaling_factor: f64) {
         // 使用Gustafson定律计算可扩展性
         let n = self.num_threads as f64;
         let scaled_speedup = serial_fraction + n * (1.0 - serial_fraction) * problem_scaling_factor;
-        
+
         self.performance_metrics.parallel_speedup = scaled_speedup;
         self.performance_metrics.efficiency = scaled_speedup / n;
     }
-    
+
     fn estimate_synchronization_overhead(&mut self, sync_points: usize, sync_cost_ns: u64) {
         // 估计同步开销
         let total_sync_time_ns = sync_points as u64 * sync_cost_ns;
-        
+
         // 假设计算时间
         let assumed_computation_time_ns = 1_000_000_000; // 1秒
-        
+
         let overhead = total_sync_time_ns as f64 / assumed_computation_time_ns as f64;
         self.performance_metrics.synchronization_overhead = overhead;
     }
-    
+
     fn shutdown(&mut self) {
         if let Some(pool) = self.thread_pool.take() {
             for _ in 0..self.num_threads {
                 let _ = pool.sender.send(Message::Terminate);
             }
-            
+
             for worker in pool.workers {
                 if let Some(thread) = worker.thread {
                     let _ = thread.join();
@@ -2512,61 +2512,61 @@ impl<T> DataDependencyAnalyzer<T> {
             next_id: 0,
         }
     }
-    
+
     fn add_task(&mut self, data: T) -> TaskId {
         let id = self.next_id;
         self.next_id += 1;
-        
+
         let node = TaskNode {
             id,
             data,
             dependencies: HashSet::new(),
             dependents: HashSet::new(),
         };
-        
+
         self.graph.insert(id, node);
         id
     }
-    
+
     fn add_dependency(&mut self, dependent: TaskId, dependency: TaskId) -> Result<(), String> {
         if !self.graph.contains_key(&dependent) {
             return Err(format!("依赖任务ID{}不存在", dependent));
         }
-        
+
         if !self.graph.contains_key(&dependency) {
             return Err(format!("被依赖任务ID{}不存在", dependency));
         }
-        
+
         // 检查循环依赖
         if self.would_create_cycle(dependent, dependency) {
             return Err("添加此依赖将创建循环依赖".to_string());
         }
-        
+
         // 更新依赖关系
         if let Some(node) = self.graph.get_mut(&dependent) {
             node.dependencies.insert(dependency);
         }
-        
+
         if let Some(node) = self.graph.get_mut(&dependency) {
             node.dependents.insert(dependent);
         }
-        
+
         Ok(())
     }
-    
+
     fn would_create_cycle(&self, start: TaskId, target: TaskId) -> bool {
         // 检查从target到start是否存在路径
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         queue.push_back(target);
         visited.insert(target);
-        
+
         while let Some(current) = queue.pop_front() {
             if current == start {
                 return true; // 找到循环
             }
-            
+
             if let Some(node) = self.graph.get(&current) {
                 for &next in &node.dependents {
                     if !visited.contains(&next) {
@@ -2576,10 +2576,10 @@ impl<T> DataDependencyAnalyzer<T> {
                 }
             }
         }
-        
+
         false
     }
-    
+
     fn get_executable_tasks(&self) -> Vec<TaskId> {
         // 返回无依赖的任务
         self.graph.values()
@@ -2587,7 +2587,7 @@ impl<T> DataDependencyAnalyzer<T> {
             .map(|node| node.id)
             .collect()
     }
-    
+
     fn remove_task(&mut self, task_id: TaskId) -> Option<T> {
         if let Some(node) = self.graph.remove(&task_id) {
             // 更新依赖于此任务的任务
@@ -2596,29 +2596,29 @@ impl<T> DataDependencyAnalyzer<T> {
                     dep_node.dependencies.remove(&task_id);
                 }
             }
-            
+
             Some(node.data)
         } else {
             None
         }
     }
-    
+
     fn generate_execution_plan(&self) -> Vec<Vec<TaskId>> {
         let mut result = Vec::new();
         let mut remaining = self.graph.clone();
-        
+
         while !remaining.is_empty() {
             // 找出当前层（无依赖的任务）
             let current_layer: Vec<_> = remaining.values()
                 .filter(|node| node.dependencies.is_empty())
                 .map(|node| node.id)
                 .collect();
-            
+
             if current_layer.is_empty() {
                 // 可能存在循环依赖
                 break;
             }
-            
+
             // 移除当前层
             for &task_id in &current_layer {
                 if let Some(node) = remaining.remove(&task_id) {
@@ -2630,10 +2630,10 @@ impl<T> DataDependencyAnalyzer<T> {
                     }
                 }
             }
-            
+
             result.push(current_layer);
         }
-        
+
         result
     }
 }
@@ -2653,26 +2653,26 @@ impl CommunicationOverheadAnalyzer {
             message_sizes: Vec::new(),
         }
     }
-    
+
     fn add_message(&mut self, size_bytes: usize) {
         self.message_sizes.push(size_bytes);
     }
-    
+
     fn calculate_total_overhead_ms(&self) -> f64 {
         let total_bytes: usize = self.message_sizes.iter().sum();
-        
+
         // 计算传输时间 (ms)
         let transmission_time_ms = (total_bytes as f64 * 8.0) / (self.bandwidth_mbps * 1_000_000.0) * 1000.0;
-        
+
         // 加上延迟时间
         let total_latency_ms = self.message_sizes.len() as f64 * self.latency_ms;
-        
+
         transmission_time_ms + total_latency_ms
     }
-    
+
     fn analyze_communication_patterns(&self) -> CommunicationPatternAnalysis {
         let message_count = self.message_sizes.len();
-        
+
         if message_count == 0 {
             return CommunicationPatternAnalysis {
                 avg_message_size: 0.0,
@@ -2684,20 +2684,20 @@ impl CommunicationOverheadAnalyzer {
                 latency_bound: false,
             };
         }
-        
+
         let total_bytes: usize = self.message_sizes.iter().sum();
         let avg_message_size = total_bytes as f64 / message_count as f64;
         let max_message_size = *self.message_sizes.iter().max().unwrap_or(&0);
         let min_message_size = *self.message_sizes.iter().min().unwrap_or(&0);
-        
+
         // 计算传输时间和延迟时间
         let transmission_time_ms = (total_bytes as f64 * 8.0) / (self.bandwidth_mbps * 1_000_000.0) * 1000.0;
         let total_latency_ms = message_count as f64 * self.latency_ms;
-        
+
         // 确定瓶颈
         let bandwidth_bound = transmission_time_ms > total_latency_ms;
         let latency_bound = !bandwidth_bound;
-        
+
         CommunicationPatternAnalysis {
             avg_message_size,
             max_message_size,
@@ -2708,38 +2708,38 @@ impl CommunicationOverheadAnalyzer {
             latency_bound,
         }
     }
-    
+
     fn optimize_message_pattern(&mut self) -> OptimizationRecommendations {
         let analysis = self.analyze_communication_patterns();
         let mut recommendations = OptimizationRecommendations {
             suggestions: Vec::new(),
         };
-        
+
         if analysis.message_count == 0 {
             return recommendations;
         }
-        
+
         // 根据分析结果提出建议
         if analysis.latency_bound {
             recommendations.suggestions.push("系统受延迟约束。考虑减少消息数量，合并小消息。".to_string());
-            
+
             if analysis.avg_message_size < 1024.0 {
                 recommendations.suggestions.push("消息较小。考虑使用消息聚合技术减少通信次数。".to_string());
             }
         }
-        
+
         if analysis.bandwidth_bound {
             recommendations.suggestions.push("系统受带宽约束。考虑减少数据传输量或增加带宽。".to_string());
-            
+
             if analysis.max_message_size > 1_000_000 {
                 recommendations.suggestions.push("存在大消息。考虑数据压缩或增量传输技术。".to_string());
             }
         }
-        
+
         if analysis.message_count > 100 {
             recommendations.suggestions.push("消息数量较多。考虑重新设计通信模式，减少同步点。".to_string());
         }
-        
+
         recommendations
     }
 }

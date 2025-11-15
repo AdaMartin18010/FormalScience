@@ -1,46 +1,47 @@
-# 控制论理论基础扩展 (Control Theory Foundation Extended)
+# 1. 控制论理论基础扩展 (Control Theory Foundation Extended)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 控制系统基础架构](#2-控制系统基础架构)
-  - [2.1 系统分类与层次结构](#21-系统分类与层次结构)
-  - [2.2 状态空间表示](#22-状态空间表示)
-- [3 高级稳定性理论](#3-高级稳定性理论)
-  - [3.1 李雅普诺夫稳定性深化](#31-李雅普诺夫稳定性深化)
-  - [3.2 输入输出稳定性](#32-输入输出稳定性)
-  - [3.3 结构稳定性](#33-结构稳定性)
-- [4 高级控制设计](#4-高级控制设计)
-  - [4.1 非线性控制](#41-非线性控制)
-  - [4.2 滑模控制](#42-滑模控制)
-  - [4.3 自适应控制](#43-自适应控制)
-- [5 鲁棒控制理论](#5-鲁棒控制理论)
-  - [5.1 H控制](#51-h控制)
-  - [5.2 μ综合](#52-μ综合)
-  - [5.3 线性矩阵不等式](#53-线性矩阵不等式)
-- [6 最优控制理论](#6-最优控制理论)
-  - [6.1 动态规划](#61-动态规划)
-  - [6.2 变分法](#62-变分法)
-- [7 分布式控制](#7-分布式控制)
-  - [7.1 多智能体系统](#71-多智能体系统)
-  - [7.2 网络化控制](#72-网络化控制)
-- [8 智能控制](#8-智能控制)
-  - [8.1 模糊控制](#81-模糊控制)
-  - [8.2 神经网络控制](#82-神经网络控制)
-- [9 前沿研究方向](#9-前沿研究方向)
-  - [9.1 量子控制](#91-量子控制)
-  - [9.2 事件触发控制](#92-事件触发控制)
-- [10 结论](#10-结论)
+- [1. 控制论理论基础扩展 (Control Theory Foundation Extended)](#1-控制论理论基础扩展-control-theory-foundation-extended)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 控制系统基础架构](#12-控制系统基础架构)
+    - [1.2.1 系统分类与层次结构](#121-系统分类与层次结构)
+    - [1.2.2 状态空间表示](#122-状态空间表示)
+  - [1.3 高级稳定性理论](#13-高级稳定性理论)
+    - [1.3.1 李雅普诺夫稳定性深化](#131-李雅普诺夫稳定性深化)
+    - [1.3.2 输入输出稳定性](#132-输入输出稳定性)
+    - [1.3.3 结构稳定性](#133-结构稳定性)
+  - [1.4 高级控制设计](#14-高级控制设计)
+    - [1.4.1 非线性控制](#141-非线性控制)
+    - [1.4.2 滑模控制](#142-滑模控制)
+    - [1.4.3 自适应控制](#143-自适应控制)
+  - [1.5 鲁棒控制理论](#15-鲁棒控制理论)
+    - [1.5.1 H控制](#151-h控制)
+    - [1.5.2 μ综合](#152-μ综合)
+    - [1.5.3 线性矩阵不等式](#153-线性矩阵不等式)
+  - [1.6 最优控制理论](#16-最优控制理论)
+    - [1.6.1 动态规划](#161-动态规划)
+    - [1.6.2 变分法](#162-变分法)
+  - [1.7 分布式控制](#17-分布式控制)
+    - [1.7.1 多智能体系统](#171-多智能体系统)
+    - [1.7.2 网络化控制](#172-网络化控制)
+  - [1.8 智能控制](#18-智能控制)
+    - [1.8.1 模糊控制](#181-模糊控制)
+    - [1.8.2 神经网络控制](#182-神经网络控制)
+  - [1.9 前沿研究方向](#19-前沿研究方向)
+    - [1.9.1 量子控制](#191-量子控制)
+    - [1.9.2 事件触发控制](#192-事件触发控制)
+  - [1.10 结论](#110-结论)
+  - [1.11 参考文献](#111-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个全面的控制论理论基础体系，从基础的线性系统理论到高级的非线性控制、鲁棒控制和自适应控制，为现代控制系统设计提供坚实的理论基础。
 
-## 2 控制系统基础架构
+## 1.2 控制系统基础架构
 
-### 2.1 系统分类与层次结构
+### 1.2.1 系统分类与层次结构
 
 **定义 1.1 (系统分类)**
 控制系统按特性分类：
@@ -69,7 +70,7 @@
 2. 将可控部分分解为可观和不可观部分
 3. 每个部分都可以独立分析和设计
 
-### 2.2 状态空间表示
+### 1.2.2 状态空间表示
 
 **定义 1.3 (广义状态空间)**
 广义状态空间表示：
@@ -99,7 +100,7 @@ data NonlinearSystem = NonlinearSystem {
 }
 
 linearizeSystem :: NonlinearSystem -> Vector Double -> Vector Double -> LinearSystem
-linearizeSystem sys xEquilibrium uEquilibrium = 
+linearizeSystem sys xEquilibrium uEquilibrium =
   let -- 计算雅可比矩阵
       aMatrix = computeJacobian (stateFunction sys) xEquilibrium uEquilibrium 0.0
       bMatrix = computeJacobian (stateFunction sys) xEquilibrium uEquilibrium 0.0
@@ -112,12 +113,12 @@ linearizeSystem sys xEquilibrium uEquilibrium =
     d = dMatrix
   }
 
-computeJacobian :: (Vector Double -> Vector Double -> Double -> Vector Double) 
+computeJacobian :: (Vector Double -> Vector Double -> Double -> Vector Double)
                 -> Vector Double -> Vector Double -> Double -> Matrix Double
-computeJacobian f x u t = 
+computeJacobian f x u t =
   let n = length x
       epsilon = 1e-8
-      jacobian = matrix n n (\(i, j) -> 
+      jacobian = matrix n n (\(i, j) ->
         let xPlus = x + (unitVector n j * epsilon)
             xMinus = x - (unitVector n j * epsilon)
             derivative = (f xPlus u t - f xMinus u t) / (2 * epsilon)
@@ -125,9 +126,9 @@ computeJacobian f x u t =
   in jacobian
 ```
 
-## 3 高级稳定性理论
+## 1.3 高级稳定性理论
 
-### 3.1 李雅普诺夫稳定性深化
+### 1.3.1 李雅普诺夫稳定性深化
 
 **定义 2.1 (李雅普诺夫函数)**
 函数 $V : \mathbb{R}^n \rightarrow \mathbb{R}$ 是系统 $\dot{x} = f(x)$ 的李雅普诺夫函数，如果：
@@ -160,11 +161,11 @@ data LyapunovFunction = LyapunovFunction {
 }
 
 constructLyapunovFunction :: Matrix Double -> LyapunovFunction
-constructLyapunovFunction aMatrix = 
+constructLyapunovFunction aMatrix =
   let -- 求解李雅普诺夫方程 A^T P + P A = -Q
       qMatrix = identity (rows aMatrix)
       pMatrix = solveLyapunovEquation aMatrix qMatrix
-      
+
       -- 构造二次型李雅普诺夫函数
       lyapunovFunc x = x `dot` (pMatrix `multiply` x)
       lyapunovGrad x = 2 * (pMatrix `multiply` x)
@@ -174,15 +175,15 @@ constructLyapunovFunction aMatrix =
   }
 
 solveLyapunovEquation :: Matrix Double -> Matrix Double -> Matrix Double
-solveLyapunovEquation a q = 
+solveLyapunovEquation a q =
   let n = rows a
       -- 将李雅普诺夫方程转换为线性系统
-      vecP = solve (kroneckerProduct (transpose a) (identity n) + 
+      vecP = solve (kroneckerProduct (transpose a) (identity n) +
                    kroneckerProduct (identity n) a) (vectorize q)
   in reshape n n vecP
 ```
 
-### 3.2 输入输出稳定性
+### 1.3.2 输入输出稳定性
 
 **定义 2.3 (L2稳定性)**
 系统是L2稳定的，如果存在常数 $\gamma > 0$ 使得：
@@ -209,26 +210,26 @@ $$\|y\|_\infty \leq \gamma \|u\|_\infty$$
 
 ```haskell
 computeL2Gain :: LinearSystem -> Double
-computeL2Gain sys = 
+computeL2Gain sys =
   let -- 计算H∞范数
       hInfinityNorm = computeHInfinityNorm sys
   in hInfinityNorm
 
 computeHInfinityNorm :: LinearSystem -> Double
-computeHInfinityNorm sys = 
+computeHInfinityNorm sys =
   let -- 通过求解Riccati方程计算H∞范数
-      gamma = binarySearch 0.0 1000.0 (\g -> 
+      gamma = binarySearch 0.0 1000.0 (\g ->
         let riccatiSolution = solveHInfinityRiccati sys g
         in isPositiveDefinite riccatiSolution)
   in gamma
 
 solveHInfinityRiccati :: LinearSystem -> Double -> Matrix Double
-solveHInfinityRiccati sys gamma = 
+solveHInfinityRiccati sys gamma =
   let a = aMatrix sys
       b = bMatrix sys
       c = cMatrix sys
       d = dMatrix sys
-      
+
       -- H∞ Riccati方程
       riccatiMatrix = a `multiply` x + x `multiply` (transpose a) +
                      x `multiply` ((1/gamma^2) `scale` (b `multiply` (transpose b))) `multiply` x +
@@ -236,7 +237,7 @@ solveHInfinityRiccati sys gamma =
   in solveRiccatiEquation riccatiMatrix
 ```
 
-### 3.3 结构稳定性
+### 1.3.3 结构稳定性
 
 **定义 2.5 (结构稳定性)**
 系统是结构稳定的，如果小的参数扰动不改变系统的定性行为。
@@ -254,26 +255,26 @@ data BifurcationAnalysis = BifurcationAnalysis {
 }
 
 analyzeBifurcations :: (Vector Double -> Double -> Vector Double) -> Double -> Double -> Int -> [BifurcationAnalysis]
-analyzeBifurcations systemFunc paramMin paramMax numPoints = 
+analyzeBifurcations systemFunc paramMin paramMax numPoints =
   let parameters = [paramMin + i * (paramMax - paramMin) / fromIntegral numPoints | i <- [0..numPoints]]
-      analyses = map (\param -> 
+      analyses = map (\param ->
         let equilibria = findEquilibriumPoints systemFunc param
             stabilities = map (\eq -> isStable systemFunc eq param) equilibria
         in BifurcationAnalysis param equilibria stabilities) parameters
   in analyses
 
 findEquilibriumPoints :: (Vector Double -> Double -> Vector Double) -> Double -> [Vector Double]
-findEquilibriumPoints systemFunc parameter = 
+findEquilibriumPoints systemFunc parameter =
   let -- 使用牛顿法寻找平衡点
       initialGuesses = generateInitialGuesses
-      equilibria = concatMap (\guess -> 
+      equilibria = concatMap (\guess ->
         newtonMethod (\x -> systemFunc x parameter) guess) initialGuesses
   in removeDuplicates equilibria
 ```
 
-## 4 高级控制设计
+## 1.4 高级控制设计
 
-### 4.1 非线性控制
+### 1.4.1 非线性控制
 
 **定义 3.1 (反馈线性化)**
 反馈线性化是将非线性系统通过状态反馈和坐标变换转换为线性系统。
@@ -291,13 +292,13 @@ data FeedbackLinearization = FeedbackLinearization {
 }
 
 designFeedbackLinearization :: NonlinearSystem -> FeedbackLinearization
-designFeedbackLinearization sys = 
+designFeedbackLinearization sys =
   let -- 计算相对度
       relDegree = computeRelativeDegree sys
-      
+
       -- 构造坐标变换
       transform = constructCoordinateTransform sys relDegree
-      
+
       -- 设计反馈律
       feedback = constructFeedbackLaw sys relDegree
   in FeedbackLinearization {
@@ -307,7 +308,7 @@ designFeedbackLinearization sys =
   }
 
 computeRelativeDegree :: NonlinearSystem -> Int
-computeRelativeDegree sys = 
+computeRelativeDegree sys =
   let -- 计算Lie导数直到输入出现
       degree = 0
       currentOutput = outputFunction sys
@@ -315,7 +316,7 @@ computeRelativeDegree sys =
   in relDegree
 
 findRelativeDegree :: (Vector Double -> Double) -> (Vector Double -> Vector Double) -> Int -> Int
-findRelativeDegree output stateFunc degree = 
+findRelativeDegree output stateFunc degree =
   let -- 计算Lie导数
       lieDerivative = computeLieDerivative output stateFunc
       -- 检查是否包含输入
@@ -325,7 +326,7 @@ findRelativeDegree output stateFunc degree =
      else findRelativeDegree lieDerivative stateFunc (degree + 1)
 ```
 
-### 4.2 滑模控制
+### 1.4.2 滑模控制
 
 **定义 3.3 (滑模面)**
 滑模面 $s(x) = 0$ 是状态空间中的超平面，系统轨迹在滑模面上滑动。
@@ -346,13 +347,13 @@ data SlidingModeController = SlidingModeController {
 }
 
 designSlidingModeController :: NonlinearSystem -> SlidingModeController
-designSlidingModeController sys = 
+designSlidingModeController sys =
   let -- 设计滑模面
       surface = designSlidingSurface sys
-      
+
       -- 计算等效控制
       eqControl = computeEquivalentControl sys surface
-      
+
       -- 设计切换控制
       swControl = designSwitchingControl sys surface
   in SlidingModeController {
@@ -362,23 +363,23 @@ designSlidingModeController sys =
   }
 
 designSlidingSurface :: NonlinearSystem -> (Vector Double -> Double)
-designSlidingSurface sys = 
+designSlidingSurface sys =
   let -- 选择滑模面参数
       lambda = [1.0, 2.0, 1.0]  -- 示例参数
       surface x = sum (zipWith (*) lambda (tail x)) + head x
   in surface
 
 computeEquivalentControl :: NonlinearSystem -> (Vector Double -> Double) -> (Vector Double -> Vector Double)
-computeEquivalentControl sys surface = 
+computeEquivalentControl sys surface =
   let -- 计算等效控制
-      eqControl x = 
+      eqControl x =
         let gradient = gradientOf surface x
             systemGradient = jacobianOf (stateFunction sys) x
         in - (gradient `dot` systemGradient) / (gradient `dot` (inputMatrix sys))
   in eqControl
 ```
 
-### 4.3 自适应控制
+### 1.4.3 自适应控制
 
 **定义 3.5 (自适应控制)**
 自适应控制是控制器参数根据系统动态自动调整的控制方法。
@@ -396,13 +397,13 @@ data AdaptiveController = AdaptiveController {
 }
 
 designAdaptiveController :: LinearSystem -> AdaptiveController
-designAdaptiveController sys = 
+designAdaptiveController sys =
   let -- 设计参数估计器
       estimator = designParameterEstimator sys
-      
+
       -- 设计控制律
       control = designAdaptiveControlLaw sys
-      
+
       -- 设计适应律
       adaptation = designAdaptationLaw sys
   in AdaptiveController {
@@ -412,9 +413,9 @@ designAdaptiveController sys =
   }
 
 designParameterEstimator :: LinearSystem -> (Vector Double -> Vector Double -> Vector Double -> Vector Double)
-designParameterEstimator sys = 
+designParameterEstimator sys =
   let -- 最小二乘参数估计
-      estimator y u phi = 
+      estimator y u phi =
         let -- 递归最小二乘算法
             p = identity (length phi)
             k = p `multiply` phi / (1 + (transpose phi) `dot` (p `multiply` phi))
@@ -424,9 +425,9 @@ designParameterEstimator sys =
   in estimator
 ```
 
-## 5 鲁棒控制理论
+## 1.5 鲁棒控制理论
 
-### 5.1 H控制
+### 1.5.1 H控制
 
 **定义 4.1 (H∞控制问题)**
 H∞控制问题是设计控制器使得闭环系统的H∞范数小于给定值。
@@ -446,13 +447,13 @@ data HInfinityController = HInfinityController {
 }
 
 designHInfinityController :: LinearSystem -> Double -> HInfinityController
-designHInfinityController plant gamma = 
+designHInfinityController plant gamma =
   let -- 构造广义对象
       generalizedPlant = constructGeneralizedPlant plant
-      
+
       -- 求解H∞Riccati方程
       (x, y) = solveHInfinityRiccatiEquations generalizedPlant gamma
-      
+
       -- 构造H∞控制器
       controller = constructHInfinityController generalizedPlant x y
   in HInfinityController {
@@ -461,20 +462,20 @@ designHInfinityController plant gamma =
   }
 
 solveHInfinityRiccatiEquations :: LinearSystem -> Double -> (Matrix Double, Matrix Double)
-solveHInfinityRiccatiEquations plant gamma = 
+solveHInfinityRiccatiEquations plant gamma =
   let -- 求解两个Riccati方程
       x = solveRiccatiEquation (hInfinityRiccatiX plant gamma)
       y = solveRiccatiEquation (hInfinityRiccatiY plant gamma)
   in (x, y)
 
 hInfinityRiccatiX :: LinearSystem -> Double -> Matrix Double
-hInfinityRiccatiX plant gamma = 
+hInfinityRiccatiX plant gamma =
   let a = aMatrix plant
       b1 = b1Matrix plant  -- 干扰输入
       b2 = b2Matrix plant  -- 控制输入
       c1 = c1Matrix plant  -- 性能输出
       c2 = c2Matrix plant  -- 测量输出
-      
+
       -- H∞ Riccati方程
       riccatiX = (transpose a) `multiply` x + x `multiply` a +
                  x `multiply` ((1/gamma^2) `scale` (b1 `multiply` (transpose b1)) -
@@ -483,7 +484,7 @@ hInfinityRiccatiX plant gamma =
   in riccatiX
 ```
 
-### 5.2 μ综合
+### 1.5.2 μ综合
 
 **定义 4.3 (μ综合)**
 μ综合是处理结构不确定性的鲁棒控制设计方法。
@@ -500,7 +501,7 @@ data MuSynthesisController = MuSynthesisController {
 }
 
 designMuSynthesisController :: LinearSystem -> [UncertaintyBlock] -> MuSynthesisController
-designMuSynthesisController plant uncertainties = 
+designMuSynthesisController plant uncertainties =
   let -- D-K迭代
       initialController = designInitialController plant
       (finalController, muValue) = dkIteration plant uncertainties initialController
@@ -510,13 +511,13 @@ designMuSynthesisController plant uncertainties =
   }
 
 dkIteration :: LinearSystem -> [UncertaintyBlock] -> LinearSystem -> (LinearSystem, Double)
-dkIteration plant uncertainties controller = 
+dkIteration plant uncertainties controller =
   let -- D步：固定K，优化D
       dScales = optimizeDScales plant controller uncertainties
-      
+
       -- K步：固定D，优化K
       newController = optimizeController plant dScales
-      
+
       -- 计算μ值
       muValue = computeMuValue plant newController uncertainties
   in if convergenceCheck muValue
@@ -524,7 +525,7 @@ dkIteration plant uncertainties controller =
      else dkIteration plant uncertainties newController
 ```
 
-### 5.3 线性矩阵不等式
+### 1.5.3 线性矩阵不等式
 
 **定义 4.5 (LMI)**
 线性矩阵不等式形如：
@@ -541,20 +542,20 @@ data LMISolver = LMISolver {
 }
 
 solveLMI :: [Matrix Double] -> Matrix Double -> Vector Double
-solveLMI constraintMatrices objectiveMatrix = 
+solveLMI constraintMatrices objectiveMatrix =
   let -- 内点法求解LMI
       initialPoint = findInitialPoint constraintMatrices
       solution = interiorPointMethod constraintMatrices objectiveMatrix initialPoint
   in solution
 
 interiorPointMethod :: [Matrix Double] -> Matrix Double -> Vector Double -> Vector Double
-interiorPointMethod constraints objective initialPoint = 
+interiorPointMethod constraints objective initialPoint =
   let -- 内点法迭代
       currentPoint = initialPoint
       tolerance = 1e-6
       maxIterations = 100
-      
-      iterate point iteration = 
+
+      iterate point iteration =
         if iteration >= maxIterations || convergenceCheck point
         then point
         else let -- 计算搜索方向
@@ -567,9 +568,9 @@ interiorPointMethod constraints objective initialPoint =
   in iterate currentPoint 0
 ```
 
-## 6 最优控制理论
+## 1.6 最优控制理论
 
-### 6.1 动态规划
+### 1.6.1 动态规划
 
 **定义 5.1 (最优性原理)**
 最优性原理：最优策略的子策略也是最优的。
@@ -586,7 +587,7 @@ data DynamicProgramming = DynamicProgramming {
 }
 
 solveDynamicProgramming :: MDP -> DynamicProgramming
-solveDynamicProgramming mdp = 
+solveDynamicProgramming mdp =
   let -- 值迭代
       initialValues = Map.fromList [(s, 0.0) | s <- states mdp]
       (finalValues, optimalPolicy) = valueIteration mdp initialValues
@@ -596,7 +597,7 @@ solveDynamicProgramming mdp =
   }
 
 valueIteration :: MDP -> Map State Double -> (Map State Double, Map State Action)
-valueIteration mdp values = 
+valueIteration mdp values =
   let -- 值迭代算法
       newValues = Map.fromList [(s, bellmanUpdate mdp s values) | s <- states mdp]
       policy = Map.fromList [(s, argmaxAction mdp s newValues) | s <- states mdp]
@@ -605,18 +606,18 @@ valueIteration mdp values =
      else valueIteration mdp newValues
 
 bellmanUpdate :: MDP -> State -> Map State Double -> Double
-bellmanUpdate mdp state values = 
+bellmanUpdate mdp state values =
   let -- Bellman方程
       actions = availableActions mdp state
-      qValues = [sum [transitionProb mdp state action nextState * 
-                     (reward mdp state action nextState + 
-                      discountFactor mdp * (values Map.! nextState)) | 
-                     nextState <- states mdp] | 
+      qValues = [sum [transitionProb mdp state action nextState *
+                     (reward mdp state action nextState +
+                      discountFactor mdp * (values Map.! nextState)) |
+                     nextState <- states mdp] |
                 action <- actions]
   in maximum qValues
 ```
 
-### 6.2 变分法
+### 1.6.2 变分法
 
 **定义 5.3 (变分问题)**
 变分问题是寻找函数使得泛函达到极值。
@@ -634,7 +635,7 @@ data VariationalProblem = VariationalProblem {
 }
 
 solveVariationalProblem :: VariationalProblem -> (Double -> Vector Double)
-solveVariationalProblem problem = 
+solveVariationalProblem problem =
   let -- 离散化变分问题
       discretizedProblem = discretizeVariational problem
       -- 求解离散化问题
@@ -644,7 +645,7 @@ solveVariationalProblem problem =
   in continuousSolution
 
 discretizeVariational :: VariationalProblem -> DiscreteProblem
-discretizeVariational problem = 
+discretizeVariational problem =
   let -- 时间离散化
       timePoints = [0.0, dt..tf]
       -- 构造离散化约束
@@ -655,9 +656,9 @@ discretizeVariational problem =
   }
 ```
 
-## 7 分布式控制
+## 1.7 分布式控制
 
-### 7.1 多智能体系统
+### 1.7.1 多智能体系统
 
 **定义 6.1 (多智能体系统)**
 多智能体系统是由多个相互作用的智能体组成的系统。
@@ -679,7 +680,7 @@ data ConsensusProtocol = ConsensusProtocol {
 }
 
 designConsensusProtocol :: Graph -> ConsensusProtocol
-designConsensusProtocol graph = 
+designConsensusProtocol graph =
   let -- 拉普拉斯矩阵
       laplacian = computeLaplacianMatrix graph
       -- 设计一致性协议
@@ -689,17 +690,17 @@ designConsensusProtocol graph =
   }
 
 simulateConsensus :: MultiAgentSystem -> Vector Double -> [Vector Double]
-simulateConsensus mas initialStates = 
+simulateConsensus mas initialStates =
   let -- 模拟一致性过程
       timeSteps = [0.0, dt..tf]
-      states = scanl (\prevStates t -> 
-        let newStates = map (\agent -> 
+      states = scanl (\prevStates t ->
+        let newStates = map (\agent ->
           updateAgentState agent prevStates (consensusProtocol mas)) (agents mas)
         in newStates) initialStates timeSteps
   in states
 ```
 
-### 7.2 网络化控制
+### 1.7.2 网络化控制
 
 **定义 6.3 (网络化控制系统)**
 网络化控制系统是通过通信网络连接的控制系统。
@@ -718,7 +719,7 @@ data NetworkedControlSystem = NetworkedControlSystem {
 }
 
 designNetworkedController :: LinearSystem -> Network -> NetworkedController
-designNetworkedController plant network = 
+designNetworkedController plant network =
   let -- 考虑网络延迟的控制器设计
       augmentedPlant = augmentPlantWithDelay plant network
       controller = designRobustController augmentedPlant
@@ -728,7 +729,7 @@ designNetworkedController plant network =
   }
 
 augmentPlantWithDelay :: LinearSystem -> Network -> LinearSystem
-augmentPlantWithDelay plant network = 
+augmentPlantWithDelay plant network =
   let -- 将延迟建模为状态
       delayState = [0.0 | _ <- [1..maxDelay network]]
       augmentedA = blockMatrix [[aMatrix plant, delayMatrix network],
@@ -742,9 +743,9 @@ augmentPlantWithDelay plant network =
   }
 ```
 
-## 8 智能控制
+## 1.8 智能控制
 
-### 8.1 模糊控制
+### 1.8.1 模糊控制
 
 **定义 7.1 (模糊集合)**
 模糊集合 $A$ 由隶属函数 $\mu_A : X \rightarrow [0,1]$ 定义。
@@ -767,7 +768,7 @@ data FuzzySet = FuzzySet {
 }
 
 designFuzzyController :: [FuzzyRule] -> FuzzyController
-designFuzzyController rules = 
+designFuzzyController rules =
   let -- 设计模糊集合
       fuzzySets = designFuzzySets rules
       -- 选择去模糊化方法
@@ -779,7 +780,7 @@ designFuzzyController rules =
   }
 
 computeFuzzyOutput :: FuzzyController -> Vector Double -> Double
-computeFuzzyOutput controller input = 
+computeFuzzyOutput controller input =
   let -- 模糊化
       fuzzifiedInput = fuzzify controller input
       -- 模糊推理
@@ -789,7 +790,7 @@ computeFuzzyOutput controller input =
   in crispOutput
 
 fuzzify :: FuzzyController -> Vector Double -> Map (Variable, FuzzySet) Double
-fuzzify controller input = 
+fuzzify controller input =
   let -- 计算每个变量的隶属度
       membershipValues = Map.fromList [((var, set), membershipFunction set value) |
                                        (var, value) <- zip (variables controller) input,
@@ -797,7 +798,7 @@ fuzzify controller input =
   in membershipValues
 ```
 
-### 8.2 神经网络控制
+### 1.8.2 神经网络控制
 
 **定义 7.3 (神经网络)**
 神经网络是由多个神经元组成的网络结构。
@@ -821,7 +822,7 @@ data NeuralNetwork = NeuralNetwork {
 }
 
 designNeuralController :: [TrainingData] -> NeuralNetworkController
-designNeuralController trainingData = 
+designNeuralController trainingData =
   let -- 设计网络结构
       network = designNetworkArchitecture trainingData
       -- 训练网络
@@ -833,12 +834,12 @@ designNeuralController trainingData =
   }
 
 trainNetwork :: NeuralNetwork -> [TrainingData] -> NeuralNetwork
-trainNetwork network trainingData = 
+trainNetwork network trainingData =
   let -- 反向传播训练
       learningRate = 0.01
       maxEpochs = 1000
-      
-      trainEpoch net epoch = 
+
+      trainEpoch net epoch =
         if epoch >= maxEpochs
         then net
         else let -- 前向传播
@@ -853,9 +854,9 @@ trainNetwork network trainingData =
   in trainEpoch network 0
 ```
 
-## 9 前沿研究方向
+## 1.9 前沿研究方向
 
-### 9.1 量子控制
+### 1.9.1 量子控制
 
 **定义 8.1 (量子系统)**
 量子系统是遵循量子力学规律的系统。
@@ -873,7 +874,7 @@ data QuantumSystem = QuantumSystem {
 }
 
 designQuantumController :: QuantumSystem -> Vector (Complex Double) -> QuantumController
-designQuantumController qsys targetState = 
+designQuantumController qsys targetState =
   let -- 量子最优控制
       optimalControl = quantumOptimalControl qsys targetState
       -- 鲁棒量子控制
@@ -884,19 +885,19 @@ designQuantumController qsys targetState =
   }
 
 quantumOptimalControl :: QuantumSystem -> Vector (Complex Double) -> [Double]
-quantumOptimalControl qsys target = 
+quantumOptimalControl qsys target =
   let -- GRAPE算法
       initialControls = [0.0 | _ <- controlOperators qsys]
       optimalControls = grapeAlgorithm qsys target initialControls
   in optimalControls
 
 grapeAlgorithm :: QuantumSystem -> Vector (Complex Double) -> [Double] -> [Double]
-grapeAlgorithm qsys target controls = 
+grapeAlgorithm qsys target controls =
   let -- GRAPE迭代
       maxIterations = 100
       tolerance = 1e-6
-      
-      iterate currentControls iteration = 
+
+      iterate currentControls iteration =
         if iteration >= maxIterations || convergenceCheck currentControls
         then currentControls
         else let -- 计算梯度
@@ -907,7 +908,7 @@ grapeAlgorithm qsys target controls =
   in iterate controls 0
 ```
 
-### 9.2 事件触发控制
+### 1.9.2 事件触发控制
 
 **定义 8.3 (事件触发控制)**
 事件触发控制是只在特定事件发生时更新控制信号的控制方法。
@@ -930,11 +931,11 @@ data TriggerCondition = TriggerCondition {
 }
 
 designEventTriggeredController :: LinearSystem -> Double -> EventTriggeredController
-designEventTriggeredController plant threshold = 
+designEventTriggeredController plant threshold =
   let -- 设计触发条件
       triggerCond = TriggerCondition {
         threshold = threshold,
-        condition = \currentState lastState -> 
+        condition = \currentState lastState ->
           norm (currentState - lastState) > threshold
       }
       -- 设计控制器
@@ -946,10 +947,10 @@ designEventTriggeredController plant threshold =
   }
 
 simulateEventTriggered :: EventTriggeredController -> LinearSystem -> Vector Double -> [Vector Double]
-simulateEventTriggered etc plant initialState = 
+simulateEventTriggered etc plant initialState =
   let -- 事件触发仿真
       timeSteps = [0.0, dt..tf]
-      states = scanl (\prevState t -> 
+      states = scanl (\prevState t ->
         let currentState = simulatePlant plant prevState t
             shouldTrigger = triggerCondition etc currentState prevState
             controlInput = if shouldTrigger
@@ -959,11 +960,11 @@ simulateEventTriggered etc plant initialState =
   in states
 ```
 
-## 10 结论
+## 1.10 结论
 
 控制论理论基础扩展为现代控制系统设计提供了全面的理论框架。从基础的线性系统理论到高级的非线性控制、鲁棒控制和智能控制，这些理论和方法在工业控制、机器人、航空航天等领域发挥着重要作用。随着人工智能和量子计算的发展，控制理论也在不断扩展和深化。
 
-## 参考文献
+## 1.11 参考文献
 
 1. Khalil, H. K. (2002). Nonlinear systems. Prentice Hall.
 2. Skogestad, S., & Postlethwaite, I. (2005). Multivariable feedback control: analysis and design.

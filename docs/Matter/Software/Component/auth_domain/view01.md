@@ -1,122 +1,122 @@
-# 加密与认证系统：从形式化角度的综合分析
+# 1. 加密与认证系统：从形式化角度的综合分析
 
 ## 目录
 
-- [加密与认证系统：从形式化角度的综合分析](#加密与认证系统从形式化角度的综合分析)
+- [1. 加密与认证系统：从形式化角度的综合分析](#1-加密与认证系统从形式化角度的综合分析)
   - [目录](#目录)
-  - [概念基础](#概念基础)
-    - [加密](#加密)
-    - [认证](#认证)
-    - [授权](#授权)
-    - [验证](#验证)
-  - [变量类型与控制](#变量类型与控制)
-    - [类型系统](#类型系统)
-    - [变量控制](#变量控制)
-    - [语义和作用域](#语义和作用域)
-  - [控制流分析](#控制流分析)
-    - [控制流图](#控制流图)
-    - [控制流属性](#控制流属性)
-    - [控制结构](#控制结构)
-  - [数据流分析](#数据流分析)
-    - [数据流模型](#数据流模型)
-    - [敏感数据流分析](#敏感数据流分析)
-  - [执行流分析](#执行流分析)
-    - [执行模型](#执行模型)
-    - [异步执行](#异步执行)
-    - [并发控制](#并发控制)
-  - [形式化验证与证明](#形式化验证与证明)
-    - [形式化技术](#形式化技术)
-    - [安全属性表达](#安全属性表达)
-    - [推理系统](#推理系统)
-  - [层次与模型关联](#层次与模型关联)
-    - [层次结构](#层次结构)
-    - [模型映射](#模型映射)
-    - [形式化关联](#形式化关联)
-  - [代码示例与实践](#代码示例与实践)
-    - [Rust安全认证示例](#rust安全认证示例)
-  - [思维导图](#思维导图)
-  - [类型系统的形式化分析](#类型系统的形式化分析)
-    - [依赖类型系统](#依赖类型系统)
-    - [会话类型](#会话类型)
-    - [类型安全证明](#类型安全证明)
-  - [协议正确性的形式化证明](#协议正确性的形式化证明)
-    - [BAN逻辑](#ban逻辑)
-    - [π演算](#π演算)
-    - [CSP模型](#csp模型)
-  - [状态机模型与验证](#状态机模型与验证)
-    - [安全状态机](#安全状态机)
-    - [时态逻辑](#时态逻辑)
-  - [信息流安全分析](#信息流安全分析)
-    - [非干扰性](#非干扰性)
-    - [去耦合分析](#去耦合分析)
-    - [信息流控制类型](#信息流控制类型)
-  - [时间和概率性质](#时间和概率性质)
-    - [时序攻击防御](#时序攻击防御)
-    - [概率安全性](#概率安全性)
-  - [组合验证与模块化证明](#组合验证与模块化证明)
-    - [模块化推理](#模块化推理)
-    - [精化关系](#精化关系)
-  - [形式化工具与实践技术](#形式化工具与实践技术)
-    - [形式化验证工具](#形式化验证工具)
-    - [形式化测试技术](#形式化测试技术)
-  - [Rust安全保障机制](#rust安全保障机制)
-    - [Rust类型系统安全性](#rust类型系统安全性)
-    - [零成本抽象](#零成本抽象)
-  - [形式化规约与实现映射](#形式化规约与实现映射)
-    - [规约到实现的映射](#规约到实现的映射)
-    - [证明义务](#证明义务)
-  - [形式化的同态加密与零知识证明](#形式化的同态加密与零知识证明)
-    - [同态加密](#同态加密)
-    - [零知识证明](#零知识证明)
-  - [正向与逆向分析技术](#正向与逆向分析技术)
-    - [抽象解释](#抽象解释)
-    - [符号执行](#符号执行)
-    - [模型精化](#模型精化)
-  - [控制流与数据流的交互证明](#控制流与数据流的交互证明)
-    - [控制流依赖的数据流安全](#控制流依赖的数据流安全)
-    - [信息流控制的形式化模型](#信息流控制的形式化模型)
-  - [分布式系统认证与验证](#分布式系统认证与验证)
-    - [分布式认证模型](#分布式认证模型)
-    - [CAP定理的形式化](#cap定理的形式化)
-    - [共识算法形式化](#共识算法形式化)
-  - [量子安全形式化分析](#量子安全形式化分析)
-    - [量子抗性定义](#量子抗性定义)
-    - [后量子密码学](#后量子密码学)
-  - [高级Rust实现模式](#高级rust实现模式)
-    - [类型驱动的安全设计](#类型驱动的安全设计)
-    - [所有权模型与安全](#所有权模型与安全)
-    - [类型系统安全保障](#类型系统安全保障)
-  - [形式化演算与推理系统](#形式化演算与推理系统)
-    - [霍尔逻辑推理](#霍尔逻辑推理)
-    - [依赖类型与精确规约](#依赖类型与精确规约)
-    - [精确并发模型](#精确并发模型)
-  - [静态与动态安全保障的统一](#静态与动态安全保障的统一)
-    - [混合验证框架](#混合验证框架)
-    - [验证连续体](#验证连续体)
-    - [全栈安全保障](#全栈安全保障)
-  - [**思维导图**](#思维导图-1)
+  - [1.1 概念基础](#11-概念基础)
+    - [1.1.1 加密](#111-加密)
+    - [1.1.2 认证](#112-认证)
+    - [1.1.3 授权](#113-授权)
+    - [1.1.4 验证](#114-验证)
+  - [1.2 变量类型与控制](#12-变量类型与控制)
+    - [1.2.1 类型系统](#121-类型系统)
+    - [1.2.2 变量控制](#122-变量控制)
+    - [1.2.3 语义和作用域](#123-语义和作用域)
+  - [1.3 控制流分析](#13-控制流分析)
+    - [1.3.1 控制流图](#131-控制流图)
+    - [1.3.2 控制流属性](#132-控制流属性)
+    - [1.3.3 控制结构](#133-控制结构)
+  - [1.4 数据流分析](#14-数据流分析)
+    - [1.4.1 数据流模型](#141-数据流模型)
+    - [1.4.2 敏感数据流分析](#142-敏感数据流分析)
+  - [1.5 执行流分析](#15-执行流分析)
+    - [1.5.1 执行模型](#151-执行模型)
+    - [1.5.2 异步执行](#152-异步执行)
+    - [1.5.3 并发控制](#153-并发控制)
+  - [1.6 形式化验证与证明](#16-形式化验证与证明)
+    - [1.6.1 形式化技术](#161-形式化技术)
+    - [1.6.2 安全属性表达](#162-安全属性表达)
+    - [1.6.3 推理系统](#163-推理系统)
+  - [1.7 层次与模型关联](#17-层次与模型关联)
+    - [1.7.1 层次结构](#171-层次结构)
+    - [1.7.2 模型映射](#172-模型映射)
+    - [1.7.3 形式化关联](#173-形式化关联)
+  - [1.8 代码示例与实践](#18-代码示例与实践)
+    - [1.8.1 Rust安全认证示例](#181-rust安全认证示例)
+  - [1.9 思维导图](#19-思维导图)
+  - [1.10 类型系统的形式化分析](#110-类型系统的形式化分析)
+    - [1.10.1 依赖类型系统](#1101-依赖类型系统)
+    - [1.10.2 会话类型](#1102-会话类型)
+    - [1.10.3 类型安全证明](#1103-类型安全证明)
+  - [1.11 协议正确性的形式化证明](#111-协议正确性的形式化证明)
+    - [1.11.1 BAN逻辑](#1111-ban逻辑)
+    - [1.11.2 π演算](#1112-π演算)
+    - [1.11.3 CSP模型](#1113-csp模型)
+  - [1.12 状态机模型与验证](#112-状态机模型与验证)
+    - [1.12.1 安全状态机](#1121-安全状态机)
+    - [1.12.2 时态逻辑](#1122-时态逻辑)
+  - [1.13 信息流安全分析](#113-信息流安全分析)
+    - [1.13.1 非干扰性](#1131-非干扰性)
+    - [1.13.2 去耦合分析](#1132-去耦合分析)
+    - [1.13.3 信息流控制类型](#1133-信息流控制类型)
+  - [1.14 时间和概率性质](#114-时间和概率性质)
+    - [1.14.1 时序攻击防御](#1141-时序攻击防御)
+    - [1.14.2 概率安全性](#1142-概率安全性)
+  - [1.15 组合验证与模块化证明](#115-组合验证与模块化证明)
+    - [1.15.1 模块化推理](#1151-模块化推理)
+    - [1.15.2 精化关系](#1152-精化关系)
+  - [1.16 形式化工具与实践技术](#116-形式化工具与实践技术)
+    - [1.16.1 形式化验证工具](#1161-形式化验证工具)
+    - [1.16.2 形式化测试技术](#1162-形式化测试技术)
+  - [1.17 Rust安全保障机制](#117-rust安全保障机制)
+    - [1.17.1 Rust类型系统安全性](#1171-rust类型系统安全性)
+    - [1.17.2 零成本抽象](#1172-零成本抽象)
+  - [1.18 形式化规约与实现映射](#118-形式化规约与实现映射)
+    - [1.18.1 规约到实现的映射](#1181-规约到实现的映射)
+    - [1.18.2 证明义务](#1182-证明义务)
+  - [1.19 形式化的同态加密与零知识证明](#119-形式化的同态加密与零知识证明)
+    - [1.19.1 同态加密](#1191-同态加密)
+    - [1.19.2 零知识证明](#1192-零知识证明)
+  - [1.20 正向与逆向分析技术](#120-正向与逆向分析技术)
+    - [1.20.1 抽象解释](#1201-抽象解释)
+    - [1.20.2 符号执行](#1202-符号执行)
+    - [1.20.3 模型精化](#1203-模型精化)
+  - [1.21 控制流与数据流的交互证明](#121-控制流与数据流的交互证明)
+    - [1.21.1 控制流依赖的数据流安全](#1211-控制流依赖的数据流安全)
+    - [1.21.2 信息流控制的形式化模型](#1212-信息流控制的形式化模型)
+  - [1.22 分布式系统认证与验证](#122-分布式系统认证与验证)
+    - [1.22.1 分布式认证模型](#1221-分布式认证模型)
+    - [1.22.2 CAP定理的形式化](#1222-cap定理的形式化)
+    - [1.22.3 共识算法形式化](#1223-共识算法形式化)
+  - [1.23 量子安全形式化分析](#123-量子安全形式化分析)
+    - [1.23.1 量子抗性定义](#1231-量子抗性定义)
+    - [1.23.2 后量子密码学](#1232-后量子密码学)
+  - [1.24 高级Rust实现模式](#124-高级rust实现模式)
+    - [1.24.1 类型驱动的安全设计](#1241-类型驱动的安全设计)
+    - [1.24.2 所有权模型与安全](#1242-所有权模型与安全)
+    - [1.24.3 类型系统安全保障](#1243-类型系统安全保障)
+  - [1.25 形式化演算与推理系统](#125-形式化演算与推理系统)
+    - [1.25.1 霍尔逻辑推理](#1251-霍尔逻辑推理)
+    - [1.25.2 依赖类型与精确规约](#1252-依赖类型与精确规约)
+    - [1.25.3 精确并发模型](#1253-精确并发模型)
+  - [1.26 静态与动态安全保障的统一](#126-静态与动态安全保障的统一)
+    - [1.26.1 混合验证框架](#1261-混合验证框架)
+    - [1.26.2 验证连续体](#1262-验证连续体)
+    - [1.26.3 全栈安全保障](#1263-全栈安全保障)
+  - [1.27 **思维导图**](#127-思维导图)
 
-## 概念基础
+## 1.1 概念基础
 
-### 加密
+### 1.1.1 加密
 
 加密是将明文信息转换为密文的过程，确保只有授权方能解读信息内容。从形式化角度看，加密可表示为函数 $E(m, k) = c$，其中 $m$ 为明文，$k$ 为密钥，$c$ 为密文。
 
-### 认证
+### 1.1.2 认证
 
 认证是验证实体身份的过程。形式化定义为函数 $Auth(cred, id) \to \{true, false\}$，其中 $cred$ 是凭证，$id$ 是身份标识。
 
-### 授权
+### 1.1.3 授权
 
 授权确定实体对资源的访问权限。形式化表示为谓词 $Authz(p, r, a) \to \{true, false\}$，其中 $p$ 是主体，$r$ 是资源，$a$ 是操作。
 
-### 验证
+### 1.1.4 验证
 
 验证检查信息的完整性和真实性。形式化为函数 $Verify(m, s, k) \to \{true, false\}$，其中 $m$ 是消息，$s$ 是签名，$k$ 是验证密钥。
 
-## 变量类型与控制
+## 1.2 变量类型与控制
 
-### 类型系统
+### 1.2.1 类型系统
 
 类型系统提供静态保障，防止运行时错误。安全相关类型常见的有：
 
@@ -125,7 +125,7 @@
 - **能力类型**：表示权限，如 `CanWrite<Resource>`
 - **线性类型**：确保资源被精确使用一次，如敏感凭证
 
-### 变量控制
+### 1.2.2 变量控制
 
 - **作用域控制**：限制敏感变量的可见范围
 - **不可变性**：防止敏感数据被意外修改
@@ -133,37 +133,37 @@
 
 形式化表示：对于变量 $v$，其类型 $T$，作用域 $S$，我们定义安全性谓词 $Safe(v: T, S) \to \{true, false\}$。
 
-### 语义和作用域
+### 1.2.3 语义和作用域
 
 - **静态作用域**：编译时确定变量范围，有助于安全分析
 - **动态作用域**：运行时确定，增加灵活性但降低可预测性
 - **词法作用域**：基于代码结构限制变量访问
 
-## 控制流分析
+## 1.3 控制流分析
 
-### 控制流图
+### 1.3.1 控制流图
 
 认证和授权过程可使用控制流图 (CFG) 建模：$G = (V, E)$，其中 $V$ 是程序点集合，$E$ 是流转边集合。
 
-### 控制流属性
+### 1.3.2 控制流属性
 
 - **可达性**：确保认证点必须经过，形式化为路径属性 $\forall p \in Paths(G), \exists v \in p: v \in AuthPoints$
 - **后置条件**：执行后必须满足的条件，如 $Post(auth\_check) \Rightarrow isAuthenticated$
 - **不变式**：全程保持的条件，如 $Inv(G) \Rightarrow sensitiveData.isEncrypted$
 
-### 控制结构
+### 1.3.3 控制结构
 
 - **顺序控制**：保证认证步骤按序执行
 - **条件控制**：基于权限级别的访问控制
 - **异常控制**：处理认证失败情况
 
-## 数据流分析
+## 1.4 数据流分析
 
-### 数据流模型
+### 1.4.1 数据流模型
 
 数据流分析跟踪数据在程序中的流动：$(Gen, Kill, In, Out)$，其中 $Gen$ 是生成集，$Kill$ 是销毁集，$In/Out$ 是流入/流出集。
 
-### 敏感数据流分析
+### 1.4.2 敏感数据流分析
 
 - **源-汇分析**：从敏感数据源（如密码）到潜在泄露点的路径
 - **污点追踪**：跟踪未验证的输入数据
@@ -171,63 +171,63 @@
 
 形式化表示：定义数据流属性 $DFP$，验证 $\forall path \in DataFlowPaths: \neg(source \in SensitiveSources \land sink \in PublicSinks)$。
 
-## 执行流分析
+## 1.5 执行流分析
 
-### 执行模型
+### 1.5.1 执行模型
 
 执行流表示程序实际运行时的指令序列。形式化为状态转换系统 $(S, \to)$，其中 $S$ 是状态集，$\to$ 是转换关系。
 
-### 异步执行
+### 1.5.2 异步执行
 
 - **Promise/Future**：建模异步认证流程
 - **事件循环**：处理多个认证请求
 - **回调安全**：确保回调函数中的安全性
 
-### 并发控制
+### 1.5.3 并发控制
 
 - **原子操作**：确保认证状态一致性
 - **锁机制**：保护共享认证资源
 - **事务语义**：保证认证操作的原子性
 
-## 形式化验证与证明
+## 1.6 形式化验证与证明
 
-### 形式化技术
+### 1.6.1 形式化技术
 
 - **模型检查**：验证系统是否满足时态逻辑属性
 - **定理证明**：严格证明安全性质
 - **符号执行**：探索程序执行路径
 
-### 安全属性表达
+### 1.6.2 安全属性表达
 
 - **机密性**：$\forall s \in States, \forall u \in Unauthorized: \neg CanAccess(u, secret, s)$
 - **完整性**：$\forall m \in Messages: Verify(m, Sign(m, k), k) = true$
 - **认证性**：$AuthSuccess(u, cred) \Rightarrow Identity(u) = Claimed(cred)$
 
-### 推理系统
+### 1.6.3 推理系统
 
 使用霍尔逻辑进行形式化推理：$\{P\} C \{Q\}$，表示若执行前满足 $P$，执行 $C$ 后满足 $Q$。
 
-## 层次与模型关联
+## 1.7 层次与模型关联
 
-### 层次结构
+### 1.7.1 层次结构
 
 - **计算层**：基本加密操作
 - **协议层**：认证协议规范
 - **系统层**：认证系统架构
 - **应用层**：用户体验与接口
 
-### 模型映射
+### 1.7.2 模型映射
 
 - **元模型到模型**：安全性概念到具体实现的映射
 - **跨层映射**：协议层安全性质如何保证系统层安全
 
-### 形式化关联
+### 1.7.3 形式化关联
 
 定义层次间映射函数 $M_{i,j}: L_i \to L_j$，确保 $\forall p \in Properties(L_i): p \Rightarrow M_{i,j}(p)$。
 
-## 代码示例与实践
+## 1.8 代码示例与实践
 
-### Rust安全认证示例
+### 1.8.1 Rust安全认证示例
 
 ```rust
 // 不透明类型，防止误用
@@ -239,7 +239,7 @@ impl Password {
         let hashed = hash_password(raw.as_bytes());
         Password(hashed)
     }
-    
+
     // 验证密码，不泄露内部表示
     fn verify(&self, input: &str) -> bool {
         verify_password(input.as_bytes(), &self.0)
@@ -265,16 +265,16 @@ impl AuthManager {
     async fn authenticate_user(&self, username: &str, password: &str) -> Result<String, AuthError> {
         // 获取用户
         let user = self.storage.get_user_by_username(username).await?;
-        
+
         // 验证密码
         if !self.verify_password(&user.password_hash, password)? {
             return Err(AuthError::InvalidCredentials);
         }
-        
+
         // 生成JWT令牌
         self.generate_token(username, &user.roles)
     }
-    
+
     // 验证令牌
     fn verify_token(&self, token: &str) -> Result<UserClaims, AuthError> {
         // 验证JWT令牌
@@ -288,7 +288,7 @@ impl AuthManager {
             jsonwebtoken::errors::ErrorKind::InvalidToken => AuthError::InvalidToken,
             _ => AuthError::TokenValidationError(e.to_string()),
         })?;
-        
+
         Ok(token_data.claims)
     }
 }
@@ -296,23 +296,23 @@ impl AuthManager {
 // 安全管理器示例
 impl SecurityManager {
     // 检查授权
-    async fn authorize(&self, 
-        principal: &Principal, 
-        resource: &Resource, 
+    async fn authorize(&self,
+        principal: &Principal,
+        resource: &Resource,
         action: &Action
     ) -> Result<AuthorizationDecision, SecurityError> {
         // 验证主体凭证
         if !self.is_valid_principal(principal) {
-            return Ok(AuthorizationDecision::Denied { 
-                reason: "Invalid principal".to_string() 
+            return Ok(AuthorizationDecision::Denied {
+                reason: "Invalid principal".to_string()
             });
         }
-        
+
         // 执行访问控制检查
         let access_check = self.policy_engine.check_access(
             principal, resource, action
         ).await?;
-        
+
         // 记录访问尝试
         match &access_check {
             AccessCheckResult::Allowed => {
@@ -326,16 +326,16 @@ impl SecurityManager {
                 ).await?;
             },
         }
-        
+
         // 转换为授权决定
         let decision = match access_check {
             AccessCheckResult::Allowed => AuthorizationDecision::Allowed,
             AccessCheckResult::Denied { reason } => AuthorizationDecision::Denied { reason },
         };
-        
+
         Ok(decision)
     }
-    
+
     // 加密敏感数据
     async fn encrypt_sensitive_data(
         &self,
@@ -348,19 +348,19 @@ impl SecurityManager {
                 "Encryption not allowed in this context".to_string()
             ));
         }
-        
+
         // 根据数据分类选择加密强度
         let encryption_level = self.security_policy.encryption_level_for_classification(
             &context.data_classification
         );
-        
+
         // 执行加密
         let encrypted = self.encryption_provider.encrypt(
             data,
             &context.key_identifier,
             encryption_level,
         ).await?;
-        
+
         // 记录加密操作
         self.audit_logger.log_encryption_operation(
             &context.principal,
@@ -368,13 +368,13 @@ impl SecurityManager {
             &context.data_classification,
             OperationType::Encrypt,
         ).await?;
-        
+
         Ok(encrypted)
     }
 }
 ```
 
-## 思维导图
+## 1.9 思维导图
 
 ```text
 认证与加密系统形式化分析
@@ -446,9 +446,9 @@ impl SecurityManager {
     └── 形式化关联: M_i,j:L_i→L_j
 ```
 
-## 类型系统的形式化分析
+## 1.10 类型系统的形式化分析
 
-### 依赖类型系统
+### 1.10.1 依赖类型系统
 
 依赖类型可表达安全性约束：$\Pi x:A. B(x)$，表示类型 $B$ 依赖于值 $x$。
 
@@ -461,23 +461,23 @@ Vec<u8, n> // n是长度参数
 形式化规则：
 $$\frac{\Gamma \vdash e : \text{Vec}<T, n> \quad \Gamma \vdash i : \text{Nat} \quad \Gamma \vdash i < n}{\Gamma \vdash e[i] : T}$$
 
-### 会话类型
+### 1.10.2 会话类型
 
 会话类型形式化通信协议，防止协议错误：
 $$S = !T_1.?T_2.!T_3.end$$
 
 表示先发送$T_1$类型消息，接收$T_2$类型应答，再发送$T_3$类型消息，然后结束会话。
 
-### 类型安全证明
+### 1.10.3 类型安全证明
 
 通过进度(Progress)和保存(Preservation)定理证明系统安全：
 
 - **进度**：$\forall e,T. \Gamma \vdash e:T \Rightarrow e 是值 \lor \exists e'. e \rightarrow e'$
 - **保存**：$\forall e,e',T. \Gamma \vdash e:T \land e \rightarrow e' \Rightarrow \Gamma \vdash e':T$
 
-## 协议正确性的形式化证明
+## 1.11 协议正确性的形式化证明
 
-### BAN逻辑
+### 1.11.1 BAN逻辑
 
 用于认证协议分析的形式逻辑：
 
@@ -489,7 +489,7 @@ $$S = !T_1.?T_2.!T_3.end$$
 推理规则示例：
 $$\frac{A \text{ 相信 } (K \text{ 是 } A \text{ 和 } B \text{ 的共享密钥}), A \text{ 看到 } \{X\}_K}{A \text{ 相信 } (B \text{ 说过 } X)}$$
 
-### π演算
+### 1.11.2 π演算
 
 用于并发协议的形式化表示：
 
@@ -498,7 +498,7 @@ $$P ::= \bar{x}\langle y \rangle.P \mid x(y).P \mid P|P \mid \nu x.P \mid !P \mi
 例如，安全通道可表示为：
 $$\nu k.(\bar{c}\langle \{m\}_k \rangle.0 | c(x).\text{解密}(x, k))$$
 
-### CSP模型
+### 1.11.3 CSP模型
 
 使用CSP描述和验证安全协议：
 
@@ -508,9 +508,9 @@ Server = check?{username,password} -> (validate.{username,password} -> Authentic
 System = Client || Server
 ```
 
-## 状态机模型与验证
+## 1.12 状态机模型与验证
 
-### 安全状态机
+### 1.12.1 安全状态机
 
 认证系统状态机：$M = (S, s_0, \delta, F)$，其中：
 
@@ -522,7 +522,7 @@ System = Client || Server
 安全属性：
 $$\forall s \in AccessProtectedStates: s \in ReachableStates \Rightarrow (\exists p \in Paths(s_0, s): \text{包含认证转换})$$
 
-### 时态逻辑
+### 1.12.2 时态逻辑
 
 使用LTL/CTL表达安全性质：
 
@@ -530,9 +530,9 @@ $$\forall s \in AccessProtectedStates: s \in ReachableStates \Rightarrow (\exist
 - **活性属性**：$\lozenge(\text{requestAuth} \Rightarrow \lozenge\text{authComplete})$
 - **公平性**：$\square\lozenge\text{authFailed} \Rightarrow \square\lozenge\text{lockAccount}$
 
-## 信息流安全分析
+## 1.13 信息流安全分析
 
-### 非干扰性
+### 1.13.1 非干扰性
 
 形式化定义信息不泄露：
 
@@ -540,13 +540,13 @@ $$\forall l_1, l_2 \in L, \forall s_1, s_2 \in S: (s_1 \approx_{l_2} s_2) \Right
 
 其中 $s_1 \approx_{l_2} s_2$ 表示状态 $s_1$ 和 $s_2$ 在安全级别 $l_2$ 看来相同。
 
-### 去耦合分析
+### 1.13.2 去耦合分析
 
 确保高安全性组件不依赖低安全性组件：
 
 $$\forall c_1, c_2 \in Components: level(c_1) > level(c_2) \Rightarrow \neg depends(c_1, c_2)$$
 
-### 信息流控制类型
+### 1.13.3 信息流控制类型
 
 类型签名反映信息流安全性：
 
@@ -556,9 +556,9 @@ fn process_data<'pc, 'a>(data: &'a SecureData) -> Result<'pc>
 where 'a: 'pc // 确保信息只能从低级流向高级
 ```
 
-## 时间和概率性质
+## 1.14 时间和概率性质
 
-### 时序攻击防御
+### 1.14.1 时序攻击防御
 
 形式化定义常量时间操作：
 
@@ -572,7 +572,7 @@ fn constant_time_eq(a: &[u8], b: &[u8]) -> bool {
     if a.len() != b.len() {
         return false;
     }
-    
+
     let mut result = 0;
     for (x, y) in a.iter().zip(b.iter()) {
         result |= x ^ y; // 按位异或，累积差异
@@ -581,7 +581,7 @@ fn constant_time_eq(a: &[u8], b: &[u8]) -> bool {
 }
 ```
 
-### 概率安全性
+### 1.14.2 概率安全性
 
 密码系统安全性定义：
 
@@ -589,15 +589,15 @@ $$Adv^{ind-cpa}_{\mathcal{A}}(k) = |Pr[Exp^{ind-cpa-1}_{\mathcal{A}}(k) = 1] - P
 
 表示敌手 $\mathcal{A}$ 在选择明文攻击下区分两个密文的优势是可忽略的。
 
-## 组合验证与模块化证明
+## 1.15 组合验证与模块化证明
 
-### 模块化推理
+### 1.15.1 模块化推理
 
 使用接口和合约分解复杂系统证明：
 
 $$\frac{\vdash Spec_A \quad \vdash Spec_B \quad \vdash Spec_A \land Spec_B \Rightarrow Spec_C}{\vdash Spec_C}$$
 
-### 精化关系
+### 1.15.2 精化关系
 
 通过精化(Refinement)连接抽象和实现：
 
@@ -605,9 +605,9 @@ $$Impl \sqsubseteq Spec \iff \forall P \in Properties(Spec): Impl \models P$$
 
 表示实现 $Impl$ 精化了规约 $Spec$。
 
-## 形式化工具与实践技术
+## 1.16 形式化工具与实践技术
 
-### 形式化验证工具
+### 1.16.1 形式化验证工具
 
 - **F***：微软开发的验证语言，用于密码协议验证
 - **AVISPA**：自动验证安全协议工具
@@ -632,15 +632,15 @@ rule Authenticate:
     Out(<$A, 'authenticated', ~sid>) ]
 ```
 
-### 形式化测试技术
+### 1.16.2 形式化测试技术
 
 - **基于模型的测试**：从形式模型生成测试用例
 - **模糊测试**：自动生成边界和异常输入
 - **符号执行测试**：分析所有可能的执行路径
 
-## Rust安全保障机制
+## 1.17 Rust安全保障机制
 
-### Rust类型系统安全性
+### 1.17.1 Rust类型系统安全性
 
 ```rust
 // 私有状态封装
@@ -674,7 +674,7 @@ impl ApiKey {
 }
 ```
 
-### 零成本抽象
+### 1.17.2 零成本抽象
 
 Rust的安全抽象编译为高效的机器码：
 
@@ -690,9 +690,9 @@ let result = validator.validate(token);
 // 编译为高效的条件和跳转指令，无运行时开销
 ```
 
-## 形式化规约与实现映射
+## 1.18 形式化规约与实现映射
 
-### 规约到实现的映射
+### 1.18.1 规约到实现的映射
 
 规约 $S$ 映射到实现 $I$ 的关系函数 $R: S \to I$，满足：
 
@@ -700,7 +700,7 @@ $$\forall p \in Properties(S), s \in States(S), i = R(s): i \models translate(p)
 
 其中 $translate$ 将规约属性转换为实现级别属性。
 
-### 证明义务
+### 1.18.2 证明义务
 
 从形式规约到代码实现的证明义务：
 
@@ -730,9 +730,9 @@ fn authenticate(user: &str, pwd: &str) -> Result<Claims, AuthError> {
 - 等价性：`pwd_hash != stored_user.password_hash` 当且仅当 `hash(pwd) ≠ storedHash(user)`
 - 结果映射：`Ok(claims)` 映射到规约中的 `Success`，`Err` 映射到 `Failure`
 
-## 形式化的同态加密与零知识证明
+## 1.19 形式化的同态加密与零知识证明
 
-### 同态加密
+### 1.19.1 同态加密
 
 同态加密允许对密文直接计算，形式化定义：
 
@@ -746,7 +746,7 @@ $$E(x) \circ E(y) = E(x \star y)$$
 - **乘法同态**：$Dec(Enc(m_1) \times Enc(m_2)) = m_1 \times m_2$
 - **全同态**：支持任意函数计算 $Dec(f(Enc(m_1), Enc(m_2), \ldots)) = f(m_1, m_2, \ldots)$
 
-### 零知识证明
+### 1.19.2 零知识证明
 
 零知识证明形式化定义为三元组 $(P, V, S)$，其中：
 
@@ -768,13 +768,13 @@ trait ZeroKnowledgeProof {
     type Statement;
     type Witness;
     type Proof;
-    
+
     // 生成证明
     fn prove(statement: &Self::Statement, witness: &Self::Witness) -> Self::Proof;
-    
+
     // 验证证明
     fn verify(statement: &Self::Statement, proof: &Self::Proof) -> bool;
-    
+
     // 模拟证明（用于证明零知识性）
     fn simulate(statement: &Self::Statement) -> Self::Proof;
 }
@@ -786,24 +786,24 @@ impl ZeroKnowledgeProof for SchnorrZKP {
     type Statement = PublicKey;
     type Witness = PrivateKey;
     type Proof = SchnorrProof;
-    
+
     fn prove(pk: &PublicKey, sk: &PrivateKey) -> SchnorrProof {
         // 实现Schnorr证明生成
     }
-    
+
     fn verify(pk: &PublicKey, proof: &SchnorrProof) -> bool {
         // 实现Schnorr证明验证
     }
-    
+
     fn simulate(pk: &PublicKey) -> SchnorrProof {
         // 实现模拟器，不需要知道私钥
     }
 }
 ```
 
-## 正向与逆向分析技术
+## 1.20 正向与逆向分析技术
 
-### 抽象解释
+### 1.20.1 抽象解释
 
 抽象解释通过在抽象域上执行程序，保证原始程序的安全属性：
 
@@ -826,7 +826,7 @@ $$\alpha(Sem(P)) \subseteq Sem^\#(P)$$
 // 抽象: [5,5] > [0,0], 取true分支: [5,5]
 ```
 
-### 符号执行
+### 1.20.2 符号执行
 
 使用符号而非具体值执行程序，推导程序状态的符号表示：
 
@@ -853,7 +853,7 @@ fn decrypt_and_process(ciphertext: &[u8], key: &Key) -> Result<Data, Error> {
 // 路径3: decrypt(c, k) = Error → Error
 ```
 
-### 模型精化
+### 1.20.3 模型精化
 
 通过逐步精化模型，保证实现的正确性：
 
@@ -866,12 +866,12 @@ $$M_0 \sqsubseteq M_1 \sqsubseteq \ldots \sqsubseteq M_n$$
 ```math
 M₀: 身份验证(用户, 密码) → 成功|失败
 
-M₁: 身份验证(用户, 密码) → 
-    如果 用户存在 且 密码匹配(用户, 密码) 
-    则 返回令牌 
+M₁: 身份验证(用户, 密码) →
+    如果 用户存在 且 密码匹配(用户, 密码)
+    则 返回令牌
     否则 返回失败
 
-M₂: 身份验证(用户, 密码) → 
+M₂: 身份验证(用户, 密码) →
     查询用户(数据库, 用户) → 记录
     如果 记录存在 且 哈希(密码, 记录.盐) = 记录.哈希
     则 生成令牌(用户, 角色, 过期时间)
@@ -888,9 +888,9 @@ fn authenticate(db: &Db, user: &str, pwd: &str) -> Result<Token, Error> {
 }
 ```
 
-## 控制流与数据流的交互证明
+## 1.21 控制流与数据流的交互证明
 
-### 控制流依赖的数据流安全
+### 1.21.1 控制流依赖的数据流安全
 
 形式化定义数据流对控制流影响的安全条件：
 
@@ -915,17 +915,17 @@ fn process_safe(user: &User) {
     } else {
         None
     };
-    
+
     let normal_result = compute_normal_result();
-    
+
     // 最后只根据权限选择结果，而不是控制计算流程
     let result = admin_result.unwrap_or(normal_result);
-    
+
     return result;
 }
 ```
 
-### 信息流控制的形式化模型
+### 1.21.2 信息流控制的形式化模型
 
 使用标签系统 $(L, \sqsubseteq)$ 跟踪信息流动：
 
@@ -969,9 +969,9 @@ where
 }
 ```
 
-## 分布式系统认证与验证
+## 1.22 分布式系统认证与验证
 
-### 分布式认证模型
+### 1.22.1 分布式认证模型
 
 使用π演算描述分布式认证协议：
 
@@ -982,7 +982,7 @@ Server &= server(id, h).lookup(id, spwd).\overline{server}\langle check(h, spwd)
 \end{align}
 $$
 
-### CAP定理的形式化
+### 1.22.2 CAP定理的形式化
 
 分布式系统无法同时满足：
 
@@ -1000,7 +1000,7 @@ enum TokenValidationStrategy {
         // 必须检查令牌撤销状态
         revocation_check: RevocationCheck,
     },
-    
+
     // 可用性优先 (AP)
     HighAvailability {
         // 本地缓存撤销列表，可能不是最新
@@ -1008,7 +1008,7 @@ enum TokenValidationStrategy {
         // 缓存过期策略
         cache_ttl: Duration,
     },
-    
+
     // 混合策略
     Hybrid {
         // 先本地检查，再异步验证
@@ -1019,7 +1019,7 @@ enum TokenValidationStrategy {
 }
 ```
 
-### 共识算法形式化
+### 1.22.3 共识算法形式化
 
 以PBFT为例，形式化其安全性：
 
@@ -1027,9 +1027,9 @@ $$\forall r_1, r_2 \in Replicas, v_1, v_2 \in Views: commit(r_1, v_1) \land comm
 
 表示不同副本在同一高度不会提交不同的值（一致性）。
 
-## 量子安全形式化分析
+## 1.23 量子安全形式化分析
 
-### 量子抗性定义
+### 1.23.1 量子抗性定义
 
 形式化量子计算模型中的安全性：
 
@@ -1037,7 +1037,7 @@ $$Adv^{quant}_{\mathcal{A}}(k) = |Pr[Exp^{quant-1}_{\mathcal{A}}(k) = 1] - Pr[Ex
 
 其中 $\mathcal{A}$ 是量子计算能力的敌手。
 
-### 后量子密码学
+### 1.23.2 后量子密码学
 
 量子安全密码原语形式化要求：
 
@@ -1051,16 +1051,16 @@ trait PostQuantumSignature {
     type PublicKey;
     type PrivateKey;
     type Signature;
-    
+
     // 生成密钥对
     fn generate_keys() -> (Self::PublicKey, Self::PrivateKey);
-    
+
     // 签名
     fn sign(message: &[u8], sk: &Self::PrivateKey) -> Self::Signature;
-    
+
     // 验证
     fn verify(message: &[u8], signature: &Self::Signature, pk: &Self::PublicKey) -> bool;
-    
+
     // 模拟量子攻击的安全证明
     fn security_proof() -> SecurityProof;
 }
@@ -1073,9 +1073,9 @@ impl PostQuantumSignature for DilithiumSignature {
 }
 ```
 
-## 高级Rust实现模式
+## 1.24 高级Rust实现模式
 
-### 类型驱动的安全设计
+### 1.24.1 类型驱动的安全设计
 
 使用类型系统进行设计安全系统：
 
@@ -1106,7 +1106,7 @@ impl AuthStateTransition<AuthState::Unauthenticated, AuthState::AwaitingCredenti
 // 例如: Authenticated -> Unauthenticated 需要先注销
 ```
 
-### 所有权模型与安全
+### 1.24.2 所有权模型与安全
 
 利用Rust所有权系统保证安全操作：
 
@@ -1123,7 +1123,7 @@ impl AuthToken {
         if self.used {
             return Err(AuthError::TokenAlreadyUsed);
         }
-        
+
         self.used = true;
         // 创建会话
         AuthenticatedSession::new(&self.token_data)
@@ -1133,19 +1133,19 @@ impl AuthToken {
 // 编译时保证AuthToken不能在use_token后再次使用
 fn secure_process() {
     let token = get_token();
-    
+
     // 使用令牌
     let session = token.use_token().unwrap();
-    
+
     // 这行会导致编译错误，因为token已被消费
     // let another = token.use_token(); // ❌ 编译错误
-    
+
     // 使用session
     session.do_authenticated_action();
 }
 ```
 
-### 类型系统安全保障
+### 1.24.3 类型系统安全保障
 
 类型状态模式(Typestate)确保操作序列正确：
 
@@ -1166,7 +1166,7 @@ impl AuthSession<Unauthenticated> {
     fn new() -> Self {
         // 创建未认证会话
     }
-    
+
     fn authenticate(self, credentials: Credentials) -> Result<AuthSession<Authenticated>, AuthError> {
         // 验证凭证
         // 成功后转换状态
@@ -1191,9 +1191,9 @@ impl<State> Drop for AuthSession<State> {
 }
 ```
 
-## 形式化演算与推理系统
+## 1.25 形式化演算与推理系统
 
-### 霍尔逻辑推理
+### 1.25.1 霍尔逻辑推理
 
 使用霍尔三元组 $\{P\} C \{Q\}$ 进行程序验证：
 
@@ -1210,7 +1210,7 @@ let result = (hash == stored);
 {result = true ⟺ correct_password(u, password)}
 ```
 
-### 依赖类型与精确规约
+### 1.25.2 依赖类型与精确规约
 
 使用依赖类型表达精确的安全规约：
 
@@ -1232,7 +1232,7 @@ fn access_resource(
 ) -> Result<(), {e: Error | e.is_err() ⟺ !authorized(user, resource)}>
 ```
 
-### 精确并发模型
+### 1.25.3 精确并发模型
 
 使用会话类型和线性类型保证协议安全：
 
@@ -1262,9 +1262,9 @@ fn server_protocol() -> Session<?Credentials.!Token.?Request.!Response.End> {
 }
 ```
 
-## 静态与动态安全保障的统一
+## 1.26 静态与动态安全保障的统一
 
-### 混合验证框架
+### 1.26.1 混合验证框架
 
 结合静态和动态验证技术：
 
@@ -1272,7 +1272,7 @@ fn server_protocol() -> Session<?Credentials.!Token.?Request.!Response.End> {
 struct HybridSecurityFramework<Static, Dynamic> {
     // 静态验证组件（编译时检查）
     static_checker: PhantomData<Static>,
-    
+
     // 动态验证组件（运行时检查）
     dynamic_checker: Dynamic,
 }
@@ -1295,15 +1295,15 @@ fn secure_auth_with_hybrid_verification() {
     // 类型系统确保静态属性
     // 运行时检查动态属性
     let security_framework = HybridSecurityFramework::<StaticAuthVerifier, DynamicAuthVerifier>::new();
-    
+
     let auth_data = get_auth_data();
     security_framework.verify(&auth_data)?;
-    
+
     // 处理认证后逻辑
 }
 ```
 
-### 验证连续体
+### 1.26.2 验证连续体
 
 形式化定义从静态到动态的验证连续体：
 
@@ -1321,7 +1321,7 @@ $$VerificationContinuum = \{Static, Hybrid, Dynamic\}$$
 运行时条件      |           |           |     ✓
 ```
 
-### 全栈安全保障
+### 1.26.3 全栈安全保障
 
 确保各层级安全性协同工作：
 
@@ -1330,16 +1330,16 @@ $$VerificationContinuum = \{Static, Hybrid, Dynamic\}$$
 struct SecurityStack {
     // 类型层 - 编译时保证
     type_system: TypeSystem,
-    
+
     // 代码层 - 静态分析
     static_analyzer: StaticAnalyzer,
-    
+
     // 运行时层 - 动态检查
     runtime_checker: RuntimeChecker,
-    
+
     // 系统层 - 隔离和监控
     system_monitor: SystemMonitor,
-    
+
     // 网络层 - 通信安全
     network_security: NetworkSecurity,
 }
@@ -1353,7 +1353,7 @@ impl SecurityStack {
         let runtime_safe = self.runtime_checker.check(context);
         let system_safe = self.system_monitor.verify(context);
         let network_safe = self.network_security.verify(context);
-        
+
         // 综合决策
         if type_safe && static_safe && runtime_safe && system_safe && network_safe {
             SecurityDecision::Allow
@@ -1364,7 +1364,7 @@ impl SecurityStack {
 }
 ```
 
-## **思维导图**
+## 1.27 **思维导图**
 
 ```text
 加密与认证系统形式化分析(续)

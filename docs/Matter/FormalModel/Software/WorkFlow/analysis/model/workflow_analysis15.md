@@ -1,46 +1,40 @@
-# Design Philosophy: The Adaptive Composable Workflow Architecture
-
-Okay, stepping away from analyzing existing systems or strictly adhering to the previous discussions,
-let's design a workflow architecture from a fresh perspective,
-aiming to address the identified limitations and build upon core principles for robustness, adaptability, and clarity.
-
-This design philosophy prioritizes **Intrinsic Adaptability, Composable Effects, and Focused Formalism**.
+# 1. Design Philosophy: The Adaptive Composable Workflow Architecture
 
 ## 目录
 
-- [Design Philosophy: The Adaptive Composable Workflow Architecture](#design-philosophy-the-adaptive-composable-workflow-architecture)
+- [1. Design Philosophy: The Adaptive Composable Workflow Architecture](#1-design-philosophy-the-adaptive-composable-workflow-architecture)
   - [目录](#目录)
-  - [I. 核心设计哲学 (Core Design Philosophy)](#i-核心设计哲学-core-design-philosophy)
-  - [II. 关键架构概念 (Key Architectural Concepts)](#ii-关键架构概念-key-architectural-concepts)
-    - [A. 工作流原语：效应单元 (Workflow Primitive: Effectful Cell)](#a-工作流原语效应单元-workflow-primitive-effectful-cell)
-    - [B. 效应执行器 (Effect Handlers)](#b-效应执行器-effect-handlers)
-    - [C. 协调日志与恢复 (Coordination Log \& Recovery)](#c-协调日志与恢复-coordination-log--recovery)
-    - [D. 对比 Temporal/Cadence (Contrast with Temporal/Cadence)](#d-对比-temporalcadence-contrast-with-temporalcadence)
-  - [IX. 结语 (Concluding Thoughts on the Design)](#ix-结语-concluding-thoughts-on-the-design)
-  - [X. 实现考虑 (Rust 重点) (Implementation Considerations (Rust Focus))](#x-实现考虑-rust-重点-implementation-considerations-rust-focus)
-    - [A. Cell 实现 (`EffectfulCell` Trait)](#a-cell-实现-effectfulcell-trait)
-    - [B. Fabric 实现 (Fabric Implementation)](#b-fabric-实现-fabric-implementation)
-    - [C. 效应执行器实现 (Effect Handler Implementation)](#c-效应执行器实现-effect-handler-implementation)
-  - [XI. 工具与开发者体验 (Tooling and Developer Experience)](#xi-工具与开发者体验-tooling-and-developer-experience)
-  - [XII. 处理高级场景 (Handling Advanced Scenarios)](#xii-处理高级场景-handling-advanced-scenarios)
-  - [XIII. 安全考虑 (Security Considerations)](#xiii-安全考虑-security-considerations)
-  - [XIV. 资源管理再探讨：能力与适应 (Resource Management Revisited: Capabilities and Adaptation)](#xiv-资源管理再探讨能力与适应-resource-management-revisited-capabilities-and-adaptation)
-  - [XV. 数据处理策略 (Data Handling Strategies)](#xv-数据处理策略-data-handling-strategies)
-  - [XVI. 重温“三流”模型 (Revisiting the "Three Streams" Model)](#xvi-重温三流模型-revisiting-the-three-streams-model)
-  - [XVII. 关于设计优越性的最终思考 (Final Thoughts on Design Superiority)](#xvii-关于设计优越性的最终思考-final-thoughts-on-design-superiority)
-  - [XVIII. 形式化验证在此架构中的适用性 (Formal Verification Applicability in This Architecture)](#xviii-形式化验证在此架构中的适用性-formal-verification-applicability-in-this-architecture)
-  - [XIX. 此架构的测试策略 (Testing Strategies for This Architecture)](#xix-此架构的测试策略-testing-strategies-for-this-architecture)
-  - [XX. 自适应可组合架构中的可观测性 (Observability in the Adaptive Composable Architecture)](#xx-自适应可组合架构中的可观测性-observability-in-the-adaptive-composable-architecture)
-  - [XXI. 可伸缩性模式 (Scalability Patterns)](#xxi-可伸缩性模式-scalability-patterns)
-  - [XXII. 部署模型 (Deployment Models)](#xxii-部署模型-deployment-models)
-  - [XXIII. 未来方向与研究 (Future Directions and Research)](#xxiii-未来方向与研究-future-directions-and-research)
-  - [XXIV. 权衡总结：批判性视角 (Trade-off Summary: A Critical Perspective)](#xxiv-权衡总结批判性视角-trade-off-summary-a-critical-perspective)
-  - [XXV. 采用策略 (Adoption Strategy)](#xxv-采用策略-adoption-strategy)
-  - [XXVI. 用例适用性 (Use Case Suitability)](#xxvi-用例适用性-use-case-suitability)
-  - [XXVII. 与微服务编排的比较 (Comparison with Microservices Orchestration)](#xxvii-与微服务编排的比较-comparison-with-microservices-orchestration)
-  - [XXVIII. 最终哲学陈述 (Final Philosophical Statement)](#xxviii-最终哲学陈述-final-philosophical-statement)
+  - [1.1 I. 核心设计哲学 (Core Design Philosophy)](#11-i-核心设计哲学-core-design-philosophy)
+  - [1.2 II. 关键架构概念 (Key Architectural Concepts)](#12-ii-关键架构概念-key-architectural-concepts)
+    - [1.2.1 A. 工作流原语：效应单元 (Workflow Primitive: Effectful Cell)](#121-a-工作流原语效应单元-workflow-primitive-effectful-cell)
+    - [1.8.2 B. 效应执行器 (Effect Handlers)](#182-b-效应执行器-effect-handlers)
+    - [1.8.3 C. 协调日志与恢复 (Coordination Log \& Recovery)](#183-c-协调日志与恢复-coordination-log--recovery)
+    - [1.8.4 D. 对比 Temporal/Cadence (Contrast with Temporal/Cadence)](#184-d-对比-temporalcadence-contrast-with-temporalcadence)
+  - [1.9 IX. 结语 (Concluding Thoughts on the Design)](#19-ix-结语-concluding-thoughts-on-the-design)
+  - [1.10 X. 实现考虑 (Rust 重点) (Implementation Considerations (Rust Focus))](#110-x-实现考虑-rust-重点-implementation-considerations-rust-focus)
+    - [1.10.1 A. Cell 实现 (`EffectfulCell` Trait)](#1101-a-cell-实现-effectfulcell-trait)
+    - [1.10.2 B. Fabric 实现 (Fabric Implementation)](#1102-b-fabric-实现-fabric-implementation)
+    - [1.10.3 C. 效应执行器实现 (Effect Handler Implementation)](#1103-c-效应执行器实现-effect-handler-implementation)
+  - [1.11 XI. 工具与开发者体验 (Tooling and Developer Experience)](#111-xi-工具与开发者体验-tooling-and-developer-experience)
+  - [1.12 XII. 处理高级场景 (Handling Advanced Scenarios)](#112-xii-处理高级场景-handling-advanced-scenarios)
+  - [1.13 XIII. 安全考虑 (Security Considerations)](#113-xiii-安全考虑-security-considerations)
+  - [1.14 XIV. 资源管理再探讨：能力与适应 (Resource Management Revisited: Capabilities and Adaptation)](#114-xiv-资源管理再探讨能力与适应-resource-management-revisited-capabilities-and-adaptation)
+  - [1.15 XV. 数据处理策略 (Data Handling Strategies)](#115-xv-数据处理策略-data-handling-strategies)
+  - [1.16 XVI. 重温“三流”模型 (Revisiting the "Three Streams" Model)](#116-xvi-重温三流模型-revisiting-the-three-streams-model)
+  - [1.17 XVII. 关于设计优越性的最终思考 (Final Thoughts on Design Superiority)](#117-xvii-关于设计优越性的最终思考-final-thoughts-on-design-superiority)
+  - [1.18 XVIII. 形式化验证在此架构中的适用性 (Formal Verification Applicability in This Architecture)](#118-xviii-形式化验证在此架构中的适用性-formal-verification-applicability-in-this-architecture)
+  - [1.19 XIX. 此架构的测试策略 (Testing Strategies for This Architecture)](#119-xix-此架构的测试策略-testing-strategies-for-this-architecture)
+  - [1.20 XX. 自适应可组合架构中的可观测性 (Observability in the Adaptive Composable Architecture)](#120-xx-自适应可组合架构中的可观测性-observability-in-the-adaptive-composable-architecture)
+  - [1.21 XXI. 可伸缩性模式 (Scalability Patterns)](#121-xxi-可伸缩性模式-scalability-patterns)
+  - [1.22 XXII. 部署模型 (Deployment Models)](#122-xxii-部署模型-deployment-models)
+  - [1.23 XXIII. 未来方向与研究 (Future Directions and Research)](#123-xxiii-未来方向与研究-future-directions-and-research)
+  - [1.24 XXIV. 权衡总结：批判性视角 (Trade-off Summary: A Critical Perspective)](#124-xxiv-权衡总结批判性视角-trade-off-summary-a-critical-perspective)
+  - [1.25 XXV. 采用策略 (Adoption Strategy)](#125-xxv-采用策略-adoption-strategy)
+  - [1.26 XXVI. 用例适用性 (Use Case Suitability)](#126-xxvi-用例适用性-use-case-suitability)
+  - [1.27 XXVII. 与微服务编排的比较 (Comparison with Microservices Orchestration)](#127-xxvii-与微服务编排的比较-comparison-with-microservices-orchestration)
+  - [1.28 XXVIII. 最终哲学陈述 (Final Philosophical Statement)](#128-xxviii-最终哲学陈述-final-philosophical-statement)
 
-## I. 核心设计哲学 (Core Design Philosophy)
+## 1.1 I. 核心设计哲学 (Core Design Philosophy)
 
 -1.  **拥抱变化而非抵抗变化 (Embrace Change, Don't Resist It)**
     演化是常态。架构应将版本控制、兼容性处理和动态适应性作为一等公民，而非事后补救。
@@ -61,9 +55,9 @@ This design philosophy prioritizes **Intrinsic Adaptability, Composable Effects,
 -6.  **组合优于继承/配置 (Composition Over Inheritance/Configuration)**
     通过组合简单、定义良好的原语来构建复杂行为，而不是依赖复杂的配置或继承层次。
 
-## II. 关键架构概念 (Key Architectural Concepts)
+## 1.2 II. 关键架构概念 (Key Architectural Concepts)
 
-### A. 工作流原语：效应单元 (Workflow Primitive: Effectful Cell)
+### 1.2.1 A. 工作流原语：效应单元 (Workflow Primitive: Effectful Cell)
 
 - **概念**
     取代单一、庞大的工作流定义或状态机，核心构建块是“效应单元” (Cell)。
@@ -123,7 +117,7 @@ trait EffectfulCell {
 }
 
 
-### B. 运行时：自适应结构 (Runtime: The Adaptive Fabric)
+### 1.2.2 B. 运行时：自适应结构 (Runtime: The Adaptive Fabric)
 
 **概念**
     取代传统的固定调度器和 Worker 池，引入“自适应结构” (Adaptive Fabric)。
@@ -149,7 +143,7 @@ trait EffectfulCell {
 **与 Cell 的交互**
     Fabric 通过一个明确的接口 (`FabricInterface`) 与 Cell 交互，Cell 通过此接口请求执行效应、获取上下文信息、报告状态等。
 
-### C. 通信与状态：显式契约与界限上下文 (Communication & State: Explicit Contracts & Bounded Contexts)
+### 1.2.3 C. 通信与状态：显式契约与界限上下文 (Communication & State: Explicit Contracts & Bounded Contexts)
 
 **契约驱动**:
     Cell 之间的交互严格基于**显式契约**：
@@ -174,9 +168,9 @@ trait EffectfulCell {
         Fabric 维护必要的协调状态，例如 Cell 实例的激活状态、正在进行的效应调用、版本信息、连接拓扑等。
         这部分状态通常需要更高的一致性保证。
 
-## III. 核心机制设计 (Core Mechanism Design)
+## 1.3 III. 核心机制设计 (Core Mechanism Design)
 
-### A. 状态管理：局部策略与协调日志 (State Management: Local Strategies & Coordination Log)
+### 1.3.1 A. 状态管理：局部策略与协调日志 (State Management: Local Strategies & Coordination Log)
 
 **抛弃单一事件历史**:
     不再依赖单一的、全局的工作流事件历史记录所有细节。
@@ -205,7 +199,7 @@ trait EffectfulCell {
         通过协调日志可以恢复 Cell 之间的连接拓扑和未完成的效应协调，
         然后加载 Cell 的局部状态快照继续执行。
 
-### B. 并发与调度：基于意图与能力的调度 (Concurrency & Scheduling: Intent & Capability-Based)
+### 1.3.2 B. 并发与调度：基于意图与能力的调度 (Concurrency & Scheduling: Intent & Capability-Based)
 
 **意图声明**:
     Cell 定义可以包含对其执行需求的声明（“意图”），例如：
@@ -221,7 +215,7 @@ trait EffectfulCell {
         支持更复杂的并发模式（如限制特定类型效应的总并发量）。
     **优势**: 更精细的资源管理，更好的性能隔离，更灵活的调度策略。
 
-### C. 故障处理：分层错误域与效应回滚/补偿 (Failure Handling: Layered Error Domains & Effect Rollback/Compensation)
+### 1.3.3 C. 故障处理：分层错误域与效应回滚/补偿 (Failure Handling: Layered Error Domains & Effect Rollback/Compensation)
 
 **分层错误**: 明确区分错误发生的层次：
     **Cell 内部逻辑错误 (`Error`)**: 由 Cell 自身处理或作为其输出返回给 Fabric。
@@ -237,7 +231,7 @@ trait EffectfulCell {
         **显式错误处理 Cell**: 可以设计专门的 Cell 来处理特定类型的错误，Fabric 将错误路由到这些 Cell。
     **优势**: 更清晰的错误处理流程，将业务错误与基础设施错误分离，利用显式效应模型进行更精确的恢复。
 
-### D. 演化：契约版本控制与结构适应 (Evolution: Contract Versioning & Fabric Adaptation)
+### 1.3.4 D. 演化：契约版本控制与结构适应 (Evolution: Contract Versioning & Fabric Adaptation)
 
     **Cell 版本化**: 每个 Cell 定义都有版本号。
     **契约版本化**: Cell 的输入、输出、错误和效应类型（即其契约）也需要进行版本化管理。可以使用兼容性规则（如后向兼容、前向兼容）或显式的适配器。
@@ -250,7 +244,7 @@ trait EffectfulCell {
     **协调日志演化**: 协调日志的格式也需要考虑演化。
     **优势**: 将版本化和兼容性作为核心设计，而不是补丁，使得系统演化更平滑、风险更低。
 
-### E. 组合性：代数组合与类型化效应 (Composition: Algebraic Composition & Typed Effects)
+### 1.3.5 E. 组合性：代数组合与类型化效应 (Composition: Algebraic Composition & Typed Effects)
 
     **连接拓扑**: 工作流逻辑通过定义 Cell 之间的连接拓扑来表达。这可以：
         **静态定义**: 使用配置或 DSL 定义固定的流程。
@@ -265,7 +259,7 @@ trait EffectfulCell {
             Fabric 可以利用 Cell 声明的效应类型来进行调度决策（如将需要特定数据库效应的 Cell 调度到靠近数据库的节点）或进行更精确的错误处理。
     **优势**: 提供灵活的组合方式，同时通过类型化的效应增强了对副作用的理解和管理能力。
 
-## IV. 形式化策略：聚焦与实用 (Formalism Strategy: Focused & Pragmatic)
+## 1.4 IV. 形式化策略：聚焦与实用 (Formalism Strategy: Focused & Pragmatic)
 
     **核心协议形式化**:
         使用 TLA+、CSP 或类似工具形式化**协调日志**的一致性协议和 Fabric 内部关键的状态机（如效应执行状态、Cell 生命周期状态）。
@@ -280,7 +274,7 @@ trait EffectfulCell {
         不试图形式验证整个工作流的业务逻辑正确性或所有可能的状态转换，承认其复杂性和不可行性。
         依赖于 Cell 的局部测试和更高层的集成/端到端测试。
 
-## V. 预期优势 (Anticipated Advantages)
+## 1.5 V. 预期优势 (Anticipated Advantages)
 
 1.  **适应性与弹性**:
     Fabric 的自适应能力和去中心化设计提高了对负载变化和局部故障的适应性。
@@ -295,7 +289,7 @@ trait EffectfulCell {
 6.  **故障隔离**:
     Cell 的界限上下文和分层错误处理有助于隔离故障影响。
 
-## VI. 面临的挑战与风险 (Challenges & Risks)
+## 1.6 VI. 面临的挑战与风险 (Challenges & Risks)
 
 1.  **复杂性**:
     Fabric 本身的设计和实现比传统调度器更复杂，涉及分布式协调、自适应算法等。
@@ -308,7 +302,7 @@ trait EffectfulCell {
 5.  **形式化与实现的差距**:
     即使聚焦形式化，确保实现严格遵守形式规范仍然是一个挑战。
 
-## VII. 结论
+## 1.7 VII. 结论
 
 “自适应可组合工作流架构”旨在通过**拥抱变化、显式化副作用、去中心化和自适应运行时**来克服传统工作流架构的一些局限性。
 它将核心构建块设计为具有明确契约和局部状态的“效应单元”，由一个智能的、自适应的“结构”进行连接、协调和管理。
@@ -318,11 +312,11 @@ trait EffectfulCell {
 这种设计哲学力求在理论严谨性、工程实用性、系统适应性和长期可维护性之间找到一个更好的平衡点，尽管它也带来了新的复杂性和挑战。
 其核心目标是构建一个更能适应未来需求、更易于推理副作用、更能从故障中优雅恢复的工作流系统基础。
 
-## VIII. 深入机制：交互、执行与恢复 (Deeper Dive: Interaction, Execution & Recovery)
+## 1.8 VIII. 深入机制：交互、执行与恢复 (Deeper Dive: Interaction, Execution & Recovery)
 
 让我们详细阐述核心组件如何交互以及处理执行和恢复。
 
-### A. Fabric-Cell 交互接口 (`FabricInterface`)
+### 1.8.1 A. Fabric-Cell 交互接口 (`FabricInterface`)
 
 `FabricInterface` 是 Cell 的业务逻辑与运行时环境 (Fabric) 之间的关键边界。它被注入到 Cell 的 `execute` 方法以及潜在的其他方法中。其设计旨在提供必要的能力，同时抽象掉 Fabric 的内部复杂性。
 
@@ -388,11 +382,11 @@ pub trait FabricInterface<Effect>: Send + Sync {
 }
 ```
 
-### B. 效应执行器 (Effect Handlers)
+### 1.8.2 B. 效应执行器 (Effect Handlers)
 
 - **职责**: 效应执行器是负责实际执行 Cell 请求的副作用的组件（例如，进行 HTTP 调用、写入数据库、与消息队列交互）。
-- **定位**: 它们通常作为独立的、可能分布式的服务或库运行，可被 Fabric 节点访问。它们*不*属于 Cell 的业务逻辑。
-- **解耦**: Fabric 充当 Cell 和效应执行器之间的中介。Cell 只声明它需要的效应*类型*；Fabric 将此请求路由到适当的、已配置的执行器。这将业务逻辑与交互的具体实现解耦（例如，使用 `reqwest` 而不是 `hyper` 进行 HTTP 调用）。
+- **定位**: 它们通常作为独立的、可能分布式的服务或库运行，可被 Fabric 节点访问。它们_不_属于 Cell 的业务逻辑。
+- **解耦**: Fabric 充当 Cell 和效应执行器之间的中介。Cell 只声明它需要的效应_类型_；Fabric 将此请求路由到适当的、已配置的执行器。这将业务逻辑与交互的具体实现解耦（例如，使用 `reqwest` 而不是 `hyper` 进行 HTTP 调用）。
 - **可靠性**: 效应执行器最好设计成幂等的，或提供幂等性机制。Fabric 层在执行器执行周围增加了可靠性（重试、超时、熔断）。
 
 - **配置**: Fabric 需要配置来将特定的 `Effect` 类型（以及可能其中的参数，如 API 端点 URL）映射到相应的执行器实例或服务。
@@ -436,7 +430,7 @@ impl EffectHandlerRegistry {
 }
 ```
 
-### C. 协调日志与恢复 (Coordination Log & Recovery)
+### 1.8.3 C. 协调日志与恢复 (Coordination Log & Recovery)
 
 - **日志内容**: 协调日志持久地记录由 Fabric 管理的高级编排事件。示例条目：
   - `CellInstanceCreated(workflow_id, cell_instance_id, cell_type, version, input_hash)`
@@ -451,7 +445,7 @@ impl EffectHandlerRegistry {
   - `TopologyLinkCreated(from_cell_id, to_cell_id, condition)`
   - `WorkflowCompleted(workflow_id)`
   - `WorkflowFailed(workflow_id)`
-- **一致性**: 此日志*必须*具有强一致性和持久性。如果 Fabric 本身是分布式的，它可能需要一个分布式共识协议（如 Raft 或 Paxos），或者如果集中化（尽管哲学上不鼓励集中化），则依赖于具有强保证的事务性数据库。
+- **一致性**: 此日志_必须_具有强一致性和持久性。如果 Fabric 本身是分布式的，它可能需要一个分布式共识协议（如 Raft 或 Paxos），或者如果集中化（尽管哲学上不鼓励集中化），则依赖于具有强保证的事务性数据库。
 - **恢复过程**: 当 Fabric 节点重启或需要恢复工作流时：
     1. **加载协调日志**: 从协调日志中读取正在恢复的工作流实例的相关条目。
     2. **重建拓扑/状态**: 根据日志确定当前的连接拓扑、哪些 Cell 应处于活动状态以及任何待处理效应的状态。
@@ -463,7 +457,7 @@ impl EffectHandlerRegistry {
         - Fabric 传递必要的输入以触发 Cell 的 `execute` 方法（如果它尚未运行或在执行中被中断）。
     4. **恢复待处理效应**: 如果日志显示 `EffectRequested` 但没有相应的 `EffectCompleted` 或 `EffectFailed`，Fabric 将重新启动效应执行（通过 `effect_id` 确保幂等性）。
 
-### D. 对比 Temporal/Cadence (Contrast with Temporal/Cadence)
+### 1.8.4 D. 对比 Temporal/Cadence (Contrast with Temporal/Cadence)
 
 | 特性                       | Temporal/Cadence 方法                                   | 自适应可组合方法 (提议)                               | 主要区别 / 预期改进                                              |
 | :------------------------- | :------------------------------------------------------ | :---------------------------------------------------- | :--------------------------------------------------------------- |
@@ -476,19 +470,19 @@ impl EffectHandlerRegistry {
 | **形式化焦点**             | 主要依赖确定性重放保证                                    | 关注协调日志一致性 & 通信契约                            | 将形式化焦点从完全重放转移到核心协调 & 接口                       |
 | **组合**                   | 子工作流；代码内的活动组合                                  | 通过 Fabric 拓扑组合 Cell；代数操作符 (可选)             | 可能更结构化和类型安全的组合                                    |
 
-## IX. 结语 (Concluding Thoughts on the Design)
+## 1.9 IX. 结语 (Concluding Thoughts on the Design)
 
 这种自适应可组合工作流架构代表了一种概念上的转变。它摒弃了基于详细全局历史进行确定性重放的单体工作流定义。取而代之的是，它倾向于一个**自治、有状态单元的联合体**，通过显式效应和契约进行通信，由一个**智能、自适应的运行时结构**进行编排，该结构依赖于一个**高级协调日志**。
 
 该设计通过将**副作用管理、演化和自适应行为**作为核心关注点来明确应对这些挑战。它借鉴了**领域驱动设计（限界上下文）、Actor 模型（局部状态、通过效应传递消息）、形式化方法（聚焦验证、类型化契约）和控制理论（自适应运行时）**的思想。
 
-虽然其运行时（Fabric）显著更复杂，但它的目标是简化每个 Cell 内部的*业务逻辑*，并使整个系统相比于严重依赖单一、详细事件日志和严格确定性重放潜在复杂、充满副作用的代码的方法，更具弹性、适应性，并且更容易随着时间的推移安全地演化。这种架构的成功取决于 Fabric 协调机制的仔细实现、自适应算法的有效性，以及为开发人员提供符合人体工程学的工具来定义和管理 Cell 及其契约。
+虽然其运行时（Fabric）显著更复杂，但它的目标是简化每个 Cell 内部的_业务逻辑_，并使整个系统相比于严重依赖单一、详细事件日志和严格确定性重放潜在复杂、充满副作用的代码的方法，更具弹性、适应性，并且更容易随着时间的推移安全地演化。这种架构的成功取决于 Fabric 协调机制的仔细实现、自适应算法的有效性，以及为开发人员提供符合人体工程学的工具来定义和管理 Cell 及其契约。
 
-## X. 实现考虑 (Rust 重点) (Implementation Considerations (Rust Focus))
+## 1.10 X. 实现考虑 (Rust 重点) (Implementation Considerations (Rust Focus))
 
 将此设计转化为实际实现，特别是使用 Rust，涉及特定的选择和挑战。
 
-### A. Cell 实现 (`EffectfulCell` Trait)
+### 1.10.1 A. Cell 实现 (`EffectfulCell` Trait)
 
 - **状态管理**:
   - 需要状态的 Cell 可以使用 `serde` 进行序列化/反序列化。`state()` 和 `load_state()` 方法将处理此问题。
@@ -602,7 +596,7 @@ impl EffectfulCell for OrderProcessorCell {
 }
 ```
 
-### B. Fabric 实现 (Fabric Implementation)
+### 1.10.2 B. Fabric 实现 (Fabric Implementation)
 
 - **核心组件**:
   - **Cell 注册表 & 版本管理器**: 跟踪可用的 Cell 类型和版本。
@@ -616,13 +610,13 @@ impl EffectfulCell for OrderProcessorCell {
 - **分布**: 构建一个真正分布式的 Fabric 是复杂的。可以利用像 `tonic` (gRPC) 这样的框架进行节点间通信，服务发现机制（如 `etcd`, `Consul`），以及潜在的分布式追踪 (`opentelemetry`)。对于高规模场景，可能需要对工作流实例或协调日志条目进行分片。
 - **配置**: 需要一个健壮的配置系统（例如，`config-rs`、环境变量）来定义 Fabric 拓扑、效应处理程序映射、扩展策略、资源限制等。
 
-### C. 效应执行器实现 (Effect Handler Implementation)
+### 1.10.3 C. 效应执行器实现 (Effect Handler Implementation)
 
 - **独立服务/库**: 用于外部交互（HTTP、数据库、队列）的处理程序通常最好实现为单独的 Rust 服务或库。
 - **幂等性**: 在可能的情况下实现幂等性检查（例如，使用通过效应负载传递的唯一请求 ID）。
 - **接口**: 为处理程序定义清晰的 `async fn` 接口。Fabric 的效应路由器调用这些接口。
 
-## XI. 工具与开发者体验 (Tooling and Developer Experience)
+## 1.11 XI. 工具与开发者体验 (Tooling and Developer Experience)
 
 一个强大的架构需要好的工具才能有效。
 
@@ -646,16 +640,16 @@ impl EffectfulCell for OrderProcessorCell {
     - 用于部署 Cell 版本、管理工作流定义和观察运行实例的 CLI 或 UI。
     - 如果将 Fabric 节点部署为容器，则与标准基础设施配置工具（Terraform、Pulumi）和容器编排器（Kubernetes）集成。
 
-## XII. 处理高级场景 (Handling Advanced Scenarios)
+## 1.12 XII. 处理高级场景 (Handling Advanced Scenarios)
 
 - **长时间运行的人工任务**: 将“等待人工输入”表示为一个 `Effect`。Cell 请求此效应并进入等待状态（持久化自身）。效应处理程序可能会将任务发布到人工任务队列。当人工完成任务时，外部事件会触发相应的 `EffectOutcome`，Fabric 通过其 `handle_effect_result` 或通过使用结果作为输入重新激活等待的 Cell，将其路由回该 Cell。
-- **复杂补偿 (Saga)**: 定义补偿效应。协调日志跟踪成功完成的效应。如果失败需要补偿，Fabric 会读取日志，识别需要补偿的效应，并请求相应的*补偿*效应（通常按相反顺序执行）。这需要仔细设计补偿效应，以确保其安全和幂等。可以设计特定的“Saga 协调器”Cell 来管理复杂的补偿逻辑。
+- **复杂补偿 (Saga)**: 定义补偿效应。协调日志跟踪成功完成的效应。如果失败需要补偿，Fabric 会读取日志，识别需要补偿的效应，并请求相应的_补偿_效应（通常按相反顺序执行）。这需要仔细设计补偿效应，以确保其安全和幂等。可以设计特定的“Saga 协调器”Cell 来管理复杂的补偿逻辑。
 - **动态并行 (扇出/扇入)**: 一个 Cell 可以多次使用 `fabric.spawn_child_cell()` 来扇出。扇入需要一个专用的“Join”Cell，它等待来自多个上游 Cell 的输出（使用 `resolve_dependency` 或让 Fabric 根据相关 ID 将输出路由到它）然后继续。Fabric 的拓扑管理器需要处理这些动态结构。
 - **外部事件/信号**: Fabric 可以公开一个 API 来接收外部事件/信号。这些事件记录在协调日志中，并可以触发特定 Cell 的激活（例如，等待 `WaitForExternalEvent` 效应的 Cell）。
 
 这个经过优化的设计强调模块化、显式契约和运行时适应性，旨在通过强类型和在最关键的地方进行聚焦的形式化支持，构建一个更健壮、更易于演化的系统。开发者体验和全面的工具对于使这样的架构变得实用至关重要。
 
-## XIII. 安全考虑 (Security Considerations)
+## 1.13 XIII. 安全考虑 (Security Considerations)
 
 安全不能是事后才考虑的事情；它必须贯穿整个架构。
 
@@ -671,17 +665,17 @@ impl EffectfulCell for OrderProcessorCell {
 3. **数据安全**:
     - **传输中加密**: 所有通信（Fabric 节点、Fabric-Cell、Fabric-Handler、Fabric-Log）都必须使用 TLS。
     - **静态加密**: 协调日志数据和持久化的 Cell 状态快照应在静态时加密。
-    - **秘密管理**: 需要秘密（API 密钥、密码）的 Cell 或效应执行器必须与安全的秘密管理系统（例如，HashiCorp Vault、AWS Secrets Manager）集成。秘密*不应*直接存储在 Cell 状态或协调日志中。Fabric 可能会将秘密引用或临时凭据注入 Cell 的上下文或效应执行器调用中。
+    - **秘密管理**: 需要秘密（API 密钥、密码）的 Cell 或效应执行器必须与安全的秘密管理系统（例如，HashiCorp Vault、AWS Secrets Manager）集成。秘密_不应_直接存储在 Cell 状态或协调日志中。Fabric 可能会将秘密引用或临时凭据注入 Cell 的上下文或效应执行器调用中。
     - **输入/输出净化**: 必须注意在 Cell 之间以及与外部系统之间传递的数据，以防止注入攻击或数据泄漏，尽管这通常被认为是 Cell 业务逻辑的责任。
 4. **可审计性**: 协调日志固有地提供了编排操作的高级审计跟踪。应添加详细的安全事件日志记录，以跟踪身份验证成功/失败、授权决策和敏感效应执行。
 
-## XIV. 资源管理再探讨：能力与适应 (Resource Management Revisited: Capabilities and Adaptation)
+## 1.14 XIV. 资源管理再探讨：能力与适应 (Resource Management Revisited: Capabilities and Adaptation)
 
 自适应 Fabric 的资源管理超越了简单的 CPU/内存限制。
 
 1. **能力建模**:
     - **节点**: Fabric 节点公布其能力：可用的 CPU 核心数、内存、磁盘空间/IOPS、网络带宽、是否存在专用硬件（GPU）、可用的效应执行器连接（例如，与特定数据库的接近程度）、地理位置、安全区域。
-    - **Cells (意图声明)**: Cell 不仅声明资源*数量*，还可能声明资源*类型*或*亲和性*：“需要 GPU 访问”、“偏好对数据库 X 的低延迟访问”、“必须在欧盟区域运行”、“需要高带宽网络”。
+    - **Cells (意图声明)**: Cell 不仅声明资源_数量_，还可能声明资源_类型_或_亲和性_：“需要 GPU 访问”、“偏好对数据库 X 的低延迟访问”、“必须在欧盟区域运行”、“需要高带宽网络”。
 2. **调度器逻辑**:
     - **匹配**: 调度器将 Cell 意图与节点能力相匹配。
     - **亲和性/反亲和性**: 支持诸如“将这些 Cell 放在一起”或“切勿在同一节点上运行这些 Cell”之类的规则。
@@ -695,31 +689,31 @@ impl EffectfulCell for OrderProcessorCell {
     - **资源限制调整**: 基于观察到的使用情况和策略，潜在地调整分配给 Cell 实例或组的资源限制（需要与底层执行环境集成）。
     - **执行器限制/路由**: 如果特定的效应执行器过载，Fabric 可以限制对其的请求，或者如果可用，则可能将请求路由到备用执行器实例。
 
-## XV. 数据处理策略 (Data Handling Strategies)
+## 1.15 XV. 数据处理策略 (Data Handling Strategies)
 
 工作流通常处理大量数据。直接在 Cell 之间传递大型有效负载可能效率低下，并可能阻塞通信通道或状态存储。
 
 1. **有效负载大小限制**: 对直接的 Cell 输入/输出有效负载以及效应请求/结果数据强制执行合理的大小限制。
 2. **认领检查模式 (Claim Check Pattern)**:
     - 对于大型数据（例如，图像、视频、大型文档），生成数据的 Cell/执行器将其存储在专用的 Blob 存储（如 S3、GCS、Azure Blob 存储）或共享文件系统中。
-    - 它不传递数据本身，而是在 Cell 输出或 EffectOutcome 中传递一个*引用*（例如，URL 或对象键）。
+    - 它不传递数据本身，而是在 Cell 输出或 EffectOutcome 中传递一个_引用_（例如，URL 或对象键）。
     - 消费 Cell 接收引用，并在需要时使用它（可能通过 Fabric 管理的另一个效应请求）直接从 Blob 存储中获取数据。
     - 需要管理 Blob 存储的权限以及可能存储数据的生命周期/清理。
 3. **流式处理**: 对于处理大型数据集，设计在数据流上操作而不是将所有内容加载到内存中的 Cell。Fabric 可能需要支持路由流引用或管理 Cell 或执行器之间的流式连接。
 4. **共享数据存储**: 利用可由多个 Cell 访问的数据库或缓存*（如果必要）*，但要极其谨慎，因为这会破坏局部状态原则并引入潜在的耦合和争用。访问最好通过专用的 Cell 或效应进行协调。
-5. **协调日志不是用于数据的**: 强调协调日志存储编排元数据，而*不是*业务数据有效负载。有效负载可能会被哈希或引用，但不会直接存储在日志中。
+5. **协调日志不是用于数据的**: 强调协调日志存储编排元数据，而_不是_业务数据有效负载。有效负载可能会被哈希或引用，但不会直接存储在日志中。
 
-## XVI. 重温“三流”模型 (Revisiting the "Three Streams" Model)
+## 1.16 XVI. 重温“三流”模型 (Revisiting the "Three Streams" Model)
 
-虽然此设计摒弃了*单一*的单体事件历史，但来自 `workflow_analysis03` 的概念性“流”仍然可以映射，尽管是以更分布式和细致的方式：
+虽然此设计摒弃了_单一_的单体事件历史，但来自 `workflow_analysis03` 的概念性“流”仍然可以映射，尽管是以更分布式和细致的方式：
 
-- **控制流 (C)**: 由 Fabric 内动态管理的**拓扑**（哪些 Cell 连接到哪些）和嵌入在单个 Cell 内的**决策逻辑**（确定输出或下一步）表示。**协调日志**记录控制流决策的*结果*（激活、完成）。
+- **控制流 (C)**: 由 Fabric 内动态管理的**拓扑**（哪些 Cell 连接到哪些）和嵌入在单个 Cell 内的**决策逻辑**（确定输出或下一步）表示。**协调日志**记录控制流决策的_结果_（激活、完成）。
 - **执行流 (E)**: 体现为**自适应调度器**将 Cell 实例**激活和调度**到 Fabric 节点上，以及将副作用委托给**效应执行器**。实际执行发生在 Cell 的代码和执行器的逻辑内部。
 - **数据流 (D)**: 通过 Cell 之间的**显式输入/输出契约**、**效应请求/结果有效负载**以及潜在的**间接数据传输**（认领检查模式）来处理。数据一致性在 Cell 内部进行本地管理，并在协调日志中记录的关键点进行协调。
 
-与专注于包含所有三者交织在一起的单一日志的模型相比，此设计将这些流去中心化了。协调日志主要捕获这些分布式流之间的*交集*和*同步点*。
+与专注于包含所有三者交织在一起的单一日志的模型相比，此设计将这些流去中心化了。协调日志主要捕获这些分布式流之间的_交集_和_同步点_。
 
-## XVII. 关于设计优越性的最终思考 (Final Thoughts on Design Superiority)
+## 1.17 XVII. 关于设计优越性的最终思考 (Final Thoughts on Design Superiority)
 
 这个设计是否明确比其他讨论过的设计（包括 `workflow_analysis11`）“更好”？
 
@@ -736,18 +730,18 @@ impl EffectfulCell for OrderProcessorCell {
   - **调试复杂性**: 在高度分布式、自适应的系统中推理行为可能具有挑战性。分布式追踪变得至关重要。
   - **新的编程模型**: 需要开发人员采用 Cell/效应/Fabric 范式。
 
-**关于优越性的结论**: 这个设计并非普遍“更好”；它代表了一组不同的**权衡**。它优先考虑**长期可演化性、显式的副作用管理和运行时适应性**，潜在地以**增加的初始复杂性和在简单情况下的潜在性能开销**为代价。它可能*更适合*涉及以下情况的场景：
+**关于优越性的结论**: 这个设计并非普遍“更好”；它代表了一组不同的**权衡**。它优先考虑**长期可演化性、显式的副作用管理和运行时适应性**，潜在地以**增加的初始复杂性和在简单情况下的潜在性能开销**为代价。它可能_更适合_涉及以下情况的场景：
 
 - 具有频繁业务逻辑更改的高度复杂、长时间运行的流程。
 - 要求高弹性和细粒度故障隔离的环境。
 - 显式控制和推理副作用至关重要的系统。
 - 拥有构建和管理复杂分布式系统和工具的工程能力的组织。
 
-对于更简单、短暂的编排任务，像 AWS Step Functions 甚至更简单的基于队列的模式可能就足够了，它可能会显得*矫枉过正*。它提供了一种比 Temporal/Cadence 模型更去中心化且可能更具适应性的替代方案，特别是通过将详细的状态历史与核心协调解耦。
+对于更简单、短暂的编排任务，像 AWS Step Functions 甚至更简单的基于队列的模式可能就足够了，它可能会显得_矫枉过正_。它提供了一种比 Temporal/Cadence 模型更去中心化且可能更具适应性的替代方案，特别是通过将详细的状态历史与核心协调解耦。
 
-## XVIII. 形式化验证在此架构中的适用性 (Formal Verification Applicability in This Architecture)
+## 1.18 XVIII. 形式化验证在此架构中的适用性 (Formal Verification Applicability in This Architecture)
 
-在倡导*聚焦*形式化的同时，让我们具体说明它在自适应可组合架构中提供最大价值的地方：
+在倡导_聚焦_形式化的同时，让我们具体说明它在自适应可组合架构中提供最大价值的地方：
 
 1. **协调日志协议**:
     - **目标**: 确保协调日志本身的一致性、持久性和顺序的协议，特别是如果使用分布式共识（Raft、Paxos）实现。
@@ -766,7 +760,7 @@ impl EffectfulCell for OrderProcessorCell {
     - **方法**: 主要利用实现语言（Rust）的**静态类型系统**。为输入、输出、错误和效应定义严格的类型/结构/枚举。Rust 的编译器成为接口兼容性的形式化验证工具。模式定义语言（如 Protocol Buffers、具有严格验证的 JSON Schema）可以在需要时跨服务边界强制执行契约。
     - **价值**: 及早（编译时）捕获集成错误，提高代码清晰度，并促进更安全的演化。这是一种非常实用且经济高效的形式化形式。
 4. **简单的效应属性 (有限)**:
-    - **目标**: 对于*某些*定义明确的效应，如果这些属性可以基于效应类型和参数进行形式化指定和检查（可能使用轻量级规范语言或注释），则可能验证诸如幂等性提示或可交换性之类的简单属性。
+    - **目标**: 对于_某些_定义明确的效应，如果这些属性可以基于效应类型和参数进行形式化指定和检查（可能使用轻量级规范语言或注释），则可能验证诸如幂等性提示或可交换性之类的简单属性。
     - **方法**: 可能涉及类型系统扩展、自定义静态分析或由 Fabric 工具检查的注释。例如，将效应注释为 `#[idempotent]` 可能允许 Fabric 的重试逻辑更具侵略性或更简单。
     - **价值**: 为 Fabric 提供优化执行或恢复的提示，但不太可能为复杂的副作用实现完整的形式证明。研究潜力高，近期实用性中等。
 5. **资源模型 (潜在地)**:
@@ -774,13 +768,13 @@ impl EffectfulCell for OrderProcessorCell {
     - **方法**: 可能涉及将资源分配建模为约束满足问题或使用简化的逻辑模型，但由于动态性，完全验证可能很复杂。
     - **价值**: 增加对调度器关于基本资源约束的正确性的信心。
 
-**通常*不*进行形式化的内容**:
+**通常_不_进行形式化的内容**:
 
 - **Cell 内部的复杂业务逻辑**: Cell 内部的决策、数据转换和算法通常过于复杂且特定于领域，不适合进行实际的形式化验证。依赖于传统测试。
 - **外部系统行为**: 通过效应执行器与之交互的外部系统的确切行为（包括故障模式）通常超出了工作流系统本身形式化验证的范围。依赖于契约、测试和健壮的效应执行器实现。
 - **完整的端到端工作流正确性**: 证明由许多 Cell 组成的复杂工作流正确地实现了高级业务需求通常在形式上是不可行的。
 
-## XIX. 此架构的测试策略 (Testing Strategies for This Architecture)
+## 1.19 XIX. 此架构的测试策略 (Testing Strategies for This Architecture)
 
 多层测试策略至关重要：
 
@@ -856,7 +850,7 @@ impl EffectfulCell for OrderProcessorCell {
 
 这种全面的测试策略，将用于隔离逻辑的单元测试与用于涌现行为和弹性的各种级别的集成和 E2E 测试相结合，对于在这种可能复杂的架构中建立信心至关重要。Cell 模型的显式契约和清晰边界应有助于比单体方法更有效地进行单元和集成测试。
 
-## XX. 自适应可组合架构中的可观测性 (Observability in the Adaptive Composable Architecture)
+## 1.20 XX. 自适应可组合架构中的可观测性 (Observability in the Adaptive Composable Architecture)
 
 有效的可观测性对于理解、调试和管理这个分布式和动态系统至关重要。
 
@@ -877,7 +871,7 @@ impl EffectfulCell for OrderProcessorCell {
 
 2. **日志记录**:
     - **结构化日志记录**: 对所有组件使用结构化日志记录（例如，通过 `tracing-subscriber`、`logstash` 使用 JSON 格式）。
-    - **相关 ID**: *至关重要地*，在 Fabric 节点、Cell（通过上下文）和效应执行器之间的*所有*相关日志消息中包含 `workflow_id`、`cell_instance_id`、`activation_id` 和 `effect_id`。这允许追踪单个工作流实例或效应请求在分布式系统中的流向。
+    - **相关 ID**: _至关重要地_，在 Fabric 节点、Cell（通过上下文）和效应执行器之间的_所有_相关日志消息中包含 `workflow_id`、`cell_instance_id`、`activation_id` 和 `effect_id`。这允许追踪单个工作流实例或效应请求在分布式系统中的流向。
     - **Fabric 日志**: 记录关键事件：Cell 生命周期更改、调度决策、效应路由/重试、状态持久化操作、错误。
     - **Cell 日志**: Cell 业务逻辑可以生成日志。Fabric 应提供一个日志记录门面（`FabricInterface` 的一部分或标准上下文），自动包含相关 ID。避免过度记录敏感的业务数据。
     - **效应执行器日志**: 记录传入请求（带有相关 ID）、与外部系统的交互、结果和错误。
@@ -901,12 +895,12 @@ impl EffectfulCell for OrderProcessorCell {
 
 4. **工作流状态检查 & 可视化**:
     - **协调日志查询**: 提供工具以根据 `workflow_id` 查询协调日志，以查看高级编排步骤、效应状态和 Cell 激活。
-    - **拓扑可视化**: 用于渲染给定工作流实例的 Cell 连接拓扑的*当前*或*历史快照*的工具，可能叠加状态信息（活动、等待、失败）。
+    - **拓扑可视化**: 用于渲染给定工作流实例的 Cell 连接拓扑的_当前_或_历史快照_的工具，可能叠加状态信息（活动、等待、失败）。
     - **Cell 状态访问 (受控)**: 为授权用户（例如，支持工程师）提供安全、经过审计的机制，以检查特定 Cell 实例的最后持久化状态快照，用于调试目的。此访问必须受到仔细控制。
 
-可观测性不仅仅是收集数据；它是关于使系统的内部状态和行为对开发人员和操作员*可理解*，这在这个自适应、分布式模型中尤其重要。
+可观测性不仅仅是收集数据；它是关于使系统的内部状态和行为对开发人员和操作员_可理解_，这在这个自适应、分布式模型中尤其重要。
 
-## XXI. 可伸缩性模式 (Scalability Patterns)
+## 1.21 XXI. 可伸缩性模式 (Scalability Patterns)
 
 实现高可伸缩性需要针对不同组件的特定模式：
 
@@ -932,7 +926,7 @@ impl EffectfulCell for OrderProcessorCell {
 
 可伸缩性需要从一开始就仔细设计，特别是围绕状态（协调日志、实例映射、Cell 快照）如何分区和管理分布。
 
-## XXII. 部署模型 (Deployment Models)
+## 1.22 XXII. 部署模型 (Deployment Models)
 
 该架构允许灵活部署：
 
@@ -950,12 +944,12 @@ impl EffectfulCell for OrderProcessorCell {
     - 需要仔细考虑组件之间的网络延迟和安全性。协调日志通常保持集中位置或使用底层服务的跨区域复制功能。
 4. **无服务器集成 (部分)**:
     - **效应执行器作为函数**: 简单的效应执行器可以实现为 FaaS（无服务器函数，例如 AWS Lambda、Google Cloud Functions）。Fabric 的效应路由器调用这些函数。
-    - **Cell 作为函数 (更复杂)**: *潜在地*，Cell 激活可以触发一个 FaaS 函数。该函数需要加载其状态（通过 Fabric API 代理或直接）、执行逻辑、请求效应（回到 Fabric API），并在终止前保存状态。这为 FaaS 模型带来了显著的状态管理复杂性和冷启动延迟问题，对于频繁激活可能不如长时间运行的 Fabric 工作节点高效，但对于不频繁、简单的 Cell 可能可行。需要一个可被函数访问的 Fabric API 网关。
+    - **Cell 作为函数 (更复杂)**: _潜在地_，Cell 激活可以触发一个 FaaS 函数。该函数需要加载其状态（通过 Fabric API 代理或直接）、执行逻辑、请求效应（回到 Fabric API），并在终止前保存状态。这为 FaaS 模型带来了显著的状态管理复杂性和冷启动延迟问题，对于频繁激活可能不如长时间运行的 Fabric 工作节点高效，但对于不频繁、简单的 Cell 可能可行。需要一个可被函数访问的 Fabric API 网关。
 5. **边缘计算**: 轻量级 Fabric 节点可能潜在地运行在边缘设备上，执行与本地处理相关的 Cell，同时通过协调日志（可能在本地缓冲）与中央 Fabric 集群协调。需要对间歇性连接进行健壮处理。
 
 关键在于 Fabric 组件和接口提供的抽象，允许在不改变核心 Cell 逻辑或编排模型的情况下改变底层部署基础设施。Kubernetes 模型通常在可伸缩性、弹性和运营工具方面提供了良好的平衡。
 
-## XXIII. 未来方向与研究 (Future Directions and Research)
+## 1.23 XXIII. 未来方向与研究 (Future Directions and Research)
 
 这种架构风格开辟了几个有趣的研究途径：
 
@@ -964,12 +958,12 @@ impl EffectfulCell for OrderProcessorCell {
 3. **类型安全的分布式协议**: 进一步研究以实用的方式应用高级类型系统（如会话类型或依赖类型），以确保 Cell 和 Fabric 组件之间交互的正确性，特别是在错误处理和协议遵守方面。
 4. **自动 Cell 组合**: 探索基于高级目标和可用 Cell 能力/契约自动建议甚至合成工作流拓扑的技术。
 5. **能量感知调度**: 扩展自适应调度器，将能源消耗作为放置和执行 Cell 的一个因素来考虑。
-6. **自愈 Fabric**: 增强 Fabric 自动检测、诊断和从其*自身*内部组件故障中恢复的能力，超越简单的节点重启。
+6. **自愈 Fabric**: 增强 Fabric 自动检测、诊断和从其_自身_内部组件故障中恢复的能力，超越简单的节点重启。
 7. **跨 Fabric 互操作性**: 为不同的 Fabric 实例（可能属于不同组织）定义标准协议，以安全地交互和协调工作流。
 
 该架构提供了一个基础，但要实现其全部潜力，需要在运行时系统、分布式协调、开发者工具和形式化技术的实际应用方面持续创新。
 
-## XXIV. 权衡总结：批判性视角 (Trade-off Summary: A Critical Perspective)
+## 1.24 XXIV. 权衡总结：批判性视角 (Trade-off Summary: A Critical Perspective)
 
 明确承认自适应可组合工作流架构与传统 BPMS、简单脚本或 Temporal/Cadence 等架构相比所做的固有权衡至关重要：
 
@@ -989,7 +983,7 @@ impl EffectfulCell for OrderProcessorCell {
 **本质上**: 该架构以**较低的初始简单性**和潜在**较高的基础性能开销**换取**更强的长期适应性、可演化性、对副作用的显式控制以及潜在更高的弹性/故障隔离**。
 它押注于对于复杂、长期存在、不断演变的业务流程，在更复杂的运行时和编程模型上的前期投资将在系统的整个生命周期内获得回报。
 
-## XXV. 采用策略 (Adoption Strategy)
+## 1.25 XXV. 采用策略 (Adoption Strategy)
 
 迁移到或采用这样的架构需要分阶段的方法：
 
@@ -1005,14 +999,14 @@ impl EffectfulCell for OrderProcessorCell {
     - 基本的状态持久化机制。
     - 一个或两个必要的效应执行器（例如，HTTP、基本数据库）。
 3. **开发 SDK & 工具**
-    *与试点用例同时*创建初始的 Cell SDK 和必要的本地开发/测试工具。
+    _与试点用例同时_创建初始的 Cell SDK 和必要的本地开发/测试工具。
     开发者反馈在此至关重要。
 4. **实施试点工作流**
     使用 Cell 模型和初生的 Fabric 构建试点工作流。
     这将对设计和工具进行压力测试。
 5. **迭代和完善**
     根据试点经验，完善 Fabric 组件、SDK 和工具。
-    *逐步*开始添加更高级的功能，如自适应调度或更丰富的效应处理。
+    _逐步_开始添加更高级的功能，如自适应调度或更丰富的效应处理。
 6. **逐步推广**
    将新的工作流引入平台。对于现有系统：
     - **绞杀者模式 (Strangler Fig Pattern)**
@@ -1024,7 +1018,7 @@ impl EffectfulCell for OrderProcessorCell {
 
 采用应被视为一项战略投资，可能跨越数个季度甚至数年，而不是快速替代。
 
-## XXVI. 用例适用性 (Use Case Suitability)
+## 1.26 XXVI. 用例适用性 (Use Case Suitability)
 
 该架构**非常适合**:
 
@@ -1043,22 +1037,22 @@ impl EffectfulCell for OrderProcessorCell {
 - **短暂的编排**: 如果工作流通常非常短，并且故障很少见或很容易重试，那么 Fabric 的开销可能不值得。
 - **缺乏分布式系统专业知识的团队**: 运营复杂性需要相当高的技能。
 
-## XXVII. 与微服务编排的比较 (Comparison with Microservices Orchestration)
+## 1.27 XXVII. 与微服务编排的比较 (Comparison with Microservices Orchestration)
 
 该架构与微服务编排有共同的目标，但在方法上有所不同：
 
 - **编排 vs. 协同**: 这坚定地是一种**编排**方法，因为 Fabric 主动协调 Cell 之间的流程。然而，Cell 本身就像是高度专业化、有状态的微服务，专注于特定的业务能力。
 - **显式工作流引擎**: 与纯粹的协同（服务对事件做出反应而没有中央控制）或嵌入服务中的临时编排不同，该架构具有一个显式的、智能的引擎 (Fabric)。
-- **Saga 模式**: Saga 协调可以*在此架构内*实现。协调日志自然地跟踪哪些效应已完成，从而有助于补偿。
+- **Saga 模式**: Saga 协调可以_在此架构内_实现。协调日志自然地跟踪哪些效应已完成，从而有助于补偿。
 专用的“Saga 协调器”Cell 可以管理补偿逻辑，由 Fabric 在失败时触发。与临时事件或嵌入服务中的状态机相比，它提供了一种更结构化的方式来实现 Saga。
 - **通信**: 虽然微服务通常依赖于直接同步调用（例如，REST、gRPC）或异步事件，但该架构主要使用中介的效应请求/响应和 Fabric 管理的 Cell 激活。
 不鼓励直接的 Cell 到 Cell 调用以保持松耦合。
 - **状态管理**: 与完全依赖外部数据库的典型无状态微服务不同，Cell 是固有的有状态单元（尽管它们的状态通过 Fabric 管理），使得长期运行的流程状态更容易在本地管理。
-- **焦点**: 微服务编排通常侧重于协调无状态服务以完成请求。该架构侧重于编排有状态的“能力单元”(Cell) 以执行可能非常长期运行的*业务流程*，包括对副作用的显式管理。
+- **焦点**: 微服务编排通常侧重于协调无状态服务以完成请求。该架构侧重于编排有状态的“能力单元”(Cell) 以执行可能非常长期运行的_业务流程_，包括对副作用的显式管理。
 
-它可以被看作是*使用*类似于微服务（限界上下文、独立部署）的原则，但具有专用的、自适应的编排引擎来实现复杂、有状态的业务流程的专业平台。
+它可以被看作是_使用_类似于微服务（限界上下文、独立部署）的原则，但具有专用的、自适应的编排引擎来实现复杂、有状态的业务流程的专业平台。
 
-## XXVIII. 最终哲学陈述 (Final Philosophical Statement)
+## 1.28 XXVIII. 最终哲学陈述 (Final Philosophical Statement)
 
 自适应可组合工作流架构基于这样一种信念：对于复杂、不断演化的系统，**管理变化和管理副作用**是最关键的挑战。
 通过将**适应性、显式契约和可组合的、效应性的单元**提升为一等公民，

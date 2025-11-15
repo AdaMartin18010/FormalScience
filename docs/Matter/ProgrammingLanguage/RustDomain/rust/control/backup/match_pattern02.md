@@ -1,29 +1,24 @@
-# Rust Pattern Matching Syntax
+# 1. Rust Pattern Matching Syntax
 
-Here is a comprehensive summary of Rust's pattern matching syntax,
-including detailed examples for each concept and a mind map:
+## 目录
 
-## 📋 目录
-
-- [1 Match Expressions](#1-match-expressions)
-- [2 Pattern Types](#2-pattern-types)
-- [3 Pattern Matching Examples](#3-pattern-matching-examples)
-- [4 Mind Map](#4-mind-map)
-  - [4.1 错误处理](#41-错误处理)
-  - [4.2 可选值处理](#42-可选值处理)
-  - [4.3 循环和流处理](#43-循环和流处理)
-  - [4.4 特定业务逻辑](#44-特定业务逻辑)
-  - [4.5 数据解析](#45-数据解析)
-  - [4.6 总结](#46-总结)
-  - [4.7 解释](#47-解释)
-    - [7.7.1 Trait Object 的定义和使用](#771-trait-object-的定义和使用)
-    - [7.7.2 解构语法的限制](#772-解构语法的限制)
-  - [4.8 解决方案](#48-解决方案)
-  - [4.9 总结](#49-总结)
-
----
-
-## 1 Match Expressions
+- [1. Rust Pattern Matching Syntax](#rust-pattern-matching-syntax)
+  - [1.1 Match Expressions](#1-match-expressions)
+  - [1.2 Pattern Types](#2-pattern-types)
+  - [1.3 Pattern Matching Examples](#3-pattern-matching-examples)
+  - [1.4 Mind Map](#4-mind-map)
+    - [1.4.1 错误处理](#41-错误处理)
+    - [1.4.2 可选值处理](#42-可选值处理)
+    - [1.4.3 循环和流处理](#43-循环和流处理)
+    - [1.4.4 特定业务逻辑](#44-特定业务逻辑)
+    - [1.4.5 数据解析](#45-数据解析)
+    - [1.4.6 总结](#46-总结)
+    - [1.4.7 解释](#47-解释)
+      - [1.4.7.1 Trait Object 的定义和使用](#471-trait-object-的定义和使用)
+      - [1.4.7.2 解构语法的限制](#472-解构语法的限制)
+    - [1.4.8 解决方案](#48-解决方案)
+    - [1.4.9 总结](#49-总结)
+## 1.1 Match Expressions
 
 - `match` expression
   - Syntax: `match scrutinee { patterns => expressions, ... }`
@@ -38,7 +33,7 @@ including detailed examples for each concept and a mind map:
     }
     ```
 
-## 2 Pattern Types
+## 1.2 Pattern Types
 
 - Literal Patterns
   - Match specific values
@@ -151,7 +146,7 @@ including detailed examples for each concept and a mind map:
     }
     ```
 
-## 3 Pattern Matching Examples
+## 1.3 Pattern Matching Examples
 
 - Basic Match
 
@@ -214,7 +209,7 @@ including detailed examples for each concept and a mind map:
   }
   ```
 
-## 4 Mind Map
+## 1.4 Mind Map
 
 ```mermaid
 graph TD
@@ -247,7 +242,7 @@ The mind map provides a visual representation of the different aspects of patter
 
 Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
 
-### 4.1 错误处理
+### 1.4.1 错误处理
 
 - **`match` 与 `Result`**：
   用于处理可能失败的操作，如文件操作、网络请求等。
@@ -272,7 +267,7 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
   }
   ```
 
-### 4.2 可选值处理
+### 1.4.2 可选值处理
 
 - **`Option` 与 `if let`**：
   处理可能存在或不存在的值。
@@ -297,7 +292,7 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
   }
   ```
 
-### 4.3 循环和流处理
+### 1.4.3 循环和流处理
 
 - **`while let`**：
   用于处理连续的值，如迭代器、网络流等。
@@ -313,7 +308,7 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
   }
   ```
 
-### 4.4 特定业务逻辑
+### 1.4.4 特定业务逻辑
 
 - **枚举匹配**：
   用于处理特定业务对象的不同状态。
@@ -339,7 +334,7 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
   }
   ```
 
-### 4.5 数据解析
+### 1.4.5 数据解析
 
 - **结构体匹配**：
   用于解析复杂的嵌套数据结构。
@@ -377,7 +372,7 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
   }
   ```
 
-### 4.6 总结
+### 1.4.6 总结
 
 这些模式匹配的应用在项目中可以使代码更加清晰、简洁和安全，同时也提高了代码的可维护性。
 
@@ -386,9 +381,9 @@ Rust 的模式匹配在项目中应用广泛，主要用于以下场景：
 trait object 是一种动态类型，其具体类型信息在运行时才确定。
 因此，不能直接使用解构语法来匹配 trait object。
 
-### 4.7 解释
+### 1.4.7 解释
 
-#### 7.7.1 Trait Object 的定义和使用
+#### 1.4.7.1 Trait Object 的定义和使用
 
 Trait object 是一种动态类型，用于表示实现了特定 trait 的任何类型。
 Trait object 通常通过 `dyn` 关键字来定义，例如 `dyn Trait`。
@@ -433,7 +428,7 @@ fn main() {
 在上面的代码中，`draw1` 和 `draw2` 函数接受 `Box<dyn Draw>` 和 `&dyn Draw` 形式的 trait object。
 这些函数可以在运行时调用 `draw` 方法，而不需要知道具体的类型。
 
-#### 7.7.2 解构语法的限制
+#### 1.4.7.2 解构语法的限制
 
 Rust 的解构语法主要用于匹配和解构数据结构，例如枚举、结构体等。
 对于 trait object，由于其具体类型在编译时是未知的，解构语法不能直接用于匹配 trait object。
@@ -448,7 +443,7 @@ match x {
 
 在上面的代码中，`SomeType` 是一个具体的类型，而 trait object 的具体类型在编译时是未知的，因此不能直接使用解构语法来匹配 trait object。
 
-### 4.8 解决方案
+### 1.4.8 解决方案
 
 虽然不能直接使用解构语法来匹配 trait object，但可以通过其他方式来实现类似的功能。
 例如，可以使用 `Any` 和 `downcast_ref` 方法来检查 trait object 的具体类型：
@@ -494,7 +489,7 @@ fn main() {
 在上面的代码中，`downcast_ref` 方法用于尝试将 trait object 转换为具体的类型。
 如果转换成功，则可以使用具体的类型进行操作。
 
-### 4.9 总结
+### 1.4.9 总结
 
 Rust 的解构语法不能直接用于匹配 trait object，因为 trait object 的具体类型在编译时是未知的。
 然而，可以通过使用 `Any` 和 `downcast_ref` 方法来检查 trait object 的具体类型，并进行相应的处理。

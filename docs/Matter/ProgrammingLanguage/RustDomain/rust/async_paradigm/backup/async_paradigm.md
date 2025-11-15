@@ -191,7 +191,7 @@ Rust的异步网络编程通常基于Tokio等运行时实现：
   ```rust
   async fn run_server() -> Result<(), Box<dyn Error>> {
       let listener = TcpListener::bind("127.0.0.1:8080").await?;
-      
+
       loop {
           let (socket, addr) = listener.accept().await?;
           tokio::spawn(async move {
@@ -207,7 +207,7 @@ Rust的异步网络编程通常基于Tokio等运行时实现：
   async fn handle_udp() -> Result<(), Box<dyn Error>> {
       let socket = UdpSocket::bind("127.0.0.1:8081").await?;
       let mut buf = [0u8; 1024];
-      
+
       loop {
           let (len, addr) = socket.recv_from(&mut buf).await?;
           let data = &buf[..len];

@@ -1,27 +1,27 @@
 
-# Rust类型系统的可变性、不变性、协变性、逆变性与概念模型的映射关系
+# 1. Rust类型系统的可变性、不变性、协变性、逆变性与概念模型的映射关系
 
-## 📋 目录
+## 目录
 
-- [1 可变性(Mutability)与不变性(Immutability)的领域映射](#1-可变性mutability与不变性immutability的领域映射)
-  - [1.1 值对象的不变性实现](#11-值对象的不变性实现)
-  - [1.2 实体的可控可变性](#12-实体的可控可变性)
-- [2 协变性(Covariance)与领域建模](#2-协变性covariance与领域建模)
-  - [2.1 领域服务中的协变关系](#21-领域服务中的协变关系)
-  - [2.2 实体集合中的协变关系](#22-实体集合中的协变关系)
-- [3 逆变性(Contravariance)与回调函数](#3-逆变性contravariance与回调函数)
-  - [3.1 领域事件处理中的逆变关系](#31-领域事件处理中的逆变关系)
-- [4 类型不变性(Invariance)与聚合一致性](#4-类型不变性invariance与聚合一致性)
-  - [4.1 聚合根一致性保证](#41-聚合根一致性保证)
-- [5 借用检查器与并发领域模型](#5-借用检查器与并发领域模型)
-- [6 泛型与抽象领域概念](#6-泛型与抽象领域概念)
-- [7 总结](#7-总结)
+- [1. Rust类型系统的可变性、不变性、协变性、逆变性与概念模型的映射关系](#1-rust类型系统的可变性不变性协变性逆变性与概念模型的映射关系)
+  - [目录](#目录)
+  - [1.1 可变性(Mutability)与不变性(Immutability)的领域映射](#11-可变性mutability与不变性immutability的领域映射)
+    - [1.1.1 值对象的不变性实现](#111-值对象的不变性实现)
+    - [1.1.2 实体的可控可变性](#112-实体的可控可变性)
+  - [1.2 协变性(Covariance)与领域建模](#12-协变性covariance与领域建模)
+    - [1.2.1 领域服务中的协变关系](#121-领域服务中的协变关系)
+    - [1.2.2 实体集合中的协变关系](#122-实体集合中的协变关系)
+  - [1.3 逆变性(Contravariance)与回调函数](#13-逆变性contravariance与回调函数)
+    - [1.3.1 领域事件处理中的逆变关系](#131-领域事件处理中的逆变关系)
+  - [1.4 类型不变性(Invariance)与聚合一致性](#14-类型不变性invariance与聚合一致性)
+    - [1.4.1 聚合根一致性保证](#141-聚合根一致性保证)
+  - [1.5 借用检查器与并发领域模型](#15-借用检查器与并发领域模型)
+  - [1.6 泛型与抽象领域概念](#16-泛型与抽象领域概念)
+  - [1.7 总结](#17-总结)
 
----
+## 1.1 可变性(Mutability)与不变性(Immutability)的领域映射
 
-## 1 可变性(Mutability)与不变性(Immutability)的领域映射
-
-### 1.1 值对象的不变性实现
+### 1.1.1 值对象的不变性实现
 
 在领域驱动设计中，值对象(Value Object)应当是不可变的。Rust的不变性特性与此完美匹配：
 
@@ -38,27 +38,27 @@ impl Money {
         if amount < 0 {
             return Err(DomainError::ValidationError("金额不能为负".into()));
         }
-        
+
         Ok(Self { amount, currency })
     }
-    
+
     // 不可变操作 - 返回新实例
     pub fn add(&self, other: &Money) -> Result<Money, DomainError> {
         if self.currency != other.currency {
             return Err(DomainError::ValidationError("货币类型不匹配".into()));
         }
-        
+
         Ok(Money {
             amount: self.amount + other.amount,
             currency: self.currency.clone(),
         })
     }
-    
+
     // 只读访问器
     pub fn amount(&self) -> i64 {
         self.amount
     }
-    
+
     pub fn currency(&self) -> &Currency {
         &self.currency
     }
@@ -71,7 +71,7 @@ impl Money {
 - 通过`&self`方法保证了值对象不会被修改
 - 操作返回新实例而非修改现有实例，符合值对象语义
 
-### 1.2 实体的可控可变性
+### 1.1.2 实体的可控可变性
 
 实体(Entity)需要有控制的可变性，Rust通过`&mut self`提供了精确控制：
 
@@ -92,20 +92,20 @@ impl Order {
         if self.status != OrderStatus::Draft {
             return Err(DomainError::InvalidOperation("只有草稿订单可以添加商品".into()));
         }
-        
+
         // 添加项目
         self.items.push(item.clone());
-        
+
         // 重新计算总金额
         let item_total = item.calculate_subtotal();
         self.total = self.total.add(&item_total)?;
-        
+
         // 增加版本号 - 实现乐观锁
         self.version += 1;
-        
+
         Ok(())
     }
-    
+
     // 只读访问使用&self
     pub fn total(&self) -> &Money {
         &self.total
@@ -119,11 +119,11 @@ impl Order {
 - 将实体修改限制在一组明确定义的方法中，满足实体封装要求
 - 修改操作内置业务规则验证，确保实体始终处于有效状态
 
-## 2 协变性(Covariance)与领域建模
+## 1.2 协变性(Covariance)与领域建模
 
 协变性是指当A是B的子类型时，容器类型`Container<A>`也是`Container<B>`的子类型的特性。在Rust中，引用类型`&T`和`Box<T>`是协变的。
 
-### 2.1 领域服务中的协变关系
+### 1.2.1 领域服务中的协变关系
 
 ```rust
 // 接口定义
@@ -158,7 +158,7 @@ impl<P: PaymentProcessor> PaymentService<P> {
     pub fn new(processor: P) -> Self {
         Self { processor }
     }
-    
+
     pub fn charge_order(&self, order: &Order) -> Result<PaymentId, DomainError> {
         self.processor.process_payment(order.total())
             .map_err(|e| DomainError::PaymentError(e))
@@ -176,7 +176,7 @@ let payment_service = PaymentService::new(credit_processor);
 - 可以将具体的处理实现替换为更具体的子类型，保持类型安全
 - 支持策略模式等常见领域设计模式
 
-### 2.2 实体集合中的协变关系
+### 1.2.2 实体集合中的协变关系
 
 ```rust
 pub struct ShoppingCart {
@@ -217,7 +217,7 @@ impl ShoppingCart {
     pub fn add_item(&mut self, item: Box<dyn CartItem>) {
         self.items.push(item);
     }
-    
+
     pub fn total(&self) -> Money {
         self.items.iter()
             .fold(Money::zero(Currency::USD), |acc, item| {
@@ -233,11 +233,11 @@ impl ShoppingCart {
 - 这种模式使领域模型能够表达"是一种"关系，同时保持类型安全
 - 支持聚合根包含不同类型的实体或值对象
 
-## 3 逆变性(Contravariance)与回调函数
+## 1.3 逆变性(Contravariance)与回调函数
 
 逆变性是指当A是B的子类型时，`Fn(B)`是`Fn(A)`的子类型。在Rust中，函数参数位置是逆变的。
 
-### 3.1 领域事件处理中的逆变关系
+### 1.3.1 领域事件处理中的逆变关系
 
 ```rust
 // 领域事件基类
@@ -272,7 +272,7 @@ impl EventBus {
     pub fn new() -> Self {
         Self { handlers: HashMap::new() }
     }
-    
+
     pub fn register<E: DomainEvent + 'static>(
         &mut self,
         event_type: &'static str,
@@ -287,12 +287,12 @@ impl EventBus {
                 Ok(()) // 忽略不匹配的事件类型
             }
         });
-        
+
         self.handlers.entry(event_type)
             .or_insert_with(Vec::new)
             .push(generic_handler);
     }
-    
+
     pub fn publish<E: DomainEvent>(&self, event: &E) -> Result<(), Error> {
         if let Some(handlers) = self.handlers.get(event.event_type()) {
             for handler in handlers {
@@ -310,11 +310,11 @@ impl EventBus {
 - 支持事件驱动架构中的松耦合设计
 - 符合开闭原则，可以添加新的事件类型而不修改现有代码
 
-## 4 类型不变性(Invariance)与聚合一致性
+## 1.4 类型不变性(Invariance)与聚合一致性
 
 类型不变性是指类型既不是协变的也不是逆变的。在Rust中，`&mut T`是不变的，这对维护聚合一致性很有用。
 
-### 4.1 聚合根一致性保证
+### 1.4.1 聚合根一致性保证
 
 ```rust
 pub struct Customer {
@@ -327,39 +327,39 @@ pub struct Customer {
 
 impl Customer {
     // 安全修改方法 - 通过&mut self确保所有更改都经过验证
-    
+
     pub fn change_email(&mut self, email: Email) -> Result<(), DomainError> {
         // 业务规则验证
         if self.email == email {
             return Ok(()); // 无需更改
         }
-        
+
         // 可能需要触发额外验证逻辑
         self.email = email;
-        
+
         Ok(())
     }
-    
+
     pub fn add_address(&mut self, address: Address) -> Result<(), DomainError> {
         if self.addresses.len() >= 5 {
             return Err(DomainError::ValidationError("地址数量超出限制".into()));
         }
-        
+
         // 验证地址是否已存在
         if self.addresses.contains(&address) {
             return Err(DomainError::ValidationError("地址已存在".into()));
         }
-        
+
         self.addresses.push(address);
-        
+
         Ok(())
     }
-    
+
     // 不提供内部集合的可变引用，防止绕过验证
     pub fn addresses(&self) -> &[Address] {
         &self.addresses
     }
-    
+
     // 不提供这样的方法！这会破坏聚合一致性
     // pub fn addresses_mut(&mut self) -> &mut Vec<Address> {
     //     &mut self.addresses
@@ -373,7 +373,7 @@ impl Customer {
 - 通过控制可变访问，确保聚合边界内的所有修改都遵循业务规则
 - 显式拒绝返回内部集合的可变引用，强制通过聚合根的方法进行修改
 
-## 5 借用检查器与并发领域模型
+## 1.5 借用检查器与并发领域模型
 
 Rust的借用检查器对保证领域模型的线程安全和一致性至关重要：
 
@@ -391,11 +391,11 @@ impl<R> ResourcePool<R> {
             max_size,
         }
     }
-    
+
     pub fn acquire(&self) -> Result<ResourceGuard<R>, PoolError> {
         let mut resources = self.available.lock()
             .map_err(|_| PoolError::LockError)?;
-            
+
         if let Some(resource) = resources.pop() {
             Ok(ResourceGuard {
                 resource: Some(resource),
@@ -405,11 +405,11 @@ impl<R> ResourcePool<R> {
             Err(PoolError::NoResourceAvailable)
         }
     }
-    
+
     pub fn size(&self) -> Result<usize, PoolError> {
         let resources = self.available.lock()
             .map_err(|_| PoolError::LockError)?;
-            
+
         Ok(resources.len())
     }
 }
@@ -432,7 +432,7 @@ impl<R> Drop for ResourceGuard<R> {
 
 impl<R> Deref for ResourceGuard<R> {
     type Target = R;
-    
+
     fn deref(&self) -> &Self::Target {
         self.resource.as_ref().unwrap()
     }
@@ -445,7 +445,7 @@ impl<R> Deref for ResourceGuard<R> {
 - 类型系统与所有权规则共同实现基于资源获取即初始化(RAII)的设计模式
 - 这些保证使得在并发环境中实现领域模型变得更加安全可靠
 
-## 6 泛型与抽象领域概念
+## 1.6 泛型与抽象领域概念
 
 Rust的泛型系统是实现抽象领域概念的强大工具：
 
@@ -461,7 +461,7 @@ pub trait Repository<T, ID> {
 // 聚合根特征，限定可以被存储的实体
 pub trait AggregateRoot {
     type Id: Clone + Send + Sync;
-    
+
     fn id(&self) -> &Self::Id;
     fn version(&self) -> u64;
     fn increment_version(&mut self);
@@ -469,7 +469,7 @@ pub trait AggregateRoot {
 
 // 基于泛型的仓储实现，约束为聚合根
 #[async_trait]
-impl<T, ID, R> Repository<T, ID> for R 
+impl<T, ID, R> Repository<T, ID> for R
 where
     T: AggregateRoot<Id = ID> + Clone + Send + Sync + 'static,
     ID: Clone + Send + Sync + Eq + Hash + 'static,
@@ -478,11 +478,11 @@ where
     async fn save(&self, entity: &T) -> Result<(), RepositoryError> {
         self.save_aggregate(entity).await
     }
-    
+
     async fn find_by_id(&self, id: &ID) -> Result<Option<T>, RepositoryError> {
         self.find_aggregate_by_id(id).await
     }
-    
+
     async fn delete(&self, entity: &T) -> Result<(), RepositoryError> {
         self.delete_aggregate(entity).await
     }
@@ -491,15 +491,15 @@ where
 // 实现聚合根的具体实体
 impl AggregateRoot for Order {
     type Id = OrderId;
-    
+
     fn id(&self) -> &Self::Id {
         &self.id
     }
-    
+
     fn version(&self) -> u64 {
         self.version
     }
-    
+
     fn increment_version(&mut self) {
         self.version += 1;
     }
@@ -512,7 +512,7 @@ impl AggregateRoot for Order {
 - 通过类型参数约束，确保仓储只能存储符合聚合根特性的实体
 - 支持依赖反转原则，领域层定义接口，基础设施层提供实现
 
-## 7 总结
+## 1.7 总结
 
 Rust类型系统的这些特性与概念模型的映射关系如下：
 

@@ -384,9 +384,9 @@ fn process(data: ValidatedData) -> ProcessedData {
 // 类型系统确保了数据流的正确顺序
 fn main() {
     let raw = RawData(vec![1, 2, 3]);
-    
+
     // 类型错误：process(raw); // 编译错误：类型不匹配
-    
+
     match validate(raw) {
         Ok(validated) => {
             let processed = process(validated);
@@ -431,14 +431,14 @@ fn functional_data_flow() {
     // 创建一个无限数据流 (惰性序列)
     let fibonacci = successors(Some((0, 1)), |&(a, b)| Some((b, a + b)))
         .map(|(a, _)| a);  // 映射出第一个元素
-    
+
     // 管道处理：过滤、转换、限制、聚合
     let sum: u64 = fibonacci
         .take(10)                // 限制取前10个数
         .filter(|&x| x % 2 == 0) // 只选偶数
         .map(|x| x * x)          // 平方转换
         .sum();                  // 求和聚合
-    
+
     println!("Sum of squares of even Fibonacci numbers: {}", sum);
 }
 ```
@@ -478,7 +478,7 @@ use std::time::Duration;
 fn concurrent_data_flow() {
     // 创建有界通道(大小为5)，实现背压
     let (tx, rx) = mpsc::sync_channel(5);
-    
+
     // 生产者线程
     let producer = thread::spawn(move || {
         for i in 0..20 {
@@ -488,7 +488,7 @@ fn concurrent_data_flow() {
             println!("Produced: {}", i);
         }
     });
-    
+
     // 消费者线程
     let consumer = thread::spawn(move || {
         for _ in 0..20 {
@@ -498,7 +498,7 @@ fn concurrent_data_flow() {
             println!("Consumed: {}", value);
         }
     });
-    
+
     producer.join().unwrap();
     consumer.join().unwrap();
 }
@@ -539,16 +539,16 @@ fn merge_sort<T: Ord + Clone>(slice: &[T]) -> Vec<T> {
     if slice.len() <= 1 {
         return slice.to_vec();
     }
-    
+
     // 分解阶段 - 数据流分割
     let mid = slice.len() / 2;
     let left = merge_sort(&slice[..mid]);
     let right = merge_sort(&slice[mid..]);
-    
+
     // 合并阶段 - 数据流合并
     let mut result = Vec::with_capacity(slice.len());
     let (mut i, mut j) = (0, 0);
-    
+
     // 数据流交织
     while i < left.len() && j < right.len() {
         if left[i] <= right[j] {
@@ -559,11 +559,11 @@ fn merge_sort<T: Ord + Clone>(slice: &[T]) -> Vec<T> {
             j += 1;
         }
     }
-    
+
     // 剩余数据流附加
     result.extend_from_slice(&left[i..]);
     result.extend_from_slice(&right[j..]);
-    
+
     result
 }
 ```
@@ -599,10 +599,10 @@ Rust中的缓存友好数据结构示例：
 fn cache_friendly_matrix_multiply(a: &[Vec<f64>], b: &[Vec<f64>]) -> Vec<Vec<f64>> {
     let (n, m, p) = (a.len(), a[0].len(), b[0].len());
     assert_eq!(m, b.len(), "矩阵维度不匹配");
-    
+
     let mut result = vec![vec![0.0; p]; n];
     let block_size = 64; // 通常设置为缓存行大小的倍数
-    
+
     // 按块遍历，提高缓存命中率
     for i_block in (0..n).step_by(block_size) {
         for j_block in (0..p).step_by(block_size) {
@@ -620,7 +620,7 @@ fn cache_friendly_matrix_multiply(a: &[Vec<f64>], b: &[Vec<f64>]) -> Vec<Vec<f64
             }
         }
     }
-    
+
     result
 }
 ```
@@ -660,18 +660,18 @@ fn fibonacci_memorization(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
     if let Some(&result) = memo.get(&n) {
         return result;
     }
-    
+
     // 基本情况
     if n <= 1 {
         return n;
     }
-    
+
     // 递归计算
     let result = fibonacci_memorization(n-1, memo) + fibonacci_memorization(n-2, memo);
-    
+
     // 存储结果
     memo.insert(n, result);
-    
+
     result
 }
 
@@ -740,11 +740,11 @@ impl Observable {
             observers: RefCell::new(Vec::new()),
         }
     }
-    
+
     fn add_observer(&self, observer: Weak<dyn Observer>) {
         self.observers.borrow_mut().push(observer);
     }
-    
+
     fn notify_observers(&self, event: &Event) {
         // 清理失效的弱引用并通知活跃观察者
         self.observers.borrow_mut().retain(|o| {
@@ -772,11 +772,11 @@ impl DataProcessor {
 impl Observer for DataProcessor {
     fn on_event(&self, event: &Event) {
         match event {
-            Event::DataCreated(data) => 
+            Event::DataCreated(data) =>
                 println!("{}: Processing new data: {}", self.name, data),
-            Event::DataModified(old, new) => 
+            Event::DataModified(old, new) =>
                 println!("{}: Data changed from {} to {}", self.name, old, new),
-            Event::DataDeleted(data) => 
+            Event::DataDeleted(data) =>
                 println!("{}: Data deleted: {}", self.name, data),
         }
     }
@@ -851,12 +851,12 @@ impl<T> Pipeline<T> {
     fn new() -> Self {
         Pipeline { filters: Vec::new() }
     }
-    
+
     fn add_filter(&mut self, filter: Box<dyn Filter<T>>) {
         self.filters.push(filter);
     }
-    
-    fn run(&self, input: T) -> T 
+
+    fn run(&self, input: T) -> T
     where
         T: Clone,
     {
@@ -910,21 +910,21 @@ impl StateContainer {
             subscribers: Vec::new(),
         }
     }
-    
+
     // 添加数据（原子操作）
     fn add_item(&mut self, item: String) {
         let mut state = self.state.lock().unwrap();
         state.push(item);
-        
+
         // 通知所有订阅者
         let state_copy = state.clone();
         drop(state); // 释放锁
-        
+
         for subscriber in &self.subscribers {
             subscriber(&state_copy);
         }
     }
-    
+
     // 订阅状态变化
     fn subscribe<F>(&mut self, callback: F)
     where
@@ -932,7 +932,7 @@ impl StateContainer {
     {
         self.subscribers.push(Box::new(callback));
     }
-    
+
     // 获取当前状态的克隆
     fn get_state(&self) -> Vec<String> {
         self.state.lock().unwrap().clone()
@@ -942,19 +942,19 @@ impl StateContainer {
 // 使用示例
 fn state_management_example() {
     let mut container = StateContainer::new();
-    
+
     // 添加状态变化订阅者
     container.subscribe(|state| {
         println!("State updated: {:?}", state);
     });
-    
+
     // 更新状态
     container.add_item("Item 1".to_string());
     container.add_item("Item 2".to_string());
-    
+
     // 在不同线程中安全访问状态
     let state_ref = Arc::new(Mutex::new(container));
-    
+
     let handles: Vec<_> = (0..5).map(|i| {
         let state_clone = Arc::clone(&state_ref);
         thread::spawn(move || {
@@ -962,12 +962,12 @@ fn state_management_example() {
             container.add_item(format!("Thread item {}", i));
         })
     }).collect();
-    
+
     // 等待所有线程完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     // 获取最终状态
     let final_state = state_ref.lock().unwrap().get_state();
     println!("Final state: {:?}", final_state);
@@ -1099,23 +1099,23 @@ fn data_exchange_formats() {
         roles: vec!["admin".to_string(), "user".to_string()],
         is_active: true,
     };
-    
+
     // JSON格式
     let json = serde_json::to_string_pretty(&user).unwrap();
     println!("JSON:\n{}", json);
-    
+
     // 紧凑JSON (节省空间)
     let compact_json = serde_json::to_string(&user).unwrap();
     println!("Compact JSON ({}bytes):\n{}", compact_json.len(), compact_json);
-    
+
     // BSON格式
     let bson = bson::to_vec(&bson::to_document(&user).unwrap()).unwrap();
     println!("BSON ({}bytes): {:?}", bson.len(), bson);
-    
+
     // CBOR格式 (紧凑二进制)
     let cbor = serde_cbor::to_vec(&user).unwrap();
     println!("CBOR ({}bytes): {:?}", cbor.len(), cbor);
-    
+
     // 从格式转回结构
     let parsed_user: User = serde_json::from_str(&json).unwrap();
     println!("Parsed user: {:?}", parsed_user);
@@ -1249,10 +1249,10 @@ fn convert_external_to_internal(external: ExternalOrder) -> Order {
 async fn receive_order(external_order: web::Json<ExternalOrder>) -> impl Responder {
     // 格式转换
     let internal_order = convert_external_to_internal(external_order.into_inner());
-    
+
     // 处理订单（存储或进一步处理）
     println!("Received order: {:?}", internal_order);
-    
+
     // 集成：通知库存系统
     let client = Client::new();
     for item in &internal_order.items {
@@ -1264,7 +1264,7 @@ async fn receive_order(external_order: web::Json<ExternalOrder>) -> impl Respond
             .send()
             .await;
     }
-    
+
     HttpResponse::Ok().json(internal_order)
 }
 
@@ -1431,91 +1431,91 @@ impl OrderRuleEngine {
         let mut engine = OrderRuleEngine {
             rules: HashMap::new(),
         };
-        
+
         // 注册业务规则
         engine.register_rule("calculate_totals", Box::new(|order| {
             let mut new_order = order.clone();
-            
+
             // 计算商品小计
             for item in &mut new_order.items {
                 item.subtotal = (item.quantity as f64) * item.unit_price;
             }
-            
+
             // 计算订单总金额
             new_order.total = new_order.items.iter().map(|item| item.subtotal).sum();
-            
+
             Ok(new_order)
         }));
-        
+
         // 订单确认规则
         engine.register_rule("confirm_order", Box::new(|order| {
             let mut new_order = order.clone();
-            
+
             // 业务规则：只有Created状态的订单可以被确认
             if order.status != OrderStatus::Created {
-                return Err(format!("Cannot confirm order in {} state", 
+                return Err(format!("Cannot confirm order in {} state",
                     format!("{:?}", order.status).to_lowercase()));
             }
-            
+
             // 业务规则：订单必须有商品
             if order.items.is_empty() {
                 return Err("Cannot confirm empty order".to_string());
             }
-            
+
             // 更新状态
             new_order.status = OrderStatus::Confirmed;
-            
+
             Ok(new_order)
         }));
-        
+
         // 支付规则
         engine.register_rule("process_payment", Box::new(|order| {
             let mut new_order = order.clone();
-            
+
             // 业务规则：只能处理已确认订单的支付
             if order.status != OrderStatus::Confirmed {
-                return Err(format!("Cannot process payment for order in {} state", 
+                return Err(format!("Cannot process payment for order in {} state",
                     format!("{:?}", order.status).to_lowercase()));
             }
-            
+
             // 业务规则：不能重复处理已支付的订单
             if order.payment_status != PaymentStatus::Pending {
-                return Err(format!("Payment already in {} state", 
+                return Err(format!("Payment already in {} state",
                     format!("{:?}", order.payment_status).to_lowercase()));
             }
-            
+
             // 模拟支付处理
             new_order.payment_status = PaymentStatus::Captured;
             new_order.status = OrderStatus::Processing;
-            
+
             Ok(new_order)
         }));
-        
+
         engine
     }
-    
+
     fn register_rule<F>(&mut self, name: &str, rule: Box<F>)
     where
         F: Fn(&Order) -> Result<Order, String> + 'static,
     {
         self.rules.insert(name.to_string(), rule);
     }
-    
+
     fn apply_rule(&self, rule_name: &str, order: &Order) -> Result<Order, String> {
         match self.rules.get(rule_name) {
             Some(rule) => rule(order),
             None => Err(format!("Rule '{}' not found", rule_name)),
         }
     }
-    
+
     // 应用一系列规则
     fn apply_rules(&self, order: &Order, rule_names: &[&str]) -> Result<Order, String> {
         let mut current_order = order.clone();
-        
+
         for &rule_name in rule_names {
             current_order = self.apply_rule(rule_name, &current_order)?;
         }
-        
+
         Ok(current_order)
     }
 }
@@ -1572,11 +1572,11 @@ impl DomainEvent for OrderCreatedEvent {
     fn event_type(&self) -> &str {
         "order_created"
     }
-    
+
     fn occurred_at(&self) -> DateTime<Utc> {
         self.occurred_at
     }
-    
+
     fn entity
 
 ```rust
@@ -1598,11 +1598,11 @@ impl DomainEvent for OrderShippedEvent {
     fn event_type(&self) -> &str {
         "order_shipped"
     }
-    
+
     fn occurred_at(&self) -> DateTime<Utc> {
         self.occurred_at
     }
-    
+
     fn entity_id(&self) -> &str {
         &self.order_id
     }
@@ -1621,21 +1621,21 @@ impl EventStore {
             entity_events: HashMap::new(),
         }
     }
-    
+
     fn append_event<E: DomainEvent + 'static>(&mut self, event: E) {
         let entity_id = event.entity_id().to_string();
         let event_index = self.events.len();
-        
+
         // 存储事件
         self.events.push(Box::new(event));
-        
+
         // 更新实体到事件的映射
         self.entity_events
             .entry(entity_id)
             .or_insert_with(Vec::new)
             .push(event_index);
     }
-    
+
     fn get_events_for_entity(&self, entity_id: &str) -> Vec<&Box<dyn DomainEvent>> {
         match self.entity_events.get(entity_id) {
             Some(indices) => {
@@ -1665,11 +1665,11 @@ impl OrderCommand {
             items,
             occurred_at: Utc::now(),
         };
-        
+
         // 存储事件
         event_store.append_event(event);
     }
-    
+
     fn ship_order(
         event_store: &mut EventStore,
         order_id: String,
@@ -1684,7 +1684,7 @@ impl OrderCommand {
             shipped_at: Utc::now(),
             occurred_at: Utc::now(),
         };
-        
+
         // 存储事件
         event_store.append_event(event);
     }
@@ -1712,18 +1712,18 @@ impl OrderView {
             orders: HashMap::new(),
         }
     }
-    
+
     // 从事件流重建视图
     fn rebuild_from_events(&mut self, event_store: &EventStore) {
         // 清空现有视图
         self.orders.clear();
-        
+
         // 按时间顺序处理所有事件
         for event in &event_store.events {
             self.apply_event(event.as_ref());
         }
     }
-    
+
     fn apply_event(&mut self, event: &dyn DomainEvent) {
         match event.event_type() {
             "order_created" => {
@@ -1753,11 +1753,11 @@ impl OrderView {
             _ => {} // 忽略未知事件类型
         }
     }
-    
+
     fn get_order(&self, order_id: &str) -> Option<&OrderViewModel> {
         self.orders.get(order_id)
     }
-    
+
     fn get_all_orders(&self) -> Vec<&OrderViewModel> {
         self.orders.values().collect()
     }

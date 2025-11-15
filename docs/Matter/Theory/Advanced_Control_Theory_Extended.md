@@ -1,41 +1,42 @@
-# 高级控制理论深化扩展 (Advanced Control Theory Extended)
+# 1. 高级控制理论深化扩展 (Advanced Control Theory Extended)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 高级非线性控制理论 (Advanced Nonlinear Control Theory)](#2-高级非线性控制理论-advanced-nonlinear-control-theory)
-  - [2.1 非线性系统基础](#21-非线性系统基础)
-  - [2.2 李雅普诺夫稳定性理论](#22-李雅普诺夫稳定性理论)
-  - [2.3 反馈线性化](#23-反馈线性化)
-- [3 高级鲁棒控制理论 (Advanced Robust Control Theory)](#3-高级鲁棒控制理论-advanced-robust-control-theory)
-  - [3.1 不确定性建模](#31-不确定性建模)
-  - [3.2 H控制](#32-h控制)
-  - [3.3 μ-综合](#33-μ-综合)
-- [4 高级自适应控制理论 (Advanced Adaptive Control Theory)](#4-高级自适应控制理论-advanced-adaptive-control-theory)
-  - [4.1 自适应控制基础](#41-自适应控制基础)
-  - [4.2 模型参考自适应控制](#42-模型参考自适应控制)
-  - [4.3 自校正调节器](#43-自校正调节器)
-- [5 高级最优控制理论 (Advanced Optimal Control Theory)](#5-高级最优控制理论-advanced-optimal-control-theory)
-  - [5.1 变分法](#51-变分法)
-  - [5.2 动态规划](#52-动态规划)
-  - [5.3 线性二次型调节器](#53-线性二次型调节器)
-- [6 量子控制理论 (Quantum Control Theory)](#6-量子控制理论-quantum-control-theory)
-  - [6.1 量子系统建模](#61-量子系统建模)
-  - [6.2 量子最优控制](#62-量子最优控制)
-- [7 批判性分析与展望 (Critical Analysis and Outlook)](#7-批判性分析与展望-critical-analysis-and-outlook)
-  - [7.1 理论局限性](#71-理论局限性)
-  - [7.2 未来发展方向](#72-未来发展方向)
-- [8 结论](#8-结论)
+- [1. 高级控制理论深化扩展 (Advanced Control Theory Extended)](#1-高级控制理论深化扩展-advanced-control-theory-extended)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 高级非线性控制理论 (Advanced Nonlinear Control Theory)](#12-高级非线性控制理论-advanced-nonlinear-control-theory)
+    - [1.2.1 非线性系统基础](#121-非线性系统基础)
+    - [1.2.2 李雅普诺夫稳定性理论](#122-李雅普诺夫稳定性理论)
+    - [1.2.3 反馈线性化](#123-反馈线性化)
+  - [1.3 高级鲁棒控制理论 (Advanced Robust Control Theory)](#13-高级鲁棒控制理论-advanced-robust-control-theory)
+    - [1.3.1 不确定性建模](#131-不确定性建模)
+    - [1.3.2 H控制](#132-h控制)
+    - [1.3.3 μ-综合](#133-μ-综合)
+  - [1.4 高级自适应控制理论 (Advanced Adaptive Control Theory)](#14-高级自适应控制理论-advanced-adaptive-control-theory)
+    - [1.4.1 自适应控制基础](#141-自适应控制基础)
+    - [1.4.2 模型参考自适应控制](#142-模型参考自适应控制)
+    - [1.4.3 自校正调节器](#143-自校正调节器)
+  - [1.5 高级最优控制理论 (Advanced Optimal Control Theory)](#15-高级最优控制理论-advanced-optimal-control-theory)
+    - [1.5.1 变分法](#151-变分法)
+    - [1.5.2 动态规划](#152-动态规划)
+    - [1.5.3 线性二次型调节器](#153-线性二次型调节器)
+  - [1.6 量子控制理论 (Quantum Control Theory)](#16-量子控制理论-quantum-control-theory)
+    - [1.6.1 量子系统建模](#161-量子系统建模)
+    - [1.6.2 量子最优控制](#162-量子最优控制)
+  - [1.7 批判性分析与展望 (Critical Analysis and Outlook)](#17-批判性分析与展望-critical-analysis-and-outlook)
+    - [1.7.1 理论局限性](#171-理论局限性)
+    - [1.7.2 未来发展方向](#172-未来发展方向)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 控制理论是形式科学的核心分支，研究动态系统的行为分析和控制设计。本文档在现有理论基础上进行深化扩展，构建一个完整的高级控制理论体系，包括非线性控制、鲁棒控制、自适应控制、最优控制、量子控制等前沿内容。
 
-## 2 高级非线性控制理论 (Advanced Nonlinear Control Theory)
+## 1.2 高级非线性控制理论 (Advanced Nonlinear Control Theory)
 
-### 2.1 非线性系统基础
+### 1.2.1 非线性系统基础
 
 **定义 1.1.1 (非线性系统)**
 非线性系统的一般形式：
@@ -73,7 +74,7 @@ data NonlinearSystem where
 3. **存在性**：通过皮卡迭代构造解
 4. **唯一性**：通过李普希茨条件保证唯一性
 
-### 2.2 李雅普诺夫稳定性理论
+### 1.2.2 李雅普诺夫稳定性理论
 
 **定义 1.2.1 (李雅普诺夫函数)**
 李雅普诺夫函数 $V : \mathbb{R}^n \rightarrow \mathbb{R}$ 满足：
@@ -109,7 +110,7 @@ data NonlinearSystem where
 3. **唯一性**：$V(x)$ 在 $x = 0$ 处达到最小值
 4. **结论**：状态轨迹收敛到平衡点
 
-### 2.3 反馈线性化
+### 1.2.3 反馈线性化
 
 **定义 1.3.1 (相对度)**
 系统 $\dot{x} = f(x) + g(x)u$ 的相对度 $r$ 是满足以下条件的最小整数：
@@ -135,24 +136,24 @@ $$u = \frac{1}{L_g L_f^{r-1} h(x)} (-L_f^r h(x) + v)$$
 
 ```haskell
 feedbackLinearization :: NonlinearSystem -> LinearSystem
-feedbackLinearization system = 
+feedbackLinearization system =
   let -- 步骤1：计算相对度
       relativeDegree = computeRelativeDegree system
-      
+
       -- 步骤2：构造坐标变换
       coordinateTransform = constructTransform system relativeDegree
-      
+
       -- 步骤3：设计反馈控制
       feedbackControl = designFeedback system relativeDegree
-      
+
       -- 步骤4：应用变换和反馈
       linearSystem = applyTransformAndFeedback system coordinateTransform feedbackControl
   in linearSystem
 ```
 
-## 3 高级鲁棒控制理论 (Advanced Robust Control Theory)
+## 1.3 高级鲁棒控制理论 (Advanced Robust Control Theory)
 
-### 3.1 不确定性建模
+### 1.3.1 不确定性建模
 
 **定义 2.1.1 (不确定性类型)**
 系统不确定性的类型：
@@ -183,7 +184,7 @@ $$y = (C + \Delta C)x + v$$
 3. **鲁棒稳定性**：闭环系统在不确定性下保持稳定
 4. **结论**：系统鲁棒稳定
 
-### 3.2 H控制
+### 1.3.2 H控制
 
 **定义 2.2.1 (H∞控制问题)**
 H∞控制问题：设计控制器使得闭环系统的H∞范数小于给定值 $\gamma$：
@@ -209,22 +210,22 @@ $$A^T P + PA + P(\frac{1}{\gamma^2} B_1 B_1^T - B_2 B_2^T)P + C_1^T C_1 = 0$$
 
 ```haskell
 hInfinityControl :: System -> Double -> Controller
-hInfinityControl system gamma = 
+hInfinityControl system gamma =
   let -- 步骤1：构造广义对象
       generalizedPlant = constructGeneralizedPlant system
-      
+
       -- 步骤2：求解黎卡提方程
       riccatiSolution = solveRiccatiEquation generalizedPlant gamma
-      
+
       -- 步骤3：构造H∞控制器
       controller = constructHInfinityController riccatiSolution
-      
+
       -- 步骤4：验证性能
       performance = verifyPerformance system controller gamma
   in if performance then controller else error "H∞ control synthesis failed"
 ```
 
-### 3.3 μ-综合
+### 1.3.3 μ-综合
 
 **定义 2.3.1 (μ-综合问题)**
 μ-综合问题：设计控制器使得闭环系统的结构化奇异值小于1：
@@ -237,20 +238,20 @@ $$\mu_\Delta(T_{zw}) < 1$$
 
 ```haskell
 muSynthesis :: System -> UncertaintyStructure -> Controller
-muSynthesis system uncertainty = 
+muSynthesis system uncertainty =
   let -- 步骤1：D-K迭代
       dkIteration = do
         -- D步：固定K，优化D
         d = optimizeD system controller uncertainty
-        
+
         -- K步：固定D，优化K
         controller = optimizeK system d uncertainty
-        
+
         return (d, controller)
-      
+
       -- 步骤2：收敛检查
       (finalD, finalController) = untilConvergence dkIteration
-      
+
   in finalController
 ```
 
@@ -264,9 +265,9 @@ D-K迭代算法在适当条件下收敛到局部最优解。
 3. **收敛性**：序列收敛到局部最优
 4. **结论**：算法收敛
 
-## 4 高级自适应控制理论 (Advanced Adaptive Control Theory)
+## 1.4 高级自适应控制理论 (Advanced Adaptive Control Theory)
 
-### 4.1 自适应控制基础
+### 1.4.1 自适应控制基础
 
 **定义 3.1.1 (自适应控制系统)**
 自适应控制系统能够在线调整控制器参数：
@@ -301,7 +302,7 @@ data AdaptiveControl where
 3. **状态有界**：系统状态保持有界
 4. **跟踪性能**：系统跟踪参考信号
 
-### 4.2 模型参考自适应控制
+### 1.4.2 模型参考自适应控制
 
 **定义 3.2.1 (模型参考自适应控制)**
 模型参考自适应控制系统：
@@ -327,7 +328,7 @@ $$\dot{K}_r = -\Gamma_r r e^T P B$$
 3. **稳定性**：系统李雅普诺夫稳定
 4. **收敛性**：在持续激励下参数收敛
 
-### 4.3 自校正调节器
+### 1.4.3 自校正调节器
 
 **定义 3.3.1 (自校正调节器)**
 自校正调节器：
@@ -345,9 +346,9 @@ $$u(k) = -\hat{\theta}^T(k) \phi(k)$$
 3. **收敛性**：在持续激励下收敛
 4. **稳定性**：闭环系统稳定
 
-## 5 高级最优控制理论 (Advanced Optimal Control Theory)
+## 1.5 高级最优控制理论 (Advanced Optimal Control Theory)
 
-### 5.1 变分法
+### 1.5.1 变分法
 
 **定义 4.1.1 (变分问题)**
 变分问题：最小化泛函
@@ -367,7 +368,7 @@ $$\frac{d}{dt} \frac{\partial L}{\partial \dot{x}} - \frac{\partial L}{\partial 
 3. **欧拉方程**：得到欧拉-拉格朗日方程
 4. **最优性**：满足方程的解是最优的
 
-### 5.2 动态规划
+### 1.5.2 动态规划
 
 **定义 4.2.1 (动态规划)**
 动态规划基于贝尔曼最优性原理：
@@ -387,7 +388,7 @@ $$-\frac{\partial V^*}{\partial t} = \min_{u} \{L(x, u, t) + \frac{\partial V^*}
 3. **控制律**：从HJB方程提取最优控制律
 4. **最优性**：控制律是最优的
 
-### 5.3 线性二次型调节器
+### 1.5.3 线性二次型调节器
 
 **定义 4.3.1 (LQR问题)**
 线性二次型调节器问题：
@@ -412,9 +413,9 @@ LQR控制律在二次型性能指标下是最优的。
 3. **黎卡提方程**：得到代数黎卡提方程
 4. **最优控制律**：从黎卡提方程解得到控制律
 
-## 6 量子控制理论 (Quantum Control Theory)
+## 1.6 量子控制理论 (Quantum Control Theory)
 
-### 6.1 量子系统建模
+### 1.6.1 量子系统建模
 
 **定义 5.1.1 (量子系统)**
 量子系统的薛定谔方程：
@@ -442,7 +443,7 @@ $$\dot{\rho}(t) = -i[H, \rho(t)] + \sum_k L_k \rho(t) L_k^\dagger - \frac{1}{2}\
 3. **可达性**：任意量子态可达
 4. **结论**：系统可控
 
-### 6.2 量子最优控制
+### 1.6.2 量子最优控制
 
 **定义 5.2.1 (量子最优控制问题)**
 量子最优控制问题：
@@ -462,9 +463,9 @@ $$u^*(t) = -R^{-1} \text{Tr}(\rho[t](H_1, P(t)))$$
 3. **控制律**：从最优性条件得到控制律
 4. **最优性**：控制律是最优的
 
-## 7 批判性分析与展望 (Critical Analysis and Outlook)
+## 1.7 批判性分析与展望 (Critical Analysis and Outlook)
 
-### 7.1 理论局限性
+### 1.7.1 理论局限性
 
 **批判 6.1.1 (非线性复杂性)**
 非线性控制面临复杂性挑战：
@@ -487,7 +488,7 @@ $$u^*(t) = -R^{-1} \text{Tr}(\rho[t](H_1, P(t)))$$
 - 持续激励要求严格
 - 鲁棒性不足
 
-### 7.2 未来发展方向
+### 1.7.2 未来发展方向
 
 **展望 6.2.1 (智能控制)**
 人工智能对控制理论的影响：
@@ -510,7 +511,7 @@ $$u^*(t) = -R^{-1} \text{Tr}(\rho[t](H_1, P(t)))$$
 - 事件触发控制
 - 网络化控制
 
-## 8 结论
+## 1.8 结论
 
 高级控制理论是形式科学的重要分支，研究动态系统的行为分析和控制设计。通过严格的形式化定义、完整的定理证明和批判性分析，我们建立了一个自洽、完备、前沿的控制理论体系。
 
@@ -525,7 +526,7 @@ $$u^*(t) = -R^{-1} \text{Tr}(\rho[t](H_1, P(t)))$$
 
 高级控制理论为控制系统设计提供了强大的理论工具，为工业控制、机器人控制、航空航天等领域提供了形式化的设计方法。通过持续的理论创新和实践应用，我们相信控制理论将在未来的科技发展中发挥更加重要的作用。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Khalil, H. K. (2002). Nonlinear systems. Prentice Hall.
 2. Slotine, J. J. E., & Li, W. (1991). Applied nonlinear control. Prentice Hall.

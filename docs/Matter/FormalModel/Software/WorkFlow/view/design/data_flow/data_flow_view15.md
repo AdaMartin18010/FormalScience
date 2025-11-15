@@ -1,60 +1,60 @@
 
-# Rust语言特性与概念模型映射分析
+# 1. Rust语言特性与概念模型映射分析
 
 ## 目录
 
-- [Rust语言特性与概念模型映射分析](#rust语言特性与概念模型映射分析)
+- [1. Rust语言特性与概念模型映射分析](#1-rust语言特性与概念模型映射分析)
   - [目录](#目录)
-  - [1. 引言](#1-引言)
-  - [2. Rust类型系统与概念模型](#2-rust类型系统与概念模型)
-    - [6.1 思维导图](#61-思维导图)
-    - [6.2 处理跨聚合事务](#62-处理跨聚合事务)
-    - [6.3 使用领域事件解耦聚合](#63-使用领域事件解耦聚合)
-    - [6.4 分布式系统与一致性保证](#64-分布式系统与一致性保证)
-    - [2.5 类型参数约束与业务规则](#25-类型参数约束与业务规则)
-    - [2.6 关联类型与领域关系](#26-关联类型与领域关系)
-    - [2.7 零成本抽象与高效模型](#27-零成本抽象与高效模型)
-  - [7 . 结论与展望（扩展）](#7-结论与展望扩展)
-    - [7.1 映射优势总结](#71-映射优势总结)
-    - [7.2 实践建议](#72-实践建议)
-    - [7.3 未来研究方向](#73-未来研究方向)
-    - [3.4 借用与聚合边界](#34-借用与聚合边界)
-    - [3.5 生命周期与对象间关系](#35-生命周期与对象间关系)
-    - [3.6 内部可变性与并发领域模型](#36-内部可变性与并发领域模型)
-    - [3.7 所有权转移与领域事件](#37-所有权转移与领域事件)
-  - [4. Rust控制流与概念模型](#4-rust控制流与概念模型)
-    - [4.1 模式匹配与业务规则处理](#41-模式匹配与业务规则处理)
-    - [4.2 错误处理与业务异常](#42-错误处理与业务异常)
-    - [4.3 迭代器与集合操作](#43-迭代器与集合操作)
-    - [4.4 闭包与策略模式](#44-闭包与策略模式)
-    - [4.5 异步流程与长时操作](#45-异步流程与长时操作)
-    - [4.6 宏系统与元建模](#46-宏系统与元建模)
-    - [4.7 条件编译与特性切换](#47-条件编译与特性切换)
-  - [5. 综合分析与最佳实践](#5-综合分析与最佳实践)
-    - [5.1 类型驱动设计方法](#51-类型驱动设计方法)
-    - [5.2 业务规则编码策略](#52-业务规则编码策略)
-    - [5.3 跨领域边界的通信模式](#53-跨领域边界的通信模式)
-    - [5.4 状态管理最佳实践](#54-状态管理最佳实践)
-    - [5.5 Rust概念模型实现挑战与对策](#55-rust概念模型实现挑战与对策)
-  - [6. 结论与展望](#6-结论与展望)
-    - [6.1 思维导图](#61-思维导图)
-    - [6.2 处理跨聚合事务](#62-处理跨聚合事务)
-    - [6.3 使用领域事件解耦聚合](#63-使用领域事件解耦聚合)
-    - [6.4 分布式系统与一致性保证](#64-分布式系统与一致性保证)
-  - [7. 结论与展望（扩展）](#7-结论与展望扩展)
-    - [7.1 映射优势总结](#71-映射优势总结)
-    - [7.2 实践建议](#72-实践建议)
-    - [7.3 未来研究方向](#73-未来研究方向)
+  - [1.1 引言](#11-引言)
+  - [1.2 Rust类型系统与概念模型](#12-rust类型系统与概念模型)
+    - [1.2.1 结构体与值对象/实体](#121-结构体与值对象实体)
+    - [1.2.2 枚举与多态领域概念](#122-枚举与多态领域概念)
+    - [1.2.3 特征与领域服务](#123-特征与领域服务)
+    - [1.2.4 泛型与领域抽象](#124-泛型与领域抽象)
+    - [1.2.5 类型参数约束与业务规则](#125-类型参数约束与业务规则)
+    - [1.2.6 关联类型与领域关系](#126-关联类型与领域关系)
+    - [1.2.7 零成本抽象与高效模型](#127-零成本抽象与高效模型)
+  - [1.3 Rust变量特性与概念模型](#13-rust变量特性与概念模型)
+    - [1.3.1 所有权模型与对象生命周期](#131-所有权模型与对象生命周期)
+    - [1.3.2 不可变性与值对象](#132-不可变性与值对象)
+    - [1.3.3 可变性与实体状态](#133-可变性与实体状态)
+    - [1.3.4 借用与聚合边界](#134-借用与聚合边界)
+    - [1.3.5 生命周期与对象间关系](#135-生命周期与对象间关系)
+    - [1.3.6 内部可变性与并发领域模型](#136-内部可变性与并发领域模型)
+    - [1.3.7 所有权转移与领域事件](#137-所有权转移与领域事件)
+  - [1.4 Rust控制流与概念模型](#14-rust控制流与概念模型)
+    - [1.4.1 模式匹配与业务规则处理](#141-模式匹配与业务规则处理)
+    - [1.4.2 错误处理与业务异常](#142-错误处理与业务异常)
+    - [1.4.3 迭代器与集合操作](#143-迭代器与集合操作)
+    - [1.4.4 闭包与策略模式](#144-闭包与策略模式)
+    - [1.4.5 异步流程与长时操作](#145-异步流程与长时操作)
+    - [1.4.6 宏系统与元建模](#146-宏系统与元建模)
+    - [1.4.7 条件编译与特性切换](#147-条件编译与特性切换)
+  - [1.5 综合分析与最佳实践](#15-综合分析与最佳实践)
+    - [1.5.1 类型驱动设计方法](#151-类型驱动设计方法)
+    - [1.5.2 业务规则编码策略](#152-业务规则编码策略)
+    - [1.5.3 跨领域边界的通信模式](#153-跨领域边界的通信模式)
+    - [1.5.4 状态管理最佳实践](#154-状态管理最佳实践)
+    - [1.5.5 Rust概念模型实现挑战与对策](#155-rust概念模型实现挑战与对策)
+  - [1.6 结论与展望](#16-结论与展望)
+    - [1.6.1 思维导图](#161-思维导图)
+    - [1.6.2 处理跨聚合事务](#162-处理跨聚合事务)
+    - [1.6.3 使用领域事件解耦聚合](#163-使用领域事件解耦聚合)
+    - [1.6.4 分布式系统与一致性保证](#164-分布式系统与一致性保证)
+  - [1.7 结论与展望（扩展）](#17-结论与展望扩展)
+    - [1.7.1 映射优势总结](#171-映射优势总结)
+    - [1.7.2 实践建议](#172-实践建议)
+    - [1.7.3 未来研究方向](#173-未来研究方向)
 
-## 1. 引言
+## 1.1 引言
 
 概念模型是描述特定领域内实体、关系和行为的抽象表示，是领域驱动设计(DDD)的核心。Rust作为一种系统级编程语言，其独特的类型系统、变量特性和控制流机制为概念模型的实现提供了强大的表达能力和安全保障。
 
 本文旨在全面分析Rust语言特性与概念模型之间的映射关系，探讨如何利用Rust的语言机制准确、高效地实现领域模型，同时保持高性能和内存安全。
 
-## 2. Rust类型系统与概念模型
+## 1.2 Rust类型系统与概念模型
 
-### 2.1 结构体与值对象/实体
+### 1.2.1 结构体与值对象/实体
 
 Rust的结构体(struct)是实现领域模型中值对象和实体的理想工具：
 
@@ -73,22 +73,22 @@ impl Money {
         if amount < 0 {
             return Err(DomainError::ValidationError("金额不能为负".into()));
         }
-        
+
         Ok(Self { amount, currency })
     }
-    
+
     // 不可变操作 - 返回新实例
     pub fn add(&self, other: &Money) -> Result<Self, DomainError> {
         if self.currency != other.currency {
             return Err(DomainError::ValidationError("货币类型不匹配".into()));
         }
-        
+
         Ok(Self {
             amount: self.amount + other.amount,
             currency: self.currency.clone(),
         })
     }
-    
+
     // 只读访问器
     pub fn amount(&self) -> i64 {
         self.amount
@@ -114,18 +114,18 @@ impl Order {
     pub fn id(&self) -> &OrderId {
         &self.id
     }
-    
+
     // 实体允许可变操作
     pub fn add_item(&mut self, item: OrderItem) -> Result<(), DomainError> {
         // 业务规则验证
         if self.status != OrderStatus::Draft {
             return Err(DomainError::InvalidOperation("只有草稿订单可添加商品".into()));
         }
-        
+
         self.items.push(item);
         self.recalculate_total();
         self.updated_at = Utc::now();
-        
+
         Ok(())
     }
 }
@@ -138,7 +138,7 @@ impl Order {
 - 构造函数可包含业务规则验证
 - 方法签名清晰区分了可变和不可变操作
 
-### 2.2 枚举与多态领域概念
+### 1.2.2 枚举与多态领域概念
 
 Rust的枚举(enum)提供了强大的代数数据类型，能够表达领域中的多态概念和状态转换：
 
@@ -193,7 +193,7 @@ impl PaymentMethod {
         }
         Ok(())
     }
-    
+
     pub fn display_name(&self) -> String {
         match self {
             Self::CreditCard { card_type, last_four, .. } => {
@@ -217,7 +217,7 @@ impl PaymentMethod {
 - 模式匹配确保处理所有可能的状态或类型
 - 方法实现使枚举行为与具体变体匹配
 
-### 2.3 特征与领域服务
+### 1.2.3 特征与领域服务
 
 Rust的特征(trait)系统非常适合表达领域服务和接口：
 
@@ -226,12 +226,12 @@ Rust的特征(trait)系统非常适合表达领域服务和接口：
 #[async_trait]
 pub trait PaymentService {
     async fn process_payment(
-        &self, 
-        order_id: &OrderId, 
-        payment_method: &PaymentMethod, 
+        &self,
+        order_id: &OrderId,
+        payment_method: &PaymentMethod,
         amount: &Money
     ) -> Result<PaymentId, PaymentError>;
-    
+
     async fn refund_payment(
         &self,
         payment_id: &PaymentId,
@@ -248,15 +248,15 @@ pub struct StripePaymentService {
 #[async_trait]
 impl PaymentService for StripePaymentService {
     async fn process_payment(
-        &self, 
-        order_id: &OrderId, 
-        payment_method: &PaymentMethod, 
+        &self,
+        order_id: &OrderId,
+        payment_method: &PaymentMethod,
         amount: &Money
     ) -> Result<PaymentId, PaymentError> {
         // Stripe实现...
         // ...
     }
-    
+
     async fn refund_payment(
         &self,
         payment_id: &PaymentId,
@@ -283,7 +283,7 @@ pub trait OrderRepository {
 - 特征对象允许在运行时选择不同实现，支持依赖注入
 - 仓储接口使领域逻辑与数据存储分离
 
-### 2.4 泛型与领域抽象
+### 1.2.4 泛型与领域抽象
 
 Rust的泛型机制使领域抽象变得更加简洁和类型安全：
 
@@ -300,15 +300,15 @@ impl<T> PagedResult<T> {
     pub fn new(items: Vec<T>, total: usize, page: usize, page_size: usize) -> Self {
         Self { items, total, page, page_size }
     }
-    
+
     pub fn items(&self) -> &[T] {
         &self.items
     }
-    
+
     pub fn total_pages(&self) -> usize {
         (self.total + self.page_size - 1) / self.page_size
     }
-    
+
     pub fn has_next_page(&self) -> bool {
         self.page < self.total_pages()
     }
@@ -357,7 +357,7 @@ impl Specification<Customer> for ActiveCustomerSpecification {
 - 组合模式等设计模式可以通过泛型优雅实现
 - 避免了运行时类型检查和类型转换
 
-### 2.5 类型参数约束与业务规则
+### 1.2.5 类型参数约束与业务规则
 
 Rust的类型参数约束可以编码一些业务规则，在编译时进行验证：
 
@@ -389,7 +389,7 @@ impl Percentage {
         }
         Ok(Self(value))
     }
-    
+
     pub fn value(&self) -> u8 {
         self.0
     }
@@ -410,7 +410,7 @@ pub fn apply_discount(price: &mut Money, discount: Percentage) {
 - 类型系统确保业务规则在编译时验证
 - 减少了运行时检查，提高了性能
 
-### 2.6 关联类型与领域关系
+### 1.2.6 关联类型与领域关系
 
 Rust的关联类型允许在特征中定义相关类型，适合表达领域对象间的关系：
 
@@ -419,7 +419,7 @@ Rust的关联类型允许在特征中定义相关类型，适合表达领域对�
 pub trait AggregateRoot {
     // 关联类型 - 聚合ID
     type Id: Clone + PartialEq + Send + Sync;
-    
+
     fn id(&self) -> &Self::Id;
     fn version(&self) -> u64;
     fn increment_version(&mut self);
@@ -438,7 +438,7 @@ pub trait Repository<A: AggregateRoot> {
 pub trait EventSourcedAggregate: AggregateRoot {
     // 关联类型 - 聚合事件
     type Event: DomainEvent;
-    
+
     fn apply(&mut self, event: Self::Event);
     fn uncommitted_events(&self) -> &[Self::Event];
     fn clear_uncommitted_events(&mut self);
@@ -447,15 +447,15 @@ pub trait EventSourcedAggregate: AggregateRoot {
 // 实现聚合根
 impl AggregateRoot for Order {
     type Id = OrderId;
-    
+
     fn id(&self) -> &Self::Id {
         &self.id
     }
-    
+
     fn version(&self) -> u64 {
         self.version
     }
-    
+
     fn increment_version(&mut self) {
         self.version += 1;
     }
@@ -469,7 +469,7 @@ impl AggregateRoot for Order {
 - 使类型系统能够捕获领域对象之间的依赖关系
 - 提高了API的可读性和可维护性
 
-### 2.7 零成本抽象与高效模型
+### 1.2.7 零成本抽象与高效模型
 
 Rust的零成本抽象原则确保领域模型不会带来额外的运行时开销：
 
@@ -498,7 +498,7 @@ impl Money {
     pub fn is_zero(&self) -> bool {
         self.amount == 0
     }
-    
+
     #[inline]
     pub fn is_positive(&self) -> bool {
         self.amount > 0
@@ -513,9 +513,9 @@ impl Money {
 - `#[inline]`属性帮助编译器优化热点领域逻辑
 - 优化关键路径上的值对象操作提高整体性能
 
-## 3. Rust变量特性与概念模型
+## 1.3 Rust变量特性与概念模型
 
-### 3.1 所有权模型与对象生命周期
+### 1.3.1 所有权模型与对象生命周期
 
 Rust的所有权模型为领域对象提供了明确的生命周期管理：
 
@@ -532,25 +532,25 @@ impl OrderProcessor {
         // 从仓储获取Order的所有权
         let mut order = self.order_repository.find_by_id(&order_id).await?
             .ok_or(ProcessError::OrderNotFound(order_id))?;
-        
+
         // 验证是否可以提交
         if order.status() != OrderStatus::Draft {
             return Err(ProcessError::InvalidOrderStatus);
         }
-        
+
         // 修改状态
         order.submit()?;
-        
+
         // 保存，转移order的所有权给save方法
         self.order_repository.save(&mut order).await?;
-        
+
         // 发送通知
         let customer_id = order.customer_id().clone();
         self.notification_service.notify_order_submitted(
-            &customer_id, 
+            &customer_id,
             &order_id
         ).await?;
-        
+
         Ok(())
     }
 }
@@ -563,7 +563,7 @@ impl OrderProcessor {
 - 明确的所有权转移反映了领域过程中的责任转移
 - 强大的内存管理使领域逻辑更专注于业务
 
-### 3.2 不可变性与值对象
+### 1.3.2 不可变性与值对象
 
 Rust的默认不可变性完美契合值对象的设计原则：
 
@@ -592,7 +592,7 @@ impl Address {
             return Err(ValidationError::EmptyStreet);
         }
         // 其他验证...
-        
+
         Ok(Self {
             street,
             city,
@@ -601,19 +601,19 @@ impl Address {
             country,
         })
     }
-    
+
     // 所有访问方法都是&self，确保不可变性
     pub fn street(&self) -> &str {
         &self.street
     }
-    
+
     // 修改返回新实例
     pub fn with_postal_code(&self, postal_code: String) -> Result<Self, ValidationError> {
         // 验证新邮编
         if postal_code.is_empty() {
             return Err(ValidationError::EmptyPostalCode);
         }
-        
+
         // 创建新实例
         Ok(Self {
             street: self.street.clone(),
@@ -634,13 +634,13 @@ pub fn example_usage() {
         "12345".to_string(),
         "USA".to_string(),
     ).unwrap();
-    
+
     // 地址值对象不可修改
     // address.postal_code = "54321".to_string(); // 编译错误
-    
+
     // 创建包含修改的新实例
     let new_address = address.with_postal_code("54321".to_string()).unwrap();
-    
+
     // 比较两个地址
     assert_ne!(address, new_address);
 }
@@ -653,7 +653,7 @@ pub fn example_usage() {
 - 内置的相等性支持(`#[derive(PartialEq)]`)适合值对象比较
 - 不可变性保证了线程安全，无需加锁
 
-### 3.3 可变性与实体状态
+### 1.3.3 可变性与实体状态
 
 Rust通过`&mut`引用精确控制实体状态变化：
 
@@ -675,31 +675,31 @@ impl Customer {
         if self.status == CustomerStatus::Suspended {
             return Err(DomainError::CustomerSuspended);
         }
-        
+
         self.email = email;
         self.updated_at = Utc::now();
-        
+
         Ok(())
     }
-    
+
     pub fn change_status(&mut self, new_status: CustomerStatus) -> Result<(), DomainError> {
         // 业务规则：活跃客户不能直接被锁定
         if self.status == CustomerStatus::Active && new_status == CustomerStatus::Locked {
             return Err(DomainError::InvalidStatusTransition);
         }
-        
+
         self.status = new_status;
         self.updated_at = Utc::now();
-        
+
         Ok(())
     }
-    
+
     // 只读方法使用&self
     pub fn can_place_order(&self, order_total: &Money) -> bool {
         if self.status != CustomerStatus::Active {
             return false;
         }
-        
+
         order_total <= &self.credit_limit
     }
 }
@@ -711,20 +711,20 @@ pub struct CustomerService {
 
 impl CustomerService {
     pub async fn suspend_customer(
-        &self, 
-        customer_id: &CustomerId, 
+        &self,
+        customer_id: &CustomerId,
         reason: String
     ) -> Result<(), ServiceError> {
         // 获取可变引用 - 明确表示意图修改状态
         let mut customer = self.customer_repository.find_by_id(customer_id).await?
             .ok_or(ServiceError::CustomerNotFound)?;
-            
+
         // 修改状态
         customer.change_status(CustomerStatus::Suspended)?;
-        
+
         // 保存修改
         self.customer_repository.save(&customer).await?;
-        
+
         Ok(())
     }
 }
@@ -737,7 +737,7 @@ impl CustomerService {
 - 可变性在API级别可见，提高代码可读性和自文档化
 - 业务规则验证内置于状态修改方法中
 
-### 3.4 借用与聚合边界
+### 1.3.4 借用与聚合边界
 
 Rust的借用规则自然地强化了聚合边界的概念：
 
@@ -758,10 +758,10 @@ impl Order {
         if self.status != OrderStatus::Draft {
             return Err(DomainError::OrderNotModifiable);
         }
-        
+
         // 添加或更新项目
         let item_index = self.items.iter().position(|i| i.product_id == product_id);
-        
+
         if let Some(index) = item_index {
             // 已有项目，更新数量
             let item = &mut self.items[index];
@@ -771,32 +771,32 @@ impl Order {
             let item = OrderItem::new(product_id, quantity, unit_price)?;
             self.items.push(item);
         }
-        
+
         // 重新计算总价
         self.recalculate_total();
-        
+
         Ok(())
     }
-    
+
     // 返回不可变切片 - 安全地读取项目
     pub fn items(&self) -> &[OrderItem] {
         &self.items
     }
-    
+
     // 不提供mutable访问 - 防止绕过业务规则
     // 错误示范：这会破坏聚合完整性
     // pub fn items_mut(&mut self) -> &mut Vec<OrderItem> {
     //     &mut self.items
     // }
-    
+
     // 计算总价 - 内部方法
     fn recalculate_total(&mut self) {
         let mut total = Money::zero(Currency::USD);
-        
+
         for item in &self.items {
             total = total.add(&item.subtotal()).unwrap();
         }
-        
+
         self.total = total;
     }
 }
@@ -809,7 +809,7 @@ impl Order {
 - 防止了"对象泄露"问题，强化了聚合的边界
 - 编译器确保没有绕过聚合根的状态修改
 
-### 3.5 生命周期与对象间关系
+### 1.3.5 生命周期与对象间关系
 
 Rust的生命周期参数能够表达对象之间的依赖关系：
 
@@ -829,11 +829,11 @@ impl<'a> OrderItem<'a> {
             unit_price: product.current_price().clone(),
         }
     }
-    
+
     pub fn product(&self) -> &Product {
         self.product
     }
-    
+
     pub fn subtotal(&self) -> Money {
         self.unit_price.multiply(self.quantity as f64)
     }
@@ -849,12 +849,12 @@ impl<'a> OrderProcessor<'a> {
     pub fn new(product_catalog: &'a ProductCatalog, inventory_service: &'a InventoryService) -> Self {
         Self { product_catalog, inventory_service }
     }
-    
+
     pub fn process_order(&self, order: &Order) -> Result<(), ProcessingError> {
         // 使用引用的服务
         for item in order.items() {
             let product = self.product_catalog.find_product(&item.product_id())?;
-            
+
             // 检查库存
             if !self.inventory_service.is_available(&item.product_id(), item.quantity()) {
                 return Err(ProcessingError::InsufficientInventory {
@@ -864,7 +864,7 @@ impl<'a> OrderProcessor<'a> {
                 });
             }
         }
-        
+
         Ok(())
     }
 }
@@ -877,7 +877,7 @@ impl<'a> OrderProcessor<'a> {
 - 编译器确保被引用对象的生命周期至少与引用者一样长
 - 适合表达领域对象之间的"使用"而非"拥有"关系
 
-### 3.6 内部可变性与并发领域模型
+### 1.3.6 内部可变性与并发领域模型
 
 Rust的内部可变性使并发领域模型的实现更加优雅：
 
@@ -888,8 +888,8 @@ pub struct EntityCache<K, V> {
     ttl: Duration,
 }
 
-impl<K, V> EntityCache<K, V> 
-where 
+impl<K, V> EntityCache<K, V>
+where
     K: Eq + Hash + Clone,
     V: Clone,
 {
@@ -899,13 +899,13 @@ where
             ttl,
         }
     }
-    
+
     pub fn get(&self, key: &K) -> Option<V> {
         // 读锁 - 允许并发读取
         let cache = self.cache.read().unwrap();
         cache.get(key).cloned()
     }
-    
+
     pub fn insert(&self, key: K, value: V) {
         // 写锁 - 互斥写入
         let mut cache = self.cache.write().unwrap();
@@ -930,10 +930,10 @@ impl InventoryService {
                 }
             }
         }
-        
+
         // 执行预留逻辑（可能需要数据库事务）
         let reservation_id = self.repository.create_reservation(product_id, quantity).await?;
-        
+
         // 更新内存中的状态
         {
             let mut status_map = self.inventory_status.write().await;
@@ -942,7 +942,7 @@ impl InventoryService {
                 status.reserved += quantity;
             }
         }
-        
+
         Ok(reservation_id)
     }
 }
@@ -955,7 +955,7 @@ impl InventoryService {
 - 锁的作用域被最小化，减少了锁竞争
 - 保持了领域模型的线程安全性而不牺牲表达能力
 
-### 3.7 所有权转移与领域事件
+### 1.3.7 所有权转移与领域事件
 
 Rust的所有权转移模型与领域事件传播自然契合：
 
@@ -975,16 +975,16 @@ impl Order {
         if self.status != OrderStatus::Draft {
             return Err(DomainError::InvalidOrderStatus);
         }
-        
+
 
 ```rust
         if self.status != OrderStatus::Draft {
             return Err(DomainError::InvalidOrderStatus);
         }
-        
+
         self.status = OrderStatus::Placed;
         self.updated_at = Utc::now();
-        
+
         // 创建事件 - 所有权转移给调用者
         let event = OrderPlacedEvent {
             order_id: self.id.clone(),
@@ -992,7 +992,7 @@ impl Order {
             total_amount: self.total.clone(),
             timestamp: Utc::now(),
         };
-        
+
         Ok(event)
     }
 }
@@ -1008,24 +1008,24 @@ impl DomainEventDispatcher {
             handlers: HashMap::new(),
         }
     }
-    
+
     // 注册事件处理器
     pub fn register<E: 'static + Send + Sync>(&mut self, handler: impl Fn(&E) + Send + Sync + 'static) {
         let type_id = TypeId::of::<E>();
-        
+
         let boxed_handler = Box::new(move |event: &dyn Any| {
             if let Some(typed_event) = event.downcast_ref::<E>() {
                 handler(typed_event);
             }
         });
-        
+
         self.handlers.entry(type_id).or_insert_with(Vec::new).push(boxed_handler);
     }
-    
+
     // 分发事件 - 获取事件的所有权
     pub fn dispatch<E: 'static + Send + Sync>(&self, event: E) {
         let type_id = TypeId::of::<E>();
-        
+
         if let Some(handlers) = self.handlers.get(&type_id) {
             for handler in handlers {
                 handler(&event);
@@ -1045,16 +1045,16 @@ impl OrderService {
         // 获取聚合
         let mut order = self.repository.find_by_id(order_id).await?
             .ok_or(ServiceError::OrderNotFound)?;
-            
+
         // 领域逻辑 - 产生事件
         let event = order.place().map_err(ServiceError::DomainError)?;
-        
+
         // 保存聚合
         self.repository.save(&order).await?;
-        
+
         // 分发事件 - 所有权转移给分发器
         self.event_dispatcher.dispatch(event);
-        
+
         Ok(())
     }
 }
@@ -1067,9 +1067,9 @@ impl OrderService {
 - 事件持有必要数据的副本，避免生命周期依赖
 - 分发器接管事件所有权，负责传递给所有订阅者
 
-## 4. Rust控制流与概念模型
+## 1.4 Rust控制流与概念模型
 
-### 4.1 模式匹配与业务规则处理
+### 1.4.1 模式匹配与业务规则处理
 
 Rust的强大模式匹配使复杂业务规则处理变得优雅：
 
@@ -1082,10 +1082,10 @@ pub fn process_order_action(order: &mut Order, action: OrderAction) -> Result<()
         (OrderStatus::Submitted, OrderAction::Pay { payment_id }) => order.mark_as_paid(payment_id),
         (OrderStatus::Paid { .. }, OrderAction::Ship { tracking_code }) => order.ship(tracking_code),
         (OrderStatus::Shipped { .. }, OrderAction::Deliver) => order.deliver(),
-        
+
         // 允许在多种状态下执行的操作
         (status, OrderAction::Cancel { reason }) if status.can_be_cancelled() => order.cancel(reason),
-        
+
         // 拒绝其他组合
         (status, action) => Err(BusinessError::InvalidStateTransition {
             entity: "Order".to_string(),
@@ -1104,7 +1104,7 @@ pub fn calculate_shipping_cost(order: &Order, shipping_options: &ShippingOptions
             ShippingMethod::Express => Money::new_usd(15.99),
             ShippingMethod::Overnight => Money::new_usd(29.99),
         },
-        
+
         // 国际订单，基于区域和重量
         country => {
             let region = shipping_options.get_region_for_country(country);
@@ -1114,7 +1114,7 @@ pub fn calculate_shipping_cost(order: &Order, shipping_options: &ShippingOptions
                 Region::AsiaPacific => Money::new_usd(25.99),
                 Region::Other => Money::new_usd(35.99),
             };
-            
+
             // 基于重量增加费用
             match order.calculate_total_weight() {
                 weight if weight <= Weight::new(1.0, WeightUnit::Kg) => base_rate,
@@ -1138,7 +1138,7 @@ pub fn calculate_shipping_cost(order: &Order, shipping_options: &ShippingOptions
 - 模式守卫(`if status.can_be_cancelled()`)增加了匹配灵活性
 - 嵌套匹配反映了业务规则的层次结构
 
-### 4.2 错误处理与业务异常
+### 1.4.2 错误处理与业务异常
 
 Rust的错误处理机制适合表达业务异常和结果：
 
@@ -1148,16 +1148,16 @@ Rust的错误处理机制适合表达业务异常和结果：
 pub enum DomainError {
     #[error("验证错误: {0}")]
     ValidationError(String),
-    
+
     #[error("实体未找到: {0}")]
     EntityNotFound(String),
-    
+
     #[error("无效状态转换: {0}")]
     InvalidStateTransition(String),
-    
+
     #[error("业务规则冲突: {0}")]
     BusinessRuleViolation(String),
-    
+
     #[error("乐观锁冲突")]
     ConcurrencyConflict,
 }
@@ -1167,13 +1167,13 @@ pub enum DomainError {
 pub enum ApplicationError {
     #[error("领域错误: {0}")]
     DomainError(#[from] DomainError),
-    
+
     #[error("数据访问错误: {0}")]
     DataAccessError(String),
-    
+
     #[error("授权错误: {0}")]
     AuthorizationError(String),
-    
+
     #[error("外部服务错误: {0}")]
     ExternalServiceError(String),
 }
@@ -1187,17 +1187,17 @@ impl Customer {
                 "信用额度减少不能超过50%".to_string()
             ));
         }
-        
+
         // 业务规则：不能为锁定客户提高额度
         if self.status == CustomerStatus::Locked && new_limit > self.credit_limit {
             return Err(DomainError::BusinessRuleViolation(
                 "锁定客户不能提高信用额度".to_string()
             ));
         }
-        
+
         self.credit_limit = new_limit;
         self.updated_at = Utc::now();
-        
+
         Ok(())
     }
 }
@@ -1208,12 +1208,12 @@ pub async fn process_payment(payment: Payment) -> Result<PaymentReceipt, Applica
     if payment.amount().is_zero() {
         return Err(DomainError::ValidationError("支付金额不能为零".into()).into());
     }
-    
+
     // 外部服务调用
     let receipt = payment_gateway.process(&payment)
         .await
         .map_err(|e| ApplicationError::ExternalServiceError(format!("支付网关错误: {}", e)))?;
-        
+
     Ok(receipt)
 }
 
@@ -1232,15 +1232,15 @@ pub async fn update_order_status(
             return Err(ApplicationError::DataAccessError(format!("数据库错误: {}", e)));
         }
     };
-    
+
     // 尝试更新状态
     order.update_status(new_status)
         .map_err(ApplicationError::DomainError)?;
-        
+
     // 保存更新
     order_repository.save(&order).await
         .map_err(|e| ApplicationError::DataAccessError(format!("保存失败: {}", e)))?;
-        
+
     Ok(())
 }
 ```
@@ -1252,7 +1252,7 @@ pub async fn update_order_status(
 - 错误链传递使错误处理更模块化
 - `?`操作符简化了错误传播，使业务逻辑更清晰
 
-### 4.3 迭代器与集合操作
+### 1.4.3 迭代器与集合操作
 
 Rust的迭代器是处理领域集合的强大工具：
 
@@ -1268,10 +1268,10 @@ impl ShoppingCart {
                 acc.add(&subtotal).unwrap()
             })
     }
-    
+
     pub fn apply_discounts(&self, discounts: &[Discount]) -> Money {
         let total = self.calculate_total();
-        
+
         // 计算总折扣
         let total_discount = discounts
             .iter()
@@ -1280,7 +1280,7 @@ impl ShoppingCart {
             .fold(Money::zero(Currency::USD), |acc, amount| {
                 acc.add(&amount).unwrap()
             });
-            
+
         // 确保折扣不超过总价
         if total_discount > total {
             total
@@ -1296,7 +1296,7 @@ pub fn analyze_customer_orders(customer_id: &CustomerId, orders: &[Order]) -> Cu
         .iter()
         .filter(|order| order.customer_id() == customer_id)
         .collect::<Vec<_>>();
-        
+
     // 计算总消费
     let total_spent = all_customer_orders
         .iter()
@@ -1304,20 +1304,20 @@ pub fn analyze_customer_orders(customer_id: &CustomerId, orders: &[Order]) -> Cu
         .fold(Money::zero(Currency::USD), |acc, total| {
             acc.add(total).unwrap()
         });
-        
+
     // 找出最大订单
     let largest_order = all_customer_orders
         .iter()
         .max_by(|a, b| a.total().partial_cmp(b.total()).unwrap())
         .cloned();
-        
+
     // 计算平均订单金额
     let average_order_value = if all_customer_orders.is_empty() {
         Money::zero(Currency::USD)
     } else {
         total_spent.divide(all_customer_orders.len() as f64).unwrap()
     };
-    
+
     // 按月统计订单
     let orders_by_month = all_customer_orders
         .iter()
@@ -1326,7 +1326,7 @@ pub fn analyze_customer_orders(customer_id: &CustomerId, orders: &[Order]) -> Cu
             (month, order)
         })
         .into_group_map();
-        
+
     CustomerAnalysis {
         customer_id: customer_id.clone(),
         order_count: all_customer_orders.len(),
@@ -1345,7 +1345,7 @@ pub fn analyze_customer_orders(customer_id: &CustomerId, orders: &[Order]) -> Cu
 - 惰性求值提升了性能，避免了中间集合的分配
 - 链式组合支持复杂的数据转换流程
 
-### 4.4 闭包与策略模式
+### 1.4.4 闭包与策略模式
 
 Rust的闭包适合实现策略模式和行为封装：
 
@@ -1356,13 +1356,13 @@ type DiscountStrategy = Box<dyn Fn(&Order) -> Money + Send + Sync>;
 // 创建不同的折扣策略
 pub fn create_discount_strategies() -> HashMap<String, DiscountStrategy> {
     let mut strategies = HashMap::new();
-    
+
     // 固定金额折扣
     strategies.insert(
         "FIXED_10".to_string(),
         Box::new(|_| Money::new_usd(10.0)) as DiscountStrategy
     );
-    
+
     // 百分比折扣
     strategies.insert(
         "PERCENT_15".to_string(),
@@ -1371,7 +1371,7 @@ pub fn create_discount_strategies() -> HashMap<String, DiscountStrategy> {
             order.total().multiply(discount_rate)
         }) as DiscountStrategy
     );
-    
+
     // 阶梯折扣
     strategies.insert(
         "TIERED".to_string(),
@@ -1388,7 +1388,7 @@ pub fn create_discount_strategies() -> HashMap<String, DiscountStrategy> {
             }
         }) as DiscountStrategy
     );
-    
+
     // 返回所有策略
     strategies
 }
@@ -1402,11 +1402,11 @@ impl DiscountService {
     pub fn new(strategies: HashMap<String, DiscountStrategy>) -> Self {
         Self { strategies }
     }
-    
+
     pub fn apply_discount(&self, code: &str, order: &Order) -> Result<Money, DiscountError> {
         let strategy = self.strategies.get(code)
             .ok_or_else(|| DiscountError::InvalidCode(code.to_string()))?;
-            
+
         Ok(strategy(order))
     }
 }
@@ -1424,11 +1424,11 @@ impl TaxCalculator {
             special_rules: Vec::new(),
         }
     }
-    
+
     pub fn add_special_rule(&mut self, rule: impl Fn(&Product) -> Option<f64> + Send + Sync + 'static) {
         self.special_rules.push(Box::new(rule));
     }
-    
+
     pub fn calculate_tax(&self, product: &Product, region: &str) -> Money {
         // 查找特殊规则
         for rule in &self.special_rules {
@@ -1436,7 +1436,7 @@ impl TaxCalculator {
                 return product.price().multiply(rate);
             }
         }
-        
+
         // 使用区域税率
         let rate = self.tax_rates.get(region).copied().unwrap_or(0.0);
         product.price().multiply(rate)
@@ -1451,7 +1451,7 @@ impl TaxCalculator {
 - `Box<dyn Fn()>`支持动态策略选择
 - 策略组合支持复杂的业务规则表达
 
-### 4.5 异步流程与长时操作
+### 1.4.5 异步流程与长时操作
 
 Rust的异步机制使领域中的长时操作更加优雅：
 
@@ -1470,27 +1470,27 @@ impl OrderProcessor {
         // 获取订单
         let mut order = self.repository.find_by_id(order_id).await?
             .ok_or(ProcessingError::OrderNotFound(order_id.clone()))?;
-            
+
         // 验证订单
         self.validate_order(&order).await?;
-        
+
         // 预留库存
         self.reserve_inventory(&order).await?;
-        
+
         // 处理支付
         let payment_result = self.process_payment(&order).await;
-        
+
         match payment_result {
             Ok(payment_id) => {
                 // 支付成功，更新订单状态
                 order.mark_as_paid(payment_id)?;
-                
+
                 // 保存订单
                 self.repository.save(&order).await?;
-                
+
                 // 发送确认通知
                 self.notification_service.send_order_confirmation(&order).await?;
-                
+
                 Ok(OrderProcessingResult::Success {
                     order_id: order_id.clone(),
                     payment_id,
@@ -1499,11 +1499,11 @@ impl OrderProcessor {
             Err(e) => {
                 // 支付失败，释放库存
                 self.release_inventory(&order).await?;
-                
+
                 // 更新订单状态
                 order.mark_as_payment_failed(e.to_string())?;
                 self.repository.save(&order).await?;
-                
+
                 Ok(OrderProcessingResult::PaymentFailed {
                     order_id: order_id.clone(),
                     reason: e.to_string(),
@@ -1511,7 +1511,7 @@ impl OrderProcessor {
             }
         }
     }
-    
+
     // 异步验证订单
     async fn validate_order(&self, order: &Order) -> Result<(), ProcessingError> {
         // 并发执行多个验证
@@ -1519,14 +1519,14 @@ impl OrderProcessor {
             self.validate_customer(order.customer_id()),
             self.validate_products(order.items())
         );
-        
+
         // 处理验证结果
         customer_result?;
         product_results?;
-        
+
         Ok(())
     }
-    
+
     // 异步验证产品是否可购买
     async fn validate_products(&self, items: &[OrderItem]) -> Result<(), ProcessingError> {
         // 并发验证所有商品
@@ -1535,26 +1535,26 @@ impl OrderProcessor {
             .map(|item| {
                 let inventory_service = self.inventory_service.clone();
                 let product_id = item.product_id().clone();
-                
+
                 async move {
                     inventory_service.validate_product_availability(&product_id).await
                 }
             })
             .collect::<Vec<_>>();
-            
+
         // 等待所有验证完成
         let results = futures::future::join_all(validation_futures).await;
-        
+
         // 检查结果
         for result in results {
             if let Err(e) = result {
                 return Err(ProcessingError::ProductValidationFailed(e.to_string()));
             }
         }
-        
+
         Ok(())
     }
-    
+
     // 其他异步方法...
 }
 ```
@@ -1566,7 +1566,7 @@ impl OrderProcessor {
 - `tokio::join!`和`future::join_all`支持并发执行多个操作
 - 错误处理模式保持一致，与同步代码相同
 
-### 4.6 宏系统与元建模
+### 1.4.6 宏系统与元建模
 
 Rust的宏系统支持领域特定语言(DSL)和元建模：
 
@@ -1591,7 +1591,7 @@ macro_rules! define_entity {
             updated_at: chrono::DateTime<chrono::Utc>,
             version: u64,
         }
-        
+
         impl $entity {
             #[allow(clippy::too_many_arguments)]
             pub fn new(
@@ -1608,7 +1608,7 @@ macro_rules! define_entity {
                         }
                     )?
                 )*
-                
+
                 Ok(Self {
                     id,
                     $(
@@ -1619,41 +1619,41 @@ macro_rules! define_entity {
                     version: 0,
                 })
             }
-            
+
             pub fn id(&self) -> &$id_type {
                 &self.id
             }
-            
+
             $(
                 pub fn $field(&self) -> &$field_type {
                     &self.$field
                 }
             )*
-            
+
             pub fn version(&self) -> u64 {
                 self.version
             }
-            
+
             pub fn created_at(&self) -> chrono::DateTime<chrono::Utc> {
                 self.created_at
             }
-            
+
             pub fn updated_at(&self) -> chrono::DateTime<chrono::Utc> {
                 self.updated_at
             }
         }
-        
+
         impl $crate::domain::AggregateRoot for $entity {
             type Id = $id_type;
-            
+
             fn id(&self) -> &Self::Id {
                 &self.id
             }
-            
+
             fn version(&self) -> u64 {
                 self.version
             }
-            
+
             fn increment_version(&mut self) {
                 self.version += 1;
                 self.updated_at = chrono::Utc::now();
@@ -1698,7 +1698,7 @@ macro_rules! impl_value_object {
                 self_json == other_json
             }
         }
-        
+
         impl Eq for $name {}
     };
 }
@@ -1723,7 +1723,7 @@ impl_value_object!(Address);
 - 宏支持元编程，生成一致的实体和值对象实现
 - 自定义DSL使领域建模更接近业务语言
 
-### 4.7 条件编译与特性切换
+### 1.4.7 条件编译与特性切换
 
 Rust的条件编译支持领域逻辑的可配置变体：
 
@@ -1746,16 +1746,16 @@ impl PaymentProcessorType {
                 config.stripe_api_key.clone(),
                 config.stripe_webhook_secret.clone(),
             )),
-            
+
             #[cfg(feature = "paypal")]
             Self::PayPal => Box::new(PayPalProcessor::new(
                 config.paypal_client_id.clone(),
                 config.paypal_secret.clone(),
             )),
-            
+
             #[cfg(feature = "mock")]
             Self::Mock => Box::new(MockProcessor::new()),
-            
+
             #[allow(unreachable_patterns)]
             _ => panic!("不支持的支付处理器类型"),
         }
@@ -1765,7 +1765,7 @@ impl PaymentProcessorType {
 // 特定区域税收规则
 pub fn calculate_tax(product: &Product, address: &Address) -> Money {
     let base_price = product.price();
-    
+
     #[cfg(feature = "eu_tax")]
     {
         if eu_countries().contains(&address.country()) {
@@ -1773,7 +1773,7 @@ pub fn calculate_tax(product: &Product, address: &Address) -> Money {
             return apply_eu_vat(product, address);
         }
     }
-    
+
     #[cfg(feature = "us_tax")]
     {
         if address.country() == "USA" {
@@ -1781,7 +1781,7 @@ pub fn calculate_tax(product: &Product, address: &Address) -> Money {
             return apply_us_sales_tax(product, address);
         }
     }
-    
+
     // 默认税收逻辑
     base_price
 }
@@ -1791,7 +1791,7 @@ pub struct OrderProcessingStrategy {
     // 配置选项
     #[cfg(feature = "async_processing")]
     queue_service: Option<Arc<dyn MessageQueue>>,
-    
+
     #[cfg(feature = "transaction_retry")]
     max_retries: u32,
 }
@@ -1805,10 +1805,10 @@ impl OrderProcessingStrategy {
                 return self.send_to_queue(order, queue);
             }
         }
-        
+
         // 同步处理逻辑
         let result = self.process_synchronously(order);
-        
+
         #[cfg(feature = "transaction_retry")]
         {
             if let Err(ProcessingError::Transient(_)) = &result {
@@ -1816,10 +1816,10 @@ impl OrderProcessingStrategy {
                 return self.retry_processing(order);
             }
         }
-        
+
         result
     }
-    
+
     // 实现方法...
 }
 ```
@@ -1831,9 +1831,9 @@ impl OrderProcessingStrategy {
 - 支持可配置的策略变体，如模拟、测试环境
 - 允许针对不同区域或客户需求的特定逻辑
 
-## 5. 综合分析与最佳实践
+## 1.5 综合分析与最佳实践
 
-### 5.1 类型驱动设计方法
+### 1.5.1 类型驱动设计方法
 
 类型驱动设计(Type-Driven Design)将Rust的类型系统与领域驱动设计结合：
 
@@ -1853,10 +1853,10 @@ impl Email {
         if !is_valid_email(&value) {
             return Err(ValidationError::InvalidEmail(value));
         }
-        
+
         Ok(Self(value))
     }
-    
+
     pub fn value(&self) -> &str {
         &self.0
     }
@@ -1872,18 +1872,18 @@ impl<T> NonEmptyList<T> {
         if items.is_empty() {
             return Err(ValidationError::EmptyCollection);
         }
-        
+
         Ok(Self { items })
     }
-    
+
     pub fn add(&mut self, item: T) {
         self.items.push(item);
     }
-    
+
     pub fn items(&self) -> &[T] {
         &self.items
     }
-    
+
     // 永远不会返回None，因为结构保证了至少有一个元素
     pub fn first(&self) -> &T {
         &self.items[0]
@@ -1907,14 +1907,14 @@ impl OrderState {
             _ => Err(DomainError::InvalidStateTransition("只有草稿订单可以提交".into())),
         }
     }
-    
+
     pub fn mark_as_paid(self, payment_id: PaymentId) -> Result<OrderState, DomainError> {
         match self {
             Self::Submitted(submitted) => Ok(Self::Paid(submitted.pay(payment_id)?)),
             _ => Err(DomainError::InvalidStateTransition("只有已提交订单可以标记为已支付".into())),
         }
     }
-    
+
     // 其他状态转换...
 }
 
@@ -1931,11 +1931,11 @@ impl ShoppingCart {
         if self.items.is_empty() {
             return Err(CheckoutError::EmptyCart);
         }
-        
+
         let customer_id = self.customer_id
             .as_ref()
             .ok_or(CheckoutError::CustomerNotLoggedIn)?;
-            
+
         Ok(CheckoutProcess::new(
             self.items.clone(),
             customer_id.clone(),
@@ -1960,11 +1960,11 @@ pub fn allocate_inventory<T: InventoryItem>(
         let item = items.iter()
             .find(|item| item.sku() == sku)
             .ok_or_else(|| AllocationError::ItemNotFound(sku.clone()))?;
-            
+
         if !item.is_available() {
             return Err(AllocationError::ItemNotAvailable(sku.clone()));
         }
-        
+
         if item.quantity() < *quantity {
             return Err(AllocationError::InsufficientQuantity {
                 sku: sku.clone(),
@@ -1973,7 +1973,7 @@ pub fn allocate_inventory<T: InventoryItem>(
             });
         }
     }
-    
+
     // 创建分配记录
     Ok(Allocation::new(allocation.clone()))
 }
@@ -1988,7 +1988,7 @@ pub fn allocate_inventory<T: InventoryItem>(
 5. 通过API设计防止误用和无效操作
 6. 利用泛型和特征约束表达领域规则
 
-### 5.2 业务规则编码策略
+### 1.5.2 业务规则编码策略
 
 将业务规则编码到Rust代码的策略：
 
@@ -2004,19 +2004,19 @@ impl PaymentMethod {
         if !is_valid_card_number(&card_number) {
             return Err(ValidationError::InvalidCardNumber);
         }
-        
+
         // 验证CVV
         if !is_valid_cvv(&cvv) {
             return Err(ValidationError::InvalidCvv);
         }
-        
+
         // 验证过期日期
         if expiry_date.is_expired() {
             return Err(ValidationError::ExpiredCard);
         }
-        
+
         // 创建有效的支付方式
-        
+
 
 ```rust
         // 创建有效的支付方式
@@ -2038,28 +2038,28 @@ impl Order {
         if self.items.is_empty() {
             return Err(DomainError::ValidationError("订单必须至少包含一个商品".into()));
         }
-        
+
         // 订单总金额必须匹配各项之和
         let calculated_total = self.items.iter()
             .map(|item| item.subtotal())
             .fold(Money::zero(Currency::USD), |acc, subtotal| {
                 acc.add(&subtotal).unwrap()
             });
-            
+
         if self.total != calculated_total {
             return Err(DomainError::InconsistentState(
                 format!("订单总金额不匹配: {} != {}", self.total, calculated_total)
             ));
         }
-        
+
         // 已取消订单不应有进一步状态变化
         if matches!(self.status, OrderStatus::Cancelled { .. }) && self.version > self.cancellation_version.unwrap() {
             return Err(DomainError::InconsistentState("已取消订单不应有状态变化".into()));
         }
-        
+
         Ok(())
     }
-    
+
     // 在所有修改后调用不变性检查
     pub fn update_shipping_address(&mut self, address: Address) -> Result<(), DomainError> {
         // 业务规则
@@ -2068,14 +2068,14 @@ impl Order {
                 "只有草稿状态的订单可以修改地址".into()
             ));
         }
-        
+
         // 更新地址
         self.shipping_address = address;
         self.updated_at = Utc::now();
-        
+
         // 验证不变性
         self.verify_invariants()?;
-        
+
         Ok(())
     }
 }
@@ -2100,7 +2100,7 @@ impl OrderStateMachine {
             }],
         }
     }
-    
+
     pub fn submit(&mut self) -> Result<(), StateError> {
         match self.state {
             OrderState::Draft => {
@@ -2114,7 +2114,7 @@ impl OrderStateMachine {
             }),
         }
     }
-    
+
     pub fn pay(&mut self, payment_id: PaymentId) -> Result<(), StateError> {
         match self.state {
             OrderState::Submitted => {
@@ -2128,7 +2128,7 @@ impl OrderStateMachine {
             }),
         }
     }
-    
+
     fn transition_to(&mut self, new_state: OrderState, reason: String) -> Result<(), StateError> {
         // 记录状态转换
         let transition = OrderTransition {
@@ -2137,10 +2137,10 @@ impl OrderStateMachine {
             timestamp: Utc::now(),
             reason,
         };
-        
+
         self.state = new_state;
         self.transitions.push(transition);
-        
+
         Ok(())
     }
 }
@@ -2157,41 +2157,41 @@ impl CreditLimit {
     const MIN_LIMIT: i64 = 50000; // $500.00
     // 最大允许额度
     const MAX_LIMIT: i64 = 10000000; // $100,000.00
-    
+
     pub fn new(amount: Money) -> Result<Self, ValidationError> {
         // 验证币种
         if amount.currency() != Currency::USD {
             return Err(ValidationError::UnsupportedCurrency(amount.currency()));
         }
-        
+
         // 验证额度范围
         let amount_cents = amount.amount_cents();
         if amount_cents < Self::MIN_LIMIT {
             return Err(ValidationError::BelowMinimumLimit(Money::from_cents(Self::MIN_LIMIT, Currency::USD)));
         }
-        
+
         if amount_cents > Self::MAX_LIMIT {
             return Err(ValidationError::AboveMaximumLimit(Money::from_cents(Self::MAX_LIMIT, Currency::USD)));
         }
-        
+
         Ok(Self {
             amount,
             currency: Currency::USD,
         })
     }
-    
+
     pub fn increase(&self, amount: Money) -> Result<Self, ValidationError> {
         // 确保币种匹配
         if amount.currency() != self.currency {
             return Err(ValidationError::CurrencyMismatch);
         }
-        
+
         // 检查新额度是否超过最大值
         let new_amount = self.amount.add(&amount)?;
         if new_amount.amount_cents() > Self::MAX_LIMIT {
             return Err(ValidationError::AboveMaximumLimit(Money::from_cents(Self::MAX_LIMIT, self.currency)));
         }
-        
+
         Ok(Self {
             amount: new_amount,
             currency: self.currency,
@@ -2215,10 +2215,10 @@ impl DiscountStrategy for PercentageDiscount {
         if !self.is_applicable(order) {
             return Money::zero(Currency::USD);
         }
-        
+
         order.total().multiply(self.percentage / 100.0)
     }
-    
+
     fn is_applicable(&self, order: &Order) -> bool {
         order.total() >= self.minimum_order_amount
     }
@@ -2234,15 +2234,15 @@ impl DiscountStrategy for FixedAmountDiscount {
         if !self.is_applicable(order) {
             return Money::zero(Currency::USD);
         }
-        
+
         // 确保折扣不超过订单总额
         if self.amount > order.total() {
             return order.total();
         }
-        
+
         self.amount.clone()
     }
-    
+
     fn is_applicable(&self, order: &Order) -> bool {
         order.total() >= self.minimum_order_amount
     }
@@ -2257,7 +2257,7 @@ impl DiscountStrategy for FixedAmountDiscount {
 4. 值对象内部封装业务规则，使其自包含
 5. 策略模式允许可配置的业务规则实现
 
-### 5.3 跨领域边界的通信模式
+### 1.5.3 跨领域边界的通信模式
 
 Rust中处理跨领域边界通信的模式：
 
@@ -2295,9 +2295,9 @@ impl PaymentServiceAdapter {
 #[async_trait]
 impl PaymentService for PaymentServiceAdapter {
     async fn process_payment(
-        &self, 
-        order_id: &OrderId, 
-        payment_method: &PaymentMethod, 
+        &self,
+        order_id: &OrderId,
+        payment_method: &PaymentMethod,
         amount: &Money
     ) -> Result<PaymentId, PaymentError> {
         // 转换领域模型到外部API格式
@@ -2305,18 +2305,18 @@ impl PaymentService for PaymentServiceAdapter {
             PaymentMethod::CreditCard { token, .. } => token,
             _ => return Err(PaymentError::UnsupportedPaymentMethod),
         };
-        
+
         // 调用外部服务
         let response = self.client.create_payment(
             amount.value(),
             amount.currency().code(),
             card_token,
         ).await.map_err(|e| PaymentError::ExternalServiceError(e.to_string()))?;
-        
+
         // 转换响应回领域模型
         Ok(PaymentId::new(response.transaction_id))
     }
-    
+
     // 其他方法实现...
 }
 
@@ -2352,12 +2352,12 @@ impl CustomerMapper {
             status: customer.status().to_string(),
         }
     }
-    
+
     pub fn to_domain(dto: CustomerDto) -> Result<Customer, ValidationError> {
         let customer_id = CustomerId::from_string(&dto.id)?;
         let email = Email::new(dto.email)?;
         let status = CustomerStatus::from_str(&dto.status)?;
-        
+
         Customer::new(
             customer_id,
             dto.name,
@@ -2387,7 +2387,7 @@ impl EventPublisher {
         // 序列化事件
         let payload = serde_json::to_vec(&event)
             .map_err(|e| PublishError::SerializationError(e.to_string()))?;
-            
+
         // 发布事件
         self.message_broker.publish("order.shipped", payload).await
             .map_err(|e| PublishError::BrokerError(e.to_string()))
@@ -2404,11 +2404,11 @@ impl ShippingEventHandler {
     pub async fn handle_order_shipped(&self, event: OrderShippedEvent) -> Result<(), HandlerError> {
         // 转换事件数据到领域模型
         let order_id = OrderId::from_string(&event.order_id)?;
-        
+
         // 查询订单
         let mut order = self.order_repository.find_by_id(&order_id).await?
             .ok_or_else(|| HandlerError::EntityNotFound(format!("订单不存在: {}", event.order_id)))?;
-            
+
         // 更新订单状态
         order.update_shipping_info(
             event.tracking_number,
@@ -2416,13 +2416,13 @@ impl ShippingEventHandler {
             parse_iso_date(&event.shipped_at)?,
             parse_iso_date(&event.estimated_delivery)?,
         )?;
-        
+
         // 保存更新
         self.order_repository.save(&order).await?;
-        
+
         // 发送通知
         self.notification_service.notify_customer_order_shipped(&order).await?;
-        
+
         Ok(())
     }
 }
@@ -2472,7 +2472,7 @@ impl IntegrationEventMapper {
 3. 领域事件进行边界内通信，维持松耦合
 4. 集成事件作为跨系统边界的标准化消息
 
-### 5.4 状态管理最佳实践
+### 1.5.4 状态管理最佳实践
 
 Rust中领域模型状态管理的最佳实践：
 
@@ -2509,21 +2509,21 @@ impl DraftOrder {
     pub fn add_item(&mut self, item: OrderItem) {
         self.items.push(item);
     }
-    
+
     // 草稿订单可以设置地址
     pub fn set_shipping_address(&mut self, address: Address) {
         self.shipping_address = Some(address);
     }
-    
+
     // 草稿订单可以提交，转变为已提交订单
     pub fn submit(self) -> Result<SubmittedOrder, ValidationError> {
         let shipping_address = self.shipping_address
             .ok_or(ValidationError::MissingShippingAddress)?;
-            
+
         if self.items.is_empty() {
             return Err(ValidationError::EmptyOrder);
         }
-        
+
         Ok(SubmittedOrder {
             id: self.id,
             customer_id: self.customer_id,
@@ -2547,7 +2547,7 @@ impl SubmittedOrder {
             paid_at: Utc::now(),
         }
     }
-    
+
     // 已提交订单不能添加商品 - 没有add_item方法
 }
 
@@ -2574,7 +2574,7 @@ impl Order {
             )),
         }
     }
-    
+
     pub fn submit(&mut self) -> Result<(), DomainError> {
         match self.status {
             OrderStatus::Draft => {
@@ -2582,11 +2582,11 @@ impl Order {
                 if self.items.is_empty() {
                     return Err(DomainError::ValidationError("空订单不能提交".into()));
                 }
-                
+
                 if self.shipping_address.is_none() {
                     return Err(DomainError::ValidationError("订单缺少配送地址".into()));
                 }
-                
+
                 // 更新状态
                 self.transition_to(OrderStatus::Submitted);
                 Ok(())
@@ -2596,11 +2596,11 @@ impl Order {
             )),
         }
     }
-    
+
     fn transition_to(&mut self, new_status: OrderStatus) {
         let old_status = self.status.clone();
         self.status = new_status.clone();
-        
+
         // 记录状态变更历史
         self.status_history.push(StatusChange {
             from: old_status,
@@ -2633,7 +2633,7 @@ impl CustomerService {
         // 获取当前状态
         let current = self.repository.find_by_id(customer_id).await?
             .ok_or(ServiceError::CustomerNotFound)?;
-            
+
         // 创建更新后的新状态
         let updated = CustomerState {
             id: current.id.clone(),
@@ -2642,10 +2642,10 @@ impl CustomerService {
             status: current.status.clone(),
             version: current.version + 1,  // 增加版本号
         };
-        
+
         // 保存新状态
         self.repository.save(&updated).await?;
-        
+
         // 返回新状态
         Ok(updated)
     }
@@ -2665,19 +2665,19 @@ impl OrderCommandModel {
         match self.state {
             OrderState::Draft => {
                 // 业务逻辑验证...
-                
+
                 // 更新状态
                 self.state = OrderState::Submitted;
-                
+
                 // 记录事件
                 self.events.push(OrderEvent::Submitted {
                     order_id: self.id.clone(),
                     timestamp: Utc::now(),
                 });
-                
+
                 // 增加版本号
                 self.version += 1;
-                
+
                 Ok(())
             },
             _ => Err(DomainError::InvalidStateTransition(
@@ -2685,7 +2685,7 @@ impl OrderCommandModel {
             )),
         }
     }
-    
+
     pub fn commit_events(&mut self) -> Vec<OrderEvent> {
         let events = self.events.clone();
         self.events.clear();
@@ -2737,7 +2737,7 @@ impl OrderQueryService {
         .await
         .map_err(|e| QueryError::DatabaseError(e.to_string()))?
         .ok_or(QueryError::NotFound(format!("订单不存在: {}", order_id)))?;
-        
+
         Ok(order)
     }
 }
@@ -2750,7 +2750,7 @@ impl OrderQueryService {
 3. 不可变更新模式减少并发问题并支持乐观锁
 4. CQRS分离写模型和读模型，优化各自的性能
 
-### 5.5 Rust概念模型实现挑战与对策
+### 1.5.5 Rust概念模型实现挑战与对策
 
 Rust实现概念模型中常见的挑战及解决方案：
 
@@ -2814,10 +2814,10 @@ impl CustomerService {
         // 加载客户
         let customer = self.customer_repository.find_by_id(customer_id).await?
             .ok_or(ServiceError::CustomerNotFound)?;
-            
+
         // 加载关联订单
         let orders = self.orders_loader.load_for_customer(customer_id).await?;
-        
+
         Ok(CustomerWithOrders { customer, orders })
     }
 }
@@ -2850,7 +2850,7 @@ impl Cart {
                 "只有活跃购物车可以修改".into()
             ));
         }
-        
+
         // 查找已有项目
         if let Some(item) = self.find_item_mut(&product_id) {
             // 更新已有项目
@@ -2864,15 +2864,15 @@ impl Cart {
             };
             self.items.push(item);
         }
-        
+
         Ok(())
     }
-    
+
     // 内部辅助方法
     fn find_item_mut(&mut self, product_id: &ProductId) -> Option<&mut CartItem> {
         self.items.iter_mut().find(|item| &item.product_id == product_id)
     }
-    
+
     // 只提供不可变访问
     pub fn items(&self) -> &[CartItem] {
         &self.items
@@ -2889,7 +2889,7 @@ pub struct Order {
     status: OrderStatus,
     total: Money,
     // 基本信息...
-    
+
     // 大型子集合使用延迟加载
     items: Option<Vec<OrderItem>>,
     payment_history: Option<Vec<PaymentAttempt>>,
@@ -2902,7 +2902,7 @@ impl Order {
             if self.items.is_none() {
                 self.items = Some(loader.load_items(&self.id).await?);
             }
-            
+
             Ok(self.items.as_ref().unwrap().as_slice())
         }
     }
@@ -2924,7 +2924,7 @@ impl PhoneNumber {
         // 验证和标准化
         let normalized_country = normalize_country_code(&country_code)?;
         let normalized_number = normalize_phone_number(&number)?;
-        
+
         Ok(Self {
             country_code: normalized_country,
             number: normalized_number,
@@ -2958,10 +2958,10 @@ impl InventoryManager {
                 return Ok(status.available_quantity >= quantity);
             }
         }
-        
+
         // 缓存未命中，从数据库加载
         let inventory = self.repository.find_by_product_id(product_id).await?;
-        
+
         // 更新缓存
         {
             let mut status_map = self.inventory_status.write().await;
@@ -2970,9 +2970,9 @@ impl InventoryManager {
                 reserved_quantity: inv.reserved_quantity(),
                 updated_at: Utc::now(),
             }).unwrap_or_default();
-            
+
             status_map.insert(product_id.clone(), status.clone());
-            
+
             Ok(status.available_quantity >= quantity)
         }
     }
@@ -2988,7 +2988,7 @@ impl InventoryManager {
 5. 确保值对象有正确的相等性和哈希行为
 6. 使用锁和内部可变性处理并发场景
 
-## 6. 结论与展望
+## 1.6 结论与展望
 
 Rust语言的类型系统、变量特性和控制流机制为概念模型实现提供了强大支持。通过合理映射，可以构建既符合领域语义又保持高性能和安全性的软件系统。
 
@@ -3011,7 +3011,7 @@ Rust语言的类型系统、变量特性和控制流机制为概念模型实现�
 
 ---
 
-### 6.1 思维导图
+### 1.6.1 思维导图
 
 ```text
 Rust语言特性与概念模型映射
@@ -3169,7 +3169,7 @@ Rust语言特性与概念模型映射
 
 ```
 
-### 6.2 处理跨聚合事务
+### 1.6.2 处理跨聚合事务
 
 在领域驱动设计中，我们通常避免跨聚合边界的事务，但有时这是必要的。Rust可以通过以下方式处理：
 
@@ -3185,37 +3185,37 @@ impl OrderCheckoutCoordinator {
     pub async fn checkout(&self, checkout_command: CheckoutCommand) -> Result<CheckoutResult, CoordinationError> {
         // 1. 准备阶段 - 获取和验证所有必要资源
         let order_id = OrderId::from_string(&checkout_command.order_id)?;
-        
+
         // 加载订单
         let mut order = self.order_repository.find_by_id(&order_id).await?
             .ok_or(CoordinationError::OrderNotFound)?;
-            
+
         // 验证订单可以结账
         if order.status() != OrderStatus::Draft {
             return Err(CoordinationError::InvalidOrderState(
                 format!("订单状态必须为草稿，当前为: {:?}", order.status())
             ));
         }
-        
+
         // 检查库存
         let inventory_checks = self.check_inventory(&order).await?;
-        
+
         // 2. 执行阶段 - 所有验证通过后执行操作
-        
+
         // 预留库存
         self.reserve_inventory(&order, inventory_checks).await?;
-        
+
         // 提交订单
         order.submit()?;
         self.order_repository.save(&order).await?;
-        
+
         // 处理支付
         let payment_result = match self.process_payment(&order, &checkout_command.payment_method).await {
             Ok(payment_id) => {
                 // 支付成功，完成结账
                 order.mark_as_paid(payment_id.clone())?;
                 self.order_repository.save(&order).await?;
-                
+
                 CheckoutResult::Success {
                     order_id: order_id.to_string(),
                     payment_id: payment_id.to_string(),
@@ -3224,26 +3224,26 @@ impl OrderCheckoutCoordinator {
             Err(e) => {
                 // 支付失败，回滚库存预留
                 self.release_inventory(&order).await?;
-                
+
                 // 更新订单状态
                 order.mark_as_payment_failed(e.to_string())?;
                 self.order_repository.save(&order).await?;
-                
+
                 CheckoutResult::PaymentFailed {
                     order_id: order_id.to_string(),
                     error: e.to_string(),
                 }
             }
         };
-        
+
         Ok(payment_result)
     }
-    
+
     // 辅助方法...
 }
 ```
 
-### 6.3 使用领域事件解耦聚合
+### 1.6.3 使用领域事件解耦聚合
 
 领域事件是解耦聚合的有效机制，Rust可以优雅地实现：
 
@@ -3269,7 +3269,7 @@ impl DomainEventSubscriber<OrderPlacedEvent> for OrderPlacedHandler {
         let inventory_service = self.inventory_service.clone();
         let notification_service = self.notification_service.clone();
         let event_clone = event.clone();
-        
+
         tokio::spawn(async move {
             // 预留库存
             match inventory_service.reserve_for_order(&event_clone.order_id).await {
@@ -3292,7 +3292,7 @@ impl DomainEventSubscriber<OrderPlacedEvent> for OrderPlacedHandler {
 }
 ```
 
-### 6.4 分布式系统与一致性保证
+### 1.6.4 分布式系统与一致性保证
 
 在分布式环境中维护概念模型的一致性是一个挑战，Rust可以提供帮助：
 
@@ -3306,7 +3306,7 @@ pub struct OptimisticRepository<T, ID> {
 impl<T: Entity<ID>, ID: EntityId> OptimisticRepository<T, ID> {
     pub async fn save(&self, entity: &T) -> Result<(), RepositoryError> {
         let current_version = entity.version();
-        
+
         let result = self.db_client
             .execute(
                 "UPDATE entities SET data = $1, version = $2 WHERE id = $3 AND version = $4",
@@ -3318,7 +3318,7 @@ impl<T: Entity<ID>, ID: EntityId> OptimisticRepository<T, ID> {
                 ],
             )
             .await?;
-            
+
         if result.rows_affected() == 0 {
             // 版本冲突
             return Err(RepositoryError::ConcurrencyConflict {
@@ -3326,7 +3326,7 @@ impl<T: Entity<ID>, ID: EntityId> OptimisticRepository<T, ID> {
                 entity_type: std::any::type_name::<T>().to_string(),
             });
         }
-        
+
         Ok(())
     }
 }
@@ -3346,7 +3346,7 @@ impl<T: Clone + Send + Sync + 'static> CompensatingTransaction<T> {
             context,
         }
     }
-    
+
     pub fn add_step<F, C>(&mut self, step: F, compensation: C)
     where
         F: Fn(&T) -> BoxFuture<'static, Result<(), TransactionError>> + Send + Sync + 'static,
@@ -3355,10 +3355,10 @@ impl<T: Clone + Send + Sync + 'static> CompensatingTransaction<T> {
         self.steps.push(Box::new(step));
         self.compensations.push(Box::new(compensation));
     }
-    
+
     pub async fn execute(mut self) -> Result<(), TransactionError> {
         let mut completed_steps = 0;
-        
+
         // 执行步骤
         for (i, step) in self.steps.iter().enumerate() {
             match step(&self.context).await {
@@ -3372,10 +3372,10 @@ impl<T: Clone + Send + Sync + 'static> CompensatingTransaction<T> {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     async fn compensate(&self, completed_steps: usize) -> Result<(), CompensationError> {
         // 反向执行补偿步骤
         for i in (0..completed_steps).rev() {
@@ -3384,19 +3384,19 @@ impl<T: Clone + Send + Sync + 'static> CompensatingTransaction<T> {
                 // 继续尝试其他补偿步骤
             }
         }
-        
+
         Ok(())
     }
 }
 ```
 
-## 7. 结论与展望（扩展）
+## 1.7 结论与展望（扩展）
 
 Rust的类型系统、变量特性和控制流机制为概念模型的精确实现提供了坚实基础。
 通过本文的分析，我们可以看到许多自然的映射点，
 这些点可以帮助开发者构建既符合领域语义，又保持高性能和安全性的软件系统。
 
-### 7.1 映射优势总结
+### 1.7.1 映射优势总结
 
 Rust语言特性与概念模型映射的主要优势可总结为：
 
@@ -3420,7 +3420,7 @@ Rust语言特性与概念模型映射的主要优势可总结为：
    - 内存安全保证避免整类运行时错误
    - 线程安全机制支持并发领域操作
 
-### 7.2 实践建议
+### 1.7.2 实践建议
 
 基于本文的分析，我们建议在Rust中实现概念模型时：
 
@@ -3444,7 +3444,7 @@ Rust语言特性与概念模型映射的主要优势可总结为：
    - 对复杂状态转换使用类型状态模式
    - 对大型系统考虑CQRS和事件溯源
 
-### 7.3 未来研究方向
+### 1.7.3 未来研究方向
 
 我们看到几个值得进一步探索的研究方向：
 

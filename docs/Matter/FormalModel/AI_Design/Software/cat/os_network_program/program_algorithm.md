@@ -1,40 +1,38 @@
-# 范畴论视角下的程序设计与算法分析
+# 1. 范畴论视角下的程序设计与算法分析
 
-## 📋 目录
+## 目录
 
-- [范畴论视角下的程序设计与算法分析](#范畴论视角下的程序设计与算法分析)
-  - [📋 目录](#-目录)
-  - [1 程序范畴基础](#1-程序范畴基础)
-    - [1.1 程序范畴定义](#11-程序范畴定义)
-    - [1.2 算法范畴定义](#12-算法范畴定义)
-  - [2 函子与变换](#2-函子与变换)
-    - [2.1 程序转换函子](#21-程序转换函子)
-    - [2.2 算法转换函子](#22-算法转换函子)
-  - [3 程序构造的代数结构](#3-程序构造的代数结构)
-    - [3.1 组合子代数](#31-组合子代数)
-    - [3.2 类型代数](#32-类型代数)
-  - [4 算法设计模式的范畴表示](#4-算法设计模式的范畴表示)
-    - [4.1 分治模式](#41-分治模式)
-    - [4.2 动态规划](#42-动态规划)
-  - [5 程序正确性与验证](#5-程序正确性与验证)
-    - [5.1 类型系统](#51-类型系统)
-    - [5.2 程序逻辑](#52-程序逻辑)
-  - [6 算法复杂度分析](#6-算法复杂度分析)
-    - [6.1 时间复杂度范畴](#61-时间复杂度范畴)
-    - [6.2 空间复杂度范畴](#62-空间复杂度范畴)
-  - [7 程序优化与转换](#7-程序优化与转换)
-    - [7.1 优化范畴](#71-优化范畴)
-    - [7.2 程序变换](#72-程序变换)
-  - [8 实际应用示例](#8-实际应用示例)
-    - [8.1 函数式编程](#81-函数式编程)
-    - [8.2 算法实现](#82-算法实现)
-  - [9 总结](#9-总结)
+- [1. 范畴论视角下的程序设计与算法分析](#1-范畴论视角下的程序设计与算法分析)
+  - [目录](#目录)
+  - [1.1 程序范畴基础](#11-程序范畴基础)
+    - [1.1.1 程序范畴定义](#111-程序范畴定义)
+    - [1.1.2 算法范畴定义](#112-算法范畴定义)
+  - [1.2 函子与变换](#12-函子与变换)
+    - [1.2.1 程序转换函子](#121-程序转换函子)
+    - [1.2.2 算法转换函子](#122-算法转换函子)
+  - [1.3 程序构造的代数结构](#13-程序构造的代数结构)
+    - [1.3.1 组合子代数](#131-组合子代数)
+    - [1.3.2 类型代数](#132-类型代数)
+  - [1.4 算法设计模式的范畴表示](#14-算法设计模式的范畴表示)
+    - [1.4.1 分治模式](#141-分治模式)
+    - [1.4.2 动态规划](#142-动态规划)
+  - [1.5 程序正确性与验证](#15-程序正确性与验证)
+    - [1.5.1 类型系统](#151-类型系统)
+    - [1.5.2 程序逻辑](#152-程序逻辑)
+  - [1.6 算法复杂度分析](#16-算法复杂度分析)
+    - [1.6.1 时间复杂度范畴](#161-时间复杂度范畴)
+    - [1.6.2 空间复杂度范畴](#162-空间复杂度范畴)
+  - [1.7 程序优化与转换](#17-程序优化与转换)
+    - [1.7.1 优化范畴](#171-优化范畴)
+    - [1.7.2 程序变换](#172-程序变换)
+  - [1.8 实际应用示例](#18-实际应用示例)
+    - [1.8.1 函数式编程](#181-函数式编程)
+    - [1.8.2 算法实现](#182-算法实现)
+  - [1.9 总结](#19-总结)
 
----
+## 1.1 程序范畴基础
 
-## 1 程序范畴基础
-
-### 1.1 程序范畴定义
+### 1.1.1 程序范畴定义
 
 ```haskell
 class ProgramCategory p where
@@ -54,7 +52,7 @@ class ProgramCategory p where
   complexity :: Program → Complexity
 ```
 
-### 1.2 算法范畴定义
+### 1.1.2 算法范畴定义
 
 ```haskell
 class AlgorithmCategory a where
@@ -74,9 +72,9 @@ class AlgorithmCategory a where
   correctness :: Algorithm → Proof
 ```
 
-## 2 函子与变换
+## 1.2 函子与变换
 
-### 2.1 程序转换函子
+### 1.2.1 程序转换函子
 
 ```haskell
 class ProgramFunctor f where
@@ -92,7 +90,7 @@ class ProgramFunctor f where
   refactor :: Program a → Program b
 ```
 
-### 2.2 算法转换函子
+### 1.2.2 算法转换函子
 
 ```haskell
 class AlgorithmFunctor f where
@@ -108,9 +106,9 @@ class AlgorithmFunctor f where
   analyzeEfficiency :: Algorithm → Algorithm → Comparison
 ```
 
-## 3 程序构造的代数结构
+## 1.3 程序构造的代数结构
 
-### 3.1 组合子代数
+### 1.3.1 组合子代数
 
 ```haskell
 class Combinator c where
@@ -125,7 +123,7 @@ class Combinator c where
   filter :: (a → Bool) → [a] → [a]
 ```
 
-### 3.2 类型代数
+### 1.3.2 类型代数
 
 ```haskell
 class TypeAlgebra t where
@@ -139,9 +137,9 @@ class TypeAlgebra t where
   contravariant :: (b → a) → f a → f b
 ```
 
-## 4 算法设计模式的范畴表示
+## 1.4 算法设计模式的范畴表示
 
-### 4.1 分治模式
+### 1.4.1 分治模式
 
 ```haskell
 class DivideConquer d where
@@ -155,7 +153,7 @@ class DivideConquer d where
   subproblemsIndependent :: [Problem] → Bool
 ```
 
-### 4.2 动态规划
+### 1.4.2 动态规划
 
 ```haskell
 class DynamicProgramming d where
@@ -169,9 +167,9 @@ class DynamicProgramming d where
   overlappingSubproblems :: Problem → Bool
 ```
 
-## 5 程序正确性与验证
+## 1.5 程序正确性与验证
 
-### 5.1 类型系统
+### 1.5.1 类型系统
 
 ```haskell
 class TypeSystem t where
@@ -188,7 +186,7 @@ class TypeSystem t where
   typeEquivalence :: Type → Type → Bool
 ```
 
-### 5.2 程序逻辑
+### 1.5.2 程序逻辑
 
 ```haskell
 class ProgramLogic p where
@@ -202,9 +200,9 @@ class ProgramLogic p where
   inferProperties :: Program → Set Property
 ```
 
-## 6 算法复杂度分析
+## 1.6 算法复杂度分析
 
-### 6.1 时间复杂度范畴
+### 1.6.1 时间复杂度范畴
 
 ```haskell
 class TimeComplexity t where
@@ -218,7 +216,7 @@ class TimeComplexity t where
   asymptoticBound :: Algorithm → Bound
 ```
 
-### 6.2 空间复杂度范畴
+### 1.6.2 空间复杂度范畴
 
 ```haskell
 class SpaceComplexity s where
@@ -231,9 +229,9 @@ class SpaceComplexity s where
   tradeSpaceForTime :: Algorithm → Algorithm
 ```
 
-## 7 程序优化与转换
+## 1.7 程序优化与转换
 
-### 7.1 优化范畴
+### 1.7.1 优化范畴
 
 ```haskell
 class Optimization o where
@@ -250,7 +248,7 @@ class Optimization o where
   suggestOptimizations :: Program → Set Optimization
 ```
 
-### 7.2 程序变换
+### 1.7.2 程序变换
 
 ```haskell
 class ProgramTransformation t where
@@ -263,9 +261,9 @@ class ProgramTransformation t where
   analyzeImpact :: Transformation → Impact
 ```
 
-## 8 实际应用示例
+## 1.8 实际应用示例
 
-### 8.1 函数式编程
+### 1.8.1 函数式编程
 
 ```haskell
 -- 函数组合
@@ -285,7 +283,7 @@ class Monad m where
   bind :: m a → (a → m b) → m b
 ```
 
-### 8.2 算法实现
+### 1.8.2 算法实现
 
 ```haskell
 -- 递归算法的范畴表示
@@ -300,7 +298,7 @@ dynamicProgramming :: Problem → Solution where
   optimal = findOptimalSolution
 ```
 
-## 9 总结
+## 1.9 总结
 
 范畴论视角下的程序设计与算法分析提供了：
 

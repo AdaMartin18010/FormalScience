@@ -1,37 +1,38 @@
-# 高级Petri网理论扩展 (Advanced Petri Net Theory Extended)
+# 1. 高级Petri网理论扩展 (Advanced Petri Net Theory Extended)
 
-## 📋 目录
+## 目录
 
-- [1 Petri网基础理论深度分析](#1-petri网基础理论深度分析)
-  - [1.1 形式化定义](#11-形式化定义)
-- [2 可达性分析理论](#2-可达性分析理论)
-  - [2.1 可达性关系](#21-可达性关系)
-  - [2.2 状态空间分析算法](#22-状态空间分析算法)
-- [3 并发性分析理论](#3-并发性分析理论)
-  - [3.1 并发变迁](#31-并发变迁)
-  - [3.2 冲突分析](#32-冲突分析)
-- [4 结构性质分析](#4-结构性质分析)
-  - [4.1 有界性](#41-有界性)
-  - [4.2 活性](#42-活性)
-  - [4.3 可逆性](#43-可逆性)
-- [5 高级Petri网模型](#5-高级petri网模型)
-  - [5.1 时间Petri网](#51-时间petri网)
-  - [5.2 着色Petri网](#52-着色petri网)
-  - [5.3 随机Petri网](#53-随机petri网)
-- [6 不变式分析](#6-不变式分析)
-  - [6.1 S-不变式](#61-s-不变式)
-  - [6.2 T-不变式](#62-t-不变式)
-- [7 实际应用](#7-实际应用)
-  - [7.1 并发系统建模](#71-并发系统建模)
-  - [7.2 工作流建模](#72-工作流建模)
-  - [7.3 硬件设计验证](#73-硬件设计验证)
-- [8 结论](#8-结论)
+- [1. 高级Petri网理论扩展 (Advanced Petri Net Theory Extended)](#1-高级petri网理论扩展-advanced-petri-net-theory-extended)
+  - [目录](#目录)
+  - [1.1 Petri网基础理论深度分析](#11-petri网基础理论深度分析)
+    - [1.1.1 形式化定义](#111-形式化定义)
+  - [1.2 可达性分析理论](#12-可达性分析理论)
+    - [1.2.1 可达性关系](#121-可达性关系)
+    - [1.2.2 状态空间分析算法](#122-状态空间分析算法)
+  - [1.3 并发性分析理论](#13-并发性分析理论)
+    - [1.3.1 并发变迁](#131-并发变迁)
+    - [1.3.2 冲突分析](#132-冲突分析)
+  - [1.4 结构性质分析](#14-结构性质分析)
+    - [1.4.1 有界性](#141-有界性)
+    - [1.4.2 活性](#142-活性)
+    - [1.4.3 可逆性](#143-可逆性)
+  - [1.5 高级Petri网模型](#15-高级petri网模型)
+    - [1.5.1 时间Petri网](#151-时间petri网)
+    - [1.5.2 着色Petri网](#152-着色petri网)
+    - [1.5.3 随机Petri网](#153-随机petri网)
+  - [1.6 不变式分析](#16-不变式分析)
+    - [1.6.1 S-不变式](#161-s-不变式)
+    - [1.6.2 T-不变式](#162-t-不变式)
+  - [1.7 实际应用](#17-实际应用)
+    - [1.7.1 并发系统建模](#171-并发系统建模)
+    - [1.7.2 工作流建模](#172-工作流建模)
+    - [1.7.3 硬件设计验证](#173-硬件设计验证)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
 
----
+## 1.1 Petri网基础理论深度分析
 
-## 1 Petri网基础理论深度分析
-
-### 1.1 形式化定义
+### 1.1.1 形式化定义
 
 **定义 1.1 (Petri网)**
 Petri网是一个四元组 $N = (P, T, F, M_0)$，其中：
@@ -70,9 +71,9 @@ $$\sum_{p \in P} F(p, t) = \sum_{p \in ^\bullet t} F(p, t) = \sum_{p \in t^\bull
 
 因此 $\sum_{p \in P} M'(p) = \sum_{p \in P} M(p)$。
 
-## 2 可达性分析理论
+## 1.2 可达性分析理论
 
-### 2.1 可达性关系
+### 1.2.1 可达性关系
 
 **定义 2.1 (可达性)**
 标识 $M'$ 从标识 $M$ 可达，记作 $M \rightarrow^* M'$，如果存在变迁序列 $\sigma = t_1 t_2 \cdots t_n$ 使得：
@@ -105,24 +106,24 @@ Petri网可达性问题是EXPSPACE完全的。
 1. **下界**：通过构造性归约到有界计数器问题
 2. **上界**：通过状态空间枚举，状态空间大小指数级
 
-### 2.2 状态空间分析算法
+### 1.2.2 状态空间分析算法
 
 -**算法 2.1 (广度优先可达性分析)**
 
 ```haskell
 reachabilityAnalysis :: PetriNet -> [Marking]
-reachabilityAnalysis net = 
+reachabilityAnalysis net =
   let initial = initialMarking net
       reachable = bfs initial [initial] []
   in reachable
   where
     bfs :: Marking -> [Marking] -> [Marking] -> [Marking]
-    bfs current visited queue = 
+    bfs current visited queue =
       let enabled = enabledTransitions net current
           newMarkings = [fireTransition net current t | t <- enabled]
           unvisited = filter (`notElem` visited) newMarkings
-      in if null unvisited 
-         then if null queue 
+      in if null unvisited
+         then if null queue
               then visited
               else bfs (head queue) visited (tail queue)
          else bfs (head unvisited) (visited ++ [head unvisited]) (queue ++ tail unvisited)
@@ -132,17 +133,17 @@ reachabilityAnalysis net =
 
 ```haskell
 dfsReachability :: PetriNet -> [Marking]
-dfsReachability net = 
+dfsReachability net =
   let initial = initialMarking net
       reachable = dfs initial [initial]
   in reachable
   where
     dfs :: Marking -> [Marking] -> [Marking]
-    dfs current visited = 
+    dfs current visited =
       let enabled = enabledTransitions net current
           newMarkings = [fireTransition net current t | t <- enabled]
           unvisited = filter (`notElem` visited) newMarkings
-      in if null unvisited 
+      in if null unvisited
          then visited
          else foldl (\acc m -> dfs m acc) visited unvisited
 ```
@@ -156,9 +157,9 @@ dfsReachability net =
 2. **正确性**：只有可达标识被访问
 3. **终止性**：状态空间有限
 
-## 3 并发性分析理论
+## 1.3 并发性分析理论
 
-### 3.1 并发变迁
+### 1.3.1 并发变迁
 
 **定义 3.1 (并发变迁)**
 两个变迁 $t_1, t_2 \in T$ 在标识 $M$ 下并发，记作 $M[t_1, t_2\rangle$，当且仅当：
@@ -192,7 +193,7 @@ $$\text{concurrency}(M) = \max\{|S| \mid S \subseteq T, M[S\rangle\}$$
 2. 并发变迁的输入位置不相交
 3. 因此并发度不超过位置数量
 
-### 3.2 冲突分析
+### 1.3.2 冲突分析
 
 **定义 3.4 (冲突)**
 两个变迁 $t_1, t_2 \in T$ 在标识 $M$ 下冲突，当且仅当：
@@ -219,9 +220,9 @@ $$\text{concurrency}(M) = \max\{|S| \mid S \subseteq T, M[S\rangle\}$$
 标识 $M$ 的冲突度是最大冲突变迁集合的大小：
 $$\text{conflict}(M) = \max\{|S| \mid S \subseteq T, \forall t_1, t_2 \in S : t_1 \neq t_2 \Rightarrow M[t_1\rangle \land M[t_2\rangle \land ^\bullet t_1 \cap ^\bullet t_2 \neq \emptyset\}$$
 
-## 4 结构性质分析
+## 1.4 结构性质分析
 
-### 4.1 有界性
+### 1.4.1 有界性
 
 **定义 4.1 (有界性)**
 位置 $p \in P$ 是 $k$-有界的，如果对于所有可达标识 $M \in R(M_0)$，都有 $M(p) \leq k$。
@@ -244,7 +245,7 @@ Petri网是有界的，如果所有位置都是 $k$-有界的，对于某个 $k$
 
 ```haskell
 isBounded :: PetriNet -> Int -> Bool
-isBounded net k = 
+isBounded net k =
   let reachable = reachabilityAnalysis net
       maxTokens = maximum [maximum [M p | p <- places net] | M <- reachable]
   in maxTokens <= k
@@ -261,7 +262,7 @@ Petri网有界性判定是PSPACE完全的。
 1. **下界**：通过归约到可达性问题
 2. **上界**：通过状态空间枚举
 
-### 4.2 活性
+### 1.4.2 活性
 
 **定义 4.4 (活性)**
 变迁 $t \in T$ 是活的，如果对于每个可达标识 $M \in R(M_0)$，都存在标识 $M' \in R(M)$ 使得 $M'[t\rangle$。
@@ -285,13 +286,13 @@ Petri网是活的，如果所有变迁都是活的。
 
 ```haskell
 isLive :: PetriNet -> Bool
-isLive net = 
+isLive net =
   let reachable = reachabilityAnalysis net
       transitions = transitions net
   in all (\t -> all (\M -> canEnableFrom net M t) reachable) transitions
 
 canEnableFrom :: PetriNet -> Marking -> Transition -> Bool
-canEnableFrom net M t = 
+canEnableFrom net M t =
   let reachableFromM = reachabilityFrom net M
   in any (\M' -> isEnabled net M' t) reachableFromM
 ```
@@ -304,7 +305,7 @@ Petri网活性判定是EXPSPACE完全的。
 1. **下界**：通过归约到可达性问题
 2. **上界**：通过状态空间枚举
 
-### 4.3 可逆性
+### 1.4.3 可逆性
 
 **定义 4.7 (可逆性)**
 Petri网是可逆的，如果对于每个可达标识 $M \in R(M_0)$，都有 $M \rightarrow^* M_0$。
@@ -324,20 +325,20 @@ Petri网是可逆的当且仅当初始标识 $M_0$ 在状态空间中是强连�
 
 ```haskell
 isReversible :: PetriNet -> Bool
-isReversible net = 
+isReversible net =
   let reachable = reachabilityAnalysis net
       initial = initialMarking net
   in all (\M -> canReach net M initial) reachable
 
 canReach :: PetriNet -> Marking -> Marking -> Bool
-canReach net from to = 
+canReach net from to =
   let reachableFrom = reachabilityFrom net from
   in to `elem` reachableFrom
 ```
 
-## 5 高级Petri网模型
+## 1.5 高级Petri网模型
 
-### 5.1 时间Petri网
+### 1.5.1 时间Petri网
 
 **定义 5.1 (时间Petri网)**
 时间Petri网是六元组 $N = (P, T, F, M_0, I, D)$，其中：
@@ -365,7 +366,7 @@ canReach net from to =
 2. 时间约束编码停机条件
 3. 因此时间可达性不可判定
 
-### 5.2 着色Petri网
+### 1.5.2 着色Petri网
 
 **定义 5.4 (着色Petri网)**
 着色Petri网是五元组 $N = (P, T, F, M_0, C)$，其中：
@@ -389,7 +390,7 @@ $$\forall p \in ^\bullet t : M(p) \geq F(p, t)(\beta)$$
 2. 为每个变迁分配颜色函数
 3. 保持行为等价性
 
-### 5.3 随机Petri网
+### 1.5.3 随机Petri网
 
 **定义 5.7 (随机Petri网)**
 随机Petri网是五元组 $N = (P, T, F, M_0, \lambda)$，其中：
@@ -409,9 +410,9 @@ $$\forall p \in ^\bullet t : M(p) \geq F(p, t)(\beta)$$
 2. 状态转移只依赖于当前状态
 3. 因此满足马尔可夫性
 
-## 6 不变式分析
+## 1.6 不变式分析
 
-### 6.1 S-不变式
+### 1.6.1 S-不变式
 
 **定义 6.1 (S-不变式)**
 向量 $x : P \rightarrow \mathbb{Z}$ 是S-不变式，如果对于所有标识 $M \in R(M_0)$：
@@ -440,21 +441,21 @@ S-不变式提供Petri网的结构性质：
 
 ```haskell
 computeSInvariants :: PetriNet -> [[Int]]
-computeSInvariants net = 
+computeSInvariants net =
   let incidenceMatrix = buildIncidenceMatrix net
       nullSpace = computeNullSpace incidenceMatrix
   in nullSpace
 
 buildIncidenceMatrix :: PetriNet -> Matrix
-buildIncidenceMatrix net = 
+buildIncidenceMatrix net =
   let places = places net
       transitions = transitions net
-  in matrix (length places) (length transitions) 
-       (\(i, j) -> postWeight net (places !! i) (transitions !! j) - 
+  in matrix (length places) (length transitions)
+       (\(i, j) -> postWeight net (places !! i) (transitions !! j) -
                    preWeight net (places !! i) (transitions !! j))
 ```
 
-### 6.2 T-不变式
+### 1.6.2 T-不变式
 
 **定义 6.3 (T-不变式)**
 向量 $y : T \rightarrow \mathbb{Z}$ 是T-不变式，如果对于所有标识 $M \in R(M_0)$：
@@ -477,16 +478,16 @@ T-不变式表示可重复的变迁序列：
 
 ```haskell
 computeTInvariants :: PetriNet -> [[Int]]
-computeTInvariants net = 
+computeTInvariants net =
   let incidenceMatrix = buildIncidenceMatrix net
       transposedMatrix = transpose incidenceMatrix
       nullSpace = computeNullSpace transposedMatrix
   in nullSpace
 ```
 
-## 7 实际应用
+## 1.7 实际应用
 
-### 7.1 并发系统建模
+### 1.7.1 并发系统建模
 
 -**定义 7.1 (生产者-消费者模型)**
 
@@ -520,7 +521,7 @@ createProducerConsumer cap = ProducerConsumer
 2. 如果容量大于1，则缓冲区可能有多个托肯
 3. 因此安全性与容量相关
 
-### 7.2 工作流建模
+### 1.7.2 工作流建模
 
 -**定义 7.2 (工作流Petri网)**
 
@@ -534,7 +535,7 @@ data WorkflowNet = WorkflowNet
   }
 
 isWorkflowNet :: PetriNet -> Bool
-isWorkflowNet net = 
+isWorkflowNet net =
   let places = places net
       transitions = transitions net
       startPlaces = [p | p <- places, preSet net p == []]
@@ -555,7 +556,7 @@ isWorkflowNet net =
 2. 可逆性确保工作流可以重复
 3. 无死锁确保工作流不会卡住
 
-### 7.3 硬件设计验证
+### 1.7.3 硬件设计验证
 
 -**定义 7.3 (硬件Petri网)**
 
@@ -568,7 +569,7 @@ data HardwareNet = HardwareNet
   }
 
 verifyHardware :: HardwareNet -> Bool
-verifyHardware hw = 
+verifyHardware hw =
   let net = toPetriNet hw
       isBounded = all (\p -> isBounded net p 1) (registers hw)
       isLive = isLive net
@@ -589,7 +590,7 @@ verifyHardware hw =
 2. 活性确保系统响应
 3. 可逆性支持系统恢复
 
-## 8 结论
+## 1.8 结论
 
 高级Petri网理论为并发系统建模和分析提供了强大的形式化工具：
 
@@ -601,7 +602,7 @@ verifyHardware hw =
 
 Petri网理论在软件工程、硬件设计、工作流管理等领域发挥着重要作用，为复杂系统的设计和验证提供了坚实的理论基础。
 
-## 参考文献
+## 1.9 参考文献
 
 1. Petri, C. A. (1962). Kommunikation mit Automaten. PhD thesis, Universität Hamburg.
 2. Reisig, W. (1985). Petri nets: an introduction. Springer-Verlag.

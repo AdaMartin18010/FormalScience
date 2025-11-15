@@ -95,12 +95,12 @@ fn simplified_event_loop() {
     loop {
         // 收集已准备好的事件
         poll_events(&mut events);
-        
+
         for event in events.drain(..) {
             // 处理事件
             dispatch_event(event);
         }
-        
+
         // 如果没有事件，短暂休眠
         if events.is_empty() {
             std::thread::sleep(std::time::Duration::from_millis(1));
@@ -138,7 +138,7 @@ async fn original() -> i32 {
 // 转换后的状态机（概念性展示）
 impl Future for GeneratedFuture {
     type Output = i32;
-    
+
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<i32> {
         loop {
             match self.state {
@@ -245,10 +245,10 @@ enum ReadFileState {
 
 impl Future for ReadFileFuture {
     type Output = Result<String, std::io::Error>;
-    
+
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         let state = &mut self.state;
-        
+
         match state {
             ReadFileState::NotStarted => {
                 match std::fs::File::open(&self.path) {
@@ -322,7 +322,7 @@ struct FetchDataFuture {
 
 impl Future for FetchDataFuture {
     type Output = Result<String, reqwest::Error>;
-    
+
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         // 状态机实现...
     }
@@ -337,10 +337,10 @@ impl Future for FetchDataFuture {
 async fn self_referential() {
     let mut s = String::from("Hello");
     let ptr = &mut s;  // 创建指向s的引用
-    
+
     // 在await点，编译器需要将s和ptr都存入状态机结构
     some_async_fn().await;
-    
+
     // await后使用ptr
     *ptr = String::from("World");
 }
@@ -408,7 +408,7 @@ struct MyWaker {
 fn create_waker(task_id: usize, queue: Arc<Mutex<VecDeque<usize>>>) -> Waker {
     // 创建原始waker vtable (大量unsafe代码省略)
     // ...
-    
+
     unsafe {
         Waker::from_raw(raw_waker)
     }
@@ -422,13 +422,13 @@ fn on_resource_ready(waker: &Waker) {
 // 在执行器中
 async fn execute_tasks() {
     let task_queue = Arc::new(Mutex::new(VecDeque::new()));
-    
+
     loop {
         if let Some(task_id) = task_queue.lock().unwrap().pop_front() {
             // 创建Context和Waker
             let waker = create_waker(task_id, task_queue.clone());
             let mut context = Context::from_waker(&waker);
-            
+
             // 轮询任务
             match tasks[task_id].poll(&mut context) {
                 Poll::Ready(_) => { /* 任务完成 */ },
@@ -461,7 +461,7 @@ Rust不在标准库中包含异步运行时，而是将选择权交给用户。�
 async fn main() {
     // 高度优化的TCP服务器
     let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
-    
+
     loop {
         let (socket, _) = listener.accept().await.unwrap();
         tokio::spawn(async move {
@@ -476,7 +476,7 @@ async fn main() {
 async fn main() {
     // 类似标准库API的接口
     let listener = async_std::net::TcpListener::bind("127.0.0.1:8080").await.unwrap();
-    
+
     let mut incoming = listener.incoming();
     while let Some(stream) = incoming.next().await {
         let stream = stream.unwrap();
@@ -532,7 +532,7 @@ async fn ticker(interval: Duration) -> impl Stream<Item = Instant> {
 
 impl Iterator for GeneratedIterator {
     type Item = YieldType;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         // 执行状态机直到下一个yield或结束
     }
@@ -562,7 +562,7 @@ let mut numbers = gen {
 
 assert_eq!(numbers.next(), Some(1));
 // 可以向生成器发送值（未被广泛支持，取决于实现）
-// numbers.send(42);  
+// numbers.send(42);
 assert_eq!(numbers.next(), Some(2));
 ```
 
@@ -697,7 +697,7 @@ where
 ```rust
 pub trait Stream {
     type Item;
-    
+
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>)
         -> Poll<Option<Self::Item>>;
 }
@@ -719,7 +719,7 @@ async fn generate_stream(max: usize) -> impl Stream<Item = usize> {
 // 使用Stream
 async fn consume_stream(stream: impl Stream<Item = usize>) {
     let mut stream = pin!(stream);
-    
+
     while let Some(item) = stream.next().await {
         println!("Got: {}", item);
     }
@@ -734,16 +734,16 @@ use futures::stream::{self, StreamExt};
 async fn stream_combinators_demo() {
     let s1 = stream::iter(1..=3);
     let s2 = stream::iter(4..=6);
-    
+
     // 连接多个流
     let combined = s1.chain(s2);
-    
+
     // 映射转换
     let doubled = combined.map(|x| x * 2);
-    
+
     // 过滤元素
     let filtered = doubled.filter(|x| future::ready(*x > 6));
-    
+
     // 收集成Vec
     let results: Vec<_> = filtered.collect().await;
     assert_eq!(results, vec![8, 10, 12]);
@@ -761,7 +761,7 @@ use tokio::time::{sleep, Duration};
 async fn select_demo() {
     let mut a = Box::pin(sleep(Duration::from_secs(1)));
     let mut b = Box::pin(sleep(Duration::from_secs(2)));
-    
+
     select! {
         _ = a => println!("a completed first"),
         _ = b => println!("b completed first"),
@@ -779,7 +779,7 @@ async fn custom_select<A, B, T1, T2>(
 ) -> Either<T1, T2> {
     let fut_a = Box::pin(fut_a);
     let fut_b = Box::pin(fut_b);
-    
+
     futures::future::select(fut_a, fut_b).await.factor_first().0
 }
 ```
@@ -792,7 +792,7 @@ async fn complex_concurrency() {
     let task1 = tokio::spawn(async { /* ... */ });
     let task2 = tokio::spawn(async { /* ... */ });
     let timeout = tokio::time::sleep(Duration::from_secs(5));
-    
+
     tokio::select! {
         result = task1 => {
             if let Ok(data) = result {
@@ -836,7 +836,7 @@ impl ComputeActor {
     fn new(receiver: mpsc::Receiver<Message>) -> Self {
         Self { receiver }
     }
-    
+
     async fn run(mut self) {
         while let Some(msg) = self.receiver.recv().await {
             match msg {
@@ -854,21 +854,21 @@ impl ComputeActor {
 async fn actor_demo() {
     let (tx, rx) = mpsc::channel(100);
     let actor = ComputeActor::new(rx);
-    
+
     // 在后台运行actor
     let actor_handle = tokio::spawn(actor.run());
-    
+
     // 与actor通信
     let (response_tx, mut response_rx) = mpsc::channel(1);
-    tx.send(Message::Compute { 
-        value: 42, 
-        respond_to: response_tx 
+    tx.send(Message::Compute {
+        value: 42,
+        respond_to: response_tx
     }).await.unwrap();
-    
+
     // 等待响应
     let result = response_rx.recv().await.unwrap();
     println!("Result: {}", result);
-    
+
     // 关闭actor
     tx.send(Message::Shutdown).await.unwrap();
     actor_handle.await.unwrap();
@@ -893,14 +893,14 @@ impl BackpressureController {
     fn new(capacity: usize) -> (Self, mpsc::Receiver<Vec<u8>>) {
         let (tx, rx) = mpsc::channel(capacity);
         let permits = Arc::new(Semaphore::new(capacity));
-        
+
         (Self { permits, sender: tx }, rx)
     }
-    
+
     async fn send(&self, data: Vec<u8>) -> Result<(), mpsc::error::SendError<Vec<u8>>> {
         // 获取许可，如果没有可用许可，会等待
         let permit = self.permits.clone().acquire_owned().await.unwrap();
-        
+
         match self.sender.send(data).await {
             Ok(()) => Ok(()),
             Err(e) => Err(e),
@@ -921,7 +921,7 @@ async fn consumer(mut rx: mpsc::Receiver<Vec<u8>>) {
 async fn producer(controller: BackpressureController) {
     for i in 0..1000 {
         let data = generate_data(i).await;
-        
+
         // 当通道已满时，会自动等待
         controller.send(data).await.unwrap();
     }
@@ -944,12 +944,12 @@ impl AsyncResource {
         // 异步初始化
         Ok(Self { /* ... */ })
     }
-    
+
     async fn use_resource(&self) -> Result<(), Error> {
         // 异步使用资源
         Ok(())
     }
-    
+
     async fn close(self) -> Result<(), Error> {
         // 异步清理资源
         Ok(())
@@ -974,20 +974,20 @@ impl Drop for AsyncResource {
 // 使用异步资源的正确模式
 async fn use_async_resource() -> Result<(), Error> {
     let resource = AsyncResource::new().await?;
-    
+
     // 使用作用域保证资源释放，类似于try-with-resources
     let result = async {
         resource.use_resource().await?;
         // 更多操作...
         Ok::<_, Error>(())
     }.await;
-    
+
     // 无论上面的操作成功与否，都确保资源关闭
     let close_result = resource.close().await;
-    
+
     result?;
     close_result?;
-    
+
     Ok(())
 }
 ```
@@ -1004,7 +1004,7 @@ struct AsyncContext<T, C: AsyncContextManager<Output = T>> {
 trait AsyncContextManager {
     type Output;
     type Error;
-    
+
     async fn acquire(&mut self) -> Result<Self::Output, Self::Error>;
     async fn release(&mut self, resource: Self::Output) -> Result<(), Self::Error>;
 }
@@ -1013,13 +1013,13 @@ impl<T, C: AsyncContextManager<Output = T>> AsyncContext<T, C> {
     fn new(manager: C) -> Self {
         Self { manager, resource: None }
     }
-    
+
     async fn enter(&mut self) -> Result<&mut T, C::Error> {
         let resource = self.manager.acquire().await?;
         self.resource = Some(resource);
         Ok(self.resource.as_mut().unwrap())
     }
-    
+
     async fn exit(&mut self) -> Result<(), C::Error> {
         if let Some(resource) = self.resource.take() {
             self.manager.release(resource).await?;
@@ -1035,12 +1035,12 @@ struct DatabaseManager;
 impl AsyncContextManager for DatabaseManager {
     type Output = DatabaseConnection;
     type Error = anyhow::Error;
-    
+
     async fn acquire(&mut self) -> Result<DatabaseConnection, Self::Error> {
         // 连接数据库
         Ok(DatabaseConnection)
     }
-    
+
     async fn release(&mut self, _conn: DatabaseConnection) -> Result<(), Self::Error> {
         // 关闭连接
         Ok(())
@@ -1049,10 +1049,10 @@ impl AsyncContextManager for DatabaseManager {
 
 async fn use_db() -> Result<(), anyhow::Error> {
     let mut ctx = AsyncContext::new(DatabaseManager);
-    
+
     let conn = ctx.enter().await?;
     // 使用连接...
-    
+
     ctx.exit().await?;
     Ok(())
 }
@@ -1079,14 +1079,14 @@ fn data_race_freedom<T: Send>(data: T) {
 // 2. 消息传递安全：通过通道保证
 fn message_passing_safety<T: Send>() {
     let (tx, rx) = tokio::sync::mpsc::channel::<T>(10);
-    
+
     tokio::spawn(async move {
         // tx拥有发送端，独占所有权
         if let Some(data) = produce_data().await {
             let _ = tx.send(data).await;
         }
     });
-    
+
     tokio::spawn(async move {
         // rx拥有接收端，独占所有权
         while let Some(data) = rx.recv().await {
@@ -1121,7 +1121,7 @@ async fn potential_deadlock(
     // 这种嵌套锁可能导致死锁
     let guard1 = mutex1.lock().await;
     let guard2 = mutex2.lock().await;
-    
+
     *guard1 += *guard2;
 }
 
@@ -1138,10 +1138,10 @@ async fn deadlock_free(
     } else {
         (mutex2, mutex1)
     };
-    
+
     let guard1 = smaller.lock().await;
     let guard2 = larger.lock().await;
-    
+
     // 安全使用...
 }
 ```
@@ -1283,7 +1283,7 @@ struct GeneratedFuture {
 
 impl Future for GeneratedFuture {
     type Output = i32;
-    
+
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<i32> {
         // 复杂的状态机实现...
     }
@@ -1355,7 +1355,7 @@ async fn borrow_data<'a>(data: &'a mut Vec<u8>) -> &'a [u8] {
 // 错误处理与异步的交互
 async fn complex_error_handling() -> Result<(), Box<dyn Error>> {
     let data = fetch_data().await?;
-    
+
     match process_first_stage(&data).await {
         Ok(result) => {
             process_second_stage(result).await?;
@@ -1365,7 +1365,7 @@ async fn complex_error_handling() -> Result<(), Box<dyn Error>> {
         }
         Err(e) => return Err(e.into()),
     }
-    
+
     Ok(())
 }
 ```
@@ -1527,12 +1527,12 @@ pub trait AsyncWrite {
         cx: &mut Context<'_>,
         buf: &[u8]
     ) -> Poll<Result<usize, io::Error>>;
-    
+
     fn poll_flush(
         self: Pin<&mut Self>,
         cx: &mut Context<'_>
     ) -> Poll<Result<(), io::Error>>;
-    
+
     fn poll_close(
         self: Pin<&mut Self>,
         cx: &mut Context<'_>
@@ -1584,9 +1584,9 @@ trait AsyncRuntime {
     fn spawn<F: Future<Output = T> + 'static, T: 'static>(
         future: F
     ) -> JoinHandle<T>;
-    
+
     fn block_on<F: Future<Output = T>, T>(future: F) -> T;
-    
+
     // 其他运行时功能...
 }
 
@@ -1631,7 +1631,7 @@ async fn verified_increment(x: i32) -> i32 {
 #[property(no_deadlock)]
 async fn concurrent_operations() {
     let mutex = Arc::new(Mutex::new(0));
-    
+
     let op1 = {
         let mutex = mutex.clone();
         async move {
@@ -1639,7 +1639,7 @@ async fn concurrent_operations() {
             *guard += 1;
         }
     };
-    
+
     let op2 = {
         let mutex = mutex.clone();
         async move {
@@ -1647,7 +1647,7 @@ async fn concurrent_operations() {
             *guard += 2;
         }
     };
-    
+
     join!(op1, op2);
 }
 ```

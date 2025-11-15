@@ -236,7 +236,7 @@ impl MqttHandler {
             while let Some(data) = data_rx.recv().await {
                 let payload = serde_json::to_string(&data).unwrap();
                 let topic = format!("device/{}/data", data.device_id);
-                
+
                 if let Err(e) = client.publish(&topic, QoS::AtLeastOnce, false, payload).await {
                     tracing::error!("Error publishing message: {}", e);
                 }
@@ -309,7 +309,7 @@ pub struct DataStorage {
 impl DataStorage {
     pub async fn new(database_url: &str) -> anyhow::Result<Self> {
         let pool = PgPool::connect(database_url).await?;
-        
+
         // 创建必要的表
         sqlx::query(
             r#"
@@ -614,7 +614,7 @@ mod tests {
     #[tokio::test]
     async fn test_modbus_manager() -> anyhow::Result<()> {
         let (tx, mut rx) = mpsc::channel(100);
-        
+
         let config = DeviceConfig {
             id: "test-device".to_string(),
             name: "Test Device".to_string(),

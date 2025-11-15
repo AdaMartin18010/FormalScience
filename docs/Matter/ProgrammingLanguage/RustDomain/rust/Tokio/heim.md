@@ -1,23 +1,21 @@
-# Rust 2024 + Tokio + Heim + OpenTelemetry 实现的分布式监控系统
-
-我将为您展示一个使用 Rust 2024 + Tokio + Heim + OpenTelemetry 实现的分布式监控系统。
+# 1. Rust 2024 + Tokio + Heim + OpenTelemetry 实现的分布式监控系统
 
 ## 目录
 
-- [Rust 2024 + Tokio + Heim + OpenTelemetry 实现的分布式监控系统](#rust-2024--tokio--heim--opentelemetry-实现的分布式监控系统)
+- [1. Rust 2024 + Tokio + Heim + OpenTelemetry 实现的分布式监控系统](#1-rust-2024--tokio--heim--opentelemetry-实现的分布式监控系统)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-  - [2. 系统指标收集器实现](#2-系统指标收集器实现)
-  - [3. 分布式追踪实现](#3-分布式追踪实现)
-  - [4. 指标控制器实现](#4-指标控制器实现)
-  - [5. gRPC 服务实现](#5-grpc-服务实现)
-  - [6. 指标聚合器实现](#6-指标聚合器实现)
-  - [7. 告警系统实现](#7-告警系统实现)
-  - [8. 存储系统实现](#8-存储系统实现)
-  - [9. 主程序实现](#9-主程序实现)
-  - [10. 配置文件示例](#10-配置文件示例)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+  - [1.2 系统指标收集器实现](#12-系统指标收集器实现)
+  - [1.3 分布式追踪实现](#13-分布式追踪实现)
+  - [1.4 指标控制器实现](#14-指标控制器实现)
+  - [1.5 gRPC 服务实现](#15-grpc-服务实现)
+  - [1.6 指标聚合器实现](#16-指标聚合器实现)
+  - [1.7 告警系统实现](#17-告警系统实现)
+  - [1.8 存储系统实现](#18-存储系统实现)
+  - [1.9 主程序实现](#19-主程序实现)
+  - [1.10 配置文件示例](#110-配置文件示例)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 ```toml
 [dependencies]
@@ -39,7 +37,7 @@ metrics-exporter-prometheus = "0.12"
 chrono = { version = "0.4", features = ["serde"] }
 ```
 
-## 2. 系统指标收集器实现
+## 1.2 系统指标收集器实现
 
 ```rust
 use heim::cpu::CpuTime;
@@ -66,7 +64,7 @@ impl MetricsCollector {
         let meter_provider = opentelemetry_otlp::new_pipeline()
             .metrics(opentelemetry_sdk::runtime::Tokio)
             .build()?;
-            
+
         let meter = meter_provider.meter("system_metrics");
 
         Ok(Self {
@@ -123,7 +121,7 @@ impl MetricsCollector {
             .f64_counter("cpu_usage")
             .with_description("CPU usage percentage")
             .init();
-            
+
         counter.add(usage, &[]);
         Ok(())
     }
@@ -133,7 +131,7 @@ impl MetricsCollector {
             .f64_up_down_counter("memory_usage")
             .with_description("Memory usage in bytes")
             .init();
-            
+
         gauge.add(memory.used().as_u64() as f64, &[]);
         Ok(())
     }
@@ -143,7 +141,7 @@ impl MetricsCollector {
             .f64_up_down_counter("disk_usage")
             .with_description("Disk usage in bytes")
             .init();
-            
+
         for (path, usage) in usage {
             gauge.add(
                 usage.used().as_u64() as f64,
@@ -158,12 +156,12 @@ impl MetricsCollector {
             .u64_counter("network_rx_bytes")
             .with_description("Network received bytes")
             .init();
-            
+
         let tx_counter = self.otel_meter
             .u64_counter("network_tx_bytes")
             .with_description("Network transmitted bytes")
             .init();
-            
+
         for (interface, stats) in stats {
             rx_counter.add(
                 stats.received_bytes,
@@ -179,7 +177,7 @@ impl MetricsCollector {
 }
 ```
 
-## 3. 分布式追踪实现
+## 1.3 分布式追踪实现
 
 ```rust
 use opentelemetry::trace::{Tracer, TracerProvider};
@@ -235,7 +233,7 @@ impl DistributedTracer {
 }
 ```
 
-## 4. 指标控制器实现
+## 1.4 指标控制器实现
 
 ```rust
 pub struct MetricsController {
@@ -292,14 +290,14 @@ impl MetricsController {
             let collector = self.collectors
                 .get(name)
                 .ok_or_else(|| anyhow::anyhow!("Collector not found"))?;
-                
+
             Ok(collector.metrics.read().await.clone())
         }).await
     }
 }
 ```
 
-## 5. gRPC 服务实现
+## 1.5 gRPC 服务实现
 
 ```rust
 #[derive(Debug)]
@@ -369,7 +367,7 @@ impl metrics_service_server::MetricsService for MetricsService {
 }
 ```
 
-## 6. 指标聚合器实现
+## 1.6 指标聚合器实现
 
 ```rust
 pub struct MetricsAggregator {
@@ -385,7 +383,7 @@ impl MetricsAggregator {
     pub async fn aggregate_metrics(&self, time_range: TimeRange) -> anyhow::Result<AggregatedMetrics> {
         self.tracer.trace_operation("aggregate_metrics", async {
             let metrics = self.storage.get_metrics(time_range).await?;
-            
+
             let cpu_stats = self.calculate_cpu_stats(&metrics);
             let memory_stats = self.calculate_memory_stats(&metrics);
             let disk_stats = self.calculate_disk_stats(&metrics);
@@ -417,7 +415,7 @@ impl MetricsAggregator {
 }
 ```
 
-## 7. 告警系统实现
+## 1.7 告警系统实现
 
 ```rust
 pub struct AlertSystem {
@@ -481,7 +479,7 @@ impl AlertRule {
 }
 ```
 
-## 8. 存储系统实现
+## 1.8 存储系统实现
 
 ```rust
 pub struct MetricsStorage {
@@ -538,7 +536,7 @@ impl MetricsStorage {
 }
 ```
 
-## 9. 主程序实现
+## 1.9 主程序实现
 
 ```rust
 #[tokio::main]
@@ -577,7 +575,7 @@ async fn main() -> anyhow::Result<()> {
 }
 ```
 
-## 10. 配置文件示例
+## 1.10 配置文件示例
 
 ```yaml
 collectors:

@@ -1,39 +1,39 @@
 
-# WebAssembly与系统生态的形式化分析
+# 1. WebAssembly与系统生态的形式化分析
 
 ## 目录
 
-- [WebAssembly与系统生态的形式化分析](#webassembly与系统生态的形式化分析)
+- [1. WebAssembly与系统生态的形式化分析](#1-webassembly与系统生态的形式化分析)
   - [目录](#目录)
-  - [1. WebAssembly基础形式化定义](#1-webassembly基础形式化定义)
-    - [1.1 形式系统表示](#11-形式系统表示)
-    - [1.2 类型系统与安全性证明](#12-类型系统与安全性证明)
-    - [1.3 执行语义形式化](#13-执行语义形式化)
-  - [2. WebAssembly与容器技术形式化对比](#2-webassembly与容器技术形式化对比)
-    - [2.1 执行模型对比](#21-执行模型对比)
-    - [2.2 隔离机制形式化](#22-隔离机制形式化)
-    - [2.3 资源管理模型](#23-资源管理模型)
-  - [3. WebAssembly与Linux系统集成](#3-webassembly与linux系统集成)
-    - [3.1 系统调用映射](#31-系统调用映射)
-    - [3.2 内核交互模型](#32-内核交互模型)
-    - [3.3 安全策略形式化](#33-安全策略形式化)
-  - [4. 编程语言到WebAssembly的形式化映射](#4-编程语言到webassembly的形式化映射)
-    - [4.1 类型系统映射](#41-类型系统映射)
-    - [4.2 内存模型转换](#42-内存模型转换)
-    - [4.3 控制流表示](#43-控制流表示)
-  - [5. 实际应用与代码示例](#5-实际应用与代码示例)
-    - [5.1 Rust与WebAssembly](#51-rust与webassembly)
-    - [5.2 Go与WebAssembly](#52-go与webassembly)
-    - [5.3 混合部署架构](#53-混合部署架构)
-  - [6. 未来发展的形式化模型](#6-未来发展的形式化模型)
-    - [6.1 组件模型形式化](#61-组件模型形式化)
-    - [6.2 分布式执行理论](#62-分布式执行理论)
-    - [6.3 形式化验证前景](#63-形式化验证前景)
-  - [7. 思维导图](#7-思维导图)
+  - [1.1 WebAssembly基础形式化定义](#11-webassembly基础形式化定义)
+    - [1.1.1 形式系统表示](#111-形式系统表示)
+    - [1.1.2 类型系统与安全性证明](#112-类型系统与安全性证明)
+    - [1.1.3 执行语义形式化](#113-执行语义形式化)
+  - [1.2 WebAssembly与容器技术形式化对比](#12-webassembly与容器技术形式化对比)
+    - [1.2.1 执行模型对比](#121-执行模型对比)
+    - [1.2.2 隔离机制形式化](#122-隔离机制形式化)
+    - [1.2.3 资源管理模型](#123-资源管理模型)
+  - [1.3 WebAssembly与Linux系统集成](#13-webassembly与linux系统集成)
+    - [1.3.1 系统调用映射](#131-系统调用映射)
+    - [1.3.2 内核交互模型](#132-内核交互模型)
+    - [1.3.3 安全策略形式化](#133-安全策略形式化)
+  - [1.4 编程语言到WebAssembly的形式化映射](#14-编程语言到webassembly的形式化映射)
+    - [1.4.1 类型系统映射](#141-类型系统映射)
+    - [1.4.2 内存模型转换](#142-内存模型转换)
+    - [1.4.3 控制流表示](#143-控制流表示)
+  - [1.5 实际应用与代码示例](#15-实际应用与代码示例)
+    - [1.5.1 Rust与WebAssembly](#151-rust与webassembly)
+    - [1.5.2 Go与WebAssembly](#152-go与webassembly)
+    - [1.5.3 混合部署架构](#153-混合部署架构)
+  - [1.6 未来发展的形式化模型](#16-未来发展的形式化模型)
+    - [1.6.1 组件模型形式化](#161-组件模型形式化)
+    - [1.6.2 分布式执行理论](#162-分布式执行理论)
+    - [1.6.3 形式化验证前景](#163-形式化验证前景)
+  - [1.7 思维导图](#17-思维导图)
 
-## 1. WebAssembly基础形式化定义
+## 1.1 WebAssembly基础形式化定义
 
-### 1.1 形式系统表示
+### 1.1.1 形式系统表示
 
 WebAssembly可以形式化表示为一个完整的计算系统 $\mathcal{W} = (T, F, M, I, E, R)$，其中：
 
@@ -52,7 +52,7 @@ WebAssembly可以形式化表示为一个完整的计算系统 $\mathcal{W} = (T
 
 这两个定理共同保证WebAssembly程序的执行不会"卡住"，且类型在执行过程中保持一致。
 
-### 1.2 类型系统与安全性证明
+### 1.1.2 类型系统与安全性证明
 
 WebAssembly类型系统可以形式化为判断式 $\Gamma \vdash e : \tau$，表示在上下文 $\Gamma$ 中表达式 $e$ 具有类型 $\tau$。
 
@@ -76,7 +76,7 @@ WebAssembly类型系统可以形式化为判断式 $\Gamma \vdash e : \tau$，�
 
 证明：通过归纳法证明验证过程确保所有内存访问指令在执行前进行边界检查。
 
-### 1.3 执行语义形式化
+### 1.1.3 执行语义形式化
 
 WebAssembly执行语义可以形式化为小步操作语义：
 
@@ -103,9 +103,9 @@ $\frac{addr + n \leq |memory|}{S, v; (i32.store~n~addr)::instr \Rightarrow S[mem
 程序执行可以表示为状态转换序列：
 $S_0 \xrightarrow{i_1} S_1 \xrightarrow{i_2} \ldots \xrightarrow{i_n} S_n$
 
-## 2. WebAssembly与容器技术形式化对比
+## 1.2 WebAssembly与容器技术形式化对比
 
-### 2.1 执行模型对比
+### 1.2.1 执行模型对比
 
 WebAssembly和Docker容器执行模型可以通过形式化模型进行对比：
 
@@ -134,7 +134,7 @@ $\mathcal{E}_C = (OS, N, I, O, S, T)$，其中：
 2. 状态空间：$|S_W| \ll |S_C|$，WebAssembly状态空间显著小于容器
 3. 转换函数复杂度：$complexity(T_W) < complexity(T_C)$
 
-### 2.2 隔离机制形式化
+### 1.2.2 隔离机制形式化
 
 WebAssembly和容器技术使用不同的隔离机制：
 
@@ -164,16 +164,16 @@ pub fn safe_memory_access(ptr: u32, len: u32) -> Result<u32, String> {
     if (ptr as usize) + (len as usize) > wasm_bindgen::memory().size() {
         return Err("内存访问越界".to_string());
     }
-    
+
     // 安全访问内存
     let memory = unsafe { slice::from_raw_parts(ptr as *const u8, len as usize) };
     let sum = memory.iter().map(|&x| x as u32).sum();
-    
+
     Ok(sum)
 }
 ```
 
-### 2.3 资源管理模型
+### 1.2.3 资源管理模型
 
 WebAssembly和容器技术的资源管理模型形式化对比：
 
@@ -206,9 +206,9 @@ $R_C = (CPU, Mem, IO, Net, FS)$，其中：
 - $U(CPU, p_W) \approx U(CPU, p_C)$：CPU利用率类似
 - $startup(p_W) \ll startup(p_C)$：WebAssembly启动时间显著短于容器
 
-## 3. WebAssembly与Linux系统集成
+## 1.3 WebAssembly与Linux系统集成
 
-### 3.1 系统调用映射
+### 1.3.1 系统调用映射
 
 WebAssembly通过WASI (WebAssembly System Interface) 实现与操作系统的交互，可形式化为映射关系：
 
@@ -237,24 +237,24 @@ use std::io::{self, Read, Write};
 fn wasi_file_example() -> io::Result<()> {
     // WASI path_open映射到Linux open系统调用
     let mut file = File::create("example.txt")?;
-    
+
     // WASI fd_write映射到Linux write系统调用
     file.write_all(b"Hello, WASI!")?;
-    
+
     // WASI fd_close隐式映射到Linux close系统调用
     drop(file);
-    
+
     // WASI path_open + fd_read映射到Linux open + read系统调用
     let mut file = File::open("example.txt")?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-    
+
     println!("Read from file: {}", contents);
     Ok(())
 }
 ```
 
-### 3.2 内核交互模型
+### 1.3.2 内核交互模型
 
 WebAssembly与Linux内核交互模型的形式化表示：
 
@@ -279,7 +279,7 @@ WebAssembly程序与Linux内核交互：$W \xrightarrow{WASI} R \xrightarrow{sys
 
 $\forall s \in Syscalls, \forall a \in Args, W \xrightarrow{s,a} K \Rightarrow F(s,a) = allow$
 
-### 3.3 安全策略形式化
+### 1.3.3 安全策略形式化
 
 WebAssembly与Linux安全机制的形式化对比：
 
@@ -318,7 +318,7 @@ fn capability_example() {
     } else {
         eprintln!("没有创建文件的权限");
     }
-    
+
     // 尝试访问未授权目录会失败
     if let Ok(_) = File::open("/unauthorized_dir/secret.txt") {
         // 在正确配置的WASI环境中永远不会执行
@@ -332,9 +332,9 @@ fn capability_example() {
 // 运行命令：wasmtime --dir=./authorized_dir capability_example.wasm
 ```
 
-## 4. 编程语言到WebAssembly的形式化映射
+## 1.4 编程语言到WebAssembly的形式化映射
 
-### 4.1 类型系统映射
+### 1.4.1 类型系统映射
 
 不同编程语言类型系统到WebAssembly类型系统的形式化映射：
 
@@ -372,7 +372,7 @@ T_Go(interface{}) = (i32, i32) // 类型ID和数据指针对
 则在WebAssembly中 $T_\Gamma \vdash_W T_e : T_\tau$，
 其中 $T_\Gamma$, $T_e$, $T_\tau$ 分别是上下文、表达式和类型的映射。
 
-### 4.2 内存模型转换
+### 1.4.2 内存模型转换
 
 编程语言内存模型到WebAssembly线性内存的形式化转换：
 
@@ -401,16 +401,16 @@ $M_{Go} = (Stack, Heap, GC) \mapsto M_W = (LinearMemory, GCImpl)$
 func main() {
     // 分配内存 - 在WASM中由自定义分配器管理
     data := make([]byte, 1024)
-    
+
     // 写入数据
     for i := 0; i < len(data); i++ {
         data[i] = byte(i % 256)
     }
-    
+
     // 计算校验和
     checksum := calculateChecksum(data)
     println("校验和:", checksum)
-    
+
     // 内存将由WASM中的GC实现自动回收
 }
 
@@ -419,7 +419,7 @@ func main() {
 //   ;; 调用内存分配器分配1024字节
 //   (local $data i32)
 //   (local.set $data (call $allocate (i32.const 1024)))
-//   
+//
 //   ;; 写入数据循环
 //   (local $i i32)
 //   (local.set $i (i32.const 0))
@@ -427,25 +427,25 @@ func main() {
 //     (loop
 //       ;; 检查是否完成
 //       (br_if 1 (i32.ge_u (local.get $i) (i32.const 1024)))
-//       
+//
 //       ;; 写入数据
 //       (i32.store8
 //         (i32.add (local.get $data) (local.get $i))
 //         (i32.rem_u (local.get $i) (i32.const 256))
 //       )
-//       
+//
 //       ;; 增加计数器
 //       (local.set $i (i32.add (local.get $i) (i32.const 1)))
 //       (br 0)
 //     )
 //   )
-//   
+//
 //   ;; 计算校验和
 //   (call $println_int (call $calculateChecksum (local.get $data) (i32.const 1024)))
 // )
 ```
 
-### 4.3 控制流表示
+### 1.4.3 控制流表示
 
 编程语言控制流结构到WebAssembly控制指令的形式化映射：
 
@@ -455,9 +455,9 @@ $C: ControlFlow_L \rightarrow ControlInstr_W$
 **条件语句映射**：
 
 ```math
-C(if e then s1 else s2) = 
+C(if e then s1 else s2) =
   eval(e)
-  (if 
+  (if
     (then C(s1))
     (else C(s2))
   )
@@ -466,7 +466,7 @@ C(if e then s1 else s2) =
 **循环映射**：
 
 ```math
-C(while e do s) = 
+C(while e do s) =
   (block $exit
     (loop $continue
       eval(e)
@@ -487,24 +487,24 @@ C(try s1 catch(e) s2) =
     (block $catch
       ;; 设置异常处理上下文
       (call $push_exception_handler (i32.const $catch))
-      
+
       ;; 尝试执行代码
       C(s1)
-      
+
       ;; 移除异常处理上下文
       (call $pop_exception_handler)
       (br $try_exit)
     )
-    
+
     ;; 捕获处理
     (call $get_exception) ;; 获取异常对象
     C(s2)
   )
 ```
 
-## 5. 实际应用与代码示例
+## 1.5 实际应用与代码示例
 
-### 5.1 Rust与WebAssembly
+### 1.5.1 Rust与WebAssembly
 
 Rust作为WebAssembly的首选语言之一，提供了优秀的编译支持和生态系统：
 
@@ -538,19 +538,19 @@ pub fn apply_filter(
     if data_ptr.is_null() {
         return false;
     }
-    
+
     // 安全地从原始指针创建可变切片
     let byte_len = (width * height * 4) as usize;
     let data = unsafe { std::slice::from_raw_parts_mut(data_ptr, byte_len) };
-    
+
     // 将字节数据解释为像素数组
-    let pixels = unsafe { 
+    let pixels = unsafe {
         std::slice::from_raw_parts_mut(
             data.as_mut_ptr() as *mut Pixel,
             (width * height) as usize
         )
     };
-    
+
     // 应用选定的滤镜
     match filter_type {
         0 => grayscale_filter(pixels),
@@ -558,15 +558,15 @@ pub fn apply_filter(
         2 => invert_filter(pixels),
         _ => return false,
     }
-    
+
     true
 }
 
 // 灰度滤镜实现
 fn grayscale_filter(pixels: &mut [Pixel]) {
     for pixel in pixels {
-        let gray = (0.299 * pixel.r as f32 + 
-                    0.587 * pixel.g as f32 + 
+        let gray = (0.299 * pixel.r as f32 +
+                    0.587 * pixel.g as f32 +
                     0.114 * pixel.b as f32) as u8;
         pixel.r = gray;
         pixel.g = gray;
@@ -581,11 +581,11 @@ fn sepia_filter(pixels: &mut [Pixel]) {
         let r = pixel.r as f32;
         let g = pixel.g as f32;
         let b = pixel.b as f32;
-        
+
         let new_r = (0.393 * r + 0.769 * g + 0.189 * b).min(255.0) as u8;
         let new_g = (0.349 * r + 0.686 * g + 0.168 * b).min(255.0) as u8;
         let new_b = (0.272 * r + 0.534 * g + 0.131 * b).min(255.0) as u8;
-        
+
         pixel.r = new_r;
         pixel.g = new_g;
         pixel.b = new_b;
@@ -609,19 +609,19 @@ fn invert_filter(pixels: &mut [Pixel]) {
 async function processImage() {
     // 加载WASM模块
     const wasmModule = await import('./image_filters.js');
-    
+
     // 获取画布和图像数据
     const canvas = document.getElementById('imageCanvas');
     const ctx = canvas.getContext('2d');
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    
+
     // 获取图像数据的内存视图
     const dataPtr = wasmModule.getMemoryDataPtr(imageData.data.length);
-    
+
     // 复制图像数据到WASM内存
     const memory = wasmModule.memory;
     new Uint8Array(memory.buffer).set(imageData.data, dataPtr);
-    
+
     // 应用滤镜 (0=灰度, 1=复古, 2=反转)
     const filterType = parseInt(document.getElementById('filterSelect').value);
     const success = wasmModule.apply_filter(
@@ -630,7 +630,7 @@ async function processImage() {
         canvas.height,
         filterType
     );
-    
+
     if (success) {
         // 从WASM内存复制回处理后的数据
         const processedData = new Uint8Array(
@@ -638,7 +638,7 @@ async function processImage() {
             dataPtr,
             imageData.data.length
         );
-        
+
         // 更新画布
         const newImageData = new ImageData(
             new Uint8ClampedArray(processedData),
@@ -650,7 +650,7 @@ async function processImage() {
 }
 ```
 
-### 5.2 Go与WebAssembly
+### 1.5.2 Go与WebAssembly
 
 Go语言对WebAssembly的支持逐渐成熟，提供了不同于Rust的编程模型：
 
@@ -671,19 +671,19 @@ func analyzeText(this js.Value, args []js.Value) interface{} {
             "error": "需要文本参数",
         }
     }
-    
+
     text := args[0].String()
-    
+
     // 文本统计
     words := strings.Fields(text)
     wordCount := len(words)
-    
+
     // 字符计数
     charCount := len(text)
     letterCount := 0
     digitCount := 0
     spaceCount := 0
-    
+
     for _, char := range text {
         if unicode.IsLetter(char) {
             letterCount++
@@ -693,20 +693,20 @@ func analyzeText(this js.Value, args []js.Value) interface{} {
             spaceCount++
         }
     }
-    
+
     // 词频分析
     wordFreq := make(map[string]int)
     for _, word := range words {
         word = strings.ToLower(word)
         wordFreq[word]++
     }
-    
+
     // 转换词频为JS格式
     jsWordFreq := make(map[string]interface{})
     for word, freq := range wordFreq {
         jsWordFreq[word] = freq
     }
-    
+
     // 返回分析结果
     return map[string]interface{}{
         "wordCount": wordCount,
@@ -722,13 +722,13 @@ func analyzeText(this js.Value, args []js.Value) interface{} {
 func main() {
     // 创建全局对象
     textAnalyzer := js.Global().Get("Object").New()
-    
+
     // 注册分析函数
     textAnalyzer.Set("analyze", js.FuncOf(analyzeText))
-    
+
     // 将对象导出到JavaScript
     js.Global().Set("TextAnalyzer", textAnalyzer)
-    
+
     // 阻止程序退出
     select {}
 }
@@ -741,29 +741,29 @@ func main() {
 async function initGoWasm() {
     // 指定Go WebAssembly环境
     const go = new Go();
-    
+
     // 加载和实例化WASM模块
     const result = await WebAssembly.instantiateStreaming(
         fetch("textanalyzer.wasm"),
         go.importObject
     );
-    
+
     // 运行Go程序
     go.run(result.instance);
-    
+
     // 现在可以使用导出的TextAnalyzer对象
     document.getElementById('analyzeButton').addEventListener('click', () => {
         const text = document.getElementById('textInput').value;
         const result = TextAnalyzer.analyze(text);
-        
+
         // 显示分析结果
         document.getElementById('wordCount').textContent = result.wordCount;
         document.getElementById('charCount').textContent = result.charCount;
-        
+
         // 显示词频
         const freqList = document.getElementById('wordFrequency');
         freqList.innerHTML = '';
-        
+
         Object.entries(result.wordFrequency)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 10)
@@ -779,7 +779,7 @@ async function initGoWasm() {
 initGoWasm().catch(console.error);
 ```
 
-### 5.3 混合部署架构
+### 1.5.3 混合部署架构
 
 WebAssembly、Docker容器和传统服务的混合部署架构示例：
 
@@ -834,31 +834,31 @@ impl ServiceManager {
     async fn new() -> Self {
         let mut config = wasmtime::Config::new();
         config.async_support(true);
-        
+
         ServiceManager {
             services: Arc::new(RwLock::new(HashMap::new())),
             engine: Engine::new(&config).unwrap(),
         }
     }
-    
+
     // 注册WebAssembly服务
     async fn register_wasm_service(&self, name: &str, wasm_bytes: &[u8]) -> Result<(), String> {
         let module = Module::new(&self.engine, wasm_bytes)
             .map_err(|e| format!("无法编译WebAssembly模块: {}", e))?;
-        
+
         let service = Service {
             name: name.to_string(),
             service_type: ServiceType::WebAssembly,
             endpoint: format!("/api/{}", name),
             wasm_module: Some(Arc::new(module)),
         };
-        
+
         let mut services = self.services.write().await;
         services.insert(name.to_string(), service);
-        
+
         Ok(())
     }
-    
+
     // 注册
 
     // 注册容器服务
@@ -869,13 +869,13 @@ impl ServiceManager {
             endpoint: container_url.to_string(),
             wasm_module: None,
         };
-        
+
         let mut services = self.services.write().await;
         services.insert(name.to_string(), service);
-        
+
         Ok(())
     }
-    
+
     // 注册原生服务
     async fn register_native_service(&self, name: &str, endpoint: &str) -> Result<(), String> {
         let service = Service {
@@ -884,68 +884,68 @@ impl ServiceManager {
             endpoint: endpoint.to_string(),
             wasm_module: None,
         };
-        
+
         let mut services = self.services.write().await;
         services.insert(name.to_string(), service);
-        
+
         Ok(())
     }
-    
+
     // 调用WebAssembly服务
     async fn call_wasm_service(&self, name: &str, data: &str, options: &HashMap<String, String>) -> Result<String, String> {
         let services = self.services.read().await;
-        
+
         let service = services.get(name)
             .ok_or_else(|| format!("服务 {} 不存在", name))?;
-        
+
         if let Some(module) = &service.wasm_module {
             let mut store = Store::new(&self.engine, ());
             let mut linker = Linker::new(&self.engine);
-            
+
             // 创建WASI环境
             wasmtime_wasi::add_to_linker(&mut linker, |s| s)?;
-            
+
             // 注册自定义函数
             linker.func_wrap("env", "log", |msg: String| {
                 println!("WASM日志: {}", msg);
             })?;
-            
+
             // 实例化模块
             let instance = linker.instantiate_async(&mut store, module).await
                 .map_err(|e| format!("无法实例化WebAssembly模块: {}", e))?;
-            
+
             // 调用处理函数
             let process = instance.get_typed_func::<(&str, &str), &str, _>(&mut store, "process")
                 .map_err(|e| format!("找不到process函数: {}", e))?;
-            
+
             // 序列化选项
             let options_str = serde_json::to_string(options)
                 .map_err(|e| format!("无法序列化选项: {}", e))?;
-            
+
             // 执行WebAssembly函数
             let result = process.call_async(&mut store, (data, &options_str)).await
                 .map_err(|e| format!("WebAssembly执行错误: {}", e))?;
-            
+
             Ok(result.to_string())
         } else {
             Err(format!("服务 {} 不是WebAssembly服务", name))
         }
     }
-    
+
     // 调用容器服务
     async fn call_container_service(&self, name: &str, data: &str, options: &HashMap<String, String>) -> Result<String, String> {
         let services = self.services.read().await;
-        
+
         let service = services.get(name)
             .ok_or_else(|| format!("服务 {} 不存在", name))?;
-        
+
         if let ServiceType::Container = service.service_type {
             // 构建请求对象
             let request = ProcessRequest {
                 data: data.to_string(),
                 options: options.clone(),
             };
-            
+
             // 发送HTTP请求到容器服务
             let client = reqwest::Client::new();
             let response = client.post(&service.endpoint)
@@ -953,17 +953,17 @@ impl ServiceManager {
                 .send()
                 .await
                 .map_err(|e| format!("HTTP请求错误: {}", e))?;
-            
+
             // 解析响应
             let result = response.text().await
                 .map_err(|e| format!("读取响应错误: {}", e))?;
-            
+
             Ok(result)
         } else {
             Err(format!("服务 {} 不是容器服务", name))
         }
     }
-    
+
     // 根据请求选择最佳服务类型
     async fn select_optimal_service(&self, request_type: &str, data_size: usize) -> ServiceType {
         // 基于请求类型和数据大小的简单决策逻辑
@@ -983,21 +983,21 @@ impl ServiceManager {
 // 设置Web服务器路由
 async fn setup_routes(service_manager: Arc<ServiceManager>) -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
     let service_manager_filter = warp::any().map(move || service_manager.clone());
-    
+
     // 处理API请求的路由
     let api = warp::path!("api" / String)
         .and(warp::post())
         .and(warp::body::json())
         .and(service_manager_filter.clone())
         .and_then(handle_api_request);
-    
+
     // 服务注册路由
     let register = warp::path!("register" / String)
         .and(warp::post())
         .and(warp::body::bytes())
         .and(service_manager_filter.clone())
         .and_then(handle_register);
-    
+
     api.or(register)
 }
 
@@ -1008,7 +1008,7 @@ async fn handle_api_request(
     service_manager: Arc<ServiceManager>
 ) -> Result<impl Reply, Rejection> {
     let start_time = std::time::Instant::now();
-    
+
     // 读取服务信息
     let services = service_manager.services.read().await;
     let service = match services.get(&service_name) {
@@ -1020,7 +1020,7 @@ async fn handle_api_request(
         })),
     };
     drop(services);
-    
+
     // 根据服务类型调用相应的处理函数
     let result = match service.service_type {
         ServiceType::WebAssembly => {
@@ -1034,17 +1034,17 @@ async fn handle_api_request(
             Ok(format!("原生处理: {}", request.data))
         }
     };
-    
+
     // 计算处理时间
     let processing_time = start_time.elapsed().as_millis() as u64;
-    
+
     // 构建响应
     let response = ProcessResponse {
         result: result.unwrap_or_else(|e| e),
         processing_time_ms: processing_time,
         processor_type: format!("{:?}", service.service_type),
     };
-    
+
     Ok(warp::reply::json(&response))
 }
 
@@ -1069,34 +1069,34 @@ async fn handle_register(
 // Docker容器集成
 mod docker {
     use std::process::Command;
-    
+
     pub struct ContainerConfig {
         pub image: String,
         pub name: String,
         pub port_mapping: String,
         pub environment: Vec<String>,
     }
-    
+
     pub fn start_container(config: &ContainerConfig) -> Result<String, String> {
         let mut cmd = Command::new("docker");
-        
+
         cmd.arg("run")
            .arg("-d")  // 后台运行
            .arg("--name").arg(&config.name)
            .arg("-p").arg(&config.port_mapping);
-        
+
         // 添加环境变量
         for env in &config.environment {
             cmd.arg("-e").arg(env);
         }
-        
+
         // 指定镜像
         cmd.arg(&config.image);
-        
+
         // 执行命令
         let output = cmd.output()
             .map_err(|e| format!("执行Docker命令失败: {}", e))?;
-        
+
         if output.status.success() {
             let container_id = String::from_utf8_lossy(&output.stdout).trim().to_string();
             Ok(container_id)
@@ -1105,14 +1105,14 @@ mod docker {
             Err(format!("启动容器失败: {}", error))
         }
     }
-    
+
     pub fn stop_container(name: &str) -> Result<(), String> {
         let output = Command::new("docker")
             .arg("stop")
             .arg(name)
             .output()
             .map_err(|e| format!("停止容器命令失败: {}", e))?;
-        
+
         if output.status.success() {
             Ok(())
         } else {
@@ -1126,10 +1126,10 @@ mod docker {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("启动混合微服务架构...");
-    
+
     // 创建服务管理器
     let service_manager = Arc::new(ServiceManager::new().await);
-    
+
     // 启动实例计算容器
     let container_config = docker::ContainerConfig {
         image: "image-processor:latest".to_string(),
@@ -1140,11 +1140,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             "MAX_WORKERS=4".to_string(),
         ],
     };
-    
+
     match docker::start_container(&container_config) {
         Ok(id) => {
             println!("容器服务启动成功，ID: {}", id);
-            
+
             // 注册容器服务
             service_manager.register_container_service(
                 "image-processor",
@@ -1153,7 +1153,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         },
         Err(e) => {
             println!("启动容器失败: {}，将使用本地服务替代", e);
-            
+
             // 注册本地服务作为备份
             service_manager.register_native_service(
                 "image-processor",
@@ -1161,25 +1161,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             ).await?;
         }
     }
-    
+
     // 从文件加载并注册WebAssembly服务
     let text_analyzer_wasm = std::fs::read("./text_analyzer.wasm")?;
     service_manager.register_wasm_service("text-analyzer", &text_analyzer_wasm).await?;
-    
+
     // 设置HTTP路由
     let routes = setup_routes(service_manager).await;
-    
+
     // 启动服务器
     println!("服务器启动在 http://localhost:3030");
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
-    
+
     Ok(())
 }
 ```
 
-## 6. 未来发展的形式化模型
+## 1.6 未来发展的形式化模型
 
-### 6.1 组件模型形式化
+### 1.6.1 组件模型形式化
 
 WebAssembly组件模型的形式化定义：
 
@@ -1225,7 +1225,7 @@ interface text-analysis {
         sentence-count: u32,
         avg-word-length: float32,
     }
-    
+
     // 分析文本
     analyze-text: func(text: string) -> statistics
 
@@ -1253,7 +1253,7 @@ impl exports::text_analysis::Guest for TextAnalyzer {
         let sentence_count = text.split(|c| c == '.' || c == '!' || c == '?')
             .filter(|s| !s.trim().is_empty())
             .count() as u32;
-            
+
         let avg_word_length = if word_count > 0 {
             text.split_whitespace()
                 .map(|w| w.chars().count())
@@ -1261,7 +1261,7 @@ impl exports::text_analysis::Guest for TextAnalyzer {
         } else {
             0.0
         };
-        
+
         exports::text_analysis::Statistics {
             word_count,
             char_count,
@@ -1269,12 +1269,12 @@ impl exports::text_analysis::Guest for TextAnalyzer {
             avg_word_length,
         }
     }
-    
+
     fn find_patterns(text: String, pattern: String) -> Vec<u32> {
         let mut results = Vec::new();
         let text_lower = text.to_lowercase();
         let pattern_lower = pattern.to_lowercase();
-        
+
         // 简单字符串匹配
         let mut index = 0;
         while let Some(pos) = text_lower[index..].find(&pattern_lower) {
@@ -1282,13 +1282,13 @@ impl exports::text_analysis::Guest for TextAnalyzer {
             results.push(absolute_pos as u32);
             index = absolute_pos + 1;
         }
-        
+
         results
     }
 }
 ```
 
-### 6.2 分布式执行理论
+### 1.6.2 分布式执行理论
 
 WebAssembly分布式执行的形式化理论模型：
 
@@ -1351,10 +1351,10 @@ impl Node {
     // 创建新节点
     async fn new(id: &str) -> (Self, mpsc::Sender<Message>) {
         let (tx, rx) = mpsc::channel(100);
-        
+
         let mut config = wasmtime::Config::new();
         config.async_support(true);
-        
+
         let node = Node {
             id: id.to_string(),
             engine: Engine::new(&config).unwrap(),
@@ -1362,26 +1362,26 @@ impl Node {
             tx_channels: HashMap::new(),
             rx_channel: rx,
         };
-        
+
         (node, tx)
     }
-    
+
     // 加载WebAssembly模块
     async fn load_module(&mut self, name: &str, wasm_bytes: &[u8]) -> Result<(), String> {
         let module = Module::new(&self.engine, wasm_bytes)
             .map_err(|e| format!("无法编译模块: {}", e))?;
-            
+
         self.modules.insert(name.to_string(), module);
         Ok(())
     }
-    
+
     // 连接到另一个节点
     fn connect_to(&mut self, node_id: &str, tx: mpsc::Sender<Message>) {
         self.tx_channels.insert(node_id.to_string(), tx);
     }
-    
+
     // 远程调用另一个节点上的函数
-    async fn call_remote(&self, target_node: &str, module: &str, function: &str, 
+    async fn call_remote(&self, target_node: &str, module: &str, function: &str,
                         args: Vec<wasmtime::Val>) -> Result<Vec<wasmtime::Val>, String> {
         // 创建请求
         let request = Message::ModuleCall {
@@ -1390,11 +1390,11 @@ impl Node {
             args,
             reply_to: self.id.clone(),
         };
-        
+
         // 发送请求
         if let Some(tx) = self.tx_channels.get(target_node) {
             tx.send(request).await.map_err(|e| format!("发送失败: {}", e))?;
-            
+
             // 在实际实现中，这里应该等待响应
             // 简化起见，返回空结果
             Ok(vec![])
@@ -1402,7 +1402,7 @@ impl Node {
             Err(format!("未连接到节点: {}", target_node))
         }
     }
-    
+
     // 处理传入消息
     async fn process_messages(&mut self) {
         while let Some(msg) = self.rx_channel.recv().await {
@@ -1410,7 +1410,7 @@ impl Node {
                 Message::ModuleCall { module, function, args, reply_to } => {
                     // 执行本地模块调用
                     let result = self.call_local(&module, &function, args).await;
-                    
+
                     // 发送响应
                     if let Some(tx) = self.tx_channels.get(&reply_to) {
                         let response = Message::Response {
@@ -1427,32 +1427,32 @@ impl Node {
             }
         }
     }
-    
+
     // 执行本地WebAssembly函数
-    async fn call_local(&self, module_name: &str, function_name: &str, 
+    async fn call_local(&self, module_name: &str, function_name: &str,
                       args: Vec<wasmtime::Val>) -> Result<Vec<wasmtime::Val>, String> {
         if let Some(module) = self.modules.get(module_name) {
             let mut store = Store::new(&self.engine, ());
             let mut linker = Linker::new(&self.engine);
-            
+
             // 添加WASI支持
             wasmtime_wasi::add_to_linker(&mut linker, |s| s)?;
-            
+
             // 实例化模块
             let instance = linker.instantiate_async(&mut store, module).await
                 .map_err(|e| format!("实例化失败: {}", e))?;
-            
+
             // 获取函数
             let func = instance.get_func(&mut store, function_name)
                 .ok_or_else(|| format!("函数不存在: {}", function_name))?;
-            
+
             // 准备结果缓冲区
             let mut results = vec![wasmtime::Val::I32(0); func.ty(&store).results().len()];
-            
+
             // 调用函数
             func.call_async(&mut store, &args, &mut results).await
                 .map_err(|e| format!("调用失败: {}", e))?;
-            
+
             Ok(results)
         } else {
             Err(format!("模块不存在: {}", module_name))
@@ -1461,7 +1461,7 @@ impl Node {
 }
 ```
 
-### 6.3 形式化验证前景
+### 1.6.3 形式化验证前景
 
 WebAssembly形式化验证的未来发展方向：
 
@@ -1498,7 +1498,7 @@ fn memory_safety(module: WasmModule) -> bool {
         if let Instruction::MemoryAccess { addr, size } = instr {
             // 符号执行addr表达式
             let addr_range = symbolic_eval(addr);
-            
+
             // 验证访问范围
             if !addr_range.upper_bound < module.memory_size() {
                 return false;
@@ -1512,28 +1512,28 @@ fn memory_safety(module: WasmModule) -> bool {
 fn termination(function: WasmFunction) -> bool {
     // 构建控制流图
     let cfg = build_cfg(function);
-    
+
     // 查找循环
     let loops = find_loops(cfg);
-    
+
     // 验证所有循环都有合适的终止条件
     for loop_node in loops {
         if !has_termination_condition(loop_node) {
             return false;
         }
     }
-    
+
     true
 }
 
 // 验证示例
 fn main() {
     let wasm_module = load_wasm("safety_critical.wasm");
-    
+
     // 验证内存安全
     let memory_safe = verify(memory_safety, wasm_module);
     println!("内存安全: {}", memory_safe);
-    
+
     // 验证终止性
     for function in wasm_module.functions() {
         let terminates = verify(termination, function);
@@ -1542,7 +1542,7 @@ fn main() {
 }
 ```
 
-## 7. 思维导图
+## 1.7 思维导图
 
 ```mermaid
 mindmap

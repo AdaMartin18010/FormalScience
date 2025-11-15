@@ -1,53 +1,53 @@
 
-# 从软件工程视角看数据流：设计、模式、算法与架构
+# 1. 从软件工程视角看数据流：设计、模式、算法与架构
 
 ## 目录
 
-- [从软件工程视角看数据流：设计、模式、算法与架构](#从软件工程视角看数据流设计模式算法与架构)
+- [1. 从软件工程视角看数据流：设计、模式、算法与架构](#1-从软件工程视角看数据流设计模式算法与架构)
   - [目录](#目录)
-  - [1. 引言：软件工程中的数据流视角](#1-引言软件工程中的数据流视角)
-  - [2. 程序语言与编程设计视角](#2-程序语言与编程设计视角)
-    - [2.1 数据流表达范式](#21-数据流表达范式)
-    - [2.2 类型系统与数据流安全](#22-类型系统与数据流安全)
-    - [2.3 并发模型与数据流同步](#23-并发模型与数据流同步)
-    - [2.4 函数式编程中的数据流](#24-函数式编程中的数据流)
-    - [2.5 Rust中的数据流控制](#25-rust中的数据流控制)
-  - [3. 算法设计视角](#3-算法设计视角)
-    - [3.1 数据流算法范式](#31-数据流算法范式)
-    - [3.2 流式算法](#32-流式算法)
-    - [3.3 数据流上的并行算法](#33-数据流上的并行算法)
-    - [3.4 自适应数据流算法](#34-自适应数据流算法)
-    - [3.5 数据流算法的复杂度分析](#35-数据流算法的复杂度分析)
-  - [4. 设计模式视角](#4-设计模式视角)
-    - [4.1 数据流相关设计模式分类](#41-数据流相关设计模式分类)
-    - [4.2 生产者-消费者模式及变体](#42-生产者-消费者模式及变体)
-    - [4.3 管道与过滤器模式](#43-管道与过滤器模式)
-    - [4.4 观察者模式与响应式扩展](#44-观察者模式与响应式扩展)
-    - [4.5 背压模式](#45-背压模式)
-  - [5. 架构设计视角](#5-架构设计视角)
-    - [5.1 数据流驱动的架构风格](#51-数据流驱动的架构风格)
-    - [5.2 流处理架构](#52-流处理架构)
-    - [5.3 事件驱动架构](#53-事件驱动架构)
-    - [5.4 反应式架构](#54-反应式架构)
-    - [5.5 数据密集型系统架构](#55-数据密集型系统架构)
-  - [6. 形式化方法的跨视角应用](#6-形式化方法的跨视角应用)
-    - [6.1 各层次形式化方法概览](#61-各层次形式化方法概览)
-    - [6.2 程序语言层的形式化验证](#62-程序语言层的形式化验证)
-    - [6.3 算法正确性的形式化证明](#63-算法正确性的形式化证明)
-    - [6.4 设计模式的形式化表达](#64-设计模式的形式化表达)
-    - [6.5 架构属性的形式化保证](#65-架构属性的形式化保证)
-  - [7. 跨视角关联与集成](#7-跨视角关联与集成)
-    - [7.1 数据流抽象的层次映射](#71-数据流抽象的层次映射)
-    - [7.2 语言-算法-模式-架构转换](#72-语言-算法-模式-架构转换)
-    - [7.3 端到端数据流设计框架](#73-端到端数据流设计框架)
-    - [7.4 工程实践中的视角选择](#74-工程实践中的视角选择)
-  - [8. 案例研究](#8-案例研究)
-    - [8.1 实时数据分析系统](#81-实时数据分析系统)
-    - [8.2 高吞吐消息处理服务](#82-高吞吐消息处理服务)
-    - [8.3 数据流可视化交互应用](#83-数据流可视化交互应用)
-  - [9. 思维导图](#9-思维导图)
+  - [1.1 引言：软件工程中的数据流视角](#11-引言软件工程中的数据流视角)
+  - [1.2 程序语言与编程设计视角](#12-程序语言与编程设计视角)
+    - [1.2.1 数据流表达范式](#121-数据流表达范式)
+    - [1.2.2 类型系统与数据流安全](#122-类型系统与数据流安全)
+    - [1.2.3 并发模型与数据流同步](#123-并发模型与数据流同步)
+    - [1.2.4 函数式编程中的数据流](#124-函数式编程中的数据流)
+    - [1.2.5 Rust中的数据流控制](#125-rust中的数据流控制)
+  - [1.3 算法设计视角](#13-算法设计视角)
+    - [1.3.1 数据流算法范式](#131-数据流算法范式)
+    - [1.3.2 流式算法](#132-流式算法)
+    - [1.3.3 数据流上的并行算法](#133-数据流上的并行算法)
+    - [1.3.4 自适应数据流算法](#134-自适应数据流算法)
+    - [1.3.5 数据流算法的复杂度分析](#135-数据流算法的复杂度分析)
+  - [1.4 设计模式视角](#14-设计模式视角)
+    - [1.4.1 数据流相关设计模式分类](#141-数据流相关设计模式分类)
+    - [1.4.2 生产者-消费者模式及变体](#142-生产者-消费者模式及变体)
+    - [1.4.3 管道与过滤器模式](#143-管道与过滤器模式)
+    - [1.4.4 观察者模式与响应式扩展](#144-观察者模式与响应式扩展)
+    - [1.4.5 背压模式](#145-背压模式)
+  - [1.5 架构设计视角](#15-架构设计视角)
+    - [1.5.1 数据流驱动的架构风格](#151-数据流驱动的架构风格)
+    - [1.5.2 流处理架构](#152-流处理架构)
+    - [1.5.3 事件驱动架构](#153-事件驱动架构)
+    - [1.5.4 反应式架构](#154-反应式架构)
+    - [1.5.5 数据密集型系统架构](#155-数据密集型系统架构)
+  - [1.6 形式化方法的跨视角应用](#16-形式化方法的跨视角应用)
+    - [1.6.1 各层次形式化方法概览](#161-各层次形式化方法概览)
+    - [1.6.2 程序语言层的形式化验证](#162-程序语言层的形式化验证)
+    - [1.6.3 算法正确性的形式化证明](#163-算法正确性的形式化证明)
+    - [1.6.4 设计模式的形式化表达](#164-设计模式的形式化表达)
+    - [1.6.5 架构属性的形式化保证](#165-架构属性的形式化保证)
+  - [1.7 跨视角关联与集成](#17-跨视角关联与集成)
+    - [1.7.1 数据流抽象的层次映射](#171-数据流抽象的层次映射)
+    - [1.7.2 语言-算法-模式-架构转换](#172-语言-算法-模式-架构转换)
+    - [1.7.3 端到端数据流设计框架](#173-端到端数据流设计框架)
+    - [1.7.4 工程实践中的视角选择](#174-工程实践中的视角选择)
+  - [1.8 案例研究](#18-案例研究)
+    - [1.8.1 实时数据分析系统](#181-实时数据分析系统)
+    - [1.8.2 高吞吐消息处理服务](#182-高吞吐消息处理服务)
+    - [1.8.3 数据流可视化交互应用](#183-数据流可视化交互应用)
+  - [1.9 思维导图](#19-思维导图)
 
-## 1. 引言：软件工程中的数据流视角
+## 1.1 引言：软件工程中的数据流视角
 
 数据流是软件系统中数据移动、传输和转换的抽象表示。
 从软件工程角度看，数据流不仅是一个理论概念，更是设计、实现和优化系统的核心视角。
@@ -64,9 +64,9 @@
 这些视角共同构成了数据流在软件工程中的完整图景，从微观的代码构造到宏观的系统架构。
 本文将从这四个视角出发，全面分析和探讨数据流在软件工程中的应用，并使用形式化方法加以规范和证明。
 
-## 2. 程序语言与编程设计视角
+## 1.2 程序语言与编程设计视角
 
-### 2.1 数据流表达范式
+### 1.2.1 数据流表达范式
 
 不同编程范式对数据流的表达方式各不相同：
 
@@ -110,7 +110,7 @@
 - 函数式：通过函数组合构建
 - 响应式：通过数据依赖动态构建
 
-### 2.2 类型系统与数据流安全
+### 1.2.2 类型系统与数据流安全
 
 类型系统是保障数据流安全和正确性的重要机制。
 
@@ -144,20 +144,20 @@
 
 ```rust
 // Rust类型系统保障数据流安全
-fn process_data<T: Send + Sync>(data: Vec<T>) -> Vec<T> 
+fn process_data<T: Send + Sync>(data: Vec<T>) -> Vec<T>
 where T: Clone {
     // Send保证数据可安全在线程间传输
     // Sync保证数据可以被多线程共享访问
     // Clone保证数据可以被复制
-    
+
     let mut result = Vec::with_capacity(data.len());
-    
+
     // 所有权系统确保数据仅被处理一次，除非显式克隆
     for item in data {
         let processed = transform(item);
         result.push(processed);
     }
-    
+
     // 所有权系统保证在此函数返回后，原始数据不再可访问
     result
 }
@@ -168,7 +168,7 @@ fn transform<T: Clone>(item: T) -> T {
 }
 ```
 
-### 2.3 并发模型与数据流同步
+### 1.2.3 并发模型与数据流同步
 
 并发模型定义了数据如何在并行执行的组件间安全流动。
 
@@ -245,7 +245,7 @@ fn main() {
 - 通道保证线程间安全的数据流动，无需手动同步
 - 接收者会自动处理发送端关闭的情况
 
-### 2.4 函数式编程中的数据流
+### 1.2.4 函数式编程中的数据流
 
 函数式编程通过纯函数组合和高阶函数自然地表达数据流。
 
@@ -281,7 +281,7 @@ fn main() {
 ```rust
 fn main() {
     let data = vec![1, 2, 3, 4, 5];
-    
+
     // 函数式数据流变换
     let result: Vec<_> = data.into_iter()
         // 筛选偶数
@@ -290,16 +290,16 @@ fn main() {
         .map(|x| x * x)
         // 收集结果
         .collect();
-    
+
     println!("Result: {:?}", result); // [4, 16]
-    
+
     // 更复杂的数据流转换
     let sum_of_transformed = (1..=10)
         .filter(|x| x % 2 == 1)     // 奇数：1,3,5,7,9
         .map(|x| x * x)             // 平方：1,9,25,49,81
         .filter(|x| *x > 20)        // 大于20：25,49,81
         .fold(0, |acc, x| acc + x); // 求和：155
-    
+
     println!("Sum of transformed: {}", sum_of_transformed);
 }
 ```
@@ -310,7 +310,7 @@ fn main() {
 - 函数类型A → B表示从类型A到类型B的变换
 - 函子（Functor）和单子（Monad）提供对效应（如错误处理）的抽象
 
-### 2.5 Rust中的数据流控制
+### 1.2.5 Rust中的数据流控制
 
 Rust语言通过其所有权系统和类型系统提供了独特的数据流控制机制。
 
@@ -342,7 +342,7 @@ fn process_data(data: &mut Vec<i32>) -> Result<Vec<f64>, String> {
     if data.is_empty() {
         return Err("Empty data vector".to_string());
     }
-    
+
     // 对数据进行转换
     let result: Vec<f64> = data.iter()
         .map(|&x| {
@@ -353,26 +353,26 @@ fn process_data(data: &mut Vec<i32>) -> Result<Vec<f64>, String> {
             Ok(f64::from(x) * 1.5)
         })
         .collect::<Result<Vec<f64>, String>>()?; // 错误传播
-    
+
     // 修改原始数据（通过可变借用）
     for item in data.iter_mut() {
         *item += 1;
     }
-    
+
     // 返回新的数据集，所有权转移给调用者
     Ok(result)
 }
 
 fn main() -> Result<(), String> {
     let mut original = vec![1, 2, 3, 4, 5];
-    
+
     // 调用函数，传递可变借用
     let processed = process_data(&mut original)?;
-    
+
     // 原始数据和处理后的数据都可访问
     println!("Original (modified): {:?}", original);  // [2, 3, 4, 5, 6]
     println!("Processed: {:?}", processed);           // [1.5, 3.0, 4.5, 6.0, 7.5]
-    
+
     Ok(())
 }
 ```
@@ -385,9 +385,9 @@ Rust的所有权系统可形式化为：
 - 借用规则：在借用期间，要么有多个不可变引用，要么最多一个可变引用
 - 生命周期：引用r的生命周期必须小于或等于被引用对象v的生命周期: lifetime(r) ≤ lifetime(v)
 
-## 3. 算法设计视角
+## 1.3 算法设计视角
 
-### 3.1 数据流算法范式
+### 1.3.1 数据流算法范式
 
 数据流算法是专门设计用于处理连续到达的数据流的计算方法。
 
@@ -418,7 +418,7 @@ Rust的所有权系统可形式化为：
 - 算法A使用内存M(n) << n，处理时间为T(n)处理n个元素
 - 近似保证：结果R满足|R - R*| ≤ ε·R*，其中R*是精确结果，ε是误差率
 
-### 3.2 流式算法
+### 1.3.2 流式算法
 
 流式算法旨在高效处理大规模数据流，特别关注空间和时间复杂度。
 
@@ -462,7 +462,7 @@ impl StreamingMedian {
             upper: std::collections::BinaryHeap::new(),
         }
     }
-    
+
     // 向数据流添加一个元素，时间复杂度O(log n)
     fn add(&mut self, value: i32) {
         // 根据当前堆的情况决定新元素放在哪个堆
@@ -473,12 +473,12 @@ impl StreamingMedian {
             // 放入upper堆（最小堆，用负值表示）
             self.upper.push(-value);
         }
-        
+
         // 重新平衡两个堆，确保size(lower) >= size(upper)
         // 且 size(lower) - size(upper) <= 1
         self.rebalance();
     }
-    
+
     fn rebalance(&mut self) {
         if self.lower.len() > self.upper.len() + 1 {
             // lower堆太大，移动一个元素到upper堆
@@ -492,13 +492,13 @@ impl StreamingMedian {
             }
         }
     }
-    
+
     // 获取当前中位数，时间复杂度O(1)
     fn get_median(&self) -> Option<f64> {
         if self.lower.is_empty() && self.upper.is_empty() {
             return None;
         }
-        
+
         if self.lower.len() > self.upper.len() {
             // 奇数个元素，中位数是lower堆顶
             Some(*self.lower.peek().unwrap() as f64)
@@ -513,7 +513,7 @@ impl StreamingMedian {
 
 fn main() {
     let mut median_finder = StreamingMedian::new();
-    
+
     // 添加数据流元素
     for value in [5, 15, 1, 3, 2, 8, 7, 9, 10] {
         median_finder.add(value);
@@ -530,7 +530,7 @@ fn main() {
 
 对于大规模数据，可以使用随机化方法如Cormode和Muthukrishnan的Count-Min Sketch来实现近似中位数计算，降低空间复杂度至O(log n)。
 
-### 3.3 数据流上的并行算法
+### 1.3.3 数据流上的并行算法
 
 数据流的特性使其天然适合并行处理，并行算法进一步提高了处理效率。
 
@@ -563,7 +563,7 @@ use std::time::Instant;
 fn main() {
     // 创建大数据流
     let data: Vec<i32> = (0..10_000_000).collect();
-    
+
     // 并行处理
     let start = Instant::now();
     let sum_parallel: i64 = data.par_iter()
@@ -574,7 +574,7 @@ fn main() {
         })
         .sum();
     let parallel_time = start.elapsed();
-    
+
     // 串行处理（用于比较）
     let start = Instant::now();
     let sum_serial: i64 = data.iter()
@@ -585,10 +585,10 @@ fn main() {
         })
         .sum();
     let serial_time = start.elapsed();
-    
+
     // 验证结果一致性
     assert_eq!(sum_parallel, sum_serial);
-    
+
     println!("Serial time: {:?}", serial_time);
     println!("Parallel time: {:?}", parallel_time);
     println!("Speedup: {:.2}x", serial_time.as_secs_f64() / parallel_time.as_secs_f64());
@@ -603,7 +603,7 @@ fn main() {
 - 使用n个处理单元的理论加速比S(n) = 1/(s + p/n)
 - 当n→∞时，最大加速比S(∞) = 1/s
 
-### 3.4 自适应数据流算法
+### 1.3.4 自适应数据流算法
 
 自适应算法能根据数据流特性动态调整其处理策略，更适合处理变化的数据流。
 
@@ -648,37 +648,37 @@ impl AdaptiveWindowProcessor {
             variability_threshold: threshold,
         }
     }
-    
+
     // 处理新数据点
     fn process(&mut self, value: f64) -> f64 {
         // 添加到窗口
         self.window.push_back(value);
-        
+
         // 如果窗口过大，移除旧数据
         if self.window.len() > self.max_window_size {
             self.window.pop_front();
         }
-        
+
         // 计算当前窗口统计量
         let mean = self.window.iter().sum::<f64>() / self.window.len() as f64;
         let variance = self.window.iter()
             .map(|x| (x - mean).powi(2))
             .sum::<f64>() / self.window.len() as f64;
-        
+
         // 基于变异性调整窗口大小
         self.adapt_window_size(variance);
-        
+
         // 返回当前窗口平均值
         mean
     }
-    
+
     // 根据数据变异性调整窗口大小
     fn adapt_window_size(&mut self, variance: f64) {
         if variance > self.variability_threshold {
             // 高变异性，减小窗口以快速响应变化
             let target_size = (self.window.len() * 3) / 4;
             let new_size = target_size.max(self.min_window_size);
-            
+
             // 移除多余的旧数据
             while self.window.len() > new_size {
                 self.window.pop_front();
@@ -688,7 +688,7 @@ impl AdaptiveWindowProcessor {
             // 窗口会自然增长，直到达到max_window_size
         }
     }
-    
+
     // 获取当前窗口大小
     fn window_size(&self) -> usize {
         self.window.len()
@@ -702,26 +702,26 @@ fn main() {
         100,   // 最大窗口
         5.0    // 变异性阈值
     );
-    
+
     // 模拟数据流
     // 前200个数据点相对稳定
     for i in 0..200 {
         let value = (i as f64 / 20.0).sin() + (rand::random::<f64>() - 0.5);
         let result = processor.process(value);
-        
+
         if i % 20 == 0 {
-            println!("i={}, value={:.2}, result={:.2}, window_size={}", 
+            println!("i={}, value={:.2}, result={:.2}, window_size={}",
                      i, value, result, processor.window_size());
         }
     }
-    
+
     // 后100个数据点变异性更大
     for i in 0..100 {
         let value = (i as f64 / 5.0).sin() * 3.0 + (rand::random::<f64>() - 0.5) * 2.0;
         let result = processor.process(value);
-        
+
         if i % 20 == 0 {
-            println!("i={}, value={:.2}, result={:.2}, window_size={}", 
+            println!("i={}, value={:.2}, result={:.2}, window_size={}",
                      i+200, value, result, processor.window_size());
         }
     }
@@ -734,7 +734,7 @@ fn main() {
 - 空间复杂度：O(max_window_size)
 - 自适应特性：窗口大小根据数据变异性动态调整
 
-### 3.5 数据流算法的复杂度分析
+### 1.3.5 数据流算法的复杂度分析
 
 数据流算法有特殊的复杂度分析框架，考虑内存、吞吐量和延迟等指标。
 
@@ -799,13 +799,13 @@ impl CountMinSketch {
         // 深度d = ln(1/delta) (向上取整)
         let width = (2.0 / epsilon).ceil() as usize;
         let depth = (1.0 / delta.ln()).ceil() as usize;
-        
+
         // 初始化计数器数组
         let counters = vec![vec![0; width]; depth];
-        
+
         // 生成哈希种子
         let hash_seeds = (0..depth).map(|i| i as u64 + 1).collect();
-        
+
         Self {
             depth,
             width,
@@ -813,7 +813,7 @@ impl CountMinSketch {
             hash_seeds,
         }
     }
-    
+
     /// 更新元素频率
     fn update<T: Hash>(&mut self, item: &T, count: u32) {
         for i in 0..self.depth {
@@ -821,19 +821,19 @@ impl CountMinSketch {
             self.counters[i][hash_index as usize] += count;
         }
     }
-    
+
     /// 估计元素频率
     fn estimate<T: Hash>(&self, item: &T) -> u32 {
         let mut min_count = u32::MAX;
-        
+
         for i in 0..self.depth {
             let hash_index = self.hash_item(item, self.hash_seeds[i]) % self.width as u64;
             min_count = min_count.min(self.counters[i][hash_index as usize]);
         }
-        
+
         min_count
     }
-    
+
     /// 使用特定种子对元素哈希
     fn hash_item<T: Hash>(&self, item: &T, seed: u64) -> u64 {
         let mut hasher = DefaultHasher::new();
@@ -841,7 +841,7 @@ impl CountMinSketch {
         item.hash(&mut hasher);
         hasher.finish()
     }
-    
+
     /// 获取当前使用的内存大小(字节)
     fn memory_usage(&self) -> usize {
         // 计数器数组大小
@@ -850,7 +850,7 @@ impl CountMinSketch {
         let seeds_size = self.depth * std::mem::size_of::<u64>();
         // 结构体自身大小
         let struct_size = std::mem::size_of::<Self>();
-        
+
         counters_size + seeds_size + struct_size
     }
 }
@@ -858,19 +858,19 @@ impl CountMinSketch {
 fn main() {
     // 创建Count-Min Sketch，设置误差率0.1，失败概率0.01
     let mut cms = CountMinSketch::new(0.1, 0.01);
-    
+
     // 更新元素频率
     cms.update(&"apple", 3);
     cms.update(&"banana", 5);
     cms.update(&"apple", 2);
     cms.update(&"cherry", 1);
-    
+
     // 估计频率
     println!("Estimated count for 'apple': {}", cms.estimate(&"apple"));
     println!("Estimated count for 'banana': {}", cms.estimate(&"banana"));
     println!("Estimated count for 'cherry': {}", cms.estimate(&"cherry"));
     println!("Estimated count for 'date': {}", cms.estimate(&"date"));
-    
+
     // 内存使用
     println!("Memory usage: {} bytes", cms.memory_usage());
     println!("Width (counters per hash): {}", cms.width);
@@ -897,9 +897,9 @@ fn main() {
    - 成功概率至少为1-δ
    - 即有至少1-δ的概率，所有估计满足误差界限
 
-## 4. 设计模式视角
+## 1.4 设计模式视角
 
-### 4.1 数据流相关设计模式分类
+### 1.4.1 数据流相关设计模式分类
 
 设计模式提供了处理数据流的经验性、可复用设计结构。数据流相关模式按功能可分为几类：
 
@@ -934,7 +934,7 @@ fn main() {
 - 数据流路径：F ⊆ R × R
 - 行为规约：B, 定义角色的期望行为
 
-### 4.2 生产者-消费者模式及变体
+### 1.4.2 生产者-消费者模式及变体
 
 生产者-消费者是处理数据流的基础模式，有多种变体适应不同场景。
 
@@ -979,84 +979,84 @@ struct Task {
 fn main() {
     // 创建通道
     let (tx, rx) = mpsc::channel();
-    
+
     // 共享接收端
     let rx = std::sync::Arc::new(std::sync::Mutex::new(rx));
-    
+
     // 创建多个生产者
     for producer_id in 1..=3 {
         let tx_clone = tx.clone();
         thread::spawn(move || {
             let mut rng = rand::thread_rng();
-            
+
             // 每个生产者生成5个任务
             for i in 1..=5 {
                 let task = Task {
                     id: producer_id * 100 + i,
                     data: format!("Task data from producer {}", producer_id),
                 };
-                
+
                 println!("Producer {} sending task {}", producer_id, task.id);
                 tx_clone.send(task).unwrap();
-                
+
                 // 随机延迟模拟不同生产速率
                 thread::sleep(Duration::from_millis(rng.gen_range(50..200)));
             }
             println!("Producer {} completed", producer_id);
         });
     }
-    
+
     // 主线程不需要发送
     drop(tx);
-    
+
     // 创建多个消费者
     let mut consumer_handles = vec![];
-    
+
     for consumer_id in 1..=2 {
         let rx_clone = rx.clone();
         let handle = thread::spawn(move || {
             let mut tasks_processed = 0;
             let mut rng = rand::thread_rng();
-            
+
             loop {
                 // 获取共享接收端的锁
                 let rx_guard = rx_clone.lock().unwrap();
-                
+
                 // 尝试接收任务
                 match rx_guard.recv() {
                     Ok(task) => {
                         // 释放锁，允许其他消费者接收
                         drop(rx_guard);
-                        
+
                         println!("Consumer {} processing task {}", consumer_id, task.id);
-                        
+
                         // 模拟任务处理
                         thread::sleep(Duration::from_millis(rng.gen_range(100..300)));
-                        
+
                         println!("Consumer {} completed task {}", consumer_id, task.id);
                         tasks_processed += 1;
                     }
                     Err(_) => {
                         // 通道已关闭，没有更多任务
-                        println!("Consumer {} shutting down, processed {} tasks", 
+                        println!("Consumer {} shutting down, processed {} tasks",
                                  consumer_id, tasks_processed);
                         break;
                     }
                 }
             }
-            
+
             tasks_processed
         });
-        
+
         consumer_handles.push(handle);
     }
-    
+
     // 等待所有消费者完成
     let mut total_processed = 0;
     for handle in consumer_handles {
         total_processed += handle.join().unwrap();
     }
-    
+
     println!("All done! Total tasks processed: {}", total_processed);
 }
 ```
@@ -1070,7 +1070,7 @@ fn main() {
 - 缓冲区：容量k
 - 系统稳定条件：长期来看，λₚ ≤ μc
 
-### 4.3 管道与过滤器模式
+### 1.4.3 管道与过滤器模式
 
 管道与过滤器是一种强大的数据流处理模式，将复杂处理分解为独立、可重用的阶段。
 
@@ -1140,7 +1140,7 @@ impl Filter<i32, i32> for SumFilter {
         self.sum += input;
         None  // 不输出中间结果
     }
-    
+
     fn finish(&mut self) -> Vec<i32> {
         vec![self.sum]  // 完成时返回累加和
     }
@@ -1164,7 +1164,7 @@ impl<T> BatchFilter<T> {
 impl<T: Clone> Filter<T, Vec<T>> for BatchFilter<T> {
     fn process(&mut self, input: T) -> Option<Vec<T>> {
         self.batch.push(input);
-        
+
         if self.batch.len() >= self.batch_size {
             let result = self.batch.clone();
             self.batch.clear();
@@ -1173,7 +1173,7 @@ impl<T: Clone> Filter<T, Vec<T>> for BatchFilter<T> {
             None
         }
     }
-    
+
     fn finish(&mut self) -> Vec<Vec<T>> {
         if self.batch.is_empty() {
             Vec::new()
@@ -1194,12 +1194,12 @@ impl<T> Pipeline<T> {
     fn new() -> Self {
         Self { filters: Vec::new() }
     }
-    
+
     fn add_filter(&mut self, filter: impl Filter<T, T> + 'static) -> &mut Self {
         self.filters.push(Box::new(filter));
         self
     }
-    
+
     fn process(&mut self, mut input: T) -> Option<T> {
         for filter in &mut self.filters {
             match filter.process(input) {
@@ -1214,22 +1214,22 @@ impl<T> Pipeline<T> {
 fn main() {
     // 创建数据源
     let data = vec![
-        "1".to_string(), "2".to_string(), "3".to_string(), 
+        "1".to_string(), "2".to_string(), "3".to_string(),
         "4".to_string(), "5".to_string(), "hello".to_string(),
         "6".to_string(), "7".to_string(), "8".to_string(),
     ];
-    
+
     // 创建并配置过滤器
     let mut parse_filter = ParseFilter;
     let mut even_filter = EvenFilter;
     let mut square_filter = SquareFilter;
     let mut batch_filter = BatchFilter::new(2);
     let mut sum_filter = SumFilter::new();
-    
+
     // 处理数据流
     let mut even_squares = Vec::new();
     let mut batches = Vec::new();
-    
+
     for item in data {
         // 解析阶段
         if let Some(number) = parse_filter.process(item) {
@@ -1239,10 +1239,10 @@ fn main() {
                 if let Some(square) = square_filter.process(even) {
                     // 累加计算
                     sum_filter.process(square);
-                    
+
                     // 收集平方值
                     even_squares.push(square);
-                    
+
                     // 批处理
                     if let Some(batch) = batch_filter.process(square) {
                         batches.push(batch);
@@ -1251,14 +1251,14 @@ fn main() {
             }
         }
     }
-    
+
     // 处理剩余数据
     if let Some(last_batch) = batch_filter.finish().into_iter().next() {
         batches.push(last_batch);
     }
-    
+
     let sum = sum_filter.finish()[0];
-    
+
     // 输出结果
     println!("Even numbers squared: {:?}", even_squares);
     println!("Batches: {:?}", batches);
@@ -1275,7 +1275,7 @@ fn main() {
 - 管道连接P = [(fᵢ, fⱼ) | fᵢ的输出连接到fⱼ的输入]
 - 整个管道系统S = (F, P)定义了输入到输出的变换
 
-### 4.4 观察者模式与响应式扩展
+### 1.4.4 观察者模式与响应式扩展
 
 观察者模式及其现代演化——响应式扩展，是处理事件流和响应式数据的核心模式。
 
@@ -1306,7 +1306,7 @@ use std::time::Duration;
 fn main() {
     // 创建一个简单的Observable
     let numbers = observable::from_iter(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    
+
     // 使用响应式操作符处理数据流
     numbers
         // 过滤偶数
@@ -1328,35 +1328,35 @@ fn main() {
         }, || {
             println!("Completed!");
         });
-    
+
     // 更复杂的例子：组合多个流
     let stream1 = observable::from_iter(vec!["Hello", "World"]);
     let stream2 = observable::from_iter(vec!["Reactive", "Programming"]);
-    
+
     // 交替合并两个流
     let merged = stream1.merge(stream2);
-    
+
     merged.subscribe(|value| {
         println!("Merged: {}", value);
     }, |_| {}, || {
         println!("Merge completed!");
     });
-    
+
     // 响应式计算
     let source = Subject::new();
     let subscription = source
         .map(|x: i32| x * 10)
         .filter(|&x| x > 20)
         .subscribe(|x| println!("Calculated: {}", x));
-    
+
     // 发送值到Subject
     source.next(1);  // 被过滤掉
     source.next(3);  // 输出30
     source.next(5);  // 输出50
-    
+
     // 取消订阅
     drop(subscription);
-    
+
     // 之后的发送不会被处理
     source.next(10);
 }
@@ -1371,7 +1371,7 @@ fn main() {
 - 操作符：f: O → O，接受并变换可观察对象
 - 组合操作符：c: O × O → O，组合多个可观察对象
 
-### 4.5 背压模式
+### 1.4.5 背压模式
 
 背压模式是处理生产者-消费者速率不匹配的关键设计模式，特别重要于数据流系统。
 
@@ -1412,7 +1412,7 @@ struct BoundedBuffer<T> {
     capacity: usize,
 }
 
-impl<T> BoundedBuffer<T> 
+impl<T> BoundedBuffer<T>
 where T: Clone {
     fn new(capacity: usize) -> Self {
         Self {
@@ -1420,76 +1420,76 @@ where T: Clone {
             capacity,
         }
     }
-    
+
     // 生产者方法 - 添加项目到缓冲区
     fn produce(&self, item: T) {
         let (lock, not_full, not_empty) = &*self.buffer;
         let mut buffer = lock.lock().unwrap();
-        
+
         // 如果缓冲区已满，等待直到有空间（实现背压）
         while buffer.len() >= self.capacity {
             println!("Buffer full! Producer waiting...");
             buffer = not_full.wait(buffer).unwrap();
         }
-        
+
         // 添加项目
         buffer.push(item);
         println!("Item produced, buffer size: {}/{}", buffer.len(), self.capacity);
-        
+
         // 通知消费者有新数据
         not_empty.notify_one();
     }
-    
+
     // 消费者方法 - 从缓冲区取出项目
     fn consume(&self) -> T {
         let (lock, not_full, not_empty) = &*self.buffer;
         let mut buffer = lock.lock().unwrap();
-        
+
         // 如果缓冲区为空，等待直到有数据
         while buffer.is_empty() {
             println!("Buffer empty! Consumer waiting...");
             buffer = not_empty.wait(buffer).unwrap();
         }
-        
+
         // 取出项目
         let item = buffer.remove(0);
         println!("Item consumed, buffer size: {}/{}", buffer.len(), self.capacity);
-        
+
         // 通知生产者有新空间
         not_full.notify_one();
-        
+
         item
     }
-    
+
     // 创建生产者
     fn producer(&self, items: Vec<T>, rate: Duration) -> thread::JoinHandle<()> {
         let buffer = self.buffer.clone();
-        
+
         thread::spawn(move || {
             for item in items {
                 let (lock, not_full, _) = &*buffer;
                 let buffer_size = lock.lock().unwrap().len();
-                
+
                 // 根据缓冲区占用率调整生产速率（额外的背压机制）
                 let fill_ratio = buffer_size as f32 / capacity as f32;
                 let adjusted_rate = rate.mul_f32(1.0 + fill_ratio * 2.0); // 缓冲区越满，延迟越大
-                
+
                 thread::sleep(adjusted_rate);
                 self.produce(item);
             }
         })
     }
-    
+
     // 创建消费者
     fn consumer(&self, count: usize, process_time: Duration) -> thread::JoinHandle<Vec<T>> {
         let buffer = self.buffer.clone();
-        
+
         thread::spawn(move || {
             let mut results = Vec::with_capacity(count);
             for _ in 0..count {
                 let item = self.consume();
                 results.push(item);
-                
+
                 // 模拟处理时间
                 thread::sleep(process_time);
             }
@@ -1501,20 +1501,20 @@ where T: Clone {
 fn main() {
     // 创建有界缓冲区，容量为3
     let buffer = BoundedBuffer::new(3);
-    
+
     // 生产者数据和消费速率
     let items = (1..=10).collect::<Vec<i32>>();
     let produce_rate = Duration::from_millis(100);  // 快速生产
     let consume_rate = Duration::from_millis(300);  // 慢速消费
-    
+
     // 启动生产者和消费者
     let producer = buffer.producer(items.clone(), produce_rate);
     let consumer = buffer.consumer(items.len(), consume_rate);
-    
+
     // 等待完成
     producer.join().unwrap();
     let consumed = consumer.join().unwrap();
-    
+
     println!("All items processed!");
     println!("Original: {:?}", items);
     println!("Consumed: {:?}", consumed);
@@ -1531,9 +1531,9 @@ fn main() {
 - 背压公式：当队列长度q > T（阈值）时，将λ调整为min(λ, μ)
 - 稳定条件：长期平均λ ≤ μ
 
-## 5. 架构设计视角
+## 1.5 架构设计视角
 
-### 5.1 数据流驱动的架构风格
+### 1.5.1 数据流驱动的架构风格
 
 数据流驱动架构以数据流动而非控制流作为系统组织的中心原则。
 
@@ -1583,7 +1583,7 @@ fn main() {
   - 路径长度：数据处理延迟
   - 最小割集：系统瓶颈
 
-### 5.2 流处理架构
+### 1.5.2 流处理架构
 
 流处理架构专门用于处理连续的、可能无界的数据流，强调实时或近实时处理。
 
@@ -1681,24 +1681,24 @@ func NewMovingAverage(windowSize int) *MovingAverage {
 func (m *MovingAverage) Process(ctx context.Context, data SensorData) ([]SensorData, error) {
     m.mu.Lock()
     defer m.mu.Unlock()
-    
+
     // 添加新值到窗口
     values := m.values[data.ID]
     values = append(values, data.Value)
-    
+
     // 保持窗口大小
     if len(values) > m.WindowSize {
         values = values[len(values)-m.WindowSize:]
     }
     m.values[data.ID] = values
-    
+
     // 计算平均值
     var sum float64
     for _, v := range values {
         sum += v
     }
     avg := sum / float64(len(values))
-    
+
     // 创建新的数据点
     return []SensorData{{
         ID:        data.ID,
@@ -1761,7 +1761,7 @@ func (s *SensorSource) Start() {
         defer close(s.Output)
         ticker := time.NewTicker(s.Interval)
         defer ticker.Stop()
-        
+
         for {
             select {
             case <-s.ctx.Done():
@@ -1774,7 +1774,7 @@ func (s *SensorSource) Start() {
                         Value:     20 + rand.Float64()*10, // 20-30范围的随机值
                         Timestamp: time.Now(),
                     }
-                    
+
                     // 偶尔生成异常值
                     if rand.Float64() < 0.1 {
                         data.Value = 50 + rand.
@@ -1815,13 +1815,13 @@ impl CountMinSketch {
         // 深度d = ln(1/delta) (向上取整)
         let width = (2.0 / epsilon).ceil() as usize;
         let depth = (1.0 / delta.ln()).ceil() as usize;
-        
+
         // 初始化计数器数组
         let counters = vec![vec![0; width]; depth];
-        
+
         // 生成哈希种子
         let hash_seeds = (0..depth).map(|i| i as u64 + 1).collect();
-        
+
         Self {
             depth,
             width,
@@ -1829,7 +1829,7 @@ impl CountMinSketch {
             hash_seeds,
         }
     }
-    
+
     /// 更新元素频率
     fn update<T: Hash>(&mut self, item: &T, count: u32) {
         for i in 0..self.depth {
@@ -1837,19 +1837,19 @@ impl CountMinSketch {
             self.counters[i][hash_index as usize] += count;
         }
     }
-    
+
     /// 估计元素频率
     fn estimate<T: Hash>(&self, item: &T) -> u32 {
         let mut min_count = u32::MAX;
-        
+
         for i in 0..self.depth {
             let hash_index = self.hash_item(item, self.hash_seeds[i]) % self.width as u64;
             min_count = min_count.min(self.counters[i][hash_index as usize]);
         }
-        
+
         min_count
     }
-    
+
     /// 使用特定种子对元素哈希
     fn hash_item<T: Hash>(&self, item: &T, seed: u64) -> u64 {
         let mut hasher = DefaultHasher::new();
@@ -1857,7 +1857,7 @@ impl CountMinSketch {
         item.hash(&mut hasher);
         hasher.finish()
     }
-    
+
     /// 获取当前使用的内存大小(字节)
     fn memory_usage(&self) -> usize {
         // 计数器数组大小
@@ -1866,7 +1866,7 @@ impl CountMinSketch {
         let seeds_size = self.depth * std::mem::size_of::<u64>();
         // 结构体自身大小
         let struct_size = std::mem::size_of::<Self>();
-        
+
         counters_size + seeds_size + struct_size
     }
 }
@@ -1874,19 +1874,19 @@ impl CountMinSketch {
 fn main() {
     // 创建Count-Min Sketch，设置误差率0.1，失败概率0.01
     let mut cms = CountMinSketch::new(0.1, 0.01);
-    
+
     // 更新元素频率
     cms.update(&"apple", 3);
     cms.update(&"banana", 5);
     cms.update(&"apple", 2);
     cms.update(&"cherry", 1);
-    
+
     // 估计频率
     println!("Estimated count for 'apple': {}", cms.estimate(&"apple"));
     println!("Estimated count for 'banana': {}", cms.estimate(&"banana"));
     println!("Estimated count for 'cherry': {}", cms.estimate(&"cherry"));
     println!("Estimated count for 'date': {}", cms.estimate(&"date"));
-    
+
     // 内存使用
     println!("Memory usage: {} bytes", cms.memory_usage());
     println!("Width (counters per hash): {}", cms.width);
@@ -1913,7 +1913,7 @@ fn main() {
    - 成功概率至少为1-δ
    - 即有至少1-δ的概率，所有估计满足误差界限
 
-### 5.3 事件驱动架构
+### 1.5.3 事件驱动架构
 
 事件驱动架构以事件流动作为系统的核心组织原则，强调松耦合和响应性。
 
@@ -1981,7 +1981,7 @@ impl EventBus {
             subscribers: Mutex::new(HashMap::new()),
         }
     }
-    
+
     // 订阅特定事件类型
     fn subscribe<F>(&self, event_type: &str, callback: F)
     where
@@ -1991,19 +1991,19 @@ impl EventBus {
         let callbacks = subscribers.entry(event_type.to_string()).or_insert_with(Vec::new);
         callbacks.push(Box::new(callback));
     }
-    
+
     // 发布事件
     fn publish(&self, event_type: &str, event: Event) {
         let subscribers = self.subscribers.lock().unwrap();
-        
+
         if let Some(callbacks) = subscribers.get(event_type) {
             // 克隆事件和回调以避免长时间持有锁
             let event_clone = event.clone();
             let callbacks_clone: Vec<_> = callbacks.iter().collect();
-            
+
             // 释放锁
             drop(subscribers);
-            
+
             // 通知所有订阅者
             for callback in callbacks_clone {
                 callback(event_clone.clone());
@@ -2024,28 +2024,28 @@ impl OrderService {
             event_bus,
             orders: Mutex::new(HashMap::new()),
         };
-        
+
         // 订阅相关事件
         service.subscribe_to_events();
-        
+
         service
     }
-    
+
     fn subscribe_to_events(&self) {
         let event_bus = self.event_bus.clone();
         let orders = self.orders.clone();
-        
+
         // 处理支付事件
         event_bus.subscribe("PaymentReceived", move |event| {
             if let Event::PaymentReceived { order_id, amount } = event {
                 println!("OrderService: Payment of ${} received for order {}", amount, order_id);
-                
+
                 // 在实际应用中，这里会更新订单状态
                 // ...
             }
         });
     }
-    
+
     // 创建新订单
     fn place_order(&self, order_id: String, items: Vec<String>, total: f64) {
         // 保存订单
@@ -2053,7 +2053,7 @@ impl OrderService {
             let mut orders = self.orders.lock().unwrap();
             orders.insert(order_id.clone(), (items.clone(), total, false));
         }
-        
+
         // 发布订单创建事件
         self.event_bus.publish(
             "OrderPlaced",
@@ -2064,7 +2064,7 @@ impl OrderService {
             },
         );
     }
-    
+
     // 标记订单为已发货
     fn ship_order(&self, order_id: String, tracking_id: String) {
         // 更新订单状态
@@ -2077,7 +2077,7 @@ impl OrderService {
                 return;
             }
         }
-        
+
         // 发布订单发货事件
         self.event_bus.publish(
             "OrderShipped",
@@ -2096,24 +2096,24 @@ struct PaymentService {
 impl PaymentService {
     fn new(event_bus: Arc<EventBus>) -> Self {
         let service = Self { event_bus };
-        
+
         // 订阅相关事件
         service.subscribe_to_events();
-        
+
         service
     }
-    
+
     fn subscribe_to_events(&self) {
         let event_bus = self.event_bus.clone();
-        
+
         // 处理订单创建事件
         event_bus.subscribe("OrderPlaced", move |event| {
             if let Event::OrderPlaced { order_id, total, .. } = event {
                 println!("PaymentService: Processing payment of ${} for order {}", total, order_id);
-                
+
                 // 模拟处理时间
                 thread::sleep(Duration::from_millis(500));
-                
+
                 // 支付成功，发布支付事件
                 event_bus.publish(
                     "PaymentReceived",
@@ -2138,7 +2138,7 @@ impl InventoryService {
             event_bus,
             inventory: Mutex::new(HashMap::new()),
         };
-        
+
         // 初始化库存
         {
             let mut inventory = service.inventory.lock().unwrap();
@@ -2146,29 +2146,29 @@ impl InventoryService {
             inventory.insert("item2".to_string(), 20);
             inventory.insert("item3".to_string(), 15);
         }
-        
+
         // 订阅相关事件
         service.subscribe_to_events();
-        
+
         service
     }
-    
+
     fn subscribe_to_events(&self) {
         let event_bus = self.event_bus.clone();
         let inventory = self.inventory.clone();
-        
+
         // 处理订单创建事件
         event_bus.subscribe("OrderPlaced", move |event| {
             if let Event::OrderPlaced { order_id, items, .. } = event {
                 println!("InventoryService: Reserving items for order {}: {:?}", order_id, items);
-                
+
                 // 更新库存
                 let mut inventory_guard = inventory.lock().unwrap();
-                
+
                 for item in items {
                     if let Some(quantity) = inventory_guard.get_mut(&item) {
                         *quantity -= 1;
-                        
+
                         // 发布库存变更事件
                         event_bus.publish(
                             "InventoryChanged",
@@ -2181,19 +2181,19 @@ impl InventoryService {
                 }
             }
         });
-        
+
         // 处理订单发货事件
         let event_bus = self.event_bus.clone();
         event_bus.subscribe("OrderShipped", move |event| {
             if let Event::OrderShipped { order_id, tracking_id } = event {
                 println!("InventoryService: Order {} shipped with tracking ID {}", order_id, tracking_id);
-                
+
                 // 在实际应用中，可能需要更新库存状态
                 // ...
             }
         });
     }
-    
+
     // 检查库存
     fn check_inventory(&self, item_id: &str) -> Option<i32> {
         let inventory = self.inventory.lock().unwrap();
@@ -2208,27 +2208,27 @@ struct ShippingService {
 impl ShippingService {
     fn new(event_bus: Arc<EventBus>) -> Self {
         let service = Self { event_bus };
-        
+
         // 订阅相关事件
         service.subscribe_to_events();
-        
+
         service
     }
-    
+
     fn subscribe_to_events(&self) {
         let event_bus = self.event_bus.clone();
-        
+
         // 处理支付事件
         event_bus.subscribe("PaymentReceived", move |event| {
             if let Event::PaymentReceived { order_id, .. } = event {
                 println!("ShippingService: Preparing shipment for order {}", order_id);
-                
+
                 // 模拟处理时间
                 thread::sleep(Duration::from_millis(700));
-                
+
                 // 生成跟踪号
                 let tracking_id = format!("TRK-{}-{}", order_id, rand::random::<u16>());
-                
+
                 // 发布发货事件
                 event_bus.publish(
                     "OrderShipped",
@@ -2245,44 +2245,44 @@ impl ShippingService {
 fn main() {
     // 创建事件总线
     let event_bus = Arc::new(EventBus::new());
-    
+
     // 创建服务
     let order_service = OrderService::new(event_bus.clone());
     let _payment_service = PaymentService::new(event_bus.clone());
     let inventory_service = InventoryService::new(event_bus.clone());
     let _shipping_service = ShippingService::new(event_bus.clone());
-    
+
     // 添加监控订阅者
     event_bus.subscribe("OrderPlaced", |event| {
         println!("Monitor: Order placed event detected: {:?}", event);
     });
-    
+
     event_bus.subscribe("PaymentReceived", |event| {
         println!("Monitor: Payment received event detected: {:?}", event);
     });
-    
+
     event_bus.subscribe("OrderShipped", |event| {
         println!("Monitor: Order shipped event detected: {:?}", event);
     });
-    
+
     event_bus.subscribe("InventoryChanged", |event| {
         println!("Monitor: Inventory changed event detected: {:?}", event);
     });
-    
+
     // 检查初始库存
     println!("Initial inventory for item1: {:?}", inventory_service.check_inventory("item1"));
     println!("Initial inventory for item2: {:?}", inventory_service.check_inventory("item2"));
-    
+
     // 创建订单，触发事件流
     order_service.place_order(
         "ORD-001".to_string(),
         vec!["item1".to_string(), "item2".to_string()],
         49.99,
     );
-    
+
     // 等待所有事件处理完成
     thread::sleep(Duration::from_secs(3));
-    
+
     // 检查最终库存
     println!("Final inventory for item1: {:?}", inventory_service.check_inventory("item1"));
     println!("Final inventory for item2: {:?}", inventory_service.check_inventory("item2"));
@@ -2298,7 +2298,7 @@ fn main() {
 - 事件流：ES = [e₁, e₂, ..., eₙ]，代表系统历史
 - 状态重建：s = fold(f, s₀, ES)，其中f是状态转换函数
 
-### 5.4 反应式架构
+### 1.5.4 反应式架构
 
 反应式架构是一种处理异步数据流的系统设计方法，强调响应性、弹性、消息驱动和可扩展性。
 
@@ -2417,20 +2417,20 @@ impl Actor for OrderActor {
 
 impl Handler<PlaceOrder> for OrderActor {
     type Result = ResponseFuture<OrderResponse>;
-    
+
     fn handle(&mut self, msg: PlaceOrder, _ctx: &mut Context<Self>) -> Self::Result {
         println!("OrderActor: Processing order {}", msg.order_id);
-        
+
         // 保存订单
         self.orders.insert(msg.order_id.clone(), (msg.items.clone(), msg.total, false));
-        
+
         // 检查库存
         let inventory_actor = self.inventory_actor.clone();
         let items = msg.items.clone();
         let order_id = msg.order_id.clone();
         let payment_actor = self.payment_actor.clone();
         let total = msg.total;
-        
+
         let future = async move {
             // 检查所有物品的库存
             for item in items {
@@ -2439,7 +2439,7 @@ impl Handler<PlaceOrder> for OrderActor {
                         if qty <= 0 {
                             return OrderResponse::Failure(format!("Item {} out of stock", item));
                         }
-                        
+
                         // 更新库存
                         let _ = inventory_actor.send(UpdateInventory {
                             item_id: item,
@@ -2454,26 +2454,26 @@ impl Handler<PlaceOrder> for OrderActor {
                     }
                 }
             }
-            
+
             // 处理付款
             let _ = payment_actor.send(PaymentReceived {
                 order_id: order_id.clone(),
                 amount: total,
             }).await;
-            
+
             OrderResponse::Success(format!("Order {} placed successfully", order_id))
         };
-        
+
         Box::pin(future)
     }
 }
 
 impl Handler<ShipOrder> for OrderActor {
     type Result = ();
-    
+
     fn handle(&mut self, msg: ShipOrder, _ctx: &mut Context<Self>) -> Self::Result {
         println!("OrderActor: Shipping order {} with tracking {}", msg.order_id, msg.tracking_id);
-        
+
         if let Some(order) = self.orders.get_mut(&msg.order_id) {
             order.2 = true; // 设置为已发货
         }
@@ -2490,7 +2490,7 @@ impl PaymentActor {
             shipping_actor: None,
         }
     }
-    
+
     fn set_shipping_actor(&mut self, addr: Addr<ShippingActor>) {
         self.shipping_actor = Some(addr);
     }
@@ -2502,15 +2502,15 @@ impl Actor for PaymentActor {
 
 impl Handler<PaymentReceived> for PaymentActor {
     type Result = ();
-    
+
     fn handle(&mut self, msg: PaymentReceived, ctx: &mut Context<Self>) -> Self::Result {
         println!("PaymentActor: Payment received for order {}: ${}", msg.order_id, msg.amount);
-        
+
         // 模拟处理时间
         ctx.run_later(Duration::from_millis(500), move |act, _| {
             if let Some(ref shipping_actor) = act.shipping_actor {
                 let order_id = msg.order_id.clone();
-                
+
                 // 通知shipping actor
                 shipping_actor.do_send(ShipOrder {
                     order_id,
@@ -2531,7 +2531,7 @@ impl ShippingActor {
             order_actor: None,
         }
     }
-    
+
     fn set_order_actor(&mut self, addr: Addr<OrderActor>) {
         self.order_actor = Some(addr);
     }
@@ -2543,18 +2543,18 @@ impl Actor for ShippingActor {
 
 impl Handler<ShipOrder> for ShippingActor {
     type Result = ();
-    
+
     fn handle(&mut self, msg: ShipOrder, ctx: &mut Context<Self>) -> Self::Result {
         println!("ShippingActor: Preparing shipment for order {}", msg.order_id);
-        
+
         // 模拟处理时间
         let order_actor = self.order_actor.clone();
         let ship_msg = msg.clone();
-        
+
         ctx.run_later(Duration::from_millis(700), move |_, _| {
-            println!("ShippingActor: Order {} shipped with tracking {}", 
+            println!("ShippingActor: Order {} shipped with tracking {}",
                      ship_msg.order_id, ship_msg.tracking_id);
-            
+
             // 通知订单服务
             if let Some(order_actor) = order_actor {
                 order_actor.do_send(ship_msg);
@@ -2573,7 +2573,7 @@ impl InventoryActor {
         inventory.insert("item1".to_string(), 10);
         inventory.insert("item2".to_string(), 20);
         inventory.insert("item3".to_string(), 5);
-        
+
         Self { inventory }
     }
 }
@@ -2584,10 +2584,10 @@ impl Actor for InventoryActor {
 
 impl Handler<CheckInventory> for InventoryActor {
     type Result = InventoryResponse;
-    
+
     fn handle(&mut self, msg: CheckInventory, _ctx: &mut Context<Self>) -> Self::Result {
         println!("InventoryActor: Checking inventory for {}", msg.item_id);
-        
+
         match self.inventory.get(&msg.item_id) {
             Some(&qty) => InventoryResponse::Available(qty),
             None => InventoryResponse::NotFound,
@@ -2597,10 +2597,10 @@ impl Handler<CheckInventory> for InventoryActor {
 
 impl Handler<UpdateInventory> for InventoryActor {
     type Result = ();
-    
+
     fn handle(&mut self, msg: UpdateInventory, _ctx: &mut Context<Self>) -> Self::Result {
         println!("InventoryActor: Updating inventory for {} by {}", msg.item_id, msg.quantity_delta);
-        
+
         if let Some(qty) = self.inventory.get_mut(&msg.item_id) {
             *qty += msg.quantity_delta;
         }
@@ -2614,49 +2614,49 @@ async fn main() {
     let payment_actor = PaymentActor::new().start();
     let shipping_actor = ShippingActor::new().start();
     let order_actor = OrderActor::new(payment_actor.clone(), inventory_actor.clone()).start();
-    
+
     // 设置相互引用
     let mut shipping = shipping_actor.clone().recipient().connected().await.unwrap();
     shipping.set_order_actor(order_actor.clone());
-    
+
     let mut payment = payment_actor.clone().recipient().connected().await.unwrap();
     payment.set_shipping_actor(shipping_actor.clone());
-    
+
     // 检查初始库存
     let item1 = inventory_actor.send(CheckInventory { item_id: "item1".to_string() }).await.unwrap();
     match item1 {
         InventoryResponse::Available(qty) => println!("Initial item1 inventory: {}", qty),
         InventoryResponse::NotFound => println!("Item1 not found"),
     }
-    
+
     // 下订单
     let result = order_actor.send(PlaceOrder {
         order_id: "ORD-002".to_string(),
         items: vec!["item1".to_string(), "item3".to_string()],
         total: 59.99,
     }).await.unwrap();
-    
+
     match result {
         OrderResponse::Success(msg) => println!("Order result: {}", msg),
         OrderResponse::Failure(msg) => println!("Order failed: {}", msg),
     }
-    
+
     // 等待处理完成
     actix_rt::time::sleep(Duration::from_secs(3)).await;
-    
+
     // 检查最终库存
     let item1 = inventory_actor.send(CheckInventory { item_id: "item1".to_string() }).await.unwrap();
     match item1 {
         InventoryResponse::Available(qty) => println!("Final item1 inventory: {}", qty),
         InventoryResponse::NotFound => println!("Item1 not found"),
     }
-    
+
     let item3 = inventory_actor.send(CheckInventory { item_id: "item3".to_string() }).await.unwrap();
     match item3 {
         InventoryResponse::Available(qty) => println!("Final item3 inventory: {}", qty),
         InventoryResponse::NotFound => println!("Item3 not found"),
     }
-    
+
     // 关闭系统
     System::current().stop();
 }
@@ -2671,7 +2671,7 @@ async fn main() {
 - 消息传递:  a₁ → a₂ 表示从a₁到a₂的消息
 - 响应性和弹性形式化为系统在有限时间内达到期望状态的能力
 
-### 5.5 数据密集型系统架构
+### 1.5.5 数据密集型系统架构
 
 数据密集型架构关注大规模数据的存储、处理和分析，面临数据量、速度和多样性的挑战。
 
@@ -2731,10 +2731,10 @@ struct DataPoint {
 trait DataShard {
     fn store(&mut self, point: DataPoint);
     fn query(&self, start_time: u64, end_time: u64, tags: &HashMap<String, String>) -> Vec<DataPoint>;
-    fn aggregate(&self, 
-                start_time: u64, 
-                end_time: u64, 
-                tags: &HashMap<String, String>, 
+    fn aggregate(&self,
+                start_time: u64,
+                end_time: u64,
+                tags: &HashMap<String, String>,
                 window: u64,
                 aggregation: AggregationType) -> Vec<AggregatedPoint>;
 }
@@ -2755,7 +2755,7 @@ impl DataShard for MemoryShard {
         // 简单追加，实际系统会有更高效的结构
         self.data.push(point);
     }
-    
+
     fn query(&self, start_time: u64, end_time: u64, tags: &HashMap<String, String>) -> Vec<DataPoint> {
         self.data.iter()
             .filter(|p| p.timestamp >= start_time && p.timestamp <= end_time)
@@ -2763,10 +2763,10 @@ impl DataShard for MemoryShard {
             .cloned()
             .collect()
     }
-    
-    fn aggregate(&self, 
-                start_time: u64, 
-                end_time: u64, 
+
+    fn aggregate(&self,
+                start_time: u64,
+                end_time: u64,
                 tags: &HashMap<String, String>,
                 window: u64,
                 aggregation: AggregationType) -> Vec<AggregatedPoint> {
@@ -2775,24 +2775,24 @@ impl DataShard for MemoryShard {
             .filter(|p| p.timestamp >= start_time && p.timestamp <= end_time)
             .filter(|p| tags.iter().all(|(k, v)| p.tags.get(k) == Some(v)))
             .collect();
-        
+
         // 如果没有数据，直接返回空
         if filtered_data.is_empty() {
             return Vec::new();
         }
-        
+
         // 按时间窗口聚合
         let mut result = Vec::new();
         let mut current_window = start_time;
-        
+
         while current_window <= end_time {
             let window_end = current_window + window;
-            
+
             // 当前窗口的数据
             let window_data: Vec<_> = filtered_data.iter()
                 .filter(|p| p.timestamp >= current_window && p.timestamp < window_end)
                 .collect();
-            
+
             if !window_data.is_empty() {
                 let aggregated_value = match aggregation {
                     AggregationType::Sum => window_data.iter().map(|p| p.value).sum(),
@@ -2803,17 +2803,17 @@ impl DataShard for MemoryShard {
                     AggregationType::Min => window_data.iter().map(|p| p.value).fold(f64::INFINITY, f64::min),
                     AggregationType::Max => window_data.iter().map(|p| p.value).fold(f64::NEG_INFINITY, f64::max),
                 };
-                
+
                 result.push(AggregatedPoint {
                     start_time: current_window,
                     end_time: window_end,
                     value: aggregated_value,
                 });
             }
-            
+
             current_window = window_end;
         }
-        
+
         result
     }
 }
@@ -2842,73 +2842,73 @@ struct ShardManager {
 impl ShardManager {
     fn new(shard_count: usize) -> Self {
         let mut shards = Vec::with_capacity(shard_count);
-        
+
         for _ in 0..shard_count {
             shards.push(Arc::new(Mutex::new(Box::new(MemoryShard::new()) as Box<dyn DataShard + Send>)));
         }
-        
+
         Self {
             shards,
             shard_count,
         }
     }
-    
+
     // 决定数据点应该存储在哪个分片
     fn get_shard_for_point(&self, point: &DataPoint) -> usize {
         // 简单的分片策略：基于时间戳哈希
         (point.timestamp as usize) % self.shard_count
     }
-    
+
     // 存储数据点
     fn store(&self, point: DataPoint) {
         let shard_idx = self.get_shard_for_point(&point);
         let mut shard = self.shards[shard_idx].lock().unwrap();
         shard.store(point);
     }
-    
+
     // 查询数据
     fn query(&self, start_time: u64, end_time: u64, tags: &HashMap<String, String>) -> Vec<DataPoint> {
         let mut results = Vec::new();
-        
+
         // 从每个分片查询（在实际系统中可能会并行化）
         for shard in &self.shards {
             let shard = shard.lock().unwrap();
             let mut shard_results = shard.query(start_time, end_time, tags);
             results.append(&mut shard_results);
         }
-        
+
         // 按时间戳排序结果
         results.sort_by_key(|p| p.timestamp);
         results
     }
-    
+
     // 聚合查询
-    fn aggregate(&self, 
-                start_time: u64, 
-                end_time: u64, 
+    fn aggregate(&self,
+                start_time: u64,
+                end_time: u64,
                 tags: &HashMap<String, String>,
                 window: u64,
                 aggregation: AggregationType) -> Vec<AggregatedPoint> {
         // 首先从所有分片获取原始数据
         let raw_data = self.query(start_time, end_time, tags);
-        
+
         // 如果没有数据，直接返回空
         if raw_data.is_empty() {
             return Vec::new();
         }
-        
+
         // 按时间窗口聚合
         let mut result = Vec::new();
         let mut current_window = start_time;
-        
+
         while current_window <= end_time {
             let window_end = current_window + window;
-            
+
             // 当前窗口的数据
             let window_data: Vec<_> = raw_data.iter()
                 .filter(|p| p.timestamp >= current_window && p.timestamp < window_end)
                 .collect();
-            
+
             if !window_data.is_empty() {
                 let aggregated_value = match aggregation {
                     AggregationType::Sum => window_data.iter().map(|p| p.value).sum(),
@@ -2919,17 +2919,17 @@ impl ShardManager {
                     AggregationType::Min => window_data.iter().map(|p| p.value).fold(f64::INFINITY, f64::min),
                     AggregationType::Max => window_data.iter().map(|p| p.value).fold(f64::NEG_INFINITY, f64::max),
                 };
-                
+
                 result.push(AggregatedPoint {
                     start_time: current_window,
                     end_time: window_end,
                     value: aggregated_value,
                 });
             }
-            
+
             current_window = window_end;
         }
-        
+
         result
     }
 }
@@ -2951,26 +2951,26 @@ impl DataGenerator {
             noise_factor,
         }
     }
-    
+
     fn start(self, shard_manager: Arc<ShardManager>, count: usize) -> thread::JoinHandle<()> {
         thread::spawn(move || {
             let start_time = std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
                 .as_secs();
-            
+
             for i in 0..count {
                 let timestamp = start_time + i as u64;
                 let value = self.base_value + (rand::random::<f64>() - 0.5) * self.noise_factor;
-                
+
                 let point = DataPoint {
                     timestamp,
                     value,
                     tags: self.tags.clone(),
                 };
-                
+
                 shard_manager.store(point);
-                
+
                 // 模拟数据生成间隔
                 thread::sleep(self.interval);
             }
@@ -2989,39 +2989,39 @@ impl TimeSeriesDB {
             shard_manager: Arc::new(ShardManager::new(shard_count)),
         }
     }
-    
+
     // 插入数据点
     fn insert(&self, point: DataPoint) {
         self.shard_manager.store(point);
     }
-    
+
     // 批量插入数据点
     fn insert_batch(&self, points: Vec<DataPoint>) {
         for point in points {
             self.shard_manager.store(point);
         }
     }
-    
+
     // 查询数据
     fn query(&self, start_time: u64, end_time: u64, tags: &HashMap<String, String>) -> Vec<DataPoint> {
         self.shard_manager.query(start_time, end_time, tags)
     }
-    
+
     // 聚合查询
-    fn aggregate(&self, 
-                start_time: u64, 
-                end_time: u64, 
+    fn aggregate(&self,
+                start_time: u64,
+                end_time: u64,
                 tags: &HashMap<String, String>,
                 window: u64,
                 aggregation: AggregationType) -> Vec<AggregatedPoint> {
         self.shard_manager.aggregate(start_time, end_time, tags, window, aggregation)
     }
-    
+
     // 获取数据生成器
-    fn get_data_generator(&self, 
-                         interval: Duration, 
-                         tags: HashMap<String, String>, 
-                         base_value: f64, 
+    fn get_data_generator(&self,
+                         interval: Duration,
+                         tags: HashMap<String, String>,
+                         base_value: f64,
                          noise_factor: f64) -> DataGenerator {
         DataGenerator::new(interval, tags, base_value, noise_factor)
     }
@@ -3030,70 +3030,70 @@ impl TimeSeriesDB {
 fn main() {
     // 创建时间序列数据库，4个分片
     let db = TimeSeriesDB::new(4);
-    
+
     // 创建数据生成器
     let mut tags1 = HashMap::new();
     tags1.insert("sensor".to_string(), "temperature".to_string());
     tags1.insert("location".to_string(), "room1".to_string());
-    
+
     let mut tags2 = HashMap::new();
     tags2.insert("sensor".to_string(), "temperature".to_string());
     tags2.insert("location".to_string(), "room2".to_string());
-    
+
     let generator1 = db.get_data_generator(
         Duration::from_millis(10),  // 快速生成数据用于演示
         tags1.clone(),
         25.0,   // 基准温度
         2.0,    // 噪声因子
     );
-    
+
     let generator2 = db.get_data_generator(
         Duration::from_millis(10),
         tags2.clone(),
         22.0,   // 基准温度
         1.5,    // 噪声因子
     );
-    
+
     // 启动数据生成
     let shard_manager = db.shard_manager.clone();
     let handle1 = generator1.start(shard_manager.clone(), 100);
     let handle2 = generator2.start(shard_manager, 100);
-    
+
     // 等待数据生成完成
     handle1.join().unwrap();
     handle2.join().unwrap();
-    
+
     // 获取当前时间基准
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap()
         .as_secs();
-    
+
     // 查询两个房间的最近数据
     let start_time = now - 120;
     let end_time = now;
-    
+
     println!("查询room1的原始数据:");
     let results1 = db.query(start_time, end_time, &tags1);
     for point in results1.iter().take(5) {
         println!("时间戳: {}, 温度: {:.2}", point.timestamp, point.value);
     }
     println!("共 {} 条记录", results1.len());
-    
+
     println!("\n查询room2的原始数据:");
     let results2 = db.query(start_time, end_time, &tags2);
     for point in results2.iter().take(5) {
         println!("时间戳: {}, 温度: {:.2}", point.timestamp, point.value);
     }
     println!("共 {} 条记录", results2.len());
-    
+
     // 按10秒窗口聚合数据
     println!("\nroom1的10秒平均温度:");
     let agg_results1 = db.aggregate(start_time, end_time, &tags1, 10, AggregationType::Avg);
     for point in agg_results1 {
         println!("时间窗口: {}--{}, 平均温度: {:.2}", point.start_time, point.end_time, point.value);
     }
-    
+
     println!("\nroom2的10秒平均温度:");
     let agg_results2 = db.aggregate(start_time, end_time, &tags2, 10, AggregationType::Avg);
     for point in agg_results2 {
@@ -3111,9 +3111,9 @@ fn main() {
 - 可靠性：R = 1 - P(failure)，即系统可用的概率
 - 数据流模型：D = (S, P, F)，其中S是存储系统，P是处理管道，F是数据流动路径
 
-## 6. 形式化方法的跨视角应用
+## 1.6 形式化方法的跨视角应用
 
-### 6.1 各层次形式化方法概览
+### 1.6.1 各层次形式化方法概览
 
 形式化方法可以应用于软件工程的各个层次，从程序语言到系统架构。
 
@@ -3145,7 +3145,7 @@ fn main() {
 - **自底向上抽象**：从具体实现提取抽象模型
 - **组合验证**：通过组件性质推导系统性质
 
-### 6.2 程序语言层的形式化验证
+### 1.6.2 程序语言层的形式化验证
 
 程序语言层形式化关注代码级别的正确性，通过类型系统、静态分析和规约验证实现。
 
@@ -3208,7 +3208,7 @@ impl<T> DataToken<Validated> {
     fn process<R>(&self, processor: impl Fn(&T) -> R) -> R {
         processor(&self.data)
     }
-    
+
     // 获取数据引用
     fn get_data(&self) -> &T {
         &self.data
@@ -3229,21 +3229,21 @@ fn main() {
     // 创建未验证数据
     let raw_data = vec![1, 2, 3, 4, 5];
     let unvalidated_token = DataToken::new(raw_data);
-    
+
     // 尝试处理未验证数据 - 编译错误!
     // secure_process(&unvalidated_token); // 类型不匹配
-    
+
     // 验证数据
     let validation_result = unvalidated_token.validate(|data| {
         // 示例验证规则：所有元素都为正
         data.iter().all(|&x| x > 0)
     });
-    
+
     match validation_result {
         Ok(validated_token) => {
             // 现在可以安全处理
             secure_process(&validated_token);
-            
+
             // 直接使用处理方法
             let sum = validated_token.process(|data| {
                 data.iter().sum::<i32>()
@@ -3254,11 +3254,11 @@ fn main() {
             println!("数据验证失败");
         }
     }
-    
+
     // 创建无效数据
     let invalid_data = vec![1, 2, -3, 4, 5];
     let unvalidated_token = DataToken::new(invalid_data);
-    
+
     // 验证失败
     match unvalidated_token.validate(|data| data.iter().all(|&x| x > 0)) {
         Ok(validated_token) => {
@@ -3285,7 +3285,7 @@ fn main() {
 - **资源管理**：防止数据在验证前被处理
 - **状态跟踪**：编译时跟踪数据验证状态
 
-### 6.3 算法正确性的形式化证明
+### 1.6.3 算法正确性的形式化证明
 
 为保证数据流算法的正确性，可以应用形式化证明技术，包括数学证明和机器辅助证明。
 
@@ -3324,15 +3324,15 @@ fn sliding_window_avg_naive(data: &[f64], window_size: usize) -> Vec<f64> {
     if data.len() < window_size {
         return Vec::new();
     }
-    
+
     let mut result = Vec::with_capacity(data.len() - window_size + 1);
-    
+
     for i in 0..=(data.len() - window_size) {
         let sum: f64 = data[i..(i + window_size)].iter().sum();
         let avg = sum / window_size as f64;
         result.push(avg);
     }
-    
+
     result
 }
 ```
@@ -3344,19 +3344,19 @@ fn sliding_window_avg_optimized(data: &[f64], window_size: usize) -> Vec<f64> {
     if data.len() < window_size {
         return Vec::new();
     }
-    
+
     let mut result = Vec::with_capacity(data.len() - window_size + 1);
-    
+
     // 计算第一个窗口的和
     let mut sum: f64 = data[0..window_size].iter().sum();
     result.push(sum / window_size as f64);
-    
+
     // 对后续窗口，增量更新
     for i in 0..(data.len() - window_size) {
         sum = sum - data[i] + data[i + window_size];
         result.push(sum / window_size as f64);
     }
-    
+
     result
 }
 ```
@@ -3394,7 +3394,7 @@ fn sliding_window_avg_optimized(data: &[f64], window_size: usize) -> Vec<f64> {
 - 朴素算法：O(n·w)，其中n是数据长度
 - 优化算法：O(n)，显著改进
 
-### 6.4 设计模式的形式化表达
+### 1.6.4 设计模式的形式化表达
 
 设计模式可以通过形式化语言更精确地表达，使其属性可以被静态验证。
 
@@ -3442,22 +3442,22 @@ impl<T> Pipeline<T, T> {
             _marker: PhantomData,
         }
     }
-    
+
     fn add_filter(&mut self, filter: impl Filter<T, T> + 'static) -> &mut Self {
         self.filters.push(Box::new(filter));
         self
     }
-    
+
     fn process(&mut self, input: T) -> Option<T> {
         let mut current = input;
-        
+
         for filter in &mut self.filters {
             match filter.process(current) {
                 Some(output) => current = output,
                 None => return None,
             }
         }
-        
+
         Some(current)
     }
 }
@@ -3471,15 +3471,15 @@ fn main() {
     struct IntMapper {
         factor: i32,
     }
-    
+
     impl Filter<i32, i32> for IntMapper {
         fn process(&mut self, input: i32) -> Option<i32> {
             Some(input * self.factor)
         }
     }
-    
+
     struct PositiveFilter;
-    
+
     impl Filter<i32, i32> for PositiveFilter {
         fn process(&mut self, input: i32) -> Option<i32> {
             if input > 0 {
@@ -3489,20 +3489,20 @@ fn main() {
             }
         }
     }
-    
+
     // 创建并配置管道
     let mut pipeline = Pipeline::new();
     pipeline
         .add_filter(IntMapper { factor: 2 })
         .add_filter(PositiveFilter);
-    
+
     // 测试管道
     let result1 = pipeline.process(5);
     let result2 = pipeline.process(-5);
-    
+
     println!("Result of processing 5: {:?}", result1);   // Some(10)
     println!("Result of processing -5: {:?}", result2);  // None
-    
+
     // 形式化验证（理论上）：
     // 1. IntMapper(5) = 10, PositiveFilter(10) = 10, 所以pipeline(5) = 10
     // 2. IntMapper(-5) = -10, PositiveFilter(-10) = None, 所以pipeline(-5) = None
@@ -3527,7 +3527,7 @@ fn main() {
 4. **并行化潜力**：
    - 如果过滤器f和g操作数据流的不相交部分，则它们可并行执行
 
-### 6.5 架构属性的形式化保证
+### 1.6.5 架构属性的形式化保证
 
 软件架构层面的形式化关注整个系统的属性，如可靠性、可伸缩性和容错性。
 
@@ -3588,11 +3588,11 @@ impl ArchitectureModel {
             flows: Vec::new(),
         }
     }
-    
+
     fn add_service(&mut self, service: Service) {
         self.services.insert(service.id.clone(), service);
     }
-    
+
     fn add_flow(&mut self, flow: MessageFlow) {
         // 验证服务存在
         if !self.services.contains_key(&flow.from) || !self.services.contains_key(&flow.to) {
@@ -3600,22 +3600,22 @@ impl ArchitectureModel {
         }
         self.flows.push(flow);
     }
-    
+
     // 计算系统可靠性
     fn calculate_system_reliability(&self) -> f64 {
         // 简化模型：系统可靠性是所有关键服务可靠性的乘积
         // 识别关键服务（没有被依赖的服务）
         let mut critical_services = HashSet::new();
-        
+
         for service in self.services.values() {
             let is_critical = self.flows.iter()
                 .any(|flow| flow.to == service.id && flow.from != service.id);
-            
+
             if !is_critical {
                 critical_services.insert(service.id.clone());
             }
         }
-        
+
         // 计算关键服务的联合可靠性
         let mut reliability = 1.0;
         for service_id in &critical_services {
@@ -3623,34 +3623,34 @@ impl ArchitectureModel {
                 reliability *= service.reliability;
             }
         }
-        
+
         reliability
     }
-    
+
     // 分析服务依赖
     fn analyze_dependencies(&self) -> HashMap<String, Vec<String>> {
         let mut direct_dependencies = HashMap::new();
-        
+
         for service in self.services.values() {
-            direct_dependencies.insert(service.id.clone(), 
+            direct_dependencies.insert(service.id.clone(),
                 service.dependencies.iter().cloned().collect());
         }
-        
+
         // 计算传递闭包（包括间接依赖）
         let mut all_dependencies = HashMap::new();
-        
+
         for service_id in self.services.keys() {
             let mut visited = HashSet::new();
             let mut to_visit = vec![service_id.clone()];
             let mut dependencies = Vec::new();
-            
+
             while let Some(current) = to_visit.pop() {
                 if current != *service_id && !visited.contains(&current) {
                     dependencies.push(current.clone());
                 }
-                
+
                 visited.insert(current.clone());
-                
+
                 if let Some(deps) = direct_dependencies.get(&current) {
                     for dep in deps {
                         if !visited.contains(dep) {
@@ -3659,31 +3659,31 @@ impl ArchitectureModel {
                     }
                 }
             }
-            
+
             all_dependencies.insert(service_id.clone(), dependencies);
         }
-        
+
         all_dependencies
     }
-    
+
     // 检测循环依赖
     fn detect_cycles(&self) -> Vec<Vec<String>> {
         let mut cycles = Vec::new();
         let mut visited = HashSet::new();
         let mut stack = Vec::new();
-        
+
         // 对每个服务做DFS
         for service_id in self.services.keys() {
             self.dfs_for_cycles(service_id, &mut visited, &mut stack, &mut cycles);
         }
-        
+
         cycles
     }
-    
-    fn dfs_for_cycles(&self, 
-                     service_id: &str, 
-                     visited: &mut HashSet<String>, 
-                     stack: &mut Vec<String>, 
+
+    fn dfs_for_cycles(&self,
+                     service_id: &str,
+                     visited: &mut HashSet<String>,
+                     stack: &mut Vec<String>,
                      cycles: &mut Vec<Vec<String>>) {
         if stack.contains(&service_id.to_string()) {
             // 找到循环
@@ -3692,40 +3692,40 @@ impl ArchitectureModel {
             cycles.push(cycle);
             return;
         }
-        
+
         if visited.contains(service_id) {
             return;
         }
-        
+
         visited.insert(service_id.to_string());
         stack.push(service_id.to_string());
-        
+
         if let Some(service) = self.services.get(service_id) {
             for dep in &service.dependencies {
                 self.dfs_for_cycles(dep, visited, stack, cycles);
             }
         }
-        
+
         stack.pop();
     }
-    
+
     // 计算端到端响应时间
     fn calculate_end_to_end_response_time(&self, path: &[String]) -> f64 {
         let mut total_time = 0.0;
-        
+
         for service_id in path {
             if let Some(service) = self.services.get(service_id) {
                 total_time += service.avg_response_time;
             }
         }
-        
+
         total_time
     }
 }
 
 fn main() {
     let mut arch = ArchitectureModel::new();
-    
+
     // 添加服务
     arch.add_service(Service {
         id: "api-gateway".to_string(),
@@ -3733,35 +3733,35 @@ fn main() {
         reliability: 0.999,
         avg_response_time: 10.0,
     });
-    
+
     arch.add_service(Service {
         id: "auth-service".to_string(),
         dependencies: ["user-db"].iter().map(|s| s.to_string()).collect(),
         reliability: 0.995,
         avg_response_time: 30.0,
     });
-    
+
     arch.add_service(Service {
         id: "product-service".to_string(),
         dependencies: ["product-db", "inventory-service"].iter().map(|s| s.to_string()).collect(),
         reliability: 0.99,
         avg_response_time: 40.0,
     });
-    
+
     arch.add_service(Service {
         id: "inventory-service".to_string(),
         dependencies: ["inventory-db"].iter().map(|s| s.to_string()).collect(),
         reliability: 0.995,
         avg_response_time: 35.0,
     });
-    
+
     arch.add_service(Service {
         id: "user-db".to_string(),
         dependencies: HashSet::new(),
         reliability: 0.9999,
         avg_response_time: 5.0,
     });
-    
+
     arch.add_service(Service {
 
 ```rust
@@ -3771,14 +3771,14 @@ fn main() {
         reliability: 0.9999,
         avg_response_time: 5.0,
     });
-    
+
     arch.add_service(Service {
         id: "inventory-db".to_string(),
         dependencies: HashSet::new(),
         reliability: 0.9999,
         avg_response_time: 5.0,
     });
-    
+
     // 添加流
     arch.add_flow(MessageFlow {
         from: "client".to_string(),
@@ -3786,37 +3786,37 @@ fn main() {
         message_type: "http-request".to_string(),
         rate: 100.0,
     });
-    
+
     arch.add_flow(MessageFlow {
         from: "api-gateway".to_string(),
         to: "auth-service".to_string(),
         message_type: "auth-request".to_string(),
         rate: 80.0,
     });
-    
+
     arch.add_flow(MessageFlow {
         from: "api-gateway".to_string(),
         to: "product-service".to_string(),
         message_type: "product-request".to_string(),
         rate: 60.0,
     });
-    
+
     arch.add_flow(MessageFlow {
         from: "product-service".to_string(),
         to: "inventory-service".to_string(),
         message_type: "inventory-check".to_string(),
         rate: 40.0,
     });
-    
+
     // 分析架构
     println!("系统可靠性: {:.6}", arch.calculate_system_reliability());
-    
+
     let dependencies = arch.analyze_dependencies();
     println!("\n服务依赖分析:");
     for (service, deps) in &dependencies {
         println!("服务 {} 依赖于: {:?}", service, deps);
     }
-    
+
     let cycles = arch.detect_cycles();
     if cycles.is_empty() {
         println!("\n无循环依赖");
@@ -3826,14 +3826,14 @@ fn main() {
             println!("{:?}", cycle);
         }
     }
-    
+
     // 计算典型路径的端到端响应时间
     let path = vec![
         "api-gateway".to_string(),
         "product-service".to_string(),
         "inventory-service".to_string(),
     ];
-    
+
     let response_time = arch.calculate_end_to_end_response_time(&path);
     println!("\n路径 {:?} 的端到端响应时间: {:.2} ms", path, response_time);
 }
@@ -3858,9 +3858,9 @@ fn main() {
 4. **流量控制定理**：
    - 系统稳定的必要条件是每个服务的处理能力大于输入流量
 
-## 7. 跨视角关联与集成
+## 1.7 跨视角关联与集成
 
-### 7.1 数据流抽象的层次映射
+### 1.7.1 数据流抽象的层次映射
 
 各个视角（语言、算法、模式、架构）之间存在自然的映射关系，这些映射有助于理解和应用数据流概念。
 
@@ -3901,7 +3901,7 @@ fn main() {
 
 数学表示：A ⊑ P ⊑ L ⊑ C，其中 ⊑ 表示精化关系
 
-### 7.2 语言-算法-模式-架构转换
+### 1.7.2 语言-算法-模式-架构转换
 
 跨视角转换是设计和实现过程中的关键步骤，需要保持数据流的一致性。
 
@@ -3961,7 +3961,7 @@ impl EventBus {
             subscribers: Mutex::new(HashMap::new()),
         }
     }
-    
+
     fn subscribe(&self, subscriber: Arc<dyn EventSubscriber>) {
         let mut subscribers = self.subscribers.lock().unwrap();
         for event_type in subscriber.supported_events() {
@@ -3969,7 +3969,7 @@ impl EventBus {
             event_subscribers.push(subscriber.clone());
         }
     }
-    
+
     fn publish(&self, event: &dyn Event) {
         let subscribers = self.subscribers.lock().unwrap();
         if let Some(event_subscribers) = subscribers.get(event.event_type()) {
@@ -3988,19 +3988,19 @@ struct DataFilter<T: Event + Clone> {
 }
 
 impl<T: Event + Clone> DataFilter<T> {
-    fn new<F>(predicate: F) -> Self 
+    fn new<F>(predicate: F) -> Self
     where F: Fn(&T) -> bool + Send + Sync + 'static {
         Self {
             predicate: Box::new(predicate),
             next_stage: None,
         }
     }
-    
+
     fn set_next_stage<F>(&mut self, next: F)
     where F: Fn(T) + Send + Sync + 'static {
         self.next_stage = Some(Box::new(next));
     }
-    
+
     fn process(&self, event: T) {
         if (self.predicate)(&event) {
             if let Some(next) = &self.next_stage {
@@ -4023,7 +4023,7 @@ impl Event for SensorEvent {
     fn event_type(&self) -> &'static str {
         "sensor_reading"
     }
-    
+
     fn as_any(&self) -> &dyn Any {
         self
     }
@@ -4052,13 +4052,13 @@ impl EventSubscriber for TemperatureMonitor {
                     "Alert! Sensor {} reported high temperature: {:.1}°C at timestamp {}",
                     sensor_event.sensor_id, sensor_event.temperature, sensor_event.timestamp
                 );
-                
+
                 // 可以发布新的告警事件
                 // self.event_bus.publish(...);
             }
         }
     }
-    
+
     fn supported_events(&self) -> Vec<&'static str> {
         vec!["sensor_reading"]
     }
@@ -4067,24 +4067,24 @@ impl EventSubscriber for TemperatureMonitor {
 fn main() {
     // 创建事件总线
     let event_bus = Arc::new(EventBus::new());
-    
+
     // 创建并注册订阅者
     let monitor = Arc::new(TemperatureMonitor::new(30.0, event_bus.clone()));
     event_bus.subscribe(monitor);
-    
+
     // 创建数据过滤器
     let mut temperature_filter = DataFilter::<SensorEvent>::new(|event| {
         // 过滤掉低于10度的读数
         event.temperature >= 10.0
     });
-    
+
     // 设置下一阶段处理
     let event_bus_clone = event_bus.clone();
     temperature_filter.set_next_stage(move |event| {
         // 将过滤后的事件发布到总线
         event_bus_clone.publish(&event);
     });
-    
+
     // 模拟传感器事件
     let events = vec![
         SensorEvent { sensor_id: "s1".to_string(), temperature: 25.0, timestamp: 1000 },
@@ -4092,7 +4092,7 @@ fn main() {
         SensorEvent { sensor_id: "s3".to_string(), temperature: 8.0, timestamp: 1002 },  // 会被过滤
         SensorEvent { sensor_id: "s1".to_string(), temperature: 28.0, timestamp: 1003 },
     ];
-    
+
     // 处理事件
     for event in events {
         println!("Processing sensor event from {}: {:.1}°C", event.sensor_id, event.temperature);
@@ -4110,7 +4110,7 @@ fn main() {
 3. **可追踪性**：能从代码追溯到架构决策
 4. **满足约束**：低层实现遵循高层约束
 
-### 7.3 端到端数据流设计框架
+### 1.7.3 端到端数据流设计框架
 
 端到端数据流设计框架整合所有视角，提供统一方法设计和实现数据流系统。
 
@@ -4168,7 +4168,7 @@ fn main() {
 
 端到端保证: 如果 C 实现 L，L 实现 P，P 实现 A，则 C 实现 A
 
-### 7.4 工程实践中的视角选择
+### 1.7.4 工程实践中的视角选择
 
 在实际工程中，需要根据项目特点和团队能力选择合适的视角和工具。
 
@@ -4224,9 +4224,9 @@ fn main() {
    - 大规模分布式系统：确保整体协调
    - 示例：金融系统的实时数据流架构
 
-## 8. 案例研究
+## 1.8 案例研究
 
-### 8.1 实时数据分析系统
+### 1.8.1 实时数据分析系统
 
 实时数据分析系统是数据流处理的典型应用，需要综合考虑所有视角。
 
@@ -4299,14 +4299,14 @@ impl DataSource {
             running: Arc::new(Mutex::new(false)),
         }
     }
-    
+
     fn start(&self) -> thread::JoinHandle<()> {
         *self.running.lock().unwrap() = true;
         let output = self.output.clone();
         let sources = self.sources.clone();
         let interval = self.interval;
         let running = self.running.clone();
-        
+
         thread::spawn(move || {
             while *running.lock().unwrap() {
                 // 为每个来源生成数据点
@@ -4316,19 +4316,19 @@ impl DataSource {
                         source_id: source.clone(),
                         value: 10.0 + (rand::random::<f64>() * 20.0), // 10-30范围随机值
                     };
-                    
+
                     output.lock().unwrap().push_back(point);
                 }
-                
+
                 thread::sleep(interval);
             }
         })
     }
-    
+
     fn stop(&self) {
         *self.running.lock().unwrap() = false;
     }
-    
+
     fn get_output(&self) -> Arc<Mutex<VecDeque<DataPoint>>> {
         self.output.clone()
     }
@@ -4345,8 +4345,8 @@ struct WindowAggregator {
 }
 
 impl WindowAggregator {
-    fn new(input: Arc<Mutex<VecDeque<DataPoint>>>, 
-           window_size: Duration, 
+    fn new(input: Arc<Mutex<VecDeque<DataPoint>>>,
+           window_size: Duration,
            slide_interval: Duration) -> Self {
         Self {
             input,
@@ -4357,7 +4357,7 @@ impl WindowAggregator {
             data_windows: HashMap::new(),
         }
     }
-    
+
     fn start(&mut self) -> thread::JoinHandle<()> {
         *self.running.lock().unwrap() = true;
         let input = self.input.clone();
@@ -4365,11 +4365,11 @@ impl WindowAggregator {
         let window_size = self.window_size;
         let slide_interval = self.slide_interval;
         let running = self.running.clone();
-        
+
         thread::spawn(move || {
             let mut data_windows: HashMap<String, VecDeque<DataPoint>> = HashMap::new();
             let mut last_slide = Instant::now();
-            
+
             while *running.lock().unwrap() {
                 // 从输入获取新数据点
                 let mut input_guard = input.lock().unwrap();
@@ -4380,38 +4380,38 @@ impl WindowAggregator {
                     window.push_back(point);
                 }
                 drop(input_guard);
-                
+
                 // 检查是否应滑动窗口
                 let now = Instant::now();
                 if now.duration_since(last_slide) >= slide_interval {
                     last_slide = now;
-                    
+
                     // 对每个来源计算窗口聚合
                     let window_cutoff = now - window_size;
-                    
+
                     let mut results = Vec::new();
-                    
+
                     for (source_id, window) in &mut data_windows {
                         // 移除旧数据点
                         while !window.is_empty() && window.front().unwrap().timestamp < window_cutoff {
                             window.pop_front();
                         }
-                        
+
                         // 计算聚合结果
                         if !window.is_empty() {
                             let mut sum = 0.0;
                             let mut min = f64::INFINITY;
                             let mut max = f64::NEG_INFINITY;
-                            
+
                             for point in window.iter() {
                                 sum += point.value;
                                 min = min.min(point.value);
                                 max = max.max(point.value);
                             }
-                            
+
                             let count = window.len();
                             let avg = sum / count as f64;
-                            
+
                             results.push(AggregationResult {
                                 window_start: window_cutoff,
                                 window_end: now,
@@ -4423,24 +4423,24 @@ impl WindowAggregator {
                             });
                         }
                     }
-                    
+
                     // 输出结果
                     let mut output_guard = output.lock().unwrap();
                     for result in results {
                         output_guard.push_back(result);
                     }
                 }
-                
+
                 // 避免忙等待
                 thread::sleep(Duration::from_millis(10));
             }
         })
     }
-    
+
     fn stop(&self) {
         *self.running.lock().unwrap() = false;
     }
-    
+
     fn get_output(&self) -> Arc<Mutex<VecDeque<AggregationResult>>> {
         self.output.clone()
     }
@@ -4455,7 +4455,7 @@ struct AlertDetector {
 }
 
 impl AlertDetector {
-    fn new(input: Arc<Mutex<VecDeque<AggregationResult>>>, 
+    fn new(input: Arc<Mutex<VecDeque<AggregationResult>>>,
            thresholds: HashMap<String, f64>) -> Self {
         Self {
             input,
@@ -4464,20 +4464,20 @@ impl AlertDetector {
             running: Arc::new(Mutex::new(false)),
         }
     }
-    
+
     fn start(&self) -> thread::JoinHandle<()> {
         *self.running.lock().unwrap() = true;
         let input = self.input.clone();
         let thresholds = self.thresholds.clone();
         let alerts = self.alerts.clone();
         let running = self.running.clone();
-        
+
         thread::spawn(move || {
             while *running.lock().unwrap() {
                 // 检查新的聚合结果
                 let mut input_guard = input.lock().unwrap();
                 let mut new_alerts = Vec::new();
-                
+
                 while let Some(result) = input_guard.pop_front() {
                     // 检查是否超过阈值
                     if let Some(&threshold) = thresholds.get(&result.source_id) {
@@ -4489,9 +4489,9 @@ impl AlertDetector {
                         }
                     }
                 }
-                
+
                 drop(input_guard);
-                
+
                 // 输出警报
                 if !new_alerts.is_empty() {
                     let mut alerts_guard = alerts.lock().unwrap();
@@ -4499,17 +4499,17 @@ impl AlertDetector {
                         alerts_guard.push_back(alert);
                     }
                 }
-                
+
                 // 避免忙等待
                 thread::sleep(Duration::from_millis(10));
             }
         })
     }
-    
+
     fn stop(&self) {
         *self.running.lock().unwrap() = false;
     }
-    
+
     fn get_alerts(&self) -> Arc<Mutex<VecDeque<String>>> {
         self.alerts.clone()
     }
@@ -4522,38 +4522,38 @@ fn main() {
         vec!["sensor1".to_string(), "sensor2".to_string(), "sensor3".to_string()],
         Duration::from_millis(100)
     );
-    
+
     // 创建窗口聚合器
     let mut window_aggregator = WindowAggregator::new(
         data_source.get_output(),
         Duration::from_secs(5),       // 5秒窗口
         Duration::from_secs(1)        // 每秒滑动一次
     );
-    
+
     // 创建警报检测器
     let mut thresholds = HashMap::new();
     thresholds.insert("sensor1".to_string(), 25.0);
     thresholds.insert("sensor2".to_string(), 22.0);
     thresholds.insert("sensor3".to_string(), 20.0);
-    
+
     let alert_detector = AlertDetector::new(
         window_aggregator.get_output(),
         thresholds
     );
-    
+
     // 创建结果显示器
     let alerts = alert_detector.get_alerts();
     let display_handle = thread::spawn(move || {
         let mut last_display = Instant::now();
-        
+
         loop {
             thread::sleep(Duration::from_millis(100));
-            
+
             // 每秒显示汇总
             let now = Instant::now();
             if now.duration_since(last_display) >= Duration::from_secs(1) {
                 last_display = now;
-                
+
                 // 显示警报
                 let mut alerts_guard = alerts.lock().unwrap();
                 if !alerts_guard.is_empty() {
@@ -4565,23 +4565,23 @@ fn main() {
             }
         }
     });
-    
+
     // 启动各组件
     let source_handle = data_source.start();
     let aggregator_handle = window_aggregator.start();
     let alert_handle = alert_detector.start();
-    
+
     // 运行系统一段时间
     println!("Real-time data analysis system running...");
     println!("Press Enter to stop");
     let mut input = String::new();
     std::io::stdin().read_line(&mut input).unwrap();
-    
+
     // 停止系统
     data_source.stop();
     window_aggregator.stop();
     alert_detector.stop();
-    
+
     // 等待线程结束
     source_handle.join().unwrap();
     aggregator_handle.join().unwrap();
@@ -4607,7 +4607,7 @@ fn main() {
    - 类型安全和线程安全
    - 资源使用与释放的正确性
 
-### 8.2 高吞吐消息处理服务
+### 1.8.2 高吞吐消息处理服务
 
 高吞吐消息处理服务需要处理大量消息，同时保证低延迟和高可靠性。
 
@@ -4677,9 +4677,9 @@ func (p *Producer) Start(ctx context.Context) {
     go func() {
         ticker := time.NewTicker(time.Second / time.Duration(p.rate))
         messageID := 0
-        
+
         defer ticker.Stop()
-        
+
         for {
             select {
             case <-ctx.Done():
@@ -4690,7 +4690,7 @@ func (p *Producer) Start(ctx context.Context) {
                     close(p.outputChan)
                     return
                 }
-                
+
                 // 创建消息
                 messageID++
                 msg := Message{
@@ -4698,10 +4698,10 @@ func (p *Producer) Start(ctx context.Context) {
                     Payload:   make([]byte, 1024), // 1KB消息
                     Timestamp: time.Now(),
                 }
-                
+
                 // 模拟数据
                 rand.Read(msg.Payload)
-                
+
                 // 尝试发送消息，实现背压
                 select {
                 case p.outputChan <- msg:
@@ -4746,7 +4746,7 @@ func (c *Consumer) SetInput(input <-chan Message) {
 
 func (c *Consumer) Start(ctx context.Context, workerCount int) {
     c.running.Store(true)
-    
+
     // 启动多个工作协程
     var wg sync.WaitGroup
     for i := 0; i < workerCount; i++ {
@@ -4756,7 +4756,7 @@ func (c *Consumer) Start(ctx context.Context, workerCount int) {
             c.workerLoop(ctx, workerID)
         }(i)
     }
-    
+
     // 等待所有工作协程结束后关闭输出通道
     go func() {
         wg.Wait()
@@ -4767,11 +4767,11 @@ func (c *Consumer) Start(ctx context.Context, workerCount int) {
 func (c *Consumer) workerLoop(ctx context.Context, workerID int) {
     // 每个工作协程处理一批消息
     batch := make([]Message, 0, c.batchSize)
-    
+
     for {
         // 收集一批消息
         batch = batch[:0] // 清空批次
-        
+
         // 尝试填充批次
         timeout := time.After(10 * time.Millisecond)
     collectLoop:
@@ -4789,7 +4789,7 @@ func (c *Consumer) workerLoop(ctx context.Context, workerID int) {
                 return
             }
         }
-        
+
         if len(batch) == 0 {
             // 没有收到消息，检查是否应该继续
             if !c.running.Load() {
@@ -4798,11 +4798,11 @@ func (c *Consumer) workerLoop(ctx context.Context, workerID int) {
             time.Sleep(10 * time.Millisecond)
             continue
         }
-        
+
         // 处理批次中的消息
         for _, msg := range batch {
             result := c.processFn(msg)
-            
+
             // 尝试发送结果，实现背压
             select {
             case c.outputChan <- result:
@@ -4819,7 +4819,7 @@ func (c *Consumer) Stop() {
 }
 
 func (c *Consumer) Output() <-chan Message {
-    
+
 
 ```go
 func (c *Consumer) Output() <-chan Message {
@@ -4846,7 +4846,7 @@ func NewCircuitBreaker(failureThreshold int, resetTimeout time.Duration) *Circui
 
 func (cb *CircuitBreaker) Execute(command func() error) error {
     cb.mutex.Lock()
-    
+
     // 检查断路器状态
     if cb.state == "open" {
         // 检查是否应该尝试重置
@@ -4857,33 +4857,33 @@ func (cb *CircuitBreaker) Execute(command func() error) error {
             return fmt.Errorf("circuit breaker is open")
         }
     }
-    
+
     cb.mutex.Unlock()
-    
+
     // 执行命令
     err := command()
-    
+
     cb.mutex.Lock()
     defer cb.mutex.Unlock()
-    
+
     if err != nil {
         // 命令失败
         cb.failureCount++
         cb.lastFailure = time.Now()
-        
+
         if cb.state == "half-open" || cb.failureCount >= cb.failureThreshold {
             cb.state = "open"
         }
-        
+
         return err
     }
-    
+
     // 命令成功
     if cb.state == "half-open" {
         cb.state = "closed"
     }
     cb.failureCount = 0
-    
+
     return nil
 }
 
@@ -4906,9 +4906,9 @@ func NewMetrics() *Metrics {
 func (m *Metrics) RecordLatency(duration time.Duration) {
     m.mutex.Lock()
     defer m.mutex.Unlock()
-    
+
     m.processingLatency = append(m.processingLatency, duration)
-    
+
     // 保持最近的1000个样本
     if len(m.processingLatency) > 1000 {
         m.processingLatency = m.processingLatency[1:]
@@ -4926,31 +4926,31 @@ func (m *Metrics) IncrementErrorCount() {
 func (m *Metrics) GetStats() map[string]interface{} {
     m.mutex.Lock()
     defer m.mutex.Unlock()
-    
+
     var totalLatency time.Duration
     var maxLatency time.Duration
-    
+
     for _, latency := range m.processingLatency {
         totalLatency += latency
         if latency > maxLatency {
             maxLatency = latency
         }
     }
-    
+
     var avgLatency time.Duration
     if len(m.processingLatency) > 0 {
         avgLatency = totalLatency / time.Duration(len(m.processingLatency))
     }
-    
+
     uptime := time.Since(m.startTime)
     messageCount := atomic.LoadInt64(&m.messageCount)
     errorCount := atomic.LoadInt64(&m.errorCount)
-    
+
     var throughput float64
     if uptime > 0 {
         throughput = float64(messageCount) / uptime.Seconds()
     }
-    
+
     return map[string]interface{}{
         "message_count": messageCount,
         "error_count": errorCount,
@@ -4966,68 +4966,68 @@ func main() {
     // 创建上下文，用于全局控制
     ctx, cancel := context.WithCancel(context.Background())
     defer cancel()
-    
+
     // 创建指标收集器
     metrics := NewMetrics()
-    
+
     // 创建断路器
     circuitBreaker := NewCircuitBreaker(5, 10*time.Second)
-    
+
     // 创建生产者，每秒生成1000条消息
     producer := NewProducer(1000)
     producer.Start(ctx)
-    
+
     // 创建第一阶段处理器 - 解析和验证
     processor1 := NewConsumer(100, func(msg Message) Message {
         start := time.Now()
-        
+
         // 模拟处理 - 验证消息
         time.Sleep(time.Millisecond)
-        
+
         // 记录延迟
         metrics.RecordLatency(time.Since(start))
         metrics.IncrementMessageCount()
-        
+
         return msg
     })
     processor1.SetInput(producer.Output())
     processor1.Start(ctx, 4) // 4个工作协程
-    
+
     // 创建第二阶段处理器 - 业务逻辑处理
     processor2 := NewConsumer(50, func(msg Message) Message {
         start := time.Now()
-        
+
         // 模拟外部服务调用，使用断路器保护
         err := circuitBreaker.Execute(func() error {
             // 模拟外部服务有5%的失败率
             if rand.Float64() < 0.05 {
                 return fmt.Errorf("external service error")
             }
-            
+
             // 模拟处理时间
             time.Sleep(5 * time.Millisecond)
             return nil
         })
-        
+
         if err != nil {
             // 记录错误
             metrics.IncrementErrorCount()
             // 在实际应用中，可能会将消息发送到死信队列
         }
-        
+
         // 记录延迟
         metrics.RecordLatency(time.Since(start))
-        
+
         return msg
     })
     processor2.SetInput(processor1.Output())
     processor2.Start(ctx, 8) // 8个工作协程
-    
+
     // 监控协程 - 每秒报告系统状态
     go func() {
         ticker := time.NewTicker(1 * time.Second)
         defer ticker.Stop()
-        
+
         for {
             select {
             case <-ticker.C:
@@ -5038,21 +5038,21 @@ func main() {
             }
         }
     }()
-    
+
     // 运行系统30秒后停止
     log.Println("System running. Will stop after 30 seconds...")
     time.Sleep(30 * time.Second)
-    
+
     // 优雅关闭
     log.Println("Stopping system...")
     producer.Stop()
     processor1.Stop()
     processor2.Stop()
     cancel()
-    
+
     // 等待处理完成
     time.Sleep(1 * time.Second)
-    
+
     // 显示最终统计
     log.Printf("Final stats: %+v\n", metrics.GetStats())
 }
@@ -5079,7 +5079,7 @@ func main() {
    - 缓冲区合理配置
    - 优雅关闭机制
 
-### 8.3 数据流可视化交互应用
+### 1.8.3 数据流可视化交互应用
 
 数据流可视化交互应用展示了前端中数据流的处理，特别关注响应式界面和实时更新。
 
@@ -5157,7 +5157,7 @@ impl DataProcessor {
             categories: Vec::new(),
         }
     }
-    
+
     // 添加数据点
     #[wasm_bindgen]
     pub fn add_data_point(&mut self, timestamp: f64, value: f64, category: String) {
@@ -5166,7 +5166,7 @@ impl DataProcessor {
             value,
             category: category.clone(),
         };
-        
+
         // 查找或创建类别窗口
         let category_index = match self.categories.iter().position(|c| c == &category) {
             Some(index) => index,
@@ -5176,11 +5176,11 @@ impl DataProcessor {
                 self.categories.len() - 1
             }
         };
-        
+
         // 添加数据点到相应窗口
         self.data_windows[category_index].push_back(data_point);
     }
-    
+
     // 清理过时数据
     #[wasm_bindgen]
     pub fn prune_old_data(&mut self, current_time: f64) {
@@ -5190,34 +5190,34 @@ impl DataProcessor {
             }
         }
     }
-    
+
     // 计算窗口统计
     #[wasm_bindgen]
     pub fn calculate_stats(&self, current_time: f64) -> JsValue {
         let mut results = Vec::new();
-        
+
         for (i, window) in self.data_windows.iter().enumerate() {
             if window.is_empty() {
                 continue;
             }
-            
+
             let category = &self.categories[i];
             let start_time = current_time - self.window_size;
-            
+
             // 计算统计值
             let mut sum = 0.0;
             let mut min = f64::INFINITY;
             let mut max = f64::NEG_INFINITY;
-            
+
             for point in window {
                 sum += point.value;
                 min = min.min(point.value);
                 max = max.max(point.value);
             }
-            
+
             let count = window.len();
             let avg = if count > 0 { sum / count as f64 } else { 0.0 };
-            
+
             results.push(WindowStats {
                 start_time,
                 end_time: current_time,
@@ -5228,7 +5228,7 @@ impl DataProcessor {
                 count,
             });
         }
-        
+
         // 序列化为JS值返回
         JsValue::from_serde(&results).unwrap()
     }
@@ -5252,24 +5252,24 @@ impl MockDataGenerator {
             variation: 5.0,
         }
     }
-    
+
     #[wasm_bindgen]
     pub fn generate_data_point(&self, timestamp: f64) -> JsValue {
         // 选择随机类别
         let index = (js_sys::Math::random() * self.categories.len() as f64) as usize;
         let category = self.categories[index].clone();
         let base_value = self.base_values[index];
-        
+
         // 生成随机变化
         let variation = (js_sys::Math::random() - 0.5) * 2.0 * self.variation;
         let value = base_value + variation;
-        
+
         let point = DataPoint {
             timestamp,
             value,
             category,
         };
-        
+
         JsValue::from_serde(&point).unwrap()
     }
 }
@@ -5331,48 +5331,48 @@ let categoryData = new Map(); // 按类别分组的数据
 // 更新图表函数
 function updateChart(stats) {
   if (!stats || stats.length === 0) return;
-  
+
   // 更新比例尺域
   const now = Date.now();
   x.domain([now - 10000, now]);
-  
+
   const yMin = d3.min(stats, d => d.min) * 0.9;
   const yMax = d3.max(stats, d => d.max) * 1.1;
   y.domain([yMin, yMax]);
-  
+
   // 更新坐标轴
   xAxis.call(d3.axisBottom(x));
   yAxis.call(d3.axisLeft(y));
-  
+
   // 更新类别数据
   for (const stat of stats) {
     if (!categoryData.has(stat.category)) {
       categoryData.set(stat.category, []);
     }
-    
+
     const data = categoryData.get(stat.category);
     // 添加当前统计点
     data.push({
       timestamp: stat.end_time,
       value: stat.avg
     });
-    
+
     // 删除旧数据点
     while (data.length > 0 && data[0].timestamp < now - 10000) {
       data.shift();
     }
   }
-  
+
   // 更新线条
   const categories = Array.from(categoryData.keys());
-  
+
   // 更新颜色比例尺
   color.domain(categories);
-  
+
   // 更新线条
   const lines = svg.selectAll('.line')
     .data(categories, d => d);
-  
+
   lines.enter()
     .append('path')
     .attr('class', 'line')
@@ -5381,31 +5381,31 @@ function updateChart(stats) {
     .merge(lines)
     .attr('stroke', d => color(d))
     .attr('d', d => line(categoryData.get(d)));
-  
+
   lines.exit().remove();
-  
+
   // 更新图例
   const legendItems = legend.selectAll('.legend-item')
     .data(categories, d => d);
-  
+
   const legendEnter = legendItems.enter()
     .append('g')
     .attr('class', 'legend-item')
     .attr('transform', (d, i) => `translate(0,${i * 20})`);
-  
+
   legendEnter.append('rect')
     .attr('width', 12)
     .attr('height', 12)
     .attr('fill', d => color(d));
-  
+
   legendEnter.append('text')
     .attr('x', 18)
     .attr('y', 9)
     .attr('dy', '.35em')
     .text(d => d);
-  
+
   legendItems.exit().remove();
-  
+
   // 更新统计信息表格
   updateStatsTable(stats);
 }
@@ -5413,27 +5413,27 @@ function updateChart(stats) {
 // 更新统计表格
 function updateStatsTable(stats) {
   const table = d3.select('#stats-table tbody');
-  
+
   const rows = table.selectAll('tr')
     .data(stats, d => d.category);
-  
+
   const rowsEnter = rows.enter()
     .append('tr');
-  
+
   rowsEnter.append('td').attr('class', 'category');
   rowsEnter.append('td').attr('class', 'min');
   rowsEnter.append('td').attr('class', 'max');
   rowsEnter.append('td').attr('class', 'avg');
   rowsEnter.append('td').attr('class', 'count');
-  
+
   const allRows = rowsEnter.merge(rows);
-  
+
   allRows.select('.category').text(d => d.category);
   allRows.select('.min').text(d => d.min.toFixed(2));
   allRows.select('.max').text(d => d.max.toFixed(2));
   allRows.select('.avg').text(d => d.avg.toFixed(2));
   allRows.select('.count').text(d => d.count);
-  
+
   rows.exit().remove();
 }
 
@@ -5441,24 +5441,24 @@ function updateStatsTable(stats) {
 function dataLoop() {
   // 获取当前时间戳
   const now = Date.now();
-  
+
   // 生成新数据点
   const point = generator.generate_data_point(now);
   const parsedPoint = JSON.parse(point);
-  
+
   // 添加到处理器
   processor.add_data_point(
     parsedPoint.timestamp,
     parsedPoint.value,
     parsedPoint.category
   );
-  
+
   // 清理旧数据
   processor.prune_old_data(now);
-  
+
   // 计算统计
   const stats = JSON.parse(processor.calculate_stats(now));
-  
+
   // 更新图表
   updateChart(stats);
 }
@@ -5597,7 +5597,7 @@ HTML页面：
    - 数据处理与UI渲染分离
    - 关注点分离提高可维护性
 
-## 9. 思维导图
+## 1.9 思维导图
 
 ```text
 从软件工程视角看数据流：设计、模式、算法与架构

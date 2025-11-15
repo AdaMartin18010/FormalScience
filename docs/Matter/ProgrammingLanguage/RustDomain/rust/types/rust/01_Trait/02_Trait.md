@@ -1,103 +1,99 @@
-# Trait
+# 1. Trait
 
-Rust 中的 trait 是一种抽象的共享行为的概念，类似于其他编程语言中的接口或抽象类。
-Trait 可以定义一组方法，这些方法可以由实现了该 trait 的类型提供具体实现。
-以下是一些 Rust 中常见的 trait：
+## 目录
 
-## 📋 目录
+- [1. Trait](#1-trait)
+  - [目录](#目录)
+  - [1.1 Copy - 允许类型通过简单的位拷贝进行复制。如果一个类型实现了 Copy trait，那么在赋值或函数参数传递时，它的值将被复制而不是移动](#11-copy---允许类型通过简单的位拷贝进行复制如果一个类型实现了-copy-trait那么在赋值或函数参数传递时它的值将被复制而不是移动)
+  - [1.2 Clone - 提供一个显式的复制操作。Clone trait 要求类型也实现了 Copy trait](#12-clone---提供一个显式的复制操作clone-trait-要求类型也实现了-copy-trait)
+  - [1.3 Debug - 允许使用 格式化占位符打印类型](#13-debug---允许使用-格式化占位符打印类型)
+  - [1.4 PartialEq - 允许使用 运算符比较类型](#14-partialeq---允许使用-运算符比较类型)
+  - [1.5 Eq - 一个标记 trait，表明类型可以被比较，并且相等性比较是可交换的](#15-eq---一个标记-trait表明类型可以被比较并且相等性比较是可交换的)
+  - [1.6 PartialOrd - 允许使用 运算符进行部分排序比较](#16-partialord---允许使用-运算符进行部分排序比较)
+  - [1.7 Ord - 一个标记 trait，表明类型可以进行排序比较，并且是 PartialOrd 的超集](#17-ord---一个标记-trait表明类型可以进行排序比较并且是-partialord-的超集)
+  - [1.8 Hash - 允许类型被哈希，通常用于存储在哈希表中](#18-hash---允许类型被哈希通常用于存储在哈希表中)
+  - [1.9 Default - 提供一个创建类型默认值的方法](#19-default---提供一个创建类型默认值的方法)
+  - [1.10 Iterator - 定义了迭代器的行为，允许使用 next() 方法和其他迭代器适配器](#110-iterator---定义了迭代器的行为允许使用-next-方法和其他迭代器适配器)
+  - [1.11 Extend 和 FromIterator - 允许集合从迭代器中扩展或填充](#111-extend-和-fromiterator---允许集合从迭代器中扩展或填充)
+  - [1.12 AsRef 和 AsMut - 允许隐式地将类型转换为对引用的转换](#112-asref-和-asmut---允许隐式地将类型转换为对引用的转换)
+  - [1.13 Into 和 From - 允许隐式地将一个类型转换为另一个类型](#113-into-和-from---允许隐式地将一个类型转换为另一个类型)
+  - [1.14 Drop - 定义了当值离开作用域时执行的清理逻辑](#114-drop---定义了当值离开作用域时执行的清理逻辑)
+  - [1.15 Fn FnMut 和 FnOnce - 这些 trait 定义了闭包的三种捕获方式](#115-fn-fnmut-和-fnonce---这些-trait-定义了闭包的三种捕获方式)
+  - [1.16 Send 和 Sync - 这些标记 trait 表明类型可以安全地在多线程之间传送或共享](#116-send-和-sync---这些标记-trait-表明类型可以安全地在多线程之间传送或共享)
+  - [1.17 Error - 为错误类型提供了一个统一的接口](#117-error---为错误类型提供了一个统一的接口)
+  - [1.18 Display 和 Format - 允许使用 格式化占位符进行格式化](#118-display-和-format---允许使用-格式化占位符进行格式化)
+  - [1.19 SliceConcatExt - 允许对切片进行连接操作](#119-sliceconcatext---允许对切片进行连接操作)
+  - [1.20 Add Sub Mul Div 等算术运算 trait](#120-add-sub-mul-div-等算术运算-trait)
+  - [1.21 Iterator 相关的 trait，如 Iterator ExactSizeIterator DoubleEndedIterator 等](#121-iterator-相关的-trait如-iterator-exactsizeiterator-doubleendediterator-等)
+  - [1.22 分类](#122-分类)
+    - [1.22.1 自动 trait](#1221-自动-trait)
+    - [1.22.2 基本 trait](#1222-基本-trait)
+    - [1.22.3 比较 trait](#1223-比较-trait)
+    - [1.22.4 算术 trait](#1224-算术-trait)
+    - [1.22.5 布尔运算 trait](#1225-布尔运算-trait)
+    - [1.22.6 内存管理 trait](#1226-内存管理-trait)
+    - [1.22.7 所有权和借用 trait](#1227-所有权和借用-trait)
+    - [1.22.8 迭代器和集合 trait](#1228-迭代器和集合-trait)
+    - [1.22.9 错误处理 trait](#1229-错误处理-trait)
+    - [1.22.10 特征对象 trait](#12210-特征对象-trait)
+    - [1.22.11 同步和并发 trait](#12211-同步和并发-trait)
+    - [1.22.12 生命周期 trait](#12212-生命周期-trait)
+  - [1.23 编译器语义](#123-编译器语义)
 
-- [1 Copy - 允许类型通过简单的位拷贝进行复制。如果一个类型实现了 Copy trait，那么在赋值或函数参数传递时，它的值将被复制而不是移动](#1-copy---允许类型通过简单的位拷贝进行复制如果一个类型实现了-copy-trait那么在赋值或函数参数传递时它的值将被复制而不是移动)
-- [2 Clone - 提供一个显式的复制操作。Clone trait 要求类型也实现了 Copy trait](#2-clone---提供一个显式的复制操作clone-trait-要求类型也实现了-copy-trait)
-- [3 Debug - 允许使用 格式化占位符打印类型](#3-debug---允许使用-格式化占位符打印类型)
-- [4 PartialEq - 允许使用 运算符比较类型](#4-partialeq---允许使用-运算符比较类型)
-- [5 Eq - 一个标记 trait，表明类型可以被比较，并且相等性比较是可交换的](#5-eq---一个标记-trait表明类型可以被比较并且相等性比较是可交换的)
-- [6 PartialOrd - 允许使用 运算符进行部分排序比较](#6-partialord---允许使用-运算符进行部分排序比较)
-- [7 Ord - 一个标记 trait，表明类型可以进行排序比较，并且是 PartialOrd 的超集](#7-ord---一个标记-trait表明类型可以进行排序比较并且是-partialord-的超集)
-- [8 Hash - 允许类型被哈希，通常用于存储在哈希表中](#8-hash---允许类型被哈希通常用于存储在哈希表中)
-- [9 Default - 提供一个创建类型默认值的方法](#9-default---提供一个创建类型默认值的方法)
-- [10 Iterator - 定义了迭代器的行为，允许使用 next() 方法和其他迭代器适配器](#10-iterator---定义了迭代器的行为允许使用-next-方法和其他迭代器适配器)
-- [11 Extend 和 FromIterator - 允许集合从迭代器中扩展或填充](#11-extend-和-fromiterator---允许集合从迭代器中扩展或填充)
-- [12 AsRef 和 AsMut - 允许隐式地将类型转换为对引用的转换](#12-asref-和-asmut---允许隐式地将类型转换为对引用的转换)
-- [13 Into 和 From - 允许隐式地将一个类型转换为另一个类型](#13-into-和-from---允许隐式地将一个类型转换为另一个类型)
-- [14 Drop - 定义了当值离开作用域时执行的清理逻辑](#14-drop---定义了当值离开作用域时执行的清理逻辑)
-- [15 Fn FnMut 和 FnOnce - 这些 trait 定义了闭包的三种捕获方式](#15-fn-fnmut-和-fnonce---这些-trait-定义了闭包的三种捕获方式)
-- [16 Send 和 Sync - 这些标记 trait 表明类型可以安全地在多线程之间传送或共享](#16-send-和-sync---这些标记-trait-表明类型可以安全地在多线程之间传送或共享)
-- [17 Error - 为错误类型提供了一个统一的接口](#17-error---为错误类型提供了一个统一的接口)
-- [18 Display 和 Format - 允许使用 格式化占位符进行格式化](#18-display-和-format---允许使用-格式化占位符进行格式化)
-- [19 SliceConcatExt - 允许对切片进行连接操作](#19-sliceconcatext---允许对切片进行连接操作)
-- [20 Add Sub Mul Div 等算术运算 trait](#20-add-sub-mul-div-等算术运算-trait)
-- [21 Iterator 相关的 trait，如 Iterator ExactSizeIterator DoubleEndedIterator 等](#21-iterator-相关的-trait如-iterator-exactsizeiterator-doubleendediterator-等)
-- [22 分类](#22-分类)
-  - [22.1 自动 trait](#221-自动-trait)
-  - [22.2 基本 trait](#222-基本-trait)
-  - [22.3 比较 trait](#223-比较-trait)
-  - [22.4 算术 trait](#224-算术-trait)
-  - [22.5 布尔运算 trait](#225-布尔运算-trait)
-  - [22.6 内存管理 trait](#226-内存管理-trait)
-  - [22.7 所有权和借用 trait](#227-所有权和借用-trait)
-  - [22.8 迭代器和集合 trait](#228-迭代器和集合-trait)
-  - [22.9 错误处理 trait](#229-错误处理-trait)
-  - [22.10 特征对象 trait](#2210-特征对象-trait)
-  - [22.11 同步和并发 trait](#2211-同步和并发-trait)
-  - [22.12 生命周期 trait](#2212-生命周期-trait)
-- [23 编译器语义](#23-编译器语义)
+## 1.1 Copy - 允许类型通过简单的位拷贝进行复制。如果一个类型实现了 Copy trait，那么在赋值或函数参数传递时，它的值将被复制而不是移动
 
----
+## 1.2 Clone - 提供一个显式的复制操作。Clone trait 要求类型也实现了 Copy trait
 
-## 1 Copy - 允许类型通过简单的位拷贝进行复制。如果一个类型实现了 Copy trait，那么在赋值或函数参数传递时，它的值将被复制而不是移动
+## 1.3 Debug - 允许使用 格式化占位符打印类型
 
-## 2 Clone - 提供一个显式的复制操作。Clone trait 要求类型也实现了 Copy trait
+## 1.4 PartialEq - 允许使用 运算符比较类型
 
-## 3 Debug - 允许使用 格式化占位符打印类型
+## 1.5 Eq - 一个标记 trait，表明类型可以被比较，并且相等性比较是可交换的
 
-## 4 PartialEq - 允许使用 运算符比较类型
+## 1.6 PartialOrd - 允许使用 运算符进行部分排序比较
 
-## 5 Eq - 一个标记 trait，表明类型可以被比较，并且相等性比较是可交换的
+## 1.7 Ord - 一个标记 trait，表明类型可以进行排序比较，并且是 PartialOrd 的超集
 
-## 6 PartialOrd - 允许使用 运算符进行部分排序比较
+## 1.8 Hash - 允许类型被哈希，通常用于存储在哈希表中
 
-## 7 Ord - 一个标记 trait，表明类型可以进行排序比较，并且是 PartialOrd 的超集
+## 1.9 Default - 提供一个创建类型默认值的方法
 
-## 8 Hash - 允许类型被哈希，通常用于存储在哈希表中
+## 1.10 Iterator - 定义了迭代器的行为，允许使用 next() 方法和其他迭代器适配器
 
-## 9 Default - 提供一个创建类型默认值的方法
+## 1.11 Extend 和 FromIterator - 允许集合从迭代器中扩展或填充
 
-## 10 Iterator - 定义了迭代器的行为，允许使用 next() 方法和其他迭代器适配器
+## 1.12 AsRef 和 AsMut - 允许隐式地将类型转换为对引用的转换
 
-## 11 Extend 和 FromIterator - 允许集合从迭代器中扩展或填充
+## 1.13 Into 和 From - 允许隐式地将一个类型转换为另一个类型
 
-## 12 AsRef 和 AsMut - 允许隐式地将类型转换为对引用的转换
+## 1.14 Drop - 定义了当值离开作用域时执行的清理逻辑
 
-## 13 Into 和 From - 允许隐式地将一个类型转换为另一个类型
+## 1.15 Fn FnMut 和 FnOnce - 这些 trait 定义了闭包的三种捕获方式
 
-## 14 Drop - 定义了当值离开作用域时执行的清理逻辑
+## 1.16 Send 和 Sync - 这些标记 trait 表明类型可以安全地在多线程之间传送或共享
 
-## 15 Fn FnMut 和 FnOnce - 这些 trait 定义了闭包的三种捕获方式
+## 1.17 Error - 为错误类型提供了一个统一的接口
 
-## 16 Send 和 Sync - 这些标记 trait 表明类型可以安全地在多线程之间传送或共享
+## 1.18 Display 和 Format - 允许使用 格式化占位符进行格式化
 
-## 17 Error - 为错误类型提供了一个统一的接口
+## 1.19 SliceConcatExt - 允许对切片进行连接操作
 
-## 18 Display 和 Format - 允许使用 格式化占位符进行格式化
+## 1.20 Add Sub Mul Div 等算术运算 trait
 
-## 19 SliceConcatExt - 允许对切片进行连接操作
-
-## 20 Add Sub Mul Div 等算术运算 trait
-
-## 21 Iterator 相关的 trait，如 Iterator ExactSizeIterator DoubleEndedIterator 等
+## 1.21 Iterator 相关的 trait，如 Iterator ExactSizeIterator DoubleEndedIterator 等
 
 这些 trait 可以单独使用，也可以组合使用，以实现复杂的类型行为。
 Rust 的标准库提供了许多 trait，同时开发者也可以定义自己的 trait 来约束和抽象化自定义类型的行为。
 
-## 22 分类
+## 1.22 分类
 
 Rust 的 trait 可以分为几类，主要根据它们的用途和特性来区分：
 
-### 22.1 自动 trait
+### 1.22.1 自动 trait
 
 - 这些 trait 会自动为所有类型实现，不需要显式实现。例如，`Sized` 和 `Copy`。
 
-### 22.2 基本 trait
+### 1.22.2 基本 trait
 
 - 基本 trait 是一些核心 trait，它们定义了类型的基本行为。例如：
   - `Copy`: 类型可以被复制。
@@ -106,13 +102,13 @@ Rust 的 trait 可以分为几类，主要根据它们的用途和特性来区�
   - `PartialEq`: 类型可以与其他类型进行比较。
   - `Eq`: 类型可以与自身进行比较，并且比较操作是等价的。
 
-### 22.3 比较 trait
+### 1.22.3 比较 trait
 
 - 这些 trait 用于定义类型之间的比较操作。例如：
   - `PartialOrd`: 类型可以与其他类型进行部分排序比较。
   - `Ord`: 类型可以进行全排序比较。
 
-### 22.4 算术 trait
+### 1.22.4 算术 trait
 
 - 这些 trait 定义了算术操作。例如：
   - `Add`: 类型可以进行加法。
@@ -120,19 +116,19 @@ Rust 的 trait 可以分为几类，主要根据它们的用途和特性来区�
   - `Mul`: 类型可以进行乘法。
   - `Div`: 类型可以进行除法。
 
-### 22.5 布尔运算 trait
+### 1.22.5 布尔运算 trait
 
 - 这些 trait 定义了布尔运算。例如：
   - `Not`: 类型可以进行逻辑非操作。
   - `And`: 类型可以进行逻辑与操作。
   - `Or`: 类型可以进行逻辑或操作。
 
-### 22.6 内存管理 trait
+### 1.22.6 内存管理 trait
 
 - 这些 trait 与内存分配和释放有关。例如：
   - `Drop`: 类型在离开作用域时执行清理操作。
 
-### 22.7 所有权和借用 trait
+### 1.22.7 所有权和借用 trait
 
 - 这些 trait 定义了类型如何与 Rust 的所有权和借用规则交互。例如：
   - `Deref`: 类型可以表现得像它们所包含的值。
@@ -140,33 +136,33 @@ Rust 的 trait 可以分为几类，主要根据它们的用途和特性来区�
   - `AsRef`: 类型可以转换为对另一个类型的不可变引用。
   - `AsMut`: 类型可以转换为对另一个类型的可变引用。
 
-### 22.8 迭代器和集合 trait
+### 1.22.8 迭代器和集合 trait
 
 - 这些 trait 定义了迭代器和集合的操作。例如：
   - `Iterator`: 类型可以迭代产生值。
   - `Extend`: 集合可以扩展自身以包含其他集合的元素。
   - `IntoIterator`: 类型可以转换成一个迭代器。
 
-### 22.9 错误处理 trait
+### 1.22.9 错误处理 trait
 
 - 这些 trait 用于错误处理。例如：
 
 - `Result`: 类型可以表示操作的结果，可能是成功的值或错误。
 - `Error`: 类型可以表示错误的信息。
 
-### 22.10 特征对象 trait
+### 1.22.10 特征对象 trait
 
     - 这些 trait 用于定义特征对象（trait objects），它们允许动态分派。例如：
      - `Any`: 类型可以表示任何类型。
      - `Fn`, `FnMut`, `FnOnce`: 这些 trait 定义了闭包的不同借用规则。
 
-### 22.11 同步和并发 trait
+### 1.22.11 同步和并发 trait
 
     - 这些 trait 定义了线程安全和并发操作。例如：
      - `Send`: 类型可以被发送到另一个线程。
      - `Sync`: 类型可以被多个线程安全地共享。
 
-### 22.12 生命周期 trait
+### 1.22.12 生命周期 trait
 
     - 这些 trait 与生命周期相关，用于定义类型与生命周期的关系。例如：
      - `CoerceUnsized`: 类型可以被强制转换为不同的生命周期。
@@ -174,7 +170,7 @@ Rust 的 trait 可以分为几类，主要根据它们的用途和特性来区�
 
 这些 trait 为 Rust 的类型系统提供了丰富的行为定义，使得 Rust 能够以类型安全的方式表达各种操作和规则。
 
-## 23 编译器语义
+## 1.23 编译器语义
 
 在 Rust 中，trait 是一种定义共享行为的方式，类似于其他编程语言中的接口或抽象类。
 它们允许我们为不同的类型实现相同的行为。

@@ -248,13 +248,13 @@ mod inline_module {
     fn private_function() {
         println!("This is private");
     }
-    
+
     // 公开函数，可从外部访问
     pub fn public_function() {
         println!("This is public");
         private_function();
     }
-    
+
     // 嵌套模块
     pub mod nested {
         pub fn nested_function() {
@@ -379,7 +379,7 @@ mod front_of_house {
 fn main() {
     // 绝对路径
     crate::front_of_house::hosting::add_to_waitlist();
-    
+
     // 相对路径
     front_of_house::hosting::add_to_waitlist();
 }
@@ -603,7 +603,7 @@ pub mod api {
         // 私有字段
         connection: Connection,
     }
-    
+
     impl Client {
         // 公共方法
         pub fn new() -> Self {
@@ -611,18 +611,18 @@ pub mod api {
                 connection: Connection::new(),
             }
         }
-        
+
         // 私有方法
         fn internal_helper() {
             // 实现细节
         }
     }
-    
+
     // 私有类型，只在模块内可见
     struct Connection {
         // 实现细节
     }
-    
+
     impl Connection {
         fn new() -> Self {
             Connection {}
@@ -720,37 +720,37 @@ Rust 的可见性机制基于以下规则：
 mod outer {
     // 私有函数，只在 outer 内可见
     fn private_outer() {}
-    
+
     // 公开函数，对所有人可见
     pub fn public_outer() {}
-    
+
     // 对 crate 可见的函数
     pub(crate) fn crate_visible() {}
-    
+
     mod inner {
         // 私有函数，只在 inner 内可见
         fn private_inner() {}
-        
+
         // 对父模块 outer 可见的函数
         pub(super) fn super_visible() {}
-        
+
         // 对所有人可见的函数
         pub fn public_inner() {
             // 可以调用父模块的私有函数
             super::private_outer();
-            
+
             // 可以调用自己的私有函数
             private_inner();
         }
     }
-    
+
     fn outer_function() {
         // 可以调用 inner 的 super_visible 函数
         inner::super_visible();
-        
+
         // 可以调用 inner 的公开函数
         inner::public_inner();
-        
+
         // 不能调用 inner 的私有函数
         // inner::private_inner(); // 错误
     }
@@ -759,10 +759,10 @@ mod outer {
 fn main() {
     // 可以调用 outer 的公开函数
     outer::public_outer();
-    
+
     // 可以调用 outer::inner 的公开函数
     // outer::inner::public_inner(); // 错误：inner 模块不是公开的
-    
+
     // 可以调用 crate 可见的函数
     outer::crate_visible();
 }
@@ -800,7 +800,7 @@ pub mod io {
     mod cursor;
     mod error;
     // ...
-    
+
     // 重导出主要类型
     pub use self::buffered::{BufReader, BufWriter};
     pub use self::cursor::Cursor;
@@ -933,7 +933,7 @@ impl Plugin for PluginA {
     fn name(&self) -> &str {
         "Plugin A"
     }
-    
+
     fn execute(&self, input: &str) -> Result<String, core::Error> {
         // 实现...
         Ok(format!("Plugin A processed: {}", input))

@@ -1,26 +1,26 @@
-# Rust 1.86.0 特性分析
+# 1. Rust 1.86.0 特性分析
 
 ## 目录
 
-- [Rust 1.86.0 特性分析](#rust-1860-特性分析)
+- [1. Rust 1.86.0 特性分析](#1-rust-1860-特性分析)
   - [目录](#目录)
-  - [引言](#引言)
-  - [主要特性](#主要特性)
-    - [`impl Trait` in Associated Types](#impl-trait-in-associated-types)
-    - [新的 Lint: `INCOMPATIBLE_FRAGMENT_MATCH`](#新的-lint-incompatible_fragment_match)
-    - [稳定的 API](#稳定的-api)
-  - [思维导图](#思维导图)
-  - [总结](#总结)
+  - [1.1 引言](#11-引言)
+  - [1.2 主要特性](#12-主要特性)
+    - [1.2.1 `impl Trait` in Associated Types](#121-impl-trait-in-associated-types)
+    - [1.2.2 新的 Lint: `INCOMPATIBLE_FRAGMENT_MATCH`](#122-新的-lint-incompatible_fragment_match)
+    - [1.2.3 稳定的 API](#123-稳定的-api)
+  - [1.3 思维导图](#13-思维导图)
+  - [1.4 总结](#14-总结)
 
-## 引言
+## 1.1 引言
 
 Rust 1.86.0 版本于 2024 年 2 月 29 日发布。
 此版本带来了一些重要的语言和库特性稳定化，以及一些编译器和 Cargo 的改进。
 本分析将重点介绍几个关键特性，并提供示例和论证。
 
-## 主要特性
+## 1.2 主要特性
 
-### `impl Trait` in Associated Types
+### 1.2.1 `impl Trait` in Associated Types
 
 - **特性描述:**
     此版本稳定了在 `trait` 关联类型（Associated Types）中使用 `impl Trait` 的能力。
@@ -77,7 +77,7 @@ Rust 1.86.0 版本于 2024 年 2 月 29 日发布。
   - **隐藏实现细节:** 调用者只知道关联类型实现了某个 `trait`，而不需要关心具体的返回类型，提高了封装性。
   - **提升表达能力:** 使得在 `trait` 定义和实现中处理 `async/await` 和迭代器更加自然和符合人体工程学。
 
-### 新的 Lint: `INCOMPATIBLE_FRAGMENT_MATCH`
+### 1.2.2 新的 Lint: `INCOMPATIBLE_FRAGMENT_MATCH`
 
 - **特性描述:**
     引入了一个新的 `warn-by-default` lint，名为 `INCOMPATIBLE_FRAGMENT_MATCH`。
@@ -116,7 +116,7 @@ Rust 1.86.0 版本于 2024 年 2 月 29 日发布。
   - **改善开发者体验:** 及早发现宏定义中的逻辑错误，减少调试时间。
   - **促进最佳实践:** 鼓励更精确地使用片段说明符，编写更可靠的宏。
 
-### 稳定的 API
+### 1.2.3 稳定的 API
 
 Rust 1.86.0 稳定了多个之前在 `nightly` 版本中可用的 API。以下是一些值得注意的例子：
 
@@ -158,7 +158,7 @@ assert!(!opt2.contains(&0)); // 对于 None，总是返回 false
   - **提升代码质量:** 提供了更符合人体工程学、更不易出错的 API。
   - **保持生态一致性:** 稳定常用功能，使整个 Rust 生态系统受益。
 
-## 思维导图
+## 1.3 思维导图
 
 ```text
 Rust 1.86.0
@@ -193,7 +193,7 @@ Rust 1.86.0
     └── Cargo 功能增强
 ```
 
-## 总结
+## 1.4 总结
 
 Rust 1.86.0 继续在语言表达能力、开发者体验和标准库功能方面进行稳步改进。
 `impl Trait` 在关联类型中的稳定化显著提升了处理异步代码和迭代器的便利性。

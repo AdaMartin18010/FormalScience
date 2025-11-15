@@ -1,40 +1,38 @@
-# rust分布式日志实现
-
-下面是一个详细的示例，展示如何在 Tokio 异步编程中结合 trace、console 和 OpenTelemetry 实现完整的日志、度量和跟踪功能。
+# 1. rust分布式日志实现
 
 ## 目录
 
-- [rust分布式日志实现](#rust分布式日志实现)
+- [1. rust分布式日志实现](#1-rust分布式日志实现)
   - [目录](#目录)
-  - [1. 项目依赖配置](#1-项目依赖配置)
-    - [2. 基础设施代码](#2-基础设施代码)
-    - [3. 创建自定义的跟踪宏](#3-创建自定义的跟踪宏)
-    - [4. 实现业务逻辑](#4-实现业务逻辑)
-    - [5. 实现 HTTP 服务器](#5-实现-http-服务器)
-    - [6. 主程序入口](#6-主程序入口)
-    - [7. 使用示例](#7-使用示例)
-    - [8. 配置文件示例](#8-配置文件示例)
-    - [9. 设计规范](#9-设计规范)
-    - [10. 监控面板配置](#10-监控面板配置)
-    - [\*1. 项目依赖配置](#1-项目依赖配置-1)
-    - [2. 自定义跟踪器实现](#2-自定义跟踪器实现)
-    - [3. 自定义日志格式化器](#3-自定义日志格式化器)
-    - [4. 异步任务跟踪器](#4-异步任务跟踪器)
-    - [5. 示例应用程序](#5-示例应用程序)
-    - [6. 使用示例](#6-使用示例)
-    - [7. 运行时环境变量配置](#7-运行时环境变量配置)
-    - [8. 输出示例](#8-输出示例)
-    - [9. 调试功能](#9-调试功能)
-      - [1. **条件跟踪**](#1-条件跟踪)
-      - [2. **性能分析**](#2-性能分析)
-      - [3. **错误跟踪**](#3-错误跟踪)
-    - [10. 最佳实践](#10-最佳实践)
-      - [1. **使用有意义的 span 名称**](#1-使用有意义的-span-名称)
-      - [2. **结构化日志记录**](#2-结构化日志记录)
-      - [3. **错误处理与日志记录**](#3-错误处理与日志记录)
-      - [4. **异步上下文传播**](#4-异步上下文传播)
+  - [1.1 项目依赖配置](#11-项目依赖配置)
+    - [1.1.1 基础设施代码](#111-基础设施代码)
+    - [1.1.2 创建自定义的跟踪宏](#112-创建自定义的跟踪宏)
+    - [1.1.3 实现业务逻辑](#113-实现业务逻辑)
+    - [1.1.4 实现 HTTP 服务器](#114-实现-http-服务器)
+    - [1.1.5 主程序入口](#115-主程序入口)
+    - [1.1.6 使用示例](#116-使用示例)
+    - [1.1.7 配置文件示例](#117-配置文件示例)
+    - [1.1.8 设计规范](#118-设计规范)
+    - [1.1.9 监控面板配置](#119-监控面板配置)
+    - [1.1.10 \*1. 项目依赖配置](#1110-1-项目依赖配置)
+    - [1.1.11 自定义跟踪器实现](#1111-自定义跟踪器实现)
+    - [1.1.12 自定义日志格式化器](#1112-自定义日志格式化器)
+    - [1.1.13 异步任务跟踪器](#1113-异步任务跟踪器)
+    - [1.1.14 示例应用程序](#1114-示例应用程序)
+    - [1.1.15 使用示例](#1115-使用示例)
+    - [1.1.16 运行时环境变量配置](#1116-运行时环境变量配置)
+    - [1.1.17 输出示例](#1117-输出示例)
+    - [1.1.18 调试功能](#1118-调试功能)
+      - [1.1.18.1 **条件跟踪**](#11181-条件跟踪)
+      - [1.1.18.2 **性能分析**](#11182-性能分析)
+      - [1.1.18.3 **错误跟踪**](#11183-错误跟踪)
+    - [1.1.19 最佳实践](#1119-最佳实践)
+      - [1.1.19.1 **使用有意义的 span 名称**](#11191-使用有意义的-span-名称)
+      - [1.1.19.2 **结构化日志记录**](#11192-结构化日志记录)
+      - [1.1.19.3 **错误处理与日志记录**](#11193-错误处理与日志记录)
+      - [1.1.19.4 **异步上下文传播**](#11194-异步上下文传播)
 
-## 1. 项目依赖配置
+## 1.1 项目依赖配置
 
 首先在 `Cargo.toml` 中添加必要的依赖：
 
@@ -53,7 +51,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 ```
 
-### 2. 基础设施代码
+### 1.1.1 基础设施代码
 
 首先创建一个 `telemetry.rs` 文件来设置基础设施：
 
@@ -106,7 +104,7 @@ impl Telemetry {
 
         // 3. 设置 tracing subscriber
         let telemetry = tracing_opentelemetry::layer().with_tracer(tracer);
-        
+
         let fmt_layer = fmt::layer()
             .with_target(true)
             .with_thread_ids(true)
@@ -136,7 +134,7 @@ impl Telemetry {
 }
 ```
 
-### 3. 创建自定义的跟踪宏
+### 1.1.2 创建自定义的跟踪宏
 
 创建 `macros.rs` 文件：
 
@@ -166,7 +164,7 @@ macro_rules! trace_async_op {
 }
 ```
 
-### 4. 实现业务逻辑
+### 1.1.3 实现业务逻辑
 
 创建 `service.rs` 文件：
 
@@ -187,7 +185,7 @@ impl UserService {
             "Total number of user operations",
         ).unwrap();
         registry.register(Box::new(counter.clone())).unwrap();
-        
+
         Self { counter }
     }
 
@@ -195,10 +193,10 @@ impl UserService {
     pub async fn get_user(&self, user_id: i32) -> Result<String, String> {
         info!(user_id = user_id, "Getting user information");
         self.counter.inc();
-        
+
         // 模拟数据库查询
         sleep(Duration::from_millis(100)).await;
-        
+
         Ok(format!("User {}", user_id))
     }
 
@@ -206,16 +204,16 @@ impl UserService {
     pub async fn create_user(&self, name: &str) -> Result<i32, String> {
         info!(name = name, "Creating new user");
         self.counter.inc();
-        
+
         // 模拟数据库操作
         sleep(Duration::from_millis(200)).await;
-        
+
         Ok(42)
     }
 }
 ```
 
-### 5. 实现 HTTP 服务器
+### 1.1.4 实现 HTTP 服务器
 
 创建 `server.rs` 文件：
 
@@ -278,7 +276,7 @@ pub async fn run_server(
 }
 ```
 
-### 6. 主程序入口
+### 1.1.5 主程序入口
 
 创建 `main.rs` 文件：
 
@@ -313,7 +311,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-### 7. 使用示例
+### 1.1.6 使用示例
 
 ```rust
 // 在任何异步函数中使用跟踪
@@ -330,7 +328,7 @@ async fn example_operation() -> Result<(), String> {
 }
 ```
 
-### 8. 配置文件示例
+### 1.1.7 配置文件示例
 
 创建 `.env` 文件：
 
@@ -340,7 +338,7 @@ OTEL_SERVICE_NAME=my-service
 OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces
 ```
 
-### 9. 设计规范
+### 1.1.8 设计规范
 
 1. **日志级别使用规范**：
    - ERROR: 影响系统运行的错误
@@ -373,7 +371,7 @@ OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces
    - 在错误发生时记录详细信息
    - 包含错误上下文
 
-### 10. 监控面板配置
+### 1.1.9 监控面板配置
 
 创建 Grafana 仪表板配置：
 
@@ -421,7 +419,7 @@ OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces
 
 下面是一个详细的示例，展示如何在 Tokio 异步编程中结合 tracing 和 console 实现完整的日志跟踪和调试功能。
 
-### *1. 项目依赖配置
+### 1.1.10 *1. 项目依赖配置
 
 首先在 `Cargo.toml` 中添加必要的依赖：
 
@@ -436,7 +434,7 @@ chrono = "0.4"
 colored = "2.0"
 ```
 
-### 2. 自定义跟踪器实现
+### 1.1.11 自定义跟踪器实现
 
 创建 `tracer.rs` 文件：
 
@@ -458,8 +456,8 @@ impl AsyncTracer {
         let indent = INDENT_LEVEL.fetch_add(1, Ordering::SeqCst);
         let indent_str = "  ".repeat(indent);
         let timestamp = Local::now().format("%H:%M:%S%.3f");
-        
-        println!("{}{} {} {}", 
+
+        println!("{}{} {} {}",
             indent_str,
             style(timestamp).dim(),
             style("→").blue(),
@@ -498,7 +496,7 @@ macro_rules! trace_async {
 }
 ```
 
-### 3. 自定义日志格式化器
+### 1.1.12 自定义日志格式化器
 
 创建 `logger.rs` 文件：
 
@@ -558,7 +556,7 @@ where
 }
 ```
 
-### 4. 异步任务跟踪器
+### 1.1.13 异步任务跟踪器
 
 创建 `task_tracker.rs` 文件：
 
@@ -637,7 +635,7 @@ impl TaskTracker {
 }
 ```
 
-### 5. 示例应用程序
+### 1.1.14 示例应用程序
 
 创建 `main.rs` 文件：
 
@@ -655,7 +653,7 @@ async fn main() {
     init_tracing();
 
     let tracker = task_tracker::TaskTracker::new();
-    
+
     // 执行一些异步任务
     let handles = vec![
         tokio::spawn(complex_operation("task1", tracker.clone())),
@@ -710,7 +708,7 @@ async fn step_two(task_id: &str) -> Result<(), String> {
 
 fn init_tracing() {
     use tracing_subscriber::prelude::*;
-    
+
     let fmt_layer = tracing_subscriber::fmt::layer()
         .with_target(true)
         .with_thread_ids(true)
@@ -727,30 +725,30 @@ fn init_tracing() {
 }
 ```
 
-### 6. 使用示例
+### 1.1.15 使用示例
 
 ```rust
 // 在异步函数中使用跟踪
 #[instrument]
 async fn example_async_function() {
     trace_async!("example_async_function");
-    
+
     info!("Starting async operation");
-    
+
     // 执行一些异步操作
     tokio::time::sleep(Duration::from_secs(1)).await;
-    
+
     info!("Async operation completed");
 }
 ```
 
-### 7. 运行时环境变量配置
+### 1.1.16 运行时环境变量配置
 
 ```bash
 RUST_LOG=debug,my_app=trace
 ```
 
-### 8. 输出示例
+### 1.1.17 输出示例
 
 运行程序后，您将看到类似以下的输出：
 
@@ -765,9 +763,9 @@ RUST_LOG=debug,my_app=trace
 12:34:57.042 INFO  my_app ← complex_operation (took 253ms)
 ```
 
-### 9. 调试功能
+### 1.1.18 调试功能
 
-#### 1. **条件跟踪**
+#### 1.1.18.1 **条件跟踪**
 
 ```rust
 #[instrument(skip_all, fields(user_id = ?user.id))]
@@ -779,7 +777,7 @@ async fn process_user(user: User) {
 }
 ```
 
-#### 2. **性能分析**
+#### 1.1.18.2 **性能分析**
 
 ```rust
 async fn measure_performance<F, Fut, T>(name: &str, f: F) -> T
@@ -790,18 +788,18 @@ where
     let start = std::time::Instant::now();
     let result = f().await;
     let duration = start.elapsed();
-    
+
     info!(
         operation = name,
         duration_ms = duration.as_millis(),
         "Performance measurement"
     );
-    
+
     result
 }
 ```
 
-#### 3. **错误跟踪**
+#### 1.1.18.3 **错误跟踪**
 
 ```rust
 #[derive(Debug)]
@@ -819,9 +817,9 @@ impl std::fmt::Display for TracedError {
 }
 ```
 
-### 10. 最佳实践
+### 1.1.19 最佳实践
 
-#### 1. **使用有意义的 span 名称**
+#### 1.1.19.1 **使用有意义的 span 名称**
 
 ```rust
 #[instrument(name = "user.authentication", skip(password))]
@@ -830,7 +828,7 @@ async fn authenticate_user(username: &str, password: &str) {
 }
 ```
 
-#### 2. **结构化日志记录**
+#### 1.1.19.2 **结构化日志记录**
 
 ```rust
 info!(
@@ -841,7 +839,7 @@ info!(
 );
 ```
 
-#### 3. **错误处理与日志记录**
+#### 1.1.19.3 **错误处理与日志记录**
 
 ```rust
 match operation().await {
@@ -850,13 +848,13 @@ match operation().await {
 }
 ```
 
-#### 4. **异步上下文传播**
+#### 1.1.19.4 **异步上下文传播**
 
 ```rust
 async fn process_request(request_id: String) {
     let span = span!(Level::INFO, "request", id = %request_id);
     let _enter = span.enter();
-    
+
     // 所有子操作都将继承这个 span 上下文
     process_step_one().await;
     process_step_two().await;

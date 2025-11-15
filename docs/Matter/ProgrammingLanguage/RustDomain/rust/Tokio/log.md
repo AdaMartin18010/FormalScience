@@ -84,7 +84,7 @@ async fn main() {
     // 结束 Span
     drop(_guard);
     span.end();
-    
+
     // 关闭 OpenTelemetry
     global::shutdown_tracer_provider();
 }
@@ -142,7 +142,7 @@ async fn another_task(tracer: Arc<dyn Tracer>) {
     tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
 
     log::info!("Finished another task.");
-    
+
     // 结束 Span
     drop(_guard);
     span.end();
@@ -244,7 +244,7 @@ pub struct LogManager {
 impl LogManager {
     pub fn new(log_dir: PathBuf, max_files: usize) -> Self {
         std::fs::create_dir_all(&log_dir).unwrap();
-        
+
         let appender = RollingFileAppender::new(
             Rotation::DAILY,
             log_dir.clone(),
@@ -264,7 +264,7 @@ impl LogManager {
             .unwrap()
             .filter_map(Result::ok)
             .collect();
-            
+
         files.sort();
 
         // 压缩旧日志文件
@@ -283,7 +283,7 @@ impl LogManager {
         let input = std::fs::File::open(file_path).unwrap();
         let gz_path = file_path.with_extension("log.gz");
         let output = std::fs::File::create(&gz_path).unwrap();
-        
+
         let mut encoder = GzEncoder::new(output, Compression::default());
         std::io::copy(&mut std::io::BufReader::new(input), &mut encoder).unwrap();
         encoder.finish().unwrap();
@@ -309,7 +309,7 @@ impl TracingManager {
 
     pub fn init(&self) {
         let file_appender = self.log_manager.current_file.clone();
-        
+
         // 文件输出层
         let file_layer = fmt::layer()
             .with_target(true)
@@ -355,7 +355,7 @@ where
         event: &tracing::Event<'_>,
     ) -> std::fmt::Result {
         let metadata = event.metadata();
-        
+
         // 时间戳
         let timestamp = chrono::Local::now().format("%Y-%m-%d %H:%M:%S%.3f");
         write!(writer, "{} ", style(timestamp).dim())?;
@@ -419,7 +419,7 @@ impl Drop for ExecutionTracer {
     fn drop(&mut self) {
         let duration = self.start_time.elapsed();
         let indent = "  ".repeat(self.depth - 1);
-        
+
         info!(
             "{}← Completed {} (took {:?})",
             indent,
@@ -584,7 +584,7 @@ impl LogAnalyzer {
     pub async fn analyze_logs(&self) -> Result<LogStats, Box<dyn std::error::Error>> {
         let mut stats = LogStats::default();
         let pattern = format!("{}/application-*.log*", self.log_dir.display());
-        
+
         for entry in glob::glob(&pattern)? {
             let path = entry?;
             let content = if path.extension().map_or(false, |ext| ext == "gz") {
@@ -674,7 +674,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 分析日志
     let analyzer = LogAnalyzer::new(PathBuf::from(&config.log_dir));
     let stats = analyzer.analyze_logs().await?;
-    
+
     println!("Log analysis results:");
     println!("  Errors: {}", stats.error_count);
     println!("  Warnings: {}", stats.warn_count);
@@ -684,12 +684,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 async fn run_with_tracing() -> Result<(), Box<dyn std::error::Error>> {
     let _trace = ExecutionTracer::new("main_operation");
-    
+
     debug_trace!("Starting main operation");
-    
+
     // 执行一些异步操作...
     tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
-    
+
     debug_trace!("Main operation completed");
     Ok(())
 }

@@ -451,7 +451,7 @@ impl Message for Increment {
 
 impl Handler<Increment> for MyActor {
     type Result = usize;
-    
+
     fn handle(&mut self, _: Increment, _: &mut Self::Context) -> Self::Result {
         self.count += 1;
         self.count
@@ -583,7 +583,7 @@ class AsyncMutex {
       this.locked = true;
       return Promise.resolve();
     }
-    
+
     return new Promise<void>(resolve => {
       this.queue.push(resolve);
     });
@@ -685,10 +685,10 @@ import { pipe } from 'fp-ts/function';
 import { TaskEither, map, chain } from 'fp-ts/TaskEither';
 
 // 异步操作封装
-const fetchUser = (id: string): TaskEither<Error, User> => 
+const fetchUser = (id: string): TaskEither<Error, User> =>
   () => fetch(`/api/users/${id}`).then(r => r.json()).catch(e => Promise.reject(new Error(e)));
 
-const validateUser = (user: User): TaskEither<Error, User> => 
+const validateUser = (user: User): TaskEither<Error, User> =>
   user.isActive ? Promise.resolve(user) : Promise.reject(new Error('用户未激活'));
 
 // 函数组合
@@ -699,8 +699,8 @@ const getActiveUser = (id: string) => pipe(
 
 // 使用
 getActiveUser('123')().then(
-  result => result._tag === 'Right' 
-    ? console.log('有效用户:', result.right) 
+  result => result._tag === 'Right'
+    ? console.log('有效用户:', result.right)
     : console.error('错误:', result.left)
 );
 ```
@@ -723,14 +723,14 @@ function* fetchUserEffect() {
 function runEffects(generator) {
   return new Promise((resolve, reject) => {
     const iterator = generator();
-    
+
     function handleNext(nextValue) {
       const { value, done } = iterator.next(nextValue);
       if (done) {
         resolve(value);
         return;
       }
-      
+
       Promise.resolve(value)
         .then(result => handleNext(result))
         .catch(error => {
@@ -747,7 +747,7 @@ function runEffects(generator) {
           }
         });
     }
-    
+
     handleNext();
   });
 }
@@ -806,11 +806,11 @@ impl RaftNode {
             }
         }
     }
-    
+
     async fn run_follower(&mut self) {
         // 设置选举超时
         let timeout = tokio::time::sleep(Duration::from_millis(rand::random::<u64>() % 300 + 300));
-        
+
         tokio::select! {
             _ = timeout => {
                 println!("超时，转变为候选人");
@@ -821,7 +821,7 @@ impl RaftNode {
             }
         }
     }
-    
+
     // 其他状态实现...
 }
 ```
@@ -939,16 +939,16 @@ class QuantumAsyncTask:
     def __init__(self, states):
         self.states = states  # 可能的计算状态集合
         self.collapsed = False
-    
+
     async def execute(self):
         # 并行探索所有可能状态
         results = await asyncio.gather(*[self._compute_state(s) for s in self.states])
-        
+
         # 选择最优结果（量子状态坍缩）
         optimal = max(results, key=lambda r: r.fitness)
         self.collapsed = True
         return optimal
-    
+
     async def _compute_state(self, state):
         # 模拟量子并行计算
         await asyncio.sleep(0.01)  # 代表量子计算时间
@@ -980,39 +980,39 @@ impl AntColonyScheduler {
             let best_path = self.evaluate_paths(paths).await;
             self.update_pheromones(best_path).await;
         }
-        
+
         self.get_best_path()
     }
-    
+
     async fn generate_paths(&self) -> Vec<Vec<usize>> {
         // 生成蚂蚁路径
         let mut paths = Vec::with_capacity(self.ants);
         let generation_tasks: Vec<_> = (0..self.ants)
             .map(|_| self.ant_walk())
             .collect();
-            
+
         // 并行执行所有蚂蚁的路径生成
         for path in futures::future::join_all(generation_tasks).await {
             paths.push(path);
         }
-        
+
         paths
     }
-    
+
     async fn ant_walk(&self) -> Vec<usize> {
         // 单个蚂蚁寻路算法实现
         let mut path = Vec::new();
         let mut remaining: HashSet<_> = (0..self.tasks.len()).collect();
-        
+
         while !remaining.is_empty() {
             let next = self.select_next_task(&path, &remaining);
             path.push(next);
             remaining.remove(&next);
         }
-        
+
         path
     }
-    
+
     // 其他方法实现...
 }
 ```

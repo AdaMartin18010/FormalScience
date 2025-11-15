@@ -1,48 +1,48 @@
-# 系统边界形式化理论的完善与发展
+# 1. 系统边界形式化理论的完善与发展
 
 ## 目录
 
-- [系统边界形式化理论的完善与发展](#系统边界形式化理论的完善与发展)
+- [1. 系统边界形式化理论的完善与发展](#1-系统边界形式化理论的完善与发展)
   - [目录](#目录)
-  - [1. 理论与实践平衡的建立](#1-理论与实践平衡的建立)
-    - [1.1 简化模型层次体系](#11-简化模型层次体系)
-    - [1.2 应用导向的理论重构](#12-应用导向的理论重构)
-    - [1.3 实用知识桥梁构建](#13-实用知识桥梁构建)
-    - [1.4 理论实践循环机制](#14-理论实践循环机制)
-  - [2. 实证研究与案例验证](#2-实证研究与案例验证)
-    - [2.1 多领域案例库构建](#21-多领域案例库构建)
-    - [2.2 比较分析研究设计](#22-比较分析研究设计)
-    - [2.3 预测验证实验设计](#23-预测验证实验设计)
-    - [2.4 失败案例分析与改进](#24-失败案例分析与改进)
-  - [3. 理论内部一致性增强](#3-理论内部一致性增强)
-    - [3.1 数学框架统一与转换](#31-数学框架统一与转换)
-    - [3.3 概念层次一致性](#33-概念层次一致性)
-    - [3.4 公理体系完备性](#34-公理体系完备性)
-    - [3.5 定理证明的严格化](#35-定理证明的严格化)
-    - [3.6 模型检验与验证](#36-模型检验与验证)
-  - [4. 认知复杂性降低](#4-认知复杂性降低)
-    - [4.1 层级学习路径设计](#41-层级学习路径设计)
-    - [4.2 直观模型和可视化](#42-直观模型和可视化)
-    - [4.3 实例驱动学习](#43-实例驱动学习)
-    - [4.4 交互式学习工具](#44-交互式学习工具)
-    - [4.5 应用模板和指南](#45-应用模板和指南)
-  - [5. 跨领域适用性扩展](#5-跨领域适用性扩展)
-    - [5.1 领域特定语言开发](#51-领域特定语言开发)
-    - [5.2 领域映射模板](#52-领域映射模板)
-    - [5.3 跨领域试验与验证](#53-跨领域试验与验证)
-    - [5.4 通用工具与特定扩展](#54-通用工具与特定扩展)
-    - [5.5 领域特定模式库](#55-领域特定模式库)
-    - [5.6 领域集成框架](#56-领域集成框架)
-  - [6. 工具链与自动化支持](#6-工具链与自动化支持)
-    - [6.1 核心工具集设计](#61-核心工具集设计)
-    - [6.3 分析与可视化引擎](#63-分析与可视化引擎)
-    - [6.4 优化建议生成器](#64-优化建议生成器)
-    - [6.5 文档与报告生成](#65-文档与报告生成)
-  - [7. 总结与未来发展](#7-总结与未来发展)
+  - [1.1 理论与实践平衡的建立](#11-理论与实践平衡的建立)
+    - [1.1.1 简化模型层次体系](#111-简化模型层次体系)
+    - [1.1.2 应用导向的理论重构](#112-应用导向的理论重构)
+    - [1.1.3 实用知识桥梁构建](#113-实用知识桥梁构建)
+    - [1.1.4 理论实践循环机制](#114-理论实践循环机制)
+  - [1.2 实证研究与案例验证](#12-实证研究与案例验证)
+    - [1.2.1 多领域案例库构建](#121-多领域案例库构建)
+    - [1.2.2 比较分析研究设计](#122-比较分析研究设计)
+    - [1.2.3 预测验证实验设计](#123-预测验证实验设计)
+    - [1.2.4 失败案例分析与改进](#124-失败案例分析与改进)
+  - [1.3 理论内部一致性增强](#13-理论内部一致性增强)
+    - [1.3.1 数学框架统一与转换](#131-数学框架统一与转换)
+    - [1.3.3 概念层次一致性](#133-概念层次一致性)
+    - [1.3.4 公理体系完备性](#134-公理体系完备性)
+    - [1.3.5 定理证明的严格化](#135-定理证明的严格化)
+    - [1.3.6 模型检验与验证](#136-模型检验与验证)
+  - [1.4 认知复杂性降低](#14-认知复杂性降低)
+    - [1.4.1 层级学习路径设计](#141-层级学习路径设计)
+    - [1.4.2 直观模型和可视化](#142-直观模型和可视化)
+    - [1.4.3 实例驱动学习](#143-实例驱动学习)
+    - [1.4.4 交互式学习工具](#144-交互式学习工具)
+    - [1.4.5 应用模板和指南](#145-应用模板和指南)
+  - [1.5 跨领域适用性扩展](#15-跨领域适用性扩展)
+    - [1.5.1 领域特定语言开发](#151-领域特定语言开发)
+    - [1.5.2 领域映射模板](#152-领域映射模板)
+    - [1.5.3 跨领域试验与验证](#153-跨领域试验与验证)
+    - [1.5.4 通用工具与特定扩展](#154-通用工具与特定扩展)
+    - [1.5.5 领域特定模式库](#155-领域特定模式库)
+    - [1.5.6 领域集成框架](#156-领域集成框架)
+  - [1.6 工具链与自动化支持](#16-工具链与自动化支持)
+    - [1.6.1 核心工具集设计](#161-核心工具集设计)
+    - [1.6.3 分析与可视化引擎](#163-分析与可视化引擎)
+    - [1.6.4 优化建议生成器](#164-优化建议生成器)
+    - [1.6.5 文档与报告生成](#165-文档与报告生成)
+  - [1.7 总结与未来发展](#17-总结与未来发展)
 
-## 1. 理论与实践平衡的建立
+## 1.1 理论与实践平衡的建立
 
-### 1.1 简化模型层次体系
+### 1.1.1 简化模型层次体系
 
 当前形式化理论体系过于复杂，需要建立不同复杂度的模型层次，以适应不同使用者的需求：
 
@@ -67,7 +67,7 @@
 
 基本边界概念的三层表达：
 
-*基础层*：
+_基础层_：
 
 ```math
 边界是系统与环境的分界线，具有过滤和控制功能。
@@ -75,7 +75,7 @@
 边界有不同程度的开放性和控制性。
 ```
 
-*标准层*：
+_标准层_：
 
 ```math
 系统S的边界B(S)满足:
@@ -85,7 +85,7 @@
 - 存在渗透函数P: Interactions × B(S) → [0,1]
 ```
 
-*高级层*：
+_高级层_：
 
 ```math
 B: Sys → TopSpace，是反变函子，满足：
@@ -95,7 +95,7 @@ B: Sys → TopSpace，是反变函子，满足：
 （完整形式化定义）
 ```
 
-### 1.2 应用导向的理论重构
+### 1.1.2 应用导向的理论重构
 
 现有理论缺乏实际应用指导，需要从应用场景角度重新组织理论内容：
 
@@ -119,7 +119,7 @@ B: Sys → TopSpace，是反变函子，满足：
 
 **示例实现**：
 
-*软件系统边界识别模式*：
+_软件系统边界识别模式_：
 
 ```math
 应用问题：识别复杂软件系统中的自然边界
@@ -145,7 +145,7 @@ B: Sys → TopSpace，是反变函子，满足：
 - 不适用于高度动态变化的系统
 ```
 
-### 1.3 实用知识桥梁构建
+### 1.1.3 实用知识桥梁构建
 
 理论与实践之间缺乏中间层知识，需要构建连接二者的桥梁：
 
@@ -169,7 +169,7 @@ B: Sys → TopSpace，是反变函子，满足：
 
 **示例实现**：
 
-*边界控制器设计模式*：
+_边界控制器设计模式_：
 
 ```math
 理论基础：边界交互公理（4.2节）
@@ -217,7 +217,7 @@ where
 }
 ```
 
-### 1.4 理论实践循环机制
+### 1.1.4 理论实践循环机制
 
 现有理论缺乏与实践的反馈循环，需要建立理论验证和改进的机制：
 
@@ -241,7 +241,7 @@ where
 
 **示例实现**：
 
-*理论实践循环框架*：
+_理论实践循环框架_：
 
 ```math
 1. 理论应用记录模板
@@ -262,7 +262,7 @@ where
    - 小型修正：澄清定义、添加约束条件
    - 中型扩展：增加新的定理或应用模式
    - 大型重构：修改基本公理或框架结构
-   
+
    每次修正遵循：
    - 提出修正假设
    - 验证与现有理论的一致性
@@ -271,9 +271,9 @@ where
    - 评估对已有应用的影响
 ```
 
-## 2. 实证研究与案例验证
+## 1.2 实证研究与案例验证
 
-### 2.1 多领域案例库构建
+### 1.2.1 多领域案例库构建
 
 现有理论缺乏足够的案例支持，需要建立全面的多领域案例库：
 
@@ -297,7 +297,7 @@ where
 
 **示例实现**：
 
-*微服务架构边界分析案例*：
+_微服务架构边界分析案例_：
 
 ```math
 系统描述：
@@ -333,7 +333,7 @@ where
 3. 开发新的微服务特定边界度量指标
 ```
 
-### 2.2 比较分析研究设计
+### 1.2.2 比较分析研究设计
 
 需要通过对比研究验证形式化方法相对于传统方法的优势：
 
@@ -357,7 +357,7 @@ where
 
 **示例实现**：
 
-*形式化边界方法与传统模块化设计对比研究*：
+_形式化边界方法与传统模块化设计对比研究_：
 
 ```math
 研究设计：
@@ -396,7 +396,7 @@ where
 - 适用条件：对于预期运行3年以上的系统，形式化方法更具成本效益
 ```
 
-### 2.3 预测验证实验设计
+### 1.2.3 预测验证实验设计
 
 需要通过预测验证实验检验理论的预测能力：
 
@@ -420,7 +420,7 @@ where
 
 **示例实现**：
 
-*边界演化预测实验*：
+_边界演化预测实验_：
 
 ```math
 实验设计：
@@ -471,7 +471,7 @@ where
      * 召回率提升至63.1%
 ```
 
-### 2.4 失败案例分析与改进
+### 1.2.4 失败案例分析与改进
 
 系统地研究理论应用失败的案例，从中提取改进机会：
 
@@ -495,7 +495,7 @@ where
 
 **示例实现**：
 
-*形式化边界理论应用失败案例分析*：
+_形式化边界理论应用失败案例分析_：
 
 ```math
 案例1：电信系统服务编排边界识别
@@ -543,9 +543,9 @@ where
    - 创建自动化工具支持，减少手动工作
 ```
 
-## 3. 理论内部一致性增强
+## 1.3 理论内部一致性增强
 
-### 3.1 数学框架统一与转换
+### 1.3.1 数学框架统一与转换
 
 解决不同数学框架之间的转换和一致性问题：
 
@@ -569,7 +569,7 @@ where
 
 **示例实现**：
 
-*数学框架统一图谱示例*：
+_数学框架统一图谱示例_：
 
 ```math
 核心框架映射：
@@ -578,11 +578,11 @@ where
    - 集合 S ↔ Set范畴中的对象
    - 映射 f: A → B ↔ Set范畴中的态射
    - 边界b(S) ↔ 边界函子B应用于对象S
-   
+
    转换规则：
    - 集合论中的边界b(S) = S̄ ∩ (X\S)̄
    - 范畴论中的边界B(S) = lim(关系图S→X←X\S)
-   
+
    一致性条件：
    - ∀S∈Set，将S视为Set中对象，然后B(S)=b(S)
 
@@ -590,11 +590,11 @@ where
    - 拓扑空间(X,τ) ↔ Top范畴中的对象
    - 连续映射f ↔ Top范畴中的态射
    - 边界点集bd(A) ↔ 边界函子应用于子空间
-   
+
    转换规则：
    - 拓扑空间中边界bd(A) = cl(A) ∩ cl(X\A)
    - 范畴论中边界B(i: A↪X) = Eq(cl∘i, cl∘c)，其中c是补集包含
-   
+
    一致性条件：
    - 对任何拓扑子空间A⊆X，有B(i_A) ≅ bd(A)
 
@@ -602,17 +602,17 @@ where
    - 代数系统(S,⊕,⊗) ↔ 代数范畴中的对象
    - 同态h ↔ 代数范畴中的态射
    - 边界运算◇ ↔ 边界函子在代数上的作用
-   
+
    转换规则：
    - 代数中的边界◇(a,b) = (a⊕b)⊗(a⊗b')
    - 范畴论中的B(A) = F(A)×G(A)，其中F,G是特定函子
-   
+
    一致性条件：
    - 对任何代数元素a,b，有B(a,b) ≅ ◇(a,b)
 
 我将继续完善 software_formal_view06.md 文件的内容：
 
-### 3.2 符号系统统一
+### 1.3.2 符号系统统一
 
 **问题分析**：
 - 不同章节使用不一致的符号表示相同概念
@@ -665,7 +665,7 @@ where
 - 边界映射使用希腊字母φ,ψ,θ表示
 ```
 
-### 3.3 概念层次一致性
+### 1.3.3 概念层次一致性
 
 **问题分析**：
 
@@ -687,7 +687,7 @@ where
 
 **示例实现**：
 
-*三层次概念映射框架*：
+_三层次概念映射框架_：
 
 ```math
 1. 层次定义：
@@ -710,7 +710,7 @@ where
    - B₃: 元模型中的边界概念
    - B₂: 模型中的边界表示
    - B₁: 实例中的边界实现
-   
+
    映射规则：
    - G₃₂(B₃) = B₂（元模型边界生成模型边界）
    - G₂₁(B₂) = B₁（模型边界生成实例边界）
@@ -722,7 +722,7 @@ where
    - 水平一致性：∀b₂,b₂'∈B₂, b₂≡b₂' ⟹ G₂₁(b₂)≡G₂₁(b₂')
 ```
 
-### 3.4 公理体系完备性
+### 1.3.4 公理体系完备性
 
 **问题分析**：
 
@@ -744,7 +744,7 @@ where
 
 **示例实现**：
 
-*边界理论公理体系审查*：
+_边界理论公理体系审查_：
 
 ```math
 1. 公理独立性分析：
@@ -788,7 +788,7 @@ where
    - 基于模型的反例搜索未找到反例
 ```
 
-### 3.5 定理证明的严格化
+### 1.3.5 定理证明的严格化
 
 **问题分析**：
 
@@ -810,7 +810,7 @@ where
 
 **示例实现**：
 
-*边界组合定理的形式化证明*：
+_边界组合定理的形式化证明_：
 
 ```math
 定理：对于任何两个系统S和T，若S和T满足边界最小化条件，则存在系统R，使得B(R)=B(S)⊕B(T)且R也满足边界最小化条件。
@@ -833,44 +833,44 @@ where
 
 3. 构造系统R：
    令R = S△T（对称差）
-   
+
    情况分析：
    (a) 若H(B(S∪T))≤H(B(S∩T))且H(B(S∪T))≤H(B(S△T))
        则B(S)⊕B(T)=B(S∪T)，取R=S∪T
-   
+
    (b) 若H(B(S∩T))≤H(B(S∪T))且H(B(S∩T))≤H(B(S△T))
        则B(S)⊕B(T)=B(S∩T)，取R=S∩T
-   
+
    (c) 若H(B(S△T))≤H(B(S∪T))且H(B(S△T))≤H(B(S∩T))
        则B(S)⊕B(T)=B(S△T)，取R=S△T
 
 4. 验证R满足边界最小化条件：
    针对情况(c)证明（其他类似）：
-   
+
    (a) 反证法：假设∃X⊂R使得H(B(X))+H(B(R\X))<H(B(R))
-   
+
    (b) 定义：
        Y₁ = X∩S, Y₂ = X∩T
        Z₁ = (R\X)∩S, Z₂ = (R\X)∩T
-   
+
    (c) 可以证明：
        Y₁∪Z₁ = S, Y₁∩Z₁ = ∅
        Y₂∪Z₂ = T, Y₂∩Z₂ = ∅
-   
+
    (d) 由S和T的边界最小化条件：
        H(B(Y₁))+H(B(Z₁))≥H(B(S))
        H(B(Y₂))+H(B(Z₂))≥H(B(T))
-   
+
    (e) 应用引理1和边界公理：
        H(B(X))+H(B(R\X))≥H(B(Y₁))+H(B(Y₂))+H(B(Z₁))+H(B(Z₂))
-   
+
    (f) 综合(d)和(e)：
        H(B(X))+H(B(R\X))≥H(B(S))+H(B(T))
-   
+
    (g) 根据引理1：H(B(R))=H(B(S△T))≤H(B(S))+H(B(T))
-   
+
    (h) 结合(f)和(g)：H(B(X))+H(B(R\X))≥H(B(R))
-   
+
    (i) 这与假设矛盾，因此R满足边界最小化条件
 
 5. 结论：
@@ -878,7 +878,7 @@ where
    B(R)=B(S)⊕B(T)且R满足边界最小化条件。
 ```
 
-### 3.6 模型检验与验证
+### 1.3.6 模型检验与验证
 
 **问题分析**：
 
@@ -900,7 +900,7 @@ where
 
 **示例实现**：
 
-*边界理论模型检验框架*：
+_边界理论模型检验框架_：
 
 ```math
 1. 形式化模型表示：
@@ -911,38 +911,38 @@ where
 
    ---- MODULE BoundaryTheory ----
    EXTENDS Naturals, FiniteSets, Sequences, TLC
-   
+
    CONSTANTS Systems, Universe
-   
+
    ASSUME Universe ∈ Systems
    ASSUME ∀ S ∈ Systems: S ⊆ Universe
-   
-   Boundary(S) == {x ∈ Universe: 
-                  ∃ y ∈ S, ∃ z ∈ Universe \ S: 
+
+   Boundary(S) == {x ∈ Universe:
+                  ∃ y ∈ S, ∃ z ∈ Universe \ S:
                   Adjacent(x, y) ∧ Adjacent(x, z)}
-   
+
    (* 边界公理形式化 *)
-   BoundaryDualityAxiom == 
+   BoundaryDualityAxiom ==
        ∀ S ∈ Systems: Boundary(S) = Boundary(Universe \ S)
-   
-   BoundaryCombinationAxiom == 
-       ∀ S, T ∈ Systems: 
+
+   BoundaryCombinationAxiom ==
+       ∀ S, T ∈ Systems:
            Boundary(S ∪ T) ⊆ Boundary(S) ∪ Boundary(T)
-   
-   BoundaryIntersectionAxiom == 
-       ∀ S, T ∈ Systems: 
+
+   BoundaryIntersectionAxiom ==
+       ∀ S, T ∈ Systems:
            Boundary(S ∩ T) ⊆ Boundary(S) ∩ Boundary(T)
-   
+
    (* 待验证定理 *)
-   BoundaryComplementTheorem == 
-       ∀ S ∈ Systems: 
+   BoundaryComplementTheorem ==
+       ∀ S ∈ Systems:
            Boundary(S) ∩ S = {} ⇒ S ⊆ Interior(S)
-   
+
    (* 模型一致性检验 *)
-   THEOREM Consistency == 
-       BoundaryDualityAxiom ∧ 
-       BoundaryCombinationAxiom ∧ 
-       BoundaryIntersectionAxiom ⇒ 
+   THEOREM Consistency ==
+       BoundaryDualityAxiom ∧
+       BoundaryCombinationAxiom ∧
+       BoundaryIntersectionAxiom ⇒
        BoundaryComplementTheorem
 
    ```
@@ -971,9 +971,9 @@ where
    - 增加边界优化权衡公理：
      当熵最小化与控制强度最大化冲突时，提供明确的优先级规则
 
-## 4. 认知复杂性降低
+## 1.4 认知复杂性降低
 
-### 4.1 层级学习路径设计
+### 1.4.1 层级学习路径设计
 
 **问题分析**：
 
@@ -995,7 +995,7 @@ where
 
 **示例实现**：
 
-*系统边界理论学习路径*：
+_系统边界理论学习路径_：
 
 ```math
 第一阶段：基础概念（面向所有学习者）
@@ -1051,7 +1051,7 @@ where
   * 理论模拟与验证工具
 ```
 
-### 4.2 直观模型和可视化
+### 1.4.2 直观模型和可视化
 
 **问题分析**：
 
@@ -1073,7 +1073,7 @@ where
 
 **示例实现**：
 
-*边界概念可视化系统*：
+_边界概念可视化系统_：
 
 ```math
 1. 视觉语言定义：
@@ -1104,7 +1104,7 @@ where
    - 边界交互强度I(B₁,B₂) ↔ 连接线数量和粗细
 ```
 
-### 4.3 实例驱动学习
+### 1.4.3 实例驱动学习
 
 **问题分析**：
 
@@ -1126,7 +1126,7 @@ where
 
 **示例实现**：
 
-*软件系统边界案例库*：
+_软件系统边界案例库_：
 
 ```math
 案例1：微服务架构边界分析
@@ -1180,7 +1180,7 @@ where
 - 模块化 → 子系统边界原理
 ```
 
-### 4.4 交互式学习工具
+### 1.4.4 交互式学习工具
 
 **问题分析**：
 
@@ -1202,7 +1202,7 @@ where
 
 **示例实现**：
 
-*边界理论交互学习平台*：
+_边界理论交互学习平台_：
 
 ```math
 1. 核心功能模块：
@@ -1251,7 +1251,7 @@ where
    - 社区共享和讨论功能
 ```
 
-### 4.5 应用模板和指南
+### 1.4.5 应用模板和指南
 
 **问题分析**：
 
@@ -1273,7 +1273,7 @@ where
 
 **示例实现**：
 
-*边界分析应用方法论*：
+_边界分析应用方法论_：
 
 ```math
 1. 边界分析通用流程：
@@ -1356,9 +1356,9 @@ where
      * 根据系统优先级设置权衡策略
 ```
 
-## 5. 跨领域适用性扩展
+## 1.5 跨领域适用性扩展
 
-### 5.1 领域特定语言开发
+### 1.5.1 领域特定语言开发
 
 **问题分析**：
 
@@ -1380,7 +1380,7 @@ where
 
 **示例实现**：
 
-*软件架构边界DSL*：
+_软件架构边界DSL_：
 
 ```math
 1. 语言元素定义：
@@ -1391,14 +1391,14 @@ where
      dependencies: <dep_list>
      boundary_control: <control_policy>
    }
-   
+
    // 组件定义
    component <name> {
      functions: <func_list>
      attributes: <attr_list>
      interfaces: <interface_list>
    }
-   
+
    // 边界定义
    boundary <name> {
      internal: <comp_list>
@@ -1406,7 +1406,7 @@ where
      crossing_points: <interface_list>
      permeability: <perm_spec>
    }
-   
+
    // 边界分析
    analyze boundary <name> {
      metrics: [cohesion, coupling, stability, entropy]
@@ -1424,7 +1424,7 @@ where
    boundary → 边界B(S)
    crossing_points → 边界渗透点{p∈B(S)}
    permeability → 渗透函数P:B(S)→[0,1]
-   
+
    analyze boundary → 边界分析函数A(B)
    cohesion → 内聚度函数C(S)
    coupling → 耦合度函数K(S,T)
@@ -1436,9 +1436,9 @@ where
 ```math
 // 电子商务系统边界分析
 system ECommerce {
-  components: [UserService, CatalogService, OrderService, 
+  components: [UserService, CatalogService, OrderService,
               PaymentService, InventoryService, NotificationService]
-  
+
   dependencies: [
     UserService -> OrderService,
     CatalogService -> InventoryService,
@@ -1487,7 +1487,7 @@ analyze boundary CoreBusinessBoundary {
    - 边界稳定性预测
    - 优化建议
 
-### 5.2 领域映射模板
+### 1.5.2 领域映射模板
 
 **问题分析**：
 
@@ -1509,7 +1509,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*系统边界领域映射框架*：
+_系统边界领域映射框架_：
 
 ```math
 1. 映射模板结构：
@@ -1577,7 +1577,7 @@ analyze boundary CoreBusinessBoundary {
    - 边界稳定性λ(B) → 组织结构稳定性指标
 ```
 
-### 5.3 跨领域试验与验证
+### 1.5.3 跨领域试验与验证
 
 **问题分析**：
 
@@ -1599,7 +1599,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*跨领域验证框架*：
+_跨领域验证框架_：
 
 ```math
 1. 跨领域实验设计：
@@ -1624,7 +1624,7 @@ analyze boundary CoreBusinessBoundary {
 2. 领域特性影响分析：
 
    特性对照表：
-   
+
    | 领域特性 | 软件系统 | 组织系统 | 生态系统 | 信息系统 |
    |----------|----------|----------|----------|----------|
    | 物理约束 | 低       | 中       | 高       | 低       |
@@ -1664,7 +1664,7 @@ analyze boundary CoreBusinessBoundary {
    - 给出应用过程中的注意事项和最佳实践
 ```
 
-### 5.4 通用工具与特定扩展
+### 1.5.4 通用工具与特定扩展
 
 **问题分析**：
 
@@ -1686,7 +1686,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*边界分析工具架构*：
+_边界分析工具架构_：
 
 ```math
 1. 核心架构设计：
@@ -1768,7 +1768,7 @@ analyze boundary CoreBusinessBoundary {
 
 ```
 
-### 5.5 领域特定模式库
+### 1.5.5 领域特定模式库
 
 **问题分析**：
 
@@ -1790,7 +1790,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*软件系统边界模式库*：
+_软件系统边界模式库_：
 
 ```math
 1. 模式描述框架：
@@ -1818,7 +1818,7 @@ analyze boundary CoreBusinessBoundary {
    创建专用的适配层作为系统边界，将所有外部接口适配为内部统一接口。适配层实现高渗透性（接受所有外部格式），但提供高控制性（统一内部格式）。
 
    结构：
-   
+
    ```math
 
    外部系统A → 适配器A →
@@ -1842,7 +1842,7 @@ analyze boundary CoreBusinessBoundary {
    // 适配器A
    class SystemAAdapter implements UnifiedDataInterface {
      private SystemAClient clientA;
-     
+
      @Override
      public DataObject processData(DataRequest request) {
        SystemARequest adaptedRequest = convert(request);
@@ -1854,11 +1854,11 @@ analyze boundary CoreBusinessBoundary {
    // 核心系统只依赖统一接口
    class CoreSystem {
      private UnifiedDataInterface dataInterface;
-     
+
      public CoreSystem(UnifiedDataInterface dataInterface) {
        this.dataInterface = dataInterface;
      }
-     
+
      public void processBusinessLogic() {
        DataRequest request = createRequest();
        DataObject data = dataInterface.processData(request);
@@ -1904,7 +1904,7 @@ analyze boundary CoreBusinessBoundary {
    • 从上下文映射模式发展"边界翻译函数"理论
    • 从微服务边界模式提取"边界协议"形式化描述
 
-### 5.6 领域集成框架
+### 1.5.6 领域集成框架
 
 **问题分析**：
 
@@ -1926,7 +1926,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*多领域边界集成框架*：
+_多领域边界集成框架_：
 
 ```math
 1. 多领域集成模型：
@@ -1948,17 +1948,17 @@ analyze boundary CoreBusinessBoundary {
    领域定义：
    - D_软件: 软件系统领域
    - D_组织: 组织结构领域
-   
+
    跨领域关系：
    - 软件模块 ↔ 开发团队（康威定律映射）
    - 软件接口 ↔ 团队协作接口
    - 代码所有权 ↔ 组织责任边界
-   
+
    边界协调问题：
    - 软件边界与组织边界不一致导致的沟通成本
    - 边界变更传播：软件架构变化vs组织调整
    - 跨边界知识传递和保留
-   
+
    集成分析方法：
 
    ```java
@@ -1974,10 +1974,10 @@ analyze boundary CoreBusinessBoundary {
      // 2. 识别边界
      const softwareBoundaries = detectBoundaries(softwareModel);
      const orgBoundaries = detectBoundaries(orgModel);
-     
+
      // 3. 建立映射关系
      const crossDomainMap = mapBoundaries(
-       softwareBoundaries, 
+       softwareBoundaries,
        orgBoundaries,
        {
          mapFunction: conwayLawMapping,
@@ -1987,10 +1987,10 @@ analyze boundary CoreBusinessBoundary {
          }
        }
      );
-     
+
      // 4. 一致性评估
      const consistencyMetrics = evaluateConsistency(crossDomainMap);
-     
+
      // 5. 识别改进机会
      const improvementOpportunities = findMisalignments(
        crossDomainMap,
@@ -2002,7 +2002,7 @@ analyze boundary CoreBusinessBoundary {
          }
        }
      );
-     
+
      // 6. 生成优化建议
      return generateOptimizationRecommendations(
        improvementOpportunities,
@@ -2049,9 +2049,9 @@ analyze boundary CoreBusinessBoundary {
    - 建立过渡状态监控指标
    - 制定反馈调整机制
 
-## 6. 工具链与自动化支持
+## 1.6 工具链与自动化支持
 
-### 6.1 核心工具集设计
+### 1.6.1 核心工具集设计
 
 **问题分析**：
 
@@ -2073,7 +2073,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*边界分析工具链*：
+_边界分析工具链_：
 
 1. 工具链架构：
 
@@ -2255,7 +2255,7 @@ analyze boundary CoreBusinessBoundary {
        console.log("Analysis completed successfully");
        console.log(`Identified ${results.boundaries.length} system boundaries`);
        console.log(`Generated ${results.optimizations.length} optimization recommendations`);
-       
+
        // 导出结果
        results.exportVisualization("./output/visualizations");
        results.exportReport("./output/reports/ecommerce-boundary-analysis.pdf");
@@ -2276,10 +2276,10 @@ analyze boundary CoreBusinessBoundary {
        this.algorithms = options.algorithms || ["entropy-minimization"];
        this.parameters = options.parameters || {};
      }
-     
+
      detectBoundaries(systemModel) {
        const results = {};
-       
+
        // 运行每种算法
        for (const algorithm of this.algorithms) {
          switch (algorithm) {
@@ -2294,34 +2294,34 @@ analyze boundary CoreBusinessBoundary {
              break;
          }
        }
-       
+
        // 如果配置了比较分析，合并结果
        if (this.algorithms.length > 1) {
          results.consensus = this.mergeResults(results, systemModel);
        }
-       
+
        return results;
      }
-     
+
      detectBoundariesByEntropy(model) {
        // 实现熵最小化边界检测算法
        const graph = model.toDependencyGraph();
        const components = graph.getNodes();
-       
+
        // 初始边界：每个组件一个边界
        let boundaries = components.map(c => new Boundary([c]));
-       
+
        // 边界合并过程，直到达到停止条件
        let iterations = 0;
        let improving = true;
-       
+
        while (improving && iterations < this.parameters.maxIterations) {
          iterations++;
          improving = false;
-         
+
          // 计算所有可能的边界合并
          const mergeOptions = this.generateMergeOptions(boundaries);
-         
+
          // 评估每个合并选项的熵变化
          const entropyChanges = mergeOptions.map(option => {
            const newBoundaries = this.simulateMerge(boundaries, option);
@@ -2332,17 +2332,17 @@ analyze boundary CoreBusinessBoundary {
              entropyChange: newEntropy - currentEntropy
            };
          });
-         
+
          // 找到最佳合并选项
          entropyChanges.sort((a, b) => a.entropyChange - b.entropyChange);
-         
+
          // 如果有熵减少的选项，执行合并
          if (entropyChanges[0].entropyChange < -this.parameters.convergenceThreshold) {
            boundaries = this.simulateMerge(boundaries, entropyChanges[0].option);
            improving = true;
          }
        }
-       
+
        return {
          boundaries,
          metrics: this.calculateBoundaryMetrics(boundaries, graph),
@@ -2350,7 +2350,7 @@ analyze boundary CoreBusinessBoundary {
          convergence: !improving
        };
      }
-     
+
      // 其他方法实现...
    }
    ```
@@ -2365,53 +2365,53 @@ analyze boundary CoreBusinessBoundary {
          coupling: true
        };
      }
-     
+
      analyzeBoundaries(boundaries, systemModel) {
        const results = {
          overall: {},
          boundaries: {}
        };
-       
+
        // 计算整体系统指标
        if (this.metrics.cohesion) {
          results.overall.cohesion = this.calculateSystemCohesion(boundaries, systemModel);
        }
-       
+
        if (this.metrics.coupling) {
          results.overall.coupling = this.calculateSystemCoupling(boundaries, systemModel);
        }
-       
+
        if (this.metrics.stability) {
          results.overall.stability = this.calculateSystemStability(boundaries, systemModel);
        }
-       
+
        // 计算每个边界的指标
        for (const boundary of boundaries) {
          results.boundaries[boundary.id] = {};
-         
+
          if (this.metrics.cohesion) {
-           results.boundaries[boundary.id].cohesion = 
+           results.boundaries[boundary.id].cohesion =
              this.calculateBoundaryCohesion(boundary, systemModel);
          }
-         
+
          if (this.metrics.permeability) {
-           results.boundaries[boundary.id].permeability = 
+           results.boundaries[boundary.id].permeability =
              this.calculateBoundaryPermeability(boundary, systemModel);
          }
-         
+
          if (this.metrics.control) {
-           results.boundaries[boundary.id].controlStrength = 
+           results.boundaries[boundary.id].controlStrength =
              this.calculateControlStrength(boundary, systemModel);
          }
-         
+
          if (this.metrics.complexity) {
-           results.boundaries[boundary.id].complexity = 
+           results.boundaries[boundary.id].complexity =
              this.calculateBoundaryComplexity(boundary, systemModel);
          }
-         
+
          // 边界间关系分析
          results.boundaries[boundary.id].interactions = {};
-         
+
          for (const otherBoundary of boundaries) {
            if (boundary.id !== otherBoundary.id) {
              results.boundaries[boundary.id].interactions[otherBoundary.id] = {
@@ -2422,15 +2422,15 @@ analyze boundary CoreBusinessBoundary {
            }
          }
        }
-       
+
        return results;
      }
-     
+
      // 具体指标计算方法...
    }
 
 
-### 6.2 数据收集与处理
+### 1.6.2 数据收集与处理
 
 **问题分析**：
 
@@ -2452,7 +2452,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*软件系统数据收集框架*：
+_软件系统数据收集框架_：
 
 ```math
 1. 数据收集器设计：
@@ -2491,7 +2491,7 @@ analyze boundary CoreBusinessBoundary {
 
      async collectData() {
        const rawData = {};
-       
+
        // 并行收集数据
        await Promise.all(
          this.collectors.map(async collector => {
@@ -2504,13 +2504,13 @@ analyze boundary CoreBusinessBoundary {
            }
          })
        );
-       
+
        return rawData;
      }
-     
+
      async processData(rawData) {
        let processedData = { ...rawData };
-       
+
        // 顺序处理数据
        for (const processor of this.processors) {
          try {
@@ -2520,20 +2520,20 @@ analyze boundary CoreBusinessBoundary {
            throw new Error(`Data processing failed: ${error.message}`);
          }
        }
-       
+
        return processedData;
      }
-     
+
      async validateData(processedData) {
        const validationResults = {};
        let validationPassed = true;
-       
+
        // 运行所有验证器
        for (const validator of this.validators) {
          try {
            const result = await validator.validate(processedData);
            validationResults[validator.name] = result;
-           
+
            if (!result.passed) {
              validationPassed = false;
            }
@@ -2546,7 +2546,7 @@ analyze boundary CoreBusinessBoundary {
            validationPassed = false;
          }
        }
-       
+
        return {
          data: processedData,
          validation: {
@@ -2555,14 +2555,14 @@ analyze boundary CoreBusinessBoundary {
          }
        };
      }
-     
+
      async run() {
        // 执行完整管道
        const rawData = await this.collectData();
        const processedData = await this.processData(rawData);
        return await this.validateData(processedData);
      }
-     
+
      // 初始化方法实现...
    }
 
@@ -2582,91 +2582,91 @@ analyze boundary CoreBusinessBoundary {
      async convert(codeData) {
        // 创建基本系统模型
        const systemModel = new SystemModel();
-       
+
        // 提取系统实体
        for (const extractor of this.entityExtractors) {
          const entities = await extractor.extract(codeData);
          systemModel.addEntities(entities);
        }
-       
+
        // 提取系统关系
        for (const extractor of this.relationExtractors) {
          const relations = await extractor.extract(codeData, systemModel);
          systemModel.addRelations(relations);
        }
-       
+
        // 执行模型转换后处理
        if (this.options.postProcessing) {
          await this.applyPostProcessing(systemModel);
        }
-       
+
        return systemModel;
      }
-     
+
      initializeEntityExtractors() {
        // 基于配置创建相应的实体提取器
        const extractors = [];
-       
+
        if (this.options.components) {
          extractors.push(new ComponentExtractor(this.options.components));
        }
-       
+
        if (this.options.modules) {
          extractors.push(new ModuleExtractor(this.options.modules));
        }
-       
+
        if (this.options.classes) {
          extractors.push(new ClassExtractor(this.options.classes));
        }
-       
+
        if (this.options.interfaces) {
          extractors.push(new InterfaceExtractor(this.options.interfaces));
        }
-       
+
        if (this.options.functions) {
          extractors.push(new FunctionExtractor(this.options.functions));
        }
-       
+
        return extractors;
      }
-     
+
      initializeRelationExtractors() {
        // 基于配置创建相应的关系提取器
        const extractors = [];
-       
+
        if (this.options.dependencies) {
          extractors.push(new DependencyExtractor(this.options.dependencies));
        }
-       
+
        if (this.options.calls) {
          extractors.push(new CallExtractor(this.options.calls));
        }
-       
+
        if (this.options.inheritance) {
          extractors.push(new InheritanceExtractor(this.options.inheritance));
        }
-       
+
        if (this.options.dataflow) {
          extractors.push(new DataFlowExtractor(this.options.dataflow));
        }
-       
+
        return extractors;
      }
-     
+
      async applyPostProcessing(systemModel) {
        // 应用模型后处理
        if (this.options.postProcessing.simplifyGraph) {
          systemModel.simplifyGraph(this.options.postProcessing.simplifyGraph);
        }
-       
+
        if (this.options.postProcessing.enrichWithMetrics) {
          await systemModel.enrichWithMetrics();
        }
-       
+
        if (this.options.postProcessing.removeTrivialNodes) {
          systemModel.removeTrivialNodes();
        }
-       
+
        return systemModel;
      }
    }
@@ -2687,7 +2687,7 @@ analyze boundary CoreBusinessBoundary {
    - 时序扩展：增加时间维度数据
    - 关系增强：补充隐含关系和依赖
 
-### 6.3 分析与可视化引擎
+### 1.6.3 分析与可视化引擎
 
 **问题分析**：
 
@@ -2709,7 +2709,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*边界分析与可视化引擎*：
+_边界分析与可视化引擎_：
 
 1. 边界分析引擎核心算法：
 
@@ -2724,7 +2724,7 @@ analyze boundary CoreBusinessBoundary {
      // 计算边界上每个点的穿越概率
      const totalFlow = crossingEdges.reduce((sum, edge) => sum + edge.weight, 0);
      const pointProbabilities = {};
-     
+
      for (const edge of crossingEdges) {
        const point = edge.crossingPoint;
        if (!pointProbabilities[point]) {
@@ -2732,14 +2732,14 @@ analyze boundary CoreBusinessBoundary {
        }
        pointProbabilities[point] += edge.weight / totalFlow;
      }
-     
+
      // 计算香农熵
      let entropy = 0;
      for (const point in pointProbabilities) {
        const p = pointProbabilities[point];
        entropy -= p * Math.log2(p);
      }
-     
+
      return entropy;
    }
 
@@ -2758,37 +2758,37 @@ analyze boundary CoreBusinessBoundary {
 
      // 计算所有可能的内外交互数量
      const potentialInteractions = internalComponents.length * externalComponents.length;
-     
+
      // 计算实际的内外交互
      const actualInteractions = system.interactions.filter(
        i => (internalComponents.includes(i.source) && externalComponents.includes(i.target)) ||
             (internalComponents.includes(i.target) && externalComponents.includes(i.source))
      ).length;
-     
+
      // 基本渗透性：实际交互占潜在交互的比例
-     const basicPermeability = potentialInteractions > 0 ? 
+     const basicPermeability = potentialInteractions > 0 ?
        actualInteractions / potentialInteractions : 0;
-     
+
      // 方向性渗透性
      const inboundInteractions = system.interactions.filter(
        i => externalComponents.includes(i.source) && internalComponents.includes(i.target)
      ).length;
-     
+
      const outboundInteractions = system.interactions.filter(
        i => internalComponents.includes(i.source) && externalComponents.includes(i.target)
      ).length;
-     
-     const inboundPermeability = potentialInteractions > 0 ? 
+
+     const inboundPermeability = potentialInteractions > 0 ?
        inboundInteractions / potentialInteractions : 0;
-     
-     const outboundPermeability = potentialInteractions > 0 ? 
+
+     const outboundPermeability = potentialInteractions > 0 ?
        outboundInteractions / potentialInteractions : 0;
-     
+
      // 控制渗透性：出入比例
-     const controlRatio = inboundInteractions > 0 ? 
-       outboundInteractions / inboundInteractions : 
+     const controlRatio = inboundInteractions > 0 ?
+       outboundInteractions / inboundInteractions :
        (outboundInteractions > 0 ? Infinity : 1);
-     
+
      return {
        basic: basicPermeability,
        inbound: inboundPermeability,
@@ -2814,16 +2814,16 @@ analyze boundary CoreBusinessBoundary {
      // 计算边界组件集随时间的变化
      const componentChanges = [];
      let previousComponents = new Set(boundary.getComponentsAtTime(snapshots[0].time));
-     
+
      for (let i = 1; i < snapshots.length; i++) {
        const currentComponents = new Set(boundary.getComponentsAtTime(snapshots[i].time));
-       
+
        // 计算Jaccard相似度
        const intersection = new Set([...previousComponents].filter(x => currentComponents.has(x)));
        const union = new Set([...previousComponents, ...currentComponents]);
-       
+
        const similarity = union.size > 0 ? intersection.size / union.size : 1;
-       
+
        componentChanges.push({
          fromTime: snapshots[i-1].time,
          toTime: snapshots[i].time,
@@ -2831,20 +2831,20 @@ analyze boundary CoreBusinessBoundary {
          added: [...currentComponents].filter(x => !previousComponents.has(x)),
          removed: [...previousComponents].filter(x => !currentComponents.has(x))
        });
-       
+
        previousComponents = currentComponents;
      }
-     
+
      // 计算整体稳定性指标
      const stabilityScores = componentChanges.map(change => change.similarity);
      const averageStability = stabilityScores.reduce((sum, score) => sum + score, 0) / stabilityScores.length;
-     
+
      // 计算趋势
      const trend = calculateStabilityTrend(stabilityScores);
-     
+
      // 分析变化模式
      const patterns = analyzeChangePatterns(componentChanges);
-     
+
      return {
        stability: averageStability,
        trend: trend,
@@ -2875,7 +2875,7 @@ analyze boundary CoreBusinessBoundary {
      initialize() {
        // 创建视图布局
        this.createLayout();
-       
+
        // 初始化各视图
        if (this.options.views.systemMap) {
          this.views.systemMap = new SystemMapView(
@@ -2884,7 +2884,7 @@ analyze boundary CoreBusinessBoundary {
          );
          this.viewCoordinator.registerView(this.views.systemMap);
        }
-       
+
        if (this.options.views.boundaryMap) {
          this.views.boundaryMap = new BoundaryMapView(
            this.container.querySelector('#boundary-map-container'),
@@ -2892,7 +2892,7 @@ analyze boundary CoreBusinessBoundary {
          );
          this.viewCoordinator.registerView(this.views.boundaryMap);
        }
-       
+
        if (this.options.views.metrics) {
          this.views.metrics = new MetricsView(
            this.container.querySelector('#metrics-container'),
@@ -2900,7 +2900,7 @@ analyze boundary CoreBusinessBoundary {
          );
          this.viewCoordinator.registerView(this.views.metrics);
        }
-       
+
        if (this.options.views.evolution) {
          this.views.evolution = new EvolutionView(
            this.container.querySelector('#evolution-container'),
@@ -2908,23 +2908,23 @@ analyze boundary CoreBusinessBoundary {
          );
          this.viewCoordinator.registerView(this.views.evolution);
        }
-       
+
        // 设置视图交互与协调
        this.setupInteractions();
      }
-     
+
      setData(data) {
        this.data = data;
-       
+
        // 更新所有视图
        for (const viewName in this.views) {
          this.views[viewName].setData(data);
        }
-       
+
        // 重置选择状态
        this.selection.clear();
      }
-     
+
      setupInteractions() {
        // 设置选择传播
        this.selection.addEventListener('change', event => {
@@ -2932,7 +2932,7 @@ analyze boundary CoreBusinessBoundary {
            this.views[viewName].updateSelection(event.selection);
          }
        });
-       
+
        // 设置过滤传播
        this.filter = new FilterModel();
        this.filter.addEventListener('change', event => {
@@ -2940,25 +2940,25 @@ analyze boundary CoreBusinessBoundary {
            this.views[viewName].updateFilter(event.filter);
          }
        });
-       
+
        // 设置视图特定交互
        for (const viewName in this.views) {
          const view = this.views[viewName];
-         
+
          view.addEventListener('select', event => {
            this.selection.select(event.items, event.source);
          });
-         
+
          view.addEventListener('filter', event => {
            this.filter.setFilter(event.criteria, event.source);
          });
-         
+
          view.addEventListener('highlight', event => {
            this.viewCoordinator.highlight(event.items, event.source);
          });
        }
      }
-     
+
      // 其他方法...
    }
 
@@ -2984,7 +2984,7 @@ analyze boundary CoreBusinessBoundary {
          color: this.getNodeColor(component),
          metrics: component.metrics
        }));
-       
+
        const edges = data.interactions.map(interaction => ({
          source: interaction.source,
          target: interaction.target,
@@ -2992,25 +2992,25 @@ analyze boundary CoreBusinessBoundary {
          type: interaction.type,
          color: this.getEdgeColor(interaction)
        }));
-       
+
        // 更新渲染器
        this.renderer.setData({ nodes, edges });
-       
+
        // 初始布局
        if (this.options.initialLayout) {
          this.renderer.layout(this.options.initialLayout);
        } else {
          this.renderer.layout();
        }
-       
+
        // 更新图例
        this.updateLegend();
      }
-     
+
      updateSelection(selection) {
        const selectedIds = selection.getItems().map(item => item.id);
        this.renderer.highlightNodes(selectedIds);
-       
+
        // 如果选择了边界，高亮边界内组件
        const selectedBoundaries = selection.getItemsByType('boundary');
        if (selectedBoundaries.length > 0) {
@@ -3023,7 +3023,7 @@ analyze boundary CoreBusinessBoundary {
          this.renderer.highlightNodes([...componentsInBoundaries]);
        }
      }
-     
+
      // 自定义颜色映射和尺寸计算
      getNodeColor(component) {
        if (this.options.colorBy === 'cluster') {
@@ -3033,7 +3033,7 @@ analyze boundary CoreBusinessBoundary {
        }
        return this.defaultNodeColor;
      }
-     
+
      calculateNodeSize(component) {
        if (this.options.sizeBy === 'connections') {
          return this.sizeScale(component.connectionCount);
@@ -3042,7 +3042,7 @@ analyze boundary CoreBusinessBoundary {
        }
        return this.defaultNodeSize;
      }
-     
+
      // 其他方法...
    }
 
@@ -3067,23 +3067,23 @@ analyze boundary CoreBusinessBoundary {
        this.toolbar.addTool(new FilterTool(this.vis));
        this.toolbar.addTool(new ZoomTool(this.vis));
        this.toolbar.addTool(new DetailsTool(this.vis));
-       
+
        // 添加边界操作工具
        this.toolbar.addTool(new CreateBoundaryTool(this.vis));
        this.toolbar.addTool(new EditBoundaryTool(this.vis));
        this.toolbar.addTool(new MergeBoundariesTool(this.vis));
        this.toolbar.addTool(new SplitBoundaryTool(this.vis));
-       
+
        // 添加分析工具
        this.toolbar.addTool(new BoundaryMetricsTool(this.vis));
        this.toolbar.addTool(new ComparisonTool(this.vis));
        this.toolbar.addTool(new ScenarioTool(this.vis));
        this.toolbar.addTool(new OptimizationTool(this.vis));
      }
-     
+
      setupContextMenu() {
        this.contextMenu = new ContextMenu();
-       
+
        // 节点上下文菜单
        this.contextMenu.addNodeMenu([
          { label: "查看详情", action: this.showNodeDetails.bind(this) },
@@ -3092,15 +3092,15 @@ analyze boundary CoreBusinessBoundary {
          { label: "从边界移除", action: this.removeFromCurrentBoundary.bind(this) },
          { label: "创建新边界", action: this.createBoundaryFromNode.bind(this) }
        ]);
-       
+
        // 边界上下文菜单
        this.contextMenu.addBoundaryMenu([
          { label: "查看边界详情", action: this.showBoundaryDetails.bind(this) },
          { label: "分析边界", action: this.analyzeBoundary.bind(this) },
          { label: "编辑边界", action: this.editBoundary.bind(this) },
          { label: "删除边界", action: this.deleteBoundary.bind(this) },
-         { 
-           label: "边界操作", 
+         {
+           label: "边界操作",
            submenu:
            [
              { label: "合并边界", action: this.mergeBoundaries.bind(this) },
@@ -3109,45 +3109,45 @@ analyze boundary CoreBusinessBoundary {
            ]
          }
        ]);
-       
+
        // 连接上下文菜单...
      }
-     
+
      setupDragAndDropInteractions() {
        // 实现组件拖放功能
        this.dragManager = new DragDropManager(this.vis);
-       
+
        // 拖拽组件到现有边界
        this.dragManager.enableDragToExistingBoundary();
-       
+
        // 拖拽创建新边界
        this.dragManager.enableDragToCreateBoundary();
-       
+
        // 边界调整大小和移动
        this.dragManager.enableBoundaryResizing();
        this.dragManager.enableBoundaryMoving();
      }
-     
+
      // 上下文菜单处理方法
      showNodeDetails(node) {
        const detailsPanel = new DetailsPanel();
        detailsPanel.showNodeDetails(node);
      }
-     
+
      showBoundaryDetails(boundary) {
        const detailsPanel = new DetailsPanel();
        detailsPanel.showBoundaryDetails(boundary);
      }
-     
+
      analyzeBoundary(boundary) {
        const analyzer = new BoundaryAnalyzer();
        const analysisResults = analyzer.analyze(boundary);
-       
+
        // 显示分析结果
        const resultsPanel = new ResultsPanel();
        resultsPanel.showResults(analysisResults);
      }
-     
+
      // 其他方法实现...
    }
    ```
@@ -3163,7 +3163,7 @@ analyze boundary CoreBusinessBoundary {
        this.renderer = new SplitScreenRenderer(container);
        this.metrics = options.metrics || ['cohesion', 'coupling', 'stability', 'permeability'];
      }
-     
+
      compare(boundaryA, boundaryB) {
        // 准备对比数据
        const comparisonData = {
@@ -3171,21 +3171,21 @@ analyze boundary CoreBusinessBoundary {
          composition: this.compareComposition(boundaryA, boundaryB),
          interactions: this.compareInteractions(boundaryA, boundaryB)
        };
-       
+
        // 计算度量对比
        for (const metric of this.metrics) {
          comparisonData.metrics[metric] = {
            valueA: boundaryA.metrics[metric],
            valueB: boundaryB.metrics[metric],
            difference: boundaryB.metrics[metric] - boundaryA.metrics[metric],
-           percentChange: ((boundaryB.metrics[metric] - boundaryA.metrics[metric]) / 
+           percentChange: ((boundaryB.metrics[metric] - boundaryA.metrics[metric]) /
                            boundaryA.metrics[metric]) * 100
          };
        }
-       
+
        // 更新渲染
        this.renderer.clear();
-       
+
        // 绘制度量对比图表
        this.renderer.addPane('metrics', 'left');
        const metricsChart = new RadarChart(this.renderer.getPane('metrics'));
@@ -3199,7 +3199,7 @@ analyze boundary CoreBusinessBoundary {
            values: this.metrics.map(m => boundaryB.metrics[m])
          }
        ], this.metrics);
-       
+
        // 绘制组成对比
        this.renderer.addPane('composition', 'right-top');
        const compositionChart = new VennDiagram(this.renderer.getPane('composition'));
@@ -3219,21 +3219,21 @@ analyze boundary CoreBusinessBoundary {
            elements: comparisonData.composition.common
          }
        });
-       
+
        // 绘制交互对比
        this.renderer.addPane('interactions', 'right-bottom');
        const interactionsChart = new SankeyDiagram(this.renderer.getPane('interactions'));
        interactionsChart.setData(comparisonData.interactions);
      }
-     
+
      compareComposition(boundaryA, boundaryB) {
        const componentsA = new Set(boundaryA.components);
        const componentsB = new Set(boundaryB.components);
-       
+
        const common = [...componentsA].filter(c => componentsB.has(c));
        const onlyInA = [...componentsA].filter(c => !componentsB.has(c));
        const onlyInB = [...componentsB].filter(c => !componentsA.has(c));
-       
+
        return {
          common,
          onlyInA,
@@ -3241,11 +3241,11 @@ analyze boundary CoreBusinessBoundary {
          jaccardSimilarity: common.length / (componentsA.size + componentsB.size - common.length)
        };
      }
-     
+
      compareInteractions(boundaryA, boundaryB) {
        // 分析两个边界的内部和外部交互差异
        // ... 实现交互比较逻辑 ...
-       
+
        return {
          // 边界内部交互比较数据
          internal: { /* ... */ },
@@ -3268,14 +3268,14 @@ analyze boundary CoreBusinessBoundary {
        this.metrics = options.metrics || ['stability', 'permeability', 'size'];
        this.renderer = new TimelineRenderer(container);
      }
-     
+
      setData(evolutionData) {
        this.data = evolutionData;
-       
+
        // 准备时间轴数据
        const timePoints = evolutionData.timePoints;
        const boundaries = evolutionData.boundaries;
-       
+
        // 为每个边界准备度量时间序列
        const timeSeriesData = [];
        for (const boundary of boundaries) {
@@ -3284,7 +3284,7 @@ analyze boundary CoreBusinessBoundary {
            name: boundary.name,
            metrics: {}
          };
-         
+
          // 为每个度量准备时间序列
          for (const metric of this.metrics) {
            boundaryData.metrics[metric] = timePoints.map(timePoint => ({
@@ -3292,7 +3292,7 @@ analyze boundary CoreBusinessBoundary {
              value: boundary.metricsOverTime[timePoint][metric]
            }));
          }
-         
+
          // 添加边界变化事件
          boundaryData.events = boundary.events.map(event => ({
            time: event.time,
@@ -3300,45 +3300,45 @@ analyze boundary CoreBusinessBoundary {
            description: event.description,
            impact: event.impact
          }));
-         
+
          timeSeriesData.push(boundaryData);
        }
-       
+
        // 更新渲染器
        this.renderer.setData(timeSeriesData);
-       
+
        // 设置时间范围
        this.renderer.setTimeRange(
          timePoints[0],
          timePoints[timePoints.length - 1]
        );
-       
+
        // 初始化视图
        this.renderer.render();
      }
-     
+
      // 设置时间尺度
      setTimeScale(scale) {
        this.timeScale = scale;
        this.renderer.setTimeScale(scale);
        this.renderer.render();
      }
-     
+
      // 高亮特定时间点
      highlightTimePoint(timePoint) {
        this.renderer.highlightTimePoint(timePoint);
      }
-     
+
      // 显示特定事件类型
      filterEventTypes(eventTypes) {
        this.renderer.filterEvents(eventTypes);
      }
-     
+
      // 展示特定边界的演化
      focusOnBoundary(boundaryId) {
        this.renderer.focusOnSeries(boundaryId);
      }
-     
+
      // 其他方法...
    }
    ```
@@ -3357,7 +3357,7 @@ analyze boundary CoreBusinessBoundary {
        };
        this.renderer = new ScatterPlotRenderer(container);
      }
-     
+
      setData(boundaries) {
        // 准备散点图数据
        const plotData = boundaries.map(boundary => ({
@@ -3369,10 +3369,10 @@ analyze boundary CoreBusinessBoundary {
          color: boundary.metrics[this.dimensions.color],
          data: boundary // 存储原始边界数据用于交互
        }));
-       
+
        // 更新渲染器
        this.renderer.setData(plotData);
-       
+
        // 设置坐标轴
        this.renderer.setAxes(
          this.dimensions.x,
@@ -3382,7 +3382,7 @@ analyze boundary CoreBusinessBoundary {
            yDomain: this.calculateDomain(plotData, 'y')
          }
        );
-       
+
        // 设置比例尺
        this.renderer.setScales({
          size: {
@@ -3396,11 +3396,11 @@ analyze boundary CoreBusinessBoundary {
            domain: this.calculateDomain(plotData, 'color')
          }
        });
-       
+
        // 渲染视图
        this.renderer.render();
      }
-     
+
      // 更改维度映射
      setDimension(dimension, metric) {
        this.dimensions[dimension] = metric;
@@ -3409,23 +3409,23 @@ analyze boundary CoreBusinessBoundary {
          this.setData(this.originalData);
        }
      }
-     
+
      // 计算度量的值域
      calculateDomain(data, field) {
        const values = data.map(d => d[field]);
        return [Math.min(...values), Math.max(...values)];
      }
-     
+
      // 添加趋势线
      addTrendLine() {
        const data = this.renderer.getData();
        const trendline = calculateLinearRegression(
          data.map(d => [d.x, d.y])
        );
-       
+
        this.renderer.addTrendLine(trendline);
      }
-     
+
      // 添加聚类
      addClusters(clusterCount) {
        const data = this.renderer.getData();
@@ -3433,10 +3433,10 @@ analyze boundary CoreBusinessBoundary {
          data.map(d => [d.x, d.y]),
          clusterCount
        );
-       
+
        this.renderer.addClusters(clusters);
      }
-     
+
      // 添加最优区域
      addOptimalRegion(criteria) {
        // 根据给定标准（如高内聚低耦合）计算最优区域
@@ -3444,15 +3444,15 @@ analyze boundary CoreBusinessBoundary {
          this.renderer.getData(),
          criteria
        );
-       
+
        this.renderer.addOptimalRegion(optimalRegion);
      }
-     
+
      // 其他方法...
    }
    ```
 
-### 6.4 优化建议生成器
+### 1.6.4 优化建议生成器
 
 **问题分析**：
 
@@ -3474,7 +3474,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*边界优化引擎*：
+_边界优化引擎_：
 
 1. 优化引擎架构：
 
@@ -3494,7 +3494,7 @@ analyze boundary CoreBusinessBoundary {
      optimize(systemModel, existingBoundaries = []) {
        // 选择优化算法
        const algorithm = this.selectAlgorithm(systemModel, existingBoundaries);
-       
+
        // 准备优化参数
        const optimizationParams = {
          objectives: this.objectives,
@@ -3502,17 +3502,17 @@ analyze boundary CoreBusinessBoundary {
          startingPoint: existingBoundaries,
          systemModel: systemModel
        };
-       
+
        // 执行优化
        const optimizationResults = algorithm.run(optimizationParams);
-       
+
        // 生成改进建议
        const recommendations = this.generateRecommendations(
          systemModel,
          existingBoundaries,
          optimizationResults
        );
-       
+
        return {
          optimizedBoundaries: optimizationResults.boundaries,
          metrics: optimizationResults.metrics,
@@ -3520,7 +3520,7 @@ analyze boundary CoreBusinessBoundary {
          comparison: this.compareBoundaries(existingBoundaries, optimizationResults.boundaries)
        };
      }
-     
+
      initializeAlgorithms() {
        return {
          genetic: new GeneticBoundaryOptimizer(),
@@ -3529,12 +3529,12 @@ analyze boundary CoreBusinessBoundary {
          mcmc: new MCMCBoundaryOptimizer()
        };
      }
-     
+
      selectAlgorithm(systemModel, existingBoundaries) {
        // 根据系统特性和现有边界选择最合适的算法
        const systemSize = systemModel.components.length;
        const boundaryCount = existingBoundaries.length;
-       
+
        if (systemSize > 100) {
          return this.algorithms.genetic; // 大型系统使用遗传算法
        } else if (boundaryCount === 0) {
@@ -3545,13 +3545,13 @@ analyze boundary CoreBusinessBoundary {
          return this.algorithms.simulatedAnnealing; // 默认使用模拟退火
        }
      }
-     
+
      generateRecommendations(systemModel, originalBoundaries, optimizationResults) {
        const recommendations = [];
-       
+
        // 比较原边界和优化后边界
        const changes = this.identifyChanges(originalBoundaries, optimizationResults.boundaries);
-       
+
        // 生成边界创建建议
        for (const newBoundary of changes.created) {
          recommendations.push({
@@ -3563,7 +3563,7 @@ analyze boundary CoreBusinessBoundary {
            effort: this.estimateEffort('create', newBoundary, systemModel)
          });
        }
-       
+
        // 生成边界删除建议
        for (const removedBoundary of changes.removed) {
          recommendations.push({
@@ -3574,7 +3574,7 @@ analyze boundary CoreBusinessBoundary {
            effort: this.estimateEffort('remove', removedBoundary, systemModel)
          });
        }
-       
+
        // 生成边界修改建议
        for (const modifiedBoundary of changes.modified) {
          recommendations.push({
@@ -3587,7 +3587,7 @@ analyze boundary CoreBusinessBoundary {
            effort: this.estimateEffort('modify', modifiedBoundary, systemModel)
          });
        }
-       
+
        // 生成边界合并建议
        for (const mergeSuggestion of changes.merges) {
          recommendations.push({
@@ -3599,7 +3599,7 @@ analyze boundary CoreBusinessBoundary {
            effort: this.estimateEffort('merge', mergeSuggestion, systemModel)
          });
        }
-       
+
        // 生成边界拆分建议
        for (const splitSuggestion of changes.splits) {
          recommendations.push({
@@ -3614,11 +3614,11 @@ analyze boundary CoreBusinessBoundary {
            effort: this.estimateEffort('split', splitSuggestion, systemModel)
          });
        }
-       
+
        // 排序建议
        return this.prioritizeRecommendations(recommendations);
      }
-     
+
      // 生成改进理由
      generateRationale(operationType, change, systemModel) {
        switch (operationType) {
@@ -3634,107 +3634,107 @@ analyze boundary CoreBusinessBoundary {
            return this.generateSplitRationale(change, systemModel);
        }
      }
-     
+
      // 具体建议理由生成方法
      generateCreateRationale(newBoundary, systemModel) {
        // 分析组件内聚性
        const cohesion = calculateCohesion(newBoundary.components, systemModel);
-       
+
        // 分析与其他组件的耦合
        const coupling = calculateExternalCoupling(newBoundary.components, systemModel);
-       
+
        // 分析组件功能相关性
        const functionalRelatedness = analyzeFunctionalRelatedness(newBoundary.components, systemModel);
-       
+
        // 生成理由
        const reasons = [];
-       
+
        if (cohesion > 0.7) {
          reasons.push(`这些组件有很高的内聚性(${cohesion.toFixed(2)})，应该归为一组`);
        }
-       
+
        if (coupling < 0.3) {
          reasons.push(`这个边界与外部系统的耦合度较低(${coupling.toFixed(2)})，有良好的独立性`);
        }
-       
+
        if (functionalRelatedness > 0.6) {
          reasons.push(`这些组件功能相关度高(${functionalRelatedness.toFixed(2)})，共同实现相关业务功能`);
        }
-       
+
        // 添加理论依据
        reasons.push(`根据边界熵最小化原理，该边界配置能降低系统的整体复杂度`);
-       
+
        if (newBoundary.metrics && newBoundary.metrics.stability > 0.8) {
          reasons.push(`预计该边界具有高稳定性(${newBoundary.metrics.stability.toFixed(2)})，变更影响可控`);
        }
-       
+
        return reasons.join('。') + '。';
      }
-     
+
      // 其他理由生成方法...
-     
+
      // 估计优化收益
      estimateBenefit(operationType, change, systemModel) {
        // 根据操作类型计算各方面收益
        const metrics = {};
-       
+
        // 维护性收益
        metrics.maintainability = this.estimateMaintainabilityBenefit(operationType, change, systemModel);
-       
+
        // 性能收益
        metrics.performance = this.estimatePerformanceBenefit(operationType, change, systemModel);
-       
+
        // 可扩展性收益
        metrics.scalability = this.estimateScalabilityBenefit(operationType, change, systemModel);
-       
+
        // 可理解性收益
        metrics.understandability = this.estimateUnderstandabilityBenefit(operationType, change, systemModel);
-       
+
        // 总体收益
        const totalBenefit = Object.values(metrics).reduce((sum, value) => sum + value, 0) / Object.keys(metrics).length;
-       
+
        return {
          total: totalBenefit,
          metrics: metrics
        };
      }
-     
+
      // 估计实施成本
      estimateEffort(operationType, change, systemModel) {
        // 根据操作类型估计实施成本
        const costs = {};
-       
+
        // 代码修改成本
        costs.codeChange = this.estimateCodeChangeCost(operationType, change, systemModel);
-       
+
        // 测试成本
        costs.testing = this.estimateTestingCost(operationType, change, systemModel);
-       
+
        // 文档更新成本
        costs.documentation = this.estimateDocumentationCost(operationType, change, systemModel);
-       
+
        // 人员培训成本
        costs.training = this.estimateTrainingCost(operationType, change, systemModel);
-       
+
        // 总体成本
        const totalCost = Object.values(costs).reduce((sum, value) => sum + value, 0);
-       
+
        return {
          total: totalCost,
          breakdown: costs
        };
      }
-     
+
      // 对建议排序
      prioritizeRecommendations(recommendations) {
        // 计算每个建议的ROI
        for (const rec of recommendations) {
          rec.roi = rec.benefit.total / rec.effort.total;
        }
-       
+
        // 基于ROI排序
        recommendations.sort((a, b) => b.roi - a.roi);
-       
+
        // 分配优先级
        recommendations.forEach((rec, index) => {
          if (index < recommendations.length * 0.3) {
@@ -3745,10 +3745,10 @@ analyze boundary CoreBusinessBoundary {
            rec.priority = 'low';
          }
        });
-       
+
        return recommendations;
      }
-     
+
      // 其他方法...
    }
 
@@ -3771,39 +3771,39 @@ analyze boundary CoreBusinessBoundary {
 
      run(params) {
        const { systemModel, startingPoint, objectives, constraints } = params;
-       
+
        // 使用现有边界或初始化随机边界
-       let currentBoundaries = startingPoint.length > 0 ? 
-         this.cloneBoundaries(startingPoint) : 
+       let currentBoundaries = startingPoint.length > 0 ?
+         this.cloneBoundaries(startingPoint) :
          this.generateInitialBoundaries(systemModel);
-       
+
        // 计算初始解的适应度
        let currentFitness = this.evaluateFitness(currentBoundaries, systemModel, objectives, constraints);
-       
+
        // 记录最佳解
        let bestBoundaries = this.cloneBoundaries(currentBoundaries);
        let bestFitness = currentFitness;
-       
+
        // 模拟退火参数
        let temperature = this.initialTemperature;
-       
+
        // 主循环
        while (temperature > this.minTemperature) {
          for (let i = 0; i < this.iterationsPerTemperature; i++) {
            // 生成邻居解
            const neighborBoundaries = this.generateNeighbor(currentBoundaries, systemModel);
-           
+
            // 评估邻居解
            const neighborFitness = this.evaluateFitness(neighborBoundaries, systemModel, objectives, constraints);
-           
+
            // 计算适应度差异
            const fitnessChange = neighborFitness - currentFitness;
-           
+
            // 决定是否接受新解
            if (fitnessChange > 0 || Math.random() < Math.exp(fitnessChange / temperature)) {
              currentBoundaries = this.cloneBoundaries(neighborBoundaries);
              currentFitness = neighborFitness;
-             
+
              // 更新最佳解
              if (currentFitness > bestFitness) {
                bestBoundaries = this.cloneBoundaries(currentBoundaries);
@@ -3811,14 +3811,14 @@ analyze boundary CoreBusinessBoundary {
              }
            }
          }
-         
+
          // 降温
          temperature *= this.coolingRate;
        }
-       
+
        // 计算最佳解的详细指标
        const metrics = this.calculateDetailedMetrics(bestBoundaries, systemModel);
-       
+
        return {
          boundaries: bestBoundaries,
          fitness: bestFitness,
@@ -3826,14 +3826,14 @@ analyze boundary CoreBusinessBoundary {
          convergence: true
        };
      }
-     
+
      // 生成邻居解（随机修改当前边界）
      generateNeighbor(boundaries, systemModel) {
        const neighbor = this.cloneBoundaries(boundaries);
-       
+
        // 随机选择一个操作
        const operation = this.selectRandomOperation(neighbor.length);
-       
+
        switch (operation) {
          case 'modify':
            this.modifyRandomBoundary(neighbor, systemModel);
@@ -3851,68 +3851,68 @@ analyze boundary CoreBusinessBoundary {
            this.removeRandomBoundary(neighbor, systemModel);
            break;
        }
-       
+
        return neighbor;
      }
-     
+
      // 评估边界配置的适应度
      evaluateFitness(boundaries, systemModel, objectives, constraints) {
        // 计算各目标的适应度贡献
        let fitness = 0;
-       
+
        for (const objective of objectives) {
          const metricValue = this.calculateMetric(objective.metric, boundaries, systemModel);
-         
+
          // 根据目标方向调整贡献
-         const contribution = objective.direction === 'maximize' ? 
+         const contribution = objective.direction === 'maximize' ?
            metricValue : 1 - metricValue;
-         
+
          // 加权累加
          fitness += contribution * objective.weight;
        }
-       
+
        // 应用约束惩罚
        for (const constraint of constraints) {
          const penaltyValue = this.evaluateConstraint(constraint, boundaries, systemModel);
          fitness -= penaltyValue;
        }
-       
+
        return fitness;
      }
-     
+
      // 具体的约束评估方法
      evaluateConstraint(constraint, boundaries, systemModel) {
        switch (constraint.type) {
          case 'max_boundaries':
-           return boundaries.length > constraint.value ? 
+           return boundaries.length > constraint.value ?
              (boundaries.length - constraint.value) * constraint.penalty : 0;
-           
+
          case 'min_boundary_size':
-           const smallBoundaries = boundaries.filter(b => 
+           const smallBoundaries = boundaries.filter(b =>
              b.components.length < constraint.value
            );
            return smallBoundaries.length * constraint.penalty;
-           
+
          case 'must_be_separate':
            // 检查指定组件是否位于不同边界
            return this.checkComponentSeparation(
-             constraint.components, 
+             constraint.components,
              boundaries
            ) ? 0 : constraint.penalty;
-           
+
          case 'must_be_together':
            // 检查指定组件是否位于同一边界
            return this.checkComponentsTogether(
-             constraint.components, 
+             constraint.components,
              boundaries
            ) ? 0 : constraint.penalty;
-           
+
          // 其他约束类型...
        }
-       
+
        return 0;
      }
-     
+
      // 其他方法实现...
    }
 
@@ -3930,7 +3930,7 @@ analyze boundary CoreBusinessBoundary {
      generatePlan(recommendations, systemModel) {
        // 对建议进行分组和排序
        const groupedRecommendations = this.groupRecommendations(recommendations);
-       
+
        // 创建分阶段实施计划
        const plan = {
          phases: [],
@@ -3945,45 +3945,45 @@ analyze boundary CoreBusinessBoundary {
            ]
          }
        ]);
-       
+
        // 连接上下文菜单...
      }
-     
+
      setupDragAndDropInteractions() {
        // 实现组件拖放功能
        this.dragManager = new DragDropManager(this.vis);
-       
+
        // 拖拽组件到现有边界
        this.dragManager.enableDragToExistingBoundary();
-       
+
        // 拖拽创建新边界
        this.dragManager.enableDragToCreateBoundary();
-       
+
        // 边界调整大小和移动
        this.dragManager.enableBoundaryResizing();
        this.dragManager.enableBoundaryMoving();
      }
-     
+
      // 上下文菜单处理方法
      showNodeDetails(node) {
        const detailsPanel = new DetailsPanel();
        detailsPanel.showNodeDetails(node);
      }
-     
+
      showBoundaryDetails(boundary) {
        const detailsPanel = new DetailsPanel();
        detailsPanel.showBoundaryDetails(boundary);
      }
-     
+
      analyzeBoundary(boundary) {
        const analyzer = new BoundaryAnalyzer();
        const analysisResults = analyzer.analyze(boundary);
-       
+
        // 显示分析结果
        const resultsPanel = new ResultsPanel();
        resultsPanel.showResults(analysisResults);
      }
-     
+
      // 其他方法实现...
    }
    ```
@@ -3999,7 +3999,7 @@ analyze boundary CoreBusinessBoundary {
        this.renderer = new SplitScreenRenderer(container);
        this.metrics = options.metrics || ['cohesion', 'coupling', 'stability', 'permeability'];
      }
-     
+
      compare(boundaryA, boundaryB) {
        // 准备对比数据
        const comparisonData = {
@@ -4007,21 +4007,21 @@ analyze boundary CoreBusinessBoundary {
          composition: this.compareComposition(boundaryA, boundaryB),
          interactions: this.compareInteractions(boundaryA, boundaryB)
        };
-       
+
        // 计算度量对比
        for (const metric of this.metrics) {
          comparisonData.metrics[metric] = {
            valueA: boundaryA.metrics[metric],
            valueB: boundaryB.metrics[metric],
            difference: boundaryB.metrics[metric] - boundaryA.metrics[metric],
-           percentChange: ((boundaryB.metrics[metric] - boundaryA.metrics[metric]) / 
+           percentChange: ((boundaryB.metrics[metric] - boundaryA.metrics[metric]) /
                            boundaryA.metrics[metric]) * 100
          };
        }
-       
+
        // 更新渲染
        this.renderer.clear();
-       
+
        // 绘制度量对比图表
        this.renderer.addPane('metrics', 'left');
        const metricsChart = new RadarChart(this.renderer.getPane('metrics'));
@@ -4035,7 +4035,7 @@ analyze boundary CoreBusinessBoundary {
            values: this.metrics.map(m => boundaryB.metrics[m])
          }
        ], this.metrics);
-       
+
        // 绘制组成对比
        this.renderer.addPane('composition', 'right-top');
        const compositionChart = new VennDiagram(this.renderer.getPane('composition'));
@@ -4055,21 +4055,21 @@ analyze boundary CoreBusinessBoundary {
            elements: comparisonData.composition.common
          }
        });
-       
+
        // 绘制交互对比
        this.renderer.addPane('interactions', 'right-bottom');
        const interactionsChart = new SankeyDiagram(this.renderer.getPane('interactions'));
        interactionsChart.setData(comparisonData.interactions);
      }
-     
+
      compareComposition(boundaryA, boundaryB) {
        const componentsA = new Set(boundaryA.components);
        const componentsB = new Set(boundaryB.components);
-       
+
        const common = [...componentsA].filter(c => componentsB.has(c));
        const onlyInA = [...componentsA].filter(c => !componentsB.has(c));
        const onlyInB = [...componentsB].filter(c => !componentsA.has(c));
-       
+
        return {
          common,
          onlyInA,
@@ -4077,11 +4077,11 @@ analyze boundary CoreBusinessBoundary {
          jaccardSimilarity: common.length / (componentsA.size + componentsB.size - common.length)
        };
      }
-     
+
      compareInteractions(boundaryA, boundaryB) {
        // 分析两个边界的内部和外部交互差异
        // ... 实现交互比较逻辑 ...
-       
+
        return {
          // 边界内部交互比较数据
          internal: { /* ... */ },
@@ -4104,14 +4104,14 @@ analyze boundary CoreBusinessBoundary {
        this.metrics = options.metrics || ['stability', 'permeability', 'size'];
        this.renderer = new TimelineRenderer(container);
      }
-     
+
      setData(evolutionData) {
        this.data = evolutionData;
-       
+
        // 准备时间轴数据
        const timePoints = evolutionData.timePoints;
        const boundaries = evolutionData.boundaries;
-       
+
        // 为每个边界准备度量时间序列
        const timeSeriesData = [];
        for (const boundary of boundaries) {
@@ -4120,7 +4120,7 @@ analyze boundary CoreBusinessBoundary {
            name: boundary.name,
            metrics: {}
          };
-         
+
          // 为每个度量准备时间序列
          for (const metric of this.metrics) {
            boundaryData.metrics[metric] = timePoints.map(timePoint => ({
@@ -4128,7 +4128,7 @@ analyze boundary CoreBusinessBoundary {
              value: boundary.metricsOverTime[timePoint][metric]
            }));
          }
-         
+
          // 添加边界变化事件
          boundaryData.events = boundary.events.map(event => ({
            time: event.time,
@@ -4136,45 +4136,45 @@ analyze boundary CoreBusinessBoundary {
            description: event.description,
            impact: event.impact
          }));
-         
+
          timeSeriesData.push(boundaryData);
        }
-       
+
        // 更新渲染器
        this.renderer.setData(timeSeriesData);
-       
+
        // 设置时间范围
        this.renderer.setTimeRange(
          timePoints[0],
          timePoints[timePoints.length - 1]
        );
-       
+
        // 初始化视图
        this.renderer.render();
      }
-     
+
      // 设置时间尺度
      setTimeScale(scale) {
        this.timeScale = scale;
        this.renderer.setTimeScale(scale);
        this.renderer.render();
      }
-     
+
      // 高亮特定时间点
      highlightTimePoint(timePoint) {
        this.renderer.highlightTimePoint(timePoint);
      }
-     
+
      // 显示特定事件类型
      filterEventTypes(eventTypes) {
        this.renderer.filterEvents(eventTypes);
      }
-     
+
      // 展示特定边界的演化
      focusOnBoundary(boundaryId) {
        this.renderer.focusOnSeries(boundaryId);
      }
-     
+
      // 其他方法...
    }
    ```
@@ -4193,7 +4193,7 @@ analyze boundary CoreBusinessBoundary {
        };
        this.renderer = new ScatterPlotRenderer(container);
      }
-     
+
      setData(boundaries) {
        // 准备散点图数据
        const plotData = boundaries.map(boundary => ({
@@ -4205,10 +4205,10 @@ analyze boundary CoreBusinessBoundary {
          color: boundary.metrics[this.dimensions.color],
          data: boundary // 存储原始边界数据用于交互
        }));
-       
+
        // 更新渲染器
        this.renderer.setData(plotData);
-       
+
        // 设置坐标轴
        this.renderer.setAxes(
          this.dimensions.x,
@@ -4218,7 +4218,7 @@ analyze boundary CoreBusinessBoundary {
            yDomain: this.calculateDomain(plotData, 'y')
          }
        );
-       
+
        // 设置比例尺
        this.renderer.setScales({
          size: {
@@ -4232,11 +4232,11 @@ analyze boundary CoreBusinessBoundary {
            domain: this.calculateDomain(plotData, 'color')
          }
        });
-       
+
        // 渲染视图
        this.renderer.render();
      }
-     
+
      // 更改维度映射
      setDimension(dimension, metric) {
        this.dimensions[dimension] = metric;
@@ -4245,23 +4245,23 @@ analyze boundary CoreBusinessBoundary {
          this.setData(this.originalData);
        }
      }
-     
+
      // 计算度量的值域
      calculateDomain(data, field) {
        const values = data.map(d => d[field]);
        return [Math.min(...values), Math.max(...values)];
      }
-     
+
      // 添加趋势线
      addTrendLine() {
        const data = this.renderer.getData();
        const trendline = calculateLinearRegression(
          data.map(d => [d.x, d.y])
        );
-       
+
        this.renderer.addTrendLine(trendline);
      }
-     
+
      // 添加聚类
      addClusters(clusterCount) {
        const data = this.renderer.getData();
@@ -4269,10 +4269,10 @@ analyze boundary CoreBusinessBoundary {
          data.map(d => [d.x, d.y]),
          clusterCount
        );
-       
+
        this.renderer.addClusters(clusters);
      }
-     
+
      // 添加最优区域
      addOptimalRegion(criteria) {
        // 根据给定标准（如高内聚低耦合）计算最优区域
@@ -4280,15 +4280,15 @@ analyze boundary CoreBusinessBoundary {
          this.renderer.getData(),
          criteria
        );
-       
+
        this.renderer.addOptimalRegion(optimalRegion);
      }
-     
+
      // 其他方法...
    }
    ```
 
-### 6.5 文档与报告生成
+### 1.6.5 文档与报告生成
 
 **问题分析**：
 
@@ -4310,7 +4310,7 @@ analyze boundary CoreBusinessBoundary {
 
 **示例实现**：
 
-*边界分析报告生成器*：
+_边界分析报告生成器_：
 
 1. 报告生成框架：
 
@@ -4321,17 +4321,17 @@ analyze boundary CoreBusinessBoundary {
        this.templates = this.loadTemplates();
        this.visualizations = this.initializeVisualizations();
      }
-     
+
      generateReport(analysisResults, targetAudience) {
        // 选择合适的报告模板
        const template = this.selectTemplate(targetAudience);
-       
+
        // 准备报告数据
        const reportData = this.prepareReportData(analysisResults, targetAudience);
-       
+
        // 生成报告结构
        const reportStructure = this.generateReportStructure(template, reportData);
-       
+
        // 生成各章节内容
        const reportSections = {};
        for (const sectionId in reportStructure.sections) {
@@ -4341,10 +4341,10 @@ analyze boundary CoreBusinessBoundary {
            reportData
          );
        }
-       
+
        // 生成可视化内容
        const visualizations = this.generateVisualizations(reportData, targetAudience);
-       
+
        // 整合报告内容
        const report = {
          title: reportStructure.title,
@@ -4358,31 +4358,31 @@ analyze boundary CoreBusinessBoundary {
            version: this.options.version || '1.0'
          }
        };
-       
+
        // 应用最终格式
        return this.formatReport(report, this.options.format || 'html');
      }
-     
+
      selectTemplate(targetAudience) {
        // 根据目标受众选择合适的模板
        switch (targetAudience) {
          case 'executive':
            return this.templates.executive;
-           
+
          case 'technical-management':
            return this.templates.technicalManagement;
-           
+
          case 'developer':
            return this.templates.developer;
-           
+
          case 'architect':
            return this.templates.architect;
-           
+
          default:
            return this.templates.default;
        }
      }
-     
+
      prepareReportData(analysisResults, targetAudience) {
        // 准备基础数据
        const baseData = {
@@ -4391,26 +4391,26 @@ analyze boundary CoreBusinessBoundary {
          metrics: analysisResults.metrics,
          recommendations: analysisResults.recommendations
        };
-       
+
        // 针对不同受众调整数据深度和重点
        switch (targetAudience) {
          case 'executive':
            return this.prepareExecutiveData(baseData);
-           
+
          case 'technical-management':
            return this.prepareTechnicalManagementData(baseData);
-           
+
          case 'developer':
            return this.prepareDeveloperData(baseData);
-           
+
          case 'architect':
            return this.prepareArchitectData(baseData);
-           
+
          default:
            return baseData;
        }
      }
-     
+
      prepareExecutiveData(baseData) {
        // 提取高层次概述和业务影响
        return {
@@ -4421,36 +4421,36 @@ analyze boundary CoreBusinessBoundary {
          costBenefitAnalysis: this.generateCostBenefitAnalysis(baseData)
        };
      }
-     
+
      // 其他受众数据准备方法...
-     
+
      generateSection(sectionId, sectionConfig, reportData) {
        // 根据配置生成章节内容
        switch (sectionConfig.type) {
          case 'text':
            return this.generateTextSection(sectionConfig, reportData);
-           
+
          case 'metrics':
            return this.generateMetricsSection(sectionConfig, reportData);
-           
+
          case 'recommendations':
            return this.generateRecommendationsSection(sectionConfig, reportData);
-           
+
          case 'visualization':
            return this.generateVisualizationSection(sectionConfig, reportData);
-           
+
          case 'table':
            return this.generateTableSection(sectionConfig, reportData);
-           
+
          default:
            return { content: "Section content not available" };
        }
      }
-     
+
      generateTextSection(config, data) {
        // 生成文本内容，替换变量
        let content = config.template;
-       
+
        // 替换模板变量
        for (const key in data) {
          const regex = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
@@ -4460,13 +4460,13 @@ analyze boundary CoreBusinessBoundary {
            content = content.replace(regex, data[key]);
          }
        }
-       
+
        return {
          title: config.title,
          content: content
        };
      }
-     
+
      generateMetricsSection(config, data) {
        // 提取指定指标
        const metricsData = {};
@@ -4475,7 +4475,7 @@ analyze boundary CoreBusinessBoundary {
            metricsData[metricKey] = data.metrics[metricKey];
          }
        }
-       
+
        // 生成指标表格或图表数据
        return {
          title: config.title,
@@ -4484,29 +4484,29 @@ analyze boundary CoreBusinessBoundary {
          visualizationType: config.visualization || "table"
        };
      }
-     
+
      generateVisualizations(reportData, targetAudience) {
        const visualizations = {};
-       
+
        // 根据受众选择适当的可视化
        switch (targetAudience) {
          case 'executive':
            visualizations.summary = this.visualizations.executiveDashboard.generate(reportData);
            visualizations.costBenefit = this.visualizations.costBenefitChart.generate(reportData);
            break;
-           
+
          case 'technical-management':
            visualizations.metrics = this.visualizations.metricsOverview.generate(reportData);
            visualizations.recommendations = this.visualizations.recommendationsPriority.generate(reportData);
            visualizations.timeline = this.visualizations.implementationTimeline.generate(reportData);
            break;
-           
+
          case 'developer':
            visualizations.boundaryDetails = this.visualizations.boundaryDetails.generate(reportData);
            visualizations.codeImpact = this.visualizations.codeChangeImpact.generate(reportData);
            visualizations.components = this.visualizations.componentRelationships.generate(reportData);
            break;
-           
+
          case 'architect':
            visualizations.systemMap = this.visualizations.systemBoundaryMap.generate(reportData);
            visualizations.evolution = this.visualizations.boundaryEvolution.generate(reportData);
@@ -4514,29 +4514,29 @@ analyze boundary CoreBusinessBoundary {
            visualizations.patterns = this.visualizations.boundaryPatterns.generate(reportData);
            break;
        }
-       
+
        return visualizations;
      }
-     
+
      formatReport(report, format) {
        switch (format) {
          case 'html':
            return this.formatAsHTML(report);
-           
+
          case 'pdf':
            return this.formatAsPDF(report);
-           
+
          case 'markdown':
            return this.formatAsMarkdown(report);
-           
+
          case 'json':
            return report; // 原始结构
-           
+
          default:
            return this.formatAsHTML(report);
        }
      }
-     
+
      // 格式转换方法...
    }
    ```
@@ -4548,7 +4548,7 @@ analyze boundary CoreBusinessBoundary {
      constructor() {
        this.components = this.initializeComponents();
      }
-     
+
      initializeComponents() {
        return {
          // 图表组件
@@ -4560,21 +4560,21 @@ analyze boundary CoreBusinessBoundary {
            heatmap: new HeatmapComponent(),
            sankey: new SankeyDiagramComponent()
          },
-         
+
          // 特殊可视化组件
          boundary: {
            map: new BoundaryMapComponent(),
            comparison: new BoundaryComparisonComponent(),
            evolution: new BoundaryEvolutionComponent()
          },
-         
+
          // 表格组件
          tables: {
            metrics: new MetricsTableComponent(),
            recommendations: new RecommendationsTableComponent(),
            components: new ComponentsTableComponent()
          },
-         
+
          // 交互式组件
          interactive: {
            boundaryExplorer: new BoundaryExplorerComponent(),
@@ -4583,10 +4583,10 @@ analyze boundary CoreBusinessBoundary {
          }
        };
      }
-     
+
      createExecutiveDashboard(data) {
        const dashboard = new DashboardLayout("executive-dashboard");
-       
+
        // 添加摘要卡片
        dashboard.addWidget(
          new MetricCardsWidget(
@@ -4595,12 +4595,12 @@ analyze boundary CoreBusinessBoundary {
            { layout: "2x2" }
          )
        );
-       
+
        // 第一阶段：快速收益 - 高价值低成本操作
-       const quickWins = recommendations.filter(rec => 
+       const quickWins = recommendations.filter(rec =>
          rec.benefit.total > 0.7 && rec.effort.total < 0.3
        );
-       
+
        if (quickWins.length > 0) {
          plan.phases.push({
            name: "快速收益阶段",
@@ -4611,13 +4611,13 @@ analyze boundary CoreBusinessBoundary {
            benefit: this.sumBenefit(quickWins)
          });
        }
-       
+
        // 第二阶段：结构改进 - 边界创建和拆分
-       const structuralChanges = recommendations.filter(rec => 
+       const structuralChanges = recommendations.filter(rec =>
          (rec.type === 'create_boundary' || rec.type === 'split_boundary') &&
          !quickWins.includes(rec)
        );
-       
+
        if (structuralChanges.length > 0) {
          plan.phases.push({
            name: "结构改进阶段",
@@ -4628,13 +4628,13 @@ analyze boundary CoreBusinessBoundary {
            benefit: this.sumBenefit(structuralChanges)
          });
        }
-       
+
        // 第三阶段：边界修正 - 边界修改和调整
-       const refinements = recommendations.filter(rec => 
+       const refinements = recommendations.filter(rec =>
          rec.type === 'modify_boundary' &&
          !quickWins.includes(rec)
        );
-       
+
        if (refinements.length > 0) {
          plan.phases.push({
            name: "边界精细化阶段",
@@ -4645,13 +4645,13 @@ analyze boundary CoreBusinessBoundary {
            benefit: this.sumBenefit(refinements)
          });
        }
-       
+
        // 第四阶段：边界整合 - 合并和删除
-       const consolidations = recommendations.filter(rec => 
+       const consolidations = recommendations.filter(rec =>
          (rec.type === 'merge_boundaries' || rec.type === 'remove_boundary') &&
          !quickWins.includes(rec)
        );
-       
+
        if (consolidations.length > 0) {
          plan.phases.push({
            name: "边界整合阶段",
@@ -4662,36 +4662,36 @@ analyze boundary CoreBusinessBoundary {
            benefit: this.sumBenefit(consolidations)
          });
        }
-       
+
        // 计算总体指标
        plan.totalEffort = plan.phases.reduce((sum, phase) => sum + phase.effort, 0);
        plan.totalBenefit = plan.phases.reduce((sum, phase) => sum + phase.benefit, 0);
        plan.estimatedTimeframe = this.calculateTotalTimeframe(plan.phases);
-       
+
        // 生成风险评估
        plan.risks = this.assessRisks(recommendations, systemModel);
-       
+
        // 生成验证计划
        plan.validationPlan = this.createValidationPlan(recommendations, systemModel);
-       
+
        return plan;
      }
-     
+
      // 估计阶段持续时间
      estimatePhaseDuration(recommendations) {
        // 基于建议数量和复杂度估计时间
        const baseTime = recommendations.length * 5; // 每个建议基础时间（天）
-       
+
        // 复杂度调整
-       const complexityFactor = recommendations.reduce((sum, rec) => 
+       const complexityFactor = recommendations.reduce((sum, rec) =>
          sum + rec.effort.total, 0) / recommendations.length;
-       
+
        // 依赖调整
        const dependencyAdjustment = this.calculateDependencyAdjustment(recommendations);
-       
+
        // 计算总时间（工作日）
        const totalDays = baseTime * complexityFactor * (1 + dependencyAdjustment);
-       
+
        // 转换为周/月
        if (totalDays < 10) {
          return `${Math.ceil(totalDays)} 工作日`;
@@ -4701,80 +4701,80 @@ analyze boundary CoreBusinessBoundary {
          return `${Math.ceil(totalDays / 20)} 个月`;
        }
      }
-     
+
      // 计算建议间的依赖复杂度
      calculateDependencyAdjustment(recommendations) {
        // 分析建议间依赖关系
        const dependencies = this.identifyRecommendationDependencies(recommendations);
-       
+
        // 计算依赖密度
        const maxPossibleDependencies = recommendations.length * (recommendations.length - 1) / 2;
        const dependencyDensity = dependencies.length / (maxPossibleDependencies || 1);
-       
+
        // 依赖路径长度
        const longestPath = this.findLongestDependencyPath(dependencies, recommendations);
        const pathLengthFactor = longestPath.length / recommendations.length;
-       
+
        // 组合因子
        return 0.2 * dependencyDensity + 0.3 * pathLengthFactor;
      }
-     
+
      // 识别建议间的依赖关系
      identifyRecommendationDependencies(recommendations) {
        const dependencies = [];
-       
+
        // 遍历所有建议对，寻找依赖
        for (let i = 0; i < recommendations.length; i++) {
          for (let j = i + 1; j < recommendations.length; j++) {
            const recA = recommendations[i];
            const recB = recommendations[j];
-           
+
            // 检查是否存在依赖
            if (this.hasRecommendationDependency(recA, recB)) {
              dependencies.push({ from: recA.id, to: recB.id });
            }
-           
+
            if (this.hasRecommendationDependency(recB, recA)) {
              dependencies.push({ from: recB.id, to: recA.id });
            }
          }
        }
-       
+
        return dependencies;
      }
-     
+
      // 检查两个建议之间是否存在依赖
      hasRecommendationDependency(recA, recB) {
        // 合并后创建的边界
-       if (recA.type === 'merge_boundaries' && 
+       if (recA.type === 'merge_boundaries' &&
            recB.type === 'modify_boundary' &&
            recA.newBoundary === recB.boundary) {
          return true;
        }
-       
+
        // 拆分后修改
-       if (recA.type === 'split_boundary' && 
+       if (recA.type === 'split_boundary' &&
            recB.type === 'modify_boundary' &&
            recA.resultBoundaries.some(b => b.id === recB.boundary)) {
          return true;
        }
-       
+
        // 相同边界的多个修改
-       if (recA.type === 'modify_boundary' && 
+       if (recA.type === 'modify_boundary' &&
            recB.type === 'modify_boundary' &&
            recA.boundary === recB.boundary) {
          return true;
        }
-       
+
        // 其他依赖类型...
-       
+
        return false;
      }
-     
+
      // 风险评估
      assessRisks(recommendations, systemModel) {
        const risks = [];
-       
+
        // 分析整体变更范围
        const affectedComponents = new Set();
        for (const rec of recommendations) {
@@ -4787,7 +4787,7 @@ analyze boundary CoreBusinessBoundary {
            // ...
          }
        }
-       
+
        // 变更范围风险
        if (affectedComponents.size > systemModel.components.length * 0.5) {
          risks.push({
@@ -4804,13 +4804,13 @@ analyze boundary CoreBusinessBoundary {
            mitigation: "确保充分的测试覆盖，准备回滚方案"
          });
        }
-       
+
        // 核心组件风险
        const coreComponents = systemModel.components.filter(c => c.importance > 0.8);
-       const affectedCoreComponents = coreComponents.filter(c => 
+       const affectedCoreComponents = coreComponents.filter(c =>
          affectedComponents.has(c.id)
        );
-       
+
        if (affectedCoreComponents.length > coreComponents.length * 0.5) {
          risks.push({
            type: "core_components",
@@ -4819,12 +4819,12 @@ analyze boundary CoreBusinessBoundary {
            mitigation: "对核心组件变更进行特别审查，增加监控和测试"
          });
        }
-       
+
        // 架构一致性风险
-       const architecturalChanges = recommendations.filter(rec => 
+       const architecturalChanges = recommendations.filter(rec =>
          rec.type === 'create_boundary' || rec.type === 'remove_boundary'
        );
-       
+
        if (architecturalChanges.length > recommendations.length * 0.4) {
          risks.push({
            type: "architectural_consistency",
@@ -4833,12 +4833,12 @@ analyze boundary CoreBusinessBoundary {
            mitigation: "进行全面的架构评审，确保变更后的整体一致性"
          });
        }
-       
+
        // 其他风险分析...
-       
+
        return risks;
      }
-     
+
      // 生成验证计划
      createValidationPlan(recommendations, systemModel) {
        const validation = {
@@ -4846,28 +4846,28 @@ analyze boundary CoreBusinessBoundary {
          testCases: [],
          metrics: []
        };
-       
+
        // 边界内聚性验证
        validation.criteria.push({
          name: "边界内聚性",
          description: "验证优化后的边界具有高内聚性",
          threshold: "每个边界的内聚度应不低于0.7"
        });
-       
+
        // 边界耦合验证
        validation.criteria.push({
          name: "边界间耦合",
          description: "验证优化后的边界间具有适当低耦合",
          threshold: "任意两个边界间的耦合度应不高于0.3"
        });
-       
+
        // 功能完整性验证
        validation.criteria.push({
          name: "功能完整性",
          description: "验证系统所有功能在边界优化后正常工作",
          threshold: "所有功能测试用例通过率100%"
        });
-       
+
        // 设计特定测试用例
        for (const rec of recommendations) {
          if (rec.type === 'modify_boundary') {
@@ -4877,7 +4877,7 @@ analyze boundary CoreBusinessBoundary {
              type: "单元测试",
              focus: "内部交互"
            });
-           
+
            validation.testCases.push({
              name: `边界${rec.boundary}接口测试`,
              description: `验证边界对外接口的稳定性和正确性`,
@@ -4889,7 +4889,7 @@ analyze boundary CoreBusinessBoundary {
            // ...
          }
        }
-       
+
        // 定义监控指标
        validation.metrics.push({
          name: "内聚度变化",
@@ -4898,7 +4898,7 @@ analyze boundary CoreBusinessBoundary {
          baseline: "当前系统平均内聚度",
          target: "提升20%以上"
        });
-       
+
        validation.metrics.push({
          name: "变更影响范围",
          description: "监控代码变更引起的连锁反应范围",
@@ -4906,7 +4906,7 @@ analyze boundary CoreBusinessBoundary {
          baseline: "当前平均影响组件数",
          target: "减少30%以上"
        });
-       
+
        validation.metrics.push({
          name: "边界稳定性",
          description: "监控边界在后续演化中的稳定性",
@@ -4914,10 +4914,10 @@ analyze boundary CoreBusinessBoundary {
          baseline: "现有边界平均变更频率",
          target: "降低25%以上"
        });
-       
+
        return validation;
      }
-     
+
      // 其他辅助方法...
    }
    ```
@@ -4936,42 +4936,42 @@ analyze boundary CoreBusinessBoundary {
          performance: new PerformanceEvaluator()
        };
      }
-     
+
      evaluateOptimization(originalModel, optimizedModel) {
        const evaluation = {
          overall: {},
          boundaries: {},
          details: {}
        };
-       
+
        // 计算整体系统改进
        evaluation.overall = this.evaluateOverallImprovement(originalModel, optimizedModel);
-       
+
        // 评估边界级别改进
        evaluation.boundaries = this.evaluateBoundaryChanges(originalModel, optimizedModel);
-       
+
        // 详细指标评估
        evaluation.details = this.evaluateDetailedMetrics(originalModel, optimizedModel);
-       
+
        // 计算改进分数
        evaluation.improvementScore = this.calculateImprovementScore(evaluation);
-       
+
        // 归一化评分（0-100）
        evaluation.score = this.normalizeScore(evaluation.improvementScore);
-       
+
        return evaluation;
      }
-     
+
      evaluateOverallImprovement(originalModel, optimizedModel) {
        const result = {};
-       
+
        // 评估各类指标
        for (const metricName in this.metrics) {
          const evaluator = this.metrics[metricName];
-         
+
          const originalValue = evaluator.evaluateSystem(originalModel);
          const optimizedValue = evaluator.evaluateSystem(optimizedModel);
-         
+
          result[metricName] = {
            before: originalValue,
            after: optimizedValue,
@@ -4979,29 +4979,29 @@ analyze boundary CoreBusinessBoundary {
            percentChange: (optimizedValue - originalValue) / originalValue * 100
          };
        }
-       
+
        // 计算综合改进
        result.composite = this.calculateCompositeImprovement(result);
-       
+
        return result;
      }
-     
+
      evaluateBoundaryChanges(originalModel, optimizedModel) {
        const result = {};
-       
+
        // 查找保留的边界
        const originalBoundaries = originalModel.boundaries;
        const optimizedBoundaries = optimizedModel.boundaries;
-       
+
        // 对比相同ID的边界
        for (const origBoundary of originalBoundaries) {
          const optBoundary = optimizedBoundaries.find(b => b.id === origBoundary.id);
-         
+
          if (optBoundary) {
            result[origBoundary.id] = this.compareBoundaries(origBoundary, optBoundary);
          }
        }
-       
+
        // 新创建的边界
        for (const optBoundary of optimizedBoundaries) {
          if (!originalBoundaries.some(b => b.id === optBoundary.id)) {
@@ -5011,7 +5011,7 @@ analyze boundary CoreBusinessBoundary {
            };
          }
        }
-       
+
        // 删除的边界
        for (const origBoundary of originalBoundaries) {
          if (!optimizedBoundaries.some(b => b.id === origBoundary.id)) {
@@ -5021,10 +5021,10 @@ analyze boundary CoreBusinessBoundary {
            };
          }
        }
-       
+
        return result;
      }
-     
+
      compareBoundaries(origBoundary, optBoundary) {
        const comparison = {
          status: 'modified',
@@ -5035,18 +5035,18 @@ analyze boundary CoreBusinessBoundary {
          },
          metrics: {}
        };
-       
+
        // 计算保留比例
-       comparison.retentionRate = comparison.componentChanges.retained.length / 
+       comparison.retentionRate = comparison.componentChanges.retained.length /
          origBoundary.components.length;
-       
+
        // 对比指标
        for (const metricName in this.metrics) {
          const evaluator = this.metrics[metricName];
-         
+
          const origValue = evaluator.evaluateBoundary(origBoundary);
          const optValue = evaluator.evaluateBoundary(optBoundary);
-         
+
          comparison.metrics[metricName] = {
            before: origValue,
            after: optValue,
@@ -5054,10 +5054,10 @@ analyze boundary CoreBusinessBoundary {
            percentChange: (optValue - origValue) / origValue * 100
          };
        }
-       
+
        return comparison;
      }
-     
+
      calculateImprovementScore(evaluation) {
        // 计算加权改进分数
        const weights = {
@@ -5068,15 +5068,15 @@ analyze boundary CoreBusinessBoundary {
          maintainability: 0.1,
          performance: 0.05
        };
-       
+
        let score = 0;
        let totalWeight = 0;
-       
+
        // 对每个指标计算加权得分
        for (const metric in weights) {
          if (evaluation.overall[metric]) {
            const change = evaluation.overall[metric].percentChange;
-           
+
            // 根据指标方向调整分数
            let adjustedChange;
            if (['cohesion', 'stability', 'maintainability', 'performance'].includes(metric)) {
@@ -5086,35 +5086,35 @@ analyze boundary CoreBusinessBoundary {
              // 这些指标越低越好（如耦合、复杂度）
              adjustedChange = -change;
            }
-           
+
            // 贡献到总分
            score += weights[metric] * adjustedChange;
            totalWeight += weights[metric];
          }
        }
-       
+
        // 归一化
        if (totalWeight > 0) {
          score = score / totalWeight;
        }
-       
+
        return score;
      }
-     
+
      normalizeScore(rawScore) {
        // 将原始分数转换为0-100分制
        // 使用sigmoid函数进行平滑转换
        const sigmoid = x => 100 / (1 + Math.exp(-0.1 * x));
-       
+
        // 中心在0，±30%变化对应约±40分
        return sigmoid(rawScore);
      }
-     
+
      // 其他方法...
    }
    ```
 
-## 7. 总结与未来发展
+## 1.7 总结与未来发展
 
 系统边界形式化理论与工具链的完善具有重要的理论和实践意义。
 通过本文提出的完善建议，理论体系将更加严谨、一致和可操作。

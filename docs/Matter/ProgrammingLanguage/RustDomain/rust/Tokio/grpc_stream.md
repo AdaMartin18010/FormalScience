@@ -1,7 +1,9 @@
-# 基于 Rust 2024 + Generator 的 gRPC 流式处理与多数据库集成项目
+# 1. 基于 Rust 2024 + Generator 的 gRPC 流式处理与多数据库集成项目
 
-我将展示如何使用 Rust、tokio 和 gRPC 实现一个完整的分布式微服务系统示例。
-我们将使用 `tonic` 作为 gRPC 框架。
+## 目录
+
+- [1. 基于 Rust 2024 + Generator 的 gRPC 流式处理与多数据库集成项目](#1-基于-rust-2024--generator-的-grpc-流式处理与多数据库集成项目)
+  - [目录](#目录)
 
 首先创建项目并设置依赖：
 
@@ -234,9 +236,9 @@ impl UserService for UserServiceImpl {
         request: Request<tonic::Streaming<ChatMessage>>,
     ) -> Result<Response<Self::ChatStreamStream>, Status> {
         let mut input_stream = request.into_inner();
-        
+
         let (tx, rx) = tokio::sync::mpsc::channel(100);
-        
+
         // 处理输入流
         tokio::spawn(async move {
             while let Some(result) = input_stream.next().await {
@@ -248,7 +250,7 @@ impl UserService for UserServiceImpl {
                             content: format!("Echo: {}", message.content),
                             timestamp: chrono::Utc::now().timestamp(),
                         };
-                        
+
                         if tx.send(Ok(response)).await.is_err() {
                             break;
                         }
@@ -293,7 +295,7 @@ async fn run_client() -> Result<(), Box<dyn std::error::Error>> {
 
     // 批量创建用户（客户端流）
     let (mut tx, rx) = tokio::sync::mpsc::channel(128);
-    
+
     let batch_request = async move {
         for i in 0..5 {
             tx.send(CreateUserRequest {
@@ -519,19 +521,19 @@ use middleware::{auth::AuthLayer, timeout::TimeoutLayer, retry::RetryLayer};
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 初始化日志
     init_tracing()?;
-    
+
     // 加载配置
     let config = config::load_config()?;
-    
+
     // 初始化数据库连接
     let db_pool = db::init_database(&config).await?;
-    
+
     // 初始化Redis连接
     let redis_client = cache::init_redis(&config).await?;
-    
+
     // 初始化metrics
     metrics::init_metrics()?;
-    
+
     // 创建服务实例
     let user_service = UserServiceImpl::new(db_pool.clone(), redis_client.clone());
     let order_service = OrderServiceImpl::new(db_pool.clone(), redis_client.clone());
@@ -545,7 +547,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // 设置服务器
     let addr = config.server.address.parse()?;
-    
+
     info!("Starting gRPC server on {}", addr);
 
     Server::builder()
@@ -601,7 +603,7 @@ impl system::user_service_server::UserService for UserServiceImpl {
         request: Request<system::CreateUserRequest>,
     ) -> Result<Response<system::UserResponse>, Status> {
         let req = request.into_inner();
-        
+
         // 数据库操作
         let user = sqlx::query_as!(
             User,
@@ -618,7 +620,7 @@ impl system::user_service_server::UserService for UserServiceImpl {
             .get_async_connection()
             .await
             .map_err(|e| Status::internal(e.to_string()))?;
-        
+
         redis::cmd("SET")
             .arg(format!("user:{}", user.id))
             .arg(serde_json::to_string(&user).unwrap())
@@ -856,13 +858,13 @@ metrics:
 1. 启动依赖服务：
 
 ```bash
-# PostgreSQL
+# 2. PostgreSQL
 docker run -d --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 
-# Redis
+# 3. Redis
 docker run -d --name redis -p 6379:6379 redis
 
-# Jaeger
+# 4. Jaeger
 docker run -d --name jaeger -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one
 ```
 

@@ -1,57 +1,57 @@
-# 现代软件架构分析：从前端到后端的全栈视角
+# 1. 现代软件架构分析：从前端到后端的全栈视角
 
 ## 目录
 
-- [现代软件架构分析：从前端到后端的全栈视角](#现代软件架构分析从前端到后端的全栈视角)
+- [1. 现代软件架构分析：从前端到后端的全栈视角](#1-现代软件架构分析从前端到后端的全栈视角)
   - [目录](#目录)
-  - [1. 引言](#1-引言)
-    - [1.1 分析背景与目标](#11-分析背景与目标)
-    - [1.2 技术生态现状概览](#12-技术生态现状概览)
-  - [2. 前端架构](#2-前端架构)
-    - [2.1 现代UI框架分析](#21-现代ui框架分析)
-    - [2.2 状态管理演进](#22-状态管理演进)
-    - [2.3 组件设计模式](#23-组件设计模式)
-    - [2.4 构建与优化系统](#24-构建与优化系统)
-  - [3. 后端架构](#3-后端架构)
-    - [3.1 服务器框架比较](#31-服务器框架比较)
-    - [3.2 API设计范式](#32-api设计范式)
-    - [3.3 微服务与单体架构](#33-微服务与单体架构)
-    - [3.4 函数即服务(FaaS)](#34-函数即服务faas)
-  - [4. 数据存储与处理](#4-数据存储与处理)
-    - [4.1 关系型数据库现状](#41-关系型数据库现状)
-    - [4.2 NoSQL解决方案](#42-nosql解决方案)
-    - [4.3 数据访问层模式](#43-数据访问层模式)
-    - [4.4 缓存策略与实现](#44-缓存策略与实现)
-  - [5. 全栈架构模式](#5-全栈架构模式)
-    - [5.1 JAMStack架构](#51-jamstack架构)
-    - [5.2 MERN/MEAN/PERN栈](#52-mernmeanpern栈)
-    - [5.3 云原生应用架构](#53-云原生应用架构)
-    - [5.4 服务网格与容器编排](#54-服务网格与容器编排)
-  - [6. 热门开源项目架构分析](#6-热门开源项目架构分析)
-    - [6.1 VSCode架构解析](#61-vscode架构解析)
-    - [6.2 Next.js内部架构](#62-nextjs内部架构)
-    - [6.3 Redis核心设计](#63-redis核心设计)
-    - [6.4 Kubernetes架构原理](#64-kubernetes架构原理)
-  - [7. 新兴架构趋势](#7-新兴架构趋势)
-    - [7.1 AI驱动的软件架构](#71-ai驱动的软件架构)
-    - [7.2 WebAssembly应用架构](#72-webassembly应用架构)
-    - [7.3 边缘计算模式](#73-边缘计算模式)
-  - [8. 软件架构思维导图](#8-软件架构思维导图)
-  - [9. 总结](#9-总结)
+  - [1.1 引言](#11-引言)
+    - [1.1.1 分析背景与目标](#111-分析背景与目标)
+    - [1.1.2 技术生态现状概览](#112-技术生态现状概览)
+  - [1.2 前端架构](#12-前端架构)
+    - [1.2.1 现代UI框架分析](#121-现代ui框架分析)
+    - [1.2.2 状态管理演进](#122-状态管理演进)
+    - [1.2.3 组件设计模式](#123-组件设计模式)
+    - [1.2.4 构建与优化系统](#124-构建与优化系统)
+  - [1.3 后端架构](#13-后端架构)
+    - [1.3.1 服务器框架比较](#131-服务器框架比较)
+    - [1.3.2 API设计范式](#132-api设计范式)
+    - [1.3.3 微服务与单体架构](#133-微服务与单体架构)
+    - [5.0.1 函数即服务(FaaS)](#501-函数即服务faas)
+  - [6.1 数据存储与处理](#61-数据存储与处理)
+    - [6.1.1 关系型数据库现状](#611-关系型数据库现状)
+    - [6.1.2 NoSQL解决方案](#612-nosql解决方案)
+    - [20.0.1 数据访问层模式](#2001-数据访问层模式)
+    - [26.0.1 缓存策略与实现](#2601-缓存策略与实现)
+  - [26.1 全栈架构模式](#261-全栈架构模式)
+    - [26.1.1 JAMStack架构](#2611-jamstack架构)
+    - [31.0.1 MERN/MEAN/PERN栈](#3101-mernmeanpern栈)
+    - [31.0.2 云原生应用架构](#3102-云原生应用架构)
+    - [42.0.1 服务网格与容器编排](#4201-服务网格与容器编排)
+  - [63.1 热门开源项目架构分析](#631-热门开源项目架构分析)
+    - [63.1.1 VSCode架构解析](#6311-vscode架构解析)
+    - [63.1.2 Next.js内部架构](#6312-nextjs内部架构)
+    - [63.1.3 Redis核心设计](#6313-redis核心设计)
+    - [63.1.4 Kubernetes架构原理](#6314-kubernetes架构原理)
+  - [63.2 新兴架构趋势](#632-新兴架构趋势)
+    - [63.2.1 AI驱动的软件架构](#6321-ai驱动的软件架构)
+    - [63.2.2 WebAssembly应用架构](#6322-webassembly应用架构)
+    - [63.2.3 边缘计算模式](#6323-边缘计算模式)
+  - [63.3 软件架构思维导图](#633-软件架构思维导图)
+  - [63.4 总结](#634-总结)
 
-## 1. 引言
+## 1.1 引言
 
-### 1.1 分析背景与目标
+### 1.1.1 分析背景与目标
 
 现代软件架构正经历前所未有的快速变革。本分析旨在提供从前端到后端的全栈视角，深入剖析当前热门技术栈、框架及应用架构的优缺点，帮助开发者和架构师做出更明智的技术决策。
 
-### 1.2 技术生态现状概览
+### 1.1.2 技术生态现状概览
 
 当前技术生态呈现多元化与专业化并存的特点。前端领域已从简单的DOM操作发展为复杂的应用平台；后端架构从单体应用向微服务与无服务器架构转变；数据存储也从传统关系型数据库扩展到多样化的存储解决方案。这种多样性带来了空前的灵活性，同时也增加了技术选型的复杂性。
 
-## 2. 前端架构
+## 1.2 前端架构
 
-### 2.1 现代UI框架分析
+### 1.2.1 现代UI框架分析
 
 -**React生态系统**
 
@@ -63,7 +63,7 @@ function UserProfile({ userId }) {
   // 状态管理
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // 副作用处理
   useEffect(() => {
     async function loadUser() {
@@ -74,10 +74,10 @@ function UserProfile({ userId }) {
     }
     loadUser();
   }, [userId]);
-  
+
   if (loading) return <Spinner />;
   if (!user) return <ErrorMessage />;
-  
+
   return (
     <div className="user-profile">
       <h1>{user.name}</h1>
@@ -170,9 +170,9 @@ Angular提供了完整的企业级开发平台：
 export class UserProfileComponent implements OnInit {
   @Input() userId: string;
   user$: Observable<User>;
-  
+
   constructor(private userService: UserService) {}
-  
+
   ngOnInit() {
     this.user$ = this.userService.getUser(this.userId).pipe(
       catchError(error => {
@@ -200,16 +200,16 @@ Svelte代表了向编译时优化转变的前端架构：
 <!-- Svelte组件示例 -->
 <script>
   export let userId;
-  
+
   let user;
   let loading = true;
-  
+
   async function loadUser() {
     loading = true;
     user = await fetchUser(userId);
     loading = false;
   }
-  
+
   $: if (userId) loadUser();
 </script>
 
@@ -244,7 +244,7 @@ Svelte代表了向编译时优化转变的前端架构：
 |包体积|中|小|大|最小|
 |编译优化|部分(JSX)|部分|高(AOT)|最高|
 
-### 2.2 状态管理演进
+### 1.2.2 状态管理演进
 
 -**集中式状态管理**
 
@@ -299,22 +299,22 @@ MobX代表了响应式状态管理方式：
 // MobX示例
 class TodoStore {
   @observable todos = [];
-  
+
   @computed get completedCount() {
     return this.todos.filter(todo => todo.completed).length;
   }
-  
+
   @action addTodo(text) {
     this.todos.push({ id: Date.now(), text, completed: false });
   }
-  
+
   @action toggleTodo(id) {
     const todo = this.todos.find(todo => todo.id === id);
     if (todo) {
       todo.completed = !todo.completed;
     }
   }
-  
+
   @action.bound async fetchTodos() {
     const response = await api.fetchTodos();
     runInAction(() => {
@@ -350,7 +350,7 @@ const filteredTodoListState = selector({
   get: ({get}) => {
     const filter = get(todoListFilterState);
     const list = get(todoListState);
-    
+
     switch (filter) {
       case 'completed':
         return list.filter(item => item.completed);
@@ -366,7 +366,7 @@ const filteredTodoListState = selector({
 function TodoList() {
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const filteredTodos = useRecoilValue(filteredTodoListState);
-  
+
   // 使用派生状态渲染UI
 }
 ```
@@ -393,7 +393,7 @@ function TodoApp() {
     retry: 3,  // 失败重试3次
     onSuccess: data => console.log('Data fetched successfully', data)
   });
-  
+
   // 修改数据
   const mutation = useMutation(addTodo, {
     onSuccess: () => {
@@ -401,10 +401,10 @@ function TodoApp() {
       queryClient.invalidateQueries('todos');
     }
   });
-  
+
   if (isLoading) return <Spinner />;
   if (error) return <ErrorMessage error={error} />;
-  
+
   return (
     <div>
       <TodoList todos={data} />
@@ -433,7 +433,7 @@ function TodoApp() {
 |调试能力|很强|中等|中等|强|
 |适用场景|复杂状态|中等复杂性|组件共享状态|远程数据|
 
-### 2.3 组件设计模式
+### 1.2.3 组件设计模式
 
 -**组合模式**
 
@@ -530,7 +530,7 @@ const formMachine = createMachine({
       on: { RESET: 'idle' }
     },
     error: {
-      on: { 
+      on: {
         SUBMIT: 'submitting',
         RESET: 'idle'
       }
@@ -546,7 +546,7 @@ function Form() {
       }
     }
   });
-  
+
   return (
     <form
       onSubmit={(e) => {
@@ -557,7 +557,7 @@ function Form() {
       {/* 根据状态渲染不同UI */}
       {state.matches('error') && <ErrorMessage />}
       {state.matches('success') && <SuccessMessage />}
-      
+
       <button type="submit" disabled={state.matches('submitting')}>
         {state.matches('submitting') ? 'Submitting...' : 'Submit'}
       </button>
@@ -588,7 +588,7 @@ export default async function UserProfile({ userId }) {
   // 直接数据库访问，无需API调用
   const user = await db.users.findUnique({ where: { id: userId } });
   const posts = await db.posts.findMany({ where: { authorId: userId } });
-  
+
   return (
     <div>
       <h1>{user.name}</h1>
@@ -608,7 +608,7 @@ import { useState } from 'react';
 
 export function ClientProfileActions({ userId }) {
   const [isFollowing, setIsFollowing] = useState(false);
-  
+
   return (
     <button onClick={() => setIsFollowing(!isFollowing)}>
       {isFollowing ? 'Unfollow' : 'Follow'}
@@ -625,7 +625,7 @@ export function ClientProfileActions({ userId }) {
 - 保持交互组件的客户端渲染
 - 无缝流式传输和渐进增强
 
-### 2.4 构建与优化系统
+### 1.2.4 构建与优化系统
 
 -**现代构建工具**
 
@@ -765,9 +765,9 @@ function App() {
 - 资源优化：图像压缩、字体优化、资源提示
 - 运行时优化：Web Workers、渲染队列、计算缓存
 
-## 3. 后端架构
+## 1.3 后端架构
 
-### 3.1 服务器框架比较
+### 1.3.1 服务器框架比较
 
 -**Node.js生态系统**
 
@@ -809,7 +809,7 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     try {
       const user = new User(req.body);
       await user.save();
@@ -935,7 +935,7 @@ package main
 
 import (
   "net/http"
-  
+
   "github.com/labstack/echo/v4"
   "github.com/labstack/echo/v4/middleware"
   "gorm.io/gorm"
@@ -965,39 +965,39 @@ func (h *UserHandler) CreateUser(c echo.Context) error {
   if err := c.Bind(u); err != nil {
     return echo.NewHTTPError(http.StatusBadRequest, err.Error())
   }
-  
+
   if err := c.Validate(u); err != nil {
     return echo.NewHTTPError(http.StatusBadRequest, err.Error())
   }
-  
+
   result := h.DB.Create(u)
   if result.Error != nil {
     return echo.NewHTTPError(http.StatusInternalServerError, result.Error.Error())
   }
-  
+
   return c.JSON(http.StatusCreated, u)
 }
 
 func main() {
   e := echo.New()
   e.Validator = &CustomValidator{validator: validator.New()}
-  
+
   // 中间件
   e.Use(middleware.Logger())
   e.Use(middleware.Recover())
   e.Use(middleware.CORS())
-  
+
   // 数据库连接
   db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
   db.AutoMigrate(&User{})
-  
+
   // 处理器
   h := &UserHandler{DB: db}
-  
+
   // 路由
   e.GET("/users", h.GetUsers)
   e.POST("/users", h.CreateUser)
-  
+
   e.Logger.Fatal(e.Start(":8080"))
 }
 ```
@@ -1022,7 +1022,7 @@ func main() {
 |类型系统|可选|原生TypeScript|静态|静态|动态|
 |异步模型|回调/Promise/Async|Promise/Async|Goroutine|多线程|同步/异步|
 
-### 3.2 API设计范式
+### 1.3.2 API设计范式
 
 -**REST API设计**
 
@@ -1072,7 +1072,7 @@ const typeDefs = gql`
     posts: [Post!]!
     following: [User!]!
   }
-  
+
   type Post {
     id: ID!
     title: String!
@@ -1083,7 +1083,7 @@ const typeDefs = gql`
     categories: [Category!]!
     createdAt: DateTime!
   }
-  
+
   type Comment {
     id: ID!
     text: String!
@@ -1091,14 +1091,14 @@ const typeDefs = gql`
     post: Post!
     createdAt: DateTime!
   }
-  
+
   type Query {
     users(first: Int, skip: Int): [User!]!
     user(id: ID!): User
     posts(first: Int, skip: Int, where: PostWhereInput): [Post!]!
     post(id: ID!): Post
   }
-  
+
   type Mutation {
     createUser(data: CreateUserInput!): User!
     updateUser(id: ID!, data: UpdateUserInput!): User
@@ -1106,18 +1106,18 @@ const typeDefs = gql`
     createPost(data: CreatePostInput!): Post!
     publishPost(id: ID!): Post
   }
-  
+
   input CreateUserInput {
     name: String!
     email: String!
     password: String!
   }
-  
+
   input UpdateUserInput {
     name: String
     email: String
   }
-  
+
   input PostWhereInput {
     published: Boolean
     title_contains: String
@@ -1185,19 +1185,19 @@ package user;
 service UserService {
   // 创建用户
   rpc CreateUser(CreateUserRequest) returns (User) {}
-  
+
   // 获取用户信息
   rpc GetUser(GetUserRequest) returns (User) {}
-  
+
   // 更新用户
   rpc UpdateUser(UpdateUserRequest) returns (User) {}
-  
+
   // 删除用户
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
-  
+
   // 获取用户列表
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
-  
+
   // 流式获取用户活动
   rpc StreamUserActivity(UserActivityRequest) returns (stream UserActivity) {}
 }
@@ -1297,7 +1297,7 @@ enum ActivityType {
 |双向流|无|有限(订阅)|完全支持|
 |适用场景|通用Web API|灵活数据需求|微服务/内部服务|
 
-### 3.3 微服务与单体架构
+### 1.3.3 微服务与单体架构
 
 -**单体应用架构**
 
@@ -1317,19 +1317,19 @@ public class EcommerceApplication {
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
-    
+
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-    
+
     @GetMapping
     public Page<ProductDTO> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return productService.findAllProducts(PageRequest.of(page, size));
     }
-    
+
     // 其他API端点
 }
 
@@ -1340,7 +1340,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
-    
+
     @Autowired
     public ProductServiceImpl(
             ProductRepository productRepository,
@@ -1350,13 +1350,13 @@ public class ProductServiceImpl implements ProductService {
         this.categoryRepository = categoryRepository;
         this.productMapper = productMapper;
     }
-    
+
     @Override
     public Page<ProductDTO> findAllProducts(Pageable pageable) {
         Page<Product> productsPage = productRepository.findAll(pageable);
         return productsPage.map(productMapper::toDto);
     }
-    
+
     // 其他业务逻辑
 }
 
@@ -1364,7 +1364,7 @@ public class ProductServiceImpl implements ProductService {
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long categoryId);
-    
+
     @Query("SELECT p FROM Product p WHERE p.price BETWEEN :min AND :max")
     List<Product> findByPriceRange(@Param("min") BigDecimal min, @Param("max") BigDecimal max);
 }
@@ -1376,19 +1376,19 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String name;
-    
+
     private String description;
-    
+
     @Column(nullable = false)
     private BigDecimal price;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-    
+
     // 其他字段、getter和setter
 }
 ```
@@ -1419,7 +1419,7 @@ public class ProductServiceApplication {
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
-    
+
     // API实现
 }
 
@@ -1435,34 +1435,34 @@ public interface InventoryClient {
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final InventoryClient inventoryClient;
-    
+
     @CircuitBreaker(name = "inventoryService", fallbackMethod = "getDefaultInventory")
     public ProductDetailDTO getProductWithInventory(Long id) {
         Product product = productRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-            
+
         // 调用库存服务获取库存信息
         InventoryResponse inventory = inventoryClient.checkInventory(id);
-        
+
         ProductDetailDTO dto = mapper.toDetailDto(product);
         dto.setAvailableQuantity(inventory.getQuantity());
         dto.setInStock(inventory.isInStock());
-        
+
         return dto;
     }
-    
+
     // 断路器回退方法
     public ProductDetailDTO getDefaultInventory(Long id, Exception ex) {
         Product product = productRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-            
+
         ProductDetailDTO dto = mapper.toDetailDto(product);
         dto.setAvailableQuantity(0);
         dto.setInStock(false);
-        
+
         // 记录失败
         log.error("Inventory service is down. Using fallback for product: {}", id, ex);
-        
+
         return dto;
     }
 }
@@ -1471,7 +1471,7 @@ public class ProductServiceImpl implements ProductService {
 -**微服务配置 - 服务注册与发现**
 
 ```yaml
-# application.yml
+# 2. application.yml
 spring:
   application:
     name: product-service
@@ -1484,15 +1484,15 @@ spring:
         healthCheckPath: /actuator/health
         healthCheckInterval: 15s
 
-# 配置中心集成
+# 3. 配置中心集成
   config:
     import: optional:configserver:http://config-server:8888
 
-# 分布式追踪
+# 4. 分布式追踪
   zipkin:
     base-url: http://zipkin:9411
-    
-# 消息队列配置
+
+# 5. 消息队列配置
   kafka:
     bootstrap-servers: kafka:9092
     producer:
@@ -1523,7 +1523,7 @@ spring:
 |监控复杂性|低|高|
 |适用场景|小团队 / 初创|大型组织 / 复杂领域|
 
-### 3.4 函数即服务(FaaS)
+### 5.0.1 函数即服务(FaaS)
 
 -**AWS Lambda架构**
 
@@ -1539,7 +1539,7 @@ exports.handler = async (event) => {
     // API Gateway事件处理
     const { pathParameters, httpMethod, body } = event;
     const id = pathParameters?.id;
-    
+
     // 路由逻辑
     if (httpMethod === 'GET') {
       if (id) {
@@ -1556,7 +1556,7 @@ exports.handler = async (event) => {
     } else if (httpMethod === 'DELETE' && id) {
       return await deleteItem(id);
     }
-    
+
     // 未支持的操作
     return {
       statusCode: 400,
@@ -1576,16 +1576,16 @@ async function getItem(id) {
     TableName: process.env.TABLE_NAME,
     Key: { id }
   };
-  
+
   const result = await dynamodb.get(params).promise();
-  
+
   if (!result.Item) {
     return {
       statusCode: 404,
       body: JSON.stringify({ error: 'Item not found' })
     };
   }
-  
+
   return {
     statusCode: 200,
     body: JSON.stringify(result.Item)
@@ -1609,14 +1609,14 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 export class ItemsServiceStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    
+
     // DynamoDB表
     const itemsTable = new dynamodb.Table(this, 'ItemsTable', {
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY, // 开发环境
     });
-    
+
     // Lambda函数
     const itemsFunction = new lambda.Function(this, 'ItemsFunction', {
       runtime: lambda.Runtime.NODEJS_14_X,
@@ -1626,22 +1626,22 @@ export class ItemsServiceStack extends cdk.Stack {
         TABLE_NAME: itemsTable.tableName
       }
     });
-    
+
     // 授予Lambda访问DynamoDB的权限
     itemsTable.grantReadWriteData(itemsFunction);
-    
+
     // API Gateway
     const api = new apigateway.RestApi(this, 'ItemsApi', {
       restApiName: 'Items Service',
       description: 'API for managing items'
     });
-    
+
     // 资源和方法
     const items = api.root.addResource('items');
     const singleItem = items.addResource('{id}');
-    
+
     const itemsIntegration = new apigateway.LambdaIntegration(itemsFunction);
-    
+
     // CRUD操作
     items.addMethod('GET', itemsIntegration);  // 列出所有
     items.addMethod('POST', itemsIntegration);  // 创建
@@ -1664,7 +1664,7 @@ export class ItemsServiceStack extends cdk.Stack {
 -**无服务器框架 - Serverless Framework**
 
 ```yaml
-# serverless.yml
+# 6. serverless.yml
 service: items-service
 
 provider:
@@ -1732,9 +1732,9 @@ resources:
 |开发复杂性|低|中|高|
 |运维复杂性|低|高|中高|
 
-## 4. 数据存储与处理
+## 6.1 数据存储与处理
 
-### 4.1 关系型数据库现状
+### 6.1.1 关系型数据库现状
 
 -**PostgreSQL高级特性**
 
@@ -1816,7 +1816,7 @@ CREATE INDEX articles_search_idx ON articles USING GIN (search_vector);
 -- 更新触发器生成搜索向量
 CREATE FUNCTION articles_search_trigger() RETURNS trigger AS $$
 BEGIN
-  NEW.search_vector := 
+  NEW.search_vector :=
     setweight(to_tsvector('english', NEW.title), 'A') ||
     setweight(to_tsvector('english', NEW.content), 'B');
   RETURN NEW;
@@ -1871,7 +1871,7 @@ CREATE TABLE product_details (
 
 -- 插入JSON数据
 INSERT INTO product_details VALUES (
-  101, 
+  101,
   '{
     "name": "Ergonomic Chair",
     "category": "furniture",
@@ -1889,7 +1889,7 @@ INSERT INTO product_details VALUES (
 );
 
 -- JSON查询
-SELECT product_id, 
+SELECT product_id,
        details->>'$.name' AS name,
        details->>'$.category' AS category,
        details->>'$.specs.weight_kg' AS weight
@@ -1898,8 +1898,8 @@ WHERE details->>'$.category' = 'furniture'
   AND JSON_CONTAINS(details->>'$.colors_available', '"black"');
 
 -- 窗口函数
-SELECT 
-  o.id, 
+SELECT
+  o.id,
   o.customer_id,
   o.total,
   o.order_date,
@@ -2030,7 +2030,7 @@ CREATE SCHEDULE cleanup_expired_sessions
 |地理数据|PostGIS|有限|原生支持|
 |云原生|需适配|需适配|原生设计|
 
-### 4.2 NoSQL解决方案
+### 6.1.2 NoSQL解决方案
 
 -**文档数据库 - MongoDB**
 
@@ -2164,11 +2164,11 @@ try {
     },
     { session }
   );
-  
+
   if (inventoryResult.modifiedCount !== 1) {
     throw new Error("Insufficient inventory");
   }
-  
+
   // 创建订单
   const orderResult = db.orders.insertOne({
     userId: userId,
@@ -2177,7 +2177,7 @@ try {
     status: "pending",
     createdAt: new Date()
   }, { session });
-  
+
   // 更新用户订单历史
   db.users.updateOne(
     { _id: userId },
@@ -2187,7 +2187,7 @@ try {
     },
     { session }
   );
-  
+
   // 提交事务
   session.commitTransaction();
 } catch (error) {
@@ -2213,66 +2213,66 @@ try {
 Redis作为高性能键值存储和多功能数据结构服务器：
 
 ```bash
-# Redis数据结构和命令示例
+# 7. Redis数据结构和命令示例
 
-# 字符串操作 - 计数器和缓存
+# 8. 字符串操作 - 计数器和缓存
 SET pageviews:homepage 1000
 INCR pageviews:homepage
 GET pageviews:homepage
 
-# 带过期时间的缓存
+# 9. 带过期时间的缓存
 SET user:profile:1001 "{\"name\":\"John\",\"email\":\"john@example.com\"}" EX 3600
 GET user:profile:1001
 
-# 哈希表 - 存储对象
+# 10. 哈希表 - 存储对象
 HSET product:10001 name "Smartphone X" price 699.99 category "electronics" stock 124
 HINCRBY product:10001 stock -1
 HGETALL product:10001
 
-# 列表 - 最新动态、消息队列
+# 11. 列表 - 最新动态、消息队列
 LPUSH latest:news "{\"id\":1,\"title\":\"New Feature Launch\"}"
 LPUSH latest:news "{\"id\":2,\"title\":\"System Maintenance\"}"
 LRANGE latest:news 0 4
 
-# 任务队列
+# 12. 任务队列
 RPUSH tasks:email "{\"type\":\"welcome\",\"user_id\":1001}"
 LPOP tasks:email
 
-# 集合 - 唯一元素集合、标签系统
+# 13. 集合 - 唯一元素集合、标签系统
 SADD product:10001:tags "smartphone" "5g" "android"
 SADD product:10002:tags "smartphone" "5g" "ios"
 SINTER product:10001:tags product:10002:tags  # 共同标签
 
-# 用户在线状态
+# 14. 用户在线状态
 SADD online:users 1001 1002 1003
 SISMEMBER online:users 1001  # 检查用户是否在线
 
-# 有序集合 - 排行榜、权重列表
+# 15. 有序集合 - 排行榜、权重列表
 ZADD leaderboard:monthly 1220 "user:1001"
-ZADD leaderboard:monthly 940 "user:1002" 
+ZADD leaderboard:monthly 940 "user:1002"
 ZADD leaderboard:monthly 1500 "user:1003"
 ZREVRANGE leaderboard:monthly 0 9 WITHSCORES  # 前10名
 
-# 位图操作 - 用户活跃统计
+# 16. 位图操作 - 用户活跃统计
 SETBIT user:1001:active:2023-08 0 1  # 8月1日活跃
 SETBIT user:1001:active:2023-08 5 1  # 8月6日活跃
 BITCOUNT user:1001:active:2023-08  # 活跃天数
 
-# 地理空间 - 位置服务
+# 17. 地理空间 - 位置服务
 GEOADD locations 13.361389 38.115556 "store:1001" 15.087269 37.502669 "store:1002"
 GEODIST locations "store:1001" "store:1002" km
 GEORADIUS locations 15.0 37.0 50 km
 
-# 流 - 事件处理、日志
+# 18. 流 - 事件处理、日志
 XADD events:purchases * product_id 10001 user_id 1001 quantity 2
 XADD events:purchases * product_id 10002 user_id 1002 quantity 1
 XREAD COUNT 10 STREAMS events:purchases 0-0
 
-# 发布订阅
+# 19. 发布订阅
 SUBSCRIBE notifications:global
 PUBLISH notifications:global "{\"type\":\"alert\",\"message\":\"System update\"}"
 
-# Lua脚本 - 原子操作
+# 20. Lua脚本 - 原子操作
 EVAL "
 local current = tonumber(redis.call('get', KEYS[1])) or 0
 if current >= tonumber(ARGV[1]) then
@@ -2372,7 +2372,7 @@ CREATE TABLE product_inventory_history (
 
 -- 插入数据
 INSERT INTO user_orders (
-  user_id, order_id, order_date, order_status, total, 
+  user_id, order_id, order_date, order_status, total,
   shipping_address, payment_method
 ) VALUES (
   123e4567-e89b-12d3-a456-426614174000,
@@ -2385,8 +2385,8 @@ INSERT INTO user_orders (
 );
 
 -- 轻量级事务 (CAS - Compare And Set)
-UPDATE products 
-SET price = 599.99 
+UPDATE products
+SET price = 599.99
 WHERE product_id = 123e4567-e89b-12d3-a456-426614174000
 IF price = 649.99;
 
@@ -2394,7 +2394,7 @@ IF price = 649.99;
 BEGIN BATCH
   INSERT INTO products (product_id, name, price, category)
   VALUES (123e4567-e89b-12d3-a456-426614174000, 'Smart Watch', 299.99, 'electronics');
-  
+
   INSERT INTO products_by_category (category, product_id, name, price, created_at)
   VALUES ('electronics', 123e4567-e89b-12d3-a456-426614174000, 'Smart Watch', 299.99, toTimestamp(now()));
 APPLY BATCH;
@@ -2425,7 +2425,7 @@ InfluxDB为时间序列数据优化：
 -- 创建连续查询进行自动降采样
 CREATE CONTINUOUS QUERY "cq_30m_system_metrics" ON "monitoring"
 BEGIN
-  SELECT 
+  SELECT
     mean("cpu_usage") AS "cpu_usage",
     mean("memory_usage") AS "memory_usage",
     mean("disk_usage") AS "disk_usage",
@@ -2456,16 +2456,16 @@ from(bucket: "monitoring")
   |> yield(name: "high_utilization")
 
 -- 使用InfluxQL查询API请求延迟的99百分位数
-SELECT percentile("response_time", 99) 
-FROM "api_metrics" 
-WHERE time >= now() - 30m 
+SELECT percentile("response_time", 99)
+FROM "api_metrics"
+WHERE time >= now() - 30m
   AND "service" = 'user-service'
   AND "endpoint" = '/api/users'
 GROUP BY time(1m), "host"
 
 -- 查找异常值 - 偏离均值超过2个标准差的点
-SELECT "response_time" 
-FROM "api_metrics" 
+SELECT "response_time"
+FROM "api_metrics"
 WHERE "service" = 'payment-service'
   AND time >= now() - 6h
   AND ("response_time" > (
@@ -2517,7 +2517,7 @@ stream
 |主要用途|通用/应用数据|缓存/实时数据|大规模分布式|指标/监控|
 |特殊功能|地理空间|数据结构|高写入容量|时序分析|
 
-### 4.3 数据访问层模式
+### 20.0.1 数据访问层模式
 
 -**ORM模式**
 
@@ -2546,10 +2546,10 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
-  
+
   @OneToMany(() => Order, order => order.user)
   orders: Order[];
-  
+
   @ManyToMany(() => Role)
   @JoinTable()
   roles: Role[];
@@ -2629,77 +2629,77 @@ export class ProductService {
     limit?: number;
     sort?: string;
   }): Promise<{ items: Product[]; total: number }> {
-    const { category, minPrice, maxPrice, inStock, page = 1, limit = 
+    const { category, minPrice, maxPrice, inStock, page = 1, limit =
 10, sort = 'name:asc' } = options;
-    
+
     // 构建查询构建器
     const queryBuilder = this.productRepository.createQueryBuilder('product');
-    
+
     // 应用过滤条件
     if (category) {
       queryBuilder.andWhere('product.category = :category', { category });
     }
-    
+
     if (minPrice !== undefined) {
       queryBuilder.andWhere('product.price >= :minPrice', { minPrice });
     }
-    
+
     if (maxPrice !== undefined) {
       queryBuilder.andWhere('product.price <= :maxPrice', { maxPrice });
     }
-    
+
     if (inStock !== undefined) {
       queryBuilder.andWhere(inStock ? 'product.stock > 0' : 'product.stock = 0');
     }
-    
+
     // 默认只返回活跃产品
     queryBuilder.andWhere('product.isActive = true');
-    
+
     // 应用排序
     const [sortField, sortDirection] = sort.split(':');
     queryBuilder.orderBy(`product.${sortField}`, sortDirection.toUpperCase() as 'ASC' | 'DESC');
-    
+
     // 应用分页
     const skip = (page - 1) * limit;
     queryBuilder.skip(skip).take(limit);
-    
+
     // 执行查询
     const [items, total] = await queryBuilder.getManyAndCount();
-    
+
     return { items, total };
   }
-  
+
   async findOne(id: string): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
       relations: ['orderItems', 'orderItems.order']
     });
-    
+
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
-    
+
     return product;
   }
-  
+
   async create(data: Partial<Product>): Promise<Product> {
     const product = this.productRepository.create(data);
     return await this.productRepository.save(product);
   }
-  
+
   async update(id: string, data: Partial<Product>): Promise<Product> {
     await this.productRepository.update(id, data);
     return this.findOne(id);
   }
-  
+
   async remove(id: string): Promise<void> {
     const result = await this.productRepository.delete(id);
-    
+
     if (result.affected === 0) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
   }
-  
+
   // 事务示例
   async createProductWithInventory(
     productData: Partial<Product>,
@@ -2712,9 +2712,9 @@ export class ProductService {
         ...productData,
         stock: 0 // 初始库存为0
       });
-      
+
       await productRepo.save(product);
-      
+
       // 创建库存记录
       const inventoryRepo = manager.getRepository(Inventory);
       const inventory = inventoryRepo.create({
@@ -2722,13 +2722,13 @@ export class ProductService {
         quantity: initialStock,
         warehouseId: 'main'
       });
-      
+
       await inventoryRepo.save(inventory);
-      
+
       // 更新产品库存
       product.stock = initialStock;
       await productRepo.save(product);
-      
+
       return product;
     });
   }
@@ -2749,20 +2749,20 @@ export class ProductService {
 SQLAlchemy核心API展示数据映射器模式：
 
 ```python
-# SQLAlchemy数据映射器示例
+# 21. SQLAlchemy数据映射器示例
 
 from sqlalchemy import (
-    create_engine, MetaData, Table, Column, Integer, String, 
+    create_engine, MetaData, Table, Column, Integer, String,
     Numeric, DateTime, ForeignKey, select, func, and_, or_
 )
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
-# 创建数据库连接
+# 22. 创建数据库连接
 engine = create_engine('postgresql://user:password@localhost:5432/mydb')
 metadata = MetaData()
 
-# 使用核心API定义表
+# 23. 使用核心API定义表
 users = Table(
     'users', metadata,
     Column('id', Integer, primary_key=True),
@@ -2800,29 +2800,29 @@ products = Table(
     Column('created_at', DateTime, default=datetime.utcnow)
 )
 
-# 创建表
+# 24. 创建表
 metadata.create_all(engine)
 
-# 数据访问类
+# 25. 数据访问类
 class UserRepository:
     def __init__(self, connection):
         self.connection = connection
-    
+
     def find_by_id(self, user_id):
         query = select([users]).where(users.c.id == user_id)
         result = self.connection.execute(query).fetchone()
         return dict(result) if result else None
-    
+
     def find_by_email(self, email):
         query = select([users]).where(users.c.email == email)
         result = self.connection.execute(query).fetchone()
         return dict(result) if result else None
-    
+
     def create(self, user_data):
         result = self.connection.execute(users.insert().values(**user_data))
         user_id = result.inserted_primary_key[0]
         return self.find_by_id(user_id)
-    
+
     def update(self, user_id, user_data):
         self.connection.execute(
             users.update()
@@ -2830,7 +2830,7 @@ class UserRepository:
             .values(**user_data)
         )
         return self.find_by_id(user_id)
-    
+
     def delete(self, user_id):
         self.connection.execute(
             users.delete().where(users.c.id == user_id)
@@ -2839,7 +2839,7 @@ class UserRepository:
 class OrderRepository:
     def __init__(self, connection):
         self.connection = connection
-    
+
     def find_with_items(self, order_id):
         # 多表连接查询
         query = select([
@@ -2849,14 +2849,14 @@ class OrderRepository:
         ]).select_from(
             orders.join(users, orders.c.user_id == users.c.id)
         ).where(orders.c.id == order_id)
-        
+
         order_result = self.connection.execute(query).fetchone()
-        
+
         if not order_result:
             return None
-        
+
         order_dict = dict(order_result)
-        
+
         # 查询订单项
         items_query = select([
             order_items,
@@ -2865,12 +2865,12 @@ class OrderRepository:
         ]).select_from(
             order_items.join(products, order_items.c.product_id == products.c.id)
         ).where(order_items.c.order_id == order_id)
-        
+
         items_result = self.connection.execute(items_query).fetchall()
         order_dict['items'] = [dict(item) for item in items_result]
-        
+
         return order_dict
-    
+
     def create_with_items(self, order_data, items_data):
         # 使用事务
         with self.connection.begin():
@@ -2879,35 +2879,35 @@ class OrderRepository:
                 orders.insert().values(**order_data)
             )
             order_id = order_result.inserted_primary_key[0]
-            
+
             # 创建订单项
             for item in items_data:
                 item['order_id'] = order_id
                 self.connection.execute(
                     order_items.insert().values(**item)
                 )
-                
+
                 # 更新产品库存
                 self.connection.execute(
                     products.update()
                     .where(products.c.id == item['product_id'])
                     .values(stock=products.c.stock - item['quantity'])
                 )
-            
+
             # 返回完整订单
             return self.find_with_items(order_id)
 
-# 使用示例
+# 26. 使用示例
 with engine.connect() as conn:
     user_repo = UserRepository(conn)
     order_repo = OrderRepository(conn)
-    
+
     # 创建用户
     user = user_repo.create({
         'name': 'John Doe',
         'email': 'john@example.com'
     })
-    
+
     # 创建订单
     order = order_repo.create_with_items(
         {
@@ -2947,26 +2947,26 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String name;
-    
+
     @Column(length = 2000)
     private String description;
-    
+
     @Column(nullable = false)
     private BigDecimal price;
-    
+
     @Column(name = "inventory_count")
     private Integer inventoryCount;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-    
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductReview> reviews = new ArrayList<>();
-    
+
     // getters, setters, etc.
 }
 
@@ -2974,25 +2974,25 @@ public class Product {
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // 基于方法名的查询定义
     List<Product> findByCategoryId(Long categoryId);
-    
+
     List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
-    
+
     @Query("SELECT p FROM Product p WHERE p.inventoryCount > 0 AND p.category.name = :category")
     List<Product> findInStockByCategory(@Param("category") String category);
-    
+
     // 原生SQL查询
-    @Query(value = 
+    @Query(value =
         "SELECT p.*, AVG(r.rating) as avg_rating " +
         "FROM products p " +
         "LEFT JOIN product_reviews r ON p.id = r.product_id " +
         "GROUP BY p.id " +
-        "HAVING AVG(r.rating) >= :minRating", 
+        "HAVING AVG(r.rating) >= :minRating",
         nativeQuery = true)
     List<Product> findWithMinimumAverageRating(@Param("minRating") double minRating);
-    
+
     // 分页和排序
     Page<Product> findByNameContaining(String name, Pageable pageable);
-    
+
     // 修改查询
     @Modifying
     @Transactional
@@ -3008,37 +3008,37 @@ public interface CustomProductRepository {
 public class CustomProductRepositoryImpl implements CustomProductRepository {
     @PersistenceContext
     private EntityManager entityManager;
-    
+
     @Override
     public List<Product> findComplexQuery(ProductSearchCriteria criteria) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = cb.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
-        
+
         // 构建复杂查询条件
         List<Predicate> predicates = new ArrayList<>();
-        
+
         if (criteria.getCategories() != null && !criteria.getCategories().isEmpty()) {
             predicates.add(root.get("category").in(criteria.getCategories()));
         }
-        
+
         if (criteria.getMinPrice() != null) {
             predicates.add(cb.greaterThanOrEqualTo(root.get("price"), criteria.getMinPrice()));
         }
-        
+
         if (criteria.getMaxPrice() != null) {
             predicates.add(cb.lessThanOrEqualTo(root.get("price"), criteria.getMaxPrice()));
         }
-        
+
         if (criteria.getSearchTerm() != null) {
             predicates.add(cb.or(
                 cb.like(cb.lower(root.get("name")), "%" + criteria.getSearchTerm().toLowerCase() + "%"),
                 cb.like(cb.lower(root.get("description")), "%" + criteria.getSearchTerm().toLowerCase() + "%")
             ));
         }
-        
+
         query.where(predicates.toArray(new Predicate[0]));
-        
+
         // 应用排序
         if (criteria.getSortBy() != null) {
             if (criteria.getSortDirection() == SortDirection.ASC) {
@@ -3047,7 +3047,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
                 query.orderBy(cb.desc(root.get(criteria.getSortBy())));
             }
         }
-        
+
         return entityManager.createQuery(query)
                 .setFirstResult(criteria.getOffset())
                 .setMaxResults(criteria.getLimit())
@@ -3060,27 +3060,27 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 @Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
-    
+
     @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
+
     public List<Product> findByCategory(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
-    
+
     public Page<Product> searchProducts(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("name").ascending());
         return productRepository.findByNameContaining(keyword, pageable);
     }
-    
+
     @Transactional
     public boolean purchaseProduct(Long productId, int quantity) {
         int updated = productRepository.reduceInventory(productId, quantity);
         return updated > 0;
     }
-    
+
     @Transactional
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -3109,7 +3109,7 @@ public class ProductService {
 |学习曲线|陡峭|中等|平缓|
 |适用场景|中小应用|高性能需求|领域驱动设计|
 
-### 4.4 缓存策略与实现
+### 26.0.1 缓存策略与实现
 
 -**多级缓存架构**
 
@@ -3121,37 +3121,37 @@ public class ProductService {
 @Configuration
 @EnableCaching
 public class CacheConfig {
-    
+
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         // 设置序列化器
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        
+
         // 本地缓存配置
         Map<String, RedisCacheConfiguration> cacheConfigurations = new HashMap<>();
-        
+
         // 产品缓存 - 短TTL, 高频访问
         cacheConfigurations.put("products", RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(10))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer)));
-        
+
         // 类别缓存 - 长TTL, 不常变化
         cacheConfigurations.put("categories", RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofHours(24))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer)));
-        
+
         // 用户会话缓存 - 中等TTL
         cacheConfigurations.put("userSessions", RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofHours(2))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer)));
-        
+
         // 创建复合缓存管理器
         CompositeCacheManager compositeCacheManager = new CompositeCacheManager();
-        
+
         // 第一级: Caffeine本地缓存
         CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
         caffeineCacheManager.setCacheNames(Arrays.asList("products", "categories"));
@@ -3159,25 +3159,25 @@ public class CacheConfig {
                 .maximumSize(10_000)
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .recordStats());
-        
+
         // 第二级: Redis分布式缓存
         RedisCacheManager redisCacheManager = RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30)))
                 .withInitialCacheConfigurations(cacheConfigurations)
                 .build();
-        
+
         // 组合缓存管理器
         compositeCacheManager.setCacheManagers(Arrays.asList(
-                caffeineCacheManager, 
+                caffeineCacheManager,
                 redisCacheManager
         ));
-        
+
         // 设置降级策略
         compositeCacheManager.setFallbackToNoOpCache(true);
-        
+
         return compositeCacheManager;
     }
-    
+
     // 缓存统计和监控
     @Bean
     public CacheMetricsRegistrar cacheMetricsRegistrar(CacheManager cacheManager, MeterRegistry registry) {
@@ -3190,28 +3190,28 @@ public class CacheConfig {
 public class ProductService {
     private final ProductRepository productRepository;
     private final CacheManager cacheManager;
-    
+
     // 声明式缓存
     @Cacheable(value = "products", key = "#id", unless = "#result == null")
     public Product findById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
-    
+
     @Cacheable(value = "products", key = "'category_' + #categoryId")
     public List<Product> findByCategory(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
-    
+
     @CachePut(value = "products", key = "#result.id")
     public Product save(Product product) {
         return productRepository.save(product);
     }
-    
+
     @CacheEvict(value = "products", key = "#id")
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
-    
+
     // 更复杂的缓存场景 - 批量更新
     @Caching(evict = {
         @CacheEvict(value = "products", key = "#product.id"),
@@ -3221,22 +3221,22 @@ public class ProductService {
     public Product updateProductWithCategory(Product product) {
         return productRepository.save(product);
     }
-    
+
     // 编程式缓存访问
     public List<Product> findFeaturedProducts() {
         Cache cache = cacheManager.getCache("products");
         ValueWrapper cached = cache.get("featured_products");
-        
+
         if (cached != null) {
             return (List<Product>) cached.get();
         }
-        
+
         List<Product> featuredProducts = productRepository.findFeaturedProducts();
         cache.put("featured_products", featuredProducts);
-        
+
         return featuredProducts;
     }
-    
+
     // 自定义缓存逻辑 - 缓存预热
     @PostConstruct
     public void warmupCache() {
@@ -3247,7 +3247,7 @@ public class ProductService {
             cacheManager.getCache("products").put("category_" + category.getId(), products);
         });
     }
-    
+
     // 缓存降级模式
     public List<Product> searchWithCacheFallback(String query) {
         try {
@@ -3307,11 +3307,11 @@ class CacheAsideService {
       console.log('Local cache hit');
       return localData;
     }
-    
+
     // 再查Redis
     const redisKey = `user:${userId}`;
     let userData = await redisClient.get(redisKey);
-    
+
     if (userData) {
       console.log('Redis cache hit');
       userData = JSON.parse(userData);
@@ -3319,24 +3319,24 @@ class CacheAsideService {
       localCache.set(localKey, userData);
       return userData;
     }
-    
+
     // 缓存未命中，查数据库
     console.log('Cache miss, querying database');
     const user = await getUserFromDatabase(userId);
-    
+
     if (user) {
       // 写入缓存
       redisClient.set(redisKey, JSON.stringify(user), 'EX', 3600); // 1小时过期
       localCache.set(localKey, user);
     }
-    
+
     return user;
   }
-  
+
   async updateUser(userId, userData) {
     // 先更新数据库
     await updateUserInDatabase(userId, userData);
-    
+
     // 再使缓存失效
     const redisKey = `user:${userId}`;
     await redisClient.del(redisKey);
@@ -3350,25 +3350,25 @@ class ReadThroughCache {
     this.dataLoader = dataLoader; // 数据加载函数
     this.redis = redisClient;
   }
-  
+
   async get(key, options = { ttl: 3600 }) {
     // 尝试从缓存获取
     let data = await this.redis.get(key);
-    
+
     // 缓存未命中
     if (!data) {
       console.log(`Cache miss for key: ${key}`);
       // 加载新数据
       data = await this.dataLoader(key);
-      
+
       // 数据存在则缓存
       if (data) {
         await this.redis.set(key, JSON.stringify(data), 'EX', options.ttl);
       }
-      
+
       return data;
     }
-    
+
     // 缓存命中
     console.log(`Cache hit for key: ${key}`);
     return JSON.parse(data);
@@ -3381,14 +3381,14 @@ class WriteThroughCache {
     this.dataWriter = dataWriter; // 数据写入函数
     this.redis = redisClient;
   }
-  
+
   async set(key, data, options = { ttl: 3600 }) {
     // 先写入数据库
     await this.dataWriter(key, data);
-    
+
     // 再更新缓存
     await this.redis.set(key, JSON.stringify(data), 'EX', options.ttl);
-    
+
     return data;
   }
 }
@@ -3401,33 +3401,33 @@ class WriteBehindCache {
     this.redis = redisClient;
     this.writeQueue = [];
     this.flushTimer = null;
-    
+
     // 启动定时刷新
     this.startFlushTimer();
   }
-  
+
   startFlushTimer() {
     this.flushTimer = setInterval(() => this.flush(), this.options.flushIntervalMs);
   }
-  
+
   async set(key, data) {
     // 先更新缓存
     await this.redis.set(key, JSON.stringify(data));
-    
+
     // 将写操作加入队列
     this.writeQueue.push({ key, data, timestamp: Date.now() });
-    
+
     // 如果队列超过阈值，立即刷新
     if (this.writeQueue.length >= this.options.maxBatchSize) {
       this.flush();
     }
-    
+
     return data;
   }
-  
+
   async flush() {
     if (this.writeQueue.length === 0) return;
-    
+
     const batch = this.writeQueue.splice(0, this.options.maxBatchSize);
     try {
       await this.batchWriter(batch);
@@ -3438,7 +3438,7 @@ class WriteBehindCache {
       this.writeQueue.unshift(...batch);
     }
   }
-  
+
   async shutdown() {
     clearInterval(this.flushTimer);
     return this.flush(); // 最终刷新
@@ -3450,10 +3450,10 @@ class CachingService {
   // 空结果缓存 - 防止缓存穿透
   async getUserWithProtection(userId) {
     const cacheKey = `user:${userId}`;
-    
+
     // 查询缓存
     let cachedData = await redisClient.get(cacheKey);
-    
+
     if (cachedData) {
       // 检查是否是空值标记
       if (cachedData ===
@@ -3463,48 +3463,48 @@ class CachingService {
       }
       return JSON.parse(cachedData);
     }
-    
+
     // 查询数据库
     const userData = await getUserFromDatabase(userId);
-    
+
     // 缓存结果，即使是null也缓存（但使用短TTL）
     if (userData) {
       await redisClient.set(cacheKey, JSON.stringify(userData), 'EX', 3600); // 1小时
     } else {
       await redisClient.set(cacheKey, 'NULL', 'EX', 60); // 1分钟短TTL
     }
-    
+
     return userData;
   }
-  
+
   // 布隆过滤器防穿透
   async getUserWithBloomFilter(userId) {
     const bloomFilter = await getBloomFilter('users');
-    
+
     // 检查ID是否可能存在
     const mightExist = await bloomFilter.exists(userId);
-    
+
     // 如果布隆过滤器说不存在，则一定不存在
     if (!mightExist) {
       console.log('Rejected by bloom filter');
       return null;
     }
-    
+
     // 可能存在，检查缓存
     const cacheKey = `user:${userId}`;
     let userData = await redisClient.get(cacheKey);
-    
+
     if (userData) {
       return JSON.parse(userData);
     }
-    
+
     // 查询数据库
     userData = await getUserFromDatabase(userId);
-    
+
     if (userData) {
       await redisClient.set(cacheKey, JSON.stringify(userData), 'EX', 3600);
     }
-    
+
     return userData;
   }
 }
@@ -3516,7 +3516,7 @@ class HotKeyProtection {
     this.retryDelay = 100;   // 100ms重试间隔
     this.maxRetries = 20;    // 最多重试20次
   }
-  
+
   // 获取分布式锁
   async acquireLock(lockKey, ttlMs) {
     // 使用 SET NX EX 实现分布式锁
@@ -3524,7 +3524,7 @@ class HotKeyProtection {
     const acquired = await redisClient.set(lockKey, token, 'NX', 'PX', ttlMs);
     return acquired === 'OK' ? token : null;
   }
-  
+
   // 释放锁
   async releaseLock(lockKey, token) {
     // Lua脚本保证原子性
@@ -3535,23 +3535,23 @@ class HotKeyProtection {
         return 0
       end
     `;
-    
+
     return await redisClient.eval(script, 1, lockKey, token);
   }
-  
+
   // 防击穿的数据加载
   async getHotKey(key, dataLoader) {
     // 先尝试从缓存获取
     let data = await redisClient.get(key);
-    
+
     if (data) {
       return JSON.parse(data);
     }
-    
+
     // 缓存未命中，尝试获取锁
     const lockKey = `lock:${key}`;
     const lockToken = await this.acquireLock(lockKey, this.lockTimeout);
-    
+
     if (lockToken) {
       try {
         // 双重检查，可能其他进程已经缓存了数据
@@ -3559,15 +3559,15 @@ class HotKeyProtection {
         if (data) {
           return JSON.parse(data);
         }
-        
+
         // 加载数据
         const freshData = await dataLoader();
-        
+
         // 更新缓存
         if (freshData) {
           await redisClient.set(key, JSON.stringify(freshData), 'EX', 3600);
         }
-        
+
         return freshData;
       } finally {
         // 释放锁
@@ -3577,14 +3577,14 @@ class HotKeyProtection {
       // 未获取到锁，等待其他进程加载数据
       for (let i = 0; i < this.maxRetries; i++) {
         await new Promise(resolve => setTimeout(resolve, this.retryDelay));
-        
+
         // 重新尝试获取缓存
         data = await redisClient.get(key);
         if (data) {
           return JSON.parse(data);
         }
       }
-      
+
       // 最终还是失败，直接加载数据不经过缓存
       return await dataLoader();
     }
@@ -3597,11 +3597,11 @@ class CacheAvoidAvalanche {
     // 添加随机抖动，避免同时过期
     const jitter = Math.floor(Math.random() * 300); // 0-300秒随机抖动
     const ttl = baseTTL + jitter;
-    
+
     await redisClient.set(key, JSON.stringify(data), 'EX', ttl);
     return data;
   }
-  
+
   // 缓存预热
   async warmupCache(keys, dataLoader) {
     for (const key of keys) {
@@ -3616,7 +3616,7 @@ class CacheAvoidAvalanche {
       }
     }
   }
-  
+
   // 定期刷新热点数据
   startRefreshTimer(keys, dataLoader, intervalMs = 1800000) { // 30分钟
     return setInterval(async () => {
@@ -3624,7 +3624,7 @@ class CacheAvoidAvalanche {
         try {
           // 获取当前TTL
           const ttl = await redisClient.ttl(key);
-          
+
           // 如果TTL低于阈值，刷新数据
           if (ttl !== -1 && ttl < 600) { // 10分钟
             const data = await dataLoader(key);
@@ -3665,9 +3665,9 @@ class CacheAvoidAvalanche {
 |性能|极高|极高|最高|网络相关|
 |应用场景|多功能缓存|简单高速缓存|热点数据|静态资源|
 
-## 5. 全栈架构模式
+## 26.1 全栈架构模式
 
-### 5.1 JAMStack架构
+### 26.1.1 JAMStack架构
 
 现代JAMStack架构采用静态生成与API组合：
 
@@ -3678,7 +3678,7 @@ class CacheAvoidAvalanche {
 export async function getStaticPaths() {
   // 在构建时获取所有可能的博客文章路径
   const posts = await api.getAllPostSlugs();
-  
+
   return {
     paths: posts.map(post => ({ params: { slug: post.slug } })),
     fallback: 'blocking' // 对新内容进行SSR
@@ -3688,15 +3688,15 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   // 获取特定博文的数据
   const post = await api.getPostBySlug(params.slug);
-  
+
   // 如果没有找到内容，返回404
   if (!post) {
     return { notFound: true };
   }
-  
+
   // MDX编译
   const mdxSource = await serializeMarkdown(post.content);
-  
+
   return {
     props: {
       post,
@@ -3717,21 +3717,21 @@ export default function BlogPost({ post, mdxSource }) {
           <meta name="description" content={post.excerpt} />
           <meta property="og:image" content={post.coverImage} />
         </Head>
-        
+
         <header>
           <h1>{post.title}</h1>
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           {post.author && <Author author={post.author} />}
         </header>
-        
+
         <MDXRemote {...mdxSource} components={MDXComponents} />
-        
+
         <footer>
           <TagList tags={post.tags} />
           <ShareButtons url={`/blog/${post.slug}`} title={post.title} />
         </footer>
       </article>
-      
+
       <RelatedPosts currentPostId={post.id} tags={post.tags} />
     </Layout>
   );
@@ -3742,7 +3742,7 @@ function CommentSection({ postId }) {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [newComment, setNewComment] = useState('');
-  
+
   // 加载评论
   useEffect(() => {
     async function loadComments() {
@@ -3756,22 +3756,22 @@ function CommentSection({ postId }) {
         setIsLoading(false);
       }
     }
-    
+
     loadComments();
   }, [postId]);
-  
+
   // 提交评论
   async function handleSubmit(e) {
     e.preventDefault();
     if (!newComment.trim()) return;
-    
+
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postId, content: newComment })
       });
-      
+
       if (response.ok) {
         const comment = await response.json();
         setComments(prev => [...prev, comment]);
@@ -3781,11 +3781,11 @@ function CommentSection({ postId }) {
       console.error('Failed to submit comment:', error);
     }
   }
-  
+
   return (
     <section>
       <h3>Comments ({comments.length})</h3>
-      
+
       {isLoading ? (
         <p>Loading comments...</p>
       ) : (
@@ -3801,7 +3801,7 @@ function CommentSection({ postId }) {
           ))}
         </ul>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <textarea
           value={newComment}
@@ -3820,30 +3820,30 @@ export default async function handler(req, res) {
   // GET请求 - 获取评论
   if (req.method === 'GET') {
     const { postId } = req.query;
-    
+
     try {
       const comments = await db.comments.findMany({
         where: { postId },
         orderBy: { createdAt: 'desc' }
       });
-      
+
       return res.status(200).json(comments);
     } catch (error) {
       console.error('Failed to fetch comments:', error);
       return res.status(500).json({ message: 'Failed to fetch comments' });
     }
   }
-  
+
   // POST请求 - 创建评论
   if (req.method === 'POST') {
     const { postId, content } = req.body;
-    
+
     // 身份验证
     const session = await getSession({ req });
     if (!session) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    
+
     try {
       const comment = await db.comments.create({
         data: {
@@ -3852,14 +3852,14 @@ export default async function handler(req, res) {
           authorId: session.user.id
         }
       });
-      
+
       return res.status(201).json(comment);
     } catch (error) {
       console.error('Failed to create comment:', error);
       return res.status(500).json({ message: 'Failed to create comment' });
     }
   }
-  
+
   // 其他HTTP方法不支持
   return res.status(405).json({ message: 'Method not allowed' });
 }
@@ -3868,7 +3868,7 @@ export default async function handler(req, res) {
 -**JAMStack部署配置 - Netlify**
 
 ```toml
-# netlify.toml
+# 27. netlify.toml
 [build]
   command = "npm run build"
   publish = "out"
@@ -3878,17 +3878,17 @@ export default async function handler(req, res) {
   NODE_VERSION = "16"
   NPM_FLAGS = "--silent"
 
-# 增量静态重新生成处理
+# 28. 增量静态重新生成处理
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# 重定向和重写
+# 29. 重定向和重写
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# 缓存控制
+# 30. 缓存控制
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
@@ -3899,10 +3899,10 @@ export default async function handler(req, res) {
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
-# 环境变量根据部署环境
+# 31. 环境变量根据部署环境
 [context.production.environment]
   NEXT_PUBLIC_API_URL = "https://api.example.com"
-  
+
 [context.deploy-preview.environment]
   NEXT_PUBLIC_API_URL = "https://staging-api.example.com"
 ```
@@ -3916,7 +3916,7 @@ export default async function handler(req, res) {
 - 无服务器函数处理动态需求
 - 增量静态再生成平衡静态与动态
 
-### 5.2 MERN/MEAN/PERN栈
+### 31.0.1 MERN/MEAN/PERN栈
 
 -**MERN栈架构**
 
@@ -4039,7 +4039,7 @@ const productSchema = new mongoose.Schema({
 // 计算平均评分的虚拟属性
 productSchema.virtual('averageRating').get(function() {
   if (this.ratings.length === 0) return 0;
-  
+
   const sum = this.ratings.reduce((total, r) => total + r.rating, 0);
   return sum / this.ratings.length;
 });
@@ -4067,19 +4067,19 @@ const { validateProduct } = require('../middleware/validation');
 // 获取所有产品 (公开)
 router.get('/', async (req, res) => {
   try {
-    const { 
-      category, 
-      minPrice, 
-      maxPrice, 
-      sortBy = 'createdAt', 
+    const {
+      category,
+      minPrice,
+      maxPrice,
+      sortBy = 'createdAt',
       sortOrder = 'desc',
       page = 1,
       limit = 10,
       search
     } = req.query;
-    
+
     const query = {};
-    
+
     // 过滤条件
     if (category) query.category = category;
     if (minPrice !== undefined) query.price = { $gte: parseFloat(minPrice) };
@@ -4090,19 +4090,19 @@ router.get('/', async (req, res) => {
     if (search) {
       query.$text = { $search: search };
     }
-    
+
     // 添加分页
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // 执行查询
     const products = await Product.find(query)
       .sort({ [sortBy]: sortOrder === 'asc' ? 1 : -1 })
       .skip(skip)
       .limit(parseInt(limit));
-    
+
     // 获取总数
     const total = await Product.countDocuments(query);
-    
+
     res.json({
       products,
       pagination: {
@@ -4121,11 +4121,11 @@ router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate('ratings.user', 'name');
-    
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -4151,11 +4151,11 @@ router.put('/:id', [authenticateJWT, authorizeAdmin, validateProduct], async (re
       req.body,
       { new: true, runValidators: true }
     );
-    
+
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     res.json(updatedProduct);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -4166,11 +4166,11 @@ router.put('/:id', [authenticateJWT, authorizeAdmin, validateProduct], async (re
 router.delete('/:id', [authenticateJWT, authorizeAdmin], async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    
+
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     res.json({ message: 'Product deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -4182,28 +4182,28 @@ router.post('/:id/ratings', authenticateJWT, async (req, res) => {
   try {
     const { rating, review } = req.body;
     const product = await Product.findById(req.params.id);
-    
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     // 检查用户是否已评价
     const existingRating = product.ratings.find(
       r => r.user.toString() === req.user.id
     );
-    
+
     if (existingRating) {
       return res.status(400).json({ message: 'You already rated this product' });
     }
-    
+
     product.ratings.push({
       user: req.user.id,
       rating,
       review
     });
-    
+
     await product.save();
-    
+
     res.status(201).json(product);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -4246,7 +4246,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const productsApi = createApi({
   reducerPath: 'productsApi',
-  baseQuery: fetchBaseQuery({ 
+  baseQuery: fetchBaseQuery({
     baseUrl: '/api/products',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
@@ -4322,7 +4322,7 @@ export const {
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { 
+import {
   useGetProductByIdQuery,
   useAddRatingMutation
 } from '../redux/services/productsApi';
@@ -4348,7 +4348,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  
+
   const [userRating, setUserRating] = React.useState(0);
   const [userReview, setUserReview] = React.useState('');
   const [snackbar, setSnackbar] = React.useState({
@@ -4356,14 +4356,14 @@ const ProductDetail = () => {
     message: '',
     severity: 'success'
   });
-  
+
   const { data: product, isLoading, error } = useGetProductByIdQuery(id);
   const [addRating, { isLoading: isRatingLoading }] = useAddRatingMutation();
-  
+
   if (isLoading) {
     return <CircularProgress />;
   }
-  
+
   if (error) {
     return (
       <Alert severity="error">
@@ -4371,12 +4371,12 @@ const ProductDetail = () => {
       </Alert>
     );
   }
-  
+
   if (!product) {
     return <Alert severity="warning">Product not found
 .</Alert>;
   }
-  
+
   const handleAddToCart = () => {
     dispatch(addToCart({
       id: product._id,
@@ -4385,20 +4385,20 @@ const ProductDetail = () => {
       imageUrl: product.imageUrl,
       quantity: 1
     }));
-    
+
     setSnackbar({
       open: true,
       message: 'Product added to cart!',
       severity: 'success'
     });
   };
-  
+
   const handleSubmitReview = async () => {
     if (!isAuthenticated) {
       navigate('/login', { state: { from: `/products/${id}` } });
       return;
     }
-    
+
     try {
       await addRating({ id, rating: userRating, review: userReview }).unwrap();
       setUserRating(0);
@@ -4416,42 +4416,42 @@ const ProductDetail = () => {
       });
     }
   };
-  
+
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
-  
+
   return (
     <Box sx={{ padding: 3 }}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <img 
-            src={product.imageUrl || '/placeholder.png'} 
+          <img
+            src={product.imageUrl || '/placeholder.png'}
             alt={product.name}
             style={{ width: '100%', borderRadius: 8 }}
           />
         </Grid>
-        
+
         <Grid item xs={12} md={6}>
           <Typography variant="h4" gutterBottom>
             {product.name}
           </Typography>
-          
+
           <Box display="flex" alignItems="center" mb={2}>
             <Rating value={product.averageRating} precision={0.5} readOnly />
             <Typography variant="body2" ml={1}>
               ({product.ratings.length} reviews)
             </Typography>
           </Box>
-          
+
           <Typography variant="h5" color="primary" gutterBottom>
             ${product.price.toFixed(2)}
           </Typography>
-          
+
           <Typography variant="body1" paragraph>
             {product.description}
           </Typography>
-          
+
           <Box display="flex" alignItems="center" mb={3}>
             <Typography variant="subtitle1" mr={2}>
               Status:
@@ -4466,10 +4466,10 @@ const ProductDetail = () => {
               </Typography>
             )}
           </Box>
-          
-          <Button 
-            variant="contained" 
-            color="primary" 
+
+          <Button
+            variant="contained"
+            color="primary"
             size="large"
             onClick={handleAddToCart}
             disabled={product.stock === 0}
@@ -4479,14 +4479,14 @@ const ProductDetail = () => {
           </Button>
         </Grid>
       </Grid>
-      
+
       <Divider sx={{ my: 4 }} />
-      
+
       <Box mb={4}>
         <Typography variant="h5" gutterBottom>
           Product Reviews
         </Typography>
-        
+
         {product.ratings.length > 0 ? (
           <Grid container spacing={2}>
             {product.ratings.map((rating) => (
@@ -4514,18 +4514,18 @@ const ProductDetail = () => {
           <Typography>No reviews yet. Be the first to review this product!</Typography>
         )}
       </Box>
-      
+
       <Box>
         <Typography variant="h5" gutterBottom>
           Write a Review
         </Typography>
-        
+
         {!isAuthenticated && (
           <Alert severity="info" sx={{ mb: 2 }}>
             Please <Button onClick={() => navigate('/login')}>log in</Button> to write a review.
           </Alert>
         )}
-        
+
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <Box display="flex" alignItems="center" mb={2}>
             <Typography mr={2}>Your Rating:</Typography>
@@ -4534,7 +4534,7 @@ const ProductDetail = () => {
               onChange={(e, newValue) => setUserRating(newValue)}
             />
           </Box>
-          
+
           <TextField
             fullWidth
             multiline
@@ -4545,7 +4545,7 @@ const ProductDetail = () => {
             disabled={!isAuthenticated}
             margin="normal"
           />
-          
+
           <Button
             variant="contained"
             onClick={handleSubmitReview}
@@ -4556,7 +4556,7 @@ const ProductDetail = () => {
           </Button>
         </Box>
       </Box>
-      
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
@@ -4695,7 +4695,7 @@ CREATE TRIGGER update_order_modtime
 
 -- 产品平均评分视图
 CREATE VIEW product_average_ratings AS
-SELECT 
+SELECT
   p.id,
   p.name,
   COALESCE(AVG(pr.rating), 0) AS average_rating,
@@ -4714,7 +4714,7 @@ DECLARE
 BEGIN
   -- 查询当前库存
   SELECT stock INTO current_stock FROM products WHERE id = product_id_param;
-  
+
   -- 检查库存是否足够
   IF current_stock >= quantity_param THEN
     -- 减少库存
@@ -4736,53 +4736,53 @@ const { validateProduct } = require('../middleware/validation');
 router.get('/', async (req, res) => {
   try {
     const { category, minPrice, maxPrice, sortBy = 'created_at', sortOrder = 'DESC', page = 1, limit = 10 } = req.query;
-    
+
     let query = `
       SELECT p.*, COALESCE(pr.average_rating, 0) as average_rating, COALESCE(pr.rating_count, 0) as rating_count
       FROM products p
       LEFT JOIN product_average_ratings pr ON p.id = pr.id
       WHERE 1=1
     `;
-    
+
     const queryParams = [];
     let paramIndex = 1;
-    
+
     if (category) {
       query += ` AND p.category = $${paramIndex}`;
       queryParams.push(category);
       paramIndex++;
     }
-    
+
     if (minPrice !== undefined) {
       query += ` AND p.price >= $${paramIndex}`;
       queryParams.push(minPrice);
       paramIndex++;
     }
-    
+
     if (maxPrice !== undefined) {
       query += ` AND p.price <= $${paramIndex}`;
       queryParams.push(maxPrice);
       paramIndex++;
     }
-    
+
     // 获取总数
     const countQuery = `SELECT COUNT(*) FROM (${query}) AS count_query`;
     const countResult = await db.query(countQuery, queryParams);
     const total = parseInt(countResult.rows[0].count);
-    
+
     // 添加排序和分页
     const validSortColumns = ['name', 'price', 'created_at', 'average_rating'];
     const actualSortBy = validSortColumns.includes(sortBy) ? sortBy : 'created_at';
     const actualSortOrder = sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
-    
+
     query += ` ORDER BY p.${actualSortBy} ${actualSortOrder}`;
-    
+
     const offset = (parseInt(page) - 1) * parseInt(limit);
     query += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
     queryParams.push(parseInt(limit), offset);
-    
+
     const result = await db.query(query, queryParams);
-    
+
     res.json({
       products: result.rows,
       pagination: {
@@ -4808,13 +4808,13 @@ router.get('/:id', async (req, res) => {
       WHERE p.id = $1
     `;
     const productResult = await db.query(productQuery, [req.params.id]);
-    
+
     if (productResult.rows.length === 0) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     const product = productResult.rows[0];
-    
+
     // 获取产品评价
     const ratingsQuery = `
       SELECT pr.*, u.name as user_name
@@ -4824,10 +4824,10 @@ router.get('/:id', async (req, res) => {
       ORDER BY pr.created_at DESC
     `;
     const ratingsResult = await db.query(ratingsQuery, [req.params.id]);
-    
+
     // 组合结果
     product.ratings = ratingsResult.rows;
-    
+
     res.json(product);
   } catch (err) {
     console.error(err);
@@ -4839,23 +4839,23 @@ router.get('/:id', async (req, res) => {
 router.post('/', [authenticateJWT, authorizeAdmin, validateProduct], async (req, res) => {
   try {
     const { name, description, price, category, imageUrl, stock, featured } = req.body;
-    
+
     const query = `
       INSERT INTO products (name, description, price, category, image_url, stock, featured)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `;
-    
+
     const result = await db.query(query, [
-      name, 
-      description, 
-      price, 
-      category, 
-      imageUrl || null, 
-      stock || 0, 
+      name,
+      description,
+      price,
+      category,
+      imageUrl || null,
+      stock || 0,
       featured || false
     ]);
-    
+
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
@@ -4867,7 +4867,7 @@ router.post('/', [authenticateJWT, authorizeAdmin, validateProduct], async (req,
 router.put('/:id', [authenticateJWT, authorizeAdmin, validateProduct], async (req, res) => {
   try {
     const { name, description, price, category, imageUrl, stock, featured } = req.body;
-    
+
     const query = `
       UPDATE products
       SET name = $1, description = $2, price = $3, category = $4,
@@ -4875,7 +4875,7 @@ router.put('/:id', [authenticateJWT, authorizeAdmin, validateProduct], async (re
       WHERE id = $8
       RETURNING *
     `;
-    
+
     const result = await db.query(query, [
       name,
       description,
@@ -4886,11 +4886,11 @@ router.put('/:id', [authenticateJWT, authorizeAdmin, validateProduct], async (re
       featured || false,
       req.params.id
     ]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
@@ -4904,32 +4904,32 @@ router.post('/:id/ratings', authenticateJWT, async (req, res) => {
     const { rating, review } = req.body;
     const productId = req.params.id;
     const userId = req.user.id;
-    
+
     // 验证产品存在
     const productCheck = await db.query('SELECT id FROM products WHERE id = $1', [productId]);
     if (productCheck.rows.length === 0) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    
+
     // 检查用户是否已评价
     const existingRating = await db.query(
       'SELECT id FROM product_ratings WHERE product_id = $1 AND user_id = $2',
       [productId, userId]
     );
-    
+
     if (existingRating.rows.length > 0) {
       return res.status(400).json({ message: 'You already rated this product' });
     }
-    
+
     // 添加新评价
     const query = `
       INSERT INTO product_ratings (product_id, user_id, rating, review)
       VALUES ($1, $2, $3, $4)
       RETURNING *
     `;
-    
+
     const result = await db.query(query, [productId, userId, rating, review || null]);
-    
+
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
@@ -4949,14 +4949,14 @@ module.exports = router;
 - 触发器用于自动化操作
 - 与MERN架构类似的前端结构
 
-### 5.3 云原生应用架构
+### 31.0.2 云原生应用架构
 
 -**云原生电子商务应用架构**
 
 ```yaml
-# Kubernetes配置示例 - 电子商务微服务应用
+# 32. Kubernetes配置示例 - 电子商务微服务应用
 
-# 产品服务部署
+# 33. 产品服务部署
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5029,7 +5029,7 @@ spec:
       imagePullSecrets:
       - name: registry-credentials
 
-# 产品服务 Service
+# 34. 产品服务 Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -5043,7 +5043,7 @@ spec:
     targetPort: 8080
   type: ClusterIP
 
-# API Gateway
+# 35. API Gateway
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -5059,8 +5059,8 @@ spec:
       protocol: HTTP
     hosts:
     - "api.ecommerce.example.com"
-    
-# 路由配置
+
+# 36. 路由配置
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5105,7 +5105,7 @@ spec:
         port:
           number: 80
 
-# 服务网格策略 - 熔断
+# 37. 服务网格策略 - 熔断
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -5126,7 +5126,7 @@ spec:
       baseEjectionTime: 30s
       maxEjectionPercent: 100
 
-# HorizontalPodAutoscaler
+# 38. HorizontalPodAutoscaler
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -5160,7 +5160,7 @@ spec:
         value: 100
         periodSeconds: 15
 
-# 存储配置 - PVC
+# 39. 存储配置 - PVC
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -5174,7 +5174,7 @@ spec:
       storage: 10Gi
   storageClassName: standard
 
-# 定时任务 - 库存检查
+# 40. 定时任务 - 库存检查
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -5200,7 +5200,7 @@ spec:
               value: "http://notification-service"
           restartPolicy: OnFailure
 
-# 配置映射
+# 41. 配置映射
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5213,7 +5213,7 @@ data:
   redis.host: "redis-master.cache"
   kafka.bootstrap.servers: "kafka-headless.messaging:9092"
 
-# 密钥
+# 42. 密钥
 apiVersion: v1
 kind: Secret
 metadata:
@@ -5235,14 +5235,14 @@ data:
 - 配置与代码分离
 - 不可变基础设施简化运维
 
-### 5.4 服务网格与容器编排
+### 42.0.1 服务网格与容器编排
 
 -**服务网格架构 - Istio**
 
 ```yaml
-# Istio服务网格配置示例
+# 43. Istio服务网格配置示例
 
-# 全局网络策略
+# 44. 全局网络策略
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
@@ -5254,7 +5254,7 @@ spec:
     - "./*"
     - "istio-system/*"
 
-# 互相TLS策略
+# 45. 互相TLS策略
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
@@ -5264,7 +5264,7 @@ spec:
   mtls:
     mode: STRICT
 
-# 流量管理 - 金丝雀发布
+# 46. 流量管理 - 金丝雀发布
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5289,7 +5289,7 @@ spec:
         host: product-service
         subset: v1
 
-# 服务版本定义
+# 47. 服务版本定义
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -5305,7 +5305,7 @@ spec:
     labels:
       version: v2
 
-# 请求路由 - 基于权重的流量分拆
+# 48. 请求路由 - 基于权重的流量分拆
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5325,7 +5325,7 @@ spec:
         subset: v2
       weight: 10
 
-# 服务容错 - 熔断器
+# 49. 服务容错 - 熔断器
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -5346,7 +5346,7 @@ spec:
       baseEjectionTime: 30s
       maxEjectionPercent: 100
 
-# 超时配置
+# 50. 超时配置
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5361,7 +5361,7 @@ spec:
         host: payment-service
     timeout: 3s
 
-# 重试策略
+# 51. 重试策略
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5380,7 +5380,7 @@ spec:
       perTryTimeout: 500ms
       retryOn: connect-failure,refused-stream,unavailable,cancelled,deadline-exceeded,5xx
 
-# 故障注入 - 用于测试恢复能力
+# 52. 故障注入 - 用于测试恢复能力
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -5403,7 +5403,7 @@ spec:
     - destination:
         host: shipping-service
 
-# 认证策略
+# 53. 认证策略
 apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication
 metadata:
@@ -5414,7 +5414,7 @@ spec:
   - issuer: "https://auth.ecommerce.example.com"
     jwksUri: "https://auth.ecommerce.example.com/.well-known/jwks.json"
 
-# 授权策略
+# 54. 授权策略
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -5440,7 +5440,7 @@ spec:
         methods: ["GET"]
         paths: ["/api/payments/*"]
 
-# 遥测配置
+# 55. 遥测配置
 apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
@@ -5462,9 +5462,9 @@ spec:
 -**Kubernetes高级配置**
 
 ```yaml
-# Kubernetes高级配置示例
+# 56. Kubernetes高级配置示例
 
-# StatefulSet示例 - 数据库
+# 57. StatefulSet示例 - 数据库
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -5513,7 +5513,7 @@ spec:
         requests:
           storage: 100Gi
 
-# Network Policies - 零信任网络模型
+# 58. Network Policies - 零信任网络模型
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -5571,7 +5571,7 @@ spec:
     - protocol: TCP
       port: 9090
 
-# Pod Security Context
+# 59. Pod Security Context
 apiVersion: v1
 kind: Pod
 metadata:
@@ -5592,7 +5592,7 @@ spec:
         drop:
           - ALL
 
-# Pod Disruption Budget - 确保高可用性
+# 60. Pod Disruption Budget - 确保高可用性
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -5604,7 +5604,7 @@ spec:
     matchLabels:
       app: product-service
 
-# 资源配额
+# 61. 资源配额
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -5620,7 +5620,7 @@ spec:
     services: "30"
     persistentvolumeclaims: "20"
 
-# 自定义资源定义 - Redis集群操作符
+# 62. 自定义资源定义 - Redis集群操作符
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -5670,7 +5670,7 @@ spec:
                       cpu:
                         type: string
 
-# 使用自定义资源
+# 63. 使用自定义资源
 apiVersion: cache.example.com/v1
 kind: RedisCluster
 metadata:
@@ -5699,9 +5699,9 @@ spec:
 - 自定义资源扩展平台能力
 - 细粒度资源控制与约束
 
-## 6. 热门开源项目架构分析
+## 63.1 热门开源项目架构分析
 
-### 6.1 VSCode架构解析
+### 63.1.1 VSCode架构解析
 
 -**VSCode核心架构**
 
@@ -5726,7 +5726,7 @@ class CoreComponent {
     @IInstantiationService private readonly instantiationService: IInstantiationService,
     @IPlatformService private readonly platformService: IPlatformService
   ) { }
-  
+
   // 核心功能实现...
 }
 
@@ -5748,7 +5748,7 @@ class EditorService implements IEditorService {
     @ICodeEditorService private readonly codeEditorService: ICodeEditorService,
     @IWorkbenchLayoutService private readonly layoutService: IWorkbenchLayoutService
   ) { }
-  
+
   async openEditor(input: IEditorInput, options?: IEditorOptions): Promise<IEditor | undefined> {
     // 实现打开编辑器逻辑
   }
@@ -5781,9 +5781,9 @@ function activate(context: IExtensionContext): API {
   const disposable = registerCommand('extension.helloWorld', () => {
     window.showInformationMessage('Hello World!');
   });
-  
+
   context.subscriptions.push(disposable);
-  
+
   return {
     // 扩展API
   };
@@ -5798,16 +5798,16 @@ class ExtensionHostEnvironment {
     // 初始化扩展环境
     this.setupMessageChannel();
   }
-  
+
   private setupMessageChannel(): void {
     // 设置主进程和扩展进程间的通信
   }
-  
+
   public async startExtensionHost(): Promise<void> {
     // 启动扩展主机
     await this.loadAndActivateExtensions();
   }
-  
+
   private async loadAndActivateExtensions(): Promise<void> {
     // 加载并激活扩展
   }
@@ -5830,7 +5830,7 @@ interface IViewContribution {
 class ContributionRegistry {
   private readonly _commands = new Map<string, ICommandContribution>();
   private readonly _views = new Map<string, IViewContribution>();
-  
+
   registerCommand(contribution: ICommandContribution): IDisposable {
     this._commands.set(contribution.id, contribution);
     return {
@@ -5839,7 +5839,7 @@ class ContributionRegistry {
       }
     };
   }
-  
+
   registerView(contribution: IViewContribution): IDisposable {
     this._views.set(contribution.id, contribution);
     return {
@@ -5848,7 +5848,7 @@ class ContributionRegistry {
       }
     };
   }
-  
+
   // 更多贡献点类型...
 }
 
@@ -5856,7 +5856,7 @@ class ContributionRegistry {
 
 class WorkbenchLayout {
   private readonly parts = new Map<WorkbenchPartId, Part>();
-  
+
   constructor(
     @IInstantiationService private readonly instantiationService: IInstantiationService,
     @ILogService private readonly logService: ILogService
@@ -5864,21 +5864,21 @@ class WorkbenchLayout {
     // 创建并注册工作台部件
     this.createParts();
   }
-  
+
   private createParts(): void {
     // 创建各部件
     const activityBar = this.instantiationService.createInstance(ActivityBarPart);
     const sideBar = this.instantiationService.createInstance(SideBarPart);
     const editor = this.instantiationService.createInstance(EditorPart);
     const statusBar = this.instantiationService.createInstance(StatusBarPart);
-    
+
     // 注册部件
     this.parts.set('activityBar', activityBar);
     this.parts.set('sideBar', sideBar);
     this.parts.set('editor', editor);
     this.parts.set('statusBar', statusBar);
   }
-  
+
   layout(width: number, height: number): void {
     // 布局逻辑
   }
@@ -5893,7 +5893,7 @@ class LanguageClient {
     private readonly serverOptions: ServerOptions,
     private readonly clientOptions: LanguageClientOptions
   ) { }
-  
+
   start(): Promise<void> {
     // 启动语言服务器
     return this.startServer().then(
@@ -5902,15 +5902,15 @@ class LanguageClient {
       connection => this.initialize(connection)
     );
   }
-  
+
   private startServer(): Promise<ChildProcess | StreamInfo> {
     // 启动服务器进程
   }
-  
+
   private createConnection(serverProcess: ChildProcess | StreamInfo): IConnection {
     // 建立与服务器的连接
   }
-  
+
   private initialize(connection: IConnection): Promise<void> {
     // 初始化语言服务器
   }
@@ -5923,17 +5923,17 @@ class MonacoEditorIntegration {
     @IModelService private readonly modelService: IModelService,
     @IConfigurationService private readonly configurationService: IConfigurationService
   ) { }
-  
+
   createEditor(domElement: HTMLElement, options: IEditorConstructionOptions): ICodeEditor {
     // 创建Monaco编辑器实例
     const editor = monaco.editor.create(domElement, options);
-    
+
     // 配置编辑器
     this.configureEditor(editor);
-    
+
     return editor;
   }
-  
+
   private configureEditor(editor: ICodeEditor): void {
     // 配置编辑器行为
   }
@@ -5950,7 +5950,7 @@ class MonacoEditorIntegration {
 - Monaco编辑器提供核心编辑体验
 - 事件驱动的响应式架构
 
-### 6.2 Next.js内部架构
+### 63.1.2 Next.js内部架构
 
 -**Next.js架构解析**
 
@@ -5970,7 +5970,7 @@ class RouterCore {
     this.dynamicRoutes = [];
     this.fallback = null;
   }
-  
+
   // 解析路由配置
   addRoutes(pages) {
     // 添加静态路由
@@ -5983,40 +5983,40 @@ class RouterCore {
         this.addStaticRoute(page);
       }
     }
-    
+
     // 添加API路由
     // ...
-    
+
     // 添加中间件
     // ...
   }
-  
+
   addStaticRoute(page) {
     const route = page.replace(/\.js$/, '').replace(/\/index$/, '/');
     this.routes.set(route, { page, dynamic: false });
   }
-  
+
   addDynamicRoute(page) {
     // 转换 [id] 为 :id 格式
     const routePattern = page
       .replace(/\.js$/, '')
       .replace(/\/index$/, '/')
       .replace(/\[([^\]]+)\]/g, ':$1');
-      
+
     // 创建路由匹配正则表达式
     const paramNames = [];
     const regexPattern = routePattern.replace(/:[^\/]+/g, (match) => {
       paramNames.push(match.slice(1));
       return '([^/]+)';
     });
-    
+
     this.dynamicRoutes.push({
       page,
       pattern: new RegExp(`^${regexPattern}$`),
       paramNames
     });
   }
-  
+
   // 路由匹配逻辑
   match(url) {
     // 1. 检查精确匹配
@@ -6026,7 +6026,7 @@ class RouterCore {
         params: {}
       };
     }
-    
+
     // 2. 检查动态路由
     for (const route of this.dynamicRoutes) {
       const match = url.match(route.pattern);
@@ -6035,14 +6035,14 @@ class RouterCore {
         route.paramNames.forEach((name, i) => {
           params[name] = match[i + 1];
         });
-        
+
         return {
           page: route.page,
           params
         };
       }
     }
-    
+
     // 3. 回退到404或自定义404页面
     return {
       page: '/404',
@@ -6056,13 +6056,13 @@ class RouterCore {
 // 客户端数据获取封装
 function createClientDataFetcher() {
   const cache = new Map();
-  
+
   return async function fetchData(key, fetchFn) {
     // 检查缓存
     if (cache.has(key)) {
       return cache.get(key);
     }
-    
+
     // 获取数据
     try {
       const data = await fetchFn();
@@ -6078,16 +6078,16 @@ function createClientDataFetcher() {
 async function executeGetStaticProps(page, params = {}) {
   // 加载页面模块
   const mod = await import(`../pages/${page}`);
-  
+
   // 检查页面是否实现了getStaticProps
   if (typeof mod.getStaticProps !== 'function') {
     return { props: {} };
   }
-  
+
   // 执行getStaticProps
   const context = { params };
   const result = await mod.getStaticProps(context);
-  
+
   return result;
 }
 
@@ -6095,16 +6095,16 @@ async function executeGetStaticProps(page, params = {}) {
 async function executeGetServerSideProps(page, req, res, params = {}) {
   // 加载页面模块
   const mod = await import(`../pages/${page}`);
-  
+
   // 检查页面是否实现了getServerSideProps
   if (typeof mod.getServerSideProps !== 'function') {
     return { props: {} };
   }
-  
+
   // 执行getServerSideProps
   const context = { req, res, params };
   const result = await mod.getServerSideProps(context);
-  
+
   return result;
 }
 
@@ -6114,10 +6114,10 @@ async function renderPageToHTML(page, req, res, params = {}) {
   // 加载页面组件
   const mod = await import(`../pages/${page}`);
   const Component = mod.default;
-  
+
   // 获取数据
   let props = {};
-  
+
   if (typeof mod.getServerSideProps === 'function') {
     // 使用getServerSideProps
     const result = await executeGetServerSideProps(page, req, res, params);
@@ -6127,13 +6127,13 @@ async function renderPageToHTML(page, req, res, params = {}) {
     const result = await executeGetStaticProps(page, params);
     props = result.props || {};
   }
-  
+
   // 渲染页面
   const AppComponent = await import('../pages/_app').then(m => m.default);
   const html = ReactDOMServer.renderToString(
     <AppComponent Component={Component} pageProps={props} />
   );
-  
+
   // 注入数据以便客户端hydration
   const dataScript = `
     <script id="__NEXT_DATA__" type="application/json">
@@ -6145,7 +6145,7 @@ async function renderPageToHTML(page, req, res, params = {}) {
       })}
     </script>
   `;
-  
+
   // 构造完整HTML
   return `
     <!DOCTYPE html>
@@ -6170,32 +6170,32 @@ class NextBuildSystem {
     this.pagesDir = options.pagesDir || './pages';
     this.outDir = options.outDir || './.next';
   }
-  
+
   async build() {
     // 发现所有页面
     const pages = await this.discoverPages();
-    
+
     // 分析每个页面的渲染模式
     const pageConfigs = await this.analyzePages(pages);
-    
+
     // 生成客户端bundles
     await this.generateClientBundles(pageConfigs);
-    
+
     // 根据渲染模式处理页面
     await this.processPages(pageConfigs);
-    
+
     // 生成路由清单
     await this.generateRouteManifest(pageConfigs);
   }
-  
+
   async analyzePages(pages) {
     const configs = [];
-    
+
     for (const page of pages) {
       const mod = await import(page);
-      
+
       let renderMode = 'SSR'; // 默认为服务端渲染
-      
+
       if (mod.getStaticProps) {
         if (mod.getStaticPaths) {
           renderMode = 'SSG_DYNAMIC';
@@ -6205,16 +6205,16 @@ class NextBuildSystem {
       } else if (mod.getServerSideProps) {
         renderMode = 'SSR';
       }
-      
+
       configs.push({
         page,
         renderMode
       });
     }
-    
+
     return configs;
   }
-  
+
   async processPages(pageConfigs) {
     for (const config of pageConfigs) {
       switch (config.renderMode) {
@@ -6230,36 +6230,36 @@ class NextBuildSystem {
       }
     }
   }
-  
+
   async handleStaticGeneration(config) {
     // 执行getStaticProps
     const result = await executeGetStaticProps(config.page);
-    
+
     // 渲染HTML
     const html = await this.renderPageToStatic(config.page, result.props);
-    
+
     // 输出HTML文件
     const outputPath = this.getOutputPath(config.page);
     await fs.writeFile(outputPath, html);
   }
-  
+
   async handleDynamicStaticGeneration(config) {
     // 获取所有可能的路径
     const mod = await import(config.page);
     const pathsResult = await mod.getStaticPaths();
-    
+
     for (const params of pathsResult.paths) {
       // 为每个路径执行getStaticProps
       const result = await executeGetStaticProps(config.page, params);
-      
+
       // 渲染HTML
       const html = await this.renderPageToStatic(config.page, result.props, params);
-      
+
       // 确定输出路径
       const outputPath = this.getOutputPathWithParams(config.page, params);
       await fs.writeFile(outputPath, html);
     }
-    
+
     // 处理fallback选项
     if (pathsResult.fallback) {
       // 生成fallback页面或配置
@@ -6273,14 +6273,14 @@ class MiddlewareSystem {
   constructor() {
     this.middlewares = [];
   }
-  
+
   use(middleware) {
     this.middlewares.push(middleware);
   }
-  
+
   async run(req, res, next) {
     let index = 0;
-    
+
     const executeMiddleware = async () => {
       if (index < this.middlewares.length) {
         const middleware = this.middlewares[index++];
@@ -6289,7 +6289,7 @@ class MiddlewareSystem {
         await next();
       }
     };
-    
+
     await executeMiddleware();
   }
 }
@@ -6301,33 +6301,33 @@ class ISRManager {
     this.pages = new Map();
     this.revalidationQueue = new Set();
   }
-  
+
   registerPage(path, { revalidate, lastGenerated = Date.now() }) {
     this.pages.set(path, {
       revalidate, // 重新验证间隔（秒）
       lastGenerated
     });
   }
-  
+
   shouldRevalidate(path, timestamp = Date.now()) {
     const page = this.pages.get(path);
     if (!page) return false;
-    
+
     const { revalidate, lastGenerated } = page;
     const timePassedSeconds = (timestamp - lastGenerated) / 1000;
-    
+
     return timePassedSeconds >= revalidate;
   }
-  
+
   async handleRequest(path, req, res) {
     // 尝试从缓存提供页面
     const cachedPage = await this.getCachedPage(path);
-    
+
     // 检查是否需要后台重新验证
     if (this.shouldRevalidate(path)) {
       // 返回当前缓存版本
       res.send(cachedPage);
-      
+
       // 后台触发重新生成
       this.triggerRegeneration(path, req);
     } else {
@@ -6335,20 +6335,20 @@ class ISRManager {
       res.send(cachedPage);
     }
   }
-  
+
   async triggerRegeneration(path, req) {
     // 防止重复重新生成
     if (this.revalidationQueue.has(path)) return;
-    
+
     this.revalidationQueue.add(path);
-    
+
     try {
       // 重新生成页面
       const newPage = await this.regeneratePage(path, req);
-      
+
       // 更新缓存
       await this.updateCache(path, newPage);
-      
+
       // 更新最后生成时间
       const page = this.pages.get(path);
       page.lastGenerated = Date.now();
@@ -6372,7 +6372,7 @@ class ISRManager {
 - 优化的构建系统针对生产环境
 - 统一的APIs简化开发体验
 
-### 6.3 Redis核心设计
+### 63.1.3 Redis核心设计
 
 -**Redis架构解析**
 
@@ -6460,7 +6460,7 @@ typedef struct zskiplist {
 
 // 整数集合 - 用于小整数集合
 typedef struct intset {
-    uint32_t encoding;        // 编码方式 
+    uint32_t encoding;        // 编码方式
     uint32_t length;          // 集合包含的元素数量
     int8_t contents[];        // 实际存储的元素，可能是int16_t/int32_t/int64_t
 } intset;
@@ -6508,7 +6508,7 @@ void aeMain(aeEventLoop *eventLoop) {
         // 如果有需要在处理事件前执行的函数，那么执行它
         if (eventLoop->beforesleep != NULL)
             eventLoop->beforesleep(eventLoop);
-            
+
         // 开始处理事件
         aeProcessEvents(eventLoop, AE_ALL_EVENTS | AE_CALL_AFTER_SLEEP);
     }
@@ -6517,37 +6517,37 @@ void aeMain(aeEventLoop *eventLoop) {
 // 事件处理
 int aeProcessEvents(aeEventLoop *eventLoop, int flags) {
     int processed = 0;
-    
+
     // 获取最近的时间事件
     tvp = ...
-    
+
     // 调用多路复用API阻塞等待事件发生
     numevents = aeApiPoll(eventLoop, tvp);
-    
+
     // 处理文件事件
     for (j = 0; j < numevents; j++) {
         // 获取被触发的事件
         aeFileEvent *fe = &eventLoop->events[eventLoop->fired[j].fd];
         int mask = eventLoop->fired[j].mask;
         int fd = eventLoop->fired[j].fd;
-        
+
         // 如果是读事件，调用读事件处理器
         if (fe->mask & mask & AE_READABLE) {
             fe->rfileProc(eventLoop, fd, fe->clientData, mask);
         }
-        
+
         // 如果是写事件，调用写事件处理器
         if (fe->mask & mask & AE_WRITABLE) {
             fe->wfileProc(eventLoop, fd, fe->clientData, mask);
         }
-        
+
         processed++;
     }
-    
+
     // 处理时间事件
     if (flags & AE_TIME_EVENTS)
         processed += processTimeEvents(eventLoop);
-        
+
     return processed;
 }
 
@@ -6558,21 +6558,21 @@ int rdbSave(char *filename) {
     // 创建临时文件
     snprintf(tmpfile, 256, "temp-%d.rdb", (int) getpid());
     fp = fopen(tmpfile, "w");
-    
+
     // 初始化保存操作的状态
     rio rdb;
     rioInitWithFile(&rdb, fp);
-    
+
     // 写入RDB文件头部
     if (rdbWriteRaw(&rdb, "REDIS", 5) == -1) goto error;
-    
+
     // 写入版本号
     if (rdbSaveRio(&rdb, RDBFLAGS_NONE, &error) == -1) goto error;
-    
+
     // 关闭文件并进行原子替换
     fclose(fp);
     return rename(tmpfile, filename);
-    
+
 error:
     // 错误处理
     fclose(fp);
@@ -6585,25 +6585,25 @@ error:
 // 追加AOF命令
 void feedAppendOnlyFile(struct redisCommand *cmd, int dictid, robj **argv, int argc) {
     sds buf = sdsempty();
-    
+
     // 添加多数据库选择命令
     if (dictid != server.aof_selected_db) {
         buf = sdscatprintf(buf, "*2\r\n$6\r\nSELECT\r\n$%d\r\n%d\r\n",
             intlen(dictid), dictid);
         server.aof_selected_db = dictid;
     }
-    
+
     // 将命令转换为RESP格式
     buf = catAppendOnlyGenericCommand(buf, argc, argv);
-    
+
     // 将命令追加到AOF缓冲区
     if (server.aof_state == AOF_ON)
         server.aof_buf = sdscatlen(server.aof_buf, buf, sdslen(buf));
-    
+
     // 将命令传入所有从节点
     if (server.replication_mode == REPLICATION_MODE_MASTER)
         replicationFeedSlaves(server.slaves, cmd, dictid, argv, argc);
-    
+
     sdsfree(buf);
 }
 
@@ -6612,21 +6612,21 @@ int rewriteAppendOnlyFile(char *filename) {
     // 创建临时文件
     snprintf(tmpfile, 256, "temp-rewriteaof-%d.aof", (int) getpid());
     fp = fopen(tmpfile, "w");
-    
+
     // 初始化写入状态
     rio aof;
     rioInitWithFile(&aof, fp);
-    
+
     // 遍历所有数据库，生成重建命令
     for (j = 0; j < server.dbnum; j++) {
         // 选择数据库
         if (dictSize(db->dict) == 0) continue;
-        
+
         // 生成SELECT命令
         buf = sdscatprintf(sdsempty(), "*2\r\n$6\r\nSELECT\r\n$%d\r\n%d\r\n",
                            len, j);
         if (rioWrite(&aof, buf, sdslen(buf)) == 0) goto werr;
-        
+
         // 遍历当前数据库的所有键
         de = dictGetIterator(db->dict);
         while((de = dictNext(de)) != NULL) {
@@ -6644,11 +6644,11 @@ int rewriteAppendOnlyFile(char *filename) {
             }
         }
     }
-    
+
     // 关闭文件并进行原子替换
     fclose(fp);
     return rename(tmpfile, filename);
-    
+
 werr:
     // 错误处理
     fclose(fp);
@@ -6671,16 +6671,16 @@ typedef struct replstate {
 // 将服务器设置为某个服务器的从服务器
 void replicationSetMaster(char *ip, int port) {
     int was_master = server.masterhost == NULL;
-    
+
     // 设置主服务器
     sdsfree(server.masterhost);
     server.masterhost = sdsnew(ip);
     server.masterport = port;
-    
+
     // 如果之前是主服务器，且执行复制的是自己，那么尝试传播新配置
     if (was_master && server.repl_state == REPL_STATE_CONNECTED)
         replicationUnsetMaster();
-    
+
     // 初始化复制为REPL_STATE_CONNECT
     server.repl_state = REPL_STATE_CONNECT;
 }
@@ -6689,40 +6689,40 @@ void replicationSetMaster(char *ip, int port) {
 void syncWithMaster(aeEventLoop *el, int fd, void *privdata, int mask) {
     char buf[1024], tmpfile[256];
     int dfd, maxtries = 5;
-    
+
     // 如果当前不是REPL_STATE_CONNECTING，返回
     if (server.repl_state != REPL_STATE_CONNECTING) return;
-    
+
     // 尝试读取 +OK 响应
     if (syncReadLine(fd, buf, sizeof(buf), server.repl_syncio_timeout) == -1) {
         replicationSetState(REPL_STATE_CONNECT);
         return;
     }
-    
+
     // 如果接收到的不是 +OK，尝试重新连接
     if (buf[0] != '+' || buf[1] != 'O' || buf[2] != 'K') {
         replicationSetState(REPL_STATE_CONNECT);
         return;
     }
-    
+
     // 发送端口信息
     if (snprintf(...) && syncWrite(...)) {
         replicationSetState(REPL_STATE_CONNECT);
         return;
     }
-    
+
     // 读取缓冲区的数据
     while(maxtries--) {
         int nread = read(fd, buf, sizeof(buf));
-        
+
         if (nread <= 0) {
             replicationSetState(REPL_STATE_CONNECT);
             return;
         }
-        
+
         // 处理读取到的数据
     }
-    
+
     // 设置状态为已连接
     replicationSetState(REPL_STATE_CONNECTED);
 }
@@ -6731,21 +6731,21 @@ void syncWithMaster(aeEventLoop *el, int fd, void *privdata, int mask) {
 void replicationFeedSlaves(list *slaves, struct redisCommand *cmd, int dictid, robj **argv, int argc) {
     listNode *ln;
     listIter li;
-    
+
     // 快速返回：如果没有从服务器，直接返回
     if (listLength(slaves) == 0) return;
-    
+
     // 向所有从服务器发送命令
     listRewind(slaves, &li);
     while((ln = listNext(&li))) {
         redisClient *slave = ln->value;
-        
+
         // 检查从服务器状态
         if (slave->replstate != REDIS_REPL_ONLINE) continue;
-        
+
         // 将命令添加到从服务器的输出缓冲区
         addReply(slave, cmd);
-        
+
         // 更新复制偏移量
         slave->repldboff += size;
     }
@@ -6795,21 +6795,21 @@ typedef struct clusterState {
 // 键到槽的映射
 unsigned int keyHashSlot(char *key, int keylen) {
     int s, e; // 开始和结束位置
-    
+
     // 查找 {
     for (s = 0; s < keylen; s++)
         if (key[s] == '{') break;
-    
+
     // 未找到 {，使用全部key进行计算
     if (s == keylen) return crc16(key, keylen) & 16383;
-    
+
     // 查找 }
     for (e = s+1; e < keylen; e++)
         if (key[e] == '}') break;
-    
+
     // 未找到 }，使用全部key进行计算
     if (e == keylen || e == s+1) return crc16(key, keylen) & 16383;
-    
+
     // 使用 {} 之间的子串进行计算
     return crc16(key+s+1, e-s-1) & 16383;
 }
@@ -6818,11 +6818,11 @@ unsigned int keyHashSlot(char *key, int keylen) {
 void clusterSendMessage(clusterLink *link, unsigned char *msg, size_t msglen) {
     if (link->node && link->node->flags & REDIS_NODE_PING_SENT)
         link->node->ping_sent = 0;
-    
+
     // 将消息写入输出缓冲区
     if (sdslen(link->sndbuf) == 0 && msglen != 0)
         aeCreateFileEvent(server.el, link->fd, AE_WRITABLE, clusterWriteHandler, link);
-    
+
     link->sndbuf = sdscatlen(link->sndbuf, msg, msglen);
 }
 
@@ -6831,11 +6831,11 @@ void clusterProcessPacket(clusterLink *link) {
     clusterMsg *hdr = (clusterMsg*) link->rcvbuf;
     uint32_t totlen = ntohl(hdr->totlen);
     uint16_t type = ntohs(hdr->type);
-    
+
     // 如果消息长度不够，等待更多数据
     if (totlen < 8) return;
     if (totlen > sdslen(link->rcvbuf)) return;
-    
+
     // 根据消息类型处理不同的消息
     if (type == CLUSTERMSG_TYPE_PING) {
         // 处理PING消息
@@ -6856,7 +6856,7 @@ void clusterProcessPacket(clusterLink *link) {
         // 处理UPDATE消息
         clusterProcessUpdateMessage(link, hdr);
     }
-    
+
     // 移除已处理的消息
     sdsrange(link->rcvbuf, totlen, -1);
 }
@@ -6866,18 +6866,18 @@ void clusterProcessPacket(clusterLink *link) {
 // 对象共享
 void createSharedObjects(void) {
     int j;
-    
+
     // 创建共享字符串对象
     shared.crlf = createObject(REDIS_STRING, sdsnew("\r\n"));
     shared.ok = createObject(REDIS_STRING, sdsnew("+OK\r\n"));
     shared.err = createObject(REDIS_STRING, sdsnew("-ERR\r\n"));
-    
+
     // 创建共享整数对象
     for (j = 0; j < REDIS_SHARED_INTEGERS; j++) {
         shared.integers[j] = createObject(REDIS_STRING, (void*)(long)j);
         shared.integers[j]->encoding = REDIS_ENCODING_INT;
     }
-    
+
     // 创建其他共享对象
     shared.nullbulk = createObject(REDIS_STRING, sdsnew("$-1\r\n"));
     shared.nullmultibulk = createObject(REDIS_STRING, sdsnew("*-1\r\n"));
@@ -6889,7 +6889,7 @@ robj *lookupKey(redisDb *db, robj *key, int flags) {
     dictEntry *de = dictFind(db->dict, key->ptr);
     if (de) {
         robj *val = dictGetVal(de);
-        
+
         // 根据需要，更新对象的LRU时间
         if (!(flags & REDIS_LOOKUP_NOTOUCH)) {
             if (server.maxmemory_policy & REDIS_MAXMEMORY_FLAG_LRU)
@@ -6905,13 +6905,13 @@ robj *lookupKey(redisDb *db, robj *key, int flags) {
 int freeMemoryIfNeeded(void) {
     // 如果没有设置最大内存限制，直接返回
     if (!server.maxmemory) return REDIS_OK;
-    
+
     // 超过限制的内存量
     size_t mem_used = zmalloc_used_memory();
     if (mem_used <= server.maxmemory) return REDIS_OK;
-    
+
     mem_tofree = mem_used - server.maxmemory;
-    
+
     // 根据淘汰策略选择要驱逐的键
     switch(server.maxmemory_policy) {
         case REDIS_MAXMEMORY_VOLATILE_LRU:
@@ -6949,7 +6949,7 @@ int freeMemoryIfNeeded(void) {
 - 内存优化实现高效运行
 - 扩展命令通过模块系统实现
 
-### 6.4 Kubernetes架构原理
+### 63.1.4 Kubernetes架构原理
 
 -**Kubernetes架构解析**
 
@@ -6972,7 +6972,7 @@ type APIServer struct {
 func (s *APIServer) InstallAPIs(apiResourceConfigSource serverstorage.APIResourceConfigSource,
     restOptionsGetter generic.RESTOptionsGetter,
     groupInfos []apiservicerest.StorageGroupInfo) {
-    
+
     // 安装核心API
     legacyRESTStorageProvider := corerest.LegacyRESTStorageProvider{
         StorageFactory:        s.StorageFactory,
@@ -6984,16 +6984,16 @@ func (s *APIServer) InstallAPIs(apiResourceConfigSource serverstorage.APIResourc
         ServiceNodePortRange:  s.ServiceNodePortRange,
         LoopbackClientConfig:  s.LoopbackClientConfig,
     }
-    
+
     apiGroupInfo, err := legacyRESTStorageProvider.NewLegacyRESTStorage(restOptionsGetter)
     if err != nil {
         log.Fatal(err)
     }
-    
+
     if err := s.GenericAPIServer.InstallLegacyAPIGroup("/api", &apiGroupInfo); err != nil {
         log.Fatal(err)
     }
-    
+
     // 安装扩展API
     for _, groupInfo := range groupInfos {
         if err := s.GenericAPIServer.InstallAPIGroup(&groupInfo); err != nil {
@@ -7008,19 +7008,19 @@ func (s *APIServer) InstallAPIs(apiResourceConfigSource serverstorage.APIResourc
 type Storage interface {
     // 创建对象
     Create(ctx context.Context, key string, obj, out runtime.Object, ttl uint64) error
-    
+
     // 删除对象
     Delete(ctx context.Context, key string, out runtime.Object, preconditions *Preconditions) error
-    
+
     // 获取对象
     Get(ctx context.Context, key string, opts GetOptions, objPtr runtime.Object) error
-    
+
     // 获取列表
     GetList(ctx context.Context, key string, opts ListOptions, listObj runtime.Object) error
-    
+
     // 监视对象变化
     Watch(ctx context.Context, key string, opts ListOptions) (watch.Interface, error)
-    
+
     // 更新对象
     GuaranteedUpdate(
         ctx context.Context, key string, ptrToType runtime.Object, ignoreNotFound bool,
@@ -7042,13 +7042,13 @@ func (s *etcd3Storage) Create(ctx context.Context, key string, obj, out runtime.
     if err != nil {
         return err
     }
-    
+
     // 创建事务
     txn := s.client.Txn(ctx)
-    
+
     // 构建创建操作，确保key不存在
     txn = txn.If(clientv3.Compare(clientv3.ModRevision(key), "=", 0))
-    
+
     // 设置TTL如果需要
     var opts []clientv3.OpOption
     if ttl > 0 {
@@ -7058,27 +7058,27 @@ func (s *etcd3Storage) Create(ctx context.Context, key string, obj, out runtime.
         }
         opts = append(opts, clientv3.WithLease(lease.ID))
     }
-    
+
     // 如果key不存在，则创建它
     txn = txn.Then(clientv3.OpPut(key, string(data), opts...))
-    
+
     // 执行事务
     txnRe
 sp, err := txn.Commit()
     if err != nil {
         return err
     }
-    
+
     // 检查事务是否成功
     if !txnResp.Succeeded {
         return storage.NewKeyExistsError(key, 0)
     }
-    
+
     // 将创建的对象解码到输出参数
     if out != nil {
         return decode(s.codec, s.versioner, data, out, txnResp.Header.Revision)
     }
-    
+
     return nil
 }
 
@@ -7088,19 +7088,19 @@ sp, err := txn.Commit()
 type ControllerManager struct {
     // 配置信息
     componentConfig      ControllerManagerConfiguration
-    
+
     // 客户端配置
     kubeClient           clientset.Interface
-    
+
     // 控制器上下文
     ControllerContext    ControllerContext
-    
+
     // 是否运行领导者选举
     leaderElection       bool
-    
+
     // 活跃控制器映射
     activeControllers    map[string]bool
-    
+
     // 其他字段...
 }
 
@@ -7108,7 +7108,7 @@ type ControllerManager struct {
 func (cm *ControllerManager) Run(ctx context.Context) error {
     // 启动健康检查服务
     go cm.startHealthzServer()
-    
+
     // 如果需要，运行领导者选举
     if cm.leaderElection {
         go cm.runLeaderElection(ctx)
@@ -7116,7 +7116,7 @@ func (cm *ControllerManager) Run(ctx context.Context) error {
         // 直接启动所有控制器
         cm.startControllers(ctx)
     }
-    
+
     <-ctx.Done()
     return nil
 }
@@ -7136,20 +7136,20 @@ func (cm *ControllerManager) startControllers(ctx context.Context) {
         "garbagecollector": startGarbageCollectorController,
         // 更多控制器...
     }
-    
+
     // 启动指定的控制器
     for controllerName, initFn := range controllers {
         if !cm.IsControllerEnabled(controllerName) {
             continue
         }
-        
+
         // 标记控制器为活跃
         cm.activeControllers[controllerName] = true
-        
+
         // 启动控制器
         go func(name string, fn initFunc) {
             defer utilruntime.HandleCrash()
-            
+
             // 初始化并启动控制器
             if err := fn(cm.ControllerContext); err != nil {
                 log.Errorf("Error starting %s controller: %v", name, err)
@@ -7176,7 +7176,7 @@ func (cm *ControllerManager) runLeaderElection(ctx context.Context) {
     if err != nil {
         log.Fatalf("error creating lock: %v", err)
     }
-    
+
     // 开始领导者选举
     leaderelection.RunOrDie(ctx, leaderelection.LeaderElectionConfig{
         Lock:          resourceLock,
@@ -7202,13 +7202,13 @@ func (cm *ControllerManager) runLeaderElection(ctx context.Context) {
 type DeploymentController struct {
     // 客户端
     client clientset.Interface
-    
+
     // 事件记录器
     eventRecorder record.EventRecorder
-    
+
     // Deployment信息队列
     queue workqueue.RateLimitingInterface
-    
+
     // 各种Informer
     dLister       appslisters.DeploymentLister
     dListerSynced cache.InformerSynced
@@ -7229,7 +7229,7 @@ func startDeploymentController(ctx context.Context, controllerContext Controller
     if err != nil {
         return err
     }
-    
+
     // 启动控制器
     go dc.Run(ctx, int(controllerContext.ComponentConfig.DeploymentController.ConcurrentDeploymentSyncs))
     return nil
@@ -7239,21 +7239,21 @@ func startDeploymentController(ctx context.Context, controllerContext Controller
 func (dc *DeploymentController) Run(ctx context.Context, workers int) {
     defer utilruntime.HandleCrash()
     defer dc.queue.ShutDown()
-    
+
     log.Info("Starting deployment controller")
     defer log.Info("Shutting down deployment controller")
-    
+
     // 等待缓存同步
     if !cache.WaitForNamedCacheSync("deployment-controller", ctx.Done(),
         dc.dListerSynced, dc.rsListerSynced, dc.podListerSynced) {
         return
     }
-    
+
     // 启动worker
     for i := 0; i < workers; i++ {
         go wait.UntilWithContext(ctx, dc.worker, time.Second)
     }
-    
+
     <-ctx.Done()
 }
 
@@ -7271,7 +7271,7 @@ func (dc *DeploymentController) processNextWorkItem(ctx context.Context) bool {
         return false
     }
     defer dc.queue.Done(key)
-    
+
     // 处理项目
     err := dc.syncHandler(ctx, key.(string))
     if err != nil {
@@ -7279,7 +7279,7 @@ func (dc *DeploymentController) processNextWorkItem(ctx context.Context) bool {
         dc.queue.AddRateLimited(key)
         return true
     }
-    
+
     // 处理成功，移除限速
     dc.queue.Forget(key)
     return true
@@ -7291,13 +7291,13 @@ func (dc *DeploymentController) syncHandler(ctx context.Context, key string) err
     defer func() {
         log.V(4).Infof("Finished syncing deployment %q (%v)", key, time.Since(startTime))
     }()
-    
+
     // 解析命名空间和名称
     namespace, name, err := cache.SplitMetaNamespaceKey(key)
     if err != nil {
         return err
     }
-    
+
     // 获取Deployment
     deployment, err := dc.dLister.Deployments(namespace).Get(name)
     if errors.IsNotFound(err) {
@@ -7307,10 +7307,10 @@ func (dc *DeploymentController) syncHandler(ctx context.Context, key string) err
     if err != nil {
         return err
     }
-    
+
     // 深拷贝避免修改缓存
     d := deployment.DeepCopy()
-    
+
     // 实现Deployment逻辑
     return dc.syncDeployment(ctx, d)
 }
@@ -7321,34 +7321,34 @@ func (dc *DeploymentController) syncHandler(ctx context.Context, key string) err
 type Kubelet struct {
     // 主机名
     hostname string
-    
+
     // 节点名称
     nodeName string
-    
+
     // 运行时
     containerRuntime container.Runtime
-    
+
     // Pod管理器
     podManager podmanager.Manager
-    
+
     // 卷管理器
     volumeManager volume.Manager
-    
+
     // 状态管理器
     statusManager status.Manager
-    
+
     // 探针管理器
     probeManager prober.Manager
-    
+
     // 容器垃圾回收器
     containerGC kubecontainer.ContainerGC
-    
+
     // 镜像垃圾回收器
     imageManager images.ImageGCManager
-    
+
     // 网络插件
     networkPlugin network.NetworkPlugin
-    
+
     // 其他字段...
 }
 
@@ -7359,22 +7359,22 @@ func (kl *Kubelet) Run(updates <-chan kubetypes.PodUpdate) {
         log.Errorf("Failed to initialize kubelet modules: %v", err)
         os.Exit(1)
     }
-    
+
     // 注册节点
     go kl.registerNode()
-    
+
     // 启动状态同步循环
     go wait.Until(kl.syncNodeStatus, kl.nodeStatusUpdateFrequency, wait.NeverStop)
-    
+
     // 启动容器垃圾回收循环
     go wait.Until(kl.containerGC.GarbageCollect, ContainerGCPeriod, wait.NeverStop)
-    
+
     // 启动镜像垃圾回收循环
     go wait.Until(kl.imageManager.GarbageCollect, ImageGCPeriod, wait.NeverStop)
-    
+
     // 启动卷管理器
     go kl.volumeManager.Run(kl.sourcesReady, wait.NeverStop)
-    
+
     // 启动Pod处理循环
     kl.syncLoop(updates, kl)
 }
@@ -7388,13 +7388,13 @@ func (kl *Kubelet) syncLoop(updates <-chan kubetypes.PodUpdate, handler SyncHand
         kubetypes.REMOVE: handler.HandlePodRemoves,
         kubetypes.RECONCILE: handler.HandlePodReconcile,
     }
-    
+
     for {
         select {
         case u := <-updates:
             // 处理Pod更新
             kl.handlePodUpdates(u)
-            
+
             // 调用相应的事件处理函数
             if handler, ok := eventHandlers[u.Op]; ok {
                 for _, pod := range u.Pods {
@@ -7415,23 +7415,23 @@ func (kl *Kubelet) syncLoop(updates <-chan kubetypes.PodUpdate, handler SyncHand
 func (kl *Kubelet) HandlePodAdditions(pods []*v1.Pod) {
     // 对Pod进行排序，优先启动高优先级的Pod
     sort.Sort(kubetypes.ByCreationTimestamp(pods))
-    
+
     for _, pod := range pods {
         // 添加Pod到管理器
         kl.podManager.AddPod(pod)
-        
+
         // 记录Pod添加事件
         kl.recordPodEvent(pod, v1.EventTypeNormal, events.PodScheduled, "Pod scheduled to node")
-        
+
         // 创建Pod目录
         if err := kl.makePodDataDir(pod); err != nil {
             log.Errorf("Unable to make pod data directories for pod %q: %v", pod.Name, err)
             continue
         }
-        
+
         // 启动Pod
         kl.dispatchWork(pod, kubetypes.SyncPodCreate, nil, waitGroup)
-        
+
         // 更新Pod状态
         kl.statusManager.SetPodStatus(pod, v1.PodStatus{Phase: v1.PodPending})
     }
@@ -7443,20 +7443,20 @@ func (kl *Kubelet) syncPod(ctx context.Context, updateType kubetypes.SyncPodType
     if !kl.canRunPod(pod) {
         return false, fmt.Errorf("Pod %s is not allowed to run on node %s", pod.Name, kl.nodeName)
     }
-    
+
     // 准备工作
     // 1. 创建Pod目录和卷目录
     // 2. 挂载Secrets和ConfigMaps
     // 3. 配置网络
-    
+
     // 运行时启动Pod
     result := kl.containerRuntime.SyncPod(pod, podStatus, kl.backOff)
-    
+
     // 处理结果
     // 1. 处理容器启动错误
     // 2. 更新Pod状态
     // 3. 处理可能的Pod终止
-    
+
     return result.IsTerminal(), nil
 }
 
@@ -7466,17 +7466,17 @@ func (kl *Kubelet) syncPod(ctx context.Context, updateType kubetypes.SyncPodType
 type ProxyServer struct {
     // Proxier接口实现
     Proxier proxy.Provider
-    
+
     // 客户端
     Client clientset.Interface
-    
+
     // 事件记录器
     Recorder record.EventRecorder
-    
+
     // 工作队列
     serviceChanges proxy.ServiceChangeTracker
     endpointsChanges proxy.EndpointsChangeTracker
-    
+
     // 其他字段...
 }
 
@@ -7486,10 +7486,10 @@ func (s *ProxyServer) Run() error {
     if err := s.initialize(); err != nil {
         return err
     }
-    
+
     // 启动信息器
     informerFactory := informers.NewSharedInformerFactory(s.Client, s.ConfigSyncPeriod)
-    
+
     // 配置服务处理器
     serviceConfig := config.NewServiceConfig(
         informerFactory.Core().V1().Services(),
@@ -7497,7 +7497,7 @@ func (s *ProxyServer) Run() error {
     )
     serviceConfig.RegisterEventHandler(s.Proxier)
     go serviceConfig.Run(wait.NeverStop)
-    
+
     // 配置端点处理器
     endpointsConfig := config.NewEndpointsConfig(
         informerFactory.Core().V1().Endpoints(),
@@ -7505,16 +7505,16 @@ func (s *ProxyServer) Run() error {
     )
     endpointsConfig.RegisterEventHandler(s.Proxier)
     go endpointsConfig.Run(wait.NeverStop)
-    
+
     // 启动定期同步
     go s.Proxier.SyncLoop()
-    
+
     // 启动信息器工厂
     informerFactory.Start(wait.NeverStop)
-    
+
     // 等待终止
     s.waitForTermination()
-    
+
     return nil
 }
 
@@ -7524,18 +7524,18 @@ func (s *ProxyServer) Run() error {
 type Scheduler struct {
     // 调度算法
     Algorithm ScheduleAlgorithm
-    
+
     // 客户端
     Client clientset.Interface
-    
+
     // Pod队列
     PodQueue internalqueue.SchedulingQueue
-    
+
     // 各种Informer和Lister
     informerFactory informers.SharedInformerFactory
     podLister       corelisters.PodLister
     nodeLister      corelisters.NodeLister
-    
+
     // 其他字段...
 }
 
@@ -7543,15 +7543,15 @@ type Scheduler struct {
 func (sched *Scheduler) Run(ctx context.Context) {
     // 启动所有Informer
     sched.informerFactory.Start(ctx.Done())
-    
+
     // 等待缓存同步
     if !cache.WaitForCacheSync(ctx.Done(), sched.podLister.Informer().HasSynced, sched.nodeLister.Informer().HasSynced) {
         return
     }
-    
+
     // 启动调度循环
     go wait.UntilWithContext(ctx, sched.scheduleOne, 0)
-    
+
     <-ctx.Done()
 }
 
@@ -7562,27 +7562,27 @@ func (sched *Scheduler) scheduleOne(ctx context.Context) {
     if pod == nil {
         return
     }
-    
+
     // 尝试调度Pod
     start := time.Now()
     scheduleResult, err := sched.Algorithm.Schedule(ctx, pod)
-    
+
     if err != nil {
         // 处理调度失败
         sched.handleSchedulingFailure(ctx, pod, err)
         return
     }
-    
+
     // 处理调度成功
     nodeName := scheduleResult.SuggestedHost
-    
+
     // 绑定Pod到节点
     err = sched.bindPod(ctx, pod, nodeName, scheduleResult.SchedulerExtender)
     if err != nil {
         log.Errorf("Error binding pod %v/%v: %v", pod.Namespace, pod.Name, err)
         return
     }
-    
+
     // 发布成功事件
     sched.Recorder.Eventf(pod, nil, v1.EventTypeNormal, "Scheduled", "Successfully assigned %v/%v to %v", pod.Namespace, pod.Name, nodeName)
 }
@@ -7593,13 +7593,13 @@ func (sched *Scheduler) bindPod(ctx context.Context, pod *v1.Pod, nodeName strin
         ObjectMeta: metav1.ObjectMeta{Namespace: pod.Namespace, Name: pod.Name, UID: pod.UID},
         Target:     v1.ObjectReference{Kind: "Node", Name: nodeName},
     }
-    
+
     // 创建绑定
     err := sched.Client.CoreV1().Pods(pod.Namespace).Bind(ctx, binding, metav1.CreateOptions{})
     if err != nil {
         return err
     }
-    
+
     return nil
 }
 
@@ -7610,14 +7610,14 @@ type CRDController struct {
     // 客户端配置
     kubeClient clientset.Interface
     crdClient  apiextensionsclientset.Interface
-    
+
     // 信息器
     crdInformer apiextensionslisters.CustomResourceDefinitionLister
     crdListerSynced cache.InformerSynced
-    
+
     // 工作队列
     queue workqueue.RateLimitingInterface
-    
+
     // 其他字段...
 }
 
@@ -7625,20 +7625,20 @@ type CRDController struct {
 func (c *CRDController) Run(workers int, stopCh <-chan struct{}) {
     defer utilruntime.HandleCrash()
     defer c.queue.ShutDown()
-    
+
     log.Info("Starting CRD controller")
     defer log.Info("Shutting down CRD controller")
-    
+
     // 等待缓存同步
     if !cache.WaitForCacheSync(stopCh, c.crdListerSynced) {
         return
     }
-    
+
     // 启动工作线程
     for i := 0; i < workers; i++ {
         go wait.Until(c.worker, time.Second, stopCh)
     }
-    
+
     <-stopCh
 }
 
@@ -7655,13 +7655,13 @@ func (c *CRDController) processNextWorkItem() bool {
         return false
     }
     defer c.queue.Done(key)
-    
+
     err := c.syncHandler(key.(string))
     if err != nil {
         c.queue.AddRateLimited(key)
         return true
     }
-    
+
     c.queue.Forget(key)
     return true
 }
@@ -7672,12 +7672,12 @@ func (c *CRDController) syncHandler(key string) error {
     if err != nil {
         return err
     }
-    
+
     // CRD是集群范围的资源，命名空间应该为空
     if namespace != "" {
         return fmt.Errorf("unexpected namespace in key: %q", key)
     }
-    
+
     // 获取CRD
     crd, err := c.crdInformer.Get(name)
     if errors.IsNotFound(err) {
@@ -7687,7 +7687,7 @@ func (c *CRDController) syncHandler(key string) error {
     if err != nil {
         return err
     }
-    
+
     // 处理CRD
     return c.handleCRD(crd)
 }
@@ -7703,9 +7703,9 @@ func (c *CRDController) syncHandler(key string) error {
 - 插件架构支持扩展
 - 声明式配置管理
 
-## 7. 新兴架构趋势
+## 63.2 新兴架构趋势
 
-### 7.1 AI驱动的软件架构
+### 63.2.1 AI驱动的软件架构
 
 -**基于LLM的软件架构**
 
@@ -7723,11 +7723,11 @@ class LLMClient {
     this.baseURL = config.baseURL;
     this.maxRetries = config.maxRetries || 3;
     this.timeout = config.timeout || 30000;
-    
+
     // 初始化特定提供商的客户端
     this.client = this._initializeClient();
   }
-  
+
   _initializeClient() {
     switch (this.provider) {
       case 'openai':
@@ -7752,7 +7752,7 @@ class LLMClient {
         throw new Error(`Unsupported LLM provider: ${this.provider}`);
     }
   }
-  
+
   async complete(prompt, options = {}) {
     try {
       return await this.client.complete(prompt, {
@@ -7767,7 +7767,7 @@ class LLMClient {
       throw error;
     }
   }
-  
+
   async chat(messages, options = {}) {
     try {
       return await this.client.chat(messages, {
@@ -7781,7 +7781,7 @@ class LLMClient {
       throw error;
     }
   }
-  
+
   async embedText(text) {
     try {
       return await this.client.embed(text);
@@ -7802,21 +7802,21 @@ class IntentRouter {
     this.fallbackHandler = null;
     this.confidenceThreshold = 0.7;
   }
-  
+
   registerIntent(intentName, handler, examples = []) {
     // 存储意图处理器
     this.intentHandlers.set(intentName, handler);
-    
+
     // 如果提供了示例，创建意图嵌入向量
     if (examples.length > 0) {
       this._addExamplesToVectorStore(intentName, examples);
     }
   }
-  
+
   setFallbackHandler(handler) {
     this.fallbackHandler = handler;
   }
-  
+
   async _addExamplesToVectorStore(intentName, examples) {
     // 为每个示例创建嵌入并存储
     for (const example of examples) {
@@ -7831,15 +7831,15 @@ class IntentRouter {
       });
     }
   }
-  
+
   async route(userInput) {
     try {
       // 使用两种方法进行意图识别
-      
+
       // 方法1: 向量相似性搜索
       const embedding = await this.llm.embedText(userInput);
       const similarItems = await this.vectorStore.search(embedding, 5);
-      
+
       // 收集候选意图与其分数
       const candidates = {};
       for (const item of similarItems) {
@@ -7850,11 +7850,11 @@ class IntentRouter {
         candidates[intentName].count++;
         candidates[intentName].score += item.similarity;
       }
-      
+
       // 找出最佳意图
       let bestIntent = null;
       let highestScore = 0;
-      
+
       for (const [intent, data] of Object.entries(candidates)) {
         const avgScore = data.score / data.count;
         if (avgScore > highestScore) {
@@ -7862,34 +7862,34 @@ class IntentRouter {
           bestIntent = intent;
         }
       }
-      
+
       // 方法2: 直接LLM分类（用于置信度低的情况）
       if (highestScore < this.confidenceThreshold) {
         // 构建意图分类提示
         const intents = Array.from(this.intentHandlers.keys());
         const prompt = `
           User input: "${userInput}"
-          
+
           Select the most appropriate intent from the following list:
           ${intents.join(', ')}
-          
+
           Reply with only the intent name, nothing else.
         `;
-        
+
         const llmResponse = await this.llm.complete(prompt, {
           temperature: 0.2,
           maxTokens: 20
         });
-        
+
         const predictedIntent = llmResponse.trim();
-        
+
         // 如果LLM预测了有效意图，使用它
         if (this.intentHandlers.has(predictedIntent)) {
           bestIntent = predictedIntent;
           highestScore = 0.8; // 假设LLM的置信度
         }
       }
-      
+
       // 执行找到的意图处理器或回退处理器
       if (bestIntent && highestScore >= this.confidenceThreshold) {
         const handler = this.intentHandlers.get(bestIntent);
@@ -7919,12 +7919,12 @@ class VectorStore {
     this.indexName = config.indexName;
     this.apiKey = config.apiKey;
     this.namespace = config.namespace;
-    
+
 ```javascript
     // 初始化特定提供商的向量存储
     this.store = this._initializeVectorStore();
   }
-  
+
   _initializeVectorStore() {
     switch (this.provider) {
       case 'pinecone':
@@ -7955,7 +7955,7 @@ class VectorStore {
         throw new Error(`Unsupported vector store provider: ${this.provider}`);
     }
   }
-  
+
   async addItem({ id, vector, metadata = {} }) {
     return this.store.upsert({
       id,
@@ -7963,7 +7963,7 @@ class VectorStore {
       metadata
     });
   }
-  
+
   async search(vector, limit = 10, filters = {}) {
     return this.store.search({
       vector,
@@ -7971,11 +7971,11 @@ class VectorStore {
       filters
     });
   }
-  
+
   async deleteItem(id) {
     return this.store.delete(id);
   }
-  
+
   async createIndex() {
     return this.store.createIndex({
       name: this.indexName,
@@ -7997,13 +7997,13 @@ class RAGSystem {
       minRelevanceScore: 0.7
     };
   }
-  
+
   async addDocuments(documents) {
     // 处理并索引文档
     for (const document of documents) {
       // 将文档分割成块
       const chunks = this.documentProcessor.splitDocument(document);
-      
+
       // 为每个块创建嵌入并存储
       for (const chunk of chunks) {
         const embedding = await this.llm.embedText(chunk.text);
@@ -8021,24 +8021,24 @@ class RAGSystem {
       }
     }
   }
-  
+
   async query(question, options = {}) {
     try {
       // 获取问题的嵌入
       const questionEmbedding = await this.llm.embedText(question);
-      
+
       // 检索相关文档
       const retrievalResults = await this.vectorStore.search(
         questionEmbedding,
         options.topK || this.retrievalConfig.topK,
         options.filters || {}
       );
-      
+
       // 过滤低相关性结果
       const relevantResults = retrievalResults.filter(
         result => result.similarity >= (options.minRelevanceScore || this.retrievalConfig.minRelevanceScore)
       );
-      
+
       // 如果没有找到相关内容，返回无结果的回复
       if (relevantResults.length === 0) {
         return {
@@ -8047,31 +8047,31 @@ class RAGSystem {
           relevantDocuments: []
         };
       }
-      
+
       // 构建上下文
       let context = '';
       const sources = new Set();
       const relevantDocuments = [];
-      
+
       // 按相关性排序，添加到上下文，同时跟踪总长度
       for (const result of relevantResults) {
         const documentText = result.metadata.text;
-        
+
         // 检查是否超出上下文长度限制
         if ((context.length + documentText.length) > this.maxContextLength) {
           continue;
         }
-        
+
         // 添加到上下文
         context += `${documentText}\n\n`;
-        
+
         // 添加到来源列表
         sources.add({
           documentId: result.metadata.documentId,
           title: result.metadata.title,
           source: result.metadata.source
         });
-        
+
         // 添加到相关文档列表
         relevantDocuments.push({
           text: documentText,
@@ -8079,25 +8079,25 @@ class RAGSystem {
           metadata: result.metadata
         });
       }
-      
+
       // 构建提示
       const prompt = `
         Answer the following question based on the provided context. If the answer is not in the context, say "I don't have enough information to answer this question." Include only information from the context. Be concise and clear.
-        
+
         Context:
         ${context}
-        
+
         Question: ${question}
-        
+
         Answer:
       `;
-      
+
       // 调用LLM生成回答
       const response = await this.llm.complete(prompt, {
         temperature: options.temperature || 0.3,
         maxTokens: options.maxTokens || 500
       });
-      
+
       return {
         answer: response.trim(),
         sources: Array.from(sources),
@@ -8118,17 +8118,17 @@ class AIAgent {
     this.tools = new Map();
     this.memory = memory || new ShortTermMemory();
     this.maxIterations = 10;
-    
+
     // 注册工具
     for (const tool of tools) {
       this.registerTool(tool);
     }
   }
-  
+
   registerTool(tool) {
     this.tools.set(tool.name, tool);
   }
-  
+
   async run(input, options = {}) {
     // 初始化会话状态
     const sessionState = {
@@ -8138,14 +8138,14 @@ class AIAgent {
       toolResults: {},
       finalResponse: null
     };
-    
+
     try {
       // 构建初始提示的系统指令
       const systemPrompt = this._buildSystemPrompt();
-      
+
       // 获取过去的对话历史（如果有的话）
       const conversationHistory = await this.memory.getConversationHistory(options.sessionId);
-      
+
       // 执行思考-行动-观察循环
       while (sessionState.iterations < this.maxIterations && !sessionState.finalResponse) {
         // 构建完整提示
@@ -8154,27 +8154,27 @@ class AIAgent {
           ...conversationHistory,
           { role: 'user', content: sessionState.iterations === 0 ? input : "Continue from your previous actions." }
         ];
-        
+
         // 添加之前的工具执行结果
         if (sessionState.intermediateSteps.length > 0) {
           for (const step of sessionState.intermediateSteps) {
             messages.push({ role: 'assistant', content: step.thought });
-            messages.push({ 
-              role: 'system', 
+            messages.push({
+              role: 'system',
               content: `Action: ${step.action}\nAction Input: ${step.actionInput}\nObservation: ${step.observation}`
             });
           }
         }
-        
+
         // 请求LLM的下一步思考
         const response = await this.llm.chat(messages, {
           temperature: options.temperature || 0.7,
           maxTokens: options.maxTokens || 1000
         });
-        
+
         // 解析LLM响应
         const parsedResponse = this._parseAgentResponse(response);
-        
+
         if (parsedResponse.finalAnswer) {
           // 代理决定了最终答案
           sessionState.finalResponse = parsedResponse.finalAnswer;
@@ -8182,7 +8182,7 @@ class AIAgent {
         } else if (parsedResponse.action) {
           // 代理想要执行工具
           const { action, actionInput } = parsedResponse;
-          
+
           // 执行工具操作
           let observation = "Error: Tool not found";
           if (this.tools.has(action)) {
@@ -8193,7 +8193,7 @@ class AIAgent {
               observation = `Error executing tool: ${toolError.message}`;
             }
           }
-          
+
           // 记录步骤
           sessionState.intermediateSteps.push({
             thought: parsedResponse.thought,
@@ -8210,20 +8210,20 @@ class AIAgent {
             observation: "I couldn't understand your response. Please use the format specified in the instructions."
           });
         }
-        
+
         sessionState.iterations++;
       }
-      
+
       // 如果达到了最大迭代次数但没有最终答案
       if (!sessionState.finalResponse) {
-        sessionState.finalResponse = "I've spent too much time trying to solve this problem. Here's what I've learned so far: " + 
+        sessionState.finalResponse = "I've spent too much time trying to solve this problem. Here's what I've learned so far: " +
           sessionState.intermediateSteps.map(step => step.observation).join(" ");
       }
-      
+
       // 保存到记忆
       await this.memory.addToHistory(options.sessionId, { role: 'user', content: input });
       await this.memory.addToHistory(options.sessionId, { role: 'assistant', content: sessionState.finalResponse });
-      
+
       return {
         response: sessionState.finalResponse,
         steps: sessionState.intermediateSteps,
@@ -8234,46 +8234,46 @@ class AIAgent {
       throw error;
     }
   }
-  
+
   _buildSystemPrompt() {
     // 构建系统提示，包括代理说明和工具描述
     const toolDescriptions = Array.from(this.tools.values()).map(tool => {
       return `Tool Name: ${tool.name}\nDescription: ${tool.description}\nInput Parameters: ${tool.parameters}\n`;
     }).join('\n');
-    
+
     return `
       You are an AI assistant that can use tools to help answer questions.
-      
+
       To use a tool, please use the following format:
-      
+
       Thought: <your reasoning about what to do>
       Action: <tool name>
       Action Input: <input parameters to the tool>
-      
+
       After receiving the observation, you should continue with this format until you have enough information to provide a final answer.
-      
+
       When you're ready to provide a final answer, use:
-      
+
       Thought: <your final reasoning>
       Final Answer: <your answer to the user's question>
-      
+
       Available Tools:
       ${toolDescriptions}
-      
+
       Remember to:
       1. Think step-by-step
       2. Use tools whenever helpful
       3. Provide accurate, helpful and harmless responses
     `;
   }
-  
+
   _parseAgentResponse(response) {
     // 解析代理的响应，提取思考、行动和最终答案
     const thought = response.match(/Thought: (.*?)(?=\nAction:|\nFinal Answer:|$)/s);
     const action = response.match(/Action: (.*?)(?=\nAction Input:|$)/s);
     const actionInput = response.match(/Action Input: (.*?)(?=\n|$)/s);
     const finalAnswer = response.match(/Final Answer: (.*?)(?=\n|$)/s);
-    
+
     return {
       thought: thought ? thought[1].trim() : response,
       action: action ? action[1].trim() : null,
@@ -8290,30 +8290,30 @@ class ShortTermMemory {
     this.conversations = new Map();
     this.maxHistoryLength = 10;
   }
-  
+
   async getConversationHistory(sessionId) {
     if (!sessionId) return [];
     return this.conversations.get(sessionId) || [];
   }
-  
+
   async addToHistory(sessionId, message) {
     if (!sessionId) return;
-    
+
     // 获取现有历史记录或创建新的
     const history = this.conversations.get(sessionId) || [];
-    
+
     // 添加新消息
     history.push(message);
-    
+
     // 如果历史记录太长，移除最早的消息
     while (history.length > this.maxHistoryLength) {
       history.shift();
     }
-    
+
     // 更新历史记录
     this.conversations.set(sessionId, history);
   }
-  
+
   async clearHistory(sessionId) {
     if (sessionId) {
       this.conversations.delete(sessionId);
@@ -8326,12 +8326,12 @@ class LongTermMemory {
     this.vectorStore = vectorStore;
     this.encoder = new TextEncoder();
   }
-  
+
   async saveMemory(memory) {
     // 为记忆创建嵌入
     const text = this._formatMemory(memory);
     const embedding = await this.llm.embedText(text);
-    
+
     // 存储带有嵌入的记忆
     return this.vectorStore.addItem({
       id: memory.id || `memory-${Date.now()}-${Math.random().toString(36).substring(7)}`,
@@ -8343,27 +8343,27 @@ class LongTermMemory {
       }
     });
   }
-  
+
   async retrieveSimilarMemories(query, limit = 5) {
     // 获取查询的嵌入
     const embedding = await this.llm.embedText(query);
-    
+
     // 搜索相似记忆
     return this.vectorStore.search(embedding, limit);
   }
-  
+
   _formatMemory(memory) {
     // 将记忆对象格式化为文本
     if (typeof memory === 'string') {
       return memory;
     }
-    
+
     let text = '';
     if (memory.type) text += `Type: ${memory.type}\n`;
     if (memory.content) text += `Content: ${memory.content}\n`;
     if (memory.context) text += `Context: ${memory.context}\n`;
     if (memory.timestamp) text += `Time: ${memory.timestamp}\n`;
-    
+
     return text.trim();
   }
 }
@@ -8378,39 +8378,39 @@ class AIWorkflow {
     this.currentStepIndex = 0;
     this.workflowContext = new Map();
   }
-  
+
   addStep(step) {
     this.steps.push(step);
     return this;
   }
-  
+
   setContext(key, value) {
     this.workflowContext.set(key, value);
     return this;
   }
-  
+
   getContext(key) {
     return this.workflowContext.get(key);
   }
-  
+
   async execute(initialInput, options = {}) {
     // 重置工作流状态
     this.currentStepIndex = 0;
     this.workflowContext.clear();
-    
+
     // 设置初始输入
     let currentInput = initialInput;
-    
+
     // 执行步骤
     const stepResults = [];
-    
+
     try {
       while (this.currentStepIndex < this.steps.length) {
         const currentStep = this.steps[this.currentStepIndex];
-        
+
         // 执行当前步骤
         const stepResult = await currentStep.execute(currentInput, this.workflowContext, this.llm);
-        
+
         // 保存步骤结果
         stepResults.push({
           stepName: currentStep.name,
@@ -8418,7 +8418,7 @@ class AIWorkflow {
           output: stepResult.output,
           metadata: stepResult.metadata
         });
-        
+
         // 如果步骤指定了跳转，更新下一步索引
         if (stepResult.nextStep !== undefined) {
           // 查找名称匹配的步骤
@@ -8439,11 +8439,11 @@ class AIWorkflow {
           // 默认移动到下一步
           this.currentStepIndex++;
         }
-        
+
         // 更新下一步的输入
         currentInput = stepResult.output;
       }
-      
+
       return {
         status: 'completed',
         output: currentInput, // 最后一步的输出作为工作流输出
@@ -8452,7 +8452,7 @@ class AIWorkflow {
       };
     } catch (error) {
       console.error(`Workflow execution error at step ${this.currentStepIndex}: ${error.message}`);
-      
+
       return {
         status: 'failed',
         error: error.message,
@@ -8470,7 +8470,7 @@ class WorkflowStep {
   constructor(name) {
     this.name = name;
   }
-  
+
   async execute(input, context, llm) {
     throw new Error('Method execute() must be implemented by subclass');
   }
@@ -8483,14 +8483,14 @@ class LLMProcessingStep extends WorkflowStep {
     this.promptTemplate = prompt;
     this.options = options;
   }
-  
+
   async execute(input, context, llm) {
     // 编译提示模板，替换变量
     const compiledPrompt = this._compileTemplate(this.promptTemplate, { input, context });
-    
+
     // 调用LLM
     const response = await llm.complete(compiledPrompt, this.options);
-    
+
     return {
       output: response,
       metadata: {
@@ -8499,18 +8499,18 @@ class LLMProcessingStep extends WorkflowStep {
       }
     };
   }
-  
+
   _compileTemplate(template, data) {
     return template.replace(/\{\{(.*?)\}\}/g, (match, variable) => {
       const path = variable.trim().split('.');
       let value;
-      
+
       if (path[0] === 'input') {
         value = data.input;
       } else if (path[0] === 'context') {
         value = data.context.get(path[1]);
       }
-      
+
       return value !== undefined ? value : match;
     });
   }
@@ -8524,14 +8524,14 @@ class ConditionalStep extends WorkflowStep {
     this.trueStepName = trueStepName;
     this.falseStepName = falseStepName;
   }
-  
+
   async execute(input, context, llm) {
     // 评估条件
     const conditionResult = await this.conditionFn(input, context, llm);
-    
+
     // 根据条件确定下一步
     const nextStep = conditionResult ? this.trueStepName : this.falseStepName;
-    
+
     return {
       output: input, // 条件步骤通常不修改输入
       nextStep,
@@ -8548,11 +8548,11 @@ class FunctionStep extends WorkflowStep {
     super(name);
     this.fn = fn;
   }
-  
+
   async execute(input, context, llm) {
     // 执行函数
     const result = await this.fn(input, context, llm);
-    
+
     return {
       output: result.output !== undefined ? result.output : input,
       nextStep: result.nextStep,
@@ -8631,7 +8631,7 @@ const tools = [
     run: async (params) => {
       // 解析JSON
       const ticketData = typeof params === 'string' ? JSON.parse(params) : params;
-      
+
       // 实际实现将连接到工单系统
       const ticketId = `TICKET-${Date.now().toString().substring(7)}`;
       return `Ticket created successfully. Ticket ID: ${ticketId}`;
@@ -8644,7 +8644,7 @@ const intentRouter = new IntentRouter(llmClient, vectorStore);
 
 // 注册意图处理器
 intentRouter.registerIntent('product_info', async (input, context) => {
-  const result = await ragSystem.query(input, { 
+  const result = await ragSystem.query(input, {
     filters: { metadata: { category: 'product' } }
   });
   return { response: result.answer, intent: 'product_info' };
@@ -8670,7 +8670,7 @@ intentRouter.registerIntent('technical_support', async (input, context) => {
 intentRouter.registerIntent('billing', async (input, context) => {
   // 使用工作流处理账单问题
   const billingWorkflow = new AIWorkflow('billing_inquiry', llmClient)
-    .addStep(new LLMProcessingStep('analyze_question', 
+    .addStep(new LLMProcessingStep('analyze_question',
       `Analyze this billing related question and determine what specific information is needed: {{input}}`
     ))
     .addStep(new ConditionalStep('check_customer_id',
@@ -8695,17 +8695,17 @@ intentRouter.registerIntent('billing', async (input, context) => {
     }))
     .addStep(new LLMProcessingStep('formulate_response',
       `Based on the user's billing question: {{input}}
-       
+
        And their billing information: {{context.billingInfo}}
-       
+
        Provide a helpful, personalized response that answers their specific question.`
     ));
-    
-  const result = await billingWorkflow.execute(input, { 
+
+  const result = await billingWorkflow.execute(input, {
     sessionId: context.sessionId,
-    customerId: context.customerId 
+    customerId: context.customerId
   });
-  
+
   return { response: result.output, intent: 'billing' };
 }, [
   'When is my next bill due?',
@@ -8723,7 +8723,7 @@ intentRouter.setFallbackHandler(async (input, context) => {
   } else {
     // 如果没有找到相关信息，使用LLM生成基于常识的回复
     const response = await llmClient.complete(
-      `As a customer support agent, please provide a helpful response to this query: ${input}`, 
+      `As a customer support agent, please provide a helpful response to this query: ${input}`,
       { temperature: 0.7 }
     );
     return { response, intent: 'general_conversation' };
@@ -8738,14 +8738,14 @@ async function handleCustomerQuery(query, sessionId, customerInfo = {}) {
       sessionId,
       ...customerInfo
     };
-    
+
     // 路由到适当的意图
     const result = await intentRouter.route(query, context);
-    
+
     // 保存对话到内存
     await shortTermMemory.addToHistory(sessionId, { role: 'user', content: query });
     await shortTermMemory.addToHistory(sessionId, { role: 'assistant', content: result.response });
-    
+
     // 如果是重要交互，保存到长期记忆
     if (result.intent === 'technical_support' || result.intent === 'billing') {
       await longTermMemory.saveMemory({
@@ -8757,7 +8757,7 @@ async function handleCustomerQuery(query, sessionId, customerInfo = {}) {
         timestamp: new Date().toISOString()
       });
     }
-    
+
     return result;
   } catch (error) {
     console.error(`Error handling customer query: ${error.message}`);
@@ -8780,7 +8780,7 @@ async function handleCustomerQuery(query, sessionId, customerInfo = {}) {
 - 工作流引擎协调多步骤处理
 - 短期和长期记忆系统管理上下文
 
-### 7.2 WebAssembly应用架构
+### 63.2.2 WebAssembly应用架构
 
 -**WebAssembly应用架构**
 
@@ -8794,21 +8794,21 @@ async function loadWasmModule(wasmUrl, importObject = {}) {
   try {
     // 获取.wasm文件
     const response = await fetch(wasmUrl);
-    
+
     // 判断响应是否正常
     if (!response.ok) {
       throw new Error(`Failed to fetch ${wasmUrl}: ${response.status} ${response.statusText}`);
     }
-    
+
     // 将响应转换为ArrayBuffer
     const bytes = await response.arrayBuffer();
-    
+
     // 编译WebAssembly模块
     const module = await WebAssembly.compile(bytes);
 
     // 实例化模块
     const instance = await WebAssembly.instantiate(module, importObject);
-    
+
     return {
       module,
       instance,
@@ -8828,68 +8828,68 @@ class WasmMemoryManager {
     this.exports = exports;
     this.allocator = exports.__alloc || exports.alloc || exports.malloc;
     this.deallocator = exports.__dealloc || exports.dealloc || exports.free;
-    
+
     if (!this.allocator) {
       throw new Error("No memory allocator function found in WebAssembly exports");
     }
   }
-  
+
   // 从JavaScript字符串创建WebAssembly字符串
   createString(str) {
     const bytes = new TextEncoder().encode(str + '\0'); // 包含null终止符
     const ptr = this.allocator(bytes.length);
-    
+
     const heap = new Uint8Array(this.memory.buffer);
     heap.set(bytes, ptr);
-    
+
     return {
       ptr,
       length: bytes.length - 1, // 不包括null终止符
       free: () => this.deallocator(ptr)
     };
   }
-  
+
   // 从WebAssembly内存中读取字符串
   readString(ptr, length) {
     const heap = new Uint8Array(this.memory.buffer);
-    
+
     // 如果没有提供长度，查找null终止符
     if (length === undefined) {
       length = 0;
       while (heap[ptr + length] !== 0) length++;
     }
-    
+
     const bytes = heap.slice(ptr, ptr + length);
     return new TextDecoder().decode(bytes);
   }
-  
+
   // 创建WebAssembly数值数组
   createArray(array, type = Float64Array) {
     const bytes = array.length * type.BYTES_PER_ELEMENT;
     const ptr = this.allocator(bytes);
-    
+
     const heap = new type(this.memory.buffer);
     // 写入数组数据
     for (let i = 0; i < array.length; i++) {
       heap[ptr / type.BYTES_PER_ELEMENT + i] = array[i];
     }
-    
+
     return {
       ptr,
       length: array.length,
       free: () => this.deallocator(ptr)
     };
   }
-  
+
   // 从WebAssembly内存中读取数值数组
   readArray(ptr, length, type = Float64Array) {
     const heap = new type(this.memory.buffer);
     const result = new type(length);
-    
+
     for (let i = 0; i < length; i++) {
       result[i] = heap[ptr / type.BYTES_PER_ELEMENT + i];
     }
-    
+
     return result;
   }
 }
@@ -8907,23 +8907,23 @@ class WasmModule {
     this.importObject = {};
     this.dependencies = [];
   }
-  
+
   // 添加JS环境提供给WebAssembly的导入函数
   addImports(namespace, imports) {
     if (!this.importObject[namespace]) {
       this.importObject[namespace] = {};
     }
-    
+
     Object.assign(this.importObject[namespace], imports);
     return this;
   }
-  
+
   // 添加依赖的模块
   addDependency(module) {
     this.dependencies.push(module);
     return this;
   }
-  
+
   // 加载模块
   async load(wasmUrl) {
     try {
@@ -8932,41 +8932,41 @@ class WasmModule {
         if (!dep.isLoaded) {
           await dep.waitUntilLoaded();
         }
-        
+
         // 将依赖的导出添加到导入对象中
         this.addImports(dep.name, dep.exports);
       }
-      
+
       // 加载WebAssembly模块
       const result = await loadWasmModule(wasmUrl, this.importObject);
-      
+
       this.instance = result.instance;
       this.exports = result.exports;
-      
+
       // 获取内存
       this.memory = this.exports.memory || this.importObject.env?.memory;
-      
+
       if (!this.memory) {
         throw new Error("No memory found in WebAssembly instance or imports");
       }
-      
+
       // 创建内存管理器
       this.memoryManager = new WasmMemoryManager(this.memory, this.exports);
-      
+
       this.isLoaded = true;
-      
+
       // 如果有初始化函数，调用它
       if (typeof this.exports._initialize === 'function') {
         this.exports._initialize();
       }
-      
+
       return this;
     } catch (error) {
       console.error(`Failed to load WebAssembly module '${this.name}':`, error);
       throw error;
     }
   }
-  
+
   // 等待模块加载完成
   waitUntilLoaded() {
     return new Promise((resolve, reject) => {
@@ -8980,13 +8980,13 @@ class WasmModule {
       check();
     });
   }
-  
+
   // 将JS函数暴露给WebAssembly
   exposeFunction(name, fn) {
     if (!this.importObject.env) {
       this.importObject.env = {};
     }
-    
+
     this.importObject.env[name] = fn;
     return this;
   }
@@ -9001,15 +9001,15 @@ class ImageProcessor {
       filters: new WasmModule('filters'),
       transforms: new WasmModule('transforms')
     };
-    
+
     // 设置模块依赖关系
     this.modules.filters.addDependency(this.modules.core);
     this.modules.transforms.addDependency(this.modules.core);
-    
+
     // 添加JS环境函数
     this._setupEnvironment();
   }
-  
+
   // 设置JS环境函数
   _setupEnvironment() {
     // 添加日志函数
@@ -9018,65 +9018,65 @@ class ImageProcessor {
       const message = this.modules.core.memoryManager.readString(ptr);
       console.log(`[WASM] ${message}`);
     });
-    
+
     // 添加性能测量函数
     let perfMarks = {};
-    
+
     this.modules.core.exposeFunction('perf_mark', (namePtr) => {
       if (!this.modules.core.memoryManager) return;
       const name = this.modules.core.memoryManager.readString(namePtr);
       perfMarks[name] = performance.now();
     });
-    
+
     this.modules.core.exposeFunction('perf_measure', (startPtr, endPtr) => {
       if (!this.modules.core.memoryManager) return 0;
       const startName = this.modules.core.memoryManager.readString(startPtr);
       const endName = this.modules.core.memoryManager.readString(endPtr);
-      
+
       if (!perfMarks[startName] || !perfMarks[endName]) {
         return 0;
       }
-      
+
       return perfMarks[endName] - perfMarks[startName];
     });
   }
-  
+
   // 加载所有模块
   async initialize() {
     // 加载核心模块
     await this.modules.core.load('/wasm/image_core.wasm');
-    
+
     // 并行加载其他模块
     await Promise.all([
       this.modules.filters.load('/wasm/image_filters.wasm'),
       this.modules.transforms.load('/wasm/image_transforms.wasm')
     ]);
-    
+
     console.log('All WebAssembly modules loaded successfully');
     return this;
   }
-  
+
   // 处理图像
   async processImage(imageData, operations) {
     if (!this.modules.core.isLoaded) {
       throw new Error('Image processor not initialized');
     }
-    
+
     try {
       // 将图像数据复制到WebAssembly内存
       const width = imageData.width;
       const height = imageData.height;
       const pixelData = new Uint8ClampedArray(imageData.data);
-      
+
       // 分配内存
       const pixelDataPtr = this.modules.core.exports.allocate_image_buffer(width * height * 4);
-      
+
       // 复制数据
       new Uint8ClampedArray(this.modules.core.memory.buffer).set(pixelData, pixelDataPtr);
-      
+
       // 创建图像处理上下文
       const contextPtr = this.modules.core.exports.create_image_context(pixelDataPtr, width, height);
-      
+
       // 按顺序应用操作
       for (const op of operations) {
         switch (op.type) {
@@ -9090,7 +9090,7 @@ class ImageProcessor {
             console.warn(`Unknown operation type: ${op.type}`);
         }
       }
-      
+
       // 获取处理后的图像数据
       const resultPtr = this.modules.core.exports.get_image_data(contextPtr);
       const resultData = new Uint8ClampedArray(
@@ -9098,28 +9098,28 @@ class ImageProcessor {
         resultPtr,
         width * height * 4
       );
-      
+
       // 创建新的ImageData对象
       const result = new ImageData(
         new Uint8ClampedArray(resultData),
         width,
         height
       );
-      
+
       // 清理分配的内存
       this.modules.core.exports.destroy_image_context(contextPtr);
-      
+
       return result;
     } catch (error) {
       console.error('Error processing image:', error);
       throw error;
     }
   }
-  
+
   // 应用滤镜
   async _applyFilter(contextPtr, filterName, params = {}) {
     const filters = this.modules.filters.exports;
-    
+
     switch (filterName) {
       case 'grayscale':
         filters.apply_grayscale(contextPtr);
@@ -9147,11 +9147,11 @@ class ImageProcessor {
         console.warn(`Unknown filter: ${filterName}`);
     }
   }
-  
+
   // 应用变换
   async _applyTransform(contextPtr, transformName, params = {}) {
     const transforms = this.modules.transforms.exports;
-    
+
     switch (transformName) {
       case 'rotate':
         const angle = params.angle || 0;
@@ -9191,20 +9191,20 @@ class WasmThreadPool {
     this.nextTaskId = 1;
     this.activeWorkers = 0;
   }
-  
+
   async initialize() {
     // 检查是否支持SharedArrayBuffer
     if (typeof SharedArrayBuffer === 'undefined') {
       throw new Error('SharedArrayBuffer is not supported in this browser');
     }
-    
+
     // 创建Web Workers
     for (let i = 0; i < this.numThreads; i++) {
       const worker = new Worker('/js/wasm-worker.js');
-      
+
       // 设置worker消息处理
       worker.onmessage = (event) => this._handleWorkerMessage(worker, event);
-      
+
       // 初始化worker
       await new Promise((resolve, reject) => {
         worker.onmessage = (event) => {
@@ -9215,28 +9215,28 @@ class WasmThreadPool {
             reject(new Error(event.data.message));
           }
         };
-        
+
         worker.postMessage({
           type: 'initialize',
           wasmUrl: this.wasmUrl
         });
       });
-      
+
       this.workers.push({
         worker,
         busy: false
       });
     }
-    
+
     console.log(`WebAssembly Thread Pool initialized with ${this.numThreads} workers`);
     return this;
   }
-  
+
   // 提交任务
   submitTask(taskType, taskData) {
     return new Promise((resolve, reject) => {
       const taskId = this.nextTaskId++;
-      
+
       this.taskQueue.push({
         id: taskId,
         type: taskType,
@@ -9244,32 +9244,32 @@ class WasmThreadPool {
         resolve,
         reject
       });
-      
+
       // 尝试调度任务
       this._scheduleTasks();
     });
   }
-  
+
   // 处理worker消息
   _handleWorkerMessage(worker, event) {
     const { type, taskId, result, error } = event.data;
-    
+
     // 查找对应的worker
     const workerInfo = this.workers.find(w => w.worker === worker);
-    
+
     if (!workerInfo) {
       console.error('Received message from unknown worker');
       return;
     }
-    
+
     if (type === 'task_complete') {
       // 查找任务
       const task = this.taskQueue.find(t => t.id === taskId);
-      
+
       if (task) {
         // 从队列中移除任务
         this.taskQueue = this.taskQueue.filter(t => t.id !== taskId);
-        
+
         // 解决promise
         if (error) {
           task.reject(new Error(error));
@@ -9277,37 +9277,37 @@ class WasmThreadPool {
           task.resolve(result);
         }
       }
-      
+
       // 设置worker为空闲
       workerInfo.busy = false;
       this.activeWorkers--;
-      
+
       // 调度更多任务
       this._scheduleTasks();
     }
   }
-  
+
   // 调度待处理任务
   _scheduleTasks() {
     // 获取所有空闲worker
     const idleWorkers = this.workers.filter(w => !w.busy);
-    
+
     // 为每个空闲worker分配任务
     for (const workerInfo of idleWorkers) {
       // 如果没有更多任务，跳出循环
       if (this.taskQueue.length === 0) break;
-      
+
       // 获取下一个任务
       const nextTask = this.taskQueue.find(t => !t.assigned);
-      
+
       if (nextTask) {
         // 标记任务为已分配
         nextTask.assigned = true;
-        
+
         // 设置worker为忙碌状态
         workerInfo.busy = true;
         this.activeWorkers++;
-        
+
         // 发送任务到worker
         workerInfo.worker.postMessage({
           type: 'task',
@@ -9318,30 +9318,30 @@ class WasmThreadPool {
       }
     }
   }
-  
+
   // 获取活跃工作线程数量
   getActiveCount() {
     return this.activeWorkers;
   }
-  
+
   // 获取待处理任务数量
   getPendingCount() {
     return this.taskQueue.filter(t => !t.assigned).length;
   }
-  
+
   // 关闭线程池
   terminate() {
     for (const { worker } of this.workers) {
       worker.terminate();
     }
-    
+
     this.workers = [];
-    
+
     // 拒绝所有待处理任务
     for (const task of this.taskQueue) {
       task.reject(new Error('Thread pool terminated'));
     }
-    
+
     this.taskQueue = [];
     this.activeWorkers = 0;
   }
@@ -9355,20 +9355,20 @@ let wasmMemory = null;
 
 self.onmessage = async function(event) {
   const { type, taskId, taskType, taskData, wasmUrl } = event.data;
-  
+
   try {
     if (type === 'initialize') {
       await initializeWasm(wasmUrl);
-      
+
       self.postMessage({ type: 'initialized' });
     } else if (type === 'task') {
       if (!wasmExports) {
         throw new Error('WebAssembly module not initialized');
       }
-      
+
       // 执行任务
       const result = await executeTask(taskType, taskData);
-      
+
       // 返回结果
       self.postMessage({
         type: 'task_complete',
@@ -9389,18 +9389,18 @@ self.onmessage = async function(event) {
 async function initializeWasm(wasmUrl) {
   // 获取.wasm文件
   const response = await fetch(wasmUrl);
-  
+
   if (!response.ok) {
     throw new Error(`Failed to fetch ${wasmUrl}: ${response.status}`);
   }
-  
+
   // 编译模块
   const bytes = await response.arrayBuffer();
   const module = await WebAssembly.compile(bytes);
-  
+
   // 创建内存
   wasmMemory = new WebAssembly.Memory({ initial: 10, maximum: 100, shared: true });
-  
+
   // 实例化模块
   const instance = await WebAssembly.instantiate(module, {
     env: {
@@ -9417,7 +9417,7 @@ async function initializeWasm(wasmUrl) {
       }
     }
   });
-  
+
   wasmModule = module;
   wasmExports = instance.exports;
 }
@@ -9439,67 +9439,67 @@ async function executeTask(taskType, taskData) {
 function processChunk(data) {
   // 将数据复制到WebAssembly内存
   const { buffer, offset, length, params } = data;
-  
+
   // 分配内存
   const inputPtr = wasmExports.malloc(length);
-  
+
   // 复制数据
   new Uint8Array(wasmMemory.buffer).set(new Uint8Array(buffer), inputPtr);
-  
+
   // 处理数据
   const outputPtr = wasmExports.process_data_chunk(
-    inputPtr, 
-    length, 
-    params.option1, 
+    inputPtr,
+    length,
+    params.option1,
     params.option2
   );
-  
+
   // 读取结果
   const outputLength = wasmExports.get_result_length();
   const result = new Uint8Array(
     wasmMemory.buffer.slice(
-      outputPtr, 
+      outputPtr,
       outputPtr + outputLength
     )
   );
-  
+
   // 释放内存
   wasmExports.free(inputPtr);
   wasmExports.free(outputPtr);
-  
+
   return result;
 }
 
 // 计算哈希值
 function computeHash(data) {
   const { buffer } = data;
-  
+
   // 分配内存
   const inputPtr = wasmExports.malloc(buffer.byteLength);
-  
+
   // 复制数据
   new Uint8Array(wasmMemory.buffer).set(new Uint8Array(buffer), inputPtr);
-  
+
   // 计算哈希
   const hashPtr = wasmExports.compute_hash(inputPtr, buffer.byteLength);
-  
+
   // 读取哈希值
   const hashLength = 32; // 假设是SHA-256
   const hashResult = new Uint8Array(
     wasmMemory.buffer.slice(
-      hashPtr, 
+      hashPtr,
       hashPtr + hashLength
     )
   );
-  
+
   // 转换为十六进制
   const hashHex = Array.from(hashResult)
     .map(b => b.toString(16).padStart(2, '0'))
     .join('');
-  
+
   // 释放内存
   wasmExports.free(inputPtr);
-  
+
   return hashHex;
 }
 */
@@ -9516,23 +9516,23 @@ class WasmWebGLRenderer {
     this.uniforms = {};
     this.textures = {};
   }
-  
+
   async initialize(canvas) {
     this.canvas = canvas;
-    
+
     // 初始化WebGL上下文
     this.gl = canvas.getContext('webgl2');
-    
+
     if (!this.gl) {
       throw new Error('WebGL 2 is not supported by your browser');
     }
-    
+
     // 加载WebAssembly模块
     await this.wasmModule
       .exposeFunction('gl_create_shader', (typePtr, sourcePtr) => {
         const type = this.wasmModule.memoryManager.readString(typePtr);
         const source = this.wasmModule.memoryManager.readString(sourcePtr);
-        
+
         return this._createShader(type, source);
       })
       .exposeFunction('gl_create_program', (vertexShader, fragmentShader) => {
@@ -9557,45 +9557,45 @@ class WasmWebGLRenderer {
         this.gl.bufferData(this.gl.ARRAY_BUFFER, data, usage);
       })
       .load('/wasm/webgl_renderer.wasm');
-    
+
     // 初始化渲染器
     const result = this.wasmModule.exports.initialize_renderer(
       canvas.width,
       canvas.height
     );
-    
+
     if (result !== 0) {
       throw new Error(`Failed to initialize WASM WebGL renderer: ${result}`);
     }
-    
+
     // 获取着色器程序
     this.program = this.wasmModule.exports.get_shader_program();
-    
+
     // 设置属性和uniform
     this._setupAttributes();
     this._setupUniforms();
-    
+
     console.log('WebAssembly WebGL Renderer initialized successfully');
-    
+
     return this;
   }
-  
+
   // 设置场景
   setupScene(sceneData) {
     // 将场景数据传递给WebAssembly
     const { vertices, indices, textures } = sceneData;
-    
+
     // 分配和复制顶点数据
     const verticesArray = this.wasmModule.memoryManager.createArray(
       new Float32Array(vertices)
     );
-    
+
     // 分配和复制索引数据
     const indicesArray = this.wasmModule.memoryManager.createArray(
       new Uint16Array(indices),
       Uint16Array
     );
-    
+
     // 设置场景
     this.wasmModule.exports.setup_scene(
       verticesArray.ptr,
@@ -9603,31 +9603,31 @@ class WasmWebGLRenderer {
       indicesArray.ptr,
       indicesArray.length
     );
-    
+
     // 清理内存
     verticesArray.free();
     indicesArray.free();
-    
+
     // 加载纹理
     this._loadTextures(textures);
   }
-  
+
   // 加载纹理
   async _loadTextures(textureList) {
     for (const texInfo of textureList) {
       // 加载图像
       const image = await this._loadImage(texInfo.url);
-      
+
       // 创建WebGL纹理
       const texture = this.gl.createTexture();
       this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
-      
+
       // 设置参数
       this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
       this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
       this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
       this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-      
+
       // 上传图像数据
       this.gl.texImage2D(
         this.gl.TEXTURE_2D,
@@ -9637,21 +9637,21 @@ class WasmWebGLRenderer {
         this.gl.UNSIGNED_BYTE,
         image
       );
-      
+
       // 存储纹理引用
       this.textures[texInfo.id] = texture;
-      
+
       // 通知WebAssembly模块
       const nameString = this.wasmModule.memoryManager.createString(texInfo.id);
       this.wasmModule.exports.register_texture(nameString.ptr, texture);
       nameString.free();
     }
   }
-  
+
   // 更新相机
   updateCamera(cameraData) {
     const { position, target, up, fov, aspect, near, far } = cameraData;
-    
+
     this.wasmModule.exports.update_camera(
       position[0], position[1], position[2],
       target[0], target[1], target[2],
@@ -9659,54 +9659,54 @@ class WasmWebGLRenderer {
       fov, aspect, near, far
     );
   }
-  
+
   // 渲染一帧
   render(deltaTime) {
     // 清除画布
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-    
+
     // 调用WebAssembly渲染函数
     this.wasmModule.exports.render_frame(deltaTime);
   }
-  
+
   // 创建WebGL着色器
   _createShader(type, source) {
     const shader = this.gl.createShader(
       type === 'vertex' ? this.gl.VERTEX_SHADER : this.gl.FRAGMENT_SHADER
     );
-    
+
     this.gl.shaderSource(shader, source);
     this.gl.compileShader(shader);
-    
+
     if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
       const error = this.gl.getShaderInfoLog(shader);
       this.gl.deleteShader(shader);
       throw new Error(`Failed to compile ${type} shader: ${error}`);
     }
-    
+
     return shader;
   }
-  
+
   // 创建WebGL程序
   _createProgram(vertexShader, fragmentShader) {
     const program = this.gl.createProgram();
-    
+
     this.gl.attachShader(program, vertexShader);
     this.gl.attachShader
 ```javascript
 (program, fragmentShader);
     this.gl.linkProgram(program);
-    
+
     if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
       const error = this.gl.getProgramInfoLog(program);
       this.gl.deleteProgram(program);
       throw new Error(`Failed to link shader program: ${error}`);
     }
-    
+
     return program;
   }
-  
+
   // 设置属性
   _setupAttributes() {
     // 获取属性位置
@@ -9716,7 +9716,7 @@ class WasmWebGLRenderer {
       normal: this.gl.getAttribLocation(this.program, 'a_normal')
     };
   }
-  
+
   // 设置Uniform
   _setupUniforms() {
     // 获取uniform位置
@@ -9727,7 +9727,7 @@ class WasmWebGLRenderer {
       sampler: this.gl.getUniformLocation(this.program, 'u_sampler')
     };
   }
-  
+
   // 加载图像
   _loadImage(url) {
     return new Promise((resolve, reject) => {
@@ -9746,22 +9746,22 @@ class WasmComponentSystem {
     this.components = new Map();
     this.interfaces = new Map();
   }
-  
+
   async initialize() {
     // 配置WASM组件接口
     await this._initializeInterfaces();
-    
+
     // 加载核心组件
     await this._loadCoreComponents();
-    
+
     return this;
   }
-  
+
   // 初始化接口定义
   async _initializeInterfaces() {
     // 这是WebAssembly Component Model的概念示例
     // 当前WebAssembly规范尚未完全实现此功能
-    
+
     // 定义日志接口
     this.interfaces.set('logging', {
       methods: {
@@ -9775,7 +9775,7 @@ class WasmComponentSystem {
         }
       }
     });
-    
+
     // 定义存储接口
     this.interfaces.set('storage', {
       methods: {
@@ -9793,7 +9793,7 @@ class WasmComponentSystem {
         }
       }
     });
-    
+
     // 定义HTTP接口
     this.interfaces.set('http', {
       methods: {
@@ -9813,7 +9813,7 @@ class WasmComponentSystem {
       }
     });
   }
-  
+
   // 加载核心组件
   async _loadCoreComponents() {
     // 实现日志功能
@@ -9821,7 +9821,7 @@ class WasmComponentSystem {
       log: (message) => console.log(`[WASM] ${message}`),
       error: (message) => console.error(`[WASM] ${message}`)
     };
-    
+
     // 实现存储功能
     const storageImpl = {
       get: (key) => {
@@ -9837,20 +9837,20 @@ class WasmComponentSystem {
         return true;
       }
     };
-    
+
     // 实现HTTP功能
     const httpImpl = {
       fetch: async (url, headers) => {
         try {
           const response = await fetch(url, { headers });
-          
+
           const responseHeaders = {};
           response.headers.forEach((value, key) => {
             responseHeaders[key] = value;
           });
-          
+
           const body = await response.arrayBuffer();
-          
+
           return {
             status: response.status,
             headers: responseHeaders,
@@ -9866,54 +9866,54 @@ class WasmComponentSystem {
         }
       }
     };
-    
+
     // 注册核心实现
     this._registerImplementation('logging', loggingImpl);
     this._registerImplementation('storage', storageImpl);
     this._registerImplementation('http', httpImpl);
   }
-  
+
   // 注册接口实现
   _registerImplementation(interfaceName, implementation) {
     if (!this.interfaces.has(interfaceName)) {
       throw new Error(`Interface '${interfaceName}' not defined`);
     }
-    
+
     // 存储实现
     this.components.set(interfaceName, {
       interface: this.interfaces.get(interfaceName),
       implementation
     });
-    
+
     console.log(`Registered implementation for '${interfaceName}' interface`);
   }
-  
+
   // 加载WASM组件
   async loadComponent(name, url) {
     try {
       // 获取.wasm文件
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch component: ${url}`);
       }
-      
+
       const bytes = await response.arrayBuffer();
-      
+
       // 这里是一个简化版的组件加载过程
       // 未来的WebAssembly Component Model将提供更标准化的API
-      
+
       // 创建导入对象，包含所有已注册的接口实现
       const imports = {};
-      
+
       for (const [interfaceName, component] of this.components.entries()) {
         imports[interfaceName] = component.implementation;
       }
-      
+
       // 编译和实例化模块
       const module = await WebAssembly.compile(bytes);
       const instance = await WebAssembly.instantiate(module, imports);
-      
+
       // 注册组件
       this.components.set(name, {
         interface: null, // 组件可能实现多个接口
@@ -9921,30 +9921,30 @@ class WasmComponentSystem {
         module,
         instance
       });
-      
+
       console.log(`Component '${name}' loaded successfully`);
-      
+
       return instance.exports;
     } catch (error) {
       console.error(`Failed to load component '${name}':`, error);
       throw error;
     }
   }
-  
+
   // 调用组件方法
   callComponent(componentName, methodName, ...args) {
     const component = this.components.get(componentName);
-    
+
     if (!component) {
       throw new Error(`Component '${componentName}' not found`);
     }
-    
+
     const method = component.implementation[methodName];
-    
+
     if (typeof method !== 'function') {
       throw new Error(`Method '${methodName}' not found in component '${componentName}'`);
     }
-    
+
     return method(...args);
   }
 }
@@ -9955,56 +9955,56 @@ class WasmComponentSystem {
 async function initializeApplication() {
   try {
     console.log('Initializing WebAssembly application...');
-    
+
     // 初始化图像处理器
     const imageProcessor = new ImageProcessor();
     await imageProcessor.initialize();
-    
+
     // 设置UI事件
     document.getElementById('process-button').addEventListener('click', async () => {
       const imageInput = document.getElementById('image-input');
       const canvas = document.getElementById('output-canvas');
       const ctx = canvas.getContext('2d');
-      
+
       if (imageInput.files.length === 0) {
         alert('Please select an image first');
         return;
       }
-      
+
       // 读取选择的图像
       const file = imageInput.files[0];
       const image = await loadImageFromFile(file);
-      
+
       // 调整画布大小
       canvas.width = image.width;
       canvas.height = image.height;
-      
+
       // 将图像绘制到画布
       ctx.drawImage(image, 0, 0);
-      
+
       // 获取图像数据
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      
+
       // 获取选择的处理操作
       const operations = getSelectedOperations();
-      
+
       // 处理图像
       console.time('Image processing');
       const processedImageData = await imageProcessor.processImage(imageData, operations);
       console.timeEnd('Image processing');
-      
+
       // 显示处理后的图像
       ctx.putImageData(processedImageData, 0, 0);
-      
+
       // 更新UI
       document.getElementById('processing-status').textContent = 'Processing complete!';
     });
-    
+
     // 初始化渲染器（如果需要）
     if (document.getElementById('3d-canvas')) {
       const renderer = new WasmWebGLRenderer();
       await renderer.initialize(document.getElementById('3d-canvas'));
-      
+
       // 设置场景
       const sceneData = {
         vertices: [
@@ -10013,12 +10013,12 @@ async function initializeApplication() {
            1.0, -1.0,  1.0,  1.0, 0.0,  0.0, 0.0, 1.0,
            1.0,  1.0,  1.0,  1.0, 1.0,  0.0, 0.0, 1.0,
           -1.0,  1.0,  1.0,  0.0, 1.0,  0.0, 0.0, 1.0,
-          
+
           -1.0, -1.0, -1.0,  1.0, 0.0,  0.0, 0.0, -1.0,
            1.0, -1.0, -1.0,  0.0, 0.0,  0.0, 0.0, -1.0,
            1.0,  1.0, -1.0,  0.0, 1.0,  0.0, 0.0, -1.0,
           -1.0,  1.0, -1.0,  1.0, 1.0,  0.0, 0.0, -1.0,
-          
+
           // 更多面...
         ],
         indices: [
@@ -10031,9 +10031,9 @@ async function initializeApplication() {
           { id: 'cube-texture', url: '/assets/textures/cube.jpg' }
         ]
       };
-      
+
       renderer.setupScene(sceneData);
-      
+
       // 设置相机
       renderer.updateCamera({
         position: [0, 0, 5],
@@ -10044,49 +10044,49 @@ async function initializeApplication() {
         near: 0.1,
         far: 100
       });
-      
+
       // 设置动画循环
       let lastTime = 0;
-      
+
       function animate(time) {
         const deltaTime = lastTime ? (time - lastTime) / 1000 : 0;
         lastTime = time;
-        
+
         renderer.render(deltaTime);
         requestAnimationFrame(animate);
       }
-      
+
       requestAnimationFrame(animate);
     }
-    
+
     // 初始化WASM组件系统（如果需要）
     const componentSystem = new WasmComponentSystem();
     await componentSystem.initialize();
-    
+
     // 加载自定义组件
     const dataProcessor = await componentSystem.loadComponent(
-      'data-processor', 
+      'data-processor',
       '/wasm/data_processor.wasm'
     );
-    
+
     // 使用组件
     document.getElementById('process-data-button')?.addEventListener('click', async () => {
       const inputData = document.getElementById('data-input').value;
-      
+
       // 调用WASM组件处理数据
       const result = componentSystem.callComponent(
-        'data-processor', 
-        'processData', 
+        'data-processor',
+        'processData',
         inputData
       );
-      
+
       document.getElementById('data-output').textContent = result;
     });
-    
+
     console.log('WebAssembly application initialized successfully');
   } catch (error) {
     console.error('Failed to initialize application:', error);
-    document.getElementById('error-message').textContent = 
+    document.getElementById('error-message').textContent =
       `Failed to initialize: ${error.message}`;
   }
 }
@@ -10095,14 +10095,14 @@ async function initializeApplication() {
 function loadImageFromFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    
+
     reader.onload = (e) => {
       const image = new Image();
       image.onload = () => resolve(image);
       image.onerror = () => reject(new Error('Failed to load image'));
       image.src = e.target.result;
     };
-    
+
     reader.onerror = () => reject(new Error('Failed to read file'));
     reader.readAsDataURL(file);
   });
@@ -10110,27 +10110,27 @@ function loadImageFromFile(file) {
 
 function getSelectedOperations() {
   const operations = [];
-  
+
   // 检查各个处理选项
   if (document.getElementById('grayscale-checkbox').checked) {
     operations.push({ type: 'filter', name: 'grayscale' });
   }
-  
+
   if (document.getElementById('blur-checkbox').checked) {
     const radius = parseFloat(document.getElementById('blur-radius').value) || 3;
     operations.push({ type: 'filter', name: 'blur', params: { radius } });
   }
-  
+
   if (document.getElementById('brightness-checkbox').checked) {
     const factor = parseFloat(document.getElementById('brightness-factor').value) || 1.0;
     operations.push({ type: 'filter', name: 'brightness', params: { factor } });
   }
-  
+
   if (document.getElementById('rotate-checkbox').checked) {
     const angle = parseFloat(document.getElementById('rotation-angle').value) || 0;
     operations.push({ type: 'transform', name: 'rotate', params: { angle } });
   }
-  
+
   return operations;
 }
 
@@ -10148,7 +10148,7 @@ document.addEventListener('DOMContentLoaded', initializeApplication);
 - 模块化组件设计促进代码复用
 - 跨语言编译支持多种源语言
 
-### 7.3 边缘计算模式
+### 63.2.3 边缘计算模式
 
 -**边缘计算架构**
 
@@ -10166,7 +10166,7 @@ async function handleRequest(event) {
   const request = event.request;
   const url = new URL(request.url);
   const cache = caches.default;
-  
+
   // 简单的路由系统
   try {
     // 优先检查缓存
@@ -10182,12 +10182,12 @@ async function handleRequest(event) {
     if (url.pathname.startsWith('/api/')) {
       return await handleApiRequest(request, url, event);
     }
-    
+
     // 处理静态资源
     if (url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|woff2?)$/)) {
       return await handleAssetRequest(request, cache);
     }
-    
+
     // 处理主页或其他HTML请求
     return await handlePageRequest(request, url, event);
   } catch (error) {
@@ -10200,7 +10200,7 @@ async function handleApiRequest(request, url, event) {
   // 解析API路径
   const apiPath = url.pathname.replace('/api/', '');
   const segments = apiPath.split('/');
-  
+
   // API路由处理
   switch (segments[0]) {
     case 'products':
@@ -10212,7 +10212,7 @@ async function handleApiRequest(request, url, event) {
         return await getProduct(segments[1], request);
       }
       break;
-    
+
     case 'cart':
       if (request.method === 'POST') {
         // 添加到购物车
@@ -10222,66 +10222,66 @@ async function handleApiRequest(request, url, event) {
         return await getCart(request);
       }
       break;
-    
+
     case 'geo':
       // 地理位置基于内容个性化
       return handleGeoRequest(request);
-      
+
     case 'auth':
       // 身份验证API
       return await handleAuthRequest(request, segments);
-      
+
     default:
       return new Response('API not found', { status: 404 });
   }
-  
+
   return new Response('API method not supported', { status: 405 });
 }
 
 async function handleAssetRequest(request, cache) {
   const assetResponse = await fetch(request);
-  
+
   if (assetResponse.ok) {
     // 创建可变缓存响应
     const response = new Response(assetResponse.body, assetResponse);
-    
+
     // 设置Cache-Control头，最大缓存时间30天
     response.headers.set('Cache-Control', 'public, max-age=2592000');
-    
+
     // 将资源放入缓存
     event.waitUntil(cache.put(request, response.clone()));
-    
+
     return response;
   }
-  
+
   return assetResponse;
 }
 
 async function handlePageRequest(request, url, event) {
   // 获取用户位置
   const userLocation = request.cf ? request.cf.country : null;
-  
+
   // 获取用户语言首选项
   const acceptLanguage = request.headers.get('Accept-Language') || 'en';
   const preferredLanguage = acceptLanguage.split(',')[0].trim().split('-')[0];
-  
+
   // 从KV存储获取HTML模板
   const template = await TEMPLATES.get('main-template');
-  
+
   if (!template) {
     return new Response('Template not found', { status: 500 });
   }
-  
+
   // 获取内容
   const content = await getPageContent(url.pathname, preferredLanguage, userLocation);
-  
+
   // 将内容注入模板
   const html = injectContent(template, content, {
     language: preferredLanguage,
     location: userLocation,
     url: url.toString()
   });
-  
+
   // 创建响应
   const response = new Response(html, {
     headers: {
@@ -10289,10 +10289,10 @@ async function handlePageRequest(request, url, event) {
       'Cache-Control': 'public, max-age=3600'
     }
   });
-  
+
   // 存储到缓存
   event.waitUntil(cache.put(request, response.clone()));
-  
+
   return response;
 }
 
@@ -10301,29 +10301,29 @@ async function getProducts(request, url) {
   const category = url.searchParams.get('category');
   const page = parseInt(url.searchParams.get('page') || '1');
   const limit = parseInt(url.searchParams.get('limit') || '20');
-  
+
   // 从KV存储获取产品数据
   let products = await PRODUCTS.get('all-products', 'json');
-  
+
   if (!products) {
     // 回退到源API
     const productApiResponse = await fetch(`${ORIGIN_API}/products`);
     products = await productApiResponse.json();
-    
+
     // 存储到KV以供将来使用
     await PRODUCTS.put('all-products', JSON.stringify(products), {
       expirationTtl: 3600 // 1小时过期
     });
   }
-  
+
   // 过滤和分页
   if (category) {
     products = products.filter(p => p.category === category);
   }
-  
+
   const total = products.length;
   const paginatedProducts = products.slice((page - 1) * limit, page * limit);
-  
+
   return new Response(JSON.stringify({
     products: paginatedProducts,
     meta: {
@@ -10343,23 +10343,23 @@ async function getProducts(request, url) {
 async function getProduct(id, request) {
   // 从KV存储获取产品
   let product = await PRODUCTS.get(`product:${id}`, 'json');
-  
+
   if (!product) {
     // 回退到源API
     const productApiResponse = await fetch(`${ORIGIN_API}/products/${id}`);
-    
+
     if (!productApiResponse.ok) {
       return new Response('Product not found', { status: 404 });
     }
-    
+
     product = await productApiResponse.json();
-    
+
     // 存储到KV
     await PRODUCTS.put(`product:${id}`, JSON.stringify(product), {
       expirationTtl: 3600 // 1小时过期
     });
   }
-  
+
   return new Response(JSON.stringify(product), {
     headers: {
       'Content-Type': 'application/json',
@@ -10378,7 +10378,7 @@ async function handleGeoRequest(request) {
     longitude: request.cf?.longitude || 0,
     timezone: request.cf?.timezone || 'UTC'
   };
-  
+
   return new Response(JSON.stringify(geo), {
     headers: {
       'Content-Type': 'application/json'
@@ -10391,7 +10391,7 @@ async function handleAuthRequest(request, segments) {
     try {
       // 解析登录请求
       const { username, password } = await request.json();
-      
+
       // 验证凭据
       const authResponse = await fetch(`${AUTH_SERVICE}/validate`, {
         method: 'POST',
@@ -10400,16 +10400,16 @@ async function handleAuthRequest(request, segments) {
         },
         body: JSON.stringify({ username, password })
       });
-      
+
       if (!authResponse.ok) {
         return new Response('Invalid credentials', { status: 401 });
       }
-      
+
       const authData = await authResponse.json();
-      
+
       // 创建JWT令牌
       const token = await generateToken(authData);
-      
+
       return new Response(JSON.stringify({ token }), {
         headers: {
           'Content-Type': 'application/json'
@@ -10423,14 +10423,14 @@ async function handleAuthRequest(request, segments) {
       // 验证令牌
       const authHeader = request.headers.get('Authorization') || '';
       const token = authHeader.replace('Bearer ', '');
-      
+
       if (!token) {
         return new Response('Missing token', { status: 401 });
       }
-      
+
       // 验证令牌
       const payload = await verifyToken(token);
-      
+
       return new Response(JSON.stringify({ valid: true, user: payload.user }), {
         headers: {
           'Content-Type': 'application/json'
@@ -10445,7 +10445,7 @@ async function handleAuthRequest(request, segments) {
       });
     }
   }
-  
+
   return new Response('Auth method not supported', { status: 405 });
 }
 
@@ -10457,7 +10457,7 @@ async function generateToken(authData) {
     alg: 'HS256',
     typ: 'JWT'
   };
-  
+
   const payload = {
     sub: authData.userId,
     user: {
@@ -10467,10 +10467,10 @@ async function generateToken(authData) {
     },
     exp: Math.floor(Date.now() / 1000) + 3600 // 1小时过期
   };
-  
+
   const encodedHeader = btoa(JSON.stringify(header));
   const encodedPayload = btoa(JSON.stringify(payload));
-  
+
   const key = await crypto.subtle.importKey(
     'raw',
     new TextEncoder().encode(JWT_SECRET),
@@ -10478,31 +10478,31 @@ async function generateToken(authData) {
     false,
     ['sign']
   );
-  
+
   const signature = await crypto.subtle.sign(
     'HMAC',
     key,
     new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
   );
-  
+
   const encodedSignature = btoa(String.fromCharCode(...new Uint8Array(signature)));
-  
+
   return `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
 }
 
 async function verifyToken(token) {
   // 拆分令牌
   const [encodedHeader, encodedPayload, encodedSignature] = token.split('.');
-  
+
   // 解码头部和载荷
   const header = JSON.parse(atob(encodedHeader));
   const payload = JSON.parse(atob(encodedPayload));
-  
+
   // 检查过期时间
   if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) {
     throw new Error('Token expired');
   }
-  
+
   // 验证签名
   const key = await crypto.subtle.importKey(
     'raw',
@@ -10511,22 +10511,22 @@ async function verifyToken(token) {
     false,
     ['verify']
   );
-  
+
   const signature = new Uint8Array(
     atob(encodedSignature).split('').map(c => c.charCodeAt(0))
   );
-  
+
   const valid = await crypto.subtle.verify(
     'HMAC',
     key,
     signature,
     new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
   );
-  
+
   if (!valid) {
     throw new Error('Invalid signature');
   }
-  
+
   return payload;
 }
 
@@ -10537,18 +10537,18 @@ exports.handler = async (event) => {
   const request = event.Records[0].cf.request;
   const headers = request.headers;
   const uri = request.uri;
-  
+
   // URI重写规则
   if (uri.endsWith('/') || !uri.includes('.')) {
     // 将请求重定向到索引页面
     request.uri = uri.replace(/\/$/, '') + '/index.html';
   }
-  
+
   // 语言重定向
   const acceptLanguage = headers['accept-language'];
   if (acceptLanguage && uri === '/index.html') {
     const language = acceptLanguage[0].value.split(',')[0].trim().split('-')[0];
-    
+
     // 重定向到语言特定页面
     if (language === 'fr') {
       request.uri = '/fr/index.html';
@@ -10558,7 +10558,7 @@ exports.handler = async (event) => {
       request.uri = '/es/index.html';
     }
   }
-  
+
   // 添加安全头部
   if (uri.endsWith('.html')) {
     request.headers['x-forwarded-host'] = [{
@@ -10566,7 +10566,7 @@ exports.handler = async (event) => {
       value: headers['host'][0].value
     }];
   }
-  
+
   return request;
 };
 
@@ -10575,37 +10575,37 @@ exports.handler = async (event) => {
   const response = event.Records[0].cf.response;
   const request = event.Records[0].cf.request;
   const headers = response.headers;
-  
+
   // 添加安全头部
   headers['strict-transport-security'] = [{
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubdomains; preload'
   }];
-  
+
   headers['content-security-policy'] = [{
     key: 'Content-Security-Policy',
     value: "default-src '
         },
         body: JSON.stringify({ username, password })
       });
-      
+
       if (!authResponse.ok) {
         throw new Error('Invalid credentials');
       }
-      
+
       const { token, user } = await authResponse.json();
-      
+
       // 创建带有JWT的响应
       return new Response(
-        JSON.stringify({ token, user }), 
-        { 
+        JSON.stringify({ token, user }),
+        {
           headers: { 'Content-Type': 'application/json' },
           status: 200
         }
       );
     } catch (error) {
       return new Response(
-        JSON.stringify({ error: error.message }), 
+        JSON.stringify({ error: error.message }),
         {
           headers: { 'Content-Type': 'application/json' },
           status: 401
@@ -10613,7 +10613,7 @@ exports.handler = async (event) => {
       );
     }
   }
-  
+
   return new Response('Auth endpoint not found', { status: 404 });
 }
 
@@ -10627,7 +10627,7 @@ module.exports = {
     name: process.env.DEVICE_NAME || 'Smart Gateway',
     type: 'gateway'
   },
-  
+
   // 网络配置
   network: {
     wifi: {
@@ -10645,7 +10645,7 @@ module.exports = {
       apiKey: process.env.API_KEY
     }
   },
-  
+
   // 传感器配置
   sensors: [
     {
@@ -10675,7 +10675,7 @@ module.exports = {
       mode: 'event' // 事件驱动而非轮询
     }
   ],
-  
+
   // 边缘处理配置
   edge: {
     enableLocalProcessing: true,
@@ -10687,7 +10687,7 @@ module.exports = {
       maxStorageSize: 100 * 1024 * 1024 // 100MB
     }
   },
-  
+
   // 更新配置
   updates: {
     checkInterval: 86400000, // 每天检查一次
@@ -10713,64 +10713,64 @@ class EdgeGateway {
     this.isPending = false;
     this.lastSyncTime = 0;
     this.bootTime = Date.now();
-    
+
     // 初始化本地存储
     this.initStorage();
-    
+
     // 初始化传感器管理
     this.sensorManager = new SensorManager(config.sensors);
-    
+
     // 初始化设备管理
     this.deviceManager = new DeviceManager();
-    
+
     // 初始化规则引擎
     this.ruleEngine = new RuleEngine();
-    
+
     // 初始化本地API
     this.localApi = new LocalApi(this);
-    
+
     // 加载持久化规则
     this.loadRules();
   }
-  
+
   async start() {
     console.log(`Starting edge gateway ${this.config.device.id}...`);
-    
+
     // 连接MQTT代理
     await this.connectMqtt();
-    
+
     // 初始化传感器
     await this.sensorManager.initialize();
-    
+
     // 发现本地设备
     await this.deviceManager.discoverDevices();
-    
+
     // 启动本地API服务
     await this.localApi.start();
-    
+
     // 发送在线状态
     this.publishStatus('online');
-    
+
     // 设置同步定时器
     this.setupSyncTimer();
-    
+
     // 设置传感器事件监听
     this.sensorManager.on('reading', this.handleSensorReading.bind(this));
     this.sensorManager.on('alert', this.handleSensorAlert.bind(this));
-    
+
     // 设置设备事件监听
     this.deviceManager.on('deviceConnected', this.handleDeviceConnected.bind(this));
     this.deviceManager.on('deviceDisconnected', this.handleDeviceDisconnected.bind(this));
     this.deviceManager.on('deviceData', this.handleDeviceData.bind(this));
-    
+
     console.log('Edge gateway started successfully');
   }
-  
+
   async connectMqtt() {
     return new Promise((resolve, reject) => {
       try {
         const { broker, username, password, clientId } = this.config.network.mqtt;
-        
+
         // 连接选项
         const options = {
           clientId,
@@ -10778,39 +10778,39 @@ class EdgeGateway {
           connectTimeout: 5000,
           reconnectPeriod: 5000
         };
-        
+
         // 如果提供了凭据则使用
         if (username && password) {
           options.username = username;
           options.password = password;
         }
-        
+
         // 连接MQTT代理
         this.mqttClient = mqtt.connect(broker, options);
-        
+
         // 注册事件处理程序
         this.mqttClient.on('connect', () => {
           console.log(`Connected to MQTT broker at ${broker}`);
           this.isConnected = true;
-          
+
           // 订阅主题
           this.mqttClient.subscribe(`devices/${this.config.device.id}/commands/#`);
           this.mqttClient.subscribe('broadcast/#');
-          
+
           resolve();
         });
-        
+
         this.mqttClient.on('message', this.handleMqttMessage.bind(this));
-        
+
         this.mqttClient.on('error', (error) => {
           console.error(`MQTT error: ${error.message}`);
           this.isConnected = false;
         });
-        
+
         this.mqttClient.on('offline', () => {
           console.log('MQTT client went offline');
           this.isConnected = false;
-          
+
           // 进入离线模式
           if (this.config.edge.offlineMode.enabled) {
             this.enterOfflineMode();
@@ -10822,19 +10822,19 @@ class EdgeGateway {
       }
     });
   }
-  
+
   // 处理MQTT消息
   handleMqttMessage(topic, message) {
     try {
       const payload = JSON.parse(message.toString());
       console.log(`Received message on topic ${topic}: ${JSON.stringify(payload)}`);
-      
+
       // 指令处理
       if (topic.startsWith(`devices/${this.config.device.id}/commands/`)) {
         const command = topic.split('/').pop();
         this.handleCommand(command, payload);
       }
-      
+
       // 广播消息处理
       if (topic.startsWith('broadcast/')) {
         const broadcastType = topic.split('/').pop();
@@ -10844,14 +10844,14 @@ class EdgeGateway {
       console.error(`Error handling MQTT message: ${error.message}`);
     }
   }
-  
+
   // 处理传感器读数
   handleSensorReading(sensorId, reading) {
     console.log(`Sensor ${sensorId} reading: ${JSON.stringify(reading)}`);
-    
+
     // 本地存储读数
     this.storeReading(sensorId, reading);
-    
+
     // 应用规则引擎
     this.ruleEngine.evaluateRules('sensorReading', {
       sensorId,
@@ -10859,7 +10859,7 @@ class EdgeGateway {
       gateway: this.config.device.id,
       timestamp: Date.now()
     });
-    
+
     // 发布到MQTT，如果已连接
     if (this.isConnected) {
       this.mqttClient.publish(
@@ -10871,14 +10871,14 @@ class EdgeGateway {
       );
     }
   }
-  
+
   // 处理传感器告警
   handleSensorAlert(sensorId, alert) {
     console.log(`Sensor ${sensorId} alert: ${JSON.stringify(alert)}`);
-    
+
     // 存储告警
     this.storeAlert(sensorId, alert);
-    
+
     // 应用规则引擎
     this.ruleEngine.evaluateRules('sensorAlert', {
       sensorId,
@@ -10886,11 +10886,11 @@ class EdgeGateway {
       gateway: this.config.device.id,
       timestamp: Date.now()
     });
-    
+
     // 高优先级：即使离线也尝试发送
     this.publishAlert(sensorId, alert);
   }
-  
+
   // 发布告警
   publishAlert(sensorId, alert) {
     const alertTopic = `devices/${this.config.device.id}/alerts`;
@@ -10900,13 +10900,13 @@ class EdgeGateway {
       timestamp: Date.now(),
       deviceId: this.config.device.id
     };
-    
+
     // 如果连接到MQTT，直接发布
     if (this.isConnected) {
       this.mqttClient.publish(alertTopic, JSON.stringify(alertPayload), { qos: 1 });
       return;
     }
-    
+
     // 否则，尝试通过HTTP API发送
     fetch(`${this.config.network.api.endpoint}/alerts`, {
       method: 'POST',
@@ -10917,28 +10917,28 @@ class EdgeGateway {
       body: JSON.stringify(alertPayload)
     }).catch(error => {
       console.error(`Failed to send alert via API: ${error.message}`);
-      
+
       // 存入待发送队列
       this.storePendingMessage(alertTopic, alertPayload);
     });
   }
-  
+
   // 同步数据到云端
   async syncData() {
     if (!this.isConnected || this.isPending) {
       return;
     }
-    
+
     try {
       this.isPending = true;
       console.log('Starting data synchronization with cloud...');
-      
+
       // 获取自上次同步以来的读数
       const newReadings = await this.getReadingsSinceLastSync();
-      
+
       if (newReadings.length > 0) {
         console.log(`Syncing ${newReadings.length} new readings...`);
-        
+
         // 批量发布读数
         this.mqttClient.publish(
           `devices/${this.config.device.id}/batch-readings`,
@@ -10949,10 +10949,10 @@ class EdgeGateway {
           { qos: 1 }
         );
       }
-      
+
       // 发送所有待发送的消息
       await this.sendPendingMessages();
-      
+
       // 更新同步时间
       this.lastSyncTime = Date.now();
       console.log('Data synchronization completed');
@@ -10962,24 +10962,24 @@ class EdgeGateway {
       this.isPending = false;
     }
   }
-  
+
   // 初始化存储
   initStorage() {
     const dbPath = this.config.edge.localDbPath;
     const dbDir = path.dirname(dbPath);
-    
+
     // 确保目录存在
     if (!fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir, { recursive: true });
     }
-    
+
     // 打开数据库
     this.db = new Database(dbPath, (err) => {
       if (err) {
         console.error(`Failed to open database: ${err.message}`);
         return;
       }
-      
+
       // 创建表
       this.db.exec(`
         CREATE TABLE IF NOT EXISTS readings (
@@ -10990,7 +10990,7 @@ class EdgeGateway {
           type TEXT NOT NULL,
           synced INTEGER DEFAULT 0
         );
-        
+
         CREATE TABLE IF NOT EXISTS alerts (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           sensor_id TEXT NOT NULL,
@@ -11000,7 +11000,7 @@ class EdgeGateway {
           level TEXT NOT NULL,
           synced INTEGER DEFAULT 0
         );
-        
+
         CREATE TABLE IF NOT EXISTS pending_messages (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           topic TEXT NOT NULL,
@@ -11008,7 +11008,7 @@ class EdgeGateway {
           timestamp INTEGER NOT NULL,
           attempts INTEGER DEFAULT 0
         );
-        
+
         CREATE TABLE IF NOT EXISTS rules (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
@@ -11019,16 +11019,16 @@ class EdgeGateway {
       `);
     });
   }
-  
+
   // 存储传感器读数
   storeReading(sensorId, reading) {
     if (!this.db) return;
-    
+
     const stmt = this.db.prepare(`
       INSERT INTO readings (sensor_id, timestamp, value, type, synced)
       VALUES (?, ?, ?, ?, ?)
     `);
-    
+
     stmt.run(
       sensorId,
       Date.now(),
@@ -11036,10 +11036,10 @@ class EdgeGateway {
       reading.type,
       this.isConnected ? 1 : 0
     );
-    
+
     stmt.finalize();
   }
-  
+
   // 获取自上次同步以来的读数
   getReadingsSinceLastSync() {
     return new Promise((resolve, reject) => {
@@ -11047,7 +11047,7 @@ class EdgeGateway {
         resolve([]);
         return;
       }
-      
+
       this.db.all(
         `SELECT * FROM readings WHERE timestamp > ? AND synced = 0`,
         [this.lastSyncTime],
@@ -11056,52 +11056,52 @@ class EdgeGateway {
             reject(err);
             return;
           }
-          
+
           // 标记为已同步
           if (rows.length > 0) {
             const ids = rows.map(r => r.id).join(',');
             this.db.run(`UPDATE readings SET synced = 1 WHERE id IN (${ids})`);
           }
-          
+
           resolve(rows);
         }
       );
     });
   }
-  
+
   // 进入离线模式
   enterOfflineMode() {
     console.log('Entering offline mode...');
-    
+
     // 确保本地处理已启用
     if (!this.config.edge.enableLocalProcessing) {
       console.warn('Local processing is disabled, limited functionality in offline mode');
     }
-    
+
     // 增加传感器数据本地存储
     this.sensorManager.enableHighFrequencyLocalStorage();
-    
+
     // 减少电源消耗
     this.sensorManager.adjustSamplingRatesForOffline();
-    
+
     // 通知连接的设备
     this.deviceManager.broadcastOfflineMode();
   }
-  
+
   // 退出离线模式
   exitOfflineMode() {
     console.log('Exiting offline mode...');
-    
+
     // 恢复正常操作
     this.sensorManager.restoreDefaultSettings();
-    
+
     // 立即同步数据
     this.syncData();
-    
+
     // 通知连接的设备
     this.deviceManager.broadcastOnlineMode();
   }
-  
+
   // 设置同步计时器
   setupSyncTimer() {
     setInterval(() => {
@@ -11110,13 +11110,13 @@ class EdgeGateway {
       }
     }, this.config.edge.syncInterval);
   }
-  
+
   // 发布设备状态
   publishStatus(status) {
     if (!this.isConnected) {
       return;
     }
-    
+
     this.mqttClient.publish(
       `devices/${this.config.device.id}/status`,
       JSON.stringify({
@@ -11158,7 +11158,7 @@ process.on('SIGINT', async () => {
 - 智能决策在边缘完成
 - 分层架构实现数据分级处理
 
-## 8. 软件架构思维导图
+## 63.3 软件架构思维导图
 
 ```text
 
@@ -11298,7 +11298,7 @@ process.on('SIGINT', async () => {
 
 ```
 
-## 9. 总结
+## 63.4 总结
 
 现代软件架构已经发展成为一个复杂而多元的生态系统，融合了多种范式、技术栈和设计原则。
 本文从前端到后端的全栈视角，系统性地分析了当今软件架构的多个方面：

@@ -1,35 +1,35 @@
-# 时态类型理论 (Temporal Type Theory)
+# 1. 时态类型理论 (Temporal Type Theory)
 
-## 📋 目录
+## 目录
 
-- [1 时态逻辑基础](#1-时态逻辑基础)
-  - [1.1 时态逻辑公理系统](#11-时态逻辑公理系统)
-  - [1.2 时态操作符](#12-时态操作符)
-- [2 时间模型](#2-时间模型)
-  - [2.1 时间结构](#21-时间结构)
-  - [2.2 时态语义](#22-时态语义)
-- [3 实时系统建模](#3-实时系统建模)
-  - [3.1 实时类型](#31-实时类型)
-  - [3.2 实时操作](#32-实时操作)
-- [4 时态逻辑的推理](#4-时态逻辑的推理)
-  - [4.1 时态推理规则](#41-时态推理规则)
-  - [4.2 时态模型检查](#42-时态模型检查)
-- [5 时态类型系统的扩展](#5-时态类型系统的扩展)
-  - [5.1 概率时态类型](#51-概率时态类型)
-  - [5.2 模糊时态类型](#52-模糊时态类型)
-- [6 实际应用](#6-实际应用)
-  - [6.1 实时系统编程](#61-实时系统编程)
-  - [6.2 嵌入式系统](#62-嵌入式系统)
-- [7 时态类型系统的元理论](#7-时态类型系统的元理论)
-  - [7.1 时态一致性](#71-时态一致性)
-  - [7.2 时态类型推断](#72-时态类型推断)
-- [8 结论](#8-结论)
+- [1. 时态类型理论 (Temporal Type Theory)](#1-时态类型理论-temporal-type-theory)
+  - [目录](#目录)
+  - [1.1 时态逻辑基础](#11-时态逻辑基础)
+    - [1.1.1 时态逻辑公理系统](#111-时态逻辑公理系统)
+    - [1.1.2 时态操作符](#112-时态操作符)
+  - [1.2 时间模型](#12-时间模型)
+    - [1.2.1 时间结构](#121-时间结构)
+    - [1.2.2 时态语义](#122-时态语义)
+  - [1.3 实时系统建模](#13-实时系统建模)
+    - [1.3.1 实时类型](#131-实时类型)
+    - [1.3.2 实时操作](#132-实时操作)
+  - [1.4 时态逻辑的推理](#14-时态逻辑的推理)
+    - [1.4.1 时态推理规则](#141-时态推理规则)
+    - [1.4.2 时态模型检查](#142-时态模型检查)
+  - [1.5 时态类型系统的扩展](#15-时态类型系统的扩展)
+    - [1.5.1 概率时态类型](#151-概率时态类型)
+    - [1.5.2 模糊时态类型](#152-模糊时态类型)
+  - [1.6 实际应用](#16-实际应用)
+    - [1.6.1 实时系统编程](#161-实时系统编程)
+    - [1.6.2 嵌入式系统](#162-嵌入式系统)
+  - [1.7 时态类型系统的元理论](#17-时态类型系统的元理论)
+    - [1.7.1 时态一致性](#171-时态一致性)
+    - [1.7.2 时态类型推断](#172-时态类型推断)
+  - [1.8 结论](#18-结论)
 
----
+## 1.1 时态逻辑基础
 
-## 1 时态逻辑基础
-
-### 1.1 时态逻辑公理系统
+### 1.1.1 时态逻辑公理系统
 
 **定义 1.1 (时态上下文)**
 时态上下文 $\Gamma$ 包含时间信息和类型信息：
@@ -54,7 +54,7 @@ $$\frac{\Gamma, x : (\tau_1, t) \vdash e : \tau_2}{\Gamma \vdash \lambda x.e : \
 **公理 1.3 (时态应用)**
 $$\frac{\Gamma_1 \vdash e_1 : \tau_1 \rightarrow \tau_2 \quad \Gamma_2 \vdash e_2 : \tau_1}{\Gamma_1, \Gamma_2 \vdash e_1 e_2 : \tau_2}$$
 
-### 1.2 时态操作符
+### 1.1.2 时态操作符
 
 **公理 1.4 (可能性引入)**
 $$\frac{\Gamma \vdash e : \tau}{\Gamma \vdash e : \diamond \tau}$$
@@ -68,9 +68,9 @@ $$\frac{\Gamma \vdash e : \tau \text{ for all } t' \geq t}{\Gamma \vdash e : \sq
 **公理 1.7 (必然性消除)**
 $$\frac{\Gamma \vdash e : \square \tau}{\Gamma \vdash e : \tau}$$
 
-## 2 时间模型
+## 1.2 时间模型
 
-### 2.1 时间结构
+### 1.2.1 时间结构
 
 **定义 2.1 (时间域)**
 时间域 $T$ 是一个偏序集 $(T, \leq)$，满足：
@@ -85,7 +85,7 @@ $$\frac{\Gamma \vdash e : \square \tau}{\Gamma \vdash e : \tau}$$
 **定义 2.3 (时间区间)**
 时间区间 $[t_1, t_2] = \{t \in T \mid t_1 \leq t \leq t_2\}$。
 
-### 2.2 时态语义
+### 1.2.2 时态语义
 
 **定义 2.4 (时态解释)**
 时态解释函数 $\llbracket \cdot \rrbracket_{t}$ 在时间点 $t$ 的解释：
@@ -98,9 +98,9 @@ $$\llbracket \tau \rrbracket_{t} = \text{类型 } \tau \text{ 在时间 } t \tex
 - $t \models \square \tau$ 当且仅当对于所有 $t' \geq t$ 都有 $t' \models \tau$
 - $t \models \tau_1 \mathcal{U} \tau_2$ 当且仅当存在 $t' \geq t$ 使得 $t' \models \tau_2$ 且对于所有 $t \leq t'' < t'$ 都有 $t'' \models \tau_1$
 
-## 3 实时系统建模
+## 1.3 实时系统建模
 
-### 3.1 实时类型
+### 1.3.1 实时类型
 
 **定义 3.1 (实时类型)**
 实时类型包含时间约束：
@@ -132,7 +132,7 @@ data TimeConstraint where
 2. 类型系统检查时间约束的一致性
 3. 运行时验证时间约束的满足
 
-### 3.2 实时操作
+### 1.3.2 实时操作
 
 **定义 3.3 (实时操作)**
 实时操作包含时间信息：
@@ -152,9 +152,9 @@ data RealTimeOp a where
 2. 时间约束得到满足
 3. 不会出现时间违规
 
-## 4 时态逻辑的推理
+## 1.4 时态逻辑的推理
 
-### 4.1 时态推理规则
+### 1.4.1 时态推理规则
 
 **公理 4.1 (时态分配)**
 $$\square(\tau \rightarrow \sigma) \rightarrow (\square\tau \rightarrow \square\sigma)$$
@@ -174,24 +174,24 @@ $$\tau \rightarrow \diamond\tau$$
 2. $\tau \rightarrow \diamond\tau$ (可能性公理)
 3. $\square(\tau \rightarrow \sigma) \rightarrow (\square\tau \rightarrow \square\sigma)$ (分配公理)
 
-### 4.2 时态模型检查
+### 1.4.2 时态模型检查
 
 -**算法 4.1 (时态模型检查)**
 
 ```haskell
 checkTemporal :: TemporalFormula -> Model -> Bool
-checkTemporal (Diamond phi) model = 
+checkTemporal (Diamond phi) model =
   any (\state -> checkTemporal phi (model `at` state)) (reachableStates model)
-checkTemporal (Box phi) model = 
+checkTemporal (Box phi) model =
   all (\state -> checkTemporal phi (model `at` state)) (reachableStates model)
-checkTemporal (Until phi1 phi2) model = 
-  exists (\state -> checkTemporal phi2 (model `at` state) && 
+checkTemporal (Until phi1 phi2) model =
+  exists (\state -> checkTemporal phi2 (model `at` state) &&
                    all (\s -> checkTemporal phi1 (model `at` s)) (statesBefore state))
 ```
 
-## 5 时态类型系统的扩展
+## 1.5 时态类型系统的扩展
 
-### 5.1 概率时态类型
+### 1.5.1 概率时态类型
 
 **定义 5.1 (概率时态类型)**
 概率时态类型包含概率信息：
@@ -206,7 +206,7 @@ $$\text{ProbTemporalType} ::= \tau_{p} \mid \tau_{[p_1, p_2]} \mid \tau_{\geq p}
 **定理 5.1 (概率时态安全)**
 概率时态类型系统保证概率约束的满足。
 
-### 5.2 模糊时态类型
+### 1.5.2 模糊时态类型
 
 **定义 5.2 (模糊时态类型)**
 模糊时态类型包含模糊时间信息：
@@ -218,9 +218,9 @@ $$\text{FuzzyTemporalType} ::= \tau_{\mu} \mid \tau_{\sim t} \mid \tau_{\approx 
 - $\tau_{\sim t}$ 表示大约在时间 $t$ 的类型 $\tau$
 - $\tau_{\approx t}$ 表示近似在时间 $t$ 的类型 $\tau$
 
-## 6 实际应用
+## 1.6 实际应用
 
-### 6.1 实时系统编程
+### 1.6.1 实时系统编程
 
 -**定义 6.1 (实时函数)**
 
@@ -238,7 +238,7 @@ class RealTime a where
 2. 满足时间约束
 3. 保证实时性
 
-### 6.2 嵌入式系统
+### 1.6.2 嵌入式系统
 
 -**定义 6.2 (嵌入式时态类型)**
 
@@ -256,9 +256,9 @@ data EmbeddedTemporal a where
 2. 执行器操作的时间准确性
 3. 控制器响应的实时性
 
-## 7 时态类型系统的元理论
+## 1.7 时态类型系统的元理论
 
-### 7.1 时态一致性
+### 1.7.1 时态一致性
 
 **定理 7.1 (时态一致性)**
 时态类型系统保证时间一致性。
@@ -269,7 +269,7 @@ data EmbeddedTemporal a where
 2. 时态操作符的单调性
 3. 时间约束的可满足性
 
-### 7.2 时态类型推断
+### 1.7.2 时态类型推断
 
 -**算法 7.1 (时态类型推断)**
 
@@ -282,13 +282,13 @@ inferTemporal ctx (TimedApp e1 e2 time) = do
   (t1, ctx1) <- inferTemporal ctx e1
   (t2, ctx2) <- inferTemporal ctx e2
   case t1 of
-    TemporalArrow t1' t2' | t1' == t2 -> 
+    TemporalArrow t1' t2' | t1' == t2 ->
       if timeConstraint time then Right (t2', ctx1 `union` ctx2)
       else Left TimeConstraintViolation
     _ -> Left TypeMismatch
 ```
 
-## 8 结论
+## 1.8 结论
 
 时态类型理论为实时系统和时间敏感应用提供了强大的形式化基础：
 

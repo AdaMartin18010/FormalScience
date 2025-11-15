@@ -52,19 +52,19 @@ import "google/protobuf/timestamp.proto";
 service NodeService {
     // 节点注册
     rpc Register (RegisterRequest) returns (RegisterResponse);
-    
+
     // 健康检查
     rpc HealthCheck (HealthCheckRequest) returns (stream HealthCheckResponse);
-    
+
     // 双向流通信
     rpc Communicate (stream Message) returns (stream Message);
-    
+
     // 文件传输
     rpc TransferFile (stream FileChunk) returns (FileResponse);
-    
+
     // 任务处理
     rpc ProcessTask (TaskRequest) returns (TaskResponse);
-    
+
     // 集群状态
     rpc GetClusterState (google.protobuf.Empty) returns (ClusterState);
 }
@@ -193,7 +193,7 @@ impl NodeService for DistributedNode {
         request: Request<RegisterRequest>,
     ) -> Result<Response<RegisterResponse>, Status> {
         let req = request.into_inner();
-        
+
         // 注册节点
         let result = self.cluster.register_node(Node {
             node_id: req.node_id,
@@ -224,7 +224,7 @@ impl NodeService for DistributedNode {
             let mut interval = tokio::time::interval(std::time::Duration::from_secs(1));
             loop {
                 interval.tick().await;
-                
+
                 let health_status = cluster.get_node_health(&node_id).await;
                 if let Ok(status) = health_status {
                     let _ = tx.send(Ok(HealthCheckResponse {
@@ -308,7 +308,7 @@ impl NodeService for DistributedNode {
         request: Request<TaskRequest>,
     ) -> Result<Response<TaskResponse>, Status> {
         let task = request.into_inner();
-        
+
         // 处理任务
         match self.task_manager.process_task(task).await {
             Ok(result) => Ok(Response::new(TaskResponse {
@@ -332,7 +332,7 @@ impl NodeService for DistributedNode {
     ) -> Result<Response<ClusterState>, Status> {
         let state = self.cluster.get_state().await
             .map_err(|e| Status::internal(e.to_string()))?;
-            
+
         Ok(Response::new(state))
     }
 }
@@ -358,7 +358,7 @@ impl ClusterManager {
 
     pub async fn register_node(&self, node: Node) -> anyhow::Result<RegisterResult> {
         self.nodes.insert(node.node_id.clone(), node);
-        
+
         Ok(RegisterResult {
             cluster_id: "cluster-1".to_string(),
             nodes: self.nodes.iter().map(|n| n.clone()).collect(),
@@ -448,7 +448,7 @@ impl FileManager {
 
     pub async fn process_file_chunks(&self, chunks: Vec<FileChunk>) -> anyhow::Result<String> {
         let file_id = chunks[0].file_id.clone();
-        
+
         // 按顺序处理文件块
         let mut data = Vec::new();
         for chunk in chunks {
@@ -637,7 +637,7 @@ where
                 return self.inner.call(req);
             }
         }
-        
+
         // 返回未授权错误
         future::ready(Err(Status::unauthenticated("Invalid API key")))
     }

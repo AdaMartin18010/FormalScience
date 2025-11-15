@@ -1,5 +1,10 @@
-# to_owned
+# 1. to_owned
 
+## 目录
+
+- [1. to_owned](#to_owned)
+(#to_owned)
+(#to_owned)
 在 Rust 中，`to_owned` 是一个方法，通常与 `Borrow` trait 配合使用。
 它用于创建某个值的 "拥有" 版本（owned version），即该值的独立副本，而不是引用。
 `to_owned` 方法本身并不直接转移所有权，但它可以用来创建一个可以拥有的新值。

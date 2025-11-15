@@ -1,45 +1,43 @@
 
-# 范畴论视角下的计算范式统一框架
+# 1. 范畴论视角下的计算范式统一框架
 
-## 📋 目录
+## 目录
 
-- [范畴论视角下的计算范式统一框架](#范畴论视角下的计算范式统一框架)
-  - [📋 目录](#-目录)
-  - [1 基础计算范畴 (ComputationCat)](#1-基础计算范畴-computationcat)
-    - [1.1 计算抽象基础](#11-计算抽象基础)
-    - [1.2 通用计算函子](#12-通用计算函子)
-  - [2 计算模式之间的关系](#2-计算模式之间的关系)
-    - [2.1 序列到并发函子](#21-序列到并发函子)
-    - [2.2 并发到并行函子](#22-并发到并行函子)
-    - [2.3 并行到分布式函子](#23-并行到分布式函子)
-  - [3 算法与计算模式关系](#3-算法与计算模式关系)
-    - [3.1 算法到并行实现函子](#31-算法到并行实现函子)
-    - [3.2 算法到分布式实现自然变换](#32-算法到分布式实现自然变换)
-  - [4 程序设计与计算模式的整合](#4-程序设计与计算模式的整合)
-    - [4.1 程序范式单子](#41-程序范式单子)
-    - [4.2 程序设计语言函子](#42-程序设计语言函子)
-  - [5 各范式共享的代数结构](#5-各范式共享的代数结构)
-    - [5.1 组合半群](#51-组合半群)
-    - [5.2 并行应用函子](#52-并行应用函子)
-  - [6 跨范式设计模式范畴](#6-跨范式设计模式范畴)
-    - [6.1 通用设计模式](#61-通用设计模式)
-    - [6.2 范式间转换函子](#62-范式间转换函子)
-  - [7 具体领域之间的关联](#7-具体领域之间的关联)
-    - [7.1 算法到并发程序变换](#71-算法到并发程序变换)
-    - [7.2 分布式到并行算法转换](#72-分布式到并行算法转换)
-  - [8 范畴论视角下的统一特性](#8-范畴论视角下的统一特性)
-    - [8.1 共同的态射](#81-共同的态射)
-    - [8.2 全范式自然变换](#82-全范式自然变换)
-  - [9 实际应用示例](#9-实际应用示例)
-    - [9.1 跨范式算法实现](#91-跨范式算法实现)
-    - [9.2 范式转换实例](#92-范式转换实例)
-  - [10 统一视图总结](#10-统一视图总结)
+- [1. 范畴论视角下的计算范式统一框架](#1-范畴论视角下的计算范式统一框架)
+  - [目录](#目录)
+  - [1.1 基础计算范畴 (ComputationCat)](#11-基础计算范畴-computationcat)
+    - [1.1.1 计算抽象基础](#111-计算抽象基础)
+    - [1.1.2 通用计算函子](#112-通用计算函子)
+  - [1.2 计算模式之间的关系](#12-计算模式之间的关系)
+    - [1.2.1 序列到并发函子](#121-序列到并发函子)
+    - [1.2.2 并发到并行函子](#122-并发到并行函子)
+    - [1.2.3 并行到分布式函子](#123-并行到分布式函子)
+  - [1.3 算法与计算模式关系](#13-算法与计算模式关系)
+    - [1.3.1 算法到并行实现函子](#131-算法到并行实现函子)
+    - [1.3.2 算法到分布式实现自然变换](#132-算法到分布式实现自然变换)
+  - [1.4 程序设计与计算模式的整合](#14-程序设计与计算模式的整合)
+    - [1.4.1 程序范式单子](#141-程序范式单子)
+    - [1.4.2 程序设计语言函子](#142-程序设计语言函子)
+  - [1.5 各范式共享的代数结构](#15-各范式共享的代数结构)
+    - [1.5.1 组合半群](#151-组合半群)
+    - [1.5.2 并行应用函子](#152-并行应用函子)
+  - [1.6 跨范式设计模式范畴](#16-跨范式设计模式范畴)
+    - [1.6.1 通用设计模式](#161-通用设计模式)
+    - [1.6.2 范式间转换函子](#162-范式间转换函子)
+  - [1.7 具体领域之间的关联](#17-具体领域之间的关联)
+    - [1.7.1 算法到并发程序变换](#171-算法到并发程序变换)
+    - [1.7.2 分布式到并行算法转换](#172-分布式到并行算法转换)
+  - [1.8 范畴论视角下的统一特性](#18-范畴论视角下的统一特性)
+    - [1.8.1 共同的态射](#181-共同的态射)
+    - [1.8.2 全范式自然变换](#182-全范式自然变换)
+  - [1.9 实际应用示例](#19-实际应用示例)
+    - [1.9.1 跨范式算法实现](#191-跨范式算法实现)
+    - [1.9.2 范式转换实例](#192-范式转换实例)
+  - [1.10 统一视图总结](#110-统一视图总结)
 
----
+## 1.1 基础计算范畴 (ComputationCat)
 
-## 1 基础计算范畴 (ComputationCat)
-
-### 1.1 计算抽象基础
+### 1.1.1 计算抽象基础
 
 ```haskell
 class ComputationCategory c where
@@ -61,7 +59,7 @@ class ComputationCategory c where
   reliability :: Computation → Reliability            -- 可靠性
 ```
 
-### 1.2 通用计算函子
+### 1.1.2 通用计算函子
 
 ```haskell
 class ComputationFunctor f where
@@ -74,9 +72,9 @@ class ComputationFunctor f where
   transformComplexity :: f a → f b → Relation  -- 复杂度变换关系
 ```
 
-## 2 计算模式之间的关系
+## 1.2 计算模式之间的关系
 
-### 2.1 序列到并发函子
+### 1.2.1 序列到并发函子
 
 ```haskell
 -- 从顺序计算到并发计算的函子映射
@@ -95,7 +93,7 @@ seqToConcurrentFunctor :: SequentialComputation → ConcurrentComputation where
   ]
 ```
 
-### 2.2 并发到并行函子
+### 1.2.2 并发到并行函子
 
 ```haskell
 -- 从并发计算到并行计算的函子映射
@@ -114,7 +112,7 @@ concurrentToParallelFunctor :: ConcurrentComputation → ParallelComputation whe
   ]
 ```
 
-### 2.3 并行到分布式函子
+### 1.2.3 并行到分布式函子
 
 ```haskell
 -- 从并行计算到分布式计算的函子映射
@@ -133,9 +131,9 @@ parallelToDistributedFunctor :: ParallelComputation → DistributedComputation w
   ]
 ```
 
-## 3 算法与计算模式关系
+## 1.3 算法与计算模式关系
 
-### 3.1 算法到并行实现函子
+### 1.3.1 算法到并行实现函子
 
 ```haskell
 -- 从算法抽象到并行实现的函子
@@ -154,7 +152,7 @@ algorithmToParallelFunctor :: Algorithm → ParallelImplementation where
   ]
 ```
 
-### 3.2 算法到分布式实现自然变换
+### 1.3.2 算法到分布式实现自然变换
 
 ```haskell
 -- 算法不同实现之间的自然变换
@@ -176,9 +174,9 @@ algorithmImplementationsTransform ::
   ]
 ```
 
-## 4 程序设计与计算模式的整合
+## 1.4 程序设计与计算模式的整合
 
-### 4.1 程序范式单子
+### 1.4.1 程序范式单子
 
 ```haskell
 class ProgrammingParadigmMonad m where
@@ -197,7 +195,7 @@ class ProgrammingParadigmMonad m where
   distributed :: [Node] → m a → m a -- 分布式执行
 ```
 
-### 4.2 程序设计语言函子
+### 1.4.2 程序设计语言函子
 
 ```haskell
 class LanguageFunctor f where
@@ -214,9 +212,9 @@ class LanguageFunctor f where
   mapMemoryModel :: MemoryModel a → MemoryModel b
 ```
 
-## 5 各范式共享的代数结构
+## 1.5 各范式共享的代数结构
 
-### 5.1 组合半群
+### 1.5.1 组合半群
 
 ```haskell
 class Semigroup computation where
@@ -227,7 +225,7 @@ class Semigroup computation where
   associativity :: (a <> b) <> c = a <> (b <> c)  -- 结合律
 ```
 
-### 5.2 并行应用函子
+### 1.5.2 并行应用函子
 
 ```haskell
 class ApplicativeFunctor f where
@@ -241,9 +239,9 @@ class ApplicativeFunctor f where
   parZip :: f a → f b → f (a, b)     -- 并行配对
 ```
 
-## 6 跨范式设计模式范畴
+## 1.6 跨范式设计模式范畴
 
-### 6.1 通用设计模式
+### 1.6.1 通用设计模式
 
 ```haskell
 class DesignPatternCategory d where
@@ -265,7 +263,7 @@ class DesignPatternCategory d where
   complexity :: Pattern → Implementation → Complexity
 ```
 
-### 6.2 范式间转换函子
+### 1.6.2 范式间转换函子
 
 ```haskell
 class ParadigmTransformFunctor f where
@@ -281,9 +279,9 @@ class ParadigmTransformFunctor f where
   preservesPerfOrdClarity :: Trace → Bool  -- 保持性能、顺序性与清晰度
 ```
 
-## 7 具体领域之间的关联
+## 1.7 具体领域之间的关联
 
-### 7.1 算法到并发程序变换
+### 1.7.1 算法到并发程序变换
 
 ```haskell
 -- 算法到并发程序的自然变换
@@ -302,7 +300,7 @@ algorithmToConcurrentProgram :: NaturalTransformation Algorithm ConcurrentProgra
   ]
 ```
 
-### 7.2 分布式到并行算法转换
+### 1.7.2 分布式到并行算法转换
 
 ```haskell
 -- 分布式算法到并行算法的自然变换
@@ -321,9 +319,9 @@ distributedToParallelAlgorithm :: NaturalTransformation DistributedAlgorithm Par
   ]
 ```
 
-## 8 范畴论视角下的统一特性
+## 1.8 范畴论视角下的统一特性
 
-### 8.1 共同的态射
+### 1.8.1 共同的态射
 
 ```haskell
 -- 所有计算范式共享的态射
@@ -338,7 +336,7 @@ class ComputationalMorphism m where
   verify :: m a b → Property → Bool            -- 验证
 ```
 
-### 8.2 全范式自然变换
+### 1.8.2 全范式自然变换
 
 ```haskell
 -- 连接所有计算范式的自然变换网络
@@ -368,9 +366,9 @@ computationalTransformationNetwork :: TransformationNetwork where
   ]
 ```
 
-## 9 实际应用示例
+## 1.9 实际应用示例
 
-### 9.1 跨范式算法实现
+### 1.9.1 跨范式算法实现
 
 ```haskell
 -- 归并排序在不同计算范式下的实现
@@ -401,7 +399,7 @@ mergeSort xs = do
     Distributed → gather [sortedLeft, sortedRight] >>= distributedMerge
 ```
 
-### 9.2 范式转换实例
+### 1.9.2 范式转换实例
 
 ```haskell
 -- 从顺序算法到分布式系统的转换
@@ -414,7 +412,7 @@ transformAlgorithm algo =
     |> addMonitoringAndControl
 ```
 
-## 10 统一视图总结
+## 1.10 统一视图总结
 
 范畴论为并行、并发、分布式、算法和程序设计提供了统一的抽象框架，揭示了这些领域的深层联系：
 

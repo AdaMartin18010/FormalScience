@@ -84,140 +84,140 @@ Cadence工作流系统的应用范围非常广泛，主要适用于以下场景�
 func OrderWorkflow(ctx workflow.Context, orderID string) error {
     logger := workflow.GetLogger(ctx)
     logger.Info("OrderWorkflow started", "orderId", orderID)
-    
+
     // 步骤1: 获取订单详情
     var order Order
     err := workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "GetOrderDetailsActivity", 
+        "GetOrderDetailsActivity",
         orderID,
     ).Get(ctx, &order)
-    
+
     if err != nil {
         return err
     }
-    
+
     // 步骤2: 验证订单
     var validationResult OrderValidationResult
     err = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "ValidateOrderActivity", 
+        "ValidateOrderActivity",
         order,
     ).Get(ctx, &validationResult)
-    
+
     if err != nil || !validationResult.IsValid {
         // 处理验证失败
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "CancelOrderActivity", 
-            orderID, 
+            "CancelOrderActivity",
+            orderID,
             validationResult.Reason,
         ).Get(ctx, nil)
-        
+
         return fmt.Errorf("order validation failed: %v", validationResult.Reason)
     }
-    
+
     // 步骤3: 预留库存
     err = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "ReserveInventoryActivity", 
+        "ReserveInventoryActivity",
         order.Items,
     ).Get(ctx, nil)
-    
+
     if err != nil {
         // 处理库存不足
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "NotifyCustomerOutOfStockActivity", 
+            "NotifyCustomerOutOfStockActivity",
             order,
         ).Get(ctx, nil)
-        
+
         return err
     }
-    
+
     // 步骤4: 处理支付
     var paymentResult PaymentResult
     err = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "ProcessPaymentActivity", 
+        "ProcessPaymentActivity",
         order,
     ).Get(ctx, &paymentResult)
-    
+
     if err != nil || !paymentResult.Success {
         // 支付失败，释放库存
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "ReleaseInventoryActivity", 
+            "ReleaseInventoryActivity",
             order.Items,
         ).Get(ctx, nil)
-        
+
         // 更新订单状态
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "UpdateOrderStatusActivity", 
-            orderID, 
+            "UpdateOrderStatusActivity",
+            orderID,
             "PAYMENT_FAILED",
         ).Get(ctx, nil)
-        
+
         return fmt.Errorf("payment failed: %v", err)
     }
-    
+
     // 步骤5: 分配包装和物流
     var shippingInfo ShippingInfo
     err = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "AllocateShippingActivity", 
+        "AllocateShippingActivity",
         order,
     ).Get(ctx, &shippingInfo)
-    
+
     if err != nil {
         // 处理物流分配失败，需要退款
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "RefundPaymentActivity", 
+            "RefundPaymentActivity",
             paymentResult.TransactionID,
         ).Get(ctx, nil)
-        
+
         // 释放库存
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
-            "ReleaseInventoryActivity", 
+            "ReleaseInventoryActivity",
             order.Items,
         ).Get(ctx, nil)
-        
+
         return err
     }
-    
+
     // 步骤6: 更新订单状态为处理中
     _ = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "UpdateOrderStatusActivity", 
-        orderID, 
+        "UpdateOrderStatusActivity",
+        orderID,
         "PROCESSING",
     ).Get(ctx, nil)
-    
+
     // 步骤7: 等待物流确认 (可能需要长时间等待)
     shippingSignal := workflow.GetSignalChannel(ctx, "shipping-update")
-    
+
     var shippingUpdate ShippingUpdate
     shippingSignal.Receive(ctx, &shippingUpdate)
-    
+
     // 步骤8: 确认发货并通知客户
     _ = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "NotifyCustomerShippedActivity", 
-        order, 
-        shippingInfo, 
+        "NotifyCustomerShippedActivity",
+        order,
+        shippingInfo,
         shippingUpdate,
     ).Get(ctx, nil)
-    
+
     // 步骤9: 完成订单
     _ = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
-        "CompleteOrderActivity", 
+        "CompleteOrderActivity",
         orderID,
     ).Get(ctx, nil)
-    
+
     logger.Info("OrderWorkflow completed", "orderId", orderID)
     return nil
 }
@@ -225,14 +225,14 @@ func OrderWorkflow(ctx workflow.Context, orderID string) error {
 // 活动实现示例
 func ReserveInventoryActivity(ctx context.Context, items []OrderItem) error {
     inventoryService := services.GetInventoryService()
-    
+
     // 尝试预留库存
     reservation, err := inventoryService.Reserve(items)
     if err != nil {
         // 记录详细错误信息供重试决策
         return fmt.Errorf("inventory reservation failed: %v", err)
     }
-    
+
     return nil
 }
 ```
@@ -288,7 +288,7 @@ func ReserveInventoryActivity(ctx context.Context, items []OrderItem) error {
            return errors.New("failed to acquire inventory lock")
        }
        defer lock.Release(ctx)
-       
+
        // 预留库存逻辑...
    }
    ```
@@ -329,27 +329,27 @@ func ReserveInventoryActivity(ctx context.Context, items []OrderItem) error {
 func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) (LoanDecision, error) {
     logger := workflow.GetLogger(ctx)
     logger.Info("Loan application workflow started", "applicationId", application.ID)
-    
+
     // 设置工作流超时为30天
     ctx = workflow.WithWorkflowRunTimeout(ctx, 30*24*time.Hour)
-    
+
     // 工作流状态跟踪
     var currentState string = "STARTED"
     decision := LoanDecision{Status: "PENDING"}
-    
+
     // 注册查询处理器，允许外部系统查询申请状态
     if err := workflow.SetQueryHandler(ctx, "getStatus", func() (string, error) {
         return currentState, nil
     }); err != nil {
         return decision, err
     }
-    
+
     if err := workflow.SetQueryHandler(ctx, "getDecision", func() (LoanDecision, error) {
         return decision, nil
     }); err != nil {
         return decision, err
     }
-    
+
     // 步骤1: 验证申请信息
     currentState = "VALIDATING_APPLICATION"
     var validationResult ValidationResult
@@ -363,12 +363,12 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Failed to validate application: " + err.Error()
         return decision, err
     }
-    
+
     if !validationResult.IsValid {
         currentState = "INVALID_APPLICATION"
         decision.Status = "REJECTED"
         decision.Reason = validationResult.Reason
-        
+
         // 通知申请人
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
@@ -376,10 +376,10 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
             application.ApplicantID,
             "Your loan application was rejected: " + validationResult.Reason,
         ).Get(ctx, nil)
-        
+
         return decision, nil
     }
-    
+
     // 步骤2: 信用检查
     currentState = "CREDIT_CHECK"
     var creditResult CreditCheckResult
@@ -393,7 +393,7 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Credit check failed: " + err.Error()
         return decision, err
     }
-    
+
     // 步骤3: 风险评估
     currentState = "RISK_ASSESSMENT"
     var riskResult RiskAssessmentResult
@@ -408,14 +408,14 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Risk assessment failed: " + err.Error()
         return decision, err
     }
-    
+
     // 步骤4: 根据贷款金额和风险结果确定审批流程
     var approvalWorkflowNeeded bool = application.Amount > 10000 || riskResult.RiskLevel == "HIGH"
-    
+
     if approvalWorkflowNeeded {
         // 子工作流：人工审批流程
         currentState = "MANUAL_APPROVAL_NEEDED"
-        
+
         // 创建审批任务
         if err := workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
@@ -429,27 +429,27 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
             decision.Reason = "System error: " + err.Error()
             return decision, err
         }
-        
+
         // 等待人工审批结果 - 使用信号
         approvalSignalChan := workflow.GetSignalChannel(ctx, "loan-approval-result")
-        
+
         // 设置超时和提醒
         var approvalResult ApprovalResult
         var timerCancelled bool
-        
+
         // 创建5天后的提醒定时器
         reminderTimer := workflow.NewTimer(ctx, 5*24*time.Hour)
-        
+
         // 设置选择器等待信号或定时器
         selector := workflow.NewSelector(ctx)
-        
+
         // 添加信号处理
         selector.AddReceive(approvalSignalChan, func(c workflow.Channel, more bool) {
             c.Receive(ctx, &approvalResult)
             timerCancelled = true
             reminderTimer.Cancel()
         })
-        
+
         // 添加定时器处理
         selector.AddFuture(reminderTimer, func(f workflow.Future) {
             // 定时器触发，发送提醒但继续等待
@@ -458,33 +458,33 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
                 "SendApprovalReminderActivity",
                 application.ID,
             ).Get(ctx, nil)
-            
+
             // 重置提醒定时器
             reminderTimer = workflow.NewTimer(ctx, 3*24*time.Hour)
-            
+
             // 再次添加定时器到选择器
             selector.AddFuture(reminderTimer, func(f workflow.Future) {
                 // 类似处理...
             })
         })
-        
+
         // 等待信号或定时器
         selector.Select(ctx)
-        
+
         // 如果定时器被取消，说明收到了信号
         if !timerCancelled {
             // 如果定时器触发，我们需要等待信号
             approvalSignalChan.Receive(ctx, &approvalResult)
         }
-        
+
         currentState = "APPROVAL_RECEIVED"
-        
+
         // 根据审批结果更新决策
         if !approvalResult.Approved {
             currentState = "MANUALLY_REJECTED"
             decision.Status = "REJECTED"
             decision.Reason = approvalResult.Reason
-            
+
             // 通知申请人
             _ = workflow.ExecuteActivity(
                 workflow.WithActivityOptions(ctx, activityOptions),
@@ -492,14 +492,14 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
                 application.ApplicantID,
                 "Your loan application was rejected: " + approvalResult.Reason,
             ).Get(ctx, nil)
-            
+
             return decision, nil
         }
     } else {
         // 自动批准小额低风险贷款
         currentState = "AUTO_APPROVED"
     }
-    
+
     // 步骤5: 准备贷款文件
     currentState = "PREPARING_DOCUMENTS"
     var loanDocuments LoanDocuments
@@ -514,7 +514,7 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Failed to prepare documents: " + err.Error()
         return decision, err
     }
-    
+
     // 步骤6: 通知申请人签署文件
     currentState = "AWAITING_SIGNATURE"
     if err := workflow.ExecuteActivity(
@@ -528,33 +528,33 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Failed to send documents: " + err.Error()
         return decision, err
     }
-    
+
     // 步骤7: 等待签署完成 - 信号
     signatureSignalChan := workflow.GetSignalChannel(ctx, "document-signed")
-    
+
     // 设置等待期限为14天
     signatureSelector := workflow.NewSelector(ctx)
     timeoutTimer := workflow.NewTimer(ctx, 14*24*time.Hour)
-    
+
     var documentsSigned bool
     var signatureTimedOut bool
-    
+
     signatureSelector.AddReceive(signatureSignalChan, func(c workflow.Channel, more bool) {
         documentsSigned = true
         c.Receive(ctx, nil) // 仅接收信号，无数据
     })
-    
+
     signatureSelector.AddFuture(timeoutTimer, func(f workflow.Future) {
         signatureTimedOut = true
     })
-    
+
     signatureSelector.Select(ctx)
-    
+
     if signatureTimedOut {
         currentState = "SIGNATURE_TIMEOUT"
         decision.Status = "CANCELLED"
         decision.Reason = "Applicant did not sign documents within the required timeframe"
-        
+
         // 通知申请人
         _ = workflow.ExecuteActivity(
             workflow.WithActivityOptions(ctx, activityOptions),
@@ -562,10 +562,10 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
             application.ApplicantID,
             "Your loan application was cancelled due to signature timeout",
         ).Get(ctx, nil)
-        
+
         return decision, nil
     }
-    
+
     // 步骤8: 放款
     currentState = "DISBURSING_FUNDS"
     var disbursementResult DisbursementResult
@@ -580,20 +580,20 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
         decision.Reason = "Failed to disburse funds: " + err.Error()
         return decision, err
     }
-    
+
     // 步骤9: 更新贷款状态和通知申请人
     currentState = "COMPLETED"
     decision.Status = "APPROVED"
     decision.LoanID = disbursementResult.LoanID
     decision.DisbursementDate = disbursementResult.DisbursementDate
-    
+
     _ = workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
         "NotifyApplicantActivity",
         application.ApplicantID,
         fmt.Sprintf("Your loan has been approved and funds have been disbursed. Loan ID: %s", disbursementResult.LoanID),
     ).Get(ctx, nil)
-    
+
     logger.Info("Loan application workflow completed", "applicationId", application.ID, "status", decision.Status)
     return decision, nil
 }
@@ -627,7 +627,7 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
        Documents          *LoanDocuments
        FinalDecision      *LoanDecision
    }
-   
+
    // 每次状态变更时记录
    func recordStateTransition(state *LoanApplicationState, newStage string, reason string) {
        state.StageHistory = append(state.StageHistory, StageTransition{
@@ -651,7 +651,7 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
    func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) (LoanDecision, error) {
        // 获取当前工作流版本
        version := workflow.GetVersion(ctx, "LoanApplicationChange", workflow.DefaultVersion, 1)
-       
+
        if version == workflow.DefaultVersion {
            // 旧版本逻辑
            return oldLoanApplicationImpl(ctx, application)
@@ -669,11 +669,11 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
    func PerformCreditCheckActivity(ctx context.Context, applicantID string) (CreditCheckResult, error) {
        // 获取信用服务客户端
        creditClient := services.GetCreditBureauClient()
-       
+
        // 添加超时控制
        timeoutCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
        defer cancel()
-       
+
        // 调用外部信用检查服务
        response, err := creditClient.CheckCredit(timeoutCtx, applicantID)
        if err != nil {
@@ -694,7 +694,7 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
            }
            // 其他错误处理...
        }
-       
+
        // 处理响应...
        return mapToCreditCheckResult(response), nil
    }
@@ -738,17 +738,17 @@ func LoanApplicationWorkflow(ctx workflow.Context, application LoanApplication) 
 func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
     logger := workflow.GetLogger(ctx)
     logger.Info("ETL workflow started", "requestId", request.RequestID, "dataSources", len(request.DataSources))
-    
+
     // 设置较长的超时时间
     ctx = workflow.WithWorkflowRunTimeout(ctx, 24*time.Hour)
-    
+
     // 结果收集
     result := ETLResult{
         RequestID: request.RequestID,
         StartTime: workflow.Now(ctx),
         Status:    "IN_PROGRESS",
     }
-    
+
     // 注册查询处理器，允许外部系统查询ETL进度
     if err := workflow.SetQueryHandler(ctx, "getProgress", func() (ETLProgress, error) {
         return ETLProgress{
@@ -763,7 +763,7 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
     }); err != nil {
         return result, err
     }
-    
+
     // 步骤1: 验证ETL请求
     var validationResult ValidationResult
     if err := workflow.ExecuteActivity(
@@ -775,13 +775,13 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
         result.Errors = append(result.Errors, fmt.Sprintf("Request validation failed: %v", err))
         return result, err
     }
-    
+
     if !validationResult.IsValid {
         result.Status = "FAILED"
         result.Errors = append(result.Errors, fmt.Sprintf("Invalid ETL request: %s", validationResult.Reason))
         return result, fmt.Errorf("invalid ETL request: %s", validationResult.Reason)
     }
-    
+
     // 步骤2: 准备ETL环境
     var etlContext ETLContext
     if err := workflow.ExecuteActivity(
@@ -793,11 +793,11 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
         result.Errors = append(result.Errors, fmt.Sprintf("Failed to prepare ETL environment: %v", err))
         return result, err
     }
-    
+
     // 步骤3: 对每个数据源并行执行ETL
     sourceFutures := make(map[string]workflow.Future)
     processedSources := make(map[string]SourceResult)
-    
+
     // 启动每个数据源的处理
     for _, source := range request.DataSources {
         // 为每个数据源创建子工作流
@@ -805,7 +805,7 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             WorkflowID:        fmt.Sprintf("%s-%s", request.RequestID, source.SourceID),
             WorkflowRunTimeout: 12 * time.Hour, // 子工作流超时
         })
-        
+
         sourceFutures[source.SourceID] = workflow.ExecuteChildWorkflow(
             childCtx,
             "ProcessDataSourceWorkflow",
@@ -817,17 +817,17 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             },
         )
     }
-    
+
     // 收集所有数据源处理结果
     for sourceID, future := range sourceFutures {
         var sourceResult SourceResult
         err := future.Get(ctx, &sourceResult)
-        
+
         if err != nil {
             // 记录错误但继续处理其他数据源
             logger.Error("Data source processing failed", "sourceId", sourceID, "error", err)
             result.Errors = append(result.Errors, fmt.Sprintf("Source %s failed: %v", sourceID, err))
-            
+
             // 添加失败的源
             processedSources[sourceID] = SourceResult{
                 SourceID: sourceID,
@@ -839,12 +839,12 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             processedSources[sourceID] = sourceResult
         }
     }
-    
+
     // 更新结果
     for _, sourceResult := range processedSources {
         result.ProcessedSources = append(result.ProcessedSources, sourceResult)
     }
-    
+
     // 检查是否所有源都失败
     allSourcesFailed := true
     for _, sourceResult := range processedSources {
@@ -853,12 +853,12 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             break
         }
     }
-    
+
     if allSourcesFailed && len(processedSources) > 0 {
         result.Status = "FAILED"
         return result, fmt.Errorf("all data sources failed processing")
     }
-    
+
     // 步骤4: 执行数据聚合
     if len(result.Errors) == 0 || request.Config.ContinueOnPartialFailure {
         var aggregateResult AggregateResult
@@ -875,7 +875,7 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             result.AggregateResult = &aggregateResult
         }
     }
-    
+
     // 步骤5: 加载数据到目标系统
     if result.AggregateResult != nil {
         var loadResult LoadResult
@@ -892,7 +892,7 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
             result.LoadResult = &loadResult
         }
     }
-    
+
     // 步骤6: 生成报告
     var reportResult ReportResult
     if err := workflow.ExecuteActivity(
@@ -906,7 +906,7 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
     } else {
         result.ReportURL = reportResult.ReportURL
     }
-    
+
     // 步骤7: 清理资源
     if err := workflow.ExecuteActivity(
         workflow.WithActivityOptions(ctx, activityOptions),
@@ -916,23 +916,23 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
         logger.Error("Resource cleanup failed", "error", err)
         // 清理失败记录但不影响结果
     }
-    
+
     // 设置最终状态
     if len(result.Errors) == 0 {
         result.Status = "COMPLETED"
     } else if result.Status != "FAILED" {
         result.Status = "PARTIALLY_COMPLETED"
     }
-    
+
     result.EndTime = workflow.Now(ctx)
     result.Duration = result.EndTime.Sub(result.StartTime)
-    
-    logger.Info("ETL workflow completed", 
-        "requestId", request.RequestID, 
-        "status", result.Status, 
+
+    logger.Info("ETL workflow completed",
+        "requestId", request.RequestID,
+        "status", result.Status,
         "duration", result.Duration.String(),
         "errors", len(result.Errors))
-    
+
     return result, nil
 }
 
@@ -940,13 +940,13 @@ func ETLWorkflow(ctx workflow.Context, request ETLRequest) (ETLResult, error) {
 func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) (SourceResult, error) {
     logger := workflow.GetLogger(ctx)
     logger.Info("Processing data source", "requestId", request.RequestID, "sourceId", request.Source.SourceID)
-    
+
     result := SourceResult{
         SourceID:  request.Source.SourceID,
         StartTime: workflow.Now(ctx),
         Status:    "IN_PROGRESS",
     }
-    
+
     // 步骤1: 提取数据
     var extractResult ExtractResult
     if err := workflow.ExecuteActivity(
@@ -959,9 +959,9 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
         result.Error = fmt.Sprintf("Data extraction failed: %v", err)
         return result, err
     }
-    
+
     result.RecordsExtracted = extractResult.RecordCount
-    
+
     // 步骤2: 转换数据
     var transformResult TransformResult
     if err := workflow.ExecuteActivity(
@@ -974,9 +974,9 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
         result.Error = fmt.Sprintf("Data transformation failed: %v", err)
         return result, err
     }
-    
+
     result.RecordsTransformed = transformResult.RecordCount
-    
+
     // 步骤3: 验证数据
     var validationResult DataValidationResult
     if err := workflow.ExecuteActivity(
@@ -989,16 +989,16 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
         result.Error = fmt.Sprintf("Data validation failed: %v", err)
         return result, err
     }
-    
+
     result.ValidationErrors = validationResult.Errors
-    
+
     if len(validationResult.Errors) > request.Config.MaxValidationErrorThreshold {
         result.Status = "FAILED"
-        result.Error = fmt.Sprintf("Validation errors exceed threshold: %d > %d", 
+        result.Error = fmt.Sprintf("Validation errors exceed threshold: %d > %d",
             len(validationResult.Errors), request.Config.MaxValidationErrorThreshold)
         return result, fmt.Errorf("validation errors exceed threshold")
     }
-    
+
     // 步骤4: 保存处理后的数据
     var storeResult StoreResult
     if err := workflow.ExecuteActivity(
@@ -1011,17 +1011,17 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
         result.Error = fmt.Sprintf("Data storage failed: %v", err)
         return result, err
     }
-    
+
     result.StorageLocation = storeResult.Location
     result.Status = "COMPLETED"
     result.EndTime = workflow.Now(ctx)
     result.Duration = result.EndTime.Sub(result.StartTime)
-    
-    logger.Info("Data source processing completed", 
-        "sourceId", request.Source.SourceID, 
+
+    logger.Info("Data source processing completed",
+        "sourceId", request.Source.SourceID,
         "records", transformResult.RecordCount,
         "duration", result.Duration.String())
-    
+
     return result, nil
 }
 ```
@@ -1047,50 +1047,50 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
    func ExtractDataActivity(ctx context.Context, source DataSource, etlContext ETLContext) (ExtractResult, error) {
        // 获取数据源客户端
        client := getDataSourceClient(source)
-       
+
        // 创建结果收集器
        result := ExtractResult{
            SourceID: source.SourceID,
            Batches:  make([]DataBatch, 0),
        }
-       
+
        // 实现批量提取逻辑
        batchSize := 10000 // 每批处理的记录数
        offset := 0
-       
+
        for {
            // 使用心跳机制报告进度
            activity.RecordHeartbeat(ctx, offset)
-           
+
            // 提取一批数据
            batch, err := client.FetchData(source.Query, batchSize, offset)
            if err != nil {
                return result, err
            }
-           
+
            // 保存批次数据到临时存储
            batchLocation, err := saveBatchToStorage(etlContext.TempStoragePath, source.SourceID, offset, batch)
            if err != nil {
                return result, err
            }
-           
+
            // 添加批次信息（不是数据本身）
            result.Batches = append(result.Batches, DataBatch{
                BatchID:  fmt.Sprintf("%s-%d", source.SourceID, offset),
                Location: batchLocation,
                Records:  len(batch),
            })
-           
+
            result.RecordCount += len(batch)
-           
+
            // 检查是否已处理完所有数据
            if len(batch) < batchSize {
                break
            }
-           
+
            offset += len(batch)
        }
-       
+
        return result, nil
    }
    ```
@@ -1124,7 +1124,7 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
        result := DataValidationResult{
            Errors: make([]ValidationError, 0),
        }
-       
+
        // 批次处理以避免内存问题
        for _, batch := range data.Batches {
            // 加载批次数据
@@ -1132,14 +1132,14 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
            if err != nil {
                return result, err
            }
-           
+
            // 对每条记录应用验证规则
            for i, record := range records {
                // 记录验证进度心跳
                if i%1000 == 0 {
                    activity.RecordHeartbeat(ctx, fmt.Sprintf("Batch %s: %d/%d", batch.BatchID, i, len(records)))
                }
-               
+
                // 应用所有验证规则
                for _, rule := range rules {
                    if err := applyValidationRule(record, rule); err != nil {
@@ -1149,7 +1149,7 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
                            Rule:     rule.Name,
                            Message:  err.Error(),
                        })
-                       
+
                        // 检查是否超过最大错误记录数
                        if len(result.Errors) > 10000 {
                            // 返回部分结果以避免过大
@@ -1160,7 +1160,7 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
                }
            }
        }
-       
+
        return result, nil
    }
    ```
@@ -1204,7 +1204,7 @@ func ProcessDataSourceWorkflow(ctx workflow.Context, request DataSourceRequest) 
 func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (OrderResult, error) {
     logger := workflow.GetLogger(ctx)
     logger.Info("Order processing workflow started", "orderId", orderRequest.OrderID)
-    
+
     // 设置活动选项，包括重试策略
     activityOptions := workflow.ActivityOptions{
         ScheduleToStartTimeout: time.Minute,
@@ -1221,15 +1221,15 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             },
         },
     }
-    
+
     ctx = workflow.WithActivityOptions(ctx, activityOptions)
-    
+
     // 结果和执行状态跟踪
     result := OrderResult{
         OrderID: orderRequest.OrderID,
         Status:  "PROCESSING",
     }
-    
+
     // 对工作流添加监控指标
     workflow.Go(ctx, func(ctx workflow.Context) {
         for {
@@ -1238,7 +1238,7 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             workflow.GetMetricsHandler(ctx).Counter("order_processing_workflow_active").Inc(1)
         }
     })
-    
+
     // 步骤1: 调用订单服务创建订单
     var orderDetails OrderDetails
     err := workflow.ExecuteActivity(ctx, "OrderService_CreateOrder", orderRequest).Get(ctx, &orderDetails)
@@ -1247,25 +1247,25 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
         result.Error = fmt.Sprintf("Failed to create order: %v", err)
         return result, err
     }
-    
+
     result.OrderDetails = &orderDetails
-    
+
     // 步骤2: 调用库存服务检查和预留库存
     var inventoryResult InventoryResult
     err = workflow.ExecuteActivity(ctx, "InventoryService_ReserveInventory", orderDetails).Get(ctx, &inventoryResult)
     if err != nil {
         result.Status = "FAILED"
         result.Error = fmt.Sprintf("Failed to reserve inventory: %v", err)
-        
+
         // 执行补偿操作 - 取消订单
         _ = workflow.ExecuteActivity(ctx, "OrderService_CancelOrder", orderDetails.OrderID).Get(ctx, nil)
-        
+
         return result, err
     }
-    
+
     // 步骤3: 调用支付服务处理支付
     var paymentResult PaymentResult
-    err = workflow.ExecuteActivity(ctx, "PaymentService_ProcessPayment", 
+    err = workflow.ExecuteActivity(ctx, "PaymentService_ProcessPayment",
         PaymentRequest{
             OrderID:     orderDetails.OrderID,
             Amount:      orderDetails.TotalAmount,
@@ -1273,32 +1273,32 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             PaymentInfo: orderRequest.PaymentInfo,
         },
     ).Get(ctx, &paymentResult)
-    
+
     if err != nil {
         result.Status = "FAILED"
         result.Error = fmt.Sprintf("Payment failed: %v", err)
-        
+
         // 执行补偿操作
         // 1. 释放库存
-        _ = workflow.ExecuteActivity(ctx, 
-            "InventoryService_ReleaseInventory", 
+        _ = workflow.ExecuteActivity(ctx,
+            "InventoryService_ReleaseInventory",
             inventoryResult.ReservationID,
         ).Get(ctx, nil)
-        
+
         // 2. 取消订单
-        _ = workflow.ExecuteActivity(ctx, 
-            "OrderService_CancelOrder", 
+        _ = workflow.ExecuteActivity(ctx,
+            "OrderService_CancelOrder",
             orderDetails.OrderID,
         ).Get(ctx, nil)
-        
+
         return result, err
     }
-    
+
     result.PaymentDetails = &paymentResult
-    
+
     // 步骤4: 调用物流服务创建配送信息
     var shippingResult ShippingResult
-    err = workflow.ExecuteActivity(ctx, "ShippingService_CreateShipment", 
+    err = workflow.ExecuteActivity(ctx, "ShippingService_CreateShipment",
         ShippingRequest{
             OrderID:  orderDetails.OrderID,
             Items:    orderDetails.Items,
@@ -1306,20 +1306,20 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             Priority: orderRequest.ShippingPriority,
         },
     ).Get(ctx, &shippingResult)
-    
+
     if err != nil {
         result.Status = "PAYMENT_COMPLETED_SHIPPING_FAILED"
         result.Error = fmt.Sprintf("Failed to create shipment: %v", err)
-        
+
         // 此时支付已成功，不应自动执行完全回滚
         // 可以通知人工干预或延迟重试
         return result, err
     }
-    
+
     result.ShippingDetails = &shippingResult
-    
+
     // 步骤5: 调用通知服务通知客户
-    err = workflow.ExecuteActivity(ctx, "NotificationService_NotifyCustomer", 
+    err = workflow.ExecuteActivity(ctx, "NotificationService_NotifyCustomer",
         NotificationRequest{
             CustomerID:   orderRequest.CustomerID,
             OrderID:      orderDetails.OrderID,
@@ -1327,14 +1327,14 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             EmailType:    "ORDER_CONFIRMATION",
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         // 通知发送失败，但不影响订单处理
         logger.Warn("Failed to send notification", "error", err)
     }
-    
+
     // 步骤6: 更新订单状态为已完成
-    err = workflow.ExecuteActivity(ctx, "OrderService_CompleteOrder", 
+    err = workflow.ExecuteActivity(ctx, "OrderService_CompleteOrder",
         OrderUpdateRequest{
             OrderID:     orderDetails.OrderID,
             Status:      "COMPLETED",
@@ -1342,16 +1342,16 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
             ShippingID:  shippingResult.ShippingID,
         },
     ).Get(ctx, nil)
-    
+
     if err != nil {
         // 订单状态更新失败，记录错误但仍然返回成功
         logger.Error("Failed to update order status", "error", err)
         result.Error = fmt.Sprintf("Order processing completed but status update failed: %v", err)
     }
-    
+
     // 所有步骤完成
     result.Status = "COMPLETED"
-    
+
     logger.Info("Order processing workflow completed successfully", "orderId", orderRequest.OrderID)
     return result, nil
 }
@@ -1362,18 +1362,18 @@ func OrderProcessingWorkflow(ctx workflow.Context, orderRequest OrderRequest) (O
 func OrderService_CreateOrder(ctx context.Context, request OrderRequest) (OrderDetails, error) {
     // 获取订单服务客户端
     client := getOrderServiceClient()
-    
+
     // 调用订单服务API
     response, err := client.CreateOrder(ctx, &orderservice.CreateOrderRequest{
         CustomerID: request.CustomerID,
         Items:      convertToServiceItems(request.Items),
         Metadata:   request.Metadata,
     })
-    
+
     if err != nil {
         return OrderDetails{}, handleServiceError(err)
     }
-    
+
     // 映射服务响应到工作流数据结构
     return OrderDetails{
         OrderID:     response.OrderID,
@@ -1388,7 +1388,7 @@ func OrderService_CreateOrder(ctx context.Context, request OrderRequest) (OrderD
 func InventoryService_ReserveInventory(ctx context.Context, order OrderDetails) (InventoryResult, error) {
     // 获取库存服务客户端
     client := getInventoryServiceClient()
-    
+
     // 准备库存请求
     items := make([]*inventoryservice.Item, len(order.Items))
     for i, item := range order.Items {
@@ -1397,17 +1397,17 @@ func InventoryService_ReserveInventory(ctx context.Context, order OrderDetails) 
             Quantity:  item.Quantity,
         }
     }
-    
+
     // 调用库存服务API
     response, err := client.ReserveInventory(ctx, &inventoryservice.ReserveRequest{
         OrderID: order.OrderID,
         Items:   items,
     })
-    
+
     if err != nil {
         return InventoryResult{}, handleServiceError(err)
     }
-    
+
     // 返回结果
     return InventoryResult{
         ReservationID: response.ReservationID,
@@ -1424,25 +1424,25 @@ func handleServiceError(err error) error {
         // 不是gRPC错误，直接返回
         return err
     }
-    
+
     switch st.Code() {
     case codes.InvalidArgument:
         return temporal.NewNonRetryableApplicationError(
-            "Invalid argument to service", 
-            "InvalidOrderError", 
+            "Invalid argument to service",
+            "InvalidOrderError",
             err,
         )
     case codes.NotFound:
         return temporal.NewNonRetryableApplicationError(
-            "Resource not found", 
-            "ResourceNotFoundError", 
+            "Resource not found",
+            "ResourceNotFoundError",
             err,
         )
     case codes.ResourceExhausted:
         if strings.Contains(st.Message(), "inventory") {
             return temporal.NewNonRetryableApplicationError(
-                "Inventory out of stock", 
-                "InventoryOutOfStockError", 
+                "Inventory out of stock",
+                "InventoryOutOfStockError",
                 err,
             )
         }
@@ -1484,7 +1484,7 @@ func handleServiceError(err error) error {
        mutex       sync.RWMutex
        config      ServiceConfig
    }
-   
+
    func (f *ServiceClientFactory) GetOrderServiceClient() (OrderServiceClient, error) {
        f.mutex.RLock()
        if client, ok := f.clientCache["order"]; ok {
@@ -1492,17 +1492,17 @@ func handleServiceError(err error) error {
            return client.(OrderServiceClient), nil
        }
        f.mutex.RUnlock()
-       
+
        // 创建新客户端
        f.mutex.Lock()
        defer f.mutex.Unlock()
-       
+
        // 检查当前使用的服务版本
        version := f.config.GetServiceVersion("order")
-       
+
        var client OrderServiceClient
        var err error
-       
+
        switch version {
        case "v1":
            client, err = orderserviceV1.NewClient(f.config.GetServiceEndpoint("order"))
@@ -1511,11 +1511,11 @@ func handleServiceError(err error) error {
        default:
            return nil, fmt.Errorf("unsupported order service version: %s", version)
        }
-       
+
        if err != nil {
            return nil, err
        }
-       
+
        f.clientCache["order"] = client
        return client, nil
    }
@@ -1528,15 +1528,15 @@ func handleServiceError(err error) error {
    func PaymentService_ProcessPayment(ctx context.Context, request PaymentRequest) (PaymentResult, error) {
        // 创建带有熔断器的客户端
        client := getPaymentServiceClient()
-       
+
        // 记录活动开始
        logger := activity.GetLogger(ctx)
        logger.Info("Processing payment", "orderId", request.OrderID, "amount", request.Amount)
-       
+
        // 使用熔断器包装服务调用
        var response *paymentservice.PaymentResponse
        var err error
-       
+
        // 熔断器配置
        cb := gobreaker.NewCircuitBreaker(gobreaker.Settings{
            Name:        "PaymentService",
@@ -1555,42 +1555,42 @@ func handleServiceError(err error) error {
                ).Inc(1)
            },
        })
-       
+
        // 执行受熔断器保护的调用
        result, cbErr := cb.Execute(func() (interface{}, error) {
            // 设置超时
            callCtx, cancel := context.WithTimeout(ctx, time.Second*30)
            defer cancel()
-           
+
            resp, err := client.ProcessPayment(callCtx, &paymentservice.PaymentRequest{
                OrderID:     request.OrderID,
                Amount:      request.Amount,
                CustomerID:  request.CustomerID,
                PaymentInfo: convertToServicePaymentInfo(request.PaymentInfo),
            })
-           
+
            return resp, err
        })
-       
+
        if cbErr != nil {
            if errors.Is(cbErr, gobreaker.ErrOpenState) {
                return PaymentResult{}, temporal.NewNonRetryableApplicationError(
-                   "Payment service circuit breaker open", 
-                   "ServiceUnavailableError", 
+                   "Payment service circuit breaker open",
+                   "ServiceUnavailableError",
                    cbErr,
                )
            }
-           
+
            return PaymentResult{}, handleServiceError(cbErr)
        }
-       
+
        response = result.(*paymentservice.PaymentResponse)
-       
+
        // 记录支付成功
-       logger.Info("Payment processed successfully", 
+       logger.Info("Payment processed successfully",
            "orderId", request.OrderID,
            "paymentId", response.PaymentID)
-       
+
        // 返回处理结果
        return PaymentResult{
            PaymentID:     response.PaymentID,
@@ -1608,7 +1608,7 @@ func handleServiceError(err error) error {
    func OrderTransactionWorkflow(ctx workflow.Context, orderRequest OrderRequest) (OrderResult, error) {
        logger := workflow.GetLogger(ctx)
        logger.Info("Order transaction workflow started", "orderId", orderRequest.OrderID)
-       
+
        // 活动选项
        activityOptions := workflow.ActivityOptions{
            ScheduleToStartTimeout: time.Minute,
@@ -1620,21 +1620,21 @@ func handleServiceError(err error) error {
                MaximumAttempts:    3,
            },
        }
-       
+
        ctx = workflow.WithActivityOptions(ctx, activityOptions)
-       
+
        // Saga定义 - 将每个步骤与其对应的补偿步骤关联起来
        saga := workflow.NewSaga(
            workflow.SagaOptions{
                Parallelism: 1, // 按顺序执行补偿
            },
        )
-       
+
        var orderDetails OrderDetails
        var inventoryResult InventoryResult
        var paymentResult PaymentResult
        var shippingResult ShippingResult
-       
+
        // 步骤1: 创建订单
        err := workflow.ExecuteActivity(ctx, "OrderService_CreateOrder", orderRequest).Get(ctx, &orderDetails)
        if err != nil {
@@ -1644,19 +1644,19 @@ func handleServiceError(err error) error {
                Error:   fmt.Sprintf("Failed to create order: %v", err),
            }, err
        }
-       
+
        // 注册订单创建的补偿操作
        saga.AddCompensation(func(ctx workflow.Context) error {
            return workflow.ExecuteActivity(
                ctx, "OrderService_CancelOrder", orderDetails.OrderID,
            ).Get(ctx, nil)
        })
-       
+
        // 步骤2: 库存预留
-       err = workflow.ExecuteActivity(ctx, 
+       err = workflow.ExecuteActivity(ctx,
            "InventoryService_ReserveInventory", orderDetails,
        ).Get(ctx, &inventoryResult)
-       
+
        if err != nil {
            return OrderResult{
                OrderID:      orderRequest.OrderID,
@@ -1665,16 +1665,16 @@ func handleServiceError(err error) error {
                OrderDetails: &orderDetails,
            }, saga.Compensate(ctx)
        }
-       
+
        // 注册库存预留的补偿操作
        saga.AddCompensation(func(ctx workflow.Context) error {
            return workflow.ExecuteActivity(
                ctx, "InventoryService_ReleaseInventory", inventoryResult.ReservationID,
            ).Get(ctx, nil)
        })
-       
+
        // 步骤3: 处理支付
-       err = workflow.ExecuteActivity(ctx, "PaymentService_ProcessPayment", 
+       err = workflow.ExecuteActivity(ctx, "PaymentService_ProcessPayment",
            PaymentRequest{
                OrderID:     orderDetails.OrderID,
                Amount:      orderDetails.TotalAmount,
@@ -1682,7 +1682,7 @@ func handleServiceError(err error) error {
                PaymentInfo: orderRequest.PaymentInfo,
            },
        ).Get(ctx, &paymentResult)
-       
+
        if err != nil {
            return OrderResult{
                OrderID:         orderRequest.OrderID,
@@ -1692,16 +1692,16 @@ func handleServiceError(err error) error {
                InventoryResult: &inventoryResult,
            }, saga.Compensate(ctx)
        }
-       
+
        // 注册支付的补偿操作
        saga.AddCompensation(func(ctx workflow.Context) error {
            return workflow.ExecuteActivity(
                ctx, "PaymentService_RefundPayment", paymentResult.PaymentID,
            ).Get(ctx, nil)
        })
-       
+
        // 步骤4: 创建物流
-       err = workflow.ExecuteActivity(ctx, "ShippingService_CreateShipment", 
+       err = workflow.ExecuteActivity(ctx, "ShippingService_CreateShipment",
            ShippingRequest{
                OrderID:  orderDetails.OrderID,
                Items:    orderDetails.Items,
@@ -1709,7 +1709,7 @@ func handleServiceError(err error) error {
                Priority: orderRequest.ShippingPriority,
            },
        ).Get(ctx, &shippingResult)
-       
+
        if err != nil {
            return OrderResult{
                OrderID:         orderRequest.OrderID,
@@ -1720,7 +1720,7 @@ func handleServiceError(err error) error {
                PaymentDetails:  &paymentResult,
            }, saga.Compensate(ctx)
        }
-       
+
        // 交易成功
        return OrderResult{
            OrderID:         orderRequest.OrderID,
@@ -1740,20 +1740,20 @@ func handleServiceError(err error) error {
    func getServiceEndpoint(serviceName string) (string, error) {
        // 从服务发现系统(如Consul、etcd等)获取服务端点
        discoveryClient := getDiscoveryClient()
-       
+
        // 查询健康的服务实例
        instances, err := discoveryClient.GetService(serviceName)
        if err != nil {
            return "", fmt.Errorf("service discovery failed for %s: %w", serviceName, err)
        }
-       
+
        if len(instances) == 0 {
            return "", fmt.Errorf("no healthy instances found for service %s", serviceName)
        }
-       
+
        // 简单的负载均衡 - 随机选择一个实例
        selectedInstance := instances[rand.Intn(len(instances))]
-       
+
        // 构建服务URL
        return fmt.Sprintf("http://%s:%d", selectedInstance.Address, selectedInstance.Port), nil
    }
@@ -1766,7 +1766,7 @@ func handleServiceError(err error) error {
    type OrderServiceV2Adapter struct {
        clientV2 *orderservicev2.Client
    }
-   
+
    func (a *OrderServiceV2Adapter) CreateOrder(ctx context.Context, request *orderservice.CreateOrderRequest) (*orderservice.CreateOrderResponse, error) {
        // 将v1请求转换为v2请求
        v2Request := &orderservicev2.OrderCreationRequest{
@@ -1776,7 +1776,7 @@ func handleServiceError(err error) error {
            LineItems: make([]*orderservicev2.LineItem, len(request.Items)),
            Metadata:  request.Metadata,
        }
-       
+
        for i, item := range request.Items {
            v2Request.LineItems[i] = &orderservicev2.LineItem{
                ProductID:   item.ProductID,
@@ -1785,13 +1785,13 @@ func handleServiceError(err error) error {
                Description: item.Description,
            }
        }
-       
+
        // 调用v2服务
        v2Response, err := a.clientV2.CreateOrder(ctx, v2Request)
        if err != nil {
            return nil, err
        }
-       
+
        // 将v2响应转换为v1响应
        return &orderservice.CreateOrderResponse{
            OrderID:     v2Response.Order.ID,
@@ -1837,11 +1837,11 @@ func handleServiceError(err error) error {
 // 贷款审批工作流
 func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (LoanApprovalResult, error) {
     logger := workflow.GetLogger(ctx)
-    logger.Info("Loan approval workflow started", 
+    logger.Info("Loan approval workflow started",
         "applicationId", application.ApplicationID,
         "applicant", application.ApplicantName,
         "amount", application.RequestedAmount)
-    
+
     // 为活动设置超时时间
     activityOptions := workflow.ActivityOptions{
         ScheduleToStartTimeout: time.Hour * 24, // 给人工审核充足的时间
@@ -1859,7 +1859,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
         },
     }
     ctx = workflow.WithActivityOptions(ctx, activityOptions)
-    
+
     // 设置查询处理器，允许外部系统查询审批状态
     currentState := ApprovalState{
         Status:        "STARTED",
@@ -1867,13 +1867,13 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
         CurrentStage:  "VALIDATION",
         History:       []ApprovalEvent{},
     }
-    
+
     if err := workflow.SetQueryHandler(ctx, "getApprovalState", func() (ApprovalState, error) {
         return currentState, nil
     }); err != nil {
         logger.Error("Failed to set query handler", "error", err)
     }
-    
+
     // 更新审批状态的辅助函数
     updateState := func(status, stage string, comment string) {
         currentState.Status = status
@@ -1886,7 +1886,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             Comment:   comment,
         })
     }
-    
+
     // 步骤1: 验证申请信息
     var validationResult ValidationResult
     err := workflow.ExecuteActivity(ctx, "ValidateLoanApplicationActivity", application).Get(ctx, &validationResult)
@@ -1898,7 +1898,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             Reason:        fmt.Sprintf("Validation failed: %v", err),
         }, nil
     }
-    
+
     if !validationResult.IsValid {
         updateState("REJECTED", "VALIDATION", validationResult.Reason)
         return LoanApprovalResult{
@@ -1907,12 +1907,12 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             Reason:        validationResult.Reason,
         }, nil
     }
-    
+
     updateState("IN_PROGRESS", "RISK_ASSESSMENT", "Application validated, proceeding to risk assessment")
-    
+
     // 步骤2: 执行风险评估
     var riskResult RiskAssessmentResult
-    err = workflow.ExecuteActivity(ctx, "AssessLoanRiskActivity", 
+    err = workflow.ExecuteActivity(ctx, "AssessLoanRiskActivity",
         RiskAssessmentRequest{
             ApplicationID:    application.ApplicationID,
             ApplicantID:      application.ApplicantID,
@@ -1924,7 +1924,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             ApplicationData:  application,
         },
     ).Get(ctx, &riskResult)
-    
+
     if err != nil {
         updateState("REJECTED", "RISK_ASSESSMENT", fmt.Sprintf("Risk assessment failed: %v", err))
         return LoanApprovalResult{
@@ -1933,48 +1933,48 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             Reason:        fmt.Sprintf("Risk assessment failed: %v", err),
         }, nil
     }
-    
+
     // 记录风险评估结果
-    updateState("IN_PROGRESS", "RISK_ASSESSED", 
-        fmt.Sprintf("Risk assessment completed. Risk score: %d, Risk level: %s", 
+    updateState("IN_PROGRESS", "RISK_ASSESSED",
+        fmt.Sprintf("Risk assessment completed. Risk score: %d, Risk level: %s",
             riskResult.RiskScore, riskResult.RiskLevel))
-    
+
     // 步骤3: 根据风险等级决定下一步操作
     var approvalResult LoanApprovalResult
-    
+
     switch riskResult.RiskLevel {
     case "LOW":
         // 低风险贷款 - 自动批准
         updateState("IN_PROGRESS", "AUTO_APPROVAL", "Low risk application, auto-approving")
-        
-        err = workflow.ExecuteActivity(ctx, "AutoApproveLoanActivity", 
+
+        err = workflow.ExecuteActivity(ctx, "AutoApproveLoanActivity",
             AutoApprovalRequest{
                 ApplicationID:   application.ApplicationID,
                 RequestedAmount: application.RequestedAmount,
                 RiskResult:      riskResult,
             },
         ).Get(ctx, &approvalResult)
-        
+
         if err != nil {
-            updateState("PENDING_REVIEW", "AUTO_APPROVAL", 
+            updateState("PENDING_REVIEW", "AUTO_APPROVAL",
                 fmt.Sprintf("Auto-approval failed, routing to manual review: %v", err))
-            
+
             // 转到人工审核流程
             goto ManualReview
         }
-        
+
         updateState("APPROVED", "AUTO_APPROVAL", "Application automatically approved based on low risk")
-        
+
     case "MEDIUM", "HIGH":
         // 中高风险贷款 - 需要人工审核
         ManualReview:
-        updateState("IN_PROGRESS", "MANUAL_REVIEW", 
+        updateState("IN_PROGRESS", "MANUAL_REVIEW",
             fmt.Sprintf("%s risk application, routing for manual review", riskResult.RiskLevel))
-        
+
         var reviewResult ManualReviewResult
-        
+
         // 创建人工审核任务
-        taskID, err := workflow.ExecuteActivity(ctx, "CreateReviewTaskActivity", 
+        taskID, err := workflow.ExecuteActivity(ctx, "CreateReviewTaskActivity",
             ReviewTaskRequest{
                 ApplicationID:   application.ApplicationID,
                 ApplicantName:   application.ApplicantName,
@@ -1984,7 +1984,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                 RequiredRole:    determineRequiredRole(riskResult.RiskLevel),
             },
         ).Get(ctx, nil)
-        
+
         if err != nil {
             updateState("ERROR", "MANUAL_REVIEW", fmt.Sprintf("Failed to create review task: %v", err))
             return LoanApprovalResult{
@@ -1993,28 +1993,28 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                 Reason:        fmt.Sprintf("Failed to create review task: %v", err),
             }, err
         }
-        
+
         // 等待人工审核完成的信号
         signalName := fmt.Sprintf("review_completed_%s", taskID.(string))
         signalChan := workflow.GetSignalChannel(ctx, signalName)
-        
+
         updateState("PENDING_REVIEW", "MANUAL_REVIEW", fmt.Sprintf("Waiting for manual review, task ID: %s", taskID.(string)))
-        
+
         // 设置超时等待信号
         selector := workflow.NewSelector(ctx)
         var signalReceived bool
-        
+
         selector.AddReceive(signalChan, func(c workflow.ReceiveChannel, more bool) {
             signalReceived = true
             c.Receive(ctx, &reviewResult)
         })
-        
+
         selector.AddFuture(workflow.NewTimer(ctx, 72*time.Hour), func(f workflow.Future) {
             // 72小时后仍未收到审核结果
             updateState("ESCALATED", "MANUAL_REVIEW", "Review timed out after 72 hours, escalating")
-            
+
             // 创建升级任务
-            workflow.ExecuteActivity(ctx, "EscalateReviewActivity", 
+            workflow.ExecuteActivity(ctx, "EscalateReviewActivity",
                 EscalationRequest{
                     ApplicationID: application.ApplicationID,
                     TaskID:        taskID.(string),
@@ -2023,24 +2023,24 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                 },
             )
         })
-        
+
         // 等待信号或超时
         selector.Select(ctx)
-        
+
         if !signalReceived {
             // 继续等待升级后的审核结果
             signalChan.Receive(ctx, &reviewResult)
         }
-        
-        updateState("IN_PROGRESS", "REVIEW_COMPLETED", 
-            fmt.Sprintf("Manual review completed. Decision: %s, Reviewer: %s", 
+
+        updateState("IN_PROGRESS", "REVIEW_COMPLETED",
+            fmt.Sprintf("Manual review completed. Decision: %s, Reviewer: %s",
                 reviewResult.Decision, reviewResult.ReviewerID))
-        
+
         // 处理审核结果
         switch reviewResult.Decision {
         case "APPROVED":
             // 步骤4A: 审核通过，处理贷款
-            err = workflow.ExecuteActivity(ctx, "ProcessApprovedLoanActivity", 
+            err = workflow.ExecuteActivity(ctx, "ProcessApprovedLoanActivity",
                 ApprovedLoanRequest{
                     ApplicationID:   application.ApplicationID,
                     ApplicantID:     application.ApplicantID,
@@ -2051,7 +2051,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     ReviewComments:  reviewResult.Comments,
                 },
             ).Get(ctx, &approvalResult)
-            
+
             if err != nil {
                 updateState("ERROR", "LOAN_PROCESSING", fmt.Sprintf("Failed to process approved loan: %v", err))
                 return LoanApprovalResult{
@@ -2060,12 +2060,12 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     Reason:        fmt.Sprintf("Failed to process approved loan: %v", err),
                 }, err
             }
-            
+
             updateState("APPROVED", "LOAN_PROCESSED", "Loan approved and processed successfully")
-            
+
         case "REJECTED":
             // 步骤4B: 审核拒绝，记录原因
-            err = workflow.ExecuteActivity(ctx, "ProcessRejectedLoanActivity", 
+            err = workflow.ExecuteActivity(ctx, "ProcessRejectedLoanActivity",
                 RejectedLoanRequest{
                     ApplicationID:   application.ApplicationID,
                     ApplicantID:     application.ApplicantID,
@@ -2073,17 +2073,17 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     ReviewerID:      reviewResult.ReviewerID,
                 },
             ).Get(ctx, &approvalResult)
-            
+
             if err != nil {
                 updateState("ERROR", "REJECTION_PROCESSING", fmt.Sprintf("Failed to process loan rejection: %v", err))
             } else {
                 updateState("REJECTED", "LOAN_REJECTED", fmt.Sprintf("Loan rejected: %s", reviewResult.Comments))
             }
-            
+
         case "NEED_MORE_INFO":
             // 步骤4C: 需要更多信息，联系申请人
             // 创建信息请求任务
-            infoRequestID, err := workflow.ExecuteActivity(ctx, "RequestAdditionalInfoActivity", 
+            infoRequestID, err := workflow.ExecuteActivity(ctx, "RequestAdditionalInfoActivity",
                 AdditionalInfoRequest{
                     ApplicationID:  application.ApplicationID,
                     ApplicantID:    application.ApplicantID,
@@ -2091,7 +2091,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     RequestedBy:    reviewResult.ReviewerID,
                 },
             ).Get(ctx, nil)
-            
+
             if err != nil {
                 updateState("ERROR", "INFO_REQUEST", fmt.Sprintf("Failed to request additional information: %v", err))
                 return LoanApprovalResult{
@@ -2100,19 +2100,19 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     Reason:        fmt.Sprintf("Failed to request additional information: %v", err),
                 }, err
             }
-            
-            updateState("PENDING_INFO", "INFO_REQUESTED", 
+
+            updateState("PENDING_INFO", "INFO_REQUESTED",
                 fmt.Sprintf("Additional information requested, request ID: %s", infoRequestID.(string)))
-            
+
             // 子工作流处理信息收集和重新审核
             childWorkflowOptions := workflow.ChildWorkflowOptions{
                 WorkflowID:        fmt.Sprintf("InfoCollection_%s", application.ApplicationID),
                 WorkflowRunTimeout: 30 * 24 * time.Hour, // 30天超时
             }
             childCtx := workflow.WithChildOptions(ctx, childWorkflowOptions)
-            
+
             var childResult LoanApprovalResult
-            err = workflow.ExecuteChildWorkflow(childCtx, "AdditionalInfoCollectionWorkflow", 
+            err = workflow.ExecuteChildWorkflow(childCtx, "AdditionalInfoCollectionWorkflow",
                 AdditionalInfoWorkflowRequest{
                     ApplicationID:  application.ApplicationID,
                     InfoRequestID:  infoRequestID.(string),
@@ -2121,7 +2121,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     ReviewerNotes:  reviewResult.Comments,
                 },
             ).Get(ctx, &childResult)
-            
+
             if err != nil {
                 updateState("ERROR", "INFO_COLLECTION", fmt.Sprintf("Additional information collection failed: %v", err))
                 return LoanApprovalResult{
@@ -2130,14 +2130,14 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
                     Reason:        fmt.Sprintf("Additional information collection failed: %v", err),
                 }, err
             }
-            
+
             // 返回子工作流的结果
             return childResult, nil
         }
     }
-    
+
     // 步骤5: 发送通知
-    _ = workflow.ExecuteActivity(ctx, "SendLoanDecisionNotificationActivity", 
+    _ = workflow.ExecuteActivity(ctx, "SendLoanDecisionNotificationActivity",
         NotificationRequest{
             ApplicationID: application.ApplicationID,
             ApplicantID:   application.ApplicantID,
@@ -2146,11 +2146,11 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
             Details:       approvalResult,
         },
     ).Get(ctx, nil)
-    
-    logger.Info("Loan approval workflow completed", 
+
+    logger.Info("Loan approval workflow completed",
         "applicationId", application.ApplicationID,
         "status", approvalResult.Status)
-    
+
     return approvalResult, nil
 }
 
@@ -2158,7 +2158,7 @@ func LoanApprovalWorkflow(ctx workflow.Context, application LoanApplication) (Lo
 func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (string, error) {
     // 获取任务管理系统客户端
     client := getTaskManagementClient()
-    
+
     // 创建任务实体
     task := &taskmanagement.Task{
         Type:            "LOAN_REVIEW",
@@ -2175,21 +2175,21 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
         RunID:           activity.GetInfo(ctx).WorkflowExecution.RunID,
         SignalName:      fmt.Sprintf("review_completed_%s", uuid.New().String()),
     }
-    
+
     // 保存任务并获取任务ID
     taskID, err := client.CreateTask(ctx, task)
     if err != nil {
         return "", fmt.Errorf("failed to create review task: %w", err)
     }
-    
+
     // 记录活动日志
     logger := activity.GetLogger(ctx)
-    logger.Info("Review task created", 
+    logger.Info("Review task created",
         "taskId", taskID,
         "applicationId", request.ApplicationID,
         "riskLevel", request.RiskLevel,
         "signalName", task.SignalName)
-    
+
     // 返回任务ID和信号名称组合，以便工作流等待正确的信号
     return task.SignalName, nil
 }
@@ -2217,7 +2217,7 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
        workflowClient   client.Client
        taskDataStore    TaskDataStore
    }
-   
+
    // 处理审核任务的完成
    func (h *WorkflowTaskHandler) HandleTaskCompletion(w http.ResponseWriter, r *http.Request) {
        // 从请求中解析任务数据
@@ -2226,37 +2226,37 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
            http.Error(w, "Invalid request body", http.StatusBadRequest)
            return
        }
-       
+
        // 验证请求
        if err := validateTaskCompletionRequest(request); err != nil {
            http.Error(w, err.Error(), http.StatusBadRequest)
            return
        }
-       
+
        // 获取任务详细信息
        task, err := h.taskDataStore.GetTask(r.Context(), request.TaskID)
        if err != nil {
            http.Error(w, fmt.Sprintf("Failed to retrieve task: %v", err), http.StatusInternalServerError)
            return
        }
-       
+
        if task.Status == "COMPLETED" {
            http.Error(w, "Task already completed", http.StatusConflict)
            return
        }
-       
+
        // 更新任务状态
        task.Status = "COMPLETED"
        task.CompletedBy = request.ReviewerID
        task.CompletedAt = time.Now()
        task.Decision = request.Decision
        task.Comments = request.Comments
-       
+
        if err := h.taskDataStore.UpdateTask(r.Context(), task); err != nil {
            http.Error(w, fmt.Sprintf("Failed to update task: %v", err), http.StatusInternalServerError)
            return
        }
-       
+
        // 将完成信息发送回工作流
        reviewResult := ManualReviewResult{
            TaskID:         request.TaskID,
@@ -2268,19 +2268,19 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
            Term:           request.Term,
            RequestedInfo:  request.RequestedInfo,
        }
-       
+
        // 向工作流发送信号
        err = h.workflowClient.SignalWorkflow(r.Context(),
            task.WorkflowID, task.RunID, task.SignalName, reviewResult)
-       
+
        if err != nil {
            // 记录错误但不回滚任务状态
            log.Printf("Failed to signal workflow: %v", err)
-           http.Error(w, fmt.Sprintf("Task completed but failed to notify workflow: %v", err), 
+           http.Error(w, fmt.Sprintf("Task completed but failed to notify workflow: %v", err),
                http.StatusInternalServerError)
            return
        }
-       
+
        // 返回成功响应
        w.WriteHeader(http.StatusOK)
        json.NewEncoder(w).Encode(map[string]string{
@@ -2296,10 +2296,10 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
    // 实现额外信息收集子工作流
    func AdditionalInfoCollectionWorkflow(ctx workflow.Context, request AdditionalInfoWorkflowRequest) (LoanApprovalResult, error) {
        logger := workflow.GetLogger(ctx)
-       logger.Info("Additional info collection workflow started", 
+       logger.Info("Additional info collection workflow started",
            "applicationId", request.ApplicationID,
            "infoRequestId", request.InfoRequestID)
-       
+
        // 设置查询处理器
        currentState := InfoCollectionState{
            ApplicationID: request.ApplicationID,
@@ -2307,13 +2307,13 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
            RequestID:     request.InfoRequestID,
            StartedAt:     workflow.Now(ctx),
        }
-       
+
        if err := workflow.SetQueryHandler(ctx, "getInfoCollectionState", func() (InfoCollectionState, error) {
            return currentState, nil
        }); err != nil {
            logger.Error("Failed to set query handler", "error", err)
        }
-       
+
        // 更新状态的辅助函数
        updateState := func(status string, comment string) {
            currentState.Status = status
@@ -2325,23 +2325,23 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                Comment:   comment,
            })
        }
-       
+
        // 等待收到额外信息信号或超时
        infoSignalName := fmt.Sprintf("additional_info_received_%s", request.InfoRequestID)
        infoSignalChan := workflow.GetSignalChannel(ctx, infoSignalName)
-       
+
        var additionalInfo ApplicantAdditionalInfo
        var infoReceived bool
-       
+
        // 设置超时期限
        selector := workflow.NewSelector(ctx)
-       
+
        selector.AddReceive(infoSignalChan, func(c workflow.ReceiveChannel, more bool) {
            c.Receive(ctx, &additionalInfo)
            infoReceived = true
            updateState("INFO_RECEIVED", "Additional information received from applicant")
        })
-       
+
        // 设置7天提醒
        selector.AddFuture(workflow.NewTimer(ctx, 7*24*time.Hour), func(f workflow.Future) {
            // 发送提醒给申请人
@@ -2354,14 +2354,14 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                    DaysElapsed:   7,
                },
            ).Get(ctx, nil)
-           
+
            if reminderErr != nil {
                logger.Error("Failed to send reminder", "error", reminderErr)
            }
-           
+
            updateState("WAITING_FOR_INFO", "Sent 7-day reminder to applicant")
        })
-       
+
        // 设置14天提醒
        selector.AddFuture(workflow.NewTimer(ctx, 14*24*time.Hour), func(f workflow.Future) {
            // 发送最后提醒给申请人
@@ -2375,19 +2375,19 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                    IsFinal:       true,
                },
            ).Get(ctx, nil)
-           
+
            if reminderErr != nil {
                logger.Error("Failed to send final reminder", "error", reminderErr)
            }
-           
+
            updateState("WAITING_FOR_INFO", "Sent 14-day (final) reminder to applicant")
        })
-       
+
        // 设置21天超时
        selector.AddFuture(workflow.NewTimer(ctx, 21*24*time.Hour), func(f workflow.Future) {
            // 如果超时，则自动拒绝申请
            updateState("TIMED_OUT", "No response received after 21 days")
-           
+
            // 通知申请人
            _ = workflow.ExecuteActivity(
                workflow.WithActivityOptions(ctx, activityOptions),
@@ -2399,12 +2399,12 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                },
            ).Get(ctx, nil)
        })
-       
+
        // 循环等待信号或超时
        for !infoReceived && currentState.Status != "TIMED_OUT" {
            selector.Select(ctx)
        }
-       
+
        // 如果超时，自动拒绝
        if currentState.Status == "TIMED_OUT" {
            return LoanApprovalResult{
@@ -2413,10 +2413,10 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                Reason:        "Application rejected due to failure to provide requested information",
            }, nil
        }
-       
+
        // 已收到信息，更新申请并重新评估
        updateState("PROCESSING", "Updating application with additional information")
-       
+
        var updatedApplication LoanApplication
        err := workflow.ExecuteActivity(
            workflow.WithActivityOptions(ctx, activityOptions),
@@ -2426,7 +2426,7 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                AdditionalInfo:      additionalInfo,
            },
        ).Get(ctx, &updatedApplication)
-       
+
        if err != nil {
            updateState("ERROR", fmt.Sprintf("Failed to update application: %v", err))
            return LoanApprovalResult{
@@ -2435,13 +2435,13 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                Reason:        fmt.Sprintf("Failed to process additional information: %v", err),
            }, err
        }
-       
+
        updateState("REASSESSING", "Additional information processed, reassessing application")
-       
+
        // 重新启动审批流程，但使用更新的申请信息
        var result LoanApprovalResult
        err = workflow.ExecuteChildWorkflow(ctx, "LoanApprovalWorkflow", updatedApplication).Get(ctx, &result)
-       
+
        if err != nil {
            updateState("ERROR", fmt.Sprintf("Failed to restart approval process: %v", err))
            return LoanApprovalResult{
@@ -2450,11 +2450,11 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                Reason:        fmt.Sprintf("Failed to reassess application: %v", err),
            }, err
        }
-       
+
        // 返回审批结果
-       updateState(fmt.Sprintf("COMPLETED_%s", result.Status), 
+       updateState(fmt.Sprintf("COMPLETED_%s", result.Status),
            fmt.Sprintf("Application reassessment completed with status: %s", result.Status))
-       
+
        return result, nil
    }
    ```
@@ -2466,16 +2466,16 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
    func AssessLoanRiskActivity(ctx context.Context, request RiskAssessmentRequest) (RiskAssessmentResult, error) {
        logger := activity.GetLogger(ctx)
        logger.Info("Assessing loan risk", "applicationId", request.ApplicationID)
-       
+
        // 获取规则引擎客户端
        rulesClient := getRulesEngineClient()
-       
+
        // 从规则服务获取当前适用的规则集
        ruleSet, err := rulesClient.GetActiveRuleSet(ctx, "LOAN_RISK_ASSESSMENT")
        if err != nil {
            return RiskAssessmentResult{}, fmt.Errorf("failed to retrieve risk assessment rules: %w", err)
        }
-       
+
        // 准备规则执行上下文
        ruleContext := map[string]interface{}{
            "applicationId":      request.ApplicationID,
@@ -2492,24 +2492,24 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
            "previousBankruptcy": request.ApplicationData.HasPreviousBankruptcy,
            "loanPurpose":        request.ApplicationData.LoanPurpose,
        }
-       
+
        // 执行规则评估
        result, err := rulesClient.EvaluateRules(ctx, ruleSet.ID, ruleContext)
        if err != nil {
            return RiskAssessmentResult{}, fmt.Errorf("rule evaluation failed: %w", err)
        }
-       
+
        // 解析结果
        riskScore, ok := result["riskScore"].(int)
        if !ok {
            return RiskAssessmentResult{}, fmt.Errorf("rule result missing risk score")
        }
-       
+
        riskLevel, ok := result["riskLevel"].(string)
        if !ok {
            return RiskAssessmentResult{}, fmt.Errorf("rule result missing risk level")
        }
-       
+
        // 记录详细的风险因素
        var riskDetails []RiskFactor
        if riskFactors, ok := result["riskFactors"].([]interface{}); ok {
@@ -2524,15 +2524,15 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                }
            }
        }
-       
+
        // 记录审计日志
        _ = recordRiskAssessmentAudit(ctx, request, riskScore, riskLevel, riskDetails)
-       
-       logger.Info("Risk assessment completed", 
+
+       logger.Info("Risk assessment completed",
            "applicationId", request.ApplicationID,
            "riskScore", riskScore,
            "riskLevel", riskLevel)
-       
+
        return RiskAssessmentResult{
            ApplicationID: request.ApplicationID,
            RiskScore:     riskScore,
@@ -2551,7 +2551,7 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
    // 审计日志记录
    func recordApprovalAudit(ctx context.Context, action string, application LoanApplication, details interface{}, userID string) error {
        auditClient := getAuditClient()
-       
+
        auditEvent := AuditEvent{
            Timestamp:     time.Now(),
            Action:        action,
@@ -2565,18 +2565,18 @@ func CreateReviewTaskActivity(ctx context.Context, request ReviewTaskRequest) (s
                RunID:      activity.GetInfo(ctx).WorkflowExecution.RunID,
            },
        }
-       
+
        // 记录不可篡改的审计日志
        if err := auditClient.RecordAuditEvent(ctx, auditEvent); err != nil {
            activity.GetLogger(ctx).Error("Failed to record audit event",
                "action", action,
                "applicationId", application.ApplicationID,
                "error", err)
-           
+
            // 记录审计失败但不中断处理
            return err
        }
-       
+
        return nil
    }
    ```
@@ -2617,12 +2617,12 @@ Cadence实施的主要技术挑战包括：
 // 错误处理的最佳实践示例
 func handleActivityError(ctx workflow.Context, err error, activityName string) (bool, error) {
     logger := workflow.GetLogger(ctx)
-    
+
     // 检查错误类型
     if temporal.IsTimeoutError(err) {
         timeoutType := temporal.GetTimeoutType(err)
         logger.Info("Activity timeout", "activity", activityName, "timeoutType", timeoutType)
-        
+
         // 对不同类型的超时使用不同的处理策略
         switch timeoutType {
         case enumspb.TIMEOUT_TYPE_START_TO_CLOSE:
@@ -2639,7 +2639,7 @@ func handleActivityError(ctx workflow.Context, err error, activityName string) (
         }
         return true, nil
     }
-    
+
     // 检查是否是应用程序错误
     var applicationErr *temporal.ApplicationError
     if errors.As(err, &applicationErr) {
@@ -2659,13 +2659,13 @@ func handleActivityError(ctx workflow.Context, err error, activityName string) (
             return false, err
         }
     }
-    
+
     // 检查是否是被取消
     if temporal.IsCanceledError(err) {
         logger.Info("Activity was canceled", "activity", activityName)
         return false, err
     }
-    
+
     // 其他未知错误，一般可重试
     logger.Warn("Unknown error occurred", "activity", activityName, "error", err)
     return true, nil
@@ -2694,7 +2694,7 @@ func handleActivityError(ctx workflow.Context, err error, activityName string) (
 // 处理大数据的最佳实践
 func LargeDataProcessingWorkflow(ctx workflow.Context, request ProcessingRequest) (ProcessingResult, error) {
     logger := workflow.GetLogger(ctx)
-    
+
     // 步骤1: 在活动中处理和存储大数据，只返回引用
     var dataReference DataReference
     err := workflow.ExecuteActivity(
@@ -2702,13 +2702,13 @@ func LargeDataProcessingWorkflow(ctx workflow.Context, request ProcessingRequest
         "StoreAndProcessLargeDataActivity",
         request.InputData,
     ).Get(ctx, &dataReference)
-    
+
     if err != nil {
         return ProcessingResult{}, err
     }
-    
+
     logger.Info("Large data processed and stored", "reference", dataReference.ID)
-    
+
     // 工作流只存储数据引用和处理状态，而非数据本身
     processingState := ProcessingState{
         RequestID:      request.RequestID,
@@ -2716,7 +2716,7 @@ func LargeDataProcessingWorkflow(ctx workflow.Context, request ProcessingRequest
         ProcessingStep: "DATA_STORED",
         Metadata:       dataReference.Metadata, // 存储摘要信息，不是完整数据
     }
-    
+
     // 步骤2: 分析数据，同样只传递引用
     var analysisResult AnalysisReference
     err = workflow.ExecuteActivity(
@@ -2724,14 +2724,14 @@ func LargeDataProcessingWorkflow(ctx workflow.Context, request ProcessingRequest
         "AnalyzeDataActivity",
         dataReference,
     ).Get(ctx, &analysisResult)
-    
+
     if err != nil {
         return ProcessingResult{}, err
     }
-    
+
     processingState.ProcessingStep = "ANALYSIS_COMPLETE"
     processingState.AnalysisReference = analysisResult.ID
-    
+
     // 工作流处理完成后，只返回必要信息
     return ProcessingResult{
         RequestID:         request.RequestID,
@@ -2747,22 +2747,22 @@ func LargeDataProcessingWorkflow(ctx workflow.Context, request ProcessingRequest
 func StoreAndProcessLargeDataActivity(ctx context.Context, inputData []byte) (DataReference, error) {
     // 获取存储客户端
     storageClient := getStorageClient()
-    
+
     // 生成唯一ID
     dataID := generateUniqueID()
-    
+
     // 处理和转换数据 (在活动中可以安全处理大数据)
     processedData, metadata, err := processLargeData(inputData)
     if err != nil {
         return DataReference{}, err
     }
-    
+
     // 存储到外部系统
     location, err := storageClient.Store(ctx, dataID, processedData)
     if err != nil {
         return DataReference{}, fmt.Errorf("failed to store data: %w", err)
     }
-    
+
     // 只返回引用和元数据，不返回数据本身
     return DataReference{
         ID:       dataID,
@@ -2799,43 +2799,43 @@ func StoreAndProcessLargeDataActivity(ctx context.Context, inputData []byte) (Da
 func OrderWorkflow(ctx workflow.Context, orderRequest OrderRequest) (OrderResult, error) {
     logger := workflow.GetLogger(ctx)
     metricsHandler := workflow.GetMetricsHandler(ctx)
-    
+
     // 记录入站订单指标
     metricsHandler.Counter("workflow.order.started").Inc(1)
-    
+
     // 记录订单金额
     metricsHandler.Histogram("workflow.order.amount", metrics.HistogramOptions{}).
         Record(float64(orderRequest.TotalAmount))
-    
+
     // 启动流程执行定时监控
     workflowID := workflow.GetInfo(ctx).WorkflowExecution.ID
     workflow.Go(ctx, func(ctx workflow.Context) {
         for {
             // 每分钟发送一次心跳指标
             workflow.Sleep(ctx, time.Minute)
-            
+
             // 记录工作流生命周期指标
             metricsHandler.Gauge("workflow.order.running.duration").
                 Update(workflow.Now(ctx).Sub(workflow.GetInfo(ctx).StartTime).Seconds())
-            
+
             // 自定义业务指标
             metricsHandler.Gauge(fmt.Sprintf("workflow.order.%s.running", orderRequest.Type)).
                 Update(1)
         }
     })
-    
+
     // 记录开始时间用于计算总持续时间
     startTime := workflow.Now(ctx)
-    
+
     // ... 工作流实现 ...
-    
+
     // 计算持续时间
     duration := workflow.Now(ctx).Sub(startTime)
-    
+
     // 记录完成指标
     metricsHandler.Counter("workflow.order.completed").Inc(1)
     metricsHandler.Timer("workflow.order.duration").Record(duration)
-    
+
     // 记录业务结果指标
     if result.Status == "COMPLETED" {
         metricsHandler.Counter("workflow.order.success").Inc(1)
@@ -2843,7 +2843,7 @@ func OrderWorkflow(ctx workflow.Context, orderRequest OrderRequest) (OrderResult
         metricsHandler.Counter("workflow.order.failed").Inc(1)
         metricsHandler.Counter(fmt.Sprintf("workflow.order.failed.%s", result.FailureReason)).Inc(1)
     }
-    
+
     return result, nil
 }
 ```
@@ -3059,7 +3059,7 @@ func (s *WorkflowTestSuite) TestOrderWorkflow_PaymentFailure() {
         case "PaymentService_ProcessPayment":
             // 返回支付失败错误
             return nil, temporal.NewApplicationError(
-                "Payment declined: insufficient funds", 
+                "Payment declined: insufficient funds",
                 "PaymentDeclinedError",
             )
         case "InventoryService_ReleaseInventory":
@@ -3113,7 +3113,7 @@ func (s *WorkflowTestSuite) TestOrderWorkflow_PaymentFailure() {
     s.True(env.IsWorkflowCompleted())
     err := env.GetWorkflowError()
     s.Error(err)
-    
+
     var applicationErr *temporal.ApplicationError
     s.True(errors.As(err, &applicationErr))
     s.Contains(applicationErr.Error(), "Payment declined")
@@ -3180,14 +3180,14 @@ func toDomainOrder(result workflow.OrderResult) domain.Order {
 func (s *OrderWorkflowService) CreateOrderActivity(ctx context.Context, request workflow.CreateOrderRequest) (workflow.OrderDetails, error) {
     // 转换为领域请求
     domainRequest := toDomainCreateOrderRequest(request)
-    
+
     // 调用领域服务
     order, err := s.orderService.CreateOrder(ctx, domainRequest)
     if err != nil {
         // 将领域错误转换为工作流错误
         return workflow.OrderDetails{}, mapDomainError(err)
     }
-    
+
     // 转换领域实体为工作流数据结构
     return toWorkflowOrderDetails(order), nil
 }

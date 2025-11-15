@@ -107,7 +107,7 @@ Rust 通过两个标记特性实现并发安全的类型检查：
 fn main() {
     use std::thread;
     use std::sync::{Arc, Mutex};
-    
+
     // 所有权转移到新线程
     let data = vec![1, 2, 3];
     let handle = thread::spawn(move || {
@@ -116,21 +116,21 @@ fn main() {
     });
     // println!("{:?}", data); // 错误：data 已被移动
     handle.join().unwrap();
-    
+
     // 通过 Arc 和 Mutex 共享数据
     let counter = Arc::new(Mutex::new(0));
     let counter2 = Arc::clone(&counter);
-    
+
     let handle2 = thread::spawn(move || {
         let mut num = counter2.lock().unwrap();
         *num += 1;
     });
-    
+
     {
         let mut num = counter.lock().unwrap();
         *num += 1;
     }
-    
+
     handle2.join().unwrap();
     println!("最终计数: {}", *counter.lock().unwrap());
 }
@@ -169,13 +169,13 @@ impl User {
             cache: RefCell::new(None),
         }
     }
-    
+
     fn get_greeting(&self) -> String {
         // 虽然 self 是不可变引用，但可以修改 cache 字段
         if let Some(cached) = self.cache.borrow().as_ref() {
             return cached.clone();
         }
-        
+
         let greeting = format!("你好，{}！", self.name);
         *self.cache.borrow_mut() = Some(greeting.clone());
         greeting
@@ -213,18 +213,18 @@ impl SelfRef {
             pointer: std::ptr::null(),
             _marker: PhantomPinned,
         });
-        
+
         let pointer = &boxed.value as *const String;
         boxed.pointer = pointer;
-        
+
         // 将结构体固定在内存中
         Pin::new(boxed)
     }
-    
+
     fn get_value(&self) -> &str {
         &self.value
     }
-    
+
     fn get_pointer_value(&self) -> &str {
         unsafe { &(*self.pointer) }
     }
@@ -273,14 +273,14 @@ fn main() {
         name: String::from("张三"),
         age: 30,
     };
-    
+
     // 同时借用不同字段是安全的
     let name = &mut person.name;
     let age = &mut person.age;
-    
+
     name.push_str("・李");
     *age += 1;
-    
+
     println!("{} 今年 {} 岁", name, age);
 }
 ```
@@ -308,9 +308,9 @@ Rust 的 unsafe 机制允许绕过所有权检查，但需要程序员保证安�
 fn split_at_mut<T>(slice: &mut [T], mid: usize) -> (&mut [T], &mut [T]) {
     let len = slice.len();
     let ptr = slice.as_mut_ptr();
-    
+
     assert!(mid <= len);
-    
+
     unsafe {
         (
             std::slice::from_raw_parts_mut(ptr, mid),
@@ -349,13 +349,13 @@ fn main() {
     let state = Rc::new(SharedState {
         data: RefCell::new(vec![1, 2, 3]),
     });
-    
+
     let state2 = Rc::clone(&state);
     let state3 = Rc::clone(&state);
-    
+
     state2.data.borrow_mut().push(4);
     state3.data.borrow_mut().push(5);
-    
+
     println!("最终数据: {:?}", state.data.borrow());
 }
 ```
@@ -516,10 +516,10 @@ fn process_data(data: &[u8]) -> Vec<u8> {
 
 fn main() {
     let data = vec![1, 2, 3, 4, 5];
-    
+
     // 通过引用传递数据，避免复制
     let result = process_data(&data);
-    
+
     // 原始数据仍然可用
     println!("原始: {:?}", data);
     println!("结果: {:?}", result);

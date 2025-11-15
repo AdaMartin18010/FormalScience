@@ -120,7 +120,7 @@ Rust 1.65+引入的GAT(泛型关联类型)提供了更强大的表达能力：
 // GAT允许在关联类型中包含生命周期参数
 trait PointerFamily {
     type Pointer<'a, T: 'a>;
-    
+
     fn new<'a, T: 'a>(value: &'a T) -> Self::Pointer<'a, T>;
 }
 
@@ -129,7 +129,7 @@ struct RefPointer;
 
 impl PointerFamily for RefPointer {
     type Pointer<'a, T: 'a> = &'a T;
-    
+
     fn new<'a, T: 'a>(value: &'a T) -> Self::Pointer<'a, T> {
         value
     }
@@ -365,7 +365,7 @@ impl Process<Initial> {
             data: Vec::new(),
         }
     }
-    
+
     fn start(self) -> Process<Processing> {
         Process {
             state: State(PhantomData),
@@ -545,7 +545,7 @@ impl<T> NonEmpty<T> {
     fn new(first: T) -> Self {
         NonEmpty(vec![first])
     }
-    
+
     fn from_vec(vec: Vec<T>) -> Option<Self> {
         if vec.is_empty() {
             None
@@ -553,7 +553,7 @@ impl<T> NonEmpty<T> {
             Some(NonEmpty(vec))
         }
     }
-    
+
     fn get(&self) -> &Vec<T> {
         &self.0
     }
@@ -572,7 +572,7 @@ impl<T: PartialEq + From<u8> + Copy> NonZero<T> {
             Some(NonZero { value })
         }
     }
-    
+
     fn get(&self) -> T {
         self.value
     }
@@ -683,7 +683,7 @@ impl<T> Mutex<T> {
             lock: AtomicBool::new(false),
         }
     }
-    
+
     fn lock(&self) -> MutexGuard<T> {
         // 获取锁的逻辑
         // ...
@@ -698,7 +698,7 @@ struct MutexGuard<'a, T> {
 
 impl<'a, T> Deref for MutexGuard<'a, T> {
     type Target = T;
-    
+
     fn deref(&self) -> &Self::Target {
         unsafe { &*self.mutex.data.get() }
     }
@@ -771,7 +771,7 @@ enum ReadDataFuture<'a, R: AsyncRead + Unpin> {
 
 impl<'a, R: AsyncRead + Unpin> Future for ReadDataFuture<'a, R> {
     type Output = Result<Vec<u8>, io::Error>;
-    
+
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         // 状态机实现
         // ...
@@ -845,7 +845,7 @@ where
 trait DataProcessor {
     type Input: Clone;
     type Output;
-    
+
     fn process(&self, input: &[Self::Input]) -> Self::Output;
 }
 ```
@@ -911,12 +911,12 @@ impl<T: Display> Tree<T> {
             }
         }
     }
-    
+
     // 尾递归转换
     fn print_iter(&self) {
         let mut stack = Vec::new();
         stack.push(self);
-        
+
         while let Some(current) = stack.pop() {
             match current {
                 Tree::Leaf(value) => println!("{}", value),

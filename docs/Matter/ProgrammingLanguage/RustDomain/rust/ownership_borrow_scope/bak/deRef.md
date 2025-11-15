@@ -42,7 +42,7 @@ impl<T> Deref for MyBox<T> {
 fn main() {
     let x = 10;
     let boxed = MyBox(MyBox(x));
-    
+
     // boxed 的类型为 MyBox<MyBox<i32>>
     // *boxed 得到 MyBox<i32>，对其再解引用 **boxed 则得到 i32，即 x 的值
     assert_eq!(x, **boxed);

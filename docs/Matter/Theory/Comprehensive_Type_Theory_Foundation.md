@@ -1,44 +1,45 @@
-# 综合类型理论基础 (Comprehensive Type Theory Foundation)
+# 1. 综合类型理论基础 (Comprehensive Type Theory Foundation)
 
-## 📋 目录
+## 目录
 
-- [1 概述](#1-概述)
-- [2 类型系统基础架构](#2-类型系统基础架构)
-  - [2.1 类型系统层次结构](#21-类型系统层次结构)
-  - [2.2 类型上下文与判断](#22-类型上下文与判断)
-- [3 高级类型构造](#3-高级类型构造)
-  - [3.1 参数多态性深度分析](#31-参数多态性深度分析)
-  - [3.2 高阶类型系统](#32-高阶类型系统)
-  - [3.3 依赖类型系统](#33-依赖类型系统)
-- [4 类型推断算法](#4-类型推断算法)
-  - [4.1 改进的Hindley-Milner系统](#41-改进的hindley-milner系统)
-  - [4.2 约束生成与求解](#42-约束生成与求解)
-- [5 类型系统语义](#5-类型系统语义)
-  - [5.1 指称语义深度分析](#51-指称语义深度分析)
-  - [5.2 操作语义](#52-操作语义)
-- [6 高级类型特性](#6-高级类型特性)
-  - [6.1 类型类系统](#61-类型类系统)
-  - [6.2 高级多态性](#62-高级多态性)
-- [7 类型系统元理论](#7-类型系统元理论)
-  - [7.1 强正规化](#71-强正规化)
-  - [7.2 一致性](#72-一致性)
-- [8 实际应用与实现](#8-实际应用与实现)
-  - [8.1 类型检查器实现](#81-类型检查器实现)
-  - [8.2 类型安全编程实践](#82-类型安全编程实践)
-- [9 前沿研究方向](#9-前沿研究方向)
-  - [9.1 同伦类型理论](#91-同伦类型理论)
-  - [9.2 量子类型理论](#92-量子类型理论)
-- [10 结论](#10-结论)
+- [1. 综合类型理论基础 (Comprehensive Type Theory Foundation)](#1-综合类型理论基础-comprehensive-type-theory-foundation)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 类型系统基础架构](#12-类型系统基础架构)
+    - [1.2.1 类型系统层次结构](#121-类型系统层次结构)
+    - [1.2.2 类型上下文与判断](#122-类型上下文与判断)
+  - [1.3 高级类型构造](#13-高级类型构造)
+    - [1.3.1 参数多态性深度分析](#131-参数多态性深度分析)
+    - [1.3.2 高阶类型系统](#132-高阶类型系统)
+    - [1.3.3 依赖类型系统](#133-依赖类型系统)
+  - [1.4 类型推断算法](#14-类型推断算法)
+    - [1.4.1 改进的Hindley-Milner系统](#141-改进的hindley-milner系统)
+    - [1.4.2 约束生成与求解](#142-约束生成与求解)
+  - [1.5 类型系统语义](#15-类型系统语义)
+    - [1.5.1 指称语义深度分析](#151-指称语义深度分析)
+    - [1.5.2 操作语义](#152-操作语义)
+  - [1.6 高级类型特性](#16-高级类型特性)
+    - [1.6.1 类型类系统](#161-类型类系统)
+    - [1.6.2 高级多态性](#162-高级多态性)
+  - [1.7 类型系统元理论](#17-类型系统元理论)
+    - [1.7.1 强正规化](#171-强正规化)
+    - [1.7.2 一致性](#172-一致性)
+  - [1.8 实际应用与实现](#18-实际应用与实现)
+    - [1.8.1 类型检查器实现](#181-类型检查器实现)
+    - [1.8.2 类型安全编程实践](#182-类型安全编程实践)
+  - [1.9 前沿研究方向](#19-前沿研究方向)
+    - [1.9.1 同伦类型理论](#191-同伦类型理论)
+    - [1.9.2 量子类型理论](#192-量子类型理论)
+  - [1.10 结论](#110-结论)
+  - [1.11 参考文献](#111-参考文献)
 
----
-
-## 1 概述
+## 1.1 概述
 
 本文档构建了一个全面的类型理论基础体系，从简单的类型检查到复杂的依赖类型系统，为现代编程语言和形式化方法提供坚实的数学基础。
 
-## 2 类型系统基础架构
+## 1.2 类型系统基础架构
 
-### 2.1 类型系统层次结构
+### 1.2.1 类型系统层次结构
 
 **定义 1.1 (类型系统层次)**
 类型系统按表达能力分为以下层次：
@@ -52,7 +53,7 @@
 **定理 1.1 (层次包含关系)**
 $$\text{Simple} \subset \text{Parametric} \subset \text{Higher-Order} \subset \text{Dependent} \subset \text{Homotopy}$$
 
-### 2.2 类型上下文与判断
+### 1.2.2 类型上下文与判断
 
 **定义 1.2 (增强类型上下文)**
 类型上下文 $\Gamma$ 包含：
@@ -69,9 +70,9 @@ $$\text{Simple} \subset \text{Parametric} \subset \text{Higher-Order} \subset \t
 - 类型相等：$\Gamma \vdash \tau_1 \equiv \tau_2$
 - 类型归约：$\Gamma \vdash \tau_1 \rightarrow \tau_2$
 
-## 3 高级类型构造
+## 1.3 高级类型构造
 
-### 3.1 参数多态性深度分析
+### 1.3.1 参数多态性深度分析
 
 **定义 2.1 (全称类型语义)**
 全称类型 $\forall \alpha.\tau$ 的语义：
@@ -95,7 +96,7 @@ $$\llbracket \exists \alpha.\tau \rrbracket = \bigcup_{A \in \text{Type}} \llbra
 
 ```haskell
 eliminateExistential :: Type -> Type -> Type -> Type
-eliminateExistential (Exists alpha tau) bodyType context = 
+eliminateExistential (Exists alpha tau) bodyType context =
   let -- 创建新的类型变量避免捕获
       freshAlpha = freshTypeVar context
       -- 替换存在类型变量
@@ -105,7 +106,7 @@ eliminateExistential (Exists alpha tau) bodyType context =
   in unifiedType
 ```
 
-### 3.2 高阶类型系统
+### 1.3.2 高阶类型系统
 
 **定义 2.3 (类型构造子)**
 类型构造子 $F : \text{Type} \rightarrow \text{Type}$ 满足：
@@ -118,7 +119,7 @@ eliminateExistential (Exists alpha tau) bodyType context =
 ```haskell
 class Functor (f :: Type -> Type) where
   fmap :: (a -> b) -> f a -> f b
-  
+
   -- 函子定律
   fmap id = id
   fmap (g . h) = fmap g . fmap h
@@ -132,7 +133,7 @@ class Functor (f :: Type -> Type) where
 1. $fmap_{F \circ G} id = fmap_F (fmap_G id) = fmap_F id = id$
 2. $fmap_{F \circ G} (g \circ h) = fmap_F (fmap_G (g \circ h)) = fmap_F (fmap_G g \circ fmap_G h) = fmap_F (fmap_G g) \circ fmap_F (fmap_G h)$
 
-### 3.3 依赖类型系统
+### 1.3.3 依赖类型系统
 
 **定义 2.5 (Π类型)**
 Π类型 $\Pi x : A.B(x)$ 表示依赖函数类型：
@@ -149,22 +150,22 @@ $$\frac{\Gamma \vdash A : \text{Type} \quad \Gamma, x : A \vdash B(x) : \text{Ty
 
 ```haskell
 checkDependentType :: Context -> Expr -> Type -> Bool
-checkDependentType ctx (Pi x a b) Type = 
+checkDependentType ctx (Pi x a b) Type =
   let ctx' = extendContext ctx x a
   in checkDependentType ctx' b Type
 
-checkDependentType ctx (App f a) expectedType = 
+checkDependentType ctx (App f a) expectedType =
   case inferType ctx f of
-    Pi x domainType codomainType -> 
+    Pi x domainType codomainType ->
       let actualType = substituteType codomainType x a
-      in checkType ctx a domainType && 
+      in checkType ctx a domainType &&
          checkType ctx (App f a) actualType
     _ -> False
 ```
 
-## 4 类型推断算法
+## 1.4 类型推断算法
 
-### 4.1 改进的Hindley-Milner系统
+### 1.4.1 改进的Hindley-Milner系统
 
 **定义 3.1 (类型模式)**
 类型模式 $\sigma$ 的语法：
@@ -177,9 +178,9 @@ $$\frac{\Gamma \vdash e : \forall \alpha.\sigma}{\Gamma \vdash e : \sigma[\alpha
 
 ```haskell
 inferType :: Context -> Expr -> Either TypeError Type
-inferType ctx (Var x) = 
+inferType ctx (Var x) =
   case lookup x ctx of
-    Just (Forall alpha sigma) -> 
+    Just (Forall alpha sigma) ->
       let freshType = freshTypeVar ctx
       in Right (instantiate sigma alpha freshType)
     Just tau -> Right tau
@@ -194,14 +195,14 @@ inferType ctx (App fun arg) = do
   funType <- inferType ctx fun
   argType <- inferType ctx arg
   case funType of
-    TArrow domain codomain -> 
+    TArrow domain codomain ->
       if unify domain argType
       then return codomain
       else Left TypeMismatch
     _ -> Left (ExpectedFunctionType funType)
 ```
 
-### 4.2 约束生成与求解
+### 1.4.2 约束生成与求解
 
 **定义 3.3 (类型约束)**
 类型约束 $C$ 的语法：
@@ -211,12 +212,12 @@ $$C ::= \tau_1 \equiv \tau_2 \mid C_1 \land C_2 \mid \exists \alpha.C$$
 
 ```haskell
 generateConstraints :: Context -> Expr -> (Type, [Constraint])
-generateConstraints ctx (Var x) = 
+generateConstraints ctx (Var x) =
   case lookup x ctx of
     Just tau -> (tau, [])
     Nothing -> error "Unbound variable"
 
-generateConstraints ctx (App e1 e2) = 
+generateConstraints ctx (App e1 e2) =
   let (tau1, c1) = generateConstraints ctx e1
       (tau2, c2) = generateConstraints ctx e2
       freshType = freshTypeVar ctx
@@ -235,8 +236,8 @@ solveConstraints (c:cs) = do
   return (compose s2 s1)
 
 solveConstraint :: Constraint -> Either TypeError Substitution
-solveConstraint (TVar a `equiv` t) = 
-  if a `elem` freeTypeVars t 
+solveConstraint (TVar a `equiv` t) =
+  if a `elem` freeTypeVars t
   then Left OccursCheck
   else Right [(a, t)]
 solveConstraint (t `equiv` TVar a) = solveConstraint (TVar a `equiv` t)
@@ -246,9 +247,9 @@ solveConstraint (TArrow t1 t2 `equiv` TArrow t1' t2') = do
   return (compose s2 s1)
 ```
 
-## 5 类型系统语义
+## 1.5 类型系统语义
 
-### 5.1 指称语义深度分析
+### 1.5.1 指称语义深度分析
 
 **定义 4.1 (类型解释函数)**
 类型解释函数 $\llbracket \cdot \rrbracket : \text{Type} \rightarrow \text{Domain}$：
@@ -267,7 +268,7 @@ solveConstraint (TArrow t1 t2 `equiv` TArrow t1' t2') = do
 2. 抽象：函数构造保持类型
 3. 应用：函数应用保持类型
 
-### 5.2 操作语义
+### 1.5.2 操作语义
 
 **定义 4.2 (小步归约关系)**
 小步归约关系 $\rightarrow$ 定义：
@@ -288,9 +289,9 @@ solveConstraint (TArrow t1 t2 `equiv` TArrow t1' t2') = do
 2. η归约：函数外延性
 3. 上下文归约：类型在上下文中保持
 
-## 6 高级类型特性
+## 1.6 高级类型特性
 
-### 6.1 类型类系统
+### 1.6.1 类型类系统
 
 **定义 5.1 (类型类)**
 类型类 $\text{Class}$ 定义了一组类型必须满足的约束：
@@ -318,7 +319,7 @@ instance Eq a => Eq [a] where
 
 ```haskell
 resolveTypeClass :: Context -> Type -> Class -> Either TypeError [Constraint]
-resolveTypeClass ctx tau cls = 
+resolveTypeClass ctx tau cls =
   let instances = findInstances ctx cls
       matchingInstances = filter (matchesType tau) instances
   in case matchingInstances of
@@ -327,7 +328,7 @@ resolveTypeClass ctx tau cls =
        _ -> Left (AmbiguousInstance cls tau)
 ```
 
-### 6.2 高级多态性
+### 1.6.2 高级多态性
 
 **定义 5.3 (高阶多态性)**
 高阶多态性允许类型变量本身具有类型：
@@ -350,9 +351,9 @@ data Vec (n :: Nat) (a :: Type) where
   Cons :: a -> Vec n a -> Vec (Succ n) a
 ```
 
-## 7 类型系统元理论
+## 1.7 类型系统元理论
 
-### 7.1 强正规化
+### 1.7.1 强正规化
 
 **定义 6.1 (强正规化)**
 类型系统是强正规化的，如果所有良类型的项都是强正规化的。
@@ -366,7 +367,7 @@ data Vec (n :: Nat) (a :: Type) where
 2. 证明可归约性在归约下保持
 3. 证明所有良类型项都是可归约的
 
-### 7.2 一致性
+### 1.7.2 一致性
 
 **定义 6.2 (类型系统一致性)**
 类型系统是一致的，如果不存在类型为 $\bot$ 的封闭项。
@@ -380,9 +381,9 @@ data Vec (n :: Nat) (a :: Type) where
 2. 该项必须强正规化到某个值
 3. 但 $\bot$ 类型没有值，矛盾
 
-## 8 实际应用与实现
+## 1.8 实际应用与实现
 
-### 8.1 类型检查器实现
+### 1.8.1 类型检查器实现
 
 **算法 7.1 (完整类型检查器)**:
 
@@ -394,7 +395,7 @@ data TypeChecker = TypeChecker {
 }
 
 checkProgram :: Program -> Either TypeError Type
-checkProgram prog = 
+checkProgram prog =
   let initialChecker = TypeChecker emptyContext emptySet []
       finalChecker = foldl checkDeclaration initialChecker (declarations prog)
   in case constraints finalChecker of
@@ -402,21 +403,21 @@ checkProgram prog =
        cs -> Left (UnsolvedConstraints cs)
 
 checkDeclaration :: TypeChecker -> Declaration -> TypeChecker
-checkDeclaration checker (TypeDecl name params body) = 
+checkDeclaration checker (TypeDecl name params body) =
   let newType = TCon name params
       newContext = extendContext (context checker) name newType
   in checker { context = newContext }
 
-checkDeclaration checker (ValueDecl name expr) = 
+checkDeclaration checker (ValueDecl name expr) =
   let (exprType, newConstraints) = generateConstraints (context checker) expr
       newContext = extendContext (context checker) name exprType
-  in checker { 
+  in checker {
        context = newContext,
        constraints = constraints checker ++ newConstraints
      }
 ```
 
-### 8.2 类型安全编程实践
+### 1.8.2 类型安全编程实践
 
 **原则 7.1 (类型安全设计)**:
 
@@ -447,9 +448,9 @@ withFile path action = do
       return (Right value)
 ```
 
-## 9 前沿研究方向
+## 1.9 前沿研究方向
 
-### 9.1 同伦类型理论
+### 1.9.1 同伦类型理论
 
 **定义 8.1 (路径类型)**
 路径类型 $a =_A b$ 表示类型 $A$ 中从 $a$ 到 $b$ 的路径。
@@ -458,7 +459,7 @@ withFile path action = do
 类型 $A$ 和 $B$ 等价，如果存在函数 $f : A \rightarrow B$ 和 $g : B \rightarrow A$ 使得：
 $$f \circ g \sim id_B \quad \text{and} \quad g \circ f \sim id_A$$
 
-### 9.2 量子类型理论
+### 1.9.2 量子类型理论
 
 **定义 8.3 (量子类型)**
 量子类型系统扩展了经典类型系统以支持量子计算：
@@ -467,11 +468,11 @@ $$f \circ g \sim id_B \quad \text{and} \quad g \circ f \sim id_A$$
 - 量子门类型：$\text{Qubit} \rightarrow \text{Qubit}$
 - 测量类型：$\text{Qubit} \rightarrow \text{Bit}$
 
-## 10 结论
+## 1.10 结论
 
 综合类型理论基础为现代编程语言和形式化方法提供了坚实的数学基础。从简单的类型检查到复杂的依赖类型系统，类型理论的发展推动了软件工程的进步，为构建可靠、安全的软件系统提供了强大的理论工具。
 
-## 参考文献
+## 1.11 参考文献
 
 1. Pierce, B. C. (2002). Types and programming languages. MIT press.
 2. Girard, J. Y., Lafont, Y., & Taylor, P. (1989). Proofs and types. Cambridge University Press.

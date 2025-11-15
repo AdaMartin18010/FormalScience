@@ -2,22 +2,24 @@
 
 ## 📋 目录
 
-- [1 何时需要工作流架构](#1-何时需要工作流架构)
-- [2 工作流的多层面视角](#2-工作流的多层面视角)
-  - [2.1 执行流视角](#21-执行流视角)
-  - [2.2 数据流视角](#22-数据流视角)
-  - [2.3 控制流视角](#23-控制流视角)
-  - [2.4 容错层视角](#24-容错层视角)
-- [3 不同行业的IoT工作流应用模型](#3-不同行业的iot工作流应用模型)
-  - [3.1 工业自动化模型](#31-工业自动化模型)
-  - [3.2 智能家居模型](#32-智能家居模型)
-  - [3.3 智慧城市模型](#33-智慧城市模型)
-- [4 自动化运维与容错能力设计](#4-自动化运维与容错能力设计)
-  - [4.1 自动化故障诊断与修复系统](#41-自动化故障诊断与修复系统)
-  - [4.2 高级调度与负载均衡系统](#42-高级调度与负载均衡系统)
-- [5 IoT工作流架构的关键考量](#5-iot工作流架构的关键考量)
-  - [5.1 可伸缩性与分层设计](#51-可伸缩性与分层设计)
-- [6 总结：IoT工作流架构的设计原则](#6-总结iot工作流架构的设计原则)
+- [物联网工作流架构深度分析](#物联网工作流架构深度分析)
+  - [📋 目录](#-目录)
+  - [1 何时需要工作流架构](#1-何时需要工作流架构)
+  - [2 工作流的多层面视角](#2-工作流的多层面视角)
+    - [2.1 执行流视角](#21-执行流视角)
+    - [2.2 数据流视角](#22-数据流视角)
+    - [2.3 控制流视角](#23-控制流视角)
+    - [2.4 容错层视角](#24-容错层视角)
+  - [3 不同行业的IoT工作流应用模型](#3-不同行业的iot工作流应用模型)
+    - [3.1 工业自动化模型](#31-工业自动化模型)
+    - [3.2 智能家居模型](#32-智能家居模型)
+    - [3.3 智慧城市模型](#33-智慧城市模型)
+  - [4 自动化运维与容错能力设计](#4-自动化运维与容错能力设计)
+    - [4.1 自动化故障诊断与修复系统](#41-自动化故障诊断与修复系统)
+    - [4.2 高级调度与负载均衡系统](#42-高级调度与负载均衡系统)
+  - [5 IoT工作流架构的关键考量](#5-iot工作流架构的关键考量)
+    - [5.1 可伸缩性与分层设计](#51-可伸缩性与分层设计)
+  - [6 总结：IoT工作流架构的设计原则](#6-总结iot工作流架构的设计原则)
 
 ---
 
@@ -54,21 +56,21 @@ pub struct ManufacturingExecutionFlow {
     id: String,
     name: String,
     description: String,
-    
+
     // 执行流特有属性
     execution_mode: ExecutionMode,          // 同步/异步/混合
     resource_requirements: ResourceRequirements, // CPU/内存/网络
     execution_priority: u8,                 // 优先级
     max_concurrent_steps: u32,              // 最大并发步骤数
     execution_monitoring: ExecutionMonitoringConfig, // 执行监控配置
-    
+
     // 执行条件
     preconditions: Vec<Condition>,          // 前置条件
     postconditions: Vec<Condition>,         // 后置条件
-    
+
     // 执行节点
     steps: Vec<ExecutionStep>,              // 执行步骤
-    
+
     // 性能和可靠性配置
     performance_targets: PerformanceTargets, // 性能目标
     reliability_config: ReliabilityConfig,   // 可靠性配置
@@ -123,7 +125,7 @@ pub fn create_equipment_calibration_workflow(equipment_id: &str) -> Manufacturin
             critical_steps: vec!["reset_to_defaults", "apply_calibration"],
         },
     };
-    
+
     // 添加执行步骤
     workflow.steps.push(ExecutionStep {
         id: "prepare_for_calibration".to_string(),
@@ -146,9 +148,9 @@ pub fn create_equipment_calibration_workflow(equipment_id: &str) -> Manufacturin
             ValidationRule::ResponseContains("status", "ready"),
         ],
     });
-    
+
     // 添加更多执行步骤...
-    
+
     workflow
 }
 ```
@@ -162,19 +164,19 @@ pub struct IoTDataFlow {
     id: String,
     name: String,
     description: String,
-    
+
     // 数据流特有属性
     data_sources: Vec<DataSource>,       // 数据来源
     data_sinks: Vec<DataSink>,           // 数据目标
     transformations: Vec<DataTransformation>, // 数据转换
     enrichment_steps: Vec<EnrichmentStep>, // 数据增强
     filtering_rules: Vec<FilteringRule>, // 过滤规则
-    
+
     // 数据质量和性能
     data_quality_rules: Vec<DataQualityRule>, // 数据质量规则
     caching_strategy: CachingStrategy,   // 缓存策略
     batching_config: BatchingConfig,     // 批处理配置
-    
+
     // 数据流控制
     flow_rate_limits: FlowRateLimit,     // 流量限制
     priority_rules: Vec<PriorityRule>,   // 优先级规则
@@ -197,7 +199,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
         id: format!("energy-dataflow-{}", building_id),
         name: format!("建筑 {} 能源监测数据流", building_id),
         description: "实时处理建筑能源数据，计算指标并发送到能源管理系统",
-        
+
         data_sources: vec![
             DataSource {
                 id: "electricity_meters".to_string(),
@@ -216,7 +218,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
                 priority: DataPriority::Medium,
             },
         ],
-        
+
         data_sinks: vec![
             DataSink {
                 id: "energy_management_system".to_string(),
@@ -246,7 +248,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
                 batch_interval: Duration::ZERO,
             },
         ],
-        
+
         transformations: vec![
             DataTransformation {
                 id: "calculate_energy_usage".to_string(),
@@ -255,11 +257,11 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
                 output_schema: Schema::from_definition("energy_usage_metrics"),
                 transformation_type: TransformationType::Calculation,
                 transformation_logic: TransformationLogic::SqlQuery(
-                    "SELECT device_id, 
-                            timestamp, 
+                    "SELECT device_id,
+                            timestamp,
                             reading_value as current_consumption,
                             reading_value - LAG(reading_value) OVER (PARTITION BY device_id ORDER BY timestamp) as consumption_delta,
-                            (reading_value - LAG(reading_value) OVER (PARTITION BY device_id ORDER BY timestamp)) / 
+                            (reading_value - LAG(reading_value) OVER (PARTITION BY device_id ORDER BY timestamp)) /
                             (EXTRACT(EPOCH FROM timestamp - LAG(timestamp) OVER (PARTITION BY device_id ORDER BY timestamp)) / 3600) as hourly_rate
                      FROM electricity_meter_readings
                      WHERE timestamp >= NOW() - INTERVAL '1 hour'"
@@ -268,7 +270,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
                 error_handling: ErrorHandlingStrategy::SkipAndLog,
             },
         ],
-        
+
         // 其他配置...
         enrichment_steps: vec![/* ... */],
         filtering_rules: vec![/* ... */],
@@ -279,7 +281,7 @@ pub fn create_energy_monitoring_dataflow(building_id: &str) -> IoTDataFlow {
         priority_rules: vec![/* ... */],
         circuit_breaker: CircuitBreakerConfig::default(),
     };
-    
+
     dataflow
 }
 ```
@@ -293,20 +295,20 @@ pub struct IoTControlFlow {
     id: String,
     name: String,
     description: String,
-    
+
     // 控制流特有属性
     triggers: Vec<Trigger>,              // 触发条件
     decision_points: Vec<DecisionPoint>, // 决策点
     scheduling_policy: SchedulingPolicy, // 调度策略
     synchronization_points: Vec<SynchronizationPoint>, // 同步点
-    
+
     // 时间和事件控制
     time_constraints: Vec<TimeConstraint>, // 时间约束
     event_handling: Vec<EventHandler>,     // 事件处理
-    
+
     // 控制流元素关系
     flow_graph: FlowGraph,                // 流程图
-    
+
     // 控制策略
     error_escalation_policy: ErrorEscalationPolicy, // 错误升级策略
     circuit_breaker_policy: CircuitBreakerPolicy,  // 熔断策略
@@ -329,7 +331,7 @@ pub fn create_smart_agriculture_control_flow(farm_id: &str) -> IoTControlFlow {
         id: format!("farm-irrigation-control-{}", farm_id),
         name: format!("农场 {} 智能灌溉控制流", farm_id),
         description: "基于多种条件和预测模型的自适应灌溉控制系统",
-        
+
         triggers: vec![
             Trigger {
                 id: "scheduled_check".to_string(),
@@ -357,7 +359,7 @@ pub fn create_smart_agriculture_control_flow(farm_id: &str) -> IoTControlFlow {
                 priority: TriggerPriority::Medium,
             },
         ],
-        
+
         decision_points: vec![
             DecisionPoint {
                 id: "irrigation_decision".to_string(),
@@ -404,14 +406,14 @@ pub fn create_smart_agriculture_control_flow(farm_id: &str) -> IoTControlFlow {
                 timeout_behavior: TimeoutBehavior::UseDefault,
             },
         ],
-        
+
         scheduling_policy: SchedulingPolicy {
             strategy: SchedulingStrategy::PriorityBased,
             max_concurrent_executions: 3,
             execution_timeout: Duration::from_secs(1800),
             starvation_prevention: true,
         },
-        
+
         // 其他控制流配置...
         synchronization_points: vec![/* ... */],
         time_constraints: vec![/* ... */],
@@ -421,7 +423,7 @@ pub fn create_smart_agriculture_control_flow(farm_id: &str) -> IoTControlFlow {
         circuit_breaker_policy: CircuitBreakerPolicy::default(),
         throttling_policy: ThrottlingPolicy::default(),
     };
-    
+
     control_flow
 }
 ```
@@ -435,21 +437,21 @@ pub struct IoTFaultToleranceLayer {
     id: String,
     name: String,
     description: String,
-    
+
     // 容错策略
     retry_strategies: Vec<RetryStrategy>,       // 重试策略
     fallback_mechanisms: Vec<FallbackMechanism>, // 备用机制
     circuit_breakers: Vec<CircuitBreaker>,     // 熔断器
     degradation_policies: Vec<DegradationPolicy>, // 服务降级策略
-    
+
     // 健康检查和恢复
     health_checks: Vec<HealthCheck>,          // 健康检查
     self_healing_procedures: Vec<SelfHealingProcedure>, // 自愈程序
-    
+
     // 状态管理
     state_persistence: StatePersistenceConfig, // 状态持久化
     state_recovery: StateRecoveryConfig,       // 状态恢复
-    
+
     // 监控和警报
     anomaly_detection: AnomalyDetectionConfig, // 异常检测
     alerting_thresholds: Vec<AlertThreshold>,  // 告警阈值
@@ -474,7 +476,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
         id: format!("industrial-fault-tolerance-{}", plant_id),
         name: format!("工厂 {} 工业自动化容错层", plant_id),
         description: "为工业自动化系统提供多层次容错和自愈能力",
-        
+
         retry_strategies: vec![
             RetryStrategy {
                 id: "network_communication_retry".to_string(),
@@ -499,7 +501,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 retry_on_status: vec!["invalid_reading", "reading_timeout"],
             },
         ],
-        
+
         fallback_mechanisms: vec![
             FallbackMechanism {
                 id: "temperature_sensor_fallback".to_string(),
@@ -515,7 +517,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 recovery_check_interval: Duration::from_secs(300),
             },
         ],
-        
+
         circuit_breakers: vec![
             CircuitBreaker {
                 id: "external_api_circuit".to_string(),
@@ -530,7 +532,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 monitoring_interval: Duration::from_secs(1),
             },
         ],
-        
+
         degradation_policies: vec![
             DegradationPolicy {
                 id: "high_load_degradation".to_string(),
@@ -558,7 +560,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 cool_down_period: Duration::from_secs(300),
             },
         ],
-        
+
         health_checks: vec![
             HealthCheck {
                 id: "plc_connectivity_check".to_string(),
@@ -577,7 +579,7 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 }),
             },
         ],
-        
+
         self_healing_procedures: vec![
             SelfHealingProcedure {
                 id: "plc_communication_recovery".to_string(),
@@ -639,14 +641,14 @@ pub fn create_industrial_fault_tolerance_layer(plant_id: &str) -> IoTFaultTolera
                 },
             },
         ],
-        
+
         // 其他配置...
         state_persistence: StatePersistenceConfig::default(),
         state_recovery: StateRecoveryConfig::default(),
         anomaly_detection: AnomalyDetectionConfig::default(),
         alerting_thresholds: vec![/* ... */],
     };
-    
+
     fault_tolerance
 }
 ```
@@ -664,23 +666,23 @@ pub struct IndustrialAutomationWorkflowModel {
     id: String,
     name: String,
     version: String,
-    
+
     // 工业特有组件
     production_line_integration: ProductionLineIntegration,
     quality_control_processes: Vec<QualityControlProcess>,
     manufacturing_recipes: Vec<ManufacturingRecipe>,
     equipment_calibration_workflows: Vec<EquipmentCalibrationWorkflow>,
     maintenance_schedules: Vec<MaintenanceSchedule>,
-    
+
     // 优化组件
     efficiency_monitors: Vec<EfficiencyMonitor>,
     energy_optimization: EnergyOptimizationConfig,
     predictive_maintenance: PredictiveMaintenanceConfig,
-    
+
     // 安全组件
     safety_interlocks: Vec<SafetyInterlock>,
     emergency_procedures: Vec<EmergencyProcedure>,
-    
+
     // 数据集成
     mes_integration: MesIntegrationConfig,
     erp_integration: ErpIntegrationConfig,
@@ -694,7 +696,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         "生产执行工作流",
         "协调生产线设备的全自动化生产过程",
     );
-    
+
     // 添加工作流节点
     workflow.add_node(WorkflowNode {
         id: "check_material_availability".to_string(),
@@ -705,7 +707,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_material_shortage".to_string()),
         timeout_seconds: 60,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "setup_production_line".to_string(),
         name: "设置生产线".to_string(),
@@ -715,7 +717,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_setup_error".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "load_manufacturing_recipe".to_string(),
         name: "加载制造配方".to_string(),
@@ -725,7 +727,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_recipe_error".to_string()),
         timeout_seconds: 120,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "start_production".to_string(),
         name: "启动生产".to_string(),
@@ -735,7 +737,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_startup_error".to_string()),
         timeout_seconds: 180,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "monitor_production".to_string(),
         name: "监控生产".to_string(),
@@ -745,7 +747,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_production_error".to_string()),
         timeout_seconds: 7200, // 2小时
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "quality_inspection".to_string(),
         name: "质量检验".to_string(),
@@ -755,7 +757,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_quality_error".to_string()),
         timeout_seconds: 600,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "rework_items".to_string(),
         name: "返工物品".to_string(),
@@ -765,7 +767,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_rework_error".to_string()),
         timeout_seconds: 1800,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "production_complete".to_string(),
         name: "生产完成".to_string(),
@@ -775,7 +777,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_completion_error".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "update_inventory".to_string(),
         name: "更新库存".to_string(),
@@ -785,7 +787,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: Some("handle_inventory_error".to_string()),
         timeout_seconds: 120,
     });
-    
+
     // 错误处理节点
     workflow.add_node(WorkflowNode {
         id: "handle_material_shortage".to_string(),
@@ -796,9 +798,9 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 180,
     });
-    
+
     // 添加更多错误处理节点...
-    
+
     workflow.add_node(WorkflowNode {
         id: "end".to_string(),
         name: "结束".to_string(),
@@ -808,7 +810,7 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 0,
     });
-    
+
     workflow
 }
 ```
@@ -821,28 +823,28 @@ fn create_manufacturing_execution_workflow() -> WorkflowDefinition {
 // 智能家居工作流模型
 pub struct SmartHomeWorkflowModel {
     // 基本属性
-    id: String, 
+    id: String,
     name: String,
     home_id: String,
-    
+
     // 场景和自动化
     scenes: Vec<HomeScene>,
     routines: Vec<DailyRoutine>,
     automation_rules: Vec<AutomationRule>,
-    
+
     // 设备控制
     device_groups: Vec<DeviceGroup>,
     room_controllers: Vec<RoomController>,
-    
+
     // 能源管理
     energy_monitoring: EnergyMonitoringConfig,
     energy_optimization: EnergyOptimizationConfig,
-    
+
     // 智能服务
     voice_control_integration: VoiceControlConfig,
     presence_detection: PresenceDetectionConfig,
     contextual_awareness: ContextualAwarenessConfig,
-    
+
     // 安全和隐私
     security_system_integration: SecuritySystemConfig,
     privacy_controls: PrivacyControlConfig,
@@ -856,7 +858,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         "晚间回家例程",
         "配置晚间回家时的智能家居场景联动",
     );
-    
+
     // 添加工作流节点
     workflow.add_node(WorkflowNode {
         id: "detect_arrival".to_string(),
@@ -867,7 +869,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 0, // 触发器不需要超时
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "check_time_and_conditions".to_string(),
         name: "检查时间和条件".to_string(),
@@ -877,7 +879,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 30,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "activate_evening_scene".to_string(),
         name: "激活傍晚场景".to_string(),
@@ -887,7 +889,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("handle_scene_error".to_string()),
         timeout_seconds: 60,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "activate_night_scene".to_string(),
         name: "激活夜晚场景".to_string(),
@@ -897,7 +899,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("handle_scene_error".to_string()),
         timeout_seconds: 60,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "adjust_temperature".to_string(),
         name: "调整温度".to_string(),
@@ -907,7 +909,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("log_temperature_error".to_string()),
         timeout_seconds: 120,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "prepare_entertainment".to_string(),
         name: "准备娱乐系统".to_string(),
@@ -917,7 +919,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("log_entertainment_error".to_string()),
         timeout_seconds: 90,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "prepare_sleep_environment".to_string(),
         name: "准备睡眠环境".to_string(),
@@ -927,7 +929,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("log_environment_error".to_string()),
         timeout_seconds: 120,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "check_security".to_string(),
         name: "检查安全状况".to_string(),
@@ -937,7 +939,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: Some("handle_security_issue".to_string()),
         timeout_seconds: 60,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "no_action".to_string(),
         name: "无需操作".to_string(),
@@ -947,7 +949,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 10,
     });
-    
+
     // 错误处理节点
     workflow.add_node(WorkflowNode {
         id: "handle_scene_error".to_string(),
@@ -958,9 +960,9 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 30,
     });
-    
+
     // 更多错误处理节点...
-    
+
     workflow.add_node(WorkflowNode {
         id: "end".to_string(),
         name: "结束".to_string(),
@@ -970,7 +972,7 @@ fn create_evening_routine_workflow(home_id: &str) -> WorkflowDefinition {
         error_node: None,
         timeout_seconds: 0,
     });
-    
+
     workflow
 }
 ```
@@ -986,28 +988,28 @@ pub struct SmartCityWorkflowModel {
     id: String,
     name: String,
     city_id: String,
-    
+
     // 城市基础设施
     traffic_management: TrafficManagementSystem,
     public_transportation: PublicTransportationSystem,
     utility_management: UtilityManagementSystem,
     public_safety: PublicSafetySystem,
     environmental_monitoring: EnvironmentalMonitoringSystem,
-    
+
     // 数据与分析
     data_integration_platform: DataIntegrationConfig,
     analytics_engines: Vec<AnalyticsEngine>,
     dashboard_configurations: Vec<DashboardConfig>,
-    
+
     // 市民服务
     citizen_services_portal: CitizenServicesConfig,
     emergency_response: EmergencyResponseConfig,
     public_engagement: PublicEngagementConfig,
-    
+
     // 协作与规划
     inter_department_coordination: CoordinationConfig,
     city_planning_tools: PlanningToolsConfig,
-    
+
     // 安全与合规
     data_privacy_framework: DataPrivacyConfig,
     security_measures: SecurityMeasuresConfig,
@@ -1021,7 +1023,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         "交通事故响应流程",
         "协调多部门对交通事故的应急响应",
     );
-    
+
     // 添加工作流节点
     workflow.add_node(WorkflowNode {
         id: "detect_traffic_incident".to_string(),
@@ -1032,7 +1034,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: None,
         timeout_seconds: 0,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "verify_incident".to_string(),
         name: "验证事故".to_string(),
@@ -1042,7 +1044,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("handle_false_alarm".to_string()),
         timeout_seconds: 120,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "classify_incident_severity".to_string(),
         name: "分类事故严重程度".to_string(),
@@ -1052,7 +1054,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("escalate_to_supervisor".to_string()),
         timeout_seconds: 180,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "handle_minor_incident".to_string(),
         name: "处理轻微事故".to_string(),
@@ -1062,7 +1064,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("escalate_response".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "handle_major_incident".to_string(),
         name: "处理重大事故".to_string(),
@@ -1072,7 +1074,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("escalate_response".to_string()),
         timeout_seconds: 480,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "handle_critical_incident".to_string(),
         name: "处理危急事故".to_string(),
@@ -1082,7 +1084,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("emergency_override".to_string()),
         timeout_seconds: 240,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "adjust_traffic_signals".to_string(),
         name: "调整交通信号".to_string(),
@@ -1092,7 +1094,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("manual_signal_control".to_string()),
         timeout_seconds: 180,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "implement_traffic_diversion".to_string(),
         name: "实施交通分流".to_string(),
@@ -1102,7 +1104,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("manual_traffic_control".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "dispatch_emergency_services".to_string(),
         name: "派遣紧急服务".to_string(),
@@ -1112,7 +1114,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("backup_dispatch_procedure".to_string()),
         timeout_seconds: 240,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "notify_hospitals".to_string(),
         name: "通知医院".to_string(),
@@ -1122,7 +1124,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("emergency_communication_backup".to_string()),
         timeout_seconds: 180,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "notify_crisis_management".to_string(),
         name: "通知危机管理部门".to_string(),
@@ -1132,7 +1134,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("escalate_to_mayor_office".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "implement_emergency_traffic_plan".to_string(),
         name: "实施紧急交通计划".to_string(),
@@ -1142,7 +1144,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("manual_emergency_coordination".to_string()),
         timeout_seconds: 360,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "notify_public".to_string(),
         name: "通知公众".to_string(),
@@ -1152,7 +1154,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("alternative_public_notification".to_string()),
         timeout_seconds: 240,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "monitor_resolution".to_string(),
         name: "监控解决情况".to_string(),
@@ -1162,7 +1164,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("manual_status_tracking".to_string()),
         timeout_seconds: 14400, // 4小时
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "incident_resolved".to_string(),
         name: "事故已解决".to_string(),
@@ -1172,7 +1174,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("reassess_situation".to_string()),
         timeout_seconds: 300,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "restore_normal_operations".to_string(),
         name: "恢复正常运营".to_string(),
@@ -1182,7 +1184,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: Some("gradual_normalization".to_string()),
         timeout_seconds: 360,
     });
-    
+
     workflow.add_node(WorkflowNode {
         id: "generate_incident_report".to_string(),
         name: "生成事故报告".to_string(),
@@ -1192,9 +1194,9 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: None,
         timeout_seconds: 600,
     });
-    
+
     // 错误处理节点...
-    
+
     workflow.add_node(WorkflowNode {
         id: "end".to_string(),
         name: "结束".to_string(),
@@ -1204,7 +1206,7 @@ fn create_traffic_incident_response_workflow(city_id: &str) -> WorkflowDefinitio
         error_node: None,
         timeout_seconds: 0,
     });
-    
+
     workflow
 }
 ```
@@ -1219,23 +1221,23 @@ pub struct AutomaticDiagnosisAndRecoverySystem {
     id: String,
     name: String,
     version: String,
-    
+
     // 诊断组件
     diagnostic_engines: Vec<DiagnosticEngine>,
     health_monitoring: HealthMonitoringConfig,
     anomaly_detection: AnomalyDetectionConfig,
     system_introspection: SystemIntrospectionConfig,
-    
+
     // 自动修复
     recovery_procedures: HashMap<String, RecoveryProcedure>,
     self_healing_actions: Vec<SelfHealingAction>,
     rollback_mechanisms: Vec<RollbackMechanism>,
-    
+
     // 决策和学习
     decision_models: Vec<DiagnosticDecisionModel>,
     learning_engines: Vec<LearningEngine>,
     knowledge_base: KnowledgeBase,
-    
+
     // 协调和管理
     escalation_policies: Vec<EscalationPolicy>,
     maintenance_windows: Vec<MaintenanceWindow>,
@@ -1356,22 +1358,22 @@ pub struct AdvancedSchedulingSystem {
     // 基本属性
     id: String,
     name: String,
-    
+
     // 调度核心组件
     scheduler_engines: Vec<SchedulerEngine>,
     task_queues: Vec<TaskQueue>,
     resource_allocator: ResourceAllocator,
-    
+
     // 负载均衡
     load_balancing_strategies: Vec<LoadBalancingStrategy>,
     capacity_management: CapacityManagement,
     network_optimization: NetworkOptimization,
-    
+
     // 优先级和策略
     priority_classes: Vec<PriorityClass>,
     fairness_policies: Vec<FairnessPolicy>,
     rate_limiting: RateLimitingConfig,
-    
+
     // 高级特性
     dynamic_adjustment: DynamicAdjustmentConfig,
     predictive_scaling: PredictiveScalingConfig,
@@ -1627,7 +1629,7 @@ pub struct ScalableIoTWorkflowArchitecture {
     cloud_layer: CloudLayerConfig,
     edge_layer: EdgeLayerConfig,
     device_layer: DeviceLayerConfig,
-    
+
     workflow_distribution: WorkflowDistributionPolicy,
     cross_layer_communication: CrossLayerCommunicationConfig,
     data_movement_optimization: DataMovementOptimization,
@@ -1724,7 +1726,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
                 ],
             },
         },
-        
+
         edge_layer: EdgeLayerConfig {
             edge_node_types: vec![
                 EdgeNodeType {
@@ -1831,7 +1833,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
                 },
             },
         },
-        
+
         device_layer: DeviceLayerConfig {
             device_categories: vec![
                 DeviceCategory {
@@ -1948,7 +1950,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
                 ],
             },
         },
-        
+
         workflow_distribution: WorkflowDistributionPolicy {
             distribution_strategy: WorkflowDistributionStrategy::CapabilityBased,
             workflow_placement_rules: vec![
@@ -1997,7 +1999,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
                 },
             },
         },
-        
+
         cross_layer_communication: CrossLayerCommunicationConfig {
             communication_patterns: vec![
                 CommunicationPattern {
@@ -2050,7 +2052,7 @@ fn create_multi_tier_workflow_architecture() -> ScalableIoTWorkflowArchitecture 
                 compression: true,
             },
         },
-        
+
         data_movement_optimization: DataMovementOptimization {
             data_reduction_techniques: vec![
                 DataReductionTechnique {

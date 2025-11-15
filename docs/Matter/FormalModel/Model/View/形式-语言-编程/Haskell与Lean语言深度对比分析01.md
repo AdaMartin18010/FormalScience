@@ -1,62 +1,62 @@
-# Haskell与Lean语言深度对比分析
+# 1. Haskell与Lean语言深度对比分析
 
 ## 目录
 
-- [Haskell与Lean语言深度对比分析](#haskell与lean语言深度对比分析)
+- [1. Haskell与Lean语言深度对比分析](#1-haskell与lean语言深度对比分析)
   - [目录](#目录)
-  - [1. 概述与定位](#1-概述与定位)
-    - [1.1 Haskell语言概述](#11-haskell语言概述)
-    - [1.2 Lean语言概述](#12-lean语言概述)
-    - [1.3 核心设计哲学对比](#13-核心设计哲学对比)
-  - [2. 类型系统比较](#2-类型系统比较)
-    - [2.1 Haskell类型系统](#21-haskell类型系统)
-    - [2.2 Lean类型系统](#22-lean类型系统)
-    - [2.3 类型系统关键差异](#23-类型系统关键差异)
-  - [3. 语法结构对比](#3-语法结构对比)
-    - [3.1 Haskell语法特性](#31-haskell语法特性)
-    - [3.2 Lean语法特性](#32-lean语法特性)
-    - [3.3 控制流对比](#33-控制流对比)
-  - [4. 语义模型分析](#4-语义模型分析)
-    - [4.1 Haskell语义模型](#41-haskell语义模型)
-    - [4.2 Lean语义模型](#42-lean语义模型)
-    - [4.3 语义模型关键差异](#43-语义模型关键差异)
-  - [5. 编译与运行时机制](#5-编译与运行时机制)
-    - [5.1 Haskell编译与运行时](#51-haskell编译与运行时)
-    - [5.2 Lean编译与运行时](#52-lean编译与运行时)
-    - [5.3 编译和运行时对比](#53-编译和运行时对比)
-  - [6. 资源管理与内存映射](#6-资源管理与内存映射)
-    - [6.1 Haskell资源管理](#61-haskell资源管理)
-    - [6.2 Lean资源管理](#62-lean资源管理)
-    - [6.3 资源管理对比](#63-资源管理对比)
-  - [7. 元模型与模型映射机制](#7-元模型与模型映射机制)
-    - [7.1 Haskell的元编程与反射](#71-haskell的元编程与反射)
-    - [7.2 Lean的元编程与反射](#72-lean的元编程与反射)
-    - [7.3 元模型-模型映射对比](#73-元模型-模型映射对比)
-  - [8. 实际应用案例比较](#8-实际应用案例比较)
-    - [8.1 Haskell应用案例](#81-haskell应用案例)
-    - [8.2 Lean应用案例](#82-lean应用案例)
-    - [8.3 应用场景对比](#83-应用场景对比)
-  - [9. 学习路径与生态系统](#9-学习路径与生态系统)
-    - [9.1 Haskell生态系统与学习路径](#91-haskell生态系统与学习路径)
-      - [Haskell生态系统](#haskell生态系统)
-      - [Haskell学习路径](#haskell学习路径)
-    - [9.2 Lean生态系统与学习路径](#92-lean生态系统与学习路径)
-      - [Lean生态系统](#lean生态系统)
-      - [Lean学习路径](#lean学习路径)
-    - [9.3 生态系统与学习对比](#93-生态系统与学习对比)
-  - [10. 总结与展望](#10-总结与展望)
-    - [10.1 核心哲学差异](#101-核心哲学差异)
-    - [10.2 技术优势与局限](#102-技术优势与局限)
-      - [Haskell优势与局限](#haskell优势与局限)
-      - [Lean优势与局限](#lean优势与局限)
-    - [10.3 未来发展趋势](#103-未来发展趋势)
-    - [10.4 跨语言学习价值](#104-跨语言学习价值)
-    - [10.5 最终思考](#105-最终思考)
-  - [思维导图](#思维导图)
+  - [1.1 概述与定位](#11-概述与定位)
+    - [1.1.1 Haskell语言概述](#111-haskell语言概述)
+    - [1.1.2 Lean语言概述](#112-lean语言概述)
+    - [1.1.3 核心设计哲学对比](#113-核心设计哲学对比)
+  - [1.2 类型系统比较](#12-类型系统比较)
+    - [1.2.1 Haskell类型系统](#121-haskell类型系统)
+    - [1.2.2 Lean类型系统](#122-lean类型系统)
+    - [1.2.3 类型系统关键差异](#123-类型系统关键差异)
+  - [1.3 语法结构对比](#13-语法结构对比)
+    - [1.3.1 Haskell语法特性](#131-haskell语法特性)
+    - [1.3.2 Lean语法特性](#132-lean语法特性)
+    - [1.3.3 控制流对比](#133-控制流对比)
+  - [1.4 语义模型分析](#14-语义模型分析)
+    - [1.4.1 Haskell语义模型](#141-haskell语义模型)
+    - [1.4.2 Lean语义模型](#142-lean语义模型)
+    - [1.4.3 语义模型关键差异](#143-语义模型关键差异)
+  - [1.5 编译与运行时机制](#15-编译与运行时机制)
+    - [1.5.1 Haskell编译与运行时](#151-haskell编译与运行时)
+    - [1.5.2 Lean编译与运行时](#152-lean编译与运行时)
+    - [1.5.3 编译和运行时对比](#153-编译和运行时对比)
+  - [1.6 资源管理与内存映射](#16-资源管理与内存映射)
+    - [1.6.1 Haskell资源管理](#161-haskell资源管理)
+    - [1.6.2 Lean资源管理](#162-lean资源管理)
+    - [1.6.3 资源管理对比](#163-资源管理对比)
+  - [1.7 元模型与模型映射机制](#17-元模型与模型映射机制)
+    - [1.7.1 Haskell的元编程与反射](#171-haskell的元编程与反射)
+    - [1.7.2 Lean的元编程与反射](#172-lean的元编程与反射)
+    - [1.7.3 元模型-模型映射对比](#173-元模型-模型映射对比)
+  - [1.8 实际应用案例比较](#18-实际应用案例比较)
+    - [1.8.1 Haskell应用案例](#181-haskell应用案例)
+    - [1.8.2 Lean应用案例](#182-lean应用案例)
+    - [1.8.3 应用场景对比](#183-应用场景对比)
+  - [1.9 学习路径与生态系统](#19-学习路径与生态系统)
+    - [1.9.1 Haskell生态系统与学习路径](#191-haskell生态系统与学习路径)
+      - [1.9.1.1 Haskell生态系统](#1911-haskell生态系统)
+      - [1.9.1.2 Haskell学习路径](#1912-haskell学习路径)
+    - [1.9.2 Lean生态系统与学习路径](#192-lean生态系统与学习路径)
+      - [1.9.2.1 Lean生态系统](#1921-lean生态系统)
+      - [1.9.2.2 Lean学习路径](#1922-lean学习路径)
+    - [1.9.3 生态系统与学习对比](#193-生态系统与学习对比)
+  - [1.10 总结与展望](#110-总结与展望)
+    - [1.10.1 核心哲学差异](#1101-核心哲学差异)
+    - [1.10.2 技术优势与局限](#1102-技术优势与局限)
+      - [1.10.2.1 Haskell优势与局限](#11021-haskell优势与局限)
+      - [1.10.2.2 Lean优势与局限](#11022-lean优势与局限)
+    - [1.10.3 未来发展趋势](#1103-未来发展趋势)
+    - [1.10.4 跨语言学习价值](#1104-跨语言学习价值)
+    - [1.10.5 最终思考](#1105-最终思考)
+  - [1.11 思维导图](#111-思维导图)
 
-## 1. 概述与定位
+## 1.1 概述与定位
 
-### 1.1 Haskell语言概述
+### 1.1.1 Haskell语言概述
 
 Haskell是一种纯函数式编程语言，以数学家Haskell Curry命名，首个标准版本发布于1990年。Haskell的设计哲学强调：
 
@@ -67,7 +67,7 @@ Haskell是一种纯函数式编程语言，以数学家Haskell Curry命名，首
 
 Haskell主要定位为通用函数式编程语言，在学术研究和工业应用中均有使用。
 
-### 1.2 Lean语言概述
+### 1.1.2 Lean语言概述
 
 Lean是由微软研究院Leonardo de Moura等人开发的依赖类型理论系统，最初发布于2013年。Lean同时是：
 
@@ -77,7 +77,7 @@ Lean是由微软研究院Leonardo de Moura等人开发的依赖类型理论系�
 
 Lean主要定位于形式化验证、定理证明和需要高度保证正确性的程序设计。
 
-### 1.3 核心设计哲学对比
+### 1.1.3 核心设计哲学对比
 
 | 方面 | Haskell | Lean |
 |------|---------|------|
@@ -87,9 +87,9 @@ Lean主要定位于形式化验证、定理证明和需要高度保证正确性�
 | 使用范式 | 函数式编程、类型类多态 | 证明辅助编程、命题即类型 |
 | 学习曲线 | 陡峭但主要集中在函数式概念 | 陡峭且需要形式化逻辑和类型论基础 |
 
-## 2. 类型系统比较
+## 1.2 类型系统比较
 
-### 2.1 Haskell类型系统
+### 1.2.1 Haskell类型系统
 
 Haskell基于Hindley-Milner类型系统，通过GHC的扩展支持更多高级类型特性：
 
@@ -122,7 +122,7 @@ incrementMaybe :: Maybe Int -> Maybe Int
 incrementMaybe = fmap (+1)  -- 不需要显式参数类型
 ```
 
-### 2.2 Lean类型系统
+### 1.2.2 Lean类型系统
 
 Lean基于依赖类型理论，具体来说是归纳构造演算(Calculus of Inductive Constructions)的变体：
 
@@ -148,11 +148,11 @@ def isEven (n : Nat) : Prop :=
   ∃ m : Nat, n = 2 * m
 
 -- 证明即程序：证明4是偶数
-theorem four_is_even : isEven 4 := 
+theorem four_is_even : isEven 4 :=
   ⟨2, rfl⟩  -- 存在证人2，且4=2*2可以通过反射性证明
 ```
 
-### 2.3 类型系统关键差异
+### 1.2.3 类型系统关键差异
 
 | 特性 | Haskell | Lean |
 |------|---------|------|
@@ -163,9 +163,9 @@ theorem four_is_even : isEven 4 :=
 | 类型层级 | 相对扁平 | 复杂的宇宙层级(universe levels) |
 | 类型安全 | 强类型但允许部分不安全操作 | 极强类型安全，证明级别保证 |
 
-## 3. 语法结构对比
+## 1.3 语法结构对比
 
-### 3.1 Haskell语法特性
+### 1.3.1 Haskell语法特性
 
 Haskell以其简洁优雅的语法而闻名：
 
@@ -203,7 +203,7 @@ printSquares = do
     putStrLn $ show n ++ "² = " ++ show (n^2)
 ```
 
-### 3.2 Lean语法特性
+### 1.3.2 Lean语法特性
 
 Lean的语法设计兼顾了编程语言和证明助手的需求：
 
@@ -226,7 +226,7 @@ def factorial : Nat → Nat
 theorem add_comm (a b : Nat) : a + b = b + a := by
   induction a with
   | zero => simp
-  | succ n ih => 
+  | succ n ih =>
     simp
     rw [Nat.add_succ, ih]
     rfl
@@ -242,7 +242,7 @@ def distanceFromOrigin (p : Point) : Float :=
   Float.sqrt (p.x * p.x + p.y * p.y)
 ```
 
-### 3.3 控制流对比
+### 1.3.3 控制流对比
 
 | 控制结构 | Haskell | Lean |
 |---------|---------|------|
@@ -252,9 +252,9 @@ def distanceFromOrigin (p : Point) : Float :=
 | 并发控制 | Software Transactional Memory | 有限支持，主要通过IO操作 |
 | 效果系统 | Monad，Applicative | Monad，IO，EIO |
 
-## 4. 语义模型分析
+## 1.4 语义模型分析
 
-### 4.1 Haskell语义模型
+### 1.4.1 Haskell语义模型
 
 Haskell的语义模型基于λ-演算和范畴论：
 
@@ -282,7 +282,7 @@ withLogging = do
   putStrLn $ "Result: " ++ show result
 ```
 
-### 4.2 Lean语义模型
+### 1.4.2 Lean语义模型
 
 Lean的语义模型基于依赖类型理论和归纳构造演算：
 
@@ -299,7 +299,7 @@ Lean的语义模型基于依赖类型理论和归纳构造演算：
 def Even (n : Nat) : Prop := ∃ k, n = 2 * k
 
 -- 证明即程序
-theorem four_is_even : Even 4 := 
+theorem four_is_even : Even 4 :=
   ⟨2, by simp⟩  -- 证据是一个存在性证明
 
 -- 归纳定义
@@ -312,7 +312,7 @@ def double (n : Nat) := 2 * n
 #eval double 21  -- 计算结果为42
 ```
 
-### 4.3 语义模型关键差异
+### 1.4.3 语义模型关键差异
 
 | 方面 | Haskell | Lean |
 |------|---------|------|
@@ -323,9 +323,9 @@ def double (n : Nat) := 2 * n
 | 相等性概念 | 主要是值相等 | 定义性相等和命题相等 |
 | 逻辑基础 | 隐含的经典逻辑 | 可选择的直觉主义或经典逻辑 |
 
-## 5. 编译与运行时机制
+## 1.5 编译与运行时机制
 
-### 5.1 Haskell编译与运行时
+### 1.5.1 Haskell编译与运行时
 
 Haskell的主要编译器是Glasgow Haskell Compiler (GHC)：
 
@@ -353,7 +353,7 @@ sumStrict = go 0
   where
     go !acc [] = acc
     go !acc (x:xs) = go (acc + x) xs
-    
+
 -- 并行计算
 import Control.Parallel.Strategies
 
@@ -361,7 +361,7 @@ parallelMap :: (a -> b) -> [a] -> [b]
 parallelMap f xs = map f xs `using` parList rdeepseq
 ```
 
-### 5.2 Lean编译与运行时
+### 1.5.2 Lean编译与运行时
 
 Lean的编译系统，特别是Lean 4，采用了多层次架构：
 
@@ -395,7 +395,7 @@ def fibonacci (n : Nat) : Nat :=
 constant systemTimeMillisec : Unit → UInt32
 ```
 
-### 5.3 编译和运行时对比
+### 1.5.3 编译和运行时对比
 
 | 方面 | Haskell | Lean |
 |------|---------|------|
@@ -407,9 +407,9 @@ constant systemTimeMillisec : Unit → UInt32
 | 跨平台 | 多平台支持 | 多平台，包括JavaScript输出 |
 | 编译速度 | 中等到慢 | Lean 4设计上追求快速编译 |
 
-## 6. 资源管理与内存映射
+## 1.6 资源管理与内存映射
 
-### 6.1 Haskell资源管理
+### 1.6.1 Haskell资源管理
 
 Haskell的资源管理建立在其惰性评估模型上：
 
@@ -449,7 +449,7 @@ efficientComputation :: VU.Vector Double -> Double
 efficientComputation vec = VU.sum $ VU.map (* 2) vec
 ```
 
-### 6.2 Lean资源管理
+### 1.6.2 Lean资源管理
 
 Lean的资源管理反映了其双重身份(证明助手和编程语言)：
 
@@ -487,7 +487,7 @@ def withTempComputation : IO String := do
     pure content
 ```
 
-### 6.3 资源管理对比
+### 1.6.3 资源管理对比
 
 | 资源管理方面 | Haskell | Lean |
 |-------------|---------|------|
@@ -498,9 +498,9 @@ def withTempComputation : IO String := do
 | 内存优化能力 | 高(多种专用数据结构) | 中等(编译器负责大部分) |
 | 内存安全性 | 高(除非使用unsafe) | 非常高(类型保证) |
 
-## 7. 元模型与模型映射机制
+## 1.7 元模型与模型映射机制
 
-### 7.1 Haskell的元编程与反射
+### 1.7.1 Haskell的元编程与反射
 
 Haskell的元编程主要通过模板Haskell和泛型编程实现：
 
@@ -546,7 +546,7 @@ instance ToJSON Person
 instance FromJSON Person
 ```
 
-### 7.2 Lean的元编程与反射
+### 1.7.2 Lean的元编程与反射
 
 Lean具有强大的内置元编程能力，特别是Lean 4：
 
@@ -591,7 +591,7 @@ elab "prove_refl" : term => do
 theorem test_eq : 2 + 2 = 4 := by prove_refl
 ```
 
-### 7.3 元模型-模型映射对比
+### 1.7.3 元模型-模型映射对比
 
 | 元编程方面 | Haskell | Lean |
 |-----------|---------|------|
@@ -603,9 +603,9 @@ theorem test_eq : 2 + 2 = 4 := by prove_refl
 | 安全保证 | 类型检查生成代码 | 类型和证明检查 |
 | 元编程应用 | 自动派生、DSL | 证明自动化、语法扩展 |
 
-## 8. 实际应用案例比较
+## 1.8 实际应用案例比较
 
-### 8.1 Haskell应用案例
+### 1.8.1 Haskell应用案例
 
 Haskell在多个领域有成功应用：
 
@@ -631,7 +631,7 @@ Haskell在多个领域有成功应用：
 {-# LANGUAGE TypeOperators #-}
 import Servant
 
-type UserAPI = 
+type UserAPI =
   "users" :> Get '[JSON] [User]
   :<|> "users" :> Capture "userId" Int :> Get '[JSON] User
   :<|> "users" :> ReqBody '[JSON] User :> Post '[JSON] User
@@ -645,7 +645,7 @@ server = getUsers :<|> getUserById :<|> createUser
     createUser = \newUser -> return $ addUser newUser
 ```
 
-### 8.2 Lean应用案例
+### 1.8.2 Lean应用案例
 
 Lean的应用主要集中在形式化验证和证明领域：
 
@@ -688,7 +688,7 @@ theorem bubble_sort_correct (xs : List Int) :
   -- 证明略
 ```
 
-### 8.3 应用场景对比
+### 1.8.3 应用场景对比
 
 | 应用领域 | Haskell | Lean |
 |---------|---------|------|
@@ -701,11 +701,11 @@ theorem bubble_sort_correct (xs : List Int) :
 | 数据科学 | 有针对性库但不是主流 | 基本不用于此目的 |
 | 安全关键 | 适用于某些领域 | 非常适合，但采用有限 |
 
-## 9. 学习路径与生态系统
+## 1.9 学习路径与生态系统
 
-### 9.1 Haskell生态系统与学习路径
+### 1.9.1 Haskell生态系统与学习路径
 
-#### Haskell生态系统
+#### 1.9.1.1 Haskell生态系统
 
 - **包管理**：
   - Cabal和Stack构建工具
@@ -729,7 +729,7 @@ theorem bubble_sort_correct (xs : List Int) :
   - haskell-ide-engine: IDE支持
   - hlint: 代码质量工具
 
-#### Haskell学习路径
+#### 1.9.1.2 Haskell学习路径
 
 1. **基础概念**：
    - 纯函数编程思想
@@ -771,9 +771,9 @@ type API = "users" :> Get '[JSON] [User]
       :<|> "user" :> Capture "userId" Int :> Get '[JSON] User
 ```
 
-### 9.2 Lean生态系统与学习路径
+### 1.9.2 Lean生态系统与学习路径
 
-#### Lean生态系统
+#### 1.9.2.1 Lean生态系统
 
 - **包管理**：
   - Lake: Lean 4包管理器
@@ -795,7 +795,7 @@ type API = "users" :> Get '[JSON] [User]
   - Lean Web Editor
   - #lean IRC和Zulip频道
 
-#### Lean学习路径
+#### 1.9.2.2 Lean学习路径
 
 1. **基础概念**：
    - 依赖类型基础
@@ -822,7 +822,7 @@ import Mathlib.Algebra.Group.Basic
 import Mathlib.Tactic
 
 -- 使用mathlib定义和证明
-theorem subgroup_intersection {G : Type*} [Group G] 
+theorem subgroup_intersection {G : Type*} [Group G]
   (H K : Subgroup G) : IsSubgroup (H ∩ K) := by
   constructor
   · -- 证明闭合性
@@ -835,7 +835,7 @@ theorem subgroup_intersection {G : Type*} [Group G]
     exact ⟨H.inv_mem hx, K.inv_mem kx⟩
 ```
 
-### 9.3 生态系统与学习对比
+### 1.9.3 生态系统与学习对比
 
 | 方面 | Haskell | Lean |
 |------|---------|------|
@@ -847,9 +847,9 @@ theorem subgroup_intersection {G : Type*} [Group G]
 | IDE支持 | 良好(HLS, VS Code) | 良好(专用VS Code插件) |
 | 更新频率 | 稳定，GHC定期发布 | 活跃，特别是mathlib |
 
-## 10. 总结与展望
+## 1.10 总结与展望
 
-### 10.1 核心哲学差异
+### 1.10.1 核心哲学差异
 
 Haskell和Lean代表了两种不同但相关的编程哲学：
 
@@ -861,9 +861,9 @@ Haskell和Lean代表了两种不同但相关的编程哲学：
 | 设计理念 | 优雅、抽象与实用的平衡 | 数学严谨性与计算能力的统一 |
 | 学术影响 | 函数式编程研究 | 类型论和形式验证研究 |
 
-### 10.2 技术优势与局限
+### 1.10.2 技术优势与局限
 
-#### Haskell优势与局限
+#### 1.10.2.1 Haskell优势与局限
 
 **优势**：
 
@@ -881,7 +881,7 @@ Haskell和Lean代表了两种不同但相关的编程哲学：
 - 缺乏依赖类型的表达能力
 - 内存使用有时难以优化
 
-#### Lean优势与局限
+#### 1.10.2.2 Lean优势与局限
 
 **优势**：
 
@@ -899,7 +899,7 @@ Haskell和Lean代表了两种不同但相关的编程哲学：
 - 性能优化不如主流语言
 - 一般编程任务可能过于复杂
 
-### 10.3 未来发展趋势
+### 1.10.3 未来发展趋势
 
 两种语言的未来发展展现了不同的轨迹：
 
@@ -919,7 +919,7 @@ Haskell和Lean代表了两种不同但相关的编程哲学：
 - 改进代码生成和运行时性能
 - 扩大在软件验证中的应用
 
-### 10.4 跨语言学习价值
+### 1.10.4 跨语言学习价值
 
 尽管差异显著，学习这两种语言具有互补价值：
 
@@ -929,7 +929,7 @@ Haskell和Lean代表了两种不同但相关的编程哲学：
 - 类型级编程技术在两种语言间有迁移价值
 - 形式化方法正日益影响主流软件开发实践
 
-### 10.5 最终思考
+### 1.10.5 最终思考
 
 Haskell和Lean代表了编程语言光谱上的两个互补位置：
     Haskell追求纯函数式编程与实用性的平衡，而Lean致力于统一数学证明和计算能力。
@@ -940,7 +940,7 @@ Haskell和Lean代表了编程语言光谱上的两个互补位置：
 随着软件系统复杂性和关键性的增加，这两种方法正日益融合，为未来的编程语言发展指明了方向：
     更强大的类型系统、更严格的形式保证，同时保持实用性和开发效率。
 
-## 思维导图
+## 1.11 思维导图
 
 ```text
 Haskell与Lean对比

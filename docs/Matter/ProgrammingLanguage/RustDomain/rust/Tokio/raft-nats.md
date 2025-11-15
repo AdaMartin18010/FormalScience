@@ -100,7 +100,7 @@ impl RaftNode {
             let mut interval = tokio::time::interval(Duration::from_millis(150));
             loop {
                 interval.tick().await;
-                
+
                 let mut state = state.write().await;
                 if matches!(state.role, RaftRole::Leader { .. }) {
                     continue;
@@ -122,7 +122,7 @@ impl RaftNode {
                 for peer in peers.iter() {
                     let nats = nats.clone();
                     let request = request.clone();
-                    
+
                     tokio::spawn(async move {
                         if let Err(e) = nats.publish(
                             format!("raft.vote.{}", peer.id),
@@ -328,11 +328,11 @@ impl NatsHandler {
         let control_handler = tokio::spawn({
             let client = self.client.clone();
             let raft_node = self.raft_node.clone();
-            
+
             async move {
                 while let Some(msg) = control_sub.next().await {
                     let command: ControlCommand = serde_json::from_slice(&msg.payload)?;
-                    
+
                     // 通过 Raft 处理命令
                     if let Some(leader_id) = raft_node.get_leader().await {
                         if leader_id == raft_node.id {
@@ -355,7 +355,7 @@ impl NatsHandler {
         // 处理 Raft 消息
         let raft_handler = tokio::spawn({
             let raft_node = self.raft_node.clone();
-            
+
             async move {
                 while let Some(msg) = raft_sub.next().await {
                     match msg.subject.as_str() {

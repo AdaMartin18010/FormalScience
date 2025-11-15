@@ -80,25 +80,25 @@ pub async fn device_monitoring_workflow(device_id: String, threshold: f32) {
         start_to_close_timeout: Some(Duration::from_secs(10)),
         ..Default::default()
     };
-    
+
     let sensor_activities = ctx.activity(SensorActivities::default(), activity_options);
-    
+
     loop {
         // 读取温度传感器数据
         let temperature = sensor_activities.read_temperature(device_id.clone()).await?;
-        
+
         // 根据条件触发执行器
         if temperature > threshold {
             // 执行降温操作
             sensor_activities.control_actuator(device_id.clone(), "COOLING_ON".to_string()).await?;
-            
+
             // 等待一段时间
             ctx.timer(Duration::from_secs(300)).await?;
-            
+
             // 关闭降温
             sensor_activities.control_actuator(device_id.clone(), "COOLING_OFF".to_string()).await?;
         }
-        
+
         // 周期性监控
         ctx.timer(Duration::from_secs(60)).await?;
     }
@@ -172,20 +172,20 @@ pub trait OfficeActivities {
 pub async fn purchase_approval_workflow(initial_request: PurchaseRequest) -> Result<ApprovalStatus, Error> {
     let mut request = initial_request;
     request.status = ApprovalStatus::Pending;
-    
+
     let activity_options = ActivityOptions {
         start_to_close_timeout: Some(Duration::from_secs(300)),
         ..Default::default()
     };
-    
+
     let office_activities = ctx.activity(OfficeActivities::default(), activity_options);
-    
+
     // 通知申请人请求已收到
     office_activities.notify_user(
-        request.requester.clone(), 
+        request.requester.clone(),
         format!("采购申请 #{} 已提交", request.request_id)
     ).await?;
-    
+
     // 根据金额决定审批流程
     let manager_id = if request.amount > 10000.0 {
         "finance_director"
@@ -194,28 +194,28 @@ pub async fn purchase_approval_workflow(initial_request: PurchaseRequest) -> Res
     } else {
         "team_leader"
     };
-    
+
     // 请求审批
     let approval_result = office_activities.get_approval(
-        manager_id.to_string(), 
+        manager_id.to_string(),
         request.clone()
     ).await?;
-    
+
     // 更新请求状态
     request.status = approval_result;
-    
+
     // 更新数据库
     office_activities.update_database(request.clone()).await?;
-    
+
     // 通知申请人结果
     let message = match request.status {
         ApprovalStatus::Approved => format!("采购申请 #{} 已批准", request.request_id),
         ApprovalStatus::Rejected => format!("采购申请 #{} 已拒绝", request.request_id),
         _ => unreachable!(),
     };
-    
+
     office_activities.notify_user(request.requester.clone(), message).await?;
-    
+
     Ok(request.status)
 }
 ```

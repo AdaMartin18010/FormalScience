@@ -1,51 +1,51 @@
-# OpenTelemetry技术方案分析
+# 1. OpenTelemetry技术方案分析
 
 ## 目录
 
-- [OpenTelemetry技术方案分析](#opentelemetry技术方案分析)
+- [1. OpenTelemetry技术方案分析](#1-opentelemetry技术方案分析)
   - [目录](#目录)
-  - [1. 基础概念](#1-基础概念)
-    - [1.1 核心定义](#11-核心定义)
-    - [1.2 设计理念](#12-设计理念)
-  - [2. 系统架构](#2-系统架构)
-    - [2.1 API层](#21-api层)
-    - [2.2 SDK层](#22-sdk层)
-    - [2.3 Collector组件](#23-collector组件)
-  - [3. 信号类型](#3-信号类型)
-    - [3.1 分布式追踪(Traces)](#31-分布式追踪traces)
-    - [3.2 指标(Metrics)](#32-指标metrics)
-    - [3.3 日志(Logs)](#33-日志logs)
-  - [4. 工作流程](#4-工作流程)
-    - [4.1 上下文传播](#41-上下文传播)
-    - [4.2 采样策略](#42-采样策略)
-    - [4.3 数据导出](#43-数据导出)
-  - [5. 语言实现](#5-语言实现)
-    - [5.1 Rust实现](#51-rust实现)
-    - [5.2 Golang实现](#52-golang实现)
-  - [6. 集成场景](#6-集成场景)
-    - [6.1 微服务架构](#61-微服务架构)
-    - [6.2 云原生环境](#62-云原生环境)
-    - [6.3 混合系统](#63-混合系统)
-  - [7. 技术对比](#7-技术对比)
-    - [7.1 与传统监控的比较](#71-与传统监控的比较)
-    - [7.2 与其他可观测性框架的比较](#72-与其他可观测性框架的比较)
-  - [8. 发展趋势](#8-发展趋势)
-    - [8.1 eBPF集成](#81-ebpf集成)
-    - [8.2 自动检测](#82-自动检测)
-    - [8.3 AI辅助分析](#83-ai辅助分析)
-  - [9. 组合架构](#9-组合架构)
-    - [9.1 与日志系统的结合](#91-与日志系统的结合)
-    - [9.2 与监控平台的结合](#92-与监控平台的结合)
-    - [9.3 与告警系统的结合](#93-与告警系统的结合)
-  - [10. 批判性思考](#10-批判性思考)
-    - [10.1 架构复杂性](#101-架构复杂性)
-    - [10.2 数据量挑战](#102-数据量挑战)
-    - [10.3 实施难度](#103-实施难度)
-  - [思维导图](#思维导图)
+  - [1.1 基础概念](#11-基础概念)
+    - [1.1.1 核心定义](#111-核心定义)
+    - [1.1.2 设计理念](#112-设计理念)
+  - [1.2 系统架构](#12-系统架构)
+    - [1.2.1 API层](#121-api层)
+    - [1.2.2 SDK层](#122-sdk层)
+    - [1.2.3 Collector组件](#123-collector组件)
+  - [2.1 信号类型](#21-信号类型)
+    - [2.1.1 分布式追踪(Traces)](#211-分布式追踪traces)
+    - [2.1.2 指标(Metrics)](#212-指标metrics)
+    - [2.1.3 日志(Logs)](#213-日志logs)
+  - [2.2 工作流程](#22-工作流程)
+    - [2.2.1 上下文传播](#221-上下文传播)
+    - [2.2.2 采样策略](#222-采样策略)
+    - [2.2.3 数据导出](#223-数据导出)
+  - [2.3 语言实现](#23-语言实现)
+    - [2.3.1 Rust实现](#231-rust实现)
+    - [2.3.2 Golang实现](#232-golang实现)
+  - [2.4 集成场景](#24-集成场景)
+    - [2.4.1 微服务架构](#241-微服务架构)
+    - [2.4.2 云原生环境](#242-云原生环境)
+    - [2.4.3 混合系统](#243-混合系统)
+  - [2.5 技术对比](#25-技术对比)
+    - [2.5.1 与传统监控的比较](#251-与传统监控的比较)
+    - [2.5.2 与其他可观测性框架的比较](#252-与其他可观测性框架的比较)
+  - [2.6 发展趋势](#26-发展趋势)
+    - [2.6.1 eBPF集成](#261-ebpf集成)
+    - [2.6.2 自动检测](#262-自动检测)
+    - [2.6.3 AI辅助分析](#263-ai辅助分析)
+  - [2.7 组合架构](#27-组合架构)
+    - [2.7.1 与日志系统的结合](#271-与日志系统的结合)
+    - [2.7.2 与监控平台的结合](#272-与监控平台的结合)
+    - [2.7.3 与告警系统的结合](#273-与告警系统的结合)
+  - [2.8 批判性思考](#28-批判性思考)
+    - [2.8.1 架构复杂性](#281-架构复杂性)
+    - [2.8.2 数据量挑战](#282-数据量挑战)
+    - [2.8.3 实施难度](#283-实施难度)
+  - [2.9 思维导图](#29-思维导图)
 
-## 1. 基础概念
+## 1.1 基础概念
 
-### 1.1 核心定义
+### 1.1.1 核心定义
 
 OpenTelemetry是一个开源的可观测性框架，旨在统一遥测数据的收集和传输标准。它结合了OpenCensus和OpenTracing项目的优点，形成了一套完整的可观测性解决方案。其核心概念包括：
 
@@ -55,7 +55,7 @@ OpenTelemetry是一个开源的可观测性框架，旨在统一遥测数据的�
 - **Span(追踪单元)**: 分布式追踪的基本单位，表示一个操作或工作单元
 - **上下文传播(Context Propagation)**: 在分布式系统的不同组件间传递追踪信息的机制
 
-### 1.2 设计理念
+### 1.1.2 设计理念
 
 OpenTelemetry的设计理念体现在：
 
@@ -65,9 +65,9 @@ OpenTelemetry的设计理念体现在：
 - **低侵入性**: 尽可能降低对应用代码的影响
 - **与已有系统兼容**: 支持与各种监控和分析后端集成
 
-## 2. 系统架构
+## 1.2 系统架构
 
-### 2.1 API层
+### 1.2.1 API层
 
 API层定义了与应用程序交互的接口，包括：
 
@@ -90,7 +90,7 @@ tracer.in_span("operation_name", |cx| {
 });
 ```
 
-### 2.2 SDK层
+### 1.2.2 SDK层
 
 SDK层实现了API层定义的接口，提供了数据处理的实际逻辑：
 
@@ -124,7 +124,7 @@ tracerProvider := trace.NewTracerProvider(
 otel.SetTracerProvider(tracerProvider)
 ```
 
-### 2.3 Collector组件
+### 1.2.3 Collector组件
 
 Collector是一个独立的服务，负责接收、处理和导出遥测数据：
 
@@ -133,7 +133,7 @@ Collector是一个独立的服务，负责接收、处理和导出遥测数据�
 - **导出器(Exporters)**: 将数据发送到目标后端
 
 ```yaml
-# Collector配置示例
+# 2. Collector配置示例
 receivers:
   otlp:
     protocols:
@@ -171,9 +171,9 @@ service:
       exporters: [prometheus]
 ```
 
-## 3. 信号类型
+## 2.1 信号类型
 
-### 3.1 分布式追踪(Traces)
+### 2.1.1 分布式追踪(Traces)
 
 追踪记录请求在分布式系统中的完整路径，由以下核心概念组成：
 
@@ -183,7 +183,7 @@ service:
 - **Events**: Span内的时间点事件
 - **Links**: 连接相关Span的引用
 
-### 3.2 指标(Metrics)
+### 2.1.2 指标(Metrics)
 
 指标是系统行为和状态的数值表示，支持多种类型：
 
@@ -192,7 +192,7 @@ service:
 - **Histogram**: 值分布的统计表示
 - **Summary**: 类似于Histogram，但在客户端计算分位数
 
-### 3.3 日志(Logs)
+### 2.1.3 日志(Logs)
 
 日志是系统生成的时间戳记录，OpenTelemetry提供结构化日志格式：
 
@@ -200,9 +200,9 @@ service:
 - **SeverityNumber**: 标准化日志严重级别
 - **SeverityText**: 人类可读的严重级别描述
 
-## 4. 工作流程
+## 2.2 工作流程
 
-### 4.1 上下文传播
+### 2.2.1 上下文传播
 
 上下文传播是分布式追踪的关键，允许跨服务边界维护请求上下文：
 
@@ -219,7 +219,7 @@ let parent_cx = global::get_text_map_propagator(|propagator| {
 });
 ```
 
-### 4.2 采样策略
+### 2.2.2 采样策略
 
 采样控制了多少遥测数据被实际记录和处理：
 
@@ -228,7 +228,7 @@ let parent_cx = global::get_text_map_propagator(|propagator| {
 - **概率采样(Probabilistic Sampling)**: 基于随机概率选择追踪
 - **速率限制采样(Rate Limiting Sampling)**: 限制每单位时间处理的追踪数量
 
-### 4.3 数据导出
+### 2.2.3 数据导出
 
 数据导出将遥测数据发送到后端存储或分析系统：
 
@@ -237,9 +237,9 @@ let parent_cx = global::get_text_map_propagator(|propagator| {
 - **背压处理**: 当后端系统过载时控制数据流
 - **多目标导出**: 同时向多个后端发送数据
 
-## 5. 语言实现
+## 2.3 语言实现
 
-### 5.1 Rust实现
+### 2.3.1 Rust实现
 
 Rust的OpenTelemetry实现具有高性能和内存安全特性：
 
@@ -260,13 +260,13 @@ impl<W: ObservableWorkflow> TelemetryWorkflow<W> {
             "workflow_service",
             Some(env!("CARGO_PKG_VERSION")),
         );
-        
+
         Self {
             inner: workflow,
             tracer: Arc::new(tracer),
         }
     }
-    
+
     pub fn execute(&self, input: W::Input) -> Result<W::Output, W::Error> {
         let span = self.tracer.span_builder(format!("execute_{}", self.inner.name()))
             .with_attributes(vec![
@@ -274,16 +274,16 @@ impl<W: ObservableWorkflow> TelemetryWorkflow<W> {
                 KeyValue::new("workflow.input_type", std::any::type_name::<W::Input>().to_string()),
             ])
             .start(&self.tracer);
-            
+
         let cx = Context::current_with_span(span);
         let result = cx.with_span(|_| self.inner.execute(input));
-        
+
         result
     }
 }
 ```
 
-### 5.2 Golang实现
+### 2.3.2 Golang实现
 
 Golang的OpenTelemetry实现简洁且易于集成：
 
@@ -293,7 +293,7 @@ package main
 import (
     "context"
     "log"
-    
+
     "go.opentelemetry.io/otel"
     "go.opentelemetry.io/otel/attribute"
     "go.opentelemetry.io/otel/exporters/otlp/otlptrace"
@@ -315,13 +315,13 @@ func initTracer() (*sdktrace.TracerProvider, error) {
     if err != nil {
         return nil, err
     }
-    
+
     resource := resource.NewWithAttributes(
         semconv.SchemaURL,
         semconv.ServiceNameKey.String("my-service"),
         semconv.ServiceVersionKey.String("1.0.0"),
     )
-    
+
     tp := sdktrace.NewTracerProvider(
         sdktrace.WithBatcher(exporter),
         sdktrace.WithResource(resource),
@@ -329,7 +329,7 @@ func initTracer() (*sdktrace.TracerProvider, error) {
             sdktrace.TraceIDRatioBased(0.1),
         )),
     )
-    
+
     otel.SetTracerProvider(tp)
     return tp, nil
 }
@@ -340,11 +340,11 @@ func main() {
         log.Fatal(err)
     }
     defer tp.Shutdown(context.Background())
-    
+
     tracer := otel.Tracer("my-service")
     ctx, span := tracer.Start(context.Background(), "main")
     defer span.End()
-    
+
     // 业务逻辑
     doWork(ctx)
 }
@@ -353,15 +353,15 @@ func doWork(ctx context.Context) {
     tracer := otel.Tracer("my-service")
     ctx, span := tracer.Start(ctx, "doWork")
     defer span.End()
-    
+
     span.SetAttributes(attribute.String("key", "value"))
     // 执行业务逻辑
 }
 ```
 
-## 6. 集成场景
+## 2.4 集成场景
 
-### 6.1 微服务架构
+### 2.4.1 微服务架构
 
 OpenTelemetry在微服务架构中的应用：
 
@@ -370,7 +370,7 @@ OpenTelemetry在微服务架构中的应用：
 - 测量服务间通信的延迟和错误率
 - 发现系统瓶颈和优化机会
 
-### 6.2 云原生环境
+### 2.4.2 云原生环境
 
 在Kubernetes等云原生环境中的应用：
 
@@ -379,7 +379,7 @@ OpenTelemetry在微服务架构中的应用：
 - 追踪跨越多个集群的请求
 - 与云提供商的可观测性工具集成
 
-### 6.3 混合系统
+### 2.4.3 混合系统
 
 在混合系统中的应用：
 
@@ -387,9 +387,9 @@ OpenTelemetry在微服务架构中的应用：
 - 提供统一的数据格式和查询接口
 - 帮助逐步迁移到现代可观测性实践
 
-## 7. 技术对比
+## 2.5 技术对比
 
-### 7.1 与传统监控的比较
+### 2.5.1 与传统监控的比较
 
 |特性|传统监控|OpenTelemetry|
 |---|---|---|
@@ -400,7 +400,7 @@ OpenTelemetry在微服务架构中的应用：
 |扩展性|受限|高度可扩展|
 |侵入性|通常需要专有代理|灵活的集成选项|
 
-### 7.2 与其他可观测性框架的比较
+### 2.5.2 与其他可观测性框架的比较
 
 |框架|优势|劣势|
 |---|---|---|
@@ -409,9 +409,9 @@ OpenTelemetry在微服务架构中的应用：
 |Prometheus|成熟的指标系统|主要关注指标|
 |OpenTelemetry|统一标准，全面覆盖|相对较新，仍在发展|
 
-## 8. 发展趋势
+## 2.6 发展趋势
 
-### 8.1 eBPF集成
+### 2.6.1 eBPF集成
 
 eBPF技术与OpenTelemetry的结合：
 
@@ -419,7 +419,7 @@ eBPF技术与OpenTelemetry的结合：
 - 性能分析和故障排查能力大幅提升
 - 自动发现服务依赖和网络流量
 
-### 8.2 自动检测
+### 2.6.2 自动检测
 
 自动检测技术的进步：
 
@@ -427,7 +427,7 @@ eBPF技术与OpenTelemetry的结合：
 - 无代码修改的遥测数据收集
 - 智能采样和过滤机制
 
-### 8.3 AI辅助分析
+### 2.6.3 AI辅助分析
 
 AI技术在可观测性领域的应用：
 
@@ -435,9 +435,9 @@ AI技术在可观测性领域的应用：
 - 预测性能问题和容量规划
 - 自动生成监控规则和告警阈值
 
-## 9. 组合架构
+## 2.7 组合架构
 
-### 9.1 与日志系统的结合
+### 2.7.1 与日志系统的结合
 
 OpenTelemetry与ELK、Loki等日志系统的集成：
 
@@ -445,7 +445,7 @@ OpenTelemetry与ELK、Loki等日志系统的集成：
 - 丰富日志上下文信息
 - 提供统一的查询接口
 
-### 9.2 与监控平台的结合
+### 2.7.2 与监控平台的结合
 
 与Grafana、Datadog等监控平台的集成：
 
@@ -453,7 +453,7 @@ OpenTelemetry与ELK、Loki等日志系统的集成：
 - 创建综合仪表板
 - 设置基于多种信号的告警
 
-### 9.3 与告警系统的结合
+### 2.7.3 与告警系统的结合
 
 与Alertmanager、PagerDuty等告警系统的集成：
 
@@ -461,9 +461,9 @@ OpenTelemetry与ELK、Loki等日志系统的集成：
 - 关联告警与根因追踪
 - 减少告警疲劳
 
-## 10. 批判性思考
+## 2.8 批判性思考
 
-### 10.1 架构复杂性
+### 2.8.1 架构复杂性
 
 OpenTelemetry架构的复杂性评估：
 
@@ -471,7 +471,7 @@ OpenTelemetry架构的复杂性评估：
 - 配置选项繁多可能导致误配置
 - 需要考虑性能与功能的平衡
 
-### 10.2 数据量挑战
+### 2.8.2 数据量挑战
 
 处理大量遥测数据的挑战：
 
@@ -479,7 +479,7 @@ OpenTelemetry架构的复杂性评估：
 - 网络带宽消耗
 - 成本控制与采样策略的权衡
 
-### 10.3 实施难度
+### 2.8.3 实施难度
 
 在实际项目中实施的难点：
 
@@ -487,7 +487,7 @@ OpenTelemetry架构的复杂性评估：
 - 团队能力和知识要求
 - 规划合理的实施路径和阶段
 
-## 思维导图
+## 2.9 思维导图
 
 ```text
 OpenTelemetry

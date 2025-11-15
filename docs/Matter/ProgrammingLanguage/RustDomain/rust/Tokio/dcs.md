@@ -86,13 +86,13 @@ impl DistributedControlSystem {
     pub async fn new() -> Result<Self, DCSError> {
         // 加载配置
         let config = Arc::new(config::load_config()?);
-        
+
         // 初始化数据库连接
         let db = Arc::new(database::Database::new(&config).await?);
-        
+
         // 创建消息通道
         let (message_tx, message_rx) = mpsc::channel(1000);
-        
+
         // 初始化节点和控制回路存储
         let nodes = Arc::new(RwLock::new(HashMap::new()));
         let control_loops = Arc::new(RwLock::new(HashMap::new()));
@@ -113,7 +113,7 @@ impl DistributedControlSystem {
         self.start_control_manager().await?;
         self.start_message_handler().await?;
         self.start_monitoring().await?;
-        
+
         Ok(())
     }
 
@@ -231,7 +231,7 @@ impl DistributedControlSystem {
     ) -> Result<(), DCSError> {
         // 存储传感器数据
         db.store_sensor_data(node_id, &data).await?;
-        
+
         // 更新相关控制回路
         let control_loops_read = control_loops.read().await;
         for control_loop in control_loops_read.values() {
@@ -239,7 +239,7 @@ impl DistributedControlSystem {
                 control_loop.update_sensor_data(data.clone()).await?;
             }
         }
-        
+
         Ok(())
     }
 
@@ -249,14 +249,14 @@ impl DistributedControlSystem {
         nodes: &Arc<RwLock<HashMap<String, Node>>>,
     ) -> Result<(), DCSError> {
         let nodes_read = nodes.read().await;
-        
+
         // 找到目标执行器节点
         if let Some(node) = nodes_read.values().find(|n| n.node_type == NodeType::Actuator) {
             node.send_command(command).await?;
         } else {
             return Err(DCSError::NodeNotFound("未找到执行器节点".into()));
         }
-        
+
         Ok(())
     }
 
@@ -287,7 +287,7 @@ impl DistributedControlSystem {
             }
             // 处理其他状态...
         }
-        
+
         Ok(())
     }
 
@@ -298,25 +298,25 @@ impl DistributedControlSystem {
 
         tokio::spawn(async move {
             let mut metrics = metrics::Metrics::new();
-            
+
             loop {
                 // 收集节点指标
                 let nodes_read = nodes.read().await;
                 for (node_id, node) in nodes_read.iter() {
                     metrics.record_node_status(node_id, &node.status);
                 }
-                
+
                 // 收集控制回路指标
                 let control_loops_read = control_loops.read().await;
                 for (loop_id, control_loop) in control_loops_read.iter() {
                     metrics.record_control_loop_status(loop_id, control_loop);
                 }
-                
+
                 // 导出指标
                 if let Err(e) = metrics.export().await {
                     error!("导出监控指标失败: {}", e);
                 }
-                
+
                 tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
             }
         });
@@ -353,17 +353,17 @@ impl PIDController {
     fn calculate(&mut self, process_value: f64) -> f64 {
         let now = std::time::Instant::now();
         let dt = (now - self.last_time).as_secs_f64();
-        
+
         let error = self.setpoint - process_value;
         self.integral += error * dt;
-        
+
         let derivative = (error - self.last_error) / dt;
-        
+
         let output = self.kp * error + self.ki * self.integral + self.kd * derivative;
-        
+
         self.last_error = error;
         self.last_time = now;
-        
+
         output
     }
 }
@@ -373,19 +373,19 @@ impl PIDController {
 pub enum DCSError {
     #[error("数据库错误: {0}")]
     Database(#[from] sqlx::Error),
-    
+
     #[error("网络错误: {0}")]
     Network(std::io::Error),
-    
+
     #[error("节点错误: {0}")]
     Node(String),
-    
+
     #[error("控制错误: {0}")]
     Control(String),
-    
+
     #[error("配置错误: {0}")]
     Config(String),
-    
+
     #[error("节点未找到: {0}")]
     NodeNotFound(String),
 }
@@ -395,11 +395,11 @@ pub enum DCSError {
 async fn main() -> Result<(), DCSError> {
     // 初始化日志
     tracing_subscriber::fmt::init();
-    
+
     // 创建并运行分布式控制系统
     let mut system = DistributedControlSystem::new().await?;
     system.run().await?;
-    
+
     Ok(())
 }
 ```
@@ -561,7 +561,7 @@ impl AdaptiveSystem {
     pub async fn new() -> Result<Self, AdaptiveError> {
         // 创建消息通道
         let (message_tx, message_rx) = mpsc::channel(100);
-        
+
         // 初始化节点存储
         let nodes = Arc::new(RwLock::new(HashMap::new()));
 
@@ -579,7 +579,7 @@ impl AdaptiveSystem {
         self.start_message_handler().await?;
         // 启动监控
         self.start_monitoring().await?;
-        
+
         Ok(())
     }
 
@@ -664,7 +664,7 @@ impl AdaptiveSystem {
         } else {
             return Err(AdaptiveError::NodeNotFound("未找到节点".into()));
         }
-        
+
         Ok(())
     }
 
@@ -673,14 +673,14 @@ impl AdaptiveSystem {
         nodes: &Arc<RwLock<HashMap<String, Node>>>,
     ) -> Result<(), AdaptiveError> {
         let nodes_read = nodes.read().await;
-        
+
         // 找到目标节点并发送命令
         if let Some(node) = nodes_read.values().find(|n| n.can_handle_command(&command)) {
             node.send_command(command).await?;
         } else {
             return Err(AdaptiveError::NodeNotFound("未找到可处理命令的节点".into()));
         }
-        
+
         Ok(())
     }
 
@@ -705,7 +705,7 @@ impl AdaptiveSystem {
                 }
             }
         }
-        
+
         Ok(())
     }
 
@@ -720,7 +720,7 @@ impl AdaptiveSystem {
                     // 记录节点状态
                     info!("节点 {} 状态: {:?}", node_id, node.status);
                 }
-                
+
                 tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
             }
         });
@@ -734,13 +734,13 @@ impl AdaptiveSystem {
 pub enum AdaptiveError {
     #[error("节点未找到: {0}")]
     NodeNotFound(String),
-    
+
     #[error("网络错误: {0}")]
     Network(#[from] std::io::Error),
-    
+
     #[error("控制错误: {0}")]
     Control(String),
-    
+
     #[error("配置错误: {0}")]
     Config(String),
 }
@@ -750,11 +750,11 @@ pub enum AdaptiveError {
 async fn main() -> Result<(), AdaptiveError> {
     // 初始化日志
     tracing_subscriber::fmt::init();
-    
+
     // 创建并运行自适应系统
     let mut system = AdaptiveSystem::new().await?;
     system.run().await?;
-    
+
     Ok(())
 }
 ```

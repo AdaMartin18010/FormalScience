@@ -119,21 +119,21 @@ impl Workflow {
     fn new() -> Self {
         Workflow { state: WorkflowState::Start }
     }
-    
+
     fn execute_task_a(&mut self) {
         if matches!(self.state, WorkflowState::Start) {
             println!("执行任务A");
             self.state = WorkflowState::TaskA;
         }
     }
-    
+
     fn execute_task_b(&mut self) {
         if matches!(self.state, WorkflowState::TaskA) {
             println!("执行任务B");
             self.state = WorkflowState::TaskB;
         }
     }
-    
+
     fn complete(&mut self) {
         if matches!(self.state, WorkflowState::TaskB) {
             self.state = WorkflowState::End;
@@ -166,9 +166,9 @@ use std::sync::{Arc, Mutex};
 
 fn main() {
     let shared_data = Arc::new(Mutex::new(0));
-    
+
     let mut handles = vec![];
-    
+
     // 创建并行分支
     for i in 0..3 {
         let data_clone = Arc::clone(&shared_data);
@@ -179,12 +179,12 @@ fn main() {
         });
         handles.push(handle);
     }
-    
+
     // 等待所有分支完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("最终结果: {}", *shared_data.lock().unwrap());
 }
 ```
@@ -207,26 +207,26 @@ fn main() {
     let num_threads = 3;
     let barrier = Arc::new(Barrier::new(num_threads));
     let mut handles = vec![];
-    
+
     for i in 0..num_threads {
         let barrier_clone = Arc::clone(&barrier);
         let handle = thread::spawn(move || {
             println!("分支 {} 开始执行", i);
             thread::sleep(std::time::Duration::from_millis(1000 * i));
             println!("分支 {} 到达同步点", i);
-            
+
             // 在这里等待其他所有线程
             barrier_clone.wait();
-            
+
             println!("分支 {} 继续执行", i);
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("所有分支同步完成后的工作");
 }
 ```
@@ -291,21 +291,21 @@ fn main() {
     let result = Arc::new(Mutex::new(false));
     let result_clone1 = Arc::clone(&result);
     let result_clone2 = Arc::clone(&result);
-    
+
     let handle1 = thread::spawn(move || {
         thread::sleep(std::time::Duration::from_millis(1000));
         let mut data = result_clone1.lock().unwrap();
         *data = true;
         println!("分支1完成");
     });
-    
+
     let handle2 = thread::spawn(move || {
         thread::sleep(std::time::Duration::from_millis(2000));
         let mut data = result_clone2.lock().unwrap();
         *data = true;
         println!("分支2完成");
     });
-    
+
     // 等待任何一个分支完成
     loop {
         if *result.lock().unwrap() {
@@ -314,7 +314,7 @@ fn main() {
         }
         thread::sleep(std::time::Duration::from_millis(100));
     }
-    
+
     // 清理资源
     handle1.join().unwrap();
     handle2.join().unwrap();
@@ -351,7 +351,7 @@ fn multi_choice(value: i32) {
         Task { id: 2, name: String::from("任务B") },
         Task { id: 3, name: String::from("任务C") },
     ];
-    
+
     // 根据条件选择多个任务执行
     let selected_tasks: Vec<&Task> = tasks.iter()
         .filter(|task| match task.id {
@@ -361,7 +361,7 @@ fn multi_choice(value: i32) {
             _ => false,
         })
         .collect();
-    
+
     println!("选择了 {} 个任务执行", selected_tasks.len());
     for task in selected_tasks {
         task.execute();
@@ -401,9 +401,9 @@ fn main() {
         Branch { id: 2, active: true, completed: false },
         Branch { id: 3, active: false, completed: false },
     ]));
-    
+
     let mut handles = vec![];
-    
+
     for i in 0..3 {
         let branches_clone = Arc::clone(&branches);
         let handle = thread::spawn(move || {
@@ -415,11 +415,11 @@ fn main() {
                     branch_active = true;
                 }
             }
-            
+
             if branch_active {
                 println!("分支 {} 开始执行", i+1);
                 thread::sleep(std::time::Duration::from_millis(1000 * (i+1)));
-                
+
                 // 标记完成
                 let mut branch_list = branches_clone.lock().unwrap();
                 branch_list[i].completed = true;
@@ -428,14 +428,14 @@ fn main() {
         });
         handles.push(handle);
     }
-    
+
     // 等待所有激活的分支完成
     loop {
         let branches_status = branches.lock().unwrap();
         let all_completed = branches_status.iter()
             .filter(|b| b.active)
             .all(|b| b.completed);
-        
+
         if all_completed {
             println!("所有激活的分支都已完成，继续执行");
             break;
@@ -443,7 +443,7 @@ fn main() {
         drop(branches_status);
         thread::sleep(std::time::Duration::from_millis(100));
     }
-    
+
     // 清理资源
     for handle in handles {
         handle.join().unwrap();
@@ -468,32 +468,32 @@ use std::thread;
 fn main() {
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
-    
+
     // 创建3个分支
     for i in 0..3 {
         let counter_clone = Arc::clone(&counter);
         let handle = thread::spawn(move || {
             println!("分支 {} 开始执行", i);
             thread::sleep(std::time::Duration::from_millis(500 * (i+1)));
-            
+
             // 每个分支到达合并点时，增加计数并执行后续任务
             {
                 let mut count = counter_clone.lock().unwrap();
                 *count += 1;
                 println!("分支 {} 到达合并点，触发后续任务执行", i);
             }
-            
+
             // 后续任务
             println!("执行分支 {} 的后续任务", i);
         });
         handles.push(handle);
     }
-    
+
     // 等待所有分支完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     // 统计后续任务执行次数
     println!("后续任务总共执行了 {} 次", *counter.lock().unwrap());
 }
@@ -516,7 +516,7 @@ use std::thread;
 fn main() {
     let first_completed = Arc::new(Mutex::new(false));
     let mut handles = vec![];
-    
+
     // 创建3个分支
     for i in 0..3 {
         let first_completed_clone = Arc::clone(&first_completed);
@@ -525,12 +525,12 @@ fn main() {
             1 => 1000, // 第二个分支延迟1秒
             _ => 3000, // 第三个分支延迟3秒
         };
-        
+
         let handle = thread::spawn(move || {
             println!("分支 {} 开始执行", i);
             thread::sleep(std::time::Duration::from_millis(delay));
             println!("分支 {} 完成执行", i);
-            
+
             // 检查是否是第一个完成的分支
             let mut first = first_completed_clone.lock().unwrap();
             if !*first {
@@ -543,12 +543,12 @@ fn main() {
         });
         handles.push(handle);
     }
-    
+
     // 等待所有分支完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("所有分支执行完毕");
 }
 ```
@@ -570,26 +570,26 @@ use std::thread;
 fn main() {
     let m = 5; // 总分支数
     let n = 3; // 需要完成的分支数
-    
+
     let completed_count = Arc::new(Mutex::new(0));
     let continuation_executed = Arc::new(Mutex::new(false));
     let mut handles = vec![];
-    
+
     // 创建M个分支
     for i in 0..m {
         let completed_count_clone = Arc::clone(&completed_count);
         let continuation_executed_clone = Arc::clone(&continuation_executed);
-        
+
         let handle = thread::spawn(move || {
             let delay = (i as u64 + 1) * 500; // 每个分支延迟不同
             println!("分支 {} 开始执行", i);
             thread::sleep(std::time::Duration::from_millis(delay));
             println!("分支 {} 完成执行", i);
-            
+
             // 增加完成计数并检查是否达到N
             let mut count = completed_count_clone.lock().unwrap();
             *count += 1;
-            
+
             if *count == n {
                 // 检查是否已经执行过后续任务
                 let mut executed = continuation_executed_clone.lock().unwrap();
@@ -602,12 +602,12 @@ fn main() {
         });
         handles.push(handle);
     }
-    
+
     // 等待所有分支完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("最终完成了 {} 个分支", *completed_count.lock().unwrap());
 }
 ```
@@ -641,7 +641,7 @@ impl Workflow {
     fn new() -> Self {
         Workflow { state: State::A, iterations: 0 }
     }
-    
+
     fn execute(&mut self) {
         loop {
             match self.state {
@@ -652,7 +652,7 @@ impl Workflow {
                 State::B => {
                     println!("执行任务B");
                     self.iterations += 1;
-                    
+
                     // 循环决策
                     if self.iterations < 3 {
                         println!("返回到任务A");
@@ -717,7 +717,7 @@ impl Workflow {
             active_tasks: HashSet::new(),
         }
     }
-    
+
     fn add_task(&mut self, id: &str, dependencies: Vec<&str>) {
         let deps = dependencies.iter().map(|&s| s.to_string()).collect();
         self.tasks.push(Task {
@@ -726,7 +726,7 @@ impl Workflow {
             dependencies: deps,
         });
     }
-    
+
     fn execute(&mut self) {
         // 初始化没有依赖的任务
         for task in &mut self.tasks {
@@ -736,13 +736,13 @@ impl Workflow {
                 println!("启动任务: {}", task.id);
             }
         }
-        
+
         // 执行工作流直到没有活动任务
         while !self.active_tasks.is_empty() {
             // 模拟任务完成
             let active_task = self.active_tasks.iter().next().unwrap().clone();
             self.active_tasks.remove(&active_task);
-            
+
             // 将任务标记为已完成
             for task in &mut self.tasks {
                 if task.id == active_task {
@@ -751,14 +751,14 @@ impl Workflow {
                     break;
                 }
             }
-            
+
             // 检查是否有新任务可以启动
             for task in &mut self.tasks {
                 if matches!(task.state, TaskState::NotStarted) {
                     let deps_completed = task.dependencies.iter().all(|dep| {
                         self.tasks.iter().any(|t| t.id == *dep && matches!(t.state, TaskState::Completed))
                     });
-                    
+
                     if deps_completed {
                         task.state = TaskState::Running;
                         self.active_tasks.insert(task.id.clone());
@@ -767,7 +767,7 @@ impl Workflow {
                 }
             }
         }
-        
+
         println!("工作流隐式终止，没有活动任务");
     }
 }
@@ -778,7 +778,7 @@ fn main() {
     workflow.add_task("B", vec!["A"]);
     workflow.add_task("C", vec!["A"]);
     workflow.add_task("D", vec!["B", "C"]);
-    
+
     workflow.execute();
 }
 ```
@@ -816,28 +816,28 @@ fn main() {
         id: 0,
         data: String::from("处理数据"),
     };
-    
+
     let mut handles = vec![];
-    
+
     // 创建多个任务实例
     for i in 1..=5 {
         let mut task_instance = Task {
             id: i,
             data: task_template.data.clone(),
         };
-        
+
         let handle = thread::spawn(move || {
             task_instance.execute();
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 无需同步，只是等待所有实例完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("所有任务实例已完成");
 }
 ```
@@ -875,49 +875,49 @@ fn main() {
     let instance_count = 5;
     let barrier = Arc::new(Barrier::new(instance_count));
     let results = Arc::new(std::sync::Mutex::new(Vec::new()));
-    
+
     let task_template = Task {
         id: 0,
         data: String::from("处理数据"),
     };
-    
+
     let mut handles = vec![];
-    
+
     // 创建设计时确定数量的任务实例
     for i in 1..=instance_count {
         let mut task_instance = Task {
             id: i,
             data: task_template.data.clone(),
         };
-        
+
         let barrier_clone = Arc::clone(&barrier);
         let results_clone = Arc::clone(&results);
-        
+
         let handle = thread::spawn(move || {
             let result = task_instance.execute();
-            
+
             // 保存结果
             {
                 let mut results = results_clone.lock().unwrap();
                 results.push(result);
             }
-            
+
             // 等待所有实例完成
             barrier_clone.wait();
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 等待所有实例完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     // 处理所有实例的结果
     let final_results = results.lock().unwrap();
     let sum: i32 = final_results.iter().sum();
-    
+
     println!("所有设计时确定的任务实例已完成，结果总和: {}", sum);
 }
 ```
@@ -955,56 +955,56 @@ fn main() {
     println!("请输入要创建的任务实例数量:");
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("读取输入失败");
-    
+
     // 运行时确定实例数量
     let instance_count = input.trim().parse::<usize>().unwrap_or(3);
     println!("将创建 {} 个任务实例", instance_count);
-    
+
     let barrier = Arc::new(Barrier::new(instance_count));
     let results = Arc::new(std::sync::Mutex::new(Vec::new()));
-    
+
     let task_template = Task {
         id: 0,
         data: String::from("处理数据"),
     };
-    
+
     let mut handles = vec![];
-    
+
     // 创建运行时确定数量的任务实例
     for i in 1..=instance_count {
         let mut task_instance = Task {
             id: i,
             data: task_template.data.clone(),
         };
-        
+
         let barrier_clone = Arc::clone(&barrier);
         let results_clone = Arc::clone(&results);
-        
+
         let handle = thread::spawn(move || {
             let result = task_instance.execute();
-            
+
             // 保存结果
             {
                 let mut results = results_clone.lock().unwrap();
                 results.push(result);
             }
-            
+
             // 等待所有实例完成
             barrier_clone.wait();
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 等待所有实例完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     // 处理所有实例的结果
     let final_results = results.lock().unwrap();
     let sum: i32 = final_results.iter().sum();
-    
+
     println!("所有运行时确定的任务实例已完成，结果总和: {}", sum);
 }
 ```
@@ -1032,7 +1032,7 @@ impl Task {
     fn execute(&self) -> bool {
         println!("实例 {} 开始执行任务: {}", self.id, self.data);
         thread::sleep(std::time::Duration::from_millis(500));
-        
+
         // 模拟任务执行结果，可能需要创建新实例
         let need_more = self.id < 5;
         println!("实例 {} 完成任务，需要更多实例: {}", self.id, need_more);
@@ -1044,18 +1044,18 @@ fn main() {
     let next_id = Arc::new(Mutex::new(1));
     let pending_tasks = Arc::new(Mutex::new(0));
     let need_more_instances = Arc::new(Mutex::new(true));
-    
+
     let task_template = Task {
         id: 0,
         data: String::from("处理动态数据"),
     };
-    
+
     // 增加初始待处理任务计数
     {
         let mut pending = pending_tasks.lock().unwrap();
         *pending += 1;
     }
-    
+
     while {
         let need_more = *need_more_instances.lock().unwrap();
         let pending = *pending_tasks.lock().unwrap();
@@ -1069,31 +1069,31 @@ fn main() {
                 *next += 1;
                 id
             };
-            
+
             let task_instance = Task {
                 id,
                 data: task_template.data.clone(),
             };
-            
+
             let need_more_clone = Arc::clone(&need_more_instances);
             let pending_tasks_clone = Arc::clone(&pending_tasks);
-            
+
             // 增加待处理任务计数
             {
                 let mut pending = pending_tasks.lock().unwrap();
                 *pending += 1;
             }
-            
+
             thread::spawn(move || {
                 // 执行任务并获取是否需要创建更多实例
                 let need_more = task_instance.execute();
-                
+
                 // 更新是否需要更多实例的标志
                 if !need_more {
                     let mut need_more_flag = need_more_clone.lock().unwrap();
                     *need_more_flag = false;
                 }
-                
+
                 // 减少待处理任务计数
                 {
                     let mut pending = pending_tasks_clone.lock().unwrap();
@@ -1101,11 +1101,11 @@ fn main() {
                 }
             });
         }
-        
+
         // 允许其他线程执行
         thread::sleep(std::time::Duration::from_millis(100));
     }
-    
+
     println!("所有动态创建的任务实例已完成");
 }
 ```
@@ -1137,12 +1137,12 @@ fn main() {
     let choice = Arc::new(Mutex::new(Choice::None));
     let choice_clone1 = Arc::clone(&choice);
     let choice_clone2 = Arc::clone(&choice);
-    
+
     // 创建两个可能的分支
     let handle1 = thread::spawn(move || {
         println!("等待选择分支A的事件");
         thread::sleep(Duration::from_millis(1500)); // 模拟等待外部事件
-        
+
         let mut current_choice = choice_clone1.lock().unwrap();
         if matches!(*current_choice, Choice::None) {
             *current_choice = Choice::A;
@@ -1151,11 +1151,11 @@ fn main() {
             println!("已经做出其他选择，分支A取消");
         }
     });
-    
+
     let handle2 = thread::spawn(move || {
         println!("等待选择分支B的事件");
         thread::sleep(Duration::from_millis(1000)); // 模拟等待外部事件
-        
+
         let mut current_choice = choice_clone2.lock().unwrap();
         if matches!(*current_choice, Choice::None) {
             *current_choice = Choice::B;
@@ -1164,10 +1164,10 @@ fn main() {
             println!("已经做出其他选择，分支B取消");
         }
     });
-    
+
     handle1.join().unwrap();
     handle2.join().unwrap();
-    
+
     // 根据选择执行相应的分支
     match *choice.lock().unwrap() {
         Choice::A => println!("执行分支A的后续工作"),
@@ -1211,23 +1211,23 @@ fn main() {
         Task { id: 2, name: String::from("处理数据B") },
         Task { id: 3, name: String::from("处理数据C") },
     ];
-    
+
     // 用于确保任意时刻只有一个任务在执行的互斥锁
     let mutex = Arc::new(Mutex::new(()));
     let task_index = Arc::new(Mutex::new(0));
     let tasks = Arc::new(tasks);
-    
+
     let mut handles = vec![];
-    
+
     // 创建多个工作线程，它们将争用互斥锁来执行任务
     for worker_id in 0..3 {
         let mutex_clone = Arc::clone(&mutex);
         let task_index_clone = Arc::clone(&task_index);
         let tasks_clone = Arc::clone(&tasks);
-        
+
         let handle = thread::spawn(move || {
             println!("工作线程 {} 启动", worker_id);
-            
+
             loop {
                 // 尝试获取下一个要执行的任务索引
                 let current_task_idx = {
@@ -1239,7 +1239,7 @@ fn main() {
                     *index += 1;
                     idx
                 };
-                
+
                 // 在临界区内执行任务，确保同一时间只有一个任务在执行
                 {
                     let _lock = mutex_clone.lock().unwrap();
@@ -1247,22 +1247,22 @@ fn main() {
                     tasks_clone[current_task_idx].execute();
                     println!("工作线程 {} 释放互斥锁", worker_id);
                 }
-                
+
                 // 让其他线程有机会获取锁
                 thread::sleep(Duration::from_millis(100));
             }
-            
+
             println!("工作线程 {} 完成并退出", worker_id);
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 等待所有工作线程完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("所有任务已完成，按交错方式执行");
 }
 ```
@@ -1290,12 +1290,12 @@ impl Workflow {
     fn new() -> Self {
         Workflow { milestone_reached: false }
     }
-    
+
     fn reach_milestone(&mut self) {
         println!("达到里程碑");
         self.milestone_reached = true;
     }
-    
+
     fn execute_dependent_task(&self) -> bool {
         if self.milestone_reached {
             println!("执行依赖于里程碑的任务");
@@ -1311,30 +1311,30 @@ fn main() {
     let workflow = Arc::new(Mutex::new(Workflow::new()));
     let workflow_clone1 = Arc::clone(&workflow);
     let workflow_clone2 = Arc::clone(&workflow);
-    
+
     // 尝试在里程碑达到前执行依赖任务
     let handle1 = thread::spawn(move || {
         println!("尝试执行依赖任务（第一次）");
         let result = workflow_clone1.lock().unwrap().execute_dependent_task();
         println!("任务执行结果: {}", if result { "成功" } else { "失败" });
     });
-    
+
     // 确保第一次尝试完成
     handle1.join().unwrap();
-    
+
     // 达到里程碑
     {
         let mut wf = workflow.lock().unwrap();
         wf.reach_milestone();
     }
-    
+
     // 再次尝试执行依赖任务
     let handle2 = thread::spawn(move || {
         println!("尝试执行依赖任务（第二次）");
         let result = workflow_clone2.lock().unwrap().execute_dependent_task();
         println!("任务执行结果: {}", if result { "成功" } else { "失败" });
     });
-    
+
     handle2.join().unwrap();
 }
 ```
@@ -1364,7 +1364,7 @@ impl CriticalSection {
             name: name.to_string(),
         }
     }
-    
+
     fn execute(&self) {
         println!("进入关键部分: {}", self.name);
         thread::sleep(Duration::from_millis(1000)); // 模拟复杂操作
@@ -1375,33 +1375,33 @@ impl CriticalSection {
 fn main() {
     // 共享的互斥锁，确保同一时间只有一个线程可以执行关键部分
     let critical_lock = Arc::new(Mutex::new(()));
-    
+
     let mut handles = vec![];
-    
+
     // 创建多个任务，它们共享同一个关键部分
     for i in 1..=5 {
         let section_name = format!("任务{}", i);
         let section = CriticalSection::new(&section_name);
         let lock_clone = Arc::clone(&critical_lock);
-        
+
         let handle = thread::spawn(move || {
             println!("任务 {} 准备进入关键部分", section_name);
-            
+
             // 获取互斥锁，确保独占访问关键部分
             let _guard = lock_clone.lock().unwrap();
-            
+
             // 执行关键部分
             section.execute();
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 等待所有任务完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("所有任务已完成关键部分执行");
 }
 ```
@@ -1442,33 +1442,33 @@ fn main() {
         Activity { sequence_id: 1, id: 2, name: String::from("处理A") },
         Activity { sequence_id: 1, id: 3, name: String::from("完成A") },
     ];
-    
+
     let sequence2 = vec![
         Activity { sequence_id: 2, id: 1, name: String::from("初始化B") },
         Activity { sequence_id: 2, id: 2, name: String::from("处理B") },
         Activity { sequence_id: 2, id: 3, name: String::from("完成B") },
     ];
-    
+
     // 序列内部的执行顺序锁，确保每个序列内的活动按顺序执行
     let sequence1_index = Arc::new(Mutex::new(0));
     let sequence2_index = Arc::new(Mutex::new(0));
-    
+
     let sequence1 = Arc::new(sequence1);
     let sequence2 = Arc::new(sequence2);
-    
+
     let mut handles = vec![];
-    
+
     // 创建多个工作线程来交错执行两个序列的活动
     for _ in 0..6 {
         let seq1 = Arc::clone(&sequence1);
         let seq2 = Arc::clone(&sequence2);
         let seq1_idx = Arc::clone(&sequence1_index);
         let seq2_idx = Arc::clone(&sequence2_index);
-        
+
         let handle = thread::spawn(move || {
             // 随机选择一个序列尝试执行下一个活动
             let choice = rand::random::<bool>();
-            
+
             if choice {
                 // 尝试执行序列1的下一个活动
                 let mut idx = seq1_idx.lock().unwrap();
@@ -1487,15 +1487,15 @@ fn main() {
                 }
             }
         });
-        
+
         handles.push(handle);
     }
-    
+
     // 等待所有工作线程完成
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     // 检查是否有未完成的活动，如果有则完成它们
     {
         let mut idx = sequence1_index.lock().unwrap();
@@ -1505,7 +1505,7 @@ fn main() {
             *idx += 1;
         }
     }
-    
+
     {
         let mut idx = sequence2_index.lock().unwrap();
         while *idx < sequence2.len() {
@@ -1514,7 +1514,7 @@ fn main() {
             *idx += 1;
         }
     }
-    
+
     println!("所有序列的活动已交错执行完成");
 }
 ```
@@ -1547,29 +1547,29 @@ impl CancellableTask {
             cancel_flag: Arc::new(AtomicBool::new(false)),
         }
     }
-    
+
     fn execute(&self) {
         println!("任务开始执行");
-        
+
         for i in 1..=10 {
             // 检查取消标志
             if self.cancel_flag.load(Ordering::Relaxed) {
                 println!("任务被取消");
                 return;
             }
-            
+
             println!("任务执行中: 步骤 {}/10", i);
             thread::sleep(Duration::from_millis(500));
         }
-        
+
         println!("任务成功完成");
     }
-    
+
     fn cancel(&self) {
         self.cancel_flag.store(true, Ordering::Relaxed);
         println!("发出取消任务的请求");
     }
-    
+
     fn get_cancel_flag(&self) -> Arc<AtomicBool> {
         Arc::clone(&self.cancel_flag)
     }
@@ -1578,19 +1578,19 @@ impl CancellableTask {
 fn main() {
     let task = CancellableTask::new();
     let cancel_flag = task.get_cancel_flag();
-    
+
     // 在另一个线程中执行任务
     let handle = thread::spawn(move || {
         task.execute();
     });
-    
+
     // 主线程等待一段时间后取消任务
     thread::sleep(Duration::from_millis(2500));
-    
+
     // 发出取消请求
     cancel_flag.store(true, Ordering::Relaxed);
     println!("主线程: 已发出取消请求");
-    
+
     // 等待执行线程结束
     handle.join().unwrap();
     println!("工作流程完成");
@@ -1632,21 +1632,21 @@ impl Task {
             cancel_flag,
         }
     }
-    
+
     fn execute(&self) {
         println!("任务 {}({}) 开始执行", self.id, self.name);
-        
+
         for i in 1..=5 {
             // 检查取消标志
             if self.cancel_flag.load(Ordering::Relaxed) {
                 println!("任务 {}({}) 因工作流取消而终止", self.id, self.name);
                 return;
             }
-            
+
             println!("任务 {}({}) 执行中: 步骤 {}/5", self.id, self.name, i);
             thread::sleep(Duration::from_millis(500));
         }
-        
+
         println!("任务 {}({}) 成功完成", self.id, self.name);
     }
 }
@@ -1654,19 +1654,19 @@ impl Task {
 impl Workflow {
     fn new() -> Self {
         let cancel_flag = Arc::new(AtomicBool::new(false));
-        
+
         let mut tasks = Vec::new();
         tasks.push(Task::new(1, "初始化", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(2, "数据处理", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(3, "验证", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(4, "报告", Arc::clone(&cancel_flag)));
-        
+
         Workflow {
             tasks,
             cancel_flag,
         }
     }
-    
+
     fn execute(&self) {
         for task in &self.tasks {
             // 检查取消标志
@@ -1674,22 +1674,22 @@ impl Workflow {
                 println!("工作流已取消，跳过剩余任务");
                 break;
             }
-            
+
             task.execute();
         }
-        
+
         if !self.cancel_flag.load(Ordering::Relaxed) {
             println!("工作流正常完成");
         } else {
             println!("工作流被取消");
         }
     }
-    
+
     fn cancel(&self) {
         self.cancel_flag.store(true, Ordering::Relaxed);
         println!("取消整个工作流实例");
     }
-    
+
     fn get_cancel_flag(&self) -> Arc<AtomicBool> {
         Arc::clone(&self.cancel_flag)
     }
@@ -1698,19 +1698,19 @@ impl Workflow {
 fn main() {
     let workflow = Workflow::new();
     let cancel_flag = workflow.get_cancel_flag();
-    
+
     // 在另一个线程中执行工作流
     let handle = thread::spawn(move || {
         workflow.execute();
     });
-    
+
     // 主线程等待一段时间后取消工作流
     thread::sleep(Duration::from_millis(3000));
-    
+
     // 发出取消工作流的请求
     cancel_flag.store(true, Ordering::Relaxed);
     println!("主线程: 已发出取消工作流的请求");
-    
+
     // 等待执行线程结束
     handle.join().unwrap();
     println!("程序完成");
@@ -1752,21 +1752,21 @@ impl Task {
             cancel_flag,
         }
     }
-    
+
     fn execute(&self) {
         println!("任务 {}({}) 开始执行", self.id, self.name);
-        
+
         for i in 1..=5 {
             // 检查取消标志
             if self.cancel_flag.load(Ordering::Relaxed) {
                 println!("任务 {}({}) 被取消", self.id, self.name);
                 return;
             }
-            
+
             println!("任务 {}({}) 执行中: 步骤 {}/5", self.id, self.name, i);
             thread::sleep(Duration::from_millis(300));
         }
-        
+
         println!("任务 {}({}) 成功完成", self.id, self.name);
     }
 }
@@ -1774,22 +1774,22 @@ impl Task {
 impl Region {
     fn new() -> Self {
         let cancel_flag = Arc::new(AtomicBool::new(false));
-        
+
         let mut tasks = Vec::new();
         tasks.push(Task::new(1, "初始化", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(2, "数据处理", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(3, "验证", Arc::clone(&cancel_flag)));
         tasks.push(Task::new(4, "报告", Arc::clone(&cancel_flag)));
-        
+
         Region {
             tasks,
             cancel_flag,
         }
     }
-    
+
     fn execute(&self) {
         let mut handles = Vec::new();
-        
+
         for task in &self.tasks {
             let task_ref = task;
             let handle = thread::spawn(move || {
@@ -1797,18 +1797,18 @@ impl Region {
             });
             handles.push(handle);
         }
-        
+
         // 等待所有任务完成
         for handle in handles {
             let _ = handle.join();
         }
     }
-    
+
     fn cancel(&self) {
         self.cancel_flag.store(true, Ordering::Relaxed);
         println!("取消整个区域内的所有任务");
     }
-    
+
     fn get_cancel_flag(&self) -> Arc<AtomicBool> {
         Arc::clone(&self.cancel_flag)
     }
@@ -1817,19 +1817,19 @@ impl Region {
 fn main() {
     let region = Region::new();
     let cancel_flag = region.get_cancel_flag();
-    
+
     // 在另一个线程中执行区域内的所有任务
     let handle = thread::spawn(move || {
         region.execute();
     });
-    
+
     // 主线程等待一段时间后取消整个区域
     thread::sleep(Duration::from_millis(1000));
-    
+
     // 发出取消区域的请求
     cancel_flag.store(true, Ordering::Relaxed);
     println!("主线程: 已发出取消区域的请求");
-    
+
     // 等待执行线程结束
     handle.join().unwrap();
     println!("工作流程完成");
@@ -1868,28 +1868,28 @@ impl MultiInstanceTask {
             cancel_flag: Arc::new(AtomicBool::new(false)),
         }
     }
-    
+
     fn execute_instance(&self, instance_id: usize) {
         println!("任务 {}({}) 实例 {} 开始执行", self.id, self.name, instance_id);
-        
+
         for i in 1..=5 {
             // 检查取消标志
             if self.cancel_flag.load(Ordering::Relaxed) {
                 println!("任务 {}({}) 实例 {} 被取消", self.id, self.name, instance_id);
                 return;
             }
-            
-            println!("任务 {}({}) 实例 {} 执行中: 步骤 {}/5", 
+
+            println!("任务 {}({}) 实例 {} 执行中: 步骤 {}/5",
                      self.id, self.name, instance_id, i);
             thread::sleep(Duration::from_millis(500));
         }
-        
+
         println!("任务 {}({}) 实例 {} 成功完成", self.id, self.name, instance_id);
     }
-    
+
     fn execute_all(&self) {
         let mut handles = Vec::new();
-        
+
         // 创建多个实例并并行执行
         for instance_id in 1..=self.instance_count {
             let self_ref = self;
@@ -1898,18 +1898,18 @@ impl MultiInstanceTask {
             });
             handles.push(handle);
         }
-        
+
         // 等待所有实例完成
         for handle in handles {
             let _ = handle.join();
         }
     }
-    
+
     fn cancel(&self) {
         self.cancel_flag.store(true, Ordering::Relaxed);
         println!("取消任务 {}({}) 的所有实例", self.id, self.name);
     }
-    
+
     fn get_cancel_flag(&self) -> Arc<AtomicBool> {
         Arc::clone(&self.cancel_flag)
     }
@@ -1918,19 +1918,19 @@ impl MultiInstanceTask {
 fn main() {
     let task = MultiInstanceTask::new(1, "数据处理", 5);
     let cancel_flag = task.get_cancel_flag();
-    
+
     // 在另一个线程中执行多实例任务
     let handle = thread::spawn(move || {
         task.execute_all();
     });
-    
+
     // 主线程等待一段时间后取消多实例任务
     thread::sleep(Duration::from_millis(1500));
-    
+
     // 发出取消多实例任务的请求
     cancel_flag.store(true, Ordering::Relaxed);
     println!("主线程: 已发出取消多实例任务的请求");
-    
+
     // 等待执行线程结束
     handle.join().unwrap();
     println!("工作流程完成");

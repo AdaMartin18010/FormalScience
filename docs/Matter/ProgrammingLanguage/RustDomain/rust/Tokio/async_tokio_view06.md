@@ -70,13 +70,13 @@ impl<T: TaskTrait> AdaptiveScheduler<T> {
     fn adapt_strategy(&mut self) {
         let avg_execution = self.stats.average_execution_time();
         let steal_ratio = self.stats.steal_success_ratio();
-        
+
         self.strategy = match (avg_execution, steal_ratio) {
-            (t, r) if t < Duration::from_micros(50) && r < 0.2 => 
+            (t, r) if t < Duration::from_micros(50) && r < 0.2 =>
                 AdaptiveStrategy::WorkFirst,
-            (t, _) if t > Duration::from_millis(1) => 
+            (t, _) if t > Duration::from_millis(1) =>
                 AdaptiveStrategy::FairScheduling,
-            (_, r) if r > 0.8 => 
+            (_, r) if r > 0.8 =>
                 AdaptiveStrategy::LocalityAware,
             _ => AdaptiveStrategy::WorkStealing,
         };
@@ -112,11 +112,11 @@ impl WorkerMetrics {
     pub fn imbalance_factor(&self, global_avg: u64) -> f64 {
         let local_avg = self.avg_execution_ns.load(Ordering::Relaxed) as f64;
         let global_avg = global_avg as f64;
-        
+
         if global_avg == 0.0 {
             return 1.0;
         }
-        
+
         (local_avg / global_avg).abs()
     }
 }
@@ -149,7 +149,7 @@ impl SessionTypeChecker {
     pub fn verify_session(&self, async_fn: &AsyncFn) -> Result<(), TypeError> {
         // 提取函数中的通信模式
         let comm_pattern = self.extract_communication_pattern(async_fn)?;
-        
+
         // 检查通信模式是否符合协议
         for (channel, actions) in &comm_pattern.channels {
             if let Some(protocol) = self.protocols.get(channel) {
@@ -158,23 +158,23 @@ impl SessionTypeChecker {
                 return Err(TypeError::UndefinedProtocol(channel.clone()));
             }
         }
-        
+
         // 验证无死锁
         self.verify_deadlock_freedom(&comm_pattern)?;
-        
+
         Ok(())
     }
-    
+
     /// 验证通信模式是否无死锁
     fn verify_deadlock_freedom(&self, pattern: &CommPattern) -> Result<(), TypeError> {
         // 构建依赖图
         let graph = self.build_dependency_graph(pattern);
-        
+
         // 检测环
         if graph.has_cycle() {
             return Err(TypeError::PotentialDeadlock);
         }
-        
+
         Ok(())
     }
 }
@@ -217,7 +217,7 @@ impl<S: State> LTLChecker<S> {
             _ => false,
         }
     }
-    
+
     /// 生成反例路径
     pub fn generate_counterexample(&self, formula: &LTLFormula) -> Option<Vec<S>> {
         // 使用Büchi自动机和深度优先搜索生成反例
@@ -263,7 +263,7 @@ impl<T: Send + 'static, E: Send + 'static> ReactiveStream<T, E> {
         let mapped_source = self.source.map(|result| {
             result.map(|value| f(value))
         });
-        
+
         ReactiveStream {
             source: Box::new(mapped_source),
             operators: Vec::new(),
@@ -271,7 +271,7 @@ impl<T: Send + 'static, E: Send + 'static> ReactiveStream<T, E> {
             error_strategy: self.error_strategy,
         }
     }
-    
+
     /// 添加过滤操作
     pub fn filter<F>(self, predicate: F) -> Self
     where
@@ -284,7 +284,7 @@ impl<T: Send + 'static, E: Send + 'static> ReactiveStream<T, E> {
                 Err(_) => true, // 错误总是传递下去
             }
         });
-        
+
         ReactiveStream {
             source: Box::new(filtered_source),
             operators: self.operators,
@@ -328,14 +328,14 @@ where
                 Err(_) => Err(TimeoutError::Elapsed),
             }
         };
-        
+
         AsyncEffect {
             future,
             handlers: self.handlers.map_err(TimeoutError::Operation),
             context: self.context,
         }
     }
-    
+
     /// 应用重试效果
     pub fn with_retry(self, policy: RetryPolicy) -> AsyncEffect<impl Future<Output = Result<T, E>>, T, E>
     where
@@ -357,7 +357,7 @@ where
                 }
             }
         };
-        
+
         AsyncEffect {
             future,
             handlers: self.handlers,
@@ -409,25 +409,25 @@ impl<T> AsyncBuilder<T> {
             _marker: PhantomData,
         }
     }
-    
+
     /// 设置超时
     pub fn timeout(mut self, duration: Duration) -> Self {
         self.timeout = Some(duration);
         self
     }
-    
+
     /// 设置重试策略
     pub fn retry(mut self, strategy: RetryStrategy) -> Self {
         self.retry = Some(strategy);
         self
     }
-    
+
     /// 启用跟踪
     pub fn with_tracing(mut self) -> Self {
         self.tracing = true;
         self
     }
-    
+
     /// 执行异步操作
     pub async fn execute<F, Fut>(self, operation: F) -> Result<T, OperationError>
     where
@@ -439,11 +439,11 @@ impl<T> AsyncBuilder<T> {
         } else {
             tracing::Span::none()
         };
-        
+
         let _guard = span.enter();
-        
+
         let operation = operation(self.config);
-        
+
         // 应用超时
         let operation = if let Some(timeout) = self.timeout {
             Box::pin(async move {
@@ -454,7 +454,7 @@ impl<T> AsyncBuilder<T> {
         } else {
             Box::pin(operation)
         };
-        
+
         // 应用重试
         if let Some(strategy) = self.retry {
             self.execute_with_retry(operation, strategy).await
@@ -462,7 +462,7 @@ impl<T> AsyncBuilder<T> {
             operation.await
         }
     }
-    
+
     async fn execute_with_retry<Fut>(
         self,
         operation: Fut,
@@ -474,7 +474,7 @@ impl<T> AsyncBuilder<T> {
         // 实现重试逻辑
         let mut attempts = 0;
         let max_attempts = strategy.max_attempts();
-        
+
         loop {
             match operation.await {
                 Ok(result) => return Ok(result),
@@ -502,20 +502,20 @@ impl<T> AsyncBuilder<T> {
 pub enum AsyncOpError<E> {
     #[error("操作超时")]
     Timeout,
-    
+
     #[error("资源暂时不可用")]
     Unavailable {
         #[from]
         source: ResourceError,
         retry_after: Option<Duration>,
     },
-    
+
     #[error("操作被取消")]
     Cancelled,
-    
+
     #[error("底层错误: {0}")]
     Underlying(#[from] E),
-    
+
     #[error("意外错误: {0}")]
     Unexpected(String),
 }
@@ -530,21 +530,21 @@ pub trait AsyncOperation {
     type Output;
     /// 关联的错误类型
     type Error;
-    
+
     /// 执行异步操作
     async fn execute(&self) -> Result<Self::Output, AsyncOpError<Self::Error>>;
-    
+
     /// 带超时执行
     async fn execute_timeout(&self, timeout: Duration) -> Result<Self::Output, AsyncOpError<Self::Error>> {
         tokio::time::timeout(timeout, self.execute())
             .await
             .map_err(|_| AsyncOpError::Timeout)?
     }
-    
+
     /// 带重试执行
     async fn execute_retry(&self, strategy: &RetryStrategy) -> Result<Self::Output, AsyncOpError<Self::Error>> {
         let mut attempts = 0;
-        
+
         loop {
             match self.execute().await {
                 Ok(output) => return Ok(output),
@@ -588,12 +588,12 @@ impl<T: Clone + Send + 'static> ReactiveProcessor<T> {
         self.nodes.push(node);
         idx
     }
-    
+
     /// 连接节点
     pub fn connect(&mut self, from: usize, to: usize) {
         self.edges.push((from, to));
     }
-    
+
     /// 启动处理
     pub async fn process(&self, input: impl Stream<Item = T>) -> impl Stream<Item = T> {
         // 创建节点间的通道
@@ -602,7 +602,7 @@ impl<T: Clone + Send + 'static> ReactiveProcessor<T> {
             let (tx, rx) = mpsc::channel(100);
             channels.insert((from, to), (tx, rx));
         }
-        
+
         // 为每个节点创建任务
         for (idx, node) in self.nodes.iter().enumerate() {
             let node_channels: HashMap<_, _> = channels
@@ -616,11 +616,11 @@ impl<T: Clone + Send + 'static> ReactiveProcessor<T> {
                     }
                 })
                 .collect();
-            
+
             // 启动节点处理
             tokio::spawn(node.run(node_channels, self.backpressure.clone()));
         }
-        
+
         // 返回输出流
         unimplemented!()
     }
@@ -648,7 +648,7 @@ impl<S: 'static, E: 'static> StateMachine<S, E> {
             transitions: HashMap::new(),
         }
     }
-    
+
     /// 添加状态转换
     pub fn add_transition<From, To, Event>(&mut self, handler: impl Fn(&From, &Event) -> Option<To> + 'static)
     where
@@ -664,19 +664,19 @@ impl<S: 'static, E: 'static> StateMachine<S, E> {
             }
             None
         });
-        
+
         let type_id = TypeId::of::<Event>();
         self.transitions.entry(type_id).or_default().push(transition);
     }
-    
+
     /// 处理事件
     pub fn handle_event(&mut self, event: E) -> bool {
         let type_id = TypeId::of::<E>();
-        
+
         if let Some(handlers) = self.transitions.get(&type_id) {
             let state_ref = &self.state;
             let event_ref = &event;
-            
+
             for handler in handlers {
                 if let Some(new_state) = handler(state_ref, event_ref) {
                     self.state = new_state;
@@ -684,7 +684,7 @@ impl<S: 'static, E: 'static> StateMachine<S, E> {
                 }
             }
         }
-        
+
         false
     }
 }
@@ -710,14 +710,14 @@ impl ActorSystem {
     pub async fn spawn<A: Actor>(&mut self, actor: A) -> ActorRef<A> {
         let actor_id = ActorId::new();
         let (tx, mut rx) = mpsc::channel(100);
-        
+
         // 注册Actor
         self.registry.insert(actor_id, tx.clone());
-        
+
         // 启动Actor处理循环
         let dead_letters = self.dead_letters.clone();
         let mut actor = actor;
-        
+
         tokio::spawn(async move {
             while let Some(msg) = rx.recv().await {
                 if let Some(typed_msg) = msg.downcast_ref::<A::Message>() {
@@ -728,10 +728,10 @@ impl ActorSystem {
                 }
             }
         });
-        
+
         ActorRef::new(actor_id, tx)
     }
-    
+
     /// 查找Actor引用
     pub fn get_ref<A: Actor>(&self, id: ActorId) -> Option<ActorRef<A>> {
         self.registry.get(&id).map(|tx| ActorRef::new(id, tx.clone()))
@@ -762,17 +762,17 @@ impl WasmAsyncAdapter {
             // 保存resolve和reject函数
             let js_resolver = resolve;
             let js_rejecter = reject;
-            
+
             Self {
                 task_queue: RefCell::new(VecDeque::new()),
                 js_resolver,
                 js_rejecter,
             }
         });
-        
+
         unimplemented!()
     }
-    
+
     /// 运行异步Rust函数并返回JavaScript Promise
     pub fn run_async<F, T>(&self, future: F) -> js_sys::Promise
     where
@@ -793,16 +793,16 @@ impl WasmAsyncAdapter {
                     }
                 }
             };
-            
+
             // 将包装的Future添加到任务队列
             wasm_bindgen_futures::spawn_local(future);
         })
     }
-    
+
     /// 轮询等待的Future
     pub fn poll_tasks(&self) {
         let mut queue = self.task_queue.borrow_mut();
-        
+
         // 处理所有准备好的任务
         let mut i = 0;
         while i < queue.len() {
@@ -843,38 +843,38 @@ impl<T: Serialize + DeserializeOwned + Clone + Send + 'static> DistributedConsen
         if !self.is_leader() {
             return Err(ConsensusError::NotLeader);
         }
-        
+
         // 创建新的日志条目
         let entry = LogEntry {
             term: self.state.current_term,
             index: self.log.len(),
             value,
         };
-        
+
         // 添加到本地日志
         self.log.push(entry.clone());
-        
+
         // 并行发送到所有追随者
         let mut futures = Vec::new();
         for &member in &self.members {
             if member == self.node_id {
                 continue;
             }
-            
+
             let rpc = self.rpc.clone();
             let entry = entry.clone();
-            
+
             futures.push(tokio::spawn(async move {
                 rpc.append_entries(member, vec![entry]).await
             }));
         }
-        
+
         // 等待多数派响应
         let results = futures::future::join_all(futures).await;
         let success_count = results.iter()
             .filter(|r| r.as_ref().map(|ok| ok.success).unwrap_or(false))
             .count();
-        
+
         if success_count >= self.majority() {
             // 提交成功
             self.state.commit_index = self.log.len() - 1;
@@ -884,17 +884,17 @@ impl<T: Serialize + DeserializeOwned + Clone + Send + 'static> DistributedConsen
             Err(ConsensusError::ConsensusFailure)
         }
     }
-    
+
     /// 检查是否是领导者
     fn is_leader(&self) -> bool {
         self.state.role == ConsensusRole::Leader
     }
-    
+
     /// 计算多数派数量
     fn majority(&self) -> usize {
         self.members.len() / 2 + 1
     }
-    
+
     /// 应用日志条目到状态机
     async fn apply_logs(&mut self) {
         while self.state.applied_index < self.state.commit_index {
@@ -908,7 +908,7 @@ impl<T: Serialize + DeserializeOwned + Clone + Send + 'static> DistributedConsen
             }
         }
     }
-    
+
     /// 应用到状态机
     async fn apply_to_state_machine(&mut self, value: &T) {
         // 实际应用逻辑
@@ -926,7 +926,7 @@ impl<T: Serialize + DeserializeOwned + Clone + Send + 'static> DistributedConsen
 pub trait WebComponent {
     /// 处理请求
     async fn handle(&self, req: Request) -> Response;
-    
+
     /// 中间件链
     fn chain(self, next: Box<dyn WebComponent>) -> MiddlewareChain<Self>
     where
@@ -978,7 +978,7 @@ impl Router {
             routes: HashMap::new(),
         }
     }
-    
+
     /// 添加路由
     pub fn route<H>(&mut self, pattern: &str, handler: H) -> &mut Self
     where
@@ -1002,7 +1002,7 @@ impl WebComponent for Router {
                 return handler.handle(req).await;
             }
         }
-        
+
         // 未找到匹配路由
         Response::not_found()
     }
@@ -1029,7 +1029,7 @@ impl<T: Connection + Send + Sync + 'static> DatabaseClient<T> {
             trace_context: None,
         }
     }
-    
+
     /// 执行查询
     pub async fn query<Q, R>(&self, query: Q) -> Result<Vec<R>, DbError>
     where
@@ -1037,16 +1037,16 @@ impl<T: Connection + Send + Sync + 'static> DatabaseClient<T> {
         R: DeserializeOwned,
     {
         let _span = self.create_span("db_query");
-        
+
         let conn = self.pool.acquire().await?;
         let query = query.into();
-        
+
         let result = conn.execute(&query).await?;
         let rows = result.rows::<R>().await?;
-        
+
         Ok(rows)
     }
-    
+
     /// 执行事务
     pub async fn transaction<F, R>(&self, f: F) -> Result<R, DbError>
     where
@@ -1054,10 +1054,10 @@ impl<T: Connection + Send + Sync + 'static> DatabaseClient<T> {
         R: Send + 'static,
     {
         let _span = self.create_span("db_transaction");
-        
+
         let conn = self.pool.acquire().await?;
         let tx = conn.begin_transaction().await?;
-        
+
         match f(&tx).await {
             Ok(result) => {
                 tx.commit().await?;
@@ -1069,7 +1069,7 @@ impl<T: Connection + Send + Sync + 'static> DatabaseClient<T> {
             }
         }
     }
-    
+
     /// 创建跟踪范围
     fn create_span(&self, name: &str) -> tracing::Span {
         if let Some(ctx) = &self.trace_context {
@@ -1101,7 +1101,7 @@ impl QueryBuilder {
             params: Vec::new(),
         }
     }
-    
+
     /// 添加参数
     pub fn param<T: Into<DbValue>>(mut self, value: T) -> Self {
         self.params.push(value.into());
@@ -1125,29 +1125,29 @@ impl<T: Serialize + DeserializeOwned + Send + Sync + 'static> MessageQueue<T> {
     /// 创建新的消息队列客户端
     pub async fn new(config: ConnectionConfig) -> Result<Self, QueueError> {
         let connection = Connection::connect(config).await?;
-        
+
         Ok(Self {
             connection,
             _marker: PhantomData,
         })
     }
-    
+
     /// 发布消息
     pub async fn publish(&self, queue: &str, message: T) -> Result<(), QueueError> {
         let payload = serde_json::to_vec(&message)?;
-        
+
         self.connection.publish(queue, payload).await?;
-        
+
         Ok(())
     }
-    
+
     /// 消费消息
     pub async fn consume(&self, queue: &str) -> impl Stream<Item = Result<Message<T>, QueueError>> {
         let rx = self.connection.consume(queue).await.unwrap_or_else(|_| {
             // 创建空流
             tokio::sync::mpsc::channel(1).1
         });
-        
+
         rx.map(|result| {
             result.map_err(QueueError::from)
                 .and_then(|msg| {
@@ -1160,7 +1160,7 @@ impl<T: Serialize + DeserializeOwned + Send + Sync + 'static> MessageQueue<T> {
                 })
         })
     }
-    
+
     /// 创建消费者组
     pub async fn create_consumer_group<F, Fut>(
         &self,
@@ -1174,16 +1174,16 @@ impl<T: Serialize + DeserializeOwned + Send + Sync + 'static> MessageQueue<T> {
         Fut: Future<Output = Result<(), QueueError>> + Send + 'static,
     {
         let mut handles = Vec::with_capacity(concurrency);
-        
+
         for i in 0..concurrency {
             let connection = self.connection.clone();
             let queue = queue.to_string();
             let group_id = group_id.to_string();
             let consumer_id = format!("{}-{}", group_id, i);
-            
+
             let handle = tokio::spawn(async move {
                 let consumer = connection.consume_with_group(&queue, &group_id, &consumer_id).await?;
-                
+
                 consumer.for_each(|msg_result| async {
                     match msg_result {
                         Ok(raw_msg) => {
@@ -1194,7 +1194,7 @@ impl<T: Serialize + DeserializeOwned + Send + Sync + 'static> MessageQueue<T> {
                                         payload,
                                         properties: raw_msg.properties,
                                     };
-                                    
+
                                     if let Err(err) = handler(msg).await {
                                         tracing::error!("消息处理错误: {:?}", err);
                                     }
@@ -1209,13 +1209,13 @@ impl<T: Serialize + DeserializeOwned + Send + Sync + 'static> MessageQueue<T> {
                         }
                     }
                 }).await;
-                
+
                 Ok::<_, QueueError>(())
             });
-            
+
             handles.push(handle);
         }
-        
+
         Ok(ConsumerGroup { handles })
     }
 }
@@ -1232,7 +1232,7 @@ impl ConsumerGroup {
         for handle in self.handles {
             handle.await??;
         }
-        
+
         Ok(())
     }
 }

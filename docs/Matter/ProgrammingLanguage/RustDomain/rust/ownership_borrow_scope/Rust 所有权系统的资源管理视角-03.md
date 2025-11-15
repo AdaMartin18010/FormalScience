@@ -1,6 +1,42 @@
-# Rust 所有权系统的资源管理视角（续三）
+# 1. Rust 所有权系统的资源管理视角（续三）
 
-## 前言
+## 目录
+
+- [1. Rust 所有权系统的资源管理视角（续三）](#1-rust-所有权系统的资源管理视角续三)
+  - [目录](#目录)
+  - [1.1 前言](#11-前言)
+  - [1.2 编译器角度的所有权实现](#12-编译器角度的所有权实现)
+    - [1.2.1 借用检查器工作原理](#121-借用检查器工作原理)
+    - [1.2.2 MIR 与所有权](#122-mir-与所有权)
+    - [1.2.3 优化与所有权分析](#123-优化与所有权分析)
+    - [1.2.4 编译错误诊断技术](#124-编译错误诊断技术)
+  - [1.3 所有权与特定领域应用](#13-所有权与特定领域应用)
+    - [1.3.1 所有权在嵌入式系统中的应用](#131-所有权在嵌入式系统中的应用)
+    - [1.3.2 所有权在异步编程中的应用](#132-所有权在异步编程中的应用)
+    - [1.3.3 所有权在数据库系统中的应用](#133-所有权在数据库系统中的应用)
+    - [1.3.4 所有权在图形编程中的应用](#134-所有权在图形编程中的应用)
+  - [1.4 数据结构设计与所有权模式](#14-数据结构设计与所有权模式)
+    - [1.4.1 树与图结构](#141-树与图结构)
+    - [1.4.2 缓存与池化资源](#142-缓存与池化资源)
+    - [1.4.3 索引与间接引用](#143-索引与间接引用)
+    - [1.4.4 低成本分配技术](#144-低成本分配技术)
+  - [1.5 异步编程与所有权](#15-异步编程与所有权)
+    - [1.5.1 生命周期与异步上下文](#151-生命周期与异步上下文)
+    - [1.5.2 Future 特性与所有权传递](#152-future-特性与所有权传递)
+    - [1.5.3 异步借用问题](#153-异步借用问题)
+    - [1.5.4 固定（Pin）与自引用结构](#154-固定pin与自引用结构)
+  - [1.6 跨语言所有权](#16-跨语言所有权)
+    - [1.6.1 Rust 与 C/C++ 交互](#161-rust-与-cc-交互)
+    - [1.6.2 所有权边界安全](#162-所有权边界安全)
+    - [1.6.3 跨语言资源管理策略](#163-跨语言资源管理策略)
+    - [1.6.4 FFI 中的所有权模式](#164-ffi-中的所有权模式)
+  - [1.7 总结：所有权系统的统一视角](#17-总结所有权系统的统一视角)
+    - [1.7.1 所有权作为语言设计支柱](#171-所有权作为语言设计支柱)
+    - [1.7.2 资源管理的统一理论](#172-资源管理的统一理论)
+    - [1.7.3 未来展望](#173-未来展望)
+  - [1.8 结论](#18-结论)
+
+## 1.1 前言
 
 ```text
 <think>
@@ -20,45 +56,9 @@
 </think>
 ```
 
-## 目录
+## 1.2 编译器角度的所有权实现
 
-- [Rust 所有权系统的资源管理视角（续三）](#rust-所有权系统的资源管理视角续三)
-  - [前言](#前言)
-  - [目录](#目录)
-  - [编译器角度的所有权实现](#编译器角度的所有权实现)
-    - [借用检查器工作原理](#借用检查器工作原理)
-    - [MIR 与所有权](#mir-与所有权)
-    - [优化与所有权分析](#优化与所有权分析)
-    - [编译错误诊断技术](#编译错误诊断技术)
-  - [所有权与特定领域应用](#所有权与特定领域应用)
-    - [所有权在嵌入式系统中的应用](#所有权在嵌入式系统中的应用)
-    - [所有权在异步编程中的应用](#所有权在异步编程中的应用)
-    - [所有权在数据库系统中的应用](#所有权在数据库系统中的应用)
-    - [所有权在图形编程中的应用](#所有权在图形编程中的应用)
-  - [数据结构设计与所有权模式](#数据结构设计与所有权模式)
-    - [树与图结构](#树与图结构)
-    - [缓存与池化资源](#缓存与池化资源)
-    - [索引与间接引用](#索引与间接引用)
-    - [低成本分配技术](#低成本分配技术)
-  - [异步编程与所有权](#异步编程与所有权)
-    - [生命周期与异步上下文](#生命周期与异步上下文)
-    - [Future 特性与所有权传递](#future-特性与所有权传递)
-    - [异步借用问题](#异步借用问题)
-    - [固定（Pin）与自引用结构](#固定pin与自引用结构)
-  - [跨语言所有权](#跨语言所有权)
-    - [Rust 与 C/C++ 交互](#rust-与-cc-交互)
-    - [所有权边界安全](#所有权边界安全)
-    - [跨语言资源管理策略](#跨语言资源管理策略)
-    - [FFI 中的所有权模式](#ffi-中的所有权模式)
-  - [总结：所有权系统的统一视角](#总结所有权系统的统一视角)
-    - [所有权作为语言设计支柱](#所有权作为语言设计支柱)
-    - [资源管理的统一理论](#资源管理的统一理论)
-    - [未来展望](#未来展望)
-  - [结论](#结论)
-
-## 编译器角度的所有权实现
-
-### 借用检查器工作原理
+### 1.2.1 借用检查器工作原理
 
 Rust 借用检查器的内部实现细节：
 
@@ -79,19 +79,19 @@ Rust 借用检查器的内部实现细节：
 // 借用检查器如何处理这段代码
 fn borrow_checker_example() {
     let mut v = vec![1, 2, 3];
-    
+
     let r = &v[0]; // 不可变借用开始
     println!("{}", r); // 不可变借用的最后使用
     // 在 NLL 之前，借用持续到作用域结束
     // 在 NLL 之后，借用在这里结束
-    
+
     v.push(4); // 创建可变借用
     // 在 NLL 之前，这会报错，因为不可变借用仍然活跃
     // 在 NLL 之后，这是合法的，因为不可变借用已经结束
 }
 ```
 
-### MIR 与所有权
+### 1.2.2 MIR 与所有权
 
 中级中间表示（Mid-level Intermediate Representation, MIR）与所有权的关系：
 
@@ -129,7 +129,7 @@ bb0: {
 */
 ```
 
-### 优化与所有权分析
+### 1.2.3 优化与所有权分析
 
 所有权分析如何促进编译器优化：
 
@@ -163,7 +163,7 @@ fn process_exclusive(x: &mut i32) -> i32 {
 }
 ```
 
-### 编译错误诊断技术
+### 1.2.4 编译错误诊断技术
 
 Rust 编译器在所有权错误诊断方面的技术：
 
@@ -187,7 +187,7 @@ fn error_diagnostics_example() {
     let r = &s;
     drop(s); // 错误：不能移动已借用的值
     println!("{}", r);
-    
+
     // 编译器错误输出示例（简化）:
     // error[E0505]: cannot move out of `s` because it is borrowed
     //   --> src/main.rs:4:10
@@ -203,9 +203,9 @@ fn error_diagnostics_example() {
 }
 ```
 
-## 所有权与特定领域应用
+## 1.3 所有权与特定领域应用
 
-### 所有权在嵌入式系统中的应用
+### 1.3.1 所有权在嵌入式系统中的应用
 
 Rust 所有权系统在嵌入式开发中的特殊应用：
 
@@ -239,10 +239,10 @@ fn main() -> ! {
         let mut data = GLOBAL_DATA.borrow(cs).borrow_mut();
         *data += 1;
     });
-    
+
     // LED 外设的安全抽象
     let mut led = Led::new(); // 获取 LED 所有权
-    
+
     loop {
         led.toggle(); // 安全访问硬件资源
     }
@@ -257,14 +257,14 @@ impl Led {
         // 初始化硬件
         Led { /* ... */ }
     }
-    
+
     fn toggle(&mut self) {
         // 安全地修改硬件状态，需要可变引用
     }
 }
 ```
 
-### 所有权在异步编程中的应用
+### 1.3.2 所有权在异步编程中的应用
 
 所有权系统如何与异步编程结合：
 
@@ -287,21 +287,21 @@ use std::sync::Arc;
 async fn handle_connection(socket: TcpStream, data: Arc<Vec<u8>>) {
     // socket 的所有权转移到此函数
     // data 使用 Arc 共享所有权
-    
+
     let mut buf = vec![0; 1024]; // 在堆上创建缓冲区
-    
+
     // 使用引用跨越 await 点
     // 编译器会确保 buf 存活足够长的时间
     let n = socket.read(&mut buf).await.unwrap();
-    
+
     let response = process_request(&buf[..n], &data).await;
-    
+
     // 所有权系统确保资源被正确释放
     socket.write_all(&response).await.unwrap();
 } // socket 在这里释放，buf 也被释放
 ```
 
-### 所有权在数据库系统中的应用
+### 1.3.3 所有权在数据库系统中的应用
 
 Rust 所有权系统在数据库实现中的应用：
 
@@ -332,7 +332,7 @@ impl BufferPool {
     fn get_page(&self, page_id: usize) -> &BufferPage {
         &self.pages[page_id]
     }
-    
+
     fn read_page<F, T>(&self, page_id: usize, f: F) -> T
     where
         F: FnOnce(&[u8]) -> T
@@ -341,7 +341,7 @@ impl BufferPool {
         let data = page.data.borrow();
         f(&data) // 传递只读借用给回调函数
     }
-    
+
     fn write_page<F, T>(&self, page_id: usize, f: F) -> T
     where
         F: FnOnce(&mut Vec<u8>) -> T
@@ -354,7 +354,7 @@ impl BufferPool {
 }
 ```
 
-### 所有权在图形编程中的应用
+### 1.3.4 所有权在图形编程中的应用
 
 图形编程中的所有权系统应用：
 
@@ -412,7 +412,7 @@ impl<'a> RenderPass<'a> {
 fn render_scene() {
     let texture = Texture { id: 1, width: 512, height: 512 };
     let shader = Shader::new("vertex.glsl", "fragment.glsl");
-    
+
     {
         let pass = RenderPass {
             shader: &shader,
@@ -420,14 +420,14 @@ fn render_scene() {
         };
         pass.execute();
     } // pass 在这里销毁，但不影响 shader 和 texture
-    
+
     // shader 和 texture 在这里仍然有效
 } // shader 和 texture 在这里销毁，GPU 资源被释放
 ```
 
-## 数据结构设计与所有权模式
+## 1.4 数据结构设计与所有权模式
 
-### 树与图结构
+### 1.4.1 树与图结构
 
 所有权系统在复杂数据结构设计中的应用：
 
@@ -477,7 +477,7 @@ impl Graph {
     fn add_edge(&mut self, from: usize, to: usize) {
         self.edges.push((from, to));
     }
-    
+
     fn neighbors(&self, node_idx: usize) -> Vec<usize> {
         self.edges.iter()
             .filter(|(from, _)| *from == node_idx)
@@ -487,7 +487,7 @@ impl Graph {
 }
 ```
 
-### 缓存与池化资源
+### 1.4.2 缓存与池化资源
 
 所有权系统在资源池和缓存实现中的应用：
 
@@ -519,7 +519,7 @@ impl<T> Pool<T> {
     fn new() -> Self {
         Pool { resources: Vec::new() }
     }
-    
+
     fn acquire(&mut self, create_fn: impl FnOnce() -> T) -> PooledResource<T> {
         // 查找空闲资源
         for (i, slot) in self.resources.iter_mut().enumerate() {
@@ -532,7 +532,7 @@ impl<T> Pool<T> {
                 };
             }
         }
-        
+
         // 没有空闲资源，创建新的
         let index = self.resources.len();
         self.resources.push(Some(create_fn()));
@@ -552,7 +552,7 @@ impl<'a, T> Drop for PooledResource<'a, T> {
 }
 ```
 
-### 索引与间接引用
+### 1.4.3 索引与间接引用
 
 通过索引实现所有权系统中的灵活引用：
 
@@ -588,11 +588,11 @@ impl<T> Registry<T> {
             _marker: std::marker::PhantomData,
         }
     }
-    
+
     fn get(&self, idx: TypedIndex<T>) -> &T {
         &self.items[idx.index]
     }
-    
+
     fn get_mut(&mut self, idx: TypedIndex<T>) -> &mut T {
         &mut self.items[idx.index]
     }
@@ -613,27 +613,27 @@ impl World {
     fn create_entity(&mut self) -> Entity {
         let id = self.entities.len();
         self.entities.push(Entity { id });
-        
+
         // 确保组件数组足够长
         if id >= self.positions.len() {
             self.positions.resize_with(id + 1, || None);
             self.velocities.resize_with(id + 1, || None);
         }
-        
+
         self.entities[id].clone()
     }
-    
+
     fn add_position(&mut self, entity: &Entity, pos: Position) {
         self.positions[entity.id] = Some(pos);
     }
-    
+
     fn get_position(&self, entity: &Entity) -> Option<&Position> {
         self.positions[entity.id].as_ref()
     }
 }
 ```
 
-### 低成本分配技术
+### 1.4.4 低成本分配技术
 
 Rust 所有权系统中的高效内存分配模式：
 
@@ -658,7 +658,7 @@ fn stack_allocation() {
     let mut stack_vec: ArrayVec<i32, 10> = ArrayVec::new();
     stack_vec.push(1);
     stack_vec.push(2);
-    
+
     for item in &stack_vec {
         println!("{}", item);
     }
@@ -670,18 +670,18 @@ use bumpalo::Bump;
 fn arena_allocation() {
     // 创建一个区域分配器
     let bump = Bump::new();
-    
+
     // 在区域中分配，无需单独释放
     let values = bump.alloc_slice_fill_copy(10, 42);
     let string = bump.alloc_str("区域分配的字符串");
-    
+
     println!("{:?}, {}", values, string);
 } // 整个区域一次性释放
 
 // 内存重用示例
 fn reuse_allocation() {
     let mut buf = String::with_capacity(100);
-    
+
     for i in 0..10 {
         buf.clear(); // 清空但保留容量
         buf.push_str(&format!("迭代 {}", i));
@@ -690,9 +690,9 @@ fn reuse_allocation() {
 } // 只有一次分配和释放
 ```
 
-## 异步编程与所有权
+## 1.5 异步编程与所有权
 
-### 生命周期与异步上下文
+### 1.5.1 生命周期与异步上下文
 
 异步编程中的生命周期挑战：
 
@@ -715,13 +715,13 @@ use tokio::time::{sleep, Duration};
 // 引用在整个异步函数中必须有效
 async fn process_data(data: &[u8]) -> usize {
     let len = data.len();
-    
+
     // 引用跨越 await 点
     sleep(Duration::from_millis(100)).await;
-    
+
     // 编译器确保 data 仍然有效
     println!("处理 {} 字节的数据", len);
-    
+
     data.len()
 }
 
@@ -737,7 +737,7 @@ where
 } // data 在这里被释放
 ```
 
-### Future 特性与所有权传递
+### 1.5.2 Future 特性与所有权传递
 
 Future 特性与所有权系统的集成：
 
@@ -765,7 +765,7 @@ struct MyFuture<T> {
 
 impl<T> Future for MyFuture<T> {
     type Output = T;
-    
+
     fn poll(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<T> {
         // 安全地从 self 中取出值（所有权转移）
         if let Some(value) = self.get_mut().value.take() {
@@ -779,7 +779,7 @@ impl<T> Future for MyFuture<T> {
 // Future 组合与所有权
 async fn process_chain() {
     let data = vec![1, 2, 3, 4];
-    
+
     // 链式异步操作，所有权在 Future 链中传递
     let result = fetch_data()
         .await
@@ -787,7 +787,7 @@ async fn process_chain() {
         .await
         .and_then(store)
         .await;
-        
+
     match result {
         Ok(_) => println!("链处理成功"),
         Err(e) => println!("错误: {}", e),
@@ -795,7 +795,7 @@ async fn process_chain() {
 }
 ```
 
-### 异步借用问题
+### 1.5.3 异步借用问题
 
 异步编程中的借用挑战及解决方案：
 
@@ -824,20 +824,20 @@ impl AsyncProcessor {
         // 并发使用不同字段
         let data_future = self.process_data();
         let config_future = self.update_config();
-        
+
         // 可以同时进行，因为借用不冲突
-        let (data_result, config_result) = 
+        let (data_result, config_result) =
             tokio::join!(data_future, config_future);
-            
+
         println!("结果: {:?}, {:?}", data_result, config_result);
     }
-    
+
     async fn process_data(&mut self) -> usize {
         // 只使用 data 字段
         self.data.push(42);
         self.data.len()
     }
-    
+
     async fn update_config(&mut self) -> usize {
         // 只使用 config 字段
         self.config.push_str("_updated");
@@ -846,7 +846,7 @@ impl AsyncProcessor {
 }
 ```
 
-### 固定（Pin）与自引用结构
+### 1.5.4 固定（Pin）与自引用结构
 
 Pin 类型与自引用结构的关系：
 
@@ -883,16 +883,16 @@ impl SelfReferential {
             self_ptr: std::ptr::null(),
             _marker: PhantomPinned,
         });
-        
+
         // 获取自引用
         let self_ptr = &boxed.data as *const String;
         // 这是安全的，因为我们已经在堆上分配了对象
         boxed.self_ptr = self_ptr;
-        
+
         // 转换为 Pin
         Pin::new(boxed)
     }
-    
+
     // 安全地访问自引用数据
     fn get_self_ref(self: Pin<&Self>) -> &str {
         // 安全地访问不会移动的数据
@@ -909,9 +909,9 @@ fn use_self_ref() {
 }
 ```
 
-## 跨语言所有权
+## 1.6 跨语言所有权
 
-### Rust 与 C/C++ 交互
+### 1.6.1 Rust 与 C/C++ 交互
 
 Rust 所有权系统与 C/C++ 交互的挑战与解决方案：
 
@@ -949,7 +949,7 @@ impl CResource {
         let ptr = unsafe { c_create_resource() };
         CResource { ptr }
     }
-    
+
     fn use_with_name(&self, name: &str) {
         let c_name = CString::new(name).unwrap();
         unsafe {
@@ -974,7 +974,7 @@ fn use_c_resource() {
 } // 资源自动释放
 ```
 
-### 所有权边界安全
+### 1.6.2 所有权边界安全
 
 跨语言边界的所有权安全保证：
 
@@ -1005,12 +1005,12 @@ impl ForeignData {
         let ptr = unsafe { c_create_resource() };
         ForeignData { ptr, owned: true }
     }
-    
+
     // 从借用指针创建（不获取所有权）
     fn from_ptr(ptr: *mut c_void) -> Self {
         ForeignData { ptr, owned: false }
     }
-    
+
     // 安全使用资源
     fn use_data(&self) {
         if self.ptr.is_null() {
@@ -1020,7 +1020,7 @@ impl ForeignData {
             c_use_resource(self.ptr, std::ptr::null());
         }
     }
-    
+
     // 放弃所有权，转移到 C 代码
     fn release(mut self) -> *mut c_void {
         let ptr = self.ptr;
@@ -1050,7 +1050,7 @@ pub extern "C" fn rust_process_data(ptr: *mut c_void) {
 }
 ```
 
-### 跨语言资源管理策略
+### 1.6.3 跨语言资源管理策略
 
 在 Rust 与其他语言集成时的资源管理策略：
 
@@ -1118,7 +1118,7 @@ fn adopt_from_c() {
 } // resource 在这里自动释放
 ```
 
-### FFI 中的所有权模式
+### 1.6.4 FFI 中的所有权模式
 
 处理外部函数接口中的所有权挑战：
 
@@ -1147,19 +1147,19 @@ impl DbConnection {
     fn connect(url: &str) -> Result<Self, ConnectionError> {
         let c_url = CString::new(url).map_err(|_| ConnectionError::InvalidUrl)?;
         let handle = unsafe { db_connect(c_url.as_ptr()) };
-        
+
         if handle.is_null() {
             Err(ConnectionError::ConnectionFailed)
         } else {
             Ok(DbConnection { handle })
         }
     }
-    
+
     fn query(&self, sql: &str) -> Result<DbResult, QueryError> {
         // 实现查询功能
         let c_sql = CString::new(sql).map_err(|_| QueryError::InvalidSql)?;
         let result = unsafe { db_query(self.handle, c_sql.as_ptr()) };
-        
+
         if result.is_null() {
             Err(QueryError::QueryFailed)
         } else {
@@ -1181,7 +1181,7 @@ extern "C" fn rust_callback(data: *mut c_void, result: *const c_char) {
     unsafe {
         // 从上下文指针恢复 Rust 状态
         let callback_state = &mut *(data as *mut CallbackState);
-        
+
         // 处理结果
         let result_str = CStr::from_ptr(result).to_string_lossy();
         callback_state.process_result(&result_str);
@@ -1202,7 +1202,7 @@ fn perform_async_operation() {
     let mut state = CallbackState {
         results: Vec::new(),
     };
-    
+
     unsafe {
         // 传递状态指针和回调函数
         c_async_operation(
@@ -1210,14 +1210,14 @@ fn perform_async_operation() {
             Some(rust_callback)
         );
     }
-    
+
     // 注意：必须确保 C 代码不会在 state 释放后使用它
 }
 ```
 
-## 总结：所有权系统的统一视角
+## 1.7 总结：所有权系统的统一视角
 
-### 所有权作为语言设计支柱
+### 1.7.1 所有权作为语言设计支柱
 
 Rust 所有权系统作为核心设计支柱的总结：
 
@@ -1235,7 +1235,7 @@ Rust 所有权系统作为核心设计支柱的总结：
    - 促进显式数据流设计
    - 推动资源意识编程范式
 
-### 资源管理的统一理论
+### 1.7.2 资源管理的统一理论
 
 将 Rust 所有权系统视为资源管理的统一理论：
 
@@ -1253,7 +1253,7 @@ Rust 所有权系统作为核心设计支柱的总结：
    - 资源传递策略的系统方法
    - 类型驱动的资源管理
 
-### 未来展望
+### 1.7.3 未来展望
 
 Rust 所有权系统的未来发展方向：
 
@@ -1286,17 +1286,17 @@ impl<T, D: FnOnce(T)> Resource<T, D> {
             deleter: Some(deleter),
         }
     }
-    
+
     // 访问资源
     fn get(&self) -> Option<&T> {
         self.value.as_ref()
     }
-    
+
     // 获取可变访问
     fn get_mut(&mut self) -> Option<&mut T> {
         self.value.as_mut()
     }
-    
+
     // 释放资源，返回其值
     fn release(mut self) -> Option<T> {
         self.value.take()
@@ -1319,24 +1319,24 @@ fn resource_examples() {
         std::fs::File::open("data.txt").unwrap(),
         |f| drop(f) // 显式关闭文件
     );
-    
+
     // 内存资源
     let memory = Resource::new(
         Vec::<u8>::with_capacity(1024),
         |v| println!("释放 {} 字节", v.capacity())
     );
-    
+
     // 外部系统资源
     let external = Resource::new(
         unsafe { c_create_resource() },
         |ptr| unsafe { c_destroy_resource(ptr) }
     );
-    
+
     // 所有资源在作用域结束时自动释放
 }
 ```
 
-## 结论
+## 1.8 结论
 
 Rust 的所有权系统代表了编程语言设计中一个重要的突破，
 它通过形式化的类型系统提供了内存和资源安全的强大保证，同时保持了高性能。

@@ -506,7 +506,7 @@ Rust 提供了两种主要的错误处理机制：`Result` 和 `Option`。
 这两种类型使得错误处理更加安全和明确。
 
 - **Result**：用于表示可能的成功或失败。
-  
+
 ```rust
 fn divide(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {

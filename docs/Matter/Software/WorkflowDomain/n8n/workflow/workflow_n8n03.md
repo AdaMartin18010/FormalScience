@@ -1,41 +1,41 @@
-# n8n工作流平台全面架构与模式分析
+# 1. n8n工作流平台全面架构与模式分析
 
 ## 目录
 
-- [n8n工作流平台全面架构与模式分析](#n8n工作流平台全面架构与模式分析)
+- [1. n8n工作流平台全面架构与模式分析](#1-n8n工作流平台全面架构与模式分析)
   - [目录](#目录)
-  - [引言](#引言)
-  - [n8n核心架构剖析](#n8n核心架构剖析)
-    - [1 插件架构](#1-插件架构)
-    - [事件驱动架构](#事件驱动架构)
-    - [微服务兼容性](#微服务兼容性)
-    - [插件架构](#插件架构)
-  - [1 工作流设计模式全景图](#1-工作流设计模式全景图)
-    - [1 基础设计模式](#1-基础设计模式)
-    - [1.2 集成模式](#12-集成模式)
-    - [1.3 数据处理模式](#13-数据处理模式)
-    - [1.4 控制流模式](#14-控制流模式)
-    - [1.5 错误处理模式](#15-错误处理模式)
-  - [2 分布式工作流程系统架构组件](#2-分布式工作流程系统架构组件)
-    - [1 . 核心组件](#1-核心组件)
-    - [2 . 弹性组件](#2-弹性组件)
-    - [3 . 扩展组件](#3-扩展组件)
-    - [4 . 管理组件](#4-管理组件)
-  - [3 分布式工作流系统设计考虑因素](#3-分布式工作流系统设计考虑因素)
-    - [1 . 可扩展性](#1-可扩展性)
-    - [2 . 一致性与持久性](#2-一致性与持久性)
-    - [3 . 故障恢复](#3-故障恢复)
-    - [4 . 可观测性](#4-可观测性)
-    - [5 . 安全性](#5-安全性)
-  - [4 当前技术趋势](#4-当前技术趋势)
+  - [1.1 引言](#11-引言)
+  - [1.2 n8n核心架构剖析](#12-n8n核心架构剖析)
+    - [1.2.1 多层架构设计](#121-多层架构设计)
+    - [1.2.2 事件驱动架构](#122-事件驱动架构)
+    - [1.2.3 微服务兼容性](#123-微服务兼容性)
+    - [4.0.1 插件架构](#401-插件架构)
+  - [4.1 工作流设计模式全景图](#41-工作流设计模式全景图)
+    - [4.1.1 基础设计模式](#411-基础设计模式)
+    - [4.1.2 集成模式](#412-集成模式)
+    - [4.1.3 数据处理模式](#413-数据处理模式)
+    - [4.1.4 控制流模式](#414-控制流模式)
+    - [4.1.5 错误处理模式](#415-错误处理模式)
+  - [4.2 分布式工作流程系统架构组件](#42-分布式工作流程系统架构组件)
+    - [4.2.1 核心组件](#421-核心组件)
+    - [4.2.2 弹性组件](#422-弹性组件)
+    - [4.2.3 扩展组件](#423-扩展组件)
+    - [4.2.4 管理组件](#424-管理组件)
+  - [4.3 分布式工作流系统设计考虑因素](#43-分布式工作流系统设计考虑因素)
+    - [4.3.1 可扩展性](#431-可扩展性)
+    - [4.3.2 一致性与持久性](#432-一致性与持久性)
+    - [4.3.3 故障恢复](#433-故障恢复)
+    - [4.3.4 可观测性](#434-可观测性)
+    - [4.3.5 安全性](#435-安全性)
+  - [4.4 当前技术趋势](#44-当前技术趋势)
 
-## 引言
+## 1.1 引言
 
 n8n作为开源工作流自动化平台，提供了丰富的集成能力和灵活的架构设计。本文深入剖析n8n的架构设计、支持的工作流模式及其组合应用，探索其应用边界和局限性，为构建企业级自动化解决方案提供全面指导。
 
-## n8n核心架构剖析
+## 1.2 n8n核心架构剖析
 
-### 多层架构设计
+### 1.2.1 多层架构设计
 
 n8n采用清晰的多层架构，每层职责明确，耦合度低：
 
@@ -70,22 +70,22 @@ n8n采用清晰的多层架构，每层职责明确，耦合度低：
 export class WorkflowExecutor {
   private readonly nodeTypes: INodeTypes;
   private readonly workflow: Workflow;
-  
+
   constructor(workflow: Workflow, nodeTypes: INodeTypes) {
     this.workflow = workflow;
     this.nodeTypes = nodeTypes;
   }
-  
+
   async execute(workflowData: IWorkflowExecuteData): Promise<IExecuteWorkflowInfo> {
     // 构建执行图
     const runExecutionData = this.buildExecutionData(workflowData);
-    
+
     // 执行工作流节点
     const executionOrder = this.getExecutionOrder();
     for (const nodeName of executionOrder) {
       await this.executeNode(nodeName, runExecutionData);
     }
-    
+
     return this.generateExecutionOutput(runExecutionData);
   }
 }
@@ -94,28 +94,28 @@ export class WorkflowExecutor {
 export class WorkflowService {
   private readonly workflowRepository: WorkflowRepository;
   private readonly nodeTypesLoader: NodeTypesLoader;
-  
+
   async executeWorkflow(workflowId: string, inputData?: INodeParameters): Promise<IExecutionResult> {
     // 加载工作流定义
     const workflowData = await this.workflowRepository.get(workflowId);
-    
+
     // 构建工作流执行器
     const nodeTypes = this.nodeTypesLoader.getAll();
     const workflow = new Workflow({ id: workflowId, nodes: workflowData.nodes, connections: workflowData.connections });
     const executor = new WorkflowExecutor(workflow, nodeTypes);
-    
+
     // 执行工作流
     const executionResult = await executor.execute({ inputData });
-    
+
     // 保存执行结果
     await this.workflowRepository.saveExecution(executionResult);
-    
+
     return executionResult;
   }
 }
 ```
 
-### 事件驱动架构
+### 1.2.2 事件驱动架构
 
 n8n内部采用事件驱动架构，使系统各组件松耦合且可扩展：
 
@@ -143,18 +143,18 @@ n8n内部采用事件驱动架构，使系统各组件松耦合且可扩展：
 export class EventBus {
   private static instance: EventBus;
   private eventEmitter = new EventEmitter();
-  
+
   static getInstance(): EventBus {
     if (!EventBus.instance) {
       EventBus.instance = new EventBus();
     }
     return EventBus.instance;
   }
-  
+
   emit(eventName: WorkflowEventType, data: any): void {
     this.eventEmitter.emit(eventName, data);
   }
-  
+
   on(eventName: WorkflowEventType, callback: (data: any) => void): void {
     this.eventEmitter.on(eventName, callback);
   }
@@ -163,24 +163,24 @@ export class EventBus {
 // 使用事件总线
 export class WorkflowExecutionManager {
   private readonly eventBus = EventBus.getInstance();
-  
+
   async executeWorkflow(workflowId: string): Promise<void> {
     try {
       // 发布工作流开始事件
       this.eventBus.emit('workflow.execution.started', { workflowId, timestamp: Date.now() });
-      
+
       // 执行工作流...
-      
+
       // 发布工作流完成事件
-      this.eventBus.emit('workflow.execution.completed', { 
-        workflowId, 
+      this.eventBus.emit('workflow.execution.completed', {
+        workflowId,
         timestamp: Date.now(),
         executionTime: executionTime
       });
     } catch (error) {
       // 发布工作流失败事件
-      this.eventBus.emit('workflow.execution.failed', { 
-        workflowId, 
+      this.eventBus.emit('workflow.execution.failed', {
+        workflowId,
         timestamp: Date.now(),
         error: error.message
       });
@@ -193,22 +193,22 @@ export class WorkflowExecutionManager {
 class ExecutionMetricsCollector {
   constructor() {
     const eventBus = EventBus.getInstance();
-    
+
     eventBus.on('workflow.execution.completed', this.recordSuccessMetrics.bind(this));
     eventBus.on('workflow.execution.failed', this.recordFailureMetrics.bind(this));
   }
-  
+
   private recordSuccessMetrics(data: any): void {
     // 记录执行成功指标...
   }
-  
+
   private recordFailureMetrics(data: any): void {
     // 记录执行失败指标...
   }
 }
 ```
 
-### 微服务兼容性
+### 1.2.3 微服务兼容性
 
 n8n虽然不是原生微服务架构，但设计上兼容微服务生态系统：
 
@@ -230,7 +230,7 @@ n8n虽然不是原生微服务架构，但设计上兼容微服务生态系统�
 微服务兼容部署配置示例：
 
 ```yaml
-# 工作流API服务
+# 2. 工作流API服务
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -257,7 +257,7 @@ spec:
         - name: QUEUE_BULL_REDIS_HOST
           value: "redis-service"
 ---
-# 工作流执行器服务
+# 3. 工作流执行器服务
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -284,7 +284,7 @@ spec:
         - name: QUEUE_BULL_REDIS_HOST
           value: "redis-service"
 ---
-# 触发器服务
+# 4. 触发器服务
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -312,7 +312,7 @@ spec:
           value: "redis-service"
 ```
 
-### 插件架构
+### 4.0.1 插件架构
 
 n8n采用了高度模块化的插件架构，使扩展和定制变得简单：
 
@@ -392,11 +392,11 @@ export class CustomAPINode implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const items = this.getInputData();
     const returnData: INodeExecutionData[] = [];
-    
+
     // 获取参数
     const url = this.getNodeParameter('url', 0) as string;
     const method = this.getNodeParameter('method', 0) as string;
-    
+
     // 处理每个输入项
     for (let i = 0; i < items.length; i++) {
       try {
@@ -407,17 +407,17 @@ export class CustomAPINode implements INodeType {
             'Accept': 'application/json',
           },
         };
-        
+
         // 对于POST和PUT请求，添加请求体
         if (['POST', 'PUT'].includes(method)) {
           const body = this.getNodeParameter('body', i) as string;
           options.body = JSON.parse(body);
           options.headers['Content-Type'] = 'application/json';
         }
-        
+
         // 发送请求
         const response = await this.helpers.request(options);
-        
+
         // 处理响应
         returnData.push({
           json: typeof response === 'string' ? JSON.parse(response) : response,
@@ -435,15 +435,15 @@ export class CustomAPINode implements INodeType {
         throw error;
       }
     }
-    
+
     return [returnData];
   }
 }
 ```
 
-## 工作流设计模式全景图
+## 4.1 工作流设计模式全景图
 
-### 基础设计模式
+### 4.1.1 基础设计模式
 
 n8n支持多种基础工作流设计模式：
 
@@ -742,7 +742,7 @@ n8n支持多种基础工作流设计模式：
    };
    ```
 
-### 集成模式
+### 4.1.2 集成模式
 
 n8n擅长的集成模式包括：
 
@@ -794,7 +794,7 @@ n8n擅长的集成模式包括：
              const customer = $node["1"].json;
              const orders = $node["2"].json;
              const payments = $node["3"].json;
-             
+
              return [{
                json: {
                  customer: {
@@ -872,14 +872,14 @@ n8n擅长的集成模式包括：
              const service = $node["1"].json.params.service;
              const endpoint = $node["1"].json.params.endpoint;
              const requestMethod = $node["1"].json.request.method;
-             
+
              // 简单的限流逻辑（示例）
              const clientIp = $node["1"].json.headers['x-forwarded-for'] || '0.0.0.0';
              const requestKey = \`\${clientIp}:\${service}:\${endpoint}\`;
-             
+
              // 在实际应用中，这里会检查Redis等系统进行限流
              // 这里简化为放行所有请求
-             
+
              return [{
                json: {
                  service,
@@ -959,7 +959,7 @@ n8n擅长的集成模式包括：
                'Cache-Control': 'no-cache',
                'Content-Type': 'application/json'
              };
-             
+
              // 返回带有头信息的响应
              return [{
                json: $json,
@@ -1122,12 +1122,12 @@ n8n擅长的集成模式包括：
                  source: $json.source || "webhook",
                  priority: $json.priority || "normal"
                };
-               
+
                return [{ json: message }];
              } catch (error) {
                return [{ json: { error: "Invalid message format" } }];
              }
-             
+
              function uuid() {
                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
                  const r = Math.random() * 16 | 0;
@@ -1304,20 +1304,20 @@ n8n擅长的集成模式包括：
              const salesData = $node["2"].json;
              const analyticsData = $node["3"].json;
              const supportData = $node["4"].json;
-             
+
              // 计算销售指标
              const totalSales = salesData.reduce((sum, sale) => sum + parseFloat(sale.amount), 0);
              const orderCount = salesData.length;
              const averageOrderValue = orderCount > 0 ? totalSales / orderCount : 0;
-             
+
              // 计算网站指标
              const totalSessions = analyticsData.reduce((sum, row) => sum + row.sessions, 0);
              const totalPageviews = analyticsData.reduce((sum, row) => sum + row.pageviews, 0);
-             
+
              // 计算支持指标
              const newTickets = supportData.filter(ticket => ticket.status === 'new').length;
              const resolvedTickets = supportData.filter(ticket => ticket.status === 'resolved').length;
-             
+
              // 创建汇总报告
              const dailyReport = {
                date: $today.minus(1, "days").format("YYYY-MM-DD"),
@@ -1336,7 +1336,7 @@ n8n擅长的集成模式包括：
                  resolutionRate: newTickets > 0 ? resolvedTickets / newTickets : 0
                }
              };
-             
+
              return [{ json: dailyReport }];
            `
          }
@@ -1389,7 +1389,7 @@ n8n擅长的集成模式包括：
 
    ```
 
-### 数据处理模式
+### 4.1.3 数据处理模式
 
 n8n提供多种数据处理模式：
 
@@ -1419,10 +1419,10 @@ n8n提供多种数据处理模式：
          parameters: {
            operation: "executeQuery",
            query: `
-             SELECT 
-               o.order_id, 
-               o.customer_id, 
-               o.order_date, 
+             SELECT
+               o.order_id,
+               o.customer_id,
+               o.order_date,
                o.status,
                c.email,
                c.name as customer_name,
@@ -1444,7 +1444,7 @@ n8n提供多种数据处理模式：
              return items.map(item => {
                // 标准化日期格式
                const orderDate = new Date(item.json.order_date);
-               
+
                // 统一状态值
                let normalizedStatus;
                switch(item.json.status.toLowerCase()) {
@@ -1464,10 +1464,10 @@ n8n提供多种数据处理模式：
                  default:
                    normalizedStatus = 'OTHER';
                }
-               
+
                // 生成唯一键
                const uniqueKey = \`ORD-\${item.json.order_id}\`;
-               
+
                // 转换为目标格式
                return {
                  json: {
@@ -1498,38 +1498,38 @@ n8n提供多种数据处理模式：
              // 数据质量检查
              const validItems = [];
              const errorItems = [];
-             
+
              for (const item of items) {
                let isValid = true;
                const errors = [];
-               
+
                // 检查必需字段
                if (!item.json.order_key) {
                  isValid = false;
                  errors.push('Missing order_key');
                }
-               
+
                if (!item.json.transaction_date) {
                  isValid = false;
                  errors.push('Missing transaction_date');
                }
-               
+
                if (!item.json.customer || !item.json.customer.id) {
                  isValid = false;
                  errors.push('Missing customer ID');
                }
-               
+
                if (!item.json.order_details || !item.json.order_details.amount) {
                  isValid = false;
                  errors.push('Missing order amount');
                }
-               
+
                // 检查数据类型
                if (isNaN(parseFloat(item.json.order_details.amount))) {
                  isValid = false;
                  errors.push('Invalid order amount');
                }
-               
+
                // 分类处理
                if (isValid) {
                  validItems.push(item);
@@ -1543,7 +1543,7 @@ n8n提供多种数据处理模式：
                  });
                }
              }
-             
+
              // 设置节点输出
              return [validItems, errorItems];
            `
@@ -1580,7 +1580,7 @@ n8n提供多种数据处理模式：
              const validCount = $node["5"].runData.length || 0;
              const errorCount = $node["6"].runData.length || 0;
              const totalCount = validCount + errorCount;
-             
+
              const summary = {
                timestamp: new Date().toISOString(),
                job: "daily_order_etl",
@@ -1593,7 +1593,7 @@ n8n提供多种数据处理模式：
                  successRate: totalCount > 0 ? (validCount / totalCount * 100).toFixed(2) + '%' : '0%'
                }
              };
-             
+
              return [{ json: summary }];
            `
          }
@@ -1614,7 +1614,7 @@ n8n提供多种数据处理模式：
        "1": { main: [{ node: "2", type: "main", index: 0 }] },
        "2": { main: [{ node: "3", type: "main", index: 0 }] },
        "3": { main: [{ node: "4", type: "main", index: 0 }] },
-       "4": { 
+       "4": {
          main: [
            { node: "5", type: "validData", index: 0 },
            { node: "6", type: "errorData", index: 0 }
@@ -1683,32 +1683,32 @@ n8n提供多种数据处理模式：
                  minLength: 5
                }
              };
-             
+
              // 验证每条记录
              return items.map(item => {
                const errors = [];
                const warnings = [];
-               
+
                // 检查每个字段
                for (const [field, rule] of Object.entries(rules)) {
                  const value = item.json[field];
-                 
+
                  // 必填检查
                  if (rule.required && (value === undefined || value === null || value === '')) {
                    errors.push(`Missing required field: ${field}`);
                    continue;
                  }
-                 
+
                  // 跳过空值的非必填字段
                  if (!rule.required && (value === undefined || value === null || value === '')) {
                    continue;
                  }
-                 
+
                  // 正则表达式验证
                  if (rule.regex && !rule.regex.test(value)) {
                    errors.push(`Invalid format for ${field}: ${value}`);
                  }
-                 
+
                  // 数值范围验证
                  if ((rule.min !== undefined || rule.max !== undefined) && !isNaN(value)) {
                    const numValue = parseFloat(value);
@@ -1719,7 +1719,7 @@ n8n提供多种数据处理模式：
                      errors.push(`${field} is above maximum: ${value} > ${rule.max}`);
                    }
                  }
-                 
+
                  // 字符串长度验证
                  if ((rule.minLength !== undefined || rule.maxLength !== undefined) && typeof value === 'string') {
                    if (rule.minLength !== undefined && value.length < rule.minLength) {
@@ -1730,14 +1730,14 @@ n8n提供多种数据处理模式：
                    }
                  }
                }
-               
+
                // 添加验证结果
                item.json._validation = {
                  valid: errors.length === 0,
                  errors: errors,
                  warnings: warnings
                };
-               
+
                return item;
              });
            `
@@ -1754,22 +1754,22 @@ n8n提供多种数据处理模式：
                if (!item.json._validation.valid) {
                  return item;
                }
-               
+
                const cleaned = { ...item.json };
-               
+
                // 删除验证信息
                delete cleaned._validation;
-               
+
                // 标准化电子邮件
                if (cleaned.email) {
                  cleaned.email = cleaned.email.trim().toLowerCase();
                }
-               
+
                // 标准化电话号码
                if (cleaned.phone) {
                  // 移除所有非数字字符
                  cleaned.phone = cleaned.phone.replace(/[^0-9]/g, '');
-                 
+
                  // 如果是美国号码且没有国家代码，添加+1
                  if (cleaned.phone.length === 10) {
                    cleaned.phone = '+1' + cleaned.phone;
@@ -1777,38 +1777,38 @@ n8n提供多种数据处理模式：
                    cleaned.phone = '+' + cleaned.phone;
                  }
                }
-               
+
                // 标准化年龄为整数
                if (cleaned.age) {
                  cleaned.age = parseInt(cleaned.age, 10);
                }
-               
+
                // 标准化邮政编码
                if (cleaned.zipcode) {
                  cleaned.zipcode = cleaned.zipcode.trim().padStart(5, '0');
                }
-               
+
                // 标准化名称格式（首字母大写）
                if (cleaned.firstName) {
                  cleaned.firstName = cleaned.firstName.trim()
                    .toLowerCase()
                    .replace(/\\b\\w/g, c => c.toUpperCase());
                }
-               
+
                if (cleaned.lastName) {
                  cleaned.lastName = cleaned.lastName.trim()
                    .toLowerCase()
                    .replace(/\\b\\w/g, c => c.toUpperCase());
                }
-               
+
                // 添加完整名称
                if (cleaned.firstName && cleaned.lastName) {
                  cleaned.fullName = `${cleaned.firstName} ${cleaned.lastName}`;
                }
-               
+
                // 添加创建时间戳
                cleaned.processedAt = new Date().toISOString();
-               
+
                item.json = cleaned;
                return item;
              });
@@ -1857,7 +1857,7 @@ n8n提供多种数据处理模式：
              const validCount = $node["6"].runData?.length || 0;
              const invalidCount = $node["7"].runData?.length || 0;
              const totalCount = validCount + invalidCount;
-             
+
              // 生成报告
              const report = {
                timestamp: new Date().toISOString(),
@@ -1870,7 +1870,7 @@ n8n提供多种数据处理模式：
                },
                status: totalCount > 0 && (validCount / totalCount) >= 0.9 ? "SUCCESS" : "WARNING"
              };
-             
+
              return [{ json: report }];
            `
          }
@@ -2024,7 +2024,7 @@ n8n提供多种数据处理模式：
              const companyData = $node["4"].json || {};
              const geoData = $node["5"].json || {};
              const industryData = $node["6"].json || {};
-             
+
              // 创建富集的完整客户档案
              const enrichedContact = {
                // 基本信息
@@ -2033,7 +2033,7 @@ n8n提供多种数据处理模式：
                fullName: contact.fullName,
                jobTitle: contact.jobTitle,
                phone: contact.phone,
-               
+
                // 社交媒体数据
                social: {
                  profiles: socialData.profiles || [],
@@ -2042,7 +2042,7 @@ n8n提供多种数据处理模式：
                  influence: socialData.influenceScore || 0,
                  platforms: socialData.platforms || []
                },
-               
+
                // 公司信息
                company: {
                  name: contact.company,
@@ -2055,7 +2055,7 @@ n8n提供多种数据处理模式：
                  publiclyTraded: companyData.publiclyTraded || false,
                  stockSymbol: companyData.stockSymbol
                },
-               
+
                // 地理位置数据
                location: {
                  address: geoData.address,
@@ -2066,7 +2066,7 @@ n8n提供多种数据处理模式：
                  coordinates: geoData.coordinates,
                  timezone: geoData.timezone
                },
-               
+
                // 行业趋势
                industryInsights: {
                  growth: industryData.growth,
@@ -2075,7 +2075,7 @@ n8n提供多种数据处理模式：
                  competitorCount: industryData.competitors?.length || 0,
                  topCompetitors: industryData.competitors?.slice(0, 5) || []
                },
-               
+
                // 派生的预测分析
                predictions: {
                  leadScore: calculateLeadScore(socialData, companyData, industryData),
@@ -2083,7 +2083,7 @@ n8n提供多种数据处理模式：
                  salesCycleDays: estimateSalesCycle(companyData, industryData),
                  propensityToBuy: calculateBuyingPropensity(socialData, companyData)
                },
-               
+
                // 元数据
                enriched: {
                  status: "completed",
@@ -2096,37 +2096,37 @@ n8n提供多种数据处理模式：
                  ].filter(Boolean)
                }
              };
-             
+
              return [{ json: enrichedContact }];
-             
+
              // 辅助函数
              function calculateLeadScore(social, company, industry) {
                // 简单的评分算法
                let score = 50; // 基础分
-               
+
                // 社交影响力
                if (social.influenceScore > 70) score += 15;
                else if (social.influenceScore > 40) score += 10;
-               
+
                // 公司规模
                if (company.employees > 1000) score += 20;
                else if (company.employees > 100) score += 10;
-               
+
                // 行业增长
                if (industry.growth > 10) score += 15;
                else if (industry.growth > 5) score += 10;
                else if (industry.growth < 0) score -= 10;
-               
+
                return Math.min(100, Math.max(0, score));
              }
-             
+
              function estimateLTV(company, industry) {
                if (!company.annualRevenue) return null;
-               
+
                // 基于行业和公司规模的估算
                const baseMultiplier = 0.05; // 基础乘数
                let industryMultiplier = 1;
-               
+
                // 根据行业调整乘数
                switch(company.industry?.toLowerCase()) {
                  case 'technology': industryMultiplier = 1.5; break;
@@ -2135,20 +2135,20 @@ n8n提供多种数据处理模式：
                  case 'manufacturing': industryMultiplier = 0.8; break;
                  case 'retail': industryMultiplier = 0.7; break;
                }
-               
+
                // 计算估计LTV
                return Math.round(company.annualRevenue * baseMultiplier * industryMultiplier);
              }
-             
+
              function estimateSalesCycle(company, industry) {
                // 基础销售周期
                let baseCycleDays = 45;
-               
+
                // 根据公司规模调整
                if (company.employees > 5000) baseCycleDays += 45;
                else if (company.employees > 1000) baseCycleDays += 30;
                else if (company.employees > 100) baseCycleDays += 15;
-               
+
                // 根据行业调整
                switch(company.industry?.toLowerCase()) {
                  case 'government': baseCycleDays += 60; break;
@@ -2156,22 +2156,22 @@ n8n提供多种数据处理模式：
                  case 'education': baseCycleDays += 45; break;
                  case 'technology': baseCycleDays -= 15; break;
                }
-               
+
                return baseCycleDays;
              }
-             
+
              function calculateBuyingPropensity(social, company) {
                // 简单的购买倾向评分
                let score = 3; // 中等倾向(1-5)
-               
+
                // 公司因素
                if (company.employees > 1000) score += 1;
                if (company.annualRevenue > 10000000) score += 1;
-               
+
                // 社交影响因素
                if (social.profiles?.length > 3) score += 0.5;
                if (social.influenceScore > 60) score += 0.5;
-               
+
                return Math.min(5, Math.max(1, score));
              }
            `
@@ -2188,22 +2188,22 @@ n8n提供多种数据处理模式：
              // 基本信息更新
              enrichmentStatus: "completed",
              enrichmentDate: "={{ $json.enriched.enrichedAt }}",
-             
+
              // 社交媒体数据
              socialInfluence: "={{ $json.social.influence }}",
              socialProfiles: "={{ JSON.stringify($json.social.profiles) }}",
-             
+
              // 公司附加信息
              companySize: "={{ $json.company.employeeCount }}",
              companyRevenue: "={{ $json.company.revenue }}",
              industry: "={{ $json.company.industry }}",
              subIndustry: "={{ $json.company.subIndustry }}",
-             
+
              // 位置信息
              city: "={{ $json.location.city }}",
              state: "={{ $json.location.state }}",
              country: "={{ $json.location.country }}",
-             
+
              // 预测分析
              leadScore: "={{ $json.predictions.leadScore }}",
              estimatedLtv: "={{ $json.predictions.lifetimeValueEstimate }}",
@@ -2244,13 +2244,13 @@ n8n提供多种数据处理模式：
          parameters: {
            channel: "sales-team",
            text: `🔥 高价值潜在客户提醒 🔥
-                        
+
                 姓名: {{ $json.fullName }}
                 公司: {{ $json.company.name }}
                 行业: {{ $json.company.industry }}
                 预测分数: {{ $json.predictions.leadScore }}/100
                 估计价值: ${{ $json.predictions.lifetimeValueEstimate }}
-                        
+
                 查看CRM: https://crm.example.com/contacts/{{ $json.contactId }}`,
            otherOptions: {
              attachments: [
@@ -2330,7 +2330,7 @@ n8n提供多种数据处理模式：
          parameters: {
            operation: "executeQuery",
            query: `
-             SELECT 
+             SELECT
                o.id as order_id,
                o.created_at,
                o.total_amount,
@@ -2345,13 +2345,13 @@ n8n提供多种数据处理模式：
                (p.unit_price * oi.quantity) as line_total,
                s.sales_rep_id,
                s.region
-             FROM 
+             FROM
                orders o
                JOIN customers c ON o.customer_id = c.id
                JOIN order_items oi ON o.id = oi.order_id
                JOIN products p ON oi.product_id = p.id
                JOIN sales_reps s ON o.sales_rep_id = s.id
-             WHERE 
+             WHERE
                o.created_at >= date_trunc('week', current_date - interval '1 week')
                AND o.created_at < date_trunc('week', current_date)
            `
@@ -2364,12 +2364,12 @@ n8n提供多种数据处理模式：
            functionCode: `
              // 按区域分析数据
              const salesByRegion = {};
-             
+
              // 处理所有销售记录
              for (const item of items) {
                const sale = item.json;
                const region = sale.region;
-               
+
                // 初始化区域
                if (!salesByRegion[region]) {
                  salesByRegion[region] = {
@@ -2380,23 +2380,23 @@ n8n提供多种数据处理模式：
                    topProducts: []
                  };
                }
-               
+
                // 更新区域统计
                salesByRegion[region].totalSales += parseFloat(sale.line_total);
-               
+
                // 追踪订单（去重）
                if (!salesByRegion[region][sale.order_id]) {
                  salesByRegion[region][sale.order_id] = true;
                  salesByRegion[region].orderCount++;
                }
-               
+
                // 更新产品类别
                const category = sale.category;
                if (!salesByRegion[region].productCategories[category]) {
                  salesByRegion[region].productCategories[category] = 0;
                }
                salesByRegion[region].productCategories[category] += parseFloat(sale.line_total);
-               
+
                // 更新产品销售
                const productIndex = salesByRegion[region].topProducts.findIndex(p => p.id === sale.product_id);
                if (productIndex >= 0) {
@@ -2412,21 +2412,21 @@ n8n提供多种数据处理模式：
                  });
                }
              }
-             
+
              // 计算每个区域的平均订单价值和排序产品
              for (const region in salesByRegion) {
                // 平均订单价值
-               salesByRegion[region].averageOrderValue = 
-                 salesByRegion[region].orderCount > 0 
+               salesByRegion[region].averageOrderValue =
+                 salesByRegion[region].orderCount > 0
                    ? (salesByRegion[region].totalSales / salesByRegion[region].orderCount).toFixed(2)
                    : 0;
-                   
+
                // 按销售额排序产品
                salesByRegion[region].topProducts.sort((a, b) => b.sales - a.sales);
-               
+
                // 只保留前5个产品
                salesByRegion[region].topProducts = salesByRegion[region].topProducts.slice(0, 5);
-               
+
                // 删除临时订单跟踪
                for (const key in salesByRegion[region]) {
                  if (key.startsWith('order_')) {
@@ -2434,7 +2434,7 @@ n8n提供多种数据处理模式：
                  }
                }
              }
-             
+
              // 返回结构化数据
              return [{
                json: {
@@ -2454,12 +2454,12 @@ n8n提供多种数据处理模式：
            functionCode: `
              // 按客户细分分析数据
              const salesBySegment = {};
-             
+
              // 处理所有销售记录
              for (const item of items) {
                const sale = item.json;
                const segment = sale.customer_segment || 'Unknown';
-               
+
                // 初始化客户细分
                if (!salesBySegment[segment]) {
                  salesBySegment[segment] = {
@@ -2470,44 +2470,44 @@ n8n提供多种数据处理模式：
                    customers: new Set()
                  };
                }
-               
+
                // 更新细分统计
                salesBySegment[segment].totalSales += parseFloat(sale.line_total);
-               
+
                // 追踪订单（去重）
                if (!salesBySegment[segment][sale.order_id]) {
                  salesBySegment[segment][sale.order_id] = true;
                  salesBySegment[segment].orderCount++;
                }
-               
+
                // 追踪客户（去重）
                salesBySegment[segment].customers.add(sale.customer_id);
              }
-             
+
              // 计算最终指标并清理
              for (const segment in salesBySegment) {
                // 客户数量
                salesBySegment[segment].customerCount = salesBySegment[segment].customers.size;
                delete salesBySegment[segment].customers; // 移除Set
-               
+
                // 平均订单价值
-               salesBySegment[segment].averageOrderValue = 
-                 salesBySegment[segment].orderCount > 0 
+               salesBySegment[segment].averageOrderValue =
+                 salesBySegment[segment].orderCount > 0
                    ? (salesBySegment[segment].totalSales / salesBySegment[segment].orderCount).toFixed(2)
                    : 0;
-                   
+
                // 每客户平均价值
-               salesBySegment[segment].averageCustomerValue = 
+               salesBySegment[segment].averageCustomerValue =
                  salesBySegment[segment].customerCount > 0
                    ? (salesBySegment[segment].totalSales / salesBySegment[segment].customerCount).toFixed(2)
                    : 0;
-                   
+
                // 每客户平均订单数
-               salesBySegment[segment].ordersPerCustomer = 
+               salesBySegment[segment].ordersPerCustomer =
                  salesBySegment[segment].customerCount > 0
                    ? (salesBySegment[segment].orderCount / salesBySegment[segment].customerCount).toFixed(2)
                    : 0;
-                   
+
                // 删除临时订单跟踪
                for (const key in salesBySegment[segment]) {
                  if (key.startsWith('order_')) {
@@ -2515,7 +2515,7 @@ n8n提供多种数据处理模式：
                  }
                }
              }
-             
+
              // 返回结构化数据
              return [{
                json: {
@@ -2535,12 +2535,12 @@ n8n提供多种数据处理模式：
            functionCode: `
              // 按产品类别分析数据
              const salesByCategory = {};
-             
+
              // 处理所有销售记录
              for (const item of items) {
                const sale = item.json;
                const category = sale.category || 'Uncategorized';
-               
+
                // 初始化类别
                if (!salesByCategory[category]) {
                  salesByCategory[category] = {
@@ -2552,14 +2552,14 @@ n8n提供多种数据处理模式：
                    topProducts: []
                  };
                }
-               
+
                // 更新类别统计
                salesByCategory[category].totalSales += parseFloat(sale.line_total);
                salesByCategory[category].totalQuantity += parseInt(sale.quantity);
-               
+
                // 追踪产品（去重）
                salesByCategory[category].products.add(sale.product_id);
-               
+
                // 更新产品销售
                const productIndex = salesByCategory[category].topProducts.findIndex(p => p.id === sale.product_id);
                if (productIndex >= 0) {
@@ -2575,26 +2575,26 @@ n8n提供多种数据处理模式：
                  });
                }
              }
-             
+
              // 计算最终指标并清理
              for (const category in salesByCategory) {
                // 产品数量
                salesByCategory[category].productCount = salesByCategory[category].products.size;
                delete salesByCategory[category].products; // 移除Set
-               
+
                // 平均单价
-               salesByCategory[category].averageUnitPrice = 
-                 salesByCategory[category].totalQuantity > 0 
+               salesByCategory[category].averageUnitPrice =
+                 salesByCategory[category].totalQuantity > 0
                    ? (salesByCategory[category].totalSales / salesByCategory[category].totalQuantity).toFixed(2)
                    : 0;
-                   
+
                // 按销售额排序产品
                salesByCategory[category].topProducts.sort((a, b) => b.sales - a.sales);
-               
+
                // 只保留前5个产品
                salesByCategory[category].topProducts = salesByCategory[category].topProducts.slice(0, 5);
              }
-             
+
              // 返回结构化数据
              return [{
                json: {
@@ -2614,13 +2614,13 @@ n8n提供多种数据处理模式：
            functionCode: `
              // 按日期分析数据
              const salesByDate = {};
-             
+
              // 处理所有销售记录
              for (const item of items) {
                const sale = item.json;
                // 提取日期部分
                const date = sale.created_at.split('T')[0];
-               
+
                // 初始化日期
                if (!salesByDate[date]) {
                  salesByDate[date] = {
@@ -2630,32 +2630,32 @@ n8n提供多种数据处理模式：
                    uniqueCustomers: new Set()
                  };
                }
-               
+
                // 更新日期统计
                salesByDate[date].totalSales += parseFloat(sale.line_total);
                salesByDate[date].itemCount += parseInt(sale.quantity);
-               
+
                // 追踪订单（去重）
                if (!salesByDate[date][sale.order_id]) {
                  salesByDate[date][sale.order_id] = true;
                  salesByDate[date].orderCount++;
                }
-               
+
                // 追踪客户（去重）
                salesByDate[date].uniqueCustomers.add(sale.customer_id);
              }
-             
+
              // 整理数据和计算趋势
              const dateKeys = Object.keys(salesByDate).sort();
              const dailyData = [];
-             
+
              for (const date of dateKeys) {
                // 计算当天指标
                const customerCount = salesByDate[date].uniqueCustomers.size;
                const averageOrderValue = salesByDate[date].orderCount > 0
                  ? salesByDate[date].totalSales / salesByDate[date].orderCount
                  : 0;
-                 
+
                // 添加到日数据数组
                dailyData.push({
                  date,
@@ -2665,7 +2665,7 @@ n8n提供多种数据处理模式：
                  customerCount,
                  averageOrderValue
                });
-               
+
                // 清理临时字段
                delete salesByDate[date].uniqueCustomers;
                for (const key in salesByDate[date]) {
@@ -2674,7 +2674,7 @@ n8n提供多种数据处理模式：
                  }
                }
              }
-             
+
              // 计算趋势变化
              const trends = {
                salesTrend: calculateTrend(dailyData, 'totalSales'),
@@ -2682,7 +2682,7 @@ n8n提供多种数据处理模式：
                customerCountTrend: calculateTrend(dailyData, 'customerCount'),
                aovTrend: calculateTrend(dailyData, 'averageOrderValue')
              };
-             
+
              // 返回结构化数据
              return [{
                json: {
@@ -2693,19 +2693,19 @@ n8n提供多种数据处理模式：
                  trends
                }
              }];
-             
+
              // 辅助函数 - 计算趋势
              function calculateTrend(data, field) {
                if (data.length < 2) return { change: 0, percentChange: 0 };
-               
+
                const firstValue = data[0][field];
                const lastValue = data[data.length - 1][field];
-               
+
                const change = lastValue - firstValue;
-               const percentChange = firstValue !== 0 
+               const percentChange = firstValue !== 0
                  ? (change / firstValue * 100).toFixed(2)
                  : 0;
-                 
+
                return {
                  change: change.toFixed(2),
                  percentChange,
@@ -2725,10 +2725,10 @@ n8n提供多种数据处理模式：
              const segmentAnalysis = $node["4"].json;
              const categoryAnalysis = $node["5"].json;
              const trendAnalysis = $node["6"].json;
-             
+
              // 计算整体汇总指标
              const allSales = items.map(item => item.json);
-             
+
              // 基本汇总指标
              const totalSalesAmount = allSales.reduce((sum, sale) => sum + parseFloat(sale.line_total), 0);
              const uniqueOrderIds = new Set(allSales.map(sale => sale.order_id));
@@ -2737,12 +2737,12 @@ n8n提供多种数据处理模式：
              const totalCustomers = uniqueCustomerIds.size;
              const totalItems = allSales.reduce((sum, sale) => sum + parseInt(sale.quantity), 0);
              const averageOrderValue = totalOrders > 0 ? (totalSalesAmount / totalOrders).toFixed(2) : 0;
-             
+
              // 寻找表现最好的指标
              const bestPerformingRegion = findBestPerforming(regionalAnalysis.data, 'totalSales');
              const bestPerformingSegment = findBestPerforming(segmentAnalysis.data, 'totalSales');
              const bestPerformingCategory = findBestPerforming(categoryAnalysis.data, 'totalSales');
-             
+
              // 创建执行摘要
              const executiveSummary = {
                period: "上周",
@@ -2767,14 +2767,14 @@ n8n提供多种数据处理模式：
                categoryPerformance: categoryAnalysis,
                trendPerformance: trendAnalysis
              };
-             
+
              return [{ json: executiveSummary }];
-             
+
              // 辅助函数 - 寻找表现最好的类别
              function findBestPerforming(data, field) {
                let bestKey = null;
                let bestValue = -Infinity;
-               
+
                for (const key in data) {
                  const value = parseFloat(data[key][field]);
                  if (value > bestValue) {
@@ -2782,7 +2782,7 @@ n8n提供多种数据处理模式：
                    bestValue = value;
                  }
                }
-               
+
                return { key: bestKey, value: bestValue };
              }
            `
@@ -2858,7 +2858,7 @@ n8n提供多种数据处理模式：
    };
    ```
 
-### 控制流模式
+### 4.1.4 控制流模式
 
 n8n支持丰富的控制流模式：
 
@@ -2887,7 +2887,7 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 对订单进行验证和分类
              const order = $json;
-             
+
              // 验证必要字段
              const errors = [];
              if (!order.orderId) errors.push("Missing order ID");
@@ -2895,45 +2895,45 @@ n8n支持丰富的控制流模式：
              if (!order.items || !Array.isArray(order.items) || order.items.length === 0) {
                errors.push("No items in order");
              }
-             
+
              // 计算订单总额
              let totalAmount = 0;
              let isHighValue = false;
              let containsRestrictedItems = false;
              let needsManualReview = false;
              let isInternational = false;
-             
+
              if (order.items && Array.isArray(order.items)) {
                totalAmount = order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-               
+
                // 检查受限商品
-               containsRestrictedItems = order.items.some(item => 
+               containsRestrictedItems = order.items.some(item =>
                  item.category === 'restricted' || item.requiresVerification);
              }
-             
+
              // 高价值订单检查
              isHighValue = totalAmount > 1000;
-             
+
              // 国际订单检查
-             isInternational = order.customerInfo && 
-               order.customerInfo.country && 
+             isInternational = order.customerInfo &&
+               order.customerInfo.country &&
                order.customerInfo.country !== 'USA';
-               
+
              // 可疑订单检查
              const suspiciousPatterns = [
                // 来自高风险国家
                order.customerInfo && ["HIGHRISK1", "HIGHRISK2"].includes(order.customerInfo.country),
                // 使用不同的账单和配送地址
-               order.billingAddress && order.shippingAddress && 
+               order.billingAddress && order.shippingAddress &&
                  order.billingAddress.country !== order.shippingAddress.country,
                // 异常高价值且是新客户
                isHighValue && order.customerInfo && order.customerInfo.isNew,
                // 其他风险指标
                order.riskScore && order.riskScore > 80
              ];
-             
+
              needsManualReview = suspiciousPatterns.some(Boolean);
-             
+
              // 返回扩展的订单信息
              return [{
                json: {
@@ -3012,7 +3012,7 @@ n8n支持丰富的控制流模式：
              // 添加人工审核标记
              item.json.reviewStatus = "pending";
              item.json.reviewAssignedAt = new Date().toISOString();
-             
+
              return item;
            `
          }
@@ -3070,7 +3070,7 @@ n8n支持丰富的控制流模式：
          parameters: {
            functionCode: `
              // 国际订单处理逻辑
-             
+
              // 添加国际运输信息
              item.json.shipping = {
                ...item.json.shipping,
@@ -3080,21 +3080,21 @@ n8n支持丰富的控制流模式：
                customsForms: ["CN22", "商业发票"],
                carrier: determineInternationalCarrier(item.json)
              };
-             
+
              // 计算国际运费
              item.json.calculated.shippingCost = calculateInternationalShipping(
                item.json.customerInfo.country,
                item.json.calculated.totalAmount,
                getTotalWeight(item.json.items)
              );
-             
+
              return item;
-             
+
              // 辅助函数
              function determineInternationalCarrier(order) {
                const country = order.customerInfo.country;
                const weight = getTotalWeight(order.items);
-               
+
                // 根据目的国家和重量选择最佳承运商
                if (["Canada", "Mexico"].includes(country)) {
                  return weight > 10 ? "FreightEx" : "Global Post";
@@ -3108,14 +3108,14 @@ n8n支持丰富的控制流模式：
                  return "Universal Shipping";
                }
              }
-             
+
              function calculateInternationalShipping(country, orderValue, weight) {
                // 基础运费
                let baseCost = 25;
-               
+
                // 按重量加收
                baseCost += weight * 2;
-               
+
                // 按地区调整
                const regionMultipliers = {
                  "Europe": 1.2,
@@ -3124,20 +3124,20 @@ n8n支持丰富的控制流模式：
                  "South America": 1.6,
                  "Africa": 1.9
                };
-               
+
                const region = getRegionForCountry(country);
                if (regionMultipliers[region]) {
                  baseCost *= regionMultipliers[region];
                }
-               
+
                // 高价值商品保险
                if (orderValue > 500) {
                  baseCost += orderValue * 0.01; // 1%保险费
                }
-               
+
                return Math.round(baseCost * 100) / 100; // 保留两位小数
              }
-             
+
              function getRegionForCountry(country) {
                // 简化的国家-区域映射
                const countryRegions = {
@@ -3147,10 +3147,10 @@ n8n支持丰富的控制流模式：
                  "Brazil": "South America", "Argentina": "South America", "Chile": "South America",
                  "South Africa": "Africa", "Egypt": "Africa", "Nigeria": "Africa"
                };
-               
+
                return countryRegions[country] || "Other";
              }
-             
+
              function getTotalWeight(items) {
                return items.reduce((total, item) => total + (item.weight || 0.5) * item.quantity, 0);
              }
@@ -3201,7 +3201,7 @@ n8n支持丰富的控制流模式：
          parameters: {
            functionCode: `
              // 高价值订单处理逻辑
-             
+
              // 添加VIP服务
              item.json.shipping = {
                ...item.json.shipping,
@@ -3212,7 +3212,7 @@ n8n支持丰富的控制流模式：
                premiumPackaging: true,
                trackingLevel: "detailed"
              };
-             
+
              // 添加VIP客户服务跟进
              item.json.customerService = {
                assignedAgent: "VIP Team",
@@ -3220,7 +3220,7 @@ n8n支持丰富的控制流模式：
                followUpDate: new Date(Date.now() + 24 * 3600000).toISOString(), // 24小时后
                specialInstructions: "高价值订单 - 确认收到后进行满意度跟进"
              };
-             
+
              return item;
            `
          }
@@ -3272,12 +3272,12 @@ n8n支持丰富的控制流模式：
          parameters: {
            functionCode: `
              // 受限商品处理逻辑
-             
+
              // 标识受限商品
-             const restrictedItems = item.json.items.filter(item => 
+             const restrictedItems = item.json.items.filter(item =>
                item.category === 'restricted' || item.requiresVerification
              );
-             
+
              // 为每个受限商品添加验证需求
              item.json.restrictedItemsProcessing = {
                items: restrictedItems.map(rItem => ({
@@ -3291,9 +3291,9 @@ n8n支持丰富的控制流模式：
                overallStatus: 'pending',
                specialHandling: true
              };
-             
+
              return item;
-             
+
              // 辅助函数
              function getVerificationInstructions(item) {
                if (item.category === 'alcohol') {
@@ -3353,7 +3353,7 @@ n8n支持丰富的控制流模式：
          parameters: {
            functionCode: `
              // 标准订单处理逻辑
-             
+
              // 如果没有走特殊路径，添加标准处理信息
              if (!item.json.shipping) {
                item.json.shipping = {
@@ -3362,27 +3362,27 @@ n8n支持丰富的控制流模式：
                  trackingLevel: "standard"
                };
              }
-             
+
              // 添加处理时间戳
              item.json.processing = {
                status: "processed",
                timestamp: new Date().toISOString(),
                route: determineProcessingRoute(item.json)
              };
-             
+
              return item;
-             
+
              // 辅助函数
              function determineProcessingRoute(order) {
                // 确定订单处理经过的路径
                const routes = [];
-               
+
                if (order.calculated.hasErrors) routes.push("error");
                if (order.calculated.needsManualReview) routes.push("review");
                if (order.calculated.isInternational) routes.push("international");
                if (order.calculated.isHighValue) routes.push("highValue");
                if (order.calculated.containsRestrictedItems) routes.push("restricted");
-               
+
                return routes.length > 0 ? routes : ["standard"];
              }
            `
@@ -3505,12 +3505,12 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 准备处理的数据
              const data = $json.data;
-             
+
              // 验证数据结构
              if (!data || !Array.isArray(data)) {
                throw new Error("无效的数据格式：需要数组");
              }
-             
+
              // 返回待处理数据
              return [{
                json: {
@@ -3520,7 +3520,7 @@ n8n支持丰富的控制流模式：
                  data: data
                }
              }];
-             
+
              // UUID生成函数
              function uuid() {
                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -3546,7 +3546,7 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 数据清洗处理
              const dataset = $json.data;
-             
+
              // 执行数据清洗（示例）
              const cleanedData = dataset.map(record => {
                // 删除空白
@@ -3555,7 +3555,7 @@ n8n支持丰富的控制流模式：
                    record[key] = record[key].trim();
                  }
                });
-               
+
                // 格式化日期
                if (record.date) {
                  try {
@@ -3565,20 +3565,20 @@ n8n支持丰富的控制流模式：
                    record.date = null;
                  }
                }
-               
+
                // 移除无效值
                Object.keys(record).forEach(key => {
                  if (record[key] === '' || record[key] === undefined || record[key] === null) {
                    delete record[key];
                  }
                });
-               
+
                // 添加处理标记
                record._cleaned = true;
-               
+
                return record;
              });
-             
+
              return [{
                json: {
                  id: $json.id,
@@ -3597,7 +3597,7 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 数据验证处理
              const dataset = $json.data;
-             
+
              // 定义验证规则
              const validationRules = {
                email: {
@@ -3613,11 +3613,11 @@ n8n支持丰富的控制流模式：
                  message: "无效的邮政编码格式"
                }
              };
-             
+
              // 对每条记录执行验证
              const validationResults = dataset.map(record => {
                const errors = [];
-               
+
                // 检查每个字段
                Object.keys(record).forEach(field => {
                  const rule = validationRules[field];
@@ -3628,18 +3628,18 @@ n8n支持丰富的控制流模式：
                    }
                  }
                });
-               
+
                return {
                  originalData: record,
                  valid: errors.length === 0,
                  errors: errors
                };
              });
-             
+
              // 统计验证结果
              const validCount = validationResults.filter(r => r.valid).length;
              const invalidCount = validationResults.length - validCount;
-             
+
              return [{
                json: {
                  id: $json.id,
@@ -3664,7 +3664,7 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 数据统计分析
              const dataset = $json.data;
-             
+
              // 初始化统计结果
              const stats = {
                count: dataset.length,
@@ -3672,7 +3672,7 @@ n8n支持丰富的控制流模式：
                numericalStats: {},
                categoricalStats: {}
              };
-             
+
              // 如果没有数据，返回空统计
              if (dataset.length === 0) {
                return [{
@@ -3684,47 +3684,47 @@ n8n支持丰富的控制流模式：
                  }
                }];
              }
-             
+
              // 确定所有字段
              const allFields = new Set();
              dataset.forEach(record => {
                Object.keys(record).forEach(field => allFields.add(field));
              });
-             
+
              // 分析每个字段
              allFields.forEach(field => {
                // 字段覆盖率
                const fieldValues = dataset.map(record => record[field]).filter(v => v !== undefined && v !== null);
                stats.fieldCoverage[field] = (fieldValues.length / dataset.length * 100).toFixed(2) + '%';
-               
+
                // 跳过空字段
                if (fieldValues.length === 0) return;
-               
+
                // 检查字段类型
                const sampleValue = fieldValues[0];
                const valueType = typeof sampleValue;
-               
+
                // 数值型字段统计
                if (valueType === 'number' || (valueType === 'string' && !isNaN(parseFloat(sampleValue)))) {
                  // 转换为数值
-                 const numericValues = fieldValues.map(v => 
+                 const numericValues = fieldValues.map(v =>
                    valueType === 'number' ? v : parseFloat(v)
                  ).filter(v => !isNaN(v));
-                 
+
                  if (numericValues.length > 0) {
                    // 计算数值统计
                    const sum = numericValues.reduce((a, b) => a + b, 0);
                    const avg = sum / numericValues.length;
                    const min = Math.min(...numericValues);
                    const max = Math.max(...numericValues);
-                   
+
                    // 计算中位数
                    const sorted = [...numericValues].sort((a, b) => a - b);
                    const mid = Math.floor(sorted.length / 2);
-                   const median = sorted.length % 2 === 0 
+                   const median = sorted.length % 2 === 0
                      ? (sorted[mid - 1] + sorted[mid]) / 2
                      : sorted[mid];
-                   
+
                    stats.numericalStats[field] = {
                      count: numericValues.length,
                      min,
@@ -3734,7 +3734,7 @@ n8n支持丰富的控制流模式：
                      sum
                    };
                  }
-               } 
+               }
                // 类别型字段统计
                else if (valueType === 'string') {
                  // 计算字符串值的频率分布
@@ -3742,7 +3742,7 @@ n8n支持丰富的控制流模式：
                  fieldValues.forEach(value => {
                    valueCounts[value] = (valueCounts[value] || 0) + 1;
                  });
-                 
+
                  // 获取最常见的值（前5个）
                  const valueFrequency = Object.entries(valueCounts)
                    .sort((a, b) => b[1] - a[1])
@@ -3752,14 +3752,14 @@ n8n支持丰富的控制流模式：
                      count,
                      percentage: (count / fieldValues.length * 100).toFixed(2) + '%'
                    }));
-                 
+
                  stats.categoricalStats[field] = {
                    uniqueValues: Object.keys(valueCounts).length,
                    mostCommon: valueFrequency
                  };
                }
              });
-             
+
              return [{
                json: {
                  id: $json.id,
@@ -3787,7 +3787,7 @@ n8n支持丰富的控制流模式：
              const cleaningResult = $node["4"].json.result;
              const validationResult = $node["5"].json.result;
              const statisticsResult = $node["6"].json.result;
-             
+
              // 创建综合报告
              const report = {
                id: $node["4"].json.id,
@@ -3819,11 +3819,11 @@ n8n支持丰富的控制流模式：
                  categorical: statisticsResult.categoricalStats
                },
                // 包含清洗后且有效的数据
-               processedData: cleaningResult.filter((record, index) => 
+               processedData: cleaningResult.filter((record, index) =>
                  validationResult.result[index].valid
                )
              };
-             
+
              return [{ json: report }];
            `
          }
@@ -3881,7 +3881,7 @@ n8n支持丰富的控制流模式：
      connections: {
        "1": { main: [{ node: "2", type: "main", index: 0 }] },
        "2": { main: [{ node: "3", type: "main", index: 0 }] },
-       "3": { 
+       "3": {
          main: [
            { node: "4", type: "main", index: 0 },
            { node: "5", type: "main", index: 0 },
@@ -3931,18 +3931,18 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 获取订单数据
              const order = $node["2"].json[0];
-             
+
              if (!order) {
                throw new Error(\`订单未找到: \${$json.orderId}\`);
              }
-             
+
              // 当前状态
              const currentState = order.status;
              // 请求的事件
              const event = $json.event;
              // 附加数据
              const eventData = $json.data || {};
-             
+
              // 定义状态机转换表
              const stateTransitions = {
                // 新建状态
@@ -4046,17 +4046,17 @@ n8n支持丰富的控制流模式：
                },
                // 其他状态...
              };
-             
+
              // 检查当前状态是否可以处理请求的事件
              if (!stateTransitions[currentState]) {
                throw new Error(\`无效的当前状态: \${currentState}\`);
              }
-             
+
              const transitionDef = stateTransitions[currentState][event];
              if (!transitionDef) {
                throw new Error(\`状态 \${currentState} 不能处理事件 \${event}\`);
              }
-             
+
              // 执行验证规则
              const validationErrors = validateTransition(transitionDef.validationRules, order, eventData);
              if (validationErrors.length > 0) {
@@ -4072,11 +4072,11 @@ n8n支持丰富的控制流模式：
                  }
                }];
              }
-             
+
              // 计算新状态
              const nextState = transitionDef.nextState;
              const action = transitionDef.action;
-             
+
              // 准备表示状态转换的响应
              return [{
                json: {
@@ -4094,64 +4094,64 @@ n8n支持丰富的控制流模式：
                  }
                }
              }];
-             
+
              // 验证函数
              function validateTransition(rules, order, eventData) {
                const errors = [];
-               
+
                for (const rule of rules) {
                  switch(rule) {
                    case "paymentAmountMatchesOrder":
-                     if (!eventData.paymentAmount || 
+                     if (!eventData.paymentAmount ||
                          parseFloat(eventData.paymentAmount) !== parseFloat(order.total_amount)) {
                        errors.push("支付金额与订单金额不匹配");
                      }
                      break;
-                     
+
                    case "inventoryAvailable":
                      // 这里通常会检查库存系统
                      if (eventData.inventoryStatus === "unavailable") {
                        errors.push("库存不足");
                      }
                      break;
-                     
+
                    case "refundReasonProvided":
                      if (!eventData.reason) {
                        errors.push("退款必须提供原因");
                      }
                      break;
-                     
+
                    case "shippingInfoProvided":
                      if (!eventData.trackingNumber || !eventData.carrier) {
                        errors.push("必须提供运单号和承运商");
                      }
                      break;
-                     
+
                    case "deliveryProofProvided":
                      if (!eventData.proofOfDelivery) {
                        errors.push("必须提供送达证明");
                      }
                      break;
-                     
+
                    case "returnReasonProvided":
                      if (!eventData.returnReason) {
                        errors.push("必须提供退货原因");
                      }
                      break;
-                     
+
                    case "returnItemsReceived":
-                     if (!eventData.receivedItems || !Array.isArray(eventData.receivedItems) || 
+                     if (!eventData.receivedItems || !Array.isArray(eventData.receivedItems) ||
                          eventData.receivedItems.length === 0) {
                        errors.push("必须提供收到的退货商品");
                      }
                      break;
-                     
+
                    default:
                      // 未知规则
                      errors.push(\`未知验证规则: \${rule}\`);
                  }
                }
-               
+
                return errors;
              }
            `
@@ -4181,10 +4181,10 @@ n8n支持丰富的控制流模式：
              const eventData = $json.data.eventData;
              const action = $json.action;
              const nextState = $json.nextState;
-             
+
              // 根据动作类型执行不同的操作
              let actionResult;
-             
+
              switch(action) {
                case "recordPayment":
                  actionResult = {
@@ -4195,7 +4195,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "cancelOrder":
                  actionResult = {
                    cancellationId: generateId("cnl"),
@@ -4203,7 +4203,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "allocateInventory":
                  actionResult = {
                    allocationId: generateId("alc"),
@@ -4216,7 +4216,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "processRefund":
                  actionResult = {
                    refundId: generateId("ref"),
@@ -4226,7 +4226,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "packageOrder":
                  actionResult = {
                    packageId: generateId("pkg"),
@@ -4239,7 +4239,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "shipOrder":
                  actionResult = {
                    shipmentId: generateId("shp"),
@@ -4253,7 +4253,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "markDelivered":
                  actionResult = {
                    deliveryId: generateId("dlv"),
@@ -4263,7 +4263,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                case "processReturnRequest":
                  actionResult = {
                    returnRequestId: generateId("ret"),
@@ -4276,7 +4276,7 @@ n8n支持丰富的控制流模式：
                    timestamp: new Date().toISOString()
                  };
                  break;
-                 
+
                default:
                  actionResult = {
                    action: action,
@@ -4284,7 +4284,7 @@ n8n支持丰富的控制流模式：
                    data: eventData
                  };
              }
-             
+
              // 扩展转换结果
              return [{
                json: {
@@ -4300,7 +4300,7 @@ n8n支持丰富的控制流模式：
                  }
                }
              }];
-             
+
              // 辅助ID生成函数
              function generateId(prefix) {
                const timestamp = new Date().getTime().toString(36);
@@ -4423,7 +4423,7 @@ n8n支持丰富的控制流模式：
                timestamp: new Date().toISOString(),
                requestData: $json
              };
-             
+
              return [{
                json: {
                  ...errorLog,
@@ -4455,7 +4455,7 @@ n8n支持丰富的控制流模式：
          parameters: {
            channel: "order-issues",
            text: `⚠️ 订单状态转换失败 ⚠️
-                        
+
                 订单ID: {{ $json.orderId }}
                 当前状态: {{ $json.currentState }}
                 请求事件: {{ $json.event }}
@@ -4523,7 +4523,7 @@ n8n支持丰富的控制流模式：
            functionCode: `
              // 从请求中提取订单数据
              const orderData = $json;
-             
+
              // 创建saga上下文
              const sagaContext = {
                sagaId: generateUUID(),
@@ -4567,9 +4567,9 @@ n8n支持丰富的控制流模式：
                errors: [],
                compensationLog: []
              };
-             
+
              return [{ json: sagaContext }];
-             
+
              // 生成UUID函数
              function generateUUID() {
                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -4601,17 +4601,17 @@ n8n支持丰富的控制流模式：
              const context = $json;
              context.currentStep = 0;
              context.steps[0].status = "IN_PROGRESS";
-             
+
              try {
                // 获取商品
                const items = context.orderData.items;
                const outOfStockItems = [];
-               
+
                // 检查每个商品的库存（模拟验证逻辑）
                for (const item of items) {
                  const productId = item.productId;
                  const quantity = item.quantity;
-                 
+
                  // 模拟库存不足
                  if (productId === 'PROD-001' && quantity > 5) {
                    outOfStockItems.push({
@@ -4621,12 +4621,12 @@ n8n支持丰富的控制流模式：
                    });
                  }
                }
-               
+
                // 检查是否有缺货商品
                if (outOfStockItems.length > 0) {
                  throw new Error(\`库存不足: \${JSON.stringify(outOfStockItems)}\`);
                }
-               
+
                // 更新步骤状态为成功
                context.steps[0].status = "COMPLETED";
                context.results.validateInventory = {
@@ -4637,7 +4637,7 @@ n8n支持丰富的控制流模式：
                    inStock: true
                  }))
                };
-               
+
                return [{ json: context }];
              } catch (error) {
                // 更新步骤状态为失败
@@ -4648,7 +4648,7 @@ n8n支持丰富的控制流模式：
                  message: error.message,
                  timestamp: new Date().toISOString()
                });
-               
+
                return [{ json: context }];
              }
            `
@@ -4678,22 +4678,22 @@ n8n支持丰富的控制流模式：
              const context = $json;
              context.currentStep = 1;
              context.steps[1].status = "IN_PROGRESS";
-             
+
              try {
                // 获取商品
                const items = context.orderData.items;
-               
+
                // 为每个商品预留库存（模拟预留逻辑）
                const reservations = [];
                for (const item of items) {
                  const productId = item.productId;
                  const quantity = item.quantity;
-                 
+
                  // 模拟预留失败
                  if (productId === 'PROD-002' && Math.random() < 0.1) {
                    throw new Error(\`无法为商品 \${productId} 预留库存\`);
                  }
-                 
+
                  // 添加预留记录
                  reservations.push({
                    productId,
@@ -4702,14 +4702,14 @@ n8n支持丰富的控制流模式：
                    reservedAt: new Date().toISOString()
                  });
                }
-               
+
                // 更新步骤状态为成功
                context.steps[1].status = "COMPLETED";
                context.results.reserveInventory = {
                  success: true,
                  reservations: reservations
                };
-               
+
                return [{ json: context }];
              } catch (error) {
                // 更新步骤状态为失败
@@ -4720,7 +4720,7 @@ n8n支持丰富的控制流模式：
                  message: error.message,
                  timestamp: new Date().toISOString()
                });
-               
+
                return [{ json: context }];
              }
            `
@@ -4750,24 +4750,24 @@ n8n支持丰富的控制流模式：
              const context = $json;
              context.currentStep = 2;
              context.steps[2].status = "IN_PROGRESS";
-             
+
              try {
                // 获取订单和支付信息
                const orderTotal = context.orderData.totalAmount;
                const paymentMethod = context.orderData.paymentMethod;
                const customerId = context.orderData.customerId;
-               
+
                // 模拟支付处理
                const paymentResult = processPayment(paymentMethod, orderTotal, customerId);
-               
+
                if (!paymentResult.success) {
                  throw new Error(\`支付失败: \${paymentResult.message}\`);
                }
-               
+
                // 更新步骤状态为成功
                context.steps[2].status = "COMPLETED";
                context.results.processPayment = paymentResult;
-               
+
                return [{ json: context }];
              } catch (error) {
                // 更新步骤状态为失败
@@ -4778,10 +4778,10 @@ n8n支持丰富的控制流模式：
                  message: error.message,
                  timestamp: new Date().toISOString()
                });
-               
+
                return [{ json: context }];
              }
-             
+
              // 模拟支付处理函数
              function processPayment(method, amount, customerId) {
                // 随机模拟支付失败
@@ -4791,7 +4791,7 @@ n8n支持丰富的控制流模式：
                    message: "支付处理失败，请稍后重试"
                  };
                }
-               
+
                // 模拟支付成功
                return {
                  success: true,
@@ -4830,24 +4830,24 @@ n8n支持丰富的控制流模式：
              const context = $json;
              context.currentStep = 3;
              context.steps[3].status = "IN_PROGRESS";
-             
+
              try {
                // 获取订单和收货信息
                const orderId = context.orderData.orderId;
                const shippingAddress = context.orderData.shippingAddress;
                const items = context.orderData.items;
-               
+
                // 模拟创建物流单
                const shipmentResult = createShipment(orderId, shippingAddress, items);
-               
+
                if (!shipmentResult.success) {
                  throw new Error(\`创建物流单失败: \${shipmentResult.message}\`);
                }
-               
+
                // 更新步骤状态为成功
                context.steps[3].status = "COMPLETED";
                context.results.createShipment = shipmentResult;
-               
+
                return [{ json: context }];
              } catch (error) {
                // 更新步骤状态为失败
@@ -4858,10 +4858,10 @@ n8n支持丰富的控制流模式：
                  message: error.message,
                  timestamp: new Date().toISOString()
                });
-               
+
                return [{ json: context }];
              }
-             
+
              // 模拟创建物流单函数
              function createShipment(orderId, address, items) {
                // 简单验证地址
@@ -4871,7 +4871,7 @@ n8n支持丰富的控制流模式：
                    message: "收货地址不完整"
                  };
                }
-               
+
                // 模拟物流单创建
                return {
                  success: true,
@@ -4885,12 +4885,12 @@ n8n支持丰富的控制流模式：
                  createdAt: new Date().toISOString()
                };
              }
-             
+
              // 选择承运商函数
              function selectCarrier(address) {
                const carriers = ["FedEx", "UPS", "USPS", "DHL"];
                const countryCode = address.countryCode || "US";
-               
+
                // 简单的国家-承运商匹配逻辑
                if (countryCode === "US") {
                  return carriers[Math.floor(Math.random() * 3)]; // FedEx, UPS, USPS
@@ -4925,11 +4925,11 @@ n8n支持丰富的控制流模式：
              const context = $json;
              context.currentStep = 4;
              context.steps[4].status = "IN_PROGRESS";
-             
+
              try {
                // 获取订单ID
                const orderId = context.orderData.orderId;
-               
+
                // 模拟订单状态更新
                const orderUpdateResult = {
                  success: true,
@@ -4940,15 +4940,15 @@ n8n支持丰富的控制流模式：
                  shipmentStatus: "PENDING",
                  updateTime: new Date().toISOString()
                };
-               
+
                // 更新步骤状态为成功
                context.steps[4].status = "COMPLETED";
                context.results.updateOrderStatus = orderUpdateResult;
-               
+
                // 所有步骤都完成，更新Saga状态
                context.status = "COMPLETED";
                context.endTime = new Date().toISOString();
-               
+
                return [{ json: context }];
              } catch (error) {
                // 更新步骤状态为失败
@@ -4959,7 +4959,7 @@ n8n支持丰富的控制流模式：
                  message: error.message,
                  timestamp: new Date().toISOString()
                });
-               
+
                return [{ json: context }];
              }
            `
@@ -5009,7 +5009,7 @@ n8n支持丰富的控制流模式：
                  shipmentInfo: $json.results.createShipment
                }
              };
-             
+
              return [{ json: response }];
            `
          }
@@ -5022,7 +5022,7 @@ n8n支持丰富的控制流模式：
              // 补偿事务
              const context = $json;
              context.compensationStartTime = new Date().toISOString();
-             
+
              // 找到需要补偿的步骤
              const stepsToCompensate = [];
              for (let i = context.currentStep; i >= 0; i--) {
@@ -5035,7 +5035,7 @@ n8n支持丰富的控制流模式：
                  });
                }
              }
-             
+
              // 执行补偿动作
              const compensationLog = [];
              for (const stepInfo of stepsToCompensate) {
@@ -5045,7 +5045,7 @@ n8n支持丰富的控制流模式：
                    context.results[stepInfo.stepName],
                    context
                  );
-                 
+
                  compensationLog.push({
                    step: stepInfo.stepName,
                    action: stepInfo.compensationAction,
@@ -5053,7 +5053,7 @@ n8n支持丰富的控制流模式：
                    result: compensationResult,
                    timestamp: new Date().toISOString()
                  });
-                 
+
                  // 更新步骤状态
                  context.steps[stepInfo.stepIndex].status = "COMPENSATED";
                } catch (error) {
@@ -5064,51 +5064,51 @@ n8n支持丰富的控制流模式：
                    error: error.message,
                    timestamp: new Date().toISOString()
                  });
-                 
+
                  // 补偿失败，标记为人工干预
                  context.status = "REQUIRES_MANUAL_INTERVENTION";
                  break;
                }
              }
-             
+
              // 更新补偿日志
              context.compensationLog = compensationLog;
-             
+
              // 如果所有补偿动作都成功，更新状态
              if (context.status !== "REQUIRES_MANUAL_INTERVENTION") {
                context.status = "COMPENSATED";
              }
-             
+
              context.compensationEndTime = new Date().toISOString();
-             
+
              return [{ json: context }];
-             
+
              // 执行补偿动作函数
              function executeCompensation(action, stepResult, context) {
                switch (action) {
-                 case "releaseInventory": 
+                 case "releaseInventory":
                    return releaseInventory(stepResult);
-                   
+
                  case "refundPayment":
                    return refundPayment(stepResult);
-                   
+
                  case "cancelShipment":
                    return cancelShipment(stepResult);
-                   
+
                  case "revertOrderStatus":
                    return revertOrderStatus(stepResult);
-                   
+
                  default:
                    throw new Error(\`未知的补偿动作: \${action}\`);
                }
              }
-             
+
              // 释放库存函数
              function releaseInventory(reservationResult) {
                if (!reservationResult || !reservationResult.reservations) {
                  return { message: "无预留库存需要释放" };
                }
-               
+
                // 模拟释放库存
                return {
                  releasedItems: reservationResult.reservations.map(r => ({
@@ -5120,13 +5120,13 @@ n8n支持丰富的控制流模式：
                  message: \`成功释放 \${reservationResult.reservations.length} 种商品的库存\`
                };
              }
-             
+
              // 退款函数
              function refundPayment(paymentResult) {
                if (!paymentResult || !paymentResult.transactionId) {
                  return { message: "无支付需要退款" };
                }
-               
+
                // 模拟退款
                return {
                  refundId: \`REF-\${Date.now()}\`,
@@ -5137,13 +5137,13 @@ n8n支持丰富的控制流模式：
                  message: \`成功退款 \${paymentResult.amount}\`
                };
              }
-             
+
              // 取消物流单函数
              function cancelShipment(shipmentResult) {
                if (!shipmentResult || !shipmentResult.shipmentId) {
                  return { message: "无物流单需要取消" };
                }
-               
+
                // 模拟取消物流单
                return {
                  shipmentId: shipmentResult.shipmentId,
@@ -5154,13 +5154,13 @@ n8n支持丰富的控制流模式：
                  message: \`成功取消物流单 \${shipmentResult.shipmentId}\`
                };
              }
-             
+
              // 恢复订单状态函数
              function revertOrderStatus(orderUpdateResult) {
                if (!orderUpdateResult || !orderUpdateResult.orderId) {
                  return { message: "无订单状态需要恢复" };
                }
-               
+
                // 模拟恢复订单状态
                return {
                  orderId: orderUpdateResult.orderId,
@@ -5200,7 +5200,7 @@ n8n支持丰富的控制流模式：
                status: $json.status,
                requiresManualIntervention: $json.status === "REQUIRES_MANUAL_INTERVENTION"
              };
-             
+
              // 添加人工干预说明
              if (response.requiresManualIntervention) {
                response.manualInterventionReason = "补偿事务部分失败，需要人工干预解决";
@@ -5208,7 +5208,7 @@ n8n支持丰富的控制流模式：
                  .filter(log => !log.success)
                  .map(log => ({ step: log.step, error: log.error }));
              }
-             
+
              return [{ json: response }];
            `
          }
@@ -5234,7 +5234,7 @@ n8n支持丰富的控制流模式：
          parameters: {
            channel: "order-alerts",
            text: `⚠️ 订单Saga需要人工干预 ⚠️
-                    
+
             Saga ID: {{ $json.sagaId }}
             订单ID: {{ $json.orderData.orderId }}
             客户: {{ $json.orderData.customerName }}
@@ -5311,7 +5311,7 @@ n8n支持丰富的控制流模式：
    };
    ```
 
-### 错误处理模式
+### 4.1.5 错误处理模式
 
 n8n提供多种错误处理策略：
 
@@ -5415,11 +5415,11 @@ n8n提供多种错误处理策略：
              const retryCount = $json.retry_count || 0;
              // 获取状态码
              const statusCode = $json.statusCode || 500;
-             
+
              // 检查是否是可重试的错误
              let isRetryable = false;
              let retryReason = "";
-             
+
              // 基于HTTP状态码判断是否可重试
              if (statusCode >= 500) {
                // 服务器错误，可能是临时性问题
@@ -5442,20 +5442,20 @@ n8n提供多种错误处理策略：
                isRetryable = true;
                retryReason = "连接被拒绝";
              }
-             
+
              // 检查重试次数是否超过最大值（这里设为5）
              const maxRetries = 5;
              const canRetry = isRetryable && retryCount < maxRetries;
-             
+
              // 计算下次重试的延迟（指数退避）
              // 基本公式: 延迟时间 = 基础延迟 * (2^重试次数) + 随机偏移
              const baseDelay = 60; // 基础延迟秒数
              const nextRetryDelay = Math.floor(baseDelay * Math.pow(2, retryCount) + Math.random() * 30);
-             
+
              // 下次重试时间
              const now = new Date();
              const nextRetryTime = new Date(now.getTime() + nextRetryDelay * 1000);
-             
+
              return [{
                json: {
                  ...item.json,
@@ -5626,14 +5626,14 @@ n8n提供多种错误处理策略：
              // 从请求中提取目标服务信息
              const serviceId = $json.service || 'default';
              const operationType = $json.operation || 'read';
-             
+
              // 生成断路器键
              const circuitKey = \`\${serviceId}:\${operationType}\`;
-             
+
              // 获取Redis中的断路器状态 (这里我们模拟实现)
              // 在实际应用中，你需要实现对Redis或其他存储的调用
              const circuitStatus = getCircuitStatus(circuitKey);
-             
+
              // 添加断路器信息到请求上下文
              return [{
                json: {
@@ -5650,13 +5650,13 @@ n8n提供多种错误处理策略：
                  }
                }
              }];
-             
+
              // 模拟获取断路器状态的函数
              // 在实际应用中，这应从Redis或类似存储中检索
              function getCircuitStatus(key) {
                // 这里假设我们有一个全局的断路器状态存储
                // 在n8n中，你可能需要实际从存储中检索这些值
-               
+
                // 为了示例，我们假设有两个服务的固定状态
                const mockCircuits = {
                  'payment-service:process': {
@@ -5674,7 +5674,7 @@ n8n提供多种错误处理策略：
                    nextAttempt: new Date(Date.now() - 60000).toISOString(), // 已过试探时间
                  }
                };
-               
+
                // 返回已知服务的状态或默认关闭状态
                return mockCircuits[key] || {
                  status: 'CLOSED', // 断路器关闭（正常状态）
@@ -5722,13 +5722,13 @@ n8n提供多种错误处理策略：
                },
                timestamp: new Date().toISOString()
              };
-             
+
              // 添加HTTP响应头
              const responseHeaders = {
                'Content-Type': 'application/json',
                'Retry-After': Math.ceil((new Date($json.circuitBreaker.nextAttempt) - new Date()) / 1000)
              };
-             
+
              return [{
                json: shortCircuitedResponse,
                headers: responseHeaders,
@@ -5760,7 +5760,7 @@ n8n提供多种错误处理策略：
              // 检查是否已到试探请求时间
              const now = new Date();
              const nextAttempt = new Date($json.circuitBreaker.nextAttempt);
-             
+
              // 如果当前时间大于下次尝试时间，允许一个试探性请求
              if (now >= nextAttempt) {
                return [{
@@ -5821,13 +5821,13 @@ n8n提供多种错误处理策略：
                },
                timestamp: new Date().toISOString()
              };
-             
+
              // 添加HTTP响应头
              const responseHeaders = {
                'Content-Type': 'application/json',
                'Retry-After': Math.ceil((new Date($json.circuitBreaker.nextAttempt) - new Date()) / 1000)
              };
-             
+
              return [{
                json: halfOpenResponse,
                headers: responseHeaders,
@@ -5845,7 +5845,7 @@ n8n提供多种错误处理策略：
              const serviceId = $json.circuitBreaker.serviceName;
              const operationType = $json.circuitBreaker.operationType;
              const requestBody = $json.data || {};
-             
+
              // 基于服务ID解析实际API端点
              let apiEndpoint;
              switch(serviceId) {
@@ -5861,7 +5861,7 @@ n8n提供多种错误处理策略：
                default:
                  apiEndpoint = 'https://api.default.example.com';
              }
-             
+
              // 基于操作类型构建API路径
              let apiPath;
              switch(operationType) {
@@ -5877,14 +5877,14 @@ n8n提供多种错误处理策略：
                default:
                  apiPath = '/default';
              }
-             
+
              // 完整的API URL
              const apiUrl = \`\${apiEndpoint}\${apiPath}\`;
-             
+
              // HTTP方法和超时
              const method = $json.method || 'POST';
              const timeout = $json.timeout || 10000; // 10秒默认
-             
+
              // 构建请求信息
              return [{
                json: {
@@ -5929,14 +5929,14 @@ n8n提供多种错误处理策略：
              // 从上下文中获取断路器信息
              const circuitKey = $json.circuitBreaker.key;
              const currentStatus = $json.circuitBreaker.status;
-             
+
              // 检查API请求是否成功
              const statusCode = $node["10"].json.statusCode || 500;
              const isSuccess = statusCode >= 200 && statusCode < 300;
-             
+
              // 更新断路器状态的信息
              let updatedCircuit;
-             
+
              if (isSuccess) {
                // 成功请求处理
                if (currentStatus === 'CLOSED') {
@@ -5975,7 +5975,7 @@ n8n提供多种错误处理策略：
                // 失败请求处理
                const newFailureCount = ($json.circuitBreaker.failureCount || 0) + 1;
                const failureThreshold = $json.circuitBreaker.failureThreshold;
-               
+
                if (currentStatus === 'CLOSED') {
                  if (newFailureCount >= failureThreshold) {
                    // 超过阈值，打开断路器
@@ -6022,7 +6022,7 @@ n8n提供多种错误处理策略：
                  };
                }
              }
-             
+
              // 更新Redis中的断路器状态（这里我们只是更新上下文）
              const response = {
                originalRequest: $json.apiRequest,
@@ -6035,11 +6035,11 @@ n8n提供多种错误处理策略：
                },
                timestamp: new Date().toISOString()
              };
-             
+
              // 记录断路器状态变更
              if (currentStatus !== updatedCircuit.status) {
                console.log(\`断路器状态变更: \${circuitKey} \${currentStatus} -> \${updatedCircuit.status}\`);
-               
+
                // 这里可以添加记录到审计日志、发送告警通知等操作
                response.circuitStateChange = {
                  from: currentStatus,
@@ -6048,9 +6048,9 @@ n8n提供多种错误处理策略：
                  timestamp: new Date().toISOString()
                };
              }
-             
+
              return [{ json: response }];
-             
+
              // 计算断路器重置超时时间（指数退避）
              function calculateResetTimeout(failureCount, threshold) {
                // 基础超时：5秒
@@ -6059,13 +6059,13 @@ n8n提供多种错误处理策略：
                const factor = Math.max(1, failureCount - threshold + 1);
                // 最大超时：5分钟
                const maxTimeout = 5 * 60 * 1000;
-               
+
                // 计算超时：基础超时 * 2^因子 + 随机抖动
                const timeout = Math.min(
                  baseTimeout * Math.pow(2, factor) + Math.random() * 1000,
                  maxTimeout
                );
-               
+
                return Math.floor(timeout);
              }
            `
@@ -6077,16 +6077,16 @@ n8n提供多种错误处理策略：
          parameters: {
            operation: "executeQuery",
            query: `
-             INSERT INTO circuit_breaker_state 
+             INSERT INTO circuit_breaker_state
              (circuit_key, status, failure_count, failure_threshold, last_failure, next_attempt, updated_at)
-             VALUES 
-             ('{{ $json.circuitBreaker.key }}', '{{ $json.circuitBreaker.currentStatus }}', 
+             VALUES
+             ('{{ $json.circuitBreaker.key }}', '{{ $json.circuitBreaker.currentStatus }}',
               {{ $json.circuitBreaker.failureCount }}, {{ $json.circuitBreaker.failureThreshold }},
-              '{{ $json.circuitBreaker.lastFailure || null }}', 
+              '{{ $json.circuitBreaker.lastFailure || null }}',
               '{{ $json.circuitBreaker.nextAttempt || null }}',
               '{{ $json.timestamp }}')
-             ON CONFLICT (circuit_key) 
-             DO UPDATE SET 
+             ON CONFLICT (circuit_key)
+             DO UPDATE SET
                status = EXCLUDED.status,
                failure_count = EXCLUDED.failure_count,
                last_failure = EXCLUDED.last_failure,
@@ -6119,7 +6119,7 @@ n8n提供多种错误处理策略：
              INSERT INTO circuit_breaker_events
              (circuit_key, event_type, previous_status, new_status, reason, failure_count, created_at)
              VALUES
-             ('{{ $json.circuitBreaker.key }}', 'STATE_CHANGE', 
+             ('{{ $json.circuitBreaker.key }}', 'STATE_CHANGE',
               '{{ $json.circuitStateChange.from }}', '{{ $json.circuitStateChange.to }}',
               '{{ $json.circuitStateChange.reason }}', {{ $json.circuitBreaker.failureCount }},
               '{{ $json.circuitStateChange.timestamp }}')
@@ -6160,10 +6160,10 @@ n8n提供多种错误处理策略：
              // 从上下文中提取关键信息
              const apiResponse = $node["10"].json;
              const circuitStatus = $json.circuitBreaker.currentStatus;
-             
+
              // 保留原始状态码
              const statusCode = apiResponse.statusCode;
-             
+
              // 添加断路器状态信息到响应中
              const response = {
                ...apiResponse,
@@ -6174,16 +6174,16 @@ n8n提供多种错误处理策略：
                  }
                }
              };
-             
+
              // 如果是半开到关闭的状态变更，添加恢复信息
-             if ($json.circuitStateChange && 
-                 $json.circuitStateChange.from === 'HALF_OPEN' && 
+             if ($json.circuitStateChange &&
+                 $json.circuitStateChange.from === 'HALF_OPEN' &&
                  $json.circuitStateChange.to === 'CLOSED') {
                response._meta.serviceRecovered = true;
                response._meta.recoveredAt = $json.circuitBreaker.recoveredAt;
              }
-             
-             return [{ 
+
+             return [{
                json: response,
                statusCode: statusCode || 200
              }];
@@ -6263,7 +6263,7 @@ n8n提供多种错误处理策略：
              // 解析消息内容（RabbitMQ消息通常是String）
              try {
                const message = $json.content ? JSON.parse($json.content) : $json;
-               
+
                // 添加处理元数据
                message._meta = {
                  messageId: $json.properties?.messageId || \`msg_\${Date.now()}\`,
@@ -6272,7 +6272,7 @@ n8n提供多种错误处理策略：
                  retryCount: message._meta?.retryCount || 0,
                  originalReceivedAt: message._meta?.originalReceivedAt || new Date().toISOString()
                };
-               
+
                return [{ json: message }];
              } catch (error) {
                // 解析失败，将原始消息包装为错误对象
@@ -6343,11 +6343,11 @@ n8n提供多种错误处理策略：
            // 从消息中提取任务信息
            const taskType = $json.taskType || "unknown";
            const taskData = $json.data || {};
-           
+
            // 任务处理模拟
            try {
              let result;
-             
+
              // 基于任务类型模拟不同处理
              switch(taskType) {
                case "order_processing":
@@ -6365,7 +6365,7 @@ n8n提供多种错误处理策略：
                default:
                  throw new Error(\`未知任务类型: \${taskType}\`);
              }
-             
+
              // 返回成功结果
              return [{
                json: {
@@ -6395,19 +6395,19 @@ n8n提供多种错误处理策略：
                }
              }];
            }
-           
+
            // 模拟订单处理
            function processOrder(data) {
              // 模拟处理逻辑和错误情况
              if (!data.orderId) {
                throw new Error("缺少订单ID");
              }
-             
+
              // 模拟特定条件下的随机错误
              if (data.orderId.includes("ERR") || Math.random() < 0.3) {
                throw new Error("订单处理失败");
              }
-             
+
              return {
                orderStatus: "processed",
                processingDetails: {
@@ -6416,56 +6416,56 @@ n8n提供多种错误处理策略：
                }
              };
            }
-           
+
            // 模拟支付确认
            function confirmPayment(data) {
              if (!data.paymentId) {
                throw new Error("缺少支付ID");
              }
-             
+
              // 模拟临时错误条件 (例如外部支付网关暂时不可用)
              if (data.paymentId.includes("TEMP") || Math.random() < 0.2) {
                const tempError = new Error("支付网关暂时不可用");
                tempError.code = "TEMPORARY_GATEWAY_ERROR";
                throw tempError;
              }
-             
+
              // 模拟永久错误 (例如付款方式被拒绝)
              if (data.paymentId.includes("PERM")) {
                const permError = new Error("付款方式被拒绝");
                permError.code = "PAYMENT_REJECTED";
                throw permError;
              }
-             
+
              return {
                paymentStatus: "confirmed",
                transactionId: \`txn_\${Date.now()}\`
              };
            }
-           
+
            // 模拟库存更新
            function updateInventory(data) {
              if (!data.productId || !data.quantity) {
                throw new Error("缺少产品ID或数量");
              }
-             
+
              return {
                inventoryUpdated: true,
                newQuantity: Math.max(0, (Math.random() * 100) - data.quantity)
              };
            }
-           
+
            // 模拟邮件发送
            function sendEmailNotification(data) {
              if (!data.recipient) {
                throw new Error("缺少收件人邮箱");
              }
-             
+
              // 模拟发送错误
              if (!data.recipient.includes("@") || Math.random() < 0.1) {
                throw new Error("邮件发送失败");
              }
-             
+
              return {
                emailSent: true,
                messageId: \`email_\${Date.now()}\`
@@ -6525,11 +6525,11 @@ n8n提供多种错误处理策略：
            const errorMessage = $json._meta.error.message;
            const errorCode = $json._meta.error.code;
            const retryCount = $json._meta.retryCount || 0;
-           
+
            // 确定错误类型和重试策略
            let isRetryable = true;
            let dlqType = "temporary"; // 默认为临时死信
-           
+
            // 最大重试次数 (可基于任务类型调整)
            const maxRetries = {
              "order_processing": 3,
@@ -6538,32 +6538,32 @@ n8n提供多种错误处理策略：
              "email_notification": 2,
              "default": 3
            }[$json.taskType] || 3;
-           
+
            // 检查是否达到最大重试次数
            if (retryCount >= maxRetries) {
              isRetryable = false;
              dlqType = "max_retry_exceeded";
            }
-           
+
            // 检查已知的不可重试错误
            const nonRetryableErrors = [
              "缺少订单ID", "缺少支付ID", "缺少产品ID或数量", "缺少收件人邮箱", // 缺少必需参数
              "付款方式被拒绝", "PAYMENT_REJECTED", // 业务逻辑拒绝
              "数据验证失败" // 数据问题
            ];
-           
+
            if (nonRetryableErrors.some(e => errorMessage.includes(e))) {
              isRetryable = false;
              dlqType = "permanent";
            }
-           
+
            // 特定错误码处理
            if (errorCode === "TEMPORARY_GATEWAY_ERROR") {
              // 支付网关临时错误特别处理 - 使用更长的重试延迟
              isRetryable = true;
              dlqType = "payment_gateway_temp_error";
            }
-           
+
            // 记录分析结果
            return [{
              json: {
@@ -6605,23 +6605,23 @@ n8n提供多种错误处理策略：
            // 增加重试计数
            const currentRetry = $json._meta.retryCount || 0;
            const newRetryCount = currentRetry + 1;
-           
+
            // 计算指数退避延迟 (基础延迟 * 2^重试次数 + 随机抖动)
            let baseDelayMs = 5000; // 5秒基础延迟
-           
+
            // 特定DLQ类型的自定义延迟
            if ($json._meta.errorAnalysis.dlqType === "payment_gateway_temp_error") {
              baseDelayMs = 30000; // 支付网关错误使用30秒基础延迟
            }
-           
+
            const delayMs = Math.min(
              baseDelayMs * Math.pow(2, newRetryCount) + (Math.random() * 1000),
              900000 // 最大15分钟
            );
-           
+
            // 生成下次执行时间
            const nextAttemptTime = new Date(Date.now() + delayMs);
-           
+
            // 更新消息元数据
            return [{
              json: {
@@ -6762,12 +6762,12 @@ n8n提供多种错误处理策略：
          operation: "executeQuery",
          query: `
            INSERT INTO dead_letter_log
-           (message_id, original_queue, task_type, retry_count, error_message, reason, 
+           (message_id, original_queue, task_type, retry_count, error_message, reason,
             received_at, processed_at, moved_to_dlq_at)
            VALUES
            ('{{ $json._meta.messageId }}', '{{ $json._meta.queueName }}', '{{ $json.taskType }}',
             {{ $json._meta.retryCount || 0 }}, '{{ $json._meta.error.message | escape_single_quotes }}',
-            '{{ $json._meta.reason }}', '{{ $json._meta.receivedAt }}', 
+            '{{ $json._meta.reason }}', '{{ $json._meta.receivedAt }}',
             '{{ $json._meta.processedAt }}', '{{ $json._meta.movedToDlqAt }}')
          `
        }
@@ -6837,11 +6837,11 @@ n8n提供多种错误处理策略：
     }
 ```
 
-## 分布式工作流程系统架构组件
+## 4.2 分布式工作流程系统架构组件
 
 前面我们讨论了一些关键的弹性模式，现在我将概述分布式工作流系统的主要架构组件，这些组件协同工作形成一个完整的工作流程系统：
 
-### 1. 核心组件
+### 4.2.1 核心组件
 
 1. **工作流引擎**
    - 负责工作流的解析、执行和状态管理
@@ -6868,7 +6868,7 @@ n8n提供多种错误处理策略：
    - 实现事件驱动的工作流触发
    - 提供缓冲和背压机制
 
-### 2. 弹性组件
+### 4.2.2 弹性组件
 
 1. **故障检测器**
    - 监控节点和任务健康状态
@@ -6890,7 +6890,7 @@ n8n提供多种错误处理策略：
    - 发生故障时执行补偿操作
    - 维护系统一致性
 
-### 3. 扩展组件
+### 4.2.3 扩展组件
 
 1. **工作流仓库**
    - 存储和管理工作流定义
@@ -6912,7 +6912,7 @@ n8n提供多种错误处理策略：
    - 支持多种数据格式转换
    - 实现数据验证和清洗
 
-### 4. 管理组件
+### 4.2.4 管理组件
 
 1. **工作流设计器**
    - 图形化工作流创建界面
@@ -6934,44 +6934,44 @@ n8n提供多种错误处理策略：
    - 实现资源配额和限制
    - 支持动态资源扩展
 
-## 分布式工作流系统设计考虑因素
+## 4.3 分布式工作流系统设计考虑因素
 
-### 1. 可扩展性
+### 4.3.1 可扩展性
 
 - **水平扩展**：系统应能通过添加更多节点线性扩展
 - **无状态设计**：计算节点应尽可能保持无状态，状态存储在专用存储层
 - **分片策略**：实现数据和工作流分片以均衡负载
 - **局部性感知**：尽可能将相关任务调度到同一节点减少网络开销
 
-### 2. 一致性与持久性
+### 4.3.2 一致性与持久性
 
 - **状态持久化**：工作流状态应持久化以防节点故障
 - **幂等性**：任务应设计为幂等，支持安全重试
 - **事务边界**：明确定义事务边界，处理分布式事务挑战
 - **最终一致性**：某些情况下接受最终一致性以提高性能
 
-### 3. 故障恢复
+### 4.3.3 故障恢复
 
 - **检查点机制**：定期保存工作流状态以支持从中间点恢复
 - **故障隔离**：限制故障影响范围，防止故障传播
 - **自动恢复**：系统应能自动检测和恢复故障
 - **手动干预**：提供必要时的手动干预机制
 
-### 4. 可观测性
+### 4.3.4 可观测性
 
 - **综合监控**：收集系统各层面的指标
 - **分布式追踪**：实现请求在系统中的端到端追踪
 - **集中式日志**：汇总和关联不同组件的日志
 - **健康检查**：提供各组件的健康状态API
 
-### 5. 安全性
+### 4.3.5 安全性
 
 - **认证与授权**：实现强身份验证和访问控制
 - **密钥管理**：安全存储和管理敏感凭证
 - **网络安全**：实现网络隔离和加密通信
 - **审计日志**：记录系统操作以支持审计和合规
 
-## 当前技术趋势
+## 4.4 当前技术趋势
 
 在分布式工作流系统领域，以下技术趋势正在塑造未来的发展方向：
 

@@ -1,20 +1,18 @@
-# 生成器算法和数据结构实现
-
-我将为您展示一个纯 Rust 2024 标准库 + Generator 实现的算法和数据结构集合。
+# 1. 生成器算法和数据结构实现
 
 ## 目录
 
-- [生成器算法和数据结构实现](#生成器算法和数据结构实现)
+- [1. 生成器算法和数据结构实现](#1-生成器算法和数据结构实现)
   - [目录](#目录)
-  - [1. 生成器基础实现](#1-生成器基础实现)
-  - [2. 排序算法实现](#2-排序算法实现)
-  - [3. 二叉树实现](#3-二叉树实现)
-  - [4. 图算法实现](#4-图算法实现)
-  - [5. 搜索算法实现](#5-搜索算法实现)
-  - [6. 堆实现](#6-堆实现)
-  - [7. 使用示例](#7-使用示例)
+  - [1.1 生成器基础实现](#11-生成器基础实现)
+  - [1.2 排序算法实现](#12-排序算法实现)
+  - [1.3 二叉树实现](#13-二叉树实现)
+  - [1.4 图算法实现](#14-图算法实现)
+  - [1.5 搜索算法实现](#15-搜索算法实现)
+  - [1.6 堆实现](#16-堆实现)
+  - [1.7 使用示例](#17-使用示例)
 
-## 1. 生成器基础实现
+## 1.1 生成器基础实现
 
 ```rust
 use std::pin::Pin;
@@ -25,7 +23,7 @@ use std::task::{Context, Poll};
 pub trait Generator {
     type Yield;
     type Return;
-    
+
     fn resume(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Yield>>;
 }
 
@@ -36,7 +34,7 @@ pub struct GenWrapper<G> {
 
 impl<G: Generator> Future for GenWrapper<G> {
     type Output = G::Return;
-    
+
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         // 实现生成器到 Future 的转换
         match self.gen.resume(cx) {
@@ -48,7 +46,7 @@ impl<G: Generator> Future for GenWrapper<G> {
 }
 ```
 
-## 2. 排序算法实现
+## 1.2 排序算法实现
 
 ```rust
 /// 快速排序生成器
@@ -77,9 +75,9 @@ impl<T: Ord> Generator for QuickSortGen<T> {
                         return Poll::Ready(None);
                     }
                     let len = self.data.len();
-                    self.state = SortState::Partitioning { 
-                        left: 0, 
-                        right: len - 1 
+                    self.state = SortState::Partitioning {
+                        left: 0,
+                        right: len - 1
                     };
                 }
                 SortState::Partitioning { left, right } => {
@@ -140,7 +138,7 @@ impl<T: Ord> QuickSortGen<T> {
 }
 ```
 
-## 3. 二叉树实现
+## 1.3 二叉树实现
 
 ```rust
 /// 二叉树节点
@@ -208,7 +206,7 @@ impl<T: Clone> Generator for TreeTraversalGen<T> {
 }
 ```
 
-## 4. 图算法实现
+## 1.4 图算法实现
 
 ```rust
 /// 图结构
@@ -315,7 +313,7 @@ impl<T> DijkstraGen<T> {
 }
 ```
 
-## 5. 搜索算法实现
+## 1.5 搜索算法实现
 
 ```rust
 /// 二分查找生成器
@@ -368,7 +366,7 @@ impl<T: Ord> Generator for BinarySearchGen<T> {
 }
 ```
 
-## 6. 堆实现
+## 1.6 堆实现
 
 ```rust
 /// 最大堆生成器
@@ -433,14 +431,14 @@ impl<T: Ord> MaxHeapGen<T> {
 }
 ```
 
-## 7. 使用示例
+## 1.7 使用示例
 
 ```rust
 fn main() {
     // 快速排序示例
     let data = vec![5, 2, 8, 1, 9, 3];
     let mut sort_gen = QuickSortGen::new(data);
-    
+
     println!("排序过程：");
     while let Poll::Ready(Some(step)) = Pin::new(&mut sort_gen).resume(&mut Context::empty()) {
         println!("{:?}", step);
@@ -450,7 +448,7 @@ fn main() {
     let mut tree = TreeNode::new(1);
     tree.insert(2);
     tree.insert(3);
-    
+
     let mut traversal_gen = TreeTraversalGen::new(tree);
     println!("树遍历：");
     while let Poll::Ready(Some(value)) = Pin::new(&mut traversal_gen).resume(&mut Context::empty()) {
@@ -463,7 +461,7 @@ fn main() {
     graph.add_edge(0, 2, 1);
     graph.add_edge(2, 1, 2);
     graph.add_edge(1, 3, 1);
-    
+
     let mut path_gen = DijkstraGen::new(graph, 0, 3);
     println!("最短路径查找：");
     while let Poll::Ready(Some(path)) = Pin::new(&mut path_gen).resume(&mut Context::empty()) {
@@ -473,7 +471,7 @@ fn main() {
     // 二分查找示例
     let data = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
     let mut search_gen = BinarySearchGen::new(data, 5);
-    
+
     println!("查找过程：");
     while let Poll::Ready(Some(mid)) = Pin::new(&mut search_gen).resume(&mut Context::empty()) {
         println!("检查位置: {}", mid);
@@ -482,7 +480,7 @@ fn main() {
     // 堆构建示例
     let data = vec![4, 10, 3, 5, 1];
     let mut heap_gen = MaxHeapGen::new(data);
-    
+
     println!("堆构建过程：");
     while let Poll::Ready(Some(heap)) = Pin::new(&mut heap_gen).resume(&mut Context::empty()) {
         println!("{:?}", heap);

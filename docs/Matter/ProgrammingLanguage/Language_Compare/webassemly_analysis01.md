@@ -314,11 +314,11 @@ const userRepo = new Repository<User>();
 // TypeScript中的类
 class Counter {
   private count: number = 0;
-  
+
   increment(): void {
     this.count++;
   }
-  
+
   getValue(): number {
     return this.count;
   }
@@ -331,7 +331,7 @@ class Counter {
 (module
   ;; 内存布局：Counter对象为一个32位整数
   (memory 1)
-  
+
   ;; 创建Counter
   (func $createCounter (result i32)
     ;; 分配内存(简化)
@@ -340,7 +340,7 @@ class Counter {
     i32.store
     i32.const 0  ;; 返回对象指针
   )
-  
+
   ;; increment方法
   (func $increment (param $this i32)
     local.get $this
@@ -350,13 +350,13 @@ class Counter {
     i32.add
     i32.store
   )
-  
+
   ;; getValue方法
   (func $getValue (param $this i32) (result i32)
     local.get $this
     i32.load
   )
-  
+
   (export "createCounter" (func $createCounter))
   (export "increment" (func $increment))
   (export "getValue" (func $getValue))
@@ -388,7 +388,7 @@ impl Point {
     fn new(x: f64, y: f64) -> Self {
         Self { x, y }
     }
-    
+
     fn distance_to(&self, other: &Point) -> f64 {
         let dx = self.x - other.x;
         let dy = self.y - other.y;
@@ -424,7 +424,7 @@ impl Point {
   local.tee $dx
   local.get $dx
   f64.mul       ;; dx*dx
-  
+
   ;; 计算dy = self.y - other.y
   local.get $self
   i32.const 8
@@ -438,7 +438,7 @@ impl Point {
   local.tee $dy
   local.get $dy
   f64.mul       ;; dy*dy
-  
+
   f64.add       ;; dx*dx + dy*dy
   f64.sqrt      ;; sqrt(dx*dx + dy*dy)
 )
@@ -480,7 +480,7 @@ WebAssembly中需要手动映射类型标签和跳转：
   ;; 读取命令类型标签：0=Move, 1=Color, 2=Text
   local.get $cmd_ptr
   i32.load
-  
+
   ;; 基于标签跳转到相应处理块
   block $exit
     block $text
@@ -531,7 +531,7 @@ fn process_result() {
         Ok(result) => println!("Result: {}", result),
         Err(e) => println!("Error: {}", e),
     }
-    
+
     // 或使用?操作符传播错误
     fn calculation() -> Result<i32, String> {
         let x = divide(10, 2)?;
@@ -576,22 +576,22 @@ WebAssembly需要通过返回值或内存标志模拟错误处理：
 // Rust编译时防止数据竞争
 fn concurrent_safety() {
     let mut data = vec![1, 2, 3];
-    
+
     // 正确：不可变引用可以同时存在多个
     let r1 = &data;
     let r2 = &data;
     println!("{:?} and {:?}", r1, r2);
-    
+
     // 错误：不能同时存在可变引用和不可变引用
     let r3 = &data;
     let m = &mut data;  // 编译错误
-    
+
     // 正确：可变引用在作用域结束后，可以创建新的引用
     {
         let m = &mut data;
         m.push(4);
     }  // m的作用域结束
-    
+
     let r4 = &data;  // 现在可以创建新的不可变引用
     println!("{:?}", r4);
 }
@@ -660,14 +660,14 @@ WebAssembly没有直接支持这些类型代数操作，而高级语言通常有
 type Sum<A, B> = A | B;              // 和类型
 type Product<A, B> = { a: A, b: B }; // 积类型
 type Exp<A, B> = (a: A) => B;        // 指数类型
-type Unit = void;                    // 单位类型 
+type Unit = void;                    // 单位类型
 type Empty = never;                  // 空类型
 
 // 类型代数定律示例
-type DistributiveLaw<A, B, C> = 
+type DistributiveLaw<A, B, C> =
   Product<A, Sum<B, C>>;  // A × (B + C)
 // 等价于
-type Distributed<A, B, C> = 
+type Distributed<A, B, C> =
   Sum<Product<A, B>, Product<A, C>>;  // (A × B) + (A × C)
 ```
 
@@ -704,13 +704,13 @@ WebAssembly中需要显式循环：
   (local $i i32)
   (local $sum i32)
   (local $value i32)
-  
+
   ;; 初始化
   i32.const 0
   local.set $i
   i32.const 0
   local.set $sum
-  
+
   ;; 循环
   block $exit
     loop $continue
@@ -719,7 +719,7 @@ WebAssembly中需要显式循环：
       local.get $len
       i32.ge_u
       br_if $exit
-      
+
       ;; 获取当前值
       local.get $ptr
       local.get $i
@@ -728,7 +728,7 @@ WebAssembly中需要显式循环：
       i32.add
       i32.load
       local.tee $value
-      
+
       ;; 过滤：检查是否>0
       i32.const 0
       i32.gt_s
@@ -742,17 +742,17 @@ WebAssembly中需要显式循环：
         i32.add
         local.set $sum
       end
-      
+
       ;; 递增索引
       local.get $i
       i32.const 1
       i32.add
       local.set $i
-      
+
       br $continue
     end
   end
-  
+
   ;; 返回结果
   local.get $sum
 )
@@ -800,14 +800,14 @@ const wasm = await WebAssembly.instantiateStreaming(fetch('module.wasm'), {
     async_callback: (ptr, len) => {
       // 从WebAssembly内存读取数据
       const data = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
-      
+
       // 异步处理
       return fetch('https://example.com')
         .then(response => response.text())
         .then(text => {
           // 处理响应并写回WebAssembly内存
           // ...
-          
+
           // 调用WebAssembly中的回调处理函数
           wasm.instance.exports.handle_response(newPtr, newLen);
         });
@@ -843,7 +843,7 @@ enum AsyncFunctionState {
 
 impl Future for AsyncFunction {
     type Output = i32;
-    
+
     fn poll(&mut self, cx: &mut Context) -> Poll<i32> {
         loop {
             match self.state {
@@ -907,7 +907,7 @@ WebAssembly要实现类似的异步转换需要更复杂的运行时支持：
   i32.const 0
   global.get $STATE_WAITING_OP1
   i32.store ;; 更新状态
-  
+
   ;; 调用宿主环境函数启动第一个异步操作
   call $start_operation_1
 )
@@ -918,12 +918,12 @@ WebAssembly要实现类似的异步转换需要更复杂的运行时支持：
   i32.const 4 ;; 结果存储位置
   local.get $result
   i32.store
-  
+
   ;; 更新状态并启动第二个操作
   i32.const 0
   global.get $STATE_WAITING_OP2
   i32.store
-  
+
   call $start_operation_2
 )
 
@@ -935,20 +935,20 @@ WebAssembly要实现类似的异步转换需要更复杂的运行时支持：
   ;; 获取操作1的结果
   i32.const 4
   i32.load
-  
+
   ;; 与操作2结果相加
   local.get $result
   i32.add
-  
+
   ;; 存储最终结果
   i32.const 8
   i32.store
-  
+
   ;; 更新状态为完成
   i32.const 0
   global.get $STATE_COMPLETED
   i32.store
-  
+
   ;; 通知完成
   call $notify_completion
 )

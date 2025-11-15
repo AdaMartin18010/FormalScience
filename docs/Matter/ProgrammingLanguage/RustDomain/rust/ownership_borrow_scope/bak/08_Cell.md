@@ -1,5 +1,10 @@
-# Cell 和 RefCell
+# 1. Cell 和 RefCell
 
+## 目录
+
+- [1. Cell 和 RefCell](#cell-和-refcell)
+(#cell-和-refcell)
+(#cell-和-refcell)
 在 Rust 中，`std::cell` 模块提供了几种 trait，
 它们定义了 `Cell` 和 `RefCell` 等类型的操作方式。
 以下是这些 trait 的定义、联系以及它们如何与 `Cell` 和 `RefCell` 相关联的解释：

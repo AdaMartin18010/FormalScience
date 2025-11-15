@@ -54,7 +54,7 @@ pub enum Message {
         success: bool,
         error: Option<String>,
     },
-    
+
     // 聊天消息
     Chat {
         message_id: String,
@@ -63,17 +63,17 @@ pub enum Message {
         content: String,
         timestamp: i64,
     },
-    
+
     // 消息确认
     Ack {
         message_id: String,
         status: AckStatus,
     },
-    
+
     // 心跳消息
     Ping,
     Pong,
-    
+
     // 状态更新
     Presence {
         user_id: String,
@@ -197,7 +197,7 @@ impl ImServer {
 
         if let Some(user_id) = auth {
             let (tx, mut rx) = mpsc::unbounded_channel();
-            
+
             // 注册客户端
             clients.insert(user_id.clone(), ConnectedClient {
                 user_id: user_id.clone(),
@@ -271,7 +271,7 @@ impl ImServer {
             loop {
                 interval.tick().await;
                 let now = chrono::Utc::now().timestamp();
-                
+
                 clients.retain(|_, client| {
                     now - client.last_ping.load(Ordering::SeqCst) < 90
                 });
@@ -457,11 +457,11 @@ impl BroadcastServer {
 
     pub async fn run(&self) -> anyhow::Result<()> {
         let mut buf = vec![0u8; 65536];
-        
+
         loop {
             let (size, addr) = self.socket.recv_from(&mut buf).await?;
             let message = String::from_utf8_lossy(&buf[..size]);
-            
+
             // 广播消息给所有客户端
             for client in self.clients.iter() {
                 if *client.key() != addr {
@@ -540,7 +540,7 @@ impl MessageStore {
                 .entry(to.clone())
                 .or_default()
                 .push(message.clone());
-            
+
             self.db.store_message(&message).await?;
         }
         Ok(())
@@ -696,7 +696,7 @@ mod tests {
         );
 
         client.connect().await?;
-        
+
         let message_id = client.send_message(
             "test-recipient".to_string(),
             "Hello, world!".to_string(),

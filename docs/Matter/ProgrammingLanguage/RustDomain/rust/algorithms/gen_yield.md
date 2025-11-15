@@ -1,23 +1,19 @@
-# Rust中使用生成器(Generator)和yield实现基本算法
-
-Rust目前没有直接的`yield`关键字，
-但我们可以使用`async/await`和第三方库如`genawaiter`来模拟生成器行为。
-下面我将展示如何在同步和异步模式下实现一些基本算法，并使用泛型容器。
+# 1. Rust中使用生成器(Generator)和yield实现基本算法
 
 ## 目录
 
-- [Rust中使用生成器(Generator)和yield实现基本算法](#rust中使用生成器generator和yield实现基本算法)
+- [1. Rust中使用生成器(Generator)和yield实现基本算法](#1-rust中使用生成器generator和yield实现基本算法)
   - [目录](#目录)
-  - [同步模式下的生成器实现](#同步模式下的生成器实现)
-    - [斐波那契数列生成器](#斐波那契数列生成器)
-    - [使用泛型容器的素数筛选](#使用泛型容器的素数筛选)
-  - [异步模式下的生成器实现](#异步模式下的生成器实现)
-    - [异步斐波那契数列生成器](#异步斐波那契数列生成器)
-    - [使用泛型异步队列的生产者-消费者模式](#使用泛型异步队列的生产者-消费者模式)
-    - [使用泛型实现异步迭代器适配器](#使用泛型实现异步迭代器适配器)
-  - [总结](#总结)
+  - [1.1 同步模式下的生成器实现](#11-同步模式下的生成器实现)
+    - [1.1.1 斐波那契数列生成器](#111-斐波那契数列生成器)
+    - [1.1.2 使用泛型容器的素数筛选](#112-使用泛型容器的素数筛选)
+  - [1.2 异步模式下的生成器实现](#12-异步模式下的生成器实现)
+    - [1.2.1 异步斐波那契数列生成器](#121-异步斐波那契数列生成器)
+    - [1.2.2 使用泛型异步队列的生产者-消费者模式](#122-使用泛型异步队列的生产者-消费者模式)
+    - [1.2.3 使用泛型实现异步迭代器适配器](#123-使用泛型实现异步迭代器适配器)
+  - [1.3 总结](#13-总结)
 
-## 同步模式下的生成器实现
+## 1.1 同步模式下的生成器实现
 
 首先需要添加依赖：
 
@@ -26,7 +22,7 @@ Rust目前没有直接的`yield`关键字，
 genawaiter = "0.99"
 ```
 
-### 斐波那契数列生成器
+### 1.1.1 斐波那契数列生成器
 
 ```rust
 use genawaiter::{sync::gen, yield_};
@@ -36,7 +32,7 @@ fn fibonacci(limit: usize) -> impl Iterator<Item = u64> {
     gen!({
         let mut a = 0;
         let mut b = 1;
-        
+
         for _ in 0..limit {
             yield_!(a);
             let next = a + b;
@@ -56,7 +52,7 @@ fn main() {
 }
 ```
 
-### 使用泛型容器的素数筛选
+### 1.1.2 使用泛型容器的素数筛选
 
 ```rust
 use genawaiter::{sync::gen, yield_};
@@ -71,16 +67,16 @@ where
         if limit >= 2 {
             yield_!(2);
         }
-        
+
         let mut sieve: T = (2..=2).collect();
-        
+
         for n in 3..=limit {
             if n % 2 == 0 {
                 continue;
             }
-            
+
             let is_prime = !sieve.into_iter().any(|p| n % p == 0);
-            
+
             if is_prime {
                 sieve = sieve.into_iter().collect::<T>();
                 sieve.extend(std::iter::once(n));
@@ -98,7 +94,7 @@ fn main() {
         print!("{} ", prime);
     }
     println!();
-    
+
     // 使用Vec作为容器
     println!("素数列表 (使用Vec):");
     for prime in primes::<Vec<usize>>(50) {
@@ -108,9 +104,9 @@ fn main() {
 }
 ```
 
-## 异步模式下的生成器实现
+## 1.2 异步模式下的生成器实现
 
-### 异步斐波那契数列生成器
+### 1.2.1 异步斐波那契数列生成器
 
 ```rust
 use genawaiter::{rc::gen, yield_};
@@ -121,7 +117,7 @@ async fn async_fibonacci(limit: usize) {
     let stream = gen!({
         let mut a = 0;
         let mut b = 1;
-        
+
         for _ in 0..limit {
             yield_!(a);
             let next = a + b;
@@ -129,7 +125,7 @@ async fn async_fibonacci(limit: usize) {
             b = next;
         }
     });
-    
+
     // 使用异步流处理
     let mut stream = Box::pin(stream);
     while let Some(num) = stream.next().await {
@@ -146,7 +142,7 @@ async fn main() {
 }
 ```
 
-### 使用泛型异步队列的生产者-消费者模式
+### 1.2.2 使用泛型异步队列的生产者-消费者模式
 
 ```rust
 use std::collections::VecDeque;
@@ -164,17 +160,17 @@ impl<T: Clone> AsyncQueue<T> {
             data: Arc::new(Mutex::new(VecDeque::new())),
         }
     }
-    
+
     async fn enqueue(&self, item: T) {
         let mut queue = self.data.lock().await;
         queue.push_back(item);
     }
-    
+
     async fn dequeue(&self) -> Option<T> {
         let mut queue = self.data.lock().await;
         queue.pop_front()
     }
-    
+
     async fn is_empty(&self) -> bool {
         let queue = self.data.lock().await;
         queue.is_empty()
@@ -210,17 +206,17 @@ async fn consumer<T: Clone + std::fmt::Display>(queue: Arc<AsyncQueue<T>>) {
 async fn main() {
     // 创建一个i32类型的队列
     let queue: Arc<AsyncQueue<i32>> = Arc::new(AsyncQueue::new());
-    
+
     // 启动生产者和消费者任务
     let producer_task = tokio::spawn(producer(Arc::clone(&queue), 10));
     let consumer_task = tokio::spawn(consumer(Arc::clone(&queue)));
-    
+
     // 等待任务完成
     let _ = tokio::join!(producer_task, consumer_task);
 }
 ```
 
-### 使用泛型实现异步迭代器适配器
+### 1.2.3 使用泛型实现异步迭代器适配器
 
 ```rust
 use std::marker::PhantomData;
@@ -295,7 +291,7 @@ async fn main() {
     let mut stream = number_stream(10)
         .async_map(|x| x * x)
         .async_map(|x| format!("平方值: {}", x));
-    
+
     while let Some(item) = stream.next().await {
         println!("{}", item);
         tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
@@ -303,7 +299,7 @@ async fn main() {
 }
 ```
 
-## 总结
+## 1.3 总结
 
 以上示例展示了如何在Rust中：
 

@@ -1,18 +1,14 @@
-# Item 和 Expression
+# 1. Item 和 Expression
 
-在 Rust 编程语言中，"item" 和 "expression" 是两个核心概念，它们在 Rust 的语法和语义中扮演着重要的角色。
+## 目录
 
-下面是它们的定义、关系和解释：
+- [1. Item 和 Expression](#1-item-和-expression)
+  - [目录](#目录)
+  - [1.1 Item](#11-item)
+  - [1.2 Expression](#12-expression)
+  - [1.3 关系和解释](#13-关系和解释)
 
-## 📋 目录
-
-- [1 Item](#1-item)
-- [2 Expression](#2-expression)
-- [3 关系和解释](#3-关系和解释)
-
----
-
-## 1 Item
+## 1.1 Item
 
 - **定义**：在 Rust 中，item 是代码中的一个声明，它可以是函数、结构体、枚举、模块、常量、静态变量或特性（traits）。
   Items 定义了程序的结构和可以被其他代码引用的实体。
@@ -36,7 +32,7 @@
   const MAX_POINTS: usize = 100;
   ```
 
-## 2 Expression
+## 1.2 Expression
 
 - **定义**：Expression 是 Rust 中的一段代码，它计算并产生一个值。
   表达式可以是简单的字面量、变量引用、函数调用、运算符应用等。
@@ -59,7 +55,7 @@
   let z = x + y - 1;
   ```
 
-## 3 关系和解释
+## 1.3 关系和解释
 
 - **结构与行为**：Items 提供了程序的结构，定义了可以被引用的实体，而 expressions 描述了程序的行为，即如何使用这些实体进行计算和操作。
 - **依赖性**：Expressions 经常引用 items。例如，函数调用表达式会引用一个函数 item，结构体实例化表达式会引用一个结构体 item。

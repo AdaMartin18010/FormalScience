@@ -1,50 +1,50 @@
-# Temporal和Cadence工作流引擎的形式理论分析
+# 1. Temporal和Cadence工作流引擎的形式理论分析
 
 ## 目录
 
-- [Temporal和Cadence工作流引擎的形式理论分析](#temporal和cadence工作流引擎的形式理论分析)
+- [1. Temporal和Cadence工作流引擎的形式理论分析](#1-temporal和cadence工作流引擎的形式理论分析)
   - [目录](#目录)
-  - [1. 形式化背景与建模方法](#1-形式化背景与建模方法)
-    - [1.1 形式化工具选择](#11-形式化工具选择)
-    - [1.2 核心形式定义](#12-核心形式定义)
-  - [2. Temporal与Cadence的基础形式模型](#2-temporal与cadence的基础形式模型)
-    - [2.1 共享形式模型](#21-共享形式模型)
-    - [2.2 基本操作语义](#22-基本操作语义)
-  - [3. 工作流模式形式分析与对比](#3-工作流模式形式分析与对比)
-    - [3.1 持久执行模式](#31-持久执行模式)
-    - [3.2 活动重试模式](#32-活动重试模式)
-    - [3.3 可查询性与信号模式](#33-可查询性与信号模式)
-    - [3.4 子工作流模式](#34-子工作流模式)
-    - [3.5 版本控制模式](#35-版本控制模式)
-  - [4. 高级模式形式分析](#4-高级模式形式分析)
-    - [4.1 Saga补偿模式](#41-saga补偿模式)
-    - [4.2 Schedule模式（Temporal特有）](#42-schedule模式temporal特有)
-    - [4.3 继续执行（Continue-As-New）模式](#43-继续执行continue-as-new模式)
-    - [4.4 搜索可见性模式](#44-搜索可见性模式)
-  - [5. 形式化属性与保证](#5-形式化属性与保证)
-    - [5.1 确定性重放](#51-确定性重放)
-    - [5.2 故障恢复一致性](#52-故障恢复一致性)
-    - [5.3 执行幂等性](#53-执行幂等性)
-  - [6. 形式比较与评价](#6-形式比较与评价)
-    - [6.1 表达能力对比](#61-表达能力对比)
-    - [6.2 安全性属性对比](#62-安全性属性对比)
-    - [6.3 活性属性对比](#63-活性属性对比)
-    - [6.4 模块化与组合性对比](#64-模块化与组合性对比)
-  - [7. 理论结论](#7-理论结论)
+  - [1.1 形式化背景与建模方法](#11-形式化背景与建模方法)
+    - [1.1.1 形式化工具选择](#111-形式化工具选择)
+    - [1.1.2 核心形式定义](#112-核心形式定义)
+  - [1.2 Temporal与Cadence的基础形式模型](#12-temporal与cadence的基础形式模型)
+    - [1.2.1 共享形式模型](#121-共享形式模型)
+    - [1.2.2 基本操作语义](#122-基本操作语义)
+  - [1.3 工作流模式形式分析与对比](#13-工作流模式形式分析与对比)
+    - [1.3.1 持久执行模式](#131-持久执行模式)
+    - [1.3.2 活动重试模式](#132-活动重试模式)
+    - [1.3.3 可查询性与信号模式](#133-可查询性与信号模式)
+    - [1.3.4 子工作流模式](#134-子工作流模式)
+    - [1.3.5 版本控制模式](#135-版本控制模式)
+  - [1.4 高级模式形式分析](#14-高级模式形式分析)
+    - [1.4.1 Saga补偿模式](#141-saga补偿模式)
+    - [1.4.2 Schedule模式（Temporal特有）](#142-schedule模式temporal特有)
+    - [1.4.3 继续执行（Continue-As-New）模式](#143-继续执行continue-as-new模式)
+    - [1.4.4 搜索可见性模式](#144-搜索可见性模式)
+  - [1.5 形式化属性与保证](#15-形式化属性与保证)
+    - [1.5.1 确定性重放](#151-确定性重放)
+    - [1.5.2 故障恢复一致性](#152-故障恢复一致性)
+    - [1.5.3 执行幂等性](#153-执行幂等性)
+  - [1.6 形式比较与评价](#16-形式比较与评价)
+    - [1.6.1 表达能力对比](#161-表达能力对比)
+    - [1.6.2 安全性属性对比](#162-安全性属性对比)
+    - [1.6.3 活性属性对比](#163-活性属性对比)
+    - [1.6.4 模块化与组合性对比](#164-模块化与组合性对比)
+  - [1.7 理论结论](#17-理论结论)
 
-## 1. 形式化背景与建模方法
+## 1.1 形式化背景与建模方法
 
 分析工作流引擎的形式理论视角需要建立适当的数学基础。
 工作流系统本质上是对分布式状态机的抽象，因此可以采用以下形式化工具进行建模和分析：
 
-### 1.1 形式化工具选择
+### 1.1.1 形式化工具选择
 
 - **进程演算（Process Calculi）**：表达并发交互系统
 - **时序逻辑（Temporal Logic）**：表达与验证时间属性
 - **状态转换系统（State Transition Systems）**：建模工作流执行
 - **区分式进程演算（Differential Process Calculi）**：比较两个系统的行为差异
 
-### 1.2 核心形式定义
+### 1.1.2 核心形式定义
 
 工作流引擎可形式化定义为：
 
@@ -59,11 +59,11 @@ C: 补偿操作映射
 H: 执行历史追踪函数
 ```
 
-## 2. Temporal与Cadence的基础形式模型
+## 1.2 Temporal与Cadence的基础形式模型
 
 Temporal和Cadence都源于同一概念基础，但在演化中产生了差异。首先建立它们共享的基础形式模型：
 
-### 2.1 共享形式模型
+### 1.2.1 共享形式模型
 
 ```rust
 WorkflowSystem = (WE, W, A, D, T, V, P) 其中：
@@ -76,7 +76,7 @@ V: 版本集合
 P: 策略集合
 ```
 
-### 2.2 基本操作语义
+### 1.2.2 基本操作语义
 
 两个系统共享的核心操作语义可表示为：
 
@@ -86,9 +86,9 @@ P: 策略集合
 执行规则 R₃: (s, TimeoutOccurred(timer)) → (s', HandleTimeout(timer))
 ```
 
-## 3. 工作流模式形式分析与对比
+## 1.3 工作流模式形式分析与对比
 
-### 3.1 持久执行模式
+### 1.3.1 持久执行模式
 
 **形式定义**：
 
@@ -100,35 +100,35 @@ PersistentExecution(w) := ∀e ∈ Execution(w), ∀f ∈ Failures,
 **Temporal实现**：
 
 ```rust
-PersistentExecution_Temporal(w) := 
-  ∀a ∈ Activities(w), HistoryEvent(a,t) ∈ EventHistory → 
+PersistentExecution_Temporal(w) :=
+  ∀a ∈ Activities(w), HistoryEvent(a,t) ∈ EventHistory →
   ∃Replay(a) ∧ State(w) = Derive(EventHistory)
 ```
 
 **Cadence实现**：
 
 ```rust
-PersistentExecution_Cadence(w) := 
-  ∀a ∈ Activities(w), HistoryEvent(a,t) ∈ EventHistory → 
+PersistentExecution_Cadence(w) :=
+  ∀a ∈ Activities(w), HistoryEvent(a,t) ∈ EventHistory →
   ∃Replay(a) ∧ State(w) = Derive(EventHistory)
 ```
 
 **形式等价性证明**：
 两个系统在持久执行模式上形式等价，证明略（两者采用相同的事件溯源模式重建状态）。
 
-### 3.2 活动重试模式
+### 1.3.2 活动重试模式
 
 **形式定义**：
 
 ```rust
-ActivityRetry(a,policy) := Failure(a,t) ∧ RetryPolicy(policy) → 
+ActivityRetry(a,policy) := Failure(a,t) ∧ RetryPolicy(policy) →
   ∃t' > t, Retry(a,t') ∧ SatisfiesPolicy(t'-t, policy)
 ```
 
 **Temporal实现**：
 
 ```rust
-ActivityRetry_Temporal(a,policy) := Failure(a,t) → 
+ActivityRetry_Temporal(a,policy) := Failure(a,t) →
   (RetryOptions(a).MaxAttempts > AttemptCount(a)) ∧
   BackoffInterval = CalculateBackoff(RetryOptions(a), AttemptCount(a)) ∧
   ScheduleRetry(a, t + BackoffInterval)
@@ -137,7 +137,7 @@ ActivityRetry_Temporal(a,policy) := Failure(a,t) →
 **Cadence实现**：
 
 ```rust
-ActivityRetry_Cadence(a,policy) := Failure(a,t) → 
+ActivityRetry_Cadence(a,policy) := Failure(a,t) →
   (RetryPolicy(a).MaxAttempts > AttemptCount(a)) ∧
   BackoffInterval = CalculateBackoff(RetryPolicy(a), AttemptCount(a)) ∧
   ScheduleRetry(a, t + BackoffInterval)
@@ -150,7 +150,7 @@ ActivityRetry_Cadence(a,policy) := Failure(a,t) →
 ∃p ∈ RetryOptions_Temporal, ¬∃p' ∈ RetryPolicy_Cadence, Equivalent(p, p')
 ```
 
-### 3.3 可查询性与信号模式
+### 1.3.3 可查询性与信号模式
 
 **形式定义**：
 
@@ -165,7 +165,7 @@ Signalable(w) := ∀sig ∈ Signals, ∀s ∈ States(w),
 **Temporal实现**：
 
 ```rust
-Query_Temporal(w, q) := ∃Handler(q) ∈ w, 
+Query_Temporal(w, q) := ∃Handler(q) ∈ w,
   Result = Handler(q)(CurrentState(w)) ∧
   ReadOnly(Handler(q))
 
@@ -177,7 +177,7 @@ Signal_Temporal(w, sig, data) := ∃Handler(sig) ∈ w,
 **Cadence实现**：
 
 ```rust
-Query_Cadence(w, q) := ∃Handler(q) ∈ w, 
+Query_Cadence(w, q) := ∃Handler(q) ∈ w,
   Result = Handler(q)(CurrentState(w)) ∧
   ReadOnly(Handler(q))
 
@@ -189,7 +189,7 @@ Signal_Cadence(w, sig, data) := ∃Handler(sig) ∈ w,
 **形式等价性**：
 查询和信号模式在两个系统中形式等价，差异主要在实现细节而非形式语义。
 
-### 3.4 子工作流模式
+### 1.3.4 子工作流模式
 
 **形式定义**：
 
@@ -203,7 +203,7 @@ SubWorkflow(parent, child) := ∃Start: Workflows → WorkflowRuns,
 **Temporal实现**：
 
 ```rust
-SubWorkflow_Temporal(parent, child, childId) := 
+SubWorkflow_Temporal(parent, child, childId) :=
   ExecuteChild(parent, child, options) ∧
   ∃option ∈ options, ParentClosePolicy(option) ∈ {Terminate, Abandon, RequestCancel} ∧
   (Completed(parent) → ApplyPolicy(child, ParentClosePolicy))
@@ -212,7 +212,7 @@ SubWorkflow_Temporal(parent, child, childId) :=
 **Cadence实现**：
 
 ```rust
-SubWorkflow_Cadence(parent, child, childId) := 
+SubWorkflow_Cadence(parent, child, childId) :=
   ExecuteChild(parent, child, options) ∧
   (Completed(parent) → Terminate(child))  // 简化版本
 ```
@@ -224,7 +224,7 @@ Temporal在父工作流终止时提供了更丰富的子工作流处理策略，
 |ParentClosePolicies_Temporal| > |ParentClosePolicies_Cadence|
 ```
 
-### 3.5 版本控制模式
+### 1.3.5 版本控制模式
 
 **形式定义**：
 
@@ -237,7 +237,7 @@ VersionControl(w, change) := ∃GetVersion: Workflows × Changes → Versions,
 **Temporal实现**：
 
 ```rust
-VersionControl_Temporal(w, change, id) := 
+VersionControl_Temporal(w, change, id) :=
   v = workflow.GetVersion(changeId, defaultVersion, maxVersion) ∧
   Branch(v, defaultVersion, maxVersion)
 ```
@@ -245,7 +245,7 @@ VersionControl_Temporal(w, change, id) :=
 **Cadence实现**：
 
 ```rust
-VersionControl_Cadence(w, change, id) := 
+VersionControl_Cadence(w, change, id) :=
   v = workflow.GetVersion(changeId, defaultVersion, maxVersion) ∧
   Branch(v, defaultVersion, maxVersion)
 ```
@@ -253,9 +253,9 @@ VersionControl_Cadence(w, change, id) :=
 **形式等价性**：
 版本控制模式在两个系统中基本等价，主要差异在于Temporal对版本兼容性检查的增强。
 
-## 4. 高级模式形式分析
+## 1.4 高级模式形式分析
 
-### 4.1 Saga补偿模式
+### 1.4.1 Saga补偿模式
 
 **形式定义**：
 
@@ -267,37 +267,37 @@ Saga(w) := ∀a ∈ Activities(w), ∃comp_a ∈ CompensatingActivities,
 **Temporal实现**：
 
 ```rust
-Saga_Temporal(w) := 
+Saga_Temporal(w) :=
   CreateSagaActivities(activities, compensations) ∧
-  ∀i, Failure(activities[i]) → 
+  ∀i, Failure(activities[i]) →
     ∀j ∈ [i-1, 0], Execute(compensations[j])
 ```
 
 **Cadence实现**：
 
 ```rust
-Saga_Cadence(w) := 
+Saga_Cadence(w) :=
   CreateSagaActivities(activities, compensations) ∧
-  ∀i, Failure(activities[i]) → 
+  ∀i, Failure(activities[i]) →
     ∀j ∈ [i-1, 0], Execute(compensations[j])
 ```
 
 **形式等价性**：
 两系统在Saga模式的核心语义上等价，但Temporal在具体实现中提供了更丰富的补偿控制选项。
 
-### 4.2 Schedule模式（Temporal特有）
+### 1.4.2 Schedule模式（Temporal特有）
 
 **形式定义**：
 
 ```rust
-Schedule(spec) := ∀t ∈ Time, Matches(t, spec) → 
+Schedule(spec) := ∀t ∈ Time, Matches(t, spec) →
   Start(targetWorkflow, t)
 ```
 
 **Temporal实现**：
 
 ```rust
-Schedule_Temporal(spec, action) := 
+Schedule_Temporal(spec, action) :=
   CreateSchedule(spec, action) ∧
   ∀t, Matches(t, spec.Calendar || spec.Interval) →
     Execute(action) ∧
@@ -309,7 +309,7 @@ Cadence没有内置的调度功能，需要通过外部调度器实现类似功�
 
 ```rust
 Schedule_Cadence_External(spec, action) :=
-  ∃ExternalScheduler, ExternalScheduler.Schedule(spec, 
+  ∃ExternalScheduler, ExternalScheduler.Schedule(spec,
     () => CadenceClient.StartWorkflow(action))
 ```
 
@@ -321,7 +321,7 @@ Schedule ∈ FirstClassConcepts_Temporal ∧
 Schedule ∉ FirstClassConcepts_Cadence
 ```
 
-### 4.3 继续执行（Continue-As-New）模式
+### 1.4.3 继续执行（Continue-As-New）模式
 
 **形式定义**：
 
@@ -334,7 +334,7 @@ ContinueAsNew(w, state) := ∃NewExecution: Workflows × States → Executions,
 **Temporal实现**：
 
 ```rust
-ContinueAsNew_Temporal(w, args) := 
+ContinueAsNew_Temporal(w, args) :=
   workflow.ContinueAsNew(workflow.GetInfo().WorkflowType, args) ∧
   TerminateCurrent(w) ∧
   StartNew(w.Type, args)
@@ -343,7 +343,7 @@ ContinueAsNew_Temporal(w, args) :=
 **Cadence实现**：
 
 ```rust
-ContinueAsNew_Cadence(w, args) := 
+ContinueAsNew_Cadence(w, args) :=
   workflow.ContinueAsNew(args) ∧
   TerminateCurrent(w) ∧
   StartNew(w.Type, args)
@@ -352,7 +352,7 @@ ContinueAsNew_Cadence(w, args) :=
 **形式等价性**：
 两个系统在继续执行模式上形式等价，差异主要在API设计而非语义。
 
-### 4.4 搜索可见性模式
+### 1.4.4 搜索可见性模式
 
 **形式定义**：
 
@@ -365,7 +365,7 @@ SearchVisibility(w) := ∃Index: Workflows → SearchAttributes,
 **Temporal实现**：
 
 ```rust
-SearchVisibility_Temporal(w, attr) := 
+SearchVisibility_Temporal(w, attr) :=
   workflow.UpsertSearchAttributes(attr) ∧
   ∀q ∈ Queries(attr), ListWorkflows(q) ⊇ {w}
 ```
@@ -373,7 +373,7 @@ SearchVisibility_Temporal(w, attr) :=
 **Cadence实现**：
 
 ```rust
-SearchVisibility_Cadence(w, attr) := 
+SearchVisibility_Cadence(w, attr) :=
   workflow.UpsertSearchAttributes(attr) ∧
   ∀q ∈ Queries(attr), ListOpenWorkflows(q) ⊇ {w if Open(w)}
 ```
@@ -386,9 +386,9 @@ Temporal的搜索可见性更强大，支持对已关闭的工作流执行高级
 ∀q' ∈ Queries_Cadence, ClosedWorkflows ∩ Query(q') = ∅
 ```
 
-## 5. 形式化属性与保证
+## 1.5 形式化属性与保证
 
-### 5.1 确定性重放
+### 1.5.1 确定性重放
 
 **形式定理**：
 对于任一工作流w，给定相同的历史事件序列H，重放后达到的状态唯一确定。
@@ -406,7 +406,7 @@ Theorem: ∀w ∈ Workflows, ∀H ∈ Histories,
 3. 重放时，这些非确定性输入从历史中提取
 4. 因此，给定相同历史，重放结果必然相同
 
-### 5.2 故障恢复一致性
+### 1.5.2 故障恢复一致性
 
 **形式定理**：
 工作流执行中断后恢复，其状态与中断前最后一个一致点等价。
@@ -423,7 +423,7 @@ Theorem: ∀w ∈ Workflows, ∀f ∈ Failures, ∃cp ∈ ConsistencyPoints,
 3. 重放是确定性的（见5.1）
 4. 因此恢复后状态等价于中断前状态
 
-### 5.3 执行幂等性
+### 1.5.3 执行幂等性
 
 **形式定理**：
 任何活动在逻辑上只会被执行一次，即使物理上可能重试多次。
@@ -440,9 +440,9 @@ Theorem: ∀a ∈ Activities, ∀w ∈ Workflows,
 3. 即使物理执行可能因失败重试多次，从工作流视角看是单次逻辑执行
 4. 非幂等活动通过唯一ID确保不会重复执行
 
-## 6. 形式比较与评价
+## 1.6 形式比较与评价
 
-### 6.1 表达能力对比
+### 1.6.1 表达能力对比
 
 引入形式度量：**表达完备性（Expressiveness Completeness）**
 
@@ -459,12 +459,12 @@ ExprCom(System) = |{p ∈ Patterns | System ⊢ p}| / |Patterns|
 
 Temporal的表达能力形式上更完备，特别是在调度和高级父子工作流控制方面。
 
-### 6.2 安全性属性对比
+### 1.6.2 安全性属性对比
 
 安全性表示"不应发生的事不会发生"。形式定义：
 
 ```rust
-Safety(System) = ∀w ∈ Workflows, ∀e ∈ Executions(w), 
+Safety(System) = ∀w ∈ Workflows, ∀e ∈ Executions(w),
   ∀s ∈ States(e), Invariants(w) → Safe(s)
 ```
 
@@ -476,7 +476,7 @@ Safety(System) = ∀w ∈ Workflows, ∀e ∈ Executions(w),
 - 更全面的父子工作流策略
 - 更精细的资源隔离
 
-### 6.3 活性属性对比
+### 1.6.3 活性属性对比
 
 活性表示"应该发生的事最终会发生"。形式定义：
 
@@ -490,7 +490,7 @@ Liveness(System) = ∀w ∈ Workflows, ∀e ∈ Executions(w),
 两个系统都提供强活性保证，在工作流最终会完成或继续方面等价。
 Temporal在调度方面的活性保证更强。
 
-### 6.4 模块化与组合性对比
+### 1.6.4 模块化与组合性对比
 
 形式化组合性度量：
 
@@ -504,7 +504,7 @@ Composability(System) = ∀w₁,w₂ ∈ Workflows, ∃op ∈ CompositionOperato
 - Temporal提供更丰富的组合操作符（子工作流策略、调度组合等）
 - Cadence组合模型相对简单但足够强大
 
-## 7. 理论结论
+## 1.7 理论结论
 
 基于形式分析，得出以下理论结论：
 

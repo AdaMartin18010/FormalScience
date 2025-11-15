@@ -1,33 +1,20 @@
-# 使用Rust的Hyperswitch实现高级支付处理系统
+# 1. 使用Rust的Hyperswitch实现高级支付处理系统
 
-```text
-让我分析一下这个需求，并规划如何使用Rust的Hyperswitch实现支付流系统。
+## 目录
 
-Hyperswitch是一个开源的支付交换机/支付路由/支付网关系统，它允许商家连接多个支付处理商，提供统一的API接口，并且能够智能路由支付交易以获得更高的成功率和更低的成本。
+- [1. 使用Rust的Hyperswitch实现高级支付处理系统](#1-使用rust的hyperswitch实现高级支付处理系统)
+  - [目录](#目录)
+  - [1.1 系统架构概览](#11-系统架构概览)
+  - [1.2 一、Hyperswitch支付核心系统实现](#12-一hyperswitch支付核心系统实现)
+  - [1.3 二、支付撤销、对冲、对账和清算系统](#13-二支付撤销对冲对账和清算系统)
+  - [1.4 三、分布式、分层对账与会计分析系统](#14-三分布式分层对账与会计分析系统)
+  - [1.5 四、API接口实现](#15-四api接口实现)
+  - [1.6 五、数据库模式设计](#16-五数据库模式设计)
+  - [1.7 六、构建主程序和配置](#17-六构建主程序和配置)
+  - [1.8 七、系统配置和部署](#18-七系统配置和部署)
+  - [1.9 八、总结与关键功能](#19-八总结与关键功能)
 
-基于用户的要求，我需要设计一个系统，该系统能够：
-1. 跟踪所有支付路径和处理各种异常
-2. 支持完整的支付生命周期操作
-3. 支持分布式的对账、流水和会计分析
-
-让我规划一下实现方案：
-```
-
-## 📋 目录
-
-- [1 系统架构概览](#1-系统架构概览)
-- [2 一、Hyperswitch支付核心系统实现](#2-一hyperswitch支付核心系统实现)
-- [3 二、支付撤销、对冲、对账和清算系统](#3-二支付撤销对冲对账和清算系统)
-- [4 三、分布式、分层对账与会计分析系统](#4-三分布式分层对账与会计分析系统)
-- [5 四、API接口实现](#5-四api接口实现)
-- [6 五、数据库模式设计](#6-五数据库模式设计)
-- [7 六、构建主程序和配置](#7-六构建主程序和配置)
-- [8 七、系统配置和部署](#8-七系统配置和部署)
-- [9 八、总结与关键功能](#9-八总结与关键功能)
-
----
-
-## 1 系统架构概览
+## 1.1 系统架构概览
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -60,7 +47,7 @@ Hyperswitch是一个开源的支付交换机/支付路由/支付网关系统，�
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-## 2 一、Hyperswitch支付核心系统实现
+## 1.2 一、Hyperswitch支付核心系统实现
 
 ```rust
 use axum::{
@@ -213,10 +200,10 @@ impl ExceptionHandler for NetworkExceptionHandler {
                 retry = exception.retry_count + 1,
                 "正在重试因网络异常失败的支付"
             );
-            
+
             // 这里应该包含重试逻辑
             // ...
-            
+
             Ok(PaymentStatus::Processing)
         } else {
             warn!(
@@ -238,28 +225,28 @@ impl PaymentCoreService {
     ) -> Result<Self, Box<dyn std::error::Error>> {
         // 初始化Hyperswitch客户端
         let hyperswitch_client = HyperSwitchClient::new(
-            hyperswitch_api_key, 
+            hyperswitch_api_key,
             hyperswitch_url
         );
-        
+
         // 初始化数据库连接池
         let db_pool = PgPoolOptions::new()
             .max_connections(20)
             .connect(database_url)
             .await?;
-            
+
         // 初始化Redis客户端
         let redis_client = redis::Client::open(redis_url)?;
-        
+
         // 初始化异常处理器
         let mut exception_handlers: HashMap<String, Box<dyn ExceptionHandler>> = HashMap::new();
         exception_handlers.insert(
-            "network".to_string(), 
+            "network".to_string(),
             Box::new(NetworkExceptionHandler { max_retries: 3 })
         );
-        
+
         // 更多异常处理器...
-        
+
         Ok(Self {
             hyperswitch_client,
             db_pool,
@@ -267,25 +254,25 @@ impl PaymentCoreService {
             exception_handlers,
         })
     }
-    
+
     // 创建新支付
     #[instrument(skip(self), fields(merchant_id = %request.merchant_id))]
     async fn create_payment(&self, request: PaymentRequest) -> Result<PaymentResponse, Box<dyn std::error::Error>> {
         let span = Span::current();
         let payment_id = Uuid::new_v4();
         span.record("payment_id", payment_id.to_string());
-        
+
         info!("创建新支付流程");
-        
+
         // 1. 请求参数验证
         // ...
-        
+
         // 2. 风控检查
         // ...
-        
+
         // 3. 转换为Hyperswitch格式的请求
         let hyperswitch_request = self.convert_to_hyperswitch_request(request.clone(), payment_id)?;
-        
+
         // 4. 跟踪开始
         let trace_id = Uuid::new_v4();
         self.create_trace(PaymentTrace {
@@ -302,7 +289,7 @@ impl PaymentCoreService {
             request_data: Some(serde_json::to_value(&hyperswitch_request)?),
             response_data: None,
         }).await?;
-        
+
         // 5. 调用Hyperswitch创建支付
         let start_time = std::time::Instant::now();
         let hyperswitch_response = match self.hyperswitch_client.create_payment(hyperswitch_request).await {
@@ -322,16 +309,16 @@ impl PaymentCoreService {
                     retry_count: 0,
                     resolution_timestamp: None,
                 };
-                
+
                 self.record_exception(&exception).await?;
                 self.handle_exception(&exception).await?;
-                
+
                 return Err(format!("支付创建失败: {}", e).into());
             }
         };
-        
+
         let duration_ms = start_time.elapsed().as_millis() as u64;
-        
+
         // 6. 更新跟踪
         self.update_trace(PaymentTrace {
             trace_id,
@@ -347,10 +334,10 @@ impl PaymentCoreService {
             request_data: Some(serde_json::to_value(&hyperswitch_request)?),
             response_data: Some(serde_json::to_value(&hyperswitch_response)?),
         }).await?;
-        
+
         // 7. 保存支付记录
         // ...
-        
+
         // 8. 构建响应
         let payment_response = PaymentResponse {
             payment_id,
@@ -364,17 +351,17 @@ impl PaymentCoreService {
             updated_at: Utc::now(),
             metadata: request.metadata,
         };
-        
+
         Ok(payment_response)
     }
-    
+
     // 记录跟踪数据
     async fn create_trace(&self, trace: PaymentTrace) -> Result<(), Box<dyn std::error::Error>> {
         sqlx::query(
             r#"
             INSERT INTO payment_traces (
-                trace_id, payment_id, merchant_id, timestamp, status, 
-                connector, attempt_number, error_message, error_code, 
+                trace_id, payment_id, merchant_id, timestamp, status,
+                connector, attempt_number, error_message, error_code,
                 duration_ms, request_data, response_data
             )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
@@ -394,24 +381,24 @@ impl PaymentCoreService {
         .bind(&trace.response_data)
         .execute(&self.db_pool)
         .await?;
-        
+
         Ok(())
     }
-    
+
     // 更新跟踪数据
     async fn update_trace(&self, trace: PaymentTrace) -> Result<(), Box<dyn std::error::Error>> {
         // 更新跟踪记录
         // ...
         Ok(())
     }
-    
+
     // 记录异常
     async fn record_exception(&self, exception: &PaymentException) -> Result<(), Box<dyn std::error::Error>> {
         // 记录异常到数据库
         // ...
         Ok(())
     }
-    
+
     // 处理异常
     async fn handle_exception(&self, exception: &PaymentException) -> Result<PaymentStatus, Box<dyn std::error::Error>> {
         if let Some(handler) = self.exception_handlers.get(&exception.exception_type) {
@@ -425,12 +412,12 @@ impl PaymentCoreService {
             Ok(PaymentStatus::Failed)
         }
     }
-    
+
     // 转换为Hyperswitch请求
     fn convert_to_hyperswitch_request(&self, request: PaymentRequest, payment_id: Uuid) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
         // 根据不同的支付方法构建不同的请求
         // ...
-        
+
         // 示例转换代码
         let hyperswitch_request = match request.payment_method {
             PaymentMethod::Card { card_number, card_exp_month, card_exp_year, card_holder_name } => {
@@ -463,10 +450,10 @@ impl PaymentCoreService {
                 serde_json::json!({})
             }
         };
-        
+
         Ok(hyperswitch_request)
     }
-    
+
     // 转换Hyperswitch状态为内部状态
     fn convert_hyperswitch_status(&self, status: &str) -> PaymentStatus {
         match status {
@@ -483,7 +470,7 @@ impl PaymentCoreService {
 }
 ```
 
-## 3 二、支付撤销、对冲、对账和清算系统
+## 1.3 二、支付撤销、对冲、对账和清算系统
 
 ```rust
 use chrono::{DateTime, Utc, Duration, NaiveDate};
@@ -580,8 +567,8 @@ struct FinancialService {
 #[async_trait::async_trait]
 trait ReconciliationRule: Send + Sync {
     async fn reconcile(
-        &self, 
-        system_records: &[ReconciliationItem], 
+        &self,
+        system_records: &[ReconciliationItem],
         connector_records: &[ReconciliationItem]
     ) -> Result<Vec<ReconciliationItem>, Box<dyn std::error::Error>>;
 }
@@ -596,52 +583,52 @@ impl FinancialService {
             .max_connections(20)
             .connect(database_url)
             .await?;
-            
+
         // 初始化对账规则
         let mut reconciliation_rules: HashMap<String, Box<dyn ReconciliationRule>> = HashMap::new();
-        
+
         Ok(Self {
             db_pool,
             payment_service,
             reconciliation_rules,
         })
     }
-    
+
     // 撤销支付
     #[instrument(skip(self), fields(payment_id = %payment_id))]
     async fn cancel_payment(&self, payment_id: Uuid, reason: &str) -> Result<PaymentStatus, Box<dyn std::error::Error>> {
         info!("开始撤销支付流程");
-        
+
         // 1. 检查支付状态是否可撤销
         let payment = self.get_payment(payment_id).await?;
-        
-        if payment.status != PaymentStatus::Authorized && 
-           payment.status != PaymentStatus::Processing && 
+
+        if payment.status != PaymentStatus::Authorized &&
+           payment.status != PaymentStatus::Processing &&
            payment.status != PaymentStatus::Created {
             return Err(format!("支付状态为 {:?}, 不可撤销", payment.status).into());
         }
-        
+
         // 2. 调用Hyperswitch撤销接口
         let trace_id = Uuid::new_v4();
         let start_time = std::time::Instant::now();
-        
+
         let result = match self.payment_service.hyperswitch_client.cancel_payment(&payment_id.to_string()).await {
             Ok(response) => {
                 // 记录成功的撤销操作
                 info!(payment_id = %payment_id, "支付撤销成功");
-                
+
                 // 更新支付状态
                 let status = self.payment_service.convert_hyperswitch_status(&response.status);
-                
+
                 // 创建会计分录
                 self.create_accounting_entries(
-                    payment_id, 
-                    "payment_cancel", 
-                    payment.amount, 
-                    &payment.currency, 
+                    payment_id,
+                    "payment_cancel",
+                    payment.amount,
+                    &payment.currency,
                     &format!("支付撤销: {}", reason)
                 ).await?;
-                
+
                 status
             },
             Err(e) => {
@@ -659,15 +646,15 @@ impl FinancialService {
                     retry_count: 0,
                     resolution_timestamp: None,
                 };
-                
+
                 self.payment_service.record_exception(&exception).await?;
-                
+
                 return Err(format!("支付撤销失败: {}", e).into());
             }
         };
-        
+
         let duration_ms = start_time.elapsed().as_millis() as u64;
-        
+
         // 3. 记录撤销轨迹
         self.payment_service.create_trace(PaymentTrace {
             trace_id,
@@ -687,36 +674,36 @@ impl FinancialService {
                 "status": format!("{:?}", result)
             })),
         }).await?;
-        
+
         Ok(result)
     }
-    
+
     // 支付退款
     #[instrument(skip(self), fields(payment_id = %payment_id))]
     async fn refund_payment(
-        &self, 
-        payment_id: Uuid, 
-        amount: Option<u64>, 
+        &self,
+        payment_id: Uuid,
+        amount: Option<u64>,
         reason: &str
     ) -> Result<Uuid, Box<dyn std::error::Error>> {
         info!("开始退款流程");
-        
+
         // 1. 检查支付状态是否可退款
         let payment = self.get_payment(payment_id).await?;
-        
-        if payment.status != PaymentStatus::Captured && 
+
+        if payment.status != PaymentStatus::Captured &&
            payment.status != PaymentStatus::Settled {
             return Err(format!("支付状态为 {:?}, 不可退款", payment.status).into());
         }
-        
+
         // 2. 确定退款金额
         let refund_amount = amount.unwrap_or(payment.amount);
-        
+
         // 3. 调用Hyperswitch退款接口
         let refund_id = Uuid::new_v4();
         let trace_id = Uuid::new_v4();
         let start_time = std::time::Instant::now();
-        
+
         let result = match self.payment_service.hyperswitch_client.refund_payment(
             &payment_id.to_string(),
             &refund_id.to_string(),
@@ -726,21 +713,21 @@ impl FinancialService {
             Ok(response) => {
                 // 记录成功的退款操作
                 info!(
-                    payment_id = %payment_id, 
-                    refund_id = %refund_id, 
-                    amount = refund_amount, 
+                    payment_id = %payment_id,
+                    refund_id = %refund_id,
+                    amount = refund_amount,
                     "支付退款成功"
                 );
-                
+
                 // 创建会计分录
                 self.create_accounting_entries(
-                    payment_id, 
-                    "payment_refund", 
-                    Decimal::from(refund_amount), 
-                    &payment.currency, 
+                    payment_id,
+                    "payment_refund",
+                    Decimal::from(refund_amount),
+                    &payment.currency,
                     &format!("支付退款: {}", reason)
                 ).await?;
-                
+
                 refund_id
             },
             Err(e) => {
@@ -758,25 +745,25 @@ impl FinancialService {
                     retry_count: 0,
                     resolution_timestamp: None,
                 };
-                
+
                 self.payment_service.record_exception(&exception).await?;
-                
+
                 return Err(format!("支付退款失败: {}", e).into());
             }
         };
-        
+
         let duration_ms = start_time.elapsed().as_millis() as u64;
-        
+
         // 4. 记录退款轨迹
         self.payment_service.create_trace(PaymentTrace {
             trace_id,
             payment_id,
             merchant_id: payment.customer_id.unwrap_or_default(),
             timestamp: Utc::now(),
-            status: if refund_amount == payment.amount { 
-                PaymentStatus::Refunded 
-            } else { 
-                PaymentStatus::PartiallyRefunded 
+            status: if refund_amount == payment.amount {
+                PaymentStatus::Refunded
+            } else {
+                PaymentStatus::PartiallyRefunded
             },
             connector: payment.connector_used,
             attempt_number: 1,
@@ -792,10 +779,10 @@ impl FinancialService {
                 "refund_id": refund_id.to_string()
             })),
         }).await?;
-        
+
         Ok(result)
     }
-    
+
     // 执行对账
     #[instrument(skip(self), fields(merchant_id = %merchant_id, connector = %connector))]
     async fn reconcile_payments(
@@ -806,10 +793,10 @@ impl FinancialService {
         end_date: DateTime<Utc>,
     ) -> Result<ReconciliationBatch, Box<dyn std::error::Error>> {
         info!("开始对账流程");
-        
+
         // 1. 创建对账批次
         let batch_id = Uuid::new_v4();
-        
+
         let batch = ReconciliationBatch {
             batch_id,
             merchant_id: merchant_id.to_string(),
@@ -827,28 +814,28 @@ impl FinancialService {
             created_at: Utc::now(),
             completed_at: None,
         };
-        
+
         // 保存批次信息
         // ...
-        
+
         // 2. 获取系统记录
         let system_records = self.get_system_records(merchant_id, connector, start_date, end_date).await?;
-        
+
         // 3. 获取渠道记录（通常是从渠道下载报表或API获取）
         let connector_records = self.fetch_connector_records(connector, merchant_id, start_date, end_date).await?;
-        
+
         // 4. 执行对账
         let rule = self.reconciliation_rules.get(connector).ok_or_else(|| {
             format!("没有找到渠道 {} 的对账规则", connector)
         })?;
-        
+
         let reconciled_items = rule.reconcile(&system_records, &connector_records).await?;
-        
+
         // 5. 处理对账结果
         let mut matched_count = 0;
         let mut unmatched_count = 0;
         let mut discrepancy_amount = Decimal::new(0, 0);
-        
+
         for item in &reconciled_items {
             if item.is_reconciled {
                 matched_count += 1;
@@ -860,23 +847,23 @@ impl FinancialService {
                     discrepancy_amount += item.amount;
                 }
             }
-            
+
             // 保存对账项
             // ...
         }
-        
+
         // 6. 系统中有但渠道没有的记录
         let system_payment_ids: HashSet<_> = system_records.iter()
             .map(|item| item.payment_id)
             .collect();
-            
+
         let connector_payment_ids: HashSet<_> = connector_records.iter()
             .map(|item| item.payment_id)
             .collect();
-            
+
         let missing_transactions = system_payment_ids.difference(&connector_payment_ids).count() as i32;
         let extra_transactions = connector_payment_ids.difference(&system_payment_ids).count() as i32;
-        
+
         // 7. 更新对账批次结果
         let updated_batch = ReconciliationBatch {
             batch_id,
@@ -895,10 +882,10 @@ impl FinancialService {
             created_at: batch.created_at,
             completed_at: Some(Utc::now()),
         };
-        
+
         // 保存更新后的批次信息
         // ...
-        
+
         info!(
             batch_id = %batch_id,
             matched = matched_count,
@@ -907,10 +894,10 @@ impl FinancialService {
             extra = extra_transactions,
             "对账完成"
         );
-        
+
         Ok(updated_batch)
     }
-    
+
     // 生成清算记录
     #[instrument(skip(self), fields(merchant_id = %merchant_id, connector = %connector))]
     async fn generate_settlement(
@@ -920,18 +907,18 @@ impl FinancialService {
         settlement_date: DateTime<Utc>,
     ) -> Result<SettlementRecord, Box<dyn std::error::Error>> {
         info!("开始生成清算记录");
-        
+
         // 1. 查询需要清算的交易
         let day_start = settlement_date.date().and_hms_opt(0, 0, 0).unwrap();
         let day_end = settlement_date.date().and_hms_opt(23, 59, 59).unwrap();
-        
+
         let transactions = sqlx::query!(
             r#"
-            SELECT 
+            SELECT
                 payment_id, amount, currency, status, fees
-            FROM 
+            FROM
                 payments
-            WHERE 
+            WHERE
                 merchant_id = $1 AND
                 connector = $2 AND
                 created_at BETWEEN $3 AND $4 AND
@@ -945,34 +932,34 @@ impl FinancialService {
         )
         .fetch_all(&self.db_pool)
         .await?;
-        
+
         if transactions.is_empty() {
             return Err("没有找到需要清算的交易".into());
         }
-        
+
         // 2. 计算总金额和手续费
         let mut total_amount = Decimal::new(0, 0);
         let mut total_fees = Decimal::new(0, 0);
         let mut payment_ids = Vec::new();
         let mut currencies = HashSet::new();
-        
+
         for transaction in &transactions {
             total_amount += transaction.amount;
             total_fees += transaction.fees.unwrap_or(Decimal::new(0, 0));
             payment_ids.push(Uuid::parse_str(&transaction.payment_id).unwrap());
             currencies.insert(transaction.currency.clone());
         }
-        
+
         // 确保所有交易都是同一种货币
         if currencies.len() != 1 {
             return Err("清算批次中存在多种货币，无法清算".into());
         }
         let currency = currencies.into_iter().next().unwrap();
-        
+
         // 3. 创建清算记录
         let settlement_id = Uuid::new_v4();
         let settlement_reference = format!("SET-{}-{}", settlement_date.format("%Y%m%d"), merchant_id);
-        
+
         let settlement = SettlementRecord {
             settlement_id,
             merchant_id: merchant_id.to_string(),
@@ -993,12 +980,12 @@ impl FinancialService {
             created_at: Utc::now(),
             updated_at: Utc::now(),
         };
-        
+
         // 4. 保存结算记录到数据库
         sqlx::query!(
             r#"
             INSERT INTO settlements (
-                settlement_id, merchant_id, connector, settlement_date, amount, currency, 
+                settlement_id, merchant_id, connector, settlement_date, amount, currency,
                 fees, net_amount, status, settlement_reference, created_at, updated_at
             ) VALUES (
                 $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
@@ -1019,12 +1006,12 @@ impl FinancialService {
         )
         .execute(&self.db_pool)
         .await?;
-        
+
         // 5. 更新支付记录的结算ID
         for payment_id in &settlement.payment_ids {
             sqlx::query!(
                 r#"
-                UPDATE payments 
+                UPDATE payments
                 SET settlement_id = $1, updated_at = $2
                 WHERE payment_id = $3
                 "#,
@@ -1035,10 +1022,10 @@ impl FinancialService {
             .execute(&self.db_pool)
             .await?;
         }
-        
+
         // 6. 生成会计分录
         self.generate_accounting_entries(&settlement).await?;
-        
+
         info!(
             settlement_id = %settlement.settlement_id,
             amount = %settlement.amount,
@@ -1046,10 +1033,10 @@ impl FinancialService {
             net_amount = %settlement.net_amount,
             "清算记录已生成"
         );
-        
+
         Ok(settlement)
     }
-    
+
     // 处理支付对冲
     #[instrument(skip(self), fields(payment_id = %payment_id))]
     async fn process_payment_reversal(
@@ -1059,20 +1046,20 @@ impl FinancialService {
         reason: &str
     ) -> Result<PaymentReversal, Box<dyn std::error::Error>> {
         info!("开始处理支付对冲");
-        
+
         // 1. 获取原始支付信息
         let payment = self.payment_service.get_payment(payment_id).await?;
-        
+
         if payment.status != PaymentStatus::Captured {
             return Err(format!("支付状态 {:?} 不允许对冲操作", payment.status).into());
         }
-        
+
         // 2. 确定对冲金额
         let reversal_amount = amount.unwrap_or(payment.amount);
         if reversal_amount > payment.amount {
             return Err("对冲金额不能大于原始支付金额".into());
         }
-        
+
         // 3. 创建对冲记录
         let reversal_id = Uuid::new_v4();
         let reversal = PaymentReversal {
@@ -1087,26 +1074,26 @@ impl FinancialService {
             updated_at: Utc::now(),
             metadata: HashMap::new(),
         };
-        
+
         // 4. 调用Hyperswitch API执行对冲
         let hyperswitch_request = serde_json::json!({
             "payment_id": payment_id.to_string(),
             "amount": reversal_amount,
             "reason": reason
         });
-        
+
         let hyperswitch_response = self.payment_service
             .hyperswitch_client
             .reverse_payment(&payment.connector_used, &hyperswitch_request)
             .await?;
-        
+
         // 5. 更新对冲状态
         let status = match hyperswitch_response["status"].as_str() {
             Some("succeeded") => ReversalStatus::Completed,
             Some("failed") => ReversalStatus::Failed,
             _ => ReversalStatus::Processing,
         };
-        
+
         let updated_reversal = PaymentReversal {
             status,
             updated_at: Utc::now(),
@@ -1117,12 +1104,12 @@ impl FinancialService {
             },
             ..reversal
         };
-        
+
         // 6. 保存对冲记录
         sqlx::query!(
             r#"
             INSERT INTO payment_reversals (
-                reversal_id, payment_id, amount, currency, status, reason, 
+                reversal_id, payment_id, amount, currency, status, reason,
                 reversal_reference, created_at, updated_at, metadata
             ) VALUES (
                 $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
@@ -1141,7 +1128,7 @@ impl FinancialService {
         )
         .execute(&self.db_pool)
         .await?;
-        
+
         // 7. 如果对冲成功，更新支付状态
         if status == ReversalStatus::Completed {
             if reversal_amount == payment.amount {
@@ -1152,21 +1139,21 @@ impl FinancialService {
                 // 这里简化处理，实际系统中可能需要更精细的状态管理
                 self.payment_service.update_payment_status(payment_id, PaymentStatus::PartiallyRefunded).await?;
             }
-            
+
             // 8. 生成对冲的会计分录
             self.generate_reversal_accounting_entries(&updated_reversal, &payment).await?;
         }
-        
+
         info!(
             reversal_id = %updated_reversal.reversal_id,
             status = ?updated_reversal.status,
             amount = %updated_reversal.amount,
             "支付对冲处理完成"
         );
-        
+
         Ok(updated_reversal)
     }
-    
+
     // 生成会计分录
     async fn generate_accounting_entries(
         &self,
@@ -1176,10 +1163,10 @@ impl FinancialService {
             settlement_id = %settlement.settlement_id,
             "生成会计分录"
         );
-        
+
         let now = Utc::now();
         let mut entries = Vec::new();
-        
+
         // 1. 收入记账 - 借记商户应收账款
         let receivable_entry = AccountingEntry {
             entry_id: Uuid::new_v4(),
@@ -1195,7 +1182,7 @@ impl FinancialService {
             created_at: now,
         };
         entries.push(receivable_entry);
-        
+
         // 2. 收入记账 - 贷记收入账户
         let revenue_entry = AccountingEntry {
             entry_id: Uuid::new_v4(),
@@ -1211,7 +1198,7 @@ impl FinancialService {
             created_at: now,
         };
         entries.push(revenue_entry);
-        
+
         // 3. 费用记账 - 借记费用
         if settlement.fees > Decimal::new(0, 0) {
             let fee_expense_entry = AccountingEntry {
@@ -1228,7 +1215,7 @@ impl FinancialService {
                 created_at: now,
             };
             entries.push(fee_expense_entry);
-            
+
             // 4. 费用记账 - 贷记应付账款
             let fee_payable_entry = AccountingEntry {
                 entry_id: Uuid::new_v4(),
@@ -1245,13 +1232,13 @@ impl FinancialService {
             };
             entries.push(fee_payable_entry);
         }
-        
+
         // 5. 将分录保存到数据库
         for entry in &entries {
             sqlx::query!(
                 r#"
                 INSERT INTO accounting_entries (
-                    entry_id, transaction_id, account_code, account_name, debit_amount, 
+                    entry_id, transaction_id, account_code, account_name, debit_amount,
                     credit_amount, transaction_date, entry_type, description, reference, created_at
                 ) VALUES (
                     $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
@@ -1272,10 +1259,10 @@ impl FinancialService {
             .execute(&self.db_pool)
             .await?;
         }
-        
+
         Ok(entries)
     }
-    
+
     // 生成对冲的会计分录
     async fn generate_reversal_accounting_entries(
         &self,
@@ -1284,7 +1271,7 @@ impl FinancialService {
     ) -> Result<Vec<AccountingEntry>, Box<dyn std::error::Error>> {
         let now = Utc::now();
         let mut entries = Vec::new();
-        
+
         // 1. 对冲借记 - 贷记应收账款(冲销原始交易)
         let receivable_entry = AccountingEntry {
             entry_id: Uuid::new_v4(),
@@ -1300,7 +1287,7 @@ impl FinancialService {
             created_at: now,
         };
         entries.push(receivable_entry);
-        
+
         // 2. 对冲贷记 - 借记收入(冲销收入)
         let revenue_entry = AccountingEntry {
             entry_id: Uuid::new_v4(),
@@ -1316,13 +1303,13 @@ impl FinancialService {
             created_at: now,
         };
         entries.push(revenue_entry);
-        
+
         // 3. 保存分录到数据库
         for entry in &entries {
             sqlx::query!(
                 r#"
                 INSERT INTO accounting_entries (
-                    entry_id, transaction_id, account_code, account_name, debit_amount, 
+                    entry_id, transaction_id, account_code, account_name, debit_amount,
                     credit_amount, transaction_date, entry_type, description, reference, created_at
                 ) VALUES (
                     $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
@@ -1343,13 +1330,13 @@ impl FinancialService {
             .execute(&self.db_pool)
             .await?;
         }
-        
+
         Ok(entries)
     }
 }
 ```
 
-## 4 三、分布式、分层对账与会计分析系统
+## 1.4 三、分布式、分层对账与会计分析系统
 
 ```rust
 use chrono::{DateTime, Utc, Duration, NaiveDate};
@@ -1437,12 +1424,12 @@ struct DistributorAllocation {
     commission_amount: Decimal,
 ...(about 246 lines omitted)...
         let budget_vs_actual = self.get_budget_vs_actual(
-            profit_center_id, 
-            account_category_ids, 
-            fiscal_year, 
+            profit_center_id,
+            account_category_ids,
+            fiscal_year,
             Some(fiscal_month)
         ).await?;
-        
+
         // 2. 计算各指标
         for item in &budget_vs_actual {
             // 计算差异金额
@@ -1453,17 +1440,17 @@ struct DistributorAllocation {
                 } else {
                     Decimal::new(0, 0)
                 };
-                
+
                 // 更新预算项
                 sqlx::query!(
                     r#"
                     UPDATE budget_items
-                    SET 
+                    SET
                         actual_amount = $1,
                         variance_amount = $2,
                         variance_percentage = $3,
                         updated_at = $4
-                    WHERE 
+                    WHERE
                         budget_id = $5
                     "#,
                     item.actual_amount,
@@ -1476,10 +1463,10 @@ struct DistributorAllocation {
                 .await?;
             }
         }
-        
+
         Ok(budget_vs_actual)
     }
-    
+
     // 计算支付渠道成本和利润
     async fn calculate_channel_profitability(
         &self,
@@ -1488,53 +1475,53 @@ struct DistributorAllocation {
         connector: Option<String>
     ) -> Result<Vec<ChannelProfitability>, Box<dyn std::error::Error>> {
         info!("计算支付渠道成本与利润");
-        
+
         // 构建SQL查询
         let query = if let Some(connector_name) = connector {
             format!(
                 "
-                SELECT 
+                SELECT
                     connector,
                     currency,
                     SUM(amount) as total_amount,
                     SUM(fees) as total_fees,
                     COUNT(*) as transaction_count
-                FROM 
+                FROM
                     payments
-                WHERE 
+                WHERE
                     status = 'captured' AND
                     created_at BETWEEN $1 AND $2 AND
                     connector = '{}'
-                GROUP BY 
+                GROUP BY
                     connector, currency
                 ",
                 connector_name
             )
         } else {
             "
-            SELECT 
+            SELECT
                 connector,
                 currency,
                 SUM(amount) as total_amount,
                 SUM(fees) as total_fees,
                 COUNT(*) as transaction_count
-            FROM 
+            FROM
                 payments
-            WHERE 
+            WHERE
                 status = 'captured' AND
                 created_at BETWEEN $1 AND $2
-            GROUP BY 
+            GROUP BY
                 connector, currency
             ".to_string()
         };
-        
+
         // 执行查询
         let rows = sqlx::query(&query)
             .bind(start_date)
             .bind(end_date)
             .fetch_all(&self.db_pool)
             .await?;
-        
+
         // 处理结果
         let mut results = Vec::new();
         for row in rows {
@@ -1543,11 +1530,11 @@ struct DistributorAllocation {
             let total_amount: Decimal = row.get("total_amount");
             let total_fees: Decimal = row.get("total_fees");
             let transaction_count: i64 = row.get("transaction_count");
-            
+
             // 获取渠道的收费设置
             let merchant_fee_rate = self.get_merchant_fee_rate(&connector, &currency).await?;
             let merchant_fees = total_amount * merchant_fee_rate;
-            
+
             // 计算利润
             let profit = merchant_fees - total_fees;
             let profit_margin = if total_amount != Decimal::new(0, 0) {
@@ -1555,7 +1542,7 @@ struct DistributorAllocation {
             } else {
                 Decimal::new(0, 0)
             };
-            
+
             results.push(ChannelProfitability {
                 connector,
                 currency,
@@ -1574,15 +1561,15 @@ struct DistributorAllocation {
                 period_end: end_date,
             });
         }
-        
+
         // 保存到分析表
         for result in &results {
             self.save_channel_profitability(result).await?;
         }
-        
+
         Ok(results)
     }
-    
+
     // 获取商户费率
     async fn get_merchant_fee_rate(
         &self,
@@ -1592,7 +1579,7 @@ struct DistributorAllocation {
         // 从费率配置表中查询
         let result = sqlx::query!(
             r#"
-            SELECT fee_rate 
+            SELECT fee_rate
             FROM merchant_fee_configs
             WHERE connector = $1 AND currency = $2
             "#,
@@ -1601,13 +1588,13 @@ struct DistributorAllocation {
         )
         .fetch_optional(&self.db_pool)
         .await?;
-        
+
         match result {
             Some(row) => Ok(row.fee_rate),
             None => Ok(Decimal::new(25, 3))  // 默认2.5%
         }
     }
-    
+
     // 保存渠道利润分析
     async fn save_channel_profitability(
         &self,
@@ -1647,13 +1634,13 @@ struct DistributorAllocation {
         )
         .execute(&self.db_pool)
         .await?;
-        
+
         Ok(())
     }
 }
 ```
 
-## 5 四、API接口实现
+## 1.5 四、API接口实现
 
 ```rust
 use axum::{
@@ -1683,29 +1670,29 @@ async fn setup_api_routes(
         .route("/api/v1/payments/:id/capture", post(capture_payment))
         .route("/api/v1/payments/:id/cancel", post(cancel_payment))
         .route("/api/v1/payments/:id/traces", get(get_payment_traces))
-        
+
         // 支付对冲与撤销API
         .route("/api/v1/payments/:id/refunds", post(create_refund))
         .route("/api/v1/payments/:id/refunds", get(list_refunds))
         .route("/api/v1/payments/:id/reversals", post(create_reversal))
-        
+
         // 对账API
         .route("/api/v1/reconciliation/batches", post(create_reconciliation_batch))
         .route("/api/v1/reconciliation/batches/:id", get(get_reconciliation_batch))
         .route("/api/v1/reconciliation/batches/:id/items", get(get_reconciliation_items))
         .route("/api/v1/reconciliation/batches/:id/execute", post(execute_reconciliation))
-        
+
         // 清算API
         .route("/api/v1/settlements", post(create_settlement))
         .route("/api/v1/settlements/:id", get(get_settlement))
         .route("/api/v1/settlements/merchant/:merchant_id", get(list_merchant_settlements))
-        
+
         // 会计分析API
         .route("/api/v1/accounting/entries/:transaction_id", get(get_accounting_entries))
         .route("/api/v1/accounting/ledger", get(get_account_ledger))
         .route("/api/v1/accounting/profit-centers/:id/budget", get(get_profit_center_budget))
         .route("/api/v1/accounting/analytics/channel-profitability", get(get_channel_profitability))
-        
+
         // 共享服务层
         .layer(Extension(payment_service))
         .layer(Extension(financial_service))
@@ -1770,7 +1757,7 @@ async fn create_reversal(
     Json(request): Json<ReversalRequest>
 ) -> impl IntoResponse {
     info!("请求创建支付对冲");
-    
+
     match financial_service.process_payment_reversal(
         payment_id,
         request.amount,
@@ -1803,7 +1790,7 @@ async fn create_reconciliation_batch(
         connector = %request.connector,
         "创建对账批次"
     );
-    
+
     match financial_service.create_reconciliation_batch(
         &request.merchant_id,
         &request.connector,
@@ -1833,13 +1820,13 @@ async fn get_channel_profitability(
     Query(params): Query<ChannelProfitabilityParams>
 ) -> impl IntoResponse {
     info!("请求渠道利润率分析");
-    
+
     let start_date = params.start_date.unwrap_or_else(|| {
         Utc::now() - chrono::Duration::days(30)
     });
-    
+
     let end_date = params.end_date.unwrap_or_else(|| Utc::now());
-    
+
     match accounting_service.calculate_channel_profitability(
         start_date,
         end_date,
@@ -1862,7 +1849,7 @@ async fn get_channel_profitability(
 }
 ```
 
-## 6 五、数据库模式设计
+## 1.6 五、数据库模式设计
 
 下面是支持这个系统的关键数据库表设计：
 
@@ -1973,10 +1960,10 @@ CREATE TABLE reconciliation_items (
 );
 
 /*
-Let me continue with the SQL schema definition for 
-the payment system using Hyperswitch. 
-I need to finish the settlements table and 
-add any other remaining tables for 
+Let me continue with the SQL schema definition for
+the payment system using Hyperswitch.
+I need to finish the settlements table and
+add any other remaining tables for
 the accounting and financial management components.
 */
 
@@ -2140,7 +2127,7 @@ CREATE TABLE connector_fee_configs (
 );
 ```
 
-## 7 六、构建主程序和配置
+## 1.7 六、构建主程序和配置
 
 这里实现主程序，将所有组件连接起来：
 
@@ -2160,55 +2147,55 @@ mod database;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 初始化日志
     tracing_subscriber::fmt::init();
-    
+
     info!("启动支付系统服务...");
-    
+
     // 加载配置
     let config = load_configuration().await?;
-    
+
     // 初始化数据库连接池
     let db_pool = database::init_database(&config.database_url).await?;
-    
+
     // 初始化Hyperswitch客户端
     let hyperswitch_client = payment::init_hyperswitch_client(&config.hyperswitch_api_key, &config.hyperswitch_url).await?;
-    
+
     // 创建各服务
     let payment_service = Arc::new(payment::PaymentCoreService::new(
         db_pool.clone(),
         hyperswitch_client,
         &config
     ).await?);
-    
+
     let financial_service = Arc::new(finance::FinancialService::new(
         db_pool.clone(),
         payment_service.clone(),
         &config
     ).await?);
-    
+
     let accounting_service = Arc::new(accounting::AccountingService::new(
         db_pool.clone(),
         &config
     ).await?);
-    
+
     // 设置API路由
     let app = api::setup_api_routes(
         payment_service.clone(),
         financial_service.clone(),
         accounting_service.clone()
     ).await;
-    
+
     // 启动后台任务
     start_background_tasks(
         financial_service.clone(),
         accounting_service.clone(),
         &config
     ).await;
-    
+
     // 启动HTTP服务器
     let addr = format!("0.0.0.0:{}", config.port);
     let listener = tokio::net::TcpListener::bind(&addr).await?;
     info!("API服务已启动在 {}", addr);
-    
+
     // 等待优雅关闭信号
     let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel::<()>();
     tokio::spawn(async move {
@@ -2216,16 +2203,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("接收到关闭信号，开始优雅关闭");
         let _ = shutdown_tx.send(());
     });
-    
+
     // 启动服务器并等待关闭信号
     axum::serve(listener, app)
         .with_graceful_shutdown(async {
             let _ = shutdown_rx.await;
         })
         .await?;
-    
+
     info!("服务优雅关闭完成");
-    
+
     Ok(())
 }
 
@@ -2233,7 +2220,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 async fn load_configuration() -> Result<Config, Box<dyn std::error::Error>> {
     // 实现配置加载逻辑
     // ...
-    
+
     Ok(Config {
         database_url: std::env::var("DATABASE_URL")
             .unwrap_or_else(|_| "postgres://user:password@localhost:5432/payments".to_string()),
@@ -2268,7 +2255,7 @@ async fn start_background_tasks(
             }
         }
     });
-    
+
     // 启动清算任务
     tokio::spawn({
         let service = financial_service.clone();
@@ -2282,7 +2269,7 @@ async fn start_background_tasks(
             }
         }
     });
-    
+
     // 启动会计分析任务
     tokio::spawn({
         let service = accounting_service.clone();
@@ -2299,7 +2286,7 @@ async fn start_background_tasks(
 }
 ```
 
-## 8 七、系统配置和部署
+## 1.8 七、系统配置和部署
 
 使用Docker Compose实现系统部署：
 
@@ -2442,7 +2429,7 @@ volumes:
   clickhouse-data:
 ```
 
-## 9 八、总结与关键功能
+## 1.9 八、总结与关键功能
 
 这个使用Rust和Hyperswitch实现的支付系统实现了以下关键功能：
 

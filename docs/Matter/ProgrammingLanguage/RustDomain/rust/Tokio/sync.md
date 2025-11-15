@@ -1,21 +1,14 @@
-# rust Tokio 同步机制
-
-以下是关于 Tokio 同步机制 的详细介绍，包括定义、概念、示例代码以及思维导图。内容以 Markdown 格式输出。
-Tokio 同步机制
-Tokio 提供了多种同步机制，用于在异步任务之间进行同步和通信。
-这些机制包括互斥锁（Mutex）、信号量（Semaphore）、屏障（Barrier）、通道（Channel）、通知（Notify）等。
+# 1. rust Tokio 同步机制
 
 ## 目录
 
-- [rust Tokio 同步机制](#rust-tokio-同步机制)
-  - [目录](#目录)
-  - [1. 互斥锁（Mutex）](#1-互斥锁mutex)
-  - [2. 信号量（Semaphore）](#2-信号量semaphore)
-  - [3. 屏障（Barrier）](#3-屏障barrier)
-  - [4. 通道（Channel）](#4-通道channel)
-  - [5. 通知（Notify）](#5-通知notify)
-
-## 1. 互斥锁（Mutex）
+- [1. rust Tokio 同步机制](#rust-tokio-同步机制)
+  - [1.1 互斥锁（Mutex）](#1-互斥锁mutex)
+  - [1.2 信号量（Semaphore）](#2-信号量semaphore)
+  - [1.3 屏障（Barrier）](#3-屏障barrier)
+  - [1.4 通道（Channel）](#4-通道channel)
+  - [1.5 通知（Notify）](#5-通知notify)
+## 1.1 互斥锁（Mutex）
 
 互斥锁用于保护共享资源，确保同一时间只有一个任务可以访问该资源。
 概念
@@ -49,7 +42,7 @@ async fn main() {
 }
 ```
 
-## 2. 信号量（Semaphore）
+## 1.2 信号量（Semaphore）
 
 信号量用于限制同时访问某个资源的任务数量。
 概念
@@ -84,7 +77,7 @@ async fn main() {
     }
 ```
 
-## 3. 屏障（Barrier）
+## 1.3 屏障（Barrier）
 
 屏障用于等待多个任务到达某个点。
 概念
@@ -117,7 +110,7 @@ async fn main() {
     }
 ```
 
-## 4. 通道（Channel）
+## 1.4 通道（Channel）
 
 通道用于任务之间的消息传递。
 概念
@@ -151,7 +144,7 @@ MPSC 通道
     }
 ```
 
-## 5. 通知（Notify）
+## 1.5 通知（Notify）
 
 通知用于任务间的通知机制。
 概念

@@ -143,7 +143,7 @@ impl MessageQueue for NatsMessageQueue {
 
     async fn subscribe(&self, topic: &str) -> Result<impl Stream<Item = Result<Vec<u8>>>> {
         let subscription = self.client.subscribe(topic).await?;
-        
+
         Ok(try_stream! {
             while let Some(msg) = subscription.next().await {
                 yield msg.payload.to_vec();
@@ -178,14 +178,14 @@ impl MessageQueue for KafkaMessageQueue {
     async fn publish(&self, topic: &str, payload: &[u8]) -> Result<()> {
         let record = FutureRecord::to(topic)
             .payload(payload);
-        
+
         self.producer.send(record, Duration::from_secs(0)).await?;
         Ok(())
     }
 
     async fn subscribe(&self, topic: &str) -> Result<impl Stream<Item = Result<Vec<u8>>>> {
         self.consumer.subscribe(&[topic])?;
-        
+
         Ok(try_stream! {
             while let Some(msg) = self.consumer.stream().next().await {
                 match msg {
@@ -228,7 +228,7 @@ impl MessageQueue for MqttMessageQueue {
 
     async fn subscribe(&self, topic: &str) -> Result<impl Stream<Item = Result<Vec<u8>>>> {
         self.client.subscribe(topic, QoS::AtLeastOnce).await?;
-        
+
         Ok(try_stream! {
             while let Ok(notification) = self.eventloop.poll().await {
                 if let Event::Incoming(Packet::Publish(publish)) = notification {
@@ -254,26 +254,26 @@ impl<T: MessageQueue> MessageHandlerGenerator<T> {
     pub fn generate_message_stream(&self, topic: &str) -> impl Stream<Item = Result<Message>> {
         try_stream! {
             let mut subscription = self.queue.subscribe(topic).await?;
-            
+
             while let Some(payload) = subscription.next().await {
                 let message = Message::from_bytes(&payload?)?;
-                
+
                 if let Some(handler) = self.handlers.get(topic) {
                     handler.handle(&message).await?;
                 }
-                
+
                 yield message;
             }
         }
     }
 
     /// 生成消息发布流
-    pub fn generate_publish_stream<M: Into<Message>>(&self, topic: &str) 
-        -> impl Stream<Item = Result<()>> 
+    pub fn generate_publish_stream<M: Into<Message>>(&self, topic: &str)
+        -> impl Stream<Item = Result<()>>
     {
         try_stream! {
             let mut message_stream = self.message_source();
-            
+
             while let Some(message) = message_stream.next().await {
                 let payload = message.into().to_bytes()?;
                 self.queue.publish(topic, &payload).await?;
@@ -294,19 +294,19 @@ pub struct MessageTransformGenerator {
 
 impl MessageTransformGenerator {
     /// 生成消息转换流
-    pub fn generate_transform_stream<M: Message>(&self) 
-        -> impl Stream<Item = Result<M>> 
+    pub fn generate_transform_stream<M: Message>(&self)
+        -> impl Stream<Item = Result<M>>
     {
         try_stream! {
             let mut message_stream = self.message_source();
-            
+
             while let Some(message) = message_stream.next().await {
                 let mut transformed = message;
-                
+
                 for transform in &self.transforms {
                     transformed = transform.transform(transformed).await?;
                 }
-                
+
                 yield transformed;
             }
         }
@@ -320,17 +320,17 @@ pub struct MessageValidationGenerator {
 
 impl MessageValidationGenerator {
     /// 生成消息验证流
-    pub fn generate_validation_stream<M: Message>(&self) 
-        -> impl Stream<Item = Result<M>> 
+    pub fn generate_validation_stream<M: Message>(&self)
+        -> impl Stream<Item = Result<M>>
     {
         try_stream! {
             let mut message_stream = self.message_source();
-            
+
             while let Some(message) = message_stream.next().await {
                 for validator in &self.validators {
                     validator.validate(&message).await?;
                 }
-                
+
                 yield message;
             }
         }
@@ -349,7 +349,7 @@ pub struct ErrorHandlingGenerator {
 
 impl ErrorHandlingGenerator {
     /// 生成错误处理流
-    pub fn generate_error_handling_stream<S, T, E>(&self, stream: S) 
+    pub fn generate_error_handling_stream<S, T, E>(&self, stream: S)
         -> impl Stream<Item = Result<T, E>>
     where
         S: Stream<Item = Result<T, E>>,
@@ -357,7 +357,7 @@ impl ErrorHandlingGenerator {
     {
         try_stream! {
             let mut retries = 0;
-            
+
             while let Some(result) = stream.next().await {
                 match result {
                     Ok(item) => {
@@ -406,7 +406,7 @@ async fn main() -> Result<()> {
     // 处理 NATS 消息
     let nats_stream = generator.generate_message_stream("nats.topic");
     let nats_handler = MessageHandlerGenerator::new(nats);
-    
+
     let mut nats_messages = nats_handler
         .generate_message_stream("nats.topic")
         .transform(transform_gen.generate_transform_stream())
@@ -419,7 +419,7 @@ async fn main() -> Result<()> {
     // 处理 Kafka 消息
     let kafka_stream = generator.generate_message_stream("kafka.topic");
     let kafka_handler = MessageHandlerGenerator::new(kafka);
-    
+
     let mut kafka_messages = kafka_handler
         .generate_message_stream("kafka.topic")
         .transform(transform_gen.generate_transform_stream())
@@ -432,7 +432,7 @@ async fn main() -> Result<()> {
     // 处理 MQTT 消息
     let mqtt_stream = generator.generate_message_stream("mqtt/topic");
     let mqtt_handler = MessageHandlerGenerator::new(mqtt);
-    
+
     let mut mqtt_messages = mqtt_handler
         .generate_message_stream("mqtt/topic")
         .transform(transform_gen.generate_transform_stream())

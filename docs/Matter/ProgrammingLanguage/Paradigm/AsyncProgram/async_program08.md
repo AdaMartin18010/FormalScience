@@ -1,46 +1,46 @@
-# 异步编程与同步编程的全面分析
+# 1. 异步编程与同步编程的全面分析
 
 ## 目录
 
-- [异步编程与同步编程的全面分析](#异步编程与同步编程的全面分析)
-  - [1 思维导图](#1-思维导图)
-  - [1. 基本概念与定义](#1-基本概念与定义)
-    - [1.1 同步编程的本质](#11-同步编程的本质)
-    - [1.2 异步编程的本质](#12-异步编程的本质)
-    - [1.3 并发与并行的区别](#13-并发与并行的区别)
-  - [2. 形式化理论基础](#2-形式化理论基础)
-    - [2.1 顺序一致性模型](#21-顺序一致性模型)
-    - [2.2 异步计算的数学模型](#22-异步计算的数学模型)
-    - [2.3 等价性证明](#23-等价性证明)
-  - [3. Rust中的同步与异步](#3-rust中的同步与异步)
-    - [3.1 Rust同步编程模型](#31-rust同步编程模型)
-    - [3.2 Rust异步编程模型](#32-rust异步编程模型)
-    - [3.3 Future与async/await工作原理](#33-future与asyncawait工作原理)
-  - [4. Tokio架构与设计原理](#4-tokio架构与设计原理)
-    - [4.1 Tokio运行时架构](#41-tokio运行时架构)
-    - [4.2 调度器与工作窃取算法](#42-调度器与工作窃取算法)
-    - [4.3 事件驱动模型实现](#43-事件驱动模型实现)
-  - [5. 调度与物理世界映射](#5-调度与物理世界映射)
-    - [5.1 异步调度与现实世界类比](#51-异步调度与现实世界类比)
-    - [5.2 时间与资源约束](#52-时间与资源约束)
-    - [5.3 因果关系与依赖管理](#53-因果关系与依赖管理)
-  - [6. 设计模式与应用场景](#6-设计模式与应用场景)
-    - [6.1 异步设计模式](#61-异步设计模式)
-    - [6.2 最佳实践与反模式](#62-最佳实践与反模式)
-    - [6.3 混合同步异步系统](#63-混合同步异步系统)
-  - [7. 推理与验证](#7-推理与验证)
-    - [7.1 异步程序的形式验证](#71-异步程序的形式验证)
-    - [7.2 同步异步转换的等价性](#72-同步异步转换的等价性)
-    - [7.3 性能与正确性权衡](#73-性能与正确性权衡)
-  - [8. 哲学与思维模型](#8-哲学与思维模型)
-    - [8.1 同步思维与异步思维](#81-同步思维与异步思维)
-    - [8.2 确定性与非确定性](#82-确定性与非确定性)
-    - [8.3 复杂性管理](#83-复杂性管理)
-  - [思维导图](#思维导图)
+- [1. 异步编程与同步编程的全面分析](#1-异步编程与同步编程的全面分析)
+  - [目录](#目录)
+  - [1.1 基本概念与定义](#11-基本概念与定义)
+    - [1.1.1 同步编程的本质](#111-同步编程的本质)
+    - [1.1.2 异步编程的本质](#112-异步编程的本质)
+    - [1.1.3 并发与并行的区别](#113-并发与并行的区别)
+  - [1.2 形式化理论基础](#12-形式化理论基础)
+    - [1.2.1 顺序一致性模型](#121-顺序一致性模型)
+    - [1.2.2 异步计算的数学模型](#122-异步计算的数学模型)
+    - [1.2.3 等价性证明](#123-等价性证明)
+  - [1.3 Rust中的同步与异步](#13-rust中的同步与异步)
+    - [1.3.1 Rust同步编程模型](#131-rust同步编程模型)
+    - [1.3.2 Rust异步编程模型](#132-rust异步编程模型)
+    - [1.3.3 Future与async/await工作原理](#133-future与asyncawait工作原理)
+  - [1.4 Tokio架构与设计原理](#14-tokio架构与设计原理)
+    - [1.4.1 Tokio运行时架构](#141-tokio运行时架构)
+    - [1.4.2 调度器与工作窃取算法](#142-调度器与工作窃取算法)
+    - [1.4.3 事件驱动模型实现](#143-事件驱动模型实现)
+  - [1.5 调度与物理世界映射](#15-调度与物理世界映射)
+    - [1.5.1 异步调度与现实世界类比](#151-异步调度与现实世界类比)
+    - [1.5.2 时间与资源约束](#152-时间与资源约束)
+    - [1.5.3 因果关系与依赖管理](#153-因果关系与依赖管理)
+  - [1.6 设计模式与应用场景](#16-设计模式与应用场景)
+    - [1.6.1 异步设计模式](#161-异步设计模式)
+    - [1.6.2 最佳实践与反模式](#162-最佳实践与反模式)
+    - [1.6.3 混合同步异步系统](#163-混合同步异步系统)
+  - [1.7 推理与验证](#17-推理与验证)
+    - [1.7.1 异步程序的形式验证](#171-异步程序的形式验证)
+    - [1.7.2 同步异步转换的等价性](#172-同步异步转换的等价性)
+    - [1.7.3 性能与正确性权衡](#173-性能与正确性权衡)
+  - [1.8 哲学与思维模型](#18-哲学与思维模型)
+    - [1.8.1 同步思维与异步思维](#181-同步思维与异步思维)
+    - [1.8.2 确定性与非确定性](#182-确定性与非确定性)
+    - [1.8.3 复杂性管理](#183-复杂性管理)
+  - [1.9 思维导图](#19-思维导图)
 
-## 1. 基本概念与定义
+## 1.1 基本概念与定义
 
-### 1.1 同步编程的本质
+### 1.1.1 同步编程的本质
 
 同步编程是一种顺序执行的编程模型，其中每个操作必须等待前一个操作完成后才能开始。
 这种模型直观、易于理解，与人类线性思维方式相符。
@@ -65,7 +65,7 @@ fn process_data_sync() {
 - **直观性**：易于理解和推理
 - **资源利用率低**：在等待I/O操作时，CPU资源闲置
 
-### 1.2 异步编程的本质
+### 1.1.2 异步编程的本质
 
 异步编程允许在等待长时间操作（如I/O）完成的同时，程序可以继续执行其他任务。
 异步操作启动后立即返回一个表示未来结果的句柄，而不会阻塞当前执行线程。
@@ -97,7 +97,7 @@ fn main() {
 - **资源利用率高**：在等待I/O时可以执行其他任务
 - **复杂性增加**：引入额外的概念和抽象，增加理解和调试难度
 
-### 1.3 并发与并行的区别
+### 1.1.3 并发与并行的区别
 
 **并发(Concurrency)**：是指程序的结构设计使其能够同时处理多个任务。即使在单核CPU上，并发程序也能通过任务切换给人一种"同时"执行的错觉。
 
@@ -108,7 +108,7 @@ fn main() {
 async fn concurrent_example() {
     let task1 = async { /* 任务1 */ };
     let task2 = async { /* 任务2 */ };
-    
+
     // 并发执行两个任务
     tokio::join!(task1, task2);
 }
@@ -122,9 +122,9 @@ fn parallel_example() {
 }
 ```
 
-## 2. 形式化理论基础
+## 1.2 形式化理论基础
 
-### 2.1 顺序一致性模型
+### 1.2.1 顺序一致性模型
 
 顺序一致性是一种内存模型，要求所有操作看起来按照程序顺序执行，且所有处理器看到的操作顺序相同。同步编程自然符合顺序一致性，而异步编程需要特殊机制确保正确性。
 
@@ -138,7 +138,7 @@ fn parallel_example() {
 4. 所有处理器观察到的是相同的执行顺序 E
 5. 因此满足顺序一致性定义 ∎
 
-### 2.2 异步计算的数学模型
+### 1.2.2 异步计算的数学模型
 
 异步计算可以用偏序集和事件结构进行形式化描述。
 
@@ -155,12 +155,12 @@ fn parallel_example() {
 async fn causal_example() {
     let a = 1;  // 事件e₁
     let b = a + 1;  // 事件e₂，依赖于e₁
-    
+
     // e₁ ≤ e₂，表示e₁必须在e₂之前完成
 }
 ```
 
-### 2.3 等价性证明
+### 1.2.3 等价性证明
 
 定理：对于没有副作用的纯函数，其异步与同步实现在结果上等价。
 
@@ -172,9 +172,9 @@ async fn causal_example() {
 4. 由于f没有副作用，输入x相同时输出必然相同
 5. 因此两种计算方式得到相同结果 ∎
 
-## 3. Rust中的同步与异步
+## 1.3 Rust中的同步与异步
 
-### 3.1 Rust同步编程模型
+### 1.3.1 Rust同步编程模型
 
 Rust的同步编程建立在所有权系统和类型系统之上，通过编译时检查保证内存安全和线程安全。
 
@@ -186,7 +186,7 @@ use std::thread;
 fn sync_counter_example() {
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
-    
+
     for _ in 0..10 {
         let counter_clone = Arc::clone(&counter);
         let handle = thread::spawn(move || {
@@ -195,16 +195,16 @@ fn sync_counter_example() {
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     println!("计数器: {}", *counter.lock().unwrap());
 }
 ```
 
-### 3.2 Rust异步编程模型
+### 1.3.2 Rust异步编程模型
 
 Rust的异步编程基于Future特征和async/await语法，提供零成本抽象。
 
@@ -215,7 +215,7 @@ use std::sync::Arc;
 async fn async_counter_example() {
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
-    
+
     for _ in 0..10 {
         let counter_clone = Arc::clone(&counter);
         let handle = tokio::spawn(async move {
@@ -224,16 +224,16 @@ async fn async_counter_example() {
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.await.unwrap();
     }
-    
+
     println!("计数器: {}", *counter.lock().await);
 }
 ```
 
-### 3.3 Future与async/await工作原理
+### 1.3.3 Future与async/await工作原理
 
 Rust的Future是惰性的，只有被轮询(poll)时才会尝试推进计算。async/await语法糖将异步代码转换为状态机。
 
@@ -258,9 +258,9 @@ enum StateMachine {
 }
 ```
 
-## 4. Tokio架构与设计原理
+## 1.4 Tokio架构与设计原理
 
-### 4.1 Tokio运行时架构
+### 1.4.1 Tokio运行时架构
 
 Tokio是Rust生态系统中最流行的异步运行时，其架构包括：
 
@@ -274,7 +274,7 @@ Tokio是Rust生态系统中最流行的异步运行时，其架构包括：
 fn tokio_runtime_example() {
     // 创建多线程运行时
     let rt = tokio::runtime::Runtime::new().unwrap();
-    
+
     // 在运行时中执行异步任务
     rt.block_on(async {
         // 异步任务在这里执行
@@ -284,7 +284,7 @@ fn tokio_runtime_example() {
 }
 ```
 
-### 4.2 调度器与工作窃取算法
+### 1.4.2 调度器与工作窃取算法
 
 Tokio使用工作窃取调度算法，当一个工作线程空闲时，它可以从其他繁忙线程"窃取"任务执行。
 
@@ -297,7 +297,7 @@ Tokio使用工作窃取调度算法，当一个工作线程空闲时，它可以
 
 这种设计平衡了缓存局部性和工作负载均衡。
 
-### 4.3 事件驱动模型实现
+### 1.4.3 事件驱动模型实现
 
 Tokio的事件驱动架构基于操作系统提供的事件通知机制：
 
@@ -312,24 +312,24 @@ fn event_loop() {
     loop {
         // 阻塞等待事件
         poll.poll(&mut events, Some(timeout));
-        
+
         for event in events.iter() {
             // 获取与事件关联的任务
             let task = event.data();
-            
+
             // 唤醒任务
             task.wake();
         }
-        
+
         // 运行已准备好的任务
         run_ready_tasks();
     }
 }
 ```
 
-## 5. 调度与物理世界映射
+## 1.5 调度与物理世界映射
 
-### 5.1 异步调度与现实世界类比
+### 1.5.1 异步调度与现实世界类比
 
 异步编程模型与现实世界中的许多系统有相似之处：
 
@@ -339,7 +339,7 @@ fn event_loop() {
 
 这些类比帮助理解异步编程的本质和优势。
 
-### 5.2 时间与资源约束
+### 1.5.2 时间与资源约束
 
 在物理世界和计算机系统中，时间和资源都是有限的。异步编程试图优化这些约束：
 
@@ -351,12 +351,12 @@ async fn time_optimization_example() {
         fetch_resource("url1"),
         fetch_resource("url2")
     );
-    
+
     // 总时间约等于较慢请求的时间，而非两者之和
 }
 ```
 
-### 5.3 因果关系与依赖管理
+### 1.5.3 因果关系与依赖管理
 
 物理世界中的因果律在异步系统中表现为依赖关系管理：
 
@@ -366,7 +366,7 @@ async fn dependency_example() {
     // 步骤1必须在步骤2之前完成（因果关系）
     let data = fetch_data().await;  // 步骤1
     let result = process_data(data).await;  // 步骤2，依赖步骤1的结果
-    
+
     // 步骤3和步骤4之间没有因果关系，可以并发
     let (result1, result2) = tokio::join!(
         independent_task1(),  // 步骤3
@@ -375,9 +375,9 @@ async fn dependency_example() {
 }
 ```
 
-## 6. 设计模式与应用场景
+## 1.6 设计模式与应用场景
 
-### 6.1 异步设计模式
+### 1.6.1 异步设计模式
 
 常见的异步设计模式包括：
 
@@ -389,7 +389,7 @@ async fn combination_pattern() {
     let result = future::ready(1)
         .then(|i| future::ready(i + 1))
         .await;
-        
+
     // 并行执行并收集结果
     let futures = vec![future::ready(1), future::ready(2), future::ready(3)];
     let results = future::join_all(futures).await;
@@ -401,27 +401,27 @@ async fn combination_pattern() {
 ```rust
 async fn channel_pattern() {
     let (tx, mut rx) = tokio::sync::mpsc::channel(100);
-    
+
     // 生产者任务
     let producer = tokio::spawn(async move {
         for i in 0..10 {
             tx.send(i).await.unwrap();
         }
     });
-    
+
     // 消费者任务
     let consumer = tokio::spawn(async move {
         while let Some(value) = rx.recv().await {
             println!("收到值: {}", value);
         }
     });
-    
+
     // 等待任务完成
     tokio::join!(producer, consumer);
 }
 ```
 
-### 6.2 最佳实践与反模式
+### 1.6.2 最佳实践与反模式
 
 异步编程最佳实践：
 
@@ -432,7 +432,7 @@ async fn channel_pattern() {
 async fn blocking_antipattern() {
     // 错误：这会阻塞整个异步运行时
     let result = compute_intensive_function();
-    
+
     // 正确：将CPU密集型工作移到专用线程池
     let result = tokio::task::spawn_blocking(|| {
         compute_intensive_function()
@@ -446,7 +446,7 @@ async fn blocking_antipattern() {
 // 限制并发请求数量
 async fn bounded_concurrency() {
     let semaphore = tokio::sync::Semaphore::new(10);  // 最多10个并发
-    
+
     let mut handles = vec![];
     for i in 0..100 {
         let permit = semaphore.acquire().await.unwrap();
@@ -458,14 +458,14 @@ async fn bounded_concurrency() {
         });
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.await.unwrap();
     }
 }
 ```
 
-### 6.3 混合同步异步系统
+### 1.6.3 混合同步异步系统
 
 在实际应用中，同步和异步代码通常需要互操作：
 
@@ -476,10 +476,10 @@ async fn mixed_sync_async() {
         // 同步代码块
         std::fs::read_to_string("file.txt").unwrap()
     }).await.unwrap();
-    
+
     // 处理结果
     println!("文件内容: {}", result);
-    
+
     // 在同步代码中运行异步代码
     fn sync_function() {
         let rt = tokio::runtime::Runtime::new().unwrap();
@@ -491,9 +491,9 @@ async fn mixed_sync_async() {
 }
 ```
 
-## 7. 推理与验证
+## 1.7 推理与验证
 
-### 7.1 异步程序的形式验证
+### 1.7.1 异步程序的形式验证
 
 异步程序的验证比同步程序更复杂，需要考虑更多的交错执行可能性。
 
@@ -509,14 +509,14 @@ fn type_verification_example() {
     // 编译器验证资源被正确释放
     let file = std::fs::File::open("test.txt").unwrap();
     // 离开作用域时自动关闭文件（RAII）
-    
+
     // 编译器验证线程安全性
     let data = Arc::new(Mutex::new(0));
     // 通过类型系统确保多线程访问安全
 }
 ```
 
-### 7.2 同步异步转换的等价性
+### 1.7.2 同步异步转换的等价性
 
 定理：任何同步程序都可以转换为等价的异步程序，反之亦然。
 
@@ -547,7 +547,7 @@ fn async_to_sync(x: i32) -> i32 {
 }
 ```
 
-### 7.3 性能与正确性权衡
+### 1.7.3 性能与正确性权衡
 
 在异步和同步编程中存在性能与正确性的权衡：
 
@@ -576,21 +576,21 @@ async fn performance_comparison() {
         let _ = handle.await;
     }
     let async_duration = start.elapsed();
-    
+
     // 同步版本 - 顺序处理请求
     let start = std::time::Instant::now();
     for i in 0..100 {
         let _ = sync_fetch_url(i);
     }
     let sync_duration = start.elapsed();
-    
+
     println!("异步版本: {:?}, 同步版本: {:?}", async_duration, sync_duration);
 }
 ```
 
-## 8. 哲学与思维模型
+## 1.8 哲学与思维模型
 
-### 8.1 同步思维与异步思维
+### 1.8.1 同步思维与异步思维
 
 同步与异步编程反映了两种不同的思维模式：
 
@@ -611,7 +611,7 @@ async fn async_thinking() {
 }
 ```
 
-### 8.2 确定性与非确定性
+### 1.8.2 确定性与非确定性
 
 同步程序一般是确定性的，而异步程序可能表现出非确定性：
 
@@ -620,18 +620,18 @@ async fn async_thinking() {
 async fn non_determinism_example() {
     let (tx1, rx1) = tokio::sync::oneshot::channel();
     let (tx2, rx2) = tokio::sync::oneshot::channel();
-    
+
     // 两个任务竞争
     tokio::spawn(async move {
         tokio::time::sleep(tokio::time::Duration::from_millis(rand::random::<u64>() % 100)).await;
         let _ = tx1.send("任务1完成");
     });
-    
+
     tokio::spawn(async move {
         tokio::time::sleep(tokio::time::Duration::from_millis(rand::random::<u64>() % 100)).await;
         let _ = tx2.send("任务2完成");
     });
-    
+
     // 谁先完成是非确定的
     tokio::select! {
         val = rx1 => println!("先收到: {}", val.unwrap()),
@@ -640,7 +640,7 @@ async fn non_determinism_example() {
 }
 ```
 
-### 8.3 复杂性管理
+### 1.8.3 复杂性管理
 
 异步编程引入了额外的复杂性，需要特殊的管理策略：
 
@@ -650,7 +650,7 @@ async fn structured_concurrency() {
     // 创建作用域，确保所有任务在退出前完成
     tokio::task::LocalSet::new().run_until(async {
         let mut tasks = vec![];
-        
+
         // 启动多个任务
         for i in 0..10 {
             let task = tokio::task::spawn_local(async move {
@@ -660,12 +660,12 @@ async fn structured_concurrency() {
             });
             tasks.push(task);
         }
-        
+
         // 等待所有任务完成
         for task in tasks {
             let _ = task.await;
         }
-        
+
         // 此处所有任务已完成
         println!("所有任务已完成");
     }).await;
@@ -674,7 +674,7 @@ async fn structured_concurrency() {
 
 ---
 
-## 思维导图
+## 1.9 思维导图
 
 ```text
 异步编程与同步编程的全面分析

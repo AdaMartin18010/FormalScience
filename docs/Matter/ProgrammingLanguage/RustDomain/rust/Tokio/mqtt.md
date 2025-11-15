@@ -73,7 +73,7 @@ impl BaseComponent {
     pub fn new(id: &str) -> (Self, broadcast::Receiver<Message>, broadcast::Receiver<Command>) {
         let (message_tx, message_rx) = broadcast::channel(100);
         let (command_tx, command_rx) = broadcast::channel(100);
-        
+
         (
             Self {
                 id: id.to_string(),
@@ -161,12 +161,12 @@ impl MqttComponent {
         handler: Box<dyn MessageHandler>,
     ) -> anyhow::Result<()> {
         self.client.subscribe(topic, QoS::AtLeastOnce).await?;
-        
+
         let mut subs = self.subscriptions.lock().await;
         subs.entry(topic.to_string())
             .or_insert_with(Vec::new)
             .push(handler);
-            
+
         Ok(())
     }
 
@@ -175,7 +175,7 @@ impl MqttComponent {
             if let rumqttc::Event::Incoming(Packet::Publish(publish)) = notification {
                 let topic = publish.topic;
                 let payload = publish.payload;
-                
+
                 let subs = self.subscriptions.lock().await;
                 if let Some(handlers) = subs.get(&topic) {
                     for handler in handlers {
@@ -193,12 +193,12 @@ impl MqttComponent {
 impl Component for MqttComponent {
     async fn start(&self) -> anyhow::Result<()> {
         self.base.start().await?;
-        
+
         let self_clone = self.clone();
         tokio::spawn(async move {
             self_clone.handle_mqtt_events().await;
         });
-        
+
         Ok(())
     }
 
@@ -328,7 +328,7 @@ impl CompositeComponent {
         mqtt_config: MqttConfig,
     ) -> anyhow::Result<Self> {
         let (base, message_rx, command_rx) = BaseComponent::new(id);
-        
+
         let mqtt = Arc::new(MqttComponent::new(
             &format!("{}_mqtt", id),
             &mqtt_config.broker_url,
@@ -353,7 +353,7 @@ impl CompositeComponent {
 
     fn setup_message_handling(&self, mut message_rx: broadcast::Receiver<Message>) {
         let message_processor = self.message_processor.clone();
-        
+
         tokio::spawn(async move {
             while let Ok(message) = message_rx.recv().await {
                 if let Err(e) = message_processor
@@ -368,7 +368,7 @@ impl CompositeComponent {
 
     fn setup_command_handling(&self, mut command_rx: broadcast::Receiver<Command>) {
         let command_processor = self.command_processor.clone();
-        
+
         tokio::spawn(async move {
             while let Ok(command) = command_rx.recv().await {
                 if let Err(e) = command_processor.process_command(command).await {
