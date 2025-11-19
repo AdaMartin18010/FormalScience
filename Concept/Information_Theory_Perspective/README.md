@@ -36,6 +36,7 @@
   - [更新记录](#更新记录)
   - [许可证](#许可证)
   - [联系方式](#联系方式)
+  - [跨视角链接](#跨视角链接)
 
 ---
 
@@ -257,6 +258,20 @@ Information_Theory_Perspective/
 - 项目Issues
 - 邮件联系
 - 学术讨论
+
+---
+
+## 跨视角链接
+
+- [AI_model_Perspective](../AI_model_Perspective/README.md)
+- [FormalLanguage_Perspective](../FormalLanguage_Perspective/README.md)
+- [Software_Perspective](../Software_Perspective/README.md)
+- [概念交叉索引（七视角版）](../CONCEPT_CROSS_INDEX.md) - 查看相关概念的七视角分析：
+  - [熵](../CONCEPT_CROSS_INDEX.md#71-熵-entropy-七视角) - 信息论的核心概念
+  - [互信息](../CONCEPT_CROSS_INDEX.md#111-互信息-mutual-information-七视角) - 信息关联的度量
+  - [Kolmogorov复杂度](../CONCEPT_CROSS_INDEX.md#121-kolmogorov复杂度-kolmogorov-complexity-七视角) - 信息复杂度的度量
+  - [通信复杂度](../CONCEPT_CROSS_INDEX.md#56-通信复杂度-communication-complexity-七视角) - 信息传输的复杂度
+  - [DIKWP模型](../CONCEPT_CROSS_INDEX.md#61-dikwp模型-七视角) - 信息到知识的升链
 
 ---
 
