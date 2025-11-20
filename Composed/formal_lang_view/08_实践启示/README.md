@@ -23,6 +23,42 @@
 
 本主题探讨**实践启示**和**新设计模式**，包括类型驱动的基础设施设计、Curry-Howard同构在DevOps中的应用和错误处理新视角。
 
+### 1.0 实践启示思维导图
+
+```mermaid
+mindmap
+  root((08 实践启示))
+    类型驱动设计
+      类型安全配置
+        CRD类型Schema
+        NetworkPolicy
+        静态验证
+      类型约束
+        资源约束
+        安全约束
+        性能约束
+    Curry-Howard同构
+      证明即配置
+        Infrastructure as Code
+        Terraform Plan
+        GitOps
+      类型即命题
+        资源类型
+        配置类型
+        验证类型
+    错误处理
+      异常处理
+        CrashLoopBackOff
+        PodPreset
+        错误恢复
+      混沌工程
+        Chaos Engineering
+        模糊测试
+        故障注入
+```
+
+**可视化文档**: 查看 [思维导图与知识矩阵](../思维导图与知识矩阵.md#38-08-实践启示) 获取更详细的思维导图。
+
 ---
 
 ## 2 子主题导航

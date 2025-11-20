@@ -17,6 +17,56 @@
 
 ## 1 子主题索引
 
+### 1.0 虚拟化容器化沙盒化思维导图
+
+```mermaid
+mindmap
+  root((05 虚拟化容器化沙盒化))
+    虚拟化技术
+      全虚拟化
+        Hypervisor
+        虚拟机监控
+        硬件模拟
+      半虚拟化
+        Para-virtualization
+        性能优化
+        驱动优化
+      硬件辅助虚拟化
+        Intel VT-x
+        AMD-V
+        IO虚拟化
+    容器化技术
+      容器运行时
+        containerd
+        CRI-O
+        Docker
+      容器编排
+        Kubernetes
+        Docker Swarm
+        Nomad
+      资源隔离
+        Namespace
+        Cgroups
+        安全上下文
+    沙盒化技术
+      安全沙盒
+        gVisor
+        Kata Containers
+        Firecracker
+      权限控制
+        Seccomp
+        AppArmor
+        SELinux
+    隔离技术对比
+      隔离强度
+      性能开销
+      启动时间
+      资源占用
+```
+
+**可视化文档**: 查看 [思维导图与知识矩阵](../思维导图与知识矩阵.md#35-05-虚拟化容器化沙盒化) 获取更详细的思维导图。
+
+
 - [5.1 虚拟化技术](./05.1_虚拟化技术.md) - Hypervisor、VM、硬件辅助虚拟化
 - [5.2 容器化技术](./05.2_容器化技术.md) - Docker、Namespace、Cgroups
 - [5.3 沙盒化技术](./05.3_沙盒化技术.md) - Seccomp、gVisor、Firecracker
