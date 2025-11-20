@@ -12,6 +12,7 @@
   - [1 子主题索引](#1-子主题索引)
     - [1.0 跨层次调度协同思维导图](#10-跨层次调度协同思维导图)
   - [2 相关主题](#2-相关主题)
+    - [2.1 跨视角链接](#21-跨视角链接)
 
 ---
 
@@ -58,6 +59,13 @@ mindmap
 
 - [06. 调度模型](../06_调度模型/README.md)
 - [07. 性能优化与安全](../07_性能优化与安全/README.md)
+
+### 2.1 跨视角链接
+
+- [概念交叉索引（七视角版）](../../../Concept/CONCEPT_CROSS_INDEX.md) - 查看相关概念的七视角分析：
+  - [通信复杂度](../../../Concept/CONCEPT_CROSS_INDEX.md#56-通信复杂度-communication-complexity-七视角) - 跨层次调度协同的通信开销
+  - [熵](../../../Concept/CONCEPT_CROSS_INDEX.md#71-熵-entropy-七视角) - 跨层次调度协同中的信息不确定性
+  - [反身性](../../../Concept/CONCEPT_CROSS_INDEX.md#31-反身性-reflexivity-七视角) - 跨层次调度协同的自指机制
 
 ---
 
