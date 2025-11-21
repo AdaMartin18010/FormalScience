@@ -166,7 +166,7 @@ cargo bench --target wasm32-wasi
 
 **每个文档都包含"批判性分析"章节**：
 
-```
+```text
 对比：
 | 功能 | Native C++ | Wasm (最佳情况) | 差距 |
 |------|-----------|----------------|------|
@@ -181,7 +181,7 @@ cargo bench --target wasm32-wasi
 
 **09.5 提供决策树**：
 
-```
+```text
 是否计算密集型？
 ├─ 否 → 使用 JavaScript
 └─ 是 → 是否频繁跨边界？
@@ -199,7 +199,7 @@ cargo bench --target wasm32-wasi
 
 ### 5.1 互补关系
 
-```
+```text
 Module 03 (Runtime Systems)
   ↓ 提供理论基础
 Module 09 (Engineering Practices)
@@ -255,13 +255,13 @@ Module 09 (Engineering Practices)
 
 **工程师快速上手**（新增）：
 
-```
+```text
 09.1 工具链 → 09.2 测试 → 09.3 调试 → 小项目实践 → 09.5 案例学习
 ```
 
 **DevOps 流水线搭建**（新增）：
 
-```
+```text
 09.4 CI/CD → 09.1 优化工具 → 09.2 自动化测试 → 实施部署
 ```
 
@@ -282,7 +282,7 @@ Module 09 (Engineering Practices)
 
 ### 7.2 覆盖完整度
 
-```
+```text
 知识体系完整度矩阵：
 
              理论  技术  实践  哲学  经济

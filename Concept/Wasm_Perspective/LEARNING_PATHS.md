@@ -149,7 +149,7 @@ wasm-opt -O3 target/wasm32-wasi/release/fib.wasm -o fib_opt.wasm
 
 ### 3.3 路线图
 
-```
+```text
 Week 1: 理论基础
   ├─ 00_Master_Index (2h)
   ├─ 01.1 形式化语义 (4h)
@@ -230,7 +230,7 @@ Week 2: 哲学与批判
 
 ### 4.3 路线图
 
-```
+```text
 Morning (4h)
   ├─ 00_Master_Index (0.5h)
   ├─ README (0.5h)
@@ -320,7 +320,7 @@ print(f"Annual Savings: ${calculate_savings(10000):,.0f}")
 
 ### 5.3 路线图
 
-```
+```text
 Week 1: 理论基础
   ├─ 00_Master_Index
   ├─ 01 理论基础（全系列）
@@ -443,7 +443,7 @@ Week 4: 哲学批判与未来
 
 ### 8.1 理论与实践结合
 
-```
+```text
 理论学习 → 实践验证 → 批判反思 → 迭代深化
 ```
 

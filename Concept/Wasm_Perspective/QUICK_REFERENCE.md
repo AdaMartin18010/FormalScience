@@ -100,13 +100,13 @@ T(\text{Validate}) = O(|M|)
 
 ### 2.1 值类型
 
-```
+```text
 i32 | i64 | f32 | f64 | v128
 ```
 
 ### 2.2 函数类型
 
-```
+```text
 [t1*] -> [t2*]  // 多返回值已支持
 ```
 
@@ -122,7 +122,7 @@ C \vdash I : [t_1^_] \to [t_2^_]
 
 ### 3.1 算术指令
 
-```
+```text
 i32.add    [i32 i32] -> [i32]
 i32.mul    [i32 i32] -> [i32]
 i32.div_s  [i32 i32] -> [i32]  // 除零 trap
@@ -131,7 +131,7 @@ f32.sqrt   [f32] -> [f32]
 
 ### 3.2 控制流
 
-```
+```text
 block [t*] ... end       [] -> [t*]
 loop [t*] ... end        [] -> [t*]
 if [t*] ... else ... end [i32] -> [t*]
@@ -141,7 +141,7 @@ call x                   [t1*] -> [t2*]
 
 ### 3.3 内存指令
 
-```
+```text
 i32.load     [i32] -> [i32]
 i32.store    [i32 i32] -> []
 memory.size  [] -> [i32]
@@ -150,7 +150,7 @@ memory.grow  [i32] -> [i32]
 
 ### 3.4 SIMD 指令
 
-```
+```text
 i32x4.add    [v128 v128] -> [v128]
 f32x4.mul    [v128 v128] -> [v128]
 i8x16.splat  [i32] -> [v128]
@@ -282,7 +282,7 @@ wasm-opt -O3 code.wasm -o optimized.wasm
 
 ### 8.2 盈亏平衡点
 
-```
+```text
 6 个月（基于 10k 边缘节点）
 ```
 

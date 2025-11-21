@@ -64,7 +64,7 @@
 
 **协作关系**：
 
-```
+```text
 JavaScript（粘合层）
      ↕ （调用）
 WebAssembly（计算核心）
@@ -129,7 +129,7 @@ WebAssembly（计算核心）
 
 **算法核心**：
 
-```
+```text
 for each instruction:
     infer_stack_effect(instr)
     check_type_consistency()
@@ -453,7 +453,7 @@ instance.exports.my_func(42);
 
 **魔数**：
 
-```
+```text
 00 61 73 6d  ; "\0asm"
 01 00 00 00  ; version 1
 ```
