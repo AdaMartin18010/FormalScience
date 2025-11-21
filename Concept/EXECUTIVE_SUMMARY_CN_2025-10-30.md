@@ -141,7 +141,7 @@
 
 1. **学术突破**（时间：1-3个月）
 
-   ```
+   ```text
    ✅ 论文撰写：POPL 2026投稿
       - 选题："UH-Cost: A Universal Model for Program Semantics"
       - 包含1个完整工业案例（Rust Vec验证）
@@ -154,7 +154,7 @@
 
 2. **快速入门优化**（时间：2-4周）
 
-   ```
+   ```text
    ✅ 新建文档：00_QUICKSTART_3_DAYS.md
       - 目标：3天入门（每天2-4小时）
       - Day 1：核心思想（5个MUST-READ文档）
@@ -164,7 +164,7 @@
 
 3. **基石假设澄清**（时间：1周）
 
-   ```
+   ```text
    ✅ 新建文档：00_Foundational_Assumptions.md
       - 明确列出5-10个核心假设
       - 每个假设给出：形式化表述、经验证据、反驳、边界
@@ -173,7 +173,7 @@
 
 4. **端到端工业案例**（时间：1-2个月）
 
-   ```
+   ```text
    ✅ 项目：Rust标准库Vec<T>模块的形式化验证
       - 用Coq/Lean4建立Vec的完整规范
       - 验证：push、pop、insert、remove等操作的正确性
@@ -185,7 +185,7 @@
 
 1. **在线Playground**（时间：1-2个月）
 
-   ```
+   ```text
    ✅ 网址：https://formal.science/playground
    ✅ 技术栈：WASM + Monaco Editor
    ✅ 功能：
@@ -197,7 +197,7 @@
 
 2. **英文化核心文档**（时间：1个月）
 
-   ```
+   ```text
    ✅ Phase 1：10个核心文档
       - README、Tutorial、Quick Start等
    ✅ 工具：AI翻译辅助+人工校对
@@ -205,7 +205,7 @@
 
 3. **社区基础设施**（时间：1-2周）
 
-   ```
+   ```text
    ✅ GitHub：
       - Issues模板（Bug报告、功能请求）
       - Contributing指南
