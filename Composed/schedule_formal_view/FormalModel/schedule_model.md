@@ -2465,7 +2465,7 @@ $$
 | **`vMotion`** | 态射 $m: V_k \to V_l$ | 推出 Pushout，满足成本约束 $\text{cost}(m) \leq D_{\max}$ | 停机 1-2s, 带宽 10Gbps | `vmkernel/vmotion/migrate.c` | $m \in \text{Hom}(V_k, V_l), \text{cost}(m) \in \mathbb{R}^+$ |
 | **`Pod` (K8s)** | 声明式对象 $C_p$ | 纤维范畴 $\mathcal{E} \to \mathcal{C}$ 的对象 | 创建 3-5s (含镜像拉取) | `pkg/apis/core/types.go:4408` | $(\text{name}, \mathbf{q}_p, \lambda_p)$ |
 | **`kube-scheduler Score`** | 效用函数 $U: \text{Node} \to \mathbb{R}$ | 最优解 $\arg\max \sum U$ | 调度 100ms, O(n·m) | `pkg/scheduler/framework/interface.go:226` | $U(n) = \sum_{f \in \text{plugins}} w_f \cdot f(n)$ |
-| **`iptables`规则** | 网络拓扑态射 $|N| \to |N|$ | 同伦等价 $H: \text{DNS} \simeq \text{Istio}$ | 规则匹配 O(k) (k=规则数) | `net/ipv4/netfilter/ip_tables.c:1243` | $f \in \text{End}(N), H(f,t) = (1-t)f + t \cdot \text{Envoy}$ |
+| **`iptables`规则** | 网络拓扑态射 $\|N\| \to \|N\|$ | 同伦等价 $H: \text{DNS} \simeq \text{Istio}$ | 规则匹配 O(k) (k=规则数) | `net/ipv4/netfilter/ip_tables.c:1243` | $f \in \text{End}(N), H(f,t) = (1-t)f + t \cdot \text{Envoy}$ |
 | **`Prometheus`** | 监控单子 $\mathcal{M}(C) = C \times \mathbb{R}^k$ | Kleisli 范畴 $\mathcal{C}_{\mathcal{M}}$ | 采样 15s, 存储 O(n·t) | `vendor/github.com/prometheus/client_golang` | $\mathcal{M}: \text{Container} \to (\text{Container}, \text{metrics})$ |
 | **`OOM Killer`** | 选择函数 $\sigma: 2^E \to E$ | 单调递减 $\sigma(\text{high}) \subseteq \sigma(\text{low})$ | 响应 ~1s | `mm/oom_kill.c:1024` | $\sigma(E) = \arg\max_{e \in E} \text{oom\_score}(e)$ |
 | **`/proc/stat`** | 余单子 $\mathbb{D}(P) = P \times \text{History}$ | Eilenberg-Moore 余代数 | 读取 1μs, 精度 1ms | `fs/proc/stat.c:120` | $\varepsilon: \mathbb{D}(P) \to P$ 提取当前状态 |
@@ -2851,7 +2851,7 @@ $$
 | `pod.spec.containers[].resources.limits.cpu` | 上确界 $\sup r(t) \leq \text{limit}$ | `kubelet/cm/cpumanager` | 准入控制器: `LimitRanger` |
 | `pod.spec.affinity.podAntiAffinity` | 距离约束 $d(P_i, P_j) > \delta$ | `kube-scheduler` | E2E测试: `ginkgo` |
 | `pod.spec.priorityClassName` | 全序 $\text{priority}(P_i) > \text{priority}(P_j)$ | `kube-scheduler/preemption` | 混沌测试: `krane` |
-| `deployment.spec.strategy.rollingUpdate.maxUnavailable` | 不变式 $|N_{\text{avail}}| \geq (1 - \text{maxUnavailable}) \cdot N_{\text{total}}$ | `kube-controller-manager` | 不变式检查: `kube-linter` |
+| `deployment.spec.strategy.rollingUpdate.maxUnavailable` | 不变式 $\|N_{\text{avail}}\| \geq (1 - \text{maxUnavailable}) \cdot N_{\text{total}}$ | `kube-controller-manager` | 不变式检查: `kube-linter` |
 
 ---
 
