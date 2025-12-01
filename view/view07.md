@@ -132,7 +132,7 @@
 
 **实例：Brusselator反应（化学振荡）**
 
-```
+```text
 d[X]/dt = A + X²Y - (B+1)X
 d[Y]/dt = BX - X²Y
 ```
@@ -398,7 +398,7 @@ def simulate(initial_state, dynamics, dt, steps):
 
 **数学映射**：
 
-```
+```text
 dG/dt = 学习率 × (语言输入 - G) + 创新项
 ```
 
@@ -415,7 +415,7 @@ dG/dt = 学习率 × (语言输入 - G) + 创新项
 **状态**：对话双方的注意力焦点向量 A₁(t), A₂(t)
 **耦合动力学**：
 
-```
+```text
 dA₁/dt = -αA₁ + β·f(A₂) + 噪声（个人思维跳跃）
 dA₂/dt = -αA₂ + β·f(A₁) + 噪声
 ```
@@ -478,7 +478,7 @@ dS/dt = a·(S_max - S) - b·S·e^{-kt}
 
 **癌症动力学**：
 
-```
+```text
 dN/dt = rN(1 - N/K) - d·I·N + 突变项
 dI/dt = σ·N - δ·I
 ```
@@ -507,7 +507,7 @@ dI/dt = σ·N - δ·I
 **状态**：易感(S)-感染(I)-康复(R)
 **动力学**：
 
-```
+```text
 dS/dt = -βSI
 dI/dt = βSI - γI
 dR/dt = γI
@@ -547,7 +547,7 @@ dR/dt = γI
 **状态**：温度场 T(θ,φ,t)，CO₂浓度 C(t)
 **动力学**：
 
-```
+```text
 ∂T/∂t = 热扩散 + 太阳辐射 + 温室效应(C) - 长波辐射
 dC/dt = 人类排放 - 海洋吸收 - 生物固碳
 ```
@@ -569,7 +569,7 @@ dC/dt = 人类排放 - 海洋吸收 - 生物固碳
 **状态**：法律判例集合 L(t) = {先例₁, 先例₂, ...}
 **动力学**：
 
-```
+```text
 新判例 = f(旧判例, 社会价值观, 随机法官偏好)
 社会价值观 = g(判例, 民众反应, 时代)
 ```
@@ -597,7 +597,7 @@ dC/dt = 人类排放 - 海洋吸收 - 生物固碳
 **状态**：风格市场份额 Sᵢ(t) （i=古典, 印象派, 现代...）
 **动力学**：Lotka-Volterra竞争方程
 
-```
+```text
 dS_i/dt = S_i·(r_i - Σ c_{ij}S_j) + 突变（新风格出现）
 ```
 
@@ -639,7 +639,7 @@ dS_i/dt = S_i·(r_i - Σ c_{ij}S_j) + 突变（新风格出现）
 **状态**：各节点账本状态 Lᵢ(t)
 **动力学**：
 
-```
+```text
 dL_i/dt = 挖矿成功概率 × (最长链 - L_i) + 分叉解决项
 ```
 
@@ -707,7 +707,7 @@ dL_i/dt = 挖矿成功概率 × (最长链 - L_i) + 分叉解决项
 
 ### **实例：快速建模一场社会运动**
 
-```
+```text
 设：U(t)=不满者, M(t)=动员者, P(t)=镇压资源
 dU/dt = α·不公 - β·U·P + γ·M·U  （不满增长+动员效应）
 dM/dt = δ·U·M - ε·P·M            （招募-镇压）
@@ -782,7 +782,7 @@ dP/dt = ζ·暴力事件 - η·P          （镇压升级-资源限制）
 
 **深刻等价**：
 
-```
+```text
 计算步骤消耗能量 ↔ 物理系统沿轨迹演化
 算法时间复杂度 ↔ 相空间混合速度
 NP难 ↔ 势垒指数级增长（类似玻璃态系统）
@@ -860,7 +860,7 @@ mapTransmissionRate -> mapNetworkVulnerability
 
 **通用结构**：
 
-```
+```text
 新信念 = 似然函数 × 旧信念
 ```
 
@@ -1197,7 +1197,7 @@ mapTransmissionRate -> mapNetworkVulnerability
 
 **跨学科同构证明**：
 
-```
+```text
 生物进化：自然选择 = 麦克斯韦妖筛选信息（DNA）→ 生物体=信息耗散结构
 机器学习：反向传播 = 梯度下降筛选信息（权重）→ 模型=信息耗散结构
 经济发展：市场竞争 = 价格机制筛选信息（技术）→ 企业=信息耗散结构
@@ -1221,7 +1221,7 @@ mapTransmissionRate -> mapNetworkVulnerability
 
 大脑的核心任务是**最小化自由能**：
 
-```
+```text
 F = E_q[ln q(θ) - ln p(θ,D)] = 预测误差 + 复杂度
 ```
 
@@ -1283,7 +1283,7 @@ F = E_q[ln q(θ) - ln p(θ,D)] = 预测误差 + 复杂度
 
 模型A比模型B更普适，当：
 
-```
+```text
 L(A) + L(D|A) < L(B) + L(D|B)
 ```
 
@@ -1403,7 +1403,7 @@ L(A) + L(D|A) < L(B) + L(D|B)
 
 **实例日志**：
 
-```
+```text
 Day 7: 读《临床研究》
 状态变量：患者xᵢ=0/1（康复/死亡）
 动力学：dx/dt = sigmoid(β·Treatment + γ·Immunity)
@@ -1488,7 +1488,7 @@ Day 7: 读《临床研究》
 
 ### **动力学：漂移-扩散-反应方程**
 
-```
+```text
 ∂n/∂t = ∇·(D∇n + μnE) + G - R
 ∂T/∂t = κ∇²T + nE·v  (焦耳热)
 ```
@@ -1514,7 +1514,7 @@ Day 7: 读《临床研究》
 
 ### **动力学：有限状态机（FSM）**
 
-```
+```text
 q[t+1] = f(q[t], input[t])  (组合逻辑)
 ```
 
@@ -1540,7 +1540,7 @@ q[t+1] = f(q[t], input[t])  (组合逻辑)
 
 ### **动力学：排队网络主方程**
 
-```
+```text
 dQⱼ/dt = λⱼ - μⱼ·hⱼ·I(Qⱼ>0) + Σᵢ Qᵢ·pᵢⱼ
 dhᵢ/dt = -α·(overload) + β·(recovery) - γ·(cascade)
 ```
@@ -1578,7 +1578,7 @@ dhᵢ/dt = -α·(overload) + β·(recovery) - γ·(cascade)
 
 ### **动力学：软件老化方程**
 
-```
+```text
 dC/dt = a·新功能 - b·重构 + ξ(t)  (随机需求)
 dD/dt = c·快速交付 - d·还债    (债务积累)
 dL/dt = e·C + f·D - g·文档      (认知过载)
@@ -1617,7 +1617,7 @@ dF/dt = h·开发速度 - i·Bug修复
 
 ### **动力学：概率分布的对流-扩散**
 
-```
+```text
 ∂p/∂t = -∇·(v·p) + D∇²p + R(p)  (数据生成-遗忘-反应)
 v = -∇Φ  (信息势能梯度，如用户兴趣漂移)
 ```
@@ -1653,7 +1653,7 @@ v = -∇Φ  (信息势能梯度，如用户兴趣漂移)
 
 ### **动力学：注意力生态**
 
-```
+```text
 dAᵢ/dt = -α·Aᵢ·Tᵢ + β·(有趣内容) - γ·(疲劳)  (Tᵢ=使用时间)
 dPⱼ/dt = δ·Aᵢ×Pⱼ - ε·Pⱼ + ζ·(算法推荐)  (注意力"捕食")
 dM/dt = η·(AI推荐准确率) - θ·(用户多样性损失)
@@ -1689,7 +1689,7 @@ dM/dt = η·(AI推荐准确率) - θ·(用户多样性损失)
 
 ### **动力学：复制者-变异方程**
 
-```
+```text
 dxᵢ/dt = xᵢ·(fᵢ(**x**) - φ) + μ·(变异)
 fᵢ = α·Eᵢ + β·Lᵢ - γ·Cᵢ  (收益=生态+锁定-成本)
 φ = Σ xⱼfⱼ  (平均收益)
@@ -1719,7 +1719,7 @@ fᵢ = α·Eᵢ + β·Lᵢ - γ·Cᵢ  (收益=生态+锁定-成本)
 
 ### **动力学：技术波包扩散**
 
-```
+```text
 ∂P_i/∂t = D·∇²P_i + r·P_i·(1 - ΣP_j/K) + 突变项(新范式)
 资本流：J = -σ·∇P_i  (投资流入高dP/dt区域)
 ```
@@ -1754,7 +1754,7 @@ fᵢ = α·Eᵢ + β·Lᵢ - γ·Cᵢ  (收益=生态+锁定-成本)
 
 ### **动力学：AI发展的三段论**
 
-```
+```text
 dM/dt = a·exp(t/τ)  (规模定律)
 dD/dt = b·M - c·D   (数据吞噬)
 dE/dt = d·M·D       (能耗爆炸)
@@ -1916,14 +1916,14 @@ Kubernetes是**分布式系统动力学最成功的工业封装**。它的每个
 
 每个Pod的状态是**希尔伯特空间的离散化投影**：
 
-```
+```text
 |ψ⟩ ∈ ℂ^N  →  x = [phase, cpu, mem, ready] ∈ ℝ^4
 phase ∈ {Pending, Running, Succeeded, Failed, Unknown}
 ```
 
 ### **动力学方程：Pod生命周期主方程**
 
-```
+```text
 dP(phase)/dt = Σ W(phase←phase')P(phase') - Σ W(phase'←phase)P(phase)
 ```
 
@@ -1945,7 +1945,7 @@ dP(phase)/dt = Σ W(phase←phase')P(phase') - Σ W(phase'←phase)P(phase)
 **参数**：集群负载 ρ = 总请求CPU / 总节点CPU
 **分岔**：当 ρ → 0.95，调度器延迟呈**超指数增长**：
 
-```
+```text
 τ_scheduler ∝ 1/(1-ρ)^α  (α≈2.3)
 ```
 
@@ -1972,7 +1972,7 @@ targetCPUUtilizationPercentage: 70
 
 ### **动力学：伊辛模型（Ising Model）**
 
-```
+```text
 H = -Σ Jᵢⱼ sᵢ sⱼ - Σ hᵢ sᵢ
 ```
 
@@ -2014,13 +2014,13 @@ podAntiAffinity:
 
 ### **动力学：Wasserstein梯度流**
 
-```
+```text
 ∂X/∂t = -∇·(X·∇Φ) + ε∇²X  (Φ = cost potential)
 ```
 
 **这等价于沙堆模型**。Scheduler不断**最小化Wasserstein距离**：
 
-```
+```text
 W₂(Pod分布, 资源分布) = min ∫ C(x,y) dγ(x,y)
 ```
 
@@ -2054,7 +2054,7 @@ topologySpreadConstraints:
 
 ### **动力学：Lattice Boltzmann方程**
 
-```
+```text
 Qᵢⱼ(t+Δt) = Qᵢⱼ(t) - (1/τ)·(Qᵢⱼ - Qᵢⱼ^eq) + Forceᵢⱼ
 Qᵢⱼ^eq = wᵢⱼ·ρᵢ·(1 + vᵢ·u/cₛ²)  (平衡态分布)
 ```
@@ -2075,7 +2075,7 @@ Qᵢⱼ^eq = wᵢⱼ·ρᵢ·(1 + vᵢ·u/cₛ²)  (平衡态分布)
 **参数**：服务调用深度 L，超时阈值 T
 **分岔**：当 L·mean(τ) > T，系统进入**超时风暴**（**正反馈循环**）：
 
-```
+```text
 超时 → 重试 → 负载↑ → 延迟↑ → 更多超时
 ```
 
@@ -2101,7 +2101,7 @@ timeout = base × 2^(retry_count)  # 指数退避
 
 ### **动力学：PID控制器**
 
-```
+```text
 u(t) = Kₚ e(t) + Kᵢ I(t) + K_d de/dt
 dR_act/dt = u(t) - τ⁻¹·R_act  (τ=Pod启动延迟)
 ```
@@ -2133,7 +2133,7 @@ dR_act/dt = u(t) - τ⁻¹·R_act  (τ=Pod启动延迟)
 
 ### **动力学：随机波利亚瓮模型（Pólya's Urn）**
 
-```
+```text
 P(Leader=i) ∝ votes_i / total_votes
 votes_i = exp(β·uptime_i)  (β=可靠性权重)
 ```
@@ -2209,7 +2209,7 @@ multiCluster:
 
 ### **动力学：卡诺循环**
 
-```
+```text
 1. 等温膨胀（apply配置）：ΔS = Q_in / T_dev  (开发环境)
 2. 绝热膨胀（滚动更新）：S = const, W = ∫p dV
 3. 等温压缩（健康检查）：ΔS = -Q_out / T_prod (生产环境)
@@ -2340,14 +2340,14 @@ EKS是K8s动力学在AWS基础设施上的**约束嵌入**。托管控制平面�
 
 AWS将控制平面参数化为**隐藏变量**：
 
-```
+```text
 x_cp = [etcd_version, api_latency, cp_uptime, backup_age] ∈ M_slow
 M_slow是AWS管理的低维流形（用户不可见）
 ```
 
 **动力学**：AWS后台执行**绝热演化**（adiabatic evolution）
 
-```
+```text
 d(cp_version)/dt = -∇V(upgrade) + ξ_AWS  (V=稳定性势能)
 ```
 
@@ -2376,7 +2376,7 @@ updateConfig:
 
 ### **状态变量：IP地址作为守恒粒子**
 
-```
+```text
 ρ_ip(x,t) = 可用IP密度 (x=子网空间)
 R_pod(t) = 已分配Pod IP数
 S_subnet(t) = 子网总容量
@@ -2384,7 +2384,7 @@ S_subnet(t) = 子网总容量
 
 ### **动力学：IP消耗反应方程**
 
-```
+```text
 dR/dt = λ_pod_create·(S - R) - μ_pod_terminate·R  (当ρ>0)
 ∂ρ/∂t = D∇²ρ - ∇·(v·ρ) + Source(新子网) - Sink(IP耗尽)
 ```
@@ -2401,7 +2401,7 @@ dR/dt = λ_pod_create·(S - R) - μ_pod_terminate·R  (当ρ>0)
 **参数**：子网大小 /26 (64 IPs), Pod密度 0.8 Pod/核
 **分岔 **：当 R → S - 5 (预留buffer)，** 延迟激增**：
 
-```
+```text
 τ_assign ∝ 1/(S - R)²   (平方反比定律)
 ```
 
@@ -2438,7 +2438,7 @@ subnet: subnet-bbb  # 备用燃烧室
 
 ### **状态：Auto Scaling Group的相空间**
 
-```
+```text
 N_spot(t) = Spot实例数
 N_on_demand(t) = On-Demand实例数
 N_reserved(t) = Reserved实例数
@@ -2446,7 +2446,7 @@ N_reserved(t) = Reserved实例数
 
 ### **动力学：Lotka-Volterra + 价格捕食**
 
-```
+```text
 dN_spot/dt = α·N_spot·(1 - (N_total)/K) - β·price_surge·N_spot
 dN_on_demand/dt = γ·β·price_surge·N_spot - δ·cost_pressure
 dN_reserved/dt = ε·(long_term_commitment) - ζ·N_reserved
@@ -2461,7 +2461,7 @@ dN_reserved/dt = ε·(long_term_commitment) - ζ·N_reserved
 **参数**：Spot中断率 λ_interrupt ≈ 0.05/hour
 **预测**：300节点全Spot集群，**期望生存时间**：
 
-```
+```text
 T_mean = 1/(λ·N) = 1/(0.05×300) = 0.067h = 4分钟
 ```
 
@@ -2487,13 +2487,13 @@ spec:
 
 Fargate Pod是**计算虚粒子**：
 
-```
+```text
 |Fargate⟩ = 创建 → 运行 → 销毁 （生命周期Δt≈任务时长）
 ```
 
 **动力学**：Fokker-Planck方程描述**任务时长分布**：
 
-```
+```text
 ∂P(T)/∂t = -∂/∂T [A(T)P] + ∂²/∂T² [B(T)P]
 ```
 
@@ -2526,7 +2526,7 @@ fargateProfile:
 
 ### **状态：权限作为规范场**
 
-```
+```text
 A_μ^a(x,t) = 服务账户a在操作μ上的权限幅度
 μ ∈ {get, list, create, delete}
 x = 资源位置（S3 bucket, DynamoDB table）
@@ -2534,7 +2534,7 @@ x = 资源位置（S3 bucket, DynamoDB table）
 
 ### **动力学：Yang-Mills规范场方程**
 
-```
+```text
 ∂_μ F^{μν} = J^ν  (F = 曲率 = 权限冲突, J = 源 = 策略)
 F_{μν} = ∂_μ A_ν - ∂_ν A_μ + [A_μ, A_ν]
 ```
@@ -2565,7 +2565,7 @@ constraints:
 
 ### **状态：ASG种群的Logistic增长**
 
-```
+```text
 N_actual(t) = 当前实例数
 N_desired(t) = CA计算值
 N_max = AutoScalingGroup.MaxSize
@@ -2573,7 +2573,7 @@ N_max = AutoScalingGroup.MaxSize
 
 ### **动力学：时滞微分方程**
 
-```
+```text
 dN/dt = α·(N_desired(t-τ) - N_actual) · (1 - N_actual/N_max)
 ```
 
@@ -2618,14 +2618,14 @@ scaleDown:
 
 ### **状态：流量作为矢量场**
 
-```
+```text
 F_ingress(t) = [HTTP请求向量场]
 B_backend(t) = [Pod端点分布]
 ```
 
 ### **动力学：麦克斯韦方程组**
 
-```
+```text
 ∇·F = ρ_requests  (请求源)
 ∇×F = -∂B/∂t     (流量旋度 = Pod端点变化率)
 ∇·B = 0           (无磁单极：每个请求必有响应)
@@ -2653,14 +2653,14 @@ readinessGates:
 
 ### **状态：日志作为概率云**
 
-```
+```text
 ψ(log) = Σ c_i·|context_i⟩  (线性叠加)
 |context_i⟩ ∈ {Pod崩溃, 网络超时, 权限拒绝}
 ```
 
 ### **动力学：退相干**
 
-```
+```text
 ∂ρ/∂t = -i[H, ρ] + Σ LₙρLₙ† - ½{Lₙ†Lₙ, ρ}  (Lindblad方程)
 ```
 
@@ -2745,7 +2745,7 @@ spec:
 
 ### **动力学方程组**
 
-```
+```text
 dN_spot/dt = -β·price_spike(t)·N_spot          # Spot中断
 dR_pending/dt = λ_pod·(N_max - N_spot) - μ·N_spot # Pod待调度
 dIP_remain/dt = -γ·R_pending                    # IP地址消耗
@@ -2821,7 +2821,7 @@ EKS集群不是孤立系统，而是**浸入AWS热浴**：
 
 数学概念在大脑中不是符号，而是**激活流形上的点**：
 
-```
+```text
 C ∈ ℳ_concept ≈ ℝ^d  (d≈50-100, 局部皮层维度)
 ```
 
@@ -2834,7 +2834,7 @@ C ∈ ℳ_concept ≈ ℝ^d  (d≈50-100, 局部皮层维度)
 
 ### **动力学：概念漂移扩散**
 
-```
+```text
 dC/dt = -∇U(C) + η·∇·D(C) + ξ(t)
 ```
 
@@ -2852,13 +2852,13 @@ dC/dt = -∇U(C) + η·∇·D(C) + ξ(t)
 
 识别A→B的类比，是寻找**函子** ℱ: 𝒞_A → 𝒞_B ：
 
-```
+```text
 ℱ ∈ ℋ_analogy ≈ Hom(ℳ_A, ℳ_B)  (同态空间)
 ```
 
 **动力学：Yang-Mills规范场**
 
-```
+```text
 ∂ℱ/∂t = -δS/δℱ  （S = 类比作用量）
 S[ℱ] = ∫ dμ (∑_i ||ℱ(f_i) - g_i||² + λ·R(ℱ))
 ```
@@ -2872,7 +2872,7 @@ S[ℱ] = ∫ dμ (∑_i ||ℱ(f_i) - g_i||² + λ·R(ℱ))
 **参数**：相似度阈值 θ = 0.7·dim(ℳ_A)
 **分岔**：当**结构保持性**：
 
-```
+```text
 η = |Hom(ℱ(A), ℱ(B))| / |Hom(A,B)| > θ
 ```
 
@@ -2895,14 +2895,14 @@ S[ℱ] = ∫ dμ (∑_i ||ℱ(f_i) - g_i||² + λ·R(ℱ))
 
 证明 = 在**定理流形**上的测地线：
 
-```
+```text
 γ: [0,1] → ℳ_theorem
 γ(0) = 公理A,  γ(1) = 定理T
 ```
 
 ### **动力学：测地线方程**
 
-```
+```text
 ∇_γ' γ' = -∇V(γ)  （V = 证明长度势能）
 ```
 
@@ -2929,7 +2929,7 @@ S[ℱ] = ∫ dμ (∑_i ||ℱ(f_i) - g_i||² + λ·R(ℱ))
 
 数学之美 = **Kolmogorov复杂度**最小化：
 
-```
+```text
 Beauty[𝒯] = -ln p(𝒯) - λ·L(𝒯)
 ```
 
@@ -2939,7 +2939,7 @@ Beauty[𝒯] = -ln p(𝒯) - λ·L(𝒯)
 
 ### **动力学：信息几何流**
 
-```
+```text
 d𝒯/dτ = -g^{ab} ∂Beauty/∂𝒯^b  （g^{ab}=Fisher信息度规）
 ```
 
@@ -2958,14 +2958,14 @@ d𝒯/dτ = -g^{ab} ∂Beauty/∂𝒯^b  （g^{ab}=Fisher信息度规）
 
 ### **状态：概念网络的沙堆**
 
-```
+```text
 每个概念 = 晶格点
 高度h_i = 该概念的"新颖度" = 连接稀有概念数
 ```
 
 ### **动力学：Bak-Tang-Wiesenfeld规则**
 
-```
+```text
 当h_i > θ_critical:
     h_i → h_i - z_c
     h_{neighbor} → h_{neighbor} + 1
@@ -2976,7 +2976,7 @@ d𝒯/dτ = -g^{ab} ∂Beauty/∂𝒯^b  （g^{ab}=Fisher信息度规）
 
 **实证 **：数学论文的** 引用雪崩**服从：
 
-```
+```text
 P(s) ∝ s^{-τ}  τ≈1.5
 ```
 
@@ -2993,14 +2993,14 @@ P(s) ∝ s^{-τ}  τ≈1.5
 
 ### **状态：证明的拓扑序**
 
-```
+```text
 证明 = 概念纤维丛上的联络
 错误 = 曲率奇点 / 单极 / 涡旋
 ```
 
 ### **动力学：拓扑量子场论**
 
-```
+```text
 Action[proof] = ∫ d⁴x Tr(F ∧ F)  (F = 错误场强)
 错误传播 = 涡旋线运动
 ```
@@ -3023,7 +3023,7 @@ Action[proof] = ∫ d⁴x Tr(F ∧ F)  (F = 错误场强)
 
 ### **状态：希尔伯特空间的不同基**
 
-```
+```text
 形式主义 = 以ZFC为基的坐标系
 直觉主义 = 构造性基（BHK解释）
 范畴论 = 函子基（态射优先）
@@ -3031,7 +3031,7 @@ Action[proof] = ∫ d⁴x Tr(F ∧ F)  (F = 错误场强)
 
 ### **动力学：基变换的李群作用**
 
-```
+```text
 |ψ⟩_new = U(g)·|ψ⟩_old
 U ∈ G = 数学哲学群（形式主义/直觉主义/柏拉图主义）
 ```
@@ -3068,7 +3068,7 @@ U ∈ G = 数学哲学群（形式主义/直觉主义/柏拉图主义）
 
 ### **协议1：间隔重复（控制权重衰减α）**
 
-```
+```text
 α_optimal = 0.3/day  （艾宾浩斯曲线）
 ```
 
@@ -3076,7 +3076,7 @@ U ∈ G = 数学哲学群（形式主义/直觉主义/柏拉图主义）
 
 ### **协议2：跨界阅读（增强扩散张量D）**
 
-```
+```text
 每天读1小时非数学领域（物理/生物/音乐）
 D↑ → 概念连接长度↑ → 长程跳跃概率↑
 ```
@@ -3085,7 +3085,7 @@ D↑ → 概念连接长度↑ → 长程跳跃概率↑
 
 ### **协议3：主动回忆（梯度流强度∇U）**
 
-```
+```text
 不看书推导定理 = 强制在U landscape中行走
 ∇U越大 → 记忆痕迹越深
 ```
@@ -3094,7 +3094,7 @@ D↑ → 概念连接长度↑ → 长程跳跃概率↑
 
 ### **协议4：睡眠（噪声重置ξ(t)）**
 
-```
+```text
 REM睡眠 = 高噪声相 (ξ_max ≈ 5×清醒)
 → 突破浅层极小 → 全局搜索
 ```
@@ -3107,13 +3107,13 @@ REM睡眠 = 高噪声相 (ξ_max ≈ 5×清醒)
 
 ### **系统架构**
 
-```
+```text
 人脑皮层 (ℳ_bio) --- 脑机接口 (函子 ℱ) --- AI概念空间 (ℳ_AI)
 ```
 
 ### **动力学耦合**
 
-```
+```text
 dC_bio/dt = -∇U_bio + K·(ℱ⁺(C_AI) - C_bio)  (双向耦合)
 dC_AI/dt = -∇U_AI + K·(ℱ(C_bio) - C_AI)
 ```
@@ -3131,7 +3131,7 @@ dC_AI/dt = -∇U_AI + K·(ℱ(C_bio) - C_AI)
 
 整合所有层次：
 
-```
+```text
 τ·dC/dt = -∇U(C)  +  η·∇·D(C)      +  ξ(t)          +  K·ℱ⁺(C_AI)
           ↓          ↓                ↓                ↓
        记忆巩固   创造扩散         随机顿悟         AI协同
@@ -3188,7 +3188,7 @@ dC_AI/dt = -∇U_AI + K·(ℱ(C_bio) - C_AI)
 
 **关键序参量**：
 
-```
+```text
 ω = 心理旋转角速度 (rad/s)  [顶叶内沟IPS激活斜率]
 δ = 视觉表象分辨率 (虚拟像素)  [V4区反馈强度]
 K = 工作空间记忆数 (3D对象数)  [海马theta振荡耦合]
@@ -3202,7 +3202,7 @@ K = 工作空间记忆数 (3D对象数)  [海马theta振荡耦合]
 
 ### **L1：动力学方程**
 
-```
+```text
 dθ/dt = ω·(θ_target - θ_current) - α·sin(2θ) + D·∇²θ + ξ(t)
 ```
 
@@ -3216,7 +3216,7 @@ dθ/dt = ω·(θ_target - θ_current) - α·sin(2θ) + D·∇²θ + ξ(t)
 **参数**：α/D = 势垒/扩散比
 **分岔图**：
 
-```
+```text
 α/D < 0.5  →  ** 流畅旋转 **   （吸引子：连续运动）
 0.5 < α/D < 2 →  ** 歧义振荡 **  （两个θ=π/2, 3π/2吸引子竞争）
 α/D > 2    →  ** 卡壳 **         （被困在θ=0不动点）
@@ -3287,7 +3287,7 @@ python shepard_test.py --trials=30
 
 **关键序参量**：
 
-```
+```text
 ν = 符号操作速度 (symbols/s)  [布洛卡区激活强度]
 L = 抽象层级 (范畴层数)  [前额叶PFC hierarchical depth]
 η = 模式压缩率 = dim(抽象)/dim(具体)  [基底节自动化程度]
@@ -3301,7 +3301,7 @@ L = 抽象层级 (范畴层数)  [前额叶PFC hierarchical depth]
 
 ### **L1：动力学方程**
 
-```
+```text
 dF/dt = -∇U(F) + η·[F,F] + A_μ·J^μ + λ·δS/δF
 ```
 
@@ -3315,7 +3315,7 @@ dF/dt = -∇U(F) + η·[F,F] + A_μ·J^μ + λ·δS/δF
 **参数**：L·η = 抽象层级×压缩率
 **分岔图**：
 
-```
+```text
 L·η < 1  → **符号堆砌** （无抽象，死循环）
 1 < L·η < 10 → **有效抽象 **  （吸引子：模式识别）
 L·η > 10   → ** 过度抽象 ** （脱离实例，不可证伪）
@@ -3385,7 +3385,7 @@ python symbolic_ops.py --ops=100
 
 **关键序参量**：
 
-```
+```text
 W = 工作记忆容量 (7±2)  [前额叶背外侧DLPFC]
 ε = 错误检测敏感度 (ACC激活阈值)
 λ = 验证循环速度 (loops/s)  [前扣带回-岛叶]
@@ -3399,7 +3399,7 @@ W = 工作记忆容量 (7±2)  [前额叶背外侧DLPFC]
 
 ### **L1：动力学方程**
 
-```
+```text
 dΓ/dt = λ·(Γ* - Γ) + β·∂ℒ/∂Γ + γ·δ_error·∇_Γℋ
 ```
 
@@ -3413,7 +3413,7 @@ dΓ/dt = λ·(Γ* - Γ) + β·∂ℒ/∂Γ + γ·δ_error·∇_Γℋ
 **参数**：W·λ = 容量×速度
 **分岔图**：
 
-```
+```text
 W·λ < 20  → **验证瘫痪** （无法保持中间命题）
 20 < W·λ < 50 → **有效验证 ** （吸引子：一致性）
 W·λ > 50   → ** 过度检查 ** （强迫症，λ过高）
@@ -3501,7 +3501,7 @@ python logic_gym.py --proofs=20
 
 ### **协同策略（时序分离）**
 
-```
+```text
 时间块1 (09:00-11:00): 几何直观训练 (ω↑)
    └─ 禁止：形式验证（允许粗糙错误）
 
@@ -3580,7 +3580,7 @@ python logic_gym.py --proofs=20
 
 **完整状态向量**：
 
-```
+```text
 x_db(t) = [C(t), M(t), I(t)] ∈ ℝ³ᴺ
 C(t) = [c_ij(t)] = 范畴的交换图矩阵（c_ij=1表示FK_{ij}∘FK_{jk}=FK_{ik}）
 M(t) = [m_i(t)] = 表i的范式级别（1NF=1, 2NF=2, 3NF=3, BCNF=4）
@@ -3591,7 +3591,7 @@ I(t) = [i_i(t)] = 表i的冗余度（i_i = 1 - (非主属性函数依赖主键�
 
 数据库演化 = **函子** ℱ: ℬ → ℬ' 的连续应用
 
-```
+```text
 dC/dt = -∂H/∂C + η·∇·D(C)  （H = 设计熵）
 H = Σ_i,j w_{ij}·||FK_{ij}∘FK_{jk} - FK_{ik}||²  （交换图惩罚）
 ```
@@ -3629,7 +3629,7 @@ CREATE TABLE OrderLineItems (order_id→Orders, product_id→Products, warehouse
 
 **动力学含义**：将ℱ: ℬ → ℬ' 分解为**左伴随⊣右伴随**对
 
-```
+```text
 Orders ⊣ OrderLineItems
 ```
 
@@ -3646,7 +3646,7 @@ Orders ⊣ OrderLineItems
 
 **完整状态向量**：
 
-```
+```text
 x_pl(t) = [T(t), C(t), E(t)] ∈ ℝ³ᴹ
 T(t) = [t_ij(t)] = 类型依赖矩阵（t_ij=1表示τ_i依赖τ_j的类型）
 C(t) = [c_k(t)] = 组合性层级（c_k = 第k层函数的组合性）
@@ -3657,7 +3657,7 @@ E(t) = [e_l(t)] = 副作用纯度（e_l = 0纯函数, 1全IO）
 
 程序β-归约 = **函子** ℰ: 𝒯 → 𝒯 的**态射复合**
 
-```
+```text
 dp/dt = β-reduction(p) + η·type_error(p)  (η=0/1开关)
 β-reduction = (λx.t₁) t₂ → t₁[x:=t₂]
 ```
@@ -3705,7 +3705,7 @@ const map: <A, B>(f: (a: A) => B) => (arr: A[]) => B[] =
 **输入**：当前Schema范畴ℬ，连接密度ρ(t)，表数N(t)
 **动力学方程**：
 
-```
+```text
 dρ/dt = α·new_FK - β·refactor·ρ
 dN/dt = γ·feature_requests - δ·arch_cleanup·N
 ```
@@ -3731,7 +3731,7 @@ dN/dt = γ·feature_requests - δ·arch_cleanup·N
 ** 输入 **：类型范畴𝒯，复杂度κ(t)，代码行LOC(t)
 ** 动力学方程**：
 
-```
+```text
 dκ/dt = a·generic_types - b·code_review·κ
 dLOC/dt = c·features - d·refactor·LOC
 ```
@@ -3815,7 +3815,7 @@ if (κ * Math.log(compileTime) > 100) {
 
 **外键约束的传递性 = 交换图**
 
-```
+```text
 Table₁ --FK₁₂--> Table₂ --FK₂₃--> Table₃
    \                /
     \              /
@@ -3843,7 +3843,7 @@ Table₁ --FK₁₂--> Table₂ --FK₂₃--> Table₃
 
 **函子保持结构**：
 
-```
+```text
 Q(FK₂₃ ∘ FK₁₂) = Q(FK₂₃) ∘ Q(FK₁₂)
 ```
 
@@ -3857,7 +3857,7 @@ Q(FK₂₃ ∘ FK₁₂) = Q(FK₂₃) ∘ Q(FK₁₂)
 **场景**：查询"订单+用户+地址"
 **范畴构造**：
 
-```
+```text
           Orders
           /   \
     FK₁₂ /     \ FK₁₃'
@@ -3896,7 +3896,7 @@ JOIN Addresses ON Users.address_id = Addresses.id
 
 **伴随单位-余单位**：
 
-```
+```text
 η: Id → U∘F    （添加外键，消除冗余）
 ε: F∘U → Id    （投影回范式）
 ```
@@ -3914,7 +3914,7 @@ JOIN Addresses ON Users.address_id = Addresses.id
 
 **物化视图** = **自然变换** α: Q₁ → Q₂
 
-```
+```text
 Table₁ --Q₁--> ResultSet₁
   |              |
 FK |              | α（数据同步）
@@ -3958,7 +3958,7 @@ g . f :: A -> C   -- 态射复合律
 2. **指数对象** = **函数类型** A ⇒ B
 3. **curry/uncurry** = **伴随同构**
 
-```
+```text
 Hom(C × A, B) ≅ Hom(C, A ⇒ B)
 ```
 
@@ -3981,7 +3981,7 @@ Hom(C × A, B) ≅ Hom(C, A ⇒ B)
 
 **自然性条件**：
 
-```
+```text
 μ ∘ Tμ = μ ∘ μT  （结合律）
 μ ∘ ηT = Id = μ ∘ Tη  （单位律）
 ```
@@ -4051,7 +4051,7 @@ distribute (a, Right c) = Right (a, c)
 
 **自然性条件**：
 
-```
+```text
 ℱ(FK₂₃ ∘ FK₁₂) = ℱ(FK₂₃) ∘ ℱ(FK₁₂)
 ```
 
@@ -4156,7 +4156,7 @@ function auditTypeCategory(project: Project): AuditResult {
 
 范畴𝒯中对象A和B的**积** A × B 是满足**泛性质**的极限：
 
-```
+```text
       C
       |
       | f
@@ -4209,7 +4209,7 @@ pair (fst p) (snd p) = p
 
 范畴𝒯中对象A和B的**余积** A + B 是满足**对偶泛性质**的余极限：
 
-```
+```text
 A ---i₁---> A + B <---i₂--- B
            ↑
            | [f,g]
@@ -4262,7 +4262,7 @@ caseEither (right b) f g = g b
 
 范畴𝒯中对象Bᴬ = A ⇒ B 是满足**currying**同构的**内部Hom**：
 
-```
+```text
 Hom(C × A, B) ≅ Hom(C, Bᴬ)
 ```
 
@@ -4314,7 +4314,7 @@ uncurry f = \(a, b) -> f a b
 
 给定纤维化 p: ℰ → ℬ（A ∈ ℬ, P ∈ ℰ_A），**Π-类型**是将纤维上的族**积**到基：
 
-```
+```text
       Π_A P -----> 1
         |           |
         |           |
@@ -4364,7 +4364,7 @@ applyForall f a = f a
 
 纤维化 p: ℰ → ℬ 的**Σ-类型** = **余积到基的聚合**：
 
-```
+```text
       Σ_A P -----> ℰ
         |           |
         |           |
@@ -4401,7 +4401,7 @@ elimExists (a, pa) cont = cont a pa
 
 ### **伴随立方（Adjunction Cube）**
 
-```
+```text
          Π
         / \
        /   \
@@ -4438,7 +4438,7 @@ useDistrib p f1 f2 = caseEither (distribute p) f1 f2
 
 **交换图验证**：
 
-```
+```text
 (a, Left b) --fst×i₁--> (a, b) --Left--> Either (a,b) (a,c)
     |                         |
     | distribute              | id
