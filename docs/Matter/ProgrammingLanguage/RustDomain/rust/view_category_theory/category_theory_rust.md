@@ -3,94 +3,96 @@
 
 ## 目录
 
-- [1. 范畴论与Rust编程：核心概念与应用](#范畴论与rust编程核心概念与应用)
-  - [1.1 范畴论基础](#1-范畴论基础)
-    - [1.1.1 范畴的定义](#11-范畴的定义)
-    - [1.1.2 对象与态射](#12-对象与态射)
-    - [1.1.3 组合与恒等态射](#13-组合与恒等态射)
-  - [1.2 函子](#2-函子)
-    - [1.2.1 函子的定义](#21-函子的定义)
-    - [1.2.2 内函子和协变函子](#22-内函子和协变函子)
-    - [1.2.3 Rust中的函子实现](#23-rust中的函子实现)
-  - [1.3 自然变换](#3-自然变换)
-    - [1.3.1 自然变换的定义](#31-自然变换的定义)
-    - [1.3.2 自然变换的性质](#32-自然变换的性质)
-    - [1.3.3 Rust中的自然变换](#33-rust中的自然变换)
-  - [1.4 单子](#4-单子)
-    - [1.4.1 单子的定义](#41-单子的定义)
-    - [1.4.2 单子的定律](#42-单子的定律)
-    - [1.4.3 Rust中的Option和Result单子](#43-rust中的option和result单子)
-  - [1.5 积与余积](#5-积与余积)
-    - [1.5.1 积的定义](#51-积的定义)
-    - [1.5.2 余积的定义](#52-余积的定义)
-    - [1.5.3 Rust中的产品类型与和类型](#53-rust中的产品类型与和类型)
-  - [1.6 极限与余极限](#6-极限与余极限)
-    - [1.6.1 极限的定义](#61-极限的定义)
-    - [1.6.2 余极限的定义](#62-余极限的定义)
-    - [1.6.3 Rust中的应用](#63-rust中的应用)
-  - [1.7 代数数据类型](#7-代数数据类型)
-    - [1.7.1 归纳类型](#71-归纳类型)
-    - [1.7.2 余归纳类型](#72-余归纳类型)
-    - [1.7.3 Rust中的递归类型](#73-rust中的递归类型)
-  - [1.8 伴随函子](#8-伴随函子)
-    - [1.8.1 伴随函子的定义](#81-伴随函子的定义)
-    - [1.8.2 单位与余单位](#82-单位与余单位)
-    - [1.8.3 Rust中的伴随函子](#83-rust中的伴随函子)
-  - [1.9 Yoneda引理](#9-yoneda引理)
-    - [1.9.1 Yoneda引理的陈述](#91-yoneda引理的陈述)
-    - [1.9.2 Yoneda引理的含义](#92-yoneda引理的含义)
-    - [1.9.3 Rust中的Yoneda引理应用](#93-rust中的yoneda引理应用)
-  - [1.10 自由单子](#10-自由单子)
-    - [1.10.1 自由单子的定义](#101-自由单子的定义)
-    - [1.10.2 解释器模式](#102-解释器模式)
-    - [1.10.3 Rust中的自由单子实现](#103-rust中的自由单子实现)
-  - [1.11 Kleisli范畴](#11-kleisli范畴)
-    - [1.11.1 Kleisli范畴的定义](#111-kleisli范畴的定义)
-    - [1.11.2 Kleisli范畴与单子编程](#112-kleisli范畴与单子编程)
-    - [1.11.3 Rust中的Kleisli箭头](#113-rust中的kleisli箭头)
-  - [1.12 F-代数与递归模式](#12-f-代数与递归模式)
-    - [1.12.1 F-代数的定义](#121-f-代数的定义)
-    - [1.12.2 递归模式](#122-递归模式)
-    - [1.12.3 Rust中的F-代数应用](#123-rust中的f-代数应用)
-  - [1.13 多函子与Lens](#13-多函子与lens)
-    - [1.13.1 多函子的定义](#131-多函子的定义)
-    - [1.13.2 Lens的结构](#132-lens的结构)
-    - [1.13.3 Rust中的Lens实现](#133-rust中的lens实现)
-  - [1.14 范畴论视角下的Rust类型系统](#14-范畴论视角下的rust类型系统)
-    - [1.14.1 类型即对象](#141-类型即对象)
-    - [1.14.2 函数即态射](#142-函数即态射)
-    - [1.14.3 Rust类型系统的范畴论解释](#143-rust类型系统的范畴论解释)
-  - [1.15 高阶函子与应用函子](#15-高阶函子与应用函子)
-    - [1.15.1 高阶函子的定义](#151-高阶函子的定义)
-    - [1.15.2 应用函子结构](#152-应用函子结构)
-    - [1.15.3 Rust中的高阶函子实现](#153-rust中的高阶函子实现)
-  - [1.16 范畴论与Rust的所有权系统](#16-范畴论与rust的所有权系统)
-    - [1.16.1 线性类型与所有权](#161-线性类型与所有权)
-    - [1.16.2 借用作为自然变换](#162-借用作为自然变换)
-    - [1.16.3 所有权系统的范畴论解释](#163-所有权系统的范畴论解释)
-  - [1.17 类型级编程与实例推导](#17-类型级编程与实例推导)
-    - [1.17.1 类型族与关联类型](#171-类型族与关联类型)
-    - [1.17.2 特征解析作为实例推导](#172-特征解析作为实例推导)
-    - [1.17.3 Rust中的依赖类型模拟](#173-rust中的依赖类型模拟)
-  - [1.18 效果系统与计算的范畴](#18-效果系统与计算的范畴)
-    - [1.18.1 代数效果与处理器](#181-代数效果与处理器)
-    - [1.18.2 函数式反应式编程](#182-函数式反应式编程)
-    - [1.18.3 Rust中实现效果系统](#183-rust中实现效果系统)
-  - [1.19 高级模式与范畴论应用](#19-高级模式与范畴论应用)
-    - [1.19.1 Tagless Final模式](#191-tagless-final模式)
-    - [1.19.2 自由模板与余余单子](#192-自由模板与余余单子)
-    - [1.19.3 Rust中的范畴论库](#193-rust中的范畴论库)
-  - [1.20 计算模型与范畴嵌入](#20-计算模型与范畴嵌入)
-    - [1.20.1 lambda演算与笛卡尔闭范畴](#201-lambda演算与笛卡尔闭范畴)
-    - [1.20.2 线性逻辑与线性范畴](#202-线性逻辑与线性范畴)
-    - [1.20.3 Rust的计算模型分析](#203-rust的计算模型分析)
-  - [1.21 范畴论与并发系统](#21-范畴论与并发系统)
-    - [1.21.1 Actor模型的范畴论视角](#211-actor模型的范畴论视角)
-    - [1.21.2 并行计算的单子模型](#212-并行计算的单子模型)
-    - [1.21.3 Rust并发原语的范畴论解释](#213-rust并发原语的范畴论解释)
-- [2. 总结与展望](#总结与展望)
-  - [2.1 主要收获](#1-主要收获)
-  - [2.2 未来方向](#2-未来方向)
+- [1. 范畴论与Rust编程：核心概念与应用](#1-范畴论与rust编程核心概念与应用)
+  - [目录](#目录)
+  - [1.1 范畴论基础](#11-范畴论基础)
+    - [1.1.1 范畴的定义](#111-范畴的定义)
+    - [1.1.2 对象与态射](#112-对象与态射)
+    - [1.1.3 组合与恒等态射](#113-组合与恒等态射)
+  - [1.2 函子](#12-函子)
+    - [1.2.1 函子的定义](#121-函子的定义)
+    - [1.2.2 内函子和协变函子](#122-内函子和协变函子)
+    - [1.2.3 Rust中的函子实现](#123-rust中的函子实现)
+  - [1.3 自然变换](#13-自然变换)
+    - [1.3.1 自然变换的定义](#131-自然变换的定义)
+    - [1.3.2 自然变换的性质](#132-自然变换的性质)
+    - [1.3.3 Rust中的自然变换](#133-rust中的自然变换)
+  - [1.4 单子](#14-单子)
+    - [1.4.1 单子的定义](#141-单子的定义)
+    - [1.4.2 单子的定律](#142-单子的定律)
+    - [1.4.3 Rust中的Option和Result单子](#143-rust中的option和result单子)
+  - [1.5 积与余积](#15-积与余积)
+    - [1.5.1 积的定义](#151-积的定义)
+    - [1.5.2 余积的定义](#152-余积的定义)
+    - [1.5.3 Rust中的产品类型与和类型](#153-rust中的产品类型与和类型)
+  - [1.6 极限与余极限](#16-极限与余极限)
+    - [1.6.1 极限的定义](#161-极限的定义)
+    - [1.6.2 余极限的定义](#162-余极限的定义)
+    - [1.6.3 Rust中的应用](#163-rust中的应用)
+  - [1.7 代数数据类型](#17-代数数据类型)
+    - [1.7.1 归纳类型](#171-归纳类型)
+    - [1.7.2 余归纳类型](#172-余归纳类型)
+    - [1.7.3 Rust中的递归类型](#173-rust中的递归类型)
+  - [1.8 伴随函子](#18-伴随函子)
+    - [1.8.1 伴随函子的定义](#181-伴随函子的定义)
+    - [1.8.2 单位与余单位](#182-单位与余单位)
+    - [1.8.3 Rust中的伴随函子](#183-rust中的伴随函子)
+  - [1.9 Yoneda引理](#19-yoneda引理)
+    - [1.9.1 Yoneda引理的陈述](#191-yoneda引理的陈述)
+    - [1.9.2 Yoneda引理的含义](#192-yoneda引理的含义)
+    - [1.9.3 Rust中的Yoneda引理应用](#193-rust中的yoneda引理应用)
+  - [1.10 自由单子](#110-自由单子)
+    - [1.10.1 自由单子的定义](#1101-自由单子的定义)
+    - [1.10.2 解释器模式](#1102-解释器模式)
+    - [1.10.3 Rust中的自由单子实现](#1103-rust中的自由单子实现)
+  - [1.11 Kleisli范畴](#111-kleisli范畴)
+    - [1.11.1 Kleisli范畴的定义](#1111-kleisli范畴的定义)
+    - [1.11.2 Kleisli范畴与单子编程](#1112-kleisli范畴与单子编程)
+    - [1.11.3 Rust中的Kleisli箭头](#1113-rust中的kleisli箭头)
+  - [1.12 F-代数与递归模式](#112-f-代数与递归模式)
+    - [1.12.1 F-代数的定义](#1121-f-代数的定义)
+    - [1.12.2 递归模式](#1122-递归模式)
+    - [1.12.3 Rust中的F-代数应用](#1123-rust中的f-代数应用)
+  - [1.13 多函子与Lens](#113-多函子与lens)
+    - [1.13.1 多函子的定义](#1131-多函子的定义)
+    - [1.13.2 Lens的结构](#1132-lens的结构)
+    - [1.13.3 Rust中的Lens实现](#1133-rust中的lens实现)
+  - [1.14 范畴论视角下的Rust类型系统](#114-范畴论视角下的rust类型系统)
+    - [1.14.1 类型即对象](#1141-类型即对象)
+    - [1.14.2 函数即态射](#1142-函数即态射)
+    - [1.14.3 Rust类型系统的范畴论解释](#1143-rust类型系统的范畴论解释)
+  - [1.15 高阶函子与应用函子](#115-高阶函子与应用函子)
+    - [1.15.1 高阶函子的定义](#1151-高阶函子的定义)
+    - [1.15.2 应用函子结构](#1152-应用函子结构)
+    - [1.15.3 Rust中的高阶函子实现](#1153-rust中的高阶函子实现)
+  - [1.16 范畴论与Rust的所有权系统](#116-范畴论与rust的所有权系统)
+    - [1.16.1 线性类型与所有权](#1161-线性类型与所有权)
+    - [1.16.2 借用作为自然变换](#1162-借用作为自然变换)
+    - [1.16.3 所有权系统的范畴论解释](#1163-所有权系统的范畴论解释)
+  - [1.17 类型级编程与实例推导](#117-类型级编程与实例推导)
+    - [1.17.1 类型族与关联类型](#1171-类型族与关联类型)
+    - [1.17.2 特征解析作为实例推导](#1172-特征解析作为实例推导)
+    - [1.17.3 Rust中的依赖类型模拟](#1173-rust中的依赖类型模拟)
+  - [1.18 效果系统与计算的范畴](#118-效果系统与计算的范畴)
+    - [1.18.1 代数效果与处理器](#1181-代数效果与处理器)
+    - [1.18.2 函数式反应式编程](#1182-函数式反应式编程)
+    - [1.18.3 Rust中实现效果系统](#1183-rust中实现效果系统)
+  - [1.19 高级模式与范畴论应用](#119-高级模式与范畴论应用)
+    - [1.19.1 Tagless Final模式](#1191-tagless-final模式)
+    - [1.19.2 自由模板与余余单子](#1192-自由模板与余余单子)
+    - [1.19.3 Rust中的范畴论库](#1193-rust中的范畴论库)
+  - [1.20 计算模型与范畴嵌入](#120-计算模型与范畴嵌入)
+    - [1.20.1 lambda演算与笛卡尔闭范畴](#1201-lambda演算与笛卡尔闭范畴)
+    - [1.20.2 线性逻辑与线性范畴](#1202-线性逻辑与线性范畴)
+    - [1.20.3 Rust的计算模型分析](#1203-rust的计算模型分析)
+  - [1.21 范畴论与并发系统](#121-范畴论与并发系统)
+    - [1.21.1 Actor模型的范畴论视角](#1211-actor模型的范畴论视角)
+    - [1.21.2 并行计算的单子模型](#1212-并行计算的单子模型)
+    - [1.21.3 Rust并发原语的范畴论解释](#1213-rust并发原语的范畴论解释)
+- [2. 总结与展望](#2-总结与展望)
+  - [2.1 主要收获](#21-主要收获)
+  - [2.2 未来方向](#22-未来方向)
+
 ## 1.1 范畴论基础
 
 ### 1.1.1 范畴的定义
@@ -239,7 +241,7 @@ trait Functor<A> {
 
 impl<A> Functor<A> for Option<A> {
     type Target<B> = Option<B>;
-    
+
     fn map<B, F>(self, f: F) -> Option<B>
     where
         F: FnOnce(A) -> B,
@@ -253,7 +255,7 @@ impl<A> Functor<A> for Option<A> {
 
 impl<A> Functor<A> for Vec<A> {
     type Target<B> = Vec<B>;
-    
+
     fn map<B, F>(self, f: F) -> Vec<B>
     where
         F: FnOnce(A) -> B,
@@ -368,7 +370,7 @@ impl<A> Monad<A> for Option<A> {
     fn pure(a: A) -> Self {
         Some(a)
     }
-    
+
     fn flat_map<B, F>(self, f: F) -> B
     where
         F: FnOnce(A) -> B,
@@ -399,15 +401,15 @@ impl<A> Monad<A> for Option<A> {
 fn verify_option_monad_laws() {
     // 左单位元
     assert_eq!(Some(42).flat_map(|x| Some(x)), Some(42));
-    
+
     // 右单位元
     let f = |x: i32| Some(x + 1);
     assert_eq!(Some(42).flat_map(f), f(42));
-    
+
     // 结合律
     let f = |x: i32| Some(x + 1);
     let g = |x: i32| Some(x * 2);
-    
+
     assert_eq!(
         Some(42).flat_map(f).flat_map(g),
         Some(42).flat_map(|x| f(x).flat_map(g))
@@ -431,7 +433,7 @@ impl<A> Option<A> {
             None => None,
         }
     }
-    
+
     fn flat_map<B, F>(self, f: F) -> Option<B>
     where
         F: FnOnce(A) -> Option<B>,
@@ -454,7 +456,7 @@ impl<T, E> Result<T, E> {
             Err(e) => Err(e),
         }
     }
-    
+
     fn flat_map<U, F>(self, f: F) -> Result<U, E>
     where
         F: FnOnce(T) -> Result<U, E>,
@@ -1012,7 +1014,7 @@ impl<A> Console<A> {
     fn pure(a: A) -> Self {
         Console::Pure(a)
     }
-    
+
     fn flat_map<B, F>(self, f: F) -> Console<B>
     where
         F: Fn(A) -> Console<B>,
@@ -1150,7 +1152,7 @@ impl<A, B, C> KleisliCompose<A, B, C, Option> for OptionKleisli {
 fn main() {
     let f = |x: i32| if x > 0 { Some(x * 2) } else { None };
     let g = |x: i32| if x < 10 { Some(x * x) } else { None };
-    
+
     let h = OptionKleisli::compose(f, g);
     println!("{:?}", h(3));  // Some(36)
     println!("{:?}", h(-1)); // None
@@ -1311,7 +1313,7 @@ fn cata_expr<A>(expr: Expr, alg: impl Fn(ExprF<A>) -> A) -> A {
 // 多函子接口
 trait Profunctor<A, B> {
     type Target<C, D>;
-    
+
     fn dimap<C, D, F, G>(self, f: F, g: G) -> Self::Target<C, D>
     where
         F: Fn(C) -> A,
@@ -1321,7 +1323,7 @@ trait Profunctor<A, B> {
 // 函数是一个多函子
 impl<A, B, R> Profunctor<A, B> for fn(A) -> B {
     type Target<C, D> = fn(C) -> D;
-    
+
     fn dimap<C, D, F, G>(self, f: F, g: G) -> fn(C) -> D
     where
         F: Fn(C) -> A,
@@ -1363,7 +1365,7 @@ where
             _phantom: std::marker::PhantomData,
         }
     }
-    
+
     // 通过Lens获取值
     fn view(&self, s: &S) -> A
     where
@@ -1371,7 +1373,7 @@ where
     {
         (self.get)(s)
     }
-    
+
     // 通过Lens更新值
     fn set(&self, s: S, a: A) -> S {
         (self.set)(s, a)
@@ -1434,10 +1436,10 @@ fn main() {
             city: "Wonderland".to_string(),
         },
     };
-    
+
     let name = name_lens().view(&person);
     println!("Name: {}", name);
-    
+
     let updated_person = name_lens().set(person, "Bob".to_string());
     println!("Updated name: {}", updated_person.name);
 }
@@ -1539,7 +1541,7 @@ impl Monoid for String {
     fn empty() -> Self {
         String::new()
     }
-    
+
     fn combine(&self, other: &Self) -> Self {
         let mut result = self.clone();
         result.push_str(other);
@@ -1594,7 +1596,7 @@ impl<F, G, A> Compose<F, G, A> {
     fn new(inner: F<G<A>>) -> Self {
         Compose { inner }
     }
-    
+
     fn map<B, Func>(self, f: Func) -> Compose<F, G, B>
     where
         F: Functor<G<A>>,
@@ -1627,7 +1629,7 @@ impl<F, G, A> Compose<F, G, A> {
 trait Applicative<A>: Functor<A> {
     // 将值放入容器
     fn pure(a: A) -> Self;
-    
+
     // 应用封装的函数到封装的值
     fn apply<B, F>(self, f: Self::Target<F>) -> Self::Target<B>
     where
@@ -1639,7 +1641,7 @@ impl<A> Applicative<A> for Option<A> {
     fn pure(a: A) -> Self {
         Some(a)
     }
-    
+
     fn apply<B, F>(self, f: Option<F>) -> Option<B>
     where
         F: FnOnce(A) -> B,
@@ -1660,7 +1662,7 @@ Rust中可以使用泛型特征来实现高阶函子和应用函子：
 // 更完整的函子实现
 trait Functor<A> {
     type Target<B>;
-    
+
     fn map<B, F>(self, f: F) -> Self::Target<B>
     where
         F: FnOnce(A) -> B;
@@ -1669,11 +1671,11 @@ trait Functor<A> {
 // 应用函子扩展函子
 trait Applicative<A>: Functor<A> {
     fn pure(a: A) -> Self;
-    
+
     fn apply<B, F>(self, f: Self::Target<F>) -> Self::Target<B>
     where
         F: FnOnce(A) -> B;
-        
+
     // 顺序应用
     fn sequence<B, FB>(self, fb: Self::Target<B>) -> Self::Target<(A, B)>
     where
@@ -1686,7 +1688,7 @@ trait Applicative<A>: Functor<A> {
 // 将Result与Either型式统一
 impl<A, E> Functor<A> for Result<A, E> {
     type Target<B> = Result<B, E>;
-    
+
     fn map<B, F>(self, f: F) -> Result<B, E>
     where
         F: FnOnce(A) -> B,
@@ -1699,7 +1701,7 @@ impl<A, E> Applicative<A> for Result<A, E> {
     fn pure(a: A) -> Self {
         Ok(a)
     }
-    
+
     fn apply<B, F>(self, f: Result<F, E>) -> Result<B, E>
     where
         F: FnOnce(A) -> B,
@@ -1806,9 +1808,9 @@ struct BorrowChecker;
 
 impl BorrowChecker {
     // 验证引用使用的安全性（检查态射的有效性）
-    fn check<'a, 'b, A>(reference: &'a A) -> &'b A 
-    where 
-        'a: 'b 
+    fn check<'a, 'b, A>(reference: &'a A) -> &'b A
+    where
+        'a: 'b
     {
         // 生命周期强制：'a必须比'b长
         reference
@@ -1852,10 +1854,10 @@ impl<T> AffineType<T> {
 trait Collection {
     // 关联类型：集合的元素类型
     type Item;
-    
+
     // 关联类型：集合的迭代器类型
     type Iter<'a>: Iterator<Item = &'a Self::Item> where Self: 'a;
-    
+
     fn iter<'a>(&'a self) -> Self::Iter<'a>;
 }
 
@@ -1863,7 +1865,7 @@ trait Collection {
 impl<T> Collection for Vec<T> {
     type Item = T;
     type Iter<'a> = std::slice::Iter<'a, T> where T: 'a;
-    
+
     fn iter<'a>(&'a self) -> Self::Iter<'a> {
         self.iter()
     }
@@ -2021,16 +2023,16 @@ impl<A> Effect<A> {
     fn pure(a: A) -> Self {
         Effect::Pure(a)
     }
-    
+
     // 效果操作
     fn read_line() -> Effect<String> {
         Effect::ReadLine(Box::new(|s| s))
     }
-    
+
     fn write_line(s: String) -> Effect<()> {
         Effect::WriteLine(s, Box::new(|()| ()))
     }
-    
+
     // 单子操作
     fn map<B, F>(self, f: F) -> Effect<B>
     where
@@ -2042,7 +2044,7 @@ impl<A> Effect<A> {
             Effect::WriteLine(s, k) => Effect::WriteLine(s, Box::new(move |()| f(k(())))),
         }
     }
-    
+
     fn and_then<B, F>(self, f: F) -> Effect<B>
     where
         F: 'static + FnOnce(A) -> Effect<B>,
@@ -2099,28 +2101,28 @@ struct Behavior<A> {
 impl<A: 'static + Clone> Event<A> {
     // 创建新事件源
     fn new() -> (EventSource<A>, Self) {
-        let subscribers: std::sync::Arc<std::sync::Mutex<Vec<Box<dyn Fn(&A)>>>> = 
+        let subscribers: std::sync::Arc<std::sync::Mutex<Vec<Box<dyn Fn(&A)>>>> =
             std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
-        
+
         let subscribers_clone = subscribers.clone();
         let source = EventSource { subscribers };
-        
+
         let event = Event {
             subscribe: Box::new(move |f| {
                 subscribers_clone.lock().unwrap().push(f);
             }),
         };
-        
+
         (source, event)
     }
-    
+
     // 映射事件
     fn map<B: 'static, F: 'static + Fn(&A) -> B>(
-        &self, 
+        &self,
         f: F
     ) -> Event<B> {
         let subscribe = self.subscribe.clone();
-        
+
         Event {
             subscribe: Box::new(move |g| {
                 subscribe(Box::new(move |a| {
@@ -2165,7 +2167,7 @@ impl<A: 'static> Async<A> {
             }),
         }
     }
-    
+
     // 映射操作
     fn map<B: 'static, F: 'static + FnOnce(A) -> B>(self, f: F) -> Async<B> {
         Async {
@@ -2176,7 +2178,7 @@ impl<A: 'static> Async<A> {
             }),
         }
     }
-    
+
     // 异步操作的链式调用
     fn and_then<B: 'static, F: 'static + FnOnce(A) -> Async<B>>(self, f: F) -> Async<B> {
         Async {
@@ -2187,7 +2189,7 @@ impl<A: 'static> Async<A> {
             }),
         }
     }
-    
+
     // 执行异步操作
     fn execute(self) {
         self.run(Box::new(|_| {}));
@@ -2218,7 +2220,7 @@ fn main() {
             println!("Received: {}", s);
             Async::pure(())
         });
-    
+
     program.execute();
     // 等待异步操作完成
     std::thread::sleep(std::time::Duration::from_secs(3));
@@ -2244,7 +2246,7 @@ fn main() {
 trait Expr {
     // 返回类型是实现者定义的
     type Result;
-    
+
     // 语言原语
     fn lit(value: i32) -> Self::Result;
     fn add(left: Self::Result, right: Self::Result) -> Self::Result;
@@ -2256,15 +2258,15 @@ struct Eval;
 
 impl Expr for Eval {
     type Result = i32;
-    
+
     fn lit(value: i32) -> Self::Result {
         value
     }
-    
+
     fn add(left: Self::Result, right: Self::Result) -> Self::Result {
         left + right
     }
-    
+
     fn mul(left: Self::Result, right: Self::Result) -> Self::Result {
         left * right
     }
@@ -2275,15 +2277,15 @@ struct Print;
 
 impl Expr for Print {
     type Result = String;
-    
+
     fn lit(value: i32) -> Self::Result {
         value.to_string()
     }
-    
+
     fn add(left: Self::Result, right: Self::Result) -> Self::Result {
         format!("({} + {})", left, right)
     }
-    
+
     fn mul(left: Self::Result, right: Self::Result) -> Self::Result {
         format!("({} * {})", left, right)
     }
@@ -2301,7 +2303,7 @@ fn expr<E: Expr>() -> E::Result {
 fn main() {
     let result = expr::<Eval>();  // 16
     let printed = expr::<Print>(); // "(10 + (2 * 3))"
-    
+
     println!("Result: {}", result);
     println!("Expression: {}", printed);
 }
@@ -2323,13 +2325,13 @@ fn main() {
 trait Comonad<A> {
     // 从余余单子中提取值
     fn extract(&self) -> A;
-    
+
     // 扩展余余单子
     fn extend<B, F>(&self, f: F) -> Self::Target<B>
     where
         F: Fn(&Self) -> B,
         Self: Sized;
-    
+
     type Target<B>;
 }
 
@@ -2343,7 +2345,7 @@ impl<A: Clone> Comonad<A> for Stream<A> {
     fn extract(&self) -> A {
         self.head.clone()
     }
-    
+
     fn extend<B, F>(&self, f: F) -> Self::Target<B>
     where
         F: Fn(&Self) -> B + Clone + 'static,
@@ -2357,7 +2359,7 @@ impl<A: Clone> Comonad<A> for Stream<A> {
             }),
         }
     }
-    
+
     type Target<B> = Stream<B>;
 }
 
@@ -2373,7 +2375,7 @@ fn from<A: Clone + 'static>(a: A) -> Stream<A> {
 fn main() {
     let ones = from(1);
     let sum = ones.extend(|s| s.extract() + (s.tail)().extract());
-    
+
     // 1, 2, 2, 2, ...
     println!("{}", sum.extract());
     println!("{}", (sum.tail)().extract());
@@ -2394,7 +2396,7 @@ type MyList = HCons<i32, HCons<String, HCons<bool, HNil>>>;
 
 fn hlist_example() {
     let list = hlist![1, "hello".to_string(), true];
-    
+
     // 使用类型级编程操作HList
     let first: i32 = list.head;
     let rest = list.tail;
@@ -2484,12 +2486,12 @@ impl<T> Linear<T> {
     fn new(value: T) -> Self {
         Linear(value)
     }
-    
+
     // 消费线性值
     fn consume(self) -> T {
         self.0
     }
-    
+
     // 线性映射
     fn map<U, F: FnOnce(T) -> U>(self, f: F) -> Linear<U> {
         Linear(f(self.0))
@@ -2519,15 +2521,15 @@ Rust的计算模型结合了几种范畴论概念：
 trait Polymorphism {
     // 参数化多态（泛型）
     fn parametric<T>(value: T) -> T { value }
-    
+
     // 特设多态（trait）
-    fn ad_hoc<T: std::fmt::Display>(value: T) -> String { 
-        format!("{}", value) 
+    fn ad_hoc<T: std::fmt::Display>(value: T) -> String {
+        format!("{}", value)
     }
-    
+
     // 子类型多态（特征对象）
-    fn subtyping(value: &dyn std::fmt::Display) -> String { 
-        format!("{}", value) 
+    fn subtyping(value: &dyn std::fmt::Display) -> String {
+        format!("{}", value)
     }
 }
 
@@ -2557,12 +2559,12 @@ use std::thread;
 // 使用消息传递的Actor模型
 fn actor_model() {
     let (tx, rx) = std::sync::mpsc::channel();
-    
+
     // 发送者线程
     thread::spawn(move || {
         tx.send("Hello from actor!").unwrap();
     });
-    
+
     // 接收者线程
     let msg = rx.recv().unwrap();
     println!("Received: {}", msg);
@@ -2590,7 +2592,7 @@ use std::thread;
 // Actor特征
 trait Actor {
     type Message;
-    
+
     fn receive(&mut self, msg: Self::Message);
 }
 
@@ -2602,16 +2604,16 @@ struct ActorSystem<A: Actor> {
 impl<A: Actor + Send + 'static> ActorSystem<A> {
     fn new(mut actor: A) -> Self {
         let (tx, rx): (Sender<A::Message>, Receiver<A::Message>) = channel();
-        
+
         thread::spawn(move || {
             while let Ok(msg) = rx.recv() {
                 actor.receive(msg);
             }
         });
-        
+
         ActorSystem { tx }
     }
-    
+
     fn send(&self, msg: A::Message) {
         self.tx.send(msg).unwrap();
     }
@@ -2629,7 +2631,7 @@ enum CounterMessage {
 
 impl Actor for Counter {
     type Message = CounterMessage;
-    
+
     fn receive(&mut self, msg: Self::Message) {
         match msg {
             CounterMessage::Increment => {
@@ -2671,14 +2673,14 @@ impl<A: Send + 'static> Par<A> {
             compute: Box::new(move || a),
         }
     }
-    
+
     // 创建并行计算
     fn from_fn<F: FnOnce() -> A + Send + 'static>(f: F) -> Self {
         Par {
             compute: Box::new(f),
         }
     }
-    
+
     // 映射操作
     fn map<B: Send + 'static, F: FnOnce(A) -> B + Send + 'static>(self, f: F) -> Par<B> {
         Par {
@@ -2688,7 +2690,7 @@ impl<A: Send + 'static> Par<A> {
             }),
         }
     }
-    
+
     // 绑定操作 (and_then)
     fn and_then<B: Send + 'static, F: FnOnce(A) -> Par<B> + Send + 'static>(self, f: F) -> Par<B> {
         Par {
@@ -2698,12 +2700,12 @@ impl<A: Send + 'static> Par<A> {
             }),
         }
     }
-    
+
     // 运行并行计算并获得结果
     fn run(self) -> A {
         (self.compute)()
     }
-    
+
     // 并行映射：同时在多个核心上运行
     fn par_map<B: Send + 'static, F: FnOnce(A) -> B + Send + 'static + Clone>(self, f: F) -> Par<B> {
         Par {
@@ -2724,12 +2726,12 @@ fn parallel_computation() -> Par<i32> {
         thread::sleep(std::time::Duration::from_millis(100));
         10
     });
-    
+
     let compute2 = Par::from_fn(|| {
         thread::sleep(std::time::Duration::from_millis(200));
         20
     });
-    
+
     compute1.and_then(move |x| {
         compute2.map(move |y| x + y)
     })
@@ -2764,7 +2766,7 @@ impl<T: Send + 'static> State<T> {
             data: Arc::new(Mutex::new(initial)),
         }
     }
-    
+
     // 读取状态
     fn get<R, F>(&self, f: F) -> R
     where
@@ -2773,7 +2775,7 @@ impl<T: Send + 'static> State<T> {
         let guard = self.data.lock().unwrap();
         f(&*guard)
     }
-    
+
     // 修改状态
     fn modify<R, F>(&self, f: F) -> R
     where
@@ -2782,7 +2784,7 @@ impl<T: Send + 'static> State<T> {
         let mut guard = self.data.lock().unwrap();
         f(&mut *guard)
     }
-    
+
     // 派生状态计算
     fn derived<U: Send + 'static, F: Fn(&T) -> U + Send + Sync + 'static>(&self, f: F) -> State<U> {
         let data = self.data.clone();
@@ -2796,18 +2798,18 @@ impl<T: Send + 'static> State<T> {
 fn channel_example() {
     let (tx1, rx1) = std::sync::mpsc::channel();
     let (tx2, rx2) = std::sync::mpsc::channel();
-    
+
     // 发送线程
     thread::spawn(move || {
         tx1.send(10).unwrap();
     });
-    
+
     // 中间处理线程
     thread::spawn(move || {
         let value = rx1.recv().unwrap();
         tx2.send(value * 2).unwrap();
     });
-    
+
     // 接收线程
     let result = rx2.recv().unwrap();
     println!("Final result: {}", result);
@@ -2820,7 +2822,7 @@ fn send_sync_example<T: Send + Sync>() {
         let data: T;
         // 使用数据...
     });
-    
+
     // 只有实现了Sync的类型可以在线程间共享
     let data: T;
     thread::spawn(move || {

@@ -2,31 +2,33 @@
 
 ## 目录
 
-- [1. 形式语言理论 (Formal Language Theory)](#形式语言理论-formal-language-theory)
-  - [1.1 基础概念](#1-基础概念)
-    - [1.1.1 字母表和语言](#11-字母表和语言)
-    - [1.1.2 乔姆斯基层次结构](#12-乔姆斯基层次结构)
-  - [1.2 有限状态自动机](#2-有限状态自动机)
-    - [1.2.1 确定性有限自动机](#21-确定性有限自动机)
-    - [1.2.2 非确定性有限自动机](#22-非确定性有限自动机)
-    - [1.2.3 正则表达式](#23-正则表达式)
-  - [1.3 上下文无关文法](#3-上下文无关文法)
-    - [1.3.1 文法定义](#31-文法定义)
-    - [1.3.2 乔姆斯基范式](#32-乔姆斯基范式)
-    - [1.3.3 CYK算法](#33-cyk算法)
-  - [1.4 下推自动机](#4-下推自动机)
-    - [1.4.1 PDA定义](#41-pda定义)
-    - [1.4.2 PDA与CFG等价性](#42-pda与cfg等价性)
-  - [1.5 图灵机](#5-图灵机)
-    - [1.5.1 图灵机定义](#51-图灵机定义)
-    - [1.5.2 图灵机变种](#52-图灵机变种)
-  - [1.6 计算复杂性](#6-计算复杂性)
-    - [1.6.1 时间复杂性](#61-时间复杂性)
-    - [1.6.2 空间复杂性](#62-空间复杂性)
-  - [1.7 实际应用](#7-实际应用)
-    - [1.7.1 编译器设计](#71-编译器设计)
-    - [1.7.2 自然语言处理](#72-自然语言处理)
-  - [1.8 结论](#8-结论)
+- [1. 形式语言理论 (Formal Language Theory)](#1-形式语言理论-formal-language-theory)
+  - [目录](#目录)
+  - [1.1 基础概念](#11-基础概念)
+    - [1.1.1 字母表和语言](#111-字母表和语言)
+    - [1.1.2 乔姆斯基层次结构](#112-乔姆斯基层次结构)
+  - [1.2 有限状态自动机](#12-有限状态自动机)
+    - [1.2.1 确定性有限自动机](#121-确定性有限自动机)
+    - [1.2.2 非确定性有限自动机](#122-非确定性有限自动机)
+    - [1.2.3 正则表达式](#123-正则表达式)
+  - [1.3 上下文无关文法](#13-上下文无关文法)
+    - [1.3.1 文法定义](#131-文法定义)
+    - [1.3.2 乔姆斯基范式](#132-乔姆斯基范式)
+    - [1.3.3 CYK算法](#133-cyk算法)
+  - [1.4 下推自动机](#14-下推自动机)
+    - [1.4.1 PDA定义](#141-pda定义)
+    - [1.4.2 PDA与CFG等价性](#142-pda与cfg等价性)
+  - [1.5 图灵机](#15-图灵机)
+    - [1.5.1 图灵机定义](#151-图灵机定义)
+    - [1.5.2 图灵机变种](#152-图灵机变种)
+  - [1.6 计算复杂性](#16-计算复杂性)
+    - [1.6.1 时间复杂性](#161-时间复杂性)
+    - [1.6.2 空间复杂性](#162-空间复杂性)
+  - [1.7 实际应用](#17-实际应用)
+    - [1.7.1 编译器设计](#171-编译器设计)
+    - [1.7.2 自然语言处理](#172-自然语言处理)
+  - [1.8 结论](#18-结论)
+
 ## 1.1 基础概念
 
 ### 1.1.1 字母表和语言
@@ -98,12 +100,12 @@ DFA接受字符串 $w$，如果计算结束于接受状态：$q_n \in F$。
 
 ```haskell
 simulateDFA :: DFA -> String -> Bool
-simulateDFA dfa input = 
+simulateDFA dfa input =
   let finalState = foldl (transition dfa) (initialState dfa) input
   in finalState `elem` (acceptingStates dfa)
 
 transition :: DFA -> State -> Char -> State
-transition dfa currentState symbol = 
+transition dfa currentState symbol =
   delta dfa currentState symbol
 ```
 
@@ -130,7 +132,7 @@ NFA在输入 $w$ 上的计算是一棵树，每个节点表示可能的状态。
 
 ```haskell
 subsetConstruction :: NFA -> DFA
-subsetConstruction nfa = 
+subsetConstruction nfa =
   let initialState = epsilonClosure nfa [initialState nfa]
       allStates = generateAllStates nfa initialState
       transitions = buildTransitions nfa allStates
@@ -192,7 +194,7 @@ $$L(G) = \{w \in T^* \mid S \Rightarrow^* w\}$$
 
 ```haskell
 parseCFG :: CFG -> String -> Bool
-parseCFG cfg input = 
+parseCFG cfg input =
   let startSymbol = startSymbol cfg
       derivations = generateDerivations cfg startSymbol
       terminalStrings = filter isTerminal derivations
@@ -220,7 +222,7 @@ parseCFG cfg input =
 
 ```haskell
 convertToCNF :: CFG -> CFG
-convertToCNF cfg = 
+convertToCNF cfg =
   let cfg1 = eliminateEpsilon cfg
       cfg2 = eliminateUnit cfg1
       cfg3 = eliminateLong cfg2
@@ -233,27 +235,27 @@ convertToCNF cfg =
 
 ```haskell
 cykParse :: CFG -> String -> Bool
-cykParse cfg input = 
+cykParse cfg input =
   let n = length input
       table = array ((0,0), (n-1,n-1)) []
-      
+
       -- 初始化对角线
-      table' = foldl (\t i -> t // [((i,i), findProductions cfg [input !! i])]) 
+      table' = foldl (\t i -> t // [((i,i), findProductions cfg [input !! i])])
                      table [0..n-1]
-      
+
       -- 填充表格
       finalTable = fillTable cfg table' n
-      
+
       startSymbol = startSymbol cfg
   in startSymbol `elem` (finalTable ! (0, n-1))
 
 fillTable :: CFG -> Array (Int,Int) [Symbol] -> Int -> Array (Int,Int) [Symbol]
-fillTable cfg table n = 
-  foldl (\t len -> 
-    foldl (\t' i -> 
+fillTable cfg table n =
+  foldl (\t len ->
+    foldl (\t' i ->
       let j = i + len - 1
           cells = [(i,k) | k <- [i..j-1]]
-          symbols = concatMap (\k -> 
+          symbols = concatMap (\k ->
             let left = t' ! (i,k)
                 right = t' ! (k+1,j)
             in findProductions cfg (left ++ right)) cells
@@ -292,7 +294,7 @@ $$(q, aw, A\gamma) \vdash (p, w, \beta\gamma)$$
 
 ```haskell
 simulatePDA :: PDA -> String -> Bool
-simulatePDA pda input = 
+simulatePDA pda input =
   let initialConfig = (initialState pda, input, [initialStackSymbol pda])
       finalConfigs = computeAllConfigs pda initialConfig
       acceptingConfigs = filter isAccepting finalConfigs
@@ -345,13 +347,13 @@ $$(q, \alpha, i) \vdash (p, \alpha', j)$$
 
 ```haskell
 simulateTuringMachine :: TuringMachine -> String -> Bool
-simulateTuringMachine tm input = 
+simulateTuringMachine tm input =
   let initialConfig = (initialState tm, input, 0)
       finalConfig = runComputation tm initialConfig
   in isAccepting tm finalConfig
 
 runComputation :: TuringMachine -> Config -> Config
-runComputation tm config = 
+runComputation tm config =
   if isHalted tm config
     then config
     else runComputation tm (step tm config)
@@ -410,7 +412,7 @@ $$S_M(n) = \max\{s \mid M \text{ 在长度为 } n \text{ 的输入上使用 } s 
 
 ```haskell
 lexicalAnalysis :: String -> [Token]
-lexicalAnalysis input = 
+lexicalAnalysis input =
   let dfa = buildLexicalDFA
       tokens = tokenize dfa input
   in tokens
@@ -421,7 +423,7 @@ lexicalAnalysis input =
 
 ```haskell
 syntaxAnalysis :: [Token] -> AST
-syntaxAnalysis tokens = 
+syntaxAnalysis tokens =
   let cfg = buildGrammar
       ast = parse cfg tokens
   in ast
@@ -434,7 +436,7 @@ syntaxAnalysis tokens =
 
 ```haskell
 syntacticAnalysis :: String -> ParseTree
-syntacticAnalysis sentence = 
+syntacticAnalysis sentence =
   let grammar = buildNaturalLanguageGrammar
       parseTree = parse grammar sentence
   in parseTree

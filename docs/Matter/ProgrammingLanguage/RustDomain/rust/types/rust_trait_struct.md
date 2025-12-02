@@ -2,10 +2,12 @@
 
 ## 目录
 
-- [1. Rust 类型系统相关概念](#rust-类型系统相关概念)
-  - [1.1 impl 可以实现的类型方法](#1-impl-可以实现的类型方法)
-    - [1.1.1 trait（特征）和泛型的关系](#11-trait特征和泛型的关系)
-    - [1.1.2 类型组合的方式](#12-类型组合的方式)
+- [1. Rust 类型系统相关概念](#1-rust-类型系统相关概念)
+  - [目录](#目录)
+  - [1.1 impl 可以实现的类型方法](#11-impl-可以实现的类型方法)
+    - [1.1.1 trait（特征）和泛型的关系](#111-trait特征和泛型的关系)
+    - [1.1.2 类型组合的方式](#112-类型组合的方式)
+
 ## 1.1 impl 可以实现的类型方法
 
 ```rust
@@ -20,7 +22,7 @@ impl Point {
     fn new(x: f64, y: f64) -> Point {
         Point { x, y }
     }
-    
+
     // 实例方法
     fn distance(&self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
@@ -71,8 +73,8 @@ fn print_item<T: Display>(item: T) {
 }
 
 // 4. 多重特征约束
-fn process<T>(item: T) 
-where 
+fn process<T>(item: T)
+where
     T: Display + Clone,
 {
     // 可以同时使用Display和Clone特征的方法

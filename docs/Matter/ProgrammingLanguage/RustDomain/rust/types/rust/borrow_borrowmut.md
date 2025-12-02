@@ -2,20 +2,22 @@
 
 ## 目录
 
-- [1. Borrow 和 BorrowMut](#borrow-和-borrowmut)
-  - [1.1 定义与作用](#1-定义与作用)
-    - [1.1.1 Borrow Trait](#11-borrow-trait)
-    - [1.1.2 BorrowMut Trait](#12-borrowmut-trait)
-  - [1.2 应用场景](#2-应用场景)
-    - [1.2.1 在集合中的查找](#21-在集合中的查找)
-    - [1.2.2 可变借用场景](#22-可变借用场景)
-  - [1.3 与 AsRefAsMut 的区别](#3-与-asrefasmut-的区别)
-  - [1.4 总结](#4-总结)
+- [1. Borrow 和 BorrowMut](#1-borrow-和-borrowmut)
+  - [目录](#目录)
+  - [1.1 定义与作用](#11-定义与作用)
+    - [1.1.1 Borrow Trait](#111-borrow-trait)
+    - [1.1.2 BorrowMut Trait](#112-borrowmut-trait)
+  - [1.2 应用场景](#12-应用场景)
+    - [1.2.1 在集合中的查找](#121-在集合中的查找)
+    - [1.2.2 可变借用场景](#122-可变借用场景)
+  - [1.3 与 AsRefAsMut 的区别](#13-与-asrefasmut-的区别)
+  - [1.4 总结](#14-总结)
+
 ## 1.1 定义与作用
 
 ### 1.1.1 Borrow Trait
 
-- **定义**  
+- **定义**
   `Borrow` trait 定义在标准库的 `std::borrow` 模块中，其核心作用是为类型提供一种不可变借用形式。其基本定义类似于下面这样：
 
   ```rust:src/borrow_trait.rs
@@ -26,14 +28,14 @@
   }
   ```
 
-- **用途**  
+- **用途**
   一个类型实现 `Borrow` 表示它能够以一种“等价”的方式暴露出它内部（或包装）的数据。常见应用场景是**集合查找**：例如，`String` 实现了 `Borrow<str>`，这样在使用 `HashMap<String, V>` 时，可以直接用 `&str` 作为查找键，无需额外的转换。这就要求 `borrow()` 返回的引用与原始数据在逻辑上相等。
 
 ---
 
 ### 1.1.2 BorrowMut Trait
 
-- **定义**  
+- **定义**
   `BorrowMut` 是 `Borrow` 的扩展，同样定义在 `std::borrow` 模块中，除了提供不可变借用外，还允许提供可变借用。它的基本定义如下：
 
   ```rust:src/borrow_mut_trait.rs
@@ -44,7 +46,7 @@
   }
   ```
 
-- **用途**  
+- **用途**
   实现了 `BorrowMut` 的类型不仅能以不可变方式提供内部数据的借用，也可以提供可变借用。这在需要进行修改操作，但仍希望保持与原数据“等价”时非常有用。
 
 ---
@@ -63,7 +65,7 @@ fn main() {
     // 创建一个以 String 为键的 HashMap
     let mut map: HashMap<String, i32> = HashMap::new();
     map.insert("hello".to_string(), 42);
-    
+
     // 使用 &str 类型作为查找键
     let key: &str = "hello";
     if let Some(&value) = map.get(key) {
@@ -84,10 +86,10 @@ fn main() {
 
 ## 1.3 与 AsRefAsMut 的区别
 
-- **相似点**  
+- **相似点**
   - `Borrow`/`BorrowMut` 与 `AsRef`/`AsMut` 都用于从一种类型获取对另一种类型的引用转换。
-  
-- **不同点**  
+
+- **不同点**
   - **语义要求**：`Borrow` 系列要求返回的引用与原始数据在逻辑上必须**等价**（例如比较或哈希相等），这对于集合查找非常关键。而 `AsRef` 更倾向于简单的转换，不一定涉及“等价”的强语义约束。
   - **应用目的**：`Borrow` 常用于标准库集合中提供灵活的查找接口，而 `AsRef` 则更适合通用的引用转换场景。
 

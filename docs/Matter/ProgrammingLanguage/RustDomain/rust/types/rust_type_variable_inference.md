@@ -2,39 +2,41 @@
 
 ## 目录
 
-- [1. Rust 变量与类型系统](#rust-变量与类型系统)
-  - [1.1 变量与类型的关系](#1-变量与类型的关系)
-  - [1.2 类型的核心模型-可以理解为Rust的类型系统有那些语义model](#2-类型的核心模型-可以理解为rust的类型系统有那些语义model)
-  - [1.3 完全的解释](#3-完全的解释)
-  - [1.4 编译器如何查看变量](#4-编译器如何查看变量)
-    - [1.4.1 静态检查（Static Checking）](#41-静态检查static-checking)
-    - [1.4.2 动态行为（Dynamic Behavior）](#42-动态行为dynamic-behavior)
-  - [1.5 总结](#5-总结)
-  - [1.6 Rust 中的变体性与多态：关系、证明与安全保证](#6-rust-中的变体性与多态关系证明与安全保证)
-    - [1.6.1 一、变体性与多态的关系](#61-一变体性与多态的关系)
-      - [1.6.1.1 基本关系](#611-基本关系)
-      - [1.6.1.2 具体联系](#612-具体联系)
-    - [1.6.2 二、变体性规则的推理与证明](#62-二变体性规则的推理与证明)
-      - [1.6.2.1 协变性推理](#621-协变性推理)
-      - [1.6.2.2 逆变性推理](#622-逆变性推理)
-      - [1.6.2.3 不变性推理](#623-不变性推理)
-    - [1.6.3 三、变体性如何保证类型安全和内存安全](#63-三变体性如何保证类型安全和内存安全)
-      - [1.6.3.1 协变与安全保证](#631-协变与安全保证)
-      - [1.6.3.2 逆变与安全保证](#632-逆变与安全保证)
-      - [1.6.3.3 不变性与安全保证](#633-不变性与安全保证)
-    - [1.6.4 四、运行时安全与变体性](#64-四运行时安全与变体性)
-      - [1.6.4.1 防止悬垂引用](#641-防止悬垂引用)
-      - [1.6.4.2 防止数据竞争](#642-防止数据竞争)
-      - [1.6.4.3 保证 trait 对象安全](#643-保证-trait-对象安全)
-    - [1.6.5 五、形式化证明示例](#65-五形式化证明示例)
-      - [1.6.5.1 协变安全性证明](#651-协变安全性证明)
-      - [1.6.5.2 逆变安全性证明](#652-逆变安全性证明)
-      - [1.6.5.3 不变性安全性证明](#653-不变性安全性证明)
-    - [1.6.6 六、变体性与多态的实际应用](#66-六变体性与多态的实际应用)
-      - [1.6.6.1 构建灵活的 API](#661-构建灵活的-api)
-      - [1.6.6.2 实现类型安全的回调系统](#662-实现类型安全的回调系统)
-      - [1.6.6.3 保证容器类型的安全](#663-保证容器类型的安全)
-    - [1.6.7 七、总结](#67-七总结)
+- [1. Rust 变量与类型系统](#1-rust-变量与类型系统)
+  - [目录](#目录)
+  - [1.1 变量与类型的关系](#11-变量与类型的关系)
+  - [1.2 类型的核心模型-可以理解为Rust的类型系统有那些语义model](#12-类型的核心模型-可以理解为rust的类型系统有那些语义model)
+  - [1.3 完全的解释](#13-完全的解释)
+  - [1.4 编译器如何查看变量](#14-编译器如何查看变量)
+    - [1.4.1 静态检查（Static Checking）](#141-静态检查static-checking)
+    - [1.4.2 动态行为（Dynamic Behavior）](#142-动态行为dynamic-behavior)
+  - [1.5 总结](#15-总结)
+  - [1.6 Rust 中的变体性与多态：关系、证明与安全保证](#16-rust-中的变体性与多态关系证明与安全保证)
+    - [1.6.1 一、变体性与多态的关系](#161-一变体性与多态的关系)
+      - [1.6.1.1 基本关系](#1611-基本关系)
+      - [1.6.1.2 具体联系](#1612-具体联系)
+    - [1.6.2 二、变体性规则的推理与证明](#162-二变体性规则的推理与证明)
+      - [1.6.2.1 协变性推理](#1621-协变性推理)
+      - [1.6.2.2 逆变性推理](#1622-逆变性推理)
+      - [1.6.2.3 不变性推理](#1623-不变性推理)
+    - [1.6.3 三、变体性如何保证类型安全和内存安全](#163-三变体性如何保证类型安全和内存安全)
+      - [1.6.3.1 协变与安全保证](#1631-协变与安全保证)
+      - [1.6.3.2 逆变与安全保证](#1632-逆变与安全保证)
+      - [1.6.3.3 不变性与安全保证](#1633-不变性与安全保证)
+    - [1.6.4 四、运行时安全与变体性](#164-四运行时安全与变体性)
+      - [1.6.4.1 防止悬垂引用](#1641-防止悬垂引用)
+      - [1.6.4.2 防止数据竞争](#1642-防止数据竞争)
+      - [1.6.4.3 保证 trait 对象安全](#1643-保证-trait-对象安全)
+    - [1.6.5 五、形式化证明示例](#165-五形式化证明示例)
+      - [1.6.5.1 协变安全性证明](#1651-协变安全性证明)
+      - [1.6.5.2 逆变安全性证明](#1652-逆变安全性证明)
+      - [1.6.5.3 不变性安全性证明](#1653-不变性安全性证明)
+    - [1.6.6 六、变体性与多态的实际应用](#166-六变体性与多态的实际应用)
+      - [1.6.6.1 构建灵活的 API](#1661-构建灵活的-api)
+      - [1.6.6.2 实现类型安全的回调系统](#1662-实现类型安全的回调系统)
+      - [1.6.6.3 保证容器类型的安全](#1663-保证容器类型的安全)
+    - [1.6.7 七、总结](#167-七总结)
+
 ## 1.1 变量与类型的关系
 
 在 Rust 中，变量和类型之间的关系是紧密且明确的。
@@ -328,7 +330,7 @@ fn lifetime_example() {
 // 证明不可变引用是协变的
 fn takes_ref<'a, T>(r: &'a T) {}
 
-fn covariance_proof<'long, 'short, T>(long_ref: &'long T) 
+fn covariance_proof<'long, 'short, T>(long_ref: &'long T)
     where 'long: 'short  // 'long 比 'short 活得长，即 'long <: 'short
 {
     // 如果 &T 对生命周期是协变的，那么应该可以传递
@@ -351,7 +353,7 @@ fn covariance_proof<'long, 'short, T>(long_ref: &'long T)
 // 证明函数参数位置是逆变的
 fn short_lived<'a>(x: &'a i32) {}
 
-fn contravariance_proof<'long, 'short>() 
+fn contravariance_proof<'long, 'short>()
     where 'long: 'short  // 'long <: 'short
 {
     // 函数类型 fn(&'short i32) 应该是 fn(&'long i32) 的子类型
@@ -374,7 +376,7 @@ fn contravariance_proof<'long, 'short>()
 // 证明可变引用是不变的
 fn takes_mut_ref<'a, T>(r: &'a mut T) {}
 
-fn invariance_proof<'long, 'short, T>(long_ref: &'long mut T) 
+fn invariance_proof<'long, 'short, T>(long_ref: &'long mut T)
     where 'long: 'short  // 'long <: 'short
 {
     // 如果 &mut T 对生命周期是不变的，那么下面应该编译失败
@@ -403,7 +405,7 @@ fn safety_example<'a>(data: &'a [u8]) {
 
 fn demonstrate_safety() {
     let long_lived = vec![1, 2, 3];
-    
+
     // 协变允许将长生命周期引用传递给接受短生命周期引用的函数
     // 这保证了引用在使用期间一定有效
     safety_example(&long_lived);
@@ -430,7 +432,7 @@ fn process_any<'a>(data: &'a [u8]) {
 fn demonstrate_contravariance() {
     // 函数类型中参数位置的逆变
     let specific_fn: fn(&'static [u8]) = process_any;
-    
+
     // 安全：process_any 能处理任意生命周期，
     // 所以一定能处理静态生命周期
     specific_fn(&[1, 2, 3]);
@@ -453,20 +455,20 @@ fn demonstrate_contravariance() {
 fn demonstrate_invariance() {
     let mut long_data = vec![1, 2, 3];
     let mut short_data = vec![4, 5];
-    
+
     {
         // 可变引用的不变性
         let long_ref = &mut long_data;
-        
+
         // 如果可变引用是协变的，下面的代码将编译通过：
         // let short_lifetime_ref: &mut Vec<i32> = long_ref;
-        
+
         // 然后我们可以在外部作用域继续使用 long_ref，
         // 同时 short_lifetime_ref 已经失效，这将导致内存不安全
-        
+
         // 不变性阻止了这种转换，保证了内存安全
     }
-    
+
     // 现在可以安全地使用 long_data
     long_data.push(4);
 }
@@ -481,7 +483,7 @@ fn demonstrate_invariance() {
 ```rust
 fn prevent_dangling_references() {
     let mut data = String::from("hello");
-    
+
     let r;
     {
         let inner = String::from("world");
@@ -498,11 +500,11 @@ fn prevent_dangling_references() {
 ```rust
 fn prevent_data_races() {
     let mut data = vec![1, 2, 3];
-    
+
     // 可变引用的不变性防止多个可变引用同时存在
     let r1 = &mut data;
     // let r2 = &mut data;  // 编译错误：不能同时有两个可变引用
-    
+
     // 如果允许多个可变引用，将导致数据竞争
     r1.push(4);
     // r2.push(5);  // 如果这行被允许，将导致未定义行为
@@ -525,7 +527,7 @@ impl Canvas {
         // 协变允许将具体类型装箱并存储为 trait 对象
         self.elements.push(Box::new(element));
     }
-    
+
     fn draw_all(&self) {
         for element in &self.elements {
             // 安全地调用多态方法
@@ -551,11 +553,11 @@ impl Canvas {
 4. 因此，这种转换保证了内存安全
 
 ```rust
-fn covariance_safety_proof<'long, 'short, T>(long_ref: &'long T) 
+fn covariance_safety_proof<'long, 'short, T>(long_ref: &'long T)
     where 'long: 'short
 {
     let short_ref: &'short T = long_ref;  // 安全的协变转换
-    
+
     // 在 'short 的作用域内使用 short_ref 是安全的
     // 因为 long_ref 保证在整个 'short 期间有效
 }
@@ -579,12 +581,12 @@ fn process_short<'a>(data: &'a [u8]) {
     // 处理短生命周期数据
 }
 
-fn contravariance_safety_proof<'long, 'short>() 
+fn contravariance_safety_proof<'long, 'short>()
     where 'long: 'short
 {
     // 逆变允许这种转换
     let long_fn: fn(&'long [u8]) = process_short::<'short>;
-    
+
     // 安全：process_short 能处理 'short 生命周期，
     // 而 'long 引用一定满足 'short 约束
     let static_data: &'static [u8] = &[1, 2, 3];
@@ -603,11 +605,11 @@ fn contravariance_safety_proof<'long, 'short>()
 3. 这将允许以下不安全操作：
 
    ```rust
-   fn unsafe_operation<'long, 'short, T>(long_ref: &'long mut T) 
+   fn unsafe_operation<'long, 'short, T>(long_ref: &'long mut T)
        where 'long: 'short
    {
        let short_ref: &'short mut T = long_ref;  // 假设这是合法的
-       
+
        // 现在 short_ref 和 long_ref 都指向同一数据
        // 当 'short 结束但 'long 仍然有效时：
        // - short_ref 已失效
@@ -619,12 +621,12 @@ fn contravariance_safety_proof<'long, 'short>()
 4. 不变性阻止了这种转换，确保了内存安全
 
 ```rust
-fn invariance_safety_proof<'long, 'short, T>(long_ref: &'long mut T) 
+fn invariance_safety_proof<'long, 'short, T>(long_ref: &'long mut T)
     where 'long: 'short
 {
     // 下面的代码不能编译，证明了不变性的安全保证
     // let short_ref: &'short mut T = long_ref;
-    
+
     // 如果上面的代码被允许，将导致潜在的内存不安全
 }
 ```
@@ -643,7 +645,7 @@ impl<'a, T> DataProcessor<'a, T> {
     fn new(data: &'a [T]) -> Self {
         DataProcessor { data }
     }
-    
+
     fn process(&self) {
         // 处理数据...
     }
@@ -651,13 +653,13 @@ impl<'a, T> DataProcessor<'a, T> {
 
 fn flexible_api_example() {
     let long_lived_data = vec![1, 2, 3];
-    
+
     // 协变允许将长生命周期数据用于短生命周期上下文
     {
         let processor = DataProcessor::new(&long_lived_data);
         processor.process();
     } // processor 的生命周期结束，但 long_lived_data 仍然有效
-    
+
     println!("原始数据仍然可用: {:?}", long_lived_data);
 }
 ```
@@ -674,7 +676,7 @@ impl<F> CallbackSystem<F> where F: Fn(&str) {
     fn new(callback: F) -> Self {
         CallbackSystem { callback }
     }
-    
+
     fn notify(&self, message: &str) {
         (self.callback)(message);
     }
@@ -685,13 +687,13 @@ fn callback_system_example() {
     let process_any = |s: &str| {
         println!("处理消息: {}", s);
     };
-    
+
     // 逆变允许将处理任意生命周期的回调用于特定生命周期
     let system = CallbackSystem::new(process_any);
-    
+
     // 使用静态字符串
     system.notify("静态消息");
-    
+
     // 使用动态创建的字符串
     let dynamic_message = String::from("动态消息");
     system.notify(&dynamic_message);
@@ -710,11 +712,11 @@ impl<T> SafeContainer<T> {
     fn new() -> Self {
         SafeContainer { data: Vec::new() }
     }
-    
+
     fn add(&mut self, item: T) {
         self.data.push(item);
     }
-    
+
     fn get_mut(&mut self, index: usize) -> Option<&mut T> {
         self.data.get_mut(index)
     }
@@ -723,13 +725,13 @@ impl<T> SafeContainer<T> {
 fn container_safety_example() {
     let mut int_container = SafeContainer::<i32>::new();
     int_container.add(42);
-    
+
     // 不变性防止以下代码编译：
     // let float_container: SafeContainer<f64> = int_container;
-    
+
     // 这保证了类型安全，防止在 float_container 中存储整数
     // 或尝试从 int_container 中读取浮点数
-    
+
     if let Some(value) = int_container.get_mut(0) {
         *value = 100;
     }

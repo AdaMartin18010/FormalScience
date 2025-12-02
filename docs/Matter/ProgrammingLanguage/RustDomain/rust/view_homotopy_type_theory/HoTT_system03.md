@@ -2,43 +2,44 @@
 
 ## 目录
 
-- [1. 基于Rust的分布式工作流系统：组合式架构与演化模型](#基于rust的分布式工作流系统组合式架构与演化模型)
-  - [1.1 引言](#1-引言)
-  - [1.2 设计理念](#2-设计理念)
-    - [1.2.1 组合性原则](#21-组合性原则)
-    - [1.2.2 分层架构模式](#22-分层架构模式)
-    - [1.2.3 演化与迭代模型](#23-演化与迭代模型)
-  - [1.3 系统架构](#3-系统架构)
-    - [1.3.1 核心层](#31-核心层)
-    - [1.3.2 协调层](#32-协调层)
-    - [1.3.3 服务层](#33-服务层)
-    - [1.3.4 接口层](#34-接口层)
-  - [1.4 组件设计与实现](#4-组件设计与实现)
-    - [1.4.1 工作流引擎](#41-工作流引擎)
-    - [1.4.2 状态管理系统](#42-状态管理系统)
-    - [1.4.3 共识协调器](#43-共识协调器)
-    - [1.4.4 调度系统](#44-调度系统)
-  - [1.5 数据模型与存储](#5-数据模型与存储)
-    - [1.5.1 事件溯源模型](#51-事件溯源模型)
-    - [1.5.2 CQRS模式实现](#52-cqrs模式实现)
-    - [1.5.3 分布式存储策略](#53-分布式存储策略)
-  - [1.6 通信与协议](#6-通信与协议)
-    - [1.6.1 消息传递模型](#61-消息传递模型)
-    - [1.6.2 RPC框架实现](#62-rpc框架实现)
-    - [1.6.3 异步通信机制](#63-异步通信机制)
-  - [1.7 容错与恢复](#7-容错与恢复)
-    - [1.7.1 错误模型与处理](#71-错误模型与处理)
-    - [1.7.2 故障检测机制](#72-故障检测机制)
-    - [1.7.3 恢复策略](#73-恢复策略)
-  - [1.8 演化与更新机制](#8-演化与更新机制)
-    - [1.8.1 增量部署策略](#81-增量部署策略)
-    - [1.8.2 版本兼容性保障](#82-版本兼容性保障)
-    - [1.8.3 状态迁移机制](#83-状态迁移机制)
-  - [1.9 结论与未来方向](#9-结论与未来方向)
-    - [1.9.1 主要贡献](#91-主要贡献)
-    - [1.9.2 未来研究方向](#92-未来研究方向)
-    - [1.9.3 总结](#93-总结)
-  - [1.10 思维导图](#10-思维导图)
+- [1. 基于Rust的分布式工作流系统：组合式架构与演化模型](#1-基于rust的分布式工作流系统组合式架构与演化模型)
+  - [目录](#目录)
+  - [1.1 引言](#11-引言)
+  - [1.2 设计理念](#12-设计理念)
+    - [1.2.1 组合性原则](#121-组合性原则)
+    - [1.2.2 分层架构模式](#122-分层架构模式)
+    - [1.2.3 演化与迭代模型](#123-演化与迭代模型)
+  - [1.3 系统架构](#13-系统架构)
+    - [1.3.1 核心层](#131-核心层)
+    - [1.3.2 协调层](#132-协调层)
+    - [1.3.3 服务层](#133-服务层)
+    - [1.3.4 接口层](#134-接口层)
+  - [1.4 组件设计与实现](#14-组件设计与实现)
+    - [1.4.1 工作流引擎](#141-工作流引擎)
+    - [1.4.2 状态管理系统](#142-状态管理系统)
+    - [1.4.3 共识协调器](#143-共识协调器)
+    - [1.4.4 调度系统](#144-调度系统)
+  - [1.5 数据模型与存储](#15-数据模型与存储)
+    - [1.5.1 事件溯源模型](#151-事件溯源模型)
+    - [1.5.2 CQRS模式实现](#152-cqrs模式实现)
+    - [1.5.3 分布式存储策略](#153-分布式存储策略)
+  - [1.6 通信与协议](#16-通信与协议)
+    - [1.6.1 消息传递模型](#161-消息传递模型)
+    - [1.6.2 RPC框架实现](#162-rpc框架实现)
+    - [1.6.3 异步通信机制](#163-异步通信机制)
+  - [1.7 容错与恢复](#17-容错与恢复)
+    - [1.7.1 错误模型与处理](#171-错误模型与处理)
+    - [1.7.2 故障检测机制](#172-故障检测机制)
+    - [1.7.3 恢复策略](#173-恢复策略)
+  - [1.8 演化与更新机制](#18-演化与更新机制)
+    - [1.8.1 增量部署策略](#181-增量部署策略)
+    - [1.8.2 版本兼容性保障](#182-版本兼容性保障)
+    - [1.8.3 状态迁移机制](#183-状态迁移机制)
+  - [1.9 结论与未来方向](#19-结论与未来方向)
+    - [1.9.1 主要贡献](#191-主要贡献)
+    - [1.9.2 未来研究方向](#192-未来研究方向)
+    - [1.9.3 总结](#193-总结)
+  - [1.10 思维导图](#110-思维导图)
 ## 1.1 引言
 
 分布式系统设计的挑战在于如何在保证系统可靠性、一致性和性能的同时，构建易于理解、维护和演进的软件架构。
@@ -66,7 +67,7 @@ pub trait Task {
     type Input;
     type Output;
     type Error;
-    
+
     async fn execute(&self, input: Self::Input) -> Result<Self::Output, Self::Error>;
 }
 
@@ -110,12 +111,12 @@ mod core {
 // 协调层 - 分布式状态管理
 mod coordination {
     use crate::core::WorkflowDefinition;
-    
+
     pub struct DistributedStateManager {
         consensus: Box<dyn ConsensusProtocol>,
         state_store: Box<dyn StateStore>,
     }
-    
+
     impl DistributedStateManager {
         pub async fn register_workflow(&self, workflow: WorkflowDefinition) -> Result<(), Error> {
             // 实现分布式状态注册
@@ -126,7 +127,7 @@ mod coordination {
 // 服务层 - 调度服务
 mod services {
     use crate::coordination::DistributedStateManager;
-    
+
     pub struct SchedulerService {
         state_manager: DistributedStateManager,
         execution_engine: ExecutionEngine,
@@ -136,11 +137,11 @@ mod services {
 // 接口层 - API
 mod api {
     use crate::services::SchedulerService;
-    
+
     pub struct WorkflowAPI {
         scheduler: SchedulerService,
     }
-    
+
     impl WorkflowAPI {
         pub async fn start_workflow(&self, id: String, input: Value) -> Result<WorkflowInstance, Error> {
             // 实现API接口
@@ -241,14 +242,14 @@ impl ExecutionEngine {
             if next_tasks.is_empty() {
                 break;
             }
-            
+
             // 执行任务
             for task in next_tasks {
                 let result = self.execute_task(&task, instance).await?;
                 self.update_instance_state(instance, &task, result).await?;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -282,31 +283,31 @@ impl ConsensusProtocol for RaftConsensus {
             term: self.current_term,
             command: Command::Put(key, value),
         };
-        
+
         // 提交到日志
         let index = self.log.append(entry)?;
-        
+
         // 等待提交
         self.wait_for_commit(index).await?;
-        
+
         Ok(())
     }
-    
+
     async fn read(&self, key: &[u8]) -> Result<Option<Vec<u8>>, ConsensusError> {
         // 线性一致性读取
         // 1. 确保节点是leader
         if !self.is_leader() {
             return Err(ConsensusError::NotLeader);
         }
-        
+
         // 2. 发送心跳确保仍是leader
         self.send_heartbeat().await?;
-        
+
         // 3. 从状态机读取
         let value = self.state_machine.get(key)?;
         Ok(value)
     }
-    
+
     // 实现其他方法...
 }
 
@@ -322,7 +323,7 @@ impl StateReplicationManager {
         self.consensus.propose(key.to_vec(), value.to_vec()).await?;
         Ok(())
     }
-    
+
     pub async fn get_state(&self, key: &[u8]) -> Result<Option<Vec<u8>>, StateError> {
         // 使用共识协议读取状态
         let value = self.consensus.read(key).await?;
@@ -347,38 +348,38 @@ impl SchedulerService {
     pub async fn schedule_workflow(&self, definition: WorkflowDefinition, input: Value) -> Result<String, SchedulerError> {
         // 创建工作流实例
         let instance = WorkflowInstance::new(definition.id.clone(), input);
-        
+
         // 分配资源
         self.resource_manager.allocate_resources(&instance).await?;
-        
+
         // 存储实例状态
         self.state_manager.update_state(
             instance.id.as_bytes(),
             &serde_json::to_vec(&instance)?
         ).await?;
-        
+
         // 触发执行
         self.trigger_execution(instance.id.clone()).await?;
-        
+
         Ok(instance.id)
     }
-    
+
     async fn trigger_execution(&self, instance_id: String) -> Result<(), SchedulerError> {
         // 获取实例
         let instance_data = self.state_manager.get_state(instance_id.as_bytes()).await?
             .ok_or(SchedulerError::InstanceNotFound)?;
-            
+
         let mut instance: WorkflowInstance = serde_json::from_slice(&instance_data)?;
-        
+
         // 执行工作流
         self.execution_engine.execute_workflow(&mut instance).await?;
-        
+
         // 更新状态
         self.state_manager.update_state(
             instance_id.as_bytes(),
             &serde_json::to_vec(&instance)?
         ).await?;
-        
+
         Ok(())
     }
 }
@@ -397,17 +398,17 @@ impl MonitoringService {
             "Workflow execution time in milliseconds",
             vec![10.0, 100.0, 500.0, 1000.0, 5000.0]
         );
-        
+
         let task_success_count = self.metrics_registry.register_counter(
             format!("workflow_{}_task_success", instance_id),
             "Number of successfully completed tasks"
         );
-        
+
         let task_failure_count = self.metrics_registry.register_counter(
             format!("workflow_{}_task_failure", instance_id),
             "Number of failed tasks"
         );
-        
+
         WorkflowMetrics {
             execution_time,
             task_success_count,
@@ -435,23 +436,23 @@ impl HttpApiServer {
             .route("/workflows/:id", get(Self::get_workflow))
             .route("/workflows/:id/start", post(Self::start_workflow))
             .route("/workflows/:id/cancel", post(Self::cancel_workflow));
-            
+
         Self { scheduler, router }
     }
-    
+
     async fn create_workflow(
         State(scheduler): State<Arc<SchedulerService>>,
         Json(definition): Json<WorkflowDefinition>
     ) -> Result<Json<CreateWorkflowResponse>, ApiError> {
         // 验证工作流定义
         validate_workflow_definition(&definition)?;
-        
+
         // 注册工作流
         let id = scheduler.register_workflow(definition).await?;
-        
+
         Ok(Json(CreateWorkflowResponse { id }))
     }
-    
+
     async fn start_workflow(
         State(scheduler): State<Arc<SchedulerService>>,
         Path(id): Path<String>,
@@ -459,10 +460,10 @@ impl HttpApiServer {
     ) -> Result<Json<StartWorkflowResponse>, ApiError> {
         // 开始工作流执行
         let instance_id = scheduler.schedule_workflow(id, input).await?;
-        
+
         Ok(Json(StartWorkflowResponse { instance_id }))
     }
-    
+
     // 其他API处理函数...
 }
 
@@ -477,14 +478,14 @@ impl WorkflowService for GrpcApiServer {
         request: Request<CreateWorkflowRequest>
     ) -> Result<Response<CreateWorkflowResponse>, Status> {
         let definition = convert_proto_to_definition(request.into_inner().definition)?;
-        
+
         // 注册工作流
         let id = self.scheduler.register_workflow(definition).await
             .map_err(|e| Status::internal(e.to_string()))?;
-            
+
         Ok(Response::new(CreateWorkflowResponse { id }))
     }
-    
+
     // 其他gRPC方法实现...
 }
 ```
@@ -506,13 +507,13 @@ pub struct WorkflowEngine {
 impl WorkflowEngine {
     pub async fn execute_workflow(&self, instance: &mut WorkflowInstance) -> Result<(), ExecutionError> {
         // 记录开始事件
-        self.event_bus.publish(WorkflowEvent::Started { 
-            instance_id: instance.id.clone() 
+        self.event_bus.publish(WorkflowEvent::Started {
+            instance_id: instance.id.clone()
         }).await?;
-        
+
         // 初始化工作流
         self.initialize_workflow(instance).await?;
-        
+
         // 主执行循环
         while !self.is_workflow_completed(instance) {
             // 获取可执行任务
@@ -521,36 +522,36 @@ impl WorkflowEngine {
                 // 工作流陷入停滞状态
                 return Err(ExecutionError::WorkflowStalled);
             }
-            
+
             // 执行任务
             let execution_results = self.execute_tasks(executable_tasks).await?;
-            
+
             // 更新工作流状态
             self.update_workflow_state(instance, &execution_results).await?;
-            
+
             // 持久化状态
             self.persist_workflow_state(instance).await?;
         }
-        
+
         // 完成工作流
         self.complete_workflow(instance).await?;
-        
+
         // 记录完成事件
-        self.event_bus.publish(WorkflowEvent::Completed { 
-            instance_id: instance.id.clone() 
+        self.event_bus.publish(WorkflowEvent::Completed {
+            instance_id: instance.id.clone()
         }).await?;
-        
+
         Ok(())
     }
-    
+
     async fn execute_tasks(&self, tasks: Vec<TaskInstance>) -> Result<Vec<TaskExecutionResult>, ExecutionError> {
         let mut results = Vec::with_capacity(tasks.len());
-        
+
         // 可以实现并行执行任务
         for task in tasks {
             let executor = self.executor_registry.get_executor(&task.task_type)
                 .ok_or(ExecutionError::ExecutorNotFound(task.task_type.clone()))?;
-                
+
             // 执行任务
             let result = match executor.execute(&task).await {
                 Ok(output) => TaskExecutionResult {
@@ -578,10 +579,10 @@ impl WorkflowEngine {
                     }
                 }
             };
-            
+
             results.push(result);
         }
-        
+
         Ok(results)
     }
 }
@@ -613,7 +614,7 @@ impl DistributedStateManager {
         if let Some(value) = self.cache.get(key) {
             return Ok(Some(value.clone()));
         }
-        
+
         // 通过共识协议读取
         match self.consensus.read(key).await {
             Ok(value) => {
@@ -633,24 +634,24 @@ impl DistributedStateManager {
             }
         }
     }
-    
+
     pub async fn put(&self, key: &[u8], value: &[u8]) -> Result<(), StateError> {
         // 通过共识协议写入
         self.consensus.propose(key.to_vec(), value.to_vec()).await?;
-        
+
         // 更新缓存
         self.cache.insert(key.to_vec(), value.to_vec());
-        
+
         Ok(())
     }
-    
+
     pub async fn transaction<F, T>(&self, ops: F) -> Result<T, StateError>
     where
         F: FnOnce(&mut Transaction) -> Result<T, StateError>,
     {
         let mut tx = Transaction::new();
         let result = ops(&mut tx)?;
-        
+
         // 执行事务
         for op in tx.operations {
             match op {
@@ -663,7 +664,7 @@ impl DistributedStateManager {
                 },
             }
         }
-        
+
         Ok(result)
     }
 }
@@ -700,11 +701,11 @@ impl RaftNode {
     pub async fn start(&mut self) -> Result<(), RaftError> {
         // 加载持久化状态
         self.load_state().await?;
-        
+
         // 启动主循环
         self.run_main_loop().await
     }
-    
+
     async fn run_main_loop(&mut self) -> Result<(), RaftError> {
         loop {
             match self.state {
@@ -720,30 +721,30 @@ impl RaftNode {
             }
         }
     }
-    
+
     async fn run_leader_loop(&mut self) -> Result<(), RaftError> {
         // 发送心跳
         self.send_heartbeats().await?;
-        
+
         // 检查是否有条目需要复制
         self.replicate_logs().await?;
-        
+
         // 检查是否可以提交新的日志条目
         self.advance_commit_index()?;
-        
+
         // 应用已提交的条目到状态机
         self.apply_committed_entries().await?;
-        
+
         Ok(())
     }
-    
+
     async fn replicate_logs(&mut self) -> Result<(), RaftError> {
         if let RaftState::Leader { ref mut next_index, ref mut match_index } = self.state {
             for &peer in &self.peers {
                 if peer == self.id {
                     continue;
                 }
-                
+
                 let peer_next_idx = next_index.get(&peer).copied().unwrap_or(1);
                 if self.log.last_index() >= peer_next_idx {
                     // 需要复制日志
@@ -751,10 +752,10 @@ impl RaftNode {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     async fn send_append_entries(&mut self, peer: NodeId, next_idx: u64) -> Result<(), RaftError> {
         let prev_log_index = next_idx - 1;
         let prev_log_term = if prev_log_index == 0 {
@@ -762,10 +763,10 @@ impl RaftNode {
         } else {
             self.log.get_term(prev_log_index)?
         };
-        
+
         // 获取要发送的条目
         let entries = self.log.get_entries(next_idx, None)?;
-        
+
         // 创建请求
         let request = AppendEntriesRequest {
             term: self.current_term(),
@@ -775,7 +776,7 @@ impl RaftNode {
             entries: entries.clone(),
             leader_commit: self.commit_index,
         };
-        
+
         // 发送请求
         match self.rpc_client.append_entries(peer, request).await {
             Ok(response) => {
@@ -801,7 +802,7 @@ impl RaftNode {
                 log::warn!("Failed to send AppendEntries to {}: {}", peer, e);
             }
         }
-        
+
         Ok(())
     }
 }
@@ -826,35 +827,35 @@ impl ResourceManager {
     pub async fn allocate_resources(&self, instance: &WorkflowInstance) -> Result<(), ResourceError> {
         // 计算所需资源
         let required = self.calculate_required_resources(instance)?;
-        
+
         // 获取写锁
         let _lock = self.resource_locks.write().await;
-        
+
         // 检查是否有足够资源
         if !self.has_sufficient_resources(&required) {
             return Err(ResourceError::InsufficientResources);
         }
-        
+
         // 分配资源
         self.available_resources.subtract(&required)?;
         self.allocated_resources.insert(instance.id.clone(), required);
-        
+
         Ok(())
     }
-    
+
     pub async fn release_resources(&self, instance_id: &str) -> Result<(), ResourceError> {
         // 获取写锁
         let _lock = self.resource_locks.write().await;
-        
+
         // 查找已分配的资源
         if let Some(allocated) = self.allocated_resources.remove(instance_id) {
             // 返回资源到可用池
             self.available_resources.add(&allocated);
         }
-        
+
         Ok(())
     }
-    
+
     fn has_sufficient_resources(&self, required: &Resources) -> bool {
         self.available_resources.cpu >= required.cpu &&
         self.available_resources.memory >= required.memory &&
@@ -873,24 +874,24 @@ impl Scheduler {
     pub async fn schedule_workflow(&self, instance: WorkflowInstance) -> Result<(), SchedulerError> {
         // 分配资源
         self.resource_manager.allocate_resources(&instance).await?;
-        
+
         // 创建调度任务
         let scheduled = ScheduledWorkflow {
             instance,
             scheduled_at: Utc::now(),
             priority: Priority::Normal,
         };
-        
+
         // 添加到执行队列
         self.execution_queue.push(scheduled).await?;
-        
+
         Ok(())
     }
-    
+
     pub async fn start(&self) -> Result<(), SchedulerError> {
         // 启动工作线程池
         self.worker_pool.start(self.execution_queue.clone()).await?;
-        
+
         Ok(())
     }
 }
@@ -905,38 +906,38 @@ impl<T> WorkQueue<T> {
     pub async fn push(&self, item: T, priority: Priority) -> Result<(), QueueError> {
         // 获取互斥锁
         let mut queue = self.queue.lock().await;
-        
+
         // 添加项目到对应优先级队列
         queue.entry(priority)
             .or_insert_with(VecDeque::new)
             .push_back(item);
-            
+
         // 通知等待的消费者
         self.notify.notify_one();
-        
+
         Ok(())
     }
-    
+
     pub async fn pop(&self) -> Option<T> {
         loop {
             // 尝试获取项目
             let item = {
                 let mut queue = self.queue.lock().await;
-                
+
                 // 从最高优先级队列中取
                 for (_, items) in queue.iter_mut().rev() {
                     if let Some(item) = items.pop_front() {
                         return Some(item);
                     }
                 }
-                
+
                 None
             };
-            
+
             if item.is_some() {
                 return item;
             }
-            
+
             // 等待通知
             self.notify.notified().await;
         }
@@ -1004,10 +1005,10 @@ impl EventStore {
     pub async fn append_event(&self, stream_id: &str, event: WorkflowEvent) -> Result<u64, EventStoreError> {
         // 序列化事件
         let event_data = serde_json::to_vec(&event)?;
-        
+
         // 获取当前序列号
         let sequence = self.db.get_stream_sequence(stream_id).await?;
-        
+
         // 创建事件记录
         let record = EventRecord {
             stream_id: stream_id.to_string(),
@@ -1017,40 +1018,40 @@ impl EventStore {
             metadata: HashMap::new(),
             created_at: Utc::now(),
         };
-        
+
         // 存储事件
         self.db.append_event(record).await?;
-        
+
         Ok(sequence + 1)
     }
-    
+
     pub async fn get_events(&self, stream_id: &str, start_sequence: Option<u64>) -> Result<Vec<EventRecord>, EventStoreError> {
         // 确定起始序列号
         let sequence = start_sequence.unwrap_or(0);
-        
+
         // 从数据库获取事件
         let records = self.db.get_events(stream_id, sequence).await?;
-        
+
         Ok(records)
     }
-    
+
     pub async fn replay_events<T, F>(&self, stream_id: &str, initial_state: T, apply_event: F) -> Result<T, EventStoreError>
     where
         F: Fn(T, WorkflowEvent) -> Result<T, EventStoreError>,
     {
         // 获取所有事件
         let events = self.get_events(stream_id, None).await?;
-        
+
         // 按序应用事件
         let mut state = initial_state;
         for record in events {
             // 反序列化事件
             let event: WorkflowEvent = serde_json::from_slice(&record.data)?;
-            
+
             // 应用事件到状态
             state = apply_event(state, event)?;
         }
-        
+
         Ok(state)
     }
 }
@@ -1111,7 +1112,7 @@ impl CommandHandler {
     pub async fn handle_command(&self, command: WorkflowCommand) -> Result<CommandResult, CommandError> {
         // 验证命令
         self.validate_command(&command).await?;
-        
+
         // 处理命令
         match command {
             WorkflowCommand::CreateWorkflow { workflow_id, definition } => {
@@ -1121,16 +1122,16 @@ impl CommandHandler {
                     definition,
                     created_at: Utc::now(),
                 };
-                
+
                 // 存储事件
                 self.event_store.append_event(&format!("workflow-{}", workflow_id), event).await?;
-                
+
                 Ok(CommandResult::WorkflowCreated { workflow_id })
             },
             WorkflowCommand::StartWorkflow { workflow_id, input } => {
                 // 生成实例ID
                 let instance_id = Uuid::new_v4().to_string();
-                
+
                 // 创建工作流开始事件
                 let event = WorkflowEvent::WorkflowStarted {
                     instance_id: instance_id.clone(),
@@ -1138,23 +1139,23 @@ impl CommandHandler {
                     input,
                     started_at: Utc::now(),
                 };
-                
+
                 // 存储事件
                 self.event_store.append_event(&format!("instance-{}", instance_id), event).await?;
-                
+
                 Ok(CommandResult::WorkflowStarted { instance_id })
             },
             // 其他命令处理...
         }
     }
-    
+
     async fn validate_command(&self, command: &WorkflowCommand) -> Result<(), CommandError> {
         let validator_key = command.validator_key();
-        
+
         if let Some(validator) = self.validators.get(&validator_key) {
             validator.validate(command).await?;
         }
-        
+
         Ok(())
     }
 }
@@ -1177,25 +1178,25 @@ impl QueryService {
     pub async fn get_workflow(&self, workflow_id: &str) -> Result<Option<WorkflowDefinition>, QueryError> {
         let model = self.read_models.get("workflows")
             .ok_or(QueryError::ReadModelNotFound("workflows".to_string()))?;
-            
+
         model.get_workflow(workflow_id).await
     }
-    
+
     pub async fn get_workflow_instance(&self, instance_id: &str) -> Result<Option<WorkflowInstance>, QueryError> {
         let model = self.read_models.get("instances")
             .ok_or(QueryError::ReadModelNotFound("instances".to_string()))?;
-            
+
         model.get_instance(instance_id).await
     }
-    
-    pub async fn list_workflow_instances(&self, 
-                                        workflow_id: Option<String>, 
+
+    pub async fn list_workflow_instances(&self,
+                                        workflow_id: Option<String>,
                                         status: Option<WorkflowStatus>,
                                         page: usize,
                                         page_size: usize) -> Result<PaginatedResult<WorkflowInstance>, QueryError> {
         let model = self.read_models.get("instances")
             .ok_or(QueryError::ReadModelNotFound("instances".to_string()))?;
-            
+
         model.list_instances(workflow_id, status, page, page_size).await
     }
 }
@@ -1204,8 +1205,8 @@ impl QueryService {
 pub trait ReadModel: Send + Sync {
     async fn get_workflow(&self, workflow_id: &str) -> Result<Option<WorkflowDefinition>, QueryError>;
     async fn get_instance(&self, instance_id: &str) -> Result<Option<WorkflowInstance>, QueryError>;
-    async fn list_instances(&self, 
-                           workflow_id: Option<String>, 
+    async fn list_instances(&self,
+                           workflow_id: Option<String>,
                            status: Option<WorkflowStatus>,
                            page: usize,
                            page_size: usize) -> Result<PaginatedResult<WorkflowInstance>, QueryError>;
@@ -1280,7 +1281,7 @@ impl DistributedStorageManager {
             StorageStrategy::Replicated { replicas, replication_factor } => {
                 // 计算需要读取的副本数
                 let quorum = (replicas.len() + 1) / 2;
-                
+
                 // 并行从多个副本读取
                 let mut futures = Vec::new();
                 for node in replicas {
@@ -1289,11 +1290,11 @@ impl DistributedStorageManager {
                         futures.push(client.get(key));
                     }
                 }
-                
+
                 // 等待足够多的响应
                 let mut results = Vec::new();
                 let mut futures_set = futures.into_iter().collect::<FuturesUnordered<_>>();
-                
+
                 while let Some(result) = futures_set.next().await {
                     if let Ok(Some(value)) = result {
                         results.push(value);
@@ -1302,12 +1303,12 @@ impl DistributedStorageManager {
                         }
                     }
                 }
-                
+
                 // 如果没有足够的响应，返回错误
                 if results.len() < quorum {
                     return Err(StorageError::QuorumNotReached);
                 }
-                
+
                 // 选择最新的值（可以基于版本号或时间戳）
                 let latest_value = results.into_iter()
                     .max_by_key(|v| {
@@ -1319,28 +1320,28 @@ impl DistributedStorageManager {
                         };
                         version
                     });
-                
+
                 Ok(latest_value)
             },
             StorageStrategy::Sharded { shards, shard_count } => {
                 // 确定键属于哪个分片
                 let shard_index = self.calculate_shard_index(key, *shard_count);
-                
+
                 // 获取分片
                 let shard = &shards[shard_index];
-                
+
                 // 选择分片中的一个节点（可以实现更复杂的路由策略）
                 let node = shard.nodes.iter()
                     .find(|n| n.status == NodeStatus::Online)
                     .ok_or(StorageError::NoAvailableNode)?;
-                    
+
                 // 从节点读取数据
                 let client = (self.client_factory)(node);
                 client.get(key).await
             }
         }
     }
-    
+
     pub async fn put(&self, key: &[u8], value: &[u8]) -> Result<(), StorageError> {
         match &self.strategy {
             StorageStrategy::Local { path } => {
@@ -1353,10 +1354,10 @@ impl DistributedStorageManager {
             StorageStrategy::Replicated { replicas, replication_factor } => {
                 // 计算写入的副本数
                 let quorum = (replicas.len() + 1) / 2;
-                
+
                 // 为值添加版本号或时间戳
                 let versioned_value = self.add_version(value);
-                
+
                 // 并行写入多个副本
                 let mut futures = Vec::new();
                 for node in replicas {
@@ -1365,11 +1366,11 @@ impl DistributedStorageManager {
                         futures.push(client.put(key, &versioned_value));
                     }
                 }
-                
+
                 // 等待足够多的响应
                 let mut successful = 0;
                 let mut futures_set = futures.into_iter().collect::<FuturesUnordered<_>>();
-                
+
                 while let Some(result) = futures_set.next().await {
                     if result.is_ok() {
                         successful += 1;
@@ -1378,53 +1379,53 @@ impl DistributedStorageManager {
                         }
                     }
                 }
-                
+
                 // 如果没有足够的成功响应，返回错误
                 if successful < quorum {
                     return Err(StorageError::QuorumNotReached);
                 }
-                
+
                 Ok(())
             },
             StorageStrategy::Sharded { shards, shard_count } => {
                 // 确定键属于哪个分片
                 let shard_index = self.calculate_shard_index(key, *shard_count);
-                
+
                 // 获取分片
                 let shard = &shards[shard_index];
-                
+
                 // 选择分片中的主节点
                 let primary_node = shard.nodes.iter()
                     .find(|n| n.status == NodeStatus::Online)
                     .ok_or(StorageError::NoAvailableNode)?;
-                    
+
                 // 写入主节点
                 let client = (self.client_factory)(primary_node);
                 client.put(key, value).await
             }
         }
     }
-    
+
     fn calculate_shard_index(&self, key: &[u8], shard_count: usize) -> usize {
         // 使用哈希函数将键映射到分片
         let mut hasher = DefaultHasher::new();
         hasher.write(key);
         let hash = hasher.finish();
-        
+
         (hash as usize) % shard_count
     }
-    
+
     fn add_version(&self, value: &[u8]) -> Vec<u8> {
         // 创建包含版本号的值
         let version = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap_or_default()
             .as_nanos() as u64;
-            
+
         let mut versioned_value = Vec::with_capacity(8 + value.len());
         versioned_value.extend_from_slice(&version.to_be_bytes());
         versioned_value.extend_from_slice(value);
-        
+
         versioned_value
     }
 }
@@ -1481,35 +1482,35 @@ impl MessageBus {
         // 获取发布者
         let publisher = self.publishers.get(topic)
             .ok_or(MessageBusError::TopicNotFound(topic.to_string()))?;
-            
+
         // 发布消息
         publisher.publish(message).await?;
-        
+
         Ok(())
     }
-    
+
     pub async fn subscribe(&self, topic: &str, subscriber: Box<dyn MessageSubscriber>) -> Result<(), MessageBusError> {
         // 获取写锁
         let mut subscribers = self.subscribers.write().await;
-        
+
         // 添加订阅者
         subscribers.entry(topic.to_string())
             .or_insert_with(Vec::new)
             .push(subscriber);
-            
+
         Ok(())
     }
-    
+
     pub async fn start(&self) -> Result<(), MessageBusError> {
         // 启动所有发布者
         for (topic, publisher) in &self.publishers {
             publisher.start().await?;
         }
-        
+
         // 启动消息分发循环
         self.run_dispatch_loop().await
     }
-    
+
     async fn run_dispatch_loop(&self) -> Result<(), MessageBusError> {
         loop {
             // 对于每个主题
@@ -1525,7 +1526,7 @@ impl MessageBus {
                             Vec::new()
                         }
                     };
-                    
+
                     // 分发消息给订阅者
                     for subscriber in subscribers {
                         if let Err(e) = subscriber.handle_message(&message).await {
@@ -1534,7 +1535,7 @@ impl MessageBus {
                     }
                 }
             }
-            
+
             // 避免CPU空转
             tokio::time::sleep(Duration::from_millis(10)).await;
         }
@@ -1573,7 +1574,7 @@ impl RpcService {
             handlers: Arc::new(handlers),
         }
     }
-    
+
     pub async fn handle_request(&self, request: RpcRequest) -> RpcResponse {
         // 查找处理器
         match self.handlers.get(&request.method) {
@@ -1652,7 +1653,7 @@ impl RpcClient {
             http_client: Client::new(),
         }
     }
-    
+
     pub async fn call<P, R>(&self, method: &str, params: P) -> Result<R, RpcClientError>
     where
         P: Serialize,
@@ -1660,49 +1661,49 @@ impl RpcClient {
     {
         // 创建请求ID
         let id = Uuid::new_v4().to_string();
-        
+
         // 创建RPC请求
         let request = RpcRequest {
             id: id.clone(),
             method: method.to_string(),
             params: serde_json::to_value(params)?,
         };
-        
+
         // 序列化请求
         let request_body = serde_json::to_string(&request)?;
-        
+
         // 发送HTTP请求
         let response = self.http_client.post(&self.endpoint)
             .header("Content-Type", "application/json")
             .body(request_body)
             .send()
             .await?;
-            
+
         // 检查HTTP状态码
         if !response.status().is_success() {
             return Err(RpcClientError::HttpError(response.status()));
         }
-        
+
         // 解析响应
         let response_body = response.text().await?;
         let rpc_response: RpcResponse = serde_json::from_str(&response_body)?;
-        
+
         // 检查RPC错误
         if let Some(error) = rpc_response.error {
             return Err(RpcClientError::RpcError(error));
         }
-        
+
         // 检查ID匹配
         if rpc_response.id != id {
             return Err(RpcClientError::IdMismatch);
         }
-        
+
         // 解析结果
         let result = rpc_response.result
             .ok_or(RpcClientError::NoResult)?;
-            
+
         let typed_result: R = serde_json::from_value(result)?;
-        
+
         Ok(typed_result)
     }
 }
@@ -1720,50 +1721,50 @@ impl workflow::workflow_service_server::WorkflowService for GrpcWorkflowService 
     ) -> Result<Response<workflow::CreateWorkflowResponse>, Status> {
         // 提取请求
         let proto_req = request.into_inner();
-        
+
         // 转换为领域模型
         let definition = convert_proto_to_definition(proto_req.definition)
             .map_err(|e| Status::invalid_argument(e.to_string()))?;
-            
+
         // 创建工作流
         let workflow_id = self.workflow_engine.create_workflow(definition).await
             .map_err(|e| Status::internal(e.to_string()))?;
-            
+
         // 构造响应
         let response = workflow::CreateWorkflowResponse {
             workflow_id,
         };
-        
+
         Ok(Response::new(response))
     }
-    
+
     async fn start_workflow(
         &self,
         request: Request<workflow::StartWorkflowRequest>,
     ) -> Result<Response<workflow::StartWorkflowResponse>, Status> {
         // 提取请求
         let proto_req = request.into_inner();
-        
+
         // 转换为领域模型
         let input = match proto_req.input {
             Some(i) => serde_json::from_str(&i.value)
                 .map_err(|e| Status::invalid_argument(format!("Invalid input: {}", e)))?,
             None => serde_json::Value::Null,
         };
-        
+
         // 启动工作流
         let instance_id = self.workflow_engine
             .start_workflow(&proto_req.workflow_id, input).await
             .map_err(|e| Status::internal(e.to_string()))?;
-            
+
         // 构造响应
         let response = workflow::StartWorkflowResponse {
             instance_id,
         };
-        
+
         Ok(Response::new(response))
     }
-    
+
     // 实现其他gRPC方法...
 }
 ```
@@ -1788,58 +1789,58 @@ impl<T: Clone + Send + 'static> AsyncMessageQueue<T> {
             closed: Arc::new(AtomicBool::new(false)),
         }
     }
-    
+
     pub async fn send(&self, message: T) -> Result<(), QueueError> {
         // 检查队列是否已关闭
         if self.closed.load(Ordering::SeqCst) {
             return Err(QueueError::Closed);
         }
-        
+
         // 获取队列锁
         let mut queue = self.queue.lock().await;
-        
+
         // 添加消息
         queue.push_back(message);
-        
+
         // 通知等待的接收者
         self.notify.notify_one();
-        
+
         Ok(())
     }
-    
+
     pub async fn receive(&self) -> Result<T, QueueError> {
         loop {
             // 获取队列锁
             let mut queue = self.queue.lock().await;
-            
+
             // 尝试获取消息
             if let Some(message) = queue.pop_front() {
                 return Ok(message);
             }
-            
+
             // 检查队列是否已关闭
             if self.closed.load(Ordering::SeqCst) {
                 return Err(QueueError::Closed);
             }
-            
+
             // 释放锁并等待通知
             drop(queue);
             self.notify.notified().await;
         }
     }
-    
+
     pub fn close(&self) {
         self.closed.store(true, Ordering::SeqCst);
         self.notify.notify_all();
     }
-    
+
     pub fn start_worker<F, Fut>(&self, handler: F) -> JoinHandle<Result<(), QueueError>>
     where
         F: Fn(T) -> Fut + Send + 'static,
         Fut: Future<Output = Result<(), WorkerError>> + Send,
     {
         let queue = self.clone();
-        
+
         tokio::spawn(async move {
             loop {
                 match queue.receive().await {
@@ -1883,7 +1884,7 @@ impl WorkerPool {
     pub fn new(num_workers: usize) -> Self {
         let queue = AsyncMessageQueue::new();
         let mut workers = Vec::with_capacity(num_workers);
-        
+
         for _ in 0..num_workers {
             let worker_queue = queue.clone();
             workers.push(worker_queue.start_worker(|item| async move {
@@ -1906,33 +1907,33 @@ impl WorkerPool {
                 }
             }));
         }
-        
+
         Self {
             workers,
             queue,
         }
     }
-    
+
     pub async fn submit<T: Send + 'static>(&self, task: Box<dyn Task<Output = T>>) -> Result<Receiver<Result<T, TaskError>>, QueueError> {
         // 创建通道
         let (sender, receiver) = mpsc::channel(1);
-        
+
         // 创建工作项
         let item = WorkItem {
             task,
             result_sender: Some(Box::new(sender)),
         };
-        
+
         // 提交到队列
         self.queue.send(item).await?;
-        
+
         Ok(receiver)
     }
-    
+
     pub async fn shutdown(&self) {
         // 关闭队列
         self.queue.close();
-        
+
         // 等待所有工作者完成
         for worker in &self.workers {
             let _ = worker.await;
@@ -1963,7 +1964,7 @@ impl<T: Send + 'static> ResultSender for Sender<Result<T, TaskError>> {
             },
             Err(e) => Err(e),
         };
-        
+
         self.send(typed_result).await.map_err(|_| SendError::ChannelClosed)
     }
 }
@@ -1981,31 +1982,31 @@ impl<T: Send + 'static> ResultSender for Sender<Result<T, TaskError>> {
 pub enum AppError {
     #[error("Workflow error: {0}")]
     Workflow(#[from] WorkflowError),
-    
+
     #[error("Storage error: {0}")]
     Storage(#[from] StorageError),
-    
+
     #[error("Network error: {0}")]
     Network(#[from] NetworkError),
-    
+
     #[error("Serialization error: {0}")]
     Serialization(#[from] SerializationError),
-    
+
     #[error("Configuration error: {0}")]
     Configuration(#[from] ConfigurationError),
-    
+
     #[error("Authentication error: {0}")]
     Authentication(#[from] AuthenticationError),
-    
+
     #[error("Authorization error: {0}")]
     Authorization(#[from] AuthorizationError),
-    
+
     #[error("Validation error: {0}")]
     Validation(#[from] ValidationError),
-    
+
     #[error("Rate limit exceeded: {0}")]
     RateLimit(String),
-    
+
     #[error("Internal error: {0}")]
     Internal(String),
 }
@@ -2015,22 +2016,22 @@ pub enum AppError {
 pub enum WorkflowError {
     #[error("Workflow definition error: {0}")]
     Definition(String),
-    
+
     #[error("Workflow execution error: {0}")]
     Execution(String),
-    
+
     #[error("Task failed: {0}")]
     TaskFailed(String),
-    
+
     #[error("Workflow timeout")]
     Timeout,
-    
+
     #[error("Workflow cancelled: {0}")]
     Cancelled(String),
-    
+
     #[error("Workflow instance not found: {0}")]
     InstanceNotFound(String),
-    
+
     #[error("Invalid workflow state transition")]
     InvalidStateTransition,
 }
@@ -2065,7 +2066,7 @@ where
     fn call(&mut self, req: Request<ReqBody>) -> Self::Future {
         // 克隆服务以捕获
         let inner = self.inner.clone();
-        
+
         // 获取请求ID
         let request_id = req
             .headers()
@@ -2073,20 +2074,20 @@ where
             .and_then(|v| v.to_str().ok())
             .unwrap_or("unknown")
             .to_string();
-            
+
         // 调用内部服务
         let future = self.inner.call(req);
-        
+
         Box::pin(async move {
             match future.await {
                 Ok(res) => Ok(res),
                 Err(err) => {
                     // 转换错误
                     let app_err: AppError = err.into();
-                    
+
                     // 记录错误
                     log::error!("Request {}: {:?}", request_id, app_err);
-                    
+
                     // 转换为HTTP响应
                     let status_code = match &app_err {
                         AppError::Workflow(WorkflowError::InstanceNotFound(_)) => StatusCode::NOT_FOUND,
@@ -2096,27 +2097,27 @@ where
                         AppError::RateLimit(_) => StatusCode::TOO_MANY_REQUESTS,
                         _ => StatusCode::INTERNAL_SERVER_ERROR,
                     };
-                    
+
                     // 创建错误响应
                     let error_response = ErrorResponse {
                         error: app_err.to_string(),
                         request_id,
                         time: Utc::now(),
                     };
-                    
+
                     let json = serde_json::to_string(&error_response)
                         .unwrap_or_else(|_| r#"{"error":"Failed to serialize error"}"#.to_string());
-                    
+
                     // 构建响应
                     let mut response = Response::new(ResBody::default());
                     *response.status_mut() = status_code;
-                    
+
                     // 这里假设可以将响应体设置为JSON
                     // 实际实现可能需要根据ResBody类型进行调整
                     if let Some(body) = response.body_mut() as Option<&mut String> {
                         *body = json;
                     }
-                    
+
                     Ok(response)
                 }
             }
@@ -2138,18 +2139,18 @@ pub fn setup_global_error_handlers() {
     std::panic::set_hook(Box::new(|panic_info| {
         let backtrace = Backtrace::force_capture();
         let location = panic_info.location().map(|loc| format!("{}:{}", loc.file(), loc.line()));
-        
+
         log::error!(
             "Panic occurred! Location: {:?}, Message: {:?}\nBacktrace: {:?}",
             location,
             panic_info.payload().downcast_ref::<&str>(),
             backtrace
         );
-        
+
         // 可以在这里添加报警通知逻辑
         notify_panic_error(panic_info);
     }));
-    
+
     // 设置logger
     env_logger::Builder::from_env(env_logger::Env::default())
         .format(|buf, record| {
@@ -2217,7 +2218,7 @@ impl FailureDetector {
             failure_threshold,
         }
     }
-    
+
     pub fn register_node(&self, node_id: NodeId) {
         let mut states = self.node_states.write().unwrap();
         states.insert(node_id, NodeState {
@@ -2226,36 +2227,36 @@ impl FailureDetector {
             status: NodeStatus::Healthy,
         });
     }
-    
+
     pub fn register_failure_handler(&mut self, handler: Box<dyn FailureHandler>) {
         self.failure_handlers.push(handler);
     }
-    
+
     pub fn record_heartbeat(&self, node_id: NodeId) {
         let mut states = self.node_states.write().unwrap();
-        
+
         if let Some(state) = states.get_mut(&node_id) {
             state.last_heartbeat = Instant::now();
             state.suspicion_count = 0;
             state.status = NodeStatus::Healthy;
         }
     }
-    
+
     pub fn check_nodes(&self) -> Vec<(NodeId, NodeStatus)> {
         let mut status_changes = Vec::new();
         let now = Instant::now();
-        
+
         // 检查所有节点
         let mut states = self.node_states.write().unwrap();
-        
+
         for (node_id, state) in states.iter_mut() {
             let elapsed = now.duration_since(state.last_heartbeat);
-            
+
             // 检查是否超过心跳超时
             if elapsed > self.heartbeat_timeout {
                 // 增加怀疑计数
                 state.suspicion_count += 1;
-                
+
                 // 检查是否达到故障阈值
                 if state.suspicion_count >= self.failure_threshold {
                     // 节点故障
@@ -2272,10 +2273,10 @@ impl FailureDetector {
                 }
             }
         }
-        
+
         // 检查状态变化并通知失败处理器
         drop(states); // 释放锁
-        
+
         for (node_id, status) in &status_changes {
             if *status == NodeStatus::Failed {
                 for handler in &self.failure_handlers {
@@ -2283,21 +2284,21 @@ impl FailureDetector {
                 }
             }
         }
-        
+
         status_changes
     }
-    
+
     pub fn get_node_status(&self, node_id: NodeId) -> Option<NodeStatus> {
         let states = self.node_states.read().unwrap();
         states.get(&node_id).map(|state| state.status.clone())
     }
-    
+
     pub fn start_failure_detection(&self, check_interval: Duration) -> JoinHandle<()> {
         let detector = self.clone();
-        
+
         tokio::spawn(async move {
             let mut interval = tokio::time::interval(check_interval);
-            
+
             loop {
                 interval.tick().await;
                 detector.check_nodes();
@@ -2388,37 +2389,37 @@ impl RecoveryManager {
             recovery_log: Arc::new(RecoveryLog::new()),
         }
     }
-    
+
     pub fn register_strategy(&mut self, error_type: ErrorType, strategy: Box<dyn RecoveryStrategy>) {
         self.strategies.insert(error_type, strategy);
     }
-    
+
     pub async fn recover_from_error(&self, error: &AppError) -> Result<(), RecoveryError> {
         // 确定错误类型
         let error_type = self.determine_error_type(error);
-        
+
         // 记录恢复开始
         let recovery_id = self.recovery_log.start_recovery(&error_type, error);
-        
+
         // 寻找合适的恢复策略
         if let Some(strategy) = self.strategies.get(&error_type) {
             // 执行恢复
             log::info!("Starting recovery for error type: {:?}", error_type);
             let result = strategy.recover(error).await;
-            
+
             // 记录恢复结果
             self.recovery_log.complete_recovery(recovery_id, &result);
-            
+
             result
         } else {
             // 没有找到合适的策略
             log::warn!("No recovery strategy found for error type: {:?}", error_type);
             self.recovery_log.complete_recovery(recovery_id, &Err(RecoveryError::NoStrategyFound));
-            
+
             Err(RecoveryError::NoStrategyFound)
         }
     }
-    
+
     fn determine_error_type(&self, error: &AppError) -> ErrorType {
         match error {
             AppError::Network(NetworkError::ConnectionRefused) => ErrorType::NetworkPartition,
@@ -2449,30 +2450,30 @@ impl RecoveryStrategy for NodeFailureRecovery {
             AppError::Network(NetworkError::NodeUnavailable(id)) => id,
             _ => return Err(RecoveryError::UnsupportedError),
         };
-        
+
         // 尝试替换节点
         log::info!("Attempting to replace failed node: {}", node_id);
-        
+
         // 检查是否有备用节点
         let spare_nodes = self.cluster_manager.get_spare_nodes().await?;
         if spare_nodes.is_empty() {
             return Err(RecoveryError::NoSpareNodes);
         }
-        
+
         // 选择一个备用节点
         let spare_node = &spare_nodes[0];
-        
+
         // 激活备用节点
         self.cluster_manager.activate_node(spare_node.id).await?;
-        
+
         // 更新集群配置
         self.cluster_manager.update_cluster_config(|config| {
             config.replace_node(*node_id, spare_node.id);
         }).await?;
-        
+
         // 重新平衡数据
         self.cluster_manager.rebalance_data().await?;
-        
+
         Ok(())
     }
 }
@@ -2489,51 +2490,51 @@ impl RecoveryStrategy for StorageFailureRecovery {
             AppError::Storage(StorageError::IOError(details)) => {
                 // 记录详细错误信息
                 log::error!("Storage I/O error: {}", details);
-                
+
                 // 识别故障存储
                 let storage_id = self.extract_storage_id(details)
                     .ok_or(RecoveryError::CannotIdentifyStorage)?;
-                
+
                 // 尝试重新初始化存储
                 log::info!("Attempting to reinitialize storage: {}", storage_id);
                 self.storage_manager.reinitialize_storage(&storage_id).await?;
-                
+
                 // 从副本恢复数据
                 log::info!("Recovering data from replicas for storage: {}", storage_id);
                 self.storage_manager.recover_from_replicas(&storage_id).await?;
-                
+
                 Ok(())
             },
             AppError::Storage(StorageError::Corruption(details)) => {
                 // 记录详细错误信息
                 log::error!("Storage corruption detected: {}", details);
-                
+
                 // 识别受损数据
                 let data_id = self.extract_data_id(details)
                     .ok_or(RecoveryError::CannotIdentifyData)?;
-                
+
                 // 从备份恢复数据
                 log::info!("Recovering corrupted data: {}", data_id);
                 self.storage_manager.recover_from_backup(&data_id).await?;
-                
+
                 // 验证恢复的数据
                 log::info!("Validating recovered data: {}", data_id);
                 if !self.storage_manager.validate_data(&data_id).await? {
                     return Err(RecoveryError::ValidationFailed);
                 }
-                
+
                 Ok(())
             },
             _ => Err(RecoveryError::UnsupportedError),
         }
     }
-    
+
     fn extract_storage_id(&self, error_details: &str) -> Option<String> {
         // 示例实现：从错误信息中提取存储ID
         let re = Regex::new(r"storage_id: ([a-zA-Z0-9-]+)").ok()?;
         re.captures(error_details).and_then(|caps| caps.get(1)).map(|m| m.as_str().to_string())
     }
-    
+
     fn extract_data_id(&self, error_details: &str) -> Option<String> {
         // 示例实现：从错误信息中提取数据ID
         let re = Regex::new(r"data_id: ([a-zA-Z0-9-]+)").ok()?;
@@ -2551,20 +2552,20 @@ impl RecoveryStrategy for NetworkPartitionRecovery {
     async fn recover(&self, error: &AppError) -> Result<(), RecoveryError> {
         // 记录网络分区事件
         log::warn!("Network partition detected: {:?}", error);
-        
+
         // 等待网络恢复
         self.wait_for_network_recovery().await?;
-        
+
         // 重新加入集群
         log::info!("Attempting to rejoin cluster after network partition");
         match self.consensus.rejoin_cluster().await {
             Ok(_) => {
                 log::info!("Successfully rejoined cluster");
-                
+
                 // 同步状态
                 log::info!("Synchronizing state after rejoining");
                 self.consensus.sync_state().await?;
-                
+
                 Ok(())
             },
             Err(e) => {
@@ -2573,30 +2574,30 @@ impl RecoveryStrategy for NetworkPartitionRecovery {
             }
         }
     }
-    
+
     async fn wait_for_network_recovery(&self) -> Result<(), RecoveryError> {
         // 实现网络恢复检测
         // 这里简化为周期性检查直到成功
         let mut interval = tokio::time::interval(Duration::from_secs(5));
         let start_time = Instant::now();
         let timeout = Duration::from_secs(300); // 5分钟超时
-        
+
         loop {
             interval.tick().await;
-            
+
             // 尝试连接其他节点
             if self.check_network_connectivity().await {
                 log::info!("Network connectivity restored");
                 return Ok(());
             }
-            
+
             // 检查是否超时
             if start_time.elapsed() > timeout {
                 return Err(RecoveryError::Timeout("Network recovery timed out".to_string()));
             }
         }
     }
-    
+
     async fn check_network_connectivity(&self) -> bool {
         // 实现网络连接性检查
         // 尝试连接集群中的其他节点
@@ -2626,10 +2627,10 @@ impl RecoveryLog {
             log: RwLock::new(Vec::new()),
         }
     }
-    
+
     pub fn start_recovery(&self, error_type: &ErrorType, error: &AppError) -> Uuid {
         let id = Uuid::new_v4();
-        
+
         let entry = RecoveryEntry {
             id,
             error_type: error_type.clone(),
@@ -2638,25 +2639,25 @@ impl RecoveryLog {
             end_time: None,
             result: None,
         };
-        
+
         let mut log = self.log.write().unwrap();
         log.push(entry);
-        
+
         id
     }
-    
+
     pub fn complete_recovery(&self, id: Uuid, result: &Result<(), RecoveryError>) {
         let mut log = self.log.write().unwrap();
-        
+
         if let Some(entry) = log.iter_mut().find(|e| e.id == id) {
             entry.end_time = Some(Utc::now());
             entry.result = Some(result.clone());
         }
     }
-    
+
     pub fn get_recent_recoveries(&self, limit: usize) -> Vec<RecoverySummary> {
         let log = self.log.read().unwrap();
-        
+
         log.iter()
             .rev()
             .take(limit)
@@ -2724,10 +2725,10 @@ impl DeploymentManager {
     pub async fn deploy_update(&self, version: &str, artifact: UpdateArtifact) -> Result<(), DeploymentError> {
         // 记录开始部署
         log::info!("Starting deployment of version {} with strategy {:?}", version, self.strategy);
-        
+
         // 验证更新包
         self.validate_update(&artifact).await?;
-        
+
         // 根据策略执行部署
         match &self.strategy {
             DeploymentStrategy::RollingUpdate { batch_size, batch_interval, health_check_timeout } => {
@@ -2741,7 +2742,7 @@ impl DeploymentManager {
             },
         }
     }
-    
+
     async fn deploy_rolling_update(
         &self,
         version: &str,
@@ -2752,29 +2753,29 @@ impl DeploymentManager {
     ) -> Result<(), DeploymentError> {
         // 获取所有节点
         let nodes = self.cluster_manager.get_nodes().await?;
-        
+
         // 按批次更新节点
         for batch in nodes.chunks(batch_size) {
             // 更新当前批次
             for node in batch {
                 self.update_node(node, version, &artifact).await?;
-                
+
                 // 等待节点健康
                 self.wait_for_node_health(node, health_check_timeout).await?;
             }
-            
+
             // 批次间隔
             if batch != nodes.chunks(batch_size).last().unwrap() {
                 tokio::time::sleep(batch_interval).await;
             }
         }
-        
+
         // 验证整体集群健康
         self.verify_cluster_health().await?;
-        
+
         Ok(())
     }
-    
+
     async fn deploy_blue_green(
         &self,
         version: &str,
@@ -2785,23 +2786,23 @@ impl DeploymentManager {
         // 创建新的"绿色"环境
         log::info!("Creating new 'green' environment for version {}", version);
         let green_env = self.cluster_manager.create_environment("green", version).await?;
-        
+
         // 部署新版本到绿色环境
         for node in &green_env.nodes {
             self.update_node(node, version, &artifact).await?;
         }
-        
+
         // 验证绿色环境健康
         self.verify_environment_health(&green_env).await?;
-        
+
         // 路由测试流量到绿色环境
         log::info!("Routing {}% of traffic to 'green' environment", test_percentage * 100.0);
         self.cluster_manager.route_traffic("green", test_percentage).await?;
-        
+
         // 验证期间监控指标
         log::info!("Monitoring 'green' environment for {} seconds", verification_period.as_secs());
         let green_metrics = self.monitor_environment("green", verification_period).await?;
-        
+
         // 检查指标是否满足要求
         if !self.verify_metrics(&green_metrics) {
             // 回滚：将所有流量路由回蓝色环境
@@ -2809,22 +2810,22 @@ impl DeploymentManager {
             self.cluster_manager.route_traffic("blue", 1.0).await?;
             return Err(DeploymentError::MetricsVerificationFailed);
         }
-        
+
         // 成功：将所有流量切换到绿色环境
         log::info!("Switching 100% traffic to 'green' environment");
         self.cluster_manager.route_traffic("green", 1.0).await?;
-        
+
         // 完成后，将绿色环境重命名为蓝色
         log::info!("Renaming 'green' environment to 'blue'");
         self.cluster_manager.rename_environment("green", "blue").await?;
-        
+
         // 清理旧的蓝色环境
         log::info!("Cleaning up old 'blue' environment");
         self.cluster_manager.remove_environment("blue-old").await?;
-        
+
         Ok(())
     }
-    
+
     async fn deploy_canary(
         &self,
         version: &str,
@@ -2836,23 +2837,23 @@ impl DeploymentManager {
         // 创建金丝雀环境
         log::info!("Creating canary environment for version {}", version);
         let canary_env = self.cluster_manager.create_environment("canary", version).await?;
-        
+
         // 部署新版本到金丝雀环境
         for node in &canary_env.nodes {
             self.update_node(node, version, &artifact).await?;
         }
-        
+
         // 验证金丝雀环境健康
         self.verify_environment_health(&canary_env).await?;
-        
+
         // 初始流量分配
         log::info!("Routing {}% of traffic to canary environment", initial_percentage * 100.0);
         self.cluster_manager.route_traffic("canary", initial_percentage).await?;
-        
+
         // 监控初始金丝雀部署
         log::info!("Monitoring canary environment for {} seconds", step_duration.as_secs());
         let initial_metrics = self.monitor_environment("canary", step_duration).await?;
-        
+
         // 检查指标是否满足要求
         if !self.verify_metrics(&initial_metrics) {
             // 回滚：将所有流量路由回主环境
@@ -2860,20 +2861,20 @@ impl DeploymentManager {
             self.cluster_manager.route_traffic("production", 1.0).await?;
             return Err(DeploymentError::CanaryVerificationFailed);
         }
-        
+
         // 逐步增加金丝雀流量
         let mut current_percentage = initial_percentage;
-        
+
         for step in increment_steps {
             current_percentage += step;
             log::info!("Increasing canary traffic to {}%", current_percentage * 100.0);
-            
+
             // 更新流量分配
             self.cluster_manager.route_traffic("canary", current_percentage).await?;
-            
+
             // 监控此阶段的指标
             let step_metrics = self.monitor_environment("canary", step_duration).await?;
-            
+
             // 检查指标是否满足要求
             if !self.verify_metrics(&step_metrics) {
                 // 回滚：将所有流量路由回主环境
@@ -2882,36 +2883,36 @@ impl DeploymentManager {
                 return Err(DeploymentError::CanaryVerificationFailed);
             }
         }
-        
+
         // 成功：将所有流量切换到新版本
         log::info!("Canary deployment successful. Switching 100% traffic to new version");
         self.cluster_manager.route_traffic("canary", 1.0).await?;
-        
+
         // 升级剩余节点
         log::info!("Upgrading remaining production nodes to version {}", version);
         let production_nodes = self.cluster_manager.get_environment_nodes("production").await?;
-        
+
         for node in production_nodes {
             self.update_node(&node, version, &artifact).await?;
             self.wait_for_node_health(&node, Duration::from_secs(60)).await?;
         }
-        
+
         // 合并环境
         log::info!("Merging canary environment into production");
         self.cluster_manager.merge_environments("canary", "production").await?;
-        
+
         Ok(())
     }
-    
+
     async fn update_node(&self, node: &Node, version: &str, artifact: &UpdateArtifact) -> Result<(), DeploymentError> {
         log::info!("Updating node {} to version {}", node.id, version);
-        
+
         // 将节点设为维护模式
         self.cluster_manager.set_node_maintenance(node.id, true).await?;
-        
+
         // 等待连接耗尽
         self.wait_for_connections_drain(node.id).await?;
-        
+
         // 部署更新
         match self.cluster_manager.deploy_to_node(node.id, version, artifact).await {
             Ok(_) => {
@@ -2921,20 +2922,20 @@ impl DeploymentManager {
             },
             Err(e) => {
                 log::error!("Failed to update node {}: {}", node.id, e);
-                
+
                 // 恢复节点
                 self.cluster_manager.set_node_maintenance(node.id, false).await?;
-                
+
                 Err(DeploymentError::NodeUpdateFailed(node.id, e.to_string()))
             }
         }
     }
-    
+
     async fn wait_for_node_health(&self, node: &Node, timeout: Duration) -> Result<(), DeploymentError> {
         log::info!("Waiting for node {} health check", node.id);
-        
+
         let start = Instant::now();
-        
+
         while start.elapsed() < timeout {
             match self.health_checker.check_node(node.id).await {
                 Ok(true) => {
@@ -2951,128 +2952,128 @@ impl DeploymentManager {
                 }
             }
         }
-        
+
         Err(DeploymentError::HealthCheckTimeout(node.id))
     }
-    
+
     async fn wait_for_connections_drain(&self, node_id: NodeId) -> Result<(), DeploymentError> {
         log::info!("Waiting for connections to drain from node {}", node_id);
-        
+
         // 检查连接数是否为0或低于阈值
         let timeout = Duration::from_secs(120);
         let start = Instant::now();
-        
+
         while start.elapsed() < timeout {
             let connections = self.metrics_collector.get_node_connections(node_id).await?;
-            
+
             if connections <= 5 { // 阈值
                 log::info!("Node {} connections drained (current: {})", node_id, connections);
                 return Ok(());
             }
-            
+
             log::info!("Node {} still has {} connections", node_id, connections);
             tokio::time::sleep(Duration::from_secs(5)).await;
         }
-        
+
         // 超时但继续执行
         log::warn!("Timeout waiting for connections to drain from node {}", node_id);
         Ok(())
     }
-    
+
     async fn verify_environment_health(&self, env: &Environment) -> Result<(), DeploymentError> {
         log::info!("Verifying health of environment {}", env.name);
-        
+
         // 检查所有节点健康
         for node in &env.nodes {
             if !self.health_checker.check_node(node.id).await? {
                 return Err(DeploymentError::EnvironmentUnhealthy(env.name.clone()));
             }
         }
-        
+
         // 执行端到端测试
         if !self.health_checker.check_environment_e2e(&env.name).await? {
             return Err(DeploymentError::EnvironmentE2ETestFailed(env.name.clone()));
         }
-        
+
         log::info!("Environment {} is healthy", env.name);
         Ok(())
     }
-    
+
     async fn monitor_environment(&self, env_name: &str, duration: Duration) -> Result<EnvironmentMetrics, DeploymentError> {
         log::info!("Monitoring environment {} for {} seconds", env_name, duration.as_secs());
-        
+
         // 开始指标收集
         let start_time = Utc::now();
         let end_time = start_time + chrono::Duration::from_std(duration).unwrap();
-        
+
         // 等待监控持续时间
         tokio::time::sleep(duration).await;
-        
+
         // 收集指标
         let metrics = self.metrics_collector.get_environment_metrics(env_name, start_time, end_time).await?;
-        
+
         Ok(metrics)
     }
-    
+
     fn verify_metrics(&self, metrics: &EnvironmentMetrics) -> bool {
         // 检查错误率
         if metrics.error_rate > 0.01 { // 1%
             log::warn!("Error rate too high: {:.2}%", metrics.error_rate * 100.0);
             return false;
         }
-        
+
         // 检查延迟
         if metrics.p95_latency > 500.0 { // 500ms
             log::warn!("P95 latency too high: {:.2}ms", metrics.p95_latency);
             return false;
         }
-        
+
         // 检查CPU使用率
         if metrics.avg_cpu_usage > 0.8 { // 80%
             log::warn!("Average CPU usage too high: {:.2}%", metrics.avg_cpu_usage * 100.0);
             return false;
         }
-        
+
         // 检查内存使用率
         if metrics.avg_memory_usage > 0.8 { // 80%
             log::warn!("Average memory usage too high: {:.2}%", metrics.avg_memory_usage * 100.0);
             return false;
         }
-        
+
         true
     }
-    
+
     async fn validate_update(&self, artifact: &UpdateArtifact) -> Result<(), DeploymentError> {
         // 验证更新包签名
         if !artifact.verify_signature() {
             return Err(DeploymentError::InvalidSignature);
         }
-        
+
         // 验证兼容性
         if !self.verify_compatibility(&artifact.version).await? {
             return Err(DeploymentError::IncompatibleVersion);
         }
-        
+
         Ok(())
     }
-    
+
     async fn verify_compatibility(&self, version: &str) -> Result<bool, DeploymentError> {
         // 检查版本兼容性
         let current_version = self.cluster_manager.get_current_version().await?;
-        
+
         // 解析版本
         let current = parse_version(&current_version)?;
         let new = parse_version(version)?;
-        
+
         // 检查是否是有效的版本升级
         if new.major > current.major {
             // 主版本升级可能不兼容
             log::warn!("Major version upgrade: {} -> {}", current_version, version);
             log::warn!("Checking compatibility matrix for major version upgrade");
-            
+
             // 检查主版本升级兼容性矩阵
             let compatibility_matrix = self.get_compatibility_matrix().await?;
-            
+
             if !compatibility_matrix.is_compatible(&current_version, version) {
                 return Ok(false);
             }
@@ -3081,11 +3082,11 @@ impl DeploymentManager {
             log::error!("Downgrade to lower major version is not supported: {} -> {}", current_version, version);
             return Ok(false);
         }
-        
+
         // 版本兼容
         Ok(true)
     }
-    
+
     async fn get_compatibility_matrix(&self) -> Result<CompatibilityMatrix, DeploymentError> {
         // 从配置或远程服务获取兼容性矩阵
         // 简化示例
@@ -3103,15 +3104,15 @@ struct Version {
 // 解析版本字符串
 fn parse_version(version: &str) -> Result<Version, DeploymentError> {
     let parts: Vec<&str> = version.split('.').collect();
-    
+
     if parts.len() < 3 {
         return Err(DeploymentError::InvalidVersionFormat);
     }
-    
+
     let major = parts[0].parse::<u32>().map_err(|_| DeploymentError::InvalidVersionFormat)?;
     let minor = parts[1].parse::<u32>().map_err(|_| DeploymentError::InvalidVersionFormat)?;
     let patch = parts[2].parse::<u32>().map_err(|_| DeploymentError::InvalidVersionFormat)?;
-    
+
     Ok(Version { major, minor, patch })
 }
 
@@ -3126,15 +3127,15 @@ impl CompatibilityMatrix {
         let mut matrix = Self {
             compatible_pairs: HashMap::new(),
         };
-        
+
         // 添加一些默认兼容规则
         let mut v1_compat = HashSet::new();
         v1_compat.insert("2.0.0".to_string());
         matrix.compatible_pairs.insert("1.0.0".to_string(), v1_compat);
-        
+
         matrix
     }
-    
+
     fn is_compatible(&self, from_version: &str, to_version: &str) -> bool {
         if let Some(compatible_versions) = self.compatible_pairs.get(from_version) {
             compatible_versions.contains(to_version)
@@ -3214,10 +3215,10 @@ impl VersionCompatibilityManager {
             compatibility_checkers: Vec::new(),
         }
     }
-    
+
     pub fn register_version(&mut self, version: &str, features: HashSet<String>, schema_version: &str) {
         let mut history = self.version_history.write().unwrap();
-        
+
         // 添加新版本记录
         history.push(VersionRecord {
             version: version.to_string(),
@@ -3226,32 +3227,32 @@ impl VersionCompatibilityManager {
             schema_version: schema_version.to_string(),
             is_active: false,
         });
-        
+
         // 按版本排序
         history.sort_by(|a, b| {
             let a_ver = parse_version(&a.version).unwrap_or_default();
             let b_ver = parse_version(&b.version).unwrap_or_default();
-            
+
             b_ver.major.cmp(&a_ver.major)
                 .then(b_ver.minor.cmp(&a_ver.minor))
                 .then(b_ver.patch.cmp(&a_ver.patch))
         });
     }
-    
+
     pub fn register_migrator<M: DataMigrator + 'static>(&mut self, from_version: &str, to_version: &str, migrator: M) {
         self.migrators.insert(
             (from_version.to_string(), to_version.to_string()),
             Box::new(migrator)
         );
     }
-    
+
     pub fn register_compatibility_checker<C: CompatibilityChecker + 'static>(&mut self, checker: C) {
         self.compatibility_checkers.push(Box::new(checker));
     }
-    
+
     pub async fn check_compatibility(&self, from_version: &str, to_version: &str) -> Result<CompatibilityReport, VersionError> {
         log::info!("Checking compatibility from {} to {}", from_version, to_version);
-        
+
         let mut report = CompatibilityReport {
             from_version: from_version.to_string(),
             to_version: to_version.to_string(),
@@ -3259,33 +3260,33 @@ impl VersionCompatibilityManager {
             issues: Vec::new(),
             required_migrations: Vec::new(),
         };
-        
+
         // 检查版本是否存在
         let history = self.version_history.read().unwrap();
         let from_record = history.iter().find(|r| r.version == from_version)
             .ok_or(VersionError::VersionNotFound(from_version.to_string()))?;
-            
+
         let to_record = history.iter().find(|r| r.version == to_version)
             .ok_or(VersionError::VersionNotFound(to_version.to_string()))?;
-            
+
         // 运行所有兼容性检查器
         for checker in &self.compatibility_checkers {
             let check_result = checker.check_compatibility(from_record, to_record).await?;
-            
+
             if !check_result.compatible {
                 report.compatible = false;
                 report.issues.extend(check_result.issues);
             }
         }
-        
+
         // 确定所需的迁移
         if from_record.schema_version != to_record.schema_version {
             // 需要数据迁移
             log::info!("Schema change detected: {} -> {}", from_record.schema_version, to_record.schema_version);
-            
+
             // 查找迁移路径
             let migration_path = self.find_migration_path(from_record, to_record)?;
-            
+
             // 添加到报告
             report.required_migrations = migration_path.iter()
                 .map(|(from, to)| MigrationStep {
@@ -3294,96 +3295,96 @@ impl VersionCompatibilityManager {
                 })
                 .collect();
         }
-        
+
         Ok(report)
     }
-    
+
     pub async fn activate_version(&self, version: &str) -> Result<(), VersionError> {
         let mut history = self.version_history.write().unwrap();
-        
+
         // 查找版本
         let record = history.iter_mut().find(|r| r.version == version)
             .ok_or(VersionError::VersionNotFound(version.to_string()))?;
-            
+
         // 标记为活动版本
         record.is_active = true;
-        
+
         // 更新其他版本状态
         for r in history.iter_mut() {
             if r.version != version {
                 r.is_active = false;
             }
         }
-        
+
         log::info!("Version {} activated", version);
         Ok(())
     }
-    
+
     pub async fn migrate_data(&self, from_version: &str, to_version: &str) -> Result<(), VersionError> {
         log::info!("Migrating data from {} to {}", from_version, to_version);
-        
+
         // 获取版本记录
         let history = self.version_history.read().unwrap();
         let from_record = history.iter().find(|r| r.version == from_version)
             .ok_or(VersionError::VersionNotFound(from_version.to_string()))?;
-            
+
         let to_record = history.iter().find(|r| r.version == to_version)
             .ok_or(VersionError::VersionNotFound(to_version.to_string()))?;
-            
+
         // 找到迁移路径
         let migration_path = self.find_migration_path(from_record, to_record)?;
-        
+
         // 执行迁移
         for (from, to) in migration_path {
             log::info!("Executing migration step: {} -> {}", from, to);
-            
+
             // 获取迁移器
             let migrator = self.migrators.get(&(from.clone(), to.clone()))
                 .ok_or(VersionError::MigratorNotFound(from.clone(), to.clone()))?;
-                
+
             // 执行迁移
             migrator.migrate().await?;
         }
-        
+
         log::info!("Data migration completed successfully");
         Ok(())
     }
-    
+
     fn find_migration_path(&self, from: &VersionRecord, to: &VersionRecord) -> Result<Vec<(String, String)>, VersionError> {
         // 如果有直接迁移路径
         if self.migrators.contains_key(&(from.version.clone(), to.version.clone())) {
             return Ok(vec![(from.version.clone(), to.version.clone())]);
         }
-        
+
         // 需要查找间接迁移路径
         // 这里使用简化的BFS算法
         let mut queue = VecDeque::new();
         let mut visited = HashSet::new();
         let mut parent = HashMap::new();
-        
+
         queue.push_back(from.version.clone());
         visited.insert(from.version.clone());
-        
+
         while let Some(current) = queue.pop_front() {
             if current == to.version {
                 // 找到路径
                 let mut path = Vec::new();
                 let mut curr = current;
-                
+
                 while curr != from.version {
                     let prev = parent.get(&curr).unwrap();
                     path.push((prev.clone(), curr.clone()));
                     curr = prev.clone();
                 }
-                
+
                 path.reverse();
                 return Ok(path);
             }
-            
+
             // 探索所有可能的下一步
             for (key, _) in self.migrators.iter() {
                 let (start, end) = key;
-                
+
                 if *start == current && !visited.contains(end) {
                     visited.insert(end.clone());
                     parent.insert(end.clone(), current.clone());
@@ -3391,22 +3392,22 @@ impl VersionCompatibilityManager {
                 }
             }
         }
-        
+
         // 找不到迁移路径
         Err(VersionError::NoMigrationPath(from.version.clone(), to.version.clone()))
     }
-    
+
     pub fn get_active_version(&self) -> Option<String> {
         let history = self.version_history.read().unwrap();
-        
+
         history.iter()
             .find(|r| r.is_active)
             .map(|r| r.version.clone())
     }
-    
+
     pub fn get_version_history(&self) -> Vec<VersionInfo> {
         let history = self.version_history.read().unwrap();
-        
+
         history.iter()
             .map(|r| VersionInfo {
                 version: r.version.clone(),
@@ -3490,17 +3491,17 @@ pub struct SchemaCompatibilityChecker {
 impl CompatibilityChecker for SchemaCompatibilityChecker {
     async fn check_compatibility(&self, from: &VersionRecord, to: &VersionRecord) -> Result<CheckResult, VersionError> {
         log::info!("Checking schema compatibility: {} -> {}", from.schema_version, to.schema_version);
-        
+
         // 获取架构定义
         let from_schema = self.schema_registry.get_schema(&from.schema_version).await?;
         let to_schema = self.schema_registry.get_schema(&to.schema_version).await?;
-        
+
         // 检查兼容性
         let issues = self.schema_registry.check_compatibility(&from_schema, &to_schema).await?;
-        
+
         // 判断是否兼容
         let has_critical_issues = issues.iter().any(|i| i.severity == IssueSeverity::Critical);
-        
+
         Ok(CheckResult {
             compatible: !has_critical_issues,
             issues,
@@ -3517,13 +3518,13 @@ pub struct ApiCompatibilityChecker {
 impl CompatibilityChecker for ApiCompatibilityChecker {
     async fn check_compatibility(&self, from: &VersionRecord, to: &VersionRecord) -> Result<CheckResult, VersionError> {
         log::info!("Checking API compatibility between versions {} and {}", from.version, to.version);
-        
+
         // 获取API定义
         let from_apis = self.api_registry.get_apis_for_version(&from.version).await?;
         let to_apis = self.api_registry.get_apis_for_version(&to.version).await?;
-        
+
         let mut issues = Vec::new();
-        
+
         // 检查移除的API
         for api in &from_apis {
             if !to_apis.iter().any(|a| a.name == api.name) {
@@ -3534,7 +3535,7 @@ impl CompatibilityChecker for ApiCompatibilityChecker {
                 });
             }
         }
-        
+
         // 检查修改的API
         for from_api in &from_apis {
             if let Some(to_api) = to_apis.iter().find(|a| a.name == from_api.name) {
@@ -3548,22 +3549,22 @@ impl CompatibilityChecker for ApiCompatibilityChecker {
                         });
                     }
                 }
-                
+
                 // 检查返回类型变化
                 if from_api.return_type != to_api.return_type {
                     issues.push(CompatibilityIssue {
                         severity: IssueSeverity::Warning,
-                        description: format!("Return type of API {} changed from {} to {}", 
+                        description: format!("Return type of API {} changed from {} to {}",
                                            from_api.name, from_api.return_type, to_api.return_type),
                         affected_component: "API".to_string(),
                     });
                 }
             }
         }
-        
+
         // 判断是否兼容
         let has_errors = issues.iter().any(|i| i.severity == IssueSeverity::Error || i.severity == IssueSeverity::Critical);
-        
+
         Ok(CheckResult {
             compatible: !has_errors,
             issues,
@@ -3598,12 +3599,12 @@ impl StateMigrationManager {
             migration_log: Arc::new(MigrationLog::new()),
         }
     }
-    
+
     pub async fn register_migration<M: StateMigration + 'static>(&self, migration: M) -> Result<(), MigrationError> {
         // 获取迁移描述
         let description = migration.describe();
         log::info!("Registering migration: {}", description);
-        
+
         // 存储迁移定义
         let migration_id = Uuid::new_v4().to_string();
         let migration_def = MigrationDefinition {
@@ -3614,50 +3615,50 @@ impl StateMigrationManager {
             target_version: migration.target_version().to_string(),
             created_at: Utc::now(),
         };
-        
+
         // 序列化定义
         let serialized = serde_json::to_vec(&migration_def)?;
-        
+
         // 存储到持久化存储
         self.storage_manager.put(
             &format!("migrations/{}", migration_id).into_bytes(),
             &serialized
         ).await?;
-        
+
         // 发布迁移注册事件
         self.event_bus.publish(SystemEvent::MigrationRegistered {
             migration_id,
             source_version: migration.source_version().to_string(),
             target_version: migration.target_version().to_string(),
         }).await?;
-        
+
         Ok(())
     }
-    
+
     pub async fn execute_migration(&self, migration_id: &str) -> Result<MigrationResult, MigrationError> {
         log::info!("Executing migration: {}", migration_id);
-        
+
         // 获取迁移定义
         let migration_bytes = self.storage_manager.get(
             &format!("migrations/{}", migration_id).into_bytes()
         ).await?
             .ok_or(MigrationError::MigrationNotFound(migration_id.to_string()))?;
-            
+
         let migration_def: MigrationDefinition = serde_json::from_slice(&migration_bytes)?;
-        
+
         // 记录迁移开始
         let execution_id = self.migration_log.start_migration(&migration_def).await?;
-        
+
         // 发布迁移开始事件
         self.event_bus.publish(SystemEvent::MigrationStarted {
             migration_id: migration_id.to_string(),
             execution_id: execution_id.clone(),
         }).await?;
-        
+
         // 获取源和目标架构
         let source_schema = self.schema_registry.get_schema(&migration_def.source_version).await?;
         let target_schema = self.schema_registry.get_schema(&migration_def.target_version).await?;
-        
+
         // 创建迁移上下文
         let context = MigrationContext {
             migration_id: migration_id.to_string(),
@@ -3667,7 +3668,7 @@ impl StateMigrationManager {
             storage: self.storage_manager.clone(),
             event_bus: self.event_bus.clone(),
         };
-        
+
         // 执行迁移
         let result = match Self::get_migration_implementation(&migration_def) {
             Some(migration) => {
@@ -3676,14 +3677,14 @@ impl StateMigrationManager {
                     Ok(stats) => {
                         // 记录成功
                         self.migration_log.complete_migration(&execution_id, &stats).await?;
-                        
+
                         // 发布迁移完成事件
                         self.event_bus.publish(SystemEvent::MigrationCompleted {
                             migration_id: migration_id.to_string(),
                             execution_id,
                             stats,
                         }).await?;
-                        
+
                         Ok(MigrationResult {
                             success: true,
                             stats,
@@ -3694,14 +3695,14 @@ impl StateMigrationManager {
                         // 记录失败
                         let error_message = e.to_string();
                         self.migration_log.fail_migration(&execution_id, &error_message).await?;
-                        
+
                         // 发布迁移失败事件
                         self.event_bus.publish(SystemEvent::MigrationFailed {
                             migration_id: migration_id.to_string(),
                             execution_id,
                             error: error_message.clone(),
                         }).await?;
-                        
+
                         Ok(MigrationResult {
                             success: false,
                             stats: MigrationStats::default(),
@@ -3712,24 +3713,24 @@ impl StateMigrationManager {
             },
             None => Err(MigrationError::MigrationImplementationNotFound(migration_id.to_string())),
         };
-        
+
         result
     }
-    
+
     pub async fn get_migration_status(&self, execution_id: &str) -> Result<MigrationStatus, MigrationError> {
         self.migration_log.get_migration_status(execution_id).await
     }
-    
+
     pub async fn list_migrations(&self, filter: Option<MigrationFilter>) -> Result<Vec<MigrationDefinition>, MigrationError> {
         // 查询存储中的所有迁移定义
         let prefix = "migrations/".as_bytes();
         let entries = self.storage_manager.scan(prefix).await?;
-        
+
         let mut migrations = Vec::new();
-        
+
         for (key, value) in entries {
             let migration_def: MigrationDefinition = serde_json::from_slice(&value)?;
-            
+
             // 应用过滤器
             if let Some(ref filter) = filter {
                 if let Some(source) = &filter.source_version {
@@ -3737,29 +3738,29 @@ impl StateMigrationManager {
                         continue;
                     }
                 }
-                
+
                 if let Some(target) = &filter.target_version {
                     if migration_def.target_version != *target {
                         continue;
                     }
                 }
-                
+
                 if let Some(name_pattern) = &filter.name_pattern {
                     if !migration_def.name.contains(name_pattern) {
                         continue;
                     }
                 }
             }
-            
+
             migrations.push(migration_def);
         }
-        
+
         // 按创建时间排序
         migrations.sort_by(|a, b| a.created_at.cmp(&b.created_at));
-        
+
         Ok(migrations)
     }
-    
+
     fn get_migration_implementation(def: &MigrationDefinition) -> Option<Box<dyn StateMigration>> {
         // 在实际实现中，这里会通过反射或工厂模式查找迁移实现
         // 这里是简化示例
@@ -3854,10 +3855,10 @@ impl MigrationLog {
             storage: Box::new(InMemoryMigrationLogStorage::new()),
         }
     }
-    
+
     pub async fn start_migration(&self, definition: &MigrationDefinition) -> Result<String, MigrationError> {
         let execution_id = Uuid::new_v4().to_string();
-        
+
         let entry = MigrationLogEntry {
             execution_id: execution_id.clone(),
             migration_id: definition.id.clone(),
@@ -3866,66 +3867,66 @@ impl MigrationLog {
                 progress: 0.0,
             },
         };
-        
+
         self.storage.save_entry(&entry).await?;
-        
+
         Ok(execution_id)
     }
-    
+
     pub async fn update_progress(&self, execution_id: &str, progress: f64) -> Result<(), MigrationError> {
         let mut entry = self.storage.get_entry(execution_id).await?
             .ok_or(MigrationError::ExecutionNotFound(execution_id.to_string()))?;
-            
+
         if let MigrationStatus::InProgress { start_time, .. } = entry.status {
             entry.status = MigrationStatus::InProgress {
                 start_time,
                 progress,
             };
-            
+
             self.storage.save_entry(&entry).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn complete_migration(&self, execution_id: &str, stats: &MigrationStats) -> Result<(), MigrationError> {
         let mut entry = self.storage.get_entry(execution_id).await?
             .ok_or(MigrationError::ExecutionNotFound(execution_id.to_string()))?;
-            
+
         if let MigrationStatus::InProgress { start_time, .. } = entry.status {
             entry.status = MigrationStatus::Completed {
                 start_time,
                 end_time: Utc::now(),
                 stats: stats.clone(),
             };
-            
+
             self.storage.save_entry(&entry).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn fail_migration(&self, execution_id: &str, error: &str) -> Result<(), MigrationError> {
         let mut entry = self.storage.get_entry(execution_id).await?
             .ok_or(MigrationError::ExecutionNotFound(execution_id.to_string()))?;
-            
+
         if let MigrationStatus::InProgress { start_time, .. } = entry.status {
             entry.status = MigrationStatus::Failed {
                 start_time,
                 end_time: Utc::now(),
                 error: error.to_string(),
             };
-            
+
             self.storage.save_entry(&entry).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn get_migration_status(&self, execution_id: &str) -> Result<MigrationStatus, MigrationError> {
         let entry = self.storage.get_entry(execution_id).await?
             .ok_or(MigrationError::ExecutionNotFound(execution_id.to_string()))?;
-            
+
         Ok(entry.status.clone())
     }
 }
@@ -3966,15 +3967,15 @@ impl MigrationLogStorage for InMemoryMigrationLogStorage {
         entries.insert(entry.execution_id.clone(), entry.clone());
         Ok(())
     }
-    
+
     async fn get_entry(&self, execution_id: &str) -> Result<Option<MigrationLogEntry>, MigrationError> {
         let entries = self.entries.read().unwrap();
         Ok(entries.get(execution_id).cloned())
     }
-    
+
     async fn list_entries(&self, migration_id: Option<&str>) -> Result<Vec<MigrationLogEntry>, MigrationError> {
         let entries = self.entries.read().unwrap();
-        
+
         let filtered_entries = entries.values()
             .filter(|entry| {
                 if let Some(id) = migration_id {
@@ -3985,7 +3986,7 @@ impl MigrationLogStorage for InMemoryMigrationLogStorage {
             })
             .cloned()
             .collect();
-            
+
         Ok(filtered_entries)
     }
 }
@@ -4010,50 +4011,50 @@ impl StateMigration for WorkflowModelV1ToV2Migration {
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn describe(&self) -> String {
         self.description.clone()
     }
-    
+
     fn source_version(&self) -> &str {
         "1.0.0"
     }
-    
+
     fn target_version(&self) -> &str {
         "2.0.0"
     }
-    
+
     async fn execute(&self, context: &MigrationContext) -> Result<MigrationStats, MigrationError> {
         log::info!("Executing workflow model migration from V1 to V2");
-        
+
         let mut stats = MigrationStats::default();
         let start_time = Instant::now();
-        
+
         // 获取所有工作流实例
         let workflow_keys = context.storage.scan("workflows/".as_bytes()).await?;
         stats.processed_items = workflow_keys.len() as u64;
-        
+
         // 更新进度
         context.event_bus.publish(SystemEvent::MigrationProgress {
             execution_id: context.execution_id.clone(),
             progress: 0.0,
             stats: stats.clone(),
         }).await?;
-        
+
         // 处理每个工作流实例
         for (i, (key, value)) in workflow_keys.iter().enumerate() {
             // 解析V1模型
             let workflow_v1: WorkflowInstanceV1 = serde_json::from_slice(value)?;
-            
+
             // 转换为V2模型
             let workflow_v2 = self.convert_workflow_model(&workflow_v1);
-            
+
             // 保存V2模型
             let serialized = serde_json::to_vec(&workflow_v2)?;
             context.storage.put(key, &serialized).await?;
-            
+
             stats.updated_items += 1;
-            
+
             // 更新进度
             let progress = (i + 1) as f64 / workflow_keys.len() as f64;
             if i % 100 == 0 || i == workflow_keys.len() - 1 {
@@ -4064,14 +4065,14 @@ impl StateMigration for WorkflowModelV1ToV2Migration {
                 }).await?;
             }
         }
-        
+
         // 计算持续时间
         stats.duration_ms = start_time.elapsed().as_millis() as u64;
-        
+
         log::info!("Migration completed: processed={}, updated={}, skipped={}, failed={}, duration={}ms",
-                 stats.processed_items, stats.updated_items, stats.skipped_items, 
+                 stats.processed_items, stats.updated_items, stats.skipped_items,
                  stats.failed_items, stats.duration_ms);
-                 
+
         Ok(stats)
     }
 }

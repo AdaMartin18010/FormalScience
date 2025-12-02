@@ -2,54 +2,56 @@
 
 ## 目录
 
-- [1. Rust所有权在分布式系统中的应用：形式化分析与证明](#rust所有权在分布式系统中的应用形式化分析与证明)
-  - [1.1 引言](#1-引言)
-    - [1.1.1 Rust所有权系统的数学基础](#11-rust所有权系统的数学基础)
-    - [1.1.2 分布式系统中的资源管理挑战](#12-分布式系统中的资源管理挑战)
-    - [1.1.3 研究方法与理论框架](#13-研究方法与理论框架)
-  - [1.2 所有权与网络通信的形式化模型](#2-所有权与网络通信的形式化模型)
-    - [1.2.1 网络资源的生命周期形式化](#21-网络资源的生命周期形式化)
-    - [1.2.2 跨网络所有权转移的π演算模型](#22-跨网络所有权转移的π演算模型)
-    - [1.2.3 分布式借用模型与线性类型](#23-分布式借用模型与线性类型)
-    - [1.2.4 会话类型与所有权协议](#24-会话类型与所有权协议)
-    - [1.2.5 网络分区下的所有权保证](#25-网络分区下的所有权保证)
-    - [1.2.6 时序逻辑证明与反例分析](#26-时序逻辑证明与反例分析)
-  - [1.3 所有权与分布式共识](#3-所有权与分布式共识)
-    - [1.3.1 一致性模型的所有权解释](#31-一致性模型的所有权解释)
-    - [1.3.2 分布式所有权转移的原子性](#32-分布式所有权转移的原子性)
-    - [1.3.3 共识算法作为所有权仲裁机制](#33-共识算法作为所有权仲裁机制)
-    - [1.3.4 CRDT与所有权分解](#34-crdt与所有权分解)
-    - [1.3.5 快照隔离与借用语义](#35-快照隔离与借用语义)
-    - [1.3.6 形式化证明：分布式所有权的安全性定理](#36-形式化证明分布式所有权的安全性定理)
-  - [1.4 所有权与分布式锁](#4-所有权与分布式锁)
-    - [1.4.1 分布式锁作为临时所有权转移](#41-分布式锁作为临时所有权转移)
-    - [1.4.2 租约机制的形式化](#42-租约机制的形式化)
-    - [1.4.3 锁的活跃性与安全性证明](#43-锁的活跃性与安全性证明)
-    - [1.4.4 细粒度所有权与意向锁](#44-细粒度所有权与意向锁)
-    - [1.4.5 死锁避免的所有权层级模型](#45-死锁避免的所有权层级模型)
-  - [1.5 所有权与分布式权限控制](#5-所有权与分布式权限控制)
-    - [1.5.1 基于能力的权限系统的代数模型](#51-基于能力的权限系统的代数模型)
-    - [1.5.2 分布式零知识证明与所有权验证](#52-分布式零知识证明与所有权验证)
-    - [1.5.3 权限委托的形式语义](#53-权限委托的形式语义)
-    - [1.5.4 可撤销能力与所有权回收](#54-可撤销能力与所有权回收)
-    - [1.5.5 跨域权限的一致性证明](#55-跨域权限的一致性证明)
-    - [1.5.6 分布式认证逻辑与所有权](#56-分布式认证逻辑与所有权)
-  - [1.6 对称性与非对称性的统一理论](#6-对称性与非对称性的统一理论)
-    - [1.6.1 所有权转移的范畴论模型](#61-所有权转移的范畴论模型)
-    - [1.6.2 对称性操作的代数结构](#62-对称性操作的代数结构)
-    - [1.6.3 非对称条件下的不变量保持](#63-非对称条件下的不变量保持)
-    - [1.6.4 量子信息理论视角的所有权](#64-量子信息理论视角的所有权)
-    - [1.6.5 统一形式框架的构建](#65-统一形式框架的构建)
-  - [1.7 实际应用模式与案例分析](#7-实际应用模式与案例分析)
-    - [1.7.1 分布式数据库中的所有权设计](#71-分布式数据库中的所有权设计)
-    - [1.7.2 微服务架构中的资源管理](#72-微服务架构中的资源管理)
-    - [1.7.3 区块链系统中的所有权语义](#73-区块链系统中的所有权语义)
-    - [1.7.4 边缘计算场景下的所有权划分](#74-边缘计算场景下的所有权划分)
-    - [1.7.5 跨语言系统的所有权桥接](#75-跨语言系统的所有权桥接)
-  - [1.8 结论与未来展望](#8-结论与未来展望)
-    - [1.8.1 理论贡献总结](#81-理论贡献总结)
-    - [1.8.2 实践指导原则](#82-实践指导原则)
-    - [1.8.3 开放问题与研究方向](#83-开放问题与研究方向)
+- [1. Rust所有权在分布式系统中的应用：形式化分析与证明](#1-rust所有权在分布式系统中的应用形式化分析与证明)
+  - [目录](#目录)
+  - [1.1 引言](#11-引言)
+    - [1.1.1 Rust所有权系统的数学基础](#111-rust所有权系统的数学基础)
+    - [1.1.2 分布式系统中的资源管理挑战](#112-分布式系统中的资源管理挑战)
+    - [1.1.3 研究方法与理论框架](#113-研究方法与理论框架)
+  - [1.2 所有权与网络通信的形式化模型](#12-所有权与网络通信的形式化模型)
+    - [1.2.1 网络资源的生命周期形式化](#121-网络资源的生命周期形式化)
+    - [1.2.2 跨网络所有权转移的π演算模型](#122-跨网络所有权转移的π演算模型)
+    - [1.2.3 分布式借用模型与线性类型](#123-分布式借用模型与线性类型)
+    - [1.2.4 会话类型与所有权协议](#124-会话类型与所有权协议)
+    - [1.2.5 网络分区下的所有权保证](#125-网络分区下的所有权保证)
+    - [1.2.6 时序逻辑证明与反例分析](#126-时序逻辑证明与反例分析)
+  - [1.3 所有权与分布式共识](#13-所有权与分布式共识)
+    - [1.3.1 一致性模型的所有权解释](#131-一致性模型的所有权解释)
+    - [1.3.2 分布式所有权转移的原子性](#132-分布式所有权转移的原子性)
+    - [1.3.3 共识算法作为所有权仲裁机制](#133-共识算法作为所有权仲裁机制)
+    - [1.3.4 CRDT与所有权分解](#134-crdt与所有权分解)
+    - [1.3.5 快照隔离与借用语义](#135-快照隔离与借用语义)
+    - [1.3.6 形式化证明：分布式所有权的安全性定理](#136-形式化证明分布式所有权的安全性定理)
+  - [1.4 所有权与分布式锁](#14-所有权与分布式锁)
+    - [1.4.1 分布式锁作为临时所有权转移](#141-分布式锁作为临时所有权转移)
+    - [1.4.2 租约机制的形式化](#142-租约机制的形式化)
+    - [1.4.3 锁的活跃性与安全性证明](#143-锁的活跃性与安全性证明)
+    - [1.4.4 细粒度所有权与意向锁](#144-细粒度所有权与意向锁)
+    - [1.4.5 死锁避免的所有权层级模型](#145-死锁避免的所有权层级模型)
+  - [1.5 所有权与分布式权限控制](#15-所有权与分布式权限控制)
+    - [1.5.1 基于能力的权限系统的代数模型](#151-基于能力的权限系统的代数模型)
+    - [1.5.2 分布式零知识证明与所有权验证](#152-分布式零知识证明与所有权验证)
+    - [1.5.3 权限委托的形式语义](#153-权限委托的形式语义)
+    - [1.5.4 可撤销能力与所有权回收](#154-可撤销能力与所有权回收)
+    - [1.5.5 跨域权限的一致性证明](#155-跨域权限的一致性证明)
+    - [1.5.6 分布式认证逻辑与所有权](#156-分布式认证逻辑与所有权)
+  - [1.6 对称性与非对称性的统一理论](#16-对称性与非对称性的统一理论)
+    - [1.6.1 所有权转移的范畴论模型](#161-所有权转移的范畴论模型)
+    - [1.6.2 对称性操作的代数结构](#162-对称性操作的代数结构)
+    - [1.6.3 非对称条件下的不变量保持](#163-非对称条件下的不变量保持)
+    - [1.6.4 量子信息理论视角的所有权](#164-量子信息理论视角的所有权)
+    - [1.6.5 统一形式框架的构建](#165-统一形式框架的构建)
+  - [1.7 实际应用模式与案例分析](#17-实际应用模式与案例分析)
+    - [1.7.1 分布式数据库中的所有权设计](#171-分布式数据库中的所有权设计)
+    - [1.7.2 微服务架构中的资源管理](#172-微服务架构中的资源管理)
+    - [1.7.3 区块链系统中的所有权语义](#173-区块链系统中的所有权语义)
+    - [1.7.4 边缘计算场景下的所有权划分](#174-边缘计算场景下的所有权划分)
+    - [1.7.5 跨语言系统的所有权桥接](#175-跨语言系统的所有权桥接)
+  - [1.8 结论与未来展望](#18-结论与未来展望)
+    - [1.8.1 理论贡献总结](#181-理论贡献总结)
+    - [1.8.2 实践指导原则](#182-实践指导原则)
+    - [1.8.3 开放问题与研究方向](#183-开放问题与研究方向)
+
 ## 1.1 引言
 
 ### 1.1.1 Rust所有权系统的数学基础
@@ -247,7 +249,7 @@ impl<T> DistributedBorrow<T> {
             borrower: self.borrower_node,
             new_deadline,
         };
-        
+
         match send_renew_request(self.owner_node, request) {
             Ok(_) => {
                 self.deadline = new_deadline;
@@ -463,34 +465,34 @@ impl<T> AtomicOwnershipTransfer<T> {
                 txid: self.txid,
                 resource_id: resource_id_of(&self.resource),
             })?;
-            
+
             if !response.ok {
                 return self.abort();
             }
         }
-        
+
         self.state = TransferState::Prepared;
         Ok(())
     }
-    
+
     fn commit(&mut self) -> Result<(), TransferError> {
         if self.state != TransferState::Prepared {
             return Err(TransferError::InvalidState);
         }
-        
+
         self.state = TransferState::Committing;
         for participant in &self.participants {
             send_commit(*participant, CommitRequest {
                 txid: self.txid,
             })?;
         }
-        
+
         self.state = TransferState::Committed;
         // 资源所有权现在已转移
         self.resource = None;
         Ok(())
     }
-    
+
     fn abort(&mut self) -> Result<(), TransferError> {
         self.state = TransferState::Aborting;
         // 通知所有参与者中止
@@ -499,7 +501,7 @@ impl<T> AtomicOwnershipTransfer<T> {
                 txid: self.txid,
             });
         }
-        
+
         self.state = TransferState::Aborted;
         Ok(())
     }
@@ -551,7 +553,7 @@ impl<T> ConsensusBasedOwnership<T> {
         // 第一阶段：收集承诺
         let mut promises_received = 0;
         let mut highest_accepted = None;
-        
+
         for node in get_participating_nodes() {
             match send_prepare(node, round) {
                 Ok(Promise { prior_round, prior_value }) => {
@@ -564,36 +566,36 @@ impl<T> ConsensusBasedOwnership<T> {
                 }
                 Err(_) => continue,
             }
-            
+
             if promises_received >= self.quorum_size {
                 break;
             }
         }
-        
+
         if promises_received < self.quorum_size {
             return Err(ConsensusError::NoQuorum);
         }
-        
+
         // 使用已接受的最高值（如果有）
         let proposal = highest_accepted.map_or(transfer, |h| h.1);
-        
+
         // 第二阶段：请求接受
         let mut accepts_received = 0;
         for node in get_participating_nodes() {
             if send_accept(node, round, proposal.clone()).is_ok() {
                 accepts_received += 1;
             }
-            
+
             if accepts_received >= self.quorum_size {
                 // 共识达成，更新所有权
                 self.apply_ownership_transfer(proposal);
                 return Ok(());
             }
         }
-        
+
         Err(ConsensusError::AcceptFailed)
     }
-    
+
     fn apply_ownership_transfer(&mut self, transfer: OwnershipTransfer) {
         // 应用所有权变更
         if transfer.resource_id == self.resource_id() {
@@ -648,13 +650,13 @@ impl<T: Clone + Eq + Hash> GrowOnlySet<T> {
             origin: self.node_id,
         });
     }
-    
+
     fn merge(&mut self, other: &Self) {
         for element in &other.elements {
             self.elements.insert(element.clone());
         }
     }
-    
+
     fn handle_remote_operation(&mut self, op: Operation<T>) {
         match op {
             Operation::Add { element, origin } => {
@@ -679,7 +681,7 @@ impl CollaborativeText {
             self.get_id_at(pos),
             text.chars().count()
         );
-        
+
         for (i, c) in text.chars().enumerate() {
             let id = ids[i].clone();
             self.characters.insert(id.clone(), Char {
@@ -687,24 +689,24 @@ impl CollaborativeText {
                 id: id.clone(),
                 tombstone: false,
             });
-            
+
             self.local_operations.push(TextOperation::Insert {
                 id,
                 value: c,
                 timestamp: self.clock.tick(),
             });
         }
-        
+
         // 广播操作
         self.broadcast_operations();
     }
-    
+
     fn delete(&mut self, start: usize, end: usize) {
         for pos in start..end {
             if let Some(id) = self.get_id_at(pos) {
                 if let Some(c) = self.characters.get_mut(&id) {
                     c.tombstone = true;
-                    
+
                     self.local_operations.push(TextOperation::Delete {
                         id: id.clone(),
                         timestamp: self.clock.tick(),
@@ -712,11 +714,11 @@ impl CollaborativeText {
                 }
             }
         }
-        
+
         // 广播操作
         self.broadcast_operations();
     }
-    
+
     fn merge(&mut self, other: &Self) {
         // 合并字符集
         for (id, c) in &other.characters {
@@ -784,10 +786,10 @@ impl<K: Eq + Hash + Clone, V: Clone> SnapshotIsolation<K, V> {
     fn start_transaction(&mut self) -> TxId {
         let tx_id = generate_unique_tx_id();
         let current_timestamp = self.get_timestamp();
-        
+
         // 创建事务快照（类似于不可变借用创建数据视图）
         let snapshot = self.data.clone();
-        
+
         self.active_transactions.insert(tx_id, Transaction {
             tx_id,
             start_timestamp: current_timestamp,
@@ -796,40 +798,40 @@ impl<K: Eq + Hash + Clone, V: Clone> SnapshotIsolation<K, V> {
             write_set: HashMap::new(),
             committed: false,
         });
-        
+
         tx_id
     }
-    
+
     fn read(&mut self, tx_id: TxId, key: K) -> Option<V> {
         let tx = self.active_transactions.get_mut(&tx_id)?;
-        
+
         // 首先检查事务本地写集（自己的修改可见）
         if let Some(value) = tx.write_set.get(&key) {
             return Some(value.clone());
         }
-        
+
         // 否则从快照读取（不可变借用语义）
         tx.read_set.insert(key.clone());
         tx.snapshot.get(&key).cloned()
     }
-    
+
     fn write(&mut self, tx_id: TxId, key: K, value: V) -> Result<(), TxError> {
         let tx = self.active_transactions.get_mut(&tx_id)
             .ok_or(TxError::InvalidTransaction)?;
-            
+
         // 记录写操作（类似可变借用）
         tx.write_set.insert(key, value);
         Ok(())
     }
-    
+
     fn commit(&mut self, tx_id: TxId) -> Result<(), TxError> {
         let tx = self.active_transactions.remove(&tx_id)
             .ok_or(TxError::InvalidTransaction)?;
-            
+
         if tx.committed {
             return Err(TxError::AlreadyCommitted);
         }
-        
+
         // 验证写集冲突（类似借用检查）
         for key in tx.write_set.keys() {
             let current_version = self.versions.get(key).cloned().unwrap_or(0);
@@ -838,17 +840,17 @@ impl<K: Eq + Hash + Clone, V: Clone> SnapshotIsolation<K, V> {
                 return Err(TxError::WriteConflict);
             }
         }
-        
+
         // 提交更改并更新版本号
         let commit_timestamp = self.get_timestamp();
         for (key, value) in tx.write_set {
             self.data.insert(key.clone(), value);
             self.versions.insert(key, commit_timestamp);
         }
-        
+
         Ok(())
     }
-    
+
     fn get_timestamp(&mut self) -> u64 {
         // 简化版，实际实现通常使用全局单调递增的时间戳
         SystemTime::now()
@@ -929,10 +931,10 @@ impl<T> DistributedMutex<T> {
     fn lock(&self) -> Result<DistributedMutexGuard<'_, T>, LockError> {
         // 尝试获取分布式锁（对应可变借用）
         self.lock_manager.acquire_lock(self.resource_id)?;
-        
+
         // 获取资源数据
         let resource = fetch_resource(self.resource_id)?;
-        
+
         Ok(DistributedMutexGuard {
             mutex: self,
             resource: Some(resource),
@@ -946,7 +948,7 @@ impl<'a, T> Drop for DistributedMutexGuard<'a, T> {
         if let Some(resource) = self.resource.take() {
             let _ = store_resource(self.mutex.resource_id, resource);
         }
-        
+
         // 释放锁（对应可变借用结束）
         let _ = self.mutex.lock_manager.release_lock(self.mutex.resource_id);
     }
@@ -954,7 +956,7 @@ impl<'a, T> Drop for DistributedMutexGuard<'a, T> {
 
 impl<'a, T> Deref for DistributedMutexGuard<'a, T> {
     type Target = T;
-    
+
     fn deref(&self) -> &Self::Target {
         self.resource.as_ref().unwrap()
     }
@@ -1017,20 +1019,20 @@ impl<T> LeaseBasedOwnership<T> {
                 return Ok(self.resource.as_mut().unwrap());
             }
         }
-        
+
         // 申请新租约
         let lease = self.lease_manager.acquire_lease(self.resource_id, duration)?;
         self.current_lease = Some(lease);
-        
+
         // 获取资源
         self.resource = Some(fetch_resource(self.resource_id)?);
-        
+
         // 启动后台租约续期任务
         self.start_lease_renewal();
-        
+
         Ok(self.resource.as_mut().unwrap())
     }
-    
+
     fn release(&mut self) -> Result<(), LeaseError> {
         if let Some(lease) = &self.current_lease {
             if lease.owner == self_node_id() {
@@ -1038,25 +1040,25 @@ impl<T> LeaseBasedOwnership<T> {
                 if let Some(resource) = self.resource.take() {
                     store_resource(self.resource_id, resource)?;
                 }
-                
+
                 // 释放租约
                 self.lease_manager.release_lease(self.resource_id)?;
                 self.current_lease = None;
-                
+
                 // 停止续期任务
                 self.stop_lease_renewal();
             }
         }
-        
+
         Ok(())
     }
-    
+
     fn start_lease_renewal(&self) {
         // 启动后台任务，定期续约
         let resource_id = self.resource_id;
         let lease_manager = Arc::clone(&self.lease_manager);
         let renewal_interval = Duration::from_secs(5); // 假设租约期限的一半
-        
+
         std::thread::spawn(move || {
             let mut interval = tokio::time::interval(renewal_interval);
             loop {
@@ -1099,7 +1101,7 @@ impl ZookeeperStyleLock {
         let created_path = self.zk_client.create_ephemeral_sequential(&path)?;
         let node_name = created_path.split('/').last().unwrap().to_string();
         self.local_node_path = Some(created_path.clone());
-        
+
         // 等待获取锁
         let start_time = Instant::now();
         loop {
@@ -1111,26 +1113,26 @@ impl ZookeeperStyleLock {
                 .cloned()
                 .collect();
             lock_nodes.sort();
-            
+
             // 检查当前节点是否是最小的（持有锁的）
             if lock_nodes[0] == node_name {
                 return Ok(());
             }
-            
+
             // 找到前一个节点，监控其删除事件
             let position = lock_nodes.iter().position(|n| *n == node_name).unwrap();
             let prev_node = &lock_nodes[position - 1];
             let prev_path = format!("{}/{}", self.lock_path, prev_node);
-            
+
             // 等待前一个节点释放
             let exists = self.zk_client.exists_w(&prev_path)?;
             if !exists {
                 continue; // 前一个节点已经不存在，重新检查
             }
-            
+
             // 等待通知或超时
             let wait_result = self.zk_client.wait_for_event(Duration::from_millis(100));
-            
+
             // 检查是否超时
             if start_time.elapsed() > timeout {
                 // 释放创建的节点
@@ -1142,7 +1144,7 @@ impl ZookeeperStyleLock {
             }
         }
     }
-    
+
     fn release(&mut self) -> Result<(), LockError> {
         if let Some(path) = self.local_node_path.take() {
             self.zk_client.delete(&path)?;
@@ -1206,43 +1208,43 @@ impl<T> FieldLevelLocking<T> {
                 resource_path: parent_path,
                 lock_type: LockType::Intention,
             };
-            
+
             self.lock_manager.acquire_lock(&intention_lock)?;
             self.held_locks.insert(intention_lock);
         }
-        
+
         // 然后获取实际字段的锁
         let field_lock = LockDescriptor {
             resource_path: field_path,
             lock_type,
         };
-        
+
         self.lock_manager.acquire_lock(&field_lock)?;
         self.held_locks.insert(field_lock);
-        
+
         Ok(())
     }
-    
+
     fn access_field<F, R>(&mut self, field_path: Vec<String>, read_only: bool, accessor: F) -> Result<R, AccessError>
     where
         F: FnOnce(&mut T) -> R
     {
         let lock_type = if read_only { LockType::Shared } else { LockType::Exclusive };
-        
+
         // 锁定字段
         self.lock_field(field_path, lock_type)?;
-        
+
         // 如果资源还未加载，加载它
         if self.resource.is_none() {
             self.resource = Some(fetch_resource(self.resource_id)?);
         }
-        
+
         // 访问资源
         let result = accessor(self.resource.as_mut().unwrap());
-        
+
         Ok(result)
     }
-    
+
     fn release_all_locks(&mut self) {
         for lock in self.held_locks.drain() {
             let _ = self.lock_manager.release_lock(&lock);
@@ -1288,7 +1290,7 @@ impl HierarchicalLockManager {
     fn acquire_lock(&mut self, node_id: NodeId, resource_id: ResourceId) -> Result<(), LockError> {
         let lock_state = self.locks.get(&resource_id).unwrap();
         let lock_level = lock_state.level;
-        
+
         // 检查层级约束
         if let Some(current_highest_level) = self.node_levels.get(&node_id) {
             if *current_highest_level >= lock_level {
@@ -1298,7 +1300,7 @@ impl HierarchicalLockManager {
                 });
             }
         }
-        
+
         // 尝试获取锁
         let lock_state = self.locks.get_mut(&resource_id).unwrap();
         match lock_state.owner {
@@ -1320,25 +1322,25 @@ impl HierarchicalLockManager {
             }
         }
     }
-    
+
     fn release_lock(&mut self, node_id: NodeId, resource_id: ResourceId) -> Result<(), LockError> {
         let lock_state = self.locks.get_mut(&resource_id).unwrap();
-        
+
         if lock_state.owner != Some(node_id) {
             return Err(LockError::NotOwned);
         }
-        
+
         // 更新节点的最高层级
         if let Some(current_level) = self.node_levels.get(&node_id) {
             if *current_level == lock_state.level {
                 // 找到新的最高层级
                 let new_highest = self.locks.iter()
-                    .filter(|(rid, state)| 
-                        **rid != resource_id && 
+                    .filter(|(rid, state)|
+                        **rid != resource_id &&
                         state.owner == Some(node_id))
                     .map(|(_, state)| state.level)
                     .max();
-                
+
                 if let Some(level) = new_highest {
                     self.node_levels.insert(node_id, level);
                 } else {
@@ -1346,7 +1348,7 @@ impl HierarchicalLockManager {
                 }
             }
         }
-        
+
         // 释放锁并唤醒下一个等待者
         if let Some(next_owner) = lock_state.waiters.pop_front() {
             lock_state.owner = Some(next_owner);
@@ -1355,7 +1357,7 @@ impl HierarchicalLockManager {
         } else {
             lock_state.owner = None;
         }
-        
+
         Ok(())
     }
 }
@@ -1418,7 +1420,7 @@ impl Capability {
         if !self.rights.can_downgrade_to(&new_rights) {
             return Err(CapError::InvalidDowngrade);
         }
-        
+
         Ok(Capability {
             resource_id: self.resource_id,
             rights: new_rights,
@@ -1426,19 +1428,19 @@ impl Capability {
             expiry: self.expiry,
         })
     }
-    
+
     // 委托给其他主体
     fn delegate_to(&self, target: Principal, new_rights: Option<CapabilityRight>, delegatable: bool, expiry: Option<Instant>) -> Result<Capability, CapError> {
         if !self.delegatable {
             return Err(CapError::NotDelegatable);
         }
-        
+
         // 权限只能更低，不能更高
         let rights = new_rights.unwrap_or(self.rights);
         if !self.rights.can_downgrade_to(&rights) {
             return Err(CapError::InvalidDowngrade);
         }
-        
+
         // 过期时间不能超过自身过期时间
         let expiry = match (self.expiry, expiry) {
             (Some(self_exp), Some(new_exp)) => Some(min(self_exp, new_exp)),
@@ -1446,17 +1448,17 @@ impl Capability {
             (None, Some(new_exp)) => Some(new_exp),
             (None, None) => None,
         };
-        
+
         let new_cap = Capability {
             resource_id: self.resource_id,
             rights,
             delegatable,
             expiry,
         };
-        
+
         // 将能力授予目标
         grant_capability(target, new_cap.clone())?;
-        
+
         Ok(new_cap)
     }
 }
@@ -1496,19 +1498,19 @@ impl OwnershipVerifier {
         // 1. 准备验证上下文
         let mut verifier_context = VerifierContext::new();
         verifier_context.add_public_input("resource_id", resource_id.to_bytes());
-        
+
         // 2. 加载验证密钥
         let vk = load_verification_key(&self.verification_key)?;
-        
+
         // 3. 验证零知识证明
         let result = verify_proof(&vk, &proof.proof, &verifier_context)?;
-        
+
         // 4. 检查承诺
         let expected_commitment = compute_commitment(resource_id);
         if !constant_time_eq(&expected_commitment, &proof.commitment) {
             return Ok(false);
         }
-        
+
         Ok(result)
     }
 }
@@ -1525,23 +1527,23 @@ impl ResourceOwner {
         if !self.owned_resources.contains_key(&resource_id) {
             return Err(ProofError::NotOwned);
         }
-        
+
         // 1. 创建证明者上下文
         let mut prover_context = ProverContext::new();
-        
+
         // 2. 添加公共输入（可验证部分）
         prover_context.add_public_input("resource_id", resource_id.to_bytes());
-        
+
         // 3. 添加私有输入（保密部分）
         prover_context.add_private_input("ownership_secret", self.private_key.to_bytes());
-        
+
         // 4. 生成证明
         let proving_key = load_proving_key()?;
         let proof = generate_proof(&proving_key, &prover_context)?;
-        
+
         // 5. 计算资源承诺
         let commitment = compute_commitment(resource_id);
-        
+
         Ok(ZKOwnershipProof {
             commitment,
             proof,
@@ -1596,7 +1598,7 @@ impl AuthorizationChain {
                 if self.contains(AuthStatement::Owns(*principal, *resource)) {
                     return true;
                 }
-                
+
                 // 2. 通过委托获得权限
                 for statement in &self.statements {
                     if let AuthStatement::Says(delegator, delegated_statement) = statement {
@@ -1611,7 +1613,7 @@ impl AuthorizationChain {
                         }
                     }
                 }
-                
+
                 false
             },
             AuthStatement::CanDelegate(principal, resource, right) => {
@@ -1619,7 +1621,7 @@ impl AuthorizationChain {
                 if self.contains(AuthStatement::Owns(*principal, *resource)) {
                     return true;
                 }
-                
+
                 // 被授予委托权的主体也可以委托
                 for statement in &self.statements {
                     if let AuthStatement::Says(delegator, delegated_statement) = statement {
@@ -1632,13 +1634,13 @@ impl AuthorizationChain {
                         }
                     }
                 }
-                
+
                 false
             },
             _ => self.contains(query.clone()),
         }
     }
-    
+
     fn contains(&self, statement: AuthStatement) -> bool {
         self.statements.contains(&statement)
     }
@@ -1691,11 +1693,11 @@ impl RevocableCapabilitySystem {
         if !self.can_issue(issuer, resource, rights) {
             return Err(CapError::NotAuthorized);
         }
-        
+
         // 创建新能力
         let cap_id = generate_capability_id();
         let parent_cap = self.get_issuer_cap_for_resource(issuer, resource);
-        
+
         let metadata = CapabilityMetadata {
             id: cap_id,
             resource,
@@ -1705,99 +1707,99 @@ impl RevocableCapabilitySystem {
             expiry,
             parent_cap,
         };
-        
+
         // 存储能力元数据
         self.capabilities.insert(cap_id, metadata);
-        
+
         // 更新资源和主体索引
         self.resource_caps.entry(resource).or_default().insert(cap_id);
         self.principal_caps.entry(principal).or_default().insert(cap_id);
-        
+
         Ok(cap_id)
     }
-    
+
     fn revoke_capability(&mut self, issuer: Principal, cap_id: CapabilityId) -> Result<(), CapError> {
         // 获取能力元数据
         let metadata = self.capabilities.get(&cap_id)
             .ok_or(CapError::InvalidCapability)?;
-            
+
         // 验证撤销者有权撤销（必须是颁发者或资源所有者）
         if metadata.issuer != issuer && !self.is_resource_owner(issuer, metadata.resource) {
             return Err(CapError::NotAuthorized);
         }
-        
+
         // 递归撤销所有派生能力
         let derived_caps: Vec<CapabilityId> = self.capabilities.iter()
             .filter(|(_, meta)| meta.parent_cap == Some(cap_id))
             .map(|(id, _)| *id)
             .collect();
-            
+
         for derived_cap in derived_caps {
             let _ = self.revoke_capability(issuer, derived_cap);
         }
-        
+
         // 从索引中移除
         if let Some(resource_set) = self.resource_caps.get_mut(&metadata.resource) {
             resource_set.remove(&cap_id);
         }
-        
+
         if let Some(principal_set) = self.principal_caps.get_mut(&metadata.principal) {
             principal_set.remove(&cap_id);
         }
-        
+
         // 从主存储中移除
         self.capabilities.remove(&cap_id);
-        
+
         Ok(())
     }
-    
+
     fn validate_capability(&self, cap_id: CapabilityId, operation: Operation) -> Result<(), CapError> {
         // 获取能力元数据
         let metadata = self.capabilities.get(&cap_id)
             .ok_or(CapError::InvalidCapability)?;
-            
+
         // 检查过期时间
         if let Some(expiry) = metadata.expiry {
             if Instant::now() > expiry {
                 return Err(CapError::Expired);
             }
         }
-        
+
         // 验证访问权限
         if !metadata.rights.allows(operation) {
             return Err(CapError::InsufficientRights);
         }
-        
+
         // 验证能力链完整性（确保所有父能力都有效）
         let mut current = metadata.parent_cap;
         while let Some(parent_id) = current {
             let parent = self.capabilities.get(&parent_id)
                 .ok_or(CapError::BrokenCapabilityChain)?;
-                
+
             // 检查父能力的权限必须包含子能力
             if !parent.rights.contains(&metadata.rights) {
                 return Err(CapError::InvalidCapabilityChain);
             }
-            
+
             // 检查父能力是否过期
             if let Some(expiry) = parent.expiry {
                 if Instant::now() > expiry {
                     return Err(CapError::ParentExpired);
                 }
             }
-            
+
             current = parent.parent_cap;
         }
-        
+
         Ok(())
     }
-    
+
     fn can_issue(&self, issuer: Principal, resource: ResourceId, rights: AccessRights) -> bool {
         // 资源所有者可以颁发任何权限
         if self.is_resource_owner(issuer, resource) {
             return true;
         }
-        
+
         // 检查颁发者是否有足够的权限和委托权
         self.principal_caps.get(&issuer)
             .map(|caps| {
@@ -1813,7 +1815,7 @@ impl RevocableCapabilitySystem {
             })
             .unwrap_or(false)
     }
-    
+
     fn is_resource_owner(&self, principal: Principal, resource: ResourceId) -> bool {
         // 检查主体是否是资源所有者
         // 在实际实现中，这可能需要访问某种资源注册表
@@ -1866,14 +1868,14 @@ impl CrossDomainAuthSystem {
         if !self.verify_signature(&proof) {
             return Ok(false);
         }
-        
+
         // 2. 检查是否已过期
         if let Some(expiry) = proof.expiry {
             if Instant::now() > expiry {
                 return Ok(false);
             }
         }
-        
+
         // 3. 检查信任关系
         let trust_level = self.get_effective_trust_level(proof.issuing_domain)?;
         match trust_level {
@@ -1895,7 +1897,7 @@ impl CrossDomainAuthSystem {
                     proof.resource,
                     proof.rights
                 )?;
-                
+
                 self.verify_cross_domain_access(delegated_proof)
             },
             TrustLevel::None => {
@@ -1904,17 +1906,17 @@ impl CrossDomainAuthSystem {
             },
         }
     }
-    
+
     fn get_effective_trust_level(&self, domain: DomainId) -> Result<TrustLevel, AuthError> {
         // 尝试找到直接信任关系
         if let Some(trust) = self.trust_relationships.get(&domain) {
             return Ok(trust.clone());
         }
-        
+
         // 尝试找到传递信任路径
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         // 初始化队列
         for (d, trust) in &self.trust_relationships {
             if let TrustLevel::Delegated(via) = trust {
@@ -1924,33 +1926,33 @@ impl CrossDomainAuthSystem {
                 queue.push_back((*d, via));
             }
         }
-        
+
         // BFS寻找信任路径
         while let Some((current, via)) = queue.pop_front() {
             if visited.contains(&current) {
                 continue;
             }
             visited.insert(current);
-            
+
             if via == &domain {
                 return Ok(TrustLevel::Limited(self.get_delegated_resource_types(&current)));
             }
-            
+
             // 继续搜索
             if let Some(TrustLevel::Delegated(next_via)) = self.trust_relationships.get(&current) {
                 queue.push_back((current, next_via));
             }
         }
-        
+
         Ok(TrustLevel::None)
     }
-    
+
     fn issue_cross_domain_proof(&self, principal: Principal, resource: ResourceId, rights: AccessRights) -> Result<CrossDomainProof, AuthError> {
         // 1. 验证本地权限
         if !self.local_auth.authorize(principal, resource, rights)? {
             return Err(AuthError::NotAuthorized);
         }
-        
+
         // 2. 创建证明
         let proof = CrossDomainProof {
             issuing_domain: self.local_domain,
@@ -1961,10 +1963,10 @@ impl CrossDomainAuthSystem {
             expiry: Some(Instant::now() + Duration::from_secs(3600)), // 1小时过期
             signature: [0u8; 64], // 临时占位
         };
-        
+
         // 3. 签名证明
         let signed_proof = self.sign_proof(proof)?;
-        
+
         Ok(signed_proof)
     }
 }
@@ -2021,15 +2023,15 @@ impl AuthorizationLogic {
         if self.axioms.contains(formula) {
             return true;
         }
-        
+
         match formula {
             // A says s, A controls s => s
             Formula::Atom(pred) => {
                 self.axioms.iter().any(|axiom| {
                     if let Formula::And(lhs, rhs) = axiom {
                         if let (Formula::Says(principal, says_formula), Formula::Controls(ctrl_principal, ctrl_formula)) = (&**lhs, &**rhs) {
-                            principal == ctrl_principal && 
-                            says_formula.as_ref() == ctrl_formula.as_ref() && 
+                            principal == ctrl_principal &&
+                            says_formula.as_ref() == ctrl_formula.as_ref() &&
                             says_formula.as_ref() == &Formula::Atom(pred.clone())
                         } else {
                             false
@@ -2039,36 +2041,36 @@ impl AuthorizationLogic {
                     }
                 })
             },
-            
+
             // A speaks_for B, A says s => B says s
             Formula::Says(principal, formula) => {
                 self.is_directly_provable_says(principal, formula) ||
                 self.axioms.iter().any(|axiom| {
                     if let Formula::SpeaksFor(delegate, delegator) = axiom {
-                        delegator == principal && 
+                        delegator == principal &&
                         self.is_provable(&Formula::Says(*delegate, formula.clone()))
                     } else {
                         false
                     }
                 })
             },
-            
+
             Formula::And(lhs, rhs) => {
                 self.is_provable(lhs) && self.is_provable(rhs)
             },
-            
+
             Formula::Or(lhs, rhs) => {
                 self.is_provable(lhs) || self.is_provable(rhs)
             },
-            
+
             Formula::Implies(premise, conclusion) => {
                 !self.is_provable(premise) || self.is_provable(conclusion)
             },
-            
+
             _ => false,
         }
     }
-    
+
     fn is_directly_provable_says(&self, principal: &Principal, formula: &Formula) -> bool {
         self.axioms.iter().any(|axiom| {
             if let Formula::Says(p, f) = axiom {
@@ -2130,17 +2132,17 @@ impl<S: Eq + Hash + Clone, O: Eq + Hash + Clone> OwnershipCategory<S, O> {
     fn compose(&self, first: &O, second: &O) -> Option<O> {
         self.composition.get(&(first.clone(), second.clone())).cloned()
     }
-    
+
     fn identity_of(&self, state: &S) -> Option<O> {
         self.identity.get(state).cloned()
     }
-    
+
     fn operations_between(&self, from: &S, to: &S) -> Vec<O> {
         self.operations.get(&(from.clone(), to.clone()))
             .cloned()
             .unwrap_or_default()
     }
-    
+
     fn is_valid_operation(&self, op: &O, from: &S) -> Option<S> {
         self.states.iter()
             .find(|to| self.operations_between(from, to).contains(op))
@@ -2170,16 +2172,16 @@ impl<S: Eq + Hash + Clone, O: Eq + Hash + Clone> OwnershipCategory<S, O> {
 // 所有权操作的代数结构
 trait OwnershipOperation: Clone {
     type State;
-    
+
     // 应用操作到状态
     fn apply(&self, state: &Self::State) -> Self::State;
-    
+
     // 组合两个操作
     fn compose(&self, other: &Self) -> Self;
-    
+
     // 检查是否为恒等操作
     fn is_identity(&self) -> bool;
-    
+
     // 尝试获取逆操作（如果存在）
     fn inverse(&self) -> Option<Self>;
 }
@@ -2195,10 +2197,10 @@ enum ResourceTransferOp {
 
 impl OwnershipOperation for ResourceTransferOp {
     type State = SystemState;
-    
+
     fn apply(&self, state: &Self::State) -> Self::State {
         let mut new_state = state.clone();
-        
+
         match self {
             ResourceTransferOp::Identity => {
                 // 恒等操作，不改变状态
@@ -2243,7 +2245,7 @@ impl OwnershipOperation for ResourceTransferOp {
             },
         }
     }
-    
+
     fn compose(&self, other: &Self) -> Self {
         match (self, other) {
             (ResourceTransferOp::Identity, _) => other.clone(),
@@ -2266,11 +2268,11 @@ impl OwnershipOperation for ResourceTransferOp {
             _ => ResourceTransferOp::Identity, // 简化表示
         }
     }
-    
+
     fn is_identity(&self) -> bool {
         matches!(self, ResourceTransferOp::Identity)
     }
-    
+
     fn inverse(&self) -> Option<Self> {
         match self {
             ResourceTransferOp::Identity => {
@@ -2332,11 +2334,11 @@ impl<S: Clone, O: OwnershipOperation<State = S>> InvariantPreservingSystem<S, O>
         }
         violated
     }
-    
+
     fn apply_operation(&self, state: &S, operation: &O) -> S {
         let new_state = operation.apply(state);
         let violated = self.check_invariants(&new_state);
-        
+
         if violated.is_empty() {
             // 操作保持不变量，可以安全应用
             new_state
@@ -2349,7 +2351,7 @@ impl<S: Clone, O: OwnershipOperation<State = S>> InvariantPreservingSystem<S, O>
                     recovered_state = recovery_op.apply(&recovered_state);
                 }
             }
-            
+
             // 最后验证不变量是否恢复
             let still_violated = self.check_invariants(&recovered_state);
             if still_violated.is_empty() {
@@ -2387,7 +2389,7 @@ where S: AsRef<SystemState>
         if !system.owners.contains_key(resource) {
             return false;
         }
-        
+
         // 可变借用不能与其他借用共存
         if *mutable {
             let borrow_count = system.borrows
@@ -2398,11 +2400,11 @@ where S: AsRef<SystemState>
                 return false;
             }
         }
-        
+
         // 存在可变借用时不能有不可变借用
         let mut has_mutable = false;
         let mut has_immutable = false;
-        
+
         for (res, (_, is_mut)) in &system.borrows {
             if res == resource {
                 if *is_mut {
@@ -2412,12 +2414,12 @@ where S: AsRef<SystemState>
                 }
             }
         }
-        
+
         if has_mutable && has_immutable {
             return false;
         }
     }
-    
+
     true
 }
 ```
@@ -2481,7 +2483,7 @@ impl<T> QuantumOwnership<T> {
             }
         }
     }
-    
+
     // 创建借用（类似量子纠缠）
     fn entangle(&mut self, borrower_id: BorrowerId) -> Result<BorrowHandle<T>, OwnershipError> {
         match self.state {
@@ -2506,7 +2508,7 @@ impl<T> QuantumOwnership<T> {
             }
         }
     }
-    
+
     // 测量所有权状态
     fn measure(&self) -> OwnershipState {
         self.state.clone()
@@ -2586,63 +2588,63 @@ impl UnifiedOwnershipFramework {
     fn is_valid_operation(&self, op: &OwnershipOperation, state: &SystemState) -> bool {
         self.rules.iter().all(|rule| rule.check(op, state))
     }
-    
+
     // 应用操作到状态
     fn apply_operation(&self, op: &OwnershipOperation, state: &SystemState) -> Result<SystemState, OperationError> {
         if !self.is_valid_operation(op, state) {
             return Err(OperationError::InvalidOperation);
         }
-        
+
         let new_state = op.apply(state);
-        
+
         // 检查不变量
         for inv in &self.invariants {
             if !inv.check(&new_state) {
                 return Err(OperationError::InvariantViolation(inv.name.clone()));
             }
         }
-        
+
         Ok(new_state)
     }
-    
+
     // 验证系统属性
     fn verify_property(&self, property: &Property) -> Result<Proof, VerificationError> {
         self.proof_system.prove(property, &self.states, &self.operations, &self.rules)
     }
-    
+
     // 检查系统是否能达到特定状态
     fn can_reach(&self, from: &SystemState, to: &SystemState) -> Option<Vec<OwnershipOperation>> {
         // 使用搜索算法找到状态转换路径
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
         let mut paths = HashMap::new();
-        
+
         visited.insert(from.clone());
         queue.push_back(from.clone());
         paths.insert(from.clone(), vec![]);
-        
+
         while let Some(state) = queue.pop_front() {
             if state == *to {
                 return Some(paths[&state].clone());
             }
-            
+
             for op in &self.operations {
                 if !self.is_valid_operation(op, &state) {
                     continue;
                 }
-                
+
                 let next_state = op.apply(&state);
                 if !visited.contains(&next_state) {
                     visited.insert(next_state.clone());
                     queue.push_back(next_state.clone());
-                    
+
                     let mut new_path = paths[&state].clone();
                     new_path.push(op.clone());
                     paths.insert(next_state, new_path);
                 }
             }
         }
-        
+
         None
     }
 }
@@ -2686,21 +2688,21 @@ impl ShardOwnershipManager {
     fn get_shard_owner(&self, shard_id: ShardId) -> Option<NodeId> {
         self.shard_assignments.get(&shard_id).copied()
     }
-    
+
     fn transfer_ownership(&mut self, shard_id: ShardId, to_node: NodeId) -> Result<(), TransferError> {
         // 获取当前所有者
         let current_owner = self.get_shard_owner(shard_id)
             .ok_or(TransferError::ShardNotFound)?;
-            
+
         // 检查目标节点状态
         if !self.is_node_healthy(to_node) {
             return Err(TransferError::TargetNodeUnhealthy);
         }
-        
+
         // 记录转移请求
         let metadata = self.shards.get_mut(&shard_id)
             .ok_or(TransferError::ShardNotFound)?;
-            
+
         let transfer = OwnershipTransferRecord {
             shard_id,
             from: current_owner,
@@ -2708,72 +2710,72 @@ impl ShardOwnershipManager {
             initiated_at: Instant::now(),
             status: TransferStatus::Initiated,
         };
-        
+
         metadata.ownership_transfers.push_back(transfer);
-        
+
         // 发送转移请求到当前所有者
         send_transfer_request(current_owner, shard_id, to_node)?;
-        
+
         Ok(())
     }
-    
+
     fn complete_transfer(&mut self, shard_id: ShardId, from_node: NodeId, to_node: NodeId) -> Result<(), TransferError> {
         // 验证转移记录
         let metadata = self.shards.get_mut(&shard_id)
             .ok_or(TransferError::ShardNotFound)?;
-            
+
         let transfer = metadata.ownership_transfers.front_mut()
             .ok_or(TransferError::NoActiveTransfer)?;
-            
+
         if transfer.from != from_node || transfer.to != to_node || transfer.status != TransferStatus::Initiated {
             return Err(TransferError::InvalidTransfer);
         }
-        
+
         // 更新所有权
         self.shard_assignments.insert(shard_id, to_node);
         metadata.primary = to_node;
-        
+
         // 更新转移状态
         transfer.status = TransferStatus::Completed;
         transfer.completed_at = Some(Instant::now());
-        
+
         // 通知其他节点
         self.broadcast_ownership_change(shard_id, from_node, to_node)?;
-        
+
         Ok(())
     }
-    
+
     fn handle_node_failure(&mut self, failed_node: NodeId) -> Result<(), FailoverError> {
         // 找出所有由失效节点拥有的分片
         let owned_shards: Vec<ShardId> = self.shard_assignments.iter()
             .filter(|(_, owner)| **owner == failed_node)
             .map(|(shard_id, _)| *shard_id)
             .collect();
-            
+
         for shard_id in owned_shards {
             // 从副本中选择新的所有者
             let metadata = self.shards.get(&shard_id)
                 .ok_or(FailoverError::ShardNotFound)?;
-                
+
             let new_owner = metadata.replicas.iter()
                 .find(|node| **node != failed_node && self.is_node_healthy(**node))
                 .ok_or(FailoverError::NoHealthyReplicas)?;
-                
+
             // 强制转移所有权
             self.force_transfer_ownership(shard_id, *new_owner)?;
-            
+
             // 启动恢复流程
             self.initiate_recovery(shard_id, failed_node, *new_owner)?;
         }
-        
+
         // 更新节点状态
         if let Some(status) = self.nodes.get_mut(&failed_node) {
             *status = NodeStatus::Down;
         }
-        
+
         Ok(())
     }
-    
+
     fn is_node_healthy(&self, node_id: NodeId) -> bool {
         self.nodes.get(&node_id)
             .map(|status| *status == NodeStatus::Healthy)
@@ -2835,14 +2837,14 @@ impl MicroserviceResourceManager {
                     ResourceResponse::NotFound { resource_id }
                 }
             },
-            
+
             ResourceRequest::Update { resource_id, requester, data, expected_version } => {
                 // 更新需要检查锁和版本
                 if let Some(resource) = self.owned_resources.get_mut(&resource_id) {
                     if !self.can_modify(resource_id, requester) {
                         return ResourceResponse::Forbidden { resource_id };
                     }
-                    
+
                     if resource.version != expected_version {
                         return ResourceResponse::VersionMismatch {
                             resource_id,
@@ -2850,19 +2852,19 @@ impl MicroserviceResourceManager {
                             actual: resource.version,
                         };
                     }
-                    
+
                     // 执行更新
                     resource.data = data;
                     resource.version += 1;
                     resource.last_modified = Instant::now();
-                    
+
                     // 发布资源更新事件
                     self.publish_event(ResourceEvent::Updated {
                         resource_id,
                         new_version: resource.version,
                         service: self.service_id,
                     });
-                    
+
                     ResourceResponse::Updated {
                         resource_id,
                         new_version: resource.version,
@@ -2871,14 +2873,14 @@ impl MicroserviceResourceManager {
                     ResourceResponse::NotFound { resource_id }
                 }
             },
-            
+
             ResourceRequest::Lock { resource_id, requester, duration } => {
                 // 尝试获取资源锁（临时所有权）
                 if let Some(resource) = self.owned_resources.get_mut(&resource_id) {
                     if resource.locks.iter().any(|lock| lock.active()) {
                         return ResourceResponse::Locked { resource_id };
                     }
-                    
+
                     // 创建新锁
                     let lock = Lock {
                         holder: requester,
@@ -2886,9 +2888,9 @@ impl MicroserviceResourceManager {
                         acquired_at: Instant::now(),
                         expires_at: Instant::now() + duration,
                     };
-                    
+
                     resource.locks.push(lock);
-                    
+
                     ResourceResponse::LockAcquired {
                         resource_id,
                         expires_at: Instant::now() + duration,
@@ -2897,17 +2899,17 @@ impl MicroserviceResourceManager {
                     ResourceResponse::NotFound { resource_id }
                 }
             },
-            
+
             ResourceRequest::Unlock { resource_id, requester } => {
                 // 释放资源锁
                 if let Some(resource) = self.owned_resources.get_mut(&resource_id) {
-                    let had_lock = resource.locks.iter().any(|lock| 
+                    let had_lock = resource.locks.iter().any(|lock|
                         lock.holder == requester && lock.resource_id == resource_id);
-                        
+
                     // 移除匹配的锁
-                    resource.locks.retain(|lock| 
+                    resource.locks.retain(|lock|
                         !(lock.holder == requester && lock.resource_id == resource_id));
-                        
+
                     if had_lock {
                         ResourceResponse::Unlocked { resource_id }
                     } else {
@@ -2919,35 +2921,35 @@ impl MicroserviceResourceManager {
             },
         }
     }
-    
+
     fn can_modify(&self, resource_id: ResourceId, service_id: ServiceId) -> bool {
         // 检查服务是否持有资源锁
         if let Some(resource) = self.owned_resources.get(&resource_id) {
-            resource.locks.iter().any(|lock| 
+            resource.locks.iter().any(|lock|
                 lock.holder == service_id && lock.active())
         } else {
             false
         }
     }
-    
+
     fn publish_event(&self, event: ResourceEvent) {
         self.event_bus.publish(event);
     }
-    
+
     // 处理资源锁过期
     fn expire_locks(&mut self) {
         let now = Instant::now();
-        
+
         for resource in self.owned_resources.values_mut() {
             let expired: Vec<ServiceId> = resource.locks.iter()
                 .filter(|lock| now > lock.expires_at)
                 .map(|lock| lock.holder)
                 .collect();
-                
+
             if !expired.is_empty() {
                 // 移除过期锁
                 resource.locks.retain(|lock| now <= lock.expires_at);
-                
+
                 // 通知相关服务锁已过期
                 for service in expired {
                     self.publish_event(ResourceEvent::LockExpired {
@@ -3005,30 +3007,30 @@ impl BlockchainOwnershipSystem {
         // 验证发送方的所有权
         let record = self.ledger.get(&tx.asset_id)
             .ok_or(TransferError::AssetNotFound)?;
-            
+
         if record.owner != tx.from {
             return Err(TransferError::NotOwner);
         }
-        
+
         // 检查资产是否被锁定
         if let Some(locked_until) = record.locked_until {
             if self.current_block_height < locked_until {
                 return Err(TransferError::AssetLocked);
             }
         }
-        
+
         // 验证签名
         if !verify_signature(&tx, &tx.signature, &tx.from) {
             return Err(TransferError::InvalidSignature);
         }
-        
+
         // 检查智能合约访问控制
         if let Some(contract_ref) = &record.access_control {
             if !self.verify_contract_allows_transfer(contract_ref, &tx) {
                 return Err(TransferError::ContractDenied);
             }
         }
-        
+
         // 创建待确认转移
         let transfer = PendingTransfer {
             transaction_id: tx.id,
@@ -3038,50 +3040,50 @@ impl BlockchainOwnershipSystem {
             signatures: HashMap::new(),
             proposed_at: self.current_block_height,
         };
-        
+
         self.pending_transfers.insert(tx.id, transfer);
-        
+
         // 广播转移请求给验证节点
         self.broadcast_transfer_request(&tx);
-        
+
         Ok(tx.id)
     }
-    
+
     fn add_validator_signature(&mut self, tx_id: TransactionId, validator: NodeId, signature: Signature) -> Result<bool, ValidationError> {
         let transfer = self.pending_transfers.get_mut(&tx_id)
             .ok_or(ValidationError::TransactionNotFound)?;
-            
+
         // 验证签名
         if !verify_validator_signature(&transfer, &signature, &validator) {
             return Err(ValidationError::InvalidSignature);
         }
-        
+
         // 添加签名
         transfer.signatures.insert(validator, signature);
-        
+
         // 检查是否达到共识阈值
         let signatures_count = transfer.signatures.len();
         let consensus_threshold = self.validators.len() * 2 / 3 + 1;
-        
+
         if signatures_count >= consensus_threshold {
             // 共识达成，执行转移
             self.finalize_transfer(tx_id)?;
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     fn finalize_transfer(&mut self, tx_id: TransactionId) -> Result<(), TransferError> {
         let transfer = self.pending_transfers.remove(&tx_id)
             .ok_or(TransferError::TransactionNotFound)?;
-            
+
         // 更新所有权记录
         if let Some(record) = self.ledger.get_mut(&transfer.asset_id) {
             if record.owner != transfer.from {
                 return Err(TransferError::OwnershipChanged);
             }
-            
+
             // 记录转移历史
             let transfer_record = OwnershipTransfer {
                 from: transfer.from,
@@ -3089,30 +3091,30 @@ impl BlockchainOwnershipSystem {
                 block_height: self.current_block_height,
                 transaction_id: transfer.transaction_id,
             };
-            
+
             record.history.push(transfer_record);
             record.owner = transfer.to;
-            
+
             // 添加到当前区块
             self.add_to_current_block(transfer);
-            
+
             Ok(())
         } else {
             Err(TransferError::AssetNotFound)
         }
     }
-    
+
     fn verify_contract_allows_transfer(&self, contract_ref: &SmartContractRef, tx: &TransferTransaction) -> bool {
         // 调用智能合约验证转移是否被允许
         let contract = self.get_contract(contract_ref)
             .expect("Contract must exist");
-            
+
         let args = vec![
             Value::Address(tx.from),
             Value::Address(tx.to),
             Value::Asset(tx.asset_id),
         ];
-        
+
         match self.execute_contract_call(contract, "can_transfer", args) {
             Ok(Value::Bool(allowed)) => allowed,
             _ => false,
@@ -3182,7 +3184,7 @@ impl EdgeOwnershipManager {
                     Err(ResourceError::NotFound)
                 }
             },
-            
+
             NodeType::EdgeNode { edge_id, parent_cloud } => {
                 // 检查是否有委托所有权
                 if let Some(delegation) = self.delegated_ownership.get(&resource_id) {
@@ -3192,7 +3194,7 @@ impl EdgeOwnershipManager {
                             return Err(ResourceError::DelegationExpired);
                         }
                     }
-                    
+
                     // 根据委托类型创建句柄
                     let ownership_type = match delegation.delegation_type {
                         DelegationType::FullOwnership => OwnershipType::Delegated(DelegationType::FullOwnership),
@@ -3207,7 +3209,7 @@ impl EdgeOwnershipManager {
                             }
                         }
                     };
-                    
+
                     Ok(ResourceHandle {
                         resource_id,
                         ownership_type,
@@ -3230,11 +3232,11 @@ impl EdgeOwnershipManager {
             }
         }
     }
-    
+
     fn handle_connection_change(&mut self, new_status: ConnectionStatus) {
         let old_status = self.connection_status;
         self.connection_status = new_status;
-        
+
         match (old_status, new_status) {
             (ConnectionStatus::Disconnected, ConnectionStatus::Connected) => {
                 // 重新连接，需要同步更改
@@ -3247,7 +3249,7 @@ impl EdgeOwnershipManager {
             _ => {}
         }
     }
-    
+
     fn sync_after_reconnect(&mut self) {
         // 开始同步流程
         let resources_to_sync: Vec<(ResourceId, ResourceState)> = self.local_resources.iter()
@@ -3266,7 +3268,7 @@ impl EdgeOwnershipManager {
             })
             .map(|(id, state)| (*id, state.clone()))
             .collect();
-            
+
         for (id, state) in resources_to_sync {
             match self.sync_manager.sync_resource(id, state, self.get_node_id()) {
                 Ok(SyncResult::Synced) => {
@@ -3286,42 +3288,42 @@ impl EdgeOwnershipManager {
             }
         }
     }
-    
+
     fn enter_offline_mode(&mut self) {
         // 将所有资源标记为离线可用
         for (_, state) in self.local_resources.values_mut() {
             state.offline_accessible = true;
         }
-        
+
         // 为重要资源激活紧急接管权限
         let emergency_resources: Vec<ResourceId> = self.delegated_ownership.iter()
             .filter(|(_, delegation)| matches!(delegation.delegation_type, DelegationType::EmergencyFailover))
             .map(|(id, _)| *id)
             .collect();
-            
+
         for id in emergency_resources {
             if let Some(state) = self.local_resources.get_mut(&id) {
                 state.emergency_mode = true;
             }
         }
     }
-    
+
     fn modify_resource(&mut self, resource_id: ResourceId, operation: ResourceOperation) -> Result<(), ModificationError> {
         let handle = self.acquire_resource(resource_id)?;
-        
+
         // 检查是否有修改权限
         match handle.ownership_type {
             OwnershipType::Primary => {
                 // 主所有者可以直接修改
                 if let Some(state) = self.local_resources.get_mut(&resource_id) {
                     self.apply_operation(state, operation)?;
-                    
+
                     // 如果是云节点，广播更改
                     if let NodeType::CloudNode = self.node_type {
                         self.broadcast_resource_change(resource_id, operation);
                     }
                 }
-                
+
                 Ok(())
             },
             OwnershipType::Delegated(delegation_type) => match delegation_type {
@@ -3329,7 +3331,7 @@ impl EdgeOwnershipManager {
                     // 可以修改，但需要记录变更
                     if let Some(state) = self.local_resources.get_mut(&resource_id) {
                         self.apply_operation(state, operation)?;
-                        
+
                         // 如果已断连，标记为离线修改
                         if self.connection_status == ConnectionStatus::Disconnected {
                             state.modified_offline = true;
@@ -3341,7 +3343,7 @@ impl EdgeOwnershipManager {
                             self.sync_manager.sync_change(resource_id, operation, self.get_node_id())?;
                         }
                     }
-                    
+
                     Ok(())
                 },
                 DelegationType::ReadOnlyWithLocalCache => {
@@ -3358,7 +3360,7 @@ impl EdgeOwnershipManager {
                             }
                         }
                     }
-                    
+
                     Err(ModificationError::EmergencyModeRequired)
                 }
             },
@@ -3427,25 +3429,25 @@ impl OwnershipBridge {
                     // 转换为外部语言表示
                     let boxed = Box::new(resource);
                     let type_info = TypeInfo::of::<T>();
-                    
+
                     // 创建外部语言句柄
                     let handle = self.create_foreign_handle::<T>(Box::into_raw(boxed), target_language)?;
-                    
+
                     // 更新边界状态为共享所有权
                     let mut foreign_handles = HashMap::new();
                     foreign_handles.insert(target_language, handle.clone());
-                    
+
                     *boundary = LanguageBoundary::SharedOwnership {
                         rust_view: Box::new(()),  // 占位，因为实际数据已转移
                         foreign_handles,
                         primary_owner: OwnerLanguage::Foreign(target_language),
                     };
-                    
+
                     // 记录引用
                     self.resource_references.entry(resource_id)
                         .or_default()
                         .insert(target_language, 1);
-                    
+
                     Ok(handle)
                 },
                 LanguageBoundary::ForeignOwned { language, .. } => {
@@ -3457,7 +3459,7 @@ impl OwnershipBridge {
                         if let Some(lang_refs) = self.resource_references.get_mut(&resource_id) {
                             *lang_refs.entry(target_language).or_insert(0) += 1;
                         }
-                        
+
                         Ok(handle.clone())
                     } else {
                         Err(BridgeError::NoHandleForLanguage(target_language))
@@ -3468,29 +3470,29 @@ impl OwnershipBridge {
             // 创建新的跨语言资源
             let boxed = Box::new(resource);
             let raw_ptr = Box::into_raw(boxed);
-            
+
             // 创建外部语言句柄
             let handle = self.create_foreign_handle::<T>(raw_ptr, target_language)?;
-            
+
             // 记录边界状态
             let mut foreign_handles = HashMap::new();
             foreign_handles.insert(target_language, handle.clone());
-            
+
             self.cross_language_resources.insert(resource_id, LanguageBoundary::SharedOwnership {
                 rust_view: Box::new(()),  // 占位
                 foreign_handles,
                 primary_owner: OwnerLanguage::Foreign(target_language),
             });
-            
+
             // 记录引用
             self.resource_references.entry(resource_id)
                 .or_default()
                 .insert(target_language, 1);
-            
+
             Ok(handle)
         }
     }
-    
+
     // 从其他语言接收资源
     fn receive_from_foreign_language<T: 'static>(&mut self, resource_id: ResourceId, handle: ForeignHandle, source_language: LanguageType) -> Result<&mut T, BridgeError> {
         if let Some(boundary) = self.cross_language_resources.get_mut(&resource_id) {
@@ -3499,17 +3501,17 @@ impl OwnershipBridge {
                     if *language != source_language || handle.ptr != existing_handle.ptr {
                         return Err(BridgeError::HandleMismatch);
                     }
-                    
+
                     // 将所有权转移到Rust
                     let rust_object: Box<T> = self.convert_handle_to_rust(handle)?;
-                    
+
                     *boundary = LanguageBoundary::RustOwned {
                         resource: rust_object,
                     };
-                    
+
                     // 通知外部语言放弃所有权
                     self.notify_ownership_transfer(resource_id, source_language, OwnerLanguage::Rust)?;
-                    
+
                     // 获取对象引用
                     if let LanguageBoundary::RustOwned { resource } = boundary {
                         resource.downcast_mut::<T>().ok_or(BridgeError::TypeMismatch)
@@ -3522,19 +3524,19 @@ impl OwnershipBridge {
                         if handle.ptr != existing_handle.ptr {
                             return Err(BridgeError::HandleMismatch);
                         }
-                        
+
                         // 转移主所有权到Rust
                         let rust_object: Box<T> = self.convert_handle_to_rust(handle)?;
                         *rust_view = rust_object;
                         *primary_owner = OwnerLanguage::Rust;
-                        
+
                         // 减少外部语言引用计数
                         if let Some(lang_refs) = self.resource_references.get_mut(&resource_id) {
                             if let Some(count) = lang_refs.get_mut(&source_language) {
                                 *count = count.saturating_sub(1);
                             }
                         }
-                        
+
                         // 获取对象引用
                         rust_view.downcast_mut::<T>().ok_or(BridgeError::TypeMismatch)
                     } else {
@@ -3548,14 +3550,14 @@ impl OwnershipBridge {
         } else {
             // 第一次跨语言传递
             let rust_object: Box<T> = self.convert_handle_to_rust(handle)?;
-            
+
             self.cross_language_resources.insert(resource_id, LanguageBoundary::RustOwned {
                 resource: rust_object,
             });
-            
+
             // 通知外部语言放弃所有权
             self.notify_ownership_transfer(resource_id, source_language, OwnerLanguage::Rust)?;
-            
+
             // 获取对象引用
             if let Some(LanguageBoundary::RustOwned { resource }) = self.cross_language_resources.get_mut(&resource_id) {
                 resource.downcast_mut::<T>().ok_or(BridgeError::TypeMismatch)
@@ -3564,7 +3566,7 @@ impl OwnershipBridge {
             }
         }
     }
-    
+
     // 处理外部语言的释放通知
     fn handle_foreign_release(&mut self, resource_id: ResourceId, language: LanguageType) -> Result<(), BridgeError> {
         if let Some(boundary) = self.cross_language_resources.get_mut(&resource_id) {
@@ -3581,11 +3583,11 @@ impl OwnershipBridge {
                     } else {
                         false
                     };
-                    
+
                     if should_remove {
                         // 移除语言句柄
                         foreign_handles.remove(&language);
-                        
+
                         // 如果主所有者是被释放的语言，转移所有权
                         if let OwnerLanguage::Foreign(owner_lang) = primary_owner {
                             if *owner_lang == language {
@@ -3601,7 +3603,7 @@ impl OwnershipBridge {
                             }
                         }
                     }
-                    
+
                     Ok(())
                 },
                 LanguageBoundary::ForeignOwned { language: owner_lang, .. } => {
@@ -3621,7 +3623,7 @@ impl OwnershipBridge {
             Err(BridgeError::ResourceNotFound)
         }
     }
-    
+
     // 创建外部语言句柄
     fn create_foreign_handle<T>(&self, ptr: *mut T, target_language: LanguageType) -> Result<ForeignHandle, BridgeError> {
         // 根据目标语言创建适当的句柄
@@ -3630,12 +3632,12 @@ impl OwnershipBridge {
                 // 创建Python兼容的句柄
                 let ffi_ptr = ptr as *mut c_void;
                 let type_info = TypeInfo::of::<T>();
-                
+
                 // 在Python中注册此对象
                 unsafe {
                     register_with_python(ffi_ptr, std::mem::size_of::<T>(), type_info.type_id)?;
                 }
-                
+
                 Ok(ForeignHandle {
                     ptr: ffi_ptr,
                     size: std::mem::size_of::<T>(),
@@ -3646,12 +3648,12 @@ impl OwnershipBridge {
                 // 创建JavaScript兼容的句柄
                 let ffi_ptr = ptr as *mut c_void;
                 let type_info = TypeInfo::of::<T>();
-                
+
                 // 在JavaScript引擎中注册此对象
                 unsafe {
                     register_with_javascript(ffi_ptr, std::mem::size_of::<T>(), type_info.type_id)?;
                 }
-                
+
                 Ok(ForeignHandle {
                     ptr: ffi_ptr,
                     size: std::mem::size_of::<T>(),
@@ -3662,7 +3664,7 @@ impl OwnershipBridge {
                 // C++直接使用指针，通常不需要额外注册
                 let ffi_ptr = ptr as *mut c_void;
                 let type_info = TypeInfo::of::<T>();
-                
+
                 Ok(ForeignHandle {
                     ptr: ffi_ptr,
                     size: std::mem::size_of::<T>(),
@@ -3673,7 +3675,7 @@ impl OwnershipBridge {
             _ => Err(BridgeError::UnsupportedLanguage(target_language)),
         }
     }
-    
+
     // 将外部句柄转换回Rust对象
     fn convert_handle_to_rust<T: 'static>(&self, handle: ForeignHandle) -> Result<Box<T>, BridgeError> {
         // 验证类型信息
@@ -3681,20 +3683,20 @@ impl OwnershipBridge {
         if handle.type_info != expected_type {
             return Err(BridgeError::TypeMismatch);
         }
-        
+
         // 安全地将指针转回Box
         unsafe {
             let typed_ptr = handle.ptr as *mut T;
             if typed_ptr.is_null() {
                 return Err(BridgeError::NullPointer);
             }
-            
+
             // 重新获取Box所有权
             let boxed = Box::from_raw(typed_ptr);
             Ok(boxed)
         }
     }
-    
+
     // 通知外部语言所有权已转移
     fn notify_ownership_transfer(&self, resource_id: ResourceId, from_language: LanguageType, to_owner: OwnerLanguage) -> Result<(), BridgeError> {
         // 使用语言特定的FFI函数通知外部语言
@@ -3717,7 +3719,7 @@ impl OwnershipBridge {
             // 其他语言...
             _ => return Err(BridgeError::UnsupportedLanguage(from_language)),
         }
-        
+
         Ok(())
     }
 }

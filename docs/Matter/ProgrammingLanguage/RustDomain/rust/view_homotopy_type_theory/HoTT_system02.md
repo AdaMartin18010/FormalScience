@@ -2,68 +2,70 @@
 
 ## 目录
 
-- [1. 从同伦类型论视角分析分布式工作流系统](#从同伦类型论视角分析分布式工作流系统)
-  - [1.1 引言](#1-引言)
-  - [1.2 同伦类型论基础](#2-同伦类型论基础)
-    - [1.2.1 类型空间与同伦](#21-类型空间与同伦)
-    - [1.2.2 依赖类型与证明论](#22-依赖类型与证明论)
-    - [1.2.3 高阶同伦与无限维类型](#23-高阶同伦与无限维类型)
-  - [1.3 Rust语言的同伦类型论解析](#3-rust语言的同伦类型论解析)
-    - [1.3.1 所有权与借用的同伦解释](#31-所有权与借用的同伦解释)
-    - [1.3.2 生命周期的路径空间模型](#32-生命周期的路径空间模型)
-    - [1.3.3 类型系统的范畴论基础](#33-类型系统的范畴论基础)
-    - [1.3.4 Trait系统作为有界多态](#34-trait系统作为有界多态)
-    - [1.3.5 代数数据类型的同伦解释](#35-代数数据类型的同伦解释)
-  - [1.4 工作流理论的同伦模型](#4-工作流理论的同伦模型)
-    - [1.4.1 工作流作为高阶类型](#41-工作流作为高阶类型)
-    - [1.4.2 依赖类型与工作流验证](#42-依赖类型与工作流验证)
-    - [1.4.3 工作流的代数结构](#43-工作流的代数结构)
-    - [1.4.4 分布式工作流的π演算模型](#44-分布式工作流的π演算模型)
-  - [1.5 分布式系统的同伦解释](#5-分布式系统的同伦解释)
-    - [1.5.1 分布式一致性的同伦等价](#51-分布式一致性的同伦等价)
-    - [1.5.2 因果关系的拓扑学描述](#52-因果关系的拓扑学描述)
-    - [1.5.3 共识协议的同伦群论](#53-共识协议的同伦群论)
-    - [1.5.4 状态复制的纤维空间模型](#54-状态复制的纤维空间模型)
-  - [1.6 分布式工作流系统的概念框架](#6-分布式工作流系统的概念框架)
-    - [1.6.1 工作流定义语言](#61-工作流定义语言)
-    - [1.6.2 状态转换规则](#62-状态转换规则)
-    - [1.6.3 分布式协调机制](#63-分布式协调机制)
-    - [1.6.4 容错与恢复模型](#64-容错与恢复模型)
-  - [1.7 分布式工作流的Rust实现框架](#7-分布式工作流的rust实现框架)
-    - [1.7.1 核心运行时架构](#71-核心运行时架构)
-    - [1.7.2 持久化与状态管理](#72-持久化与状态管理)
-    - [1.7.3 工作流引擎实现](#73-工作流引擎实现)
-    - [1.7.4 分布式协调实现](#74-分布式协调实现)
-  - [1.8 算法框架与实现](#8-算法框架与实现)
-    - [1.8.1 分布式共识实现](#81-分布式共识实现)
-    - [1.8.2 状态机复制机制](#82-状态机复制机制)
-    - [1.8.3 冲突检测与解决](#83-冲突检测与解决)
-    - [1.8.4 分区容忍策略](#84-分区容忍策略)
-  - [1.9 控制流框架实现](#9-控制流框架实现)
-    - [1.9.1 事件触发系统](#91-事件触发系统)
-    - [1.9.2 补偿事务实现](#92-补偿事务实现)
-    - [1.9.3 容错策略模式](#93-容错策略模式)
-    - [1.9.4 自适应控制循环](#94-自适应控制循环)
-  - [1.10 完备性理论分析](#10-完备性理论分析)
-    - [1.10.1 类型完备性证明](#101-类型完备性证明)
-    - [1.10.2 操作完备性保障](#102-操作完备性保障)
-    - [1.10.3 容错完备性模型](#103-容错完备性模型)
-    - [1.10.4 表达力完备性论证](#104-表达力完备性论证)
-  - [1.11 逼近完全性的模型框架](#11-逼近完全性的模型框架)
-    - [1.11.1 渐进式类型系统实现](#111-渐进式类型系统实现)
-    - [1.11.2 非确定性处理机制](#112-非确定性处理机制)
-    - [1.11.3 自适应计算模型](#113-自适应计算模型)
-    - [1.11.4 形式化验证方法](#114-形式化验证方法)
-  - [1.12 部署演进模型与实践](#12-部署演进模型与实践)
-    - [1.12.1 增量演进策略](#121-增量演进策略)
-    - [1.12.2 混合一致性模型](#122-混合一致性模型)
-    - [1.12.3 自动化扩缩容机制](#123-自动化扩缩容机制)
-    - [1.12.4 多区域部署架构](#124-多区域部署架构)
-  - [1.13 结论与未来方向](#13-结论与未来方向)
-    - [1.13.1 主要贡献](#131-主要贡献)
-    - [1.13.2 未来研究方向](#132-未来研究方向)
-    - [1.13.3 结语](#133-结语)
-  - [1.14 思维导图](#14-思维导图)
+- [1. 从同伦类型论视角分析分布式工作流系统](#1-从同伦类型论视角分析分布式工作流系统)
+  - [目录](#目录)
+  - [1.1 引言](#11-引言)
+  - [1.2 同伦类型论基础](#12-同伦类型论基础)
+    - [1.2.1 类型空间与同伦](#121-类型空间与同伦)
+    - [1.2.2 依赖类型与证明论](#122-依赖类型与证明论)
+    - [1.2.3 高阶同伦与无限维类型](#123-高阶同伦与无限维类型)
+  - [1.3 Rust语言的同伦类型论解析](#13-rust语言的同伦类型论解析)
+    - [1.3.1 所有权与借用的同伦解释](#131-所有权与借用的同伦解释)
+    - [1.3.2 生命周期的路径空间模型](#132-生命周期的路径空间模型)
+    - [1.3.3 类型系统的范畴论基础](#133-类型系统的范畴论基础)
+    - [1.3.4 Trait系统作为有界多态](#134-trait系统作为有界多态)
+    - [1.3.5 代数数据类型的同伦解释](#135-代数数据类型的同伦解释)
+  - [1.4 工作流理论的同伦模型](#14-工作流理论的同伦模型)
+    - [1.4.1 工作流作为高阶类型](#141-工作流作为高阶类型)
+    - [1.4.2 依赖类型与工作流验证](#142-依赖类型与工作流验证)
+    - [1.4.3 工作流的代数结构](#143-工作流的代数结构)
+    - [1.4.4 分布式工作流的π演算模型](#144-分布式工作流的π演算模型)
+  - [1.5 分布式系统的同伦解释](#15-分布式系统的同伦解释)
+    - [1.5.1 分布式一致性的同伦等价](#151-分布式一致性的同伦等价)
+    - [1.5.2 因果关系的拓扑学描述](#152-因果关系的拓扑学描述)
+    - [1.5.3 共识协议的同伦群论](#153-共识协议的同伦群论)
+    - [1.5.4 状态复制的纤维空间模型](#154-状态复制的纤维空间模型)
+  - [1.6 分布式工作流系统的概念框架](#16-分布式工作流系统的概念框架)
+    - [1.6.1 工作流定义语言](#161-工作流定义语言)
+    - [1.6.2 状态转换规则](#162-状态转换规则)
+    - [1.6.3 分布式协调机制](#163-分布式协调机制)
+    - [1.6.4 容错与恢复模型](#164-容错与恢复模型)
+  - [1.7 分布式工作流的Rust实现框架](#17-分布式工作流的rust实现框架)
+    - [1.7.1 核心运行时架构](#171-核心运行时架构)
+    - [1.7.2 持久化与状态管理](#172-持久化与状态管理)
+    - [1.7.3 工作流引擎实现](#173-工作流引擎实现)
+    - [1.7.4 分布式协调实现](#174-分布式协调实现)
+  - [1.8 算法框架与实现](#18-算法框架与实现)
+    - [1.8.1 分布式共识实现](#181-分布式共识实现)
+    - [1.8.2 状态机复制机制](#182-状态机复制机制)
+    - [1.8.3 冲突检测与解决](#183-冲突检测与解决)
+    - [1.8.4 分区容忍策略](#184-分区容忍策略)
+  - [1.9 控制流框架实现](#19-控制流框架实现)
+    - [1.9.1 事件触发系统](#191-事件触发系统)
+    - [1.9.2 补偿事务实现](#192-补偿事务实现)
+    - [1.9.3 容错策略模式](#193-容错策略模式)
+    - [1.9.4 自适应控制循环](#194-自适应控制循环)
+  - [1.10 完备性理论分析](#110-完备性理论分析)
+    - [1.10.1 类型完备性证明](#1101-类型完备性证明)
+    - [1.10.2 操作完备性保障](#1102-操作完备性保障)
+    - [1.10.3 容错完备性模型](#1103-容错完备性模型)
+    - [1.10.4 表达力完备性论证](#1104-表达力完备性论证)
+  - [1.11 逼近完全性的模型框架](#111-逼近完全性的模型框架)
+    - [1.11.1 渐进式类型系统实现](#1111-渐进式类型系统实现)
+    - [1.11.2 非确定性处理机制](#1112-非确定性处理机制)
+    - [1.11.3 自适应计算模型](#1113-自适应计算模型)
+    - [1.11.4 形式化验证方法](#1114-形式化验证方法)
+  - [1.12 部署演进模型与实践](#112-部署演进模型与实践)
+    - [1.12.1 增量演进策略](#1121-增量演进策略)
+    - [1.12.2 混合一致性模型](#1122-混合一致性模型)
+    - [1.12.3 自动化扩缩容机制](#1123-自动化扩缩容机制)
+    - [1.12.4 多区域部署架构](#1124-多区域部署架构)
+  - [1.13 结论与未来方向](#113-结论与未来方向)
+    - [1.13.1 主要贡献](#1131-主要贡献)
+    - [1.13.2 未来研究方向](#1132-未来研究方向)
+    - [1.13.3 结语](#1133-结语)
+  - [1.14 思维导图](#114-思维导图)
+
 ## 1.1 引言
 
 本文从同伦类型论（Homotopy Type Theory, HoTT）的理论视角，对Rust语言、工作流理论和分布式系统设计进行深入分析与整合。
@@ -83,13 +85,13 @@
 trait TypeSpace {
     // 空间中的点（值）
     type Point;
-    
+
     // 点之间的路径（等价证明）
     type Path<A: Self::Point, B: Self::Point>;
-    
+
     // 路径组合（证明的传递性）
     fn compose<A, B, C>(
-        p1: Self::Path<A, B>, 
+        p1: Self::Path<A, B>,
         p2: Self::Path<B, C>
     ) -> Self::Path<A, C>
     where
@@ -168,7 +170,7 @@ struct LifetimePath<'a, T> {
 }
 
 // 生命周期的嵌套表示子路径关系
-fn nested_lifetimes<'a, 'b, T>(x: &'a T, y: &'b T) -> &'a T 
+fn nested_lifetimes<'a, 'b, T>(x: &'a T, y: &'b T) -> &'a T
 where 'b: 'a {
     // 'b: 'a表示'b的路径包含'a的路径
     x // 返回生命周期为'a的引用
@@ -184,13 +186,13 @@ Rust的类型系统可以被视为一个丰富的范畴，其中对象是类型�
 trait Category {
     // 对象（类型）
     type Object;
-    
+
     // 态射（函数）
     type Morphism<A: Self::Object, B: Self::Object>;
-    
+
     // 恒等态射
     fn identity<A: Self::Object>() -> Self::Morphism<A, A>;
-    
+
     // 态射组合
     fn compose<A, B, C>(
         f: Self::Morphism<A, B>,
@@ -212,7 +214,7 @@ Rust的trait系统可以被理解为有界存在类型的一种形式，它定�
 trait Monad<T> {
     // 从值创建单子
     fn unit(value: T) -> Self;
-    
+
     // 绑定操作（flatMap）
     fn bind<U, F>(self, f: F) -> F::Output
     where
@@ -225,7 +227,7 @@ impl<T> Monad<T> for Option<T> {
     fn unit(value: T) -> Self {
         Some(value)
     }
-    
+
     fn bind<U, F>(self, f: F) -> F::Output
     where
         F: FnOnce(T) -> Self,
@@ -317,16 +319,16 @@ struct TypedTransition<S, A, Pre: Fn(&S) -> bool, Post: Fn(&S, &A, &S) -> bool> 
 enum WorkflowAlgebra<S, A> {
     // 原子工作流
     Atomic(Workflow<S, A>),
-    
+
     // 顺序组合
     Sequence(Box<WorkflowAlgebra<S, A>>, Box<WorkflowAlgebra<S, A>>),
-    
+
     // 并行组合
     Parallel(Box<WorkflowAlgebra<S, A>>, Box<WorkflowAlgebra<S, A>>),
-    
+
     // 条件分支
     Condition(fn(&S) -> bool, Box<WorkflowAlgebra<S, A>>, Box<WorkflowAlgebra<S, A>>),
-    
+
     // 循环
     Loop(fn(&S) -> bool, Box<WorkflowAlgebra<S, A>>),
 }
@@ -341,19 +343,19 @@ enum WorkflowAlgebra<S, A> {
 enum PiProcess {
     // 空过程
     Nil,
-    
+
     // 输出操作
     Output(Channel, Value, Box<PiProcess>),
-    
+
     // 输入操作
     Input(Channel, Value, Box<PiProcess>),
-    
+
     // 并行组合
     Parallel(Box<PiProcess>, Box<PiProcess>),
-    
+
     // 复制
     Replication(Box<PiProcess>),
-    
+
     // 新建通道
     New(Channel, Box<PiProcess>),
 }
@@ -378,13 +380,13 @@ struct DistributedWorkflow {
 enum ConsistencyModel {
     // 线性一致性：所有操作都有全局顺序
     Linearizable,
-    
+
     // 顺序一致性：每个进程的操作保持程序顺序
     Sequential,
-    
+
     // 因果一致性：尊重因果关系
     Causal,
-    
+
     // 最终一致性：最终达到相同状态
     Eventual,
 }
@@ -422,7 +424,7 @@ impl VectorClock {
     fn happens_before(&self, other: &Self) -> bool {
         // 检查是否所有元素都小于等于，且至少有一个小于
         let mut at_least_one_less = false;
-        
+
         for (node_id, &ts) in &self.timestamps {
             match other.timestamps.get(node_id) {
                 Some(&other_ts) => {
@@ -436,7 +438,7 @@ impl VectorClock {
                 None => return false,
             }
         }
-        
+
         at_least_one_less
     }
 }
@@ -530,7 +532,7 @@ mod workflow_dsl {
         // 任务执行函数
         handler: fn(In) -> Result<Out, Error>,
     }
-    
+
     // 工作流构建器
     pub struct WorkflowBuilder<In, Out> {
         tasks: Vec<Box<dyn Any>>,
@@ -538,14 +540,14 @@ mod workflow_dsl {
         entry_point: usize,
         exit_points: Vec<usize>,
     }
-    
+
     impl<In, Out> WorkflowBuilder<In, Out> {
         // 添加任务
         pub fn task<T: Task<In, Out>>(mut self, task: T) -> Self {
             self.tasks.push(Box::new(task));
             self
         }
-        
+
         // 连接任务
         pub fn connect<A, B, C>(
             mut self,
@@ -563,12 +565,12 @@ mod workflow_dsl {
             ));
             self
         }
-        
+
         // 构建工作流
         pub fn build(self) -> Workflow<In, Out> {
             // 检查图的完整性和类型正确性
             // ...
-            
+
             Workflow {
                 tasks: self.tasks,
                 connections: self.connections,
@@ -605,25 +607,25 @@ struct StateMachine<S, E> {
     current_state: S,
     // 转换规则
     transitions: Vec<StateTransitionRule<S, E>>,
-    
+
     // 处理事件
     fn process_event(&mut self, event: E) -> Result<(), Error> {
         for rule in &self.transitions {
-            if rule.source == self.current_state 
-               && rule.event == event 
+            if rule.source == self.current_state
+               && rule.event == event
                && rule.condition.map_or(true, |f| f(&self.current_state, &event)) {
-                
+
                 // 执行副作用
                 if let Some(effect) = rule.side_effect {
                     effect(&mut self.current_state, &event);
                 }
-                
+
                 // 更新状态
                 self.current_state = rule.target;
                 return Ok(());
             }
         }
-        
+
         Err(Error::NoMatchingTransition)
     }
 }
@@ -656,21 +658,21 @@ impl<S, E> DistributedCoordinator<S, E> {
         if self.node_id == self.leader {
             // 创建日志条目
             let entry = (event.clone(), self.current_vector_clock());
-            
+
             // 通过共识协议提交
             self.consensus.propose(event)?;
-            
+
             // 更新本地状态
             self.event_log.push(entry);
             self.state_machine.process_event(event)?;
-            
+
             Ok(())
         } else {
             // 转发给领导者
             self.forward_to_leader(event)
         }
     }
-    
+
     // 应用已提交的事件
     fn apply_committed_events(&mut self) -> Result<(), Error> {
         for event in self.consensus.get_committed_events() {
@@ -679,7 +681,7 @@ impl<S, E> DistributedCoordinator<S, E> {
                 self.event_log.push((event, self.current_vector_clock()));
             }
         }
-        
+
         Ok(())
     }
 }
@@ -722,7 +724,7 @@ struct FaultHandler {
     detectors: HashMap<FailureMode, Box<dyn Fn() -> bool>>,
     // 恢复策略
     strategies: HashMap<FailureMode, RecoveryStrategy>,
-    
+
     // 处理故障
     fn handle_failure(&self, mode: FailureMode) -> Result<(), Error> {
         match self.strategies.get(&mode) {
@@ -744,7 +746,7 @@ struct FaultHandler {
             },
             None => return Err(Error::NoRecoveryStrategy),
         }
-        
+
         Ok(())
     }
 }
@@ -777,43 +779,43 @@ impl<S, E> WorkflowEngine<S, E> {
         self.workflow_repository.insert(id, workflow);
         id
     }
-    
+
     // 启动工作流实例
     fn start_workflow(&mut self, workflow_id: WorkflowId, input: Input) -> Result<InstanceId, Error> {
         let workflow = self.workflow_repository.get(&workflow_id)
             .ok_or(Error::WorkflowNotFound)?;
-            
+
         // 创建工作流实例
         let instance = WorkflowInstance::new(workflow.clone(), input);
         let instance_id = generate_id();
-        
+
         // 存储实例
         self.instance_repository.insert(instance_id, instance);
-        
+
         // 调度初始任务
         self.schedule_initial_tasks(instance_id)?;
-        
+
         Ok(instance_id)
     }
-    
+
     // 处理任务完成事件
     fn handle_task_completion(&mut self, task_id: TaskId, result: TaskResult) -> Result<(), Error> {
         // 获取任务所属的工作流实例
         let instance_id = self.get_instance_for_task(task_id)?;
         let instance = self.instance_repository.get_mut(&instance_id)
             .ok_or(Error::InstanceNotFound)?;
-            
+
         // 更新工作流状态
         instance.update_task_state(task_id, TaskState::Completed(result))?;
-        
+
         // 检查后续任务并调度
         self.schedule_next_tasks(instance_id, task_id)?;
-        
+
         // 检查工作流是否完成
         if instance.is_completed() {
             instance.set_state(WorkflowState::Completed);
         }
-        
+
         Ok(())
     }
 }
@@ -845,7 +847,7 @@ impl<S: Serialize + DeserializeOwned> StateStore<S> for RocksDBStateStore {
         self.db.put(key.as_bytes(), &serialized)?;
         Ok(())
     }
-    
+
     fn load(&self, key: &str) -> Result<Option<S>, Error> {
         match self.db.get(key.as_bytes())? {
             Some(data) => {
@@ -855,7 +857,7 @@ impl<S: Serialize + DeserializeOwned> StateStore<S> for RocksDBStateStore {
             None => Ok(None),
         }
     }
-    
+
     fn delete(&self, key: &str) -> Result<(), Error> {
         self.db.delete(key.as_bytes())?;
         Ok(())
@@ -866,23 +868,23 @@ impl<S: Serialize + DeserializeOwned> StateStore<S> for RocksDBStateStore {
 struct PersistentWorkflowManager<S, E> {
     engine: WorkflowEngine<S, E>,
     state_store: Box<dyn StateStore<WorkflowState<S, E>>>,
-    
+
     // 持久化工作流状态
     fn persist_workflow(&self, instance_id: &InstanceId) -> Result<(), Error> {
         let instance = self.engine.instance_repository.get(instance_id)
             .ok_or(Error::InstanceNotFound)?;
-        
+
         // 序列化并保存状态
         self.state_store.save(&format!("workflow:{}", instance_id), &instance.state)?;
-        
+
         Ok(())
     }
-    
+
     // 从持久化存储恢复工作流
     fn recover_workflows(&mut self) -> Result<(), Error> {
         // 遍历所有持久化的工作流实例
         // ...
-        
+
         Ok(())
     }
 }
@@ -912,19 +914,19 @@ impl<S, E> WorkflowExecutor<S, E> {
     fn start(&mut self, input: Input) -> Result<(), Error> {
         // 初始化工作流状态
         self.current_state = self.workflow.initialize(input)?;
-        
+
         // 确定初始任务
         let initial_tasks = self.workflow.get_initial_tasks(&self.current_state);
-        
+
         // 提交初始任务执行
         for task in initial_tasks {
             let task_id = self.submit_task(task)?;
             self.active_tasks.insert(task_id, TaskInfo::new(task));
         }
-        
+
         Ok(())
     }
-    
+
     // 提交任务执行
     fn submit_task(&self, task: Task<S, E>) -> Result<TaskId, Error> {
         let task_id = generate_task_id();
@@ -933,39 +935,39 @@ impl<S, E> WorkflowExecutor<S, E> {
             task_id,
             state: &self.current_state,
         };
-        
+
         // 提交任务到执行器
         self.task_executor.execute(task, task_context)?;
         Ok(task_id)
     }
-    
+
     // 处理任务完成事件
     fn handle_task_completion(&mut self, task_id: TaskId, result: TaskResult) -> Result<(), Error> {
         // 检查任务是否存在
         let task_info = self.active_tasks.remove(&task_id)
             .ok_or(Error::TaskNotFound)?;
-            
+
         // 标记任务为已完成
         self.completed_tasks.insert(task_id);
-        
+
         // 更新工作流状态
         let state_transition = task_info.task.state_transition;
         self.current_state = state_transition(&self.current_state, &result)?;
-        
+
         // 检查后续任务
         let next_tasks = self.workflow.get_next_tasks(&self.current_state, &task_id);
-        
+
         // 提交后续任务执行
         for task in next_tasks {
             let next_task_id = self.submit_task(task)?;
             self.active_tasks.insert(next_task_id, TaskInfo::new(task));
         }
-        
+
         // 检查工作流是否完成
         if self.active_tasks.is_empty() && self.workflow.is_completed(&self.current_state) {
             return Ok(());
         }
-        
+
         Ok(())
     }
 }
@@ -995,26 +997,26 @@ impl DistributedWorkflowCoordinator {
     fn start(&mut self) -> Result<(), Error> {
         // 加入集群
         self.join_cluster()?;
-        
+
         // 参与领导者选举
         self.participate_in_leader_election()?;
-        
+
         // 启动状态同步
         self.replication_manager.start()?;
-        
+
         Ok(())
     }
-    
+
     // 提交工作流操作
     fn submit_operation(&self, operation: WorkflowOperation) -> Result<OperationResult, Error> {
         // 检查当前节点角色
         if self.is_leader() {
             // 作为领导者，直接处理操作
             let log_entry = LogEntry::new(operation.clone(), self.current_term);
-            
+
             // 通过共识协议提交
             self.consensus_client.propose(log_entry)?;
-            
+
             // 等待操作应用
             self.wait_for_application(operation)
         } else if let Some(leader_id) = self.leader_id {
@@ -1025,7 +1027,7 @@ impl DistributedWorkflowCoordinator {
             Err(Error::NoLeaderAvailable)
         }
     }
-    
+
     // 处理集群成员变更
     fn handle_membership_change(&mut self, change: MembershipChange) -> Result<(), Error> {
         match change {
@@ -1038,7 +1040,7 @@ impl DistributedWorkflowCoordinator {
                 self.cluster_members.remove(&node_id);
                 // 更新复制配置
                 self.replication_manager.update_replica_set(&self.cluster_members)?;
-                
+
                 // 如果离开的是领导者，触发新的选举
                 if Some(node_id) == self.leader_id {
                     self.leader_id = None;
@@ -1046,7 +1048,7 @@ impl DistributedWorkflowCoordinator {
                 }
             },
         }
-        
+
         Ok(())
     }
 }
@@ -1108,14 +1110,14 @@ impl RaftConsensus {
                 vote_granted: false,
             };
         }
-        
+
         // 如果请求的任期大于当前任期，转为追随者
         if request.term > self.current_term {
             self.current_term = request.term;
             self.voted_for = None;
             self.convert_to_follower(None);
         }
-        
+
         // 决定是否投票
         let vote_granted = match self.voted_for {
             // 尚未投票，或已经投给请求者
@@ -1126,7 +1128,7 @@ impl RaftConsensus {
             // 已经投给其他候选人
             _ => false,
         };
-        
+
         if vote_granted {
             self.voted_for = Some(request.candidate_id);
             // 重置选举超时
@@ -1134,13 +1136,13 @@ impl RaftConsensus {
                 *election_timeout = Instant::now() + self.election_timeout_duration();
             }
         }
-        
+
         RequestVoteResponse {
             term: self.current_term,
             vote_granted,
         }
     }
-    
+
     // 处理附加日志RPC
     fn handle_append_entries(&mut self, request: AppendEntriesRequest) -> AppendEntriesResponse {
         // 如果请求的任期小于当前任期，拒绝请求
@@ -1151,13 +1153,13 @@ impl RaftConsensus {
                 match_index: self.log.len(),
             };
         }
-        
+
         // 如果请求的任期大于或等于当前任期，转为追随者
         if request.term >= self.current_term {
             self.current_term = request.term;
             self.convert_to_follower(Some(request.leader_id));
         }
-        
+
         // 处理心跳消息
         if request.entries.is_empty() {
             // 更新提交索引
@@ -1165,18 +1167,18 @@ impl RaftConsensus {
                 self.commit_index = min(request.leader_commit, self.log.len());
                 self.apply_committed_entries();
             }
-            
+
             return AppendEntriesResponse {
                 term: self.current_term,
                 success: true,
                 match_index: self.log.len(),
             };
         }
-        
+
         // 检查前一个日志条目是否匹配
         if request.prev_log_index > 0 {
             let prev_log_index = request.prev_log_index as usize - 1;
-            
+
             if prev_log_index >= self.log.len() {
                 // 日志不够长
                 return AppendEntriesResponse {
@@ -1185,11 +1187,11 @@ impl RaftConsensus {
                     match_index: self.log.len(),
                 };
             }
-            
+
             if self.log[prev_log_index].term != request.prev_log_term {
                 // 任期不匹配，删除此条目及之后的所有条目
                 self.log.truncate(prev_log_index);
-                
+
                 return AppendEntriesResponse {
                     term: self.current_term,
                     success: false,
@@ -1197,14 +1199,14 @@ impl RaftConsensus {
                 };
             }
         }
-        
+
         // 追加新条目
         let mut new_entries_index = 0;
         let mut log_index = request.prev_log_index;
-        
+
         while new_entries_index < request.entries.len() {
             log_index += 1;
-            
+
             if log_index <= self.log.len() as u64 {
                 // 检查现有条目是否与新条目冲突
                 if self.log[(log_index - 1) as usize].term != request.entries[new_entries_index].term {
@@ -1212,25 +1214,25 @@ impl RaftConsensus {
                     self.log.truncate((log_index - 1) as usize);
                     break;
                 }
-                
+
                 new_entries_index += 1;
             } else {
                 break;
             }
         }
-        
+
         // 追加剩余的新条目
         while new_entries_index < request.entries.len() {
             self.log.push(request.entries[new_entries_index].clone());
             new_entries_index += 1;
         }
-        
+
         // 更新提交索引
         if request.leader_commit > self.commit_index {
             self.commit_index = min(request.leader_commit, self.log.len() as u64);
             self.apply_committed_entries();
         }
-        
+
         AppendEntriesResponse {
             term: self.current_term,
             success: true,
@@ -1293,29 +1295,29 @@ impl StateReplicationManager {
             replication_progress: HashMap::new(),
         }
     }
-    
+
     // 复制日志到指定节点
     fn replicate_to_node(&mut self, node_id: NodeId) -> Result<(), Error> {
         let progress = self.replication_progress.get_mut(&node_id)
             .ok_or(Error::NodeNotFound)?;
-        
+
         // 检查是否需要发送快照
         if progress.next_index < self.log_storage.first_index() {
             return self.send_snapshot(node_id, progress);
         }
-        
+
         // 准备要发送的日志条目
         let entries = self.log_storage.get_entries(
             progress.next_index,
             self.log_storage.last_index() + 1,
             MAX_BATCH_SIZE,
         )?;
-        
+
         if entries.is_empty() {
             // 没有新条目，发送心跳
             return self.send_heartbeat(node_id);
         }
-        
+
         // 获取前一个日志条目的信息
         let prev_log_index = progress.next_index - 1;
         let prev_log_term = if prev_log_index == 0 {
@@ -1323,7 +1325,7 @@ impl StateReplicationManager {
         } else {
             self.log_storage.get_term(prev_log_index)?
         };
-        
+
         // 构造AppendEntries请求
         let request = AppendEntriesRequest {
             term: self.current_term,
@@ -1333,10 +1335,10 @@ impl StateReplicationManager {
             entries: entries.clone(),
             leader_commit: self.commit_index,
         };
-        
+
         // 发送请求
         let response = self.rpc_client.append_entries(node_id, request)?;
-        
+
         // 处理响应
         if response.term > self.current_term {
             // 发现更高的任期，转为追随者
@@ -1344,35 +1346,35 @@ impl StateReplicationManager {
             self.convert_to_follower(None);
             return Ok(());
         }
-        
+
         if response.success {
             // 更新复制进度
             progress.match_index = response.match_index;
             progress.next_index = response.match_index + 1;
-            
+
             // 尝试提交更多日志条目
             self.update_commit_index();
         } else {
             // 复制失败，回退next_index
             progress.next_index = max(1, min(response.match_index + 1, progress.next_index - 1));
         }
-        
+
         Ok(())
     }
-    
+
     // 更新提交索引
     fn update_commit_index(&mut self) {
         let mut match_indices: Vec<u64> = self.replication_progress.values()
             .map(|p| p.match_index)
             .collect();
         match_indices.push(self.log_storage.last_index()); // 包括自己
-        
+
         // 排序以找到中位数（多数派）
         match_indices.sort_unstable();
         let majority_match = match_indices[match_indices.len() / 2];
-        
+
         // 检查日志任期，避免提交前任领导者的日志
-        if majority_match > self.commit_index 
+        if majority_match > self.commit_index
            && self.log_storage.get_term(majority_match).unwrap_or(0) == self.current_term {
             self.commit_index = majority_match;
             self.apply_committed_entries();
@@ -1413,42 +1415,42 @@ impl ConflictDetector {
     fn add_read(&mut self, resource_id: ResourceId, version: Version) {
         self.read_set.insert(resource_id, version);
     }
-    
+
     // 添加写操作
     fn add_write(&mut self, resource_id: ResourceId, version: Version) {
         self.write_set.insert(resource_id, version);
     }
-    
+
     // 添加删除操作
     fn add_delete(&mut self, resource_id: ResourceId) {
         self.delete_set.insert(resource_id);
     }
-    
+
     // 检测与另一个事务的冲突
     fn detect_conflicts(&self, other: &ConflictDetector) -> Vec<(ResourceId, ConflictType)> {
         let mut conflicts = Vec::new();
-        
+
         // 检测写-写冲突
         for (res_id, _) in &self.write_set {
             if other.write_set.contains_key(res_id) {
                 conflicts.push((*res_id, ConflictType::WriteWrite));
             }
         }
-        
+
         // 检测读-写冲突
         for (res_id, _) in &self.read_set {
             if other.write_set.contains_key(res_id) {
                 conflicts.push((*res_id, ConflictType::ReadWrite));
             }
         }
-        
+
         // 检测写-删除冲突
         for res_id in &self.delete_set {
             if other.write_set.contains_key(res_id) {
                 conflicts.push((*res_id, ConflictType::WriteDelete));
             }
         }
-        
+
         conflicts
     }
 }
@@ -1488,7 +1490,7 @@ impl ConflictResolver {
         let resource_type = self.get_resource_type(resource_id);
         let strategy = self.resource_strategies.get(&resource_type)
             .unwrap_or(&self.default_strategy);
-            
+
         match strategy {
             ConflictResolutionStrategy::LastWriteWins => {
                 // 比较时间戳，选择最新的事务
@@ -1554,12 +1556,12 @@ impl PartitionDetector {
         // 如果节点之前被怀疑，现在移除怀疑
         self.suspected_partitions.remove(&node_id);
     }
-    
+
     // 检测分区
     fn detect_partitions(&mut self) -> HashSet<NodeId> {
         let now = Instant::now();
         let mut partitioned_nodes = HashSet::new();
-        
+
         for node_id in &self.nodes {
             match self.heartbeats.get(node_id) {
                 Some(last_heartbeat) => {
@@ -1576,7 +1578,7 @@ impl PartitionDetector {
                 },
             }
         }
-        
+
         // 检查持续怀疑时间
         for (node_id, suspected_since) in &self.suspected_partitions {
             if now.duration_since(*suspected_since) > self.confirmation_window {
@@ -1584,7 +1586,7 @@ impl PartitionDetector {
                 partitioned_nodes.insert(*node_id);
             }
         }
-        
+
         partitioned_nodes
     }
 }
@@ -1616,14 +1618,14 @@ impl PartitionHandler {
     fn has_quorum(&self) -> bool {
         self.available_nodes.len() >= self.quorum_size
     }
-    
+
     // 处理检测到的分区
     fn handle_partition(&mut self, partitioned_nodes: HashSet<NodeId>) -> PartitionAction {
         // 更新可用节点列表
         for node_id in &partitioned_nodes {
             self.available_nodes.remove(node_id);
         }
-        
+
         match self.strategy {
             PartitionToleranceStrategy::ConsistencyPreferred => {
                 if self.has_quorum() {
@@ -1649,14 +1651,14 @@ impl PartitionHandler {
             },
         }
     }
-    
+
     // 处理分区恢复
     fn handle_partition_recovery(&mut self, recovered_nodes: HashSet<NodeId>) -> RecoveryAction {
         // 更新可用节点列表
         for node_id in &recovered_nodes {
             self.available_nodes.insert(*node_id);
         }
-        
+
         // 确定恢复操作
         if !recovered_nodes.is_empty() {
             RecoveryAction::Reconcile {
@@ -1710,26 +1712,26 @@ impl EventBus {
             .or_insert_with(Vec::new)
             .push(handler);
     }
-    
+
     // 发布事件
     fn publish<T: 'static>(&mut self, event: Event<T>) {
         let boxed_event = Box::new(event);
         self.queue.push_back(boxed_event as Box<dyn AnyEvent>);
     }
-    
+
     // 启动事件分发器
     fn start(&mut self) {
         let running = self.running.clone();
         running.store(true, Ordering::SeqCst);
-        
+
         let mut handlers = self.handlers.clone();
         let mut queue = self.queue.clone();
-        
+
         self.dispatcher = Some(thread::spawn(move || {
             while running.load(Ordering::SeqCst) {
                 if let Some(event) = queue.pop_front() {
                     let event_type = event.event_type();
-                    
+
                     if let Some(type_handlers) = handlers.get_mut(&event_type) {
                         for handler in type_handlers {
                             handler.handle(event.clone());
@@ -1741,7 +1743,7 @@ impl EventBus {
             }
         }));
     }
-    
+
     // 停止事件分发器
     fn stop(&mut self) {
         if let Some(dispatcher) = self.dispatcher.take() {
@@ -1815,10 +1817,10 @@ impl<S, E> Saga<S, E> {
     fn execute_action(&mut self, action_id: ActionId, params: E) -> Result<(), Error> {
         // 查找操作
         let action = self.find_action(action_id)?;
-        
+
         // 执行操作
         let result = (action.action)(&mut self.state, &params);
-        
+
         // 记录执行
         self.executed_actions.push(ActionRecord {
             action_id,
@@ -1826,15 +1828,15 @@ impl<S, E> Saga<S, E> {
             parameters: params,
             result: result.clone(),
         });
-        
+
         // 如果失败，启动补偿
         if result.is_err() {
             self.compensate()?;
         }
-        
+
         result
     }
-    
+
     // 补偿已执行的操作
     fn compensate(&mut self) -> Result<(), Error> {
         // 反向遍历已执行操作
@@ -1843,28 +1845,28 @@ impl<S, E> Saga<S, E> {
             if action_record.result.is_err() {
                 continue;
             }
-            
+
             // 查找补偿操作
             if let Some(compensation) = self.compensation_map.get(&action_record.action_id) {
                 // 执行补偿
                 let mut attempts = 0;
                 let max_attempts = compensation.retry_policy.max_attempts;
-                
+
                 loop {
                     attempts += 1;
                     let result = (compensation.action)(&mut self.state, &action_record.parameters);
-                    
+
                     if result.is_ok() || attempts >= max_attempts {
                         break;
                     }
-                    
+
                     // 计算重试延迟
                     let delay = compensation.retry_policy.calculate_delay(attempts);
                     thread::sleep(delay);
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -1895,18 +1897,18 @@ impl RetryPolicy {
         if attempt == 0 {
             return Duration::from_millis(0);
         }
-        
+
         // 计算基础延迟
-        let base_delay = self.initial_delay.as_millis() as f64 * 
+        let base_delay = self.initial_delay.as_millis() as f64 *
             self.backoff_factor.powf((attempt - 1) as f64);
-            
+
         // 应用最大延迟限制
         let capped_delay = base_delay.min(self.max_delay.as_millis() as f64);
-        
+
         // 添加随机抖动
         let jitter = rand::random::<f64>() * self.jitter_factor * capped_delay;
         let final_delay = capped_delay * (1.0 + jitter);
-        
+
         Duration::from_millis(final_delay as u64)
     }
 }
@@ -1959,7 +1961,7 @@ impl CircuitBreaker {
             },
         }
     }
-    
+
     // 记录成功
     fn record_success(&mut self) {
         match self.state {
@@ -1970,7 +1972,7 @@ impl CircuitBreaker {
             CircuitBreakerState::HalfOpen => {
                 // 增加成功计数
                 self.success_count += 1;
-                
+
                 // 检查是否应该关闭断路器
                 if self.success_count >= self.success_threshold {
                     self.transition_to(CircuitBreakerState::Closed);
@@ -1981,14 +1983,14 @@ impl CircuitBreaker {
             },
         }
     }
-    
+
     // 记录失败
     fn record_failure(&mut self) {
         match self.state {
             CircuitBreakerState::Closed => {
                 // 增加失败计数
                 self.failure_count += 1;
-                
+
                 // 检查是否应该打开断路器
                 if self.failure_count >= self.failure_threshold {
                     self.transition_to(CircuitBreakerState::Open);
@@ -2003,12 +2005,12 @@ impl CircuitBreaker {
             },
         }
     }
-    
+
     // 状态转换
     fn transition_to(&mut self, new_state: CircuitBreakerState) {
         // 记录状态变更时间
         self.last_state_change = Instant::now();
-        
+
         // 重置相关计数器
         match new_state {
             CircuitBreakerState::Closed => {
@@ -2021,7 +2023,7 @@ impl CircuitBreaker {
                 // 无特殊处理
             },
         }
-        
+
         // 更新状态
         self.state = new_state;
     }
@@ -2042,7 +2044,7 @@ impl TimeoutHandler {
             .cloned()
             .unwrap_or(self.default_timeout)
     }
-    
+
     // 执行带超时的操作
     fn execute_with_timeout<T, F>(&self, operation_id: &OperationId, operation: F) -> Result<T, Error>
     where
@@ -2050,16 +2052,16 @@ impl TimeoutHandler {
         T: Send + 'static,
     {
         let timeout = self.get_timeout(operation_id);
-        
+
         // 创建通道用于结果传递
         let (tx, rx) = mpsc::channel();
-        
+
         // 在新线程中执行操作
         thread::spawn(move || {
             let result = operation();
             let _ = tx.send(result); // 发送结果，忽略接收端已关闭的错误
         });
-        
+
         // 等待结果或超时
         match rx.recv_timeout(timeout) {
             Ok(result) => result,
@@ -2132,16 +2134,16 @@ impl AdaptiveController {
     // 收集系统指标
     fn collect_metrics(&mut self, metrics: SystemMetrics) {
         let now = Instant::now();
-        
+
         // 添加到历史记录
         self.metrics_history.push_back((now, metrics));
-        
+
         // 限制历史记录长度
         if self.metrics_history.len() > self.max_history_length {
             self.metrics_history.pop_front();
         }
     }
-    
+
     // 更新控制参数
     fn update_parameters(&mut self) -> ControlParameters {
         // 获取最新指标
@@ -2149,26 +2151,26 @@ impl AdaptiveController {
             // 计算偏差
             let latency_error = current_metrics.request_latency.as_millis() as f64 -
                                self.target_metrics.request_latency.as_millis() as f64;
-            
+
             // 计算积分项（历史偏差累积）
-            let integral = self.calculate_integral(|m| m.request_latency.as_millis() as f64 - 
+            let integral = self.calculate_integral(|m| m.request_latency.as_millis() as f64 -
                                                   self.target_metrics.request_latency.as_millis() as f64);
-            
+
             // 计算微分项（偏差变化率）
             let derivative = self.calculate_derivative(|m| m.request_latency.as_millis() as f64);
-            
+
             // 计算PID控制器输出
-            let control_output = self.control_gains.kp * latency_error + 
-                                self.control_gains.ki * integral + 
+            let control_output = self.control_gains.kp * latency_error +
+                                self.control_gains.ki * integral +
                                 self.control_gains.kd * derivative;
-            
+
             // 更新并发级别
-            let new_concurrency = (self.current_parameters.concurrency_level as f64 * 
+            let new_concurrency = (self.current_parameters.concurrency_level as f64 *
                                   (1.0 - control_output.min(0.5).max(-0.5))) as usize;
-            
+
             // 确保参数在合理范围内
             let new_concurrency = new_concurrency.max(1).min(100);
-            
+
             // 创建新的控制参数
             let new_parameters = ControlParameters {
                 concurrency_level: new_concurrency,
@@ -2177,23 +2179,23 @@ impl AdaptiveController {
                 timeout: self.calculate_timeout(current_metrics),
                 retry_count: self.calculate_retry_count(current_metrics),
             };
-            
+
             // 记录参数历史
             self.parameters_history.push_back((Instant::now(), new_parameters.clone()));
             if self.parameters_history.len() > self.max_history_length {
                 self.parameters_history.pop_front();
             }
-            
+
             // 更新当前参数
             self.current_parameters = new_parameters.clone();
-            
+
             new_parameters
         } else {
             // 没有历史指标，使用当前参数
             self.current_parameters.clone()
         }
     }
-    
+
     // 计算积分项
     fn calculate_integral<F>(&self, metric_fn: F) -> f64
     where
@@ -2201,19 +2203,19 @@ impl AdaptiveController {
     {
         let mut integral = 0.0;
         let mut prev_time = None;
-        
+
         for (time, metrics) in &self.metrics_history {
             if let Some(prev) = prev_time {
                 let dt = time.duration_since(prev).as_secs_f64();
                 integral += metric_fn(metrics) * dt;
             }
-            
+
             prev_time = Some(*time);
         }
-        
+
         integral
     }
-    
+
     // 计算微分项
     fn calculate_derivative<F>(&self, metric_fn: F) -> f64
     where
@@ -2222,35 +2224,35 @@ impl AdaptiveController {
         if self.metrics_history.len() < 2 {
             return 0.0;
         }
-        
+
         let (time1, metrics1) = &self.metrics_history[self.metrics_history.len() - 1];
         let (time2, metrics2) = &self.metrics_history[self.metrics_history.len() - 2];
-        
+
         let dt = time1.duration_since(*time2).as_secs_f64();
         if dt == 0.0 {
             return 0.0;
         }
-        
+
         (metric_fn(metrics1) - metric_fn(metrics2)) / dt
     }
-    
+
     // 计算队列大小
     fn calculate_queue_size(&self, concurrency: usize) -> usize {
         concurrency * 2
     }
-    
+
     // 计算批处理大小
     fn calculate_batch_size(&self, concurrency: usize) -> usize {
         (concurrency as f64 * 0.5).max(1.0) as usize
     }
-    
+
     // 计算超时时间
     fn calculate_timeout(&self, metrics: &SystemMetrics) -> Duration {
         // 基于当前延迟的p99值设置超时
         let timeout_factor = 3.0; // 超时设为平均延迟的3倍
         Duration::from_millis((metrics.request_latency.as_millis() as f64 * timeout_factor) as u64)
     }
-    
+
     // 计算重试次数
     fn calculate_retry_count(&self, metrics: &SystemMetrics) -> usize {
         // 基于错误率调整重试次数
@@ -2311,52 +2313,52 @@ struct TypeSystemCompletenessProof {
     fn prove_data_structure_expressiveness() -> ProofResult {
         // 1. 证明能表达基本数据类型
         let proof_base = Self::prove_base_types();
-        
+
         // 2. 证明能表达复合数据类型
         let proof_composite = Self::prove_composite_types();
-        
+
         // 3. 证明能表达递归数据类型
         let proof_recursive = Self::prove_recursive_types();
-        
+
         // 4. 证明能表达泛型数据类型
         let proof_generic = Self::prove_generic_types();
-        
+
         // 综合证明结果
         if proof_base.is_proven && proof_composite.is_proven &&
            proof_recursive.is_proven && proof_generic.is_proven {
             ProofResult { is_proven: true, notes: "Type system is complete for data structures".to_string() }
         } else {
-            ProofResult { 
-                is_proven: false, 
-                notes: format!("Incomplete proofs: base={}, composite={}, recursive={}, generic={}", 
+            ProofResult {
+                is_proven: false,
+                notes: format!("Incomplete proofs: base={}, composite={}, recursive={}, generic={}",
                               proof_base.is_proven, proof_composite.is_proven,
                               proof_recursive.is_proven, proof_generic.is_proven)
             }
         }
     }
-    
+
     // 证明类型系统能表达所有的控制流模式
     fn prove_control_flow_expressiveness() -> ProofResult {
         // 1. 证明能表达顺序执行
         let proof_sequence = Self::prove_sequence_expression();
-        
+
         // 2. 证明能表达条件分支
         let proof_branching = Self::prove_branching_expression();
-        
+
         // 3. 证明能表达循环结构
         let proof_looping = Self::prove_looping_expression();
-        
+
         // 4. 证明能表达异常控制流
         let proof_exceptions = Self::prove_exception_handling();
-        
+
         // 综合证明结果
         if proof_sequence.is_proven && proof_branching.is_proven &&
            proof_looping.is_proven && proof_exceptions.is_proven {
             ProofResult { is_proven: true, notes: "Type system is complete for control flow".to_string() }
         } else {
-            ProofResult { 
-                is_proven: false, 
-                notes: format!("Incomplete proofs: sequence={}, branching={}, looping={}, exceptions={}", 
+            ProofResult {
+                is_proven: false,
+                notes: format!("Incomplete proofs: sequence={}, branching={}, looping={}, exceptions={}",
                               proof_sequence.is_proven, proof_branching.is_proven,
                               proof_looping.is_proven, proof_exceptions.is_proven)
             }
@@ -2385,7 +2387,7 @@ impl OperationalCompletenessAnalysis {
     fn check_base_operations_completeness(&self, required_operations: &HashSet<OperationId>) -> CompletenessResult {
         // 找出缺失的操作
         let missing_operations: HashSet<_> = required_operations.difference(&self.base_operations).collect();
-        
+
         if missing_operations.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2400,18 +2402,18 @@ impl OperationalCompletenessAnalysis {
             }
         }
     }
-    
+
     // 检查操作组合完备性
     fn check_operational_composition_completeness(&self) -> CompletenessResult {
         // 检查是否所有组合操作都可以由基本操作构建
         let mut unsatisfiable_operations = HashSet::new();
-        
+
         for op_id in &self.composite_operations {
             if !self.can_be_satisfied(op_id) {
                 unsatisfiable_operations.insert(*op_id);
             }
         }
-        
+
         if unsatisfiable_operations.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2426,18 +2428,18 @@ impl OperationalCompletenessAnalysis {
             }
         }
     }
-    
+
     // 检查操作可逆性
     fn check_operation_invertibility(&self) -> CompletenessResult {
         // 检查每个操作是否有对应的逆操作
         let mut operations_without_inverse = HashSet::new();
-        
+
         for op_id in &self.base_operations {
             if !self.has_inverse_operation(op_id) {
                 operations_without_inverse.insert(*op_id);
             }
         }
-        
+
         if operations_without_inverse.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2452,14 +2454,14 @@ impl OperationalCompletenessAnalysis {
             }
         }
     }
-    
+
     // 检查操作是否可以由已有操作满足
     fn can_be_satisfied(&self, op_id: &OperationId) -> bool {
         // 基本操作直接满足
         if self.base_operations.contains(op_id) {
             return true;
         }
-        
+
         // 检查组合操作的依赖
         if let Some(dependencies) = self.dependency_graph.get(op_id) {
             // 所有依赖都能满足，则当前操作也能满足
@@ -2469,12 +2471,12 @@ impl OperationalCompletenessAnalysis {
             false
         }
     }
-    
+
     // 检查操作是否有逆操作
     fn has_inverse_operation(&self, op_id: &OperationId) -> bool {
         // 实现操作逆检测的逻辑
         // ...
-        
+
         // 简化示例：假设偶数ID的操作和奇数ID的操作互为逆操作
         op_id.0 % 2 == 0 && self.base_operations.contains(&OperationId(op_id.0 + 1)) ||
         op_id.0 % 2 == 1 && self.base_operations.contains(&OperationId(op_id.0 - 1))
@@ -2542,7 +2544,7 @@ impl FaultToleranceCompletenessAnalysis {
     fn check_failure_mode_coverage(&self, required_modes: &HashSet<FailureMode>) -> CompletenessResult {
         // 找出缺失的故障模式
         let missing_modes: HashSet<_> = required_modes.difference(&self.supported_failures).collect();
-        
+
         if missing_modes.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2557,19 +2559,19 @@ impl FaultToleranceCompletenessAnalysis {
             }
         }
     }
-    
+
     // 检查恢复策略完备性
     fn check_recovery_strategy_completeness(&self) -> CompletenessResult {
         // 检查每种故障模式是否有对应的恢复策略
         let mut unrecoverable_failures = HashSet::new();
-        
+
         for failure_mode in &self.supported_failures {
-            if !self.recovery_strategies.contains_key(failure_mode) || 
+            if !self.recovery_strategies.contains_key(failure_mode) ||
                self.recovery_strategies[failure_mode].is_empty() {
                 unrecoverable_failures.insert(failure_mode.clone());
             }
         }
-        
+
         if unrecoverable_failures.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2584,19 +2586,19 @@ impl FaultToleranceCompletenessAnalysis {
             }
         }
     }
-    
+
     // 检查故障检测完备性
     fn check_detection_mechanism_completeness(&self) -> CompletenessResult {
         // 检查每种故障模式是否有对应的检测机制
         let mut undetectable_failures = HashSet::new();
-        
+
         for failure_mode in &self.supported_failures {
-            if !self.detection_mechanisms.contains_key(failure_mode) || 
+            if !self.detection_mechanisms.contains_key(failure_mode) ||
                self.detection_mechanisms[failure_mode].is_empty() {
                 undetectable_failures.insert(failure_mode.clone());
             }
         }
-        
+
         if undetectable_failures.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2611,28 +2613,28 @@ impl FaultToleranceCompletenessAnalysis {
             }
         }
     }
-    
+
     // 分析故障检测的质量
     fn analyze_detection_quality(&self) -> HashMap<FailureMode, DetectionQuality> {
         let mut results = HashMap::new();
-        
+
         for (failure_mode, mechanisms) in &self.detection_mechanisms {
             // 计算平均检测延迟
             let avg_latency = mechanisms.iter()
                 .map(|m| m.detection_latency.as_millis())
                 .sum::<u128>() as f64 / mechanisms.len() as f64;
-                
+
             // 计算有效检测率（考虑误检和漏检）
             let effective_detection_rate = mechanisms.iter()
                 .map(|m| 1.0 - m.false_negative_rate)
                 .product::<f64>();
-                
+
             results.insert(failure_mode.clone(), DetectionQuality {
                 average_latency: Duration::from_millis(avg_latency as u64),
                 effective_detection_rate,
             });
         }
-        
+
         results
     }
 }
@@ -2702,7 +2704,7 @@ impl ExpressivenessCompletenessAnalysis {
                 notes: format!("Directly supports {:?}", required_model),
             };
         }
-        
+
         // 检查是否通过表达力关系间接支持
         for supported_model in &self.supported_models {
             if let Some(expressible_models) = self.expressiveness_relations.get(supported_model) {
@@ -2715,23 +2717,23 @@ impl ExpressivenessCompletenessAnalysis {
                 }
             }
         }
-        
+
         // 不支持该模型
         let mut missing = HashSet::new();
         missing.insert(required_model);
-        
+
         CompletenessResult {
             is_complete: false,
             missing_elements: missing,
             notes: format!("Does not support {:?}", required_model),
         }
     }
-    
+
     // 检查工作流模式完备性
     fn check_workflow_pattern_completeness(&self, required_patterns: &HashSet<WorkflowPattern>) -> CompletenessResult {
         // 找出缺失的工作流模式
         let missing_patterns: HashSet<_> = required_patterns.difference(&self.supported_patterns).collect();
-        
+
         if missing_patterns.is_empty() {
             CompletenessResult {
                 is_complete: true,
@@ -2746,7 +2748,7 @@ impl ExpressivenessCompletenessAnalysis {
             }
         }
     }
-    
+
     // 分析图灵完备性
     fn analyze_turing_completeness(&self) -> CompletenessResult {
         // 检查是否支持图灵机或等价的计算模型
@@ -2757,7 +2759,7 @@ impl ExpressivenessCompletenessAnalysis {
                 notes: "Directly supports Turing Machine model".to_string(),
             };
         }
-        
+
         // 检查是否支持λ演算
         if self.supported_models.contains(&ComputationModel::LambdaCalculus) {
             return CompletenessResult {
@@ -2766,7 +2768,7 @@ impl ExpressivenessCompletenessAnalysis {
                 notes: "Supports Lambda Calculus which is Turing complete".to_string(),
             };
         }
-        
+
         // 检查是否支持π演算
         if self.supported_models.contains(&ComputationModel::PiCalculus) {
             return CompletenessResult {
@@ -2775,35 +2777,35 @@ impl ExpressivenessCompletenessAnalysis {
                 notes: "Supports Pi Calculus which is Turing complete".to_string(),
             };
         }
-        
+
         // 不支持图灵完备计算模型
         let mut missing = HashSet::new();
         missing.insert(ComputationModel::TuringMachine);
-        
+
         CompletenessResult {
             is_complete: false,
             missing_elements: missing,
             notes: "Does not support any Turing complete computation model".to_string(),
         }
     }
-    
+
     // 分析表达力边界
     fn analyze_expressiveness_boundaries(&self) -> HashMap<WorkflowPattern, HashSet<ComputationModel>> {
         // 分析每种工作流模式需要的最小计算模型
         let mut requirements = HashMap::new();
-        
+
         // 基本控制流需要有限状态机
         let mut basic_models = HashSet::new();
         basic_models.insert(ComputationModel::FiniteStateMachine);
         requirements.insert(WorkflowPattern::BasicControlFlow, basic_models);
-        
+
         // 高级分支和同步需要下推自动机
         let mut advanced_models = HashSet::new();
         advanced_models.insert(ComputationModel::PushdownAutomaton);
         requirements.insert(WorkflowPattern::AdvancedBranchingAndSynchronization, advanced_models);
-        
+
         // 其他模式的需求...
-        
+
         requirements
     }
 }
@@ -2863,30 +2865,30 @@ impl ProgressiveTypeChecker {
                     })
                 }
             },
-            
+
             // 动态类型对任何表达式
             (_, ProgressiveType::Dynamic) => {
                 // 动态类型接受任何表达式
                 Ok(())
             },
-            
+
             // 部分静态类型
             (Expr::Typed(inner_expr, expr_type), ProgressiveType::Partial(inner_expected, fields)) => {
                 // 检查指定字段的类型
                 // ...
-                
+
                 Ok(())
             },
-            
+
             // 约束类型
             (expr, ProgressiveType::Constrained(inner_type, constraint)) => {
                 // 先检查内部类型
                 self.static_check(expr, inner_type)?;
-                
+
                 // 约束检查需要在运行时完成
                 Ok(())
             },
-            
+
             // 其他情况
             _ => {
                 // 根据静态检查级别决定是否报错
@@ -2899,16 +2901,16 @@ impl ProgressiveTypeChecker {
             },
         }
     }
-    
+
     // 生成运行时类型检查代码
     fn generate_runtime_checks(&self, expr: &Expr, expected_type: &ProgressiveType<TypeExpr>) -> Expr {
         match expected_type {
             // 静态类型已在编译时检查
             ProgressiveType::Static(_) if self.static_check_level >= 2 => expr.clone(),
-            
+
             // 动态类型不需要额外检查
             ProgressiveType::Dynamic => expr.clone(),
-            
+
             // 需要运行时检查的类型
             _ => Expr::TypeCheck {
                 expr: Box::new(expr.clone()),
@@ -2916,7 +2918,7 @@ impl ProgressiveTypeChecker {
             },
         }
     }
-    
+
     // 创建类型检查函数
     fn create_type_check(&self, expected_type: &ProgressiveType<TypeExpr>) -> Box<dyn Fn(&Any) -> bool> {
         match expected_type {
@@ -2937,13 +2939,13 @@ impl ProgressiveTypeChecker {
                 // 创建部分类型检查
                 let inner_check = self.create_type_check(inner_type);
                 let fields = fields.clone();
-                
+
                 Box::new(move |value: &Any| {
                     // 先检查内部类型
                     if !inner_check(value) {
                         return false;
                     }
-                    
+
                     // 检查指定字段
                     // ...
                     true
@@ -2953,13 +2955,13 @@ impl ProgressiveTypeChecker {
                 // 创建约束类型检查
                 let inner_check = self.create_type_check(inner_type);
                 let constraint = constraint.clone();
-                
+
                 Box::new(move |value: &Any| {
                     // 先检查内部类型
                     if !inner_check(value) {
                         return false;
                     }
-                    
+
                     // 检查约束
                     constraint.check(value)
                 })
@@ -3007,13 +3009,13 @@ impl Distribution for GaussianDistribution {
         // 使用Box-Muller变换生成正态分布随机数
         let u1 = rand::random::<f64>();
         let u2 = rand::random::<f64>();
-        
+
         let z = ((-2.0 * u1.ln()).sqrt()) * (2.0 * std::f64::consts::PI * u2).cos();
         let sample = self.mean + self.std_dev * z;
-        
+
         Box::new(sample)
     }
-    
+
     fn pdf(&self, value: &dyn Any) -> f64 {
         if let Some(x) = value.downcast_ref::<f64>() {
             let exponent = -0.5 * ((x - self.mean) / self.std_dev).powi(2);
@@ -3022,7 +3024,7 @@ impl Distribution for GaussianDistribution {
             0.0 // 不匹配的类型
         }
     }
-    
+
     fn cdf(&self, value: &dyn Any) -> f64 {
         if let Some(x) = value.downcast_ref::<f64>() {
             let z = (x - self.mean) / self.std_dev;
@@ -3031,7 +3033,7 @@ impl Distribution for GaussianDistribution {
             0.0 // 不匹配的类型
         }
     }
-    
+
     fn describe(&self) -> String {
         format!("Gaussian(μ={}, σ={})", self.mean, self.std_dev)
     }
@@ -3055,41 +3057,41 @@ impl UncertaintyComputation {
     {
         // 结果样本
         let mut result_samples = Vec::with_capacity(self.simulation_count);
-        
+
         // 进行蒙特卡洛模拟
         for _ in 0..self.simulation_count {
             // 为每个输入生成样本
             let input_samples: Vec<Box<dyn Any>> = inputs.iter()
                 .map(|input| input.distribution.sample())
                 .collect();
-            
+
             // 应用操作
             let result = operation(input_samples);
-            
+
             // 保存结果样本
             result_samples.push(result);
         }
-        
+
         // 从结果样本估计分布
         let distribution = self.estimate_distribution(&result_samples);
-        
+
         ProbabilisticType {
             base_type: result_samples[0].clone(), // 使用第一个样本的类型
             distribution: distribution,
         }
     }
-    
+
     // 从样本估计分布
     fn estimate_distribution<R: 'static>(&self, samples: &[R]) -> Box<dyn Distribution> {
         // 简化：假设分布是高斯的
         let (mean, variance) = self.compute_statistics(samples);
-        
+
         Box::new(GaussianDistribution {
             mean,
             std_dev: variance.sqrt(),
         })
     }
-    
+
     // 计算样本统计量
     fn compute_statistics<R>(&self, samples: &[R]) -> (f64, f64)
     where
@@ -3099,7 +3101,7 @@ impl UncertaintyComputation {
         let mean = samples.iter()
             .map(|s| *s.as_ref())
             .sum::<f64>() / samples.len() as f64;
-        
+
         // 计算方差
         let variance = samples.iter()
             .map(|s| {
@@ -3107,19 +3109,19 @@ impl UncertaintyComputation {
                 diff * diff
             })
             .sum::<f64>() / samples.len() as f64;
-        
+
         (mean, variance)
     }
-    
+
     // 区间估计
     fn interval_estimate<R: PartialOrd + Clone>(&self, samples: &[R]) -> (R, R) {
         // 简化：使用排序和百分位数法
         let mut sorted_samples = samples.to_vec();
         sorted_samples.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-        
+
         let lower_idx = ((1.0 - self.confidence_level) / 2.0 * samples.len() as f64) as usize;
         let upper_idx = (samples.len() as f64 - lower_idx as f64) as usize - 1;
-        
+
         (sorted_samples[lower_idx].clone(), sorted_samples[upper_idx].clone())
     }
 }
@@ -3134,7 +3136,7 @@ struct FuzzySet<T> {
 
 impl<T: Clone> FuzzySet<T> {
     // 创建新的模糊集
-    fn new<F>(membership: F, support: Vec<T>) -> Self 
+    fn new<F>(membership: F, support: Vec<T>) -> Self
     where
         F: Fn(&T) -> f64 + 'static,
     {
@@ -3143,18 +3145,18 @@ impl<T: Clone> FuzzySet<T> {
             support,
         }
     }
-    
+
     // 计算元素隶属度
     fn membership_of(&self, element: &T) -> f64 {
         (self.membership)(element)
     }
-    
+
     // 模糊集交集
     fn intersection(&self, other: &FuzzySet<T>) -> FuzzySet<T> {
         let membership = Box::new(move |element: &T| {
             self.membership_of(element).min(other.membership_of(element))
         });
-        
+
         // 合并支撑集
         let mut combined_support = self.support.clone();
         for element in &other.support {
@@ -3162,19 +3164,19 @@ impl<T: Clone> FuzzySet<T> {
                 combined_support.push(element.clone());
             }
         }
-        
+
         FuzzySet {
             membership,
             support: combined_support,
         }
     }
-    
+
     // 模糊集并集
     fn union(&self, other: &FuzzySet<T>) -> FuzzySet<T> {
         let membership = Box::new(move |element: &T| {
             self.membership_of(element).max(other.membership_of(element))
         });
-        
+
         // 合并支撑集
         let mut combined_support = self.support.clone();
         for element in &other.support {
@@ -3182,13 +3184,13 @@ impl<T: Clone> FuzzySet<T> {
                 combined_support.push(element.clone());
             }
         }
-        
+
         FuzzySet {
             membership,
             support: combined_support,
         }
     }
-    
+
     // α-截集
     fn alpha_cut(&self, alpha: f64) -> Vec<T> {
         self.support.iter()
@@ -3221,46 +3223,46 @@ impl<I: Clone + 'static, O: Clone + 'static> FuzzyController<I, O> {
     fn infer(&self, inputs: &HashMap<String, I>) -> HashMap<String, O> {
         // 步骤1：模糊化
         let fuzzified_inputs = self.fuzzify(inputs);
-        
+
         // 步骤2：规则评估
         let rule_strengths = self.evaluate_rules(&fuzzified_inputs);
-        
+
         // 步骤3：聚合结论
         let aggregated_outputs = self.aggregate_outputs(&rule_strengths);
-        
+
         // 步骤4：解模糊化
         self.defuzzify(&aggregated_outputs)
     }
-    
+
     // 模糊化输入
     fn fuzzify(&self, inputs: &HashMap<String, I>) -> HashMap<String, HashMap<String, f64>> {
         let mut result = HashMap::new();
-        
+
         for (var_name, var_value) in inputs {
             if let Some(fuzzy_sets) = self.input_fuzzy_sets.get(var_name) {
                 let mut var_memberships = HashMap::new();
-                
+
                 for (set_name, fuzzy_set) in fuzzy_sets {
                     let membership = fuzzy_set.membership_of(var_value);
                     var_memberships.insert(set_name.clone(), membership);
                 }
-                
+
                 result.insert(var_name.clone(), var_memberships);
             }
         }
-        
+
         result
     }
-    
+
     // 评估规则
     fn evaluate_rules(&self, fuzzified_inputs: &HashMap<String, HashMap<String, f64>>) -> Vec<(f64, &[(String, String)])> {
         let mut rule_strengths = Vec::new();
-        
+
         for rule in &self.rules {
             // 计算规则前提条件的强度
             let mut rule_strength = 1.0;
             let mut rule_applicable = true;
-            
+
             for (var_name, set_name, operator) in &rule.antecedents {
                 if let Some(var_memberships) = fuzzified_inputs.get(var_name) {
                     if let Some(membership) = var_memberships.get(set_name) {
@@ -3278,19 +3280,19 @@ impl<I: Clone + 'static, O: Clone + 'static> FuzzyController<I, O> {
                     break;
                 }
             }
-            
+
             if rule_applicable {
                 rule_strengths.push((rule_strength, rule.consequents.as_slice()));
             }
         }
-        
+
         rule_strengths
     }
-    
+
     // 聚合输出
     fn aggregate_outputs(&self, rule_strengths: &[(f64, &[(String, String)])]) -> HashMap<String, FuzzySet<O>> {
         let mut aggregated = HashMap::new();
-        
+
         // 为每个输出变量创建聚合后的模糊集
         for (strength, consequents) in rule_strengths {
             for (var_name, set_name) in *consequents {
@@ -3303,7 +3305,7 @@ impl<I: Clone + 'static, O: Clone + 'static> FuzzyController<I, O> {
                             },
                             fuzzy_set.support.clone()
                         );
-                        
+
                         // 聚合到结果中
                         aggregated.entry(var_name.clone())
                             .and_modify(|existing: &mut FuzzySet<O>| {
@@ -3314,14 +3316,14 @@ impl<I: Clone + 'static, O: Clone + 'static> FuzzyController<I, O> {
                 }
             }
         }
-        
+
         aggregated
     }
-    
+
     // 解模糊化
     fn defuzzify(&self, aggregated_outputs: &HashMap<String, FuzzySet<O>>) -> HashMap<String, O> {
         let mut result = HashMap::new();
-        
+
         // 使用重心法解模糊化
         for (var_name, fuzzy_set) in aggregated_outputs {
             // 简化：假设我们可以计算重心
@@ -3330,10 +3332,10 @@ impl<I: Clone + 'static, O: Clone + 'static> FuzzyController<I, O> {
                 result.insert(var_name.clone(), centroid);
             }
         }
-        
+
         result
     }
-    
+
     // 计算模糊集的重心
     fn calculate_centroid(&self, fuzzy_set: &FuzzySet<O>) -> Option<O> {
         // 简化：返回支撑集中隶属度最高的元素
@@ -3426,16 +3428,16 @@ impl SystemMonitor {
         for (res_type, monitor) in &self.resource_monitors {
             resource_usage.insert(res_type.clone(), monitor.current_usage());
         }
-        
+
         // 收集性能指标
         let mut performance_metrics = HashMap::new();
         for (metric, monitor) in &self.performance_monitors {
             performance_metrics.insert(metric.clone(), monitor.current_value());
         }
-        
+
         // 收集最近事件
         let recent_events = self.event_monitor.recent_events(self.monitoring_period);
-        
+
         SystemState {
             timestamp: Utc::now(),
             resource_usage,
@@ -3443,32 +3445,32 @@ impl SystemMonitor {
             recent_events,
         }
     }
-    
+
     // 启动监控
     fn start_monitoring(&mut self) {
         // 启动各监控器
         for (_, monitor) in &mut self.resource_monitors {
             monitor.start();
         }
-        
+
         for (_, monitor) in &mut self.performance_monitors {
             monitor.start();
         }
-        
+
         self.event_monitor.start();
     }
-    
+
     // 停止监控
     fn stop_monitoring(&mut self) {
         // 停止各监控器
         for (_, monitor) in &mut self.resource_monitors {
             monitor.stop();
         }
-        
+
         for (_, monitor) in &mut self.performance_monitors {
             monitor.stop();
         }
-        
+
         self.event_monitor.stop();
     }
 }
@@ -3490,16 +3492,16 @@ impl AdaptationAnalyzer {
     fn analyze(&self, current_state: &SystemState, historical_states: &[SystemState]) -> AnalysisResult {
         // 检测异常
         let anomalies = self.anomaly_detector.detect_anomalies(current_state, historical_states);
-        
+
         // 分析趋势
         let trends = self.trend_analyzer.analyze_trends(historical_states);
-        
+
         // 预测未来状态
         let future_states = self.prediction_model.predict_future_states(historical_states, 5);
-        
+
         // 检查阈值违反
         let threshold_violations = self.check_threshold_violations(current_state);
-        
+
         // 生成分析结果
         AnalysisResult {
             anomalies,
@@ -3509,11 +3511,11 @@ impl AdaptationAnalyzer {
             timestamp: Utc::now(),
         }
     }
-    
+
     // 检查阈值违反
     fn check_threshold_violations(&self, state: &SystemState) -> Vec<ThresholdViolation> {
         let mut violations = Vec::new();
-        
+
         // 检查资源使用阈值
         for (res_type, usage) in &state.resource_usage {
             if let Some((lower, upper)) = self.thresholds.get(&format!("resource:{:?}", res_type)) {
@@ -3534,7 +3536,7 @@ impl AdaptationAnalyzer {
                 }
             }
         }
-        
+
         // 检查性能指标阈值
         for (metric, value) in &state.performance_metrics {
             if let Some((lower, upper)) = self.thresholds.get(&format!("performance:{:?}", metric)) {
@@ -3555,7 +3557,7 @@ impl AdaptationAnalyzer {
                 }
             }
         }
-        
+
         violations
     }
 }
@@ -3575,10 +3577,10 @@ impl AdaptationPlanner {
     fn plan(&self, analysis: &AnalysisResult) -> AdaptationPlan {
         // 找到触发的策略
         let triggered_policies = self.find_triggered_policies(analysis);
-        
+
         // 按优先级排序策略
         let prioritized_policies = self.prioritize_policies(triggered_policies);
-        
+
         // 选择适应行动
         let mut actions = Vec::new();
         for policy in prioritized_policies {
@@ -3586,10 +3588,10 @@ impl AdaptationPlanner {
                 actions.push(action);
             }
         }
-        
+
         // 检查行动冲突
         let conflict_free_actions = self.resolve_action_conflicts(actions);
-        
+
         // 创建执行计划
         AdaptationPlan {
             actions: conflict_free_actions,
@@ -3597,24 +3599,24 @@ impl AdaptationPlanner {
             coordination: self.determine_coordination_strategy(analysis),
         }
     }
-    
+
     // 找到触发的策略
     fn find_triggered_policies(&self, analysis: &AnalysisResult) -> Vec<&AdaptationPolicy> {
         let mut triggered = Vec::new();
-        
+
         for policy in &self.policies {
             if policy.is_triggered(analysis) {
                 triggered.push(policy);
             }
         }
-        
+
         triggered
     }
-    
+
     // 按优先级排序策略
     fn prioritize_policies<'a>(&self, policies: Vec<&'a AdaptationPolicy>) -> Vec<&'a AdaptationPolicy> {
         let mut prioritized = policies;
-        
+
         prioritized.sort_by(|a, b| {
             // 应用优先级规则
             for rule in &self.priority_rules {
@@ -3622,14 +3624,14 @@ impl AdaptationPlanner {
                     return ordering;
                 }
             }
-            
+
             // 默认按策略优先级排序
             b.priority.cmp(&a.priority)
         });
-        
+
         prioritized
     }
-    
+
     // 选择适应行动
     fn select_action(&self, policy: &AdaptationPolicy) -> Option<AdaptationAction> {
         if let Some(actions) = self.strategies.get(&policy.strategy) {
@@ -3639,16 +3641,16 @@ impl AdaptationPlanner {
             None
         }
     }
-    
+
     // 解决行动冲突
     fn resolve_action_conflicts(&self, actions: Vec<AdaptationAction>) -> Vec<AdaptationAction> {
         let mut conflict_free = Vec::new();
         let mut seen_resources = HashSet::new();
-        
+
         for action in actions {
             // 检查是否与已选行动冲突
             let resources = action.affected_resources();
-            
+
             if resources.iter().any(|r| seen_resources.contains(r)) {
                 // 存在冲突，检查是否可以合并
                 if let Some(merged) = self.try_merge_actions(&conflict_free, &action) {
@@ -3663,10 +3665,10 @@ impl AdaptationPlanner {
                 seen_resources.extend(resources);
             }
         }
-        
+
         conflict_free
     }
-    
+
     // 尝试合并行动
     fn try_merge_actions(&self, existing_actions: &[AdaptationAction], new_action: &AdaptationAction) -> Option<AdaptationAction> {
         for action in existing_actions {
@@ -3674,10 +3676,10 @@ impl AdaptationPlanner {
                 return Some(action.merge_with(new_action));
             }
         }
-        
+
         None
     }
-    
+
     // 确定执行时机
     fn determine_timing(&self, analysis: &AnalysisResult) -> ExecutionTiming {
         // 根据分析结果确定执行时机
@@ -3692,7 +3694,7 @@ impl AdaptationPlanner {
             ExecutionTiming::Scheduled(Utc::now() + chrono::Duration::minutes(5))
         }
     }
-    
+
     // 确定协调策略
     fn determine_coordination_strategy(&self, analysis: &AnalysisResult) -> CoordinationStrategy {
         // 根据分析结果确定协调策略
@@ -3741,43 +3743,43 @@ impl AdaptationExecutor {
             },
         }
     }
-    
+
     // 执行适应行动
     fn execute_actions(&mut self, actions: Vec<AdaptationAction>) -> ExecutionResult {
         let mut results = HashMap::new();
         let mut succeeded = true;
-        
+
         // 根据协调策略组织执行
         for action in actions {
             // 获取对应的执行器
             if let Some(executor) = self.executors.get(&action.strategy) {
                 // 执行行动
                 let result = executor.execute(&action);
-                
+
                 // 记录执行状态
                 self.execution_state.insert(action.id, ExecutionState {
                     action: action.clone(),
                     start_time: Utc::now(),
-                    status: if result.success { 
-                        ActionStatus::Succeeded 
-                    } else { 
-                        ActionStatus::Failed(result.error.unwrap_or_else(|| "Unknown error".to_string())) 
+                    status: if result.success {
+                        ActionStatus::Succeeded
+                    } else {
+                        ActionStatus::Failed(result.error.unwrap_or_else(|| "Unknown error".to_string()))
                     },
                     completion_time: if result.success { Some(Utc::now()) } else { None },
                 });
-                
+
                 // 记录结果
                 results.insert(action.id, result.clone());
-                
+
                 // 检查执行是否成功
                 if !result.success {
                     succeeded = false;
-                    
+
                     // 处理失败，考虑回滚
                     if action.needs_rollback_on_failure {
                         self.rollback_handler.rollback_action(&action);
                     }
-                    
+
                     // 根据失败处理策略决定是否继续
                     if action.fail_fast {
                         break;
@@ -3790,14 +3792,14 @@ impl AdaptationExecutor {
                     error: Some(format!("No executor found for strategy {:?}", action.strategy)),
                     metrics: HashMap::new(),
                 });
-                
+
                 succeeded = false;
                 if action.fail_fast {
                     break;
                 }
             }
         }
-        
+
         // 返回总体执行结果
         ExecutionResult {
             success: succeeded,
@@ -3805,17 +3807,17 @@ impl AdaptationExecutor {
             metrics: self.aggregate_metrics(&results),
         }
     }
-    
+
     // 聚合指标数据
     fn aggregate_metrics(&self, results: &HashMap<ActionId, ExecutionResult>) -> HashMap<String, f64> {
         let mut aggregated = HashMap::new();
-        
+
         for result in results.values() {
             for (metric, value) in &result.metrics {
                 *aggregated.entry(metric.clone()).or_insert(0.0) += value;
             }
         }
-        
+
         aggregated
     }
 }
@@ -3836,43 +3838,43 @@ impl KnowledgeBase {
     // 更新系统状态
     fn update_state(&mut self, state: SystemState) {
         self.state_history.push_back(state);
-        
+
         // 限制历史记录大小
         if self.state_history.len() > MAX_HISTORY_SIZE {
             self.state_history.pop_front();
         }
-        
+
         // 更新学习模型
         self.learning_model.update(&self.state_history);
     }
-    
+
     // 记录适应结果
     fn record_adaptation(&mut self, action: AdaptationAction, result: ExecutionResult) {
         self.action_history.push_back((action, result));
-        
+
         // 限制历史记录大小
         if self.action_history.len() > MAX_ACTION_HISTORY {
             self.action_history.pop_front();
         }
-        
+
         // 更新学习模型
         self.learning_model.learn_from_action(&self.action_history);
     }
-    
+
     // 查询知识
     fn query(&self, context: &AdaptationContext) -> KnowledgeQueryResult {
         // 应用知识规则
         let mut applicable_rules = Vec::new();
-        
+
         for rule in &self.knowledge_rules {
             if rule.is_applicable(context) {
                 applicable_rules.push(rule);
             }
         }
-        
+
         // 获取模型预测
         let model_prediction = self.learning_model.predict(context);
-        
+
         KnowledgeQueryResult {
             applicable_rules,
             model_prediction,
@@ -3932,14 +3934,14 @@ impl FormalVerifier {
     // 静态验证系统模型
     fn verify_system_model(&self, system_model: &SystemModel) -> VerificationResult {
         let mut property_results = HashMap::new();
-        
+
         // 使用模型检查器验证安全性和活性属性
         for (name, property) in &self.property_specifications {
             match property {
                 FormalProperty::Safety(formula) | FormalProperty::Liveness(formula) => {
                     // 将属性转换为时态逻辑表达式
                     let expr = self.parse_formula(formula);
-                    
+
                     // 使用模型检查器验证
                     let result = self.model_checker.check(system_model, &expr);
                     property_results.insert(name.clone(), result);
@@ -3947,7 +3949,7 @@ impl FormalVerifier {
                 FormalProperty::Invariant(formula) => {
                     // 将不变量转换为逻辑表达式
                     let expr = self.parse_formula(formula);
-                    
+
                     // 使用定理证明器验证
                     let result = self.theorem_prover.prove(system_model, &expr);
                     property_results.insert(name.clone(), result);
@@ -3957,25 +3959,25 @@ impl FormalVerifier {
                 },
             }
         }
-        
+
         // 整合验证结果
         let verified = property_results.values().all(|r| r.verified);
-        
+
         VerificationResult {
             verified,
             property_results,
-            counter_examples: if verified { 
-                None 
-            } else { 
-                Some(self.extract_counter_examples(&property_results)) 
+            counter_examples: if verified {
+                None
+            } else {
+                Some(self.extract_counter_examples(&property_results))
             },
         }
     }
-    
+
     // 运行时验证
     fn runtime_verify(&self, system_state: &SystemState) -> RuntimeVerificationResult {
         let mut violations = Vec::new();
-        
+
         // 检查所有需要运行时验证的属性
         for (name, property) in &self.property_specifications {
             match property {
@@ -4002,7 +4004,7 @@ impl FormalVerifier {
                 },
             }
         }
-        
+
         RuntimeVerificationResult {
             satisfied: violations.is_empty(),
             violations,
@@ -4010,18 +4012,18 @@ impl FormalVerifier {
             timestamp: Utc::now(),
         }
     }
-    
+
     // 解析形式化公式
     fn parse_formula(&self, formula: &str) -> TemporalLogicExpr {
         // 简化：这里应该是一个实际的解析器
         // 示例实现返回一个简单的原子表达式
         TemporalLogicExpr::Atom(formula.to_string())
     }
-    
+
     // 提取反例
     fn extract_counter_examples(&self, results: &HashMap<String, VerificationResult>) -> Vec<CounterExample> {
         let mut counter_examples = Vec::new();
-        
+
         for (property_name, result) in results {
             if !result.verified {
                 if let Some(ref examples) = result.counter_examples {
@@ -4035,7 +4037,7 @@ impl FormalVerifier {
                 }
             }
         }
-        
+
         counter_examples
     }
 }
@@ -4044,10 +4046,10 @@ impl FormalVerifier {
 trait ModelChecker {
     // 检查系统模型是否满足时态逻辑表达式
     fn check(&self, model: &SystemModel, property: &TemporalLogicExpr) -> VerificationResult;
-    
+
     // 生成状态空间
     fn generate_state_space(&self, model: &SystemModel) -> StateSpace;
-    
+
     // 缩减状态空间
     fn reduce_state_space(&self, space: &StateSpace) -> StateSpace;
 }
@@ -4066,10 +4068,10 @@ impl ModelChecker for SymbolicModelChecker {
     fn check(&self, model: &SystemModel, property: &TemporalLogicExpr) -> VerificationResult {
         // 生成初始状态空间
         let mut state_space = self.generate_state_space(model);
-        
+
         // 应用状态空间约简
         state_space = self.reduce_state_space(&state_space);
-        
+
         // 检查状态空间是否太大
         if state_space.size() > self.max_states {
             return VerificationResult {
@@ -4082,24 +4084,24 @@ impl ModelChecker for SymbolicModelChecker {
                 }]),
             };
         }
-        
+
         // 将属性转换为BDD
         let property_bdd = self.convert_to_bdd(property);
-        
+
         // 计算满足属性的状态集
         let satisfying_states = self.compute_satisfying_states(&state_space, &property_bdd);
-        
+
         // 检查初始状态是否在满足集中
         let initial_states = state_space.initial_states();
         let verified = initial_states.iter().all(|s| satisfying_states.contains(s));
-        
+
         // 如果验证失败，生成反例
         let counter_examples = if !verified {
             Some(self.generate_counter_examples(&state_space, &satisfying_states, initial_states))
         } else {
             None
         };
-        
+
         // 构建结果
         let mut property_results = HashMap::new();
         property_results.insert("main".to_string(), VerificationResult {
@@ -4107,33 +4109,33 @@ impl ModelChecker for SymbolicModelChecker {
             property_results: HashMap::new(),
             counter_examples: counter_examples.clone(),
         });
-        
+
         VerificationResult {
             verified,
             property_results,
             counter_examples,
         }
     }
-    
+
     fn generate_state_space(&self, model: &SystemModel) -> StateSpace {
         // 创建初始状态
         let initial_states = model.initial_states();
-        
+
         // 创建转换关系
         let transitions = model.transitions();
-        
+
         // 构建状态空间
         StateSpace::new(initial_states, transitions)
     }
-    
+
     fn reduce_state_space(&self, space: &StateSpace) -> StateSpace {
         let mut reduced_space = space.clone();
-        
+
         // 应用各种约简技术
         for technique in &self.reduction_techniques {
             reduced_space = technique.apply(&reduced_space);
         }
-        
+
         reduced_space
     }
 }
@@ -4142,10 +4144,10 @@ impl ModelChecker for SymbolicModelChecker {
 trait TheoremProver {
     // 证明系统模型满足逻辑表达式
     fn prove(&self, model: &SystemModel, property: &TemporalLogicExpr) -> VerificationResult;
-    
+
     // 生成不变量
     fn generate_invariants(&self, model: &SystemModel) -> Vec<TemporalLogicExpr>;
-    
+
     // 尝试反证
     fn try_disprove(&self, model: &SystemModel, property: &TemporalLogicExpr) -> Option<CounterExample>;
 }
@@ -4154,16 +4156,16 @@ trait TheoremProver {
 trait RuntimeMonitor {
     // 检查不变量
     fn check_invariant(&self, formula: &str, state: &SystemState) -> bool;
-    
+
     // 检查截止时间属性
     fn check_deadline(&self, formula: &str, state: &SystemState, deadline: Duration) -> bool;
-    
+
     // 检查公平性
     fn check_fairness(&self, formula: &str, state: &SystemState) -> bool;
-    
+
     // 记录事件
     fn record_event(&mut self, event: SystemEvent);
-    
+
     // 检查时态属性
     fn check_temporal_property(&self, property: &TemporalLogicExpr) -> bool;
 }
@@ -4271,7 +4273,7 @@ impl IncrementalDeploymentPlan {
     fn execute(&self) -> DeploymentResult {
         let mut results = HashMap::new();
         let mut current_version = self.evolution_path.current_version.clone();
-        
+
         // 按阶段执行部署
         for phase in &[
             DeploymentPhase::Planning,
@@ -4283,21 +4285,21 @@ impl IncrementalDeploymentPlan {
         ] {
             if let Some(plan) = self.phase_plans.get(phase) {
                 println!("Executing {:?} phase", phase);
-                
+
                 // 执行当前阶段
                 let phase_result = plan.execute();
                 results.insert(phase.clone(), phase_result.clone());
-                
+
                 // 检查阶段是否成功
                 if !phase_result.success {
                     println!("Phase {:?} failed: {}", phase, phase_result.message);
-                    
+
                     // 执行回滚
                     if let Some(rollback_plan) = self.evolution_path.rollback_plans.get(&current_version) {
                         println!("Executing rollback plan for version {}", current_version);
                         rollback_plan.execute();
                     }
-                    
+
                     return DeploymentResult {
                         success: false,
                         completed_phases: results,
@@ -4305,20 +4307,20 @@ impl IncrementalDeploymentPlan {
                         message: format!("Deployment failed at {:?} phase", phase),
                     };
                 }
-                
+
                 // 检查成功标准
                 if let Some(criteria) = self.success_criteria.get(phase) {
                     let all_criteria_met = criteria.iter().all(|c| c.is_met());
-                    
+
                     if !all_criteria_met {
                         println!("Success criteria not met for phase {:?}", phase);
-                        
+
                         // 执行回滚
                         if let Some(rollback_plan) = self.evolution_path.rollback_plans.get(&current_version) {
                             println!("Executing rollback plan for version {}", current_version);
                             rollback_plan.execute();
                         }
-                        
+
                         return DeploymentResult {
                             success: false,
                             completed_phases: results,
@@ -4327,7 +4329,7 @@ impl IncrementalDeploymentPlan {
                         };
                     }
                 }
-                
+
                 // 在全量部署阶段更新当前版本
                 if *phase == DeploymentPhase::FullDeployment {
                     if !self.evolution_path.intermediate_versions.is_empty() {
@@ -4340,7 +4342,7 @@ impl IncrementalDeploymentPlan {
                 }
             }
         }
-        
+
         // 确认最终版本
         let final_version = if current_version == self.evolution_path.target_version {
             current_version
@@ -4348,7 +4350,7 @@ impl IncrementalDeploymentPlan {
             // 没有达到目标版本，可能是只完成了部分演进
             current_version
         };
-        
+
         DeploymentResult {
             success: true,
             completed_phases: results,
@@ -4356,49 +4358,49 @@ impl IncrementalDeploymentPlan {
             message: "Deployment completed successfully".to_string(),
         }
     }
-    
+
     // 验证部署
     fn validate(&self) -> ValidationResult {
         println!("Validating deployment");
-        
+
         let mut test_results = HashMap::new();
         let mut all_passed = true;
-        
+
         // 执行所有验证测试
         for test in &self.validation_tests {
             println!("Running test: {}", test.name);
             let result = test.run();
-            
+
             if !result.passed {
                 all_passed = false;
                 println!("Test failed: {}", result.message);
             }
-            
+
             test_results.insert(test.name.clone(), result);
         }
-        
+
         ValidationResult {
             passed: all_passed,
             test_results,
         }
     }
-    
+
     // 监控部署
     fn monitor(&self) -> MonitoringResult {
         println!("Monitoring deployment");
-        
+
         // 启动监控
         self.monitoring_plan.start();
-        
+
         // 收集监控数据
         let metrics = self.monitoring_plan.collect_metrics();
-        
+
         // 分析指标
         let analysis = self.monitoring_plan.analyze_metrics(&metrics);
-        
+
         // 检查是否有异常
         let anomalies = self.monitoring_plan.detect_anomalies(&metrics);
-        
+
         MonitoringResult {
             metrics,
             analysis,
@@ -4424,14 +4426,14 @@ impl PhasePlan {
     // 执行阶段计划
     fn execute(&self) -> PhaseResult {
         println!("Executing phase plan: {}", self.name);
-        
+
         let mut task_results = HashMap::new();
         let start_time = Utc::now();
-        
+
         // 执行所有任务
         for task in &self.tasks {
             println!("Executing task: {}", task.name);
-            
+
             // 检查任务依赖
             if !self.check_task_dependencies(task, &task_results) {
                 let result = TaskResult {
@@ -4439,23 +4441,23 @@ impl PhasePlan {
                     message: "Dependency failed".to_string(),
                     execution_time: Duration::from_secs(0),
                 };
-                
+
                 task_results.insert(task.name.clone(), result);
                 continue;
             }
-            
+
             // 执行任务
             let task_start = Instant::now();
             let result = task.execute();
             let execution_time = task_start.elapsed();
-            
+
             // 记录结果
             task_results.insert(task.name.clone(), TaskResult {
                 success: result.success,
                 message: result.message.clone(),
                 execution_time,
             });
-            
+
             // 检查是否超时
             let elapsed = start_time.signed_duration_since(Utc::now());
             if elapsed > chrono::Duration::from_std(self.timeout).unwrap() {
@@ -4465,7 +4467,7 @@ impl PhasePlan {
                     message: "Phase execution timed out".to_string(),
                 };
             }
-            
+
             // 如果任务失败且是关键任务，则整个阶段失败
             if !result.success && task.critical {
                 return PhaseResult {
@@ -4475,12 +4477,12 @@ impl PhasePlan {
                 };
             }
         }
-        
+
         // 检查所有关键任务是否成功
         let all_critical_succeeded = self.tasks.iter()
             .filter(|t| t.critical)
             .all(|t| task_results[&t.name].success);
-            
+
         PhaseResult {
             success: all_critical_succeeded,
             task_results,
@@ -4491,7 +4493,7 @@ impl PhasePlan {
             },
         }
     }
-    
+
     // 检查任务依赖
     fn check_task_dependencies(&self, task: &DeploymentTask, task_results: &HashMap<String, TaskResult>) -> bool {
         for dep in &task.dependencies {
@@ -4505,7 +4507,7 @@ impl PhasePlan {
                 return false;
             }
         }
-        
+
         true
     }
 }
@@ -4546,7 +4548,7 @@ impl RollbackPlan {
     // 执行回滚
     fn execute(&self) -> RollbackResult {
         println!("Executing rollback plan");
-        
+
         // 执行回滚前检查
         for (i, check) in self.pre_checks.iter().enumerate() {
             if !check() {
@@ -4556,16 +4558,16 @@ impl RollbackPlan {
                 };
             }
         }
-        
+
         let mut task_results = HashMap::new();
-        
+
         // 执行回滚任务
         for task in &self.tasks {
             println!("Executing rollback task: {}", task.name);
             let result = task.execute();
             task_results.insert(task.name.clone(), result);
         }
-        
+
         // 执行回滚后检查
         for (i, check) in self.post_checks.iter().enumerate() {
             if !check() {
@@ -4575,11 +4577,11 @@ impl RollbackPlan {
                 };
             }
         }
-        
+
         // 检查所有任务是否成功
         let all_succeeded = self.tasks.iter()
             .all(|t| task_results.get(&t.name).map_or(false, |r| r.success));
-            
+
         RollbackResult {
             success: all_succeeded,
             message: if all_succeeded {
@@ -4640,61 +4642,61 @@ impl HybridConsistencyManager {
     fn read<T>(&self, resource_id: ResourceId, options: Option<ConsistencyOptions>) -> Result<T, Error> {
         // 确定一致性级别
         let consistency_level = self.determine_consistency_level(resource_id, options);
-        
+
         // 获取对应的一致性协议
         if let Some(protocol) = self.consistency_implementations.get(&consistency_level) {
             // 执行读取操作
             let start = Instant::now();
             let result = protocol.read(resource_id);
             let duration = start.elapsed();
-            
+
             // 更新指标
             self.metrics.record_operation(OperationType::Read, consistency_level, duration, result.is_ok());
-            
+
             result
         } else {
             Err(Error::ConsistencyLevelNotSupported)
         }
     }
-    
+
     // 写入操作
     fn write<T>(&self, resource_id: ResourceId, value: T, options: Option<ConsistencyOptions>) -> Result<(), Error> {
         // 确定一致性级别
         let consistency_level = self.determine_consistency_level(resource_id, options);
-        
+
         // 获取对应的一致性协议
         if let Some(protocol) = self.consistency_implementations.get(&consistency_level) {
             // 执行写入操作
             let start = Instant::now();
             let result = protocol.write(resource_id, value);
             let duration = start.elapsed();
-            
+
             // 更新指标
             self.metrics.record_operation(OperationType::Write, consistency_level, duration, result.is_ok());
-            
+
             result
         } else {
             Err(Error::ConsistencyLevelNotSupported)
         }
     }
-    
+
     // 确定资源的一致性级别
     fn determine_consistency_level(&self, resource_id: ResourceId, options: Option<ConsistencyOptions>) -> ConsistencyLevel {
         // 优先使用请求选项
         if let Some(opts) = options {
             return opts.level;
         }
-        
+
         // 其次使用资源特定设置
         let resource_type = self.get_resource_type(resource_id);
         if let Some(level) = self.resource_settings.get(&resource_type) {
             return level.clone();
         }
-        
+
         // 最后使用默认级别
         self.default_level.clone()
     }
-    
+
     // 获取资源类型
     fn get_resource_type(&self, resource_id: ResourceId) -> ResourceType {
         // 实现资源ID到资源类型的映射
@@ -4705,13 +4707,13 @@ impl HybridConsistencyManager {
             _ => ResourceType::Regular,
         }
     }
-    
+
     // 动态调整一致性级别
     fn adjust_consistency_level(&mut self, resource_type: ResourceType, new_level: ConsistencyLevel) {
         println!("Adjusting consistency level for {:?} to {:?}", resource_type, new_level);
         self.resource_settings.insert(resource_type, new_level);
     }
-    
+
     // 获取一致性指标
     fn get_metrics(&self) -> &ConsistencyMetrics {
         &self.metrics
@@ -4722,13 +4724,13 @@ impl HybridConsistencyManager {
 trait ConsistencyProtocol {
     // 读取操作
     fn read<T>(&self, resource_id: ResourceId) -> Result<T, Error>;
-    
+
     // 写入操作
     fn write<T>(&self, resource_id: ResourceId, value: T) -> Result<(), Error>;
-    
+
     // 获取协议描述
     fn get_description(&self) -> String;
-    
+
     // 检查一致性保证
     fn check_guarantees(&self) -> Vec<ConsistencyGuarantee>;
 }
@@ -4748,16 +4750,16 @@ impl ConsistencyProtocol for StrongConsistencyProtocol {
         // 通过共识引擎读取
         self.consensus_engine.read(resource_id)
     }
-    
+
     fn write<T>(&self, resource_id: ResourceId, value: T) -> Result<(), Error> {
         // 通过共识引擎写入
         self.consensus_engine.write(resource_id, value)
     }
-    
+
     fn get_description(&self) -> String {
         format!("Strong consistency protocol with quorum size {}", self.quorum_size)
     }
-    
+
     fn check_guarantees(&self) -> Vec<ConsistencyGuarantee> {
         vec![
             ConsistencyGuarantee::Linearizability,
@@ -4783,27 +4785,27 @@ impl ConsistencyProtocol for EventualConsistencyProtocol {
         // 直接从本地存储读取
         self.local_store.get(resource_id)
     }
-    
+
     fn write<T>(&self, resource_id: ResourceId, value: T) -> Result<(), Error> {
         // 首先写入本地存储
         self.local_store.put(resource_id, value.clone())?;
-        
+
         // 然后将写入事件加入复制队列
         let event = ReplicationEvent {
             resource_id,
             value: Box::new(value),
             timestamp: Utc::now(),
         };
-        
+
         self.replication_queue.push(event)?;
-        
+
         Ok(())
     }
-    
+
     fn get_description(&self) -> String {
         "Eventual consistency protocol with asynchronous replication".to_string()
     }
-    
+
     fn check_guarantees(&self) -> Vec<ConsistencyGuarantee> {
         vec![
             ConsistencyGuarantee::EventualConvergence,
@@ -4846,22 +4848,22 @@ impl ConsistencyMetrics {
         self.latencies.entry((op_type, level.clone()))
             .or_insert_with(Vec::new)
             .push(duration);
-            
+
         // 记录成功率
         let (success_count, total_count) = self.success_rates.entry((op_type, level))
             .or_insert((0, 0));
-        
+
         *total_count += 1;
         if success {
             *success_count += 1;
         }
     }
-    
+
     // 记录一致性违反
     fn record_violation(&mut self, guarantee: ConsistencyGuarantee) {
         *self.consistency_violations.entry(guarantee).or_insert(0) += 1;
     }
-    
+
     // 计算平均延迟
     fn average_latency(&self, op_type: OperationType, level: ConsistencyLevel) -> Option<Duration> {
         if let Some(latencies) = self.latencies.get(&(op_type, level)) {
@@ -4871,10 +4873,10 @@ impl ConsistencyMetrics {
                 return Some(Duration::from_nanos(avg_nanos as u64));
             }
         }
-        
+
         None
     }
-    
+
     // 计算成功率
     fn success_rate(&self, op_type: OperationType, level: ConsistencyLevel) -> Option<f64> {
         if let Some((success_count, total_count)) = self.success_rates.get(&(op_type, level)) {
@@ -4882,7 +4884,7 @@ impl ConsistencyMetrics {
                 return Some(*success_count as f64 / *total_count as f64);
             }
         }
-        
+
         None
     }
 }
@@ -4979,7 +4981,7 @@ impl AutoScaler {
                 return None;
             }
         }
-        
+
         // 根据触发器类型检查
         match &self.config.trigger {
             ScalingTrigger::Metric { metric_name: _, threshold, comparison } => {
@@ -5019,7 +5021,7 @@ impl AutoScaler {
             ScalingTrigger::Predictive { model, look_ahead } => {
                 // 预测未来负载
                 let predicted_metric = model.predict_metric(look_ahead);
-                
+
                 // 根据预测值决定扩容还是缩容
                 if self.should_scale_out(predicted_metric) {
                     return self.plan_scale_out();
@@ -5031,20 +5033,20 @@ impl AutoScaler {
                 // 手动触发，不在自动检查中处理
             },
         }
-        
+
         None
     }
-    
+
     // 执行扩缩容操作
     fn execute_scaling(&mut self, action: ScalingAction) -> ScalingResult {
         println!("Executing scaling action: {:?}", action);
-        
+
         match action {
             ScalingAction::ScaleOut(count) => {
                 // 检查是否超过最大实例数
                 let new_count = self.current_instances + count;
                 let target_count = new_count.min(self.config.max_instances);
-                
+
                 if target_count <= self.current_instances {
                     return ScalingResult {
                         success: false,
@@ -5053,13 +5055,13 @@ impl AutoScaler {
                         actual_instances: self.current_instances,
                     };
                 }
-                
+
                 // 执行扩容
                 match self.resource_allocator.allocate(target_count - self.current_instances) {
                     Ok(_) => {
                         self.current_instances = target_count;
                         self.last_scaling = Some(Utc::now());
-                        
+
                         ScalingResult {
                             success: true,
                             action,
@@ -5081,7 +5083,7 @@ impl AutoScaler {
                 // 检查是否低于最小实例数
                 let new_count = self.current_instances.saturating_sub(count);
                 let target_count = new_count.max(self.config.min_instances);
-                
+
                 if target_count >= self.current_instances {
                     return ScalingResult {
                         success: false,
@@ -5090,13 +5092,13 @@ impl AutoScaler {
                         actual_instances: self.current_instances,
                     };
                 }
-                
+
                 // 执行缩容
                 match self.resource_allocator.deallocate(self.current_instances - target_count) {
                     Ok(_) => {
                         self.current_instances = target_count;
                         self.last_scaling = Some(Utc::now());
-                        
+
                         ScalingResult {
                             success: true,
                             action,
@@ -5125,7 +5127,7 @@ impl AutoScaler {
             },
         }
     }
-    
+
     // 检查调度触发
     fn is_schedule_triggered(&self, cron_expression: &str) -> bool {
         // 解析cron表达式并检查是否匹配当前时间
@@ -5133,81 +5135,81 @@ impl AutoScaler {
         let now = Utc::now();
         let minute = now.minute() as u8;
         let hour = now.hour() as u8;
-        
+
         // 简单示例：每小时整点触发
         hour % 1 == 0 && minute == 0
     }
-    
+
     // 判断是否应该扩容
     fn should_scale_out(&self, metric: f64) -> bool {
         // 检查是否已经达到最大实例数
         if self.current_instances >= self.config.max_instances {
             return false;
         }
-        
+
         // 检查指标趋势
         let trend = self.calculate_metric_trend();
-        
+
         // 如果指标值高且趋势上升，则扩容
         metric > 0.7 && trend > 0.1
     }
-    
+
     // 判断是否应该缩容
     fn should_scale_in(&self, metric: f64) -> bool {
         // 检查是否已经达到最小实例数
         if self.current_instances <= self.config.min_instances {
             return false;
         }
-        
+
         // 检查指标趋势
         let trend = self.calculate_metric_trend();
-        
+
         // 检查稳定期
         let stable = self.check_stability_period();
-        
+
         // 如果指标值低且趋势下降，且系统稳定，则缩容
         metric < 0.3 && trend < -0.1 && stable
     }
-    
+
     // 计算指标趋势
     fn calculate_metric_trend(&self) -> f64 {
         if self.metric_history.len() < 2 {
             return 0.0;
         }
-        
+
         // 使用简单线性回归计算趋势
         let n = self.metric_history.len() as f64;
         let mut sum_x = 0.0;
         let mut sum_y = 0.0;
         let mut sum_xy = 0.0;
         let mut sum_xx = 0.0;
-        
+
         for (i, (_, value)) in self.metric_history.iter().enumerate() {
             let x = i as f64;
             let y = *value;
-            
+
             sum_x += x;
             sum_y += y;
             sum_xy += x * y;
             sum_xx += x * x;
         }
-        
+
         // 计算斜率
         let slope = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
-        
+
         slope
     }
-    
+
     // 检查稳定期
     fn check_stability_period(&self) -> bool {
         if let Some(last_scaling) = self.last_scaling {
             let elapsed = Utc::now().signed_duration_since(last_scaling);
             return elapsed >= chrono::Duration::from_std(self.config.stabilization_period).unwrap();
         }
-        
+
         true // 如果没有上次扩缩容记录，则认为已经稳定
     }
-    
+
     // 规划扩容操作
     fn plan_scale_out(&self) -> Option<ScalingAction> {
         if self.current_instances < self.config.max_instances {
@@ -5217,7 +5219,7 @@ impl AutoScaler {
             None
         }
     }
-    
+
     // 规划缩容操作
     fn plan_scale_in(&self) -> Option<ScalingAction> {
         if self.current_instances > self.config.min_instances {
@@ -5227,11 +5229,11 @@ impl AutoScaler {
             None
         }
     }
-    
+
     // 更新指标历史
     fn update_metric_history(&mut self, metric: f64) {
         self.metric_history.push_back((Utc::now(), metric));
-        
+
         // 限制历史长度
         const MAX_HISTORY_LENGTH: usize = 100;
         if self.metric_history.len() > MAX_HISTORY_LENGTH {
@@ -5267,13 +5269,13 @@ struct ScalingResult {
 trait ResourceAllocator {
     // 分配资源
     fn allocate(&self, count: usize) -> Result<(), String>;
-    
+
     // 释放资源
     fn deallocate(&self, count: usize) -> Result<(), String>;
-    
+
     // 获取可用资源
     fn get_available_resources(&self) -> usize;
-    
+
     // 获取总资源
     fn get_total_resources(&self) -> usize;
 }
@@ -5282,10 +5284,10 @@ trait ResourceAllocator {
 trait LoadPredictor {
     // 预测未来负载
     fn predict_load(&self, look_ahead: Duration) -> f64;
-    
+
     // 更新预测模型
     fn update_model(&mut self, metrics: &[(DateTime<Utc>, f64)]);
-    
+
     // 获取预测准确度
     fn get_prediction_accuracy(&self) -> f64;
 }
@@ -5303,42 +5305,42 @@ struct KubernetesResourceAllocator {
 impl ResourceAllocator for KubernetesResourceAllocator {
     fn allocate(&self, count: usize) -> Result<(), String> {
         println!("Scaling up {} instances in Kubernetes deployment {}", count, self.deployment);
-        
+
         // 获取当前部署
         let deployment = self.client.get_deployment(&self.namespace, &self.deployment)
             .map_err(|e| format!("Failed to get deployment: {}", e))?;
-            
+
         // 计算新的副本数
         let current_replicas = deployment.spec.replicas;
         let new_replicas = current_replicas + count as i32;
-        
+
         // 更新部署
         self.client.scale_deployment(&self.namespace, &self.deployment, new_replicas)
             .map_err(|e| format!("Failed to scale deployment: {}", e))?;
-            
+
         // 等待部署完成
         self.wait_for_deployment_ready()
     }
-    
+
     fn deallocate(&self, count: usize) -> Result<(), String> {
         println!("Scaling down {} instances in Kubernetes deployment {}", count, self.deployment);
-        
+
         // 获取当前部署
         let deployment = self.client.get_deployment(&self.namespace, &self.deployment)
             .map_err(|e| format!("Failed to get deployment: {}", e))?;
-            
+
         // 计算新的副本数
         let current_replicas = deployment.spec.replicas;
         let new_replicas = (current_replicas - count as i32).max(0);
-        
+
         // 更新部署
         self.client.scale_deployment(&self.namespace, &self.deployment, new_replicas)
             .map_err(|e| format!("Failed to scale deployment: {}", e))?;
-            
+
         // 等待部署完成
         self.wait_for_deployment_ready()
     }
-    
+
     fn get_available_resources(&self) -> usize {
         // 获取可用资源数量（例如，可用的节点数）
         match self.client.get_available_resources(&self.namespace) {
@@ -5346,7 +5348,7 @@ impl ResourceAllocator for KubernetesResourceAllocator {
             Err(_) => 0, // 获取失败时返回0
         }
     }
-    
+
     fn get_total_resources(&self) -> usize {
         // 获取总资源数量
         match self.client.get_total_resources(&self.namespace) {
@@ -5360,25 +5362,25 @@ impl KubernetesResourceAllocator {
     // 等待部署就绪
     fn wait_for_deployment_ready(&self) -> Result<(), String> {
         println!("Waiting for deployment to be ready");
-        
+
         let start_time = Instant::now();
         let timeout = Duration::from_secs(300); // 5分钟超时
-        
+
         loop {
             // 检查部署状态
             let deployment = self.client.get_deployment(&self.namespace, &self.deployment)
                 .map_err(|e| format!("Failed to get deployment: {}", e))?;
-                
+
             if deployment.status.ready_replicas == deployment.spec.replicas {
                 println!("Deployment is ready");
                 return Ok(());
             }
-            
+
             // 检查是否超时
             if start_time.elapsed() > timeout {
                 return Err("Timed out waiting for deployment to be ready".to_string());
             }
-            
+
             // 等待一段时间后重试
             thread::sleep(Duration::from_secs(5));
         }
@@ -5395,7 +5397,7 @@ impl KubernetesClient {
     fn get_deployment(&self, namespace: &str, name: &str) -> Result<Deployment, String> {
         // 实际实现会调用Kubernetes API
         println!("Getting deployment {}/{}", namespace, name);
-        
+
         // 模拟返回部署信息
         Ok(Deployment {
             spec: DeploymentSpec {
@@ -5406,30 +5408,30 @@ impl KubernetesClient {
             },
         })
     }
-    
+
     // 扩缩部署
     fn scale_deployment(&self, namespace: &str, name: &str, replicas: i32) -> Result<(), String> {
         // 实际实现会调用Kubernetes API
         println!("Scaling deployment {}/{} to {} replicas", namespace, name, replicas);
-        
+
         // 模拟成功
         Ok(())
     }
-    
+
     // 获取可用资源
     fn get_available_resources(&self, namespace: &str) -> Result<usize, String> {
         // 实际实现会查询Kubernetes资源
         println!("Getting available resources for namespace {}", namespace);
-        
+
         // 模拟返回可用资源数量
         Ok(10)
     }
-    
+
     // 获取总资源
     fn get_total_resources(&self, namespace: &str) -> Result<usize, String> {
         // 实际实现会查询Kubernetes资源
         println!("Getting total resources for namespace {}", namespace);
-        
+
         // 模拟返回总资源数量
         Ok(20)
     }
@@ -5541,15 +5543,15 @@ impl MultiRegionDeploymentManager {
     // 部署到新区域
     fn deploy_to_region(&mut self, region_id: RegionId, deployment_config: DeploymentConfig) -> Result<(), Error> {
         println!("Deploying to region: {}", region_id);
-        
+
         // 检查区域是否存在
         if !self.regions.contains_key(&region_id) {
             return Err(Error::RegionNotFound);
         }
-        
+
         // 创建区域部署
         let region_deployment = RegionDeployment::new(region_id, deployment_config);
-        
+
         // 执行部署
         match region_deployment.deploy() {
             Ok(()) => {
@@ -5557,13 +5559,13 @@ impl MultiRegionDeploymentManager {
                 if let Some(region_info) = self.regions.get_mut(&region_id) {
                     region_info.status = RegionStatus::Online;
                 }
-                
+
                 // 配置数据复制
                 self.setup_replication(region_id)?;
-                
+
                 // 更新流量路由
                 self.update_traffic_routing()?;
-                
+
                 Ok(())
             },
             Err(e) => {
@@ -5572,15 +5574,15 @@ impl MultiRegionDeploymentManager {
             },
         }
     }
-    
+
     // 设置数据复制
     fn setup_replication(&self, region_id: RegionId) -> Result<(), Error> {
         println!("Setting up replication for region: {}", region_id);
-        
+
         // 获取区域信息
         let region_info = self.regions.get(&region_id)
             .ok_or(Error::RegionNotFound)?;
-            
+
         // 根据区域类型设置不同的复制策略
         let replication_config = match region_info.region_type {
             RegionType::Primary => {
@@ -5608,7 +5610,7 @@ impl MultiRegionDeploymentManager {
             RegionType::Edge => {
                 // 边缘区域向最近的次要区域复制
                 let nearest_secondary = self.find_nearest_region(region_id, RegionType::Secondary)?;
-                
+
                 ReplicationConfig {
                     source_region: region_id,
                     target_regions: vec![nearest_secondary],
@@ -5617,21 +5619,21 @@ impl MultiRegionDeploymentManager {
                 }
             },
         };
-        
+
         // 配置复制
         self.replication_manager.configure_replication(replication_config)
     }
-    
+
     // 更新流量路由
     fn update_traffic_routing(&self) -> Result<(), Error> {
         println!("Updating traffic routing");
-        
+
         // 获取所有在线区域
         let online_regions: Vec<RegionId> = self.regions.iter()
             .filter(|(_, info)| info.status == RegionStatus::Online)
             .map(|(id, _)| *id)
             .collect();
-            
+
         // 创建路由配置
         let mut routing_config = RoutingConfig {
             region_weights: HashMap::new(),
@@ -5641,80 +5643,80 @@ impl MultiRegionDeploymentManager {
                 failover_regions: self.get_regions_by_type(RegionType::Secondary),
             },
         };
-        
+
         // 设置区域权重
         for region_id in online_regions {
             let region_info = self.regions.get(&region_id).unwrap();
-            
+
             let weight = match region_info.region_type {
                 RegionType::Primary => 100,
                 RegionType::Secondary => 50,
                 RegionType::DisasterRecovery => 0, // 灾备区域通常不接收常规流量
                 RegionType::Edge => 75, // 边缘区域优先处理附近的请求
             };
-            
+
             routing_config.region_weights.insert(region_id, weight);
         }
-        
+
         // 应用路由配置
         self.traffic_router.apply_routing_config(routing_config)
     }
-    
+
     // 执行故障转移
     fn perform_failover(&mut self, from_region: RegionId, to_region: RegionId) -> Result<(), Error> {
         println!("Performing failover from region {} to region {}", from_region, to_region);
-        
+
         // 检查目标区域是否在线
         let to_region_info = self.regions.get(&to_region)
             .ok_or(Error::RegionNotFound)?;
-            
+
         if to_region_info.status != RegionStatus::Online {
             return Err(Error::RegionNotAvailable);
         }
-        
+
         // 执行故障转移步骤
-        
+
         // 1. 停止向源区域的写入
         self.traffic_router.block_writes_to_region(from_region)?;
-        
+
         // 2. 确保数据已完全复制到目标区域
         self.replication_manager.ensure_replication_completed(from_region, to_region)?;
-        
+
         // 3. 提升目标区域为新的主区域
         if to_region_info.region_type == RegionType::Secondary {
             // 更新区域类型
             if let Some(region_info) = self.regions.get_mut(&to_region) {
                 region_info.region_type = RegionType::Primary;
             }
-            
+
             // 更新主区域记录
             self.primary_region = to_region;
         }
-        
+
         // 4. 重新配置复制拓扑
         self.reconfigure_replication_topology()?;
-        
+
         // 5. 更新流量路由以反映新的主区域
         self.update_traffic_routing()?;
-        
+
         // 6. 记录故障转移事件
         self.log_failover_event(from_region, to_region);
-        
+
         Ok(())
     }
-    
+
     // 重新配置复制拓扑
     fn reconfigure_replication_topology(&self) -> Result<(), Error> {
         println!("Reconfiguring replication topology");
-        
+
         // 为每个区域重新配置复制
         for (region_id, _) in &self.regions {
             self.setup_replication(*region_id)?;
         }
-        
+
         Ok(())
     }
-    
+
     // 获取指定类型的区域
     fn get_regions_by_type(&self, region_type: RegionType) -> Vec<RegionId> {
         self.regions.iter()
@@ -5722,15 +5724,15 @@ impl MultiRegionDeploymentManager {
             .map(|(id, _)| *id)
             .collect()
     }
-    
+
     // 查找最近的区域
     fn find_nearest_region(&self, source_region: RegionId, target_type: RegionType) -> Result<RegionId, Error> {
         let source_info = self.regions.get(&source_region)
             .ok_or(Error::RegionNotFound)?;
-            
+
         let mut nearest_region = None;
         let mut min_latency = Duration::from_secs(u64::MAX);
-        
+
         // 查找延迟最小的区域
         for (region_id, info) in &self.regions {
             if info.region_type == target_type && info.status == RegionStatus::Online {
@@ -5742,26 +5744,26 @@ impl MultiRegionDeploymentManager {
                 }
             }
         }
-        
+
         nearest_region.ok_or(Error::NoRegionFound)
     }
-    
+
     // 记录故障转移事件
     fn log_failover_event(&self, from_region: RegionId, to_region: RegionId) {
         println!("Logging failover event: {} -> {}", from_region, to_region);
-        
+
         // 实际实现会记录到监控系统或日志
     }
-    
+
     // 监控所有区域的健康状态
     fn monitor_regions_health(&self) -> HashMap<RegionId, HealthStatus> {
         let mut statuses = HashMap::new();
-        
+
         for (region_id, _) in &self.regions {
             let health_status = self.health_checker.check_region_health(*region_id);
             statuses.insert(*region_id, health_status);
         }
-        
+
         statuses
     }
 }
@@ -5782,70 +5784,70 @@ impl RegionDeployment {
             config,
         }
     }
-    
+
     // 执行部署
     fn deploy(&self) -> Result<(), Error> {
         println!("Deploying to region {} with config: {:?}", self.region_id, self.config);
-        
+
         // 部署基础设施
         self.deploy_infrastructure()?;
-        
+
         // 部署应用
         self.deploy_applications()?;
-        
+
         // 配置数据存储
         self.configure_data_stores()?;
-        
+
         // 配置网络
         self.configure_networking()?;
-        
+
         // 设置监控
         self.setup_monitoring()?;
-        
+
         Ok(())
     }
-    
+
     // 部署基础设施
     fn deploy_infrastructure(&self) -> Result<(), Error> {
         // 实现基础设施部署逻辑
         println!("Deploying infrastructure in region {}", self.region_id);
-        
+
         // 模拟成功
         Ok(())
     }
-    
+
     // 部署应用
     fn deploy_applications(&self) -> Result<(), Error> {
         // 实现应用部署逻辑
         println!("Deploying applications in region {}", self.region_id);
-        
+
         // 模拟成功
         Ok(())
     }
-    
+
     // 配置数据存储
     fn configure_data_stores(&self) -> Result<(), Error> {
         // 实现数据存储配置逻辑
         println!("Configuring data stores in region {}", self.region_id);
-        
+
         // 模拟成功
         Ok(())
     }
-    
+
     // 配置网络
     fn configure_networking(&self) -> Result<(), Error> {
         // 实现网络配置逻辑
         println!("Configuring networking in region {}", self.region_id);
-        
+
         // 模拟成功
         Ok(())
     }
-    
+
     // 设置监控
     fn setup_monitoring(&self) -> Result<(), Error> {
         // 实现监控设置逻辑
         println!("Setting up monitoring in region {}", self.region_id);
-        
+
         // 模拟成功
         Ok(())
     }
@@ -5855,16 +5857,16 @@ impl RegionDeployment {
 trait ReplicationManager {
     // 配置复制
     fn configure_replication(&self, config: ReplicationConfig) -> Result<(), Error>;
-    
+
     // 确保复制完成
     fn ensure_replication_completed(&self, source: RegionId, target: RegionId) -> Result<(), Error>;
-    
+
     // 获取复制延迟
     fn get_replication_lag(&self, source: RegionId, target: RegionId) -> Result<Duration, Error>;
-    
+
     // 暂停复制
     fn pause_replication(&self, source: RegionId, target: RegionId) -> Result<(), Error>;
-    
+
     // 恢复复制
     fn resume_replication(&self, source: RegionId, target: RegionId) -> Result<(), Error>;
 }
@@ -5873,10 +5875,10 @@ trait ReplicationManager {
 trait TrafficRouter {
     // 应用路由配置
     fn apply_routing_config(&self, config: RoutingConfig) -> Result<(), Error>;
-    
+
     // 阻止向指定区域的写入
     fn block_writes_to_region(&self, region_id: RegionId) -> Result<(), Error>;
-    
+
     // 获取区域流量指标
     fn get_traffic_metrics(&self) -> HashMap<RegionId, TrafficMetrics>;
 }
@@ -5885,7 +5887,7 @@ trait TrafficRouter {
 trait RegionHealthChecker {
     // 检查区域健康状态
     fn check_region_health(&self, region_id: RegionId) -> HealthStatus;
-    
+
     // 获取所有区域的健康报告
     fn get_health_report(&self) -> HashMap<RegionId, HealthReport>;
 }
@@ -5894,10 +5896,10 @@ trait RegionHealthChecker {
 trait DisasterRecoveryCoordinator {
     // 初始化恢复计划
     fn initialize_recovery_plan(&self) -> Result<RecoveryPlan, Error>;
-    
+
     // 执行恢复计划
     fn execute_recovery_plan(&self, plan: &RecoveryPlan) -> Result<(), Error>;
-    
+
     // 验证恢复结果
     fn validate_recovery(&self, plan: &RecoveryPlan) -> ValidationResult;
 }

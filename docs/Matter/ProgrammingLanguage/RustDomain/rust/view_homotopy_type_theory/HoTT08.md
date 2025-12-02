@@ -2,88 +2,90 @@
 
 ## 目录
 
-- [1. 从同伦类型论视角分析Rust语言、算法设计与工作流理论](#从同伦类型论视角分析rust语言算法设计与工作流理论)
-  - [1.1 思维导图](#1-思维导图)
-  - [1.2 引言](#2-引言)
-  - [1.3 同伦类型论形式化基础](#3-同伦类型论形式化基础)
-    - [1.3.1 类型论与同伦的统一](#31-类型论与同伦的统一)
-      - [1.3.1.1 核心判断形式](#311-核心判断形式)
-      - [1.3.1.2 同一性类型的形式定义](#312-同一性类型的形式定义)
-      - [1.3.1.3 路径归纳原理(J-eliminator)](#313-路径归纳原理j-eliminator)
-    - [1.3.2 高阶类型构造](#32-高阶类型构造)
-      - [1.3.2.1 Π-类型(依赖函数类型)](#321-π-类型依赖函数类型)
-      - [1.3.2.2 Σ-类型(依赖对类型)](#322-σ-类型依赖对类型)
-      - [1.3.2.3 高阶归纳类型(HITs)](#323-高阶归纳类型hits)
-    - [1.3.3 同伦层级](#33-同伦层级)
-    - [1.3.4 单位化公理(Univalence Axiom)](#34-单位化公理univalence-axiom)
-  - [1.4 Rust编程语言的同伦类型论解析](#4-rust编程语言的同伦类型论解析)
-    - [1.4.1 Rust类型系统的范畴论解构](#41-rust类型系统的范畴论解构)
-      - [1.4.1.1 代数数据类型的形式语义](#411-代数数据类型的形式语义)
-      - [1.4.1.2 泛型与多态的依赖类型解释](#412-泛型与多态的依赖类型解释)
-      - [1.4.1.3 Trait系统作为有界量化](#413-trait系统作为有界量化)
-    - [1.4.2 所有权系统的线性逻辑映射](#42-所有权系统的线性逻辑映射)
-      - [1.4.2.1 线性类型与所有权语义](#421-线性类型与所有权语义)
-      - [1.4.2.2 借用检查器的形式模型](#422-借用检查器的形式模型)
-      - [1.4.2.3 生命周期的时态逻辑解释](#423-生命周期的时态逻辑解释)
-    - [1.4.3 Rust类型安全并发的同伦模型](#43-rust类型安全并发的同伦模型)
-    - [1.4.4 Rust中的类型级证明](#44-rust中的类型级证明)
-  - [1.5 算法设计与验证的同伦类型论框架](#5-算法设计与验证的同伦类型论框架)
-    - [1.5.1 算法设计作为路径构造](#51-算法设计作为路径构造)
-      - [1.5.1.1 算法作为类型间函数](#511-算法作为类型间函数)
-      - [1.5.1.2 算法正确性的形式证明](#512-算法正确性的形式证明)
-    - [1.5.2 算法分析作为同伦分类](#52-算法分析作为同伦分类)
-      - [1.5.2.1 复杂度分析的类型级编码](#521-复杂度分析的类型级编码)
-      - [1.5.2.2 递归算法的归纳证明](#522-递归算法的归纳证明)
-    - [1.5.3 数据结构的高阶归纳类型表示](#53-数据结构的高阶归纳类型表示)
-      - [1.5.3.1 列表与树的归纳定义](#531-列表与树的归纳定义)
-      - [1.5.3.2 不变量的依赖类型编码](#532-不变量的依赖类型编码)
-    - [1.5.4 并发算法的路径空间模型](#54-并发算法的路径空间模型)
-  - [1.6 工作流理论的同伦类型学解构](#6-工作流理论的同伦类型学解构)
-    - [1.6.1 工作流作为路径空间](#61-工作流作为路径空间)
-      - [1.6.1.1 工作流的形式定义](#611-工作流的形式定义)
-      - [1.6.1.2 工作流语义的形式描述](#612-工作流语义的形式描述)
-    - [1.6.2 Petri网的高阶归纳类型表示](#62-petri网的高阶归纳类型表示)
-    - [1.6.3 工作流性质的时态逻辑验证](#63-工作流性质的时态逻辑验证)
-      - [1.6.3.1 安全性与活性](#631-安全性与活性)
-      - [1.6.3.2 时态属性的形式化表达](#632-时态属性的形式化表达)
-      - [1.6.3.3 业务规则作为依赖类型约束](#633-业务规则作为依赖类型约束)
-    - [1.6.4 分布式工作流的同伦代数](#64-分布式工作流的同伦代数)
-      - [1.6.4.1 分布式工作流的形式模型](#641-分布式工作流的形式模型)
-      - [1.6.4.2 分布式工作流的等价性与重构](#642-分布式工作流的等价性与重构)
-  - [1.7 三领域统一的形式化模型](#7-三领域统一的形式化模型)
-    - [1.7.1 数学结构的统一视角](#71-数学结构的统一视角)
-      - [1.7.1.1 类型论作为统一基础](#711-类型论作为统一基础)
-      - [1.7.1.2 范畴论映射的形式化](#712-范畴论映射的形式化)
-    - [1.7.2 Rust与算法设计的互译形式化](#72-rust与算法设计的互译形式化)
-      - [1.7.2.1 从算法规范到Rust实现的形式映射](#721-从算法规范到rust实现的形式映射)
-      - [1.7.2.2 算法正确性与Rust类型安全的对应](#722-算法正确性与rust类型安全的对应)
-    - [1.7.3 算法与工作流的同构形式化](#73-算法与工作流的同构形式化)
-      - [1.7.3.1 算法作为计算工作流](#731-算法作为计算工作流)
-      - [1.7.3.2 工作流作为业务算法](#732-工作流作为业务算法)
-    - [1.7.4 工作流与Rust程序的映射形式化](#74-工作流与rust程序的映射形式化)
-      - [1.7.4.1 工作流引擎的Rust实现](#741-工作流引擎的rust实现)
-      - [1.7.4.2 类型安全工作流DSL](#742-类型安全工作流dsl)
-  - [1.8 高阶应用与案例研究](#8-高阶应用与案例研究)
-    - [1.8.1 从同伦视角设计的类型安全分布式系统](#81-从同伦视角设计的类型安全分布式系统)
-      - [1.8.1.1 分布式系统的同伦模型](#811-分布式系统的同伦模型)
-      - [1.8.1.2 分布式一致性的类型证明](#812-分布式一致性的类型证明)
-    - [1.8.2 形式化验证的Rust算法库](#82-形式化验证的rust算法库)
-      - [1.8.2.1 半形式化验证方法](#821-半形式化验证方法)
-      - [1.8.2.2 算法不变量的静态保证](#822-算法不变量的静态保证)
-    - [1.8.3 工作流驱动的企业应用架构](#83-工作流驱动的企业应用架构)
-      - [1.8.3.1 类型安全工作流架构](#831-类型安全工作流架构)
-  - [1.9 理论扩展与前沿探索](#9-理论扩展与前沿探索)
-    - [1.9.1 高阶范式融合：范畴论、HoTT与计算理论](#91-高阶范式融合范畴论hott与计算理论)
-    - [1.9.2 量子计算的同伦类型表达](#92-量子计算的同伦类型表达)
-    - [1.9.3 依赖类型系统与Rust的未来](#93-依赖类型系统与rust的未来)
-      - [1.9.3.1 Rust中的轻量级依赖类型](#931-rust中的轻量级依赖类型)
-      - [1.9.3.2 形式验证与类型驱动开发](#932-形式验证与类型驱动开发)
-    - [1.9.4 高阶类型论与分布式系统形式化](#94-高阶类型论与分布式系统形式化)
-  - [1.10 结论与展望](#10-结论与展望)
-    - [1.10.1 三域统一的理论框架总结](#101-三域统一的理论框架总结)
-    - [1.10.2 实践意义与应用前景](#102-实践意义与应用前景)
-    - [1.10.3 未来研究方向](#103-未来研究方向)
-    - [1.10.4 哲学反思](#104-哲学反思)
+- [1. 从同伦类型论视角分析Rust语言、算法设计与工作流理论](#1-从同伦类型论视角分析rust语言算法设计与工作流理论)
+  - [目录](#目录)
+  - [1.1 思维导图](#11-思维导图)
+  - [1.2 引言](#12-引言)
+  - [1.3 同伦类型论形式化基础](#13-同伦类型论形式化基础)
+    - [1.3.1 类型论与同伦的统一](#131-类型论与同伦的统一)
+      - [1.3.1.1 核心判断形式](#1311-核心判断形式)
+      - [1.3.1.2 同一性类型的形式定义](#1312-同一性类型的形式定义)
+      - [1.3.1.3 路径归纳原理(J-eliminator)](#1313-路径归纳原理j-eliminator)
+    - [1.3.2 高阶类型构造](#132-高阶类型构造)
+      - [1.3.2.1 Π-类型(依赖函数类型)](#1321-π-类型依赖函数类型)
+      - [1.3.2.2 Σ-类型(依赖对类型)](#1322-σ-类型依赖对类型)
+      - [1.3.2.3 高阶归纳类型(HITs)](#1323-高阶归纳类型hits)
+    - [1.3.3 同伦层级](#133-同伦层级)
+    - [1.3.4 单位化公理(Univalence Axiom)](#134-单位化公理univalence-axiom)
+  - [1.4 Rust编程语言的同伦类型论解析](#14-rust编程语言的同伦类型论解析)
+    - [1.4.1 Rust类型系统的范畴论解构](#141-rust类型系统的范畴论解构)
+      - [1.4.1.1 代数数据类型的形式语义](#1411-代数数据类型的形式语义)
+      - [1.4.1.2 泛型与多态的依赖类型解释](#1412-泛型与多态的依赖类型解释)
+      - [1.4.1.3 Trait系统作为有界量化](#1413-trait系统作为有界量化)
+    - [1.4.2 所有权系统的线性逻辑映射](#142-所有权系统的线性逻辑映射)
+      - [1.4.2.1 线性类型与所有权语义](#1421-线性类型与所有权语义)
+      - [1.4.2.2 借用检查器的形式模型](#1422-借用检查器的形式模型)
+      - [1.4.2.3 生命周期的时态逻辑解释](#1423-生命周期的时态逻辑解释)
+    - [1.4.3 Rust类型安全并发的同伦模型](#143-rust类型安全并发的同伦模型)
+    - [1.4.4 Rust中的类型级证明](#144-rust中的类型级证明)
+  - [1.5 算法设计与验证的同伦类型论框架](#15-算法设计与验证的同伦类型论框架)
+    - [1.5.1 算法设计作为路径构造](#151-算法设计作为路径构造)
+      - [1.5.1.1 算法作为类型间函数](#1511-算法作为类型间函数)
+      - [1.5.1.2 算法正确性的形式证明](#1512-算法正确性的形式证明)
+    - [1.5.2 算法分析作为同伦分类](#152-算法分析作为同伦分类)
+      - [1.5.2.1 复杂度分析的类型级编码](#1521-复杂度分析的类型级编码)
+      - [1.5.2.2 递归算法的归纳证明](#1522-递归算法的归纳证明)
+    - [1.5.3 数据结构的高阶归纳类型表示](#153-数据结构的高阶归纳类型表示)
+      - [1.5.3.1 列表与树的归纳定义](#1531-列表与树的归纳定义)
+      - [1.5.3.2 不变量的依赖类型编码](#1532-不变量的依赖类型编码)
+    - [1.5.4 并发算法的路径空间模型](#154-并发算法的路径空间模型)
+  - [1.6 工作流理论的同伦类型学解构](#16-工作流理论的同伦类型学解构)
+    - [1.6.1 工作流作为路径空间](#161-工作流作为路径空间)
+      - [1.6.1.1 工作流的形式定义](#1611-工作流的形式定义)
+      - [1.6.1.2 工作流语义的形式描述](#1612-工作流语义的形式描述)
+    - [1.6.2 Petri网的高阶归纳类型表示](#162-petri网的高阶归纳类型表示)
+    - [1.6.3 工作流性质的时态逻辑验证](#163-工作流性质的时态逻辑验证)
+      - [1.6.3.1 安全性与活性](#1631-安全性与活性)
+      - [1.6.3.2 时态属性的形式化表达](#1632-时态属性的形式化表达)
+      - [1.6.3.3 业务规则作为依赖类型约束](#1633-业务规则作为依赖类型约束)
+    - [1.6.4 分布式工作流的同伦代数](#164-分布式工作流的同伦代数)
+      - [1.6.4.1 分布式工作流的形式模型](#1641-分布式工作流的形式模型)
+      - [1.6.4.2 分布式工作流的等价性与重构](#1642-分布式工作流的等价性与重构)
+  - [1.7 三领域统一的形式化模型](#17-三领域统一的形式化模型)
+    - [1.7.1 数学结构的统一视角](#171-数学结构的统一视角)
+      - [1.7.1.1 类型论作为统一基础](#1711-类型论作为统一基础)
+      - [1.7.1.2 范畴论映射的形式化](#1712-范畴论映射的形式化)
+    - [1.7.2 Rust与算法设计的互译形式化](#172-rust与算法设计的互译形式化)
+      - [1.7.2.1 从算法规范到Rust实现的形式映射](#1721-从算法规范到rust实现的形式映射)
+      - [1.7.2.2 算法正确性与Rust类型安全的对应](#1722-算法正确性与rust类型安全的对应)
+    - [1.7.3 算法与工作流的同构形式化](#173-算法与工作流的同构形式化)
+      - [1.7.3.1 算法作为计算工作流](#1731-算法作为计算工作流)
+      - [1.7.3.2 工作流作为业务算法](#1732-工作流作为业务算法)
+    - [1.7.4 工作流与Rust程序的映射形式化](#174-工作流与rust程序的映射形式化)
+      - [1.7.4.1 工作流引擎的Rust实现](#1741-工作流引擎的rust实现)
+      - [1.7.4.2 类型安全工作流DSL](#1742-类型安全工作流dsl)
+  - [1.8 高阶应用与案例研究](#18-高阶应用与案例研究)
+    - [1.8.1 从同伦视角设计的类型安全分布式系统](#181-从同伦视角设计的类型安全分布式系统)
+      - [1.8.1.1 分布式系统的同伦模型](#1811-分布式系统的同伦模型)
+      - [1.8.1.2 分布式一致性的类型证明](#1812-分布式一致性的类型证明)
+    - [1.8.2 形式化验证的Rust算法库](#182-形式化验证的rust算法库)
+      - [1.8.2.1 半形式化验证方法](#1821-半形式化验证方法)
+      - [1.8.2.2 算法不变量的静态保证](#1822-算法不变量的静态保证)
+    - [1.8.3 工作流驱动的企业应用架构](#183-工作流驱动的企业应用架构)
+      - [1.8.3.1 类型安全工作流架构](#1831-类型安全工作流架构)
+  - [1.9 理论扩展与前沿探索](#19-理论扩展与前沿探索)
+    - [1.9.1 高阶范式融合：范畴论、HoTT与计算理论](#191-高阶范式融合范畴论hott与计算理论)
+    - [1.9.2 量子计算的同伦类型表达](#192-量子计算的同伦类型表达)
+    - [1.9.3 依赖类型系统与Rust的未来](#193-依赖类型系统与rust的未来)
+      - [1.9.3.1 Rust中的轻量级依赖类型](#1931-rust中的轻量级依赖类型)
+      - [1.9.3.2 形式验证与类型驱动开发](#1932-形式验证与类型驱动开发)
+    - [1.9.4 高阶类型论与分布式系统形式化](#194-高阶类型论与分布式系统形式化)
+  - [1.10 结论与展望](#110-结论与展望)
+    - [1.10.1 三域统一的理论框架总结](#1101-三域统一的理论框架总结)
+    - [1.10.2 实践意义与应用前景](#1102-实践意义与应用前景)
+    - [1.10.3 未来研究方向](#1103-未来研究方向)
+    - [1.10.4 哲学反思](#1104-哲学反思)
+
 ## 1.1 思维导图
 
 ```text
@@ -493,7 +495,7 @@ where
 fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
     let mut left = 0;
     let mut right = arr.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
         match arr[mid].cmp(target) {
@@ -502,7 +504,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
             std::cmp::Ordering::Greater => right = mid,
         }
     }
-    
+
     None
 }
 ```
@@ -630,13 +632,13 @@ impl<T: Ord> BST<T> {
     fn insert(&mut self, value: T) {
         // 维护BST不变量的实现
     }
-    
+
     // 验证BST性质的函数
     fn is_valid(&self) -> bool {
         // 递归验证每个节点满足BST性质
         fn is_valid_node<T: Ord>(
-            node: &Node<T>, 
-            min: Option<&T>, 
+            node: &Node<T>,
+            min: Option<&T>,
             max: Option<&T>
         ) -> bool {
             // 检查节点值是否在范围内
@@ -645,22 +647,22 @@ impl<T: Ord> BST<T> {
                     return false;
                 }
             }
-            
+
             if let Some(max_val) = max {
                 if node.value >= *max_val {
                     return false;
                 }
             }
-            
+
             // 递归检查左右子树
             node.left.as_ref().map_or(true, |left| {
                 is_valid_node(left, min, Some(&node.value))
-            }) && 
+            }) &&
             node.right.as_ref().map_or(true, |right| {
                 is_valid_node(right, Some(&node.value), max)
             })
         }
-        
+
         self.root.as_ref().map_or(true, |root| {
             is_valid_node(root, None, None)
         })
@@ -689,15 +691,15 @@ where
 {
     let num_threads = num_cpus::get();
     let chunk_size = (data.len() + num_threads - 1) / num_threads;
-    
+
     let (tx, rx) = mpsc::channel();
-    
+
     // 并行Map阶段
     for chunk in data.chunks(chunk_size) {
         let tx = tx.clone();
         let chunk_vec = chunk.to_vec();
         let map_fn = &map_fn;
-        
+
         thread::spawn(move || {
             for item in chunk_vec {
                 let mapped = map_fn(item);
@@ -705,15 +707,15 @@ where
             }
         });
     }
-    
+
     drop(tx); // 关闭发送通道
-    
+
     // Reduce阶段
     let mut result = R::default();
     for mapped in rx {
         result = reduce_fn(result, mapped);
     }
-    
+
     result
 }
 ```
@@ -757,10 +759,10 @@ struct Workflow<S> {
 impl<S: Clone> Workflow<S> {
     fn execute(&self) -> Option<S> {
         let mut current = self.initial_state.clone();
-        
+
         while !(*self.is_final)(&current) {
             let mut advanced = false;
-            
+
             for transition in &self.transitions {
                 if let Some(next) = transition(&current) {
                     current = next;
@@ -768,12 +770,12 @@ impl<S: Clone> Workflow<S> {
                     break;
                 }
             }
-            
+
             if !advanced {
                 return None; // 工作流陷入死锁
             }
         }
-        
+
         Some(current)
     }
 }
@@ -805,24 +807,24 @@ struct Transition {
 impl PetriNet {
     fn fire_transition(&mut self, transition_idx: usize) -> bool {
         let transition = &self.transitions[transition_idx];
-        
+
         // 检查是否可以发射
         for &(place_idx, weight) in &transition.inputs {
             if self.places[place_idx].tokens < weight {
                 return false;
             }
         }
-        
+
         // 消耗输入令牌
         for &(place_idx, weight) in &transition.inputs {
             self.places[place_idx].tokens -= weight;
         }
-        
+
         // 产生输出令牌
         for &(place_idx, weight) in &transition.outputs {
             self.places[place_idx].tokens += weight;
         }
-        
+
         true
     }
 }
@@ -857,7 +859,7 @@ impl PetriNet {
 trait SafetyProperty<S> {
     // 验证状态是否安全
     fn is_safe(&self, state: &S) -> bool;
-    
+
     // 验证从初始状态到当前状态的安全性
     fn verify_path_safety(&self, initial: &S, path: &[Transition<S>]) -> bool {
         let mut current = initial.clone();
@@ -874,30 +876,30 @@ trait SafetyProperty<S> {
 trait LivenessProperty<S> {
     // 验证状态是否达到目标
     fn is_goal(&self, state: &S) -> bool;
-    
+
     // 验证是否存在从初始状态到目标的路径
     fn exists_path_to_goal(&self, workflow: &Workflow<S>) -> bool {
         // 使用广度优先搜索实现路径存在性证明
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
         queue.push_back(workflow.initial_state.clone());
-        
+
         while let Some(state) = queue.pop_front() {
             if self.is_goal(&state) {
                 return true;
             }
-            
+
             if !visited.insert(state.clone()) {
                 continue; // 已访问过的状态
             }
-            
+
             for transition in &workflow.transitions {
                 if let Some(next) = transition(&state) {
                     queue.push_back(next);
                 }
             }
         }
-        
+
         false // 找不到通向目标的路径
     }
 }
@@ -936,7 +938,7 @@ impl OrderWorkflow<Created> {
     fn approve(self) -> OrderWorkflow<Approved> {
         OrderWorkflow { state: Approved, _marker: PhantomData }
     }
-    
+
     fn cancel(self) -> OrderWorkflow<Cancelled> {
         OrderWorkflow { state: Cancelled, _marker: PhantomData }
     }
@@ -946,7 +948,7 @@ impl OrderWorkflow<Approved> {
     fn ship(self) -> OrderWorkflow<Shipped> {
         OrderWorkflow { state: Shipped, _marker: PhantomData }
     }
-    
+
     fn cancel(self) -> OrderWorkflow<Cancelled> {
         OrderWorkflow { state: Cancelled, _marker: PhantomData }
     }
@@ -986,7 +988,7 @@ struct WorkflowNode<S> {
 impl<S: Clone + Send + 'static> DistributedWorkflow<S> {
     fn execute(&self) {
         let mut handles = Vec::new();
-        
+
         for (i, node) in self.nodes.iter().enumerate() {
             let node_clone = node.clone();
             let handle = thread::spawn(move || {
@@ -1002,7 +1004,7 @@ impl<S: Clone + Send + 'static> DistributedWorkflow<S> {
             });
             handles.push(handle);
         }
-        
+
         for handle in handles {
             handle.join().unwrap();
         }
@@ -1074,13 +1076,13 @@ fn merge_sort<T: Ord>(mut v: Vec<T>) -> Vec<T> {
     if v.len() <= 1 {
         return v;
     }
-    
+
     let mid = v.len() / 2;
     let right = v.split_off(mid);
-    
+
     let left = merge_sort(v);
     let right = merge_sort(right);
-    
+
     merge(left, right)
 }
 
@@ -1088,10 +1090,10 @@ fn merge<T: Ord>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
     let mut result = Vec::with_capacity(left.len() + right.len());
     let mut left_iter = left.into_iter();
     let mut right_iter = right.into_iter();
-    
+
     let mut left_peek = left_iter.next();
     let mut right_peek = right_iter.next();
-    
+
     while left_peek.is_some() || right_peek.is_some() {
         if right_peek.is_none() {
             result.push(left_peek.take().unwrap());
@@ -1107,7 +1109,7 @@ fn merge<T: Ord>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
             right_peek = right_iter.next();
         }
     }
-    
+
     result
 }
 ```
@@ -1154,10 +1156,10 @@ impl<T: Ord + Clone> QuickSortWorkflow<T> {
         }
         QuickSortWorkflow { stack }
     }
-    
+
     fn execute(&mut self) -> Vec<T> {
         let mut results = Vec::new();
-        
+
         while let Some((data, stage)) = self.stack.pop() {
             match stage {
                 WorkflowStage::Initial => {
@@ -1172,7 +1174,7 @@ impl<T: Ord + Clone> QuickSortWorkflow<T> {
                     let mut less = Vec::new();
                     let mut equal = Vec::new();
                     let mut greater = Vec::new();
-                    
+
                     for item in data {
                         match item.cmp(&pivot) {
                             std::cmp::Ordering::Less => less.push(item),
@@ -1180,7 +1182,7 @@ impl<T: Ord + Clone> QuickSortWorkflow<T> {
                             std::cmp::Ordering::Greater => greater.push(item),
                         }
                     }
-                    
+
                     self.stack.push((less, WorkflowStage::Initial));
                     self.stack.push((equal, WorkflowStage::Initial));
                     self.stack.push((greater, WorkflowStage::Initial));
@@ -1202,7 +1204,7 @@ impl<T: Ord + Clone> QuickSortWorkflow<T> {
                 }
             }
         }
-        
+
         results.pop().unwrap_or_default()
     }
 }
@@ -1231,16 +1233,16 @@ impl OrderProcessingAlgorithm {
                 return Err(error);
             }
         }
-        
+
         // 定价步骤
         let base_price = (self.pricing_strategy)(&order);
-        
+
         // 税费计算
         let tax = (self.tax_calculator)(&order, base_price);
-        
+
         // 配送路由
         let shipping = (self.shipping_router)(&order);
-        
+
         // 生成处理后的订单
         Ok(ProcessedOrder {
             order_id: order.id,
@@ -1289,7 +1291,7 @@ impl<S, E> WorkflowEngine<S, E> {
             current_state: initial_state,
         }
     }
-    
+
     fn add_state<F, G>(&mut self, name: String, enter: F, exit: G)
     where
         F: Fn(&mut S) -> Result<(), E> + 'static,
@@ -1300,7 +1302,7 @@ impl<S, E> WorkflowEngine<S, E> {
             exit: Box::new(exit),
         });
     }
-    
+
     fn add_transition<F, G>(&mut self, from: String, to: String, guard: F, action: G)
     where
         F: Fn(&S) -> bool + 'static,
@@ -1313,37 +1315,37 @@ impl<S, E> WorkflowEngine<S, E> {
             action: Box::new(action),
         });
     }
-    
+
     fn execute(&mut self, context: &mut S) -> Result<(), E> {
         // 执行工作流直到稳定状态
         let mut changed = true;
         while changed {
             changed = false;
-            
+
             for transition in &self.transitions {
                 if transition.from == self.current_state && (transition.guard)(context) {
                     // 执行当前状态的退出动作
                     if let Some(state) = self.states.get(&self.current_state) {
                         (state.exit)(context)?;
                     }
-                    
+
                     // 执行转换动作
                     (transition.action)(context)?;
-                    
+
                     // 更新当前状态
                     self.current_state = transition.to.clone();
-                    
+
                     // 执行新状态的进入动作
                     if let Some(state) = self.states.get(&self.current_state) {
                         (state.enter)(context)?;
                     }
-                    
+
                     changed = true;
                     break;
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -1391,7 +1393,7 @@ impl<S: 'static, E, Final: 'static> Workflow<S, E, Final> {
             _marker: PhantomData,
         }
     }
-    
+
     fn then<T: 'static, NS: 'static, F>(self, f: F) -> Workflow<S, E, NS>
     where
         F: Fn(T) -> Result<NS, E> + 'static,
@@ -1399,21 +1401,21 @@ impl<S: 'static, E, Final: 'static> Workflow<S, E, Final> {
     {
         let mut steps = self.steps;
         steps.push(Box::new(StateFunction::<T, E, NS>::new(f)));
-        
+
         Workflow {
             initial: self.initial,
             steps,
             _marker: PhantomData,
         }
     }
-    
+
     fn run(self) -> Result<Final, E> {
         let mut state: Box<dyn Any> = Box::new(self.initial);
-        
+
         for step in self.steps {
             state = step.execute(state)?;
         }
-        
+
         if let Ok(final_state) = state.downcast::<Final>() {
             Ok(*final_state)
         } else {
@@ -1464,13 +1466,13 @@ impl<S, M: Message, N: Node<S, M>> DistributedSystem<S, M, N> {
     fn step(&mut self) -> bool {
         let mut active = false;
         let mut outgoing_messages = Vec::new();
-        
+
         // 处理每个节点的一条消息
         for (node_id, queue) in &mut self.message_queues {
             if let Some(message) = queue.pop_front() {
                 active = true;
                 let node = self.nodes.get_mut(node_id).unwrap();
-                
+
                 match node.process_message(message) {
                     NodeAction::NoAction => {},
                     NodeAction::UpdateState(state) => {
@@ -1486,7 +1488,7 @@ impl<S, M: Message, N: Node<S, M>> DistributedSystem<S, M, N> {
                 }
             }
         }
-        
+
         // 分发新消息
         for (target, message) in outgoing_messages {
             if let Some(queue) = self.message_queues.get_mut(&target) {
@@ -1494,10 +1496,10 @@ impl<S, M: Message, N: Node<S, M>> DistributedSystem<S, M, N> {
                 active = true;
             }
         }
-        
+
         active
     }
-    
+
     fn run_until_quiescence(&mut self) {
         while self.step() {}
     }
@@ -1538,14 +1540,14 @@ impl<S: Clone> ConsistencyProtocol<S> for Paxos<S> {
         }
         ConsistencyProof(PhantomData)
     }
-    
+
     fn commit(&mut self, _proof: ConsistencyProof<S, Inconsistent>) -> ConsistencyProof<S, Consistent> {
         if let Some(value) = &self.accepted_value {
             self.committed_value = Some(value.clone());
         }
         ConsistencyProof(PhantomData)
     }
-    
+
     fn read(&self, _proof: &ConsistencyProof<S, Consistent>) -> S {
         self.committed_value.clone().unwrap()
     }
@@ -1567,7 +1569,7 @@ struct SortProof<T, S>(Vec<T>, PhantomData<S>);
 
 trait SortAlgorithm<T: Ord> {
     fn sort(data: SortProof<T, Unsorted>) -> SortProof<T, Sorted>;
-    
+
     // 验证排序后的数组是否有序
     fn verify(sorted: &SortProof<T, Sorted>) -> bool {
         let data = &sorted.0;
@@ -1589,22 +1591,22 @@ impl<T: Ord + Clone> SortAlgorithm<T> for MergeSort {
             if arr.len() <= 1 {
                 return arr.to_vec();
             }
-            
+
             let mid = arr.len() / 2;
             let left = merge_sort(&arr[..mid]);
             let right = merge_sort(&arr[mid..]);
-            
+
             merge(left, right)
         }
-        
+
         fn merge<T: Ord + Clone>(left: Vec<T>, right: Vec<T>) -> Vec<T> {
             let mut result = Vec::with_capacity(left.len() + right.len());
             let mut left_iter = left.into_iter();
             let mut right_iter = right.into_iter();
-            
+
             let mut left_peek = left_iter.next();
             let mut right_peek = right_iter.next();
-            
+
             while left_peek.is_some() || right_peek.is_some() {
                 if right_peek.is_none() {
                     result.push(left_peek.take().unwrap());
@@ -1620,10 +1622,10 @@ impl<T: Ord + Clone> SortAlgorithm<T> for MergeSort {
                     right_peek = right_iter.next();
                 }
             }
-            
+
             result
         }
-        
+
         let sorted_vec = merge_sort(&data.0);
         SortProof(sorted_vec, PhantomData)
     }
@@ -1656,12 +1658,12 @@ impl<'a, T: Ord> SortedSlice<'a, T> {
             None
         }
     }
-    
+
     // 二分查找只能在有序切片上操作
     fn binary_search(&self, target: &T) -> Option<usize> {
         let mut left = 0;
         let mut right = self.data.len();
-        
+
         while left < right {
             let mid = left + (right - left) / 2;
             match self.data[mid].cmp(target) {
@@ -1670,7 +1672,7 @@ impl<'a, T: Ord> SortedSlice<'a, T> {
                 std::cmp::Ordering::Greater => right = mid,
             }
         }
-        
+
         None
     }
 }
@@ -1746,7 +1748,7 @@ impl OrderWorkflow<CreatedState> {
             _state: PhantomData,
         }
     }
-    
+
     fn request_payment(mut self) -> OrderWorkflow<PaymentPendingState> {
         self.order.status = OrderStatus::PaymentPending;
         OrderWorkflow {
@@ -1754,7 +1756,7 @@ impl OrderWorkflow<CreatedState> {
             _state: PhantomData,
         }
     }
-    
+
     fn cancel(mut self) -> OrderWorkflow<CancelledState> {
         self.order.status = OrderStatus::Cancelled;
         OrderWorkflow {
@@ -1772,7 +1774,7 @@ impl OrderWorkflow<PaymentPendingState> {
             _state: PhantomData,
         }
     }
-    
+
     fn cancel(mut self) -> OrderWorkflow<CancelledState> {
         self.order.status = OrderStatus::Cancelled;
         OrderWorkflow {
@@ -1816,14 +1818,14 @@ fn process_order() {
         ],
         status: OrderStatus::Created,
     };
-    
+
     // 类型安全的工作流执行
     let workflow = OrderWorkflow::new(order);
     let workflow = workflow.request_payment();
     let workflow = workflow.confirm_payment();
     let workflow = workflow.ship();
     let workflow = workflow.deliver();
-    
+
     // 以下代码将导致编译错误：无法从已送达状态转换到其他状态
     // let workflow = workflow.cancel();
 }
@@ -1892,11 +1894,11 @@ impl QuantumCircuit {
     fn new() -> Self {
         QuantumCircuit { gates: Vec::new() }
     }
-    
+
     fn add_gate<G: QuantumGate + 'static>(&mut self, gate: G) {
         self.gates.push(Box::new(gate));
     }
-    
+
     fn run(&self, input: Qubit) -> Qubit {
         let mut state = input;
         for gate in &self.gates {
@@ -1971,12 +1973,12 @@ fn increment_all(v: Vec<i32>) -> Vec<i32> {
 fn increment_all_loop(v: &[i32]) -> Vec<i32> {
     let mut result = Vec::with_capacity(v.len());
     let mut i = 0;
-    
+
     while i < v.len() {
         result.push(v[i] + 1);
         i += 1;
     }
-    
+
     result
 }
 ```
@@ -1999,7 +2001,7 @@ struct ConsistencyProof<S>(PhantomData<S>);
 
 trait Node {
     type State: State;
-    
+
     fn propose(&mut self, value: Self::State);
     fn accept(&mut self, value: Self::State) -> bool;
     fn commit(&mut self, value: Self::State) -> ConsistencyProof<Self::State>;
@@ -2017,7 +2019,7 @@ impl<S: State, N: Node<State=S>> ConsensusProtocol<S, N> {
         for node in &mut self.nodes {
             node.propose(initial_value.clone());
         }
-        
+
         // 第2阶段：接受
         let mut accepted = true;
         for node in &mut self.nodes {
@@ -2026,7 +2028,7 @@ impl<S: State, N: Node<State=S>> ConsensusProtocol<S, N> {
                 break;
             }
         }
-        
+
         // 第3阶段：提交
         if accepted {
             // 所有节点提交相同的值
@@ -2037,7 +2039,7 @@ impl<S: State, N: Node<State=S>> ConsensusProtocol<S, N> {
             self.reach_consensus(merged_value)
         }
     }
-    
+
     fn merge_conflicting_values(&self) -> S {
         // 合并冲突值的实现
         unimplemented!()

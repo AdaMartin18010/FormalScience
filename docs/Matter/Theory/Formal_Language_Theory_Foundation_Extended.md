@@ -2,34 +2,36 @@
 
 ## 目录
 
-- [1. 形式语言理论基础扩展 (Formal Language Theory Foundation Extended)](#形式语言理论基础扩展-formal-language-theory-foundation-extended)
-  - [1.1 概述](#1-概述)
-  - [1.2 语言理论基础架构](#2-语言理论基础架构)
-    - [1.2.1 语言层次结构深化](#21-语言层次结构深化)
-    - [1.2.2 语言操作代数](#22-语言操作代数)
-  - [1.3 高级自动机理论](#3-高级自动机理论)
-    - [1.3.1 双向有限自动机](#31-双向有限自动机)
-    - [1.3.2 交替有限自动机](#32-交替有限自动机)
-    - [1.3.3 概率有限自动机](#33-概率有限自动机)
-  - [1.4 高级文法理论](#4-高级文法理论)
-    - [1.4.1 属性文法](#41-属性文法)
-    - [1.4.2 树邻接文法](#42-树邻接文法)
-    - [1.4.3 依赖文法](#43-依赖文法)
-  - [1.5 语言理论算法](#5-语言理论算法)
-    - [1.5.1 最小化算法](#51-最小化算法)
-    - [1.5.2 语言等价性检查](#52-语言等价性检查)
-    - [1.5.3 语言包含性检查](#53-语言包含性检查)
-  - [1.6 高级语言特性](#6-高级语言特性)
-    - [1.6.1 上下文敏感语言](#61-上下文敏感语言)
-    - [1.6.2 递归可枚举语言](#62-递归可枚举语言)
-  - [1.7 语言理论应用](#7-语言理论应用)
-    - [1.7.1 编译器设计](#71-编译器设计)
-    - [1.7.2 自然语言处理](#72-自然语言处理)
-  - [1.8 前沿研究方向](#8-前沿研究方向)
-    - [1.8.1 量子自动机](#81-量子自动机)
-    - [1.8.2 概率上下文无关文法](#82-概率上下文无关文法)
-  - [1.9 结论](#9-结论)
-  - [1.10 参考文献](#10-参考文献)
+- [1. 形式语言理论基础扩展 (Formal Language Theory Foundation Extended)](#1-形式语言理论基础扩展-formal-language-theory-foundation-extended)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 语言理论基础架构](#12-语言理论基础架构)
+    - [1.2.1 语言层次结构深化](#121-语言层次结构深化)
+    - [1.2.2 语言操作代数](#122-语言操作代数)
+  - [1.3 高级自动机理论](#13-高级自动机理论)
+    - [1.3.1 双向有限自动机](#131-双向有限自动机)
+    - [1.3.2 交替有限自动机](#132-交替有限自动机)
+    - [1.3.3 概率有限自动机](#133-概率有限自动机)
+  - [1.4 高级文法理论](#14-高级文法理论)
+    - [1.4.1 属性文法](#141-属性文法)
+    - [1.4.2 树邻接文法](#142-树邻接文法)
+    - [1.4.3 依赖文法](#143-依赖文法)
+  - [1.5 语言理论算法](#15-语言理论算法)
+    - [1.5.1 最小化算法](#151-最小化算法)
+    - [1.5.2 语言等价性检查](#152-语言等价性检查)
+    - [1.5.3 语言包含性检查](#153-语言包含性检查)
+  - [1.6 高级语言特性](#16-高级语言特性)
+    - [1.6.1 上下文敏感语言](#161-上下文敏感语言)
+    - [1.6.2 递归可枚举语言](#162-递归可枚举语言)
+  - [1.7 语言理论应用](#17-语言理论应用)
+    - [1.7.1 编译器设计](#171-编译器设计)
+    - [1.7.2 自然语言处理](#172-自然语言处理)
+  - [1.8 前沿研究方向](#18-前沿研究方向)
+    - [1.8.1 量子自动机](#181-量子自动机)
+    - [1.8.2 概率上下文无关文法](#182-概率上下文无关文法)
+  - [1.9 结论](#19-结论)
+  - [1.10 参考文献](#110-参考文献)
+
 ## 1.1 概述
 
 本文档构建了一个全面的形式语言理论基础体系，从基础的自动机理论到高级的语言理论，为编译器设计、自然语言处理和形式化验证提供坚实的理论基础。
@@ -112,7 +114,7 @@ data TwoWayDFA = TwoWayDFA {
 data Direction = Left | Right
 
 simulateTwoWayDFA :: TwoWayDFA -> String -> Bool
-simulateTwoWayDFA dfa input = 
+simulateTwoWayDFA dfa input =
   let initialConfig = Config (initialState dfa) 0 input
       finalConfigs = iterateStep dfa initialConfig
   in any isAccepting finalConfigs
@@ -124,7 +126,7 @@ data Config = Config {
 }
 
 iterateStep :: TwoWayDFA -> Config -> [Config]
-iterateStep dfa config = 
+iterateStep dfa config =
   if position config < 0 || position config >= length (tape config)
   then [config]  -- 停止条件
   else let currentChar = tape config !! position config
@@ -162,18 +164,18 @@ data AlternatingDFA = AlternatingDFA {
 }
 
 simulateAlternatingDFA :: AlternatingDFA -> String -> Bool
-simulateAlternatingDFA dfa input = 
+simulateAlternatingDFA dfa input =
   let initialConfig = (initialState dfa, input)
   in acceptsConfig dfa initialConfig
 
 acceptsConfig :: AlternatingDFA -> (State, String) -> Bool
-acceptsConfig dfa (state, []) = 
+acceptsConfig dfa (state, []) =
   state `elem` acceptingStates dfa
 
-acceptsConfig dfa (state, c:cs) = 
+acceptsConfig dfa (state, c:cs) =
   let transitions = delta dfa state c
       -- 存在性选择：至少有一个转移集合使得所有状态都接受
-      validTransitions = filter (\stateSet -> 
+      validTransitions = filter (\stateSet ->
         all (\s -> acceptsConfig dfa (s, cs)) stateSet) transitions
   in not (null validTransitions)
 ```
@@ -204,15 +206,15 @@ data ProbabilisticDFA = ProbabilisticDFA {
 }
 
 acceptanceProbability :: ProbabilisticDFA -> String -> Double
-acceptanceProbability dfa input = 
+acceptanceProbability dfa input =
   let initialProb = Map.singleton (initialState dfa) 1.0
       finalProbs = foldl (stepProbabilistic dfa) initialProb input
   in sum [finalProbs Map.! q | q <- acceptingStates dfa]
 
 stepProbabilistic :: ProbabilisticDFA -> Map State Double -> Char -> Map State Double
-stepProbabilistic dfa currentProbs char = 
+stepProbabilistic dfa currentProbs char =
   let newProbs = Map.empty
-      updates = [(q', prob * delta dfa q char q') | 
+      updates = [(q', prob * delta dfa q char q') |
                  (q, prob) <- Map.toList currentProbs,
                  q' <- states dfa]
   in foldl (\m (q, p) -> Map.insertWith (+) q p m) newProbs updates
@@ -251,7 +253,7 @@ data AttributeRule = AttributeRule {
 }
 
 evaluateAttributes :: AttributeGrammar -> ParseTree -> AttributeEnvironment
-evaluateAttributes grammar tree = 
+evaluateAttributes grammar tree =
   let initialEnv = Map.empty
       -- 首先计算所有综合属性
       env1 = evaluateSynthesized grammar tree initialEnv
@@ -261,7 +263,7 @@ evaluateAttributes grammar tree =
 
 evaluateSynthesized :: AttributeGrammar -> ParseTree -> AttributeEnvironment -> AttributeEnvironment
 evaluateSynthesized grammar (Leaf symbol) env = env
-evaluateSynthesized grammar (Node production children) env = 
+evaluateSynthesized grammar (Node production children) env =
   let -- 递归计算子节点的综合属性
       env1 = foldl (\e child -> evaluateSynthesized grammar child e) env children
       -- 计算当前节点的综合属性
@@ -303,7 +305,7 @@ data Tree = Tree {
 }
 
 parseTAG :: TreeAdjoiningGrammar -> String -> Bool
-parseTAG grammar input = 
+parseTAG grammar input =
   let initialDerivations = initialTrees grammar
       allDerivations = generateAllDerivations grammar initialDerivations
       terminalTrees = filter isTerminalTree allDerivations
@@ -311,8 +313,8 @@ parseTAG grammar input =
   in input `elem` yields
 
 generateAllDerivations :: TreeAdjoiningGrammar -> [Tree] -> [Tree]
-generateAllDerivations grammar trees = 
-  let newTrees = concatMap (\tree -> 
+generateAllDerivations grammar trees =
+  let newTrees = concatMap (\tree ->
     concatMap (\op -> applyOperation op tree) [Substitution, Adjunction]) trees
   in if newTrees == trees
      then trees  -- 固定点
@@ -348,15 +350,15 @@ data DependencyRule = DependencyRule {
 }
 
 parseDependency :: DependencyGrammar -> [Word] -> [Dependency]
-parseDependency grammar words = 
+parseDependency grammar words =
   let initialDeps = []
       allDeps = generateDependencies grammar words initialDeps
       validDeps = filter (isValidDependencyTree grammar) allDeps
   in head validDeps  -- 返回第一个有效解析
 
 generateDependencies :: DependencyGrammar -> [Word] -> [Dependency] -> [Dependency]
-generateDependencies grammar words currentDeps = 
-  let possibleDeps = [(w1, w2, t) | 
+generateDependencies grammar words currentDeps =
+  let possibleDeps = [(w1, w2, t) |
                       w1 <- words, w2 <- words, w1 /= w2,
                       t <- relationTypes grammar,
                       isValidRule grammar w1 w2 t]
@@ -372,7 +374,7 @@ generateDependencies grammar words currentDeps =
 
 ```haskell
 minimizeDFA :: DFA -> DFA
-minimizeDFA dfa = 
+minimizeDFA dfa =
   let -- 移除不可达状态
       reachableStates = findReachableStates dfa
       dfa1 = removeUnreachableStates dfa reachableStates
@@ -382,14 +384,14 @@ minimizeDFA dfa =
   in minimizedStates
 
 findEquivalentStates :: DFA -> Set (Set State)
-findEquivalentStates dfa = 
+findEquivalentStates dfa =
   let initialPartition = [acceptingStates dfa, states dfa \\ acceptingStates dfa]
       refinedPartition = refinePartition dfa initialPartition
   in refinedPartition
 
 refinePartition :: DFA -> [Set State] -> [Set State]
-refinePartition dfa partition = 
-  let newPartition = concatMap (\block -> 
+refinePartition dfa partition =
+  let newPartition = concatMap (\block ->
     let subBlocks = splitBlock dfa block partition
     in subBlocks) partition
   in if newPartition == partition
@@ -397,13 +399,13 @@ refinePartition dfa partition =
      else refinePartition dfa newPartition
 
 splitBlock :: DFA -> Set State -> [Set State] -> [Set State]
-splitBlock dfa block partition = 
+splitBlock dfa block partition =
   let -- 根据转移函数将块分割
-      splits = groupBy (\s1 s2 -> 
-        all (\a -> 
+      splits = groupBy (\s1 s2 ->
+        all (\a ->
           let next1 = delta dfa s1 a
               next2 = delta dfa s2 a
-          in findBlock next1 partition == findBlock next2 partition) 
+          in findBlock next1 partition == findBlock next2 partition)
         (alphabet dfa)) (Set.toList block)
   in map Set.fromList splits
 ```
@@ -414,7 +416,7 @@ splitBlock dfa block partition =
 
 ```haskell
 areLanguagesEquivalent :: DFA -> DFA -> Bool
-areLanguagesEquivalent dfa1 dfa2 = 
+areLanguagesEquivalent dfa1 dfa2 =
   let -- 构造乘积自动机
       productDFA = constructProductDFA dfa1 dfa2
       -- 检查是否存在接受状态差异
@@ -422,11 +424,11 @@ areLanguagesEquivalent dfa1 dfa2 =
   in null acceptingDifference
 
 constructProductDFA :: DFA -> DFA -> DFA
-constructProductDFA dfa1 dfa2 = 
+constructProductDFA dfa1 dfa2 =
   let productStates = [(q1, q2) | q1 <- states dfa1, q2 <- states dfa2]
       productDelta (q1, q2) a = (delta dfa1 q1 a, delta dfa2 q2 a)
-      productAccepting = [(q1, q2) | 
-                         q1 <- acceptingStates dfa1, 
+      productAccepting = [(q1, q2) |
+                         q1 <- acceptingStates dfa1,
                          q2 <- acceptingStates dfa2]
   in DFA {
     states = Set.fromList productStates,
@@ -443,7 +445,7 @@ constructProductDFA dfa1 dfa2 =
 
 ```haskell
 isLanguageContained :: DFA -> DFA -> Bool
-isLanguageContained dfa1 dfa2 = 
+isLanguageContained dfa1 dfa2 =
   let -- 构造补集自动机
       complementDFA2 = complementDFA dfa2
       -- 检查交集是否为空
@@ -451,7 +453,7 @@ isLanguageContained dfa1 dfa2 =
   in isEmptyLanguage intersection
 
 isEmptyLanguage :: DFA -> Bool
-isEmptyLanguage dfa = 
+isEmptyLanguage dfa =
   let reachableStates = findReachableStates dfa
       reachableAccepting = Set.intersection reachableStates (acceptingStates dfa)
   in Set.null reachableAccepting
@@ -483,7 +485,7 @@ data LinearBoundedAutomaton = LinearBoundedAutomaton {
 }
 
 simulateLBA :: LinearBoundedAutomaton -> String -> Bool
-simulateLBA lba input = 
+simulateLBA lba input =
   let initialConfig = LBAConfig (initialState lba) 0 (markInput input)
       finalConfigs = iterateLBAStep lba initialConfig
   in any isAccepting finalConfigs
@@ -498,7 +500,7 @@ markInput :: String -> String
 markInput input = ">" ++ input ++ "<"  -- 添加边界标记
 
 iterateLBAStep :: LinearBoundedAutomaton -> LBAConfig -> [LBAConfig]
-iterateLBAStep lba config = 
+iterateLBAStep lba config =
   let currentChar = workTape config !! headPosition config
       (newState, newChar, direction) = delta lba (state config) currentChar
       newTape = updateTape (workTape config) (headPosition config) newChar
@@ -534,7 +536,7 @@ data TuringMachine = TuringMachine {
 }
 
 simulateTuringMachine :: TuringMachine -> String -> Bool
-simulateTuringMachine tm input = 
+simulateTuringMachine tm input =
   let initialConfig = TMConfig (initialState tm) 0 (input ++ repeat (blankSymbol tm))
       finalConfigs = iterateTMStep tm initialConfig
   in any isAccepting finalConfigs
@@ -546,7 +548,7 @@ data TMConfig = TMConfig {
 }
 
 iterateTMStep :: TuringMachine -> TMConfig -> [TMConfig]
-iterateTMStep tm config = 
+iterateTMStep tm config =
   let currentChar = tape config !! headPosition config
       (newState, newChar, direction) = delta tm (state config) currentChar
       newTape = updateTape (tape config) (headPosition config) newChar
@@ -565,7 +567,7 @@ iterateTMStep tm config =
 
 ```haskell
 generateLexer :: [RegularExpression] -> Lexer
-generateLexer regexps = 
+generateLexer regexps =
   let -- 为每个正则表达式构造NFA
       nfas = map regexToNFA regexps
       -- 合并所有NFA
@@ -582,9 +584,9 @@ data Lexer = Lexer {
 }
 
 tokenize :: Lexer -> String -> [Token]
-tokenize lexer input = 
+tokenize lexer input =
   let tokens = []
-      (finalTokens, _) = foldl (\acc char -> 
+      (finalTokens, _) = foldl (\acc char ->
         let (tokens, currentState) = acc
             newState = delta (dfa lexer) currentState char
         in if newState `elem` acceptingStates (dfa lexer)
@@ -604,21 +606,21 @@ data Parser = Parser {
 }
 
 parseSentence :: Parser -> [Token] -> ParseTree
-parseSentence parser tokens = 
+parseSentence parser tokens =
   let initialStack = [startSymbol (grammar parser)]
       initialInput = tokens
       parseTree = shiftReduce parser initialStack initialInput
   in parseTree
 
 shiftReduce :: Parser -> [Symbol] -> [Token] -> ParseTree
-shiftReduce parser stack input = 
+shiftReduce parser stack input =
   case (stack, input) of
     ([start], []) -> createParseTree start
-    (s:ss, t:ts) -> 
+    (s:ss, t:ts) ->
       let action = getAction parser (head s) t
       in case action of
            Shift -> shiftReduce parser (t:s:ss) ts
-           Reduce prod -> 
+           Reduce prod ->
              let newStack = reduceStack parser s ss prod
              in shiftReduce parser newStack input
            Accept -> createParseTree (head s)
@@ -646,15 +648,15 @@ data QuantumDFA = QuantumDFA {
 }
 
 acceptanceProbability :: QuantumDFA -> String -> Double
-acceptanceProbability qdfa input = 
+acceptanceProbability qdfa input =
   let initialState = Map.singleton (initialState qdfa) 1.0
       finalState = foldl (stepQuantum qdfa) initialState input
   in sum [magnitude (finalState Map.! q) | q <- acceptingStates qdfa]
 
 stepQuantum :: QuantumDFA -> Map State (Complex Double) -> Char -> Map State (Complex Double)
-stepQuantum qdfa currentState char = 
+stepQuantum qdfa currentState char =
   let newState = Map.empty
-      updates = [(q', amplitude * delta qdfa q char q') | 
+      updates = [(q', amplitude * delta qdfa q char q') |
                  (q, amplitude) <- Map.toList currentState,
                  q' <- states qdfa]
   in foldl (\m (q, amp) -> Map.insertWith (+) q amp m) newState updates
@@ -680,7 +682,7 @@ data ProbabilisticCFG = ProbabilisticCFG {
 }
 
 parsePCFG :: ProbabilisticCFG -> String -> (ParseTree, Double)
-parsePCFG pcfg input = 
+parsePCFG pcfg input =
   let -- 使用CYK算法计算所有解析的概率
       parseTable = buildParseTable pcfg input
       -- 选择概率最高的解析
@@ -688,18 +690,18 @@ parsePCFG pcfg input =
   in bestParse
 
 buildParseTable :: ProbabilisticCFG -> String -> Array (Int,Int) (Map NonTerminal Double)
-buildParseTable pcfg input = 
+buildParseTable pcfg input =
   let n = length input
       table = array ((0,0), (n-1,n-1)) (repeat Map.empty)
-      
+
       -- 初始化对角线
-      table' = foldl (\t i -> 
+      table' = foldl (\t i ->
         let char = input !! i
             probs = [(A, prob) | (A, alpha) <- productions pcfg,
                                alpha == [char],
                                let prob = probabilities pcfg Map.! (A, alpha)]
         in t // [((i,i), Map.fromList probs)]) table [0..n-1]
-      
+
       -- 填充表格
       finalTable = fillParseTable pcfg table' n
   in finalTable

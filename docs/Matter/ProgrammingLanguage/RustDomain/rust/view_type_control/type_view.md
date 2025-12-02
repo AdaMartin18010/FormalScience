@@ -2,157 +2,159 @@
 
 ## 目录
 
-- [1. 从多个理论视角理解编程语言的类型](#从多个理论视角理解编程语言的类型)
-  - [1.1 一、类型论 (Type Theory) 视角](#1-一类型论-type-theory-视角)
-    - [1.1.1 核心概念](#11-核心概念)
-    - [1.1.2 实例](#12-实例)
-  - [1.2 二、类型代数 (Type Algebra) 视角](#2-二类型代数-type-algebra-视角)
-    - [1.2.1 核心对应关系](#21-核心对应关系)
-    - [1.2.2 实例](#22-实例)
-  - [1.3 三、范畴论 (Category Theory) 视角](#3-三范畴论-category-theory-视角)
-    - [1.3.1 核心概念](#31-核心概念)
-    - [1.3.2 实例](#32-实例)
-  - [1.4 四、系统论 (System Theory) 视角](#4-四系统论-system-theory-视角)
-    - [1.4.1 核心概念](#41-核心概念)
-    - [1.4.2 实例](#42-实例)
-  - [1.5 五、综合视角](#5-五综合视角)
-  - [1.6 六、类型系统的实际应用](#6-六类型系统的实际应用)
-    - [1.6.1 依赖类型 (Dependent Types)](#61-依赖类型-dependent-types)
-    - [1.6.2 线性类型 (Linear Types)](#62-线性类型-linear-types)
-  - [1.7 七、范畴论中的更高级概念](#7-七范畴论中的更高级概念)
-    - [1.7.1 单子 (Monad)](#71-单子-monad)
-    - [1.7.2 自然变换 (Natural Transformation)](#72-自然变换-natural-transformation)
-  - [1.8 八、类型与代数结构的深层联系](#8-八类型与代数结构的深层联系)
-    - [1.8.1 同构 (Isomorphism)](#81-同构-isomorphism)
-    - [1.8.2 递归类型的代数视角](#82-递归类型的代数视角)
-  - [1.9 九、系统论与类型抽象的联系](#9-九系统论与类型抽象的联系)
-    - [1.9.1 抽象边界 (Abstract Boundaries)](#91-抽象边界-abstract-boundaries)
-    - [1.9.2 组合系统 (Composable Systems)](#92-组合系统-composable-systems)
-  - [1.10 十、面向实际编程的思考](#10-十面向实际编程的思考)
-    - [1.10.1 类型驱动开发 (Type-Driven Development)](#101-类型驱动开发-type-driven-development)
-    - [1.10.2 类型安全与类型级编程](#102-类型安全与类型级编程)
-    - [1.10.3 类型与并发](#103-类型与并发)
-  - [1.11 十一、类型系统与设计模式的融合](#11-十一类型系统与设计模式的融合)
-    - [1.11.1 设计模式的类型理论表达](#111-设计模式的类型理论表达)
-    - [1.11.2 访问者模式 (Visitor Pattern)](#112-访问者模式-visitor-pattern)
-    - [1.11.3 单例模式 (Singleton Pattern)](#113-单例模式-singleton-pattern)
-    - [1.11.4 策略模式 (Strategy Pattern)](#114-策略模式-strategy-pattern)
-  - [1.12 十二、设计模式的代数结构](#12-十二设计模式的代数结构)
-    - [1.12.1 命令模式 (Command Pattern)](#121-命令模式-command-pattern)
-    - [1.12.2 适配器模式 (Adapter Pattern)](#122-适配器模式-adapter-pattern)
-  - [1.13 十三、类型系统与算法的结合](#13-十三类型系统与算法的结合)
-    - [1.13.1 类型安全的算法实现](#131-类型安全的算法实现)
-    - [1.13.2 二分查找的类型安全版本](#132-二分查找的类型安全版本)
-    - [1.13.3 图算法的类型安全表示](#133-图算法的类型安全表示)
-  - [1.14 十四、算法复杂度与类型](#14-十四算法复杂度与类型)
-    - [1.14.1 线性时间算法的类型表示](#141-线性时间算法的类型表示)
-    - [1.14.2 内存安全的动态规划](#142-内存安全的动态规划)
-  - [1.15 十五、设计模式与类型系统的高级应用](#15-十五设计模式与类型系统的高级应用)
-  - [1.16 依赖注入与类型](#16-依赖注入与类型)
-    - [1.16.1 依赖注入容器](#161-依赖注入容器)
-  - [1.17 十六、总结：跨理论视角的整合](#17-十六总结跨理论视角的整合)
-  - [1.18 十七、类型系统与函数式编程模式](#18-十七类型系统与函数式编程模式)
-    - [1.18.1 函数式编程模式的类型表示](#181-函数式编程模式的类型表示)
-      - [1.18.1.1 函子 (Functor) 模式](#1811-函子-functor-模式)
-      - [1.18.1.2 应用函子 (Applicative) 模式](#1812-应用函子-applicative-模式)
-      - [1.18.1.3 单子 (Monad) 模式的高级应用](#1813-单子-monad-模式的高级应用)
-  - [1.19 十八、类型级编程 (Type-Level Programming)](#19-十八类型级编程-type-level-programming)
-    - [1.19.1 类型级状态机](#191-类型级状态机)
-    - [1.19.2 类型级数值计算](#192-类型级数值计算)
-  - [1.20 十九、依赖类型理论的实际应用](#20-十九依赖类型理论的实际应用)
-    - [1.20.1 通过类型系统约束资源使用](#201-通过类型系统约束资源使用)
-    - [1.20.2 编译时检查的 API 协议](#202-编译时检查的-api-协议)
-  - [1.21 二十、类型系统与分布式系统](#21-二十类型系统与分布式系统)
-    - [1.21.1 分布式系统中的类型安全](#211-分布式系统中的类型安全)
-      - [1.21.1.1 分布式追踪的类型安全实现](#2111-分布式追踪的类型安全实现)
-    - [1.21.2 一致性模型的类型表示](#212-一致性模型的类型表示)
-  - [1.22 二十一、类型系统与并发模型](#22-二十一类型系统与并发模型)
-    - [1.22.1 Actor 模型的类型安全实现](#221-actor-模型的类型安全实现)
-    - [1.22.2 软件事务内存 (STM) 的类型安全](#222-软件事务内存-stm-的类型安全)
-  - [1.23 二十二、类型系统与领域建模](#23-二十二类型系统与领域建模)
-    - [1.23.1 领域驱动设计 (DDD) 中的类型应用](#231-领域驱动设计-ddd-中的类型应用)
-    - [1.23.2 代数数据类型 (ADT) 与领域模型](#232-代数数据类型-adt-与领域模型)
-  - [1.24 二十三、总结：类型系统作为编程的统一理论](#24-二十三总结类型系统作为编程的统一理论)
-  - [1.25 二十四、类型系统前沿与创新](#25-二十四类型系统前沿与创新)
-    - [1.25.1 依赖类型系统的深入探索](#251-依赖类型系统的深入探索)
-      - [1.25.1.1 有界索引的类型安全实现](#2511-有界索引的类型安全实现)
-      - [1.25.1.2 会话类型系统](#2512-会话类型系统)
-  - [1.26 二十五、效应系统与类型安全](#26-二十五效应系统与类型安全)
-    - [1.26.1 代数效应 (Algebraic Effects) 的模拟](#261-代数效应-algebraic-effects-的模拟)
-    - [1.26.2 类型级状态效应](#262-类型级状态效应)
-  - [1.27 二十六、线性类型与资源管理](#27-二十六线性类型与资源管理)
-    - [1.27.1 线性类型的资源安全](#271-线性类型的资源安全)
-    - [1.27.2 线性逻辑与程序证明](#272-线性逻辑与程序证明)
-  - [1.28 二十七、类型系统与程序验证](#28-二十七类型系统与程序验证)
-    - [1.28.1 合约编程与类型](#281-合约编程与类型)
-    - [1.28.2 细化类型的模拟](#282-细化类型的模拟)
-  - [1.29 二十八、类型系统在特定领域的应用](#29-二十八类型系统在特定领域的应用)
-    - [1.29.1 智能合约中的类型安全](#291-智能合约中的类型安全)
-    - [1.29.2 量子计算中的类型表示](#292-量子计算中的类型表示)
-  - [1.30 二十九、类型系统的哲学意义](#30-二十九类型系统的哲学意义)
-    - [1.30.1 命题为类型，程序为证明](#301-命题为类型程序为证明)
-  - [1.31 三十、综合与未来展望](#31-三十综合与未来展望)
-  - [1.32 三十一、类型系统与分布式计算的融合](#32-三十一类型系统与分布式计算的融合)
-    - [1.32.1 会话类型的实际应用](#321-会话类型的实际应用)
-  - [1.33 协议类型定义语言 (PTDL)](#33-协议类型定义语言-ptdl)
-  - [1.34 三十二、渐进类型系统 (Gradual Typing)](#34-三十二渐进类型系统-gradual-typing)
-    - [1.34.1 渐进类型化的实现](#341-渐进类型化的实现)
-  - [1.35 三十三、类型系统与人工智能](#35-三十三类型系统与人工智能)
-    - [1.35.1 类型安全的神经网络](#351-类型安全的神经网络)
-  - [1.36 类型系统与机器学习管道](#36-类型系统与机器学习管道)
-  - [1.37 三十四、交集和联合类型的高级应用](#37-三十四交集和联合类型的高级应用)
-    - [1.37.1 交集类型的模拟](#371-交集类型的模拟)
-  - [1.38 联合类型的高级应用](#38-联合类型的高级应用)
-  - [1.39 三十五、类型系统的未来展望](#39-三十五类型系统的未来展望)
-    - [1.39.1 量子类型系统的发展](#391-量子类型系统的发展)
-  - [1.40 依赖类型的主流化](#40-依赖类型的主流化)
-  - [1.41 类型系统与分布式计算的深度整合](#41-类型系统与分布式计算的深度整合)
-  - [1.42 三十六、结语：类型系统作为统一理论](#42-三十六结语类型系统作为统一理论)
-  - [1.43 三十七、类型系统与编程语言设计的新趋势](#43-三十七类型系统与编程语言设计的新趋势)
-    - [1.43.1 线性类型与所有权的融合](#431-线性类型与所有权的融合)
-    - [1.43.2 效应系统 (Effect Systems)](#432-效应系统-effect-systems)
-    - [1.43.3 类型级状态机的发展](#433-类型级状态机的发展)
-  - [1.44 三十八、类型系统与软件架构的融合](#44-三十八类型系统与软件架构的融合)
-    - [1.44.1 类型驱动的六边形架构](#441-类型驱动的六边形架构)
-  - [1.45 类型驱动的事件溯源](#45-类型驱动的事件溯源)
-  - [1.46 三十九、类型安全在关键系统中的应用](#46-三十九类型安全在关键系统中的应用)
-    - [1.46.1 航空航天软件的类型安全](#461-航空航天软件的类型安全)
-  - [1.47 金融系统的类型安全](#47-金融系统的类型安全)
-  - [1.48 四十、类型系统与领域特定语言 (DSL)](#48-四十类型系统与领域特定语言-dsl)
-    - [1.48.1 类型安全的查询 DSL](#481-类型安全的查询-dsl)
-  - [1.49 类型安全的有限状态机 DSL](#49-类型安全的有限状态机-dsl)
-  - [1.50 四十一、类型系统与人机交互](#50-四十一类型系统与人机交互)
-    - [1.50.1 类型安全的用户界面](#501-类型安全的用户界面)
-  - [1.51 类型安全的命令行界面](#51-类型安全的命令行界面)
-  - [1.52 四十二、量子计算中的类型系统未来](#52-四十二量子计算中的类型系统未来)
-  - [1.53 量子类型系统的理论基础](#53-量子类型系统的理论基础)
-  - [1.54 量子-经典混合计算的类型系统](#54-量子-经典混合计算的类型系统)
-  - [1.55 四十三、面向实践的类型系统应用](#55-四十三面向实践的类型系统应用)
-  - [1.56 功能完备的状态管理类型系统](#56-功能完备的状态管理类型系统)
-  - [1.57 全栈类型安全的API](#57-全栈类型安全的api)
-  - [1.58 四十四、类型系统的融合与进化](#58-四十四类型系统的融合与进化)
-  - [1.59 跨理论融合](#59-跨理论融合)
-  - [1.60 实用性与理论性的平衡](#60-实用性与理论性的平衡)
-  - [1.61 跨学科应用的扩展](#61-跨学科应用的扩展)
-  - [1.62 结语](#62-结语)
-  - [1.63 类型驱动的形式验证](#63-类型驱动的形式验证)
-  - [1.64 不变量编码与证明](#64-不变量编码与证明)
-  - [1.65 四十六、类型系统与编程语言进化](#65-四十六类型系统与编程语言进化)
-    - [1.65.1 类型系统驱动的语言设计](#651-类型系统驱动的语言设计)
-  - [1.66 多范式类型系统](#66-多范式类型系统)
-  - [1.67 四十七、类型系统在安全关键系统中的应用](#67-四十七类型系统在安全关键系统中的应用)
-    - [1.67.1 医疗系统中的类型安全](#671-医疗系统中的类型安全)
-  - [1.68 航空航天软件中的类型安全](#68-航空航天软件中的类型安全)
-  - [1.69 四十八、类型系统与编译器优化](#69-四十八类型系统与编译器优化)
-    - [1.69.1 类型引导的优化](#691-类型引导的优化)
-    - [1.69.2 零成本抽象的类型表示](#692-零成本抽象的类型表示)
-  - [1.70 四十九、类型系统与领域特定语言集成](#70-四十九类型系统与领域特定语言集成)
-    - [1.70.1 内嵌DSL的类型安全](#701-内嵌dsl的类型安全)
-  - [1.71 流式API的类型安全](#71-流式api的类型安全)
-  - [1.72 五十、类型系统的未来展望](#72-五十类型系统的未来展望)
-    - [1.72.1 量子计算与类型理论](#721-量子计算与类型理论)
-  - [1.73 依赖类型系统的未来](#73-依赖类型系统的未来)
-  - [1.74 五十一、总结与展望](#74-五十一总结与展望)
+- [1. 从多个理论视角理解编程语言的类型](#1-从多个理论视角理解编程语言的类型)
+  - [目录](#目录)
+  - [1.1 一、类型论 (Type Theory) 视角](#11-一类型论-type-theory-视角)
+    - [1.1.1 核心概念](#111-核心概念)
+    - [1.1.2 实例](#112-实例)
+  - [1.2 二、类型代数 (Type Algebra) 视角](#12-二类型代数-type-algebra-视角)
+    - [1.2.1 核心对应关系](#121-核心对应关系)
+    - [1.2.2 实例](#122-实例)
+  - [1.3 三、范畴论 (Category Theory) 视角](#13-三范畴论-category-theory-视角)
+    - [1.3.1 核心概念](#131-核心概念)
+    - [1.3.2 实例](#132-实例)
+  - [1.4 四、系统论 (System Theory) 视角](#14-四系统论-system-theory-视角)
+    - [1.4.1 核心概念](#141-核心概念)
+    - [1.4.2 实例](#142-实例)
+  - [1.5 五、综合视角](#15-五综合视角)
+  - [1.6 六、类型系统的实际应用](#16-六类型系统的实际应用)
+    - [1.6.1 依赖类型 (Dependent Types)](#161-依赖类型-dependent-types)
+    - [1.6.2 线性类型 (Linear Types)](#162-线性类型-linear-types)
+  - [1.7 七、范畴论中的更高级概念](#17-七范畴论中的更高级概念)
+    - [1.7.1 单子 (Monad)](#171-单子-monad)
+    - [1.7.2 自然变换 (Natural Transformation)](#172-自然变换-natural-transformation)
+  - [1.8 八、类型与代数结构的深层联系](#18-八类型与代数结构的深层联系)
+    - [1.8.1 同构 (Isomorphism)](#181-同构-isomorphism)
+    - [1.8.2 递归类型的代数视角](#182-递归类型的代数视角)
+  - [1.9 九、系统论与类型抽象的联系](#19-九系统论与类型抽象的联系)
+    - [1.9.1 抽象边界 (Abstract Boundaries)](#191-抽象边界-abstract-boundaries)
+    - [1.9.2 组合系统 (Composable Systems)](#192-组合系统-composable-systems)
+  - [1.10 十、面向实际编程的思考](#110-十面向实际编程的思考)
+    - [1.10.1 类型驱动开发 (Type-Driven Development)](#1101-类型驱动开发-type-driven-development)
+    - [1.10.2 类型安全与类型级编程](#1102-类型安全与类型级编程)
+    - [1.10.3 类型与并发](#1103-类型与并发)
+  - [1.11 十一、类型系统与设计模式的融合](#111-十一类型系统与设计模式的融合)
+    - [1.11.1 设计模式的类型理论表达](#1111-设计模式的类型理论表达)
+    - [1.11.2 访问者模式 (Visitor Pattern)](#1112-访问者模式-visitor-pattern)
+    - [1.11.3 单例模式 (Singleton Pattern)](#1113-单例模式-singleton-pattern)
+    - [1.11.4 策略模式 (Strategy Pattern)](#1114-策略模式-strategy-pattern)
+  - [1.12 十二、设计模式的代数结构](#112-十二设计模式的代数结构)
+    - [1.12.1 命令模式 (Command Pattern)](#1121-命令模式-command-pattern)
+    - [1.12.2 适配器模式 (Adapter Pattern)](#1122-适配器模式-adapter-pattern)
+  - [1.13 十三、类型系统与算法的结合](#113-十三类型系统与算法的结合)
+    - [1.13.1 类型安全的算法实现](#1131-类型安全的算法实现)
+    - [1.13.2 二分查找的类型安全版本](#1132-二分查找的类型安全版本)
+    - [1.13.3 图算法的类型安全表示](#1133-图算法的类型安全表示)
+  - [1.14 十四、算法复杂度与类型](#114-十四算法复杂度与类型)
+    - [1.14.1 线性时间算法的类型表示](#1141-线性时间算法的类型表示)
+    - [1.14.2 内存安全的动态规划](#1142-内存安全的动态规划)
+  - [1.15 十五、设计模式与类型系统的高级应用](#115-十五设计模式与类型系统的高级应用)
+  - [1.16 依赖注入与类型](#116-依赖注入与类型)
+    - [1.16.1 依赖注入容器](#1161-依赖注入容器)
+  - [1.17 十六、总结：跨理论视角的整合](#117-十六总结跨理论视角的整合)
+  - [1.18 十七、类型系统与函数式编程模式](#118-十七类型系统与函数式编程模式)
+    - [1.18.1 函数式编程模式的类型表示](#1181-函数式编程模式的类型表示)
+      - [1.18.1.1 函子 (Functor) 模式](#11811-函子-functor-模式)
+      - [1.18.1.2 应用函子 (Applicative) 模式](#11812-应用函子-applicative-模式)
+      - [1.18.1.3 单子 (Monad) 模式的高级应用](#11813-单子-monad-模式的高级应用)
+  - [1.19 十八、类型级编程 (Type-Level Programming)](#119-十八类型级编程-type-level-programming)
+    - [1.19.1 类型级状态机](#1191-类型级状态机)
+    - [1.19.2 类型级数值计算](#1192-类型级数值计算)
+  - [1.20 十九、依赖类型理论的实际应用](#120-十九依赖类型理论的实际应用)
+    - [1.20.1 通过类型系统约束资源使用](#1201-通过类型系统约束资源使用)
+    - [1.20.2 编译时检查的 API 协议](#1202-编译时检查的-api-协议)
+  - [1.21 二十、类型系统与分布式系统](#121-二十类型系统与分布式系统)
+    - [1.21.1 分布式系统中的类型安全](#1211-分布式系统中的类型安全)
+      - [1.21.1.1 分布式追踪的类型安全实现](#12111-分布式追踪的类型安全实现)
+    - [1.21.2 一致性模型的类型表示](#1212-一致性模型的类型表示)
+  - [1.22 二十一、类型系统与并发模型](#122-二十一类型系统与并发模型)
+    - [1.22.1 Actor 模型的类型安全实现](#1221-actor-模型的类型安全实现)
+    - [1.22.2 软件事务内存 (STM) 的类型安全](#1222-软件事务内存-stm-的类型安全)
+  - [1.23 二十二、类型系统与领域建模](#123-二十二类型系统与领域建模)
+    - [1.23.1 领域驱动设计 (DDD) 中的类型应用](#1231-领域驱动设计-ddd-中的类型应用)
+    - [1.23.2 代数数据类型 (ADT) 与领域模型](#1232-代数数据类型-adt-与领域模型)
+  - [1.24 二十三、总结：类型系统作为编程的统一理论](#124-二十三总结类型系统作为编程的统一理论)
+  - [1.25 二十四、类型系统前沿与创新](#125-二十四类型系统前沿与创新)
+    - [1.25.1 依赖类型系统的深入探索](#1251-依赖类型系统的深入探索)
+      - [1.25.1.1 有界索引的类型安全实现](#12511-有界索引的类型安全实现)
+      - [1.25.1.2 会话类型系统](#12512-会话类型系统)
+  - [1.26 二十五、效应系统与类型安全](#126-二十五效应系统与类型安全)
+    - [1.26.1 代数效应 (Algebraic Effects) 的模拟](#1261-代数效应-algebraic-effects-的模拟)
+    - [1.26.2 类型级状态效应](#1262-类型级状态效应)
+  - [1.27 二十六、线性类型与资源管理](#127-二十六线性类型与资源管理)
+    - [1.27.1 线性类型的资源安全](#1271-线性类型的资源安全)
+    - [1.27.2 线性逻辑与程序证明](#1272-线性逻辑与程序证明)
+  - [1.28 二十七、类型系统与程序验证](#128-二十七类型系统与程序验证)
+    - [1.28.1 合约编程与类型](#1281-合约编程与类型)
+    - [1.28.2 细化类型的模拟](#1282-细化类型的模拟)
+  - [1.29 二十八、类型系统在特定领域的应用](#129-二十八类型系统在特定领域的应用)
+    - [1.29.1 智能合约中的类型安全](#1291-智能合约中的类型安全)
+    - [1.29.2 量子计算中的类型表示](#1292-量子计算中的类型表示)
+  - [1.30 二十九、类型系统的哲学意义](#130-二十九类型系统的哲学意义)
+    - [1.30.1 命题为类型，程序为证明](#1301-命题为类型程序为证明)
+  - [1.31 三十、综合与未来展望](#131-三十综合与未来展望)
+  - [1.32 三十一、类型系统与分布式计算的融合](#132-三十一类型系统与分布式计算的融合)
+    - [1.32.1 会话类型的实际应用](#1321-会话类型的实际应用)
+  - [1.33 协议类型定义语言 (PTDL)](#133-协议类型定义语言-ptdl)
+  - [1.34 三十二、渐进类型系统 (Gradual Typing)](#134-三十二渐进类型系统-gradual-typing)
+    - [1.34.1 渐进类型化的实现](#1341-渐进类型化的实现)
+  - [1.35 三十三、类型系统与人工智能](#135-三十三类型系统与人工智能)
+    - [1.35.1 类型安全的神经网络](#1351-类型安全的神经网络)
+  - [1.36 类型系统与机器学习管道](#136-类型系统与机器学习管道)
+  - [1.37 三十四、交集和联合类型的高级应用](#137-三十四交集和联合类型的高级应用)
+    - [1.37.1 交集类型的模拟](#1371-交集类型的模拟)
+  - [1.38 联合类型的高级应用](#138-联合类型的高级应用)
+  - [1.39 三十五、类型系统的未来展望](#139-三十五类型系统的未来展望)
+    - [1.39.1 量子类型系统的发展](#1391-量子类型系统的发展)
+  - [1.40 依赖类型的主流化](#140-依赖类型的主流化)
+  - [1.41 类型系统与分布式计算的深度整合](#141-类型系统与分布式计算的深度整合)
+  - [1.42 三十六、结语：类型系统作为统一理论](#142-三十六结语类型系统作为统一理论)
+  - [1.43 三十七、类型系统与编程语言设计的新趋势](#143-三十七类型系统与编程语言设计的新趋势)
+    - [1.43.1 线性类型与所有权的融合](#1431-线性类型与所有权的融合)
+    - [1.43.2 效应系统 (Effect Systems)](#1432-效应系统-effect-systems)
+    - [1.43.3 类型级状态机的发展](#1433-类型级状态机的发展)
+  - [1.44 三十八、类型系统与软件架构的融合](#144-三十八类型系统与软件架构的融合)
+    - [1.44.1 类型驱动的六边形架构](#1441-类型驱动的六边形架构)
+  - [1.45 类型驱动的事件溯源](#145-类型驱动的事件溯源)
+  - [1.46 三十九、类型安全在关键系统中的应用](#146-三十九类型安全在关键系统中的应用)
+    - [1.46.1 航空航天软件的类型安全](#1461-航空航天软件的类型安全)
+  - [1.47 金融系统的类型安全](#147-金融系统的类型安全)
+  - [1.48 四十、类型系统与领域特定语言 (DSL)](#148-四十类型系统与领域特定语言-dsl)
+    - [1.48.1 类型安全的查询 DSL](#1481-类型安全的查询-dsl)
+  - [1.49 类型安全的有限状态机 DSL](#149-类型安全的有限状态机-dsl)
+  - [1.50 四十一、类型系统与人机交互](#150-四十一类型系统与人机交互)
+    - [1.50.1 类型安全的用户界面](#1501-类型安全的用户界面)
+  - [1.51 类型安全的命令行界面](#151-类型安全的命令行界面)
+  - [1.52 四十二、量子计算中的类型系统未来](#152-四十二量子计算中的类型系统未来)
+  - [1.53 量子类型系统的理论基础](#153-量子类型系统的理论基础)
+  - [1.54 量子-经典混合计算的类型系统](#154-量子-经典混合计算的类型系统)
+  - [1.55 四十三、面向实践的类型系统应用](#155-四十三面向实践的类型系统应用)
+  - [1.56 功能完备的状态管理类型系统](#156-功能完备的状态管理类型系统)
+  - [1.57 全栈类型安全的API](#157-全栈类型安全的api)
+  - [1.58 四十四、类型系统的融合与进化](#158-四十四类型系统的融合与进化)
+  - [1.59 跨理论融合](#159-跨理论融合)
+  - [1.60 实用性与理论性的平衡](#160-实用性与理论性的平衡)
+  - [1.61 跨学科应用的扩展](#161-跨学科应用的扩展)
+  - [1.62 结语](#162-结语)
+  - [1.63 类型驱动的形式验证](#163-类型驱动的形式验证)
+  - [1.64 不变量编码与证明](#164-不变量编码与证明)
+  - [1.65 四十六、类型系统与编程语言进化](#165-四十六类型系统与编程语言进化)
+    - [1.65.1 类型系统驱动的语言设计](#1651-类型系统驱动的语言设计)
+  - [1.66 多范式类型系统](#166-多范式类型系统)
+  - [1.67 四十七、类型系统在安全关键系统中的应用](#167-四十七类型系统在安全关键系统中的应用)
+    - [1.67.1 医疗系统中的类型安全](#1671-医疗系统中的类型安全)
+  - [1.68 航空航天软件中的类型安全](#168-航空航天软件中的类型安全)
+  - [1.69 四十八、类型系统与编译器优化](#169-四十八类型系统与编译器优化)
+    - [1.69.1 类型引导的优化](#1691-类型引导的优化)
+    - [1.69.2 零成本抽象的类型表示](#1692-零成本抽象的类型表示)
+  - [1.70 四十九、类型系统与领域特定语言集成](#170-四十九类型系统与领域特定语言集成)
+    - [1.70.1 内嵌DSL的类型安全](#1701-内嵌dsl的类型安全)
+  - [1.71 流式API的类型安全](#171-流式api的类型安全)
+  - [1.72 五十、类型系统的未来展望](#172-五十类型系统的未来展望)
+    - [1.72.1 量子计算与类型理论](#1721-量子计算与类型理论)
+  - [1.73 依赖类型系统的未来](#173-依赖类型系统的未来)
+  - [1.74 五十一、总结与展望](#174-五十一总结与展望)
+
 ## 1.1 一、类型论 (Type Theory) 视角
 
 类型论将类型视为命题，程序视为证明，这是 Curry-Howard 同构的核心思想。
@@ -301,7 +303,7 @@ impl<T> Option<T> {
     fn pure(x: T) -> Option<T> {
         Some(x)
     }
-    
+
     // bind/flatMap操作
     fn and_then<U, F: FnOnce(T) -> Option<U>>(self, f: F) -> Option<U> {
         match self {
@@ -454,16 +456,16 @@ fn calculate_area(length: Meters, width: Meters) -> Meters {
 // Rust的所有权系统防止数据竞争
 fn concurrent_example() {
     let mut data = vec![1, 2, 3];
-    
+
     // 在不同线程中安全使用数据
     let handle = std::thread::spawn(move || {
         data.push(4); // 数据的所有权移动到新线程
         // 类型系统保证了没有其他线程能同时访问
     });
-    
+
     // 下面的代码会导致编译错误，防止了并发错误
     // data.push(5); // 错误：数据已被移动
-    
+
     handle.join().unwrap();
 }
 ```
@@ -576,7 +578,7 @@ impl Sorter {
     fn new(strategy: Box<dyn SortStrategy>) -> Self {
         Sorter { strategy }
     }
-    
+
     fn sort(&self, data: &mut [i32]) {
         self.strategy.sort(data);
     }
@@ -607,7 +609,7 @@ impl Command for LightOnCommand {
     fn execute(&self) {
         self.light.borrow_mut().turn_on();
     }
-    
+
     fn undo(&self) {
         self.light.borrow_mut().turn_off();
     }
@@ -678,7 +680,7 @@ impl<T: Ord> TypedVec<T, Unsorted> {
     fn new(data: Vec<T>) -> Self {
         TypedVec { data, _marker: PhantomData }
     }
-    
+
     fn sort(mut self) -> TypedVec<T, Sorted> {
         self.data.sort();
         TypedVec { data: self.data, _marker: PhantomData }
@@ -778,8 +780,8 @@ struct Memoized<T, F> {
     cache: HashMap<T, T>,
 }
 
-impl<F> Memoized<u64, F> 
-where 
+impl<F> Memoized<u64, F>
+where
     F: Fn(&mut Memoized<u64, F>, u64) -> u64
 {
     fn new(func: F) -> Self {
@@ -788,12 +790,12 @@ where
         cache.insert(1, 1);
         Memoized { func, cache }
     }
-    
+
     fn get(&mut self, n: u64) -> u64 {
         if let Some(&result) = self.cache.get(&n) {
             return result;
         }
-        
+
         let result = (self.func)(self, n);
         self.cache.insert(n, result);
         result
@@ -805,7 +807,7 @@ fn fibonacci() -> impl FnMut(u64) -> u64 {
     let mut memo = Memoized::new(|memo, n| {
         memo.get(n-1) + memo.get(n-2)
     });
-    
+
     move |n| memo.get(n)
 }
 
@@ -859,11 +861,11 @@ impl ServiceContainer {
             database: Box::new(SqliteDatabase),
         }
     }
-    
+
     fn get_logger(&self) -> &dyn Logger {
         &*self.logger
     }
-    
+
     fn get_database(&self) -> &dyn Database {
         &*self.database
     }
@@ -914,7 +916,7 @@ trait Functor<A> {
 // 为 Option 实现函子
 impl<A> Functor<A> for Option<A> {
     type Target<B> = Option<B>;
-    
+
     fn map<B, F>(self, f: F) -> Option<B>
     where
         F: FnOnce(A) -> B,
@@ -937,7 +939,7 @@ impl<A> Functor<A> for Option<A> {
 ```rust
 trait Applicative<A>: Functor<A> {
     fn pure(a: A) -> Self;
-    
+
     fn apply<B, F>(self, f: Self::Target<F>) -> Self::Target<B>
     where
         F: FnOnce(A) -> B;
@@ -947,7 +949,7 @@ impl<A> Applicative<A> for Option<A> {
     fn pure(a: A) -> Self {
         Some(a)
     }
-    
+
     fn apply<B, F>(self, f: Option<F>) -> Option<B>
     where
         F: FnOnce(A) -> B,
@@ -974,7 +976,7 @@ fn complex_computation() -> Result<u32, String> {
     let x = get_value()?;
     let y = transform_value(x)?;
     let z = validate_value(y)?;
-    
+
     // 最终结果
     Ok(z * 2)
 }
@@ -1009,7 +1011,7 @@ impl File<Closed> {
             _state: std::marker::PhantomData,
         })
     }
-    
+
     fn open(self) -> File<Open> {
         // 打开文件...
         File {
@@ -1024,12 +1026,12 @@ impl File<Open> {
         // 读取文件...
         Ok(0) // 简化示例
     }
-    
+
     fn write(&self, data: &[u8]) -> Result<usize, std::io::Error> {
         // 写入文件...
         Ok(data.len()) // 简化示例
     }
-    
+
     fn close(self) -> File<Closed> {
         // 关闭文件...
         File {
@@ -1037,7 +1039,7 @@ impl File<Open> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn lock(self) -> File<Locked> {
         // 锁定文件...
         File {
@@ -1128,14 +1130,14 @@ impl ThreadPool {
         assert!(size > 0, "线程池大小必须大于零");
         ThreadPool { size }
     }
-    
+
     fn execute<F>(&self, job: F)
     where
         F: FnOnce() + Send + 'static,
     {
         // 执行任务...
     }
-    
+
     // 类型安全的关闭
     fn shutdown(self) -> ShutdownPool {
         // 关闭线程池...
@@ -1149,12 +1151,12 @@ struct ShutdownPool;
 fn use_pool() {
     let pool = ThreadPool::new(4);
     pool.execute(|| println!("执行任务"));
-    
+
     let shutdown_pool = pool.shutdown();
-    
+
     // 编译错误：pool 已移动
     // pool.execute(|| println!("错误！"));
-    
+
     // 类型系统确保了线程池的正确使用顺序
 }
 ```
@@ -1189,7 +1191,7 @@ impl RequestBuilder<Uninitialized> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn url(mut self, url: &str) -> RequestBuilder<WithUrl> {
         self.url = Some(url.to_string());
         RequestBuilder {
@@ -1233,7 +1235,7 @@ impl RequestBuilder<WithMethod> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn no_body(self) -> RequestBuilder<Ready> {
         RequestBuilder {
             url: self.url,
@@ -1291,7 +1293,7 @@ impl<T> Traced<T> {
             },
         }
     }
-    
+
     fn child<U>(&self, value: U) -> Traced<U> {
         Traced {
             value,
@@ -1302,7 +1304,7 @@ impl<T> Traced<T> {
             },
         }
     }
-    
+
     fn map<U, F>(&self, f: F) -> Traced<U>
     where
         F: FnOnce(&T) -> U,
@@ -1357,12 +1359,12 @@ impl DataStore<StrongConsistency> {
         // 强一致性读取实现...
         unimplemented!()
     }
-    
+
     fn write<T: Serialize>(&self, key: &str, value: &T) -> Result<(), Error> {
         // 强一致性写入实现...
         unimplemented!()
     }
-    
+
     // 降级到因果一致性
     fn with_causal_consistency(self) -> DataStore<CausalConsistency> {
         DataStore {
@@ -1377,7 +1379,7 @@ impl DataStore<EventualConsistency> {
         // 最终一致性读取实现...
         unimplemented!()
     }
-    
+
     fn write<T: Serialize>(&self, key: &str, value: &T) -> Result<(), Error> {
         // 最终一致性写入实现...
         unimplemented!()
@@ -1446,10 +1448,10 @@ impl ActorSystem {
             actors: Vec::new(),
         }
     }
-    
+
     fn spawn<A: Actor + 'static>(&mut self, mut actor: A) -> ActorRef {
         let (sender, receiver) = std::sync::mpsc::channel();
-        
+
         let handle = std::thread::spawn(move || {
             while let Ok(msg) = receiver.recv() {
                 actor.receive(msg);
@@ -1458,11 +1460,11 @@ impl ActorSystem {
                 }
             }
         });
-        
+
         self.actors.push(handle);
         ActorRef { sender }
     }
-    
+
     fn shutdown(self) {
         // 关闭所有 Actor...
         for handle in self.actors {
@@ -1491,13 +1493,13 @@ impl<T: Clone> TVar<T> {
             version: std::sync::atomic::AtomicUsize::new(1),
         }
     }
-    
+
     fn read(&self) -> (T, usize) {
         let guard = self.value.lock().unwrap();
         let version = self.version.load(std::sync::atomic::Ordering::SeqCst);
         (guard.clone(), version)
     }
-    
+
     fn write(&self, value: T) -> usize {
         let mut guard = self.value.lock().unwrap();
         *guard = value;
@@ -1529,7 +1531,7 @@ impl<'a, T: Clone + PartialEq + 'a> AnyLog for Log<'a, T> {
         let (_, current_version) = self.var.read();
         current_version == self.version
     }
-    
+
     fn commit(&self) {
         if let Some(ref new_value) = self.new_value {
             self.var.write(new_value.clone());
@@ -1541,27 +1543,27 @@ impl<'a> Transaction<'a> {
     fn new() -> Self {
         Transaction { logs: Vec::new() }
     }
-    
+
     fn read<T: Clone + PartialEq + 'a>(&mut self, var: &'a TVar<T>) -> T {
         // 从事务日志读取或创建新日志...
         let (value, version) = var.read();
-        
+
         self.logs.push(Box::new(Log {
             var,
             old_value: value.clone(),
             new_value: None,
             version,
         }));
-        
+
         value
     }
-    
+
     fn write<T: Clone + PartialEq + 'a>(&mut self, var: &'a TVar<T>, value: T) {
         // 更新事务日志...
         for log in &mut self.logs {
             // 实际实现需要类型检查...
         }
-        
+
         self.logs.push(Box::new(Log {
             var,
             old_value: var.read().0,
@@ -1569,17 +1571,17 @@ impl<'a> Transaction<'a> {
             version: var.read().1,
         }));
     }
-    
+
     fn commit(self) -> bool {
         // 验证并提交事务...
         let valid = self.logs.iter().all(|log| log.validate());
-        
+
         if valid {
             for log in self.logs {
                 log.commit();
             }
         }
-        
+
         valid
     }
 }
@@ -1653,22 +1655,22 @@ impl Order {
             total: Money { amount: 0.0, currency: Currency::USD },
         }
     }
-    
+
     fn add_item(&mut self, product_id: ProductId, quantity: u32, price: Money) -> Result<(), String> {
         if self.status != OrderStatus::Created {
             return Err("不能修改非创建状态的订单".to_string());
         }
-        
+
         // 添加商品...
         let item = OrderItem { product_id, quantity, price: price.clone() };
         self.items.push(item);
-        
+
         // 更新总价...
         self.total.amount += price.amount * quantity as f64;
-        
+
         Ok(())
     }
-    
+
     fn pay(&mut self) -> Result<(), String> {
         match self.status {
             OrderStatus::Created => {
@@ -1678,7 +1680,7 @@ impl Order {
             _ => Err("只有创建状态的订单可以支付".to_string()),
         }
     }
-    
+
     // 其他领域逻辑...
 }
 
@@ -1743,7 +1745,7 @@ impl<const N: usize> BoundedIndex<N> {
             None
         }
     }
-    
+
     fn get<T>(&self, array: &[T; N]) -> &T {
         // 由于类型系统保证了索引在边界内，因此可以安全地使用索引
         &array[self.index]
@@ -1753,11 +1755,11 @@ impl<const N: usize> BoundedIndex<N> {
 // 使用示例
 fn use_bounded_index() {
     let array = [1, 2, 3, 4, 5];
-    
+
     if let Some(idx) = BoundedIndex::<5>::new(3) {
         println!("安全索引: {}", idx.get(&array));
     }
-    
+
     // 编译时确保索引安全
     let out_of_bounds = BoundedIndex::<5>::new(10);
     assert!(out_of_bounds.is_none());
@@ -1786,7 +1788,7 @@ impl Protocol<WaitingForGreeting> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     fn send_greeting(self) -> Protocol<WaitingForName> {
         println!("发送: 你好！");
         Protocol {
@@ -1826,7 +1828,7 @@ fn run_protocol() {
     let protocol = protocol.receive_name("张三");
     let protocol = protocol.receive_age(30);
     protocol.close();
-    
+
     // 错误：跳过步骤会导致编译错误
     // let protocol = Protocol::new();
     // let protocol = protocol.receive_name("张三"); // 错误：必须先发送问候
@@ -1867,7 +1869,7 @@ where
             _effect: std::marker::PhantomData,
         }
     }
-    
+
     fn run(self) -> T {
         (self.computation)(&self.handler)
     }
@@ -1883,7 +1885,7 @@ struct ConsoleLogger;
 
 impl Handler<LogEffect> for ConsoleLogger {
     type Output = ();
-    
+
     fn handle(&self, effect: LogEffect) -> Self::Output {
         match effect {
             LogEffect::Log(msg) => println!("[日志] {}", msg),
@@ -1924,7 +1926,7 @@ struct State<S, T> {
 // 状态单子
 trait StatefulComputation<S> {
     type Output;
-    
+
     fn run_with_state(self, initial_state: S) -> (Self::Output, S);
 }
 
@@ -1933,7 +1935,7 @@ where
     F: FnOnce(S) -> State<S, T>,
 {
     type Output = T;
-    
+
     fn run_with_state(self, initial_state: S) -> (Self::Output, S) {
         let State { state, value } = self(initial_state);
         (value, state)
@@ -1958,7 +1960,7 @@ fn counter_example() {
     // 状态计算
     let increment = |s: i32| State { state: s + 1, value: s };
     let double_and_increment = map(increment, |x| x * 2);
-    
+
     let (result, final_state) = double_and_increment.run_with_state(5);
     println!("结果: {}, 最终状态: {}", result, final_state);
 }
@@ -1984,12 +1986,12 @@ impl FileHandle {
         // 实际打开文件...
         Ok(FileHandle { descriptor: 0 })
     }
-    
+
     fn write(&mut self, data: &[u8]) -> Result<usize, std::io::Error> {
         // 写入文件...
         Ok(data.len())
     }
-    
+
     fn close(self) -> Result<(), std::io::Error> {
         // 关闭文件...
         Ok(())
@@ -2001,10 +2003,10 @@ fn linear_file_usage() -> Result<(), std::io::Error> {
     let mut file = FileHandle::open("example.txt")?;
     file.write(b"Hello, world!")?;
     file.close()?; // 文件句柄被消耗
-    
+
     // 错误：不能使用已关闭的文件
     // file.write(b"More data"); // 编译错误：值已移动
-    
+
     Ok(())
 }
 
@@ -2046,11 +2048,11 @@ impl<A, B> And<A, B> {
     fn split(self) -> (Proof<A>, Proof<B>) {
         (self.0, self.1)
     }
-    
+
     fn left(self) -> Proof<A> {
         self.0
     }
-    
+
     fn right(self) -> Proof<B> {
         self.1
     }
@@ -2061,14 +2063,14 @@ fn prove_transitive() {
     // 给定命题: P => Q, Q => R
     let p_implies_q = Implies(|_proof_p: Proof<P>| Proof(std::marker::PhantomData::<Q>));
     let q_implies_r = Implies(|_proof_q: Proof<Q>| Proof(std::marker::PhantomData::<R>));
-    
+
     // 证明: P => R
     let p_implies_r = q_implies_r.compose(p_implies_q);
-    
+
     // 使用证明
     let proof_p = Proof(std::marker::PhantomData::<P>);
     let proof_r = (p_implies_r.0)(proof_p);
-    
+
     println!("证明成功: P => R");
 }
 
@@ -2102,7 +2104,7 @@ where
             None
         }
     }
-    
+
     fn value(&self) -> &T {
         &self.0
     }
@@ -2124,7 +2126,7 @@ fn use_contracts() {
         let result = factorial(n);
         println!("5! = {}", result);
     }
-    
+
     // 前置条件不满足
     let negative = Requires::<NonNegative, i32>::new(-5);
     assert!(negative.is_none());
@@ -2155,7 +2157,7 @@ impl<const N: i32> Refined<i32, GreaterThan<N>> {
             None
         }
     }
-    
+
     fn value(&self) -> i32 {
         self.0
     }
@@ -2169,7 +2171,7 @@ impl<const N: i32> Refined<i32, LessThan<N>> {
             None
         }
     }
-    
+
     fn value(&self) -> i32 {
         self.0
     }
@@ -2192,10 +2194,10 @@ fn use_refined_types() {
     // 创建在范围内的值
     let greater_than_zero = Refined::<i32, GreaterThan<0>>::new(42).unwrap();
     let less_than_hundred = Refined::<i32, LessThan<100>>::new(42).unwrap();
-    
+
     let result = process_in_range((greater_than_zero, less_than_hundred));
     println!("结果: {}", result);
-    
+
     // 范围外的值
     let negative = Refined::<i32, GreaterThan<0>>::new(-5);
     assert!(negative.is_none());
@@ -2220,15 +2222,15 @@ impl Amount {
     fn new(value: u64) -> Self {
         Amount(value)
     }
-    
+
     fn value(&self) -> u64 {
         self.0
     }
-    
+
     fn add(self, other: Self) -> Self {
         Amount(self.0 + other.0)
     }
-    
+
     fn subtract(self, other: Self) -> Option<Self> {
         if self.0 >= other.0 {
             Some(Amount(self.0 - other.0))
@@ -2253,28 +2255,28 @@ impl Contract {
     fn new(owner: Address) -> Self {
         let mut balances = std::collections::HashMap::new();
         balances.insert(owner.clone(), Amount::new(1000));
-        
+
         Contract {
             balances,
             owner,
         }
     }
-    
+
     fn transfer(&mut self, from: &Address, to: &Address, amount: Amount) -> Result<(), &'static str> {
         // 检查余额
         let from_balance = self.balances.get(from).copied().unwrap_or(Amount::new(0));
         let new_from_balance = from_balance.subtract(amount).ok_or("余额不足")?;
-        
+
         // 更新余额
         let to_balance = self.balances.get(to).copied().unwrap_or(Amount::new(0));
         let new_to_balance = to_balance.add(amount);
-        
+
         self.balances.insert(from.clone(), new_from_balance);
         self.balances.insert(to.clone(), new_to_balance);
-        
+
         Ok(())
     }
-    
+
     fn only_owner<F>(&self, sender: &Address, f: F) -> Result<(), &'static str>
     where
         F: FnOnce() -> Result<(), &'static str>,
@@ -2290,21 +2292,21 @@ impl Contract {
 fn use_contract() {
     let owner = Address([0u8; 20]);
     let user = Address([1u8; 20]);
-    
+
     let mut contract = Contract::new(owner.clone());
-    
+
     // 转账
     let result = contract.transfer(&owner, &user, Amount::new(500));
     assert!(result.is_ok());
-    
+
     // 转账过多 - 类型系统帮助防止溢出
     let result = contract.transfer(&owner, &user, Amount::new(600));
     assert!(result.is_err());
-    
+
     // 只有所有者的操作
     let result = contract.only_owner(&owner, || Ok(()));
     assert!(result.is_ok());
-    
+
     let result = contract.only_owner(&user, || Ok(()));
     assert!(result.is_err());
 }
@@ -2332,35 +2334,35 @@ impl QubitState {
     fn zero() -> Self {
         QubitState { alpha: 1.0, beta: 0.0 }
     }
-    
+
     // 创建 |1⟩ 状态
     fn one() -> Self {
         QubitState { alpha: 0.0, beta: 1.0 }
     }
-    
+
     // 应用 Hadamard 门
     fn apply_hadamard(&mut self) {
         let alpha = self.alpha;
         let beta = self.beta;
-        
+
         self.alpha = (alpha + beta) / std::f64::consts::SQRT_2;
         self.beta = (alpha - beta) / std::f64::consts::SQRT_2;
     }
-    
+
     // 应用 X 门（NOT）
     fn apply_x(&mut self) {
         std::mem::swap(&mut self.alpha, &mut self.beta);
     }
-    
+
     // 应用 Z 门
     fn apply_z(&mut self) {
         self.beta = -self.beta;
     }
-    
+
     // 测量比特
     fn measure(&self) -> (bool, f64) {
         let probability_one = self.beta * self.beta;
-        
+
         // 简化示例，使用确定性测量结果
         if probability_one > 0.5 {
             (true, probability_one)
@@ -2411,11 +2413,11 @@ impl QuantumCircuit {
     fn new() -> Self {
         QuantumCircuit { gates: Vec::new() }
     }
-    
+
     fn add_gate<G: QuantumGate + 'static>(&mut self, gate: G) {
         self.gates.push(Box::new(gate));
     }
-    
+
     fn run(&self, initial_state: &mut QubitState) {
         for gate in &self.gates {
             gate.apply(initial_state);
@@ -2426,19 +2428,19 @@ impl QuantumCircuit {
 // 使用示例
 fn quantum_example() {
     let mut circuit = QuantumCircuit::new();
-    
+
     // 构建电路：H -> X -> H
     circuit.add_gate(HadamardGate);
     circuit.add_gate(XGate);
     circuit.add_gate(HadamardGate);
-    
+
     // 运行电路
     let mut qubit = QubitState::zero();
     println!("初始状态: {}", qubit);
-    
+
     circuit.run(&mut qubit);
     println!("最终状态: {}", qubit);
-    
+
     // 测量结果
     let (result, probability) = qubit.measure();
     println!("测量结果: {}, 概率: {:.3}", if result { "|1⟩" } else { "|0⟩" }, probability);
@@ -2494,7 +2496,7 @@ impl<A, B> And<A, B> {
     fn left(self) -> A {
         self.0
     }
-    
+
     fn right(self) -> B {
         self.1
     }
@@ -2607,7 +2609,7 @@ impl Client<Init> {
             _state: PhantomData,
         }
     }
-    
+
     fn connect(self) -> Client<WaitingForRequest> {
         println!("连接到服务器: {}", self.endpoint);
         Client {
@@ -2652,7 +2654,7 @@ fn distributed_communication() {
     let (response, client) = client.receive_response();
     println!("处理响应: {}", response);
     client.close();
-    
+
     // 类型错误：状态机强制按正确顺序调用
     // let client = Client::new("server.example.com:8080");
     // client.send_request("错误！"); // 编译错误：必须先连接
@@ -2685,7 +2687,7 @@ where
     First::Next: ProtocolStep<Next = Rest>,
 {
     type Next = Rest;
-    
+
     fn execute(self) -> Self::Next {
         let next = self.0.execute();
         next.execute()
@@ -2700,9 +2702,9 @@ struct End;
 // 实现协议步骤
 impl<From, To, Msg, Next> ProtocolStep for Send<From, To, Msg, Next> {
     type Next = Next;
-    
+
     fn execute(self) -> Self::Next {
-        println!("{:?} 发送 {:?} 到 {:?}", 
+        println!("{:?} 发送 {:?} 到 {:?}",
                  std::any::type_name::<From>(),
                  std::any::type_name::<Msg>(),
                  std::any::type_name::<To>());
@@ -2721,7 +2723,7 @@ impl<From, To, Msg, Next: Default> Default for Send<From, To, Msg, Next> {
 type RequestMsg = String;
 type ResponseMsg = String;
 
-type ClientServerProtocol = 
+type ClientServerProtocol =
     Send<Role::Client, Role::Server, RequestMsg,
     Receive<Role::Server, Role::Client, ResponseMsg,
     End>>;
@@ -2756,28 +2758,28 @@ impl DynValue {
             value: Box::new(value),
         }
     }
-    
+
     fn new_string(value: String) -> Self {
         DynValue {
             tag: TypeTag::String,
             value: Box::new(value),
         }
     }
-    
+
     fn new_bool(value: bool) -> Self {
         DynValue {
             tag: TypeTag::Bool,
             value: Box::new(value),
         }
     }
-    
+
     fn new_dynamic(value: Box<dyn std::any::Any>) -> Self {
         DynValue {
             tag: TypeTag::Dynamic,
             value,
         }
     }
-    
+
     fn get_int(&self) -> Result<i32, String> {
         match self.tag {
             TypeTag::Int => {
@@ -2790,7 +2792,7 @@ impl DynValue {
             _ => Err(format!("类型错误: 预期 Int, 实际为 {:?}", self.tag)),
         }
     }
-    
+
     fn get_string(&self) -> Result<String, String> {
         match self.tag {
             TypeTag::String => {
@@ -2828,12 +2830,12 @@ fn gradual_typing_example() {
     let b = DynValue::new_int(10);
     let result = add(a, b).unwrap();
     println!("5 + 10 = {}", result.get_int().unwrap());
-    
+
     let s1 = DynValue::new_string("Hello, ".to_string());
     let s2 = DynValue::new_string("World!".to_string());
     let result = add(s1, s2).unwrap();
     println!("字符串连接: {}", result.get_string().unwrap());
-    
+
     // 类型错误 - 在运行时捕获
     let a = DynValue::new_int(5);
     let s = DynValue::new_string("Hello".to_string());
@@ -2864,16 +2866,16 @@ impl<T: Clone + Default, const N: usize> Tensor<T, Dim<N>> {
     fn new() -> Self {
         let mut data = Vec::with_capacity(N);
         data.resize(N, T::default());
-        
+
         Tensor {
             data,
             _dim: PhantomData,
         }
     }
-    
+
     fn with_data(data: Vec<T>) -> Self {
         assert_eq!(data.len(), N, "数据维度不匹配");
-        
+
         Tensor {
             data,
             _dim: PhantomData,
@@ -2921,7 +2923,7 @@ impl<const IN: usize, const HIDDEN: usize, const OUT: usize> Model<IN, HIDDEN, O
             layer2: Dense::new(),
         }
     }
-    
+
     fn predict(&self, input: &Tensor<f32, Dim<IN>>) -> Tensor<f32, Dim<OUT>> {
         let hidden = self.layer1.forward(input);
         self.layer2.forward(&hidden)
@@ -2932,13 +2934,13 @@ impl<const IN: usize, const HIDDEN: usize, const OUT: usize> Model<IN, HIDDEN, O
 fn typed_neural_network() {
     // 创建一个具有类型安全层的模型
     let model = Model::<784, 128, 10>::new();  // MNIST分类器
-    
+
     // 创建输入数据
     let input = Tensor::<f32, Dim<784>>::new();
-    
+
     // 前向传播
     let output = model.predict(&input);
-    
+
     // 类型系统确保了神经网络层维度的兼容性
     // 维度不匹配会导致编译错误
 }
@@ -2987,7 +2989,7 @@ impl<D, F, const N: usize> Dataset<D, F, N> {
 struct FeatureProcessor;
 
 impl FeatureProcessor {
-    fn process<const N: usize>(dataset: Dataset<TrainingData, RawFeatures, N>) 
+    fn process<const N: usize>(dataset: Dataset<TrainingData, RawFeatures, N>)
         -> Dataset<TrainingData, ProcessedFeatures, N> {
         println!("处理特征...");
         // 实际处理代码...
@@ -2997,8 +2999,8 @@ impl FeatureProcessor {
             _markers: PhantomData,
         }
     }
-    
-    fn normalize<const N: usize>(dataset: Dataset<TrainingData, ProcessedFeatures, N>) 
+
+    fn normalize<const N: usize>(dataset: Dataset<TrainingData, ProcessedFeatures, N>)
         -> Dataset<TrainingData, NormalizedFeatures, N> {
         println!("归一化特征...");
         // 实际归一化代码...
@@ -3023,7 +3025,7 @@ impl<F, const FEATURES: usize, const CLASSES: usize> Model<Untrained, F, FEATURE
             _markers: PhantomData,
         }
     }
-    
+
     fn train(self, dataset: &Dataset<TrainingData, F, FEATURES>) -> Model<Trained, F, FEATURES, CLASSES> {
         println!("训练模型...");
         // 实际训练代码...
@@ -3043,7 +3045,7 @@ impl<F, const FEATURES: usize, const CLASSES: usize> Model<Trained, F, FEATURES,
             _markers: PhantomData,
         }
     }
-    
+
     fn predict(&self, features: &[f32]) -> usize {
         // 简化的预测实现...
         0
@@ -3057,24 +3059,24 @@ fn typed_ml_pipeline() {
         vec![vec![1.0, 2.0, 3.0]; 100],  // 特征
         vec![0, 1, 0, 1, 0; 20]           // 标签
     );
-    
+
     // 特征处理管道
     let processed_data = FeatureProcessor::process(raw_training_data);
     let normalized_data = FeatureProcessor::normalize(processed_data);
-    
+
     // 创建并训练模型
     let model = Model::<Untrained, NormalizedFeatures, 10, 2>::new();
     let trained_model = model.train(&normalized_data);
-    
+
     // 创建验证数据集
     let validation_data = Dataset::<ValidationData, NormalizedFeatures, 10>::new(
         vec![vec![1.0, 2.0, 3.0]; 20],  // 特征
         vec![0, 1, 0, 1, 0; 4]           // 标签
     );
-    
+
     // 评估模型
     let evaluated_model = trained_model.evaluate(&validation_data);
-    
+
     // 类型系统确保了机器学习管道的完整性
     // 防止常见错误如：在数据归一化前训练、使用错误类型的数据等
 }
@@ -3140,7 +3142,7 @@ enum HttpResponse<T, E> {
 trait HttpHandler {
     type Response;
     type Error;
-    
+
     fn handle(&self, request: &str) -> HttpResponse<Self::Response, Self::Error>;
 }
 
@@ -3157,7 +3159,7 @@ struct UserError {
 impl HttpHandler for UserHandler {
     type Response = UserResponse;
     type Error = UserError;
-    
+
     fn handle(&self, request: &str) -> HttpResponse<Self::Response, Self::Error> {
         if request.contains("user") {
             HttpResponse::Ok(UserResponse {
@@ -3189,13 +3191,13 @@ fn process_response<T, E>(response: HttpResponse<T, E>) -> String {
 // 使用示例
 fn union_types_example() {
     let handler = UserHandler;
-    
+
     let response1 = handler.handle("/user/123");
     let response2 = handler.handle("/admin");
-    
+
     println!("用户请求结果: {}", process_response(response1));
     println!("管理员请求结果: {}", process_response(response2));
-    
+
     // 联合类型允许统一处理不同类型的值
     // 同时保持类型安全
 }
@@ -3288,13 +3290,13 @@ impl DatabaseConnection {
     fn close(self) {
         // 资源被消耗
     }
-    
+
     // 借用连接的操作
     #[borrowing]
     fn query(&self, sql: &str) -> QueryResult {
         // 不消耗资源
     }
-    
+
     // 共享但有限制的操作
     #[sharing(max_uses = 5)]
     fn create_transaction(&self) -> Transaction {
@@ -3339,11 +3341,11 @@ fn test_config_parsing() {
     let result = with_mock_io(|| {
         // 模拟文件系统
         mock_file("config.json", r#"{"setting": true}"#);
-        
+
         // 调用被测函数
         read_and_parse_config()
     });
-    
+
     assert!(result.is_ok());
 }
 ```
@@ -3356,7 +3358,7 @@ trait StateMachine {
     type State;
     type Event;
     type Error;
-    
+
     fn next(state: Self::State, event: Self::Event) -> Result<Self::State, Self::Error>;
 }
 
@@ -3390,7 +3392,7 @@ impl StateMachine for OrderStateMachine {
     type State = OrderState;
     type Event = OrderEvent;
     type Error = OrderError;
-    
+
     fn next(state: Self::State, event: Self::Event) -> Result<Self::State, Self::Error> {
         match (state, event) {
             (OrderState::Created { mut items }, OrderEvent::AddItem { item }) => {
@@ -3403,9 +3405,9 @@ impl StateMachine for OrderStateMachine {
             },
             (OrderState::Paid { items, payment_id }, OrderEvent::Ship { carrier }) => {
                 // 处理发货逻辑...
-                Ok(OrderState::Shipped { 
-                    items, 
-                    tracking_number: format!("{}-tracking", carrier) 
+                Ok(OrderState::Shipped {
+                    items,
+                    tracking_number: format!("{}-tracking", carrier)
                 })
             },
             // 类型系统确保状态转换的有效性
@@ -3424,27 +3426,27 @@ impl StateMachine for OrderStateMachine {
 mod domain {
     #[derive(Clone, PartialEq, Eq)]
     pub struct UserId(pub String);
-    
+
     #[derive(Clone)]
     pub struct User {
         pub id: UserId,
         pub name: String,
         pub email: String,
     }
-    
+
     pub enum UserError {
         NotFound,
         InvalidData,
         AuthFailed,
     }
-    
+
     // 端口 - 核心业务接口
     pub trait UserRepository {
         fn find(&self, id: &UserId) -> Result<User, UserError>;
         fn save(&self, user: &User) -> Result<(), UserError>;
         fn delete(&self, id: &UserId) -> Result<(), UserError>;
     }
-    
+
     pub trait UserService {
         fn get_user(&self, id: &UserId) -> Result<User, UserError>;
         fn create_user(&self, name: &str, email: &str) -> Result<User, UserError>;
@@ -3456,12 +3458,12 @@ mod domain {
 // 适配器 - 实现与外部世界的连接
 mod adapters {
     use super::domain::*;
-    
+
     // 数据库适配器
     pub struct PostgresUserRepository {
         connection: String, // 简化示例
     }
-    
+
     impl UserRepository for PostgresUserRepository {
         fn find(&self, id: &UserId) -> Result<User, UserError> {
             // 实现数据库查询...
@@ -3471,37 +3473,37 @@ mod adapters {
                 email: "test@example.com".to_string(),
             })
         }
-        
+
         fn save(&self, user: &User) -> Result<(), UserError> {
             // 实现数据库保存...
             Ok(())
         }
-        
+
         fn delete(&self, id: &UserId) -> Result<(), UserError> {
             // 实现数据库删除...
             Ok(())
         }
     }
-    
+
     // Web API 适配器
     pub struct UserController {
         service: Box<dyn UserService>,
     }
-    
+
     impl UserController {
         pub fn new(service: Box<dyn UserService>) -> Self {
             UserController { service }
         }
-        
+
         pub fn get_user(&self, id_str: &str) -> Result<String, String> {
             let user_id = UserId(id_str.to_string());
             match self.service.get_user(&user_id) {
-                Ok(user) => Ok(format!("{{\"id\":\"{}\",\"name\":\"{}\",\"email\":\"{}\"}}", 
+                Ok(user) => Ok(format!("{{\"id\":\"{}\",\"name\":\"{}\",\"email\":\"{}\"}}",
                                      user.id.0, user.name, user.email)),
                 Err(e) => Err(format!("Error: {:?}", e)),
             }
         }
-        
+
         // 其他API方法...
     }
 }
@@ -3509,22 +3511,22 @@ mod adapters {
 // 应用服务实现
 mod application {
     use super::domain::*;
-    
+
     pub struct DefaultUserService {
         repository: Box<dyn UserRepository>,
     }
-    
+
     impl DefaultUserService {
         pub fn new(repository: Box<dyn UserRepository>) -> Self {
             DefaultUserService { repository }
         }
     }
-    
+
     impl UserService for DefaultUserService {
         fn get_user(&self, id: &UserId) -> Result<User, UserError> {
             self.repository.find(id)
         }
-        
+
         fn create_user(&self, name: &str, email: &str) -> Result<User, UserError> {
             let id = UserId(format!("user-{}", name)); // 简化示例
             let user = User {
@@ -3535,14 +3537,14 @@ mod application {
             self.repository.save(&user)?;
             Ok(user)
         }
-        
+
         fn update_email(&self, id: &UserId, email: &str) -> Result<User, UserError> {
             let mut user = self.repository.find(id)?;
             user.email = email.to_string();
             self.repository.save(&user)?;
             Ok(user)
         }
-        
+
         fn delete_user(&self, id: &UserId) -> Result<(), UserError> {
             self.repository.delete(id)
         }
@@ -3567,7 +3569,7 @@ trait Event {
 trait Aggregate {
     type Id;
     type Event: Event<AggregateId = Self::Id>;
-    
+
     fn id(&self) -> &Self::Id;
     fn version(&self) -> u64;
     fn apply(&mut self, event: &Self::Event);
@@ -3587,7 +3589,7 @@ enum AccountEvent {
 
 impl Event for AccountEvent {
     type AggregateId = AccountId;
-    
+
     fn aggregate_id(&self) -> &Self::AggregateId {
         match self {
             AccountEvent::Created { id, .. } => id,
@@ -3596,7 +3598,7 @@ impl Event for AccountEvent {
             AccountEvent::OverdraftDetected { id, .. } => id,
         }
     }
-    
+
     fn event_type(&self) -> &'static str {
         match self {
             AccountEvent::Created { .. } => "AccountCreated",
@@ -3605,7 +3607,7 @@ impl Event for AccountEvent {
             AccountEvent::OverdraftDetected { .. } => "OverdraftDetected",
         }
     }
-    
+
     fn version(&self) -> u64 {
         match self {
             AccountEvent::Created { version, .. } => *version,
@@ -3633,7 +3635,7 @@ impl Account {
             version: 0,
         }
     }
-    
+
     fn create(id: AccountId, owner: String) -> (Self, AccountEvent) {
         let version = 1;
         let account = Account {
@@ -3642,16 +3644,16 @@ impl Account {
             balance: 0,
             version,
         };
-        
+
         let event = AccountEvent::Created {
             id: id.clone(),
             owner: account.owner.clone(),
             version,
         };
-        
+
         (account, event)
     }
-    
+
     fn deposit(&self, amount: u64) -> AccountEvent {
         AccountEvent::Deposited {
             id: self.id.clone(),
@@ -3659,7 +3661,7 @@ impl Account {
             version: self.version + 1,
         }
     }
-    
+
     fn withdraw(&self, amount: u64) -> Result<AccountEvent, String> {
         if amount <= self.balance {
             Ok(AccountEvent::Withdrawn {
@@ -3681,15 +3683,15 @@ impl Account {
 impl Aggregate for Account {
     type Id = AccountId;
     type Event = AccountEvent;
-    
+
     fn id(&self) -> &Self::Id {
         &self.id
     }
-    
+
     fn version(&self) -> u64 {
         self.version
     }
-    
+
     fn apply(&mut self, event: &Self::Event) {
         match event {
             AccountEvent::Created { id, owner, version } => {
@@ -3750,11 +3752,11 @@ impl Length<Meters> {
     fn new(value: f64) -> Self {
         Length(value, std::marker::PhantomData)
     }
-    
+
     fn to_feet(&self) -> Length<Feet> {
         Length(self.0 * 3.28084, std::marker::PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -3764,11 +3766,11 @@ impl Length<Feet> {
     fn new(value: f64) -> Self {
         Length(value, std::marker::PhantomData)
     }
-    
+
     fn to_meters(&self) -> Length<Meters> {
         Length(self.0 / 3.28084, std::marker::PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -3779,7 +3781,7 @@ impl<LUnit, TUnit> Velocity<LUnit, TUnit> {
     fn new(value: f64) -> Self {
         Velocity(value, std::marker::PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -3788,7 +3790,7 @@ impl<LUnit, TUnit> Velocity<LUnit, TUnit> {
 // 类型安全的运算
 impl<TUnit> std::ops::Div<Time<TUnit>> for Length<Meters> {
     type Output = Velocity<Meters, TUnit>;
-    
+
     fn div(self, rhs: Time<TUnit>) -> Self::Output {
         Velocity::new(self.0 / rhs.0)
     }
@@ -3807,24 +3809,24 @@ impl FlightControlSystem {
             airspeed: Velocity::<Meters, Seconds>::new(0.0),
         }
     }
-    
+
     // 类型安全的接口确保正确的单位
     fn set_altitude(&mut self, altitude: Length<Feet>) {
         self.altitude = altitude;
     }
-    
+
     fn set_airspeed(&mut self, airspeed: Velocity<Meters, Seconds>) {
         self.airspeed = airspeed;
     }
-    
+
     fn is_safe_altitude(&self) -> bool {
         self.altitude.value() > 1000.0
     }
-    
+
     fn is_safe_airspeed(&self) -> bool {
         self.airspeed.value() > 60.0 && self.airspeed.value() < 300.0
     }
-    
+
     fn autopilot_status(&self) -> &'static str {
         if self.is_safe_altitude() && self.is_safe_airspeed() {
             "正常"
@@ -3837,22 +3839,22 @@ impl FlightControlSystem {
 // 使用示例
 fn flight_control_example() {
     let mut fcs = FlightControlSystem::new();
-    
+
     // 设置高度 (英尺)
     fcs.set_altitude(Length::<Feet>::new(5000.0));
-    
+
     // 设置空速 (米/秒)
     fcs.set_airspeed(Velocity::<Meters, Seconds>::new(100.0));
-    
+
     println!("自动驾驶状态: {}", fcs.autopilot_status());
-    
+
     // 类型错误：单位不匹配
     // fcs.set_altitude(Length::<Meters>::new(5000.0)); // 编译错误
-    
+
     // 正确的单位转换
     let altitude_meters = Length::<Meters>::new(2000.0);
     fcs.set_altitude(altitude_meters.to_feet());
-    
+
     // 类型系统防止了Mars Climate Orbiter那样的单位错误
 }
 ```
@@ -3883,18 +3885,18 @@ impl<const DP: u8> Money<DP> {
         // 转换为最小单位 (如分)
         let factor = 10_i64.pow(DP as u32);
         let amount_smallest = (amount * factor as f64).round() as i64;
-        
+
         Money {
             amount: amount_smallest,
             currency,
         }
     }
-    
+
     fn value(&self) -> f64 {
         let factor = 10_f64.powi(DP as i32);
         self.amount as f64 / factor
     }
-    
+
     fn format(&self) -> String {
         match DP {
             2 => format!("{:.2} {}", self.value(), self.currency.0),
@@ -3907,13 +3909,13 @@ impl<const DP: u8> Money<DP> {
 // 类型安全的货币操作
 impl<const DP: u8> std::ops::Add for Money<DP> {
     type Output = Result<Self, String>;
-    
+
     fn add(self, other: Self) -> Self::Output {
         if self.currency != other.currency {
-            return Err(format!("不能相加不同币种: {} 和 {}", 
+            return Err(format!("不能相加不同币种: {} 和 {}",
                               self.currency.0, other.currency.0));
         }
-        
+
         Ok(Money {
             amount: self.amount + other.amount,
             currency: self.currency,
@@ -3923,13 +3925,13 @@ impl<const DP: u8> std::ops::Add for Money<DP> {
 
 impl<const DP: u8> std::ops::Sub for Money<DP> {
     type Output = Result<Self, String>;
-    
+
     fn sub(self, other: Self) -> Self::Output {
         if self.currency != other.currency {
-            return Err(format!("不能相减不同币种: {} 和 {}", 
+            return Err(format!("不能相减不同币种: {} 和 {}",
                               self.currency.0, other.currency.0));
         }
-        
+
         Ok(Money {
             amount: self.amount - other.amount,
             currency: self.currency,
@@ -3948,13 +3950,13 @@ impl ExchangeRate {
     fn new(from: Currency, to: Currency, rate: f64) -> Self {
         ExchangeRate { from, to, rate }
     }
-    
+
     fn convert<const DP: u8>(&self, money: Money<DP>) -> Result<Money<DP>, String> {
         if money.currency != self.from {
-            return Err(format!("货币不匹配：预期 {}，实际 {}", 
+            return Err(format!("货币不匹配：预期 {}，实际 {}",
                               self.from.0, money.currency.0));
         }
-        
+
         let converted_amount = money.value() * self.rate;
         Ok(Money::new(converted_amount, self.to))
     }
@@ -3973,15 +3975,15 @@ impl<const DP: u8> Account<DP> {
             balance: initial_balance,
         }
     }
-    
+
     fn deposit(&mut self, amount: Money<DP>) -> Result<(), String> {
         self.balance = (*self.balance + amount)?;
         Ok(())
     }
-    
+
     fn withdraw(&mut self, amount: Money<DP>) -> Result<(), String> {
         let new_balance = *self.balance - amount?;
-        
+
         if let Ok(balance) = new_balance {
             if balance.amount < 0 {
                 return Err("余额不足".to_string());
@@ -3992,27 +3994,27 @@ impl<const DP: u8> Account<DP> {
             new_balance.map(|_| ())
         }
     }
-    
+
     fn balance(&self) -> Money<DP> {
         self.balance
     }
-    
-    fn transfer<const DP2: u8>(&mut self, to: &mut Account<DP2>, amount: Money<DP>, 
+
+    fn transfer<const DP2: u8>(&mut self, to: &mut Account<DP2>, amount: Money<DP>,
                   rate: Option<&ExchangeRate>) -> Result<(), String> {
         // 先从当前账户扣款
         self.withdraw(amount)?;
-        
+
         // 如果币种相同且精度相同，直接存入
         if DP == DP2 && amount.currency == to.balance.currency {
             to.deposit(amount)?;
             return Ok(());
         }
-        
+
         // 需要汇率转换
         if let Some(rate) = rate {
             // 先转换币种
             let converted = rate.convert(amount)?;
-            
+
             // 如果精度不同，需要调整
             if DP != DP2 {
                 // 这里简化处理，实际需要更复杂的精度转换
@@ -4022,7 +4024,7 @@ impl<const DP: u8> Account<DP> {
                 // 精度相同，直接存入
                 to.deposit(converted)?;
             }
-            
+
             Ok(())
         } else {
             Err("需要提供汇率进行币种转换".to_string())
@@ -4034,32 +4036,32 @@ impl<const DP: u8> Account<DP> {
 fn financial_system_example() {
     // 创建USD账户 (2位小数)
     let mut account_usd = Account::<2>::new("ACC001", Money::new(1000.0, Currency::USD));
-    
+
     // 创建JPY账户 (0位小数)
     let mut account_jpy = Account::<0>::new("ACC002", Money::new(100000.0, Currency::JPY));
-    
+
     // 存款
     account_usd.deposit(Money::new(500.50, Currency::USD)).unwrap();
     println!("USD账户余额: {}", account_usd.balance().format());
-    
+
     // 取款
     account_usd.withdraw(Money::new(200.25, Currency::USD)).unwrap();
     println!("USD账户余额: {}", account_usd.balance().format());
-    
+
     // 币种不匹配的操作会导致错误
     let result = account_usd.deposit(Money::new(10000.0, Currency::JPY));
     println!("尝试存入错误币种: {:?}", result);
-    
+
     // 创建汇率
     let usd_to_jpy = ExchangeRate::new(Currency::USD, Currency::JPY, 110.0);
-    
+
     // 跨币种转账
     let transfer_amount = Money::new(100.0, Currency::USD);
     account_usd.transfer(&mut account_jpy, transfer_amount, Some(&usd_to_jpy)).unwrap();
-    
+
     println!("转账后USD账户余额: {}", account_usd.balance().format());
     println!("转账后JPY账户余额: {}", account_jpy.balance().format());
-    
+
     // 类型系统确保了金融计算的安全性
     // 不同币种不能直接相加减，需要显式的转换
 }
@@ -4140,7 +4142,7 @@ impl<T, TB> Column<T, TB> {
             Box::new(Expr::Literal(value)),
         ))
     }
-    
+
     fn gt(&self, value: T) -> Where<T> {
         Where(Expr::BinaryOp(
             Box::new(Expr::Column(self.table.to_string(), self.name.to_string())),
@@ -4186,19 +4188,19 @@ fn create_user_table() -> Table<UserSchema, UserColumns> {
 // 使用示例
 fn query_dsl_example() {
     let users = create_user_table();
-    
+
     // 构建类型安全的查询
     let query = QueryBuilder::from(&users.columns, &users)
         .where_(users.columns.age.gt(18));
-    
+
     // 生成SQL
     let sql = query.to_sql();
     println!("生成的SQL: {}", sql);
-    
+
     // 类型错误：
     // let invalid_query = QueryBuilder::from(&users.columns, &users)
     //     .where_(users.columns.age.eq("18")); // 类型不匹配，编译失败
-    
+
     // 类型系统确保了查询的类型安全
     // 列类型与值类型必须匹配
 }
@@ -4270,19 +4272,19 @@ impl StateMachine<Locked> {
 fn state_machine_dsl_example() {
     // 创建一个初始状态为锁定的状态机
     let machine = StateMachine::new();
-    
+
     // 投币，解锁
     let machine = machine.transition(Input::Coin);
-    
+
     // 推动，重新锁定
     let machine = machine.transition(Input::Push);
-    
+
     // 投币，再次解锁
     let machine = machine.transition(Input::Coin);
-    
+
     // 类型错误：无效的转换
     // let broken_machine = machine.transition(Input::Reset); // 编译错误，Unlocked没有实现Reset转换
-    
+
     // 类型系统确保了状态机的有效状态转换
     // 无效的转换在编译时被捕获
 }
@@ -4359,7 +4361,7 @@ impl Button<Enabled> {
     {
         handler();
     }
-    
+
     fn disable(self) -> Button<Disabled> {
         Button {
             id: self.id,
@@ -4432,7 +4434,7 @@ impl LoginForm {
             },
         }
     }
-    
+
     // 当所有字段有效时启用提交按钮
     fn with_valid_password(mut self, valid_password: TextField<Enabled, Valid>) -> Self {
         self.password = valid_password;
@@ -4448,22 +4450,22 @@ impl LoginForm {
 // 使用示例
 fn ui_example() {
     let mut login_form = LoginForm::new();
-    
+
     // 设置用户名
     login_form.username.set_value("user@example.com");
-    
+
     // 设置密码并验证
     login_form.password.set_value("password123");
-    
+
     // 验证密码
     let validated_password = login_form.password.validate(|password| password.len() >= 8);
-    
+
     // 根据验证结果处理表单
     match validated_password {
         Either::Left(valid_password) => {
             // 密码有效，启用提交按钮
             login_form = login_form.with_valid_password(valid_password);
-            
+
             // 现在可以点击提交按钮
             login_form.submit.click(|| {
                 println!("表单提交成功！");
@@ -4474,7 +4476,7 @@ fn ui_example() {
             // 提交按钮仍然禁用
         }
     }
-    
+
     // 类型系统确保UI组件的正确状态
     // 无法点击禁用的按钮或提交无效的表单
 }
@@ -4532,7 +4534,7 @@ impl<Args, Output> Command<Args, Output> {
             _output: std::marker::PhantomData,
         }
     }
-    
+
     fn execute(&self) -> Result<Output, String> {
         // 实际执行命令的逻辑
         unimplemented!("这里应该实现命令执行")
@@ -4543,25 +4545,25 @@ impl<Args, Output> Command<Args, Output> {
 fn cli_example() {
     // 创建不带参数的命令
     let simple_cmd = Command::<_, String>::new("status");
-    
+
     // 创建带参数的命令
     let complex_cmd = Command::<_, Vec<String>>::new("fetch")
         .with_args((
-            Flag::<false> { 
-                name: "verbose".to_string(), 
-                short: Some('v'), 
-                value: Some("true".to_string()) 
+            Flag::<false> {
+                name: "verbose".to_string(),
+                short: Some('v'),
+                value: Some("true".to_string())
             },
-            StringArg::<true> { 
-                name: "url".to_string(), 
-                value: Some("https://example.com".to_string()) 
+            StringArg::<true> {
+                name: "url".to_string(),
+                value: Some("https://example.com".to_string())
             },
-            IntArg::<false> { 
-                name: "timeout".to_string(), 
-                value: Some(30) 
+            IntArg::<false> {
+                name: "timeout".to_string(),
+                value: Some(30)
             },
         ));
-    
+
     // 执行命令
     match complex_cmd.execute() {
         Ok(output) => {
@@ -4572,7 +4574,7 @@ fn cli_example() {
             println!("命令执行失败: {}", e);
         }
     }
-    
+
     // 类型系统确保命令行参数的正确性
     // 必需参数不能缺少，可选参数可以为None
 }
@@ -4603,7 +4605,7 @@ impl Qubit {
             beta: num_complex::Complex64::new(0.0, 0.0),
         }
     }
-    
+
     // |1⟩ 状态
     fn one() -> Self {
         Qubit {
@@ -4611,7 +4613,7 @@ impl Qubit {
             beta: num_complex::Complex64::new(1.0, 0.0),
         }
     }
-    
+
     // |+⟩ 状态
     fn plus() -> Self {
         Qubit {
@@ -4619,7 +4621,7 @@ impl Qubit {
             beta: num_complex::Complex64::new(FRAC_1_SQRT_2, 0.0),
         }
     }
-    
+
     // |-⟩ 状态
     fn minus() -> Self {
         Qubit {
@@ -4663,7 +4665,7 @@ impl QuantumGate for HadamardGate {
     fn apply(&self, qubit: &mut Qubit) {
         let alpha = qubit.alpha;
         let beta = qubit.beta;
-        
+
         qubit.alpha = (alpha + beta) * FRAC_1_SQRT_2;
         qubit.beta = (alpha - beta) * FRAC_1_SQRT_2;
     }
@@ -4695,29 +4697,29 @@ impl TypedQubit<Superposition> {
             _marker: std::marker::PhantomData,
         }
     }
-    
+
     fn zero() -> Self {
         TypedQubit {
             state: Qubit::zero(),
             _marker: std::marker::PhantomData,
         }
     }
-    
+
     fn apply<G: QuantumGate>(&mut self, gate: &G) {
         gate.apply(&mut self.state);
     }
-    
+
     fn measure(self) -> TypedQubit<Collapsed> {
         // 简化的测量模型
         let p0 = self.state.alpha.norm_sqr();
         let random_value = 0.5; // 在实际应用中应该是真随机数
-        
+
         let collapsed_state = if random_value < p0 {
             Qubit::zero()
         } else {
             Qubit::one()
         };
-        
+
         TypedQubit {
             state: collapsed_state,
             _marker: std::marker::PhantomData,
@@ -4741,11 +4743,11 @@ impl QuantumCircuit {
     fn new() -> Self {
         QuantumCircuit { gates: Vec::new() }
     }
-    
+
     fn add_gate<G: QuantumGate + 'static>(&mut self, gate: G) {
         self.gates.push(Box::new(gate));
     }
-    
+
     fn run(&self, qubit: &mut TypedQubit<Superposition>) {
         for gate in &self.gates {
             qubit.apply(&**gate);
@@ -4757,28 +4759,28 @@ impl QuantumCircuit {
 fn quantum_example() {
     // 创建量子电路
     let mut circuit = QuantumCircuit::new();
-    
+
     // 添加量子门
     circuit.add_gate(HadamardGate);
     circuit.add_gate(PauliXGate);
     circuit.add_gate(HadamardGate);
-    
+
     // 创建初始量子比特
     let mut qubit = TypedQubit::zero();
     println!("初始状态: {}", qubit.state());
-    
+
     // 运行电路
     circuit.run(&mut qubit);
     println!("电路运行后: {}", qubit.state());
-    
+
     // 测量
     let measured = qubit.measure();
     let result = measured.classical_value();
     println!("测量结果: {}", if result { "|1⟩" } else { "|0⟩" });
-    
+
     // 类型错误：测量后不能应用量子门
     // measured.apply(&HadamardGate); // 编译错误
-    
+
     // 类型系统确保了量子操作的正确性
     // 防止对已测量的量子比特应用门操作
 }
@@ -4811,11 +4813,11 @@ impl<const N: usize> QuantumRegister<N> {
         }
         QuantumRegister { qubits }
     }
-    
+
     fn get(&self, index: usize) -> Option<&Qubit> {
         self.qubits.get(index)
     }
-    
+
     fn apply_gate<G: QuantumGate>(&mut self, index: usize, gate: &G) -> Result<(), String> {
         if index >= N {
             return Err(format!("索引超出范围: {} >= {}", index, N));
@@ -4835,11 +4837,11 @@ impl<const N: usize> ClassicalRegister<N> {
         let bits = vec![false; N];
         ClassicalRegister { bits }
     }
-    
+
     fn get(&self, index: usize) -> Option<bool> {
         self.bits.get(index).copied()
     }
-    
+
     fn set(&mut self, index: usize, value: bool) -> Result<(), String> {
         if index >= N {
             return Err(format!("索引超出范围: {} >= {}", index, N));
@@ -4862,49 +4864,49 @@ impl<const QN: usize, const CN: usize> QuantumProgram<QuantumRegister<QN>, Class
             classical_register: ClassicalRegister::new(),
         }
     }
-    
+
     // 量子操作
     fn hadamard(&mut self, q_index: usize) -> Result<(), String> {
         self.quantum_register.apply_gate(q_index, &HadamardGate)
     }
-    
+
     fn cnot(&mut self, control: usize, target: usize) -> Result<(), String> {
         // 实际实现更复杂，这里简化
         if control >= QN || target >= QN {
             return Err("量子比特索引超出范围".to_string());
         }
-        
+
         // 模拟CNOT门
         let control_bit = self.quantum_register.get(control)
             .ok_or("无效的控制比特索引")?;
-            
+
         // 简化实现，实际CNOT在叠加态上更复杂
         if control_bit.beta.norm_sqr() > 0.5 {
             self.quantum_register.apply_gate(target, &PauliXGate)?;
         }
-        
+
         Ok(())
     }
-    
+
     // 测量
     fn measure(&mut self, q_index: usize, c_index: usize) -> Result<bool, String> {
         if q_index >= QN || c_index >= CN {
             return Err("索引超出范围".to_string());
         }
-        
+
         // 简化的测量模型
         let qubit = self.quantum_register.get(q_index)
             .ok_or("无效的量子比特索引")?;
-            
+
         let p0 = qubit.alpha.norm_sqr();
         let random_value = 0.5; // 实际应用中应该是真随机数
-        
+
         let result = random_value >= p0;
         self.classical_register.set(c_index, result)?;
-        
+
         Ok(result)
     }
-    
+
     // 基于经典比特的条件执行
     fn if_bit<F>(&mut self, c_index: usize, mut f: F) -> Result<(), String>
     where
@@ -4913,14 +4915,14 @@ impl<const QN: usize, const CN: usize> QuantumProgram<QuantumRegister<QN>, Class
         if c_index >= CN {
             return Err("经典比特索引超出范围".to_string());
         }
-        
+
         let bit_value = self.classical_register.get(c_index)
             .ok_or("无效的经典比特索引")?;
-            
+
         if bit_value {
             f(self)?;
         }
-        
+
         Ok(())
     }
 }
@@ -4928,18 +4930,18 @@ impl<const QN: usize, const CN: usize> QuantumProgram<QuantumRegister<QN>, Class
 // 量子算法示例：贝尔态制备
 fn bell_state_example() {
     let mut program = QuantumProgram::<QuantumRegister<2>, ClassicalRegister<2>>::new();
-    
+
     // 创建贝尔态 |Φ⁺⟩ = (|00⟩ + |11⟩)/√2
     program.hadamard(0).unwrap();
     program.cnot(0, 1).unwrap();
-    
+
     // 测量
     let result0 = program.measure(0, 0).unwrap();
     let result1 = program.measure(1, 1).unwrap();
-    
+
     println!("测量结果: {} {}", if result0 { "1" } else { "0" }, if result1 { "1" } else { "0" });
     println!("注意：在贝尔态中，两个测量结果应该相同！");
-    
+
     // 类型系统确保了量子-经典混合计算的正确性
     // 防止错误操作，如对经典比特应用量子门
 }
@@ -4984,24 +4986,24 @@ impl<T: Clone, M: Message<State = T>> Store<T, M> {
             _message: std::marker::PhantomData,
         }
     }
-    
+
     fn get_state(&self) -> &State<T> {
         &self.state
     }
-    
+
     fn dispatch(&mut self, message: M) {
         let new_value = message.apply(&self.state.value);
         self.state = State {
             value: new_value,
             version: self.state.version + 1,
         };
-        
+
         // 通知所有订阅者
         for subscriber in &self.subscribers {
             subscriber.notify(&self.state);
         }
     }
-    
+
     fn subscribe<S: Subscriber<T> + 'static>(&mut self, subscriber: S) {
         self.subscribers.push(Box::new(subscriber));
     }
@@ -5021,7 +5023,7 @@ enum CounterMessage {
 
 impl Message for CounterMessage {
     type State = CounterState;
-    
+
     fn apply(self, state: &Self::State) -> Self::State {
         match self {
             CounterMessage::Increment(amount) => CounterState {
@@ -5050,22 +5052,22 @@ impl Subscriber<CounterState> for ConsoleLogger {
 fn state_management_example() {
     // 创建状态存储
     let mut store = Store::new(CounterState { count: 0 });
-    
+
     // 添加订阅者
     store.subscribe(ConsoleLogger);
-    
+
     // 派发消息
     store.dispatch(CounterMessage::Increment(5));
     store.dispatch(CounterMessage::Increment(3));
     store.dispatch(CounterMessage::Decrement(2));
     store.dispatch(CounterMessage::Reset);
     store.dispatch(CounterMessage::Increment(10));
-    
+
     // 获取最终状态
     let final_state = store.get_state();
-    println!("最终状态: 计数 = {}, 版本 = {}", 
+    println!("最终状态: 计数 = {}, 版本 = {}",
              final_state.value.count, final_state.version);
-             
+
     // 类型系统确保了状态管理的类型安全
     // 只有正确类型的消息才能被派发到特定的状态存储
 }
@@ -5080,7 +5082,7 @@ trait ApiEndpoint {
     type Request;
     type Response;
     type Error;
-    
+
     fn path(&self) -> &str;
     fn method(&self) -> &str;
     fn handle(&self, request: Self::Request) -> Result<Self::Response, Self::Error>;
@@ -5106,7 +5108,7 @@ impl ApiClient {
             base_url: base_url.to_string(),
         }
     }
-    
+
     fn call<E: ApiEndpoint>(&self, endpoint: &E, request: E::Request) -> Result<E::Response, String>
     where
         E::Request: Serialize,
@@ -5115,10 +5117,10 @@ impl ApiClient {
     {
         // 在实际应用中，这里会发出HTTP请求
         // 这里简化为直接调用handler
-        
+
         println!("调用API: {} {}", endpoint.method(), endpoint.path());
         println!("请求体: {}", request.to_json());
-        
+
         match endpoint.handle(request) {
             Ok(response) => {
                 println!("响应: {}", response.to_json());
@@ -5223,28 +5225,28 @@ impl ApiEndpoint for CreateUserEndpoint {
     type Request = CreateUserRequest;
     type Response = CreateUserResponse;
     type Error = UserApiError;
-    
+
     fn path(&self) -> &str {
         "/api/users"
     }
-    
+
     fn method(&self) -> &str {
         "POST"
     }
-    
+
     fn handle(&self, request: Self::Request) -> Result<Self::Response, Self::Error> {
         // 验证
         if request.email.is_empty() || !request.email.contains('@') {
             return Err(UserApiError::InvalidData("无效的电子邮件".to_string()));
         }
-        
+
         // 创建用户（实际应用中会与数据库交互）
         let user = User {
             id: 123, // 在实际应用中由数据库生成
             name: request.name,
             email: request.email,
         };
-        
+
         Ok(CreateUserResponse {
             user,
             created_at: "2023-01-01T00:00:00Z".to_string(),
@@ -5256,16 +5258,16 @@ impl ApiEndpoint for CreateUserEndpoint {
 fn api_example() {
     // 创建API客户端
     let client = ApiClient::new("https://api.example.com");
-    
+
     // 创建API端点
     let create_user_endpoint = CreateUserEndpoint;
-    
+
     // 准备请求
     let request = CreateUserRequest {
         name: "张三".to_string(),
         email: "zhangsan@example.com".to_string(),
     };
-    
+
     // 调用API
     match client.call(&create_user_endpoint, request) {
         Ok(response) => {
@@ -5275,7 +5277,7 @@ fn api_example() {
             println!("API调用失败: {}", e);
         }
     }
-    
+
     // 类型系统确保了API调用的类型安全
     // 请求和响应类型在编译时被检查
 }
@@ -5395,7 +5397,7 @@ struct RangeVerifier {
 
 impl Verifier<DataEntry> for RangeVerifier {
     type Error = String;
-    
+
     fn verify(&self, data: &DataEntry) -> Result<(), Self::Error> {
         if data.value < self.min || data.value > self.max {
             Err(format!("值 {} 超出范围 [{}, {}]", data.value, self.min, self.max))
@@ -5434,7 +5436,7 @@ where
     V2::Error: std::fmt::Display,
 {
     type Error = String;
-    
+
     fn verify(&self, data: &T) -> Result<(), Self::Error> {
         self.v1.verify(data).map_err(|e| format!("V1: {}", e))?;
         self.v2.verify(data).map_err(|e| format!("V2: {}", e))?;
@@ -5450,7 +5452,7 @@ impl<T> VerificationResult<T, Unverified> {
             _state: PhantomData,
         }
     }
-    
+
     fn verify<V>(self, verifier: &V) -> Result<VerificationResult<T, Verified>, VerificationResult<T, Failed>>
     where
         V: Verifier<T>,
@@ -5474,11 +5476,11 @@ impl<T> VerificationResult<T, Verified> {
     fn get(&self) -> &T {
         &self.data
     }
-    
+
     fn into_inner(self) -> T {
         self.data
     }
-    
+
     // 已验证数据的安全转换
     fn map<U, F>(self, f: F) -> VerificationResult<U, Verified>
     where
@@ -5499,18 +5501,18 @@ fn formal_verification_example() {
         value: 42,
         timestamp: 1609459200,
     };
-    
+
     // 创建验证器
     let range_verifier = RangeVerifier { min: 0, max: 100 };
-    
+
     // 创建时间戳验证器
     struct TimestampVerifier {
         min_timestamp: u64,
     }
-    
+
     impl Verifier<DataEntry> for TimestampVerifier {
         type Error = String;
-        
+
         fn verify(&self, data: &DataEntry) -> Result<(), Self::Error> {
             if data.timestamp < self.min_timestamp {
                 Err(format!("时间戳 {} 早于最小时间戳 {}", data.timestamp, self.min_timestamp))
@@ -5519,37 +5521,37 @@ fn formal_verification_example() {
             }
         }
     }
-    
+
     let timestamp_verifier = TimestampVerifier { min_timestamp: 1609459000 };
-    
+
     // 组合验证器
     let compound_verifier = CompoundVerifier::new(range_verifier, timestamp_verifier);
-    
+
     // 验证数据
     let unverified = VerificationResult::<_, Unverified>::new(data);
     let verification_result = unverified.verify(&compound_verifier);
-    
+
     // 处理验证结果
     match verification_result {
         Ok(verified) => {
             println!("数据验证成功!");
             let data = verified.get();
-            println!("用户ID: {}, 值: {}, 时间戳: {}", 
+            println!("用户ID: {}, 值: {}, 时间戳: {}",
                      data.user_id, data.value, data.timestamp);
-            
+
             // 安全操作已验证数据
             let processed = verified.map(|d| {
-                format!("处理后的数据: 用户 {} 在时间点 {} 提交了值 {}", 
+                format!("处理后的数据: 用户 {} 在时间点 {} 提交了值 {}",
                         d.user_id, d.timestamp, d.value)
             });
-            
+
             println!("{}", processed.get());
         },
         Err(_) => {
             println!("数据验证失败!");
         }
     }
-    
+
     // 类型系统确保只有通过验证的数据才能进行特定操作
     // 无法直接访问未经验证的数据的内部值
 }
@@ -5613,7 +5615,7 @@ impl<T, N> Vector<T, N> {
     fn len(&self) -> usize {
         self.data.len()
     }
-    
+
     fn get(&self, index: usize) -> Option<&T> {
         self.data.get(index)
     }
@@ -5623,7 +5625,7 @@ impl<T, N> Vector<T, N> {
     fn push(self, item: T) -> Vector<T, Succ<N>> {
         let mut data = self.data;
         data.push(item);
-        
+
         Vector {
             data,
             _marker: PhantomData,
@@ -5642,7 +5644,7 @@ where
     I: LessThan<N>,
 {
     type Output = T;
-    
+
     fn index(&self, index: Nat<I>) -> Self::Output {
         self.data[index.value].clone()
     }
@@ -5661,23 +5663,23 @@ fn invariant_proof_example() {
     let v1 = v0.push(1);
     let v2 = v1.push(2);
     let v3 = v2.push(3);
-    
+
     // 类型安全的索引
     let index0 = Nat::<Zero>::zero();
     let index1 = Nat::<Succ<Zero>>::from_nat(index0);
-    
+
     // 这是安全的，因为 index1 < v3.len()
     // （在类型级别保证）
     let value = Index::<Succ<Zero>, Succ<Succ<Succ<Zero>>>>::index(&v3, index1);
     println!("索引 1 的值: {}", value);
-    
+
     // 编译错误：索引超出范围
     // 这行会导致编译错误，因为 Succ<Succ<Succ<Zero>>> 不是 LessThan<Succ<Succ<Zero>>>
     // let index_out_of_bounds = Nat::<Succ<Succ<Zero>>>::from_nat(index1);
     // let invalid_value = v2.index(index_out_of_bounds);
-    
+
     println!("类型系统证明了向量访问的安全性");
-    
+
     // 其他证明的可能性：
     // - 排序证明
     // - 线程安全性证明
@@ -5717,7 +5719,7 @@ struct IoEffect<T> {
 
 impl<T> Effect for IoEffect<T> {
     type Output = T;
-    
+
     fn handle(self) -> Self::Output {
         (self.operation)()
     }
@@ -5730,7 +5732,7 @@ struct StateEffect<S, T> {
 
 impl<S, T> Effect for StateEffect<S, T> {
     type Output = T;
-    
+
     fn handle(self) -> Self::Output {
         let mut state = S::default();
         (self.operation)(&mut state)
@@ -5746,7 +5748,7 @@ impl<E: Effect> EffectRunner<E> {
     fn new(effect: E) -> Self {
         EffectRunner { effect }
     }
-    
+
     fn run(self) -> E::Output {
         self.effect.handle()
     }
@@ -5768,22 +5770,22 @@ fn language_evolution_example() {
     // 今天的Rust已经有的特性
     let optional: Option<i32> = Some(42);
     let result: Result<String, &str> = Ok("Success".to_string());
-    
+
     // 使用Option和Result的模式匹配
     match optional {
         Some(value) => println!("有值: {}", value),
         None => println!("无值"),
     }
-    
+
     // 使用?运算符简化错误处理
     fn process() -> Result<String, &'static str> {
         let value = optional.ok_or("无值")?;
         Ok(format!("处理后的值: {}", value))
     }
-    
+
     let processed = process();
     println!("处理结果: {:?}", processed);
-    
+
     // 模拟未来语言中的效应系统
     let io_effect = IoEffect {
         operation: Box::new(|| {
@@ -5791,11 +5793,11 @@ fn language_evolution_example() {
             "IO结果"
         }),
     };
-    
+
     let runner = EffectRunner::new(io_effect);
     let result = runner.run();
     println!("效应结果: {}", result);
-    
+
     // 注：这些代码示例模拟了未来编程语言的可能特性
     // 它们展示了类型系统如何推动语言设计的发展
 }
@@ -5822,14 +5824,14 @@ impl<T> Capability<T> {
     fn new(resource: T) -> Self {
         Capability { resource }
     }
-    
+
     fn use_resource<F, R>(&self, operation: F) -> R
     where
         F: FnOnce(&T) -> R,
     {
         operation(&self.resource)
     }
-    
+
     // 转移能力
     fn transfer(self) -> T {
         self.resource
@@ -5849,20 +5851,20 @@ impl<T: Clone> LogicVariable<T> {
             constraints: Vec::new(),
         }
     }
-    
+
     fn with_value(value: T) -> Self {
         LogicVariable {
             value: Some(value),
             constraints: Vec::new(),
         }
     }
-    
+
     fn add_constraint<F>(&mut self, constraint: F)
     where
         F: Fn(&T) -> bool + 'static,
     {
         self.constraints.push(Box::new(constraint));
-        
+
         // 如果已有值，检查约束
         if let Some(ref value) = self.value {
             for constraint in &self.constraints {
@@ -5873,7 +5875,7 @@ impl<T: Clone> LogicVariable<T> {
             }
         }
     }
-    
+
     fn unify(&mut self, other: &Self) -> bool {
         match (&self.value, &other.value) {
             (Some(v1), Some(v2)) => {
@@ -5913,30 +5915,30 @@ fn multi_paradigm_example() {
     let values = vec![1, 2, 3, 4, 5];
     let doubled: Vec<_> = values.into_iter().map(|x| x * 2).collect();
     println!("函数式 - 加倍后的值: {:?}", doubled);
-    
+
     // 对象能力模型
     let file_capability = Capability::new("sensitive_file.txt");
-    
+
     // 只有拥有能力的代码才能访问资源
     file_capability.use_resource(|filename| {
         println!("能力模型 - 访问文件: {}", filename);
     });
-    
+
     // 逻辑编程模式
     let mut x = LogicVariable::<i32>::new();
     let mut y = LogicVariable::with_value(5);
-    
+
     // 添加约束
     x.add_constraint(|v| *v > 0);
     x.add_constraint(|v| *v < 10);
-    
+
     // 尝试统一变量
     if x.unify(&y) {
         println!("逻辑编程 - 变量统一成功");
     } else {
         println!("逻辑编程 - 变量统一失败");
     }
-    
+
     // 未来的语言可能提供更自然的语法来混合这些范式
     // 类型系统将确保不同范式的安全交互
 }
@@ -6002,22 +6004,22 @@ impl PatientRecord<Unauthorized> {
             _auth: PhantomData,
         }
     }
-    
+
     // 基本信息可以不需授权访问
     fn get_patient_id(&self) -> &PatientId {
         &self.patient_id
     }
-    
+
     fn get_name(&self) -> &str {
         &self.name
     }
-    
+
     // 授权访问
     fn authorize(self, credential: &DoctorCredential) -> PatientRecord<Authorized> {
         // 在实际系统中，这里会有更复杂的授权逻辑
-        println!("医生 {:?} 授权访问患者 {} 的记录", 
+        println!("医生 {:?} 授权访问患者 {} 的记录",
                  credential.doctor_id, self.name);
-                 
+
         PatientRecord {
             patient_id: self.patient_id,
             name: self.name,
@@ -6034,15 +6036,15 @@ impl PatientRecord<Authorized> {
     fn get_medical_history(&self) -> &[String] {
         &self.medical_history
     }
-    
+
     fn add_medical_history(&mut self, entry: &str) {
         self.medical_history.push(entry.to_string());
     }
-    
+
     fn get_prescriptions(&self) -> &[Prescription] {
         &self.prescriptions
     }
-    
+
     fn add_prescription(&mut self, prescription: Prescription) {
         if prescription.patient_id != self.patient_id {
             println!("错误：处方的患者ID与记录不匹配");
@@ -6050,7 +6052,7 @@ impl PatientRecord<Authorized> {
         }
         self.prescriptions.push(prescription);
     }
-    
+
     // 撤销授权
     fn revoke_authorization(self) -> PatientRecord<Unauthorized> {
         PatientRecord {
@@ -6082,7 +6084,7 @@ enum InteractionSeverity {
 fn check_drug_interactions(prescriptions: &[Prescription]) -> Vec<DrugInteraction> {
     // 在实际系统中，这里会有复杂的药物相互作用检查逻辑
     let mut interactions = Vec::new();
-    
+
     // 简化的示例检查
     if prescriptions.len() > 1 {
         interactions.push(DrugInteraction {
@@ -6090,7 +6092,7 @@ fn check_drug_interactions(prescriptions: &[Prescription]) -> Vec<DrugInteractio
             description: "检测到多种药物，建议检查相互作用".to_string(),
         });
     }
-    
+
     interactions
 }
 
@@ -6099,38 +6101,38 @@ fn medical_system_example() {
     // 创建患者和医生ID
     let patient_id = PatientId(12345);
     let doctor_id = DoctorId(98765);
-    
+
     // 创建患者记录（未授权状态）
     let patient_record = PatientRecord::<Unauthorized>::new(
         patient_id.clone(),
         "张三",
         "1980-01-01"
     );
-    
+
     // 可以访问基本信息
     println!("患者名称: {}", patient_record.get_name());
-    
+
     // 错误：未授权不能访问医疗历史
     // patient_record.get_medical_history(); // 编译错误
-    
+
     // 创建医生凭证
     let doctor_credential = DoctorCredential {
         doctor_id: doctor_id.clone(),
         department: "内科".to_string(),
     };
-    
+
     // 授权访问
     let mut authorized_record = patient_record.authorize(&doctor_credential);
-    
+
     // 现在可以访问和修改医疗历史
     authorized_record.add_medical_history("2023-01-01: 高血压诊断");
     authorized_record.add_medical_history("2023-01-15: 开始服用降压药");
-    
+
     println!("医疗历史记录:");
     for entry in authorized_record.get_medical_history() {
         println!("  {}", entry);
     }
-    
+
     // 添加处方
     let prescription = Prescription {
         id: 1001,
@@ -6143,24 +6145,24 @@ fn medical_system_example() {
         start_date: "2023-01-15".to_string(),
         end_date: "2023-03-15".to_string(),
     };
-    
+
     authorized_record.add_prescription(prescription);
-    
+
     // 检查药物相互作用
     let interactions = check_drug_interactions(authorized_record.get_prescriptions());
-    
+
     println!("药物相互作用检查结果:");
     for interaction in &interactions {
-        println!("  严重性: {:?}, 描述: {}", 
+        println!("  严重性: {:?}, 描述: {}",
                  interaction.severity, interaction.description);
     }
-    
+
     // 撤销授权
     let unauthorized_record = authorized_record.revoke_authorization();
-    
+
     // 错误：撤销授权后不能访问医疗历史
     // unauthorized_record.get_medical_history(); // 编译错误
-    
+
     // 类型系统确保了医疗记录的安全访问
     // 未经授权不能访问敏感信息
 }
@@ -6198,15 +6200,15 @@ impl Length<Meters> {
     fn new(value: f64) -> Self {
         Length(value, PhantomData)
     }
-    
+
     fn to_kilometers(self) -> Length<Kilometers> {
         Length(self.0 / 1000.0, PhantomData)
     }
-    
+
     fn to_feet(self) -> Length<Feet> {
         Length(self.0 * 3.28084, PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -6216,11 +6218,11 @@ impl Mass<Kilograms> {
     fn new(value: f64) -> Self {
         Mass(value, PhantomData)
     }
-    
+
     fn to_pounds(self) -> Mass<Pounds> {
         Mass(self.0 * 2.20462, PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -6229,7 +6231,7 @@ impl Mass<Kilograms> {
 // 类型安全的计算
 impl<TimeUnit> std::ops::Div<Time<TimeUnit>> for Length<Meters> {
     type Output = Velocity<Meters, TimeUnit>;
-    
+
     fn div(self, rhs: Time<TimeUnit>) -> Self::Output {
         Velocity(self.0 / rhs.0, PhantomData)
     }
@@ -6261,7 +6263,7 @@ impl PreflightCheck<Unchecked> {
             status: Unchecked,
         }
     }
-    
+
     fn start_check(self) -> PreflightCheck<CheckInProgress> {
         println!("开始飞行前检查...");
         PreflightCheck {
@@ -6276,22 +6278,22 @@ impl PreflightCheck<CheckInProgress> {
         let min_safe_altitude = Length::<Feet>::new(1000.0);
         self.system.altitude >= min_safe_altitude
     }
-    
+
     fn check_speed(&self) -> bool {
         // 简化检查
         true
     }
-    
+
     fn check_fuel(&self) -> bool {
         let min_fuel = Mass::<Kilograms>::new(1000.0);
         self.system.fuel_mass >= min_fuel
     }
-    
+
     fn complete_check(self) -> Result<PreflightCheck<CheckPassed>, PreflightCheck<CheckFailed>> {
         let altitude_ok = self.check_altitude();
         let speed_ok = self.check_speed();
         let fuel_ok = self.check_fuel();
-        
+
         if altitude_ok && speed_ok && fuel_ok {
             println!("所有检查通过");
             Ok(PreflightCheck {
@@ -6299,7 +6301,7 @@ impl PreflightCheck<CheckInProgress> {
                 status: CheckPassed,
             })
         } else {
-            println!("检查失败: 高度检查={}, 速度检查={}, 燃料检查={}", 
+            println!("检查失败: 高度检查={}, 速度检查={}, 燃料检查={}",
                      altitude_ok, speed_ok, fuel_ok);
             Err(PreflightCheck {
                 system: self.system,
@@ -6331,11 +6333,11 @@ fn aerospace_system_example() {
         speed: Velocity::<Meters, Seconds>::new(0.0),
         fuel_mass: Mass::<Kilograms>::new(2000.0),
     };
-    
+
     // 启动飞行前检查
     let preflight = PreflightCheck::new(fcs);
     let checking = preflight.start_check();
-    
+
     // 完成检查
     match checking.complete_check() {
         Ok(passed) => {
@@ -6347,12 +6349,12 @@ fn aerospace_system_example() {
             // 处理检查失败
             let failure_report = failed.get_failure_report();
             println!("失败报告: {}", failure_report);
-            
+
             // 错误：不能授权未通过检查的飞机起飞
             // failed.authorize_takeoff(); // 编译错误
         }
     }
-    
+
     // 类型系统确保了航空操作的安全性
     // 只有通过所有检查的系统才能被授权起飞
 }
@@ -6416,7 +6418,7 @@ impl<T: ShortLived> Optimized<T, OptLevel::Speed> {
 }
 
 // 函数内联优化
-fn process_with_inline<T>(value: T) -> T 
+fn process_with_inline<T>(value: T) -> T
 where
     T: Clone,
 {
@@ -6453,23 +6455,23 @@ fn compiler_optimization_example() {
         value: simd_data,
         _level: PhantomData::<OptLevel::Speed>,
     };
-    
+
     let result = optimized.process();
     println!("SIMD优化结果: {}", result);
-    
+
     // 内联优化
     let value = 42;
     let processed = process_with_inline(value);
     println!("内联优化结果: {}", processed);
-    
+
     // 特化优化
     let processor = ();
     let generic_result = processor.process("Hello".to_string());
     let specialized_result = processor.process(42);
-    
+
     println!("泛型结果: {}", generic_result);
     println!("特化结果: {}", specialized_result);
-    
+
     // 在实际语言中，这些优化通常由编译器基于类型信息自动应用
     // 类型系统提供了丰富的信息，指导编译器进行优化
 }
@@ -6500,7 +6502,7 @@ where
     F: FnMut(I::Item) -> B,
 {
     type Item = B;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         self.iterator.next().map(&mut self.function)
     }
@@ -6543,35 +6545,35 @@ fn zero_cost_abstractions() {
     let values = vec![1, 2, 3, 4, 5];
     let sum: i32 = values.iter().map(|x| x * 2).sum();
     println!("Map-Sum结果: {}", sum);
-    
+
     // 零大小类型 - 不占用实际内存
     let phantom = PhantomStruct;
     println!("PhantomStruct的大小: {}", std::mem::size_of::<PhantomStruct>());
-    
+
     // 类型标记 - 在编译时提供类型安全，运行时无开销
     fn calculate_speed<L, T>(_distance: f64, _time: f64) -> f64 {
         // 编译时检查单位兼容性，运行时无开销
         42.0 // 简化示例
     }
-    
+
     let speed = calculate_speed::<Meters, Seconds>(100.0, 9.8);
     println!("计算的速度: {}", speed);
-    
+
     // 虚函数表和动态分发
     struct ConcreteType(i32);
-    
+
     impl Object for ConcreteType {
         fn method(&self) -> String {
             format!("ConcreteType: {}", self.0)
         }
     }
-    
+
     let erased = Erased {
         inner: Box::new(ConcreteType(42)),
     };
-    
+
     println!("类型擦除对象: {}", erased.inner.method());
-    
+
     // 类型系统允许表达这些高级抽象
     // 而编译器可以在编译时优化掉大部分抽象开销
 }
@@ -6629,7 +6631,7 @@ impl<C, F, W> Select<C, F, W> {
             where_clause: self.where_clause,
         }
     }
-    
+
     fn where_<W2>(self, condition: W2) -> Select<C, F, W2> {
         Select {
             columns: self.columns,
@@ -6667,14 +6669,14 @@ impl<L: ToSql, R: ToSql> ToSql for Eq<L, R> {
 
 impl<C: ToSql, F: ToSql, W: ToSql> ToSql for Select<C, F, W> {
     fn to_sql(&self) -> String {
-        let mut sql = format!("SELECT {} FROM {}", 
-                            self.columns.to_sql(), 
+        let mut sql = format!("SELECT {} FROM {}",
+                            self.columns.to_sql(),
                             self.from.to_sql());
-                            
+
         if let Some(ref where_clause) = self.where_clause {
             sql += &format!(" WHERE {}", where_clause.to_sql());
         }
-        
+
         sql
     }
 }
@@ -6701,50 +6703,50 @@ fn sql_dsl_example() {
         name: "users",
         _marker: PhantomData,
     };
-    
+
     let orders = Table::<Order> {
         name: "orders",
         _marker: PhantomData,
     };
-    
+
     let user_id = Column::<User, i32> {
         name: "id",
         table: "users",
         _marker: PhantomData,
     };
-    
+
     let user_name = Column::<User, String> {
         name: "name",
         table: "users",
         _marker: PhantomData,
     };
-    
+
     let order_id = Column::<Order, i32> {
         name: "id",
         table: "orders",
         _marker: PhantomData,
     };
-    
+
     let order_user_id = Column::<Order, i32> {
         name: "user_id",
         table: "orders",
         _marker: PhantomData,
     };
-    
+
     // 构建查询
     let query = select(user_name)
         .from(users)
         .where_(user_id.eq(1));
-    
+
     // 生成SQL
     let sql = query.to_sql();
     println!("生成的SQL: {}", sql);
-    
+
     // 类型错误：列类型不匹配
     // let invalid_query = select(user_name)
     //     .from(users)
     //     .where_(user_id.eq("1")); // 编译错误：i32不能与&str比较
-    
+
     // 类型系统确保了DSL的正确使用
     // 即使DSL是内嵌的，类型检查仍然有效
 }
@@ -6786,7 +6788,7 @@ impl UserBuilder<Uninitialized> {
             _state: PhantomData,
         }
     }
-    
+
     fn id(self, id: u64) -> UserBuilder<WithId> {
         UserBuilder {
             id: Some(id),
@@ -6837,23 +6839,23 @@ fn fluent_api_example() {
         .name("张三")
         .email("zhangsan@example.com")
         .build();
-    
-    println!("创建用户: ID={}, 名称={}, 邮箱={}", 
+
+    println!("创建用户: ID={}, 名称={}, 邮箱={}",
              user.id, user.name, user.email);
-    
+
     // 类型错误：缺少必需步骤
     // let incomplete_user = UserBuilder::new()
     //     .id(123)
     //     .email("zhangsan@example.com")
     //     .build(); // 编译错误：缺少name
-    
+
     // 类型错误：步骤顺序错误
     // let wrong_order_user = UserBuilder::new()
     //     .name("张三")        // 编译错误：需要先设置id
     //     .id(123)
     //     .email("zhangsan@example.com")
     //     .build();
-    
+
     // 类型系统确保了API的正确使用
     // 必须按照正确的顺序调用所有必需的方法
 }
@@ -6921,7 +6923,7 @@ impl EntangledPair {
             state: QubitState::Entangled,
         }
     }
-    
+
     fn measure(&self) -> (bool, bool) {
         // 纠缠粒子测量结果相关
         let result = rand::random();
@@ -6953,21 +6955,21 @@ fn quantum_computation_example() {
     // 创建量子比特
     let q0 = QubitState::Zero;
     let q1 = QubitState::Zero;
-    
+
     // 应用Hadamard门
     let h_gate = HadamardGate;
     let q0_superposition = h_gate.apply(q0);
-    
+
     println!("应用Hadamard门后的状态: {:?}", q0_superposition);
-    
+
     // 创建Bell态
     let bell_circuit = BellCircuit;
     let entangled_pair = bell_circuit.execute((q0_superposition, q1));
-    
+
     // 测量纠缠对
     let (m1, m2) = entangled_pair.measure();
     println!("纠缠粒子测量结果: ({}, {})", m1, m2);
-    
+
     // 未来的量子类型系统将更加精确地表达量子状态
     // 并确保量子算法的正确实现
 }
@@ -7000,13 +7002,13 @@ impl<T, const N: i32> Vector<T, TypeInt<N>> {
     fn push(self, item: T) -> Vector<T, TypeInt<{N+1}>> {
         let mut data = self.data;
         data.push(item);
-        
+
         Vector {
             data,
             _length: PhantomData,
         }
     }
-    
+
     fn len(&self) -> usize {
         N as usize
     }
@@ -7024,7 +7026,7 @@ impl<T, const N1: i32, const N2: i32> DepFn<(Vector<T, TypeInt<N1>>, Vector<T, T
     fn call(&self, input: (Vector<T, TypeInt<N1>>, Vector<T, TypeInt<N2>>)) -> Vector<T, TypeInt<{N1+N2}>> {
         let mut result = input.0.data;
         result.extend(input.1.data);
-        
+
         Vector {
             data: result,
             _length: PhantomData,
@@ -7043,23 +7045,23 @@ fn dependent_types_example() {
     // 创建长度为零的向量
     let v0: Vector<i32, TypeInt<0>> = Vector::new();
     println!("v0长度: {}", v0.len());
-    
+
     // 添加元素，长度在类型中跟踪
     let v1 = v0.push(1);
     println!("v1长度: {}", v1.len());
-    
+
     let v2 = v1.push(2);
     println!("v2长度: {}", v2.len());
-    
+
     // 创建另一个向量
     let v0b: Vector<i32, TypeInt<0>> = Vector::new();
     let v1b = v0b.push(3);
-    
+
     // 连接向量，长度在类型级别计算
     let concat = Concat::<i32, TypeInt<2>, TypeInt<1>, TypeInt<3>>{};
     let v3 = concat.call((v2, v1b));
     println!("v3长度: {}", v3.len());
-    
+
     // 未来的依赖类型系统将允许更复杂的类型级计算
     // 并在编译时证明程序属性
 }

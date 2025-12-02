@@ -2,8 +2,8 @@
 
 ## 📋 目录
 
-  - [1.1 体系总览](#11-体系总览)
-  - [1.2 体系架构](#12-体系架构)
+- [1.1 体系总览](#11-体系总览)
+- [1.2 体系架构](#12-体系架构)
 - [1 理论体系导航](#1-理论体系导航)
   - [1.1 _基础理论体系 (Basic Theoretical System)](#11-_基础理论体系-basic-theoretical-system)
   - [1.2 _应用理论体系 (Applied Theoretical System)](#12-_应用理论体系-applied-theoretical-system)
@@ -43,7 +43,7 @@
 形式科学理论体系/
 ├── 00_主索引_Master_Index.md              # 本文件 - 主索引
 ├── 01_基础理论体系/                        # 基础理论体系
-├── 02_应用理论体系/                        # 应用理论体系  
+├── 02_应用理论体系/                        # 应用理论体系
 ├── 03_前沿理论体系/                        # 前沿理论体系
 ├── 04_高级理论体系/                        # 高级理论体系
 ├── 05_项目管理体系/                        # 项目管理体系
@@ -243,10 +243,10 @@
 
 ### 核心参考文献
 
-1. Russell, B. *The Problems of Philosophy*. Oxford University Press, 1912.
-2. Quine, W. V. O. *Word and Object*. MIT Press, 1960.
-3. Pierce, B. C. *Types and Programming Languages*. MIT Press, 2002.
-4. Nielsen, M. A., & Chuang, I. L. *Quantum Computation and Quantum Information*. Cambridge University Press, 2010.
+1. Russell, B. _The Problems of Philosophy_. Oxford University Press, 1912.
+2. Quine, W. V. O. _Word and Object_. MIT Press, 1960.
+3. Pierce, B. C. _Types and Programming Languages_. MIT Press, 2002.
+4. Nielsen, M. A., & Chuang, I. L. _Quantum Computation and Quantum Information_. Cambridge University Press, 2010.
 
 ### 5.3 扩展阅读
 
@@ -256,7 +256,7 @@
 
 ---
 
-**🎉 体系状态**：✅ 100% 重构完成  
-**📅 最后更新**：2025年1月  
-**👥 维护团队**：形式科学理论体系重构团队  
+**🎉 体系状态**：✅ 100% 重构完成
+**📅 最后更新**：2025年1月
+**👥 维护团队**：形式科学理论体系重构团队
 **🔗 版本**：v1.0 - 完整版

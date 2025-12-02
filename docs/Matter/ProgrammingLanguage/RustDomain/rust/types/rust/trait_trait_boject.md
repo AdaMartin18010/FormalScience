@@ -2,11 +2,13 @@
 
 ## 目录
 
-- [1. Trait 和 Trait Object](#trait-和-trait-object)
-  - [1.1 Trait 的定义与作用](#1-trait-的定义与作用)
-  - [1.2 Trait Object 的定义与作用](#2-trait-object-的定义与作用)
-  - [1.3 Trait 与 Trait Object 的区别](#3-trait-与-trait-object-的区别)
-  - [1.4 Trait 与 Trait Object 的联系](#4-trait-与-trait-object-的联系)
+- [1. Trait 和 Trait Object](#1-trait-和-trait-object)
+  - [目录](#目录)
+  - [1.1 Trait 的定义与作用](#11-trait-的定义与作用)
+  - [1.2 Trait Object 的定义与作用](#12-trait-object-的定义与作用)
+  - [1.3 Trait 与 Trait Object 的区别](#13-trait-与-trait-object-的区别)
+  - [1.4 Trait 与 Trait Object 的联系](#14-trait-与-trait-object-的联系)
+
 ## 1.1 Trait 的定义与作用
 
 Trait 是 Rust 中用于定义共享行为的抽象机制，类似于其他语言中的接口。

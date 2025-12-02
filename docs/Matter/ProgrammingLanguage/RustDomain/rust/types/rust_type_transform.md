@@ -2,34 +2,36 @@
 
 ## 目录
 
-- [1. rust type transform](#rust-type-transform)
-  - [1.1 Rust 中类型转换的基本概念](#1-rust-中类型转换的基本概念)
-  - [1.2 使用 `as` 关键字进行直接类型转换](#2-使用-as-关键字进行直接类型转换)
-  - [1.3 基于 `From` / `Into` Trait 的转换](#3-基于-from-into-trait-的转换)
-    - [1.3.1 示例一：使用 `From` 进行转换](#31-示例一使用-from-进行转换)
-    - [1.3.2 示例二：使用 `Into` 进行转换](#32-示例二使用-into-进行转换)
-  - [1.4 基于 `TryFrom` / `TryInto` Trait 的转换](#4-基于-tryfrom-tryinto-trait-的转换)
-  - [1.5 `AsRef` / `AsMut` 的引用转换](#5-asref-asmut-的引用转换)
-  - [1.6 自动解引用（Deref Coercion）](#6-自动解引用deref-coercion)
-  - [1.7 总结](#7-总结)
+- [1. rust type transform](#1-rust-type-transform)
+  - [目录](#目录)
+  - [1.1 Rust 中类型转换的基本概念](#11-rust-中类型转换的基本概念)
+  - [1.2 使用 `as` 关键字进行直接类型转换](#12-使用-as-关键字进行直接类型转换)
+  - [1.3 基于 `From` / `Into` Trait 的转换](#13-基于-from--into-trait-的转换)
+    - [1.3.1 示例一：使用 `From` 进行转换](#131-示例一使用-from-进行转换)
+    - [1.3.2 示例二：使用 `Into` 进行转换](#132-示例二使用-into-进行转换)
+  - [1.4 基于 `TryFrom` / `TryInto` Trait 的转换](#14-基于-tryfrom--tryinto-trait-的转换)
+  - [1.5 `AsRef` / `AsMut` 的引用转换](#15-asref--asmut-的引用转换)
+  - [1.6 自动解引用（Deref Coercion）](#16-自动解引用deref-coercion)
+  - [1.7 总结](#17-总结)
+
 ## 1.1 Rust 中类型转换的基本概念
 
 Rust 中的类型转换主要有以下几种方式：
 
-- **直接转换（cast）**  
+- **直接转换（cast）**
   使用 `as` 关键字，可以将一种原始类型转换为另一种，比如从整型转换为浮点型、枚举类型转换为整数等。
   这种转换通常用于原语或简单类型之间，但编译器不会进行检查，可能存在一定风险。
 
-- **基于 trait 的转换**  
+- **基于 trait 的转换**
   Rust 中提供了一组基于 trait 的转换机制，它们更为安全且适用于自定义类型，包括：
-  - **`From` / `Into`**  
+  - **`From` / `Into`**
     定义“从某类型转换为另一类型”的方式。实现了 `From<T>` 的类型能够通过 `T::from()` 方法或者 `into()` 方法进行转换。
-  - **`TryFrom` / `TryInto`**  
+  - **`TryFrom` / `TryInto`**
     与 `From` 类似，不过这种转换可能会失败，返回 `Result` 类型。适合转换中可能发生错误的场景。
-  - **`AsRef` / `AsMut`**  
+  - **`AsRef` / `AsMut`**
     主要用于引用转换，比如将 `String` 转换为 `&str`，这种转换通常是零开销的借用转换。
 
-- **自动解引用（Deref Coercion）**  
+- **自动解引用（Deref Coercion）**
   利用 [`Deref`](https://doc.rust-lang.org/std/ops/trait.Deref.html) 特性，
   可以在一定程度上自动将智能指针转换为借用引用，使得用户无需显式调用解引用操作。
 
@@ -118,7 +120,7 @@ fn main() {
     let s = String::from("Hello from String");
     // String 实现了 AsRef<str>，所以可以直接传入
     print_message(&s);
-    
+
     // 同样适用于 &str
     let s_slice: &str = "Hello from &str";
     print_message(s_slice);

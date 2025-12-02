@@ -2,12 +2,14 @@
 
 ## 目录
 
-- [1. Trait Object](#trait-object)
-  - [1.1 使用 `dyn` 关键字和 `Any` trait](#1-使用-dyn-关键字和-any-trait)
-  - [1.2 使用枚举](#2-使用枚举)
-  - [1.3 使用泛型](#3-使用泛型)
-  - [1.4 使用 `async-trait` crate](#4-使用-async-trait-crate)
-  - [1.5 总结](#5-总结)
+- [1. Trait Object](#1-trait-object)
+  - [目录](#目录)
+  - [1.1 使用 `dyn` 关键字和 `Any` trait](#11-使用-dyn-关键字和-any-trait)
+  - [1.2 使用枚举](#12-使用枚举)
+  - [1.3 使用泛型](#13-使用泛型)
+  - [1.4 使用 `async-trait` crate](#14-使用-async-trait-crate)
+  - [1.5 总结](#15-总结)
+
 ## 1.1 使用 `dyn` 关键字和 `Any` trait
 
 Rust 的 `Any` trait 可以用来检查 trait object 的具体类型。

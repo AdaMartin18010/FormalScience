@@ -2,32 +2,34 @@
 
 ## 目录
 
-- [1. 形式理论综合深化扩展 (Formal Theory Comprehensive Synthesis Extended)](#形式理论综合深化扩展-formal-theory-comprehensive-synthesis-extended)
-  - [1.1 概述](#1-概述)
-  - [1.2 统一形式理论框架 (Unified Formal Theory Framework)](#2-统一形式理论框架-unified-formal-theory-framework)
-    - [1.2.1 理论基础公理化](#21-理论基础公理化)
-    - [1.2.2 跨理论映射](#22-跨理论映射)
-  - [1.3 高级类型系统综合理论 (Advanced Type System Synthesis)](#3-高级类型系统综合理论-advanced-type-system-synthesis)
-    - [1.3.1 统一类型理论](#31-统一类型理论)
-    - [1.3.2 高级类型构造](#32-高级类型构造)
-    - [1.3.3 线性类型系统深化](#33-线性类型系统深化)
-  - [1.4 高级系统理论综合 (Advanced System Theory Synthesis)](#4-高级系统理论综合-advanced-system-theory-synthesis)
-    - [1.4.1 统一系统模型](#41-统一系统模型)
-    - [1.4.2 分布式系统理论深化](#42-分布式系统理论深化)
-    - [1.4.3 控制理论深化](#43-控制理论深化)
-  - [1.5 高级语言理论综合 (Advanced Language Theory Synthesis)](#5-高级语言理论综合-advanced-language-theory-synthesis)
-    - [1.5.1 统一语言框架](#51-统一语言框架)
-    - [1.5.2 自动机理论深化](#52-自动机理论深化)
-    - [1.5.3 形式语言与类型系统](#53-形式语言与类型系统)
-  - [1.6 形式证明系统 (Formal Proof System)](#6-形式证明系统-formal-proof-system)
-    - [1.6.1 统一证明框架](#61-统一证明框架)
-    - [1.6.2 机械化证明](#62-机械化证明)
-  - [1.7 批判性分析与展望 (Critical Analysis and Prospects)](#7-批判性分析与展望-critical-analysis-and-prospects)
-    - [1.7.1 理论局限性分析](#71-理论局限性分析)
-    - [1.7.2 理论发展方向](#72-理论发展方向)
-    - [1.7.3 实际应用挑战](#73-实际应用挑战)
-  - [1.8 结论](#8-结论)
-  - [1.9 参考文献](#9-参考文献)
+- [1. 形式理论综合深化扩展 (Formal Theory Comprehensive Synthesis Extended)](#1-形式理论综合深化扩展-formal-theory-comprehensive-synthesis-extended)
+  - [目录](#目录)
+  - [1.1 概述](#11-概述)
+  - [1.2 统一形式理论框架 (Unified Formal Theory Framework)](#12-统一形式理论框架-unified-formal-theory-framework)
+    - [1.2.1 理论基础公理化](#121-理论基础公理化)
+    - [1.2.2 跨理论映射](#122-跨理论映射)
+  - [1.3 高级类型系统综合理论 (Advanced Type System Synthesis)](#13-高级类型系统综合理论-advanced-type-system-synthesis)
+    - [1.3.1 统一类型理论](#131-统一类型理论)
+    - [1.3.2 高级类型构造](#132-高级类型构造)
+    - [1.3.3 线性类型系统深化](#133-线性类型系统深化)
+  - [1.4 高级系统理论综合 (Advanced System Theory Synthesis)](#14-高级系统理论综合-advanced-system-theory-synthesis)
+    - [1.4.1 统一系统模型](#141-统一系统模型)
+    - [1.4.2 分布式系统理论深化](#142-分布式系统理论深化)
+    - [1.4.3 控制理论深化](#143-控制理论深化)
+  - [1.5 高级语言理论综合 (Advanced Language Theory Synthesis)](#15-高级语言理论综合-advanced-language-theory-synthesis)
+    - [1.5.1 统一语言框架](#151-统一语言框架)
+    - [1.5.2 自动机理论深化](#152-自动机理论深化)
+    - [1.5.3 形式语言与类型系统](#153-形式语言与类型系统)
+  - [1.6 形式证明系统 (Formal Proof System)](#16-形式证明系统-formal-proof-system)
+    - [1.6.1 统一证明框架](#161-统一证明框架)
+    - [1.6.2 机械化证明](#162-机械化证明)
+  - [1.7 批判性分析与展望 (Critical Analysis and Prospects)](#17-批判性分析与展望-critical-analysis-and-prospects)
+    - [1.7.1 理论局限性分析](#171-理论局限性分析)
+    - [1.7.2 理论发展方向](#172-理论发展方向)
+    - [1.7.3 实际应用挑战](#173-实际应用挑战)
+  - [1.8 结论](#18-结论)
+  - [1.9 参考文献](#19-参考文献)
+
 ## 1.1 概述
 
 本文档是对形式科学理论体系的全面综合与深化扩展。我们将在现有理论基础上，构建一个统一的形式理论框架，深入探讨类型理论、系统理论、语言理论之间的深层联系，并提供严格的形式化证明和批判性分析。
@@ -40,7 +42,7 @@
 形式理论统一框架是一个六元组 $\mathcal{F} = (\mathcal{T}, \mathcal{S}, \mathcal{L}, \mathcal{R}, \mathcal{P}, \mathcal{M})$，其中：
 
 - $\mathcal{T}$ 是类型理论空间
-- $\mathcal{S}$ 是系统理论空间  
+- $\mathcal{S}$ 是系统理论空间
 - $\mathcal{L}$ 是语言理论空间
 - $\mathcal{R}$ 是关系映射集合
 - $\mathcal{P}$ 是证明系统
@@ -84,16 +86,16 @@ $$f : (A_X, \Sigma_X, \Phi_X, \vdash_X, \models_X) \rightarrow (A_Y, \Sigma_Y, \
 
 ```haskell
 typeTheoryToSystem :: TypeTheory -> SystemTheory
-typeTheoryToSystem typeTheory = 
+typeTheoryToSystem typeTheory =
   let -- 类型作为系统状态
       states = typeSpace typeTheory
-      
+
       -- 类型转换作为状态转移
       transitions = typeTransitions typeTheory
-      
+
       -- 类型安全作为系统不变性
       invariants = typeSafety typeTheory
-      
+
       -- 类型检查作为系统验证
       verification = typeChecking typeTheory
   in SystemTheory { stateSpace = states
@@ -404,13 +406,13 @@ $$\text{Regular} \subset \text{CFL} \subset \text{CSL} \subset \text{REL}$$
 
 ```haskell
 typeToLanguage :: TypeSystem -> Language
-typeToLanguage typeSystem = 
+typeToLanguage typeSystem =
   let -- 类型作为语言符号
       alphabet = typeSymbols typeSystem
-      
+
       -- 类型规则作为语法规则
       grammar = typeRules typeSystem
-      
+
       -- 类型检查作为语言识别
       recognizer = typeChecker typeSystem
   in Language { alphabet = alphabet
@@ -469,7 +471,7 @@ data ProofSystem where
 
 -- 自然演绎系统
 naturalDeduction :: ProofSystem
-naturalDeduction = NaturalDeduction 
+naturalDeduction = NaturalDeduction
   [ ImplicationIntro
   , ImplicationElim
   , ConjunctionIntro

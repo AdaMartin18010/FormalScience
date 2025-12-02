@@ -2,40 +2,41 @@
 
 ## 目录
 
-- [1. 从同伦类型论视角分析Rust语言、算法设计与工作流理论](#从同伦类型论视角分析rust语言算法设计与工作流理论)
-  - [1.1 思维导图](#1-思维导图)
-  - [1.2 引言](#2-引言)
-  - [1.3 同伦类型论基础概念](#3-同伦类型论基础概念)
-    - [1.3.1 类型即空间](#31-类型即空间)
-    - [1.3.2 同一性类型与路径](#32-同一性类型与路径)
-    - [1.3.3 同伦与高阶路径](#33-同伦与高阶路径)
-    - [1.3.4 命题即类型](#34-命题即类型)
-    - [1.3.5 高阶归纳类型(HITs)](#35-高阶归纳类型hits)
-  - [1.4 Rust编程语言的同伦类型论视角](#4-rust编程语言的同伦类型论视角)
-    - [1.4.1 Rust类型系统作为空间](#41-rust类型系统作为空间)
-      - [1.4.1.1 代数数据类型作为高阶归纳类型](#411-代数数据类型作为高阶归纳类型)
-      - [1.4.1.2 Trait作为依赖类型](#412-trait作为依赖类型)
-    - [1.4.2 所有权系统的同伦解释](#42-所有权系统的同伦解释)
-      - [1.4.2.1 所有权转移作为等价映射](#421-所有权转移作为等价映射)
-      - [1.4.2.2 借用作为纤维化](#422-借用作为纤维化)
-      - [1.4.2.3 生命周期作为同伦](#423-生命周期作为同伦)
-    - [1.4.3 错误处理作为高阶类型](#43-错误处理作为高阶类型)
-  - [1.5 算法设计实现的同伦类型论视角](#5-算法设计实现的同伦类型论视角)
-    - [1.5.1 算法正确性作为类型证明](#51-算法正确性作为类型证明)
-    - [1.5.2 复杂度分析作为同伦分类](#52-复杂度分析作为同伦分类)
-    - [1.5.3 递归算法作为归纳类型](#53-递归算法作为归纳类型)
-    - [1.5.4 并发算法作为高阶路径空间](#54-并发算法作为高阶路径空间)
-  - [1.6 工作流理论的同伦类型论视角](#6-工作流理论的同伦类型论视角)
-    - [1.6.1 工作流作为高阶路径](#61-工作流作为高阶路径)
-    - [1.6.2 Petri网作为依赖类型](#62-petri网作为依赖类型)
-    - [1.6.3 工作流验证作为类型检查](#63-工作流验证作为类型检查)
-    - [1.6.4 工作流编排作为高阶函数](#64-工作流编排作为高阶函数)
-  - [1.7 三者关系的同伦类型论统一框架](#7-三者关系的同伦类型论统一框架)
-    - [1.7.1 Rust与算法的等价映射](#71-rust与算法的等价映射)
-    - [1.7.2 算法与工作流的同构](#72-算法与工作流的同构)
-    - [1.7.3 工作流与Rust的纤维关系](#73-工作流与rust的纤维关系)
-    - [1.7.4 三域统一的高阶同伦框架](#74-三域统一的高阶同伦框架)
-  - [1.8 结论与展望](#8-结论与展望)
+- [1. 从同伦类型论视角分析Rust语言、算法设计与工作流理论](#1-从同伦类型论视角分析rust语言算法设计与工作流理论)
+  - [目录](#目录)
+  - [1.1 思维导图](#11-思维导图)
+  - [1.2 引言](#12-引言)
+  - [1.3 同伦类型论基础概念](#13-同伦类型论基础概念)
+    - [1.3.1 类型即空间](#131-类型即空间)
+    - [1.3.2 同一性类型与路径](#132-同一性类型与路径)
+    - [1.3.3 同伦与高阶路径](#133-同伦与高阶路径)
+    - [1.3.4 命题即类型](#134-命题即类型)
+    - [1.3.5 高阶归纳类型(HITs)](#135-高阶归纳类型hits)
+  - [1.4 Rust编程语言的同伦类型论视角](#14-rust编程语言的同伦类型论视角)
+    - [1.4.1 Rust类型系统作为空间](#141-rust类型系统作为空间)
+      - [1.4.1.1 代数数据类型作为高阶归纳类型](#1411-代数数据类型作为高阶归纳类型)
+      - [1.4.1.2 Trait作为依赖类型](#1412-trait作为依赖类型)
+    - [1.4.2 所有权系统的同伦解释](#142-所有权系统的同伦解释)
+      - [1.4.2.1 所有权转移作为等价映射](#1421-所有权转移作为等价映射)
+      - [1.4.2.2 借用作为纤维化](#1422-借用作为纤维化)
+      - [1.4.2.3 生命周期作为同伦](#1423-生命周期作为同伦)
+    - [1.4.3 错误处理作为高阶类型](#143-错误处理作为高阶类型)
+  - [1.5 算法设计实现的同伦类型论视角](#15-算法设计实现的同伦类型论视角)
+    - [1.5.1 算法正确性作为类型证明](#151-算法正确性作为类型证明)
+    - [1.5.2 复杂度分析作为同伦分类](#152-复杂度分析作为同伦分类)
+    - [1.5.3 递归算法作为归纳类型](#153-递归算法作为归纳类型)
+    - [1.5.4 并发算法作为高阶路径空间](#154-并发算法作为高阶路径空间)
+  - [1.6 工作流理论的同伦类型论视角](#16-工作流理论的同伦类型论视角)
+    - [1.6.1 工作流作为高阶路径](#161-工作流作为高阶路径)
+    - [1.6.2 Petri网作为依赖类型](#162-petri网作为依赖类型)
+    - [1.6.3 工作流验证作为类型检查](#163-工作流验证作为类型检查)
+    - [1.6.4 工作流编排作为高阶函数](#164-工作流编排作为高阶函数)
+  - [1.7 三者关系的同伦类型论统一框架](#17-三者关系的同伦类型论统一框架)
+    - [1.7.1 Rust与算法的等价映射](#171-rust与算法的等价映射)
+    - [1.7.2 算法与工作流的同构](#172-算法与工作流的同构)
+    - [1.7.3 工作流与Rust的纤维关系](#173-工作流与rust的纤维关系)
+    - [1.7.4 三域统一的高阶同伦框架](#174-三域统一的高阶同伦框架)
+  - [1.8 结论与展望](#18-结论与展望)
 ## 1.1 思维导图
 
 ```text
@@ -221,7 +222,7 @@ fn divide(a: f64, b: f64) -> Result<f64, String> {
 fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
     let mut left = 0;
     let mut right = arr.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
         match arr[mid].cmp(target) {
@@ -230,7 +231,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
             std::cmp::Ordering::Greater => right = mid,
         }
     }
-    
+
     None
 }
 ```
@@ -278,28 +279,28 @@ use std::thread;
 fn parallel_sum(data: &[i32], num_threads: usize) -> i32 {
     let result = Arc::new(Mutex::new(0));
     let chunk_size = (data.len() + num_threads - 1) / num_threads;
-    
+
     let mut handles = vec![];
-    
+
     for i in 0..num_threads {
         let start = i * chunk_size;
         let end = std::cmp::min(start + chunk_size, data.len());
         let data_slice = &data[start..end];
         let result_clone = Arc::clone(&result);
-        
+
         let handle = thread::spawn(move || {
             let local_sum: i32 = data_slice.iter().sum();
             let mut global_sum = result_clone.lock().unwrap();
             *global_sum += local_sum;
         });
-        
+
         handles.push(handle);
     }
-    
+
     for handle in handles {
         handle.join().unwrap();
     }
-    
+
     *result.lock().unwrap()
 }
 ```
@@ -374,12 +375,12 @@ impl<T, E> Workflow<T, E> {
     fn new() -> Self {
         Workflow { steps: Vec::new() }
     }
-    
-    fn add_step<F>(&mut self, step: F) 
+
+    fn add_step<F>(&mut self, step: F)
     where F: Fn(T) -> Result<T, E> + 'static {
         self.steps.push(Box::new(step));
     }
-    
+
     fn execute(&self, initial: T) -> Result<T, E> {
         let mut state = initial;
         for step in &self.steps {
@@ -441,7 +442,7 @@ where
     let mapped: Vec<M> = data.into_iter()
         .map(|item| map_fn(item))
         .collect();
-    
+
     // Reduce阶段：聚合结果
     reduce_fn(mapped)
 }
@@ -458,14 +459,14 @@ use tokio::sync::mpsc;
 async fn workflow() {
     let (tx1, mut rx1) = mpsc::channel(100);
     let (tx2, mut rx2) = mpsc::channel(100);
-    
+
     // 步骤1：生成数据
     tokio::spawn(async move {
         for i in 0..10 {
             tx1.send(i).await.unwrap();
         }
     });
-    
+
     // 步骤2：处理数据
     tokio::spawn(async move {
         while let Some(value) = rx1.recv().await {
@@ -473,7 +474,7 @@ async fn workflow() {
             tx2.send(processed).await.unwrap();
         }
     });
-    
+
     // 步骤3：聚合结果
     let mut sum = 0;
     while let Some(value) = rx2.recv().await {

@@ -2,44 +2,46 @@
 
 ## 目录
 
-- [1. 同伦类型理论与推理编程语言设计](#同伦类型理论与推理编程语言设计)
-  - [1.1 引言](#1-引言)
-  - [1.2 同伦类型理论的核心概念](#2-同伦类型理论的核心概念)
-    - [1.2.1 类型即命题，程序即证明](#21-类型即命题程序即证明)
-    - [1.2.2 同伦与路径](#22-同伦与路径)
-    - [1.2.3 高阶归纳类型](#23-高阶归纳类型)
-    - [1.2.4 向量空间与n维类型](#24-向量空间与n维类型)
-    - [1.2.5 依赖类型系统](#25-依赖类型系统)
-  - [1.3 推理机制在编程语言中的应用](#3-推理机制在编程语言中的应用)
-    - [1.3.1 类型推导](#31-类型推导)
-    - [1.3.2 静态验证与约束求解](#32-静态验证与约束求解)
-    - [1.3.3 自动证明生成](#33-自动证明生成)
-  - [1.4 Rust中的类型理论实践](#4-rust中的类型理论实践)
-    - [1.4.1 所有权与借用作为线性逻辑](#41-所有权与借用作为线性逻辑)
-    - [1.4.2 代数数据类型与模式匹配](#42-代数数据类型与模式匹配)
-    - [1.4.3 特质系统与类型界限](#43-特质系统与类型界限)
-    - [1.4.4 生命周期参数作为时序逻辑](#44-生命周期参数作为时序逻辑)
-    - [1.4.5 类型态射与函子](#45-类型态射与函子)
-  - [1.5 高级类型系统设计模式](#5-高级类型系统设计模式)
-    - [1.5.1 类型级编程](#51-类型级编程)
-    - [1.5.2 幻影类型与零成本抽象](#52-幻影类型与零成本抽象)
-    - [1.5.3 依赖类型模拟](#53-依赖类型模拟)
-  - [1.6 形式化验证与程序证明](#6-形式化验证与程序证明)
-    - [1.6.1 不变量与合约编程](#61-不变量与合约编程)
-    - [1.6.2 状态机建模](#62-状态机建模)
-    - [1.6.3 程序逻辑与霍尔三元组](#63-程序逻辑与霍尔三元组)
-  - [1.7 同伦类型理论对未来编程语言的影响](#7-同伦类型理论对未来编程语言的影响)
-    - [1.7.1 可计算性与一致性](#71-可计算性与一致性)
-    - [1.7.2 形式化方法的普及](#72-形式化方法的普及)
-    - [1.7.3 编译器作为定理证明器](#73-编译器作为定理证明器)
-  - [1.8 结论与展望](#8-结论与展望)
-  - [1.9 高级应用场景与未来发展](#9-高级应用场景与未来发展)
-    - [1.9.1 并发编程与会话类型](#91-并发编程与会话类型)
-    - [1.9.2 领域特定语言(DSL)的类型安全设计](#92-领域特定语言dsl的类型安全设计)
-    - [1.9.3 量子计算与线性类型](#93-量子计算与线性类型)
-    - [1.9.4 工业界形式化方法的逐步采纳](#94-工业界形式化方法的逐步采纳)
-    - [1.9.5 人工智能与机器学习的形式化验证](#95-人工智能与机器学习的形式化验证)
-  - [1.10 总结与展望](#10-总结与展望)
+- [1. 同伦类型理论与推理编程语言设计](#1-同伦类型理论与推理编程语言设计)
+  - [目录](#目录)
+  - [1.1 引言](#11-引言)
+  - [1.2 同伦类型理论的核心概念](#12-同伦类型理论的核心概念)
+    - [1.2.1 类型即命题，程序即证明](#121-类型即命题程序即证明)
+    - [1.2.2 同伦与路径](#122-同伦与路径)
+    - [1.2.3 高阶归纳类型](#123-高阶归纳类型)
+    - [1.2.4 向量空间与n维类型](#124-向量空间与n维类型)
+    - [1.2.5 依赖类型系统](#125-依赖类型系统)
+  - [1.3 推理机制在编程语言中的应用](#13-推理机制在编程语言中的应用)
+    - [1.3.1 类型推导](#131-类型推导)
+    - [1.3.2 静态验证与约束求解](#132-静态验证与约束求解)
+    - [1.3.3 自动证明生成](#133-自动证明生成)
+  - [1.4 Rust中的类型理论实践](#14-rust中的类型理论实践)
+    - [1.4.1 所有权与借用作为线性逻辑](#141-所有权与借用作为线性逻辑)
+    - [1.4.2 代数数据类型与模式匹配](#142-代数数据类型与模式匹配)
+    - [1.4.3 特质系统与类型界限](#143-特质系统与类型界限)
+    - [1.4.4 生命周期参数作为时序逻辑](#144-生命周期参数作为时序逻辑)
+    - [1.4.5 类型态射与函子](#145-类型态射与函子)
+  - [1.5 高级类型系统设计模式](#15-高级类型系统设计模式)
+    - [1.5.1 类型级编程](#151-类型级编程)
+    - [1.5.2 幻影类型与零成本抽象](#152-幻影类型与零成本抽象)
+    - [1.5.3 依赖类型模拟](#153-依赖类型模拟)
+  - [1.6 形式化验证与程序证明](#16-形式化验证与程序证明)
+    - [1.6.1 不变量与合约编程](#161-不变量与合约编程)
+    - [1.6.2 状态机建模](#162-状态机建模)
+    - [1.6.3 程序逻辑与霍尔三元组](#163-程序逻辑与霍尔三元组)
+  - [1.7 同伦类型理论对未来编程语言的影响](#17-同伦类型理论对未来编程语言的影响)
+    - [1.7.1 可计算性与一致性](#171-可计算性与一致性)
+    - [1.7.2 形式化方法的普及](#172-形式化方法的普及)
+    - [1.7.3 编译器作为定理证明器](#173-编译器作为定理证明器)
+  - [1.8 结论与展望](#18-结论与展望)
+  - [1.9 高级应用场景与未来发展](#19-高级应用场景与未来发展)
+    - [1.9.1 并发编程与会话类型](#191-并发编程与会话类型)
+    - [1.9.2 领域特定语言(DSL)的类型安全设计](#192-领域特定语言dsl的类型安全设计)
+    - [1.9.3 量子计算与线性类型](#193-量子计算与线性类型)
+    - [1.9.4 工业界形式化方法的逐步采纳](#194-工业界形式化方法的逐步采纳)
+    - [1.9.5 人工智能与机器学习的形式化验证](#195-人工智能与机器学习的形式化验证)
+  - [1.10 总结与展望](#110-总结与展望)
+
 ## 1.1 引言
 
 同伦类型理论(Homotopy Type Theory, HoTT)是数学基础理论研究的前沿，
@@ -69,7 +71,7 @@ fn safe_division(a: f64, b: f64) -> Option<f64> {
 // 使用map组合证明
 fn compute_ratio(x: f64, y: f64, z: f64) -> Option<f64> {
     // 这整个表达式可以视为一个复合证明
-    safe_division(x, y).and_then(|xy_ratio| 
+    safe_division(x, y).and_then(|xy_ratio|
         safe_division(xy_ratio, z).map(|result| result * 100.0)
     )
 }
@@ -110,7 +112,7 @@ where
         // 在更完整的实现中，我们会验证to和from满足同构的条件
         Isomorphism { to, from, _marker: PhantomData }
     }
-    
+
     // 同构的对称性
     fn symm(self) -> Isomorphism<B, A, G, F> {
         Isomorphism { to: self.from, from: self.to, _marker: PhantomData }
@@ -160,7 +162,7 @@ impl Interval {
     fn new(t: f64) -> Self {
         Interval(t.max(0.0).min(1.0))
     }
-    
+
     fn endpoints(&self) -> bool {
         self.0 == 0.0 || self.0 == 1.0
     }
@@ -187,7 +189,7 @@ impl<T: Copy + std::ops::Add<Output = T> + std::ops::Mul<Output = T> + Default, 
         let elements = [T::default(); N];
         Vector { elements }
     }
-    
+
     fn dot_product(&self, other: &Self) -> T where T: std::ops::AddAssign {
         let mut result = T::default();
         for i in 0..N {
@@ -202,7 +204,7 @@ fn matrix_multiply<T, const M: usize, const N: usize, const P: usize>(
     a: &[[T; N]; M],
     b: &[[T; P]; N]
 ) -> [[T; P]; M]
-where 
+where
     T: Copy + Default + std::ops::Add<Output = T> + std::ops::AddAssign + std::ops::Mul<Output = T>
 {
     let mut result = [[T::default(); P]; M];
@@ -257,12 +259,12 @@ fn main() {
     // 编译时常量
     const POSITIVE: i32 = 16;
     const NEGATIVE: i32 = -4;
-    
+
     // 可以创建非负数的证明
     if let Some(proof) = NonNegative::<POSITIVE>::new() {
         println!("Square root of {} is {}", POSITIVE, sqrt(proof));
     }
-    
+
     // 无法为负数创建证明
     if let Some(proof) = NonNegative::<NEGATIVE>::new() { // 这个分支永远不会执行
         println!("This will never print");
@@ -286,17 +288,17 @@ fn main() {
 fn main() {
     // 类型推导：编译器推断v1的类型为Vec<i32>
     let v1 = vec![1, 2, 3];
-    
+
     // 返回类型推导：编译器根据函数体推断返回类型
     let get_five = || 5;  // 编译器推断返回类型为i32
-    
+
     // 泛型类型推导：
     let numbers = vec![1, 2, 3];
     let strings = vec!["hello", "world"];
-    
+
     // 闭包参数类型推导
     let sum: i32 = numbers.iter().fold(0, |acc, x| acc + x);
-    
+
     // turbofish语法用于显式指定类型参数
     let parsed = "42".parse::<i32>().unwrap();
 }
@@ -327,18 +329,18 @@ fn print_pair<T: Display, U: Display>(t: T, u: U) {
 fn main() {
     // 编译器需要解决类型变量和它们的约束
     let pairs = vec![(1, "one"), (2, "two"), (3, "three")];
-    
+
     for (i, s) in &pairs {
         // 编译器推导i和s的类型并验证它们满足Display约束
         print_pair(*i, *s);
     }
-    
+
     // 更复杂的约束求解
     let process = |x| {
         // 编译器需要推导x的类型，并保证它满足所有使用的约束
         format!("{}", x) // 需要Display
     };
-    
+
     let result = process(42);  // 这里编译器推导x是i32类型
 }
 
@@ -352,7 +354,7 @@ struct BoxedValue<T>(Box<T>);
 
 impl<T> Container for BoxedValue<T> {
     type Item = T;  // 关联类型约束
-    
+
     fn get(&self) -> Option<&Self::Item> {
         Some(&self.0)
     }
@@ -431,35 +433,35 @@ fn main() {
     let v1 = vec![1, 2, 3];
     let v2 = v1;  // v1的所有权移动到v2
     // println!("{:?}", v1);  // 错误：v1已被移动
-    
+
     // 借用规则（线性逻辑中的资源临时使用）
     let s = String::from("hello");
-    
+
     {
         let r1 = &s;  // 不可变借用
         let r2 = &s;  // 多个不可变借用是允许的
         println!("{} and {}", r1, r2);
     } // r1和r2在此处离开作用域
-    
+
     {
         let r3 = &mut s.clone();  // 可变借用
         // let r4 = &s;  // 错误：不能同时有可变和不可变借用
         r3.push_str(" world");
     } // r3在此处离开作用域
-    
+
     // 所有权与函数
     fn takes_ownership(s: String) {
         println!("{}", s);
     } // s在此离开作用域并被丢弃
-    
+
     fn takes_and_returns(s: String) -> String {
         s  // 返回所有权
     }
-    
+
     let s1 = String::from("ownership");
     takes_ownership(s1);  // s1的所有权移动到函数中
     // println!("{}", s1);  // 错误：s1已被移动
-    
+
     let s2 = String::from("temp move");
     let s3 = takes_and_returns(s2);  // s2的所有权移动后又返回给s3
 }
@@ -541,7 +543,7 @@ impl Shape for Circle {
     fn area(&self) -> f64 {
         std::f64::consts::PI * self.radius * self.radius
     }
-    
+
     fn name(&self) -> &'static str {
         "Circle"
     }
@@ -554,7 +556,7 @@ fn print_area<T: Shape>(shape: &T) {
 
 // 复合特质界限
 fn draw_and_measure<T>(shape: &T)
-where 
+where
     T: Shape + std::fmt::Display,
 {
     println!("Drawing: {}", shape);
@@ -586,7 +588,7 @@ impl Shape for Rectangle {
     fn area(&self) -> f64 {
         self.width * self.height
     }
-    
+
     fn name(&self) -> &'static str {
         "Rectangle"
     }
@@ -628,7 +630,7 @@ fn main() {
     let novel = String::from("Call me Ishmael. Some years ago...");
     let first_sentence = novel.split('.').next().unwrap();
     let e = Excerpt { part: first_sentence };
-    
+
     println!("{}", e.part);
 }
 ```
@@ -649,7 +651,7 @@ trait Functor<A, B> {
 // 为Option实现Functor
 impl<A, B> Functor<A, B> for Option<A> {
     type Target = Option<B>;
-    
+
     fn fmap(self, mut f: impl FnMut(A) -> B) -> Self::Target {
         match self {
             Some(a) => Some(f(a)),
@@ -661,7 +663,7 @@ impl<A, B> Functor<A, B> for Option<A> {
 // 为Result实现Functor
 impl<A, B, E> Functor<A, B> for Result<A, E> {
     type Target = Result<B, E>;
-    
+
     fn fmap(self, mut f: impl FnMut(A) -> B) -> Self::Target {
         match self {
             Ok(a) => Ok(f(a)),
@@ -682,7 +684,7 @@ fn main() {
     // 使用函子映射
     let opt = Some(42);
     let mapped = opt.fmap(|x| x.to_string());
-    
+
     // 自然变换的应用
     let result = option_to_result(opt, || "Value not found".to_string());
 }
@@ -784,7 +786,7 @@ impl<Unit> Length<Unit> {
     fn new(value: f64) -> Self {
         Length(value, PhantomData)
     }
-    
+
     fn value(&self) -> f64 {
         self.0
     }
@@ -824,7 +826,7 @@ impl File<Closed> {
             _marker: PhantomData,
         }
     }
-    
+
     fn open(self) -> Result<File<Open>, std::io::Error> {
         // 实际打开文件的操作
         Ok(File {
@@ -839,7 +841,7 @@ impl File<Open> {
         // 实际读取文件的操作
         Ok(format!("Content of {}", self.path))
     }
-    
+
     fn close(self) -> File<Closed> {
         File {
             path: self.path,
@@ -905,11 +907,11 @@ fn main() {
     // 创建固定长度的向量
     let v1: Vector<i32, 3> = Vector { elements: [1, 2, 3] };
     let v2: Vector<i32, 3> = Vector { elements: [4, 5, 6] };
-    
+
     // 编译时验证向量维度匹配
     let product = dot_product(&v1, &v2);
     println!("Dot product: {}", product);
-    
+
     // 下面的代码会在编译时失败，因为维度不匹配
     // let v3: Vector<i32, 4> = Vector { elements: [1, 2, 3, 4] };
     // let invalid_product = dot_product(&v1, &v3);
@@ -938,7 +940,7 @@ impl PositiveInt {
             None
         }
     }
-    
+
     fn get(&self) -> u32 {
         self.0
     }
@@ -948,7 +950,7 @@ impl PositiveInt {
 fn sqrt(n: PositiveInt) -> f64 {
     // 前置条件由类型系统强制执行（n必须是正整数）
     let result = (n.get() as f64).sqrt();
-    
+
     // 后置条件检查
     debug_assert!(result >= 0.0, "Square root must be non-negative");
     result
@@ -960,14 +962,14 @@ fn divide(a: i32, b: i32) -> Result<i32, &'static str> {
     if b == 0 {
         return Err("Division by zero");
     }
-    
+
     let result = a / b;
-    
+
     // 后置条件检查示例
     if a < 0 && b < 0 && result < 0 {
         return Err("Expected positive result for negative divided by negative");
     }
-    
+
     Ok(result)
 }
 
@@ -977,13 +979,13 @@ fn main() {
         Some(p) => println!("Square root of {} is {}", p.get(), sqrt(p)),
         None => println!("Invalid input"),
     }
-    
+
     // 运行时合约检查
     match divide(10, 2) {
         Ok(result) => println!("10 / 2 = {}", result),
         Err(msg) => println!("Error: {}", msg),
     }
-    
+
     match divide(10, 0) {
         Ok(result) => println!("10 / 0 = {}", result), // 永远不会执行
         Err(msg) => println!("Error: {}", msg),
@@ -1018,7 +1020,7 @@ impl TcpConnection<Closed> {
             _state: std::marker::PhantomData,
         }
     }
-    
+
     // 从Closed到Listen的转换
     fn listen(self) -> TcpConnection<Listen> {
         println!("Starting to listen on {}", self.socket_addr);
@@ -1058,7 +1060,7 @@ impl TcpConnection<Established> {
     fn send_data(&self, data: &str) {
         println!("Sending data on {}: {}", self.socket_addr, data);
     }
-    
+
     fn close(self) -> TcpConnection<Closed> {
         println!("Closing connection on {}", self.socket_addr);
         TcpConnection {
@@ -1071,24 +1073,24 @@ impl TcpConnection<Established> {
 fn main() {
     // 使用类型安全的状态机
     let conn = TcpConnection::new("127.0.0.1:8080");
-    
+
     // 正确的状态转换序列
     let conn = conn.listen();
     let conn = conn.receive_syn();
     let conn = conn.receive_ack();
-    
+
     // 只有在Established状态才能发送数据
     conn.send_data("Hello, world!");
-    
+
     // 关闭连接
     let _conn = conn.close();
-    
+
     // 下面的代码会导致编译错误，因为状态不正确
     // conn.send_data("Too late!"); // conn已经被移动
-    
+
     // 创建一个新连接来展示错误的状态转换
     let new_conn = TcpConnection::new("127.0.0.1:8081");
-    
+
     // 下面的代码会导致编译错误，因为尝试在错误的状态调用方法
     // new_conn.send_data("Invalid state"); // 只有Established状态可以发送数据
     // new_conn.receive_syn(); // 只有Listen状态可以接收SYN
@@ -1114,14 +1116,14 @@ fn main() {
 fn binary_search<T: Ord>(array: &[T], target: &T) -> Option<usize> {
     // 断言前置条件：数组已排序（运行时检查）
     debug_assert!(array.windows(2).all(|w| w[0] <= w[1]), "Array must be sorted");
-    
+
     let mut low = 0;
     let mut high = array.len();
-    
+
     // 循环不变量：如果target在数组中，它的索引在[low, high)范围内
     while low < high {
         let mid = low + (high - low) / 2;
-        
+
         match array[mid].cmp(target) {
             std::cmp::Ordering::Equal => {
                 // 满足后置条件：array[mid] == target
@@ -1137,7 +1139,7 @@ fn binary_search<T: Ord>(array: &[T], target: &T) -> Option<usize> {
             }
         }
     }
-    
+
     // 后置条件：target不在数组中
     None
 }
@@ -1159,36 +1161,36 @@ impl<'a, T: Ord> SortedSlice<'a, T> {
             None
         }
     }
-    
+
     // 在已知前置条件下的二分查找
     fn binary_search(&self, target: &T) -> Option<usize> {
         // 不需要检查排序条件，已由类型保证
         let mut low = 0;
         let mut high = self.data.len();
-        
+
         while low < high {
             let mid = low + (high - low) / 2;
-            
+
             match self.data[mid].cmp(target) {
                 std::cmp::Ordering::Equal => return Some(mid),
                 std::cmp::Ordering::Less => low = mid + 1,
                 std::cmp::Ordering::Greater => high = mid,
             }
         }
-        
+
         None
     }
 }
 
 fn main() {
     let numbers = [1, 3, 5, 7, 9, 11, 13, 15, 17];
-    
+
     // 使用普通函数，运行时检查前置条件
     match binary_search(&numbers, &7) {
         Some(index) => println!("Found 7 at index {}", index),
         None => println!("7 not found"),
     }
-    
+
     // 使用类型安全版本，编译时确保前置条件
     if let Some(sorted) = SortedSlice::new(&numbers) {
         match sorted.binary_search(&7) {
@@ -1227,7 +1229,7 @@ impl<T: 'static> Computation<Unknown, T> {
             _marker: PhantomData,
         }
     }
-    
+
     // 尝试证明停机性（注意：这只是示例，实际上不能解决停机问题）
     fn prove_halting(self, steps: usize) -> Result<Computation<Halting, T>, Self> {
         // 模拟有限步，检查是否停机
@@ -1268,7 +1270,7 @@ impl<T: Clone> Normalizable for T {
 fn main() {
     // 封装安全计算
     let increment = Computation::new(|x: i32| x + 1);
-    
+
     // 尝试证明停机性
     match increment.prove_halting(100) {
         Ok(safe_computation) => {
@@ -1307,11 +1309,11 @@ impl<T: Ord + Clone> BinarySearchTree<T> {
     fn new() -> Self {
         BinarySearchTree { root: None }
     }
-    
+
     fn insert(&mut self, value: T) {
         self.root = self.insert_recursive(self.root.take(), value);
     }
-    
+
     fn insert_recursive(&self, node: Option<Box<Node<T>>>, value: T) -> Option<Box<Node<T>>> {
         match node {
             None => Some(Box::new(Node {
@@ -1330,11 +1332,11 @@ impl<T: Ord + Clone> BinarySearchTree<T> {
             }
         }
     }
-    
+
     fn contains(&self, value: &T) -> bool {
         self.contains_recursive(&self.root, value)
     }
-    
+
     fn contains_recursive(&self, node: &Option<Box<Node<T>>>, value: &T) -> bool {
         match node {
             None => false,
@@ -1349,31 +1351,31 @@ impl<T: Ord + Clone> BinarySearchTree<T> {
             }
         }
     }
-    
+
     // 形式化证明：插入后包含该元素（伪形式化，实际上是测试）
     fn prove_insert_contains(&self) -> bool {
         let mut tree = self.clone();
         let test_values = [1, 5, 3, 7, 2, 8, 4, 6]; // 测试数据
-        
+
         for &value in &test_values {
             tree.insert(value);
             if !tree.contains(&value) {
                 return false; // 反例：插入后不包含
             }
         }
-        
+
         true // 所有测试用例都通过
     }
-    
+
     // 形式化证明：BST保持有序性（中序遍历产生有序序列）
     fn prove_ordering(&self) -> bool {
         let mut elements = Vec::new();
         self.inorder_traversal(&self.root, &mut elements);
-        
+
         // 检查是否有序
         elements.windows(2).all(|w| w[0] <= w[1])
     }
-    
+
     fn inorder_traversal(&self, node: &Option<Box<Node<T>>>, elements: &mut Vec<T>) {
         if let Some(ref boxed_node) = node {
             self.inorder_traversal(&boxed_node.left, elements);
@@ -1385,7 +1387,7 @@ impl<T: Ord + Clone> BinarySearchTree<T> {
 
 fn main() {
     let mut bst = BinarySearchTree::new();
-    
+
     // 插入元素
     bst.insert(5);
     bst.insert(3);
@@ -1394,11 +1396,11 @@ fn main() {
     bst.insert(4);
     bst.insert(6);
     bst.insert(8);
-    
+
     // 验证形式化属性
     println!("Insert-Contains property: {}", bst.prove_insert_contains());
     println!("Ordering property: {}", bst.prove_ordering());
-    
+
     // 实际应用
     println!("BST contains 4: {}", bst.contains(&4));
     println!("BST contains 9: {}", bst.contains(&9));
@@ -1436,7 +1438,7 @@ fn factorial(n: u32) -> u64 {
 // 循环不变量：在循环中维持的性质
 fn sum_positive(numbers: &[i32]) -> i32 {
     let mut sum = 0;
-    
+
     // 循环不变量：sum >= 0
     for &n in numbers {
         if n > 0 {
@@ -1444,7 +1446,7 @@ fn sum_positive(numbers: &[i32]) -> i32 {
             // 证明器会验证这里仍然有 sum >= 0
         }
     }
-    
+
     // 最终后置条件：sum >= 0
     sum
 }
@@ -1455,25 +1457,25 @@ fn safe_division(a: f64, b: f64) -> Option<f64> {
     if b == 0.0 {
         return None;
     }
-    
+
     let result = a / b;
-    
+
     // 后置条件检查（仅用于示例）
     if b > 0.0 {
         debug_assert!(result * b <= a + 1e-10, "Division correctness broken");
     }
-    
+
     Some(result)
 }
 
 fn main() {
     // 在实际Rust中，编译器不会执行定理证明
     // 但未来的编程语言可能会整合这些功能
-    
+
     println!("Absolute value of -5: {}", absolute_value(-5));
     println!("Factorial of 5: {}", factorial(5));
     println!("Sum of positive numbers in [1, -2, 3]: {}", sum_positive(&[1, -2, 3]));
-    
+
     match safe_division(10.0, 2.0) {
         Some(result) => println!("10 / 2 = {}", result),
         None => println!("Division by zero"),
@@ -1609,7 +1611,7 @@ impl<Cols, From, Where> Select<Cols, From, Where> {
     {
         Select(PhantomData)
     }
-    
+
     fn execute(&self) -> String {
         // 在实际实现中，这里会生成SQL查询字符串
         // 类型信息确保查询的列和条件都是有效的
@@ -1619,15 +1621,15 @@ impl<Cols, From, Where> Select<Cols, From, Where> {
 
 fn main() {
     let users = Table::<UsersTable>(PhantomData);
-    
+
     // 类型安全的查询构建
     let query = users
         .select::<(Column<StrLit<"name">, String>, Column<StrLit<"age">, i32>)>()
         .where_eq(Column::<StrLit<"age">, i32>(PhantomData), 30);
-    
+
     let sql = query.execute();
     println!("生成的SQL: {}", sql);
-    
+
     // 下面的代码会导致编译错误：
     // let invalid_query = users
     //    .select::<Column<StrLit<"invalid_column">, String>>() // 错误：表中没有此列
@@ -1654,20 +1656,20 @@ impl QuantumCircuit {
     fn new() -> Self {
         QuantumCircuit { operations: Vec::new() }
     }
-    
+
     // Hadamard门 - 创建叠加态
     fn hadamard(mut self, qubit: Qubit) -> (Self, Qubit) {
         self.operations.push(format!("Hadamard on qubit {}", qubit.0));
         (self, qubit) // 返回变换后的量子比特
     }
-    
+
     // CNOT门 - 纠缠两个量子比特
     fn cnot(mut self, control: Qubit, target: Qubit) -> (Self, Qubit, Qubit) {
-        self.operations.push(format!("CNOT with control {} and target {}", 
+        self.operations.push(format!("CNOT with control {} and target {}",
                                     control.0, target.0));
         (self, control, target)
     }
-    
+
     // 测量量子比特 - 消耗量子比特，返回经典结果
     fn measure(mut self, qubit: Qubit) -> (Self, bool) {
         self.operations.push(format!("Measure qubit {}", qubit.0));
@@ -1675,7 +1677,7 @@ impl QuantumCircuit {
         let result = rand::random::<bool>();
         (self, result)
     }
-    
+
     // 打印电路操作
     fn print_operations(&self) {
         for op in &self.operations {
@@ -1686,21 +1688,21 @@ impl QuantumCircuit {
 
 fn quantum_teleportation() {
     let circuit = QuantumCircuit::new();
-    
+
     // 初始化三个量子比特
     let q0 = Qubit(0); // 要传送的状态
     let q1 = Qubit(1); // Alice的纠缠比特
     let q2 = Qubit(2); // Bob的纠缠比特
-    
+
     // 准备纠缠对
     let (circuit, q1, q2) = circuit.hadamard(q1).0.cnot(q1, q2);
-    
+
     // Alice的操作
     let (circuit, q0, q1) = circuit.cnot(q0, q1);
     let (circuit, q0) = circuit.hadamard(q0);
     let (circuit, m0) = circuit.measure(q0);
     let (circuit, m1) = circuit.measure(q1);
-    
+
     // Bob的操作（基于Alice的测量结果）
     let circuit = if m1 {
         // 应用X门
@@ -1710,7 +1712,7 @@ fn quantum_teleportation() {
     } else {
         circuit
     };
-    
+
     let circuit = if m0 {
         // 应用Z门
         let mut c = circuit;
@@ -1719,10 +1721,10 @@ fn quantum_teleportation() {
     } else {
         circuit
     };
-    
+
     // 打印电路操作
     circuit.print_operations();
-    
+
     // 注意：在真正的量子编程中，我们希望编译器确保每个量子比特只使用一次
     // Rust的所有权系统部分实现了这一点，但不足以完全捕获量子计算的需求
 }
@@ -1757,7 +1759,7 @@ impl Length<Meters> {
     fn new(value: f64) -> Self {
         Length(value, PhantomData)
     }
-    
+
     fn to_kilometers(&self) -> Length<Kilometers> {
         Length(self.0 / 1000.0, PhantomData)
     }
@@ -1767,7 +1769,7 @@ impl Time<Seconds> {
     fn new(value: f64) -> Self {
         Time(value, PhantomData)
     }
-    
+
     fn to_hours(&self) -> Time<Hours> {
         Time(self.0 / 3600.0, PhantomData)
     }
@@ -1813,7 +1815,7 @@ impl CriticalSystem {
             data: Vec::new(),
         }
     }
-    
+
     fn start(&mut self) -> Result<(), &'static str> {
         match self.state {
             SystemState::Init => {
@@ -1824,7 +1826,7 @@ impl CriticalSystem {
             _ => Err("只能从初始状态启动系统"),
         }
     }
-    
+
     fn pause(&mut self) -> Result<(), &'static str> {
         match self.state {
             SystemState::Running => {
@@ -1835,7 +1837,7 @@ impl CriticalSystem {
             _ => Err("只能暂停运行中的系统"),
         }
     }
-    
+
     fn shutdown(&mut self) -> Result<(), &'static str> {
         match self.state {
             SystemState::Running | SystemState::Paused => {
@@ -1854,26 +1856,26 @@ fn main() {
     let time = Time::<Seconds>::new(50.0);
     let velocity = distance.divide(time);
     println!("速度: {} m/s", velocity.value());
-    
+
     // 单位转换和计算
     let km_distance = distance.to_kilometers();
     let hours_time = time.to_hours();
     let km_per_hour = km_distance.divide(hours_time);
     println!("速度: {} km/h", km_per_hour.value());
-    
+
     // 使用状态机模型
     let mut system = CriticalSystem::new();
-    
+
     if let Err(e) = system.pause() {
         println!("错误: {}", e);
     }
-    
+
     if let Ok(_) = system.start() {
         println!("系统成功启动");
-        
+
         if let Ok(_) = system.pause() {
             println!("系统成功暂停");
-            
+
             if let Ok(_) = system.shutdown() {
                 println!("系统成功关闭");
             }
@@ -1924,7 +1926,7 @@ where
             _marker: PhantomData,
         }
     }
-    
+
     // 添加要验证的属性
     fn with_property<F>(mut self, property: F) -> Self
     where
@@ -1933,18 +1935,18 @@ where
         self.properties.push(Box::new(property));
         self
     }
-    
+
     // 带有运行时属性检查的预测
     fn predict(&self, input: &I) -> Result<O, String> {
         let output = self.model.predict(input);
-        
+
         // 验证所有属性
         for (i, property) in self.properties.iter().enumerate() {
             if !property(&self.model, input, &output) {
                 return Err(format!("属性 #{} 验证失败", i));
             }
         }
-        
+
         Ok(output)
     }
 }
@@ -1969,17 +1971,17 @@ impl Model<Vec<f64>, f64> for LinearRegression {
         }
         result
     }
-    
+
     fn validate(&self, dataset: &[(Vec<f64>, f64)]) -> ValidationResult {
         let mut total_error = 0.0;
         let mut false_pos = 0;
         let mut false_neg = 0;
-        
+
         for (input, expected) in dataset {
             let predicted = self.predict(input);
             let error = (predicted - expected).abs();
             total_error += error;
-            
+
             // 分类错误统计（假设0是阈值）
             if *expected <= 0.0 && predicted > 0.0 {
                 false_pos += 1;
@@ -1987,9 +1989,9 @@ impl Model<Vec<f64>, f64> for LinearRegression {
                 false_neg += 1;
             }
         }
-        
+
         let avg_error = total_error / dataset.len() as f64;
-        
+
         ValidationResult {
             accuracy: 1.0 - avg_error.min(1.0),
             error_rate: avg_error,
@@ -2002,7 +2004,7 @@ impl Model<Vec<f64>, f64> for LinearRegression {
 fn main() {
     // 创建一个简单的线性回归模型
     let model = LinearRegression::new(vec![0.5, 1.5, -0.3], 0.2);
-    
+
     // 创建一个带有形式化属性的验证模型
     let verified_model = VerifiedModel::new(model)
         // 输出值在合理范围内
@@ -2014,14 +2016,14 @@ fn main() {
             let output = model.predict(input);
             output.abs() <= 100.0 * penalty
         });
-    
+
     // 使用验证模型进行预测
     let input = vec![1.0, 2.0, 3.0];
     match verified_model.predict(&input) {
         Ok(output) => println!("预测结果: {}", output),
         Err(msg) => println!("验证失败: {}", msg),
     }
-    
+
     // 极端输入测试
     let extreme_input = vec![1000.0, 2000.0, 3000.0];
     match verified_model.predict(&extreme_input) {
