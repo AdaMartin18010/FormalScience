@@ -15,6 +15,13 @@
     - [1.1 核心洞察](#11-核心洞察)
     - [1.2 神经形态调度特性](#12-神经形态调度特性)
     - [1.3 形式化定义](#13-形式化定义)
+    - [1.4 核心概念精确定义](#14-核心概念精确定义)
+      - [1.4.1 脉冲事件（Spike Event）](#141-脉冲事件spike-event)
+      - [1.4.2 事件驱动调度（Event-Driven Scheduling）](#142-事件驱动调度event-driven-scheduling)
+      - [1.4.3 时间编码（Temporal Coding）](#143-时间编码temporal-coding)
+    - [1.5 设计原理与动机](#15-设计原理与动机)
+      - [1.5.1 为什么事件驱动？](#151-为什么事件驱动)
+      - [1.5.2 稀疏激活的调度优势](#152-稀疏激活的调度优势)
   - [2 思维导图](#2-思维导图)
   - [3 神经形态硬件](#3-神经形态硬件)
     - [3.1 Intel Loihi架构](#31-intel-loihi架构)
@@ -68,6 +75,112 @@
   ∀ spike s: latency(s) ≤ time_constant
   ∀ core c: spikes_per_tick(c) ≤ bandwidth_limit
 ```
+
+### 1.4 核心概念精确定义
+
+#### 1.4.1 脉冲事件（Spike Event）
+
+**定义 1.1**：脉冲事件是神经元在特定时间点产生的离散信号。
+
+**形式化表述**：
+
+```text
+Spike = (neuron_id: NeuronId, time: Time, weight: Weight)
+
+关键属性：
+  - 离散性：脉冲是瞬时事件，不是连续信号
+  - 时间性：时间信息编码信息
+  - 权重性：脉冲携带权重信息
+```
+
+#### 1.4.2 事件驱动调度（Event-Driven Scheduling）
+
+**定义 1.2**：事件驱动调度是根据事件（脉冲）的发生来触发计算，而非固定时间步。
+
+**与传统调度的区别**：
+
+```text
+时钟驱动调度：
+  for each time_step:
+    update_all_neurons()
+
+事件驱动调度：
+  while event_queue not empty:
+    event = pop_next_event()
+    process_event(event)
+    schedule_new_events(event)
+```
+
+**优势论证**：
+
+- **稀疏性利用**：只处理活跃神经元，节省计算
+- **时间精度**：保持精确的时间信息
+- **自然异步**：符合生物神经系统的异步特性
+
+#### 1.4.3 时间编码（Temporal Coding）
+
+**定义 1.3**：时间编码是利用脉冲的时间信息来编码数据。
+
+**编码类型**：
+
+1. **速率编码（Rate Coding）**：
+
+   ```text
+   信息 ∝ 脉冲频率
+   rate = spike_count / time_window
+   ```
+
+2. **时间编码（Temporal Coding）**：
+
+   ```text
+   信息在脉冲的精确时间
+   information = f(spike_times)
+   ```
+
+3. **群体编码（Population Coding）**：
+
+   ```text
+   信息在神经元群体的活动模式
+   information = pattern(neuron_population_activity)
+   ```
+
+### 1.5 设计原理与动机
+
+#### 1.5.1 为什么事件驱动？
+
+**生物启发**：
+
+- 生物神经元只在需要时发放脉冲
+- 大部分神经元大部分时间处于静息状态
+- 信息通过脉冲时间传递
+
+**计算优势**：
+
+```text
+传统时钟驱动：
+  计算量 = O(neurons × time_steps)
+
+事件驱动：
+  计算量 = O(active_neurons × events)
+
+当active_neurons << neurons时，事件驱动更高效
+```
+
+#### 1.5.2 稀疏激活的调度优势
+
+**定理 1.1**（稀疏性优势）：
+
+```text
+如果神经元激活率为p（p << 1），则事件驱动调度的计算复杂度为：
+  O(p × n × log(n))
+
+而时钟驱动的复杂度为：
+  O(n × t)
+
+其中n是神经元数，t是时间步数。
+```
+
+**证明**：事件驱动只需要处理p×n个活跃神经元，且事件队列操作是O(log(n))。
 
 ---
 
