@@ -28,6 +28,7 @@
     - [1.7.2 复杂性结果](#172-复杂性结果)
     - [1.7.3 正确性证明](#173-正确性证明)
   - [1.8 结论](#18-结论)
+
 ## 1.1 分布式系统基础
 
 ### 1.1.1 系统模型
@@ -330,12 +331,15 @@ addNode ch node =
 
 **定义 4.2 (心跳机制)**
 心跳机制通过定期消息检测故障：
-$$\text{Heartbeat}_i(t) = \begin{cases}
+$$
+\text{Heartbeat}_i(t) = \begin{cases}
 1 & \text{if } p_i \text{ sends heartbeat at } t \\
 0 & \text{otherwise}
-\end{cases}$$
+\end{cases}
+$$
 
 **定义 4.3 (故障检测算法)**
+
 ```haskell
 failureDetector :: Node -> IO ()
 failureDetector node = do
@@ -352,6 +356,7 @@ failureDetector node = do
 故障检测器在异步系统中无法同时满足强完整性和强准确性。
 
 **证明：** 通过反证法：
+
 1. 假设存在同时满足强完整性和强准确性的故障检测器
 2. 构造消息延迟场景
 3. 导致正确节点被错误怀疑，违反强准确性
@@ -360,12 +365,14 @@ failureDetector node = do
 
 **定义 4.4 (故障恢复)**
 故障恢复机制确保系统在节点故障后继续运行：
+
 - **状态恢复**：从其他节点恢复状态
 - **日志重放**：重放未提交的操作
 - **成员变更**：更新系统成员
 
 **定义 4.5 (状态转移)**
 状态转移函数：
+
 ```haskell
 data StateTransfer = StateTransfer
   { fromNode :: Node
@@ -376,6 +383,7 @@ data StateTransfer = StateTransfer
 ```
 
 **算法 4.1 (故障恢复)**
+
 ```haskell
 failureRecovery :: Node -> IO ()
 failureRecovery node = do
@@ -394,6 +402,7 @@ failureRecovery node = do
 如果故障恢复机制正确实现，则系统在故障后保持一致性。
 
 **证明：** 通过状态一致性：
+
 1. 状态转移保持一致性
 2. 日志重放保持顺序
 3. 成员变更保持多数
@@ -410,6 +419,7 @@ $$S = (S_1, S_2, \ldots, S_n, C_{12}, C_{21}, \ldots, C_{n-1,n}, C_{n,n-1})$$
 
 **定义 5.2 (Chandy-Lamport算法)**
 Chandy-Lamport快照算法：
+
 ```haskell
 data SnapshotState = SnapshotState
   { localState :: State
@@ -433,6 +443,7 @@ chandyLamport node = do
 Chandy-Lamport算法产生的快照是一致的。
 
 **证明：** 通过标记消息：
+
 1. 标记消息分割通道历史
 2. 快照包含标记前的所有消息
 3. 快照不包含标记后的消息
@@ -441,11 +452,13 @@ Chandy-Lamport算法产生的快照是一致的。
 
 **定义 5.3 (资源分配图)**
 资源分配图 $G = (V, E)$，其中：
+
 - $V = P \cup R$ 是进程和资源节点
 - $E = E_P \cup E_R$ 是分配和请求边
 
 **定义 5.4 (死锁检测)**
 死锁检测算法：
+
 ```haskell
 detectDeadlock :: ResourceGraph -> Bool
 detectDeadlock graph =
@@ -463,6 +476,7 @@ findCycles graph =
 死锁检测算法正确识别死锁。
 
 **证明：** 通过图论：
+
 1. 死锁对应资源分配图中的环
 2. 环检测算法找到所有环
 3. 环存在等价于死锁存在
@@ -473,11 +487,13 @@ findCycles graph =
 
 **定义 6.1 (两阶段提交)**
 两阶段提交协议：
+
 - **阶段1**：协调者询问所有参与者是否可以提交
 - **阶段2**：协调者根据参与者响应决定提交或中止
 
 **定义 6.2 (2PC状态)**
 2PC节点状态：
+
 ```haskell
 data TwoPCState = TwoPCState
   { phase :: Phase
@@ -492,6 +508,7 @@ data TwoPCState = TwoPCState
 ```
 
 **算法 6.1 (两阶段提交)**
+
 ```haskell
 twoPhaseCommit :: Coordinator -> Transaction -> IO Decision
 twoPhaseCommit coordinator transaction = do
@@ -516,6 +533,7 @@ twoPhaseCommit coordinator transaction = do
 两阶段提交保证原子性。
 
 **证明：** 通过协议设计：
+
 1. 所有参与者要么都提交，要么都中止
 2. 协调者故障不影响已决定的参与者
 3. 参与者故障不影响其他参与者
@@ -524,6 +542,7 @@ twoPhaseCommit coordinator transaction = do
 
 **定义 6.3 (三阶段提交)**
 三阶段提交协议：
+
 - **阶段1**：协调者询问参与者是否可以提交
 - **阶段2**：协调者发送预提交消息
 - **阶段3**：协调者发送提交消息
@@ -532,6 +551,7 @@ twoPhaseCommit coordinator transaction = do
 三阶段提交可以避免阻塞。
 
 **证明：** 通过超时机制：
+
 1. 预提交阶段允许参与者超时
 2. 超时的参与者可以安全提交
 3. 避免了2PC的阻塞问题
@@ -544,6 +564,7 @@ twoPhaseCommit coordinator transaction = do
 在分布式系统中，一致性(Consistency)、可用性(Availability)和分区容错性(Partition tolerance)最多只能同时满足两个。
 
 **证明：** 通过构造性证明：
+
 1. 假设同时满足CAP三个性质
 2. 构造网络分区场景
 3. 导致一致性或可用性被违反
@@ -552,6 +573,7 @@ twoPhaseCommit coordinator transaction = do
 在异步系统中，即使只有一个节点崩溃，也无法实现确定性共识。
 
 **证明：** 通过构造性证明：
+
 1. 假设存在确定性共识算法
 2. 构造执行序列导致无限延迟
 3. 违反终止性，得出矛盾
@@ -560,11 +582,13 @@ twoPhaseCommit coordinator transaction = do
 
 **定理 7.3 (分布式算法复杂性)**
 分布式算法的复杂性：
+
 1. 共识算法：$\Omega(n)$ 消息复杂度
 2. 领导者选举：$\Omega(n \log n)$ 消息复杂度
 3. 故障检测：$\Omega(n^2)$ 消息复杂度
 
 **证明：** 通过信息论：
+
 1. 每个节点必须与至少一个其他节点通信
 2. 领导者选举需要比较所有节点
 3. 故障检测需要所有节点对通信
@@ -573,12 +597,14 @@ twoPhaseCommit coordinator transaction = do
 
 **定理 7.4 (分布式算法正确性)**
 分布式算法的正确性可以通过以下方法证明：
+
 1. **不变式**：证明系统状态满足不变式
 2. **归纳法**：通过结构归纳证明性质
 3. **博弈论**：将算法建模为博弈
 4. **模型检查**：自动验证有限状态系统
 
 **证明：** 通过形式化方法：
+
 1. 不变式在初始状态成立
 2. 不变式在状态转移后保持
 3. 不变式蕴含所需性质
