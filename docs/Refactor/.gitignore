@@ -1,0 +1,207 @@
+# FormalScience Refactor - Git Ignore
+# Generated: 2026-04-11
+
+# ============================================
+# Rust
+# ============================================
+/target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# ============================================
+# Lean
+# ============================================
+/build/
+/lake-packages/
+*.olean
+.lake/
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ============================================
+# Node.js / JavaScript
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================
+# Java / Scala
+# ============================================
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+target/
+.bloop/
+.metals/
+project/
+
+# ============================================
+# Go
+# ============================================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# ============================================
+# C++
+# ============================================
+*.exe
+*.out
+*.app
+*.i
+*.ii
+*.o
+*.obj
+*.gch
+*.pch
+*.so
+*.dylib
+*.dll
+*.mod
+*.smod
+*.lai
+*.la
+*.a
+*.lib
+*.ko
+*.elf
+
+# ============================================
+# IDE / Editor
+# ============================================
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# ============================================
+# OS Generated
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# Docker
+# ============================================
+.docker/
+
+# ============================================
+# Logs and Databases
+# ============================================
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+# ============================================
+# Backup Files
+# ============================================
+*.bak
+*.backup
+*.orig
+*.save
+*.swp
+*~
+
+# ============================================
+# Project Specific
+# ============================================
+# Temporary files
+*.tmp
+.cache/
+
+# Test output
+test_output/
+coverage/
+
+# Documentation build
+docs/_build/
+site/
+
+# ============================================
+# Security / Secrets
+# ============================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+secrets/
+credentials/

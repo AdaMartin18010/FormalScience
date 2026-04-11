@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FormalScience 资源中心 - 代码示例、练习题、视频教程和工具下载">
+  <title>资源中心 - FormalScience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔬</div>
+        <span>FormalScience</span>
+      </a>
+      
+      <nav class="nav">
+        <ul class="nav-links">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="about.html">关于</a></li>
+          <li><a href="modules.html">模块</a></li>
+          <li><a href="resources.html" class="active">资源</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索... (Ctrl+K)" autocomplete="off">
+          <button type="button" aria-label="搜索">🔍</button>
+          <div class="search-results"></div>
+        </div>
+        
+        <button class="theme-toggle" aria-label="切换主题">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+        
+        <button class="menu-toggle" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <a href="index.html">首页</a>
+          <span>/</span>
+          <span>资源中心</span>
+        </nav>
+        <h1>资源中心</h1>
+        <p>丰富的学习资源，助你深入掌握形式化科学</p>
+      </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="content-section" id="examples">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>💻 代码示例</h2>
+          <p>各模块的配套代码示例，涵盖多种证明助手和编程语言</p>
+        </div>
+        
+        <div class="resources-grid">
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🐓</div>
+            <div class="resource-content">
+              <h3>Coq 示例代码</h3>
+              <p>包含基础证明、归纳法、列表操作等经典 Coq 代码示例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Coq基础示例下载即将提供', 'info')">基础示例</a>
+                <a href="#" onclick="FormalScience.notify('Coq高级证明下载即将提供', 'info')">高级证明</a>
+                <a href="#" onclick="FormalScience.notify('Coq项目实战下载即将提供', 'info')">项目实战</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🔷</div>
+            <div class="resource-content">
+              <h3>Lean 4 示例</h3>
+              <p>现代证明助手 Lean 4 的函数式编程和数学证明示例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Lean基础教程下载即将提供', 'info')">基础教程</a>
+                <a href="#" onclick="FormalScience.notify('Lean数学证明下载即将提供', 'info')">数学证明</a>
+                <a href="#" onclick="FormalScience.notify('Lean元编程下载即将提供', 'info')">元编程</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">🔶</div>
+            <div class="resource-content">
+              <h3>Isabelle/HOL 示例</h3>
+              <p>高阶逻辑证明助手的规范和验证案例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Isabelle入门指南下载即将提供', 'info')">入门指南</a>
+                <a href="#" onclick="FormalScience.notify('Isabelle数据结构下载即将提供', 'info')">数据结构</a>
+                <a href="#" onclick="FormalScience.notify('Isabelle算法验证下载即将提供', 'info')">算法验证</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">λ</div>
+            <div class="resource-content">
+              <h3>Lambda 演算</h3>
+              <p>纯 Lambda 演算实现，包含归约策略和类型推导</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Lambda演算解释器下载即将提供', 'info')">解释器</a>
+                <a href="#" onclick="FormalScience.notify('类型推导算法下载即将提供', 'info')">类型推导</a>
+                <a href="#" onclick="FormalScience.notify('扩展Lambda演算下载即将提供', 'info')">扩展实现</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🔍</div>
+            <div class="resource-content">
+              <h3>SMT 求解器示例</h3>
+              <p>Z3、CVC5 等 SMT 求解器的 Python 和 C++ 接口示例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Z3 Python绑定示例下载即将提供', 'info')">Z3 Python</a>
+                <a href="#" onclick="FormalScience.notify('SMT-LIB语法示例下载即将提供', 'info')">SMT-LIB</a>
+                <a href="#" onclick="FormalScience.notify('约束求解案例下载即将提供', 'info')">求解案例</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">⚙️</div>
+            <div class="resource-content">
+              <h3>程序验证框架</h3>
+              <p>霍尔逻辑、分离逻辑的验证工具使用示例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Dafny验证示例下载即将提供', 'info')">Dafny</a>
+                <a href="#" onclick="FormalScience.notify('Why3验证示例下载即将提供', 'info')">Why3</a>
+                <a href="#" onclick="FormalScience.notify('Viper验证示例下载即将提供', 'info')">Viper</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercises Section -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="exercises">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>📝 练习题库</h2>
+          <p>分难度等级的练习题，配有详细解答和提示</p>
+        </div>
+        
+        <div class="resources-grid">
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🟢</div>
+            <div class="resource-content">
+              <h3>入门级练习</h3>
+              <p>适合初学者的基础概念练习题，建立扎实基础</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('数学基础入门题下载即将提供', 'info')">数学基础</a>
+                <a href="#" onclick="FormalScience.notify('逻辑推理入门题下载即将提供', 'info')">逻辑推理</a>
+                <a href="#" onclick="FormalScience.notify('集合运算入门题下载即将提供', 'info')">集合运算</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🟡</div>
+            <div class="resource-content">
+              <h3>进阶级练习</h3>
+              <p>中等难度题目，考验对核心概念的理解和应用</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('自动机构建练习题下载即将提供', 'info')">自动机</a>
+                <a href="#" onclick="FormalScience.notify('类型推导练习题下载即将提供', 'info')">类型推导</a>
+                <a href="#" onclick="FormalScience.notify('归纳证明练习题下载即将提供', 'info')">归纳证明</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">🔴</div>
+            <div class="resource-content">
+              <h3>挑战级练习</h3>
+              <p>高难度综合题目，适合深入研究和能力提升</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('复杂定理证明题下载即将提供', 'info')">定理证明</a>
+                <a href="#" onclick="FormalScience.notify('程序验证挑战题下载即将提供', 'info')">程序验证</a>
+                <a href="#" onclick="FormalScience.notify('形式化项目实战下载即将提供', 'info')">项目实战</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🏆</div>
+            <div class="resource-content">
+              <h3>竞赛题目</h3>
+              <p>精选自国内外形式化方法相关竞赛的题目</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('VSTTE竞赛题目下载即将提供', 'info')">VSTTE</a>
+                <a href="#" onclick="FormalScience.notify('VerifyThis竞赛题目下载即将提供', 'info')">VerifyThis</a>
+                <a href="#" onclick="FormalScience.notify('SAT竞赛题目下载即将提供', 'info')">SAT 竞赛</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Tutorials Section -->
+    <section class="content-section" id="videos">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>🎬 视频教程</h2>
+          <p>系统化的视频课程，由浅入深讲解核心概念</p>
+        </div>
+        
+        <div class="resources-grid">
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">▶️</div>
+            <div class="resource-content">
+              <h3>入门系列 (24集)</h3>
+              <p>形式化科学基础概念介绍，零基础友好</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('第1-8集播放列表即将提供', 'info')">第1-8集</a>
+                <a href="#" onclick="FormalScience.notify('第9-16集播放列表即将提供', 'info')">第9-16集</a>
+                <a href="#" onclick="FormalScience.notify('第17-24集播放列表即将提供', 'info')">第17-24集</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🎓</div>
+            <div class="resource-content">
+              <h3>Coq 实战 (36集)</h3>
+              <p>从安装到高级证明技巧的完整 Coq 教程</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Coq基础篇即将提供', 'info')">基础篇</a>
+                <a href="#" onclick="FormalScience.notify('Coq进阶篇即将提供', 'info')">进阶篇</a>
+                <a href="#" onclick="FormalScience.notify('Coq项目篇即将提供', 'info')">项目篇</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">📐</div>
+            <div class="resource-content">
+              <h3>类型理论深度 (18集)</h3>
+              <p>Lambda 演算、类型系统与 Curry-Howard 同构</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Lambda演算专题即将提供', 'info')">Lambda 演算</a>
+                <a href="#" onclick="FormalScience.notify('类型系统专题即将提供', 'info')">类型系统</a>
+                <a href="#" onclick="FormalScience.notify('依赖类型专题即将提供', 'info')">依赖类型</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🔒</div>
+            <div class="resource-content">
+              <h3>程序验证实战 (20集)</h3>
+              <p>使用分离逻辑和霍尔逻辑验证实际程序</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('霍尔逻辑基础即将提供', 'info')">霍尔逻辑</a>
+                <a href="#" onclick="FormalScience.notify('分离逻辑详解即将提供', 'info')">分离逻辑</a>
+                <a href="#" onclick="FormalScience.notify('实战案例解析即将提供', 'info')">实战案例</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🧩</div>
+            <div class="resource-content">
+              <h3>自动机理论 (16集)</h3>
+              <p>有限自动机、下推自动机和图灵机的可视化讲解</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('有限自动机专题即将提供', 'info')">有限自动机</a>
+                <a href="#" onclick="FormalScience.notify('上下文无关语言专题即将提供', 'info')">上下文无关</a>
+                <a href="#" onclick="FormalScience.notify('可计算性理论专题即将提供', 'info')">可计算性</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">🏭</div>
+            <div class="resource-content">
+              <h3>工业应用 (12集)</h3>
+              <p>形式化方法在工业界的实际应用案例</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('操作系统验证案例即将提供', 'info')">OS 验证</a>
+                <a href="#" onclick="FormalScience.notify('编译器验证案例即将提供', 'info')">编译器</a>
+                <a href="#" onclick="FormalScience.notify('智能合约验证案例即将提供', 'info')">智能合约</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="tools">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>🛠️ 工具下载</h2>
+          <p>学习和实践所需的各类工具和环境</p>
+        </div>
+        
+        <div class="resources-grid">
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🐓</div>
+            <div class="resource-content">
+              <h3>Coq 证明助手</h3>
+              <p>业界领先的归纳构造演算证明助手</p>
+              <div class="resource-links">
+                <a href="https://coq.inria.fr/download" target="_blank">官网下载 ↗</a>
+                <a href="#" onclick="FormalScience.notify('Windows安装指南即将提供', 'info')">Windows指南</a>
+                <a href="#" onclick="FormalScience.notify('macOS安装指南即将提供', 'info')">macOS指南</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">🔷</div>
+            <div class="resource-content">
+              <h3>Lean 4</h3>
+              <p>现代依赖类型理论和数学库</p>
+              <div class="resource-links">
+                <a href="https://leanprover.github.io/download/" target="_blank">官网下载 ↗</a>
+                <a href="#" onclick="FormalScience.notify('Lean4安装教程即将提供', 'info')">安装教程</a>
+                <a href="#" onclick="FormalScience.notify('VS Code插件配置即将提供', 'info')">VS Code插件</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">🔶</div>
+            <div class="resource-content">
+              <h3>Isabelle/HOL</h3>
+              <p>经典的高阶逻辑证明环境</p>
+              <div class="resource-links">
+                <a href="https://isabelle.in.tum.de/download.html" target="_blank">官网下载 ↗</a>
+                <a href="#" onclick="FormalScience.notify('Isabelle入门手册即将提供', 'info')">入门手册</a>
+                <a href="#" onclick="FormalScience.notify('Isabelle常用技巧即将提供', 'info')">常用技巧</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🔍</div>
+            <div class="resource-content">
+              <h3>Z3 SMT 求解器</h3>
+              <p>微软研究院开发的高效 SMT 求解器</p>
+              <div class="resource-links">
+                <a href="https://github.com/Z3Prover/z3/releases" target="_blank">GitHub ↗</a>
+                <a href="#" onclick="FormalScience.notify('Python API教程即将提供', 'info')">Python API</a>
+                <a href="#" onclick="FormalScience.notify('Z3示例集合即将提供', 'info')">示例集合</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">☕</div>
+            <div class="resource-content">
+              <h3>Dafny</h3>
+              <p>微软开发的程序验证语言和验证器</p>
+              <div class="resource-links">
+                <a href="https://github.com/dafny-lang/dafny/releases" target="_blank">GitHub ↗</a>
+                <a href="#" onclick="FormalScience.notify('Dafny在线编辑器即将提供', 'info')">在线编辑器</a>
+                <a href="#" onclick="FormalScience.notify('Dafny教程资源即将提供', 'info')">教程资源</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">📦</div>
+            <div class="resource-content">
+              <h3>其他工具</h3>
+              <p>更多形式化方法相关工具和插件</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('TLA+工具箱下载即将提供', 'info')">TLA+</a>
+                <a href="#" onclick="FormalScience.notify('Alloy Analyzer下载即将提供', 'info')">Alloy</a>
+                <a href="#" onclick="FormalScience.notify('SPIN模型检测器下载即将提供', 'info')">SPIN</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>📄 文档资料</h2>
+          <p>经典教材、论文和参考手册</p>
+        </div>
+        
+        <div class="resources-grid">
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">📚</div>
+            <div class="resource-content">
+              <h3>推荐教材</h3>
+              <p>形式化科学领域经典教材和参考书目</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('教材列表即将提供', 'info')">教材列表</a>
+                <a href="#" onclick="FormalScience.notify('阅读路线图即将提供', 'info')">阅读路线</a>
+                <a href="#" onclick="FormalScience.notify('电子版资源即将提供', 'info')">电子版</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="150">
+            <div class="resource-icon">📰</div>
+            <div class="resource-content">
+              <h3>精选论文</h3>
+              <p>形式化方法领域里程碑式的重要论文</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('经典论文集即将提供', 'info')">经典论文</a>
+                <a href="#" onclick="FormalScience.notify('最新研究进展即将提供', 'info')">最新研究</a>
+                <a href="#" onclick="FormalScience.notify('工业应用案例即将提供', 'info')">应用案例</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="200">
+            <div class="resource-icon">📖</div>
+            <div class="resource-content">
+              <h3>速查手册</h3>
+              <p>常用工具的快速参考卡片和语法手册</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('Coq速查表下载即将提供', 'info')">Coq</a>
+                <a href="#" onclick="FormalScience.notify('Lean速查表下载即将提供', 'info')">Lean</a>
+                <a href="#" onclick="FormalScience.notify('逻辑符号表下载即将提供', 'info')">逻辑符号</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-card" data-animate data-delay="100">
+            <div class="resource-icon">🔗</div>
+            <div class="resource-content">
+              <h3>外部链接</h3>
+              <p>精选的形式化科学相关网站和资源</p>
+              <div class="resource-links">
+                <a href="#" onclick="FormalScience.notify('学术机构链接即将提供', 'info')">学术机构</a>
+                <a href="#" onclick="FormalScience.notify('在线课程链接即将提供', 'info')">在线课程</a>
+                <a href="#" onclick="FormalScience.notify('社区论坛链接即将提供', 'info')">社区论坛</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box" data-animate>
+          <h2>找不到需要的资源?</h2>
+          <p>我们正在持续扩充资源库，如果你有任何建议或需求，欢迎联系我们</p>
+          <a href="#" class="btn btn-secondary btn-lg" onclick="FormalScience.notify('资源申请功能即将上线', 'info'); return false;">
+            <span>💡</span> 提交资源请求
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔬</div>
+            <span>FormalScience</span>
+          </a>
+          <p>致力于形式化科学知识的普及与传播，构建系统化的学习平台。</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>导航</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="modules.html">学习模块</a></li>
+            <li><a href="resources.html">资源中心</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>资源</h4>
+          <ul>
+            <li><a href="resources.html#examples">代码示例</a></li>
+            <li><a href="resources.html#exercises">练习题</a></li>
+            <li><a href="resources.html#videos">视频教程</a></li>
+            <li><a href="resources.html#tools">工具下载</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="#" onclick="FormalScience.notify('论坛功能即将上线', 'info')">讨论论坛</a></li>
+            <li><a href="#" onclick="FormalScience.notify('贡献指南即将发布', 'info')">贡献指南</a></li>
+            <li><a href="#" onclick="FormalScience.notify('GitHub仓库链接即将提供', 'info')">GitHub</a></li>
+            <li><a href="#" onclick="FormalScience.notify('联系我们功能即将上线', 'info')">联系我们</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 FormalScience. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="GitHub" onclick="FormalScience.notify('GitHub链接即将提供', 'info')">📦</a>
+          <a href="#" aria-label="Twitter" onclick="FormalScience.notify('Twitter链接即将提供', 'info')">🐦</a>
+          <a href="#" aria-label="Discord" onclick="FormalScience.notify('Discord链接即将提供', 'info')">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="回到顶部">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

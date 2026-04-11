@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FormalScience - 形式化科学学习平台，提供数学基础、形式语言、类型理论、证明助手等8大模块的完整学习资源">
+  <meta name="keywords" content="形式化科学, 数学基础, 形式语言, 类型理论, 证明助手, 程序验证">
+  <title>FormalScience - 形式化科学学习平台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔬</div>
+        <span>FormalScience</span>
+      </a>
+      
+      <nav class="nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">首页</a></li>
+          <li><a href="about.html">关于</a></li>
+          <li><a href="modules.html">模块</a></li>
+          <li><a href="resources.html">资源</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索... (Ctrl+K)" autocomplete="off">
+          <button type="button" aria-label="搜索">🔍</button>
+          <div class="search-results"></div>
+        </div>
+        
+        <button class="theme-toggle" aria-label="切换主题">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+        
+        <button class="menu-toggle" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>v2.0 全新发布</span>
+          </div>
+          
+          <h1>探索形式化科学的世界</h1>
+          <p>
+            FormalScience 是一个综合性的形式化科学学习平台，涵盖数学基础、形式语言、
+            类型理论、证明助手等核心领域，帮助你构建坚实的理论基础。
+          </p>
+          
+          <div class="hero-buttons">
+            <a href="modules.html" class="btn btn-primary btn-lg">
+              <span>🚀</span> 开始学习
+            </a>
+            <a href="resources.html" class="btn btn-secondary btn-lg">
+              <span>📚</span> 浏览资源
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-animate>
+            <div class="stat-number" data-count="8">0</div>
+            <div class="stat-label">核心模块</div>
+          </div>
+          <div class="stat-item" data-animate>
+            <div class="stat-number" data-count="128">0</div>
+            <div class="stat-label">学习章节</div>
+          </div>
+          <div class="stat-item" data-animate>
+            <div class="stat-number" data-count="500">0</div>
+            <div class="stat-label">练习题</div>
+          </div>
+          <div class="stat-item" data-animate>
+            <div class="stat-number" data-count="10000">0</div>
+            <div class="stat-label">学习者</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>为什么选择 FormalScience?</h2>
+          <p>我们提供系统化的学习路径、丰富的实践资源和活跃的社区支持</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">📖</div>
+            <h3>系统化课程</h3>
+            <p>从基础到高级的完整学习路径，循序渐进掌握形式化科学的核心概念和方法。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">💻</div>
+            <h3>实践驱动</h3>
+            <p>大量编程练习和证明实践，通过动手操作深化理论理解，培养实际应用能力。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="300">
+            <div class="feature-icon">🎯</div>
+            <h3>交互式学习</h3>
+            <p>内置代码编辑器和证明环境，无需配置即可开始学习和实践。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">👥</div>
+            <h3>社区支持</h3>
+            <p>加入活跃的学习社区，与志同道合的学习者交流讨论，共同进步。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">📊</div>
+            <h3>进度跟踪</h3>
+            <p>可视化学习进度和成就系统，清晰了解自己的学习状态和薄弱环节。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="300">
+            <div class="feature-icon">🆓</div>
+            <h3>完全免费</h3>
+            <p>所有学习资源永久免费开放，让知识无障碍传播，助力每一个学习者成长。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modules Preview Section -->
+    <section class="modules">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>8大核心模块</h2>
+          <p>涵盖形式化科学领域的核心知识体系</p>
+        </div>
+        
+        <div class="modules-grid">
+          <div class="module-card" data-animate data-delay="50">
+            <div class="module-icon">🔢</div>
+            <h3>数学基础</h3>
+            <p>集合论、数理逻辑、图论等数学基础理论</p>
+            <a href="modules.html#math" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="100">
+            <div class="module-icon">🔤</div>
+            <h3>形式语言</h3>
+            <p>自动机理论、形式文法、正则语言</p>
+            <a href="modules.html#formal" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="150">
+            <div class="module-icon">🧬</div>
+            <h3>类型理论</h3>
+            <p>Lambda演算、类型系统、依赖类型</p>
+            <a href="modules.html#type" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="200">
+            <div class="module-icon">✅</div>
+            <h3>证明助手</h3>
+            <p>Coq、Isabelle、Lean等证明工具</p>
+            <a href="modules.html#proof" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="50">
+            <div class="module-icon">🔍</div>
+            <h3>程序验证</h3>
+            <p>霍尔逻辑、模型检测、抽象解释</p>
+            <a href="modules.html#verify" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="100">
+            <div class="module-icon">📝</div>
+            <h3>语义理论</h3>
+            <p>操作语义、指称语义、公理语义</p>
+            <a href="modules.html#semantic" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="150">
+            <div class="module-icon">🔧</div>
+            <h3>代数规范</h3>
+            <p>抽象数据类型、代数结构、规范语言</p>
+            <a href="modules.html#algebra" class="module-link">了解更多 →</a>
+          </div>
+          
+          <div class="module-card" data-animate data-delay="200">
+            <div class="module-icon">🎓</div>
+            <h3>形式化方法</h3>
+            <p>定理证明、SAT/SMT求解、模型检验</p>
+            <a href="modules.html#method" class="module-link">了解更多 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box" data-animate>
+          <h2>准备好开始了吗？</h2>
+          <p>加入成千上万的学习者，一起探索形式化科学的奥秘</p>
+          <a href="modules.html" class="btn btn-secondary btn-lg">
+            <span>🚀</span> 立即开始
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔬</div>
+            <span>FormalScience</span>
+          </a>
+          <p>致力于形式化科学知识的普及与传播，构建系统化的学习平台。</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>导航</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="modules.html">学习模块</a></li>
+            <li><a href="resources.html">资源中心</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>资源</h4>
+          <ul>
+            <li><a href="resources.html#examples">代码示例</a></li>
+            <li><a href="resources.html#exercises">练习题</a></li>
+            <li><a href="resources.html#videos">视频教程</a></li>
+            <li><a href="resources.html#tools">工具下载</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="#" onclick="FormalScience.notify('论坛功能即将上线', 'info')">讨论论坛</a></li>
+            <li><a href="#" onclick="FormalScience.notify('贡献指南即将发布', 'info')">贡献指南</a></li>
+            <li><a href="#" onclick="FormalScience.notify('GitHub仓库链接即将提供', 'info')">GitHub</a></li>
+            <li><a href="#" onclick="FormalScience.notify('联系我们功能即将上线', 'info')">联系我们</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 FormalScience. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="GitHub" onclick="FormalScience.notify('GitHub链接即将提供', 'info')">📦</a>
+          <a href="#" aria-label="Twitter" onclick="FormalScience.notify('Twitter链接即将提供', 'info')">🐦</a>
+          <a href="#" aria-label="Discord" onclick="FormalScience.notify('Discord链接即将提供', 'info')">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="回到顶部">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

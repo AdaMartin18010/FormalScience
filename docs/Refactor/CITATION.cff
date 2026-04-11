@@ -1,0 +1,88 @@
+# 参考文献格式文件 Citation File Format
+# 了解更多: https://citation-file-format.github.io/
+
+cff-version: 1.2.0
+message: "如果您在研究或项目中使用了 FormalScience，请按以下方式引用本项目。"
+type: software
+title: "FormalScience"
+abstract: "FormalScience 是一个形式化科学与软件工程相结合的开源项目，旨在提供严谨的软件开发方法论和工具支持。"
+authors:
+  - family-names: "Project"
+    given-names: "FormalScience"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+  # 添加更多作者：
+  # - family-names: "姓氏"
+  #   given-names: "名字"
+  #   affiliation: "所属机构"
+  #   orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+
+# 项目标识
+repository-code: "https://github.com/username/FormalScience"
+url: "https://formalscience.readthedocs.io"
+license: MIT
+
+# 版本信息
+version: 1.0.0
+date-released: 2025-04-11
+
+# 关键词
+keywords:
+  - formal methods
+  - software engineering
+  - formal verification
+  - program analysis
+  - type theory
+  - logic programming
+  - software refactoring
+  - code quality
+
+# 相关资源
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#   - type: url
+#     value: "https://arxiv.org/abs/XXXX.XXXXX"
+
+# 引用信息
+preferred-citation:
+  type: software
+  title: "FormalScience: 形式化科学软件工程框架"
+  authors:
+    - family-names: "Project"
+      given-names: "FormalScience"
+  year: 2025
+  url: "https://github.com/username/FormalScience"
+  # doi: "10.5281/zenodo.XXXXXXX"
+
+# 参考文献
+references:
+  - type: software
+    title: "Git Version Control System"
+    authors:
+      - name: "The Git Development Team"
+    year: 2024
+    url: "https://git-scm.com/"
+  
+  - type: article
+    title: "形式化方法在软件工程中的应用"
+    authors:
+      - family-names: "作者"
+        given-names: "示例"
+    year: 2024
+    journal: "软件工程期刊"
+    # doi: "10.XXXX/XXXX.XXXX"
+
+# 开发状态
+repository-artifact: "https://github.com/username/FormalScience/releases"
+
+# 联系信息
+contact:
+  - family-names: "Project"
+    given-names: "FormalScience"
+    email: "contact@formalscience.org"
+    website: "https://formalscience.org"
+
+# 资助信息
+# funding:
+#   - name: "国家自然科学基金"
+#     award-number: "XXXXXXXX"

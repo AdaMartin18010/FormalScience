@@ -1,0 +1,18 @@
+[package]
+name = "scheduler_simulator"
+version = "0.1.0"
+edition = "2021"
+authors = ["FormalScience Project"]
+description = "A CPU scheduling algorithm simulator in Rust"
+license = "MIT"
+
+[dependencies]
+# 用于格式化表格输出
+comfy-table = "7.1"
+
+[dev-dependencies]
+# 测试依赖
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"

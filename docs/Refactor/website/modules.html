@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FormalScience 8大核心模块 - 数学基础、形式语言、类型理论、证明助手、程序验证、语义理论、代数规范、形式化方法">
+  <title>学习模块 - FormalScience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔬</div>
+        <span>FormalScience</span>
+      </a>
+      
+      <nav class="nav">
+        <ul class="nav-links">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="about.html">关于</a></li>
+          <li><a href="modules.html" class="active">模块</a></li>
+          <li><a href="resources.html">资源</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索... (Ctrl+K)" autocomplete="off">
+          <button type="button" aria-label="搜索">🔍</button>
+          <div class="search-results"></div>
+        </div>
+        
+        <button class="theme-toggle" aria-label="切换主题">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+        
+        <button class="menu-toggle" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <a href="index.html">首页</a>
+          <span>/</span>
+          <span>学习模块</span>
+        </nav>
+        <h1>8大核心模块</h1>
+        <p>系统化的形式化科学学习路径，从基础理论到高级应用</p>
+      </div>
+    </section>
+
+    <!-- Module 1: Mathematical Foundations -->
+    <section class="content-section" id="math">
+      <div class="container">
+        <div class="content-grid" data-animate>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔢</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 01</span>
+            </div>
+            <h2>数学基础</h2>
+            <p>
+              数学基础是所有形式化科学的根基。本模块涵盖集合论、数理逻辑、图论和离散数学等核心内容，
+              为后续学习奠定坚实的理论基础。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>朴素集合论与公理化集合论</li>
+              <li>命题逻辑与一阶逻辑</li>
+              <li>图论基础与算法</li>
+              <li>关系与函数</li>
+              <li>归纳与递归</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#math" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));">
+            <div style="font-size: 6rem;">🔢</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 2: Formal Languages -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="formal">
+      <div class="container">
+        <div class="content-grid reverse" data-animate>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(109, 41, 217, 0.1));">
+            <div style="font-size: 6rem;">🔤</div>
+          </div>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔤</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 02</span>
+            </div>
+            <h2>形式语言</h2>
+            <p>
+              形式语言理论是计算机科学的核心理论之一。本模块深入探讨自动机理论、形式文法、
+              正则语言和上下文无关语言等主题。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>有限自动机与正则表达式</li>
+              <li>上下文无关文法与下推自动机</li>
+              <li>图灵机与可计算性</li>
+              <li>Chomsky 层次结构</li>
+              <li>语言的判定性与复杂性</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#formal" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 3: Type Theory -->
+    <section class="content-section" id="type">
+      <div class="container">
+        <div class="content-grid" data-animate>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🧬</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 03</span>
+            </div>
+            <h2>类型理论</h2>
+            <p>
+              类型理论是现代程序语言理论的基础。本模块涵盖 Lambda 演算、简单类型系统、
+              多态类型和依赖类型等高级主题。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>Lambda 演算基础</li>
+              <li>简单类型 Lambda 演算</li>
+              <li>系统 F 与多态</li>
+              <li>依赖类型与 Martin-Löf 类型论</li>
+              <li> Curry-Howard 同构</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#type" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));">
+            <div style="font-size: 6rem;">🧬</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 4: Proof Assistants -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="proof">
+      <div class="container">
+        <div class="content-grid reverse" data-animate>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));">
+            <div style="font-size: 6rem;">✅</div>
+          </div>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #10b981, #059669); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">✅</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 04</span>
+            </div>
+            <h2>证明助手</h2>
+            <p>
+              证明助手是形式化验证的重要工具。本模块介绍 Coq、Isabelle/HOL、Lean 等主流证明助手的使用方法和最佳实践。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>Coq 证明助手入门</li>
+              <li>Isabelle/HOL 基础</li>
+              <li>Lean 4 现代证明助手</li>
+              <li>证明策略与自动化</li>
+              <li>实际案例研究</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#proof" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 5: Program Verification -->
+    <section class="content-section" id="verify">
+      <div class="container">
+        <div class="content-grid" data-animate>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔍</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 05</span>
+            </div>
+            <h2>程序验证</h2>
+            <p>
+              程序验证确保软件系统的正确性。本模块介绍霍尔逻辑、最弱前置条件、模型检测和抽象解释等核心技术。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>霍尔逻辑与程序正确性</li>
+              <li>最弱前置条件演算</li>
+              <li>分离逻辑</li>
+              <li>模型检测基础</li>
+              <li>抽象解释理论</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#verify" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));">
+            <div style="font-size: 6rem;">🔍</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 6: Semantics Theory -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="semantic">
+      <div class="container">
+        <div class="content-grid reverse" data-animate>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));">
+            <div style="font-size: 6rem;">📝</div>
+          </div>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📝</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 06</span>
+            </div>
+            <h2>语义理论</h2>
+            <p>
+              语义理论形式化地定义程序的含义。本模块涵盖操作语义、指称语义和公理语义三种主要方法。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>结构化操作语义 (SOS)</li>
+              <li>指称语义基础</li>
+              <li>公理语义</li>
+              <li>环境语义与存储语义</li>
+              <li>语义等价性</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#semantic" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 7: Algebraic Specification -->
+    <section class="content-section" id="algebra">
+      <div class="container">
+        <div class="content-grid" data-animate>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #ec4899, #db2777); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔧</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 07</span>
+            </div>
+            <h2>代数规范</h2>
+            <p>
+              代数规范使用代数方法描述抽象数据类型。本模块介绍代数规范语言、重写系统和规范验证技术。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>多类代数与签名</li>
+              <li>抽象数据类型规范</li>
+              <li>初始语义与终结语义</li>
+              <li>重写系统与合流性</li>
+              <li>OBJ 家族语言</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#algebra" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(219, 39, 119, 0.1));">
+            <div style="font-size: 6rem;">🔧</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 8: Formal Methods -->
+    <section class="content-section" style="background-color: var(--bg-secondary);" id="method">
+      <div class="container">
+        <div class="content-grid reverse" data-animate>
+          <div class="content-image" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(79, 70, 229, 0.1));">
+            <div style="font-size: 6rem;">🎓</div>
+          </div>
+          <div class="content-text">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div class="module-icon" style="background: linear-gradient(135deg, #6366f1, #4f46e5); width: 3rem; height: 3rem; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎓</div>
+              <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">模块 08</span>
+            </div>
+            <h2>形式化方法</h2>
+            <p>
+              形式化方法是确保系统正确性的系统化方法。本模块综合介绍 SAT/SMT 求解、定理证明和工业应用。
+            </p>
+            <h4 style="margin: 1.5rem 0 0.75rem;">包含内容：</h4>
+            <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+              <li>SAT 求解基础</li>
+              <li>SMT 理论与应用</li>
+              <li>交互式定理证明</li>
+              <li>符号执行</li>
+              <li>形式化方法工业实践</li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resources.html#method" class="btn btn-primary">开始学习</a>
+              <a href="resources.html" class="btn btn-secondary" style="margin-left: 0.75rem;">查看资源</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Path CTA -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box" data-animate>
+          <h2>开始学习之旅</h2>
+          <p>所有模块都配有完整的教程、练习题和项目实战，帮助你循序渐进地掌握形式化科学</p>
+          <a href="resources.html" class="btn btn-secondary btn-lg">
+            <span>📚</span> 查看全部资源
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔬</div>
+            <span>FormalScience</span>
+          </a>
+          <p>致力于形式化科学知识的普及与传播，构建系统化的学习平台。</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>导航</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="modules.html">学习模块</a></li>
+            <li><a href="resources.html">资源中心</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>资源</h4>
+          <ul>
+            <li><a href="resources.html#examples">代码示例</a></li>
+            <li><a href="resources.html#exercises">练习题</a></li>
+            <li><a href="resources.html#videos">视频教程</a></li>
+            <li><a href="resources.html#tools">工具下载</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="#" onclick="FormalScience.notify('论坛功能即将上线', 'info')">讨论论坛</a></li>
+            <li><a href="#" onclick="FormalScience.notify('贡献指南即将发布', 'info')">贡献指南</a></li>
+            <li><a href="#" onclick="FormalScience.notify('GitHub仓库链接即将提供', 'info')">GitHub</a></li>
+            <li><a href="#" onclick="FormalScience.notify('联系我们功能即将上线', 'info')">联系我们</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 FormalScience. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="GitHub" onclick="FormalScience.notify('GitHub链接即将提供', 'info')">📦</a>
+          <a href="#" aria-label="Twitter" onclick="FormalScience.notify('Twitter链接即将提供', 'info')">🐦</a>
+          <a href="#" aria-label="Discord" onclick="FormalScience.notify('Discord链接即将提供', 'info')">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="回到顶部">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="关于 FormalScience - 了解项目背景、目标受众和核心团队">
+  <title>关于我们 - FormalScience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔬</div>
+        <span>FormalScience</span>
+      </a>
+      
+      <nav class="nav">
+        <ul class="nav-links">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="about.html" class="active">关于</a></li>
+          <li><a href="modules.html">模块</a></li>
+          <li><a href="resources.html">资源</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索... (Ctrl+K)" autocomplete="off">
+          <button type="button" aria-label="搜索">🔍</button>
+          <div class="search-results"></div>
+        </div>
+        
+        <button class="theme-toggle" aria-label="切换主题">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+        
+        <button class="menu-toggle" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <a href="index.html">首页</a>
+          <span>/</span>
+          <span>关于我们</span>
+        </nav>
+        <h1>关于 FormalScience</h1>
+        <p>了解我们的项目背景、使命愿景以及致力于形式化科学普及的团队</p>
+      </div>
+    </section>
+
+    <!-- Project Background -->
+    <section class="content-section">
+      <div class="container">
+        <div class="content-grid" data-animate>
+          <div class="content-text">
+            <h2>项目背景</h2>
+            <p>
+              FormalScience 诞生于对形式化科学教育普及的深切渴望。在当今计算机科学和软件工程领域，
+              形式化方法的重要性日益凸显，但优质的学习资源却分散各处，缺乏系统性的整合。
+            </p>
+            <p>
+              我们意识到，许多学习者在探索形式化科学的过程中面临着入门门槛高、学习路径不清晰、
+              实践机会匮乏等问题。因此，我们决定打造一个综合性的学习平台，将这些知识系统化地组织起来，
+              降低学习门槛，让更多人能够接触和掌握形式化科学。
+            </p>
+            <p>
+              项目始于 2023 年，由一群热爱形式化方法的工程师和研究者发起，
+              旨在构建一个开放、免费、高质量的形式化科学学习社区。
+            </p>
+          </div>
+          <div class="content-image">
+            <div style="font-size: 6rem;">🎯</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="content-section" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <div class="content-grid reverse" data-animate>
+          <div class="content-image">
+            <div style="font-size: 6rem;">🚀</div>
+          </div>
+          <div class="content-text">
+            <h2>使命与愿景</h2>
+            <p>
+              <strong>我们的使命</strong>是让形式化科学知识变得触手可及，帮助每一位学习者构建坚实的理论基础，
+              培养严谨的思维能力，为软件可靠性保障和系统安全做出贡献。
+            </p>
+            <p>
+              <strong>我们的愿景</strong>是成为全球领先的形式化科学学习平台，建立一个活跃的学习社区，
+              推动形式化方法在工业界的广泛应用，提升软件系统的可靠性和安全性。
+            </p>
+            <p>
+              我们坚信，形式化科学不应该是少数专家的专利，而应该是每一位软件工程师工具箱中的标准工具。
+              通过我们的努力，让形式化方法从学术界走向工业界，从理论走向实践。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>目标受众</h2>
+          <p>FormalScience 适合以下人群学习和使用</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">🎓</div>
+            <h3>计算机专业学生</h3>
+            <p>想要系统学习形式化方法、程序验证、类型理论等课程的大学生和研究生，为学术研究和职业发展打下基础。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">💼</div>
+            <h3>软件工程师</h3>
+            <p>希望提升代码质量、学习形式化验证技术的开发者，特别是在安全关键系统、区块链、智能合约等领域工作的工程师。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="300">
+            <div class="feature-icon">🔬</div>
+            <h3>研究人员</h3>
+            <p>从事形式化方法、程序语言理论、自动推理等领域研究的学者，寻找参考资料和教学资源。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">🧩</div>
+            <h3>编程语言爱好者</h3>
+            <p>对编程语言理论、类型系统、函数式编程感兴趣的爱好者，想要深入理解语言背后的理论基础。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">🔐</div>
+            <h3>安全工程师</h3>
+            <p>关注软件安全和系统可靠性，希望学习形式化验证技术来发现和预防安全漏洞的专业人士。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="300">
+            <div class="feature-icon">📚</div>
+            <h3>自学者</h3>
+            <p>对形式化科学有浓厚兴趣，希望通过系统化学习提升自己理论水平的终身学习者。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="content-section" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>核心价值观</h2>
+          <p>指导我们工作的核心原则</p>
+        </div>
+        
+        <div class="features-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">🆓</div>
+            <h3>开放免费</h3>
+            <p>所有学习资源永久免费开放，我们相信知识应该无障碍传播，每个人都有平等的学习机会。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">✨</div>
+            <h3>质量至上</h3>
+            <p>严格把控内容质量，确保每一篇教程、每一道练习都经过精心设计和审核。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="100">
+            <div class="feature-icon">🤝</div>
+            <h3>社区共建</h3>
+            <p>欢迎社区成员参与内容贡献和改进，通过协作共同打造最好的学习平台。</p>
+          </div>
+          
+          <div class="feature-card" data-animate data-delay="200">
+            <div class="feature-icon">🔄</div>
+            <h3>持续更新</h3>
+            <p>紧跟学术前沿和工业实践，持续更新和优化学习内容，保持材料的时效性。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2>核心团队</h2>
+          <p>致力于形式化科学教育普及的团队成员</p>
+        </div>
+        
+        <div class="team-grid">
+          <div class="team-card" data-animate data-delay="100">
+            <div class="team-avatar">👨‍💻</div>
+            <h3>张明</h3>
+            <p>项目创始人</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">形式化方法研究员，专注程序验证和定理证明</p>
+          </div>
+          
+          <div class="team-card" data-animate data-delay="150">
+            <div class="team-avatar">👩‍🔬</div>
+            <h3>李雪</h3>
+            <p>内容负责人</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">类型理论专家，负责课程体系设计和内容审核</p>
+          </div>
+          
+          <div class="team-card" data-animate data-delay="200">
+            <div class="team-avatar">👨‍🏫</div>
+            <h3>王强</h3>
+            <p>技术负责人</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">全栈工程师，负责平台开发和工具链建设</p>
+          </div>
+          
+          <div class="team-card" data-animate data-delay="100">
+            <div class="team-avatar">👩‍💻</div>
+            <h3>陈雨</h3>
+            <p>社区经理</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">负责社区运营、用户支持和活动策划</p>
+          </div>
+          
+          <div class="team-card" data-animate data-delay="150">
+            <div class="team-avatar">👨‍🎨</div>
+            <h3>刘艺</h3>
+            <p>设计师</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">负责视觉设计、用户体验和交互设计</p>
+          </div>
+          
+          <div class="team-card" data-animate data-delay="200">
+            <div class="team-avatar">👥</div>
+            <h3>贡献者们</h3>
+            <p>社区贡献者</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.5rem;">感谢所有为项目做出贡献的社区成员</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Us CTA -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box" data-animate>
+          <h2>加入我们</h2>
+          <p>无论你是想贡献内容、参与开发，还是成为社区志愿者，我们都欢迎你的加入</p>
+          <a href="#" class="btn btn-secondary btn-lg" onclick="FormalScience.notify('贡献指南即将发布', 'info'); return false;">
+            <span>🤝</span> 成为贡献者
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔬</div>
+            <span>FormalScience</span>
+          </a>
+          <p>致力于形式化科学知识的普及与传播，构建系统化的学习平台。</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>导航</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="modules.html">学习模块</a></li>
+            <li><a href="resources.html">资源中心</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>资源</h4>
+          <ul>
+            <li><a href="resources.html#examples">代码示例</a></li>
+            <li><a href="resources.html#exercises">练习题</a></li>
+            <li><a href="resources.html#videos">视频教程</a></li>
+            <li><a href="resources.html#tools">工具下载</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="#" onclick="FormalScience.notify('论坛功能即将上线', 'info')">讨论论坛</a></li>
+            <li><a href="#" onclick="FormalScience.notify('贡献指南即将发布', 'info')">贡献指南</a></li>
+            <li><a href="#" onclick="FormalScience.notify('GitHub仓库链接即将提供', 'info')">GitHub</a></li>
+            <li><a href="#" onclick="FormalScience.notify('联系我们功能即将上线', 'info')">联系我们</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 FormalScience. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="GitHub" onclick="FormalScience.notify('GitHub链接即将提供', 'info')">📦</a>
+          <a href="#" aria-label="Twitter" onclick="FormalScience.notify('Twitter链接即将提供', 'info')">🐦</a>
+          <a href="#" aria-label="Discord" onclick="FormalScience.notify('Discord链接即将提供', 'info')">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="回到顶部">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

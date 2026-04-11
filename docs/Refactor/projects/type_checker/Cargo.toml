@@ -1,0 +1,24 @@
+[package]
+name = "type_checker"
+version = "0.1.0"
+edition = "2021"
+authors = ["FormalScience Project"]
+description = "A simple type checker implemented in Rust"
+license = "MIT"
+
+[dependencies]
+# 目前无外部依赖
+
+[dev-dependencies]
+
+[[example]]
+name = "basic"
+path = "examples/basic.rs"
+
+[[example]]
+name = "function"
+path = "examples/function.rs"
+
+[[example]]
+name = "generic"
+path = "examples/generic.rs"

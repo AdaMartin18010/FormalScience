@@ -1,0 +1,138 @@
+{
+  "project": {
+    "name": "FormalScience",
+    "displayName": "形式科学知识体系",
+    "version": "1.0.0",
+    "description": "一个综合性的形式科学知识体系库，涵盖数学基础、形式语言、编程范式、软件工程、形式化理论和调度系统等领域",
+    "author": "FormalScience Contributors",
+    "repository": "https://github.com/formalscience/knowledge-base",
+    "license": "CC BY-SA 4.0"
+  },
+  "structure": {
+    "modules": [
+      {
+        "id": "01",
+        "name": "数学基础",
+        "path": "01_数学基础",
+        "description": "集合论、数理逻辑、证明论、代数学、几何学、分析学、概率论与测度论",
+        "dependencies": [],
+        "priority": 1
+      },
+      {
+        "id": "02",
+        "name": "形式语言",
+        "path": "02_形式语言",
+        "description": "形式语言基础、类型论、同伦类型论(HoTT)、范畴论",
+        "dependencies": ["01"],
+        "priority": 2
+      },
+      {
+        "id": "03",
+        "name": "编程范式",
+        "path": "03_编程范式",
+        "description": "编程语言理论、Rust语言深入、异步编程模型、函数式编程",
+        "dependencies": ["01", "02"],
+        "priority": 3
+      },
+      {
+        "id": "04",
+        "name": "软件工程",
+        "path": "04_软件工程",
+        "description": "设计模式、微服务架构、工作流系统、分布式系统",
+        "dependencies": ["01", "02", "03"],
+        "priority": 4
+      },
+      {
+        "id": "05",
+        "name": "形式化理论",
+        "path": "05_形式化理论",
+        "description": "时序逻辑、Petri网理论、控制论、计算理论",
+        "dependencies": ["01", "02"],
+        "priority": 5
+      },
+      {
+        "id": "06",
+        "name": "调度系统",
+        "path": "06_调度系统",
+        "description": "调度理论基础、硬件调度、OS调度、分布式调度",
+        "dependencies": ["01", "03", "04", "05"],
+        "priority": 6
+      },
+      {
+        "id": "07",
+        "name": "交叉视角",
+        "path": "07_交叉视角",
+        "description": "形式化方法统一、多视角映射、学习路线图、研究前沿",
+        "dependencies": ["01", "02", "03", "04", "05", "06"],
+        "priority": 7
+      },
+      {
+        "id": "08",
+        "name": "附录",
+        "path": "08_附录",
+        "description": "参考文献、符号表、索引",
+        "dependencies": [],
+        "priority": 8
+      }
+    ],
+    "specialDirs": [
+      {
+        "name": "cases",
+        "description": "实际案例分析",
+        "type": "case_studies"
+      },
+      {
+        "name": "examples",
+        "description": "代码示例(Haskell/Lean/Rust)",
+        "type": "code_examples"
+      },
+      {
+        "name": "exercises",
+        "description": "练习题与测试",
+        "type": "exercises"
+      },
+      {
+        "name": "tools",
+        "description": "工具与速查表",
+        "type": "tools"
+      },
+      {
+        "name": "visual",
+        "description": "可视化图表与知识图谱",
+        "type": "visualization"
+      },
+      {
+        "name": ".context",
+        "description": "项目上下文与元数据",
+        "type": "metadata"
+      },
+      {
+        "name": ".project",
+        "description": "项目配置与统计",
+        "type": "config"
+      }
+    ]
+  },
+  "build": {
+    "outputDir": "dist",
+    "formats": ["markdown", "html", "pdf"],
+    "plugins": [
+      "math-renderer",
+      "code-highlight",
+      "graph-generator",
+      "index-builder"
+    ],
+    "styles": {
+      "theme": "academic",
+      "codeTheme": "monokai",
+      "mathEngine": "katex"
+    }
+  },
+  "metadata": {
+    "createdAt": "2025-01-01",
+    "lastUpdated": "2026-04-11",
+    "status": "completed",
+    "language": "zh-CN",
+    "audience": ["计算机科学学生", "软件工程师", "研究人员", "形式化方法爱好者"]
+  }
+}
