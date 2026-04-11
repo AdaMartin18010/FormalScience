@@ -147,29 +147,29 @@
 
 **中期 (2027-2030)**:
 
-4. **神经符号整合**
+1. **神经符号整合**
    - 神经网络的形式语义
    - 可解释AI的逻辑基础
    - 概率类型论
 
-5. **生物计算理论**
+2. **生物计算理论**
    - DNA计算的Church-Turing分析
    - 细胞自动机的递归论
    - 合成生物学的形式化
 
-6. **区块链范畴论**
+3. **区块链范畴论**
    - 共识协议的不可能性定理
    - 智能合约的范畴语义
    - 去中心化系统的拓扑
 
 **长期 (2030+)**:
 
-7. **AGI的可计算性理论**
+1. **AGI的可计算性理论**
    - 通用智能是否递归可枚举？
    - 意识的形式化（如果可能）
    - 价值对齐的逻辑基础
 
-8. **物理学的计算基础**
+2. **物理学的计算基础**
    - 数字物理学（Digital Physics）
    - 全息原理与计算
    - 信息即物质？
@@ -222,13 +222,13 @@
 
 ### 现代争议
 
-4. **Copeland, J. (2002)**. "Hypercomputation"
+1. **Copeland, J. (2002)**. "Hypercomputation"
    - 探讨超递归计算可能性
 
-5. **Wegner, P. (1997)**. "Why interaction is more powerful than algorithms"
+2. **Wegner, P. (1997)**. "Why interaction is more powerful than algorithms"
    - 挑战Church-Turing绝对性
 
-6. **Voevodsky, V. (2010)**. "Univalent Foundations"
+3. **Voevodsky, V. (2010)**. "Univalent Foundations"
    - 提出HoTT作为新基础
 
 ---
