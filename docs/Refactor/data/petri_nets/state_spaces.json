@@ -1,0 +1,177 @@
+{
+  "version": "1.0.0",
+  "description": "Petri网状态空间数据",
+  "generation_method": "BFS reachability graph construction",
+  "state_spaces": [
+    {
+      "model_id": "PN002",
+      "model_name": "生产者-消费者",
+      "state_count": 12,
+      "edge_count": 20,
+      "bounded": true,
+      "k_bounded": 3,
+      "safe": false,
+      "states": [
+        {
+          "id": "S0",
+          "marking": {"P1": 1, "P2": 0, "P3": 3, "P4": 0, "P5": 1, "P6": 0},
+          "enabled_transitions": ["T1", "T4"],
+          "is_initial": true,
+          "is_final": false
+        },
+        {
+          "id": "S1",
+          "marking": {"P1": 0, "P2": 1, "P3": 3, "P4": 0, "P5": 1, "P6": 0},
+          "enabled_transitions": ["T2", "T4"],
+          "is_initial": false,
+          "is_final": false
+        },
+        {
+          "id": "S2",
+          "marking": {"P1": 0, "P2": 0, "P3": 2, "P4": 1, "P5": 1, "P6": 0},
+          "enabled_transitions": ["T1", "T4", "T3_complete"],
+          "is_initial": false,
+          "is_final": false
+        },
+        {
+          "id": "S3",
+          "marking": {"P1": 1, "P2": 0, "P3": 2, "P4": 1, "P5": 0, "P6": 1},
+          "enabled_transitions": ["T1", "T5", "T3_complete"],
+          "is_initial": false,
+          "is_final": false
+        },
+        {
+          "id": "S4",
+          "marking": {"P1": 1, "P2": 0, "P3": 3, "P4": 0, "P5": 0, "P6": 1},
+          "enabled_transitions": ["T1", "T5"],
+          "is_initial": false,
+          "is_final": false
+        },
+        {
+          "id": "S5",
+          "marking": {"P1": 1, "P2": 0, "P3": 2, "P4": 1, "P5": 1, "P6": 0},
+          "enabled_transitions": ["T1", "T4"],
+          "is_initial": false,
+          "is_final": false
+        }
+      ],
+      "transitions": [
+        {"from": "S0", "to": "S1", "label": "T1"},
+        {"from": "S1", "to": "S2", "label": "T2"},
+        {"from": "S2", "to": "S5", "label": "T3"},
+        {"from": "S2", "to": "S3", "label": "T4"},
+        {"from": "S3", "to": "S4", "label": "T5"},
+        {"from": "S5", "to": "S0", "label": "cycle"}
+      ],
+      "home_state": "S0",
+      "deadlocks": [],
+      "traps": ["P3 + P4"],
+      "siphons": ["P3 + P4"]
+    },
+    {
+      "model_id": "PN001",
+      "model_name": "哲学家就餐问题",
+      "state_count": 32,
+      "edge_count": 80,
+      "bounded": true,
+      "k_bounded": 1,
+      "safe": true,
+      "key_states": [
+        {
+          "id": "S0",
+          "description": "初始状态：所有哲学家思考，所有叉子可用",
+          "marking_summary": "P1-P5=1, P6-P10=1, P11-P15=0",
+          "type": "initial"
+        },
+        {
+          "id": "S_deadlock",
+          "description": "死锁状态：所有哲学家持有左叉子等待右叉子",
+          "marking_summary": "每位哲学家在就餐库所，无叉子可用",
+          "type": "deadlock",
+          "reachable": true
+        },
+        {
+          "id": "S_all_eating",
+          "description": "不可能状态：所有哲学家同时就餐",
+          "marking_summary": "P11-P15=1, P6-P10=0",
+          "type": "unreachable"
+        }
+      ],
+      "liveness": {
+        "l0_live": true,
+        "l1_live": false,
+        "l2_live": false,
+        "l3_live": false,
+        "l4_live": false
+      },
+      "fairness": {
+        "strongly_fair": false,
+        "weakly_fair": false
+      }
+    },
+    {
+      "model_id": "PN004",
+      "model_name": "并行流程工作流",
+      "state_count": 16,
+      "edge_count": 24,
+      "bounded": true,
+      "sound": true,
+      "workflow_metrics": {
+        "throughput": 1.67,
+        "cycle_time_ms": 750,
+        "work_in_progress": 1.25,
+        "bottleneck": "任务B (300ms)"
+      },
+      "reachable_markings": [
+        {
+          "step": 0,
+          "marking": "P1=1 (开始)",
+          "parallelism": 0
+        },
+        {
+          "step": 1,
+          "marking": "P2=1, P3=1, P4=1 (并行执行)",
+          "parallelism": 3
+        },
+        {
+          "step": 2,
+          "marking": "P5=1, P3=1, P4=1 (A完成，BC执行)",
+          "parallelism": 2
+        },
+        {
+          "step": 3,
+          "marking": "P5=1, P6=1, P4=1 (AB完成，C执行)",
+          "parallelism": 1
+        },
+        {
+          "step": 4,
+          "marking": "P5=1, P6=1, P7=1 (全部完成)",
+          "parallelism": 0,
+          "and_join_enabled": true
+        },
+        {
+          "step": 5,
+          "marking": "P8=1 (合并)",
+          "parallelism": 0
+        },
+        {
+          "step": 6,
+          "marking": "P9=1 (结束)",
+          "parallelism": 0
+        }
+      ]
+    }
+  ],
+  "analysis_algorithms": {
+    "state_space_generation": {
+      "method": "BFS",
+      "complexity": "O(b^d)",
+      "optimization": "stubborn_sets"
+    },
+    "model_checking": {
+      "ctl_properties_checked": 15,
+      "ltl_properties_checked": 8,
+      "verification_time_ms": 450
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "Common phrases for FormalScience i18n",
+    "lastUpdated": "2026-04-11"
+  },
+  "navigation": {
+    "home": {
+      "zh-CN": "首页",
+      "en": "Home",
+      "ja": "ホーム",
+      "ko": "홈"
+    },
+    "docs": {
+      "zh-CN": "文档",
+      "en": "Documentation",
+      "ja": "ドキュメント",
+      "ko": "문서"
+    },
+    "api": {
+      "zh-CN": "API",
+      "en": "API",
+      "ja": "API",
+      "ko": "API"
+    },
+    "guide": {
+      "zh-CN": "指南",
+      "en": "Guide",
+      "ja": "ガイド",
+      "ko": "가이드"
+    },
+    "tutorial": {
+      "zh-CN": "教程",
+      "en": "Tutorial",
+      "ja": "チュートリアル",
+      "ko": "튜토리얼"
+    }
+  },
+  "actions": {
+    "submit": {
+      "zh-CN": "提交",
+      "en": "Submit",
+      "ja": "送信",
+      "ko": "제출"
+    },
+    "cancel": {
+      "zh-CN": "取消",
+      "en": "Cancel",
+      "ja": "キャンセル",
+      "ko": "취소"
+    },
+    "save": {
+      "zh-CN": "保存",
+      "en": "Save",
+      "ja": "保存",
+      "ko": "저장"
+    },
+    "delete": {
+      "zh-CN": "删除",
+      "en": "Delete",
+      "ja": "削除",
+      "ko": "삭제"
+    },
+    "edit": {
+      "zh-CN": "编辑",
+      "en": "Edit",
+      "ja": "編集",
+      "ko": "편집"
+    },
+    "create": {
+      "zh-CN": "创建",
+      "en": "Create",
+      "ja": "作成",
+      "ko": "생성"
+    },
+    "search": {
+      "zh-CN": "搜索",
+      "en": "Search",
+      "ja": "検索",
+      "ko": "검색"
+    }
+  },
+  "status": {
+    "loading": {
+      "zh-CN": "加载中...",
+      "en": "Loading...",
+      "ja": "読み込み中...",
+      "ko": "로딩 중..."
+    },
+    "success": {
+      "zh-CN": "成功",
+      "en": "Success",
+      "ja": "成功",
+      "ko": "성공"
+    },
+    "error": {
+      "zh-CN": "错误",
+      "en": "Error",
+      "ja": "エラー",
+      "ko": "오류"
+    },
+    "warning": {
+      "zh-CN": "警告",
+      "en": "Warning",
+      "ja": "警告",
+      "ko": "경고"
+    },
+    "info": {
+      "zh-CN": "信息",
+      "en": "Information",
+      "ja": "情報",
+      "ko": "정보"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "zh-CN": "未找到",
+      "en": "Not Found",
+      "ja": "見つかりません",
+      "ko": "찾을 수 없음"
+    },
+    "unauthorized": {
+      "zh-CN": "未授权",
+      "en": "Unauthorized",
+      "ja": "未承認",
+      "ko": "권한 없음"
+    },
+    "forbidden": {
+      "zh-CN": "禁止访问",
+      "en": "Forbidden",
+      "ja": "アクセス禁止",
+      "ko": "접근 금지"
+    },
+    "serverError": {
+      "zh-CN": "服务器错误",
+      "en": "Server Error",
+      "ja": "サーバーエラー",
+      "ko": "서버 오류"
+    },
+    "networkError": {
+      "zh-CN": "网络错误",
+      "en": "Network Error",
+      "ja": "ネットワークエラー",
+      "ko": "네트워크 오류"
+    }
+  },
+  "messages": {
+    "welcome": {
+      "zh-CN": "欢迎使用 FormalScience",
+      "en": "Welcome to FormalScience",
+      "ja": "FormalScience へようこそ",
+      "ko": "FormalScience에 오신 것을 환영합니다"
+    },
+    "gettingStarted": {
+      "zh-CN": "开始使用",
+      "en": "Getting Started",
+      "ja": "はじめに",
+      "ko": "시작하기"
+    },
+    "learnMore": {
+      "zh-CN": "了解更多",
+      "en": "Learn More",
+      "ja": "詳細を見る",
+      "ko": "더 알아보기"
+    }
+  }
+}

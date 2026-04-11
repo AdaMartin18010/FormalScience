@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="statsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a8edea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fed6e3;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="url(#statsGrad)"/>
+  <g stroke="white" stroke-width="3" stroke-linecap="round">
+    <line x1="14" y1="46" x2="14" y2="30"/>
+    <line x1="26" y1="46" x2="26" y2="22"/>
+    <line x1="38" y1="46" x2="38" y2="26"/>
+    <line x1="50" y1="46" x2="50" y2="18"/>
+  </g>
+  <polyline points="14,30 26,22 38,26 50,18" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

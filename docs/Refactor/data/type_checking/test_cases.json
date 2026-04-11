@@ -1,0 +1,214 @@
+{
+  "version": "1.0.0",
+  "description": "类型检查测试用例",
+  "test_frameworks": ["quickcheck", "hspec", "tasty", "criterion"],
+  "test_categories": ["unit", "property", "integration", "regression"],
+  "test_suites": [
+    {
+      "id": "TS001",
+      "name": "基本类型推断",
+      "category": "unit",
+      "test_cases": [
+        {
+          "id": "TC001",
+          "description": "整数常量类型",
+          "input": "42",
+          "expected_type": "Num a => a",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC002",
+          "description": "Lambda表达式",
+          "input": "\\x -> x + 1",
+          "expected_type": "Num a => a -> a",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC003",
+          "description": "函数应用",
+          "input": "(\\x -> x) 5",
+          "expected_type": "Num a => a",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC004",
+          "description": "元组构造",
+          "input": "(1, 'a', True)",
+          "expected_type": "(Num a, Char, Bool)",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC005",
+          "description": "列表字面量",
+          "input": "[1, 2, 3]",
+          "expected_type": "Num a => [a]",
+          "expected_result": "pass"
+        }
+      ]
+    },
+    {
+      "id": "TS002",
+      "name": "多态类型测试",
+      "category": "unit",
+      "test_cases": [
+        {
+          "id": "TC006",
+          "description": "多态函数应用",
+          "input": "map (\\x -> x * 2) [1, 2, 3]",
+          "expected_type": "Num a => [a]",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC007",
+          "description": "嵌套多态",
+          "input": "foldr (\\x acc -> x : acc) [] [1, 2, 3]",
+          "expected_type": "Num a => [a]",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC008",
+          "description": "高阶函数",
+          "input": "(.) (\\x -> x + 1) (\\y -> y * 2)",
+          "expected_type": "Num a => a -> a",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC009",
+          "description": "类型变量一致性",
+          "input": "let f = \\x y -> (x, y) in (f 1 'a', f True 2.0)",
+          "expected_type": "((Num a, Char), (Bool, Float))",
+          "expected_result": "pass"
+        }
+      ]
+    },
+    {
+      "id": "TS003",
+      "name": "属性测试",
+      "category": "property",
+      "properties": [
+        {
+          "id": "PROP001",
+          "name": "类型推断一致性",
+          "description": "同一表达式在相同环境下应推断出相同类型",
+          "property": "forall expr env. infer expr env == infer expr env",
+          "generator": "arbitrary_expression",
+          "tests_run": 1000,
+          "pass_rate": 1.0
+        },
+        {
+          "id": "PROP002",
+          "name": "替换稳定性",
+          "description": "类型推断结果在替换后应保持有效",
+          "property": "forall expr subst. isValid(infer expr >>= apply subst)",
+          "generator": "arbitrary_expression_with_substitution",
+          "tests_run": 1000,
+          "pass_rate": 1.0
+        },
+        {
+          "id": "PROP003",
+          "name": "单调性",
+          "description": "更强的环境应产生更具体的类型",
+          "property": "forall expr env1 env2. env1 ⊑ env2 => infer expr env2 ⊑ infer expr env1",
+          "generator": "nested_environments",
+          "tests_run": 500,
+          "pass_rate": 0.98
+        }
+      ]
+    },
+    {
+      "id": "TS004",
+      "name": "边界情况",
+      "category": "regression",
+      "test_cases": [
+        {
+          "id": "TC010",
+          "description": "空列表",
+          "input": "[]",
+          "expected_type": "[a]",
+          "expected_result": "pass",
+          "notes": "空列表是完全多态的"
+        },
+        {
+          "id": "TC011",
+          "description": "部分应用",
+          "input": "map (+1)",
+          "expected_type": "Num a => [a] -> [a]",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC012",
+          "description": "嵌套Lambda",
+          "input": "\\x -> \\y -> \\z -> (x, y, z)",
+          "expected_type": "a -> b -> c -> (a, b, c)",
+          "expected_result": "pass"
+        },
+        {
+          "id": "TC013",
+          "description": "递归绑定",
+          "input": "let ones = 1 : ones in take 5 ones",
+          "expected_type": "Num a => [a]",
+          "expected_result": "pass",
+          "notes": "需要显式类型标注"
+        },
+        {
+          "id": "TC014",
+          "description": "模式匹配",
+          "input": "\\(x, y) -> x + y",
+          "expected_type": "Num a => (a, a) -> a",
+          "expected_result": "pass"
+        }
+      ]
+    },
+    {
+      "id": "TS005",
+      "name": "错误恢复",
+      "category": "regression",
+      "test_cases": [
+        {
+          "id": "TC015",
+          "description": "局部错误不影响整体",
+          "input": "let x = 'a' + 1; y = 2 + 3 in y",
+          "expected_type": "Num a => a",
+          "expected_result": "pass_with_warning",
+          "notes": "应报告x的错误但正确推断y"
+        },
+        {
+          "id": "TC016",
+          "description": "多位置错误",
+          "input": "('a' + 1, True + 1, 2 + 'b')",
+          "expected_error_count": 3,
+          "expected_result": "fail_with_multiple_errors"
+        }
+      ]
+    }
+  ],
+  "performance_tests": {
+    "description": "类型推断性能基准",
+    "benchmarks": [
+      {
+        "name": "小型表达式",
+        "expression_depth": 3,
+        "mean_time_ms": 0.05,
+        "std_dev_ms": 0.01
+      },
+      {
+        "name": "中型表达式",
+        "expression_depth": 10,
+        "mean_time_ms": 0.5,
+        "std_dev_ms": 0.1
+      },
+      {
+        "name": "大型表达式",
+        "expression_depth": 50,
+        "mean_time_ms": 12.0,
+        "std_dev_ms": 2.0
+      },
+      {
+        "name": "深层嵌套",
+        "expression_depth": 100,
+        "mean_time_ms": 85.0,
+        "std_dev_ms": 15.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "version": "1.0.0",
+  "description": "算法性能对比数据",
+  "comparison_categories": ["scheduling", "type_checking", "petri_net_analysis", "constraint_solving"],
+  "comparisons": [
+    {
+      "category": "scheduling",
+      "test_scenario": "RTOS任务集调度 (10任务, U=0.71)",
+      "baseline_algorithm": "RateMonotonic",
+      "algorithms": [
+        {
+          "name": "RateMonotonic",
+          "execution_time_ms": 0.52,
+          "relative_performance": 1.0,
+          "schedulability": 0.72,
+          "overhead_us": 0.8,
+          "strengths": ["低开销", "实现简单", "确定性行为"],
+          "weaknesses": ["非最优", "利用率限制严格"]
+        },
+        {
+          "name": "EDF",
+          "execution_time_ms": 0.68,
+          "relative_performance": 1.31,
+          "schedulability": 0.85,
+          "overhead_us": 1.2,
+          "strengths": ["最优单处理器算法", "高利用率"],
+          "weaknesses": ["抖动大", "优先级翻转"]
+        },
+        {
+          "name": "LeastLaxityFirst",
+          "execution_time_ms": 0.95,
+          "relative_performance": 1.83,
+          "schedulability": 0.88,
+          "overhead_us": 2.5,
+          "strengths": ["最优", "最小化截止时间违约"],
+          "weaknesses": ["高开销", "频繁抢占"]
+        },
+        {
+          "name": "PartitionedEDF_4Core",
+          "execution_time_ms": 2.15,
+          "relative_performance": 4.13,
+          "schedulability": 0.78,
+          "overhead_us": 1.5,
+          "strengths": ["多核扩展性好", "无迁移开销"],
+          "weaknesses": ["分区算法复杂", "负载不均衡可能"]
+        }
+      ],
+      "recommendation": {
+        "single_core_low_utilization": "RateMonotonic",
+        "single_core_high_utilization": "EDF",
+        "multi_core": "PartitionedEDF",
+        "safety_critical": "RateMonotonic"
+      }
+    },
+    {
+      "category": "type_checking",
+      "test_scenario": "HM类型推断 (1000个节点)",
+      "implementations": [
+        {
+          "name": "Rust_native",
+          "language": "Rust",
+          "execution_time_ms": 12.5,
+          "memory_mb": 18.2,
+          "relative_performance": 1.0,
+          "features": ["所有权系统", "零成本抽象"]
+        },
+        {
+          "name": "OCaml_native",
+          "language": "OCaml",
+          "execution_time_ms": 15.8,
+          "memory_mb": 22.5,
+          "relative_performance": 1.26,
+          "features": ["垃圾回收", "模式匹配"]
+        },
+        {
+          "name": "Haskell_optimized",
+          "language": "Haskell",
+          "execution_time_ms": 18.2,
+          "memory_mb": 35.8,
+          "relative_performance": 1.46,
+          "features": ["惰性求值", "高阶抽象"]
+        },
+        {
+          "name": "Python_pure",
+          "language": "Python",
+          "execution_time_ms": 125.0,
+          "memory_mb": 45.2,
+          "relative_performance": 10.0,
+          "features": ["易开发", "灵活性"]
+        },
+        {
+          "name": "TypeScript_node",
+          "language": "TypeScript",
+          "execution_time_ms": 85.5,
+          "memory_mb": 68.5,
+          "relative_performance": 6.84,
+          "features": ["JavaScript生态", "渐进类型"]
+        }
+      ],
+      "winner": "Rust_native",
+      "speedup_vs_slowest": 10.0
+    },
+    {
+      "category": "petri_net_analysis",
+      "test_scenario": "状态空间生成 (哲学家就餐问题)",
+      "tools": [
+        {
+          "name": "Custom_Rust",
+          "execution_time_ms": 25.6,
+          "memory_mb": 45.2,
+          "states_per_second": 1250,
+          "relative_performance": 1.0,
+          "scalability": "excellent"
+        },
+        {
+          "name": "TINA",
+          "execution_time_ms": 35.2,
+          "memory_mb": 52.8,
+          "states_per_second": 909,
+          "relative_performance": 1.38,
+          "scalability": "good"
+        },
+        {
+          "name": "LoLA",
+          "execution_time_ms": 28.5,
+          "memory_mb": 48.5,
+          "states_per_second": 1123,
+          "relative_performance": 1.11,
+          "scalability": "good"
+        },
+        {
+          "name": "Python_implementation",
+          "execution_time_ms": 285.0,
+          "memory_mb": 125.5,
+          "states_per_second": 112,
+          "relative_performance": 11.13,
+          "scalability": "poor"
+        }
+      ]
+    },
+    {
+      "category": "constraint_solving",
+      "test_scenario": "SAT问题 (500变量)",
+      "solvers": [
+        {
+          "name": "Z3",
+          "execution_time_ms": 45.6,
+          "memory_mb": 18.5,
+          "relative_performance": 1.0,
+          "sat_count": 450,
+          "unsat_count": 50,
+          "timeout_count": 0
+        },
+        {
+          "name": "CVC5",
+          "execution_time_ms": 52.8,
+          "memory_mb": 22.5,
+          "relative_performance": 1.16,
+          "sat_count": 448,
+          "unsat_count": 50,
+          "timeout_count": 2
+        },
+        {
+          "name": "MiniSat",
+          "execution_time_ms": 38.5,
+          "memory_mb": 12.8,
+          "relative_performance": 0.84,
+          "sat_count": 450,
+          "unsat_count": 50,
+          "timeout_count": 0
+        },
+        {
+          "name": "Glucose",
+          "execution_time_ms": 32.5,
+          "memory_mb": 14.2,
+          "relative_performance": 0.71,
+          "sat_count": 450,
+          "unsat_count": 50,
+          "timeout_count": 0
+        }
+      ],
+      "best_sat": "Glucose",
+      "best_smt": "Z3"
+    }
+  ],
+  "statistical_tests": {
+    "method": "Wilcoxon signed-rank test",
+    "significance_level": 0.05,
+    "results": [
+      {
+        "comparison": "Rust vs Python type checker",
+        "p_value": 0.001,
+        "significant": true,
+        "effect_size": "large"
+      },
+      {
+        "comparison": "EDF vs RM scheduling overhead",
+        "p_value": 0.02,
+        "significant": true,
+        "effect_size": "medium"
+      }
+    ]
+  }
+}

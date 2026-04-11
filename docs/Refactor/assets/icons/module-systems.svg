@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="sysGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#11998e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38ef7d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="url(#sysGrad)"/>
+  <g fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+    <rect x="14" y="14" width="14" height="14" rx="2"/>
+    <rect x="36" y="14" width="14" height="14" rx="2"/>
+    <rect x="14" y="36" width="14" height="14" rx="2"/>
+    <rect x="36" y="36" width="14" height="14" rx="2"/>
+    <line x1="28" y1="21" x2="36" y2="21"/>
+    <line x1="28" y1="43" x2="36" y2="43"/>
+    <line x1="21" y1="28" x2="21" y2="36"/>
+    <line x1="43" y1="28" x2="43" y2="36"/>
+  </g>
+</svg>

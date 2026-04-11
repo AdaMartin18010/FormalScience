@@ -1,0 +1,246 @@
+{
+  "version": "1.0.0",
+  "description": "经典Petri网模型集合",
+  "model_categories": ["synchronization", "communication", "resource_sharing", "workflow", "fault_tolerant"],
+  "models": [
+    {
+      "id": "PN001",
+      "name": "哲学家就餐问题",
+      "category": "resource_sharing",
+      "description": "Dijkstra经典同步问题，5位哲学家共享5把叉子",
+      "philosophers": 5,
+      "places": [
+        {"id": "P1", "name": "哲学家1思考", "initial": 1, "capacity": 1},
+        {"id": "P2", "name": "哲学家2思考", "initial": 1, "capacity": 1},
+        {"id": "P3", "name": "哲学家3思考", "initial": 1, "capacity": 1},
+        {"id": "P4", "name": "哲学家4思考", "initial": 1, "capacity": 1},
+        {"id": "P5", "name": "哲学家5思考", "initial": 1, "capacity": 1},
+        {"id": "P6", "name": "叉子1可用", "initial": 1, "capacity": 1},
+        {"id": "P7", "name": "叉子2可用", "initial": 1, "capacity": 1},
+        {"id": "P8", "name": "叉子3可用", "initial": 1, "capacity": 1},
+        {"id": "P9", "name": "叉子4可用", "initial": 1, "capacity": 1},
+        {"id": "P10", "name": "叉子5可用", "initial": 1, "capacity": 1},
+        {"id": "P11", "name": "哲学家1就餐", "initial": 0, "capacity": 1},
+        {"id": "P12", "name": "哲学家2就餐", "initial": 0, "capacity": 1},
+        {"id": "P13", "name": "哲学家3就餐", "initial": 0, "capacity": 1},
+        {"id": "P14", "name": "哲学家4就餐", "initial": 0, "capacity": 1},
+        {"id": "P15", "name": "哲学家5就餐", "initial": 0, "capacity": 1}
+      ],
+      "transitions": [
+        {"id": "T1", "name": "哲学家1拿起叉子", "type": "immediate"},
+        {"id": "T2", "name": "哲学家1放下叉子", "type": "immediate"},
+        {"id": "T3", "name": "哲学家2拿起叉子", "type": "immediate"},
+        {"id": "T4", "name": "哲学家2放下叉子", "type": "immediate"},
+        {"id": "T5", "name": "哲学家3拿起叉子", "type": "immediate"},
+        {"id": "T6", "name": "哲学家3放下叉子", "type": "immediate"},
+        {"id": "T7", "name": "哲学家4拿起叉子", "type": "immediate"},
+        {"id": "T8", "name": "哲学家4放下叉子", "type": "immediate"},
+        {"id": "T9", "name": "哲学家5拿起叉子", "type": "immediate"},
+        {"id": "T10", "name": "哲学家5放下叉子", "type": "immediate"}
+      ],
+      "arcs": [
+        {"from": "P1", "to": "T1", "weight": 1},
+        {"from": "P6", "to": "T1", "weight": 1},
+        {"from": "P7", "to": "T1", "weight": 1},
+        {"from": "T1", "to": "P11", "weight": 1},
+        {"from": "P11", "to": "T2", "weight": 1},
+        {"from": "T2", "to": "P6", "weight": 1},
+        {"from": "T2", "to": "P7", "weight": 1},
+        {"from": "T2", "to": "P1", "weight": 1}
+      ],
+      "properties": {
+        "bounded": true,
+        "safe": true,
+        "deadlock_free": false,
+        "live": false,
+        "reversible": false
+      },
+      "analysis_notes": "存在死锁可能，当所有哲学家同时拿起左叉子时"
+    },
+    {
+      "id": "PN002",
+      "name": "生产者-消费者",
+      "category": "communication",
+      "description": "单生产者单消费者，缓冲区容量为3",
+      "producers": 1,
+      "consumers": 1,
+      "buffer_size": 3,
+      "places": [
+        {"id": "P1", "name": "生产者空闲", "initial": 1, "capacity": 1},
+        {"id": "P2", "name": "生产者生产", "initial": 0, "capacity": 1},
+        {"id": "P3", "name": "缓冲区空位", "initial": 3, "capacity": 3},
+        {"id": "P4", "name": "缓冲区数据", "initial": 0, "capacity": 3},
+        {"id": "P5", "name": "消费者空闲", "initial": 1, "capacity": 1},
+        {"id": "P6", "name": "消费者消费", "initial": 0, "capacity": 1}
+      ],
+      "transitions": [
+        {"id": "T1", "name": "开始生产", "type": "immediate"},
+        {"id": "T2", "name": "生产完成", "type": "timed", "delay_ms": 100},
+        {"id": "T3", "name": "放入缓冲区", "type": "immediate"},
+        {"id": "T4", "name": "取出数据", "type": "immediate"},
+        {"id": "T5", "name": "消费数据", "type": "timed", "delay_ms": 150}
+      ],
+      "arcs": [
+        {"from": "P1", "to": "T1", "weight": 1},
+        {"from": "T1", "to": "P2", "weight": 1},
+        {"from": "P2", "to": "T2", "weight": 1},
+        {"from": "T2", "to": "T3", "weight": 1, "inhibitor": false},
+        {"from": "P3", "to": "T3", "weight": 1},
+        {"from": "T3", "to": "P4", "weight": 1},
+        {"from": "T3", "to": "P1", "weight": 1},
+        {"from": "P4", "to": "T4", "weight": 1},
+        {"from": "P5", "to": "T4", "weight": 1},
+        {"from": "T4", "to": "P6", "weight": 1},
+        {"from": "T4", "to": "P3", "weight": 1},
+        {"from": "P6", "to": "T5", "weight": 1},
+        {"from": "T5", "to": "P5", "weight": 1}
+      ],
+      "properties": {
+        "bounded": true,
+        "safe": false,
+        "deadlock_free": true,
+        "live": true,
+        "reversible": true
+      },
+      "invariants": {
+        "p_invariants": ["P3 + P4 = 3"],
+        "t_invariants": ["T1 T2 T3 T4 T5"]
+      }
+    },
+    {
+      "id": "PN003",
+      "name": "读者-写者问题",
+      "category": "resource_sharing",
+      "description": "多个读者和写者共享资源，读者优先策略",
+      "readers": 3,
+      "writers": 2,
+      "places": [
+        {"id": "P1", "name": "资源空闲", "initial": 1, "capacity": 1},
+        {"id": "P2", "name": "读者计数", "initial": 0, "capacity": 3},
+        {"id": "P3", "name": "读者等待", "initial": 0, "capacity": 3},
+        {"id": "P4", "name": "读者阅读", "initial": 0, "capacity": 3},
+        {"id": "P5", "name": "写者等待", "initial": 0, "capacity": 2},
+        {"id": "P6", "name": "写者写作", "initial": 0, "capacity": 1}
+      ],
+      "transitions": [
+        {"id": "T1", "name": "读者请求", "type": "immediate"},
+        {"id": "T2", "name": "读者进入", "type": "immediate"},
+        {"id": "T3", "name": "读者退出", "type": "immediate"},
+        {"id": "T4", "name": "写者请求", "type": "immediate"},
+        {"id": "T5", "name": "写者进入", "type": "immediate"},
+        {"id": "T6", "name": "写者退出", "type": "immediate"}
+      ],
+      "arcs": [
+        {"from": "P3", "to": "T2", "weight": 1},
+        {"from": "P1", "to": "T2", "weight": 1, "inhibitor": true, "condition": "test_zero"},
+        {"from": "T2", "to": "P4", "weight": 1},
+        {"from": "T2", "to": "P2", "weight": 1},
+        {"from": "P4", "to": "T3", "weight": 1},
+        {"from": "T3", "to": "P2", "weight": 1, "direction": "decrement"},
+        {"from": "P2", "to": "T3", "weight": 1, "condition": "if_zero_return_P1"},
+        {"from": "P5", "to": "T5", "weight": 1},
+        {"from": "P1", "to": "T5", "weight": 1},
+        {"from": "T5", "to": "P6", "weight": 1},
+        {"from": "P6", "to": "T6", "weight": 1},
+        {"from": "T6", "to": "P1", "weight": 1}
+      ],
+      "properties": {
+        "bounded": true,
+        "safe": true,
+        "deadlock_free": true,
+        "live": true,
+        "fair": false
+      },
+      "priority": "读者优先"
+    },
+    {
+      "id": "PN004",
+      "name": "并行流程工作流",
+      "category": "workflow",
+      "description": "AND-split 和 AND-join 模式的并行工作流",
+      "places": [
+        {"id": "P1", "name": "开始", "initial": 1, "capacity": 1},
+        {"id": "P2", "name": "任务A准备", "initial": 0, "capacity": 1},
+        {"id": "P3", "name": "任务B准备", "initial": 0, "capacity": 1},
+        {"id": "P4", "name": "任务C准备", "initial": 0, "capacity": 1},
+        {"id": "P5", "name": "任务A完成", "initial": 0, "capacity": 1},
+        {"id": "P6", "name": "任务B完成", "initial": 0, "capacity": 1},
+        {"id": "P7", "name": "任务C完成", "initial": 0, "capacity": 1},
+        {"id": "P8", "name": "合并就绪", "initial": 0, "capacity": 1},
+        {"id": "P9", "name": "结束", "initial": 0, "capacity": 1}
+      ],
+      "transitions": [
+        {"id": "T1", "name": "AND-Split", "type": "immediate"},
+        {"id": "T2", "name": "执行任务A", "type": "timed", "delay_ms": 200},
+        {"id": "T3", "name": "执行任务B", "type": "timed", "delay_ms": 300},
+        {"id": "T4", "name": "执行任务C", "type": "timed", "delay_ms": 250},
+        {"id": "T5", "name": "AND-Join", "type": "immediate"}
+      ],
+      "arcs": [
+        {"from": "P1", "to": "T1", "weight": 1},
+        {"from": "T1", "to": "P2", "weight": 1},
+        {"from": "T1", "to": "P3", "weight": 1},
+        {"from": "T1", "to": "P4", "weight": 1},
+        {"from": "P2", "to": "T2", "weight": 1},
+        {"from": "P3", "to": "T3", "weight": 1},
+        {"from": "P4", "to": "T4", "weight": 1},
+        {"from": "T2", "to": "P5", "weight": 1},
+        {"from": "T3", "to": "P6", "weight": 1},
+        {"from": "T4", "to": "P7", "weight": 1},
+        {"from": "P5", "to": "T5", "weight": 1},
+        {"from": "P6", "to": "T5", "weight": 1},
+        {"from": "P7", "to": "T5", "weight": 1},
+        {"from": "T5", "to": "P8", "weight": 1},
+        {"from": "P8", "to": "P9", "weight": 1}
+      ],
+      "workflow_patterns": ["and_split", "and_join"],
+      "critical_path": ["T1", "T3", "T5"],
+      "minimum_completion_time_ms": 500
+    },
+    {
+      "id": "PN005",
+      "name": "故障恢复系统",
+      "category": "fault_tolerant",
+      "description": "三模冗余(TMR)系统的Petri网模型",
+      "places": [
+        {"id": "P1", "name": "系统正常", "initial": 1, "capacity": 1},
+        {"id": "P2", "name": "模块A正常", "initial": 1, "capacity": 1},
+        {"id": "P3", "name": "模块B正常", "initial": 1, "capacity": 1},
+        {"id": "P4", "name": "模块C正常", "initial": 1, "capacity": 1},
+        {"id": "P5", "name": "模块A故障", "initial": 0, "capacity": 1},
+        {"id": "P6", "name": "模块B故障", "initial": 0, "capacity": 1},
+        {"id": "P7", "name": "模块C故障", "initial": 0, "capacity": 1},
+        {"id": "P8", "name": "系统降级", "initial": 0, "capacity": 1},
+        {"id": "P9", "name": "系统故障", "initial": 0, "capacity": 1}
+      ],
+      "transitions": [
+        {"id": "T1", "name": "模块A故障", "type": "stochastic", "rate": 0.001},
+        {"id": "T2", "name": "模块B故障", "type": "stochastic", "rate": 0.001},
+        {"id": "T3", "name": "模块C故障", "type": "stochastic", "rate": 0.001},
+        {"id": "T4", "name": "进入降级模式", "type": "immediate"},
+        {"id": "T5", "name": "系统崩溃", "type": "immediate"},
+        {"id": "T6", "name": "模块A修复", "type": "timed", "delay_ms": 5000},
+        {"id": "T7", "name": "模块B修复", "type": "timed", "delay_ms": 5000},
+        {"id": "T8", "name": "模块C修复", "type": "timed", "delay_ms": 5000}
+      ],
+      "arcs": [
+        {"from": "P2", "to": "T1", "weight": 1},
+        {"from": "T1", "to": "P5", "weight": 1},
+        {"from": "P3", "to": "T2", "weight": 1},
+        {"from": "T2", "to": "P6", "weight": 1},
+        {"from": "P4", "to": "T3", "weight": 1},
+        {"from": "T3", "to": "P7", "weight": 1}
+      ],
+      "fault_tolerance": {
+        "redundancy_level": 3,
+        "voting_mechanism": "majority",
+        "recovery_strategy": "hot_standby"
+      },
+      "reliability": {
+        "mission_time_hours": 1000,
+        "system_reliability": 0.9999,
+        "mtbf_hours": 10000
+      }
+    }
+  ]
+}

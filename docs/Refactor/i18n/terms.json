@@ -1,0 +1,392 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "FormalScience Terminology Database",
+    "lastUpdated": "2026-04-11",
+    "maintainers": ["FormalScience i18n Team"]
+  },
+  "categories": {
+    "core_concepts": {
+      "name": "核心概念",
+      "description": "FormalScience 核心概念术语"
+    },
+    "system_components": {
+      "name": "系统组件",
+      "description": "系统架构和组件相关术语"
+    },
+    "mathematics": {
+      "name": "数学术语",
+      "description": "数学领域专业术语"
+    },
+    "computing": {
+      "name": "计算机术语",
+      "description": "计算机科学术语"
+    },
+    "networking": {
+      "name": "网络术语",
+      "description": "网络和通信相关术语"
+    }
+  },
+  "terms": {
+    "formal_science": {
+      "category": "core_concepts",
+      "translations": {
+        "zh-CN": "形式化科学",
+        "en": "Formal Science",
+        "ja": "形式科学",
+        "ko": "형식과학"
+      },
+      "definition": {
+        "zh-CN": "研究抽象结构和形式的学科，包括数学、逻辑学、统计学等",
+        "en": "The study of abstract structures and forms, including mathematics, logic, and statistics",
+        "ja": "数学、論理学、統計学など、抽象的な構造と形式を研究する学問",
+        "ko": "수학, 논리학, 통계학 등 추상적 구조와 형식을 연구하는 학문"
+      },
+      "examples": [
+        "形式化科学为计算机科学提供了理论基础",
+        "Formal science provides the theoretical foundation for computer science"
+      ],
+      "priority": "P0"
+    },
+    "mathematics": {
+      "category": "core_concepts",
+      "translations": {
+        "zh-CN": "数学",
+        "en": "Mathematics",
+        "ja": "数学",
+        "ko": "수학"
+      },
+      "definition": {
+        "zh-CN": "研究数量、结构、变化以及空间等概念的学科",
+        "en": "The study of quantity, structure, change, and space",
+        "ja": "数量、構造、変化、空間などを研究する学問",
+        "ko": "수량, 구조, 변화, 공간 등을 연구하는 학문"
+      },
+      "examples": [
+        "数学是形式化科学的核心组成部分",
+        "Mathematics is a core component of formal science"
+      ],
+      "priority": "P0"
+    },
+    "logic": {
+      "category": "core_concepts",
+      "translations": {
+        "zh-CN": "逻辑学",
+        "en": "Logic",
+        "ja": "論理学",
+        "ko": "논리학"
+      },
+      "definition": {
+        "zh-CN": "研究推理和论证的学科",
+        "en": "The study of reasoning and argumentation",
+        "ja": "推論と論証を研究する学問",
+        "ko": "추론과 논증을 연구하는 학문"
+      },
+      "examples": [
+        "逻辑学为形式化证明提供了基础",
+        "Logic provides the foundation for formal proofs"
+      ],
+      "priority": "P0"
+    },
+    "statistics": {
+      "category": "core_concepts",
+      "translations": {
+        "zh-CN": "统计学",
+        "en": "Statistics",
+        "ja": "統計学",
+        "ko": "통계학"
+      },
+      "definition": {
+        "zh-CN": "收集、分析、解释和展示数据的学科",
+        "en": "The discipline of collecting, analyzing, interpreting, and presenting data",
+        "ja": "データの収集、分析、解釈、提示を行う学問",
+        "ko": "데이터의 수집, 분석, 해석, 제시를 다루는 학문"
+      },
+      "examples": [
+        "统计学在数据分析中起着关键作用",
+        "Statistics plays a key role in data analysis"
+      ],
+      "priority": "P0"
+    },
+    "computer_science": {
+      "category": "core_concepts",
+      "translations": {
+        "zh-CN": "计算机科学",
+        "en": "Computer Science",
+        "ja": "計算機科学",
+        "ko": "컴퓨터과학"
+      },
+      "definition": {
+        "zh-CN": "研究计算理论和计算的学科",
+        "en": "The study of computation theory and computing",
+        "ja": "計算理論と計算を研究する学問",
+        "ko": "계산이론과 컴퓨팅을 연구하는 학문"
+      },
+      "examples": [
+        "计算机科学建立在形式化科学的基础之上",
+        "Computer science is built upon the foundation of formal science"
+      ],
+      "priority": "P0"
+    },
+    "core_scheduler": {
+      "category": "system_components",
+      "translations": {
+        "zh-CN": "核心调度器",
+        "en": "Core Scheduler",
+        "ja": "コアスケジューラ",
+        "ko": "코어 스케줄러"
+      },
+      "definition": {
+        "zh-CN": "负责系统任务调度的核心组件",
+        "en": "The core component responsible for system task scheduling",
+        "ja": "システムタスクのスケジューリングを担当するコアコンポーネント",
+        "ko": "시스템 작업 스케줄링을 담당하는 핵심 컴포넌트"
+      },
+      "examples": [
+        "核心调度器优化了任务分配效率",
+        "The core scheduler optimizes task allocation efficiency"
+      ],
+      "priority": "P0"
+    },
+    "network_scheduler": {
+      "category": "system_components",
+      "translations": {
+        "zh-CN": "网络调度器",
+        "en": "Network Scheduler",
+        "ja": "ネットワークスケジューラ",
+        "ko": "네트워크 스케줄러"
+      },
+      "definition": {
+        "zh-CN": "负责网络资源调度的组件",
+        "en": "The component responsible for network resource scheduling",
+        "ja": "ネットワークリソースのスケジューリングを担当するコンポーネント",
+        "ko": "네트워크 리소스 스케줄링을 담당하는 컴포넌트"
+      },
+      "examples": [
+        "网络调度器管理网络流量的分配",
+        "The network scheduler manages network traffic distribution"
+      ],
+      "priority": "P0"
+    },
+    "resource_manager": {
+      "category": "system_components",
+      "translations": {
+        "zh-CN": "资源管理器",
+        "en": "Resource Manager",
+        "ja": "リソースマネージャ",
+        "ko": "리소스 관리자"
+      },
+      "definition": {
+        "zh-CN": "管理系统资源的组件",
+        "en": "The component that manages system resources",
+        "ja": "システムリソースを管理するコンポーネント",
+        "ko": "시스템 리소스를 관리하는 컴포넌트"
+      },
+      "examples": [
+        "资源管理器监控资源使用情况",
+        "The resource manager monitors resource usage"
+      ],
+      "priority": "P1"
+    },
+    "task_queue": {
+      "category": "system_components",
+      "translations": {
+        "zh-CN": "任务队列",
+        "en": "Task Queue",
+        "ja": "タスクキュー",
+        "ko": "작업 큐"
+      },
+      "definition": {
+        "zh-CN": "存储待处理任务的数据结构",
+        "en": "A data structure that stores tasks waiting to be processed",
+        "ja": "処理待ちタスクを保存するデータ構造",
+        "ko": "처리 대기 작업을 저장하는 데이터 구조"
+      },
+      "examples": [
+        "任务队列确保任务按顺序执行",
+        "The task queue ensures tasks are executed in order"
+      ],
+      "priority": "P1"
+    },
+    "theorem": {
+      "category": "mathematics",
+      "translations": {
+        "zh-CN": "定理",
+        "en": "Theorem",
+        "ja": "定理",
+        "ko": "정리"
+      },
+      "definition": {
+        "zh-CN": "经过严格证明的数学命题",
+        "en": "A mathematical proposition that has been rigorously proven",
+        "ja": "厳密に証明された数学的命題",
+        "ko": "엄격하게 증명된 수학적 명제"
+      },
+      "examples": [
+        "勾股定理是几何学中的基本定理",
+        "The Pythagorean theorem is a fundamental theorem in geometry"
+      ],
+      "priority": "P1"
+    },
+    "lemma": {
+      "category": "mathematics",
+      "translations": {
+        "zh-CN": "引理",
+        "en": "Lemma",
+        "ja": "補題",
+        "ko": "보조정리"
+      },
+      "definition": {
+        "zh-CN": "用于证明定理的辅助命题",
+        "en": "An auxiliary proposition used to prove a theorem",
+        "ja": "定理の証明に使用される補助的な命題",
+        "ko": "정리 증명에 사용되는 보조 명제"
+      },
+      "examples": [
+        "这个引理在证明主要定理时起着关键作用",
+        "This lemma plays a crucial role in proving the main theorem"
+      ],
+      "priority": "P1"
+    },
+    "proof": {
+      "category": "mathematics",
+      "translations": {
+        "zh-CN": "证明",
+        "en": "Proof",
+        "ja": "証明",
+        "ko": "증명"
+      },
+      "definition": {
+        "zh-CN": "验证数学命题真实性的逻辑过程",
+        "en": "A logical process to verify the truth of a mathematical proposition",
+        "ja": "数学的命題の真実性を検証する論理的過程",
+        "ko": "수학적 명제의 진위를 검증하는 논리적 과정"
+      },
+      "examples": [
+        "数学证明要求严格的逻辑推导",
+        "Mathematical proofs require rigorous logical deduction"
+      ],
+      "priority": "P1"
+    },
+    "algorithm": {
+      "category": "computing",
+      "translations": {
+        "zh-CN": "算法",
+        "en": "Algorithm",
+        "ja": "アルゴリズム",
+        "ko": "알고리즘"
+      },
+      "definition": {
+        "zh-CN": "解决问题的明确步骤序列",
+        "en": "A well-defined sequence of steps to solve a problem",
+        "ja": "問題を解決する明確なステップの順序",
+        "ko": "문제를 해결하는 명확한 단계 순서"
+      },
+      "examples": [
+        "排序算法是计算机科学的基础",
+        "Sorting algorithms are fundamental to computer science"
+      ],
+      "priority": "P1"
+    },
+    "data_structure": {
+      "category": "computing",
+      "translations": {
+        "zh-CN": "数据结构",
+        "en": "Data Structure",
+        "ja": "データ構造",
+        "ko": "자료구조"
+      },
+      "definition": {
+        "zh-CN": "组织和存储数据的方式",
+        "en": "A way of organizing and storing data",
+        "ja": "データを整理・保存する方法",
+        "ko": "데이터를 구성하고 저장하는 방식"
+      },
+      "examples": [
+        "选择合适的数据结构可以提高程序效率",
+        "Choosing the right data structure can improve program efficiency"
+      ],
+      "priority": "P1"
+    },
+    "complexity": {
+      "category": "computing",
+      "translations": {
+        "zh-CN": "复杂度",
+        "en": "Complexity",
+        "ja": "複雑度",
+        "ko": "복잡도"
+      },
+      "definition": {
+        "zh-CN": "算法资源消耗的度量",
+        "en": "A measure of algorithm resource consumption",
+        "ja": "アルゴリズムのリソース消費の尺度",
+        "ko": "알고리즘 리소스 소비의 척도"
+      },
+      "examples": [
+        "时间复杂度描述了算法执行时间随输入增长的变化",
+        "Time complexity describes how execution time grows with input"
+      ],
+      "priority": "P1"
+    },
+    "load_balancing": {
+      "category": "networking",
+      "translations": {
+        "zh-CN": "负载均衡",
+        "en": "Load Balancing",
+        "ja": "負荷分散",
+        "ko": "로드 밸런싱"
+      },
+      "definition": {
+        "zh-CN": "将工作负载分配到多个资源的技术",
+        "en": "A technique to distribute workload across multiple resources",
+        "ja": "複数のリソース間でワークロードを分散する技術",
+        "ko": "여러 리소스 간에 작업 부하를 분산하는 기술"
+      },
+      "examples": [
+        "负载均衡提高了系统的可用性和性能",
+        "Load balancing improves system availability and performance"
+      ],
+      "priority": "P1"
+    },
+    "latency": {
+      "category": "networking",
+      "translations": {
+        "zh-CN": "延迟",
+        "en": "Latency",
+        "ja": "レイテンシ",
+        "ko": "지연 시간"
+      },
+      "definition": {
+        "zh-CN": "数据传输的时间延迟",
+        "en": "The time delay in data transmission",
+        "ja": "データ転送の時間遅延",
+        "ko": "데이터 전송의 시간 지연"
+      },
+      "examples": [
+        "低延迟对于实时应用至关重要",
+        "Low latency is critical for real-time applications"
+      ],
+      "priority": "P2"
+    },
+    "throughput": {
+      "category": "networking",
+      "translations": {
+        "zh-CN": "吞吐量",
+        "en": "Throughput",
+        "ja": "スループット",
+        "ko": "처리량"
+      },
+      "definition": {
+        "zh-CN": "系统处理能力的度量",
+        "en": "A measure of system processing capacity",
+        "ja": "システム処理能力の尺度",
+        "ko": "시스템 처리 용량의 척도"
+      },
+      "examples": [
+        "高吞吐量意味着系统可以处理更多请求",
+        "High throughput means the system can handle more requests"
+      ],
+      "priority": "P2"
+    }
+  }
+}

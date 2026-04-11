@@ -1,0 +1,204 @@
+{
+  "version": "1.0.0",
+  "description": "类型表达式示例集合",
+  "type_system": "Hindley-Milner with extensions",
+  "categories": [
+    "primitive",
+    "function",
+    "polymorphic",
+    "algebraic",
+    "dependent",
+    "higher_order"
+  ],
+  "expressions": [
+    {
+      "id": "TE001",
+      "name": "恒等函数类型",
+      "category": "polymorphic",
+      "notation": "∀α. α → α",
+      "ascii": "forall a. a -> a",
+      "language_examples": {
+        "haskell": "id :: a -> a",
+        "rust": "fn id<T>(x: T) -> T",
+        "typescript": "<T>(x: T) => T",
+        "lean": "{α : Type} → α → α"
+      },
+      "properties": {
+        "parametricity": true,
+        "isomorphism": "单元素集合"
+      },
+      "inhabitants_count": 1,
+      "difficulty": "beginner"
+    },
+    {
+      "id": "TE002",
+      "name": "常量函数类型",
+      "category": "polymorphic",
+      "notation": "∀αβ. α → β → α",
+      "ascii": "forall a b. a -> b -> a",
+      "language_examples": {
+        "haskell": "const :: a -> b -> a",
+        "rust": "fn const_<T, U>(x: T) -> impl Fn(U) -> T",
+        "typescript": "<A, B>(a: A) => (b: B) => A",
+        "lean": "{α β : Type} → α → β → α"
+      },
+      "properties": {
+        "parametricity": true,
+        "currying": true
+      },
+      "inhabitants_count": "infinite",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "TE003",
+      "name": "列表类型构造器",
+      "category": "higher_order",
+      "notation": "Type → Type",
+      "ascii": "Type -> Type",
+      "language_examples": {
+        "haskell": "data List a",
+        "rust": "struct Vec<T>",
+        "lean": "List : Type → Type"
+      },
+      "properties": {
+        "functor": true,
+        "monad": true,
+        "foldable": true,
+        "traversable": true
+      },
+      "kind": "* → *",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "TE004",
+      "name": "Either类型",
+      "category": "algebraic",
+      "notation": "∀αβ. α + β",
+      "ascii": "forall a b. Either a b",
+      "language_examples": {
+        "haskell": "data Either a b = Left a | Right b",
+        "rust": "enum Result<T, E> { Ok(T), Err(E) }",
+        "typescript": "type Either<A, B> = { tag: 'Left'; value: A } | { tag: 'Right'; value: B }",
+        "lean": "inductive Either (α β : Type) | left : α → Either α β | right : β → Either α β"
+      },
+      "properties": {
+        "sum_type": true,
+        "functor": true,
+        "bifunctor": true,
+        "monad": "在右侧"
+      },
+      "constructors": ["Left", "Right"],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "TE005",
+      "name": "函数复合类型",
+      "category": "function",
+      "notation": "∀αβγ. (β → γ) → (α → β) → α → γ",
+      "ascii": "forall a b c. (b -> c) -> (a -> b) -> a -> c",
+      "language_examples": {
+        "haskell": "(.) :: (b -> c) -> (a -> b) -> a -> c",
+        "rust": "fn compose<A, B, C>(f: impl Fn(B) -> C, g: impl Fn(A) -> B) -> impl Fn(A) -> C",
+        "typescript": "<A, B, C>(f: (b: B) => C) => (g: (a: A) => B) => (a: A) => C"
+      },
+      "properties": {
+        "associative": true,
+        "identity": "id 函数"
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "TE006",
+      "name": "依赖函数类型",
+      "category": "dependent",
+      "notation": "(n : ℕ) → Vec ℕ n",
+      "ascii": "(n : Nat) -> Vec Nat n",
+      "language_examples": {
+        "agda": "(n : ℕ) → Vec ℕ n",
+        "lean": "(n : ℕ) → Vector ℕ n",
+        "idris": "(n : Nat) -> Vect Nat n"
+      },
+      "properties": {
+        "dependent": true,
+        "indexed": true
+      },
+      "explanation": "返回类型依赖于参数值，生成固定长度的向量",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "TE007",
+      "name": "多态递归类型",
+      "category": "polymorphic",
+      "notation": "μX. ∀α. 1 + α × X α",
+      "ascii": "mu X. forall a. Unit + a * X a",
+      "language_examples": {
+        "haskell": "data List a = Nil | Cons a (List a)",
+        "rust": "enum List<T> { Nil, Cons(T, Box<List<T>>) }",
+        "lean": "inductive List (α : Type) | nil : List α | cons : α → List α → List α"
+      },
+      "properties": {
+        "recursive": true,
+        "initial_algebra": true,
+        "catamorphism": true
+      },
+      "isomorphism": "所有有限序列",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "TE008",
+      "name": "状态单子",
+      "category": "higher_order",
+      "notation": "∀sα. s → (α × s)",
+      "ascii": "forall s a. s -> (a, s)",
+      "language_examples": {
+        "haskell": "newtype State s a = State { runState :: s -> (a, s) }",
+        "rust": "struct State<S, A>(Box<dyn Fn(S) -> (A, S)>)",
+        "typescript": "type State<S, A> = (s: S) => [A, S]"
+      },
+      "properties": {
+        "monad": true,
+        "functor": true,
+        "applicative": true
+      },
+      "operations": ["get", "put", "modify", "runState", "evalState", "execState"],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "TE009",
+      "name": "存在类型",
+      "category": "polymorphic",
+      "notation": "∃α. (α × (α → String))",
+      "ascii": "exists a. (a, a -> String)",
+      "language_examples": {
+        "haskell": "data Showable = forall a. Show a => Showable a",
+        "rust": "trait Showable { fn show(&self) -> String; }",
+        "typescript": "{ value: unknown; show: (x: unknown) => string }"
+      },
+      "properties": {
+        "existential": true,
+        "information_hiding": true
+      },
+      "use_cases": ["抽象数据类型", "异构集合", "对象封装"],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "TE010",
+      "name": "线性函数类型",
+      "category": "function",
+      "notation": "A ⊸ B",
+      "ascii": "A -o B",
+      "language_examples": {
+        "haskell_linear": "a %1 -> b",
+        "rust": "fn linear<A, B>(a: A) -> B  // 所有权转移",
+        "clean": ":: A -> . B"
+      },
+      "properties": {
+        "linear": true,
+        "resource_tracking": true,
+        "affine": false
+      },
+      "explanation": "参数必须恰好使用一次，用于资源管理",
+      "difficulty": "advanced"
+    }
+  ]
+}

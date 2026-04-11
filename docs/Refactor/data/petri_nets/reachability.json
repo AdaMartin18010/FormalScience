@@ -1,0 +1,205 @@
+{
+  "version": "1.0.0",
+      "description": "Petri网可达性分析结果",
+  "analysis_types": ["reachability", "coverability", "boundedness", "liveness"],
+  "results": [
+    {
+      "model_id": "PN002",
+      "model_name": "生产者-消费者",
+      "reachability_analysis": {
+        "reachable_set_size": 12,
+        "coverability_graph_nodes": 12,
+        "omega_nodes": 0,
+        "is_finite": true,
+        "query_results": [
+          {
+            "query_id": "RQ001",
+            "target_marking": "P4=2, P5=1",
+            "reachable": true,
+            "witness_path": ["S0", "S1", "S2", "S5", "S7"],
+            "path_length": 4,
+            "verification_time_ms": 12
+          },
+          {
+            "query_id": "RQ002",
+            "target_marking": "P4=4",
+            "reachable": false,
+            "reason": "超出缓冲区容量限制(P3+P4=3)",
+            "verification_time_ms": 8
+          },
+          {
+            "query_id": "RQ003",
+            "target_marking": "P6=1, P2=1",
+            "reachable": false,
+            "reason": "互斥约束：不能同时生产和消费",
+            "verification_time_ms": 10
+          }
+        ]
+      },
+      "invariant_analysis": {
+        "p_invariants": [
+          {
+            "id": "PI1",
+            "vector": {"P1": 1, "P2": 1, "P3": 0, "P4": 0, "P5": 0, "P6": 0},
+            "interpretation": "生产者要么空闲，要么在生产"
+          },
+          {
+            "id": "PI2",
+            "vector": {"P1": 0, "P2": 0, "P3": 1, "P4": 1, "P5": 0, "P6": 0},
+            "interpretation": "缓冲区槽位守恒"
+          },
+          {
+            "id": "PI3",
+            "vector": {"P1": 0, "P2": 0, "P3": 0, "P4": 0, "P5": 1, "P6": 1},
+            "interpretation": "消费者要么空闲，要么在消费"
+          }
+        ],
+        "t_invariants": [
+          {
+            "id": "TI1",
+            "vector": {"T1": 1, "T2": 1, "T3": 1, "T4": 1, "T5": 1},
+            "interpretation": "完整生产-消费周期",
+            "minimal": true
+          }
+        ],
+        "computation_time_ms": 35
+      }
+    },
+    {
+      "model_id": "PN001",
+      "model_name": "哲学家就餐问题",
+      "reachability_analysis": {
+        "reachable_set_size": 32,
+        "coverability_graph_nodes": 32,
+        "omega_nodes": 0,
+        "deadlock_states": [
+          {
+            "id": "D1",
+            "description": "所有哲学家持有左叉子",
+            "marking": "P11=1, P12=1, P13=1, P14=1, P15=1, P6-P10=0"
+          }
+        ],
+        "trap_states": [],
+        "home_states": [],
+        "query_results": [
+          {
+            "query_id": "RQ004",
+            "target_marking": "P11=1 (哲学家1就餐)",
+            "reachable": true,
+            "witness_path": ["S0", "S_phil1_pickup"],
+            "path_length": 2
+          },
+          {
+            "query_id": "RQ005",
+            "target_marking": "所有哲学家同时就餐",
+            "reachable": false,
+            "reason": "资源约束：只有5把叉子"
+          },
+          {
+            "query_id": "RQ006",
+            "target_marking": "死锁状态",
+            "reachable": true,
+            "witness_path": ["S0", "...", "D1"],
+            "path_length": 5
+          }
+        ]
+      },
+      "liveness_analysis": {
+        "quasi_live": true,
+        "live": false,
+        "deadlock_free": false,
+        "transitions": {
+          "T1": {"l0": true, "l1": true, "l2": false, "l3": false, "l4": false},
+          "T2": {"l0": true, "l1": true, "l2": false, "l3": false, "l4": false}
+        }
+      },
+      "boundedness_analysis": {
+        "bounded": true,
+        "safe": true,
+        "k_bounded": 1,
+        "place_bounds": {
+          "P1-P5": {"bound": 1, "explanation": "哲学家要么思考要么就餐"},
+          "P6-P10": {"bound": 1, "explanation": "每把叉子最多被一人持有"},
+          "P11-P15": {"bound": 1, "explanation": "就餐状态互斥"}
+        }
+      }
+    },
+    {
+      "model_id": "PN003",
+      "model_name": "读者-写者问题",
+      "reachability_analysis": {
+        "reachable_set_size": 24,
+        "fairness_violations": [
+          {
+            "type": "writer_starvation",
+            "description": "持续到来的读者可能使写者无限等待",
+            "possible": true
+          }
+        ]
+      },
+      "invariant_analysis": {
+        "mutual_exclusion": [
+          "P6=0 ∨ (P4=0 ∧ P2=0)",
+          "解释：写者写作时，不能有读者阅读或有读者计数"
+        ],
+        "reader_counting": [
+          "P2 = Σ(读者进入) - Σ(读者退出)",
+          "解释：读者计数等于当前活跃的读者数"
+        ]
+      }
+    },
+    {
+      "model_id": "PN004",
+      "model_name": "并行流程工作流",
+      "reachability_analysis": {
+        "sound": true,
+        "proper_completion": true,
+        "no_dead_tasks": true,
+        "option_to_complete": true,
+        "safeness": true,
+        "workflow_patterns": {
+          "and_split": {
+            "correctness": true,
+            "firing_semantics": "one_token_to_each_branch"
+          },
+          "and_join": {
+            "correctness": true,
+            "synchronization": "wait_for_all_branches"
+          }
+        }
+      },
+      "temporal_properties": {
+        "ctl": [
+          {
+            "formula": "AG(P1=1 → EF(P9=1))",
+            "description": "从开始总能到达结束",
+            "satisfied": true
+          },
+          {
+            "formula": "AG(P2=1 → AF(P5=1))",
+            "description": "任务A完成后最终会标记完成",
+            "satisfied": true
+          }
+        ],
+        "ltl": [
+          {
+            "formula": "G(P1=1 → F(P9=1))",
+            "description": "每次执行最终都会完成",
+            "satisfied": true
+          }
+        ]
+      }
+    }
+  ],
+  "verification_statistics": {
+    "total_models_analyzed": 5,
+    "total_reachability_queries": 12,
+    "average_verification_time_ms": 125,
+    "tools_used": ["TINA", "LoLA", "PIPE"],
+    "theoretical_complexity": {
+      "reachability": "EXPSPACE-complete",
+      "coverability": "EXPSPACE-complete",
+      "boundedness": "PSPACE-complete"
+    }
+  }
+}

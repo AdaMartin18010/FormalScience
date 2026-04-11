@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f7fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e4e8ec;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+  
+  <!-- 窗口框架 -->
+  <rect x="50" y="40" width="700" height="520" rx="8" fill="white" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- 窗口标题栏 -->
+  <rect x="50" y="40" width="700" height="40" rx="8" fill="#f8f9fa"/>
+  <rect x="50" y="68" width="700" height="12" fill="#f8f9fa"/>
+  
+  <!-- 窗口控制按钮 -->
+  <circle cx="80" cy="60" r="6" fill="#ff5f56"/>
+  <circle cx="100" cy="60" r="6" fill="#ffbd2e"/>
+  <circle cx="120" cy="60" r="6" fill="#27ca40"/>
+  
+  <!-- 侧边栏 -->
+  <rect x="70" y="100" width="180" height="440" rx="4" fill="#f8f9fa"/>
+  
+  <!-- 侧边栏菜单项 -->
+  <rect x="90" y="130" width="140" height="30" rx="4" fill="url(#accentGrad)"/>
+  <rect x="90" y="180" width="100" height="20" rx="4" fill="#e4e8ec"/>
+  <rect x="90" y="220" width="120" height="20" rx="4" fill="#e4e8ec"/>
+  <rect x="90" y="260" width="90" height="20" rx="4" fill="#e4e8ec"/>
+  
+  <!-- 主内容区 -->
+  <rect x="280" y="100" width="450" height="200" rx="4" fill="url(#accentGrad)" opacity="0.1"/>
+  <rect x="280" y="100" width="450" height="200" rx="4" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- 内容卡片 -->
+  <rect x="300" y="320" width="200" height="100" rx="6" fill="white" stroke="#e4e8ec" stroke-width="1"/>
+  <rect x="320" y="340" width="80" height="10" rx="2" fill="#667eea"/>
+  <rect x="320" y="360" width="150" height="6" rx="2" fill="#ddd"/>
+  <rect x="320" y="375" width="120" height="6" rx="2" fill="#ddd"/>
+  <rect x="320" y="390" width="100" height="6" rx="2" fill="#ddd"/>
+  
+  <rect x="530" y="320" width="200" height="100" rx="6" fill="white" stroke="#e4e8ec" stroke-width="1"/>
+  <rect x="550" y="340" width="80" height="10" rx="2" fill="#764ba2"/>
+  <rect x="550" y="360" width="150" height="6" rx="2" fill="#ddd"/>
+  <rect x="550" y="375" width="120" height="6" rx="2" fill="#ddd"/>
+  <rect x="550" y="390" width="100" height="6" rx="2" fill="#ddd"/>
+  
+  <rect x="300" y="440" width="430" height="80" rx="6" fill="white" stroke="#e4e8ec" stroke-width="1"/>
+  <rect x="320" y="460" width="120" height="10" rx="2" fill="#43e97b"/>
+  <rect x="320" y="485" width="380" height="6" rx="2" fill="#ddd"/>
+  <rect x="320" y="498" width="350" height="6" rx="2" fill="#ddd"/>
+  
+  <!-- 占位符文字 -->
+  <text x="400" y="280" font-family="Arial, sans-serif" font-size="24" fill="#999" text-anchor="middle">
+    项目截图占位
+  </text>
+  <text x="400" y="310" font-family="Arial, sans-serif" font-size="14" fill="#bbb" text-anchor="middle">
+    Screenshot Placeholder
+  </text>
+  
+  <!-- Logo 装饰 -->
+  <circle cx="680" cy="70" r="15" fill="url(#accentGrad)" opacity="0.3"/>
+  <polygon points="680,60 688,75 672,75" fill="url(#accentGrad)"/>
+</svg>

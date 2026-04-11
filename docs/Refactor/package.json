@@ -1,0 +1,70 @@
+{
+  "name": "formalscience-refactor",
+  "version": "1.0.0",
+  "description": "FormalScience项目重构与文档工具",
+  "main": "index.js",
+  "scripts": {
+    "build": "make build",
+    "test": "make test",
+    "clean": "make clean",
+    "install:all": "make install",
+    "docs": "make docs",
+    "docs:serve": "make serve",
+    "docs:build": "npx mdbook build ./docs",
+    "serve": "make serve",
+    "deploy": "make deploy",
+    "lint": "make lint",
+    "lint:md": "npx markdownlint-cli2 '**/*.md'",
+    "watch": "make watch",
+    "check": "make check",
+    "setup": "bash scripts/setup.sh",
+    "dev": "bash scripts/dev.sh",
+    "dev:lean": "cd ../Concept && lake build --watch",
+    "dev:rust": "cd ../FormalRE && cargo watch -x build",
+    "preview": "npx vite --port 3000 --open",
+    "format:md": "npx prettier --write '**/*.md'",
+    "format:json": "npx prettier --write '**/*.json'"
+  },
+  "keywords": [
+    "formal-verification",
+    "lean4",
+    "rust",
+    "python",
+    "mathematics",
+    "type-theory",
+    "documentation"
+  ],
+  "author": "FormalScience Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/formalscience.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-table-of-contents": "^0.6.0",
+    "highlight.js": "^11.9.0",
+    "katex": "^0.16.9",
+    "mermaid": "^10.6.1"
+  },
+  "devDependencies": {
+    "mdbook": "^0.4.36",
+    "vite": "^5.0.10",
+    "vite-plugin-static-copy": "^1.0.0",
+    "markdownlint-cli2": "^0.12.1",
+    "prettier": "^3.1.1",
+    "live-server": "^1.2.2",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  },
+  "optionalDependencies": {
+    "@leanprover/lean4-cli": "^0.0.1",
+    "@types/node": "^20.10.5"
+  }
+}

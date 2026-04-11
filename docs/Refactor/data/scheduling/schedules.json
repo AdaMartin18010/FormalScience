@@ -1,0 +1,108 @@
+{
+  "version": "1.0.0",
+  "description": "调度结果示例",
+  "schedules": [
+    {
+      "id": "SCH001",
+      "task_set_id": "TS001",
+      "algorithm": "RateMonotonic",
+      "hyperperiod": 100,
+      "timeline": [
+        {"time": 0, "task": "T1", "action": "start", "core": 0},
+        {"time": 2, "task": "T1", "action": "complete", "core": 0},
+        {"time": 2, "task": "T2", "action": "start", "core": 0},
+        {"time": 7, "task": "T2", "action": "complete", "core": 0},
+        {"time": 10, "task": "T1", "action": "start", "core": 0},
+        {"time": 12, "task": "T1", "action": "complete", "core": 0},
+        {"time": 12, "task": "T3", "action": "start", "core": 0},
+        {"time": 20, "task": "T2", "action": "start", "core": 0},
+        {"time": 20, "task": "T3", "action": "preempt", "core": 0},
+        {"time": 25, "task": "T2", "action": "complete", "core": 0},
+        {"time": 25, "task": "T3", "action": "resume", "core": 0},
+        {"time": 28, "task": "T3", "action": "complete", "core": 0}
+      ],
+      "statistics": {
+        "total_jobs": 17,
+        "completed_jobs": 17,
+        "missed_deadlines": 0,
+        "context_switches": 4,
+        "preemptions": 1,
+        "average_response_time": 8.5,
+        "maximum_response_time": 20
+      },
+      "feasibility": {
+        "schedulable": true,
+        "utilization_test": "U = 0.71 ≤ 4(2^(1/4)-1) ≈ 0.757",
+        "response_time_analysis": "all tasks R_i ≤ D_i"
+      }
+    },
+    {
+      "id": "SCH002",
+      "task_set_id": "TS001",
+      "algorithm": "EDF",
+      "hyperperiod": 100,
+      "timeline": [
+        {"time": 0, "task": "T1", "action": "start", "core": 0},
+        {"time": 2, "task": "T1", "action": "complete", "core": 0},
+        {"time": 2, "task": "T2", "action": "start", "core": 0},
+        {"time": 7, "task": "T2", "action": "complete", "core": 0},
+        {"time": 10, "task": "T1", "action": "start", "core": 0},
+        {"time": 12, "task": "T1", "action": "complete", "core": 0},
+        {"time": 12, "task": "T2", "action": "start", "core": 0},
+        {"time": 17, "task": "T2", "action": "complete", "core": 0},
+        {"time": 17, "task": "T3", "action": "start", "core": 0},
+        {"time": 25, "task": "T3", "action": "complete", "core": 0}
+      ],
+      "statistics": {
+        "total_jobs": 17,
+        "completed_jobs": 17,
+        "missed_deadlines": 0,
+        "context_switches": 3,
+        "preemptions": 0,
+        "average_response_time": 7.2,
+        "maximum_response_time": 18
+      },
+      "feasibility": {
+        "schedulable": true,
+        "utilization_test": "U = 0.71 ≤ 1.0 (optimal for EDF)"
+      }
+    },
+    {
+      "id": "SCH003",
+      "task_set_id": "TS003",
+      "algorithm": "PartitionedEDF",
+      "hyperperiod": 3300,
+      "assignment": {
+        "core_0": ["M1"],
+        "core_1": ["M1"],
+        "core_2": ["M2"],
+        "core_3": ["M3"]
+      },
+      "timeline": [
+        {"time": 0, "task": "M3", "action": "start", "core": 3},
+        {"time": 1, "task": "M3", "action": "complete", "core": 3},
+        {"time": 5, "task": "M3", "action": "start", "core": 3},
+        {"time": 6, "task": "M3", "action": "complete", "core": 3},
+        {"time": 10, "task": "M2", "action": "start", "core": 2},
+        {"time": 13, "task": "M2", "action": "complete", "core": 2}
+      ],
+      "statistics": {
+        "total_jobs": 128,
+        "completed_jobs": 128,
+        "missed_deadlines": 0,
+        "inter_core_migrations": 0,
+        "average_load_balance": 0.85,
+        "core_utilization": {
+          "core_0": 0.76,
+          "core_1": 0.76,
+          "core_2": 0.30,
+          "core_3": 0.20
+        }
+      },
+      "feasibility": {
+        "schedulable": true,
+        "partitioning_algorithm": "Worst-Fit Decreasing"
+      }
+    }
+  ]
+}

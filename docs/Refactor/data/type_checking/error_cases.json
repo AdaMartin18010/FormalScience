@@ -1,0 +1,180 @@
+{
+  "version": "1.0.0",
+  "description": "类型错误案例集",
+  "error_categories": [
+    "unification_failure",
+    "occurs_check",
+    "infinite_type",
+    "scope_error",
+    "kind_mismatch",
+    "missing_instance"
+  ],
+  "error_cases": [
+    {
+      "id": "ERR001",
+      "category": "unification_failure",
+      "severity": "error",
+      "title": "类型不匹配",
+      "code_example": {
+        "language": "haskell",
+        "source": "f x = if x then 1 else 'a'",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc": "Couldn't match expected type 'Int' with actual type 'Char'",
+        "rustc": "if and else have incompatible types",
+        "typescript": "Type 'string' is not assignable to type 'number'"
+      },
+      "explanation": "条件表达式的两个分支必须具有相同的类型",
+      "expected_type": "Int",
+      "actual_type": "Char",
+      "fix_suggestion": "统一两个分支的类型，例如将 'a' 改为 97",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "ERR002",
+      "category": "occurs_check",
+      "severity": "error",
+      "title": "Occurs Check 失败",
+      "code_example": {
+        "language": "haskell",
+        "source": "let y = \\x -> x x in y",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc": "Occurs check: cannot construct the infinite type: t ~ t -> t1",
+        "lean": "type mismatch, term has type ?m_1 but is expected to have type ?m_1 → ?m_2"
+      },
+      "explanation": "类型变量不能出现在它自己的定义中，这会导致无限类型",
+      "inferred_type": "α → β",
+      "applied_to": "α",
+      "result": "会导致 α = α → β",
+      "fix_suggestion": "使用递归类型包装器，如 newtype Fix f = Fix (f (Fix f))",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ERR003",
+      "category": "infinite_type",
+      "severity": "error",
+      "title": "无限类型",
+      "code_example": {
+        "language": "haskell",
+        "source": "ones = 1 : ones",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc_without_extension": "Cannot construct the infinite type: a = [a]",
+        "ghc_with_extension": "(需要 -XRecursiveDo 或显式类型标注)"
+      },
+      "explanation": "递归定义需要显式类型标注或延迟求值支持",
+      "inferred_type": "Num a => [a]",
+      "fix_suggestion": "添加显式类型标注: ones :: [Integer]; ones = 1 : ones",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ERR004",
+      "category": "scope_error",
+      "severity": "error",
+      "title": "类型变量逃逸",
+      "code_example": {
+        "language": "haskell",
+        "source": "f = let x = id in (x 'a', x True)",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc": "Couldn't match expected type 'Char' with actual type 'Bool'"
+      },
+      "explanation": "let绑定中的多态变量被实例化为具体类型后不能再次泛化",
+      "monomorphism_restriction": true,
+      "fix_suggestion": "添加显式多态签名: let x :: a -> a; x = id",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ERR005",
+      "category": "kind_mismatch",
+      "severity": "error",
+      "title": "Kind 不匹配",
+      "code_example": {
+        "language": "haskell",
+        "source": "data T a = MkT (a Int)",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc": "Expected kind '* -> *', but 'a' has kind '*''"
+      },
+      "explanation": "类型参数a需要接收一个类型参数，但这里作为普通类型使用",
+      "expected_kind": "* -> *",
+      "actual_kind": "*",
+      "fix_suggestion": "声明高阶类型参数: data T (a :: * -> *) = MkT (a Int)",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ERR006",
+      "category": "missing_instance",
+      "severity": "error",
+      "title": "缺少类型类实例",
+      "code_example": {
+        "language": "haskell",
+        "source": "show (\\x -> x)",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "ghc": "No instance for (Show (a0 -> a0)) arising from a use of 'show'"
+      },
+      "explanation": "函数类型没有Show实例，因为函数无法被打印",
+      "type_class": "Show",
+      "target_type": "a -> a",
+      "fix_suggestion": "如果确实需要显示，可以将函数包装在有Show实例的newtype中",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "ERR007",
+      "category": "unification_failure",
+      "severity": "error",
+      "title": "子类型错误",
+      "code_example": {
+        "language": "typescript",
+        "source": "let animal: Animal = { name: 'Cat', meow: true };",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "typescript": "Object literal may only specify known properties"
+      },
+      "explanation": "赋值时类型需要兼容，多余的属性可能导致错误",
+      "expected": "Animal (具有 name 属性)",
+      "actual": "{ name: string, meow: boolean }",
+      "fix_suggestion": "使用类型断言或添加索引签名: [key: string]: any",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ERR008",
+      "category": "scope_error",
+      "severity": "warning",
+      "title": "未使用的类型变量",
+      "code_example": {
+        "language": "rust",
+        "source": "fn foo<T>(x: i32) -> i32 { x }",
+        "highlighted_line": 1
+      },
+      "error_message": {
+        "rustc": "warning: unused type parameter `T`"
+      },
+      "explanation": "类型参数T未在函数签名中使用，可能是设计错误",
+      "unused_variable": "T",
+      "fix_suggestion": "移除未使用的类型参数，或使用 PhantomData<T> 标记",
+      "difficulty": "beginner"
+    }
+  ],
+  "error_statistics": {
+    "total_cases": 8,
+    "by_severity": {
+      "error": 7,
+      "warning": 1
+    },
+    "by_difficulty": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 2
+    }
+  }
+}

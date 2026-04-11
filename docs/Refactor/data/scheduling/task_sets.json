@@ -1,0 +1,210 @@
+{
+  "version": "1.0.0",
+  "description": "调度任务集示例数据",
+  "categories": ["rtos", "distributed", "multicore", "mixed_criticality"],
+  "task_sets": [
+    {
+      "id": "TS001",
+      "name": "RTOS基础任务集",
+      "category": "rtos",
+      "description": "嵌入式RTOS典型任务配置",
+      "tasks": [
+        {
+          "id": "T1",
+          "name": "传感器采集",
+          "period": 10,
+          "wcet": 2,
+          "deadline": 10,
+          "priority": 1,
+          "type": "periodic",
+          "utilization": 0.2
+        },
+        {
+          "id": "T2",
+          "name": "控制计算",
+          "period": 20,
+          "wcet": 5,
+          "deadline": 20,
+          "priority": 2,
+          "type": "periodic",
+          "utilization": 0.25
+        },
+        {
+          "id": "T3",
+          "name": "数据显示",
+          "period": 50,
+          "wcet": 8,
+          "deadline": 50,
+          "priority": 3,
+          "type": "periodic",
+          "utilization": 0.16
+        },
+        {
+          "id": "T4",
+          "name": "日志记录",
+          "period": 100,
+          "wcet": 10,
+          "deadline": 100,
+          "priority": 4,
+          "type": "periodic",
+          "utilization": 0.10
+        }
+      ],
+      "total_utilization": 0.71,
+      "schedulable": true,
+      "algorithm": "RM"
+    },
+    {
+      "id": "TS002",
+      "name": "分布式系统任务集",
+      "category": "distributed",
+      "description": "分布式节点间任务调度",
+      "tasks": [
+        {
+          "id": "D1",
+          "name": "数据同步",
+          "period": 100,
+          "wcet": 15,
+          "deadline": 80,
+          "priority": 1,
+          "type": "periodic",
+          "nodes": ["node1", "node2"],
+          "communication_cost": 5
+        },
+        {
+          "id": "D2",
+          "name": "状态广播",
+          "period": 50,
+          "wcet": 8,
+          "deadline": 40,
+          "priority": 2,
+          "type": "periodic",
+          "nodes": ["node1", "node2", "node3"],
+          "communication_cost": 3
+        },
+        {
+          "id": "D3",
+          "name": "故障检测",
+          "period": 200,
+          "wcet": 20,
+          "deadline": 150,
+          "priority": 3,
+          "type": "periodic",
+          "nodes": ["node1", "node2", "node3", "node4"],
+          "communication_cost": 8
+        }
+      ],
+      "nodes": ["node1", "node2", "node3", "node4"],
+      "network_topology": "fully_connected",
+      "total_utilization": 0.65
+    },
+    {
+      "id": "TS003",
+      "name": "多核处理器任务集",
+      "category": "multicore",
+      "description": "4核处理器任务分配",
+      "cores": 4,
+      "tasks": [
+        {
+          "id": "M1",
+          "name": "视频编码",
+          "period": 33,
+          "wcet": 25,
+          "deadline": 33,
+          "priority": 1,
+          "type": "periodic",
+          "affinity": [0, 1],
+          "parallelizable": true
+        },
+        {
+          "id": "M2",
+          "name": "音频处理",
+          "period": 10,
+          "wcet": 3,
+          "deadline": 10,
+          "priority": 2,
+          "type": "periodic",
+          "affinity": [2],
+          "parallelizable": false
+        },
+        {
+          "id": "M3",
+          "name": "网络IO",
+          "period": 5,
+          "wcet": 1,
+          "deadline": 5,
+          "priority": 3,
+          "type": "periodic",
+          "affinity": [3],
+          "parallelizable": false
+        },
+        {
+          "id": "M4",
+          "name": "后台压缩",
+          "period": 100,
+          "wcet": 30,
+          "deadline": 100,
+          "priority": 4,
+          "type": "aperiodic",
+          "affinity": "any",
+          "parallelizable": true
+        }
+      ],
+      "migration_cost": 0.5,
+      "cache_aware": true
+    },
+    {
+      "id": "TS004",
+      "name": "混合关键性系统",
+      "category": "mixed_criticality",
+      "description": "Safety-critical与Non-critical任务混合",
+      "criticality_levels": ["A", "B", "C"],
+      "tasks": [
+        {
+          "id": "C1",
+          "name": "紧急制动",
+          "period": 5,
+          "wcet_LO": 1,
+          "wcet_HI": 2,
+          "deadline": 5,
+          "criticality": "A",
+          "type": "periodic"
+        },
+        {
+          "id": "C2",
+          "name": "车道保持",
+          "period": 20,
+          "wcet_LO": 5,
+          "wcet_HI": 8,
+          "deadline": 20,
+          "criticality": "A",
+          "type": "periodic"
+        },
+        {
+          "id": "C3",
+          "name": "导航计算",
+          "period": 100,
+          "wcet_LO": 20,
+          "wcet_HI": 40,
+          "deadline": 100,
+          "criticality": "B",
+          "type": "periodic"
+        },
+        {
+          "id": "C4",
+          "name": "娱乐系统",
+          "period": 50,
+          "wcet_LO": 10,
+          "wcet_HI": null,
+          "deadline": 50,
+          "criticality": "C",
+          "type": "sporadic"
+        }
+      ],
+      "mode_switch": {
+        "trigger": " overrun",
+        "recovery": " graceful_degradation"
+      }
+    }
+  ]
+}

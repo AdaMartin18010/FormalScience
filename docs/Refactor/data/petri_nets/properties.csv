@@ -1,0 +1,6 @@
+model_id,model_name,category,places,transitions,arcs,bounded,safe,deadlock_free,live,k_bounded,state_count,analysis_time_ms
+PN001,哲学家就餐问题,resource_sharing,15,10,45,TRUE,TRUE,FALSE,FALSE,1,32,45
+PN002,生产者-消费者,communication,6,5,13,TRUE,FALSE,TRUE,TRUE,3,12,15
+PN003,读者-写者问题,resource_sharing,6,6,16,TRUE,TRUE,TRUE,TRUE,1,24,28
+PN004,并行流程工作流,workflow,9,5,14,TRUE,TRUE,TRUE,TRUE,1,16,12
+PN005,故障恢复系统,fault_tolerant,9,8,20,TRUE,TRUE,FALSE,FALSE,1,48,65
