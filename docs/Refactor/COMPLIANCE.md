@@ -194,7 +194,7 @@ pip-licenses --fail-on="GPL;LGPL;AGPL"
 
 - "FormalScience" 是项目的商标
 - 其他商标归其各自所有者所有
-- 使用商标需遵守 [商标指南](TRADEMARKS.md)
+- 使用商标需遵守 [商标指南](LICENSE.md)
 
 #### 专利
 

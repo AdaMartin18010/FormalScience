@@ -1,37 +1,53 @@
+- --
+topic: "🌐 FormalScience 全局综合梳理（顶层总览）"
+dependencies: []
+status: "review"
+author: "FormalScience Project"
+date: "2026-04-12"
+version: "1.0.0"
+tags: ["类型", "形式化", "证明", "定理", "算法"]
+category: "reference"
+priority: "medium"
+- --
+
 # 🌐 FormalScience 全局综合梳理（顶层总览）
 
 > 版本: v1.0.0
 > 创建日期: 2025-10-30
 > 目的: 提供 Knowledge_Maps 顶层统一综述，串联思维导图、矩阵对比、解释与论证、形式化锚点与引用，作为全局入口与学术级参考索引。
 
----
+- --
 
-## 📋 目录
+## 1. 📋 目录 {#-目录}
 
 - [🌐 FormalScience 全局综合梳理（顶层总览）](#-formalscience-全局综合梳理顶层总览)
-  - [📋 目录](#-目录)
-  - [1 一页图景What Why](#1-一页图景what-why)
-  - [2 顶层结构How its organized](#2-顶层结构how-its-organized)
-  - [3 统一术语与记法Conventions](#3-统一术语与记法conventions)
-  - [4 形式化方法锚点Formalization Anchors](#4-形式化方法锚点formalization-anchors)
-  - [5 核心定理快速索引带权威引用](#5-核心定理快速索引带权威引用)
-  - [6 证明与论证层次Proof Strategy Guide](#6-证明与论证层次proof-strategy-guide)
-  - [7 使用入口Who reads what first](#7-使用入口who-reads-what-first)
-  - [8 参考与书目优先非维基百科](#8-参考与书目优先非维基百科)
-  - [9 关联导航Cross-links](#9-关联导航cross-links)
-  - [10 后续计划Roadmap](#10-后续计划roadmap)
+  - [1. 📋 目录 {#-目录}](#1--目录--目录)
+  - [1. 一页图景What Why {#一页图景what-why}](#1-一页图景what-why-一页图景what-why)
+  - [2. 顶层结构How its organized {#顶层结构how-its-organized}](#2-顶层结构how-its-organized-顶层结构how-its-organized)
+  - [3. 统一术语与记法Conventions {#统一术语与记法conventions}](#3-统一术语与记法conventions-统一术语与记法conventions)
+  - [4. 形式化方法锚点Formalization Anchors {#形式化方法锚点formalization-anchors}](#4-形式化方法锚点formalization-anchors-形式化方法锚点formalization-anchors)
+  - [5. 核心定理快速索引带权威引用 {#核心定理快速索引带权威引用}](#5-核心定理快速索引带权威引用-核心定理快速索引带权威引用)
+  - [6. 证明与论证层次Proof Strategy Guide {#证明与论证层次proof-strategy-guide}](#6-证明与论证层次proof-strategy-guide-证明与论证层次proof-strategy-guide)
+  - [7. 使用入口Who reads what first {#使用入口who-reads-what-first}](#7-使用入口who-reads-what-first-使用入口who-reads-what-first)
+  - [8. 参考与书目优先非维基百科 {#参考与书目优先非维基百科}](#8-参考与书目优先非维基百科-参考与书目优先非维基百科)
+  - [9. 关联导航Cross-links {#关联导航cross-links}](#9-关联导航cross-links-关联导航cross-links)
+  - [10. 后续计划Roadmap {#后续计划roadmap}](#10-后续计划roadmap-后续计划roadmap)
+  - [关联网络](#关联网络)
+    - [前向引用](#前向引用)
+    - [后向引用](#后向引用)
+    - [交叉链接](#交叉链接)
 
----
+- --
 
-## 1 一页图景What Why
+## 1. 一页图景What Why {#一页图景what-why}
 
 - 核心问题: 以统一形式化框架整合八视角（形式语言、AI模型、信息论、图灵可计算、控制论、冯·诺依曼、分布式、编程算法），支撑概念体系、定理体系与应用案例。
 - 目标用户: 初学者（入口）、工程师（方法到实现）、研究者（理论到证明与引用）。
 - 出口文档: `01_Core_Concepts_MindMap.md`（全貌）、`02_Eight_Perspectives_Matrix.md`（对比）、`03_Theoretical_Hierarchy.md`（层次）、`04_Knowledge_Graph.md`（关系网）、`05_Case_Study_Network.md`（案例）。
 
----
+- --
 
-## 2 顶层结构How its organized
+## 2. 顶层结构How its organized {#顶层结构how-its-organized}
 
 ```text
 【顶层统一视图】
@@ -49,17 +65,17 @@
   - Graph: 概念/定理/视角的拓扑关系
   - Cases: 理论到工程的落地通道
 
----
+- --
 
-## 3 统一术语与记法Conventions
+## 3. 统一术语与记法Conventions {#统一术语与记法conventions}
 
 - 统一术语: “阿什比定律”（Law of Requisite Variety）等专名采用中文标准译名；必要时附英文括注。
 - 形式化符号: 逻辑与类型论采用常用符号（∀, ∃, ⊢, λ）；复杂度类用标准记号（P, NP, PSPACE）。
 - 证明粒度: 本文给出“证明框架/思路 + 正式引用”，完整机助证明参考外部教材/论文与定理证明器资源。
 
----
+- --
 
-## 4 形式化方法锚点Formalization Anchors
+## 4. 形式化方法锚点Formalization Anchors {#形式化方法锚点formalization-anchors}
 
 - 语义与类型（形式语言视角）
   - 语义三分: 操作语义（small/big-step）、指称语义、行为等价
@@ -73,9 +89,9 @@
 
 > 路径建议：在各专题文档内，优先阅读“定义 → 引理/定理 → 证明思路 → 工具与案例”。
 
----
+- --
 
-## 5 核心定理快速索引带权威引用
+## 5. 核心定理快速索引带权威引用 {#核心定理快速索引带权威引用}
 
 - 语言-计算类
   - Curry–Howard 同构 [Wadler 2015; Sørensen & Urzyczyn 2006]
@@ -98,9 +114,9 @@
 
 > 详细条目与链接见本页第 8 节“参考与书目”。
 
----
+- --
 
-## 6 证明与论证层次Proof Strategy Guide
+## 6. 证明与论证层次Proof Strategy Guide {#证明与论证层次proof-strategy-guide}
 
 - 证明层级:
   - 定义级: 严格给出对象、关系与运算
@@ -113,17 +129,17 @@
   - IB/泛化: 信息-压缩-预测三角的上界与下界关系
   - CAP/拜占庭: 模型化假设 → 不可能性/代价下界 → 协议可达边界
 
----
+- --
 
-## 7 使用入口Who reads what first
+## 7. 使用入口Who reads what first {#使用入口who-reads-what-first}
 
 - 初学者: 先读 `01`（全貌）→ `02`（对比）→ `03`（层次）
 - 工程师: 先读 `05`（案例）→ `02`（选择）→ `04`（关系）
 - 研究者: 直达本页 + `03`（依赖）+ `FORMAL_THEOREMS_INDEX.md`
 
----
+- --
 
-## 8 参考与书目优先非维基百科
+## 8. 参考与书目优先非维基百科 {#参考与书目优先非维基百科}
 
 - 形式语言/语义/类型
   - Benjamin C. Pierce. Types and Programming Languages. MIT Press, 2002.
@@ -146,9 +162,9 @@
 
 > 注: 必要时可附加维基链接，但优先给出教材/论文等权威来源。
 
----
+- --
 
-## 9 关联导航Cross-links
+## 9. 关联导航Cross-links {#关联导航cross-links}
 
 - 思维导图: `01_Core_Concepts_MindMap.md`
 - 八视角矩阵: `02_Eight_Perspectives_Matrix.md`
@@ -157,10 +173,38 @@
 - 案例网络: `05_Case_Study_Network.md`
 - 定理总索引: `../FORMAL_THEOREMS_INDEX.md`
 
----
+- --
 
-## 10 后续计划Roadmap
+## 10. 后续计划Roadmap {#后续计划roadmap}
 
 - 为核心定理补充“可机助验证脚手架”（Coq/Lean 最小示例与外链）
 - 为每个案例添加“形式化断言/不变量清单”与“检验点”
 - 为跨视角映射添加“可度量/可验证指标”模板
+
+
+---
+
+## 关联网络
+
+### 前向引用
+
+> 本文档为以下文档提供基础：
+>
+> - [相关文档](./) (待补充)
+
+### 后向引用
+
+> 本文档依赖以下基础文档：
+>
+> - [基础文档](./) (待补充)
+
+### 交叉链接
+
+> 相关主题：
+>
+> - [主题A](./) (待补充)
+> - [主题B](./) (待补充)
+
+---
+
+_本文档由 FormalScience 文档规范化工具自动生成_

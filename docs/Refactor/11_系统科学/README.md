@@ -253,3 +253,12 @@ graph TD
 >
 > FormalScience Project. (2026). _Module 11: Systems Science_.
 > Retrieved from https://github.com/formalscience/11-systems-science
+---
+
+## 📚 延伸阅读
+
+- [11.22 反馈回路](./06_系统动力学/06.2_反馈回路.md)
+- [11.14 协同学](./04_自组织理论/04.2_协同学.md)
+- [9.2.2 随机变量](./09_统计学/02_概率论基础/02.2_随机变量.md)
+- [2.2 线性代数](./01_数学基础/02_代数学/02.2_线性代数.md)
+- [2.3 线性代数](./01_数学基础/02_代数学/02.3_线性代数.md)

@@ -342,10 +342,10 @@ print(response)
 
 ### 完整教程
 
-1. [快速开始指南](../00_GETTING_STARTED.md)
+1. [快速开始指南](00_GETTING_STARTED.md)
 2. [NetworkScheduler 教程](../tutorials/network_scheduler.md)
 3. [API 参考文档](../docs/api/)
-4. [示例代码库](../examples/)
+4. [示例代码库](examples/)
 
 ---
 
@@ -370,10 +370,10 @@ print(response)
 ## 📞 获取帮助
 
 ### 文档资源
-- 📖 [完整文档](../docs/)
+- 📖 [完整文档](docs/)
 - 🔧 [API 参考](../docs/api/)
-- 💡 [常见问题](../FAQ.md)
-- 🎓 [教程中心](../tutorials/)
+- 💡 [常见问题](FAQ.md)
+- 🎓 [教程中心](tutorials/)
 
 ### 社区支持
 - 💬 [讨论区](https://github.com/formalscience/formalscience/discussions)
@@ -387,7 +387,7 @@ print(response)
 
 ## 📜 许可证
 
-FormalScience 采用 [MIT 许可证](../LICENSE.md) 开源。
+FormalScience 采用 [MIT 许可证](LICENSE.md) 开源。
 
 ```
 MIT License

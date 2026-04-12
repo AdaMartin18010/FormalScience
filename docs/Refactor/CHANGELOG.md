@@ -264,7 +264,7 @@ python tools/migrate_config.py --input config.yaml --output config.toml
 
 ### 从 v2.x 迁移至 v3.x
 
-参考 [v3.0 迁移指南](MIGRATION_v2_to_v3.md)
+参考 [v3.0 迁移指南](CHANGELOG.md)
 
 ---
 

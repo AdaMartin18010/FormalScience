@@ -1514,10 +1514,10 @@ Reduce阶段：
 | SSM / Mamba-2 | 状态空间替代注意力，长序列高效 | 降熵路径更稳定（线性流） | 连续核≈可判片段的逼近 | 推理吞吐/显存优；混合层 | `AI_model_Perspective/02_Neural_Network_Theory/02.4_Transformer_Architecture.md` §12.1 |
 | RWKV / Hyena | RNN风格与卷积核替代 | 频域压缩冗余 | 卷积核=受限语法模板 | 低延迟流式场景 | 同上 §12.1 |
 | MoE（专家混合） | 容量扩展与路由学习 | 专家利用率熵/Gini | 路由=选择性语法分支 | all-to-all/专家并行/退化治理 | 同上 §12.3 |
-| PagedAttention v2 | - | - | - | 页式KV管理，多租户稳定 | 同上 §12.2；`Software_Perspective.md` 附 |
+| PagedAttention v2 | [理论待验证] | [理论待验证] | [理论待验证] | 页式KV管理，多租户稳定 | 同上 §12.2；`Software_Perspective.md` 附 |
 | FlashAttention-3 | - | 内存带宽高效利用 | - | 训练/推理核加速 | 同上 |
 | Speculative Decoding | 草拟-确认分工 | 期望步数下降 | 两阶段语法校验 | 时延优化策略 | 同上 §12.2；`Software_Perspective.md` 附 |
-| Continuous Batching | - | - | - | 持续合流，p95/p99 改善 | `Software_Perspective.md` 附 |
+| Continuous Batching | [待理论验证] | [待理论验证] | [待理论验证] | 持续合流，p95/p99 改善 | `Software_Perspective.md` 附 |
 | 语法约束解码 | 结构化输出自愈 | 无效熵降低、样本密度↑ | CFG/Regex/JSON Schema | 网关/服务端中间件 | `formal_language_view.md` 附 |
 | Agent Evals | 工具/规划能力测度 | 不确定性→任务完成度 | 有限步数证明/轨迹一致性 | 成功率/回合数/延迟 | `02.4` §12.6 评测统一卡 |
 

@@ -1,0 +1,16 @@
+[package]
+name = "async_runtime"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pin-project-lite = "0.2"
+crossbeam = "0.8"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+tokio = { version = "1", features = ["full"] }
+
+[[bench]]
+name = "async_benchmark"
+harness = false

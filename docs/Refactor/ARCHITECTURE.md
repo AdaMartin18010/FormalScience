@@ -116,37 +116,37 @@ flowchart TB
         M01[01_数学基础]
         M02[02_形式语言]
     end
-    
+
     subgraph Implementation["实现层 Modules 03-04"]
         M03[03_编程范式]
         M04[04_软件工程]
     end
-    
+
     subgraph Theory["理论层 Modules 05"]
         M05[05_形式化理论]
     end
-    
+
     subgraph Application["应用层 Modules 06-07"]
         M06[06_调度系统]
         M07[07_交叉视角]
     end
-    
+
     subgraph DataScience["数据科学层 Modules 09-10"]
         M09[09_统计学]
         M10[10_信息论]
     end
-    
+
     subgraph SystemScience["系统科学层 Module 11"]
         M11[11_系统科学]
     end
-    
+
     subgraph CognitiveSocial["认知社会层 Modules 12-15"]
         M12[12_决策与博弈论]
         M13[13_认知科学形式模型]
         M14[14_形式语言学]
         M15[15_社会科学形式化]
     end
-    
+
     M01 --> M02
     M01 --> M09
     M02 --> M03
@@ -175,12 +175,12 @@ flowchart TB
 | Composed | `Composed/` | 组合与编排服务 | FormalRE, Concept | 稳定 |
 | DataScience | `DataScience/` | 统计与机器学习服务 | Tools, Tech | 新增 |
 | Cognition | `Cognition/` | 认知建模与NLP | Concept, DataScience | 新增 |
-| Tools | `tools/` | 工具集与公用库 | - | 稳定 |
-| Tech | `Tech/` | 技术基础设施 | - | 稳定 |
+| Tools | `tools/` | 工具集与公用库 | Core | 稳定 |
+| Tech | `Tech/` | 技术基础设施 | Core | 稳定 |
 | Engineer | `Engineer/` | 工程化组件 | Tools | 稳定 |
 | View | `view/` | 前端展示层 | Core模块 | 稳定 |
-| Docs | `docs/` | 文档系统 | - | 扩展 |
-| Research | `research/` | 研究与实验 | - | 活跃 |
+| Docs | `docs/` | 文档系统 | Core | 扩展 |
+| Research | `research/` | 研究与实验 | Core | 活跃 |
 
 ---
 
@@ -254,25 +254,25 @@ flowchart TB
         Clean["数据清洗"]
         Transform["特征工程"]
     end
-    
+
     subgraph Analysis["分析层"]
         Stats["统计分析"]
         ML["机器学习"]
         Viz["可视化"]
     end
-    
+
     subgraph ModelMgmt["模型管理"]
         Train["训练"]
         Eval["评估"]
         Deploy["部署"]
     end
-    
+
     subgraph Inference["推理服务"]
         Predict["预测"]
         Explain["解释性"]
         Monitor["监控"]
     end
-    
+
     Raw --> Clean --> Transform
     Transform --> Stats
     Transform --> ML
@@ -516,7 +516,7 @@ flowchart TB
         Audit["审计日志"]
         Privacy["隐私保护"]
     end
-    
+
     subgraph MLSecurity["ML安全"]
         ModelEncrypt["模型加密"]
         AdvDefense["对抗防御"]
@@ -568,9 +568,9 @@ flowchart TB
 
 | 版本 | 日期 | 变更内容 |
 |------|------|----------|
-| v1.0 | - | 初始架构 (Modules 01-06) |
-| v2.0 | - | 添加交叉视角 (Module 07) |
-| v3.0 | - | 添加附录 (Module 08) |
+| v1.0 | 2026-01 | 初始架构 (Modules 01-06) |
+| v2.0 | 2026-02 | 添加交叉视角 (Module 07) |
+| v3.0 | 2026-03 | 添加附录 (Module 08) |
 | v4.0 | 2026-04-11 | 基础架构完成 |
 | **v5.0** | **2026-04-11** | **新增Modules 09-15，扩展数据科学、系统科学、认知社会科学** |
 

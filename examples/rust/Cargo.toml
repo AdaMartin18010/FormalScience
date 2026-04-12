@@ -1,0 +1,137 @@
+[package]
+name = "formalscience-rust-examples"
+version = "0.1.0"
+edition = "2021"
+authors = ["FormalScience Project"]
+description = "Rust code examples for FormalScience project - scheduling algorithms, concurrency patterns, async runtime, and system programming"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/formalscience/formalscience"
+rust-version = "1.70"
+
+[dependencies]
+# 异步运行时
+tokio = { version = "1.35", features = ["full"] }
+tokio-stream = "0.1"
+
+# 并发和数据结构
+crossbeam = "0.8"
+parking_lot = "0.12"
+
+# 系统调用和底层操作
+libc = "0.2"
+nix = { version = "0.27", features = ["process", "signal", "mman", "resource"] }
+
+# 序列化和数据处理
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 日志和错误处理
+tracing = "0.1"
+thiserror = "1.0"
+anyhow = "1.0"
+
+# 集合和算法
+ahash = "0.8"
+indexmap = "2.1"
+
+# 原子操作和无锁结构
+crossbeam-utils = "0.8"
+crossbeam-epoch = "0.9"
+
+# 网络（用于示例）
+async-trait = "0.1"
+
+# 性能测试
+criterion = { version = "0.5", optional = true }
+
+[dev-dependencies]
+# 测试工具
+tokio-test = "0.4"
+proptest = "1.4"
+rand = "0.8"
+
+# 文档测试需要
+futures = "0.3"
+
+[features]
+default = ["std"]
+std = []
+bench = ["criterion"]
+nightly = []
+
+# 示例程序特定依赖
+[[example]]
+name = "scheduling_round_robin"
+path = "scheduling/round_robin.rs"
+
+[[example]]
+name = "scheduling_priority"
+path = "scheduling/priority_scheduler.rs"
+
+[[example]]
+name = "scheduling_thread_pool"
+path = "scheduling/thread_pool.rs"
+
+[[example]]
+name = "scheduling_buddy_allocator"
+path = "scheduling/buddy_allocator.rs"
+
+[[example]]
+name = "scheduling_async_io"
+path = "scheduling/async_io.rs"
+
+[[example]]
+name = "concurrency_locks"
+path = "concurrency/locks.rs"
+
+[[example]]
+name = "concurrency_lock_free"
+path = "concurrency/lock_free.rs"
+
+[[example]]
+name = "concurrency_channels"
+path = "concurrency/channels.rs"
+
+[[example]]
+name = "concurrency_atomic_memory"
+path = "concurrency/atomic_memory.rs"
+
+[[example]]
+name = "async_futures_pin"
+path = "async/futures_pin.rs"
+
+[[example]]
+name = "async_waker_executor"
+path = "async/waker_executor.rs"
+
+[[example]]
+name = "async_tokio_examples"
+path = "async/tokio_examples.rs"
+
+[[example]]
+name = "system_memory_management"
+path = "system/memory_management.rs"
+
+[[example]]
+name = "system_syscalls"
+path = "system/syscalls.rs"
+
+[[example]]
+name = "system_bpf"
+path = "system/bpf_program.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+# [[bench]]
+# name = "scheduling_bench"
+# harness = false
+# required-features = ["bench"]

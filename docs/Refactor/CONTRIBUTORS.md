@@ -131,7 +131,7 @@
 
 我们欢迎各种形式的贡献！请参阅以下指南：
 
-1. **代码贡献** - 阅读 [CONTRIBUTING.md](../CONTRIBUTING.md) 了解代码提交规范
+1. **代码贡献** - 阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解代码提交规范
 2. **文档贡献** - 帮助改进或翻译文档
 3. **问题反馈** - 通过 Issue 系统报告 bug 或建议
 4. **代码审查** - 参与 Pull Request 的审查

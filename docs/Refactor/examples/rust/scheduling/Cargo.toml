@@ -1,0 +1,16 @@
+[package]
+name = "scheduling"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+crossbeam = "0.8"
+parking_lot = "0.12"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+rand = "0.8"
+
+[[bench]]
+name = "scheduler_benchmark"
+harness = false

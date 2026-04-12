@@ -1,0 +1,14 @@
+[package]
+name = "type_system"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "type_check_benchmark"
+harness = false

@@ -2,7 +2,7 @@
 
 > **项目**: FormalScience 形式科学知识依赖图谱
 > **版本**: 2.0.0
-> **最后更新**: 2026-04-11
+> **最后更新**: 2026-04-12
 
 ---
 
@@ -18,129 +18,129 @@ graph TB
         PROOF[证明论]
         COMP[可计算性理论]
     end
-    
+
     subgraph 代数层["🔢 代数层"]
         GROUP[群论]
         RING[环与域]
         LIN[线性代数]
         ALG[抽象代数]
     end
-    
+
     subgraph 形式语言层["📝 形式语言层"]
         FL[形式语言基础]
         TT[类型论]
         HOTT[同伦类型论]
         CAT[范畴论]
     end
-    
+
     subgraph 编程层["💻 编程层"]
         PLT[PLT]
         RUST[Rust]
         ASYNC[异步编程]
         FP[函数式编程]
     end
-    
+
     subgraph 工程层["🏗️ 工程层"]
         DP[设计模式]
         MS[微服务]
         WF[工作流]
         DIST[分布式系统]
     end
-    
+
     subgraph 理论层["🧮 理论层"]
         TL[时序逻辑]
         PN[Petri网]
         CTRL[控制论]
         CT[计算理论]
     end
-    
+
     subgraph 应用层["⚡ 应用层"]
         SCHED[调度系统]
         UNIFY[形式化统一]
         MAP[多视角映射]
     end
-    
+
     subgraph 数据科学层["📊 数据科学层"]
         STAT[统计学]
         INFO[信息论]
     end
-    
+
     subgraph 系统科学层["🌐 系统科学层"]
         SYS[一般系统论]
         CYBER[控制论]
         COMPLEX[复杂系统]
         NET[网络科学]
     end
-    
+
     subgraph 认知社会层["🧠 认知社会层"]
         DECISION[决策与博弈论]
         COG[认知科学形式模型]
         LING[形式语言学]
         SOC[社会科学形式化]
     end
-    
+
     %% 基础到代数
     SET --> ALG
     LOG --> ALG
     SET --> LIN
-    
+
     %% 代数到形式语言
     ALG --> CAT
     LOG --> FL
     LOG --> TT
     COMP --> FL
-    
+
     %% 形式语言内部
     FL --> TT
     TT --> HOTT
     CAT --> HOTT
     CAT --> TT
-    
+
     %% 形式语言到编程
     TT --> PLT
     CAT --> PLT
     FL --> PLT
-    
+
     %% 编程内部
     PLT --> RUST
     PLT --> FP
     RUST --> ASYNC
     FP --> ASYNC
-    
+
     %% 编程到工程
     PLT --> DP
     RUST --> MS
     ASYNC --> MS
     ASYNC --> DIST
-    
+
     %% 工程内部
     DP --> MS
     MS --> WF
     MS --> DIST
     WF --> DIST
-    
+
     %% 理论层
     LOG --> TL
     LOG --> PN
     FL --> CT
     CAT --> CTRL
-    
+
     %% 到应用层
     CT --> SCHED
     CTRL --> SCHED
     TL --> SCHED
     PN --> WF
-    
+
     %% 统一层
     HOTT --> UNIFY
     CAT --> UNIFY
     TT --> UNIFY
-    
+
     %% 映射层
     UNIFY --> MAP
     SCHED --> MAP
     DIST --> MAP
-    
+
     %% 数据科学层依赖
     PROB[概率论] --> STAT
     PROB --> INFO
@@ -148,13 +148,13 @@ graph TB
     CT --> INFO
     STAT --> SYS
     INFO --> SYS
-    
+
     %% 系统科学层内部
     SYS --> CYBER
     SYS --> COMPLEX
     COMPLEX --> NET
     CYBER --> COMPLEX
-    
+
     %% 认知社会层依赖
     STAT --> DECISION
     GAME[博弈论] --> DECISION
@@ -166,7 +166,7 @@ graph TB
     NET --> SOC
     COG --> SOC
     LING --> SOC
-    
+
     %% 跨层联系
     CYBER --> CTRL
     NET --> DIST
@@ -187,18 +187,18 @@ flowchart LR
         M2[逻辑]
         M3[证明论]
     end
-    
+
     subgraph F["02_形式语言"]
         F1[形式语言基础]
         F2[类型论]
         F3[范畴论]
     end
-    
+
     M1 -->|"定义语言集合"| F1
     M2 -->|"逻辑基础"| F2
     M3 -->|"证明构造"| F2
     M1 -->|"范畴对象"| F3
-    
+
     F2 -->|"Curry-Howard"| M3
     F3 -->|"代数结构"| M1
 ```
@@ -212,19 +212,19 @@ flowchart LR
         F2[范畴论]
         F3[λ演算]
     end
-    
+
     subgraph P["03_编程范式"]
         P1[PLT]
         P2[Rust]
         P3[函数式编程]
     end
-    
+
     F1 -->|"类型系统设计"| P1
     F2 -->|"语义基础"| P1
     F3 -->|"计算模型"| P3
     F1 -->|"所有权类型"| P2
     F2 -->|"Trait系统"| P2
-    
+
     P1 -->|"语言实例"| F1
     P3 -->|"实践反馈"| F3
 ```
@@ -238,18 +238,18 @@ flowchart LR
         P2[异步编程]
         P3[并发模型]
     end
-    
+
     subgraph S["04_软件工程"]
         S1[设计模式]
         S2[微服务]
         S3[分布式系统]
     end
-    
+
     P1 -->|"所有权模式"| S1
     P2 -->|"异步架构"| S2
     P3 -->|"并发安全"| S3
     P2 -->|"事件驱动"| S2
-    
+
     S1 -->|"抽象需求"| P1
     S3 -->|"一致性模型"| P3
 ```
@@ -263,20 +263,20 @@ flowchart TB
         PN[Petri网]
         CTRL[控制论]
     end
-    
+
     subgraph Targets["应用目标"]
         SW[软件工程]
         SCHED[调度系统]
         UNI[统一框架]
     end
-    
+
     TL -->|"协议验证"| SW
     TL -->|"实时调度规约"| SCHED
     PN -->|"工作流建模"| SW
     PN -->|"任务依赖"| SCHED
     CTRL -->|"反馈控制"| SCHED
     CTRL -->|"系统稳定"| UNI
-    
+
     SW -->|"规约需求"| TL
     SCHED -->|"模型需求"| PN
 ```
@@ -289,21 +289,21 @@ flowchart TB
         STAT[统计学]
         INFO[信息论]
     end
-    
+
     subgraph System["11 系统科学"]
         SYS[一般系统论]
         CYBER[控制论]
         COMPLEX[复杂系统]
         NET[网络科学]
     end
-    
+
     subgraph CogSoc["12-15 认知与社会"]
         DECISION[决策与博弈论]
         COG[认知科学形式模型]
         LING[形式语言学]
         SOC[社会科学形式化]
     end
-    
+
     STAT -->|"统计物理方法"| COMPLEX
     INFO -->|"熵与信息"| SYS
     SYS -->|"系统思维"| COG
@@ -479,7 +479,7 @@ graph LR
     F --> N[形式化统一]
     E --> N
     N --> O[多视角映射]
-    
+
     %% 新增路径
     P[概率论] --> Q[统计学]
     P --> R[信息论]
@@ -526,20 +526,20 @@ graph TB
         T3[形式化理论]
         T4[统计学/信息论]
     end
-    
+
     subgraph Practice["实践层"]
         P1[编程范式]
         P2[软件工程]
         P3[调度系统]
         P4[认知社会]
     end
-    
+
     subgraph Unify["统一层"]
         U1[形式化统一]
         U2[多视角映射]
         U3[系统科学]
     end
-    
+
     T1 -->|"提供基础"| T2
     T2 -->|"指导"| P1
     P1 -->|"实践反馈"| T2
@@ -548,15 +548,15 @@ graph TB
     T3 -->|"验证方法"| P2
     T3 -->|"优化"| P3
     P3 -->|"新模型"| T3
-    
+
     T4 -->|"数据分析"| P4
     P4 -->|"模型验证"| T4
-    
+
     T1 -->|"统一基础"| U1
     T2 -->|"统一语言"| U1
     T3 -->|"统一方法"| U1
     T4 -->|"信息统一"| U3
-    
+
     P1 -->|"实现参考"| U2
     P2 -->|"架构参考"| U2
     P3 -->|"调度参考"| U2
@@ -582,7 +582,7 @@ graph TB
         A5[博弈论 ↔ 社会科学形式化]
         A6[决策理论 ↔ 博弈论]
     end
-    
+
     subgraph 中耦合["🟡 中耦合模块对"]
         B1[形式语言 ↔ PLT]
         B2[软件工程 ↔ 分布式系统]
@@ -591,7 +591,7 @@ graph TB
         B5[系统科学 ↔ 控制论]
         B6[认知科学 ↔ 形式语言学]
     end
-    
+
     subgraph 低耦合["🟢 低耦合模块对"]
         C1[几何学 ↔ 软件工程]
         C2[概率论 ↔ 形式语言]
@@ -637,4 +637,36 @@ graph TB
 
 ---
 
-**导航**: [⬆️ 返回顶部](#formalscience-知识地图) | [📑 主索引](00_INDEX.md) | [📈 进度追踪](00_PROGRESS.md)
+**导航**: [⬆️ 返回顶部](#formalscience-知识地图) | [📑 主索引](00_INDEX.md) | [📈 进度追踪](00_PROGRESS.md) | [📚 概念索引](08_附录/03_索引/03.1_概念索引.md)
+
+---
+
+## 📊 交叉引用统计
+
+> 最后更新: 2026-04-12
+
+| 统计项 | 数量 |
+|--------|------|
+| 核心概念定义 | 150 |
+| 定理与引理 | 9 |
+| 模块间引用关系 | 128 |
+| 文档文件总数 | 516 |
+
+### 概念分布
+
+| 模块 | 概念数量 |
+|------|----------|
+| 形式语言 | 20 |
+| 编程范式 | 18 |
+| 数学基础 | 17 |
+| 软件工程 | 15 |
+| 统计学 | 9 |
+| 形式化理论 | 7 |
+| 调度系统 | 7 |
+| 交叉视角 | 5 |
+| 信息论 | 5 |
+| 决策与博弈论 | 5 |
+| 系统科学 | 3 |
+| 认知科学 | 3 |
+| 形式语言学 | 3 |
+| 社会科学 | 3 |

@@ -1,57 +1,73 @@
+- --
+topic: "WebAssembly 快速参考卡"
+dependencies: []
+status: "review"
+author: "FormalScience Project"
+date: "2026-04-12"
+version: "1.0.0"
+tags: ["递归", "类型", "算法", "计算", "集合"]
+category: "reference"
+priority: "medium"
+- --
+
 # WebAssembly 快速参考卡
 
-**版本**：1.0.0
-**最后更新**：2025-10-30
-**打印友好** ✓
+- _版本_*：1.0.0
+- _最后更新_*：2025-10-30
+- _打印友好_* ✓
 
----
+- --
 
-## 📋 目录
+## 1. 📋 目录 {#-目录}
 
 - [WebAssembly 快速参考卡](#webassembly-快速参考卡)
-  - [📋 目录](#-目录)
-  - [1 快速开始5 分钟](#1-快速开始5-分钟)
-  - [2 核心指令速查](#2-核心指令速查)
-    - [2.1 整数运算](#21-整数运算)
-    - [2.2 浮点运算](#22-浮点运算)
-    - [2.3 内存操作](#23-内存操作)
-    - [2.4 控制流](#24-控制流)
-  - [3 编译选项速查](#3-编译选项速查)
-    - [3.1 Rust Wasm](#31-rust-wasm)
-    - [3.2 CC Wasm](#32-cc-wasm)
-  - [4 性能优化速查](#4-性能优化速查)
-    - [4.1 延迟参考WasmEdge x86\_64 34 GHz](#41-延迟参考wasmedge-x86_64-34-ghz)
-    - [4.2 性能优化清单](#42-性能优化清单)
-  - [5 安全速查](#5-安全速查)
-    - [5.1 常见威胁](#51-常见威胁)
-    - [5.2 安全检查清单](#52-安全检查清单)
-  - [6 内存模型速查](#6-内存模型速查)
-    - [6.1 线性内存布局](#61-线性内存布局)
-    - [6.2 内存操作](#62-内存操作)
-  - [7 跨边界通信速查](#7-跨边界通信速查)
-    - [7.1 JavaScript Wasm](#71-javascript-wasm)
-    - [7.2 Rust JavaScript](#72-rust-javascript)
-  - [8 工具链速查](#8-工具链速查)
-    - [8.1 必备工具](#81-必备工具)
-    - [8.2 常用命令](#82-常用命令)
-  - [9 调试速查](#9-调试速查)
-    - [9.1 Chrome DevTools](#91-chrome-devtools)
-    - [9.2 日志注入](#92-日志注入)
-  - [10 性能分析速查](#10-性能分析速查)
-    - [10.1 浏览器 Profiling](#101-浏览器-profiling)
-    - [10.2 命令行 Profiling](#102-命令行-profiling)
-  - [11 常见数值速查](#11-常见数值速查)
-  - [12 浏览器兼容性速查](#12-浏览器兼容性速查)
-  - [13 术语速查](#13-术语速查)
-  - [14 快速链接](#14-快速链接)
-  - [15 快速诊断](#15-快速诊断)
-    - [15.1 问题：Wasm 加载失败](#151-问题wasm-加载失败)
-    - [15.2 问题：性能不如预期](#152-问题性能不如预期)
-    - [15.3 问题：内存不足](#153-问题内存不足)
+  - [1. 📋 目录 {#-目录}](#1--目录--目录)
+  - [1. 快速开始5 分钟 {#快速开始5-分钟}](#1-快速开始5-分钟-快速开始5-分钟)
+  - [2. 核心指令速查 {#核心指令速查}](#2-核心指令速查-核心指令速查)
+    - [2 1 整数运算 {#1-整数运算}](#2-1-整数运算-1-整数运算)
+    - [2 2 浮点运算 {#2-浮点运算}](#2-2-浮点运算-2-浮点运算)
+    - [2 3 内存操作 {#3-内存操作}](#2-3-内存操作-3-内存操作)
+    - [2 4 控制流 {#4-控制流}](#2-4-控制流-4-控制流)
+  - [3. 编译选项速查 {#编译选项速查}](#3-编译选项速查-编译选项速查)
+    - [3 1 Rust Wasm {#1-rust-wasm}](#3-1-rust-wasm-1-rust-wasm)
+    - [3 2 CC Wasm {#2-cc-wasm}](#3-2-cc-wasm-2-cc-wasm)
+  - [4. 性能优化速查 {#性能优化速查}](#4-性能优化速查-性能优化速查)
+    - [4 1 延迟参考WasmEdge x86\_64 34 GHz {#1-延迟参考wasmedge-x86\_64-34-ghz}](#4-1-延迟参考wasmedge-x86_64-34-ghz-1-延迟参考wasmedge-x86_64-34-ghz)
+    - [4 2 性能优化清单 {#2-性能优化清单}](#4-2-性能优化清单-2-性能优化清单)
+  - [5. 安全速查 {#安全速查}](#5-安全速查-安全速查)
+    - [5 1 常见威胁 {#1-常见威胁}](#5-1-常见威胁-1-常见威胁)
+    - [5 2 安全检查清单 {#2-安全检查清单}](#5-2-安全检查清单-2-安全检查清单)
+  - [6. 内存模型速查 {#内存模型速查}](#6-内存模型速查-内存模型速查)
+    - [6 1 线性内存布局 {#1-线性内存布局}](#6-1-线性内存布局-1-线性内存布局)
+    - [6 2 内存操作 {#2-内存操作}](#6-2-内存操作-2-内存操作)
+  - [7. 跨边界通信速查 {#跨边界通信速查}](#7-跨边界通信速查-跨边界通信速查)
+    - [7 1 JavaScript Wasm {#1-javascript-wasm}](#7-1-javascript-wasm-1-javascript-wasm)
+    - [7 2 Rust JavaScript {#2-rust-javascript}](#7-2-rust-javascript-2-rust-javascript)
+  - [8. 工具链速查 {#工具链速查}](#8-工具链速查-工具链速查)
+    - [8 1 必备工具 {#1-必备工具}](#8-1-必备工具-1-必备工具)
+    - [8 2 常用命令 {#2-常用命令}](#8-2-常用命令-2-常用命令)
+  - [9. 调试速查 {#调试速查}](#9-调试速查-调试速查)
+    - [9 1 Chrome DevTools {#1-chrome-devtools}](#9-1-chrome-devtools-1-chrome-devtools)
+    - [9 2 日志注入 {#2-日志注入}](#9-2-日志注入-2-日志注入)
+  - [10. 性能分析速查 {#性能分析速查}](#10-性能分析速查-性能分析速查)
+    - [10 1 浏览器 Profiling {#1-浏览器-profiling}](#10-1-浏览器-profiling-1-浏览器-profiling)
+    - [10 2 命令行 Profiling {#2-命令行-profiling}](#10-2-命令行-profiling-2-命令行-profiling)
+  - [11. 常见数值速查 {#常见数值速查}](#11-常见数值速查-常见数值速查)
+  - [12. 浏览器兼容性速查 {#浏览器兼容性速查}](#12-浏览器兼容性速查-浏览器兼容性速查)
+  - [13. 术语速查 {#术语速查}](#13-术语速查-术语速查)
+  - [14. 快速链接 {#快速链接}](#14-快速链接-快速链接)
+  - [15. 快速诊断 {#快速诊断}](#15-快速诊断-快速诊断)
+    - [15 1 问题：Wasm 加载失败 {#1-问题wasm-加载失败}](#15-1-问题wasm-加载失败-1-问题wasm-加载失败)
+    - [15 2 问题：性能不如预期 {#2-问题性能不如预期}](#15-2-问题性能不如预期-2-问题性能不如预期)
+    - [15 3 问题：内存不足 {#3-问题内存不足}](#15-3-问题内存不足-3-问题内存不足)
+  - [关联网络](#关联网络)
+    - [前向引用](#前向引用)
+    - [后向引用](#后向引用)
+    - [交叉链接](#交叉链接)
 
----
+- --
 
-## 1 快速开始5 分钟
+## 1. 快速开始5 分钟 {#快速开始5-分钟}
 
 ```bash
 # 安装 Rust 工具链
@@ -68,11 +84,11 @@ cargo build --release --target wasm32-wasi
 wasmedge target/wasm32-wasi/release/my_wasm.wasm
 ```
 
----
+- --
 
-## 2 核心指令速查
+## 2. 核心指令速查 {#核心指令速查}
 
-### 2.1 整数运算
+### 2 1 整数运算 {#1-整数运算}
 
 | 指令 | 功能 | 栈行为 |
 |------|------|--------|
@@ -85,7 +101,7 @@ wasmedge target/wasm32-wasi/release/my_wasm.wasm
 | `i32.or` | 位或 | [i32 i32] → [i32] |
 | `i32.shl` | 左移 | [i32 i32] → [i32] |
 
-### 2.2 浮点运算
+### 2 2 浮点运算 {#2-浮点运算}
 
 | 指令 | 功能 | 栈行为 |
 |------|------|--------|
@@ -95,7 +111,7 @@ wasmedge target/wasm32-wasi/release/my_wasm.wasm
 | `f32.min` | 最小值 | [f32 f32] → [f32] |
 | `f32.max` | 最大值 | [f32 f32] → [f32] |
 
-### 2.3 内存操作
+### 2 3 内存操作 {#3-内存操作}
 
 | 指令 | 功能 | 说明 |
 |------|------|------|
@@ -104,7 +120,7 @@ wasmedge target/wasm32-wasi/release/my_wasm.wasm
 | `memory.size` | 获取页数 | 1 页 = 64 KB |
 | `memory.grow` | 扩展内存 | 返回旧页数或 -1 |
 
-### 2.4 控制流
+### 2 4 控制流 {#4-控制流}
 
 | 指令 | 功能 | 示例 |
 |------|------|------|
@@ -115,11 +131,11 @@ wasmedge target/wasm32-wasi/release/my_wasm.wasm
 | `br_if` | 条件跳转 | `(br_if $label)` |
 | `return` | 返回 | `(return)` |
 
----
+- --
 
-## 3 编译选项速查
+## 3. 编译选项速查 {#编译选项速查}
 
-### 3.1 Rust Wasm
+### 3 1 Rust Wasm {#1-rust-wasm}
 
 ```toml
 # Cargo.toml 优化配置
@@ -151,7 +167,7 @@ wasm-opt -Oz input.wasm -o output.wasm  # 体积
 wasm-opt -O3 input.wasm -o output.wasm  # 速度
 ```
 
-### 3.2 CC Wasm
+### 3 2 CC Wasm {#2-cc-wasm}
 
 ```bash
 # Emscripten 基础
@@ -159,18 +175,18 @@ emcc hello.c -o hello.wasm
 
 # 优化编译
 emcc hello.c -O3 -s WASM=1 \
-  -s EXPORTED_FUNCTIONS='["_main"]' \
-  -o hello.wasm
+  - s EXPORTED_FUNCTIONS='["_main"]' \
+  - o hello.wasm
 
 # SIMD 支持
 emcc hello.c -O3 -msimd128 -o hello.wasm
 ```
 
----
+- --
 
-## 4 性能优化速查
+## 4. 性能优化速查 {#性能优化速查}
 
-### 4.1 延迟参考WasmEdge x86_64 34 GHz
+### 4 1 延迟参考WasmEdge x86_64 34 GHz {#1-延迟参考wasmedge-x86_64-34-ghz}
 
 | 操作 | 延迟 | 说明 |
 |------|------|------|
@@ -181,7 +197,7 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 | **f64.div** | 4-13 cycles | ~1-4 ns |
 | **memory.grow** | 1-10 µs | 依赖大小 |
 
-### 4.2 性能优化清单
+### 4 2 性能优化清单 {#2-性能优化清单}
 
 ```text
 ✓ 使用 AOT 编译         → +30-50% 吞吐
@@ -193,11 +209,11 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 ✓ 对象池（热路径）      → 减少分配开销
 ```
 
----
+- --
 
-## 5 安全速查
+## 5. 安全速查 {#安全速查}
 
-### 5.1 常见威胁
+### 5 1 常见威胁 {#1-常见威胁}
 
 | 威胁 | Wasm 防御 | 额外措施 |
 |------|----------|---------|
@@ -207,7 +223,7 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 | **Spectre** | ❌ 无防御 | 进程隔离 + CPU 补丁 |
 | **侧信道** | ❌ 无防御 | 常量时间算法 |
 
-### 5.2 安全检查清单
+### 5 2 安全检查清单 {#2-安全检查清单}
 
 ```text
 ✓ 验证所有输入边界
@@ -219,11 +235,11 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 ✓ 启用 CSP 头
 ```
 
----
+- --
 
-## 6 内存模型速查
+## 6. 内存模型速查 {#内存模型速查}
 
-### 6.1 线性内存布局
+### 6 1 线性内存布局 {#1-线性内存布局}
 
 ```text
 0x00000000  ┌─────────────────┐
@@ -238,7 +254,7 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 0xFFFFFFFF  └─────────────────┘  32 位地址空间 (4 GB)
 ```
 
-### 6.2 内存操作
+### 6 2 内存操作 {#2-内存操作}
 
 ```wat
 ;; 分配内存
@@ -253,11 +269,11 @@ emcc hello.c -O3 -msimd128 -o hello.wasm
 (memory.grow (i32.const 1))  ;; 扩展 1 页
 ```
 
----
+- --
 
-## 7 跨边界通信速查
+## 7. 跨边界通信速查 {#跨边界通信速查}
 
-### 7.1 JavaScript Wasm
+### 7 1 JavaScript Wasm {#1-javascript-wasm}
 
 ```javascript
 // 实例化
@@ -280,35 +296,35 @@ const memory = new WebAssembly.Memory({
 });
 ```
 
-### 7.2 Rust JavaScript
+### 7 2 Rust JavaScript {#2-rust-javascript}
 
 ```rust
 use wasm_bindgen::prelude::*;
 
 // 导出到 JS
-#[wasm_bindgen]
+# [wasm_bindgen]
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
 // 导入 JS 函数
-#[wasm_bindgen]
+# [wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
 }
 
 // 使用
-#[wasm_bindgen]
+# [wasm_bindgen]
 pub fn greet(name: &str) {
     alert(&format!("Hello, {}!", name));
 }
 ```
 
----
+- --
 
-## 8 工具链速查
+## 8. 工具链速查 {#工具链速查}
 
-### 8.1 必备工具
+### 8 1 必备工具 {#1-必备工具}
 
 ```bash
 # Rust 工具链
@@ -330,7 +346,7 @@ npm install -g binaryen
 curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash
 ```
 
-### 8.2 常用命令
+### 8 2 常用命令 {#2-常用命令}
 
 ```bash
 # WAT ↔ Wasm 转换
@@ -351,11 +367,11 @@ wasmedge module.wasm
 wasmtime module.wasm
 ```
 
----
+- --
 
-## 9 调试速查
+## 9. 调试速查 {#调试速查}
 
-### 9.1 Chrome DevTools
+### 9 1 Chrome DevTools {#1-chrome-devtools}
 
 ```text
 1. 打开 DevTools (F12)
@@ -364,11 +380,11 @@ wasmtime module.wasm
 4. 单步调试（Step Into/Over/Out）
 ```
 
-### 9.2 日志注入
+### 9 2 日志注入 {#2-日志注入}
 
 ```rust
 // 宿主函数声明
-#[link(wasm_import_module = "env")]
+# [link(wasm_import_module = "env")]
 extern "C" {
     fn log(ptr: *const u8, len: usize);
 }
@@ -387,11 +403,11 @@ macro_rules! debug {
 debug!("Value: {}", x);
 ```
 
----
+- --
 
-## 10 性能分析速查
+## 10. 性能分析速查 {#性能分析速查}
 
-### 10.1 浏览器 Profiling
+### 10 1 浏览器 Profiling {#1-浏览器-profiling}
 
 ```javascript
 // 测量时间
@@ -406,7 +422,7 @@ const duration = performance.now() - start;
 console.log(`${duration}ms`);
 ```
 
-### 10.2 命令行 Profiling
+### 10 2 命令行 Profiling {#2-命令行-profiling}
 
 ```bash
 # Linux perf
@@ -418,9 +434,9 @@ valgrind --tool=massif wasmedge app.wasm
 ms_print massif.out.*
 ```
 
----
+- --
 
-## 11 常见数值速查
+## 11. 常见数值速查 {#常见数值速查}
 
 | 概念 | 值 | 说明 |
 |------|-----|------|
@@ -431,9 +447,9 @@ ms_print massif.out.*
 | **指令数（MVP）** | 178 | 核心指令集 |
 | **指令数（全部）** | ~387 | 含提案 |
 
----
+- --
 
-## 12 浏览器兼容性速查
+## 12. 浏览器兼容性速查 {#浏览器兼容性速查}
 
 | 特性 | Chrome | Firefox | Safari | Edge |
 |------|--------|---------|--------|------|
@@ -443,11 +459,11 @@ ms_print massif.out.*
 | **Exception** | ✅ 95+ | 🚧 | 🚧 | ✅ 95+ |
 | **Memory64** | 🚧 | 🚧 | 🚧 | 🚧 |
 
-**图例**：✅ 支持，⚠️ 部分支持，🚧 实验性
+- _图例_*：✅ 支持，⚠️ 部分支持，🚧 实验性
 
----
+- --
 
-## 13 术语速查
+## 13. 术语速查 {#术语速查}
 
 | 术语 | 含义 | 示例 |
 |------|------|------|
@@ -459,9 +475,9 @@ ms_print massif.out.*
 | **JIT** | 即时编译 | V8 |
 | **MVP** | 最小产品 | 核心功能集 |
 
----
+- --
 
-## 14 快速链接
+## 14. 快速链接 {#快速链接}
 
 | 资源 | 链接 |
 |------|------|
@@ -471,11 +487,11 @@ ms_print massif.out.*
 | **MDN** | [developer.mozilla.org/WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) |
 | **WasmEdge** | [wasmedge.org](https://wasmedge.org/) |
 
----
+- --
 
-## 15 快速诊断
+## 15. 快速诊断 {#快速诊断}
 
-### 15.1 问题：Wasm 加载失败
+### 15 1 问题：Wasm 加载失败 {#1-问题wasm-加载失败}
 
 ```text
 ✓ 检查 MIME 类型（application/wasm）
@@ -484,7 +500,7 @@ ms_print massif.out.*
 ✓ 查看浏览器控制台错误
 ```
 
-### 15.2 问题：性能不如预期
+### 15 2 问题：性能不如预期 {#2-问题性能不如预期}
 
 ```text
 ✓ 是否使用 AOT 编译？
@@ -494,7 +510,7 @@ ms_print massif.out.*
 ✓ Profile 找热点
 ```
 
-### 15.3 问题：内存不足
+### 15 3 问题：内存不足 {#3-问题内存不足}
 
 ```text
 ✓ 当前使用多少？（memory.size）
@@ -503,12 +519,40 @@ ms_print massif.out.*
 ✓ 是否需要 Memory64？（>4 GB）
 ```
 
----
+- --
 
-**打印提示**：
+- _打印提示_*：
 
 - A4 双面打印
 - 建议彩色（语法高亮）
 - 可缩放到 80%（更紧凑）
 
-**版本**：1.0.0 | **更新**：2025-10-30 | **许可证**：CC BY-SA 4.0
+- _版本_*：1.0.0 | **更新**：2025-10-30 | **许可证**：CC BY-SA 4.0
+
+
+---
+
+## 关联网络
+
+### 前向引用
+
+> 本文档为以下文档提供基础：
+>
+> - [相关文档](./) (待补充)
+
+### 后向引用
+
+> 本文档依赖以下基础文档：
+>
+> - [基础文档](./) (待补充)
+
+### 交叉链接
+
+> 相关主题：
+>
+> - [主题A](./) (待补充)
+> - [主题B](./) (待补充)
+
+---
+
+_本文档由 FormalScience 文档规范化工具自动生成_

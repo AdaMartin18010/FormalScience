@@ -42,3 +42,80 @@ yarn.lock
 *.tmp
 *.temp
 .cache/
+
+# ============================================
+# Build outputs and compiled files
+# ============================================
+
+# Rust
+/target/
+**/target/
+**/*.rs.bk
+Cargo.lock
+*.rlib
+*.rmeta
+*.d
+
+# C/C++
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.ilk
+*.pdb
+*.idb
+*.manifest
+*.exp
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Lean
+*.olean
+/build/
+
+# Haskell
+*.hi
+*.o
+*.dyn_o
+*.dyn_hi
+/dist/
+/dist-newstyle/
+
+# Go
+*.out
+/vendor/
+
+# ============================================
+# Backup and generated files
+# ============================================
+
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+
+# Reports and temporary outputs
+QUALITY_CHECK_REPORT.md
+PLACEHOLDER_FIX_REPORT*.md
+FINAL_VERIFICATION_REPORT.md
+TASK_COMPLETION_*.md
+
+# ============================================
+# Project specific
+# ============================================
+
+# Large generated indices (keep the main ones)
+# docs/Refactor/08_附录/03_索引/03.4_文档摘要索引.md
+
+# Session logs (optional)
+# docs/Refactor/.context/session_log.md

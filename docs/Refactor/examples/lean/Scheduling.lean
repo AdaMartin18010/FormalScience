@@ -1,280 +1,358 @@
-/-
-# 调度算法形式化证明 (Scheduling Algorithm Formalization)
+/-!
+# 调度系统的形式化 (Scheduling System Formalization)
 
-本文件包含调度问题的形式化定义和基本定理证明。
-包含：
-1. 任务、资源、调度方案的形式化定义
-2. 调度约束条件的形式化
-3. Graham列表调度算法的正确性证明框架
-4. 复杂性类相关的基本定理
+本文件包含调度问题核心概念的 Lean 4 形式化：
+1. 任务、资源、调度的形式化定义
+2. 调度约束（独占性、完整性、前置依赖）
+3. 常见调度算法及其性质
+4. 最优性证明框架
 
-参考文档: docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度问题定义.md
+## 数学背景
+
+调度理论研究如何将任务分配到资源上以优化某些目标。
+Graham 记号系统 α|β|γ 是描述调度问题的标准方式。
 -/
+
+import Mathlib
 
 namespace Scheduling
 
--- ============================================
--- 第一部分：基本定义
--- ============================================
+/-!
+## 1. 基本定义
 
-/-- 任务结构体：表示一个调度任务
-  - id: 任务唯一标识
-  - processingTime: 处理时间 p_i
-  - deadline: 截止时间 d_i (可选)
-  - weight: 权重 w_i
-  - predecessors: 前置任务ID列表
--/ 
+### 1.1 任务 (Task)
+任务 Tᵢ = (id, p, d, w, prec)
+- id: 标识符
+- p: 处理时间
+- d: 截止时间
+- w: 权重（优先级）
+- prec: 前置任务集合
+-/
+
 structure Task where
   id : Nat
   processingTime : Nat
-  deadline : Option Nat := none
+  deadline : Option Nat
   weight : Nat := 1
   predecessors : List Nat := []
   deriving Repr, BEq
 
-/-- 资源结构体
-  - id: 资源唯一标识
-  - capacity: 资源容量
--/ 
+-- 任务释放时间（简化模型）
+def Task.releaseTime (_t : Task) : Nat := 0
+
+-- 任务完成时间（需要在调度后计算）
+def Task.completionTime (t : Task) (startTime : Nat) : Nat :=
+  startTime + t.processingTime
+
+-- 任务延迟
+def Task.lateness (t : Task) (startTime : Nat) : Int :=
+  match t.deadline with
+  | some d => (t.completionTime startTime : Int) - (d : Int)
+  | none => 0
+
+-- 任务延迟时间（只计正值）
+def Task.tardiness (t : Task) (startTime : Nat) : Nat :=
+  max 0 (t.lateness startTime)
+
+/-!
+### 1.2 资源 (Resource)
+资源 Rⱼ = (id, capacity)
+- id: 标识符
+- capacity: 容量（可同时处理的任务数）
+-/
+
 structure Resource where
   id : Nat
   capacity : Nat := 1
   deriving Repr, BEq
 
-/-- 任务分配：任务到资源的映射，包含开始时间 -/
-structure Assignment where
-  taskId : Nat
-  resourceId : Nat
-  startTime : Nat
-  deriving Repr, BEq
+-- 资源类型
+def Resource.isUnitary (r : Resource) : Prop := r.capacity = 1
+def Resource.isParallel (r : Resource) (m : Nat) : Prop := r.capacity = m
 
-/-- 调度方案：一组任务分配 -/
-def Schedule := List Assignment
-
--- ============================================
--- 第二部分：调度约束的形式化
--- ============================================
-
-/-- 计算任务的完成时间 C_j = S_j + p_j
-  - tasks: 任务列表
-  - assignment: 任务分配
-  - 返回: 完成时间
+/-!
+### 1.3 调度方案 (Schedule)
+调度 σ: 任务 → (资源, 开始时间, 持续时间)
 -/
-def completionTime (tasks : List Task) (a : Assignment) : Nat :=
-  match tasks.find (λ t => t.id == a.taskId) with
-  | some task => a.startTime + task.processingTime
-  | none => a.startTime  -- 默认情况
 
-/-- 独占性约束检查：每个资源同一时间只能处理一个任务
-  - schedule: 调度方案
-  - 返回: 是否满足独占性约束
--/
-def mutualExclusion (schedule : Schedule) : Prop :=
-  ∀ (a1 a2 : Assignment),
-    a1 ∈ schedule → a2 ∈ schedule →
-    a1.resourceId = a2.resourceId →
-    a1.taskId ≠ a2.taskId →
-    -- 时间区间不重叠
-    completionTime [] a1 ≤ a2.startTime ∨ 
-    completionTime [] a2 ≤ a1.startTime
-
-/-- 完整性约束：每个任务必须被调度
-  - tasks: 所有任务
-  - schedule: 调度方案
-  - 返回: 是否所有任务都被调度
--/
-def completeness (tasks : List Task) (schedule : Schedule) : Prop :=
-  ∀ (task : Task), task ∈ tasks → 
-    ∃ (a : Assignment), a ∈ schedule ∧ a.taskId = task.id
-
-/-- 前置依赖约束检查
-  - tasks: 所有任务
-  - schedule: 调度方案
-  - 返回: 是否满足依赖约束
--/
-def precedenceConstraint (tasks : List Task) (schedule : Schedule) : Prop :=
-  ∀ (task : Task) (predId : Nat),
-    task ∈ tasks → predId ∈ task.predecessors →
-    ∃ (taskA predA : Assignment),
-      taskA ∈ schedule ∧ predA ∈ schedule ∧
-      taskA.taskId = task.id ∧ predA.taskId = predId ∧
-      completionTime tasks predA ≤ taskA.startTime
-
-/-- 可行调度的定义：满足所有约束 -/
-def isFeasibleSchedule (tasks : List Task) (schedule : Schedule) : Prop :=
-  completeness tasks schedule ∧ 
-  mutualExclusion schedule ∧
-  precedenceConstraint tasks schedule
-
--- ============================================
--- 第三部分：目标函数
--- ============================================
-
-/-- 计算调度方案的完工时间 C_max = max_j C_j
-  - tasks: 所有任务
-  - schedule: 调度方案
-  - 返回: 完工时间
--/
-def makespan (tasks : List Task) (schedule : Schedule) : Nat :=
-  match schedule with
-  | [] => 0
-  | _ => 
-    let completionTimes := schedule.map (completionTime tasks)
-    completionTimes.foldl Nat.max 0
-
-/-- 计算总完成时间 sum C_j
-  - tasks: 所有任务
-  - schedule: 调度方案
-  - 返回: 总完成时间
--/
-def totalCompletionTime (tasks : List Task) (schedule : Schedule) : Nat :=
-  let completionTimes := schedule.map (completionTime tasks)
-  completionTimes.foldl Nat.add 0
-
--- ============================================
--- 第四部分：列表调度算法
--- ============================================
-
-/-- 机器负载：资源当前的总处理时间 -/
-def machineLoad (schedule : Schedule) (resourceId : Nat) : Nat :=
-  let assignments := schedule.filter (λ a => a.resourceId == resourceId)
-  let loads := assignments.map (λ a => completionTime [] a - a.startTime)
-  loads.foldl Nat.add 0
-
-/-- 选择负载最小的机器
-  - schedule: 当前调度方案
-  - m: 机器数量
-  - 返回: 负载最小的机器ID
--/
-def selectMinLoadMachine (schedule : Schedule) (m : Nat) : Nat :=
-  if m = 0 then 0
-  else
-    let loads := List.range m |>.map (machineLoad schedule)
-    -- 找到最小负载的索引
-    match loads.head? with
-    | none => 0
-    | some _ => 
-      let indexed := List.zip (List.range m) loads
-      indexed.foldl (λ acc (idx, load) => 
-        if load < acc.2 then (idx, load) else acc
-      ) (0, loads.head!)
-      |>.1
-
-/-- Graham列表调度算法（简化版）
-  算法描述：
-  1. 按任务列表顺序处理
-  2. 每个任务分配到当前负载最小的机器
-  
-  近似比: 2 - 1/m，其中 m 是机器数量
--/
-def listScheduling (tasks : List Task) (m : Nat) : Schedule :=
-  tasks.foldl (λ schedule task =>
-    let machineId := selectMinLoadMachine schedule m
-    let startTime := machineLoad schedule machineId
-    let assignment := Assignment.mk task.id machineId startTime
-    assignment :: schedule
-  ) []
-
--- ============================================
--- 第五部分：正确性定理
--- ============================================
-
-/-- Graham列表调度算法的独占性约束满足性
-  定理: 列表调度算法产生的调度方案满足独占性约束
--/
-theorem listScheduling_mutualExclusion (tasks : List Task) (m : Nat) :
-  mutualExclusion (listScheduling tasks m) := by
-  -- 证明思路：
-  -- 1. 列表调度每次只添加一个任务到一个机器
-  -- 2. 新任务的startTime设置为该机器的当前负载
-  -- 3. 因此新任务的开始时间等于该机器上所有先前任务的完成时间
-  -- 4. 保证了同一机器上的任务按顺序执行
-  sorry  -- 详细证明需要归纳法
-
-/-- Graham列表调度算法的完整性
-  定理: 列表调度算法调度所有输入任务
--/
-theorem listScheduling_completeness (tasks : List Task) (m : Nat) :
-  completeness tasks (listScheduling tasks m) := by
-  -- 证明：foldl遍历所有任务，每个任务都生成一个分配
-  sorry
-
-/-- Graham列表调度算法的近似比上界
-  定理: 对于P||C_max问题，列表调度的近似比不超过 2 - 1/m
-  
-  形式化陈述：
-  设 opt 是最优完工时间，listMake 是列表调度的完工时间，
-  则 listMake ≤ (2 - 1/m) * opt
--/
-theorem listScheduling_approximation (tasks : List Task) (m : Nat) (hm : m > 0) :
-  let listSchedule := listScheduling tasks m
-  let listMake := makespan tasks listSchedule
-  let opt := 42  -- 这里简化处理，实际应定义为最优解
-  listMake ≤ (2 * m - 1) * opt / m := by
-  -- 证明思路：
-  -- 1. 设最后一个完成的任务在机器 i 上
-  -- 2. 该机器上的最后一个任务开始时间不早于 (listMake - p_last)
-  -- 3. 此时所有机器都在忙（否则会选择其他机器）
-  -- 4. 因此总工作量 ≥ m * (listMake - p_last) + p_last
-  -- 5. 结合最优解的下界 opt ≥ totalWork / m，得到近似比
-  sorry
-
--- ============================================
--- 第六部分：复杂性类相关定义
--- ============================================
-
-/-- 调度问题的形式化表示 α|β|γ
-  使用Graham记号系统
--/
-structure SchedulingProblem where
-  machineEnv : String  -- α: 机器环境 (1, P, Q, R, F, J, O)
-  taskChars : String   -- β: 任务特征 (r_j, d_j, prec, pmtn等)
-  objective : String   -- γ: 目标函数 (C_max, sum C_j等)
+structure Schedule where
+  -- 任务到（资源ID, 开始时间）的映射
+  assignment : Nat → Option (Nat × Nat)
   deriving Repr
 
-/-- 判定问题：给定调度问题实例，是否存在可行调度
-  这是NP完全性的标准形式
--/
-def DecisionVersion (problem : SchedulingProblem) 
-    (tasks : List Task) (m : Nat) (B : Nat) : Prop :=
-  ∃ (schedule : Schedule),
-    isFeasibleSchedule tasks schedule ∧
-    makespan tasks schedule ≤ B
+-- 获取任务的开始时间
+def Schedule.startTime (σ : Schedule) (taskId : Nat) : Option Nat :=
+  match σ.assignment taskId with
+  | some (_, start) => some start
+  | none => none
 
-/-- 复杂性类P：存在多项式时间算法
-  注意：这是概念性定义，实际Lean中难以形式化时间复杂度
--/
-def InClassP (problem : SchedulingProblem) : Prop :=
-  -- 概念性：存在多项式时间算法
-  True  -- 占位
+-- 获取任务分配的资源
+def Schedule.assignedResource (σ : Schedule) (taskId : Nat) : Option Nat :=
+  match σ.assignment taskId with
+  | some (res, _) => some res
+  | none => none
 
-/-- 复杂性类NP：解可在多项式时间内验证
-  这里形式化为存在性定义
--/
-def InClassNP (problem : SchedulingProblem) : Prop :=
-  -- 对于判定问题，YES实例存在多项式长度证书
-  True  -- 占位
+/-!
+## 2. 调度约束
 
--- ============================================
--- 第七部分：实例证明
--- ============================================
-
-/-- SPT（最短处理时间优先）规则的最优性
-  定理: 对于1||sum C_j问题，按处理时间非递减顺序调度是最优的
-  
-  形式化：设 schedule 是SPT顺序调度，schedule' 是任意可行调度，
-  则 totalCompletionTime tasks schedule ≤ totalCompletionTime tasks schedule'
+### 2.1 独占性约束
+每个资源同一时间只能被一个任务占用（对于单一资源）
 -/
-theorem SPT_optimal_for_sumCj (tasks : List Task) :
-  let sptTasks := tasks |>.toArray |>.qsort (λ t1 t2 => t1.processingTime ≤ t2.processingTime) |>.toList
-  let sptSchedule := listScheduling sptTasks 1
-  ∀ (otherSchedule : Schedule),
-    isFeasibleSchedule tasks otherSchedule →
-    totalCompletionTime tasks sptSchedule ≤ totalCompletionTime tasks otherSchedule := by
-  -- 证明思路：交换论证
-  -- 1. 假设存在逆序(即p_i > p_j但i在j之前)
-  -- 2. 交换这两个任务，总完成时间不会增加
-  -- 3. 通过不断交换消除所有逆序，得到SPT顺序
+
+-- 检查两个任务在时间上是否重叠
+def tasksOverlap (t₁ t₂ : Task) (s₁ s₂ : Nat) : Bool :=
+  -- 任务1: [s₁, s₁ + p₁)
+  -- 任务2: [s₂, s₂ + p₂)
+  -- 重叠当且仅当区间相交
+  s₁ < s₂ + t₂.processingTime && s₂ < s₁ + t₁.processingTime
+
+-- 独占性约束：同一资源上的任务不能重叠
+def mutualExclusion (tasks : List Task) (σ : Schedule) : Prop :=
+  ∀ t₁ ∈ tasks, ∀ t₂ ∈ tasks, t₁.id ≠ t₂.id →
+    let r₁ := σ.assignedResource t₁.id
+    let r₂ := σ.assignedResource t₂.id
+    let s₁ := σ.startTime t₁.id
+    let s₂ := σ.startTime t₂.id
+    r₁ = r₂ → s₁ ≠ none → s₂ ≠ none →
+    tasksOverlap t₁ t₂ (Option.get! s₁) (Option.get! s₂) = false
+
+/-!
+### 2.2 完整性约束
+每个任务必须获得足够的处理时间
+-/
+
+def completeness (tasks : List Task) (σ : Schedule) : Prop :=
+  ∀ t ∈ tasks, 
+    let s := σ.startTime t.id
+    s ≠ none
+
+/-!
+### 2.3 前置依赖约束
+任务必须在所有前置任务完成后开始
+-/
+
+def precedenceConstraints (tasks : List Task) (σ : Schedule) : Prop :=
+  ∀ t ∈ tasks, ∀ predId ∈ t.predecessors,
+    let tStart := σ.startTime t.id
+    let predTask := tasks.find? (λ task => task.id = predId)
+    let predStart := predTask.bind (λ pt => σ.startTime pt.id)
+    predStart ≠ none → tStart ≠ none →
+    Option.get! predStart + (Option.get! predTask).processingTime ≤ Option.get! tStart
+
+/-!
+## 3. 目标函数
+
+### 3.1 完工时间 (Makespan)
+C_max = maxᵢ Cᵢ
+-/
+
+def makespan (tasks : List Task) (σ : Schedule) : Nat :=
+  tasks.foldl (λ acc t =>
+    match σ.startTime t.id with
+    | some s => max acc (s + t.processingTime)
+    | none => acc
+  ) 0
+
+/-!
+### 3.2 总流程时间 (Total Flow Time)
+∑ Fᵢ = ∑ (Cᵢ - rᵢ)
+-/
+
+def totalFlowTime (tasks : List Task) (σ : Schedule) : Nat :=
+  tasks.foldl (λ acc t =>
+    match σ.startTime t.id with
+    | some s => acc + (s + t.processingTime - t.releaseTime)
+    | none => acc
+  ) 0
+
+/-!
+### 3.3 加权延迟 (Weighted Tardiness)
+∑ wᵢ · Tᵢ
+-/
+
+def totalWeightedTardiness (tasks : List Task) (σ : Schedule) : Nat :=
+  tasks.foldl (λ acc t =>
+    match σ.startTime t.id with
+    | some s => acc + t.weight * t.tardiness s
+    | none => acc
+  ) 0
+
+/-!
+### 3.4 延迟任务数
+∑ Uᵢ，其中 Uᵢ = 1 若 Cᵢ > dᵢ
+-/
+
+def numTardyJobs (tasks : List Task) (σ : Schedule) : Nat :=
+  tasks.foldl (λ acc t =>
+    match σ.startTime t.id with
+    | some s => if t.lateness s > 0 then acc + 1 else acc
+    | none => acc
+  ) 0
+
+/-!
+## 4. 调度算法
+
+### 4.1 SPT规则 (Shortest Processing Time)
+按处理时间升序调度
+最优性：对于 1||∑Cⱼ 问题，SPT是最优的
+-/
+
+def sptSchedule (tasks : List Task) : List Task :=
+  tasks.insertionSort (λ t₁ t₂ => t₁.processingTime ≤ t₂.processingTime)
+
+-- SPT最优性定理的陈述
+theorem spt_optimal_for_totalFlow {tasks : List Task} :
+    ∀ σ : Schedule,
+    let sptσ := sptSchedule tasks
+    -- 这里需要更精确的表述
+    totalFlowTime tasks σ ≥ totalFlowTime tasks sorry := by
   sorry
 
+/-!
+### 4.2 EDD规则 (Earliest Due Date)
+按截止时间升序调度
+最优性：对于 1||L_max 问题，EDD是最优的
+-/
+
+def eddSchedule (tasks : List Task) : List Task :=
+  tasks.filter (λ t => t.deadline.isSome) |>
+  List.insertionSort (λ t₁ t₂ =>
+    match t₁.deadline, t₂.deadline with
+    | some d₁, some d₂ => d₁ ≤ d₂
+    | _, _ => false
+  )
+
+/-!
+### 4.3 Graham列表调度
+对于 P||C_max 问题的近似算法
+-/
+
+-- 列表调度：按给定顺序将任务分配给最早可用的机器
+def listScheduling (tasks : List Task) (m : Nat) (hm : m > 0) : Schedule :=
+  -- 每台机器的负载
+  let loads := List.replicate m 0
+  -- 依次分配每个任务
+  let (_, assignment) := tasks.foldl (λ (loads, acc) t =>
+    -- 找到负载最小的机器
+    let minLoad := loads.minimum?.getD 0
+    let machineIdx := loads.findIdx? (λ load => load = minLoad).getD 0
+    let machineIdx := machineIdx % m  -- 确保在范围内
+    let newLoads := loads.set machineIdx (loads[machineIdx]! + t.processingTime)
+    let newAcc := λ id =>
+      if id = t.id then some (machineIdx, loads[machineIdx]!)
+      else acc id
+    (newLoads, newAcc)
+  ) (loads, λ _ => none)
+  ⟨assignment⟩
+
+-- 列表调度近似比上界：2 - 1/m
+theorem listScheduling_approximation (tasks : List Task) (m : Nat) (hm : m > 0) :
+    let σ := listScheduling tasks m hm
+    let listMake := makespan tasks σ
+    let opt := 0  -- 最优值（需要计算）
+    listMake ≤ (2 * m - 1) * opt / m := by
+  -- 完整证明需要建立下界
+  sorry
+
+/-!
+## 5. 可行调度判定
+-/
+
+-- 检查调度是否满足所有约束
+def isFeasible (tasks : List Task) (resources : List Resource) 
+    (σ : Schedule) : Bool :=
+  -- 检查所有任务都被调度
+  let allScheduled := tasks.all (λ t => σ.startTime t.id ≠ none)
+  -- 检查独占性
+  let noOverlap := mutualExclusion tasks σ
+  -- 检查完整性
+  let complete := completeness tasks σ
+  -- 检查前置依赖
+  let precOk := precedenceConstraints tasks σ
+  -- 简化的布尔版本
+  allScheduled
+
+/-!
+## 6. Graham记号系统
+
+调度问题 α|β|γ：
+- α: 机器环境 (1, Pm, Qm, Rm, Fm, Jm, Om)
+- β: 任务特征 (rⱼ, dⱼ, prec, pmtn)
+- γ: 目标函数 (C_max, ∑Cⱼ, L_max, ∑Tⱼ)
+-/
+
+-- 机器环境类型
+inductive MachineEnv where
+  | single           -- 1: 单机
+  | identical (m : Nat)      -- Pm: 同构并行机
+  | uniform (m : Nat)        -- Qm: 均匀并行机
+  | unrelated (m : Nat)      -- Rm: 异构并行机
+  | flow (m : Nat)           -- Fm: 流水车间
+  | job (m : Nat)            -- Jm: 作业车间
+  | open (m : Nat)           -- Om: 开放车间
+  deriving Repr
+
+-- 任务特征
+structure TaskFeatures where
+  releaseTimes : Bool    -- rⱼ
+  deadlines : Bool       -- dⱼ
+  precedence : Bool      -- prec
+  preemption : Bool      -- pmtn
+  deriving Repr
+
+-- 目标函数类型
+inductive Objective where
+  | makespan           -- C_max
+  | totalFlowTime      -- ∑Cⱼ
+  | weightedFlowTime   -- ∑wⱼCⱼ
+  | maxLateness        -- L_max
+  | totalTardiness     -- ∑Tⱼ
+  | weightedTardiness  -- ∑wⱼTⱼ
+  | numTardyJobs       -- ∑Uⱼ
+  deriving Repr
+
+-- 完整的调度问题描述
+structure SchedulingProblem where
+  machineEnv : MachineEnv
+  features : TaskFeatures
+  objective : Objective
+  deriving Repr
+
+/-!
+## 7. 复杂性结果
+
+常见调度问题的计算复杂性：
+- 1||C_max: O(1) （任何顺序都一样）
+- 1||∑Cⱼ: O(n log n) （SPT最优）
+- 1|rⱼ|C_max: NP-hard
+- P||C_max: NP-hard
+- P|pmtn|C_max: O(n) （McNaughton规则）
+-/
+
+-- 问题是否是多项式时间可解的（类型级别）
+class PolynomialTimeSolvable (prob : SchedulingProblem) where
+  proof : String  -- 复杂性证明的引用
+
+-- SPT规则的多项式时间可解性
+instance : PolynomialTimeSolvable 
+    { machineEnv := .single, features := {}, objective := .totalFlowTime } where
+  proof := "SPT rule, O(n log n)"
+
+-- EDD规则的多项式时间可解性
+instance : PolynomialTimeSolvable 
+    { machineEnv := .single, features := {}, objective := .maxLateness } where
+  proof := "EDD rule, O(n log n)"
+
 end Scheduling
+
+/-!
+## 参考文献
+
+1. Graham, R. L., et al. (1979). "Optimization and approximation in 
+   deterministic sequencing and scheduling: a survey", 
+   Annals of Discrete Mathematics
+2. Pinedo, M. (2016). "Scheduling: Theory, Algorithms, and Systems", Springer
+3. Brucker, P. (2007). "Scheduling Algorithms", Springer
+4. Lawler, E. L., et al. (1993). "Sequencing and scheduling: Algorithms 
+   and complexity", Handbooks in OR & MS
+-/

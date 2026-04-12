@@ -1,50 +1,66 @@
+- --
+topic: "WebAssembly 视角：主索引"
+dependencies: []
+status: "review"
+author: "FormalScience Project"
+date: "2026-04-12"
+version: "1.0.0"
+tags: ["类型", "形式化", "证明", "定理", "算法"]
+category: "reference"
+priority: "medium"
+- --
+
 # WebAssembly 视角：主索引
 
-## 📋 目录
+## 1. 📋 目录 {#-目录}
 
 - [WebAssembly 视角：主索引](#webassembly-视角主索引)
-  - [📋 目录](#-目录)
-  - [1 文档体系概览](#1-文档体系概览)
-    - [1.1 知识体系架构](#11-知识体系架构)
-  - [2 实践指南新增](#2-实践指南新增)
-    - [2.1 快速选择指南](#21-快速选择指南)
-  - [3 理论基础 (Foundational Theory)](#3-理论基础-foundational-theory)
-    - [3.1 核心命题](#31-核心命题)
-  - [4 二进制格式 (Binary Format)](#4-二进制格式-binary-format)
-    - [4.1 核心命题](#41-核心命题)
-  - [5 运行时系统 (Runtime Systems)](#5-运行时系统-runtime-systems)
-    - [5.1 核心命题](#51-核心命题)
-  - [6 系统集成 (System Integration)](#6-系统集成-system-integration)
-    - [6.1 核心命题](#61-核心命题)
-  - [7 应用模式 (Application Patterns)](#7-应用模式-application-patterns)
-    - [7.1 核心命题](#71-核心命题)
-  - [8 哲学基础 (Philosophical Foundations)](#8-哲学基础-philosophical-foundations)
-    - [8.1 核心命题](#81-核心命题)
-  - [9 工程经济学 (Engineering Economics)](#9-工程经济学-engineering-economics)
-    - [9.1 核心命题](#91-核心命题)
-  - [10 未来方向 (Future Directions)](#10-未来方向-future-directions)
-    - [10.1 核心命题](#101-核心命题)
-  - [11 软件工程实践 (Software Engineering Practices)](#11-软件工程实践-software-engineering-practices)
-    - [11.1 核心命题](#111-核心命题)
-  - [12 横切关注点 (Cross-Cutting Concerns)](#12-横切关注点-cross-cutting-concerns)
-    - [12.1 方法论三角](#121-方法论三角)
-    - [12.2 批判性视角](#122-批判性视角)
-  - [13 使用指南](#13-使用指南)
-    - [13.1 阅读路径](#131-阅读路径)
-    - [13.2 符号约定](#132-符号约定)
-  - [14 元文档信息](#14-元文档信息)
-  - [15 贡献者指南](#15-贡献者指南)
-    - [15.1 文档原则](#151-文档原则)
-    - [15.2 引用规范](#152-引用规范)
-  - [16 相关资源](#16-相关资源)
+  - [1. 📋 目录 {#-目录}](#1--目录--目录)
+  - [1. 文档体系概览 {#文档体系概览}](#1-文档体系概览-文档体系概览)
+    - [1 1 知识体系架构 {#1-知识体系架构}](#1-1-知识体系架构-1-知识体系架构)
+  - [2. 实践指南新增 {#实践指南新增}](#2-实践指南新增-实践指南新增)
+    - [2 1 快速选择指南 {#1-快速选择指南}](#2-1-快速选择指南-1-快速选择指南)
+  - [3. 理论基础 (Foundational Theory) {#理论基础-foundational-theory}](#3-理论基础-foundational-theory-理论基础-foundational-theory)
+    - [3 1 核心命题 {#1-核心命题}](#3-1-核心命题-1-核心命题)
+  - [4. 二进制格式 (Binary Format) {#二进制格式-binary-format}](#4-二进制格式-binary-format-二进制格式-binary-format)
+    - [4 1 核心命题 {#1-核心命题}](#4-1-核心命题-1-核心命题)
+  - [5. 运行时系统 (Runtime Systems) {#运行时系统-runtime-systems}](#5-运行时系统-runtime-systems-运行时系统-runtime-systems)
+    - [5 1 核心命题 {#1-核心命题}](#5-1-核心命题-1-核心命题)
+  - [6. 系统集成 (System Integration) {#系统集成-system-integration}](#6-系统集成-system-integration-系统集成-system-integration)
+    - [6 1 核心命题 {#1-核心命题}](#6-1-核心命题-1-核心命题)
+  - [7. 应用模式 (Application Patterns) {#应用模式-application-patterns}](#7-应用模式-application-patterns-应用模式-application-patterns)
+    - [7 1 核心命题 {#1-核心命题}](#7-1-核心命题-1-核心命题)
+  - [8. 哲学基础 (Philosophical Foundations) {#哲学基础-philosophical-foundations}](#8-哲学基础-philosophical-foundations-哲学基础-philosophical-foundations)
+    - [8 1 核心命题 {#1-核心命题}](#8-1-核心命题-1-核心命题)
+  - [9. 工程经济学 (Engineering Economics) {#工程经济学-engineering-economics}](#9-工程经济学-engineering-economics-工程经济学-engineering-economics)
+    - [9 1 核心命题 {#1-核心命题}](#9-1-核心命题-1-核心命题)
+  - [10. 未来方向 (Future Directions) {#未来方向-future-directions}](#10-未来方向-future-directions-未来方向-future-directions)
+    - [10 1 核心命题 {#1-核心命题}](#10-1-核心命题-1-核心命题)
+  - [11. 软件工程实践 (Software Engineering Practices) {#软件工程实践-software-engineering-pr}](#11-软件工程实践-software-engineering-practices-软件工程实践-software-engineering-pr)
+    - [11 1 核心命题 {#1-核心命题}](#11-1-核心命题-1-核心命题)
+  - [12. 横切关注点 (Cross-Cutting Concerns) {#横切关注点-cross-cutting-concerns}](#12-横切关注点-cross-cutting-concerns-横切关注点-cross-cutting-concerns)
+    - [12 1 方法论三角 {#1-方法论三角}](#12-1-方法论三角-1-方法论三角)
+    - [12 2 批判性视角 {#2-批判性视角}](#12-2-批判性视角-2-批判性视角)
+  - [13. 使用指南 {#使用指南}](#13-使用指南-使用指南)
+    - [13 1 阅读路径 {#1-阅读路径}](#13-1-阅读路径-1-阅读路径)
+    - [13 2 符号约定 {#2-符号约定}](#13-2-符号约定-2-符号约定)
+  - [14. 元文档信息 {#元文档信息}](#14-元文档信息-元文档信息)
+  - [15. 贡献者指南 {#贡献者指南}](#15-贡献者指南-贡献者指南)
+    - [15 1 文档原则 {#1-文档原则}](#15-1-文档原则-1-文档原则)
+    - [15 2 引用规范 {#2-引用规范}](#15-2-引用规范-2-引用规范)
+  - [16. 相关资源 {#相关资源}](#16-相关资源-相关资源)
+  - [关联网络](#关联网络)
+    - [前向引用](#前向引用)
+    - [后向引用](#后向引用)
+    - [交叉链接](#交叉链接)
 
----
+- --
 
-## 1 文档体系概览
+## 1. 文档体系概览 {#文档体系概览}
 
 本文档体系以 **形式化、批判性和跨学科** 的视角，系统剖析 WebAssembly (Wasm) 作为通用计算抽象的理论基础、技术实现与工程实践。
 
-### 1.1 知识体系架构
+### 1 1 知识体系架构 {#1-知识体系架构}
 
 ```text
 理论层 ━━━━━━━┓
@@ -57,11 +73,11 @@
               ┗━━> 本体论 ━━> 认识论 ━━> 方法论
 ```
 
----
+- --
 
-## 2 实践指南新增
+## 2. 实践指南新增 {#实践指南新增}
 
-**3 篇高质量实战文档**，降低入门门槛，提升工程实践：
+- _3 篇高质量实战文档_*，降低入门门槛，提升工程实践：
 
 | 文档 | 描述 | 特色 | 推荐指数 |
 |------|------|------|---------|
@@ -69,17 +85,17 @@
 | **[CHEAT_SHEET.md](CHEAT_SHEET.md)** | 快速参考卡（打印友好） | ✅ A4 打印优化<br>✅ 14 个速查区<br>✅ 可执行命令 | ⭐⭐⭐⭐⭐ |
 | **[ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md)** | 系统架构概览 | ✅ ASCII 架构图<br>✅ 权衡分析<br>✅ 设计决策 | ⭐⭐⭐⭐⭐ |
 
-### 2.1 快速选择指南
+### 2 1 快速选择指南 {#1-快速选择指南}
 
-**我想立即上手** → CHEAT_SHEET.md (10 分钟)
-**我需要避坑指南** → BEST_PRACTICES.md (30 分钟)
-**我要了解架构** → ARCHITECTURE_OVERVIEW.md (20 分钟)
+- _我想立即上手_* → CHEAT_SHEET.md (10 分钟)
+- _我需要避坑指南_* → BEST_PRACTICES.md (30 分钟)
+- _我要了解架构_* → ARCHITECTURE_OVERVIEW.md (20 分钟)
 
----
+- --
 
-## 3 理论基础 (Foundational Theory)
+## 3. 理论基础 (Foundational Theory) {#理论基础-foundational-theory}
 
-### 3.1 核心命题
+### 3 1 核心命题 {#1-核心命题}
 >
 > **WebAssembly 是一个具有形式化验证语义的栈式虚拟机，其类型安全性可在多项式时间内证明。**
 
@@ -91,16 +107,16 @@
 | [01.4 执行模型](01_Foundational_Theory/01.4_Execution_Model.md) | 如何保证确定性？ | 状态转移系统 + 不变式 |
 | [01.5 安全模型](01_Foundational_Theory/01.5_Security_Model.md) | 如何形式化沙箱边界？ | 能力安全模型 + 访问控制逻辑 |
 
-**关键定理**：
+- _关键定理_*：
 
 - \( \forall M \in \text{ValidModule} : \text{TypeCheck}(M) \Rightarrow \neg \text{UndefinedBehavior}(M) \)
 - 验证复杂度：\( O(n) \)，其中 \( n \) 为字节码长度
 
----
+- --
 
-## 4 二进制格式 (Binary Format)
+## 4. 二进制格式 (Binary Format) {#二进制格式-binary-format}
 
-### 4.1 核心命题
+### 4 1 核心命题 {#1-核心命题}
 >
 > **Wasm 二进制格式通过 LEB128 编码与段式结构实现了流式验证与紧凑表示的双重目标。**
 
@@ -112,17 +128,17 @@
 | [02.4 验证规则](02_Binary_Format/02.4_Validation_Rules.md) | 类型栈验证 / 控制流完整性 | 单遍验证 + 类型安全 |
 | [02.5 流式编译](02_Binary_Format/02.5_Streaming_Compilation.md) | 管道化编译 / 增量验证 | 低延迟 + 内存效率 |
 
-**关键不变式**：
+- _关键不变式_*：
 
 - 段顺序：\( \text{Type} \prec \text{Import} \prec \text{Function} \prec \text{Code} \prec \text{Data} \)
 - 编码唯一性：\( \forall M : \exists! B : \text{decode}(B) = M \)
 - 流式内存界限：\( \text{Memory}_{\text{stream}} = O(\max_{f \in M}(|f|)) \)
 
----
+- --
 
-## 5 运行时系统 (Runtime Systems)
+## 5. 运行时系统 (Runtime Systems) {#运行时系统-runtime-systems}
 
-### 5.1 核心命题
+### 5 1 核心命题 {#1-核心命题}
 >
 > **分层编译策略通过权衡启动延迟与峰值性能，实现了自适应优化。**
 
@@ -134,16 +150,16 @@
 | [03.4 独立运行时](03_Runtime_Systems/03.4_Standalone_Runtimes.md) | 通用计算平台 | WASI 扩展模型 |
 | [03.5 性能分析](03_Runtime_Systems/03.5_Performance_Analysis.md) | 基准测试方法论 | 统计显著性检验 |
 
-**性能定理**：
+- _性能定理_*：
 
 - 冷启动下界：\( T_{\text{startup}} \geq O(\text{validation}) = O(n) \)
 - 峰值性能上界：\( \text{Perf}_{\text{wasm}} \leq 0.95 \times \text{Perf}_{\text{native}} \)（经验上界）
 
----
+- --
 
-## 6 系统集成 (System Integration)
+## 6. 系统集成 (System Integration) {#系统集成-system-integration}
 
-### 6.1 核心命题
+### 6 1 核心命题 {#1-核心命题}
 >
 > **WASI 通过能力导向接口实现了安全的系统资源访问，同时保持沙箱完整性。**
 
@@ -155,16 +171,16 @@
 | [04.4 线程模型](04_System_Integration/04.4_Threading_Model.md) | 并发原语 | 原子指令 + Futex |
 | [04.5 互操作性](04_System_Integration/04.5_Interoperability.md) | 多语言绑定 | 接口类型提案 |
 
-**安全约束**：
+- _安全约束_*：
 
 - 能力安全：\( \text{Access}(R) \Rightarrow \exists c \in \text{Capabilities} : \text{grants}(c, R) \)
 - 内存隔离：\( \text{LinearMemory}_{\text{wasm}} \cap \text{HostMemory} = \emptyset \)
 
----
+- --
 
-## 7 应用模式 (Application Patterns)
+## 7. 应用模式 (Application Patterns) {#应用模式-application-patterns}
 
-### 7.1 核心命题
+### 7 1 核心命题 {#1-核心命题}
 >
 > **Wasm 在边缘计算场景中通过函数级粒度实现了成本量级降低。**
 
@@ -176,16 +192,16 @@
 | [05.4 插件系统](05_Application_Patterns/05.4_Plugin_Systems.md) | 可扩展架构 | 沙箱隔离 |
 | [05.5 区块链合约](05_Application_Patterns/05.5_Blockchain_Contracts.md) | 确定性执行 | 燃料计量 |
 
-**经济学定理**：
+- _经济学定理_*：
 
 - ROI 模型：\( \text{Savings} = \sum (\Delta \text{Traffic} + \Delta \text{Memory} + \Delta \text{DevOps}) \)
 - 盈亏平衡点：6 个月（基于 10k 边缘节点实证数据）
 
----
+- --
 
-## 8 哲学基础 (Philosophical Foundations)
+## 8. 哲学基础 (Philosophical Foundations) {#哲学基础-philosophical-foundations}
 
-### 8.1 核心命题
+### 8 1 核心命题 {#1-核心命题}
 >
 > **可移植性本质上是一种抽象的本体论承诺，而确定性则是认识论的保证。**
 
@@ -197,16 +213,16 @@
 | [06.4 抽象层次论](06_Philosophical_Foundations/06.4_Abstraction_Layers.md) | 抽象的代价 | 信息论 + 复杂性理论 |
 | [06.5 通用计算本体](06_Philosophical_Foundations/06.5_Universal_Computation.md) | 计算的本质 | 图灵完备性 + λ演算 |
 
-**哲学定理**：
+- _哲学定理_*：
 
 - 抽象不变性：\( \llbracket P \rrbracket_{\text{Platform}_1} \equiv \llbracket P \rrbracket_{\text{Platform}_2} \)
 - 沙箱悖论：安全性与功能性的本质张力
 
----
+- --
 
-## 9 工程经济学 (Engineering Economics)
+## 9. 工程经济学 (Engineering Economics) {#工程经济学-engineering-economics}
 
-### 9.1 核心命题
+### 9 1 核心命题 {#1-核心命题}
 >
 > **函数级粒度带来的边际成本递减，在高密度场景下产生量级式收益。**
 
@@ -218,17 +234,17 @@
 | [07.4 可扩展性模式](07_Engineering_Economics/07.4_Scalability_Patterns.md) | 水平扩展理论 | Amdahl 定律变体 |
 | [07.5 迁移路径](07_Engineering_Economics/07.5_Migration_Pathways.md) | 技术债务管理 | 演化架构框架 |
 
-**成本函数**：
+- _成本函数_*：
 \[
 C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} + C_{\text{devops}}
 \]
 其中 Wasm 在前三项均可降低 10-100 倍。
 
----
+- --
 
-## 10 未来方向 (Future Directions)
+## 10. 未来方向 (Future Directions) {#未来方向-future-directions}
 
-### 10.1 核心命题
+### 10 1 核心命题 {#1-核心命题}
 >
 > **Wasm 的演化路径受限于形式化验证的可行性边界与硬件抽象的鸿沟。**
 
@@ -240,16 +256,16 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 | [08.4 研究前沿](08_Future_Directions/08.4_Research_Frontiers.md) | 形式化方法 | 全程序验证挑战 |
 | [08.5 工业趋势](08_Future_Directions/08.5_Industry_Trends.md) | 采用障碍 | 组织惯性 + 工具链成熟度 |
 
-**开放性定理**：
+- _开放性定理_*：
 
 - 哥德尔限制：存在无法在多项式时间验证的合法 Wasm 程序类
 - 图灵墙：任何通用计算抽象终将面临停机问题
 
----
+- --
 
-## 11 软件工程实践 (Software Engineering Practices)
+## 11. 软件工程实践 (Software Engineering Practices) {#软件工程实践-software-engineering-pr}
 
-### 11.1 核心命题
+### 11 1 核心命题 {#1-核心命题}
 >
 > **工具链质量决定开发效率下界，工程实践决定生产质量上界。**
 
@@ -261,17 +277,17 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 | [09.4 CI/CD 集成](09_Software_Engineering_Practices/09.4_CICD_Integration.md) | 持续集成 / 自动化部署 / 质量门控 | GitHub Actions, Docker, 优化流水线 |
 | [09.5 实际项目案例](09_Software_Engineering_Practices/09.5_Real_World_Case_Studies.md) | Figma / AutoCAD / Zoom / Shopify | 真实场景 + 经验教训 |
 
-**工程定理**：
+- _工程定理_*：
 
 - 调试时间：\( T_{\text{debug}}(Wasm) \approx 2-3 \times T_{\text{debug}}(Native) \)
 - 工具链复杂度：\( \text{Wasm\_Toolchain} > \text{JS\_Toolchain} \times 3 \)
 - ROI 方程：\( \text{Value}(\text{Wasm}) = f(\text{Performance}, \text{Reuse}) - \text{Cost}(\text{Learning}, \text{Tooling}) \)
 
----
+- --
 
-## 12 横切关注点 (Cross-Cutting Concerns)
+## 12. 横切关注点 (Cross-Cutting Concerns) {#横切关注点-cross-cutting-concerns}
 
-### 12.1 方法论三角
+### 12 1 方法论三角 {#1-方法论三角}
 
 ```text
 形式化验证 ←→ 实证测量 ←→ 哲学批判
@@ -281,7 +297,7 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
   正确性        性能          适用性
 ```
 
-### 12.2 批判性视角
+### 12 2 批判性视角 {#2-批判性视角}
 
 1. **技术乐观主义批判**
    - Wasm 非银弹：抽象层带来的性能税不可消除
@@ -295,37 +311,37 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
    - 可移植性的本体论承诺能否兑现？
    - 沙箱安全是否是不可逾越的边界？
 
----
+- --
 
-## 13 使用指南
+## 13. 使用指南 {#使用指南}
 
-### 13.1 阅读路径
+### 13 1 阅读路径 {#1-阅读路径}
 
-**快速入门**（2小时）：
+- _快速入门_*（2小时）：
 
 ```text
 00_Master_Index → 01.1 → 02.1 → 03.1 → QUICK_REFERENCE
 ```
 
-**理论深度**（1周）：
+- _理论深度_*（1周）：
 
 ```text
 01_Foundational_Theory (全部) → 06_Philosophical_Foundations (全部)
 ```
 
-**工程实践**（3天）：
+- _工程实践_*（3天）：
 
 ```text
 03_Runtime_Systems → 04_System_Integration → 05_Application_Patterns
 ```
 
-**决策支持**（4小时）：
+- _决策支持_*（4小时）：
 
 ```text
 07_Engineering_Economics (全部) → FAQ (关键问题)
 ```
 
-### 13.2 符号约定
+### 13 2 符号约定 {#2-符号约定}
 
 - \( \llbracket \cdot \rrbracket \)：语义解释函数
 - \( \prec \)：偏序关系
@@ -333,9 +349,9 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 - \( \equiv \)：语义等价
 - \( O(\cdot) \)：算法复杂度
 
----
+- --
 
-## 14 元文档信息
+## 14. 元文档信息 {#元文档信息}
 
 | 属性 | 值 |
 |------|-----|
@@ -348,37 +364,66 @@ C_{\text{total}} = C_{\text{compute}} + C_{\text{network}} + C_{\text{storage}} 
 | 批判性级别 | 高（包含反例与边界条件分析）|
 | 工程实践 | 真实项目案例 + 工具链详解 |
 
----
+- --
 
-## 15 贡献者指南
+## 15. 贡献者指南 {#贡献者指南}
 
-### 15.1 文档原则
+### 15 1 文档原则 {#1-文档原则}
 
 1. **形式化优先**：所有核心命题必须有数学表达
 2. **可证伪性**：提供反例或边界条件
 3. **跨学科视角**：融合计算机科学、哲学、经济学
 4. **批判性思维**：质疑技术乐观主义，揭示权衡
 
-### 15.2 引用规范
+### 15 2 引用规范 {#2-引用规范}
 
 - 学术论文：ACM/IEEE 格式
 - 规范文档：W3C 永久链接
 - 实证数据：附带测试环境与统计显著性
 
----
+- --
 
-## 16 相关资源
+## 16. 相关资源 {#相关资源}
 
 - **官方规范**：[WebAssembly Specification](https://webassembly.github.io/spec/)
 - **形式化验证**：[Wasm-Coq](https://github.com/WasmCert/WasmCert-Coq)
 - **性能基准**：[Wasm-Bench](https://github.com/wasmbench/wasmbench)
 - **生态地图**：[Wasm Landscape](https://landscape.cncf.io/?group=wasm)
 
----
+- --
 
-**核心论断**：
+- _核心论断_*：
+
 > WebAssembly 作为"可移植字节码"的承诺，本质上是在抽象与性能、安全与功能、标准化与创新之间的持续张力中寻求动态平衡。其成功不仅依赖于技术优越性，更依赖于生态系统网络效应与工程实践的协同演化。
 
----
+- --
 
 _本索引采用批判性技术哲学视角，旨在超越单纯的技术描述，揭示 WebAssembly 作为计算抽象的深层结构与限制。_
+
+
+---
+
+## 关联网络
+
+### 前向引用
+
+> 本文档为以下文档提供基础：
+>
+> - [相关文档](./) (待补充)
+
+### 后向引用
+
+> 本文档依赖以下基础文档：
+>
+> - [基础文档](./) (待补充)
+
+### 交叉链接
+
+> 相关主题：
+>
+> - [主题A](./) (待补充)
+> - [主题B](./) (待补充)
+
+---
+
+_本文档由 FormalScience 文档规范化工具自动生成_
