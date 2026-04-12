@@ -214,8 +214,8 @@
 
 ## 🔗 相关文档
 
-- [view04.md](../../../view04.md) - 复杂系统年鉴与范畴论工作坊
-- [view05.md](../../../view05.md) - 基于Wikipedia和大学课程的论证
+- view04.md - 复杂系统年鉴与范畴论工作坊
+- view05.md - 基于Wikipedia和大学课程的论证
 - [FormalScience/10_扩展计划与推广/README.md](../../FormalScience/10_扩展计划与推广/README.md)
 
 ## 📝 更新日志

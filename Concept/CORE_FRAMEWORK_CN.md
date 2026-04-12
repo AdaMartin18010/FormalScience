@@ -202,7 +202,7 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 **典型应用**: 计算理论、云计算、虚拟化
 
-**相关文档**: [TuningCompute/](TuningCompute/)
+**相关文档**: [TuningCompute/](TuningCompute/README.md)
 
 ---
 
@@ -260,7 +260,7 @@ R₂: 系统操作"操作自身"的能力（元元学习）
 
 **典型应用**: 形式验证、编译器、系统设计
 
-**相关文档**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/)
+**相关文档**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md)
 
 ---
 

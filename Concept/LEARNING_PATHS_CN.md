@@ -230,7 +230,7 @@
 
 **必读文档**:
 
-1. [编程算法设计视角](Program_Algorithm_Perspective/) - 工程实践视角
+1. [编程算法设计视角](Program_Algorithm_Perspective/README.md) - 工程实践视角
 2. [案例研究索引](CASE_STUDIES_INDEX.md) - 所有案例研究
 3. [学习路径指南](LEARNING_PATHS.md) - 完整版学习路径
 
@@ -272,7 +272,7 @@
 **必读文档**:
 
 1. [信息论视角](information_view.md) - 信息论视角详解
-2. [图灵可计算视角](TuningCompute/) - 图灵可计算视角
+2. [图灵可计算视角](TuningCompute/README.md) - 图灵可计算视角
 3. [快速参考（中文版）](QUICK_REFERENCE_CN.md) - 公式和定理
 
 **预期收获**: 理解信息论和计算复杂性的核心理论
@@ -350,7 +350,7 @@
 
 **必读文档**:
 
-1. [编程算法设计视角](Program_Algorithm_Perspective/) - 工程实践视角
+1. [编程算法设计视角](Program_Algorithm_Perspective/README.md) - 工程实践视角
 2. [案例研究索引](CASE_STUDIES_INDEX.md) - 所有案例研究
 3. [常见问题解答（中文版）](FAQ_CN.md) - 解答疑问
 
@@ -450,7 +450,7 @@
 ### 5.3 实践应用
 
 1. [案例研究索引](CASE_STUDIES_INDEX.md) - 所有案例研究
-2. [编程算法设计视角](Program_Algorithm_Perspective/) - 工程实践视角
+2. [编程算法设计视角](Program_Algorithm_Perspective/README.md) - 工程实践视角
 3. [扩展内容导航](EXTENDED_CONTENT_NAVIGATION.md) - 扩展学习
 
 ---
@@ -465,7 +465,7 @@
 
 ### 6.1 虚拟化与隔离
 
-1. [图灵可计算视角](TuningCompute/) - 图灵可计算视角
+1. [图灵可计算视角](TuningCompute/README.md) - 图灵可计算视角
 2. [操作系统案例](CASE_STUDY_OPERATING_SYSTEMS.md) - 系统软件案例
 
 ---
@@ -562,7 +562,7 @@
 
 **核心文档**: [formal_language_view.md](formal_language_view.md)
 
-**扩展内容**: [FormalLanguage_Perspective/](FormalLanguage_Perspective/) - 63个文档
+**扩展内容**: [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) - 63个文档
 
 **关键概念**: Chomsky层级、语法、语义、语言类
 
@@ -574,7 +574,7 @@
 
 **核心文档**: [ai_model_view.md](ai_model_view.md)
 
-**扩展内容**: [AI_model_Perspective/](AI_model_Perspective/) - 60个文档
+**扩展内容**: [AI_model_Perspective/](AI_model_Perspective/README.md) - 60个文档
 
 **关键概念**: VC维、PAC学习、元学习、Transformer
 
@@ -586,7 +586,7 @@
 
 **核心文档**: [information_view.md](information_view.md)
 
-**扩展内容**: [Information_Theory_Perspective/](Information_Theory_Perspective/) - 65个文档
+**扩展内容**: [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) - 65个文档
 
 **关键概念**: Shannon熵、互信息、信道容量、DIKWP模型
 
@@ -596,7 +596,7 @@
 
 ### 9.4 图灵可计算视角
 
-**核心文档**: [TuningCompute/](TuningCompute/) - 25个文档
+**核心文档**: [TuningCompute/](TuningCompute/README.md) - 25个文档
 
 **关键概念**: 图灵机、停机问题、复杂度、虚拟化
 
@@ -636,7 +636,7 @@
 
 ### 9.8 编程算法设计视角
 
-**核心文档**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 50个文档
+**核心文档**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) - 50个文档
 
 **关键概念**: UH-Cost模型、三元视角、20维复杂度、形式验证
 
@@ -670,8 +670,8 @@
 1. [形式语言视角](formal_language_view.md) - 形式语言视角详解
 2. [AI模型视角](ai_model_view.md) - AI模型视角详解
 3. [信息论视角](information_view.md) - 信息论视角详解
-4. [图灵可计算视角](TuningCompute/) - 图灵可计算视角
-5. [编程算法设计视角](Program_Algorithm_Perspective/) - 编程算法设计视角
+4. [图灵可计算视角](TuningCompute/README.md) - 图灵可计算视角
+5. [编程算法设计视角](Program_Algorithm_Perspective/README.md) - 编程算法设计视角
 
 ---
 

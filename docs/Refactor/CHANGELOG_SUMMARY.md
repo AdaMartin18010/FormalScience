@@ -122,7 +122,7 @@
 ### 新用户
 1. 直接采用 **v4.0.0** - 最稳定、最完整
 2. 阅读 [00_GETTING_STARTED.md](00_GETTING_STARTED.md)
-3. 跟随 [tutorials/](tutorials/) 学习路径
+3. 跟随 [tutorials/](tutorials/README.md) 学习路径
 
 ### 现有用户升级
 1. 先阅读 **v4.0.0 破坏性变更**

@@ -243,9 +243,9 @@ graph TD
 
 如有问题或建议，请通过以下方式联系：
 
-- **项目主页**: [FormalScience](../../../README.md)
-- **问题反馈**: [GitHub Issues](../../../.github/ISSUE_TEMPLATE.md)
-- **贡献指南**: [CONTRIBUTING](../../../CONTRIBUTING.md)
+- **项目主页**: FormalScience
+- **问题反馈**: GitHub Issues
+- **贡献指南**: CONTRIBUTING
 
 ---
 

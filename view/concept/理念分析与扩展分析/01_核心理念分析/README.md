@@ -179,7 +179,7 @@
 
 ## 🔗 相关文档
 
-- [Concept/README.md](../../../Concept/README.md)
+- Concept/README.md
 - [FormalScience/01_形式科学基础理论/README.md](../../FormalScience/01_形式科学基础理论/README.md)
 
 ## 📖 扩展阅读

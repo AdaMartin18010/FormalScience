@@ -258,14 +258,14 @@ FormalLanguage_Perspective/
 
 | 视角 | 主文档 | 目录 | 状态 |
 |------|--------|------|------|
-| 形式语言 | [formal_language_view.md](formal_language_view.md) | [FormalLanguage_Perspective/](FormalLanguage_Perspective/) | ✅ |
-| AI模型 | [ai_model_view.md](ai_model_view.md) | [AI_model_Perspective/](AI_model_Perspective/) | ✅ |
-| 信息论 | [information_view.md](information_view.md) | [Information_Theory_Perspective/](Information_Theory_Perspective/) | ✅ |
+| 形式语言 | [formal_language_view.md](formal_language_view.md) | [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) | ✅ |
+| AI模型 | [ai_model_view.md](ai_model_view.md) | [AI_model_Perspective/](AI_model_Perspective/README.md) | ✅ |
+| 信息论 | [information_view.md](information_view.md) | [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) | ✅ |
 | 控制论等 | [SUPPLEMENTARY_PERSPECTIVES.md](SUPPLEMENTARY_PERSPECTIVES.md) | - | ✅ |
-| 图灵可计算 | [TURINGCOMPUTE_INTEGRATION.md](TURINGCOMPUTE_INTEGRATION.md) | [TuningCompute/](TuningCompute/) | ✅ |
-| 编程算法 | - | [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) | ✅ |
-| 软件 | [Software_Perspective.md](Software_Perspective.md) | [Software_Perspective/](Software_Perspective/) | ✅ |
-| Wasm | [Wasm_Perspective.md](Wasm_Perspective.md) | [Wasm_Perspective/](Wasm_Perspective/) | ✅ |
+| 图灵可计算 | [TURINGCOMPUTE_INTEGRATION.md](TURINGCOMPUTE_INTEGRATION.md) | [TuningCompute/](TuningCompute/README.md) | ✅ |
+| 编程算法 | - | [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) | ✅ |
+| 软件 | [Software_Perspective.md](Software_Perspective.md) | [Software_Perspective/](Software_Perspective/README.md) | ✅ |
+| Wasm | [Wasm_Perspective.md](Wasm_Perspective.md) | [Wasm_Perspective/](Wasm_Perspective/README.md) | ✅ |
 
 **总计验证**: 50+个主要链接，全部有效 ✅
 

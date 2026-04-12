@@ -268,11 +268,11 @@ Gödel不完备 ≡ 停机问题 ≡ AI完美对齐不可能
 
 ### 8.2 视角专题
 
-- [形式语言视角](FormalLanguage_Perspective/)
-- [AI模型视角](AI_model_Perspective/)
-- [信息论视角](Information_Theory_Perspective/)
-- [图灵可计算视角](TuningCompute/)
-- [编程算法设计视角](Program_Algorithm_Perspective/)
+- [形式语言视角](FormalLanguage_Perspective/README.md)
+- [AI模型视角](AI_model_Perspective/README.md)
+- [信息论视角](Information_Theory_Perspective/README.md)
+- [图灵可计算视角](TuningCompute/README.md)
+- [编程算法设计视角](Program_Algorithm_Perspective/README.md)
 
 ---
 

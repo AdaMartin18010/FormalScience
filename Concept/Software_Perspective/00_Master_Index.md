@@ -128,7 +128,7 @@ priority: "medium"
 - [08.2 黄金路径](./08_Platform_Engineering/08.2_Golden_Path.md)
 - [08.3 内部开发者平台](./08_Platform_Engineering/08.3_Internal_Developer_Platform.md)
 
-### 3 9 [09 - 云原生模式 (Cloud Native Patterns)](./09_Cloud_Native_Patterns/) {#9-09---云原生模式-cloud-native-patt}
+### 3 9 [09 - 云原生模式 (Cloud Native Patterns)](./09_Cloud_Native_Patterns/README.md) {#9-09---云原生模式-cloud-native-patt}
 
 容器、微服务与云原生架构
 
@@ -173,9 +173,9 @@ priority: "medium"
 
 | 透视维度 | 关联关系 | 交叉主题 |
 |---------|---------|---------|
-| [形式语言透视](../FormalLanguage_Perspective/) | 软件是形式语言的工程化实现 | 类型系统、程序语义 |
-| [信息论透视](../Information_Theory_Perspective/) | 软件处理和转换信息 | 复杂度、熵、通信 |
-| [AI模型透视](../AI_model_Perspective/) | AI重塑软件开发范式 | 代码生成、自动化 |
+| [形式语言透视](../FormalLanguage_Perspective/README.md) | 软件是形式语言的工程化实现 | 类型系统、程序语义 |
+| [信息论透视](../Information_Theory_Perspective/README.md) | 软件处理和转换信息 | 复杂度、熵、通信 |
+| [AI模型透视](../AI_model_Perspective/README.md) | AI重塑软件开发范式 | 代码生成、自动化 |
 
 ## 7. 时间线视角 {#时间线视角}
 
@@ -235,20 +235,20 @@ OTLP + OPA + GitOps 闭环实现 60 秒自动回滚
 
 > 本文档为以下文档提供基础：
 >
-> - [相关文档](./) (待补充)
+> - [相关文档](./README.md) (待补充)
 
 ### 后向引用
 
 > 本文档依赖以下基础文档：
 >
-> - [基础文档](./) (待补充)
+> - [基础文档](./README.md) (待补充)
 
 ### 交叉链接
 
 > 相关主题：
 >
-> - [主题A](./) (待补充)
-> - [主题B](./) (待补充)
+> - [主题A](./README.md) (待补充)
+> - [主题B](./README.md) (待补充)
 
 ---
 

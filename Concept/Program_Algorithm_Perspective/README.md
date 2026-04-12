@@ -399,7 +399,7 @@ ltsinfo observer.lts
 ### 形式语言视角
 
 - **联系**：提供语义建模的元理论基础
-- **引用**：[../FormalLanguage_Perspective/](../FormalLanguage_Perspective/)
+- **引用**：[../FormalLanguage_Perspective/](../FormalLanguage_Perspective/README.md)
 - **关键概念**：
   - 反身性公理 A5 → 元编程的形式化
   - 26 阶升链 → 编程语言的表达能力层次
@@ -407,7 +407,7 @@ ltsinfo observer.lts
 ### 信息论视角
 
 - **联系**：提供复杂度的信息论下界
-- **引用**：[../Information_Theory_Perspective/](../Information_Theory_Perspective/)
+- **引用**：[../Information_Theory_Perspective/](../Information_Theory_Perspective/README.md)
 - **关键概念**：
   - Shannon 熵 → 通讯复杂度下界
   - Kolmogorov 复杂度 → 算法复杂度下界
@@ -416,7 +416,7 @@ ltsinfo observer.lts
 ### AI 模型视角
 
 - **联系**：AI 算法的形式化分析
-- **引用**：[../AI_model_Perspective/](../AI_model_Perspective/)
+- **引用**：[../AI_model_Perspective/](../AI_model_Perspective/README.md)
 - **关键概念**：
   - Chomsky 层级 → 语言识别算法的复杂度
   - Gold 可学习性 → 学习算法的样本复杂度
@@ -425,7 +425,7 @@ ltsinfo observer.lts
 ### 软件视角
 
 - **联系**：工程实践的形式化桥梁
-- **引用**：[../Software_Perspective/](../Software_Perspective/)
+- **引用**：[../Software_Perspective/](../Software_Perspective/README.md)
 - **关键概念**：
   - 语义-形式二元性 → 设计模式的双重表达
   - 六螺旋框架 → 软件演化的形式化模型

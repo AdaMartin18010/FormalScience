@@ -226,7 +226,7 @@ FormalScience 主题分类体系
 - _相关文档_*:
 
 - [图灵可计算整合](../TURINGCOMPUTE_INTEGRATION.md)
-- [TuningCompute/](../TuningCompute/)
+- [TuningCompute/](../TuningCompute/README.md)
 
 ### 4 信息理论 {#信息理论}
 
@@ -260,7 +260,7 @@ FormalScience 主题分类体系
 - _相关文档_*:
 
 - [信息论视角](../information_view.md)
-- [Information_Theory_Perspective/](../Information_Theory_Perspective/)
+- [Information_Theory_Perspective/](../Information_Theory_Perspective/README.md)
 
 ### 5 学习理论 {#学习理论}
 
@@ -944,20 +944,20 @@ FormalScience 主题分类体系
 
 > 本文档为以下文档提供基础：
 >
-> - [相关文档](./) (待补充)
+> - [相关文档](./README.md) (待补充)
 
 ### 后向引用
 
 > 本文档依赖以下基础文档：
 >
-> - [基础文档](./) (待补充)
+> - [基础文档](./README.md) (待补充)
 
 ### 交叉链接
 
 > 相关主题：
 >
-> - [主题A](./) (待补充)
-> - [主题B](./) (待补充)
+> - [主题A](./README.md) (待补充)
+> - [主题B](./README.md) (待补充)
 
 ---
 

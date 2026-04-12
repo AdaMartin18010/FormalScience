@@ -64,19 +64,19 @@ mindmap
 
 ## 2 子主题导航
 
-### 2.1 [81 类型驱动的基础设施设计](081_类型驱动设计md)
+### 2.1 [81 类型驱动的基础设施设计](./81_类型驱动设计.md)
 
 - CRD类型Schema
 - NetworkPolicy作为函数签名
 - 静态验证
 
-### 2.2 [82 Curry-Howard 同构在DevOps](082_Curry-Howard同构md)
+### 2.2 [82 Curry-Howard 同构在DevOps](./82_Curry-Howard同构.md)
 
 - Infrastructure as Code ≈ Code as Proof
 - Terraform Plan ≈ 类型检查证明
 - GitOps期望状态
 
-### 2.3 [83 错误处理新视角](083_错误处理新视角md)
+### 2.3 [83 错误处理新视角](./83_错误处理新视角.md)
 
 - CrashLoopBackOff ≈ 异常
 - PodPreset ≈ 异常恢复策略

@@ -282,7 +282,7 @@
 
 1. [Gold可学习性](CONCEPT_CROSS_INDEX.md#gold可学习性-gold-learnability-theory-七视角)
 2. [VC维](CONCEPT_CROSS_INDEX.md#vc维-vapnik-chervonenkis-dimension-七视角)
-3. [PAC学习](AI_model_Perspective/)
+3. [PAC学习](AI_model_Perspective/README.md)
 
 **重点**:
 
@@ -603,19 +603,19 @@ Day 13-14: 实践项目：架构设计评审
 
 **起点**: [形式语言视角](formal_language_view.md)
 **核心**: Chomsky层级、反身性、语义模型
-**专题**: [FormalLanguage_Perspective/](FormalLanguage_Perspective/)
+**专题**: [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md)
 
 ### 9.2 AI模型视角
 
-**起点**: [AI模型视角](AI_model_Perspective/)
+**起点**: [AI模型视角](AI_model_Perspective/README.md)
 **核心**: Gold可学习性、VC维、神经网络理论
-**专题**: [AI_model_Perspective/](AI_model_Perspective/)
+**专题**: [AI_model_Perspective/](AI_model_Perspective/README.md)
 
 ### 9.3 信息论视角
 
 **起点**: [信息论视角](information_view.md)
 **核心**: 熵、互信息、Kolmogorov复杂度
-**专题**: [Information_Theory_Perspective/](Information_Theory_Perspective/)
+**专题**: [Information_Theory_Perspective/](Information_Theory_Perspective/README.md)
 
 ### 9.4 图灵可计算视角
 
@@ -645,7 +645,7 @@ Day 13-14: 实践项目：架构设计评审
 
 **起点**: [Program_Algorithm_Perspective/README_FIRST.md](Program_Algorithm_Perspective/README_FIRST.md) - 新手友好入门
 **核心**: UH-Cost统一元模型、三元视角、形式语义、设计模式形式化
-**专题**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 47+文档
+**专题**: [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) - 47+文档
 
 **推荐学习路径**:
 
@@ -704,11 +704,11 @@ Day 13-14: 实践项目：架构设计评审
 
 ### 10.3 视角专题文档
 
-- [FormalLanguage_Perspective/](FormalLanguage_Perspective/) - 85+文档
-- [AI_model_Perspective/](AI_model_Perspective/) - 15+文档
-- [Information_Theory_Perspective/](Information_Theory_Perspective/) - 83+文档
+- [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) - 85+文档
+- [AI_model_Perspective/](AI_model_Perspective/README.md) - 15+文档
+- [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) - 83+文档
 - [TuringCompute/](TuringCompute/) - 25+文档
-- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 47+文档 ✨ **NEW!**
+- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) - 47+文档 ✨ **NEW!**
 
 ### 10.4 案例研究
 

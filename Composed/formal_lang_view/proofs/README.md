@@ -1,93 +1,53 @@
-# 形式化验证代码库
+# Proofs - 形式化证明
 
-> **目录**: formal_lang_view/proofs/
-> **创建日期**: 2025-12-02
-> **文档状态**: ✅ 完成
+> **目录**: `Composed/formal_lang_view/proofs/`  
+> **用途**: 形式化证明和验证代码  
+> **最后更新**: 2026-04-12
 
 ---
 
-## 📋 目录结构
+## 📁 目录结构
 
-```text
+```
 proofs/
-├── README.md          # 本文件
-├── coq/               # Coq证明
-│   ├── BasicTypes.v   # 基本类型定义
-│   ├── ImageLayers.v  # 镜像层理论
-│   └── Functors.v     # 函子证明
-├── lean4/             # Lean4证明
-│   ├── BasicTypes.lean
-│   └── ResourceSafety.lean
-└── tla+/              # TLA+规约
-    └── Scheduling.tla
+├── coq/       # Coq 证明助手代码
+├── lean4/     # Lean 4 证明代码
+└── tla+/      # TLA+ 形式化规约
 ```
 
 ---
 
-## 1 Coq证明
+## 🔬 证明工具
 
-### 1.1 基本类型定义 (`BasicTypes.v`)
+### Coq
+- 用于构造性数学证明
+- 类型理论形式化
 
-定义基础设施中的核心类型及其属性。
+### Lean 4
+- 现代定理证明器
+- 与数学库集成
 
-### 1.2 镜像层理论 (`ImageLayers.v`)
-
-证明OCI镜像层与类型系统的对应关系。
-
-### 1.3 函子证明 (`Functors.v`)
-
-证明类型-调度映射函子的满忠实性。
-
----
-
-## 2 Lean4证明
-
-### 2.1 基本类型 (`BasicTypes.lean`)
-
-使用Lean4重新实现基本类型定义。
-
-### 2.2 资源安全 (`ResourceSafety.lean`)
-
-线性类型与资源安全的对应证明。
+### TLA+
+- 分布式系统规约
+- 时序逻辑验证
 
 ---
 
-## 3 TLA+规约
+## 📚 证明主题
 
-### 3.1 调度规约 (`Scheduling.tla`)
-
-调度系统的时序逻辑规约。
-
----
-
-## 4 构建与验证
-
-### 4.1 Coq
-
-```bash
-# 安装Coq
-opam install coq
-
-# 编译验证
-coqc coq/BasicTypes.v
-coqc coq/ImageLayers.v
-coqc coq/Functors.v
-```
-
-### 4.2 Lean4
-
-```bash
-# 安装Lean4
-curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh
-
-# 构建验证
-lake build
-```
-
-### 4.3 TLA+
-
-使用TLC模型检查器验证。
+- 类型系统安全性
+- 并发系统正确性
+- 调度算法性质
+- 程序等价性
 
 ---
 
-**返回**: [形式化理论](../09_形式化理论/README.md) | [形式语言视角](../README.md)
+## 🔗 相关资源
+
+- [形式语言理论](../README.md)
+- [类型系统形式化视图](../type_formal_view.md)
+- [09_形式化理论](../09_形式化理论/)
+
+---
+
+**维护者**: FormalScience 理论团队

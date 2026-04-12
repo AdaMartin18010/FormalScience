@@ -139,9 +139,9 @@ python docs/Refactor/.scripts/build_cross_references.py
 ## 📚 学习路径
 
 1. **初学者**：[00_GETTING_STARTED.md](docs/Refactor/00_GETTING_STARTED.md)
-2. **数学基础**：[01_数学基础/](docs/Refactor/01_数学基础/)
-3. **形式语言**：[02_形式语言/](docs/Refactor/02_形式语言/)
-4. **调度系统**：[06_调度系统/](docs/Refactor/06_调度系统/)
+2. **数学基础**：[01_数学基础/](docs/Refactor/01_数学基础/_index.md)
+3. **形式语言**：[02_形式语言/](docs/Refactor/02_形式语言/_index.md)
+4. **调度系统**：[06_调度系统/](docs/Refactor/06_调度系统/README.md)
 
 ## 📄 许可证
 

@@ -478,7 +478,7 @@ Program_Algorithm_Perspective/
 ```markdown
 # AI模型视角：图灵机
 
-> **主定义**: 详见 [Core_Definitions/01_Turing_Machine.md](...)
+> **主定义**: 详见 [Core_Definitions/01_Turing_Machine.md](.../README.md)
 
 ## 6 AI模型视角的扩展
 

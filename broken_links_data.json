@@ -1,0 +1,1369 @@
+{
+  "broken_links": [
+    {
+      "source": "docs/Refactor/01_数学基础/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 134
+    },
+    {
+      "source": "docs/Refactor/01_数学基础/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 135
+    },
+    {
+      "source": "docs/Refactor/01_数学基础/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 136
+    },
+    {
+      "source": "docs/Refactor/01_数学基础/01_元数学基础/01.1_集合论基础.md",
+      "link_text": "`examples/lean/SetTheory.lean`",
+      "target": "docs/examples/lean/SetTheory.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 381
+    },
+    {
+      "source": "docs/Refactor/01_数学基础/01_元数学基础/01.2_数理逻辑.md",
+      "link_text": "t_1, ..., t_n",
+      "target": "docs/Refactor/01_数学基础/01_元数学基础/s",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 243
+    },
+    {
+      "source": "docs/Refactor/01_数学基础/02_代数学/02.1_群论基础.md",
+      "link_text": "`examples/lean/GroupTheory.lean`",
+      "target": "docs/examples/lean/GroupTheory.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 381
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 125
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 126
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 127
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/01_形式语言基础/01.1_文法与语言.md",
+      "link_text": "`examples/lean/FiniteAutomaton.lean`",
+      "target": "docs/examples/lean/FiniteAutomaton.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 723
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/01_形式语言基础/01.1_文法与语言.md",
+      "link_text": "`examples/lean/LambdaCalculus.lean`",
+      "target": "docs/examples/lean/LambdaCalculus.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 724
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/01_形式语言基础/01.2_有限自动机.md",
+      "link_text": "`examples/lean/FiniteAutomaton.lean`",
+      "target": "docs/examples/lean/FiniteAutomaton.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1020
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/01_形式语言基础/01.3_λ演算.md",
+      "link_text": "`examples/lean/LambdaCalculus.lean`",
+      "target": "docs/examples/lean/LambdaCalculus.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 459
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/01_形式语言基础/01.3_λ演算.md",
+      "link_text": "`examples/lean/LambdaCalculus.lean`",
+      "target": "docs/examples/lean/LambdaCalculus.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 491
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/02_类型论/02.1_简单类型系统.md",
+      "link_text": "`examples/lean/SimpleTypeSystem.lean`",
+      "target": "docs/examples/lean/SimpleTypeSystem.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 292
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/02_类型论/02.1_简单类型论.md",
+      "link_text": "`examples/lean/SimplyTypedLambda.lean`",
+      "target": "docs/examples/lean/SimplyTypedLambda.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 500
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/02_类型论/02.2_多态类型.md",
+      "link_text": "X:=R",
+      "target": "docs/Refactor/02_形式语言/02_类型论/t{[B]}, u{[C]}",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 305
+    },
+    {
+      "source": "docs/Refactor/02_形式语言/02_类型论/02.2_多态类型.md",
+      "link_text": "`examples/lean/PolymorphicTypes.lean`",
+      "target": "docs/examples/lean/PolymorphicTypes.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 312
+    },
+    {
+      "source": "docs/Refactor/03_编程范式/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 128
+    },
+    {
+      "source": "docs/Refactor/03_编程范式/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 129
+    },
+    {
+      "source": "docs/Refactor/03_编程范式/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 130
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 125
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 126
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 127
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/01_设计模式/01.2_结构型模式.md",
+      "link_text": "{}",
+      "target": "docs/Refactor/04_软件工程/01_设计模式/{}",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 330
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/01_设计模式/01.2_结构型模式.md",
+      "link_text": "%s",
+      "target": "docs/Refactor/04_软件工程/01_设计模式/%s",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 408
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/02_微服务架构/02.4_可观测性.md",
+      "link_text": "03_工作流系统",
+      "target": "docs/Refactor/04_软件工程/03_工作流系统",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 576
+    },
+    {
+      "source": "docs/Refactor/04_软件工程/04_分布式系统/04.2_共识算法形式化.md",
+      "link_text": "`examples/lean/ConsensusAlgorithm.lean`",
+      "target": "docs/examples/lean/ConsensusAlgorithm.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 847
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 120
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 121
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 122
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/01_时序逻辑/01.1_线性时序逻辑_LTL.md",
+      "link_text": "`examples/lean/LinearTemporalLogic.lean`",
+      "target": "docs/examples/lean/LinearTemporalLogic.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 419
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/01_时序逻辑/01.3_时序逻辑应用.md",
+      "link_text": "../04_软件工程/03_工作流系统",
+      "target": "docs/Refactor/05_形式化理论/04_软件工程/03_工作流系统",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 583
+    },
+    {
+      "source": "docs/Refactor/05_形式化理论/02_Petri网理论/02.1_Petri网基础.md",
+      "link_text": "`examples/lean/PetriNet.lean`",
+      "target": "docs/examples/lean/PetriNet.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 425
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/_index.md",
+      "link_text": "📑 主索引",
+      "target": "docs/Refactor/00_INDEX.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 127
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/_index.md",
+      "link_text": "🗺️ 知识地图",
+      "target": "docs/Refactor/00_MAP.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 128
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/_index.md",
+      "link_text": "📈 进度追踪",
+      "target": "docs/Refactor/00_PROGRESS.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 129
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/_index.md",
+      "link_text": "下一模块: 07 交叉视角",
+      "target": "docs/Refactor/07_交叉视角/_index.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 131
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度模型抽象.md",
+      "link_text": "Matter: 分布式调度框架",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.3_分布式调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度模型抽象.md",
+      "link_text": "Matter: 操作系统调度",
+      "target": "docs/Refactor/Matter/01_操作系统/01.4_进程调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度模型抽象.md",
+      "link_text": "FormalRE: 实时调度系统",
+      "target": "docs/Refactor/FormalRE/调度系统/实时调度核心理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度问题定义.md",
+      "link_text": "`examples/lean/Scheduling.lean`",
+      "target": "docs/examples/lean/Scheduling.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 472
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.1_调度问题定义.md",
+      "link_text": "`examples/lean/Scheduling.lean`",
+      "target": "docs/examples/lean/Scheduling.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 504
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.2_调度复杂性.md",
+      "link_text": "`examples/lean/Scheduling.lean`",
+      "target": "docs/examples/lean/Scheduling.lean",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 488
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.2_调度算法分析.md",
+      "link_text": "Matter: 调度算法复杂度",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.3_分布式调度.md",
+      "anchor": "调度算法复杂度",
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.2_调度算法分析.md",
+      "link_text": "FormalRE: 算法复杂度分析",
+      "target": "docs/Refactor/FormalRE/算法复杂度/调度复杂度理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.2_调度算法分析.md",
+      "link_text": "&",
+      "target": "docs/Refactor/06_调度系统/01_调度理论基础/size_t a, size_t b",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 459
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.3_调度等价性.md",
+      "link_text": "Matter: 调度系统映射",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.3_分布式调度.md",
+      "anchor": "调度等价性",
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/01_调度理论基础/01.3_调度等价性.md",
+      "link_text": "FormalRE: 形式化等价关系",
+      "target": "docs/Refactor/FormalRE/形式化方法/系统等价理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.2_GPU调度.md",
+      "link_text": "Matter: GPU架构",
+      "target": "docs/Refactor/Matter/01_计算机组成原理/04.2_GPU架构.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.2_GPU调度.md",
+      "link_text": "Matter: CUDA编程模型",
+      "target": "docs/Refactor/Matter/01_计算机组成原理/04.3_CUDA编程模型.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.2_GPU调度.md",
+      "link_text": "FormalRE: GPU调度理论",
+      "target": "docs/Refactor/FormalRE/硬件/GPU调度模型.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.3_加速器调度.md",
+      "link_text": "Matter: TPU架构",
+      "target": "docs/Refactor/Matter/01_计算机组成原理/04.4_TPU架构.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.3_加速器调度.md",
+      "link_text": "Matter: AI加速器",
+      "target": "docs/Refactor/Matter/01_计算机组成原理/04.5_AI加速器.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/02_硬件调度/02.3_加速器调度.md",
+      "link_text": "FormalRE: 加速器调度理论",
+      "target": "docs/Refactor/FormalRE/硬件/AI加速器调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.2_内存调度.md",
+      "link_text": "Matter: 内存管理",
+      "target": "docs/Refactor/Matter/01_操作系统/01.5_内存管理.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.2_内存调度.md",
+      "link_text": "Matter: 虚拟内存",
+      "target": "docs/Refactor/Matter/01_操作系统/01.6_虚拟内存.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.2_内存调度.md",
+      "link_text": "FormalRE: 内存调度理论",
+      "target": "docs/Refactor/FormalRE/操作系统/内存调度理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.3_IO调度.md",
+      "link_text": "Matter: I/O系统",
+      "target": "docs/Refactor/Matter/01_操作系统/01.7_IO系统.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.3_IO调度.md",
+      "link_text": "Matter: 磁盘调度",
+      "target": "docs/Refactor/Matter/01_操作系统/01.8_磁盘调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.3_IO调度.md",
+      "link_text": "FormalRE: I/O调度理论",
+      "target": "docs/Refactor/FormalRE/操作系统/IO调度理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/03_OS调度/03.3_IO调度.md",
+      "link_text": "current_head",
+      "target": "docs/Refactor/06_调度系统/03_OS调度/const auto& a, const auto& b",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 632
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.2_大数据调度.md",
+      "link_text": "Matter: Spark调度",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.6_Spark调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.2_大数据调度.md",
+      "link_text": "Matter: Flink调度",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.7_Flink调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.2_大数据调度.md",
+      "link_text": "FormalRE: 大数据调度理论",
+      "target": "docs/Refactor/FormalRE/分布式系统/大数据调度理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 45
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.2_大数据调度.md",
+      "link_text": "this",
+      "target": "docs/Refactor/06_调度系统/04_分布式调度/int p",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 741
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.3_跨层调度协同.md",
+      "link_text": "Matter: 跨层优化",
+      "target": "docs/Refactor/Matter/02_分布式系统/02.8_跨层优化.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 43
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/04_分布式调度/04.3_跨层调度协同.md",
+      "link_text": "FormalRE: 跨层调度理论",
+      "target": "docs/Refactor/FormalRE/分布式系统/跨层调度理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 44
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/05_形式化证明/_index.md",
+      "link_text": "05.1 时序逻辑",
+      "target": "docs/Refactor/06_调度系统/05_形式化理论/01_时序逻辑",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 204
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/05_形式化证明/_index.md",
+      "link_text": "05.2 Petri网理论",
+      "target": "docs/Refactor/06_调度系统/05_形式化理论/02_Petri网理论",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 205
+    },
+    {
+      "source": "docs/Refactor/06_调度系统/05_形式化证明/_index.md",
+      "link_text": "05.3 控制论",
+      "target": "docs/Refactor/06_调度系统/05_形式化理论/03_控制论",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 206
+    },
+    {
+      "source": "Composed/schedule_formal_view/README.md",
+      "link_text": "概念目录：虚拟化容器化沙盒化",
+      "target": "Composed/Concept/TuningCompute",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 326
+    },
+    {
+      "source": "Composed/schedule_formal_view/README.md",
+      "link_text": "基础设施即类型系统",
+      "target": "Composed/formal_lang_view/README.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 327
+    },
+    {
+      "source": "Composed/schedule_formal_view/内容填充实施方案.md",
+      "link_text": "06.2_OS内核调度.md",
+      "target": "Composed/06_调度模型/06.2_OS内核调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 209
+    },
+    {
+      "source": "Composed/schedule_formal_view/内容补充完善计划与方案.md",
+      "link_text": "06.2_OS内核调度.md",
+      "target": "Composed/06_调度模型/06.2_OS内核调度.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 258
+    },
+    {
+      "source": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "link_text": "主题索引",
+      "target": "Composed/README.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1132
+    },
+    {
+      "source": "Composed/schedule_formal_view/论证脉络总览.md",
+      "link_text": "主文档：调度作为元模型",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "核心论证调度作为元模型的普适性",
+      "type": "missing_anchor",
+      "line": 62
+    },
+    {
+      "source": "Composed/schedule_formal_view/论证脉络总览.md",
+      "link_text": "主文档：时间-空间-能耗三角约束",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角1时间-空间-能耗三角约束",
+      "type": "missing_anchor",
+      "line": 137
+    },
+    {
+      "source": "Composed/schedule_formal_view/论证脉络总览.md",
+      "link_text": "主文档：成本驱动的技术路线分叉",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角3成本驱动的技术路线分叉",
+      "type": "missing_anchor",
+      "line": 207
+    },
+    {
+      "source": "Composed/schedule_formal_view/论证脉络总览.md",
+      "link_text": "主文档：优化策略的收益递减",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角4优化策略的收益递减",
+      "type": "missing_anchor",
+      "line": 237
+    },
+    {
+      "source": "Composed/schedule_formal_view/论证脉络总览.md",
+      "link_text": "主文档：核心论证",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "核心论证调度作为元模型的普适性",
+      "type": "missing_anchor",
+      "line": 287
+    },
+    {
+      "source": "Composed/schedule_formal_view/01_CPU硬件层/01.1_CPU微架构.md",
+      "link_text": "主文档：跨领域洞察",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "跨领域洞察与论证脉络",
+      "type": "missing_anchor",
+      "line": 1634
+    },
+    {
+      "source": "Composed/schedule_formal_view/01_CPU硬件层/01.2_缓存层次结构.md",
+      "link_text": "主文档：抽象泄漏",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2软件抽象泄漏定律",
+      "type": "missing_anchor",
+      "line": 1356
+    },
+    {
+      "source": "Composed/schedule_formal_view/01_CPU硬件层/01.3_内存子系统.md",
+      "link_text": "主文档：内存墙分析",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "洞察1内存墙的不可逾越性",
+      "type": "missing_anchor",
+      "line": 1196
+    },
+    {
+      "source": "Composed/schedule_formal_view/01_CPU硬件层/01.4_MMU与TLB.md",
+      "link_text": "主文档：TLB分析",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "知识图谱概念关系链",
+      "type": "missing_anchor",
+      "line": 1556
+    },
+    {
+      "source": "Composed/schedule_formal_view/01_CPU硬件层/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "31-01-cpu硬件层",
+      "type": "missing_anchor",
+      "line": 83
+    },
+    {
+      "source": "Composed/schedule_formal_view/02_系统总线层/02.1_PCIe子系统.md",
+      "link_text": "主文档：物理约束",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "物理约束决定软件抽象",
+      "type": "missing_anchor",
+      "line": 764
+    },
+    {
+      "source": "Composed/schedule_formal_view/02_系统总线层/02.2_芯片组架构.md",
+      "link_text": "主文档：成本驱动",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角3成本驱动的技术路线分叉",
+      "type": "missing_anchor",
+      "line": 1487
+    },
+    {
+      "source": "Composed/schedule_formal_view/02_系统总线层/02.3_北桥与南桥.md",
+      "link_text": "主文档：成本驱动",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角3成本驱动的技术路线分叉",
+      "type": "missing_anchor",
+      "line": 1461
+    },
+    {
+      "source": "Composed/schedule_formal_view/02_系统总线层/02.4_中断子系统.md",
+      "link_text": "主文档：延迟穿透",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角5从应用穿透到硬件的反馈循环",
+      "type": "missing_anchor",
+      "line": 988
+    },
+    {
+      "source": "Composed/schedule_formal_view/02_系统总线层/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "32-02-系统总线层",
+      "type": "missing_anchor",
+      "line": 67
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.0_Linux调度视角全面分析.md",
+      "link_text": "Linux 操作系统原理全面分析",
+      "target": "Composed/Concept/LINUX_OS_PRINCIPLES.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1894
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.1_进程调度模型.md",
+      "link_text": "主文档：公平性vs性能",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "洞察3公平性vs性能的永恒权衡",
+      "type": "missing_anchor",
+      "line": 1034
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.2_内存管理模型.md",
+      "link_text": "主文档：抽象泄漏",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2软件抽象泄漏定律",
+      "type": "missing_anchor",
+      "line": 1202
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.3_文件系统模型.md",
+      "link_text": "主文档：抽象泄漏",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2软件抽象泄漏定律",
+      "type": "missing_anchor",
+      "line": 1155
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.4_设备驱动模型.md",
+      "link_text": "主文档：抽象泄漏",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2软件抽象泄漏定律",
+      "type": "missing_anchor",
+      "line": 1103
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/03.5_网络栈模型.md",
+      "link_text": "主文档：应用穿透路径",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角5从应用穿透到硬件的反馈循环",
+      "type": "missing_anchor",
+      "line": 1141
+    },
+    {
+      "source": "Composed/schedule_formal_view/03_OS抽象层/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "33-03-os抽象层",
+      "type": "missing_anchor",
+      "line": 73
+    },
+    {
+      "source": "Composed/schedule_formal_view/04_同步通信机制/04.1_硬件同步原语.md",
+      "link_text": "主文档：硬件同步",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "知识图谱概念关系链",
+      "type": "missing_anchor",
+      "line": 1760
+    },
+    {
+      "source": "Composed/schedule_formal_view/04_同步通信机制/04.2_软件同步机制.md",
+      "link_text": "主文档：同步机制",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "知识图谱概念关系链",
+      "type": "missing_anchor",
+      "line": 1815
+    },
+    {
+      "source": "Composed/schedule_formal_view/04_同步通信机制/04.3_内存序模型.md",
+      "link_text": "主文档：内存序模型",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "知识图谱概念关系链",
+      "type": "missing_anchor",
+      "line": 1803
+    },
+    {
+      "source": "Composed/schedule_formal_view/04_同步通信机制/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "34-04-同步通信机制",
+      "type": "missing_anchor",
+      "line": 60
+    },
+    {
+      "source": "Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.1_虚拟化技术.md",
+      "link_text": "主文档：虚拟化开销",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2虚拟化开销逼近物理极限",
+      "type": "missing_anchor",
+      "line": 1158
+    },
+    {
+      "source": "Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.2_容器化技术.md",
+      "link_text": "主文档：抽象泄漏",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角2软件抽象泄漏定律",
+      "type": "missing_anchor",
+      "line": 1528
+    },
+    {
+      "source": "Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.3_沙盒化技术.md",
+      "link_text": "主文档：安全vs性能",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角1时间-空间-能耗三角约束",
+      "type": "missing_anchor",
+      "line": 1691
+    },
+    {
+      "source": "Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.4_隔离技术对比.md",
+      "link_text": "主文档：隔离vs性能",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角1时间-空间-能耗三角约束",
+      "type": "missing_anchor",
+      "line": 1455
+    },
+    {
+      "source": "Composed/schedule_formal_view/05_虚拟化容器化沙盒化/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "35-05-虚拟化容器化沙盒化",
+      "type": "missing_anchor",
+      "line": 68
+    },
+    {
+      "source": "Composed/schedule_formal_view/06_调度模型/06.1_硬件微架构调度.md",
+      "link_text": "主文档：调度模型",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "形式化理论框架",
+      "type": "missing_anchor",
+      "line": 1725
+    },
+    {
+      "source": "Composed/schedule_formal_view/06_调度模型/06.2_OS内核调度.md",
+      "link_text": "主文档：调度映射",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "核心论证调度作为元模型的普适性",
+      "type": "missing_anchor",
+      "line": 1703
+    },
+    {
+      "source": "Composed/schedule_formal_view/06_调度模型/06.3_编程语言层调度.md",
+      "link_text": "主文档：调度映射",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "核心论证调度作为元模型的普适性",
+      "type": "missing_anchor",
+      "line": 1863
+    },
+    {
+      "source": "Composed/schedule_formal_view/06_调度模型/06.5_调度模型统一理论.md",
+      "link_text": "主文档：调度作为元模型",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "核心论证调度作为元模型的普适性",
+      "type": "missing_anchor",
+      "line": 1384
+    },
+    {
+      "source": "Composed/schedule_formal_view/06_调度模型/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "36-06-调度模型",
+      "type": "missing_anchor",
+      "line": 93
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/07.1_性能特征矩阵.md",
+      "link_text": "主文档：性能优化",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "技术演进与物理极限",
+      "type": "missing_anchor",
+      "line": 1185
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/07.1_性能特征矩阵.md",
+      "link_text": "主文档：收益递减",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角4优化策略的收益递减",
+      "type": "missing_anchor",
+      "line": 1186
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/07.2_延迟穿透分析.md",
+      "link_text": "主文档：应用穿透路径",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角5从应用穿透到硬件的反馈循环",
+      "type": "missing_anchor",
+      "line": 1238
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/07.3_安全机制.md",
+      "link_text": "主文档：安全vs性能",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角1时间-空间-能耗三角约束",
+      "type": "missing_anchor",
+      "line": 1135
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/07.4_优化策略.md",
+      "link_text": "主文档：收益递减",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角4优化策略的收益递减",
+      "type": "missing_anchor",
+      "line": 1219
+    },
+    {
+      "source": "Composed/schedule_formal_view/07_性能优化与安全/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "37-07-性能优化与安全",
+      "type": "missing_anchor",
+      "line": 68
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/08.1_硬件演进路线.md",
+      "link_text": "主文档：技术演进",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "技术演进与物理极限",
+      "type": "missing_anchor",
+      "line": 1599
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/08.2_OS适配演进.md",
+      "link_text": "主文档：OS适配",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "技术演进与物理极限",
+      "type": "missing_anchor",
+      "line": 1077
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/08.3_厂商技术对标.md",
+      "link_text": "主文档：生态锁定",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角6生态锁定的经济学本质",
+      "type": "missing_anchor",
+      "line": 1094
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/08.3_厂商技术对标.md",
+      "link_text": "主文档：成本驱动",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "视角3成本驱动的技术路线分叉",
+      "type": "missing_anchor",
+      "line": 1095
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/08.4_最新技术趋势.md",
+      "link_text": "主文档：未来不确定性",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "未来十年的关键不确定性",
+      "type": "missing_anchor",
+      "line": 711
+    },
+    {
+      "source": "Composed/schedule_formal_view/08_技术演进与对标/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "38-08-技术演进与对标",
+      "type": "missing_anchor",
+      "line": 68
+    },
+    {
+      "source": "Composed/schedule_formal_view/09_形式化理论与证明/09.1_调度模型形式化.md",
+      "link_text": "主文档：形式化理论",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "形式化理论框架",
+      "type": "missing_anchor",
+      "line": 884
+    },
+    {
+      "source": "Composed/schedule_formal_view/09_形式化理论与证明/09.2_硬件-OS映射证明.md",
+      "link_text": "主文档：形式化证明",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "形式化理论框架",
+      "type": "missing_anchor",
+      "line": 751
+    },
+    {
+      "source": "Composed/schedule_formal_view/09_形式化理论与证明/09.3_性能边界证明.md",
+      "link_text": "主文档：物理极限",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "技术演进与物理极限",
+      "type": "missing_anchor",
+      "line": 799
+    },
+    {
+      "source": "Composed/schedule_formal_view/09_形式化理论与证明/09.4_安全机制证明.md",
+      "link_text": "主文档：形式化证明",
+      "target": "Composed/schedule_formal_view/schedule_formal_view.md",
+      "anchor": "形式化理论框架",
+      "type": "missing_anchor",
+      "line": 806
+    },
+    {
+      "source": "Composed/schedule_formal_view/09_形式化理论与证明/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "39-09-形式化理论与证明",
+      "type": "missing_anchor",
+      "line": 55
+    },
+    {
+      "source": "Composed/schedule_formal_view/10_AI驱动调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 66
+    },
+    {
+      "source": "Composed/schedule_formal_view/11_企业架构调度/11.3_应用架构层调度.md",
+      "link_text": "s",
+      "target": "Composed/schedule_formal_view/11_企业架构调度/k",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 212
+    },
+    {
+      "source": "Composed/schedule_formal_view/11_企业架构调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 80
+    },
+    {
+      "source": "Composed/schedule_formal_view/12_跨层次调度协同/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 50
+    },
+    {
+      "source": "Composed/schedule_formal_view/13_实践案例与最佳实践/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 54
+    },
+    {
+      "source": "Composed/schedule_formal_view/14_存储调度系统/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 98
+    },
+    {
+      "source": "Composed/schedule_formal_view/15_网络调度系统/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 73
+    },
+    {
+      "source": "Composed/schedule_formal_view/16_GPU与加速器调度/16.3_异构计算调度.md",
+      "link_text": "&",
+      "target": "Composed/schedule_formal_view/16_GPU与加速器调度/handler& h",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 759
+    },
+    {
+      "source": "Composed/schedule_formal_view/16_GPU与加速器调度/16.3_异构计算调度.md",
+      "link_text": "=",
+      "target": "Composed/schedule_formal_view/16_GPU与加速器调度/id<1> i",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 764
+    },
+    {
+      "source": "Composed/schedule_formal_view/16_GPU与加速器调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 142
+    },
+    {
+      "source": "Composed/schedule_formal_view/17_数据库调度系统/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 146
+    },
+    {
+      "source": "Composed/schedule_formal_view/18_编译器调度优化/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 72
+    },
+    {
+      "source": "Composed/schedule_formal_view/19_实时系统调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 72
+    },
+    {
+      "source": "Composed/schedule_formal_view/20_边缘与移动调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 84
+    },
+    {
+      "source": "Composed/schedule_formal_view/21_基础设施调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 91
+    },
+    {
+      "source": "Composed/schedule_formal_view/22_量子计算调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 72
+    },
+    {
+      "source": "Composed/schedule_formal_view/23_神经形态计算调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 80
+    },
+    {
+      "source": "Composed/schedule_formal_view/24_光学计算调度/README.md",
+      "link_text": "思维导图与知识矩阵",
+      "target": "Composed/schedule_formal_view/思维导图与知识矩阵.md",
+      "anchor": "310-10-24-扩展主题",
+      "type": "missing_anchor",
+      "line": 72
+    },
+    {
+      "source": "Composed/schedule_formal_view/27_机密计算调度/27.1_TEE调度基础.md",
+      "link_text": "04.3 形式化验证",
+      "target": "Composed/formal_lang_view/04_类型检查与验证/04.3_形式化验证.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 682
+    },
+    {
+      "source": "Composed/schedule_formal_view/27_机密计算调度/27.1_TEE调度基础.md",
+      "link_text": "09.4 应用范畴论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.4_应用范畴论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 683
+    },
+    {
+      "source": "Composed/schedule_formal_view/27_机密计算调度/README.md",
+      "link_text": "24_安全调度",
+      "target": "Composed/schedule_formal_view/24_安全调度",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 447
+    },
+    {
+      "source": "Composed/schedule_formal_view/30_工作流调度/30.1_工作流Petri网模型.md",
+      "link_text": "Petri网理论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.5_Petri网理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 89
+    },
+    {
+      "source": "Composed/schedule_formal_view/30_工作流调度/30.3_Petri网调度模型.md",
+      "link_text": "Petri网理论",
+      "target": "formal_lang_view/10_Petri网理论",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 428
+    },
+    {
+      "source": "Composed/schedule_formal_view/30_工作流调度/README.md",
+      "link_text": "09.5_Petri网理论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.5_Petri网理论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 724
+    },
+    {
+      "source": "Composed/schedule_formal_view/31_多集群调度/31.1_联邦集群架构.md",
+      "link_text": "09.4 应用范畴论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.4_应用范畴论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 524
+    },
+    {
+      "source": "Composed/schedule_formal_view/31_多集群调度/31.2_跨云调度策略.md",
+      "link_text": "09.4 应用范畴论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.4_应用范畴论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 776
+    },
+    {
+      "source": "Composed/schedule_formal_view/31_多集群调度/README.md",
+      "link_text": "05.3 依赖类型",
+      "target": "Composed/formal_lang_view/05_高级类型特性/05.3_依赖类型.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 280
+    },
+    {
+      "source": "Composed/schedule_formal_view/31_多集群调度/README.md",
+      "link_text": "09.4 应用范畴论",
+      "target": "Composed/formal_lang_view/09_形式化理论/09.4_应用范畴论.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 281
+    },
+    {
+      "source": "Composed/schedule_formal_view/31_多集群调度/README.md",
+      "link_text": "03.1 控制流映射",
+      "target": "Composed/formal_lang_view/03_程序控制/03.1_控制流映射.md",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 282
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/schedule_model.md",
+      "link_text": "k",
+      "target": "Composed/schedule_formal_view/FormalModel/y[k] - Hx̂[k|k-1]",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 317
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/schedule_model.md",
+      "link_text": "\\mathbf{L}",
+      "target": "/mathbf{v}",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1677
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/schedule_model.md",
+      "link_text": "\\mathbf{L}",
+      "target": "/Delta /mathbf{L}(m",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1679
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/schedule_model.md",
+      "link_text": "\\mathbf{L}",
+      "target": "/mathbf{v}",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1680
+    },
+    {
+      "source": "Composed/schedule_formal_view/view/2025年技术趋势完整索引.md",
+      "link_text": "4.1 数据库查询优化增强（2025年新增）",
+      "target": "Composed/schedule_formal_view/view/09_数据库与编译器调度.md",
+      "anchor": "41-数据库查询优化增强2025年新增",
+      "type": "missing_anchor",
+      "line": 114
+    },
+    {
+      "source": "Composed/schedule_formal_view/view/2025年技术趋势完整索引.md",
+      "link_text": "4.2 分布式数据库调度（2025年新增）",
+      "target": "Composed/schedule_formal_view/view/09_数据库与编译器调度.md",
+      "anchor": "42-分布式数据库调度2025年新增",
+      "type": "missing_anchor",
+      "line": 115
+    },
+    {
+      "source": "Composed/schedule_formal_view/view/2025年技术趋势完整索引.md",
+      "link_text": "09_数据库与编译器调度.md",
+      "target": "Composed/schedule_formal_view/view/09_数据库与编译器调度.md",
+      "anchor": "41-数据库查询优化增强2025年新增",
+      "type": "missing_anchor",
+      "line": 192
+    },
+    {
+      "source": "Composed/schedule_formal_view/view/2025年技术趋势完整索引.md",
+      "link_text": "09_数据库与编译器调度.md",
+      "target": "Composed/schedule_formal_view/view/09_数据库与编译器调度.md",
+      "anchor": "42-分布式数据库调度2025年新增",
+      "type": "missing_anchor",
+      "line": 193
+    },
+    {
+      "source": "Composed/schedule_formal_view/view/schedule_model.md",
+      "link_text": "k",
+      "target": "Composed/schedule_formal_view/view/y[k] - Hx̂[k|k-1]",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 317
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/01_基础形式化框架/01.2_思维导图.md",
+      "link_text": "next_state",
+      "target": "Composed/schedule_formal_view/FormalModel/01_基础形式化框架/entity",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 1382
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/07_监控与反馈/07.1_统一观测模型.md",
+      "link_text": "k",
+      "target": "Composed/schedule_formal_view/FormalModel/07_监控与反馈/y[k] - H/hat{x}[k|k-1]",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 515
+    },
+    {
+      "source": "Composed/schedule_formal_view/FormalModel/07_监控与反馈/07.1_统一观测模型.md",
+      "link_text": "k",
+      "target": "Composed/schedule_formal_view/FormalModel/07_监控与反馈/y[k] - H/hat{x}[k|k-1]",
+      "anchor": null,
+      "type": "missing_file",
+      "line": 570
+    }
+  ],
+  "stats": {
+    "total": 170,
+    "missing_file": 99,
+    "missing_anchor": 71
+  }
+}

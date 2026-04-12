@@ -379,7 +379,7 @@ E_min = kT ln 2  ≈ 2.9 × 10^(-21) J @ 300K
 - **设计原则**: 在设计工具时考虑这些限制
 - **验证策略**: 采用近似方法而非完全检测
 
-→ 详见：[TuningCompute/](TuningCompute/)
+→ 详见：[TuningCompute/](TuningCompute/README.md)
 
 ---
 
@@ -530,7 +530,7 @@ Cost(程序) = Σ (操作数 × 操作成本)
 - **优化指导**: 指导程序优化
 - **理论分析**: 形式化分析算法复杂度
 
-→ 详见：[Program_Algorithm_Perspective/](Program_Algorithm_Perspective/)
+→ 详见：[Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md)
 
 ---
 

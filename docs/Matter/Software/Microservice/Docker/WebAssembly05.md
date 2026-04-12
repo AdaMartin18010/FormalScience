@@ -6505,7 +6505,7 @@ class ComponentModelCompatTester {
 
     for (const impl of this.implementations) {
       const features = Array.from(impl.supportedFeatures).join(', ');
-      report += `| [${impl.name}](${impl.url}) | ${impl.vendor} | ${impl.version} | ${features} |\n`;
+      report += `| ${impl.name} | ${impl.vendor} | ${impl.version} | ${features} |\n`;
     }
 
     // 添加测试结果摘要

@@ -345,7 +345,7 @@ print(response)
 1. [快速开始指南](00_GETTING_STARTED.md)
 2. [NetworkScheduler 教程](../tutorials/network_scheduler.md)
 3. [API 参考文档](../docs/api/)
-4. [示例代码库](examples/)
+4. [示例代码库](examples/README.md)
 
 ---
 
@@ -373,7 +373,7 @@ print(response)
 - 📖 [完整文档](docs/)
 - 🔧 [API 参考](../docs/api/)
 - 💡 [常见问题](FAQ.md)
-- 🎓 [教程中心](tutorials/)
+- 🎓 [教程中心](tutorials/README.md)
 
 ### 社区支持
 - 💬 [讨论区](https://github.com/formalscience/formalscience/discussions)

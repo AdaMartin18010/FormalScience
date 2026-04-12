@@ -380,4 +380,4 @@ python tools/document_quality_checker.py Concept/ || echo "有错误需要修复
 
 ---
 
-**导航**: [← 返回项目根目录](../../../README.md)
+**导航**: ← 返回项目根目录

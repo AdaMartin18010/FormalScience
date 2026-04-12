@@ -356,14 +356,14 @@ AI模型视角：
 
 | 视角 | 主要文档 | 完成度 |
 |-----|---------|--------|
-| **形式语言** | [FormalLanguage_Perspective/](FormalLanguage_Perspective/) | ✅ 100% |
-| **AI模型** | [AI_model_Perspective/](AI_model_Perspective/) | ✅ 100% |
-| **信息论** | [Information_Theory_Perspective/](Information_Theory_Perspective/) | ✅ 100% |
+| **形式语言** | [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) | ✅ 100% |
+| **AI模型** | [AI_model_Perspective/](AI_model_Perspective/README.md) | ✅ 100% |
+| **信息论** | [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) | ✅ 100% |
 | **图灵可计算** | [TuringCompute/](TuringCompute/) | ✅ 100% |
 | **控制论** | [SUPPLEMENTARY_PERSPECTIVES.md](SUPPLEMENTARY_PERSPECTIVES.md) | ✅ 100% |
 | **冯·诺依曼** | [SUPPLEMENTARY_PERSPECTIVES.md](SUPPLEMENTARY_PERSPECTIVES.md) | ✅ 100% |
 | **分布式** | [SUPPLEMENTARY_PERSPECTIVES.md](SUPPLEMENTARY_PERSPECTIVES.md) | ✅ 100% |
-| **编程算法设计** ✨ | [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) | ✅ **100%** |
+| **编程算法设计** ✨ | [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) | ✅ **100%** |
 
 ---
 

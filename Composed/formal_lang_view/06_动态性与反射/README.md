@@ -62,13 +62,13 @@ mindmap
 
 ## 2 子主题导航
 
-### 2.1 [61 反射Reflection](061_反射md)
+### 2.1 [61 反射Reflection](./61_反射.md)
 
 - Downward API
 - 监控指标暴露
 - kubectl exec
 
-### 2.2 [62 动态类型 弹性伸缩](062_动态类型与弹性伸缩md)
+### 2.2 [62 动态类型 弹性伸缩](./62_动态类型与弹性伸缩.md)
 
 - 无服务器计算
 - 虚拟节点（Virtual Kubelet）

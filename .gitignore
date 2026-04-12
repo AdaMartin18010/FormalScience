@@ -109,6 +109,64 @@ QUALITY_CHECK_REPORT.md
 PLACEHOLDER_FIX_REPORT*.md
 FINAL_VERIFICATION_REPORT.md
 TASK_COMPLETION_*.md
+*.report.md
+*.analysis.md
+
+# ============================================
+# Security and sensitive files
+# ============================================
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.secret
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+id_rsa
+id_rsa.pub
+id_dsa
+id_dsa.pub
+id_ecdsa
+id_ecdsa.pub
+id_ed25519
+id_ed25519.pub
+.htpasswd
+.netrc
+
+# API keys and tokens
+*.apikey
+*.token
+credentials.json
+token.json
+
+# ============================================
+# Backup and temporary files
+# ============================================
+
+# Backup directories
+backup/
+backups/
+*.backup
+*.bak
+*.old
+*.orig
+
+# Cache directories
+.cache/
+**/.cache/
+
+# Temporary directories
+tmp/
+temp/
 
 # ============================================
 # Project specific
@@ -119,3 +177,26 @@ TASK_COMPLETION_*.md
 
 # Session logs (optional)
 # docs/Refactor/.context/session_log.md
+
+# ============================================
+# Large files optimization
+# ============================================
+
+# Large generated reports (archived versions available)
+document_quality_report.txt
+broken_links_details.json
+current_broken_links.json
+current_broken_links_v2.json
+
+# Archive directory contents (keep structure)
+# reports/archive/
+
+# Binary archives (use Git LFS or Release attachments)
+*.rar
+*.tar.gz
+*.7z
+
+# Temporary large files
+*.tmp.json
+*.tmp.txt
+*.large.md

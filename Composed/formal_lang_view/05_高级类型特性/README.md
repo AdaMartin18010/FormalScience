@@ -78,19 +78,19 @@ mindmap
 
 ## 2 子主题导航
 
-### 2.1 [51 泛型Generics](051_泛型md)
+### 2.1 [51 泛型Generics](./51_泛型.md)
 
 - Helm Charts ≈ 类型参数
 - Kustomize overlay机制
 - Crossplane Composite Resource
 
-### 2.2 [52 类型类Type Classes](052_类型类md)
+### 2.2 [52 类型类Type Classes](./52_类型类.md)
 
 - CNI接口
 - CSI接口
 - Operator模式
 
-### 2.3 [53 依赖类型Dependent Types](053_依赖类型md)
+### 2.3 [53 依赖类型Dependent Types](./53_依赖类型.md)
 
 - HPA metrics
 - 类型依赖运行时值

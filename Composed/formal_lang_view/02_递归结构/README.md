@@ -66,20 +66,20 @@ mindmap
 
 ## 2 子主题导航
 
-### 2.1 [21 自相似性Fractal Architecture](021_自相似性md)
+### 2.1 [21 自相似性Fractal Architecture](./21_自相似性.md)
 
 - 物理机到WASM沙盒的分层结构
 - 同构的资源抽象Monad
 - 分形基础设施的层次模型
 
-### 2.2 [22 类型递归的具体体现](022_类型递归的具体体现md)
+### 2.2 [22 类型递归的具体体现](./22_类型递归的具体体现.md)
 
 - Docker in Docker
 - Kubernetes in Kubernetes
 - WASM in Container
 - VCluster作为类型的类型
 
-### 2.3 [23 不动点Fixed Point](023_不动点md)
+### 2.3 [23 不动点Fixed Point](./23_不动点.md)
 
 - 基础设施的稳定状态
 - 归纳构造终点

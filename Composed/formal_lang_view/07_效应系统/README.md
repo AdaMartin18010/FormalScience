@@ -72,19 +72,19 @@ mindmap
 
 ## 2 子主题导航
 
-### 2.1 [71 效应管理基础](071_效应管理基础md)
+### 2.1 [71 效应管理基础](./71_效应管理基础.md)
 
 - 网络I/O → Effect[Network]
 - 文件系统 → Effect[Storage]
 - 进程fork → Effect[Fork]
 
-### 2.2 [72 无状态容器与纯函数](072_无状态容器与纯函数md)
+### 2.2 [72 无状态容器与纯函数](./72_无状态容器与纯函数.md)
 
 - 无状态容器 ≈ 纯函数
 - 无副作用保证
 - 可组合性
 
-### 2.3 [73 StatefulSet与Monadic计算](073_StatefulSet与Monadic计算md)
+### 2.3 [73 StatefulSet与Monadic计算](./73_StatefulSet与Monadic计算.md)
 
 - StatefulSet ≈ 带状态效应的Monadic计算
 - 状态管理

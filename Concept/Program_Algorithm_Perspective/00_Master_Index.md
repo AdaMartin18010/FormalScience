@@ -260,15 +260,15 @@ graph TD
 
 ### 4 2 与项目其他部分的联系 {#2-与项目其他部分的联系}
 
-- **形式语言视角** ([../FormalLanguage_Perspective/](../FormalLanguage_Perspective/))
+- **形式语言视角** ([../FormalLanguage_Perspective/](../FormalLanguage_Perspective/README.md))
   - 提供语义建模的基础理论
   - 反身性公理 A5 用于描述元编程
 
-- **信息论视角** ([../Information_Theory_Perspective/](../Information_Theory_Perspective/))
+- **信息论视角** ([../Information_Theory_Perspective/](../Information_Theory_Perspective/README.md))
   - 提供复杂度的信息论下界
   - Kolmogorov 复杂度与算法复杂度的关系
 
-- **软件视角** ([../Software_Perspective/](../Software_Perspective/))
+- **软件视角** ([../Software_Perspective/](../Software_Perspective/README.md))
   - 提供工程实践的具体案例
   - 自修复系统、配置管理等实际应用
 
@@ -379,20 +379,20 @@ graph TD
 
 > 本文档为以下文档提供基础：
 >
-> - [相关文档](./) (待补充)
+> - [相关文档](./README.md) (待补充)
 
 ### 后向引用
 
 > 本文档依赖以下基础文档：
 >
-> - [基础文档](./) (待补充)
+> - [基础文档](./README.md) (待补充)
 
 ### 交叉链接
 
 > 相关主题：
 >
-> - [主题A](./) (待补充)
-> - [主题B](./) (待补充)
+> - [主题A](./README.md) (待补充)
+> - [主题B](./README.md) (待补充)
 
 ---
 

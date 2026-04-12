@@ -73,7 +73,7 @@
 
 - [线性类型与资源安全](./formal_lang_view/05_高级类型特性/05.4_线性类型与资源安全.md)
 - [WASM组件模型](./formal_lang_view/05_高级类型特性/05.6_WASM组件模型.md)
-- [形式化验证代码库](./formal_lang_view/proofs/) (Coq/Lean4/TLA+)
+- [形式化验证代码库](./formal_lang_view/proofs/README.md) (Coq/Lean4/TLA+)
 
 **特点**:
 
@@ -193,18 +193,18 @@
 | **理解类型系统** | 形式语言 | [形式语言视角思维导图](./formal_lang_view/思维导图与知识矩阵.md) |
 | **理解调度系统** | 调度 | [调度视角思维导图](./schedule_formal_view/思维导图与知识矩阵.md) |
 | **对比两个视角** | 跨视角 | [跨视角多维知识矩阵](./跨视角多维知识矩阵.md) |
-| **系统设计** | 形式语言 | [形式语言视角实践](./formal_lang_view/08_实践启示/) |
-| **性能优化** | 调度 | [调度视角性能优化](./schedule_formal_view/07_性能优化与安全/) |
-| **形式化验证** | 两个视角 | [形式化理论](./formal_lang_view/09_形式化理论/) |
+| **系统设计** | 形式语言 | [形式语言视角实践](./formal_lang_view/08_实践启示/README.md) |
+| **性能优化** | 调度 | [调度视角性能优化](./schedule_formal_view/07_性能优化与安全/README.md) |
+| **形式化验证** | 两个视角 | [形式化理论](./formal_lang_view/09_形式化理论/README.md) |
 
 ### 4.2 按技术领域导航
 
 | 技术领域 | 形式语言视角 | 调度视角 |
 |---------|------------|---------|
-| **容器技术** | [类型系统映射](./formal_lang_view/01_核心概念映射/) | [容器调度](./schedule_formal_view/05_虚拟化容器化沙盒化/) |
-| **类型检查** | [类型检查与验证](./formal_lang_view/04_类型检查与验证/) | [调度验证](./schedule_formal_view/09_形式化理论与证明/) |
-| **资源管理** | [效应系统](./formal_lang_view/07_效应系统/) | [资源调度](./schedule_formal_view/06_调度模型/) |
-| **性能优化** | [实践启示](./formal_lang_view/08_实践启示/) | [性能优化](./schedule_formal_view/07_性能优化与安全/) |
+| **容器技术** | [类型系统映射](./formal_lang_view/01_核心概念映射/README.md) | [容器调度](./schedule_formal_view/05_虚拟化容器化沙盒化/README.md) |
+| **类型检查** | [类型检查与验证](./formal_lang_view/04_类型检查与验证/README.md) | [调度验证](./schedule_formal_view/09_形式化理论与证明/README.md) |
+| **资源管理** | [效应系统](./formal_lang_view/07_效应系统/README.md) | [资源调度](./schedule_formal_view/06_调度模型/README.md) |
+| **性能优化** | [实践启示](./formal_lang_view/08_实践启示/README.md) | [性能优化](./schedule_formal_view/07_性能优化与安全/README.md) |
 
 ---
 
@@ -225,8 +225,8 @@ graph LR
 
 **推荐文档**:
 
-1. [形式语言视角 - 01 核心概念映射](./formal_lang_view/01_核心概念映射/)
-2. [调度视角 - 01 CPU硬件层](./schedule_formal_view/01_CPU硬件层/)
+1. [形式语言视角 - 01 核心概念映射](./formal_lang_view/01_核心概念映射/README.md)
+2. [调度视角 - 01 CPU硬件层](./schedule_formal_view/01_CPU硬件层/README.md)
 3. [跨视角多维知识矩阵](./跨视角多维知识矩阵.md)
 
 ### 5.2 进阶路径
@@ -268,8 +268,8 @@ graph TD
 
 **推荐文档**:
 
-1. [形式语言视角 - 09 形式化理论](./formal_lang_view/09_形式化理论/)
-2. [调度视角 - 09 形式化理论与证明](./schedule_formal_view/09_形式化理论与证明/)
+1. [形式语言视角 - 09 形式化理论](./formal_lang_view/09_形式化理论/README.md)
+2. [调度视角 - 09 形式化理论与证明](./schedule_formal_view/09_形式化理论与证明/README.md)
 3. [跨视角多维知识矩阵 - 统一框架](./跨视角多维知识矩阵.md#9-统一框架思维导图)
 
 ---

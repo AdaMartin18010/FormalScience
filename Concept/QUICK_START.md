@@ -129,15 +129,15 @@
 
 1. **形式语言** - 语法-语义基础
    - Chomsky层级、反身性
-   - [查看详情](FormalLanguage_Perspective/)
+   - [查看详情](FormalLanguage_Perspective/README.md)
 
 2. **AI模型** - 学习理论
    - Gold可学习性、VC维
-   - [查看详情](AI_model_Perspective/)
+   - [查看详情](AI_model_Perspective/README.md)
 
 3. **信息论** - 信息度量
    - Shannon熵、互信息
-   - [查看详情](Information_Theory_Perspective/)
+   - [查看详情](Information_Theory_Perspective/README.md)
 
 4. **图灵可计算** - 计算边界
    - 停机问题、虚拟化
@@ -487,11 +487,11 @@ Week 4: 编程算法设计视角 ✨（可选）
 
 ### 13.2 视角专题
 
-- [形式语言视角](FormalLanguage_Perspective/)
-- [AI模型视角](AI_model_Perspective/)
-- [信息论视角](Information_Theory_Perspective/)
+- [形式语言视角](FormalLanguage_Perspective/README.md)
+- [AI模型视角](AI_model_Perspective/README.md)
+- [信息论视角](Information_Theory_Perspective/README.md)
 - [图灵可计算视角](TuringCompute/)
-- [**编程算法设计视角** ✨](Program_Algorithm_Perspective/)
+- [**编程算法设计视角** ✨](Program_Algorithm_Perspective/README.md)
 
 ### 13.3 案例研究
 

@@ -784,28 +784,28 @@ priority: "medium"
 - _1. 形式语言视角_* 📁
 
 - 主文档: [formal_language_view.md](../formal_language_view.md)
-- 扩展目录: [FormalLanguage_Perspective/](../FormalLanguage_Perspective/)
+- 扩展目录: [FormalLanguage_Perspective/](../FormalLanguage_Perspective/README.md)
 - 核心问题: 语法如何映射到语义？
 - 文档数: 85+
 
 - _2. AI模型视角_* 📁
 
 - 主文档: [ai_model_view.md](../ai_model_view.md)
-- 扩展目录: [AI_model_Perspective/](../AI_model_Perspective/)
+- 扩展目录: [AI_model_Perspective/](../AI_model_Perspective/README.md)
 - 核心问题: 如何从数据中学习知识？
 - 文档数: 54+
 
 - _3. 信息论视角_* 📁
 
 - 主文档: [information_view.md](../information_view.md)
-- 扩展目录: [Information_Theory_Perspective/](../Information_Theory_Perspective/)
+- 扩展目录: [Information_Theory_Perspective/](../Information_Theory_Perspective/README.md)
 - 核心问题: 信息的本质是什么？
 - 文档数: 65+
 
 - _4. 图灵可计算视角_* 📁
 
 - 主文档: [TURINGCOMPUTE_INTEGRATION.md](../TURINGCOMPUTE_INTEGRATION.md)
-- 扩展目录: [TuningCompute/](../TuningCompute/)
+- 扩展目录: [TuningCompute/](../TuningCompute/README.md)
 - 核心问题: 什么是可计算的？
 - 文档数: 25+
 
@@ -831,7 +831,7 @@ priority: "medium"
 - _8. 编程算法设计视角_* 📁
 
 - 主文档: [progrma_algorithm_view.md](../progrma_algorithm_view.md)
-- 扩展目录: [Program_Algorithm_Perspective/](../Program_Algorithm_Perspective/)
+- 扩展目录: [Program_Algorithm_Perspective/](../Program_Algorithm_Perspective/README.md)
 - 核心问题: 如何形式化设计程序？
 - 文档数: 50+
 
@@ -971,20 +971,20 @@ priority: "medium"
 
 > 本文档为以下文档提供基础：
 >
-> - [相关文档](./) (待补充)
+> - [相关文档](./README.md) (待补充)
 
 ### 后向引用
 
 > 本文档依赖以下基础文档：
 >
-> - [基础文档](./) (待补充)
+> - [基础文档](./README.md) (待补充)
 
 ### 交叉链接
 
 > 相关主题：
 >
-> - [主题A](./) (待补充)
-> - [主题B](./) (待补充)
+> - [主题A](./README.md) (待补充)
+> - [主题B](./README.md) (待补充)
 
 ---
 

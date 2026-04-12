@@ -440,7 +440,7 @@ Petri网可以表示所有离散事件调度系统。
 ### 7.3 形式化视角关联
 
 - [FormalModel](../FormalModel/) - 形式化模型
-- [Petri网理论](../../formal_lang_view/10_Petri网理论/) - 理论基础
+- [Petri网理论](../../formal_lang_view/10_Petri网理论/README.md) - 理论基础
 
 ---
 

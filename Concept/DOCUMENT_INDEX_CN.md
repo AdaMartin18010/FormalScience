@@ -306,26 +306,26 @@
 **形式语言视角**:
 
 - [formal_language_view.md](formal_language_view.md)
-- [FormalLanguage_Perspective/](FormalLanguage_Perspective/)
+- [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md)
 
 **AI模型视角**:
 
 - [ai_model_view.md](ai_model_view.md)
-- [AI_model_Perspective/](AI_model_Perspective/)
+- [AI_model_Perspective/](AI_model_Perspective/README.md)
 
 **信息论视角**:
 
 - [information_view.md](information_view.md)
-- [Information_Theory_Perspective/](Information_Theory_Perspective/)
+- [Information_Theory_Perspective/](Information_Theory_Perspective/README.md)
 
 **图灵可计算视角**:
 
-- [TuningCompute/](TuningCompute/)
+- [TuningCompute/](TuningCompute/README.md)
 
 **编程算法设计视角**:
 
 - [progrma_algorithm_view.md](progrma_algorithm_view.md)
-- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/)
+- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md)
 
 ---
 

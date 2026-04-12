@@ -217,7 +217,7 @@
 
 **扩展内容**:
 
-- [FormalLanguage_Perspective/](FormalLanguage_Perspective/) - 63个文档
+- [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) - 63个文档
 
 **关键概念**: 语法、语义、语言类、Chomsky层级
 
@@ -229,7 +229,7 @@
 
 **扩展内容**:
 
-- [AI_model_Perspective/](AI_model_Perspective/) - 60个文档
+- [AI_model_Perspective/](AI_model_Perspective/README.md) - 60个文档
 
 **关键概念**: 神经网络、学习理论、Transformer、语言模型
 
@@ -241,7 +241,7 @@
 
 **扩展内容**:
 
-- [Information_Theory_Perspective/](Information_Theory_Perspective/) - 65个文档
+- [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) - 65个文档
 
 **关键概念**: 熵、互信息、信道容量、DIKWP模型
 
@@ -249,7 +249,7 @@
 
 **核心文档**:
 
-- [TuningCompute/](TuningCompute/) - 25个文档
+- [TuningCompute/](TuningCompute/README.md) - 25个文档
 
 **关键概念**: 可计算性、复杂度、虚拟化、主权矩阵
 
@@ -269,7 +269,7 @@
 
 **扩展内容**:
 
-- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 50个文档
+- [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) - 50个文档
 
 **关键概念**: 形式语义、设计模式、复杂度理论、UH-Cost模型
 
@@ -440,7 +440,7 @@
 
 ### 8.3 知识地图
 
-- [**Knowledge_Maps/**](Knowledge_Maps/) - **9个知识地图文档**
+- [**Knowledge_Maps/**](Knowledge_Maps/README.md) - **9个知识地图文档**
 - [**知识地图中文索引**](Knowledge_Maps/README_CN.md) - **知识地图简体中文指南** ✨
 
 ---

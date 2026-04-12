@@ -204,10 +204,10 @@ FormalScience的解决方案：
 
 **推荐视角**：
 
-- AI研究者 → [AI模型视角](AI_model_Perspective/)
-- 系统程序员 → [图灵可计算视角](TuningCompute/)
+- AI研究者 → [AI模型视角](AI_model_Perspective/README.md)
+- 系统程序员 → [图灵可计算视角](TuningCompute/README.md)
 - 数据库工程师 → [分布式系统视角](CASE_STUDY_DATABASE_SYSTEMS.md)
-- 编译器开发者 → [形式语言视角](FormalLanguage_Perspective/)
+- 编译器开发者 → [形式语言视角](FormalLanguage_Perspective/README.md)
 
 ### 3.3 第3小时：应用框架分析系统
 
@@ -236,8 +236,8 @@ FormalScience的解决方案：
 **推荐路径**：
 
 1. [大语言模型案例](CASE_STUDY_LARGE_LANGUAGE_MODELS.md) - 理解LLM的形式化分析
-2. [AI模型视角](AI_model_Perspective/) - 深入学习AI理论
-3. [信息论视角](Information_Theory_Perspective/) - 理解信息与学习的关系
+2. [AI模型视角](AI_model_Perspective/README.md) - 深入学习AI理论
+3. [信息论视角](Information_Theory_Perspective/README.md) - 理解信息与学习的关系
 
 **核心概念**：
 
@@ -252,7 +252,7 @@ FormalScience的解决方案：
 
 1. [数据库系统案例](CASE_STUDY_DATABASE_SYSTEMS.md) - 理解数据库的形式化分析
 2. [分布式系统视角](CASE_STUDY_BLOCKCHAIN_CONSENSUS.md) - 理解CAP定理
-3. [编程算法设计视角](Program_Algorithm_Perspective/) - 形式语义与设计模式
+3. [编程算法设计视角](Program_Algorithm_Perspective/README.md) - 形式语义与设计模式
 
 **核心概念**：
 
@@ -266,7 +266,7 @@ FormalScience的解决方案：
 **推荐路径**：
 
 1. [操作系统案例](CASE_STUDY_OPERATING_SYSTEMS.md) - 理解OS的形式化分析
-2. [图灵可计算视角](TuningCompute/) - 理解虚拟化与隔离
+2. [图灵可计算视角](TuningCompute/README.md) - 理解虚拟化与隔离
 3. [编译器系统案例](CASE_STUDY_COMPILER_SYSTEMS.md) - 理解编译器的形式化
 
 **核心概念**：

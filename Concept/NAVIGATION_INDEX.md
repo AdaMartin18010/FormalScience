@@ -284,7 +284,7 @@
 **主要文档**:
 
 - 📄 [形式语言主视角](formal_language_view.md) - 26阶模型、反身性理论
-- 📂 [FormalLanguage_Perspective/](FormalLanguage_Perspective/) - **85+深度文档**
+- 📂 [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) - **85+深度文档**
   - [哲学基础](FormalLanguage_Perspective/01_Philosophical_Foundations/) (5文档)
   - [科学对应](FormalLanguage_Perspective/02_Scientific_Correspondence/) (5文档)
   - [历史发展](FormalLanguage_Perspective/03_Historical_Development/) (5文档)
@@ -293,7 +293,7 @@
   - [社会应用](FormalLanguage_Perspective/06_Social_Applications/) (5文档)
   - [意识研究](FormalLanguage_Perspective/07_Consciousness_Studies/) (5文档)
   - [未来展望](FormalLanguage_Perspective/08_Future_Projections/) (5文档)
-  - [专题研究](FormalLanguage_Perspective/) (13个专题目录)
+  - [专题研究](FormalLanguage_Perspective/README.md) (13个专题目录)
 
 **深度指南**: [扩展内容导航](EXTENDED_CONTENT_NAVIGATION.md)
 
@@ -304,7 +304,7 @@
 **主要文档**:
 
 - 📄 [AI模型主视角](ai_model_view.md)
-- 📂 [AI_model_Perspective/](AI_model_Perspective/) - 54+文档
+- 📂 [AI_model_Perspective/](AI_model_Perspective/README.md) - 54+文档
   - [神经网络理论](AI_model_Perspective/02_Neural_Network_Theory/)
   - [语言模型](AI_model_Perspective/03_Language_Models/)
   - [学习理论](AI_model_Perspective/05_Learning_Theory/)
@@ -317,7 +317,7 @@
 **主要文档**:
 
 - 📄 [信息论主视角](information_view.md)
-- 📂 [Information_Theory_Perspective/](Information_Theory_Perspective/) - 65+文档
+- 📂 [Information_Theory_Perspective/](Information_Theory_Perspective/README.md) - 65+文档
 
 ### 5.4 图灵可计算视角
 
@@ -325,7 +325,7 @@
 
 **主要文档**:
 
-- 📂 [TuningCompute/](TuningCompute/) - 25+文档
+- 📂 [TuningCompute/](TuningCompute/README.md) - 25+文档
 - 📄 [图灵可计算整合](TURINGCOMPUTE_INTEGRATION.md)
 
 ### 5.5 控制论视角
@@ -359,7 +359,7 @@
 
 **主要文档**:
 
-- 📂 [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/) - 50+文档
+- 📂 [Program_Algorithm_Perspective/](Program_Algorithm_Perspective/README.md) - 50+文档
 - 📚 [总体概述](Program_Algorithm_Perspective/README.md)
 - 🗺️ [主索引](Program_Algorithm_Perspective/00_Master_Index.md)
 
@@ -495,13 +495,13 @@ README → 扩展内容导航 → 选择相关主题 → 深度学习
 
 ### 10.1 Software_Perspective软件视角
 
-- 📂 [Software_Perspective/](Software_Perspective/) - 60+文档
+- 📂 [Software_Perspective/](Software_Perspective/README.md) - 60+文档
 - 📄 [主文档](Software_Perspective.md)
 - 主题：架构演化、自愈系统、云原生
 
 ### 10.2 Wasm_PerspectiveWebAssembly视角
 
-- 📂 [Wasm_Perspective/](Wasm_Perspective/) - 55+文档
+- 📂 [Wasm_Perspective/](Wasm_Perspective/README.md) - 55+文档
 - 📄 [主文档](Wasm_Perspective.md)
 - 主题：编译原理、性能优化、安全沙箱
 
