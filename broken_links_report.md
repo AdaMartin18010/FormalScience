@@ -2,70 +2,22 @@
 
 **扫描时间**: 2026-04-12
 **扫描目录**: 7 个核心模块
-**发现断链**: 170 个
+**发现断链**: 125 个
 
 ## 统计摘要
 
 | 类型 | 数量 |
 |------|------|
-| 缺失文件 | 99 |
-| 缺失锚点 | 71 |
+| 缺失文件 | 96 |
+| 缺失锚点 | 29 |
 
 ## 断链详情
-
-### Composed/schedule_formal_view/01_CPU硬件层/01.1_CPU微架构.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1634 | 主文档：跨领域洞察 | `Composed/schedule_formal_view/schedule_formal_view.md#跨领域洞察与论证脉络` | 缺失锚点 |
-
-### Composed/schedule_formal_view/01_CPU硬件层/01.2_缓存层次结构.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1356 | 主文档：抽象泄漏 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2软件抽象泄漏定律` | 缺失锚点 |
-
-### Composed/schedule_formal_view/01_CPU硬件层/01.3_内存子系统.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1196 | 主文档：内存墙分析 | `Composed/schedule_formal_view/schedule_formal_view.md#洞察1内存墙的不可逾越性` | 缺失锚点 |
-
-### Composed/schedule_formal_view/01_CPU硬件层/01.4_MMU与TLB.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1556 | 主文档：TLB分析 | `Composed/schedule_formal_view/schedule_formal_view.md#知识图谱概念关系链` | 缺失锚点 |
 
 ### Composed/schedule_formal_view/01_CPU硬件层/README.md
 
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 83 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#31-01-cpu硬件层` | 缺失锚点 |
-
-### Composed/schedule_formal_view/02_系统总线层/02.1_PCIe子系统.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 764 | 主文档：物理约束 | `Composed/schedule_formal_view/schedule_formal_view.md#物理约束决定软件抽象` | 缺失锚点 |
-
-### Composed/schedule_formal_view/02_系统总线层/02.2_芯片组架构.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1487 | 主文档：成本驱动 | `Composed/schedule_formal_view/schedule_formal_view.md#视角3成本驱动的技术路线分叉` | 缺失锚点 |
-
-### Composed/schedule_formal_view/02_系统总线层/02.3_北桥与南桥.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1461 | 主文档：成本驱动 | `Composed/schedule_formal_view/schedule_formal_view.md#视角3成本驱动的技术路线分叉` | 缺失锚点 |
-
-### Composed/schedule_formal_view/02_系统总线层/02.4_中断子系统.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 988 | 主文档：延迟穿透 | `Composed/schedule_formal_view/schedule_formal_view.md#视角5从应用穿透到硬件的反馈循环` | 缺失锚点 |
 
 ### Composed/schedule_formal_view/02_系统总线层/README.md
 
@@ -79,59 +31,11 @@
 |------|----------|------|----------|
 | 1894 | Linux 操作系统原理全面分析 | `Composed/Concept/LINUX_OS_PRINCIPLES.md` | 缺失文件 |
 
-### Composed/schedule_formal_view/03_OS抽象层/03.1_进程调度模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1034 | 主文档：公平性vs性能 | `Composed/schedule_formal_view/schedule_formal_view.md#洞察3公平性vs性能的永恒权衡` | 缺失锚点 |
-
-### Composed/schedule_formal_view/03_OS抽象层/03.2_内存管理模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1202 | 主文档：抽象泄漏 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2软件抽象泄漏定律` | 缺失锚点 |
-
-### Composed/schedule_formal_view/03_OS抽象层/03.3_文件系统模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1155 | 主文档：抽象泄漏 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2软件抽象泄漏定律` | 缺失锚点 |
-
-### Composed/schedule_formal_view/03_OS抽象层/03.4_设备驱动模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1103 | 主文档：抽象泄漏 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2软件抽象泄漏定律` | 缺失锚点 |
-
-### Composed/schedule_formal_view/03_OS抽象层/03.5_网络栈模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1141 | 主文档：应用穿透路径 | `Composed/schedule_formal_view/schedule_formal_view.md#视角5从应用穿透到硬件的反馈循环` | 缺失锚点 |
-
 ### Composed/schedule_formal_view/03_OS抽象层/README.md
 
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 73 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#33-03-os抽象层` | 缺失锚点 |
-
-### Composed/schedule_formal_view/04_同步通信机制/04.1_硬件同步原语.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1760 | 主文档：硬件同步 | `Composed/schedule_formal_view/schedule_formal_view.md#知识图谱概念关系链` | 缺失锚点 |
-
-### Composed/schedule_formal_view/04_同步通信机制/04.2_软件同步机制.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1815 | 主文档：同步机制 | `Composed/schedule_formal_view/schedule_formal_view.md#知识图谱概念关系链` | 缺失锚点 |
-
-### Composed/schedule_formal_view/04_同步通信机制/04.3_内存序模型.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1803 | 主文档：内存序模型 | `Composed/schedule_formal_view/schedule_formal_view.md#知识图谱概念关系链` | 缺失锚点 |
 
 ### Composed/schedule_formal_view/04_同步通信机制/README.md
 
@@ -145,53 +49,11 @@
 |------|----------|------|----------|
 | 1158 | 主文档：虚拟化开销 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2虚拟化开销逼近物理极限` | 缺失锚点 |
 
-### Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.2_容器化技术.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1528 | 主文档：抽象泄漏 | `Composed/schedule_formal_view/schedule_formal_view.md#视角2软件抽象泄漏定律` | 缺失锚点 |
-
-### Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.3_沙盒化技术.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1691 | 主文档：安全vs性能 | `Composed/schedule_formal_view/schedule_formal_view.md#视角1时间-空间-能耗三角约束` | 缺失锚点 |
-
-### Composed/schedule_formal_view/05_虚拟化容器化沙盒化/05.4_隔离技术对比.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1455 | 主文档：隔离vs性能 | `Composed/schedule_formal_view/schedule_formal_view.md#视角1时间-空间-能耗三角约束` | 缺失锚点 |
-
 ### Composed/schedule_formal_view/05_虚拟化容器化沙盒化/README.md
 
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 68 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#35-05-虚拟化容器化沙盒化` | 缺失锚点 |
-
-### Composed/schedule_formal_view/06_调度模型/06.1_硬件微架构调度.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1725 | 主文档：调度模型 | `Composed/schedule_formal_view/schedule_formal_view.md#形式化理论框架` | 缺失锚点 |
-
-### Composed/schedule_formal_view/06_调度模型/06.2_OS内核调度.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1703 | 主文档：调度映射 | `Composed/schedule_formal_view/schedule_formal_view.md#核心论证调度作为元模型的普适性` | 缺失锚点 |
-
-### Composed/schedule_formal_view/06_调度模型/06.3_编程语言层调度.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1863 | 主文档：调度映射 | `Composed/schedule_formal_view/schedule_formal_view.md#核心论证调度作为元模型的普适性` | 缺失锚点 |
-
-### Composed/schedule_formal_view/06_调度模型/06.5_调度模型统一理论.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1384 | 主文档：调度作为元模型 | `Composed/schedule_formal_view/schedule_formal_view.md#核心论证调度作为元模型的普适性` | 缺失锚点 |
 
 ### Composed/schedule_formal_view/06_调度模型/README.md
 
@@ -199,91 +61,17 @@
 |------|----------|------|----------|
 | 93 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#36-06-调度模型` | 缺失锚点 |
 
-### Composed/schedule_formal_view/07_性能优化与安全/07.1_性能特征矩阵.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1185 | 主文档：性能优化 | `Composed/schedule_formal_view/schedule_formal_view.md#技术演进与物理极限` | 缺失锚点 |
-| 1186 | 主文档：收益递减 | `Composed/schedule_formal_view/schedule_formal_view.md#视角4优化策略的收益递减` | 缺失锚点 |
-
-### Composed/schedule_formal_view/07_性能优化与安全/07.2_延迟穿透分析.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1238 | 主文档：应用穿透路径 | `Composed/schedule_formal_view/schedule_formal_view.md#视角5从应用穿透到硬件的反馈循环` | 缺失锚点 |
-
-### Composed/schedule_formal_view/07_性能优化与安全/07.3_安全机制.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1135 | 主文档：安全vs性能 | `Composed/schedule_formal_view/schedule_formal_view.md#视角1时间-空间-能耗三角约束` | 缺失锚点 |
-
-### Composed/schedule_formal_view/07_性能优化与安全/07.4_优化策略.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1219 | 主文档：收益递减 | `Composed/schedule_formal_view/schedule_formal_view.md#视角4优化策略的收益递减` | 缺失锚点 |
-
 ### Composed/schedule_formal_view/07_性能优化与安全/README.md
 
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 68 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#37-07-性能优化与安全` | 缺失锚点 |
 
-### Composed/schedule_formal_view/08_技术演进与对标/08.1_硬件演进路线.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1599 | 主文档：技术演进 | `Composed/schedule_formal_view/schedule_formal_view.md#技术演进与物理极限` | 缺失锚点 |
-
-### Composed/schedule_formal_view/08_技术演进与对标/08.2_OS适配演进.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1077 | 主文档：OS适配 | `Composed/schedule_formal_view/schedule_formal_view.md#技术演进与物理极限` | 缺失锚点 |
-
-### Composed/schedule_formal_view/08_技术演进与对标/08.3_厂商技术对标.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 1094 | 主文档：生态锁定 | `Composed/schedule_formal_view/schedule_formal_view.md#视角6生态锁定的经济学本质` | 缺失锚点 |
-| 1095 | 主文档：成本驱动 | `Composed/schedule_formal_view/schedule_formal_view.md#视角3成本驱动的技术路线分叉` | 缺失锚点 |
-
-### Composed/schedule_formal_view/08_技术演进与对标/08.4_最新技术趋势.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 711 | 主文档：未来不确定性 | `Composed/schedule_formal_view/schedule_formal_view.md#未来十年的关键不确定性` | 缺失锚点 |
-
 ### Composed/schedule_formal_view/08_技术演进与对标/README.md
 
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 68 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#38-08-技术演进与对标` | 缺失锚点 |
-
-### Composed/schedule_formal_view/09_形式化理论与证明/09.1_调度模型形式化.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 884 | 主文档：形式化理论 | `Composed/schedule_formal_view/schedule_formal_view.md#形式化理论框架` | 缺失锚点 |
-
-### Composed/schedule_formal_view/09_形式化理论与证明/09.2_硬件-OS映射证明.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 751 | 主文档：形式化证明 | `Composed/schedule_formal_view/schedule_formal_view.md#形式化理论框架` | 缺失锚点 |
-
-### Composed/schedule_formal_view/09_形式化理论与证明/09.3_性能边界证明.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 799 | 主文档：物理极限 | `Composed/schedule_formal_view/schedule_formal_view.md#技术演进与物理极限` | 缺失锚点 |
-
-### Composed/schedule_formal_view/09_形式化理论与证明/09.4_安全机制证明.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 806 | 主文档：形式化证明 | `Composed/schedule_formal_view/schedule_formal_view.md#形式化理论框架` | 缺失锚点 |
 
 ### Composed/schedule_formal_view/09_形式化理论与证明/README.md
 
@@ -296,12 +84,6 @@
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 66 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#310-10-24-扩展主题` | 缺失锚点 |
-
-### Composed/schedule_formal_view/11_企业架构调度/11.3_应用架构层调度.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 212 | s | `Composed/schedule_formal_view/11_企业架构调度/k` | 缺失文件 |
 
 ### Composed/schedule_formal_view/11_企业架构调度/README.md
 
@@ -332,13 +114,6 @@
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 73 | 思维导图与知识矩阵 | `Composed/schedule_formal_view/思维导图与知识矩阵.md#310-10-24-扩展主题` | 缺失锚点 |
-
-### Composed/schedule_formal_view/16_GPU与加速器调度/16.3_异构计算调度.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 759 | & | `Composed/schedule_formal_view/16_GPU与加速器调度/handler& h` | 缺失文件 |
-| 764 | = | `Composed/schedule_formal_view/16_GPU与加速器调度/id<1> i` | 缺失文件 |
 
 ### Composed/schedule_formal_view/16_GPU与加速器调度/README.md
 
@@ -506,16 +281,6 @@
 | 行号 | 链接文本 | 目标 | 问题类型 |
 |------|----------|------|----------|
 | 1132 | 主题索引 | `Composed/README.md` | 缺失文件 |
-
-### Composed/schedule_formal_view/论证脉络总览.md
-
-| 行号 | 链接文本 | 目标 | 问题类型 |
-|------|----------|------|----------|
-| 62 | 主文档：调度作为元模型 | `Composed/schedule_formal_view/schedule_formal_view.md#核心论证调度作为元模型的普适性` | 缺失锚点 |
-| 137 | 主文档：时间-空间-能耗三角约束 | `Composed/schedule_formal_view/schedule_formal_view.md#视角1时间-空间-能耗三角约束` | 缺失锚点 |
-| 207 | 主文档：成本驱动的技术路线分叉 | `Composed/schedule_formal_view/schedule_formal_view.md#视角3成本驱动的技术路线分叉` | 缺失锚点 |
-| 237 | 主文档：优化策略的收益递减 | `Composed/schedule_formal_view/schedule_formal_view.md#视角4优化策略的收益递减` | 缺失锚点 |
-| 287 | 主文档：核心论证 | `Composed/schedule_formal_view/schedule_formal_view.md#核心论证调度作为元模型的普适性` | 缺失锚点 |
 
 ### docs/Refactor/01_数学基础/01_元数学基础/01.1_集合论基础.md
 
@@ -755,7 +520,7 @@
 
 ## 修复建议
 
-### 需要创建的文件 (70个)
+### 需要创建的文件 (67个)
 
 - `/Delta /mathbf{L}(m`
 - `/mathbf{v}`
@@ -769,9 +534,6 @@
 - `Composed/formal_lang_view/09_形式化理论/09.4_应用范畴论.md`
 - `Composed/formal_lang_view/09_形式化理论/09.5_Petri网理论.md`
 - `Composed/formal_lang_view/README.md`
-- `Composed/schedule_formal_view/11_企业架构调度/k`
-- `Composed/schedule_formal_view/16_GPU与加速器调度/handler& h`
-- `Composed/schedule_formal_view/16_GPU与加速器调度/id<1> i`
 - `Composed/schedule_formal_view/24_安全调度`
 - `Composed/schedule_formal_view/FormalModel/01_基础形式化框架/entity`
 - `Composed/schedule_formal_view/FormalModel/07_监控与反馈/y[k] - H/hat{x}[k|k-1]`
@@ -807,4 +569,7 @@
 - `docs/Refactor/Matter/01_操作系统/01.6_虚拟内存.md`
 - `docs/Refactor/Matter/01_操作系统/01.7_IO系统.md`
 - `docs/Refactor/Matter/01_操作系统/01.8_磁盘调度.md`
-- ... 还有 20 个
+- `docs/Refactor/Matter/01_计算机组成原理/04.2_GPU架构.md`
+- `docs/Refactor/Matter/01_计算机组成原理/04.3_CUDA编程模型.md`
+- `docs/Refactor/Matter/01_计算机组成原理/04.4_TPU架构.md`
+- ... 还有 17 个
