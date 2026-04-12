@@ -323,7 +323,7 @@
 - [结构说明](./结构说明.md)
 - [进度总结](./进度总结.md)
 - [完成总结](./完成总结.md)
-- [概念目录：虚拟化容器化沙盒化](../Concept/TuningCompute/)
+- [概念目录：虚拟化容器化沙盒化](https://github.com/formalscience/Concept/tree/main/TuningCompute)
 - [基础设施即类型系统](../formal_lang_view/README.md)
 
 ---
