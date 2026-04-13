@@ -227,10 +227,10 @@ FormalScience/
 
 ### 核心模块
 
-1. ⚡ **[调度系统](docs/Refactor/06_调度系统/)** - 核心调度理论
-2. 🔢 **[数学基础](docs/Refactor/01_数学基础/)** - 数学理论
-3. 📝 **[形式语言](docs/Refactor/02_形式语言/)** - 类型论、λ演算
-4. 💻 **[编程范式](docs/Refactor/03_编程范式/)** - Rust、异步编程
+1. ⚡ **[调度系统](docs/Refactor/06_调度系统/README.md)** - 核心调度理论
+2. 🔢 **[数学基础](docs/Refactor/01_数学基础/_index.md)** - 数学理论
+3. 📝 **[形式语言](docs/Refactor/02_形式语言/_index.md)** - 类型论、λ演算
+4. 💻 **[编程范式](docs/Refactor/03_编程范式/README.md)** - Rust、异步编程
 
 ### 运行代码
 
@@ -281,14 +281,14 @@ python tools/document_linter.py docs/Refactor
 ### 初学者
 
 1. [00_GETTING_STARTED.md](docs/Refactor/00_GETTING_STARTED.md)
-2. [01_数学基础/](docs/Refactor/01_数学基础/)
-3. [02_形式语言/](docs/Refactor/02_形式语言/)
+2. [01_数学基础/](docs/Refactor/01_数学基础/_index.md)
+3. [02_形式语言/](docs/Refactor/02_形式语言/_index.md)
 
 ### 进阶学习
 
-1. [06_调度系统/](docs/Refactor/06_调度系统/)
-2. [FormalRE/](FormalRE/)
-3. [Composed/schedule_formal_view/](Composed/schedule_formal_view/)
+1. [06_调度系统/](docs/Refactor/06_调度系统/README.md)
+2. [FormalRE/](FormalRE/README.md)
+3. [Composed/schedule_formal_view/](Composed/schedule_formal_view/README.md)
 
 ---
 

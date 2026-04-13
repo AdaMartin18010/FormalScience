@@ -329,30 +329,30 @@ priority: "medium"
 - *完成度**：✅ **100%** (v2.0.0 - Production Ready)
 
 - *文档**：
-- 🚀 首次阅读：[README_FIRST.md](Program_Algorithm_Perspective/README_FIRST.md)
-- 📚 总体概述：[README.md](Program_Algorithm_Perspective/README.md)
-- 🗺️ 主索引：[00_Master_Index.md](Program_Algorithm_Perspective/00_Master_Index.md)
+- 🚀 首次阅读：[README_FIRST.md](./README_FIRST.md)
+- 📚 总体概述：[README.md](./README.md)
+- 🗺️ 主索引：[00_Master_Index.md](./00_Master_Index.md)
 
 - *可视化导航**：
-- 🧠 思维导图：[MINDMAP.md](Program_Algorithm_Perspective/MINDMAP.md)
-- 📊 概念对比矩阵：[CONCEPT_MATRIX.md](Program_Algorithm_Perspective/CONCEPT_MATRIX.md)
-- 🗂️ 分层结构：[LAYERED_STRUCTURE.md](Program_Algorithm_Perspective/LAYERED_STRUCTURE.md)
+- 🧠 思维导图：[MINDMAP.md](./MINDMAP.md)
+- 📊 概念对比矩阵：[CONCEPT_MATRIX.md](./CONCEPT_MATRIX.md)
+- 🗂️ 分层结构：[LAYERED_STRUCTURE.md](./LAYERED_STRUCTURE.md)
 
 - *快速开始**：
 1. **初学者路径**：
-   - [01.1_Operational_Semantics.md](Program_Algorithm_Perspective/01_Formal_Semantics/01.1_Operational_Semantics.md) - 操作语义
-   - [05.1_Coq_Introduction.md](Program_Algorithm_Perspective/05_Formal_Verification/05.1_Coq_Introduction.md) - Coq 定理证明
-   - [02.1_GoF_Formal_Analysis.md](Program_Algorithm_Perspective/02_Design_Patterns/02.1_GoF_Formal_Analysis.md) - 设计模式形式化
+   - [01.1_Operational_Semantics.md](./01_Formal_Semantics/01.1_Operational_Semantics.md) - 操作语义
+   - [05.1_Coq_Introduction.md](./05_Formal_Verification/05.1_Coq_Introduction.md) - Coq 定理证明
+   - [02.1_GoF_Formal_Analysis.md](./02_Design_Patterns/02.1_GoF_Formal_Analysis.md) - 设计模式形式化
 
 2. **进阶路径**：
-   - [03.1_Multidimensional_Complexity.md](Program_Algorithm_Perspective/03_Algorithm_Complexity/03.1_Multidimensional_Complexity.md) - 多维复杂度
-   - [04.2_Microservices_Architecture.md](Program_Algorithm_Perspective/04_Architecture_Patterns/04.2_Microservices_Architecture.md) - 微服务架构
-   - [04.4_Cross_Layer_Verification.md](Program_Algorithm_Perspective/04_Architecture_Patterns/04.4_Cross_Layer_Verification.md) - 跨层验证
+   - [03.1_Multidimensional_Complexity.md](./03_Algorithm_Complexity/03.1_Multidimensional_Complexity.md) - 多维复杂度
+   - [04.3_Microservices_Architecture.md](./04_Architecture_Patterns/04.3_Microservices_Architecture.md) - 微服务架构
+   - [04.5_Cross_Layer_Verification.md](./04_Architecture_Patterns/04.5_Cross_Layer_Verification.md) - 跨层验证
 
 3. **工程师路径**：
-   - [05.5_Industrial_Applications.md](Program_Algorithm_Perspective/05_Formal_Verification/05.5_Industrial_Applications.md) - 工业应用
-   - [02.6_Pattern_Verification.md](Program_Algorithm_Perspective/02_Design_Patterns/02.6_Pattern_Verification.md) - 模式验证工具链
-   - [QUICK_REFERENCE.md](Program_Algorithm_Perspective/QUICK_REFERENCE.md) - 工具速查
+   - [05.5_Industrial_Applications.md](./05_Formal_Verification/05.5_Industrial_Applications.md) - 工业应用
+   - [02.6_Pattern_Verification.md](./02_Design_Patterns/02.6_Pattern_Verification.md) - 模式验证工具链
+   - [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) - 工具速查
 
 - --
 ```

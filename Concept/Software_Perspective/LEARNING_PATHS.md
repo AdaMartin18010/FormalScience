@@ -189,7 +189,7 @@ priority: "medium"
 ### 5.2 # 4.1.1 Week 1-2: 容器基础 {#-411-week-1-2-容器基础}
 
 - Kubernetes 基础概念
-- [9.1 容器化基础](./09_Cloud_Native_Patterns/09.1_Containerization_Fundamentals.md)
+- [9.2 容器化基础](./09_Cloud_Native_Patterns/09.2_Containerization_Fundamentals.md)
 - **实践**：部署一个 Deployment + Service
 
 ### 5.3 # 4.1.2 Week 3-4: GitOps {#-412-week-3-4-gitops}
@@ -238,7 +238,7 @@ priority: "medium"
 ### 6.3 # 5.1.2 Phase 2: 平台工程（3 周） {#-512-phase-2-平台工程3-周}
 
 - [8.1 平台工程定义](./08_Platform_Engineering/08.1_Platform_Engineering_Definition.md) ⭐️
-- [8.3 黄金路径](./08_Platform_Engineering/08.3_Golden_Path.md)
+- [8.2 黄金路径](./08_Platform_Engineering/08.2_Golden_Path.md)
 - **项目**：设计一个最小 IDP
 
 ### 6.4 # 5.1.3 Phase 3: 认知负载（1 周） {#-513-phase-3-认知负载1-周}
@@ -404,7 +404,7 @@ priority: "medium"
 
 ### 10.3 # 9.1.2 Phase 2: 模式精通（4 周） {#-912-phase-2-模式精通4-周}
 
-- [9.3 Service Mesh](./09_Cloud_Native_Patterns/09.3_Service_Mesh.md)
+- [9.4 Service Mesh](./09_Cloud_Native_Patterns/09.4_Service_Mesh.md)
 - **实践**：为 3 个不同场景设计架构
 
 ### 10.4 # 9.1.3 Phase 3: 治理体系（3 周） {#-913-phase-3-治理体系3-周}
@@ -498,7 +498,7 @@ priority: "medium"
 ### 12.4 # 11.1.3 Phase 3: 未来推演（4 周） {#-1113-phase-3-未来推演4-周}
 
 - [10.1 意图驱动编程](./10_Future_Directions/10.1_Intent_Driven_Programming.md) ⭐️
-- [10.3 AI 辅助软件工程](./10_Future_Directions/10.3_AI_Assisted_Software_Engineering.md)
+- [10.2 AI 辅助软件工程](./10_Future_Directions/10.2_AI_Assisted_Software_Engineering.md)
 - **预测**：写一篇"2030 年的软件工程"
 
 ### 11 2 研究方向 {#2-研究方向}

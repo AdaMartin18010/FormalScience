@@ -8,33 +8,33 @@ Welcome to the English version of FormalScience documentation.
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Overview](./overview.md) | Project overview and introduction | 🚧 In Progress |
-| [Quick Start](./quickstart.md) | Quick start guide | 📋 Planned |
-| [Installation](./installation.md) | Installation instructions | 📋 Planned |
+| Overview | Project overview and introduction | 🚧 In Progress |
+| Quick Start | Quick start guide | 📋 Planned |
+| Installation | Installation instructions | 📋 Planned |
 
 ### Architecture
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Architecture Design](./architecture/design.md) | System architecture overview | 🚧 In Progress |
-| [Core Components](./architecture/components.md) | Core component documentation | 📋 Planned |
-| [Data Flow](./architecture/dataflow.md) | Data flow diagrams | 📋 Planned |
+| Architecture Design | System architecture overview | 🚧 In Progress |
+| Core Components | Core component documentation | 📋 Planned |
+| Data Flow | Data flow diagrams | 📋 Planned |
 
 ### Development
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Development Guide](./development/guide.md) | Development guidelines | 📋 Planned |
-| [API Reference](./development/api.md) | API documentation | 📋 Planned |
-| [Contributing](./development/contributing.md) | Contribution guidelines | 📋 Planned |
+| Development Guide | Development guidelines | 📋 Planned |
+| API Reference | API documentation | 📋 Planned |
+| Contributing | Contribution guidelines | 📋 Planned |
 
 ### Operations
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Deployment Guide](./operations/deployment.md) | Deployment instructions | 📋 Planned |
-| [Configuration](./operations/configuration.md) | Configuration reference | 📋 Planned |
-| [Troubleshooting](./operations/troubleshooting.md) | Common issues and solutions | 📋 Planned |
+| Deployment Guide | Deployment instructions | 📋 Planned |
+| Configuration | Configuration reference | 📋 Planned |
+| Troubleshooting | Common issues and solutions | 📋 Planned |
 
 ## 🌐 Other Languages
 

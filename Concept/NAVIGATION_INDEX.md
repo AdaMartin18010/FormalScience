@@ -285,14 +285,14 @@
 
 - 📄 [形式语言主视角](formal_language_view.md) - 26阶模型、反身性理论
 - 📂 [FormalLanguage_Perspective/](FormalLanguage_Perspective/README.md) - **85+深度文档**
-  - [哲学基础](FormalLanguage_Perspective/01_Philosophical_Foundations/) (5文档)
-  - [科学对应](FormalLanguage_Perspective/02_Scientific_Correspondence/) (5文档)
-  - [历史发展](FormalLanguage_Perspective/03_Historical_Development/) (5文档)
-  - [数学结构](FormalLanguage_Perspective/04_Mathematical_Structures/) (5文档)
-  - [计算模型](FormalLanguage_Perspective/05_Computational_Models/) (5文档)
-  - [社会应用](FormalLanguage_Perspective/06_Social_Applications/) (5文档)
-  - [意识研究](FormalLanguage_Perspective/07_Consciousness_Studies/) (5文档)
-  - [未来展望](FormalLanguage_Perspective/08_Future_Projections/) (5文档)
+  - [哲学基础](FormalLanguage_Perspective/01_Philosophical_Foundations/01.1_Consciousness_Mechanism_Theory.md) (5文档)
+  - [科学对应](FormalLanguage_Perspective/02_Scientific_Correspondence/02.1_Physics_Formal_Language_Mapping.md) (5文档)
+  - [历史发展](FormalLanguage_Perspective/03_Historical_Development/03.1_Ancient_Logic_Origins.md) (5文档)
+  - [数学结构](FormalLanguage_Perspective/04_Mathematical_Structures/04.1_Category_Theory_Foundations.md) (5文档)
+  - [计算模型](FormalLanguage_Perspective/05_Computational_Models/05.1_Automata_Theory_Formal_Language.md) (5文档)
+  - [社会应用](FormalLanguage_Perspective/06_Social_Applications/06.1_Legal_System_Formalization.md) (5文档)
+  - [意识研究](FormalLanguage_Perspective/07_Consciousness_Studies/07.1_Qualia_Formal_Representation.md) (5文档)
+  - [未来展望](FormalLanguage_Perspective/08_Future_Projections/08.1_Next_26_Stages_Roadmap.md) (5文档)
   - [专题研究](FormalLanguage_Perspective/README.md) (13个专题目录)
 
 **深度指南**: [扩展内容导航](EXTENDED_CONTENT_NAVIGATION.md)
@@ -305,10 +305,10 @@
 
 - 📄 [AI模型主视角](ai_model_view.md)
 - 📂 [AI_model_Perspective/](AI_model_Perspective/README.md) - 54+文档
-  - [神经网络理论](AI_model_Perspective/02_Neural_Network_Theory/)
-  - [语言模型](AI_model_Perspective/03_Language_Models/)
-  - [学习理论](AI_model_Perspective/05_Learning_Theory/)
-  - [AI哲学](AI_model_Perspective/07_AI_Philosophy/)
+  - [神经网络理论](AI_model_Perspective/02_Neural_Network_Theory/02.1_Neural_Network_Foundations.md)
+  - [语言模型](AI_model_Perspective/03_Language_Models/03.1_Statistical_Language_Models.md)
+  - [学习理论](AI_model_Perspective/05_Learning_Theory/05.1_PAC_Learning_Framework.md)
+  - [AI哲学](AI_model_Perspective/07_AI_Philosophy/07.1_Chinese_Room_Argument.md)
 
 ### 5.3 信息论视角
 

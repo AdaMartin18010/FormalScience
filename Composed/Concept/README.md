@@ -1,15 +1,16 @@
 # Concept
 
-## 简介
+`Concept` 是 **Composed** 组合视角知识体系中的概念中枢目录，负责承载跨视角的通用基础概念与理论桥梁。
 
-本目录包含组合概念相关的核心文档，重点阐述Linux操作系统原则在组合系统中的应用。
+## 目录定位
 
-## 文件列表
+- 衔接 `formal_lang_view`（形式语言视角）与 `schedule_formal_view`（调度形式化视角）
+- 提供操作系统原则、组合系统设计等跨领域核心概念
+- 作为进入各专题视角前的概念预习与索引入口
 
-- [LINUX_OS_PRINCIPLES.md](LINUX_OS_PRINCIPLES.md) - Linux操作系统原则
+## 相关导航
 
-## 相关链接
-
-- [上级目录](../README.md)
-- [形式语言视图](../formal_lang_view/README.md)
-- [调度形式化视图](../schedule_formal_view/README.md)
+- [Composed 主索引](../README.md)
+- [形式语言视角](../formal_lang_view/README.md)
+- [调度形式化视角](../schedule_formal_view/README.md)
+- [PetriNet 视角](../PetriNetView/README.md)
