@@ -63,7 +63,12 @@ theorem safe_implies_deadlock_free (state : SystemState n m) :
   -- 矛盾
   have h_exists_can_finish : ∃ i, can_finish state i := by
     cases seq with
-    | nil => sorry
+    | nil =>
+      -- 空序列意味着n=0（否则不可能所有进程都安全完成）
+      -- 对于n=0，Fin 0为空，死锁定义∀ i : Fin 0自动满足，但 waiting_for_resources 也空真
+      -- 严格来说n=0时无死锁，所以这里需要更细致处理
+      -- TODO: 需要补充n=0的边界情况分析
+      sorry
     | cons i rest =>
       use i
       cases h_seq
@@ -71,14 +76,17 @@ theorem safe_implies_deadlock_free (state : SystemState n m) :
   rcases h_exists_can_finish with ⟨i, h_can⟩
   have h_waiting : waiting_for_resources state i := h_all_waiting i
   -- 可以完成与等待矛盾
-  sorry
+  simp [waiting_for_resources] at h_waiting
+  contradiction
 
 /-- 无死锁不一定安全（可能有活锁） -/
 theorem deadlock_free_not_implies_safe :
-  ∃ (state : SystemState n m), 
+  ∃ (state : SystemState n m),
     ¬is_deadlocked state ∧ ¬is_safe_state state := by
   -- 构造例子：系统无死锁但也不安全
-  -- 例如：某些进程可以完成，但不是所有进程都能保证完成
+  -- TODO: 需要显式构造一个状态，其中某些进程可以完成（因此无死锁）
+  -- 但不存在安全序列（因此不安全）
+  -- 这是一个中等难度的存在性证明
   sorry
 
 -- ============================================
@@ -104,8 +112,10 @@ theorem deadlock_iff_cycle (state : SystemState n m) :
   is_deadlocked state ↔ has_cycle state := by
   constructor
   · -- 死锁 → 有环
+    -- TODO: 从死锁定义导出资源分配图存在环
     sorry
   · -- 有环 → 死锁（需要额外条件）
+    -- TODO: 需要额外条件（如每个进程只请求一种资源的一个实例）
     sorry
 
 -- ============================================
@@ -135,7 +145,18 @@ where
       allocation := fun p j => 
         if p = i then state.allocation p j + req j else state.allocation p j,
       available := fun j => state.available j - req j,
-      h_valid := sorry
+      h_valid := by
+        intro p j
+        by_cases h : p = i
+        · simp [h]
+          have h1 := state.h_valid p j
+          have h2 : requested_resources j ≤ need state i j := by sorry
+          have h3 : state.allocation p j + requested_resources j ≤ state.max_demand p j := by
+            simp [need] at h2
+            omega
+          exact h3
+        · simp [h]
+          exact state.h_valid p j
     }
 
 /-- 银行家算法保证系统始终无死锁 -/
@@ -147,6 +168,7 @@ theorem banker_system_deadlock_free (initial_state : SystemState n m)
   -- 基础：初始状态安全，因此无死锁
   -- 归纳：如果当前状态安全，银行家算法只批准保持安全的请求
   -- 因此新状态也安全，从而无死锁
+  -- TODO: 需要对请求序列进行结构归纳，并反复应用banker_maintains_deadlock_free
   sorry
 
 -- ============================================

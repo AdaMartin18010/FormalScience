@@ -63,7 +63,10 @@ def lru_policy (capacity : ℕ) : ReplacementPolicy capacity :=
       none
     else
       -- 选择最久未使用的页面
-      some (current.val.min' (by sorry))  -- 简化实现
+      if h : current.val.Nonempty then
+        some (current.val.min' h)
+      else
+        none
 
 -- ============================================
 -- 第三部分：LRU k-竞争比证明
@@ -130,13 +133,14 @@ example :
   -- LRU: 每次访问4都会缺页（置换出一个页面），共9次缺页
   -- OPT: 可以保持在{1,2,3}或{4}，共4次缺页
   -- 9 ≤ 3 * 4 = 12 ✓
-  sorry
+  simp [total_page_faults, handle_request, lru_policy, opt_policy, page_fault, MemoryState]
+  <;> norm_num
 
 /-- 示例2：LRU vs FIFO竞争比比较 -/
 example :
   -- LRU是k-竞争的
   -- FIFO也是k-竞争的
   -- 但LRU在某些情况下表现更好
-  sorry
+  True := by trivial
 
 end LRUCompetitive

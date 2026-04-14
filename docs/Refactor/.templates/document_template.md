@@ -98,8 +98,8 @@ def example_function():
 
 ### 内部参考
 
-- [相关文档A](../path/to/doc-a.md)
-- [相关文档B](../path/to/doc-b.md)
+- 相关文档A
+- 相关文档B
 
 ### 外部参考
 

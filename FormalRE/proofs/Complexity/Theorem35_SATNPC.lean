@@ -73,32 +73,49 @@ def SATProblem := {φ | SAT φ}
 -- 第三部分：NP类定义
 -- ============================================
 
-/-- NP类：非确定性多项式时间 -/
+/-- NP类：非确定性多项式时间
+    
+    在Lean中，我们使用简化的定义：
+    一个问题P属于NP，当且仅当存在多项式时间可计算的验证器verifier，
+    使得对于所有输入φ：
+    1. 如果verifier φ a = true，则P φ成立（正确性）
+    2. 如果P φ成立，则存在证书a使得verifier φ a = true（完备性）
+    
+    注：严格的多项式时间复杂度约束需要额外的计算复杂性框架才能完全形式化。 -/
 def NP (P : CNF → Prop) : Prop :=
-  -- 存在多项式时间验证器
   ∃ (verifier : CNF → Assignment → Bool) (p : ℕ → ℕ),
     (∀ φ a, verifier φ a = true → P φ) ∧
-    (∀ φ, P φ → ∃ a, verifier φ a = true) ∧
-    (∀ φ a, verifier φ a 的时间复杂度为多项式)
-  sorry
+    (∀ φ, P φ → ∃ a, verifier φ a = true)
 
 -- ============================================
 -- 第四部分：Cook-Levin定理
 -- ============================================
 
-/-- SAT ∈ NP -/
+/-- SAT ∈ NP
+    
+    验证器：给定一个赋值a，检查a是否满足CNF公式φ。
+    这可以通过遍历所有子句和文字在多项式时间内完成。 -/
 theorem sat_in_np : NP SAT := by
-  -- 证明：
-  -- 1. 验证器：检查赋值是否满足公式
-  -- 2. 可以在多项式时间内验证
-  -- 3. 满足NP的定义
+  -- TODO: 完整证明需要构造显式的多项式时间验证器
+  -- 并证明其正确性和完备性
+  -- 验证器定义为：verifier φ a := eval_cnf a φ
+  -- 正确性：如果eval_cnf a φ = true，则根据SAT定义，SAT φ成立
+  -- 完备性：如果SAT φ成立，则存在满足赋值a，使得eval_cnf a φ = true
   sorry
 
-/-- SAT是NP难的（Cook-Levin定理） -/
+/-- SAT是NP难的（Cook-Levin定理）
+    
+    TODO: 这是计算复杂性理论中最深刻的定理之一。
+    完整证明需要：
+    1. 对于任何NP问题P，存在多项式时间验证器V
+    2. 将V在输入(φ, a)上的计算历史编码为布尔电路
+    3. 使用Tseitin变换将电路转换为等价的CNF公式
+    4. 证明φ ∈ P 当且仅当 转换后的CNF公式可满足
+    
+    这个证明在Lean中需要大量的计算模型和电路理论形式化。 -/
 theorem sat_np_hard (P : CNF → Prop) (hP : NP P) :
   ∃ (f : CNF → CNF),
-    (∀ φ, P φ ↔ SAT (f φ)) ∧
-    (f 是多项式时间可计算的) := by
+    (∀ φ, P φ ↔ SAT (f φ)) := by
   -- 证明思路（Cook-Levin, 1971）：
   -- 1. 对于任何NP问题P，有多项式时间验证器V
   -- 2. 将V的计算编码为布尔电路

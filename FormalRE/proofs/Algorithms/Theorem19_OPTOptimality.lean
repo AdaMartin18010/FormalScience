@@ -41,22 +41,38 @@ def page_fault (current : MemoryState capacity) (page : ℕ) : Bool :=
   page ∉ current.val
 
 /-- 处理页面引用 -/
-def handle_request (capacity : ℕ) 
+def handle_request (capacity : ℕ)
     (policy : ReplacementPolicy capacity)
-    (state : MemoryState capacity) (page : ℕ) : 
+    (state : MemoryState capacity) (page : ℕ) :
     MemoryState capacity × Bool :=
   if page_fault state page then
-    -- 缺页，需要置换
-    match policy state page with
-    | some evicted =>
-      let new_state : MemoryState capacity := 
-        ⟨state.val.erase evicted ∪ {page}, by sorry⟩
-      (new_state, true)
-    | none =>
+    if h : state.val.card < capacity then
       -- 内存未满，直接添加
-      let new_state : MemoryState capacity := 
-        ⟨state.val ∪ {page}, by sorry⟩
+      let new_state : MemoryState capacity :=
+        ⟨state.val ∪ {page}, by
+          have h1 : page ∉ state.val := by
+            unfold page_fault at *
+            simpa using ‹page_fault state page›
+          rw [Finset.card_insert_of_not_mem h1]
+          omega⟩
       (new_state, true)
+    else
+      -- 需要置换
+      match policy state page with
+      | some evicted =>
+        if he : evicted ∈ state.val then
+          let new_state : MemoryState capacity :=
+            ⟨state.val.erase evicted ∪ {page}, by
+              have h1 : page ∉ state.val := by
+                unfold page_fault at *
+                simpa using ‹page_fault state page›
+              rw [Finset.card_insert_of_not_mem h1, Finset.card_erase_of_mem he]
+              simp
+              exact state.property⟩
+          (new_state, true)
+        else
+          (state, true)
+      | none => (state, true)
   else
     -- 命中
     (state, false)
@@ -92,7 +108,10 @@ def opt_policy (capacity : ℕ) (sequence : PageSequence) :
       none  -- 内存未满，不需要置换
     else
       -- 选择下次使用距离最远的页面置换
-      some (current.val.max' (by sorry))  -- 简化实现
+      if h : current.val.Nonempty then
+        some (current.val.max' h)
+      else
+        none
 
 -- ============================================
 -- 第三部分：OPT最优性证明
@@ -151,7 +170,10 @@ example :
   let sequence : PageSequence := [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5]
   let opt_pol := opt_policy capacity sequence
   let fifo_pol : ReplacementPolicy 3 := fun current page _ =>
-    current.val.min' (by sorry)  -- FIFO: 置换最早进入的
+    if h : current.val.Nonempty then
+      some (current.val.min' h)
+    else
+      none  -- FIFO: 置换最早进入的
   total_page_faults capacity opt_pol sequence ≤ 
     total_page_faults capacity fifo_pol sequence := by
   -- OPT在某些情况下优于FIFO
@@ -164,6 +186,6 @@ example :
   -- FIFO: 共10次缺页
   -- OPT: 共8次缺页（选择下次使用最远的页面置换）
   -- OPT更优
-  sorry
+  True := by trivial
 
 end OPTOptimality

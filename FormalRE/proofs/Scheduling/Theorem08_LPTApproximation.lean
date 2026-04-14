@@ -189,6 +189,9 @@ example :
   -- LPT分配：机器0: 5+2=7, 机器1: 5+2=7, 机器2: 4+4=8
   -- makespan = 8
   -- 8 / 7.33 ≈ 1.09 ≤ 11/9 ≈ 1.22
+  simp [makespan, machine_load, lpt_assignment]
+  -- 由于opt_makespan涉及下确界，这里用trivial占位
+  -- TODO: 可以通过显式构造调度方案来证明上界
   sorry
 
 /-- 示例2：LPT近似比随m变化 -/

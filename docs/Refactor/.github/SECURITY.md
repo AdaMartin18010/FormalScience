@@ -62,7 +62,7 @@ pip install safety && safety check
 
 ### 贡献者
 
-- 遵循 [安全编码指南](../docs/SECURITY.md#安全最佳实践)
+- 遵循 [安全编码指南](SECURITY.md#安全最佳实践)
 - 提交前运行安全扫描
 - 不在代码中提交密钥或密码
 

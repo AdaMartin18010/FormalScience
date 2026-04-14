@@ -153,7 +153,7 @@ response = requests.post('/api/v2/tasks', json=data)
 
 **手动迁移指南:**
 1. 备份现有配置: `cp config.yaml config.yaml.backup`
-2. 参考 [配置迁移文档](./migration/config-v4.0-to-v4.1.md)
+2. 参考 配置迁移文档
 3. 逐项更新配置项
 4. 验证新配置: `./bin/validate-config config.new.yaml`
 
@@ -257,10 +257,10 @@ curl -X POST https://api.example.com/notifications/subscribe \
 
 | 资源 | 说明 | 链接 |
 |------|------|------|
-| 迁移指南 | 详细的迁移步骤 | [migration-guide.md](./migration/migration-guide.md) |
-| API 对比表 | 新旧 API 对照 | [api-migration.md](./migration/api-migration.md) |
-| 配置映射 | 配置项变更映射 | [config-mapping.md](./migration/config-mapping.md) |
-| 常见问题 | 迁移常见问题解答 | [migration-faq.md](./migration/migration-faq.md) |
+| 迁移指南 | 详细的迁移步骤 | migration-guide.md |
+| API 对比表 | 新旧 API 对照 | api-migration.md |
+| 配置映射 | 配置项变更映射 | config-mapping.md |
+| 常见问题 | 迁移常见问题解答 | migration-faq.md |
 
 ### 工具
 

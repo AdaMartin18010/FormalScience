@@ -33,6 +33,7 @@ structure KnapsackInstance where
   capacity : ℕ                   -- 背包容量
   target_value : ℕ               -- 目标价值
   h_positive : ∀ i, values i > 0 ∧ weights i > 0
+
 deriving Repr
 
 /-- 背包问题判定版本：
@@ -51,6 +52,8 @@ structure SubsetSumInstance where
   n : ℕ
   elements : Fin n → ℕ
   target : ℕ
+  h_positive : ∀ i, elements i > 0
+
 deriving Repr
 
 /-- Subset Sum判定问题 -/
@@ -73,7 +76,7 @@ def subset_sum_to_knapsack (ss_inst : SubsetSumInstance) : KnapsackInstance :=
     weights := ss_inst.elements,
     capacity := ss_inst.target,
     target_value := ss_inst.target,
-    h_positive := by sorry
+    h_positive := ss_inst.h_positive
   }
 
 /-- 归约正确性 -/
@@ -95,7 +98,7 @@ theorem reduction_correct (ss_inst : SubsetSumInstance) :
     use S
     simp [subset_sum_to_knapsack] at h_weight h_value
     -- 由重量约束和价值约束，总和必须等于目标
-    sorry
+    omega
 
 -- ============================================
 -- 第四部分：NP难性和NP完全性
@@ -107,16 +110,28 @@ theorem knapsack_np_hard :
     SubsetSum ss_inst ↔ KnapsackDecision (subset_sum_to_knapsack ss_inst) :=
   reduction_correct
 
-/-- 背包问题属于NP -/
+/-- 背包问题属于NP
+    
+    验证器接收一个候选子集S，检查：
+    1. S ⊆ {0, ..., n-1}
+    2. ∑ weights ≤ capacity
+    3. ∑ values ≥ target_value
+    这个验证可以在多项式时间内完成。 -/
 theorem knapsack_in_np : 
-  -- 存在多项式时间验证器
-  sorry := by
+  ∃ (verifier : ∀ (inst : KnapsackInstance), Finset (Fin inst.n) → Bool),
+    (∀ inst S, verifier inst S = true → KnapsackDecision inst) ∧
+    (∀ inst, KnapsackDecision inst → ∃ S, verifier inst S = true) := by
+  -- TODO: 完整实现需要定义多项式时间验证器
+  -- 在Lean中严格定义多项式时间复杂度需要额外的计算复杂性框架
   sorry
 
 /-- 背包问题是NP完全的 -/
 theorem knapsack_np_complete :
   knapsack_in_np ∧ knapsack_np_hard := by
-  sorry
+  constructor
+  · exact knapsack_in_np
+  · intro ss_inst
+    exact knapsack_np_hard ss_inst
 
 -- ============================================
 -- 第五部分：应用示例

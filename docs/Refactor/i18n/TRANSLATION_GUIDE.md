@@ -137,7 +137,7 @@ def fibonacci(n):
 
 ```markdown
 <!-- 内部链接 - 指向翻译后的文档 -->
-[快速开始](./quick-start.md)
+快速开始
 
 <!-- 外部链接 - 保持不变 -->
 [Markdown Guide](https://www.markdownguide.org/)

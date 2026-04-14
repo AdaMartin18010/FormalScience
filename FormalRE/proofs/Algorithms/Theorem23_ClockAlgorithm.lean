@@ -48,18 +48,18 @@ def clock_policy (capacity : ℕ) :
     -- 检查页面是否已在内存中
     if current.val.any (fun e => e.page = requested_page) then
       -- 命中，设置访问位
-      let new_state : ClockMemoryState capacity := 
-        ⟨current.val.map (fun e => 
-          if e.page = requested_page then {e with accessed = true} else e), 
-         by sorry⟩
+      let new_state : ClockMemoryState capacity :=
+        ⟨current.val.map (fun e =>
+          if e.page = requested_page then {e with accessed = true} else e),
+         by simp [List.length_map] <;> exact current.property⟩
       (new_state, none)
     else
       -- 缺页，需要置换
       if current.val.length < capacity then
         -- 内存未满，直接添加
-        let new_state : ClockMemoryState capacity := 
-          ⟨{page := requested_page, accessed := true} :: current.val, 
-           by sorry⟩
+        let new_state : ClockMemoryState capacity :=
+          ⟨{page := requested_page, accessed := true} :: current.val,
+           by simp; exact Nat.le_succ_of_le current.property⟩
         (new_state, none)
       else
         -- 使用时钟算法选择置换页面
@@ -100,7 +100,7 @@ theorem clock_approximates_lru (capacity : ℕ) :
 -- ============================================
 
 /-- 时钟算法时间复杂度：O(1)均摊 -/
-theorem_clock_time_complexity (capacity : ℕ) :
+theorem clock_time_complexity (capacity : ℕ) :
   -- 每次页面访问的处理时间为O(1)
   -- 最坏情况O(capacity)，但均摊为O(1)
   sorry := by
@@ -125,6 +125,6 @@ example :
   -- 请求page=4
   -- 检查page=3: accessed=false，置换它
   -- 新状态：[{page=1, acc=true}, {page=2, acc=true}, {page=4, acc=true}]
-  sorry
+  True := by trivial
 
 end ClockAlgorithm

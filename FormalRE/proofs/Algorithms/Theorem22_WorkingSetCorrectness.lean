@@ -58,11 +58,14 @@ def working_set_policy (Δ : WindowSize) (capacity : ℕ) :
       -- 找出不在工作集中的页面进行置换
       let ws := working_set sequence current_pos Δ
       let evict_candidates := current.val \ ws
-      if evict_candidates.Nonempty then
-        some (evict_candidates.min' (by sorry))
+      if h : evict_candidates.Nonempty then
+        some (evict_candidates.min' h)
       else
         -- 所有页面都在工作集中，使用LRU
-        some (current.val.min' (by sorry))
+        if h2 : current.val.Nonempty then
+          some (current.val.min' h2)
+        else
+          none
 where
   ReplacementPolicy (capacity : ℕ) := 
     ∀ (current : {s : Finset ℕ // s.card ≤ capacity}) (requested_page : ℕ)
@@ -76,8 +79,16 @@ where
 lemma working_set_monotone (sequence : PageSequence) (current_pos : ℕ)
     (Δ1 Δ2 : WindowSize) (h : Δ1 ≤ Δ2) :
   working_set sequence current_pos Δ1 ⊆ working_set sequence current_pos Δ2 := by
-  -- 更大的窗口包含更多页面
-  sorry
+  unfold working_set
+  intro x hx
+  simp at hx ⊢
+  rcases hx with ⟨i, hi1, hi2, hi3⟩
+  use i
+  constructor
+  · exact hi1
+  constructor
+  · omega
+  · exact hi3
 
 /-- 工作集大小的界限 -/
 theorem working_set_size_bound (sequence : PageSequence) (current_pos : ℕ)
@@ -85,9 +96,16 @@ theorem working_set_size_bound (sequence : PageSequence) (current_pos : ℕ)
   working_set_size sequence current_pos Δ ≤ n := by
   -- 工作集大小不超过总页面数
   unfold working_set_size working_set
-  have h : (List.toFinset (List.take (current_pos - max 0 (current_pos - Δ)) 
+  have h : (List.toFinset (List.take (current_pos - max 0 (current_pos - Δ))
     (List.drop (max 0 (current_pos - Δ)) sequence))).card ≤ sequence.toFinset.card := by
-    sorry
+    apply Finset.card_le_card
+    intro x hx
+    simp at hx ⊢
+    rcases hx with ⟨i, hi1, hi2, hi3⟩
+    use i
+    constructor
+    · omega
+    · exact hi3
   linarith [hn, h]
 
 -- ============================================
@@ -131,7 +149,10 @@ example :
   -- 窗口包含位置2,3,4的页面：[3, 1, 2]
   -- 工作集 = {1, 2, 3} 修正：[4]之前是3,1,2
   -- 实际：位置5引用的是4，窗口是[3,1,2]（位置2,3,4）
-  -- 工作集 = {1, 2, 3}
-  sorry
+  -- working_set sequence 5 3 = {1, 2, 4}
+  unfold working_set
+  simp [max_eq_left, max_eq_right]
+  <;> norm_num
+  <;> rfl
 
 end WorkingSetCorrectness

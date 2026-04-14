@@ -291,4 +291,4 @@ json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 
 - [官方文档](https://docs.example.com)
 - [API 参考](https://api.example.com/docs)
-- [最佳实践指南](../best-practices.md)
+- 最佳实践指南

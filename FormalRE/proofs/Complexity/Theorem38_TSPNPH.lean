@@ -106,7 +106,27 @@ def hamiltonian_to_tsp {V : Type} (g : Graph V) : TSPInstance V :=
       · norm_num
   }
 
-/-- 归约正确性 -/
+/-- 归约正确性
+
+    TODO: 完整证明需要以下两个方向的详细论证：
+    
+    正向（哈密顿回路 → TSP）：
+    - 如果p是哈密顿回路，则p中每条边都在原图g中
+    - 因此hamiltonian_to_tsp中每条边的距离为1
+    - p.length = |V| + 1，所以求和项数为|V|
+    - 总距离 = |V| × 1 = |V| ≤ |V|，满足TSP约束
+    
+    反向（TSP → 哈密顿回路）：
+    - 如果存在TSP路径p，距离和 ≤ |V|
+    - p.tail.toFinset = g.vertices 意味着p访问了所有|V|个顶点
+    - 因此p至少有|V|条边（从起点出发并回到起点，经过所有顶点）
+    - 每条边距离 ≥ 1（由h_positive），所以总和 ≥ 边数
+    - 总和 ≤ |V| 且 边数 ≥ |V| 意味着：
+      * 恰好有|V|条边，即p.length = |V| + 1
+      * 每条边距离恰好为1，即所有边都在g中
+    - 因此p是哈密顿回路
+    
+    这个证明的Lean形式化需要大量关于列表、有限集和求和的引理。 -/
 theorem reduction_correct {V : Type} (g : Graph V)
     (h_finite : g.vertices.Finite) :
   HamiltonianCycle g ↔ TSP (hamiltonian_to_tsp g) g.vertices.card := by
@@ -162,11 +182,41 @@ example :
       (⟨2, by simp⟩, ⟨3, by simp⟩), (⟨3, by simp⟩, ⟨2, by simp⟩),
       (⟨3, by simp⟩, ⟨0, by simp⟩), (⟨0, by simp⟩, ⟨3, by simp⟩)
     },
-    h_undirected := by sorry,
-    h_no_self_loop := by sorry
+    h_undirected := by
+      intro u v h
+      simp at h
+      rcases h with (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩)
+      all_goals simp,
+    h_no_self_loop := by
+      intro v
+      simp
+      fin_cases v
+      all_goals simp
   }
   -- 存在哈密顿回路：0 → 1 → 2 → 3 → 0
   HamiltonianCycle g := by
-  sorry
+  use [⟨0, by simp⟩, ⟨1, by simp⟩, ⟨2, by simp⟩, ⟨3, by simp⟩, ⟨0, by simp⟩]
+  constructor
+  · -- is_valid_path
+    simp [is_valid_path, List.Chain']
+    constructor
+    · norm_num
+    · constructor
+      · intro v hv
+        simp at hv ⊢
+        rcases hv with (rfl | rfl | rfl | rfl | rfl)
+        all_goals simp
+      · -- Chain'
+        repeat { constructor }
+        all_goals simp
+  constructor
+  · -- p.length = g.vertices.card + 1
+    norm_num
+  constructor
+  · -- p.head! = p.getLast!
+    simp
+  · -- p.tail.toFinset = g.vertices
+    simp
+    rfl
 
 end TSPNPH

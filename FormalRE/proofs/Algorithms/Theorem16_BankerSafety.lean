@@ -89,6 +89,10 @@ lemma safe_sequence_completion (state : SystemState n m)
       exact h_can
     | inr h_mem =>
       -- 需要证明：如果i在rest中，则它也可以在原始状态下完成
+      -- 由于i在rest中，根据归纳假设，i可以在release_resources后的状态下完成
+      -- 但这是原始状态，需要转换
+      -- TODO: 这个引理的完整证明需要更精细的序列分析
+      -- 在这里我们先承认它（属于中等难度证明）
       sorry
 
 /-- 安全状态不会进入死锁
@@ -100,9 +104,22 @@ theorem safe_state_no_deadlock (state : SystemState n m) :
   rcases h_safe with ⟨seq, h_seq⟩
   -- 安全状态意味着至少有一个进程可以完成
   cases seq with
-  | nil => 
-    -- 空序列意味着没有进程，矛盾
-    sorry
+  | nil =>
+    -- 空序列意味着没有进程
+    -- 但如果有0个进程，死锁定义中的∀ i : Fin n要求n=0，此时空真
+    -- 对于n>0，空序列不可能存在（因为SafeSequence nil只在n=0时自然成立）
+    -- 需要利用h_seq的类型来导出矛盾
+    have hn : n = 0 := by
+      cases h_seq
+      -- SafeSequence nil成立时，空列表是安全的
+      -- 但这本身不直接给出n=0
+      -- 我们可以从h_deadlock推断：如果所有进程都在等待，则n不可能为0
+      -- 这是一个矛盾
+      sorry
+    -- 如果n=0，h_deadlock中∀ i : Fin 0是空真，¬can_finish不可能成立
+    -- 因为Fin 0是空类型
+    have h_contra := h_deadlock ⟨0, by omega⟩
+    exact Fin.elim0 ⟨0, by omega⟩
   | cons i rest =>
     -- 序列中的第一个进程可以完成
     have h_can : can_finish state i := by
@@ -119,8 +136,23 @@ theorem safe_state_progress (state : SystemState n m) :
   intro h_safe
   rcases h_safe with ⟨seq, h_seq⟩
   cases seq with
-  | nil => 
-    -- 空安全序列：所有进程都已完成
+  | nil =>
+    -- 空安全序列：意味着没有进程需要执行
+    -- 此时任何进程都不存在（或n=0），我们可以选择任意Fin n元素
+    -- 但空序列实际上意味着所有进程都已完成，因此不存在可以完成的进程
+    -- 这是一个边界情况。对于非空进程集，安全序列不可能为空
+    have h_nonempty : n > 0 := by
+      by_contra h
+      push_neg at h
+      have : n = 0 := by omega
+      -- n=0时，不存在任何进程，与h_safe的构造无关
+      sorry
+    -- 实际上，如果n>0，空安全序列不可能存在
+    -- 这里我们简化处理：对于n>0，空序列导致矛盾
+    -- TODO: 需要更严格的 Fin 0 处理
+    use ⟨0, by omega⟩
+    cases h_seq
+    -- 此处需要证明空序列蕴含所有进程可以完成（在n=0时显然）
     sorry
   | cons i rest =>
     -- 第一个进程可以完成
@@ -202,6 +234,18 @@ example :
   -- 或更标准的 <P1, P3, P4, P2, P0>
   use [1, 3, 4, 0, 2]
   -- 验证每个进程都可以完成
-  sorry
+  -- P1可以完成：need = (1,2,2) ≤ available = (3,3,2)
+  -- P1完成后释放资源，available = (5,3,2)
+  -- P3可以完成：need = (0,1,1) ≤ (5,3,2)
+  -- P3完成后，available = (7,4,3)
+  -- P4可以完成：need = (4,3,1) ≤ (7,4,3)
+  -- P4完成后，available = (7,4,5)
+  -- P0可以完成：need = (7,4,3) ≤ (7,4,5)
+  -- P0完成后，available = (7,5,5)
+  -- P2可以完成：need = (6,0,0) ≤ (7,5,5)
+  simp [SafeSequence, can_finish, need, release_resources]
+  <;> norm_num
+  <;> simp [SafeSequence, can_finish, need, release_resources]
+  <;> norm_num
 
 end BankerSafety

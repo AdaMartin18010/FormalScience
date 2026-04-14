@@ -99,7 +99,7 @@ def reduce_to_scheduling (inst : ThreePartitionInstance) : SchedulingInstance :=
         m * B + (m - 1)  -- 公共截止时间
       else
         let j := i.val - 3 * m + 1
-        j * (B + 1)
+        j * (B + 1) + 1  -- 分隔任务截止时间 = 释放时间 + 处理时间
   }
 
 -- ============================================
@@ -114,11 +114,12 @@ lemma forward_direction (tp_inst : ThreePartitionInstance) :
   rcases tp_solution with ⟨partition, h_card, h_disjoint, h_cover, h_sum⟩
   -- 构造调度方案
   let inst := reduce_to_scheduling tp_inst
+  -- TODO: Proof requires detailed schedule construction from 3-Partition
   -- 按照3-Partition的解构造调度
   use (fun i =>
     if i.val < 3 * tp_inst.m then
       -- 元素任务：根据所属分区确定开始时间
-      0  -- 简化实现
+      0  -- 简化实现（实际应根据分区索引计算）
     else
       let j := i.val - 3 * tp_inst.m + 1
       j * (tp_inst.B + 1))
@@ -129,7 +130,8 @@ lemma forward_direction (tp_inst : ThreePartitionInstance) :
     · simp [is_feasible, reduce_to_scheduling, h]
     · simp [is_feasible, reduce_to_scheduling, h]
   · -- 证明最大延迟 ≤ 0
-    sorry  -- 需要详细计算完成时间
+    -- TODO: Proof requires detailed timing analysis with correct schedule construction
+    sorry
 
 /-- 关键引理：调度实例有解 → 3-Partition有解 -/
 lemma backward_direction (tp_inst : ThreePartitionInstance) :
@@ -141,10 +143,81 @@ lemma backward_direction (tp_inst : ThreePartitionInstance) :
   let inst := reduce_to_scheduling tp_inst
   -- 分隔任务强制在固定时间执行，将调度划分为m个区间
   have separator_constraint : ∀ (j : Fin (tp_inst.m - 1)),
-    σ ⟨3 * tp_inst.m + j.val, by sorry⟩ = (j.val + 1) * (tp_inst.B + 1) := by
-    sorry  -- 由释放时间和截止时间相等推导
+    σ ⟨3 * tp_inst.m + j.val, by
+      have h1 : tp_inst.m > 0 := by
+        by_contra h
+        push_neg at h
+        have h0 : tp_inst.m = 0 := by omega
+        have h_empty : 3 * tp_inst.m = 0 := by rw [h0]; simp
+        have h_sum0 : Finset.univ.sum tp_inst.elements = 0 := by
+          rw [tp_inst.total_sum, h0]
+          simp
+        have h_contra : ∃ i, tp_inst.elements i > 0 := by
+          have : tp_inst.B > 0 := by
+            by_contra hB
+            push_neg at hB
+            have hB0 : tp_inst.B = 0 := by omega
+            have h_bound := tp_inst.element_bound₁ 0
+            rw [hB0] at h_bound
+            norm_num at h_bound
+          use 0
+          have h_bound := tp_inst.element_bound₁ 0
+          omega
+        rcases h_contra with ⟨i, hi⟩
+        have h_zero : tp_inst.elements i = 0 := by
+          have : Finset.univ.sum tp_inst.elements = 0 := h_sum0
+          have : tp_inst.elements i ≤ Finset.univ.sum tp_inst.elements := by
+            apply Finset.single_le_sum
+            · intro j _
+              exact Nat.zero_le _
+            · exact Finset.mem_univ i
+          omega
+        omega
+      have : j.val < tp_inst.m - 1 := j.2
+      omega
+    ⟩ = (j.val + 1) * (tp_inst.B + 1) := by
+    intro j
+    let i : Fin inst.n := ⟨3 * tp_inst.m + j.val, by
+      have h1 : tp_inst.m > 0 := by
+        by_contra h
+        push_neg at h
+        have h0 : tp_inst.m = 0 := by omega
+        have h_sum0 : Finset.univ.sum tp_inst.elements = 0 := by
+          rw [tp_inst.total_sum, h0]
+          simp
+        have h_contra : ∃ i, tp_inst.elements i > 0 := by
+          have : tp_inst.B > 0 := by
+            by_contra hB
+            push_neg at hB
+            have hB0 : tp_inst.B = 0 := by omega
+            have h_bound := tp_inst.element_bound₁ 0
+            rw [hB0] at h_bound
+            norm_num at h_bound
+          use 0
+          have h_bound := tp_inst.element_bound₁ 0
+          omega
+        rcases h_contra with ⟨i, hi⟩
+        have h_zero : tp_inst.elements i = 0 := by
+          have : Finset.univ.sum tp_inst.elements = 0 := h_sum0
+          have : tp_inst.elements i ≤ Finset.univ.sum tp_inst.elements := by
+            apply Finset.single_le_sum
+            · intro k _
+              exact Nat.zero_le _
+            · exact Finset.mem_univ i
+          omega
+        omega
+      have : j.val < tp_inst.m - 1 := j.2
+      omega
+    ⟩
+    have h_feas : σ i ≥ inst.release_times i := h_feasible i
+    have h_lateness_i : lateness inst σ i ≤ max_lateness inst σ := by
+      apply Finset.le_sup (Finset.mem_univ i)
+    have h_lateness_i' : lateness inst σ i ≤ 0 := by linarith [h_lateness_i, h_lateness]
+    simp [lateness, completion_time, reduce_to_scheduling] at h_feas h_lateness_i'
+    omega
   -- 每个区间长度为B，必须恰好包含3个元素任务
   -- 由此构造3-Partition的解
+  -- TODO: Proof requires detailed combinatorial analysis of task placement in each slot
   sorry
 
 -- ============================================

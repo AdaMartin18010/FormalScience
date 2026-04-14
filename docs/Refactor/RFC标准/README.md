@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-本文档集是FormalScience项目的核心组成部分，全面映射了计算机网络领域的13个核心RFC标准。
+本文档集是FormalScience项目的核心组成部分，全面映射了计算机网络领域的14个核心RFC标准。
 每个文档均按照统一结构编写，包含协议概述、详细说明、报文格式、状态机、安全性考虑、教材对标、实现示例和现代应用等内容。
 
 ---
@@ -32,6 +32,7 @@
 | [RFC1034-RFC1035-DNS.md](RFC1034-RFC1035-DNS.md) | RFC 1034/1035 | Domain Name System | 886 | DNS架构、报文格式、解析过程 |
 | [RFC2616-RFC7230-HTTP.md](RFC2616-RFC7230-HTTP.md) | RFC 2616/7230 | Hypertext Transfer Protocol | 1085 | HTTP/1.1协议、方法、状态码 |
 | [RFC7540-HTTP2.md](RFC7540-HTTP2.md) | RFC 7540 | HTTP/2 | 962 | 二进制分帧、多路复用、HPACK |
+| [RFC8446-TLS1.3协议.md](RFC8446-TLS1.3协议.md) | RFC 8446 | TLS 1.3 | ~1200 | 1-RTT握手、0-RTT、HKDF密钥派生、AEAD |
 | [RFC9000-QUIC.md](RFC9000-QUIC.md) | RFC 9000 | QUIC | 891 | QUIC传输、0-RTT、连接迁移 |
 | [RFC9002-TCP性能.md](RFC9002-TCP性能.md) | RFC 9002 | QUIC Loss Detection | 905 | QUIC丢包检测、PTO、拥塞控制 |
 
@@ -100,11 +101,11 @@
 
 ## 统计信息
 
-- **总文档数**: 13
-- **总行数**: 约11,000行
-- **总大小**: 约330KB
-- **覆盖协议**: IP、TCP、UDP、DNS、HTTP、HTTP/2、QUIC、IntServ、DiffServ、ECN
-- **包含算法**: 慢启动、拥塞避免、CUBIC、丢包检测
+- **总文档数**: 14
+- **总行数**: 约12,200行
+- **总大小**: 约360KB
+- **覆盖协议**: IP、TCP、UDP、DNS、HTTP、HTTP/2、TLS 1.3、QUIC、IntServ、DiffServ、ECN
+- **包含算法**: 慢启动、拥塞避免、CUBIC、丢包检测、HKDF密钥派生
 
 ---
 

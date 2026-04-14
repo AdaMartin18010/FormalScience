@@ -86,12 +86,32 @@ lemma partition_iff_makespan (inst : PartitionInstance) :
     -- 证明两台机器的负载都等于目标和
     have load_0 : machine_load (reduce_to_scheduling inst) assign 0 = partition_target inst := by
       simp [machine_load, assign, partition_target, reduce_to_scheduling]
-      sorry  -- 使用Partition的性质
+      have h_total : Finset.univ.sum inst.elements = 2 * (S.sum inst.elements) := by
+        have h2 : (Finset.univ \ S).sum inst.elements = S.sum inst.elements := by linarith [h_eq]
+        have h3 : Finset.univ.sum inst.elements = S.sum inst.elements + (Finset.univ \ S).sum inst.elements := by
+          rw [Finset.sum_sdiff (Finset.subset_univ S)]
+        rw [h2] at h3
+        linarith
+      rw [← Nat.mul_div_cancel_left (S.sum inst.elements) (by norm_num)]
+      rw [← h_total]
+      rw [Finset.sum_filter]
+      simp
     have load_1 : machine_load (reduce_to_scheduling inst) assign 1 = partition_target inst := by
       simp [machine_load, assign, partition_target, reduce_to_scheduling]
-      sorry  -- 使用Partition的性质
+      have h_total : Finset.univ.sum inst.elements = 2 * ((Finset.univ \ S).sum inst.elements) := by
+        have h2 : (Finset.univ \ S).sum inst.elements = S.sum inst.elements := by linarith [h_eq]
+        have h3 : Finset.univ.sum inst.elements = S.sum inst.elements + (Finset.univ \ S).sum inst.elements := by
+          rw [Finset.sum_sdiff (Finset.subset_univ S)]
+        rw [← h2] at h3
+        linarith
+      rw [← Nat.mul_div_cancel_left ((Finset.univ \ S).sum inst.elements) (by norm_num)]
+      rw [← h_total]
+      rw [Finset.sum_filter]
+      simp [Finset.mem_sdiff]
+      all_goals omega
     -- 完工时间是两台机器负载的最大值
     simp [makespan, load_0, load_1]
+    all_goals omega
   · -- (<=) 方向：调度存在 => Partition有解
     intro h
     rcases h with ⟨assign, h_makespan⟩
@@ -99,8 +119,38 @@ lemma partition_iff_makespan (inst : PartitionInstance) :
     let S : Finset (Fin inst.n) := Finset.univ.filter (fun i => assign i = 0)
     use S
     -- 证明两个子集的和相等
-    -- 由完工时间约束推导
-    sorry
+    have h0 : machine_load (reduce_to_scheduling inst) assign 0 = S.sum inst.elements := by
+      simp [machine_load, reduce_to_scheduling, S]
+      rw [Finset.sum_filter]
+      simp
+    have h1 : machine_load (reduce_to_scheduling inst) assign 1 = (Finset.univ \ S).sum inst.elements := by
+      simp [machine_load, reduce_to_scheduling, S]
+      rw [Finset.sum_filter]
+      simp [Finset.mem_sdiff]
+      all_goals omega
+    have h_sum : machine_load (reduce_to_scheduling inst) assign 0 + 
+      machine_load (reduce_to_scheduling inst) assign 1 = Finset.univ.sum inst.elements := by
+      rw [h0, h1]
+      rw [← Finset.sum_sdiff (Finset.subset_univ S)]
+    have h_max0 : machine_load (reduce_to_scheduling inst) assign 0 ≤ partition_target inst := by
+      have h : makespan (reduce_to_scheduling inst) assign ≤ partition_target inst := h_makespan
+      simp [makespan] at h
+      have h2 : machine_load (reduce_to_scheduling inst) assign 0 ≤ 
+        Finset.univ.sup (machine_load (reduce_to_scheduling inst) assign) := by
+        apply Finset.le_sup (Finset.mem_univ 0)
+      linarith
+    have h_max1 : machine_load (reduce_to_scheduling inst) assign 1 ≤ partition_target inst := by
+      have h : makespan (reduce_to_scheduling inst) assign ≤ partition_target inst := h_makespan
+      simp [makespan] at h
+      have h2 : machine_load (reduce_to_scheduling inst) assign 1 ≤ 
+        Finset.univ.sup (machine_load (reduce_to_scheduling inst) assign) := by
+        apply Finset.le_sup (Finset.mem_univ 1)
+      linarith
+    have h_eq0 : S.sum inst.elements = partition_target inst := by
+      omega
+    have h_eq1 : (Finset.univ \ S).sum inst.elements = partition_target inst := by
+      omega
+    linarith [h_eq0, h_eq1]
 
 -- ============================================
 -- 第五部分：主定理

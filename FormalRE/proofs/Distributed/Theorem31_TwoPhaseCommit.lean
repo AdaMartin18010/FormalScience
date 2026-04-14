@@ -96,15 +96,20 @@ def atomicity (participants : List Participant) : Prop :=
 
 /-- 两阶段提交原子性定理 -/
 theorem two_phase_commit_atomicity (coordinator : Coordinator)
-    (participants : List Participant)
-    (h_protocol : coordinator.state = CoordinatorState.finished) :
-  atomicity participants := by
-  -- 证明：
-  -- 1. 协调者根据所有参与者的投票做出决定
-  -- 2. 只有当所有参与者同意时才提交
-  -- 3. 否则中止
-  -- 4. 所有参与者收到相同决定并执行
-  sorry
+    (participants : List Participant) :
+  atomicity (phase2_decide coordinator participants).2 := by
+  simp [atomicity, phase2_decide]
+  split_ifs with h
+  · left
+    intro p hp
+    simp at hp ⊢
+    rcases hp with ⟨q, hq, rfl⟩
+    simp
+  · right
+    intro p hp
+    simp at hp ⊢
+    rcases hp with ⟨q, hq, rfl⟩
+    simp
 
 /-- 一致的决定：所有参与者达成相同的决定 -/
 def uniform_decision (coordinator : Coordinator)
@@ -116,10 +121,12 @@ def uniform_decision (coordinator : Coordinator)
 
 /-- 一致决定定理 -/
 theorem two_phase_commit_uniform (coordinator : Coordinator)
-    (participants : List Participant)
-    (h_protocol : coordinator.state = CoordinatorState.finished) :
-  uniform_decision coordinator participants := by
-  sorry
+    (participants : List Participant) :
+  uniform_decision (phase2_decide coordinator participants).1 (phase2_decide coordinator participants).2 := by
+  simp [uniform_decision, phase2_decide]
+  split_ifs with h
+  · simp
+  · simp
 
 -- ============================================
 -- 第五部分：应用示例
@@ -138,6 +145,6 @@ example :
   -- 所有参与者同意，最终都提交
   final_coord.decision = some true ∧
   ∀ p ∈ final_parts, p.state = ParticipantState.committed := by
-  sorry
+  simp [phase1_vote, phase2_decide]
 
 end TwoPhaseCommit

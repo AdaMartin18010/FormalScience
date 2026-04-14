@@ -159,7 +159,7 @@
 
 ### 前置知识
 
-- [01系列第3集](../01_getting_started_outline.md) 命题逻辑
+- [01系列第3集](01_getting_started_outline.md) 命题逻辑
 
 ---
 
@@ -346,7 +346,7 @@
 
 ### 前置知识
 
-- [01系列第4集](../01_getting_started_outline.md) 一阶逻辑
+- [01系列第4集](01_getting_started_outline.md) 一阶逻辑
 - 第6集：等式与重写
 
 ---
@@ -394,7 +394,7 @@
 
 ### 前置知识
 
-- [01系列第7集](../01_getting_started_outline.md) 归纳数据结构
+- [01系列第7集](01_getting_started_outline.md) 归纳数据结构
 
 ---
 

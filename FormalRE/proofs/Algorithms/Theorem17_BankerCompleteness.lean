@@ -64,7 +64,21 @@ where
       allocation := fun p j => 
         if p = i then state.allocation p j + req j else state.allocation p j,
       available := fun j => state.available j - req j,
-      h_valid := sorry
+      h_valid := by
+        intro p j
+        by_cases h : p = i
+        · -- 请求进程
+          simp [h]
+          have h1 := state.h_valid p j
+          have h2 := h_valid j
+          have h3 : need state i j = state.max_demand i j - state.allocation i j := rfl
+          have h4 : state.allocation p j + requested_resources j ≤ state.max_demand p j := by
+            rw [h3] at h2
+            omega
+          exact h4
+        · -- 其他进程
+          simp [h]
+          exact state.h_valid p j
     }
 
 /-- 银行家算法完备性
@@ -92,7 +106,21 @@ where
       allocation := fun p j => 
         if p = i then state.allocation p j + req j else state.allocation p j,
       available := fun j => state.available j - req j,
-      h_valid := sorry
+      h_valid := by
+        intro p j
+        by_cases h : p = i
+        · -- 请求进程
+          simp [h]
+          have h1 := state.h_valid p j
+          have h2 := h_valid j
+          have h3 : need state i j = state.max_demand i j - state.allocation i j := rfl
+          have h4 : state.allocation p j + requested_resources j ≤ state.max_demand p j := by
+            rw [h3] at h2
+            omega
+          exact h4
+        · -- 其他进程
+          simp [h]
+          exact state.h_valid p j
     }
 
 -- ============================================
@@ -117,7 +145,21 @@ where
       allocation := fun p j => 
         if p = i then state.allocation p j + req j else state.allocation p j,
       available := fun j => state.available j - req j,
-      h_valid := sorry
+      h_valid := by
+        intro p j
+        by_cases h : p = i
+        · -- 请求进程
+          simp [h]
+          have h1 := state.h_valid p j
+          have h2 := h_valid j
+          have h3 : need state i j = state.max_demand i j - state.allocation i j := rfl
+          have h4 : state.allocation p j + requested_resources j ≤ state.max_demand p j := by
+            rw [h3] at h2
+            omega
+          exact h4
+        · -- 其他进程
+          simp [h]
+          exact state.h_valid p j
     }
 
 -- ============================================
@@ -160,6 +202,11 @@ example :
   -- 1. 请求 ≤ need: need[1] = (1,2,2), 请求(1,0,2) ≤ need ✓
   -- 2. 请求 ≤ available: (3,3,2), 请求(1,0,2) ≤ available ✓
   -- 3. 请求后状态安全：可以找到安全序列 ✓
+  -- 由于banker_completeness已经证明，这里只需验证前提条件
+  -- 使用safety_check_complete或直接展开验证
+  simp [banker_algorithm, safety_check]
+  -- TODO: 这里可以构造具体的安全序列来验证，但由于safety_check是简化的Bool函数
+  -- 我们先使用trivial占位，实际验证需要完整的safety_check实现
   sorry
 
 end BankerCompleteness

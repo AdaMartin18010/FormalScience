@@ -188,6 +188,9 @@ example :
   -- 下界1: max(3+2, 1+4) = 5
   -- 下界2: max(3+1, 2+4) = 6
   -- 因此opt ≥ 6
+  simp [opt_makespan, makespan, machine_constraint, job_constraint]
+  -- 由于涉及下确界，这里用trivial占位
+  -- TODO: 需要显式证明任何可行调度的makespan都≥6
   sorry
 
 end OpenShopComplexity

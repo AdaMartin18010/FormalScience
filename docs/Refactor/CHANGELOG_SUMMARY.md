@@ -133,7 +133,7 @@
 ### 贡献者
 1. 了解 [版本命名规范](CONTRIBUTING.md)
 2. 关注 [v4.1.0 计划](CHANGELOG.md#未来计划)
-3. 参与 [讨论区](../.github/DISCUSSIONS.md)
+3. 参与 讨论区
 
 ---
 

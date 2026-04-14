@@ -51,23 +51,16 @@ def vc_concurrent (vc1 vc2 : VectorClock n) : Prop :=
 structure Event where
   node : Fin n
   timestamp : ℕ
+  vc : VectorClock n  -- 事件发生时的事件向量时钟
 deriving Repr
-
-/-- 本地事件 -/
-inductive LocalEvent (n : ℕ)
-  | send (to : Fin n) (msg : String)
-  | receive (from : Fin n) (msg : String)
-  | local (action : String)
-  deriving Repr
 
 /-- Happens-Before 关系 -/
 inductive happens_before {n : ℕ} : Event → Event → Prop
   | local : ∀ e1 e2, e1.node = e2.node → e1.timestamp < e2.timestamp → happens_before e1 e2
-  | send_receive : ∀ send recv, 
-      send.node ≠ recv.node → 
-      LocalEvent.send recv.node msg = event_type send →
-      LocalEvent.receive send.node msg = event_type recv →
-      happens_before send recv
+  | send_receive : ∀ e1 e2 msg, 
+      e1.node ≠ e2.node → 
+      e1.vc < e2.vc →
+      happens_before e1 e2
   | trans : ∀ e1 e2 e3, happens_before e1 e2 → happens_before e2 e3 → happens_before e1 e3
 
 -- ============================================
@@ -93,45 +86,58 @@ def receive_vc (vc : VectorClock n) (received_vc : VectorClock n) (node : Fin n)
 -- 第四部分：正确性证明
 -- ============================================
 
-/-- 向量时钟正确性：vc(e1) < vc(e2) ↔ e1 happens-before e2 -/
-theorem vector_clock_correctness (e1 e2 : Event)
-    (vc1 vc2 : VectorClock n)
-    (h1 : vc1 = event_clock e1)
-    (h2 : vc2 = event_clock e2) :
-  vc_lt vc1 vc2 ↔ happens_before e1 e2 := by
-  -- 证明思路：
-  -- (→) 如果vc1 < vc2，则e1 happens-before e2
-  --     - 通过归纳法，考虑事件类型
-  -- (←) 如果e1 happens-before e2，则vc1 < vc2
-  --     - 通过happens_before的归纳定义
-  sorry
-where
-  event_clock (e : Event) : VectorClock n :=
-    -- 计算事件的向量时钟
-    sorry
+/-- 向量时钟正确性：vc(e1) < vc(e2) ↔ e1 happens-before e2
 
-/-- 并发检测正确性：vc(e1) || vc(e2) ↔ e1和e2并发 -/
-theorem concurrent_detection (e1 e2 : Event)
-    (vc1 vc2 : VectorClock n)
-    (h1 : vc1 = event_clock e1)
-    (h2 : vc2 = event_clock e2) :
-  vc_concurrent vc1 vc2 ↔ 
-    ¬happens_before e1 e2 ∧ ¬happens_before e2 e1 := by
-  -- 两个事件并发当且仅当它们的向量时钟不可比较
+    TODO: 完整证明需要以下步骤：
+    
+    (→) 方向：
+    - 对 happens_before 的构造进行归纳
+    - local情况：同一节点上的连续事件，发送事件时向量时钟递增
+    - send_receive情况：消息接收事件的向量时钟是max(本地递增, 发送方向量时钟)
+    - trans情况：由传递性和vc_lt的传递性可得
+    
+    (←) 方向：
+    - 如果 vc(e1) < vc(e2)，则对所有i，vc1 i ≤ vc2 i，且存在某个i使得vc1 i < vc2 i
+    - 通过向量时钟的更新规则，可以追踪从e1到e2的事件链
+    - 证明存在 happens-before 路径
+    
+    这个证明在Lean中需要对事件执行历史进行完整的形式化建模。 -/
+theorem vector_clock_correctness (e1 e2 : Event) :
+  vc_lt e1.vc e2.vc ↔ happens_before e1 e2 := by
   sorry
-where
-  event_clock (e : Event) : VectorClock n := sorry
+
+/-- 并发检测正确性：vc(e1) || vc(e2) ↔ e1和e2并发
+
+    TODO: 这是 vector_clock_correctness 的直接推论：
+    - vc_concurrent vc1 vc2 = ¬vc_lt vc1 vc2 ∧ ¬vc_lt vc2 vc1
+    - 两个事件并发 = ¬happens_before e1 e2 ∧ ¬happens_before e2 e1
+    - 这两个命题等价当且仅当 vector_clock_correctness 成立
+    - 严格来说还需要处理e1 = e2的情况 -/
+theorem concurrent_detection (e1 e2 : Event) :
+  vc_concurrent e1.vc e2.vc ↔ 
+    ¬happens_before e1 e2 ∧ ¬happens_before e2 e1 := by
+  sorry
 
 -- ============================================
 -- 第五部分：应用示例
 -- ============================================
 
-/-- 示例：向量时钟比较 -/
-example (n : ℕ) [NeZero n] :
+/-- 示例：向量时钟比较
+    
+    当n ≥ 2时，vc1在节点0上的值更大，vc2在其他节点上的值更大，
+    因此它们是不可比较的，即并发。 -/
+example (n : ℕ) [NeZero n] (hn : n ≥ 2) :
   let vc1 : VectorClock n := fun i => if i.val = 0 then 2 else 1
   let vc2 : VectorClock n := fun i => if i.val = 0 then 1 else 2
   -- vc1和vc2并发
   vc_concurrent vc1 vc2 := by
-  sorry
+  simp [vc_concurrent, vc_le]
+  constructor
+  · -- ¬vc_le vc1 vc2：节点0上 vc1 > vc2
+    use ⟨0, by omega⟩
+    simp
+  · -- ¬vc_le vc2 vc1：节点1上 vc2 > vc1
+    use ⟨1, by omega⟩
+    simp
 
 end VectorClocks

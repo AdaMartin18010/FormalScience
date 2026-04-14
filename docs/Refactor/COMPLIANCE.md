@@ -337,7 +337,7 @@ Copyright (c) 2026 FormalScience Contributors
 
 ## 相关文档
 
-- [LICENSE](../LICENSE)
+- LICENSE
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [SECURITY.md](SECURITY.md)
 - [PRIVACY.md](PRIVACY.md)

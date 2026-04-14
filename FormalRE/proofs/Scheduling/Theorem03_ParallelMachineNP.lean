@@ -105,10 +105,19 @@ lemma machine_load_complement (inst : PartitionInstance)
   Finset.univ.sum inst.elements := by
   simp [machine_load, reduce_to_scheduling]
   -- 两个机器的负载之和等于所有任务处理时间之和
-  have : (Finset.univ.filter (fun i => assign i = 0)).disjUnion
-         (Finset.univ.filter (fun i => assign i = 1)) (by sorry) = Finset.univ := by
-    sorry
-  sorry
+  have h_disj : Disjoint (Finset.univ.filter (fun i => assign i = 0))
+                         (Finset.univ.filter (fun i => assign i = 1)) := by
+    rw [Finset.disjoint_filter]
+    intro i _ h0 h1
+    rw [h0] at h1
+    contradiction
+  have h_union : (Finset.univ.filter (fun i => assign i = 0)).disjUnion
+                 (Finset.univ.filter (fun i => assign i = 1)) h_disj = Finset.univ := by
+    ext i
+    simp
+    -- assign i 是 0 或 1
+    fin_cases assign i <;> tauto
+  rw [Finset.sum_disjUnion h_disj, h_union]
 
 /-- 关键引理：Partition有解 ↔ 完工时间 ≤ 总和/2 -/
 lemma partition_iff_makespan (inst : PartitionInstance) :
@@ -127,22 +136,61 @@ lemma partition_iff_makespan (inst : PartitionInstance) :
     have load_0 : machine_load (reduce_to_scheduling inst) assign 0 = partition_target inst := by
       simp [machine_load, assign, partition_target, reduce_to_scheduling]
       -- 机器0的负载 = S中元素的和
-      have : (Finset.univ.filter (fun i => 
+      have : (Finset.univ.filter (fun i =>
         (if i ∈ S then 0 else 1) = 0)).sum inst.elements = S.sum inst.elements := by
-        sorry
+        have h_eq : Finset.univ.filter (fun i => (if i ∈ S then 0 else 1 : Fin 2) = 0) = S := by
+          ext i
+          simp
+          -- 利用 S ⊆ univ
+          tauto
+        rw [h_eq]
       rw [this]
-      -- S的和等于目标和
-      sorry
+      -- S的和等于目标和：由 partition 定义，S.sum = (univ \ S).sum
+      -- 且 partition_target = univ.sum / 2
+      have h_total : Finset.univ.sum inst.elements = 2 * partition_target inst := by
+        simp [partition_target]
+        -- 需要证明 sum = 2 * (sum / 2)
+        -- 这要求 sum 是偶数。由 h_eq 知 S.sum = (univ \ S).sum
+        -- 所以 sum = S.sum + (univ \ S).sum = 2 * S.sum
+        have h_even : S.sum inst.elements = (Finset.univ \ S).sum inst.elements := h_eq
+        have h_sum : Finset.univ.sum inst.elements = S.sum inst.elements + (Finset.univ \ S).sum inst.elements := by
+          rw [←Finset.sum_sdiff (Finset.subset_univ S)]
+          simp
+        rw [h_even] at h_sum
+        omega
+      have h_eq2 : S.sum inst.elements = partition_target inst := by
+        have h1 : S.sum inst.elements = (Finset.univ \ S).sum inst.elements := h_eq
+        have h2 : S.sum inst.elements + (Finset.univ \ S).sum inst.elements = 2 * partition_target inst := by
+          linarith [h_total]
+        omega
+      exact h_eq2
     
     have load_1 : machine_load (reduce_to_scheduling inst) assign 1 = partition_target inst := by
       simp [machine_load, assign, partition_target, reduce_to_scheduling]
       -- 机器1的负载 = 非S元素的和
-      have : (Finset.univ.filter (fun i => 
+      have : (Finset.univ.filter (fun i =>
         (if i ∈ S then 0 else 1) = 1)).sum inst.elements = (Finset.univ \ S).sum inst.elements := by
-        sorry
+        have h_eq : Finset.univ.filter (fun i => (if i ∈ S then 0 else 1 : Fin 2) = 1) = Finset.univ \ S := by
+          ext i
+          simp
+          tauto
+        rw [h_eq]
       rw [this]
       -- 非S的和等于S的和（由partition定义）
-      sorry
+      have h_total : Finset.univ.sum inst.elements = 2 * partition_target inst := by
+        simp [partition_target]
+        have h_even : S.sum inst.elements = (Finset.univ \ S).sum inst.elements := h_eq
+        have h_sum : Finset.univ.sum inst.elements = S.sum inst.elements + (Finset.univ \ S).sum inst.elements := by
+          rw [←Finset.sum_sdiff (Finset.subset_univ S)]
+          simp
+        rw [h_even] at h_sum
+        omega
+      have h_eq2 : (Finset.univ \ S).sum inst.elements = partition_target inst := by
+        have h1 : S.sum inst.elements = (Finset.univ \ S).sum inst.elements := h_eq
+        have h2 : S.sum inst.elements + (Finset.univ \ S).sum inst.elements = 2 * partition_target inst := by
+          linarith [h_total]
+        omega
+      exact h_eq2
     
     -- 完工时间是两台机器负载的最大值
     simp [makespan, load_0, load_1]
@@ -157,11 +205,21 @@ lemma partition_iff_makespan (inst : PartitionInstance) :
     -- 证明两个子集的和相等
     have load_0 : machine_load (reduce_to_scheduling inst) assign 0 = S.sum inst.elements := by
       simp [machine_load, S, reduce_to_scheduling]
-      sorry
-    
+      -- 机器0的负载 = {i | assign i = 0}.sum = S.sum
+      have h_eq : Finset.univ.filter (fun i => assign i = 0) = S := by
+        ext i
+        simp [S]
+      rw [h_eq]
+
     have load_1 : machine_load (reduce_to_scheduling inst) assign 1 = (Finset.univ \ S).sum inst.elements := by
       simp [machine_load, S, reduce_to_scheduling]
-      sorry
+      -- 机器1的负载 = {i | assign i = 1}.sum = (univ \ S).sum
+      have h_eq : Finset.univ.filter (fun i => assign i = 1) = Finset.univ \ S := by
+        ext i
+        simp [S]
+        -- assign i 是 0 或 1
+        fin_cases assign i <;> tauto
+      rw [h_eq]
     
     -- 由完工时间约束推导
     have h_max : max (machine_load (reduce_to_scheduling inst) assign 0) 
@@ -169,15 +227,42 @@ lemma partition_iff_makespan (inst : PartitionInstance) :
       exact h_makespan
     
     -- 利用负载之和等于总和
-    have h_sum : machine_load (reduce_to_scheduling inst) assign 0 + 
-                 machine_load (reduce_to_scheduling inst) assign 1 = 
+    have h_sum : machine_load (reduce_to_scheduling inst) assign 0 +
+                 machine_load (reduce_to_scheduling inst) assign 1 =
                  2 * partition_target inst := by
       rw [machine_load_complement inst assign]
       simp [partition_target]
-      sorry
-    
+      -- 需要证明 sum = 2 * (sum / 2)
+      -- 由 h_max: a ≤ T, b ≤ T, 且 a + b = S_total
+      -- 若 S_total 为奇数，则 2T < S_total，矛盾
+      -- 因此 S_total 必为偶数
+      have h_max0 : machine_load (reduce_to_scheduling inst) assign 0 ≤ partition_target inst := by
+        have : max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) =
+               max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) := rfl
+        have h1 : machine_load (reduce_to_scheduling inst) assign 0 ≤ max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) := by apply le_max_left
+        linarith [h_makespan, h1]
+      have h_max1 : machine_load (reduce_to_scheduling inst) assign 1 ≤ partition_target inst := by
+        have h1 : machine_load (reduce_to_scheduling inst) assign 1 ≤ max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) := by apply le_max_right
+        linarith [h_makespan, h1]
+      have h_total : Finset.univ.sum inst.elements = machine_load (reduce_to_scheduling inst) assign 0 + machine_load (reduce_to_scheduling inst) assign 1 := by
+        rw [←machine_load_complement inst assign]
+      have h_even : Finset.univ.sum inst.elements = 2 * partition_target inst := by
+        omega
+      omega
+
     -- 两个数都不超过目标和，且和为2倍目标和，则必相等
-    sorry
+    have h_eq0 : machine_load (reduce_to_scheduling inst) assign 0 = partition_target inst := by
+      have h_max0 : machine_load (reduce_to_scheduling inst) assign 0 ≤ partition_target inst := by
+        have h1 : machine_load (reduce_to_scheduling inst) assign 0 ≤ max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) := by apply le_max_left
+        linarith [h_makespan, h1]
+      have h_max1 : machine_load (reduce_to_scheduling inst) assign 1 ≤ partition_target inst := by
+        have h1 : machine_load (reduce_to_scheduling inst) assign 1 ≤ max (machine_load (reduce_to_scheduling inst) assign 0) (machine_load (reduce_to_scheduling inst) assign 1) := by apply le_max_right
+        linarith [h_makespan, h1]
+      omega
+    have h_eq1 : machine_load (reduce_to_scheduling inst) assign 1 = partition_target inst := by
+      omega
+    rw [load_0, load_1] at h_eq0 h_eq1
+    exact h_eq0
 
 -- ============================================
 -- 第五部分：主定理
@@ -240,7 +325,8 @@ example :
   have h_partition : partition part_inst := by
     use {⟨1, by simp⟩, ⟨0, by simp⟩}
     simp [Finset.sum]
-    sorry
+    <;> norm_num
+    <;> rfl
   rw [←parallel_machine_np_hard part_inst]
   exact h_partition
 

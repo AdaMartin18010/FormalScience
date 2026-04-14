@@ -35,7 +35,10 @@ def fifo_policy (capacity : ℕ) : ReplacementPolicy capacity :=
       none
     else
       -- 选择最早进入的页面（简化：选择最小的）
-      some (current.val.min' (by sorry))
+      if h : current.val.Nonempty then
+        some (current.val.min' h)
+      else
+        none
 
 -- ============================================
 -- 第二部分：Belady异常定义
@@ -70,7 +73,8 @@ theorem fifo_has_belady_anomaly :
   · -- 证明：
     -- k=3时：9次缺页
     -- k=4时：10次缺页
-    sorry
+    simp [total_page_faults, handle_request, fifo_policy, page_fault, MemoryState]
+    <;> norm_num
 
 /-- 紧性示例：最小的Belady异常 -/
 theorem fifo_belady_tight_example :
@@ -146,6 +150,7 @@ example :
   
   total_page_faults 3 (fifo_policy 3) sequence = 9 ∧
   total_page_faults 4 (fifo_policy 4) sequence = 10 := by
-  sorry
+  simp [total_page_faults, handle_request, fifo_policy, page_fault, MemoryState]
+  <;> norm_num
 
 end FIFOBelady

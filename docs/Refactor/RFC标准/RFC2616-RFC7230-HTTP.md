@@ -684,7 +684,7 @@ class HTTPServer:
         # 精确匹配
         if path in self.routes and method in self.routes[path]:
             try:
-                return self.routes[path][method](request)
+                return self.routes[path]method
             except Exception as e:
                 return HTTPResponse(
                     status=500,
@@ -698,7 +698,7 @@ class HTTPServer:
             if match and method in handlers:
                 try:
                     request.path_params = match.groupdict()
-                    return handlers[method](request)
+                    return handlersmethod
                 except Exception as e:
                     return HTTPResponse(
                         status=500,

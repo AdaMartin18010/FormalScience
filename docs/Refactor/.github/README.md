@@ -18,7 +18,7 @@
 ## 🔗 相关链接
 
 - [docs/Refactor 首页](../README.md)
-- [项目 .github](../../.github/README.md)
+- [项目 .github](README.md)
 
 ---
 

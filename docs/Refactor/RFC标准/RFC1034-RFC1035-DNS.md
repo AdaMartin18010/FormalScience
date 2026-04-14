@@ -872,6 +872,323 @@ if __name__ == "__main__":
 
 ---
 
+## 9. 深度扩展：EDNS0、DNSSEC与DoH/DoT
+
+### 9.1 EDNS0 (RFC 6891) 详解
+
+EDNS0扩展了传统DNS 512字节UDP载荷限制，支持更大的响应包和新选项。
+
+#### 9.1.1 OPT伪资源记录结构
+
+EDNS0通过在Additional节添加一个特殊的OPT记录来协商扩展能力：
+
+```
++-----------------+
+|    NAME         |  单字节 0x00（根域名）
++-----------------+
+|    TYPE         |  0x0029 (41, OPT)
++-----------------+
+|  UDP Payload Size |  发送方支持的UDP载荷上限（如 4096）
++-----------------+
+|  EXTENDED RCODE |  高8位扩展RCODE
++-----------------+
+|  VERSION        |  EDNS版本（当前为0）
++-----------------+
+|    Z            |  DO bit + 保留位
++-----------------+
+|    RDLENGTH     |  选项列表长度
++-----------------+
+|    RDATA        |  选项列表（可为空）
++-----------------+
+```
+
+**关键字段**:
+
+- **UDP Payload Size**: 客户端建议的上限，典型值 1232（避免IPv6分片）或 4096
+- **DO bit (DNSSEC OK)**: Z字段的最高位，置1表示客户端支持并期望DNSSEC记录（RRSIG, DNSKEY）
+- **Extended RCODE**: 与首部RCODE组合支持0-4095的错误码
+
+#### 9.1.2 常见EDNS选项
+
+| 选项代码 | 名称 | 用途 |
+|----------|------|------|
+| 3 | NSID | 返回处理查询的服务器标识 |
+| 8 | ECS (Client Subnet) | CDN根据用户子网返回最优IP |
+| 10 | Padding | 填充报文以防御流量分析 |
+| 15 | Extended DNS Error | 提供更详细的错误信息 |
+
+**Python生成EDNS0查询示例**:
+
+```python
+import struct
+import socket
+
+def build_edns0_query(domain: str, qtype: int = 1, payload_size: int = 4096, dnssec_ok: bool = True):
+    """
+    构建携带EDNS0 OPT记录的标准DNS查询。
+    """
+    # DNS Header
+    flags = 0x0100 | (0x8000 if dnssec_ok else 0)  # RD + DO bit in OPT
+    header = struct.pack('!HHHHHH', 0x1234, 0x0100, 1, 0, 0, 1)
+
+    # Question section
+    question = b''
+    for part in domain.rstrip('.').split('.'):
+        question += bytes([len(part)]) + part.encode()
+    question += b'\x00'  # 根结束
+    question += struct.pack('!HH', qtype, 1)  # Type A, Class IN
+
+    # OPT Pseudo-RR
+    z_field = 0x8000 if dnssec_ok else 0x0000
+    opt_rr = (b'\x00' +           # NAME = root
+              struct.pack('!H', 41) +  # TYPE = OPT
+              struct.pack('!H', payload_size) +  # UDP payload size
+              struct.pack('!BBH', 0, 0, z_field) + # ERcode, Version, Z
+              struct.pack('!H', 0))  # RDLENGTH = 0
+
+    return header + question + opt_rr
+
+# 发送查询
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.settimeout(5)
+sock.sendto(build_edns0_query("example.com"), ("8.8.8.8", 53))
+response = sock.recvfrom(4096)[0]
+print(f"Response length: {len(response)} bytes (supports >512 via EDNS0)")
+```
+
+### 9.2 DNSSEC验证链深度分析
+
+DNSSEC通过数字签名链保证DNS响应的完整性和真实性，从根域开始逐级向下建立信任。
+
+#### 9.2.1 DNSSEC记录类型与作用
+
+| 记录类型 | 作用 | 所在位置 |
+|----------|------|----------|
+| **DNSKEY** | 区域公钥，用于验证RRSIG | 每个启用DNSSEC的区域 |
+| **RRSIG** | 资源记录的数字签名 | 跟随被签名的记录集 |
+| **DS** | 子区域DNSKEY的哈希摘要 | 父区域（建立信任链） |
+| **NSEC/NSEC3** | 安全的否定存在证明 | 区域内 |
+
+#### 9.2.2 完整验证流程（Mermaid）
+
+```mermaid
+flowchart TD
+    A[客户端发起查询: www.example.com A] --> B[递归解析器收到响应]
+    B --> C{响应包含 RRSIG?}
+    C -->|否| D[返回未验证结果]
+    C -->|是| E[获取 example.com DNSKEY]
+    E --> F[用 DNSKEY 验证 www.example.com 的 RRSIG]
+    F --> G{签名有效?}
+    G -->|否| H[返回 SERVFAIL]
+    G -->|是| I[验证 example.com DNSKEY 的真实性]
+    I --> J[向父域 .com 查询 DS 记录]
+    J --> K[对比 DS 哈希与 DNSKEY 哈希]
+    K --> L{匹配?}
+    L -->|否| H
+    L -->|是| M[递归验证 .com DS via Root DNSKEY]
+    M --> N[根 DNSKEY 为信任锚点]
+    N --> O[验证链完整，返回安全结果]
+```
+
+#### 9.2.3 数学原理：ZSK与KSK分离
+
+DNSSEC采用**双密钥策略**以最小化密钥滚动风险：
+
+- **ZSK (Zone Signing Key)**: 用于签名区域内的日常资源记录（RRSIG生成）。
+- **KSK (Key Signing Key)**: 用于签名区域的DNSKEY记录集本身。
+
+**信任链逻辑**:
+$$\text{Validate}(RR_{www}) \rightarrow \text{ZSK}_{example} \rightarrow \text{KSK}_{example} \rightarrow \text{DS}_{example\_in\_com} \rightarrow \text{ZSK}_{com} \rightarrow \text{KSK}_{com} \rightarrow \text{DS}_{com\_in\_root} \rightarrow \text{Trust\ Anchor}$$
+
+**Python验证DNSKEY指纹（DS记录对应算法）**:
+
+```python
+import hashlib
+
+def calculate_ds_digest(dnskey_rdata: bytes, algorithm: int = 2) -> str:
+    """
+    计算DS记录摘要（算法2 = SHA-256）。
+    dnskey_rdata: DNSKEY RDATA (flags, protocol, algorithm, pubkey)
+    """
+    owner_name = b"example.com"  # 需使用规范化的所有者名称
+    # 实际计算需结合 wire-format 域名，此处简化展示核心哈希逻辑
+    data = owner_name + dnskey_rdata
+    if algorithm == 1:
+        return hashlib.sha1(data).hexdigest()
+    elif algorithm == 2:
+        return hashlib.sha256(data).hexdigest()
+    elif algorithm == 4:
+        return hashlib.sha384(data).hexdigest()
+    raise ValueError("Unsupported digest algorithm")
+```
+
+### 9.3 DoH / DoT / DoQ 协议栈与代码
+
+| 协议 | 传输层 | 端口 | 特点 | 延迟开销 |
+|------|--------|------|------|----------|
+| 传统DNS | UDP/TCP | 53 | 明文，快 | 最低 |
+| DoT | TCP + TLS | 853 | 专用端口，OS级封装 | +1-RTT |
+| DoH | HTTPS (TLS over TCP) | 443 | 与Web流量混合，易穿越防火墙 | +1-RTT + HTTP开销 |
+| DoQ | QUIC (UDP) | 853 | 0-RTT复用，抗队头阻塞 | ~0-RTT (session resumption) |
+
+#### 9.3.1 Python DoH查询（使用httpx）
+
+```python
+import base64
+import httpx
+
+def doh_query_json(domain: str, doh_server: str = "https://cloudflare-dns.com/dns-query"):
+    """
+    通过DoH JSON API查询DNS记录（Cloudflare/Google支持）。
+    """
+    params = {"name": domain, "type": "A"}
+    headers = {"accept": "application/dns-json"}
+
+    r = httpx.get(doh_server, params=params, headers=headers, timeout=10.0)
+    r.raise_for_status()
+    return r.json()
+
+# 使用示例
+# result = doh_query_json("example.com")
+# for ans in result.get("Answer", []):
+#     print(f"{ans['name']} -> {ans['data']} (TTL={ans['TTL']})")
+
+def doh_query_wireformat(domain: str, doh_server: str = "https://dns.google/dns-query"):
+    """
+    通过DoH Wire-format (RFC 8484) 发送二进制DNS查询。
+    """
+    import struct, socket
+    # 构建简单A记录查询
+    q = b''
+    for p in domain.rstrip('.').split('.'):
+        q += bytes([len(p)]) + p.encode()
+    q += b'\x00\x00\x01\x00\x01'  # A, IN
+    msg = struct.pack('!HHHHHH', 0xABCD, 0x0100, 1, 0, 0, 0) + q
+
+    r = httpx.post(doh_server, content=msg,
+                   headers={"content-type": "application/dns-message"},
+                   timeout=10.0)
+    return r.content
+```
+
+#### 9.3.2 Python DoT查询（使用ssl套接字）
+
+```python
+import socket
+import ssl
+import struct
+
+def dot_query(domain: str, dot_server: str = "8.8.8.8", port: int = 853):
+    """
+    通过DNS over TLS发送查询。注意：DNS over TCP需在报文前加2字节长度前缀。
+    """
+    context = ssl.create_default_context()
+
+    with socket.create_connection((dot_server, port), timeout=5) as sock:
+        with context.wrap_socket(sock, server_hostname=dot_server) as ssock:
+            # 构建查询
+            q = b''
+            for p in domain.rstrip('.').split('.'):
+                q += bytes([len(p)]) + p.encode()
+            q += b'\x00\x00\x01\x00\x01'
+            msg = struct.pack('!HHHHHH', 0xABCD, 0x0100, 1, 0, 0, 0) + q
+
+            # TCP前缀 + 发送
+            ssock.sendall(struct.pack('!H', len(msg)) + msg)
+
+            # 读取长度前缀
+            len_prefix = ssock.recv(2)
+            resp_len = struct.unpack('!H', len_prefix)[0]
+            response = ssock.recv(resp_len)
+            return response
+```
+
+### 9.4 递归解析器缓存数学模型
+
+DNS解析器的性能很大程度上取决于缓存命中率。递归解析器通常采用**LRU (Least Recently Used)** 或 **TTL-aware** 缓存策略。
+
+#### 9.4.1 缓存命中率估算
+
+假设域名的流行度服从Zipf分布（齐普夫定律），排名第 $i$ 的域名被查询的概率为：
+
+$$P(i) = \frac{C}{i^s}$$
+
+其中 $s \approx 0.8-1.2$（典型DNS流量），$C$ 为归一化常数。
+
+对于缓存容量为 $M$ 的解析器，缓存命中率近似为：
+
+$$H(M) \approx \sum_{i=1}^{M} P(i) = \frac{\sum_{i=1}^{M} i^{-s}}{\sum_{i=1}^{N} i^{-s}}$$
+
+当 $N \gg M$ 时，对于 $s=1$：
+
+$$H(M) \approx \frac{\ln M + \gamma}{\ln N + \gamma}$$
+
+**实际观测值**:
+
+- 大型企业/ISP递归解析器（缓存容量数百万条）：缓存命中率 **85% - 95%**
+- 小型本地解析器：命中率 **50% - 75%**
+
+#### 9.4.2 TTL与缓存一致性权衡
+
+| TTL策略 | 优点 | 缺点 |
+|---------|------|------|
+| 严格遵循权威TTL | 一致性强 | 缓存失效快，命中低 |
+| 固定上限（如24h） | 减少重复查询 | 故障切换延迟大 |
+| 预取（Pre-fetch） | 在TTL到期前刷新 | 增加后台流量 |
+
+---
+
+## 10. DNS性能基准与工具
+
+### 10.1 公共DNS解析延迟对比
+
+以下数据来自全球多节点平均测量（2025年参考值）：
+
+| 服务商 | IPv4地址 | UDP53 平均延迟 | DoH 平均延迟 | DoT 平均延迟 | 备注 |
+|--------|----------|----------------|--------------|--------------|------|
+| Google DNS | 8.8.8.8 | 12 ms | 35 ms | 38 ms | 全球Anycast |
+| Cloudflare | 1.1.1.1 | 8 ms | 28 ms | 30 ms | 低延迟领先 |
+| Quad9 | 9.9.9.9 | 15 ms | 40 ms | 42 ms | 内置恶意域名过滤 |
+| Alibaba DNS | 223.5.5.5 | 6 ms (Asia) | 22 ms | 25 ms | 国内优化 |
+
+### 10.2 常用分析命令
+
+```bash
+# 使用dig查看完整DNS响应和EDNS0信息
+dig +dnssec +nocmd +multiline example.com A
+
+# 追踪完整解析链（迭代查询）
+dig +trace example.com
+
+# 强制使用TCP查询
+dig +tcp example.com A
+
+# 测试DoH (使用curl)
+curl -H "accept: application/dns-json" \
+     "https://cloudflare-dns.com/dns-query?name=example.com&type=A"
+
+# 使用kdig测试DoT
+kdig +tls @8.8.8.8 example.com
+```
+
+### 10.3 Wireshark过滤表达式
+
+```text
+# 过滤DNS协议（UDP 53 和 TCP 53）
+dns
+
+# 过滤包含DNSSEC记录的查询（DO bit置位）
+dns.flags.opcode == 0 && dns.opt.type == 41 && dns.opt.do == 1
+
+# 过滤DoT流量（TLS over port 853）
+tls && tcp.port == 853
+
+# 过滤DoH流量（HTTPS到已知DoH服务器IP）
+http2 && (ip.addr == 1.1.1.1 || ip.addr == 8.8.8.8)
+```
+
+---
+
 ## 参考文献
 
 1. Mockapetris, P. "Domain Names - Concepts and Facilities." RFC 1034, November 1987.

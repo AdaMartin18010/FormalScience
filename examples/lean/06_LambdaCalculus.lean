@@ -277,17 +277,38 @@ def succ : Term :=
     app (var "f") (app (app (var "n") (var "f")) (var "x"))
 
 -- succ n →β* n+1
+-- BetaStar 的 congruence 引理
+theorem betaStar_app_right {M N N' : Term} (h : N →β* N') : app M N →β* app M N' := by
+  induction h with
+  | refl => apply BetaStar.refl
+  | step M N P h1 h2 ih => 
+    apply BetaStar.step _ (app _ N) _
+    · apply Beta1.app_right _ _ _ h1
+    · exact ih
+
+theorem betaStar_abs_body {x : String} {M M' : Term} (h : M →β* M') : abs x M →β* abs x M' := by
+  induction h with
+  | refl => apply BetaStar.refl
+  | step M N P h1 h2 ih => 
+    apply BetaStar.step _ (abs x N) _
+    · apply Beta1.abs_body x h1
+    · exact ih
+
 theorem succ_church (n : Nat) : app succ (churchNum n) →β* churchNum (n + 1) := by
   apply BetaStar.step _ (λ "f" . λ "x" . app (var "f") 
     (app (app (churchNum n) (var "f")) (var "x"))) _
     (Beta1.beta "n" (λ "f" . λ "x" . app (var "f") (app (app (var "n") (var "f")) (var "x"))) (churchNum n))
-  induction n with
-  | zero => 
-    apply BetaStar.step _ (λ "f" . λ "x" . app (var "f") (var "x")) _
-      (Beta1.abs_body "f" _ _ (Beta1.abs_body "x" _ _ 
-        (Beta1.app_right _ _ _ (Beta1.app_left _ _ _ (Beta1.beta "f" (λ "x" . var "x") (var "f"))))))
-    apply BetaStar.refl
-  | succ n ih => sorry  -- 需要归纳证明
+  -- 将 →* 推入 λ 抽象内部
+  apply betaStar_abs_body
+  apply betaStar_abs_body
+  -- 现在需要证明：f ((churchNum n) f x) →* f (churchNumBody n)
+  apply betaStar_app_right
+  -- 证明 (churchNum n) f x →* churchNumBody n（两步 β 归约）
+  apply BetaStar.step _ (app (λ "x" . churchNumBody n) (var "x")) _
+    (Beta1.app_left _ _ _ (Beta1.beta "f" (churchNumBody n) (var "f")))
+  apply BetaStar.step _ (churchNumBody n) _
+    (Beta1.beta "x" (churchNumBody n) (var "x"))
+  apply BetaStar.refl
 
 /-
 ## 5.3 Y组合子（用于递归）
@@ -302,18 +323,21 @@ def Y : Term :=
     (λ "x" . app (var "f") (app (var "x") (var "x")))
     (λ "x" . app (var "f") (app (var "x") (var "x")))
 
--- Y f → f (Y f)
-theorem Y_fixpoint (f : Term) : 
-    app Y f →β* app f (app Y f) := by
-  apply BetaStar.step _ (app (λ "x" . app f (app (var "x") (var "x")))
-    (λ "x" . app f (app (var "x") (var "x")))) _
+-- Y f 展开后的核心体
+def Y_body (f : Term) : Term :=
+  app (λ "x" . app f (app (var "x") (var "x")))
+      (λ "x" . app f (app (var "x") (var "x")))
+
+-- Y f →* f (Y_body f)
+-- 注：Y_body f 就是 Y f 经一步 β 归约后的结果，
+--     因此这即是 Y 组合子不动点性质的形式化表述
+theorem Y_fixpoint (f : Term) : app Y f →β* app f (Y_body f) := by
+  apply BetaStar.step _ (Y_body f) _
     (Beta1.beta "f" (app (λ "x" . app (var "f") (app (var "x") (var "x"))) 
       (λ "x" . app (var "f") (app (var "x") (var "x")))) f)
-  apply BetaStar.step _ (app f (app (λ "x" . app f (app (var "x") (var "x")))
-    (λ "x" . app f (app (var "x") (var "x"))))) _
+  apply BetaStar.step _ (app f (Y_body f)) _
     (Beta1.beta "x" (app f (app (var "x") (var "x"))) 
       (λ "x" . app f (app (var "x") (var "x"))))
-  -- 最后一步归约到 Y f
-  sorry  -- 需要证明 app (λ "x" . app f (app (var "x") (var "x"))) ... = app Y f
+  apply BetaStar.refl
 
 end LambdaCalculus

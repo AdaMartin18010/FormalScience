@@ -130,9 +130,9 @@ lemma active_tasks_demand_bound (tasks : List Task) (resources : List Resource)
     (σ : FeasibleSchedule tasks resources) (time : Time) :
   let active_set := {t : Task | t ∈ tasks ∧ is_active t σ.schedule time}
   active_set.sum (fun t => t.processing_time) ≤ total_resource_capacity resources time := by
-  -- 证明思路：资源独占性意味着活跃任务数不超过资源数
-  -- 每个活跃任务需要单位时间处理时间
-  sorry  -- 详细证明需要测度论和集合论工具
+  -- TODO: Proof requires model refinement (active_set.sum on Set Task needs finiteness,
+  -- and the bound should relate number of active tasks to capacity, not sum of processing times)
+  sorry
 
 /-- 必要性：可行调度存在 → 资源条件满足 -/
 theorem feasibility_implies_condition (tasks : List Task) (resources : List Resource)
@@ -140,10 +140,8 @@ theorem feasibility_implies_condition (tasks : List Task) (resources : List Reso
   schedulability_condition tasks resources H := by
   intro t ht
   unfold schedulability_condition total_resource_demand cumulative_supply
-  -- 步骤1：将积分内的比较转化为逐点比较
-  -- 步骤2：使用活跃任务需求引理
-  -- 步骤3：应用积分单调性
-  sorry  -- 需要测度论积分理论
+  -- TODO: Proof requires measure-theoretic integration and careful demand analysis
+  sorry
 
 -- ============================================
 -- 第五部分：充分性证明（构造性）
@@ -156,7 +154,8 @@ def edf_order (t1 t2 : Task) : Bool := t1.deadline ≤ t2.deadline
 noncomputable def greedy_edf_schedule (tasks : List Task) (resources : List Resource) : Schedule :=
   -- 按截止时间排序任务
   let sorted_tasks := tasks.mergeSort (fun t1 t2 => t1.deadline ≤ t2.deadline)
-  -- 迭代构造调度（简化实现）
+  -- TODO: 需要实现真正的EDF调度构造算法
+  -- 当前为占位实现
   fun id => some (0, 0)
 
 /-- 关键引理：EDF保持资源约束 -/
@@ -164,19 +163,23 @@ lemma edf_maintains_constraints (tasks : List Task) (resources : List Resource)
     (H : Time) (h : schedulability_condition tasks resources H) :
   let σ := greedy_edf_schedule tasks resources
   resource_exclusivity tasks σ resources := by
+  -- TODO: Proof requires proper EDF schedule construction
   sorry
 
 /-- 充分性：资源条件满足 → 可行调度存在 -/
 theorem condition_implies_feasibility (tasks : List Task) (resources : List Resource)
     (H : Time) (h : schedulability_condition tasks resources H) :
   Nonempty (FeasibleSchedule tasks resources) := by
-  -- 构造性证明：使用EDF算法
+  -- TODO: 需要实现真正的EDF调度构造才能完整证明
+  -- 当前保留sorry作为占位
   let σ := greedy_edf_schedule tasks resources
-  -- 验证所有约束
   have h1 : resource_exclusivity tasks σ resources := edf_maintains_constraints tasks resources H h
-  have h2 : release_time_constraint tasks σ := by sorry
-  have h3 : deadline_constraint tasks σ := by sorry
-  -- 构建FeasibleSchedule实例
+  have h2 : release_time_constraint tasks σ := by
+    -- TODO: Proof requires proper schedule construction
+    sorry
+  have h3 : deadline_constraint tasks σ := by
+    -- TODO: Proof requires proper schedule construction
+    sorry
   exact ⟨σ, h1, h2, h3⟩
 
 -- ============================================
@@ -220,24 +223,42 @@ example : ∃ (tasks : List Task) (resources : List Resource),
   }
   use [task1, task2]
   use [resource]
-  -- 验证条件满足
-  have h : schedulability_condition [task1, task2] [resource] 5 := by
-    unfold schedulability_condition total_resource_demand cumulative_supply
-    intro t ht
-    simp [resource_demand, total_resource_capacity]
-    -- 分情况讨论
-    by_cases h1 : t < 2
-    · -- 0 ≤ t < 2: 只有task1活跃
+  -- 直接构造可行调度
+  let σ : Schedule := fun id =>
+    if id = 1 then some (0, 1)
+    else if id = 2 then some (2, 1)
+    else none
+  have h_excl : resource_exclusivity [task1, task2] σ [resource] := by
+    intro time r hr
+    simp [σ, resource_exclusivity, is_active, assigned_resource] at *
+    rcases hr with rfl
+    simp
+    by_cases h1 : 0 ≤ time ∧ time < 2
+    · -- task1 活跃
       simp [h1]
-      linarith
-    · -- t ≥ 2
-      by_cases h2 : t < 4
-      · -- 2 ≤ t < 4: task1和task2都活跃
-        simp [h1, h2]
+      by_cases h2 : 2 ≤ time ∧ time < 3
+      · -- task2 也活跃（但不可能，因为 time < 2 和 time ≥ 2 矛盾）
+        exfalso
         linarith
-      · -- t ≥ 4
-        simp [h1, h2]
-        linarith
-  exact condition_implies_feasibility [task1, task2] [resource] 5 h
+      · -- 只有 task1 活跃
+        simp [h2]
+    · -- task1 不活跃
+      simp [h1]
+      by_cases h2 : 2 ≤ time ∧ time < 3
+      · -- task2 活跃
+        simp [h2]
+      · -- 都不活跃
+        simp [h2]
+  have h_release : release_time_constraint [task1, task2] σ := by
+    intro t ht
+    simp [σ] at *
+    rcases ht with rfl | rfl
+    all_goals norm_num
+  have h_deadline : deadline_constraint [task1, task2] σ := by
+    intro t ht
+    simp [σ] at *
+    rcases ht with rfl | rfl
+    all_goals norm_num
+  exact ⟨{ schedule := σ, exclusivity := h_excl, release_constraint := h_release, deadline_constraint := h_deadline }⟩
 
 end SchedulingExistence

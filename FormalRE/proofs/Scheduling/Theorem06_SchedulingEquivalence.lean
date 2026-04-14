@@ -226,7 +226,6 @@ example (m : ℕ) (hm : m > 0) :
   let P_parallel := {machine := MachineEnvironment.parallel, constraints := [Constraint.pmtn], objective := Objective.C_max}
   let P_single := {machine := MachineEnvironment.single, constraints := [Constraint.pmtn], objective := Objective.C_max}
   polynomial_reduction P_parallel P_single := by
-  intro m hm
   exact parallel_to_single_reduction m hm
 
 end SchedulingEquivalence

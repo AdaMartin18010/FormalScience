@@ -135,6 +135,7 @@ example :
   -- 请求12字节，分配到16字节slab
   let (new_allocator, result) := slab_allocate allocator 12
   result ≠ none := by
-  sorry
+  simp [slab_allocate, find_slab]
+  <;> rfl
 
 end SlabAllocator

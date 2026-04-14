@@ -124,6 +124,367 @@ Client                                    Server
 | 拥塞控制 | 内核实现 | 用户空间可配置 |
 | 协议 Ossification | 易受阻 | 加密保护 |
 
+### 2.5 0-RTT 与 1-RTT 握手详细流程
+
+QUIC 将 TLS 1.3 握手封装在 CRYPTO 帧中传输，实现加密与连接的合一。
+
+#### 2.5.1 1-RTT 完整握手
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    Note over C,S: 初始无共享密钥
+    C->>S: Initial [CH (ClientHello)]
+    Note right of S: 生成临时密钥<br>推导 Initial Secret
+    S-->>C: Initial [SH, EE, CERT, CV, FIN]
+    Note left of C: 验证服务器证书<br>推导 Handshake Keys
+    C->>S: Handshake [FIN, 1-RTT [DATA]]
+    Note right of S: 验证客户端 Finished<br>推导 1-RTT Keys
+    S-->>C: Handshake [1-RTT [DATA]]
+    Note over C,S: 应用数据在 1-RTT 阶段即可双向传输
+```
+
+帧与包类型映射：
+
+- `Initial` 包：承载 TLS ClientHello / ServerHello。
+- `Handshake` 包：承载 EncryptedExtensions、Certificate、CertVerify、Finished。
+- `1-RTT` 短首部包：承载应用层 `STREAM` 帧，从客户端第二个航班开始即可携带。
+
+#### 2.5.2 0-RTT 快速恢复握手
+
+0-RTT 要求客户端已缓存前一次连接的 `ticket` 和 `resumption secret`。
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    Note over C,S: 客户端已缓存 PSK + transport params
+    C->>S: Initial [CH (with PSK)]
+    C->>S: 0-RTT [STREAM: early data]
+    Note right of S: 用 PSK 解密 0-RTT<br>推导 Initial/0-RTT keys
+    S-->>C: Initial [SH, EE, FIN]
+    S-->>C: 1-RTT [ACK + 应用响应]
+    Note over C,S: 应用数据在第一个 RTT 内即双向到达
+```
+
+**0-RTT 安全边界**：
+
+- 前向安全性限制：0-RTT 数据受 PSK 保护，若 PSK 泄露则历史 0-RTT 可被解密。
+- 重放风险：中间网络可重放 0-RTT 包，应用层必须保证幂等性（如 GET、幂等 POST）。
+- 服务器可通过 `early_data` 扩展拒绝 0-RTT，回退到 1-RTT。
+
+### 2.6 Connection ID 与连接迁移
+
+QUIC 使用 64 位**连接 ID（Connection ID）**标识逻辑连接，而非传统的四元组（IP + Port）。
+
+#### 2.6.1 Connection ID 结构
+
+| 字段 | 长度 | 说明 |
+|------|------|------|
+| Destination Connection ID (DCID) | 0–2040 bits | 接收方用于查找连接状态 |
+| Source Connection ID (SCID) | 0–2040 bits | 对端在回复时应使用的 DCID |
+
+长首部包同时携带 DCID 与 SCID；进入 1-RTT 后，短首部包仅携带 DCID。
+
+#### 2.6.2 NAT 重绑定（NAT Rebinding）
+
+当客户端经过 NAT 的 IP/端口发生变化时：
+
+1. 客户端继续使用相同的 DCID 发送短首部包。
+2. 服务器根据 DCID 定位到已有连接，发现源地址变化。
+3. 服务器发送 `PATH_CHALLENGE` 帧验证新路径的可达性。
+4. 客户端在新路径回复 `PATH_RESPONSE`。
+5. 验证通过后，数据流无缝继续，无需重新握手。
+
+```mermaid
+sequenceDiagram
+    participant C as Client (新地址)
+    participant S as Server
+    C->>S: 1-RTT [DCID=X, STREAM data]
+    Note right of S: 检测到源地址变化
+    S-->>C: 1-RTT [PATH_CHALLENGE (nonce)]
+    C->>S: 1-RTT [PATH_RESPONSE (nonce)]
+    Note over C,S: 路径验证成功，迁移完成
+```
+
+#### 2.6.3 主动路径迁移（Path Migration）
+
+客户端可显式使用新的本地地址发送包，并在包中通过新的 SCID 通知服务器。迁移遵循**地址验证**与**拥塞控制重置**原则：
+
+- 新路径的拥塞窗口与 RTT 估计独立初始化（防止放大攻击）。
+- 旧路径在一段时间内保持可用（Draining），直到新路径稳定。
+- 若服务器同时迁移，可通过 `NEW_CONNECTION_ID` 帧发布新的 CID。
+
+### 2.7 流多路复用与无队头阻塞
+
+QUIC 在单一连接上支持多条独立流（Stream），每条流拥有自己的发送/接收状态，避免了 TCP 中一条流丢包阻塞其他流的问题。
+
+#### 2.7.1 Stream ID 编码规则
+
+Stream ID 为 62 位可变长度整数，低两位标识流类型：
+
+| 低两位 | 方向 | 发起方 |
+|--------|------|--------|
+| `0x00` | 双向（Bidirectional） | 客户端 |
+| `0x01` | 单向（Unidirectional） | 客户端 |
+| `0x02` | 双向（Bidirectional） | 服务器 |
+| `0x03` | 单向（Unidirectional） | 服务器 |
+
+高 60 位为流序号。例如：
+
+- 客户端首个双向流：`0x00`
+- 服务器首个单向流：`0x03`
+- 客户端第二个双向流：`0x04`
+
+#### 2.7.2 STREAM 帧格式
+
+```
+STREAM Frame {
+  Type (i) = 0x08..0x0f,
+  Stream ID (i),
+  [Offset (i)],      -- 存在当 OFF 位=1
+  [Length (i)],      -- 存在当 LEN 位=1
+  Stream Data (..),
+}
+```
+
+标志位：
+
+- `OFF (0x04)`：存在 Offset 字段，支持乱序递交与缓存。
+- `LEN (0x02)`：显式声明数据长度。
+- `FIN (0x01)`：流结束标志。
+
+#### 2.7.3 流量控制（Flow Control）
+
+QUIC 在两级实施流量控制：
+
+1. **连接级（Connection-level）**：通过 `MAX_DATA` 帧限制整个连接上所有流的发送偏移总量。
+   - 发送方维护 `current_offset`（所有流已发送字节总和）。
+   - 接收方周期性发送 `MAX_DATA` 增加限额。
+
+2. **流级（Stream-level）**：通过 `MAX_STREAM_DATA` 帧限制单条流的最大发送偏移。
+   - 每条流独立维护 `send_offset` 与 `recv_offset`。
+   - 当单条流阻塞时，不影响其他流在该连接上的发送。
+
+```mermaid
+graph LR
+    A[应用数据] --> B{选择流}
+    B --> C[Stream 0]
+    B --> D[Stream 4]
+    B --> E[Stream 8]
+    C --> F[QUIC Packet]
+    D --> F
+    E --> F
+    F --> G[UDP Datagram]
+    G --> H[IP]
+```
+
+由于 QUIC 的 ACK 是**包级别**（Packet-level）但流重组是**独立**的，某条流的丢包只会触发该流相关帧的重传，其他流的数据可立即递交应用层，彻底消除 TCP 的队头阻塞（Head-of-Line Blocking）。
+
+### 2.8 丢包恢复与 ACK 机制
+
+#### 2.8.1 QUIC ACK 与 TCP SACK 的根本差异
+
+| 特性 | TCP SACK | QUIC ACK |
+|------|----------|----------|
+| 确认粒度 | 字节范围（Byte sequence） | 包号范围（Packet number） |
+| 选项空间 | 受 TCP 选项长度限制（40 bytes） | 帧在加密载荷中，空间充足 |
+| 乱序表达 | Left Edge / Right Edge | ACK Range（Gap + Range Length） |
+| ACK Delay | 无显式字段 | 显式 `ACK Delay` 字段，用于 RTT 计算 |
+
+QUIC 的包号严格单调递增（即使重传也是新包号），因此 ACK 只需确认“收到了哪些包号”，而不需要像 TCP 那样处理重传序号重叠的歧义。
+
+**ACK 帧结构**：
+
+```
+ACK Frame {
+  Largest Acknowledged (i),
+  ACK Delay (i),
+  ACK Range Count (i),
+  First ACK Range (i),
+  ACK Range (..) ...,
+  [ECN Counts (..)],
+}
+```
+
+`ACK Range` 以 `(Gap, Range Length)` 对描述不连续接收块，Gap 为当前块与前一个块之间的未确认包数量。
+
+#### 2.8.2 ACK Frequency 帧（RFC 9000 / draft-ietf-quic-ack-frequency）
+
+QUIC 允许接收方通过 `ACK_FREQUENCY` 帧（类型 `0xaf`）动态指示发送方的 ACK 策略：
+
+```
+ACK_FREQUENCY Frame {
+  Sequence Number (i),
+  Ack-Eliciting Threshold (i),
+  Request Max Ack Delay (i),
+}
+```
+
+- **Ack-Eliciting Threshold**：每收到多少包必须发一次 ACK，减少 ACK 频率以降低 CPU 负载。
+- **Request Max Ack Delay**：允许的最大 ACK 延迟（如 25 ms），用于在高带宽场景 batch 多个 ACK。
+- 与 TCP 的延迟 ACK（固定 40 ms 或每 2 段）相比，QUIC 的 ACK 频率是可协商、自适应的。
+
+#### 2.8.3 丢包检测算法
+
+QUIC 丢包检测结合两种机制：
+
+1. **包号阈值（Packet Threshold）**：当某个包号之后已确认 $k$ 个包（默认 $k=3$），判定该包丢失。等价于 TCP 的 3 dup ACK。
+2. **时间阈值（Time Threshold）**：当某个包的发送时间已超过最近一个已确认包发送时间加上 `max(9/8 * SRTT, SRTT + 4 * RTTVAR)`，判定丢失。等价于 TCP RACK-TLP。
+
+伪代码：
+
+```python
+def detect_loss(largest_acked, time_of_last_ack, srtt, rttvar):
+    loss_time = None
+    for pkt in unacked_packets:
+        # Packet threshold
+        if pkt.pn + PACKET_THRESHOLD <= largest_acked:
+            mark_lost(pkt)
+        # Time threshold
+        elif time_of_last_ack > pkt.send_time + max(1.125 * srtt, srtt + 4 * rttvar):
+            loss_time = min(loss_time, pkt.send_time + max(1.125 * srtt, srtt + 4 * rttvar))
+    return loss_time
+```
+
+### 2.9 Python 实践：基于 aioquic 的 HTTP/3 客户端与服务器
+
+以下示例使用 `aioquic` 库构建最小 HTTP/3 服务。安装依赖：
+
+```bash
+pip install aioquic
+```
+
+#### 2.9.1 HTTP/3 服务器（`server.py`）
+
+```python
+import asyncio
+from aioquic.asyncio import serve
+from aioquic.quic.configuration import QuicConfiguration
+from aioquic.h3.connection import H3_ALPN, H3Connection
+from aioquic.h3.events import HeadersReceived
+
+async def handle_http3(reader, writer):
+    quic = writer.get_extra_info("quic")
+    h3 = H3Connection(quic)
+    while True:
+        data = await reader.read(65535)
+        if not data:
+            break
+        for event in h3.receive_data(data):
+            if isinstance(event, HeadersReceived):
+                headers = dict(event.headers)
+                if headers.get(b":method") == b"GET":
+                    h3.send_headers(event.stream_id, [
+                        (b":status", b"200"),
+                        (b"content-type", b"text/plain"),
+                    ])
+                    h3.send_data(event.stream_id, b"Hello from QUIC HTTP/3!", end_stream=True)
+        writer.write(h3.transmit())
+        await writer.drain()
+
+async def main():
+    configuration = QuicConfiguration(
+        alpn_protocols=H3_ALPN,
+        is_client=False,
+        max_datagram_frame_size=65536,
+    )
+    configuration.load_cert_chain("cert.pem", "key.pem")
+    await serve("0.0.0.0", 4433, configuration=configuration, create_protocol=handle_http3)
+    print("HTTP/3 server listening on https://0.0.0.0:4433")
+    await asyncio.Future()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+#### 2.9.2 HTTP/3 客户端（`client.py`）
+
+```python
+import asyncio
+from aioquic.asyncio import connect
+from aioquic.quic.configuration import QuicConfiguration
+from aioquic.h3.connection import H3_ALPN, H3Connection
+from aioquic.h3.events import HeadersReceived, DataReceived
+
+async def main():
+    configuration = QuicConfiguration(
+        alpn_protocols=H3_ALPN,
+        is_client=True,
+        max_datagram_frame_size=65536,
+    )
+    configuration.verify_mode = 0  # 仅用于自签名证书测试
+
+    async with connect("localhost", 4433, configuration=configuration) as (reader, writer):
+        quic = writer.get_extra_info("quic")
+        h3 = H3Connection(quic)
+        stream_id = quic.get_next_available_stream_id()
+        h3.send_headers(stream_id, [
+            (b":method", b"GET"),
+            (b":scheme", b"https"),
+            (b":authority", b"localhost:4433"),
+            (b":path", b"/"),
+        ], end_stream=True)
+        writer.write(h3.transmit())
+        await writer.drain()
+
+        while True:
+            data = await reader.read(65535)
+            if not data:
+                break
+            for event in h3.receive_data(data):
+                if isinstance(event, HeadersReceived):
+                    print("Response headers:", dict(event.headers))
+                elif isinstance(event, DataReceived):
+                    print("Response data:", event.data.decode())
+                    return
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+> **提示**：若使用自签名证书，可通过 OpenSSL 快速生成：`openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 7 -nodes`。
+
+### 2.10 大规模部署数据：QUIC vs TCP+TLS 1.3
+
+#### 2.10.1 Google 全网部署（YouTube / Search）
+
+| 指标 | TCP+TLS 1.3 | QUIC | 提升 |
+|------|-------------|------|------|
+| **握手延迟（中位数）** | 1-RTT (~100 ms) | 0-RTT (~0 ms) | 100% 消除握手等待 |
+| **搜索延迟** | 基准 | -8% | 页面加载更快 |
+| **YouTube 重缓冲率** | 基准 | -9% (桌面) / -18% (移动) | 视频更流畅 |
+| **移动网络吞吐** | 基准 | +7% | 弱网恢复更快 |
+
+数据来源：Google 2017–2020 技术博客与 ACM Queue 论文。
+
+#### 2.10.2 Cloudflare 边缘网络
+
+| 指标 | TCP+TLS 1.3 | QUIC | 备注 |
+|------|-------------|------|------|
+| **0-RTT 恢复比例** | 0% | ~35–50% | 取决于 PSK 缓存命中率 |
+| **连接建立中位数** | 2-3 RTT | 0-1 RTT | 首次访问 1-RTT，回访 0-RTT |
+| **尾延迟 P95** | 基准 | -15% ~ -25% | 高延迟网络收益更大 |
+| **连接迁移成功率** | N/A | >99.9% | Wi-Fi ↔ 蜂窝切换无断连 |
+
+数据来源：Cloudflare Blog "The Road to QUIC" (2021) 及后续年度报告。
+
+#### 2.10.3 Facebook (Meta) 数据中心
+
+在 Facebook 的 CDN 边缘，QUIC 与 TCP+TLS 1.3 的 A/B 测试显示：
+
+- **请求完成时间（TTFB）**：QUIC 比 TCP 快 **10–15%**（尤其在新兴市场）。
+- **连接迁移**：移动端网络切换导致的请求失败率降低 **50%**。
+- **拥塞控制优化**：QUIC BBR 在用户态可快速迭代，相比内核 TCP CUBIC，长尾延迟降低 **20%**。
+
+#### 2.10.4 关键洞察总结
+
+1. **握手收益**：0-RTT 对短连接密集场景（Web 浏览、API 调用）收益最大，可减少 1 个 RTT 的等待。
+2. **队头阻塞消除**：在丢包率较高的移动网络中，QUIC 的多流独立性显著降低页面加载时间。
+3. **连接迁移**：对移动端和长连接应用（视频会议、游戏）至关重要，可无缝切换网络而不重建连接。
+4. **用户态迭代**：拥塞控制与丢包恢复算法可在 QUIC 库中快速更新，无需等待操作系统内核升级周期。
+
 ---
 
 ## 3. 报文格式

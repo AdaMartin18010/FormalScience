@@ -135,6 +135,8 @@ theorem job_shop_complexity (m : ℕ) (hm : m ≥ 2) :
   -- J2||C_max 是强NP难的（对于任意固定的m≥2）
   -- 实际上，J2||C_max是强NP难的（Lenstra & Rinnooy Kan, 1979）
   sorry := by
+  -- TODO: 需要构造从Partition或3-Partition到J2||C_max的多项式时间归约
+  -- 并证明归约的双向正确性
   sorry
 
 /-- 特殊情况的复杂度 -/
@@ -168,7 +170,30 @@ example :
   -- 时间2-6: 作业1在机器1
   -- makespan = 6
   decision_problem inst 6 := by
-  sorry
+  -- 构造调度方案
+  use fun i k =>
+    match i.val, k.val with
+    | 0, 0 => 0 | 0, 1 => 2
+    | 1, 0 => 0 | 1, 1 => 1
+    | _, _ => 0
+  constructor
+  · -- 机器约束
+    simp [machine_constraint, operation_completion]
+    <;> fin_cases i1 <;> fin_cases i2 <;> fin_cases k1 <;> fin_cases k2
+    <;> norm_num
+    <;> tauto
+  constructor
+  · -- 优先约束
+    simp [precedence_constraint, operation_completion]
+    <;> fin_cases i <;> fin_cases k
+    <;> norm_num
+    <;> try { tauto }
+    <;> norm_num
+  · -- makespan ≤ 6
+    simp [makespan, operation_completion]
+    <;> norm_num
+    <;> try { omega }
+    <;> norm_num
 
 end JobShopComplexity
 

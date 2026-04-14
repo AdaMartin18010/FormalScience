@@ -445,7 +445,7 @@
 
 ### 前置知识
 
-- [01系列第3-4集](../01_getting_started_outline.md)
+- [01系列第3-4集](01_getting_started_outline.md)
 - 第6集：依赖类型入门
 
 ---

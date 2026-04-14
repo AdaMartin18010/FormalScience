@@ -199,6 +199,9 @@ example :
   -- 列表调度结果：机器0负载 = 2+1=3, 机器1负载 = 3, 机器2负载 = 4+2=6
   -- makespan = 6
   -- 6 / 4 = 1.5 ≤ 5/3 ≈ 1.67
+  simp [makespan, machine_load, simple_list_scheduling]
+  -- 由于opt_makespan涉及下确界，这里用trivial占位
+  -- TODO: 可以通过显式构造调度方案来证明上界
   sorry
 
 /-- 示例2：不同机器数的近似比 -/

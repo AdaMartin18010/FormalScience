@@ -271,7 +271,7 @@
 
 ### 前置知识
 
-- [04系列第9集](../04_rust_formal_outline.md) 并发程序验证
+- [04系列第9集](04_rust_formal_outline.md) 并发程序验证
 
 ---
 

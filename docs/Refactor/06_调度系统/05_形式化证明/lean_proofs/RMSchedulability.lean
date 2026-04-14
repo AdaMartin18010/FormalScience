@@ -70,18 +70,50 @@ lemma bound_decreasing (n : ℕ) (hn : n > 0) :
   liu_layland_bound (n + 1) < liu_layland_bound n := by
   unfold liu_layland_bound
   simp [hn]
-  -- 使用微积分证明单调递减
-  -- f(n) = n * (2^(1/n) - 1)
-  -- f'(n) < 0 for n ≥ 1
+  -- TODO: Proof requires calculus (showing derivative of x*(2^(1/x)-1) is negative)
   sorry
 
 /-- 渐近极限：当n→∞时，边界→ln(2) -/
 lemma bound_limit :
   Filter.Tendsto (fun n => liu_layland_bound n) Filter.atTop (nhds (Real.log 2)) := by
-  unfold liu_layland_bound
-  -- 使用L'Hopital法则或Taylor展开
-  -- lim_{n→∞} n*(2^(1/n) - 1) = ln(2)
-  sorry
+  have h_eq : ∀ᶠ n in Filter.atTop, liu_layland_bound n = (n : ℝ) * ((2 : ℝ) ^ ((1 : ℝ) / n) - 1) := by
+    filter_upwards [Filter.eventually_gt_atTop 0] with n hn
+    simp [liu_layland_bound, hn]
+  rw [Filter.tendsto_congr' h_eq]
+  have h1 : Filter.Tendsto (fun (n : ℕ) => (1 : ℝ) / n) Filter.atTop (nhdsWithin 0 (Set.Ioi 0)) := by
+    rw [Filter.tendsto_nhdsWithin_iff]
+    constructor
+    · exact tendsto_one_div_atTop_nhds_zero_nat
+    · filter_upwards [Filter.eventually_gt_atTop 0] with n hn
+      positivity
+  have h2 : Filter.Tendsto (fun (t : ℝ) => ((2 : ℝ) ^ t - 1) / t) (nhdsWithin 0 (Set.Ioi 0)) (nhds (Real.log 2)) := by
+    have h3 : Real.log 2 = deriv (fun (x : ℝ) => (2 : ℝ) ^ x) 0 := by
+      rw [Real.deriv_rpow_const]
+      simp
+      all_goals norm_num
+    rw [h3]
+    have h4 : HasDerivAt (fun (x : ℝ) => (2 : ℝ) ^ x) (Real.log 2) 0 := by
+      rw [← h3]
+      apply Real.hasDerivAt_rpow_const
+      all_goals norm_num
+    have h5 : Tendsto (fun (x : ℝ) => ((2 : ℝ) ^ x - (2 : ℝ) ^ 0) / (x - 0)) (𝓝[≠] 0) (nhds (Real.log 2)) := by
+      rw [hasDerivAt_iff_tendsto_slope] at h4
+      simpa using h4
+    have h6 : nhdsWithin 0 (Set.Ioi 0) ≤ 𝓝[≠] 0 := by
+      apply nhdsWithin_le_nhdsWithin
+      · intro x hx
+        simp at hx ⊢
+        exact ne_of_gt hx
+      · simp
+    exact Tendsto.mono_left h5 h6
+  have h_comp : Filter.Tendsto (fun (n : ℕ) => ((2 : ℝ) ^ ((1 : ℝ) / n) - 1) / ((1 : ℝ) / n)) Filter.atTop (nhds (Real.log 2)) := by
+    apply Filter.Tendsto.comp h2 h1
+  have h_eq2 : ∀ᶠ n in Filter.atTop, (n : ℝ) * ((2 : ℝ) ^ ((1 : ℝ) / n) - 1) = ((2 : ℝ) ^ ((1 : ℝ) / n) - 1) / ((1 : ℝ) / n) := by
+    filter_upwards [Filter.eventually_ne_atTop 0] with n hn
+    field_simp
+    all_goals linarith
+  rw [Filter.tendsto_congr' h_eq2]
+  exact h_comp
 
 -- ============================================
 -- 第四部分：主定理证明
@@ -90,7 +122,8 @@ lemma bound_limit :
 /-- 关键引理：临界瞬间分析 -/
 lemma critical_instant (tasks : TaskSet) (i : ℕ) :
   -- 最坏情况响应时间发生在所有高优先级任务同时释放
-  sorry  -- 需要定义释放模式
+  -- TODO: Proof requires release pattern definition
+  sorry
 
 /-- Liu & Layland主定理 -/
 theorem liu_layland_schedulability (tasks : TaskSet) (n : ℕ)
@@ -115,9 +148,58 @@ theorem bound_is_tight (n : ℕ) (hn : n > 0) :
   ∃ (tasks : TaskSet),
     tasks.length = n ∧
     total_utilization tasks = liu_layland_bound n := by
-  -- 构造：所有任务具有相同利用率
-  -- C_i/T_i = 2^(1/n) - 1 for all i
-  sorry
+  let u : ℝ := (2 : ℝ) ^ ((1 : ℝ) / n) - 1
+  let mkTask (i : Fin n) : PeriodicTask := {
+    id := i.val,
+    computation_time := (2 : ℝ) ^ ((i.val : ℝ) / n) * u,
+    period := (2 : ℝ) ^ ((i.val : ℝ) / n),
+    deadline := (2 : ℝ) ^ ((i.val : ℝ) / n),
+    valid := by
+      constructor
+      · -- 0 < computation_time
+        apply mul_pos
+        · positivity
+        · have h1 : (2 : ℝ) ^ ((1 : ℝ) / n) > 1 := by
+            apply Real.one_lt_rpow
+            all_goals linarith
+          linarith
+      constructor
+      · -- computation_time ≤ period
+        simp [u]
+        have h2 : (2 : ℝ) ^ ((1 : ℝ) / n) ≤ (2 : ℝ) := by
+          have h3 : (1 : ℝ) / n ≤ (1 : ℝ) := by
+            have : (n : ℝ) ≥ 1 := by exact_mod_cast hn
+            field_simp
+            nlinarith
+          apply Real.rpow_le_rpow_of_exponent_le
+          · linarith
+          · linarith
+        nlinarith
+      · -- period > 0
+        positivity
+  }
+  let tasks : TaskSet := List.map mkTask (List.finRange n)
+  use tasks
+  constructor
+  · -- tasks.length = n
+    simp [tasks]
+  · -- total_utilization tasks = liu_layland_bound n
+    have h_util : total_utilization tasks = (n : ℝ) * u := by
+      simp [total_utilization, utilization, tasks, mkTask]
+      rw [List.sum_map]
+      have h_eq : ∀ i : Fin n, ((2 : ℝ) ^ ((i.val : ℝ) / n) * u) / ((2 : ℝ) ^ ((i.val : ℝ) / n)) = u := by
+        intro i
+        have h_nonzero : (2 : ℝ) ^ ((i.val : ℝ) / n) ≠ 0 := by positivity
+        field_simp [h_nonzero]
+      simp [h_eq]
+      -- ∑_{i=0}^{n-1} u = n * u
+      induction n with
+      | zero => simp
+      | succ n ih =>
+        simp [List.finRange_succ, ih]
+        ring
+    simp [liu_layland_bound, hn]
+    linarith [h_util]
 
 -- ============================================
 -- 第六部分：应用示例
@@ -136,5 +218,57 @@ example :
   total_utilization tasks ≤ liu_layland_bound 3 := by
   simp [total_utilization, utilization, liu_layland_bound]
   norm_num
+
+/-- EDF优于RM：EDF的利用率边界更高 -/
+theorem edf_superior_to_rm (n : ℕ) (hn : n > 0) :
+  rm_bound n ≤ 1 := by
+  unfold rm_bound
+  have h : n * (2 ^ ((1 : ℝ) / n) - 1) ≤ 1 := by
+    have h1 : (2 : ℝ) ^ ((1 : ℝ) / n) ≤ 1 + (1 : ℝ) / n := by
+      have h2 : Real.log ((2 : ℝ) ^ ((1 : ℝ) / n)) ≤ Real.log (1 + (1 : ℝ) / n) := by
+        apply Real.log_le_log
+        · positivity
+        · have : (1 : ℝ) / n > 0 := by positivity
+          linarith
+      have h3 : Real.log ((2 : ℝ) ^ ((1 : ℝ) / n)) = (1 / n) * Real.log 2 := by
+        rw [Real.log_rpow]
+        all_goals linarith
+      rw [h3] at h2
+      have h4 : Real.log (1 + (1 : ℝ) / n) = (1 / n) * (n * Real.log (1 + (1 : ℝ) / n)) := by
+        field_simp
+        all_goals linarith
+      rw [h4] at h2
+      have h5 : n * Real.log (1 + (1 : ℝ) / n) = Real.log ((1 + (1 : ℝ) / n) ^ n) := by
+        rw [Real.log_pow]
+        ring_nf
+      rw [h5] at h2
+      have h6 : Real.log 2 ≤ Real.log ((1 + (1 : ℝ) / n) ^ n) := by
+        apply Real.log_le_log
+        · linarith
+        · have h7 : (2 : ℝ) ≤ (1 + (1 : ℝ) / n) ^ n := by
+            have h8 : (1 + (1 : ℝ) / n) ^ n ≥ (1 + n * ((1 : ℝ) / n)) := by
+              apply one_add_mul_le_rpow
+              · have : (1 : ℝ) / n ≥ -1 := by positivity
+                linarith
+              · have : (n : ℝ) ≥ 1 := by exact_mod_cast hn
+                linarith
+            have h9 : 1 + n * ((1 : ℝ) / n) = 2 := by
+              field_simp
+              all_goals nlinarith
+            linarith [h8, h9]
+          linarith
+        · positivity
+      have h7 : (1 / n : ℝ) > 0 := by positivity
+      nlinarith
+    have h2 : (n : ℝ) * ((2 : ℝ) ^ ((1 : ℝ) / n) - 1) ≤ (n : ℝ) * ((1 : ℝ) / n) := by
+      apply mul_le_mul_of_nonneg_left
+      · linarith
+      · have : (n : ℝ) ≥ 0 := by exact_mod_cast show 0 ≤ n by omega
+        linarith
+    have h3 : (n : ℝ) * ((1 : ℝ) / n) = 1 := by
+      field_simp
+      all_goals linarith
+    linarith [h2, h3]
+  exact h
 
 end RMSchedulability

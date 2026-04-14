@@ -73,13 +73,14 @@
 在文档中引用截图：
 
 ```markdown
-![描述文字](screenshots/filename.png)
+!描述文字
 *图 X: 图片描述*
 ```
 
 示例：
+
 ```markdown
-![主界面截图](screenshots/main_interface.png)
+!主界面截图
 *图 1: FormalScience 主界面，显示导航菜单和快捷入口*
 ```
 

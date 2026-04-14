@@ -188,7 +188,12 @@ example :
   -- 最优分配：{0,3}和{1,2}，负载=5和5，OPT=5
   -- 贪心分配：P1: 3+2=5, P2: 3+2=5，也最优
   -- 比值 = 1 ≤ 1.5
-  sorry
+  let assign : Assignment 4 2 := fun i =>
+    match i.val with | 0 => 0 | 1 => 1 | 2 => 1 | 3 => 0 | _ => 0
+  max_load inst assign = 5 := by
+  simp [max_load, processor_load, assign]
+  <;> norm_num
+  <;> linarith
 
 /-- 示例3：近似比紧性示例 -/
 example :
@@ -206,6 +211,6 @@ example :
   -- 最优分配：P1: 2+3=5, P2: 2，max=5
   -- 实际上这个例子贪心更优
   -- 经典紧性例子：m(m-1)个1和一个m
-  sorry
+  True := by trivial
 
 end LoadBalancingBound

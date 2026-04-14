@@ -116,7 +116,7 @@
 
 ### 前置知识
 
-- [03系列第3集](../03_type_theory_outline.md) 在Lean中实现STLC
+- [03系列第3集](03_type_theory_outline.md) 在Lean中实现STLC
 
 ---
 
@@ -255,7 +255,7 @@
 
 ### 前置知识
 
-- [03系列第2集](../03_type_theory_outline.md) 简单类型λ演算
+- [03系列第2集](03_type_theory_outline.md) 简单类型λ演算
 
 ---
 
@@ -302,7 +302,7 @@
 
 ### 前置知识
 
-- [03系列第6-7集](../03_type_theory_outline.md) 依赖类型
+- [03系列第6-7集](03_type_theory_outline.md) 依赖类型
 
 ---
 

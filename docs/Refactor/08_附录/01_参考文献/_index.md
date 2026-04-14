@@ -23,18 +23,21 @@
 ### 1. 学术论文与经典著作
 
 #### 调度系统经典论文
+
 - Dijkstra - _A Discipline of Programming_ (1976)
 - Liu & Layland - Rate Monotonic Scheduling (1973)
 - Blumofe & Leiserson - Work Stealing (1999)
 - Lamport - Time, Clocks, and the Ordering of Events (1978)
 
 #### 形式化方法经典论文
+
 - Hoare - _An Axiomatic Basis for Computer Programming_ (1969)
 - Milner - _The Polyadic π-Calculus_ (1991)
 - Church - _The Calculi of Lambda Conversion_ (1941)
 - Martin-Löf - _Intuitionistic Type Theory_ (1984)
 
 #### 分布式系统经典论文
+
 - Lamport - Paxos Made Simple (2001)
 - Ongaro & Ousterhout - Raft (2014)
 - Dean & Ghemawat - MapReduce (2008)
@@ -68,17 +71,20 @@
 ### 4. 在线资源
 
 #### 官方文档
+
 - [Linux Kernel Documentation](https://docs.kernel.org/)
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
 - [Docker Documentation](https://docs.docker.com/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 
 #### 学术资源
+
 - [arXiv cs.PL](https://arxiv.org/cs.PL) - 编程语言预印本
 - [ACM Digital Library](https://dl.acm.org/)
 - [IEEE Xplore](https://ieeexplore.ieee.org/)
 
 #### 开源项目
+
 - [Linux Kernel (GitHub)](https://github.com/torvalds/linux)
 - [Kubernetes (GitHub)](https://github.com/kubernetes/kubernetes)
 - [Apache Spark (GitHub)](https://github.com/apache/spark)
@@ -157,7 +163,7 @@
 
 ## 相关索引
 
-- [符号表总览](../02_符号表/_index.md)
+- [符号表总览](../../06_调度系统/05_形式化证明/_index.md)
 - [概念索引](../03_索引/03.1_概念索引.md)
 - [定理索引](../03_索引/03.2_定理索引.md)
 - [项目主索引](../../00_INDEX.md)
